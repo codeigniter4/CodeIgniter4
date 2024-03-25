@@ -17,6 +17,7 @@ parameters:
 		- admin/starter/tests
 		- app
 		- system
+		- tests
 		- utils/PHPStan
 	excludePaths:
 		- app/Views/errors/cli/*
@@ -27,6 +28,7 @@ parameters:
 		- system/Test/Filters/CITestStreamFilter.php
 		- system/ThirdParty/*
 		- system/Validation/Views/single.php
+		- tests/system/View/Views/*
 	scanDirectories:
 		- system/Helpers
 	checkGenericClassInNonGenericObjectType: false

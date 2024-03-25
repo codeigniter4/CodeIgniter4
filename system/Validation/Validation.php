@@ -799,7 +799,9 @@ class Validation implements ValidationInterface
                         // Check if the validation rule for the placeholder exists
                         if ($placeholderRules === null) {
                             throw new LogicException(
-                                'No validation rules for the placeholder: ' . $field
+                                'No validation rules for the placeholder: "' . $field
+                                . '". You must set the validation rules for the field.'
+                                . ' See <https://codeigniter4.github.io/userguide/libraries/validation.html#validation-placeholders>.'
                             );
                         }
 

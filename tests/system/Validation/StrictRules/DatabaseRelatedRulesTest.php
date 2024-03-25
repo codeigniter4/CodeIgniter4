@@ -19,6 +19,7 @@ use CodeIgniter\Validation\Validation;
 use Config\Database;
 use Config\Services;
 use InvalidArgumentException;
+use LogicException;
 use Tests\Support\Validation\TestRules;
 
 /**
@@ -150,6 +151,34 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
             'email' => 'is_unique[user.email,id,{id}]',
         ]);
         $this->assertTrue($this->validation->run($data));
+    }
+
+    public function testIsUniqueWithPlaceholderAndNoValidationRulesForIt(): void
+    {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('No validation rules for the placeholder: "id". You must set the validation rules for the field.');
+
+        $this->hasInDatabase('user', [
+            'name'    => 'Derek',
+            'email'   => 'derek@world.co.uk',
+            'country' => 'GB',
+        ]);
+
+        $row = Database::connect()
+            ->table('user')
+            ->limit(1)
+            ->get()
+            ->getRow();
+
+        $data = [
+            'id'    => $row->id,
+            'email' => 'derek@world.co.uk',
+        ];
+
+        $this->validation->setRules([
+            'email' => 'is_unique[user.email,id,{id}]',
+        ]);
+        $this->validation->run($data);
     }
 
     public function testIsUniqueByManualRun(): void

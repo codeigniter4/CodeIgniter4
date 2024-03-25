@@ -10192,6 +10192,12571 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/View/View.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Autoloader\\\\FatalLocator\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Autoloader/FatalLocator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Cells\\\\StarterCell\\:\\:hello\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Cells/StarterCell.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Cells\\\\StarterCell\\:\\:hello\\(\\) has parameter \\$params with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Cells/StarterCell.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\LanguageCommand\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\LanguageCommand\\:\\:generateClass\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\LanguageCommand\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\LanguageCommand\\:\\:generateView\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\LanguageCommand\\:\\:generateView\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\LanguageCommand\\:\\:parseTemplate\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\LanguageCommand\\:\\:parseTemplate\\(\\) has parameter \\$replace with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\LanguageCommand\\:\\:parseTemplate\\(\\) has parameter \\$search with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\LanguageCommand\\:\\:renderTemplate\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Commands\\\\LanguageCommand\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Commands\\\\ParamsReveal\\:\\:\\$args has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/ParamsReveal.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\Unsuffixable\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\Unsuffixable\\:\\:generateClass\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\Unsuffixable\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\Unsuffixable\\:\\:generateView\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\Unsuffixable\\:\\:generateView\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\Unsuffixable\\:\\:parseTemplate\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\Unsuffixable\\:\\:parseTemplate\\(\\) has parameter \\$replace with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\Unsuffixable\\:\\:parseTemplate\\(\\) has parameter \\$search with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\Unsuffixable\\:\\:renderTemplate\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Commands\\\\Unsuffixable\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Config\\\\BadRegistrar\\:\\:RegistrarConfig\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Config/BadRegistrar.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Variable \\$filters might not be defined\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/_support/Config/Filters.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Config/Registrar.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Config\\\\Registrar\\:\\:Database\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Config/Registrar.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Config\\\\Registrar\\:\\:Publisher\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Config/Registrar.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Config\\\\Registrar\\:\\:\\$dbConfig type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Config/Registrar.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Variable \\$routes might not be defined\\.$#',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/_support/Config/Routes.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Config\\\\TestRegistrar\\:\\:RegistrarConfig\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Config/TestRegistrar.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Config\\\\Validation\\:\\:\\$signup has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Config/Validation.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Config\\\\Validation\\:\\:\\$signup_errors has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Config/Validation.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Hello\\:\\:index\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Hello.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Newautorouting\\:\\:getIndex\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Newautorouting.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Newautorouting\\:\\:postSave\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Newautorouting.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Newautorouting\\:\\:postSave\\(\\) has parameter \\$c with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Newautorouting.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\RequestInterface\\:\\:getGet\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\RequestInterface\\:\\:getJSON\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\RequestInterface\\:\\:getLocale\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Popcorn\\:\\:echoJson\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Popcorn\\:\\:fail\\(\\) has parameter \\$messages with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Popcorn\\:\\:format\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Popcorn\\:\\:goaway\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Popcorn\\:\\:index\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Popcorn\\:\\:index3\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Popcorn\\:\\:json\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Popcorn\\:\\:oops\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Popcorn\\:\\:pop\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Popcorn\\:\\:respond\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Popcorn\\:\\:respondCreated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Popcorn\\:\\:respondDeleted\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Popcorn\\:\\:respondUpdated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Popcorn\\:\\:toindex\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Popcorn\\:\\:weasel\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Popcorn\\:\\:xml\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Popcorn.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Remap\\:\\:_remap\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Remap.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Remap\\:\\:_remap\\(\\) has parameter \\$method with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Remap.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Remap\\:\\:_remap\\(\\) has parameter \\$params with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Remap.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Remap\\:\\:abc\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Remap.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Controllers\\\\Remap\\:\\:index\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Controllers/Remap.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Entity\\\\Cast\\\\CastBase64\\:\\:get\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/Cast/CastBase64.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Entity\\\\Cast\\\\CastBase64\\:\\:set\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/Cast/CastBase64.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$value \\(string\\) of method Tests\\\\Support\\\\Entity\\\\Cast\\\\CastBase64\\:\\:get\\(\\) should be contravariant with parameter \\$value \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\BaseCast\\:\\:get\\(\\)$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/Cast/CastBase64.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$value \\(string\\) of method Tests\\\\Support\\\\Entity\\\\Cast\\\\CastBase64\\:\\:get\\(\\) should be contravariant with parameter \\$value \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\CastInterface\\:\\:get\\(\\)$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/Cast/CastBase64.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$value \\(string\\) of method Tests\\\\Support\\\\Entity\\\\Cast\\\\CastBase64\\:\\:set\\(\\) should be contravariant with parameter \\$value \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\BaseCast\\:\\:set\\(\\)$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/Cast/CastBase64.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$value \\(string\\) of method Tests\\\\Support\\\\Entity\\\\Cast\\\\CastBase64\\:\\:set\\(\\) should be contravariant with parameter \\$value \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\CastInterface\\:\\:set\\(\\)$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/Cast/CastBase64.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Entity\\\\Cast\\\\CastBinaryUUID\\:\\:get\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/Cast/CastBinaryUUID.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Entity\\\\Cast\\\\CastBinaryUUID\\:\\:set\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/Cast/CastBinaryUUID.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$binary \\(string\\) of method Tests\\\\Support\\\\Entity\\\\Cast\\\\CastBinaryUUID\\:\\:get\\(\\) should be contravariant with parameter \\$value \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\BaseCast\\:\\:get\\(\\)$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/Cast/CastBinaryUUID.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$binary \\(string\\) of method Tests\\\\Support\\\\Entity\\\\Cast\\\\CastBinaryUUID\\:\\:get\\(\\) should be contravariant with parameter \\$value \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\CastInterface\\:\\:get\\(\\)$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/Cast/CastBinaryUUID.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$string \\(string\\) of method Tests\\\\Support\\\\Entity\\\\Cast\\\\CastBinaryUUID\\:\\:set\\(\\) should be contravariant with parameter \\$value \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\BaseCast\\:\\:set\\(\\)$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/Cast/CastBinaryUUID.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$string \\(string\\) of method Tests\\\\Support\\\\Entity\\\\Cast\\\\CastBinaryUUID\\:\\:set\\(\\) should be contravariant with parameter \\$value \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\CastInterface\\:\\:set\\(\\)$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/Cast/CastBinaryUUID.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Entity\\\\Cast\\\\CastPassParameters\\:\\:set\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/Cast/CastPassParameters.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Return type \\(mixed\\) of method Tests\\\\Support\\\\Entity\\\\Cast\\\\CastPassParameters\\:\\:set\\(\\) should be covariant with return type \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\BaseCast\\:\\:set\\(\\)$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/Cast/CastPassParameters.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Return type \\(mixed\\) of method Tests\\\\Support\\\\Entity\\\\Cast\\\\CastPassParameters\\:\\:set\\(\\) should be covariant with return type \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\CastInterface\\:\\:set\\(\\)$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/Cast/CastPassParameters.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Entity\\\\User\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/User.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Filters\\\\Customfilter\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Filters/Customfilter.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Filters\\\\Customfilter\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Filters/Customfilter.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Filters\\\\RedirectFilter\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Filters/RedirectFilter.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Filters\\\\RedirectFilter\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Filters/RedirectFilter.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Language\\\\SecondMockLanguage\\:\\:loaded\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Language/SecondMockLanguage.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Language\\\\SecondMockLanguage\\:\\:loadem\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Language/SecondMockLanguage.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Log\\\\Handlers\\\\TestHandler\\:\\:__construct\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Log/Handlers/TestHandler.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Log\\\\Handlers\\\\TestHandler\\:\\:getLogs\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Log/Handlers/TestHandler.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Log\\\\Handlers\\\\TestHandler\\:\\:\\$logs type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Log/Handlers/TestHandler.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\Database\\\\ConnectionInterface\\:\\:tableExists\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EntityModel\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EntityModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:afterDeleteMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:afterDeleteMethod\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:afterFindMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:afterFindMethod\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:afterInsertBatchMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:afterInsertBatchMethod\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:afterInsertMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:afterInsertMethod\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:afterUpdateBatchMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:afterUpdateBatchMethod\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:afterUpdateMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:afterUpdateMethod\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:beforeDeleteMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:beforeDeleteMethod\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:beforeFindMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:beforeFindMethod\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:beforeInsertBatchMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:beforeInsertBatchMethod\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:beforeInsertMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:beforeInsertMethod\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:beforeUpdateBatchMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:beforeUpdateBatchMethod\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:beforeUpdateMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:beforeUpdateMethod\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\EventModel\\:\\:hasToken\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterDelete type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterFind type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterInsert type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterInsertBatch type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterUpdate type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterUpdateBatch type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeDelete type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeFind type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeFindReturnData has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeInsert type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeInsertBatch type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeUpdate type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeUpdateBatch type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$eventData has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$tokens has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Models\\\\FabricatorModel\\:\\:fake\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/FabricatorModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\FabricatorModel\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/FabricatorModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\JobModel\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/JobModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\JobModel\\:\\:\\$description has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/JobModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\JobModel\\:\\:\\$name has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/JobModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\SecondaryModel\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/SecondaryModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\UUIDPkeyModel\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/UUIDPkeyModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\UserModel\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/UserModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\UserModel\\:\\:\\$country has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/UserModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\UserModel\\:\\:\\$email has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/UserModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\UserModel\\:\\:\\$name has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/UserModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\UserObjModel\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/UserObjModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\UserTimestampModel\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/UserTimestampModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\ValidErrorsModel\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/ValidErrorsModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\ValidErrorsModel\\:\\:\\$validationRules type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/ValidErrorsModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\ValidModel\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/ValidModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\ValidModel\\:\\:\\$validationMessages type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/ValidModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\ValidModel\\:\\:\\$validationRules type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/ValidModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\ValidModelRuleGroup\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/ValidModelRuleGroup.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\ValidModelRuleGroup\\:\\:\\$validationRules type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/ValidModelRuleGroup.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\Models\\\\WithoutAutoIncrementModel\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Models/WithoutAutoIncrementModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\SomeEntity\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/SomeEntity.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Test\\\\TestForReflectionHelper\\:\\:getPrivate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Test/TestForReflectionHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Test\\\\TestForReflectionHelper\\:\\:getStaticPrivate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Test/TestForReflectionHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Test\\\\TestForReflectionHelper\\:\\:privateMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Test/TestForReflectionHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Test\\\\TestForReflectionHelper\\:\\:privateMethod\\(\\) has parameter \\$param1 with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Test/TestForReflectionHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Test\\\\TestForReflectionHelper\\:\\:privateMethod\\(\\) has parameter \\$param2 with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Test/TestForReflectionHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Test\\\\TestForReflectionHelper\\:\\:privateMethod\\(\\) is unused\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Test/TestForReflectionHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Test\\\\TestForReflectionHelper\\:\\:privateStaticMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Test/TestForReflectionHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Test\\\\TestForReflectionHelper\\:\\:privateStaticMethod\\(\\) has parameter \\$param1 with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Test/TestForReflectionHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Test\\\\TestForReflectionHelper\\:\\:privateStaticMethod\\(\\) has parameter \\$param2 with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Test/TestForReflectionHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Static method Tests\\\\Support\\\\Test\\\\TestForReflectionHelper\\:\\:privateStaticMethod\\(\\) is unused\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Test/TestForReflectionHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Validation\\\\TestRules\\:\\:array_count\\(\\) has parameter \\$count with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Validation/TestRules.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Validation\\\\TestRules\\:\\:array_count\\(\\) has parameter \\$value with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Validation/TestRules.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Validation\\\\TestRules\\:\\:check_object_rule\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Validation/TestRules.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Validation\\\\TestRules\\:\\:check_object_rule\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Validation/TestRules.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Validation\\\\TestRules\\:\\:customError\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Validation/TestRules.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\View\\\\Cells\\\\ListerCell\\:\\:getItemsProperty\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/Cells/ListerCell.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Tests\\\\Support\\\\View\\\\Cells\\\\ListerCell\\:\\:\\$items type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/Cells/ListerCell.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Variable \\$value might not be defined\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/Cells/addition.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Variable \\$message might not be defined\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/Cells/awesome_cell.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Variable \\$this might not be defined\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/Cells/colors.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Variable \\$greeting might not be defined\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/Cells/greeting.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Variable \\$name might not be defined\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/Cells/greeting.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Variable \\$items might not be defined\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/Cells/lister.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Variable \\$value might not be defined\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/Cells/multiplier.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Variable \\$message might not be defined\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/Cells/notice.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\View\\\\OtherCells\\\\SampleClass\\:\\:hello\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/OtherCells/SampleClass.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\View\\\\SampleClass\\:\\:echobox\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/SampleClass.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\View\\\\SampleClass\\:\\:echobox\\(\\) has parameter \\$params with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/SampleClass.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\View\\\\SampleClass\\:\\:hello\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/SampleClass.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\View\\\\SampleClass\\:\\:index\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/SampleClass.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\View\\\\SampleClass\\:\\:staticEcho\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/SampleClass.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\View\\\\SampleClass\\:\\:staticEcho\\(\\) has parameter \\$params with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/SampleClass.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\View\\\\SampleClass\\:\\:work\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/SampleClass.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\View\\\\SampleClass\\:\\:work\\(\\) has parameter \\$p1 with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/SampleClass.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\View\\\\SampleClass\\:\\:work\\(\\) has parameter \\$p2 with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/SampleClass.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\View\\\\SampleClass\\:\\:work\\(\\) has parameter \\$p4 with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/SampleClass.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\View\\\\SampleClassWithInitController\\:\\:index\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/SampleClassWithInitController.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Variable \\$testString might not be defined\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/View/Views/simple.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning mixed directly on offset \'CONTENT_TYPE\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\API\\\\ResponseTraitTest\\:\\:invoke\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\API\\\\ResponseTraitTest\\:\\:invoke\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\API\\\\ResponseTraitTest\\:\\:makeController\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\API\\\\ResponseTraitTest\\:\\:makeController\\(\\) has parameter \\$userConfig with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\API\\\\ResponseTraitTest\\:\\:makeController\\(\\) has parameter \\$userHeaders with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\API\\\\ResponseTraitTest\\:\\:tryValidContentType\\(\\) has parameter \\$contentType with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\API\\\\ResponseTraitTest\\:\\:tryValidContentType\\(\\) has parameter \\$mimeType with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:__construct\\(\\) has parameter \\$request with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:__construct\\(\\) has parameter \\$response with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:fail\\(\\) has parameter \\$messages with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:format\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:respond\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:respondCreated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:respondDeleted\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:respondUpdated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:__construct\\(\\) has parameter \\$formatter with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:__construct\\(\\) has parameter \\$request with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:__construct\\(\\) has parameter \\$response with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:fail\\(\\) has parameter \\$messages with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:format\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:respond\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:respondCreated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:respondDeleted\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:respondUpdated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:\\$request has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:\\$response has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:\\$formatter has no type specified\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:\\$request has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:\\$response has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\AutoReview\\\\ComposerJsonTest\\:\\:checkConfig\\(\\) has parameter \\$fromComponent with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/AutoReview/ComposerJsonTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\AutoReview\\\\ComposerJsonTest\\:\\:checkConfig\\(\\) has parameter \\$fromMain with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/AutoReview/ComposerJsonTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\AutoReview\\\\ComposerJsonTest\\:\\:getComposerJson\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/AutoReview/ComposerJsonTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\AutoReview\\\\ComposerJsonTest\\:\\:\\$devComposer type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/AutoReview/ComposerJsonTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\AutoReview\\\\ComposerJsonTest\\:\\:\\$frameworkComposer type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/AutoReview/ComposerJsonTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\AutoReview\\\\ComposerJsonTest\\:\\:\\$starterComposer type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/AutoReview/ComposerJsonTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\AutoReview\\\\FrameworkCodeTest\\:\\:getTestClasses\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/AutoReview/FrameworkCodeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\AutoReview\\\\FrameworkCodeTest\\:\\:provideEachTestClassHasCorrectGroupAnnotation\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/AutoReview/FrameworkCodeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\AutoReview\\\\FrameworkCodeTest\\:\\:\\$recognizedGroupAnnotations type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/AutoReview/FrameworkCodeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\AutoReview\\\\FrameworkCodeTest\\:\\:\\$testClasses type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/AutoReview/FrameworkCodeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\AutoloaderTest\\:\\:getPrivateMethodInvoker\\(\\) return type has no signature specified for Closure\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Autoloader/AutoloaderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\AutoloaderTest\\:\\:setPrivateProperty\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Autoloader/AutoloaderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Autoloader/AutoloaderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning 3 directly on offset \'argc\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CLI/CLITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'ignored\', \'b\', \'c\', \'\\-\\-parm\', \'pvalue\', \'d\', \'\\-\\-p2\', \'\\-\\-p3\', \'value 3\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CLI/CLITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'ignored\', \'b\', \'c\', \'\\-\\-parm\', \'pvalue\', \'d\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CLI/CLITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'ignored\', \'b\', \'c\', \'d\', \'\\-\\-parm\', \'pvalue\', \'d2\', \'da\\-sh\', \'\\-\\-fix\', \'\\-\\-opt\\-in\', \'sure\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CLI/CLITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'ignored\', \'b\', \'c\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CLI/CLITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLITest\\:\\:provideTable\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CLI/CLITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLITest\\:\\:testTable\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CLI/CLITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLITest\\:\\:testTable\\(\\) has parameter \\$tbody with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CLI/CLITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLITest\\:\\:testTable\\(\\) has parameter \\$thead with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CLI/CLITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'app\\.baseURL\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CLI/ConsoleTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'argv\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CLI/ConsoleTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'http\\://example\\.com/\' directly on offset \'app\\.baseURL\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CLI/ConsoleTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning int\\<1, max\\> directly on offset \'argc\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CLI/ConsoleTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning non\\-empty\\-array\\<int\\|string, \'spark\'\\|array\\> directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CLI/ConsoleTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\CLI\\\\ConsoleTest\\:\\:initCLI\\(\\) has parameter \\$command with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CLI/ConsoleTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^PHPDoc tag @var has invalid value \\(@var FileVarExportHandler\\|CacheInterface\\)\\: Unexpected token "@var", expected type at offset 16$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/FactoriesCacheFileHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Config\\\\BaseConfig\\:\\:\\$baseURL\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/FactoriesCacheFileVarExportHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\FactoriesCacheFileVarExportHandlerTest\\:\\:testDelete\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/FactoriesCacheFileVarExportHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\FactoriesCacheFileVarExportHandlerTest\\:\\:testInstantiate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/FactoriesCacheFileVarExportHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\FactoriesCacheFileVarExportHandlerTest\\:\\:testLoad\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/FactoriesCacheFileVarExportHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\FactoriesCacheFileVarExportHandlerTest\\:\\:testSave\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/FactoriesCacheFileVarExportHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\AbstractHandlerTest\\:\\:\\$dummy has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/AbstractHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\AbstractHandlerTest\\:\\:\\$key1 has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/AbstractHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\AbstractHandlerTest\\:\\:\\$key2 has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/AbstractHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\AbstractHandlerTest\\:\\:\\$key3 has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/AbstractHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\BaseHandlerTest\\:\\:provideValidateKeyInvalidType\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/BaseHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Calling new DummyHandler\\(\\) directly is incomplete to get the cache instance\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/DummyHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Calling new BaseTestFileHandler\\(\\) directly is incomplete to get the cache instance\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/FileHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Calling new FileHandler\\(\\) directly is incomplete to get the cache instance\\.$#',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/FileHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\BaseTestFileHandler\\:\\:getFileInfoTest\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/FileHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\FileHandlerTest\\:\\:getKeyArray\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/FileHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\FileHandlerTest\\:\\:provideSaveMode\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/FileHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Calling new MemcachedHandler\\(\\) directly is incomplete to get the cache instance\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/MemcachedHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\MemcachedHandlerTest\\:\\:getKeyArray\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/MemcachedHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Calling new PredisHandler\\(\\) directly is incomplete to get the cache instance\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/PredisHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\PredisHandlerTest\\:\\:getKeyArray\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/PredisHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Calling new RedisHandler\\(\\) directly is incomplete to get the cache instance\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/RedisHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\RedisHandlerTest\\:\\:getKeyArray\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/Handlers/RedisHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'public/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning non\\-empty\\-array\\<int, string\\> directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning non\\-falsy\\-string directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:createIncomingRequest\\(\\) has parameter \\$query with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:testCachePageCLIRequest\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:testCachePageIncomingRequest\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:testCachePageIncomingRequestWithCacheQueryString\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:testInvalidCacheError\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:testUnserializeError\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, array given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/cli\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/example\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 6,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/image\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 18,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/pages/about\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 7,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/test\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'CLI\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'GET\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'HTTP/1\\.1\' directly on offset \'SERVER_PROTOCOL\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 8,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'HTTP/2\\.0\' directly on offset \'SERVER_PROTOCOL\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'HTTP/3\\.0\' directly on offset \'SERVER_PROTOCOL\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'POST\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'public/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning 1 directly on offset \'argc\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning 2 directly on offset \'argc\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 28,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'/\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 13,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'cli\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'example\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 6,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'image\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'pages/about\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 7,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning non\\-falsy\\-string directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\ResponseInterface\\:\\:pretend\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\CodeIgniterTest\\:\\:providePageCacheWithCacheQueryString\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\CodeIgniterTest\\:\\:testOutputBufferingControl\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\CodeIgniterTest\\:\\:testPageCacheWithCacheQueryString\\(\\) has parameter \\$cacheQueryStringValue with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\CodeIgniterTest\\:\\:testPageCacheWithCacheQueryString\\(\\) has parameter \\$testingUrls with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\CodeIgniterTest\\:\\:testRegisterSameFilterTwiceWithDifferentArgument\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$to of method CodeIgniter\\\\Router\\\\RouteCollection\\:\\:add\\(\\) expects array\\|\\(Closure\\(mixed \\.\\.\\.\\)\\: \\(CodeIgniter\\\\HTTP\\\\ResponseInterface\\|string\\|void\\)\\)\\|string, Closure\\(mixed\\)\\: \\(CodeIgniter\\\\HTTP\\\\DownloadResponse\\|null\\) given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$to of method CodeIgniter\\\\Router\\\\RouteCollection\\:\\:add\\(\\) expects array\\|\\(Closure\\(mixed \\.\\.\\.\\)\\: \\(CodeIgniter\\\\HTTP\\\\ResponseInterface\\|string\\|void\\)\\)\\|string, Closure\\(mixed\\)\\: CodeIgniter\\\\HTTP\\\\ResponseInterface given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$to of method CodeIgniter\\\\Router\\\\RouteCollection\\:\\:add\\(\\) expects array\\|\\(Closure\\(mixed \\.\\.\\.\\)\\: \\(CodeIgniter\\\\HTTP\\\\ResponseInterface\\|string\\|void\\)\\)\\|string, Closure\\(mixed\\)\\: non\\-falsy\\-string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$to of method CodeIgniter\\\\Router\\\\RouteCollection\\:\\:add\\(\\) expects array\\|\\(Closure\\(mixed \\.\\.\\.\\)\\: \\(CodeIgniter\\\\HTTP\\\\ResponseInterface\\|string\\|void\\)\\)\\|string, Closure\\(mixed\\)\\: void given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property Tests\\\\Support\\\\Commands\\\\AppInfo\\:\\:\\$foobar\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/BaseCommandTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/CellGeneratorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$search of function str_replace expects array\\|string, int given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/ClearDebugbarTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$replace of function str_replace expects array\\|string, int given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/ClearDebugbarTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/CommandGeneratorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\CommandTest\\:\\:getBuffer\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/CommandTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\CommandTest\\:\\:provideCommandParsesArgsCorrectly\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/CommandTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\CommandTest\\:\\:testCommandParsesArgsCorrectly\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/CommandTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/ControllerGeneratorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\CreateDatabaseTest\\:\\:getBuffer\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/CreateDatabaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfoTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Database/ShowTableInfoTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'production\' directly on offset \'CI_ENVIRONMENT\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/EnvironmentCommandTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset \'CI_ENVIRONMENT\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/EnvironmentCommandTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\FilterCheckTest\\:\\:getBuffer\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/FilterCheckTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'encryption\\.key\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/GenerateKeyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\HelpCommandTest\\:\\:getBuffer\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/HelpCommandTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\InfoCacheTest\\:\\:getBuffer\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/InfoCacheTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/ModelGeneratorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\RoutesTest\\:\\:getBuffer\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/RoutesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\RoutesTest\\:\\:testRoutesCommandHostHostname\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/RoutesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\RoutesTest\\:\\:testRoutesCommandHostSubdomain\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/RoutesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$mock of static method CodeIgniter\\\\Config\\\\BaseService\\:\\:injectMock\\(\\) expects object, null given\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/Commands/RoutesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/ScaffoldGeneratorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\NamespacesTest\\:\\:getBuffer\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Utilities/NamespacesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\AutoRouteCollectorTest\\:\\:createAutoRouteCollector\\(\\) has parameter \\$filterConfigFilters with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollectorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\Controllers\\\\Dash_folder\\\\Dash_controller\\:\\:getDash_method\\(\\) has parameter \\$p1 with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/AutoRouterImproved/Controllers/Dash_folder/Dash_controller.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\Controllers\\\\Dash_folder\\\\Dash_controller\\:\\:getDash_method\\(\\) has parameter \\$p2 with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/AutoRouterImproved/Controllers/Dash_folder/Dash_controller.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\Controllers\\\\Dash_folder\\\\Dash_controller\\:\\:getSomemethod\\(\\) has parameter \\$p1 with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/AutoRouterImproved/Controllers/Dash_folder/Dash_controller.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\FilterFinderTest\\:\\:createFilters\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/FilterFinderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\FilterFinderTest\\:\\:createRouteCollection\\(\\) has parameter \\$routes with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/FilterFinderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\FilterFinderTest\\:\\:createRouteCollection\\(\\) should return CodeIgniter\\\\Router\\\\RouteCollection but returns CodeIgniter\\\\Router\\\\RouteCollectionInterface\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/FilterFinderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\FilterFinderTest\\:\\:\\$response \\(CodeIgniter\\\\HTTP\\\\Response\\) does not accept CodeIgniter\\\\HTTP\\\\ResponseInterface\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/FilterFinderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\SampleURIGeneratorTest\\:\\:provideGet\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/SampleURIGeneratorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'foo\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsSendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$value of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int\\<1, max\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsSendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$expire of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsSendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'foo\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Argument \\#1 \\$name \\(\'CodeIgniter\\\\\\\\UnexsistenceClass\'\\) passed to function model does not extend CodeIgniter\\\\\\\\Model\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'GET\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'bar\' directly on offset \'foo\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Class CodeIgniter\\\\UnexsistenceClass not found\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\CommonFunctionsTest\\:\\:disableHtml5\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\CommonFunctionsTest\\:\\:enableHtml5\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\CommonFunctionsTest\\:\\:provideCleanPathActuallyCleaningThePaths\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$name of function model expects a valid class string, \'JobModel\' given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$context of function esc expects \'attr\'\\|\'css\'\\|\'html\'\\|\'js\'\\|\'raw\'\\|\'url\', \'0\' given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$context of function esc expects \'attr\'\\|\'css\'\\|\'html\'\\|\'js\'\\|\'raw\'\\|\'url\', \'bogus\' given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$value of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int\\<1, max\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$expire of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Function foo_bar_baz not found\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Inner named functions are not supported by PHPStan\\. Consider refactoring to an anonymous function, class method, or a top\\-level\\-defined function\\. See issue \\#165 \\(https\\://github\\.com/phpstan/phpstan/issues/165\\) for more details\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\CommonHelperTest\\:\\:\\$dummyHelpers type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to unknown service method \'bar\'\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonSingleServiceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to unknown service method \'baz\'\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonSingleServiceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to unknown service method \'caches\'\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonSingleServiceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to unknown service method \'foo\'\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonSingleServiceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to unknown service method \'timers\'\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonSingleServiceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to unknown service method string\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/CommonSingleServiceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\CommonSingleServiceTest\\:\\:provideServiceNames\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CommonSingleServiceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$expected of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) expects class\\-string\\<object\\>, false given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/CommonSingleServiceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'BAR\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/DotEnvTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'FOO\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/DotEnvTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'NULL\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/DotEnvTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'SPACED\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/DotEnvTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'SimpleConfig_simple_name\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/DotEnvTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'TT\' directly on offset \'SER_VAR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/DotEnvTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\DotEnvTest\\:\\:provideLoadsVars\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/DotEnvTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$file of class CodeIgniter\\\\Config\\\\DotEnv constructor expects string, int given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/DotEnvTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined static method CodeIgniter\\\\Config\\\\Factories\\:\\:cells\\(\\)\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined static method CodeIgniter\\\\Config\\\\Factories\\:\\:tedwigs\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined static method CodeIgniter\\\\Config\\\\Factories\\:\\:widgets\\(\\)\\.$#',
+	'count' => 13,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:getFactoriesStaticProperty\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:getFactoriesStaticProperty\\(\\) has parameter \\$params with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testCanLoadSharedConfigWithDifferentAlias\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testCanLoadTwoCellsWithSameShortName\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testDefineAfterLoading\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testDefineAndLoad\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testDefineNonExistentClass\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testDefineSameAliasAndSameClassTwice\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testDefineSameAliasTwiceWithDifferentClasses\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testFullClassnameIgnoresPreferApp\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testGetComponentInstances\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testIsUpdated\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testIsUpdated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testSetComponentInstances\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testSetComponentInstances\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testShortnameReturnsConfigInApp\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$expected of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) expects class\\-string\\<Config\\\\TestRegistrar\\>, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$name of function model expects a valid class string, \'CodeIgniter\\\\\\\\Shield\\\\\\\\Models\\\\\\\\UserModel\' given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$classname of static method CodeIgniter\\\\Config\\\\Factories\\:\\:define\\(\\) expects class\\-string, string given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Config/FactoriesTest\\.php\\:86\\:\\:\\$widgets has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\MimesTest\\:\\:provideGuessExtensionFromType\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/MimesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\MimesTest\\:\\:provideGuessTypeFromExtension\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/MimesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined static method Tests\\\\Support\\\\Config\\\\Services\\:\\:SeSsIoN\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/ServicesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined static method Tests\\\\Support\\\\Config\\\\Services\\:\\:SeSsIoNs\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/ServicesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined static method Tests\\\\Support\\\\Config\\\\Services\\:\\:redirectResponse\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/ServicesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Config\\\\ServicesTest\\:\\:\\$original type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/ServicesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property RegistrarConfig\\:\\:\\$bar has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/RegistrarConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property RegistrarConfig\\:\\:\\$foo has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/RegistrarConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$FOO has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$QEMPTYSTR has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$QFALSE has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$QZERO has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$QZEROSTR has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$alpha has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$bravo has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$charlie has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$crew has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$default has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$delta has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$dessert has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$echo has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$first has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$float has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$foxtrot has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$fruit has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$golf has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$int has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$longie has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$one_deep has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$onedeep has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$onedeep_value has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$password has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$second has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$shortie has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property SimpleConfig\\:\\:\\$simple has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/fixtures/SimpleConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Dead catch \\- CodeIgniter\\\\HTTP\\\\Exceptions\\\\RedirectException is never thrown in the try block\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/ControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/ControllerTest\\.php\\:126\\:\\:\\$signup has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/ControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/ControllerTest\\.php\\:126\\:\\:\\$signup_errors has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/ControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/ControllerTest\\.php\\:149\\:\\:\\$signup has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/ControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/ControllerTest\\.php\\:194\\:\\:\\$helpers type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/ControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$cookies of class CodeIgniter\\\\Cookie\\\\CookieStore constructor expects array\\<CodeIgniter\\\\Cookie\\\\Cookie\\>, array\\<int, DateTimeImmutable\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cookie/CookieStoreTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Cookie\\\\CookieStoreTest\\:\\:\\$defaults type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cookie/CookieStoreTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Expression "\\$cookie\\[\'expiry\'\\]" on a separate line does not do anything\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cookie/CookieTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cookie\\\\CookieTest\\:\\:provideConfigPrefix\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cookie/CookieTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cookie\\\\CookieTest\\:\\:provideInvalidExpires\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cookie/CookieTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cookie\\\\CookieTest\\:\\:provideSetCookieHeaderCreation\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cookie/CookieTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cookie\\\\CookieTest\\:\\:testSetCookieHeaderCreation\\(\\) has parameter \\$changed with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cookie/CookieTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$options of class CodeIgniter\\\\Cookie\\\\Cookie constructor expects array\\<string, bool\\|int\\|string\\>, array\\<string, DateTimeImmutable\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cookie/CookieTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Cookie\\\\CookieTest\\:\\:\\$defaults type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cookie/CookieTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Test\\\\Mock\\\\MockConnection\\:\\:\\$foobar\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/BaseConnectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to protected property CodeIgniter\\\\Test\\\\Mock\\\\MockConnection\\:\\:\\$username\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/BaseConnectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to protected property class@anonymous/tests/system/Database/BaseConnectionTest\\.php\\:107\\:\\:\\$username\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/BaseConnectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseConnectionTest\\:\\:provideProtectIdentifiers\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/BaseConnectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\BaseConnectionTest\\:\\:\\$failoverOptions type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/BaseConnectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\BaseConnectionTest\\:\\:\\$options type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/BaseConnectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Database/BaseConnectionTest\\.php\\:107\\:\\:\\$returnValues has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/BaseConnectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseQueryTest\\:\\:provideHighlightQueryKeywords\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/BaseQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseQueryTest\\:\\:provideIsWriteType\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/BaseQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$from of method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:from\\(\\) expects array\\|string, null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Builder/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, CodeIgniter\\\\Database\\\\ResultInterface given\\.$#',
+	'count' => 10,
+	'path' => __DIR__ . '/tests/system/Database/Builder/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, CodeIgniter\\\\Database\\\\ResultInterface\\|false given\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Database/Builder/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^PHPDoc type CodeIgniter\\\\Test\\\\Mock\\\\MockConnection of property CodeIgniter\\\\Database\\\\Builder\\\\InsertTest\\:\\:\\$db is not the same as PHPDoc type CodeIgniter\\\\Database\\\\BaseConnection of overridden property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$db\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Builder/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^PHPDoc type CodeIgniter\\\\Test\\\\Mock\\\\MockConnection of property CodeIgniter\\\\Database\\\\Builder\\\\UnionTest\\:\\:\\$db is not the same as PHPDoc type CodeIgniter\\\\Database\\\\BaseConnection of overridden property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$db\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Builder/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^PHPDoc type CodeIgniter\\\\Test\\\\Mock\\\\MockConnection of property CodeIgniter\\\\Database\\\\Builder\\\\UpdateTest\\:\\:\\$db is not the same as PHPDoc type CodeIgniter\\\\Database\\\\BaseConnection of overridden property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$db\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Builder/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^PHPDoc type CodeIgniter\\\\Test\\\\Mock\\\\MockConnection of property CodeIgniter\\\\Database\\\\Builder\\\\WhenTest\\:\\:\\$db is not the same as PHPDoc type CodeIgniter\\\\Database\\\\BaseConnection of overridden property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$db\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Builder/WhenTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Builder\\\\WhereTest\\:\\:provideWhereInEmptyValuesThrowInvalidArgumentException\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Builder/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Builder\\\\WhereTest\\:\\:provideWhereInvalidKeyThrowInvalidArgumentException\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Builder/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^PHPDoc type CodeIgniter\\\\Test\\\\Mock\\\\MockConnection of property CodeIgniter\\\\Database\\\\Builder\\\\WhereTest\\:\\:\\$db is not the same as PHPDoc type CodeIgniter\\\\Database\\\\BaseConnection of overridden property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$db\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Builder/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ConfigTest\\:\\:getPrivateMethodInvoker\\(\\) return type has no signature specified for Closure\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ConfigTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ConfigTest\\:\\:provideConvertDSN\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ConfigTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ConfigTest\\:\\:setPrivateProperty\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ConfigTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\ConfigTest\\:\\:\\$dsnGroup type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ConfigTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\ConfigTest\\:\\:\\$dsnGroupPostgre type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ConfigTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\ConfigTest\\:\\:\\$dsnGroupPostgreNative type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ConfigTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\ConfigTest\\:\\:\\$group type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ConfigTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce1Test\\:\\:\\$namespace type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\DatabaseTestCase\\\\DatabaseTestCaseMigrationOnce2Test\\:\\:\\$namespace type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:\\$namespace type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\DatabaseTestCaseTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AbstractGetFieldDataTest\\:\\:assertSameFieldData\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AbstractGetFieldDataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AbstractGetFieldDataTest\\:\\:assertSameFieldData\\(\\) has parameter \\$actual with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AbstractGetFieldDataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AbstractGetFieldDataTest\\:\\:assertSameFieldData\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AbstractGetFieldDataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AbstractGetFieldDataTest\\:\\:createTableForDefault\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AbstractGetFieldDataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AbstractGetFieldDataTest\\:\\:createTableForType\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AbstractGetFieldDataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\AliasTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/AliasTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\BadQueryTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/BadQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:\\$group1 has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:\\$group2 has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:\\$tests has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\CountTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/CountTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\DatabaseTestTraitCaseTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DatabaseTestTraitCaseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbDebugTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbDebugTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\DbUtilsTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\DeleteTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/DeleteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\EmptyTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EmptyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:escapeLikeStringDirect\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\EscapeTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/EscapeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$name on array\\|object\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FabricatorLiveTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:testAddColumnNull\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$fields of method CodeIgniter\\\\Database\\\\Forge\\:\\:addField\\(\\) expects array\\<string, array\\|string\\>\\|string, array\\<int, string\\> given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\FromTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/FromTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\GetNumRowsTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetNumRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$currentRow on CodeIgniter\\\\Database\\\\ResultInterface\\|false\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$name on array\\|object\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$resultID on CodeIgniter\\\\Database\\\\ResultInterface\\|false\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\GetTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:232\\:\\:\\$country has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:232\\:\\:\\$created_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:232\\:\\:\\$deleted_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:232\\:\\:\\$email has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:232\\:\\:\\$id has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:232\\:\\:\\$name has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:232\\:\\:\\$updated_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GetVersionTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GetVersionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\GroupTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/GroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\IncrementTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/IncrementTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:getWhere\\(\\) with incorrect case\\: getwhere$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\InsertTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\JoinTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/JoinTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\LikeTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LikeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\LimitTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/LimitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^PHPDoc type string of property CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:\\$seed is not the same as PHPDoc type array\\|string of overridden property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$seed\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:\\$expectedTables type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MetadataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$numberNative\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:testDisableNumberNative\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:testEnableNumberNative\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:testQueryDataAfterDisableNumberNative\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:testQueryDataAfterEnableNumberNative\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:\\$tests has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Class stdClass referenced with incorrect case\\: stdclass\\.$#',
+	'count' => 9,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\RawSqlTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:getCursor\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:storedProcedure\\(\\)\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\CallStoredProcedureTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/CallStoredProcedureTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\OCI8\\\\LastInsertIDTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OCI8/LastInsertIDTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$schema\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\OrderTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/OrderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$schema\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\PreparedQueryTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PreparedQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\PretendTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/PretendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$db of class CodeIgniter\\\\Database\\\\SQLite3\\\\Table constructor expects CodeIgniter\\\\Database\\\\SQLite3\\\\Connection, CodeIgniter\\\\Database\\\\BaseConnection given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$forge of class CodeIgniter\\\\Database\\\\SQLite3\\\\Table constructor expects CodeIgniter\\\\Database\\\\SQLite3\\\\Forge, CodeIgniter\\\\Database\\\\Forge given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:\\$forge \\(CodeIgniter\\\\Database\\\\SQLite3\\\\Forge\\) does not accept CodeIgniter\\\\Database\\\\Forge\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\GetFieldDataTest\\:\\:createTableCompositePrimaryKey\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/GetFieldDataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^PHPDoc type CodeIgniter\\\\Database\\\\SQLite3\\\\Connection of property CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\GetIndexDataTest\\:\\:\\$db is not the same as PHPDoc type CodeIgniter\\\\Database\\\\BaseConnection of overridden property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$db\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/GetIndexDataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\GetIndexDataTest\\:\\:\\$db \\(CodeIgniter\\\\Database\\\\SQLite3\\\\Connection\\) does not accept CodeIgniter\\\\Database\\\\BaseConnection\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/GetIndexDataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\GetIndexDataTest\\:\\:\\$forge \\(CodeIgniter\\\\Database\\\\SQLite3\\\\Forge\\) does not accept CodeIgniter\\\\Database\\\\Forge\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/GetIndexDataTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\SelectTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/SelectTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\TransactionDBDebugTrueTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionDBDebugTrueTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\TransactionTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/TransactionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\UnionTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UnionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:provideUpdateBatch\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:testUpdateBatch\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:testUpdateBatch\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:getWhere\\(\\) with incorrect case\\: getwhere$#',
+	'count' => 9,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Class stdClass referenced with incorrect case\\: stdclass\\.$#',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$set of method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:updateFields\\(\\) expects array\\<int, CodeIgniter\\\\Database\\\\RawSql\\|string\\>\\|string, array\\<string, CodeIgniter\\\\Database\\\\RawSql\\> given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\UpsertTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\WhereTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WhereTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\WriteTypeQueryTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Live/WriteTypeQueryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$schema\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:resetTables\\(\\) has parameter \\$db with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Migrations\\\\MigrationRunnerTest\\:\\:\\$namespace type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\Migrations\\\\MigrationTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/Migrations/MigrationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactoryTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Database/ModelFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\ResponseInterface\\:\\:pretend\\(\\)\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Debug/ExceptionHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Debug\\\\ExceptionHandlerTest\\:\\:backupIniValues\\(\\) has parameter \\$keys with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Debug/ExceptionHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Debug\\\\ExceptionHandlerTest\\:\\:\\$iniSettings type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Debug/ExceptionHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'CODEIGNITER_SCREAM_DEPRECATIONS\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'1\' directly on offset \'CODEIGNITER_SCREAM_DEPRECATIONS\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to function strlen\\(\\) on a separate line has no effect\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Instantiating CastException using new is not allowed\\. Use one of its named constructors instead\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Debug\\\\ExceptionsTest\\:\\:getPrivateMethodInvoker\\(\\) return type has no signature specified for Closure\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Debug\\\\ExceptionsTest\\:\\:setPrivateProperty\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$callable of method CodeIgniter\\\\Debug\\\\Timer\\:\\:record\\(\\) expects callable\\(\\)\\: mixed, \'strlen\' given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Debug/TimerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Instantiating FrameworkException using new is not allowed\\. Use one of its named constructors instead\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DebugTraceableTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Email\\\\EmailTest\\:\\:provideEmailSendWithClearance\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Email/EmailTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Email/EmailTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Encryption\\\\EncrypterInterface\\:\\:\\$key\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Encryption/EncryptionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Encryption\\\\Encryption\\:\\:\\$bogus\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Encryption/EncryptionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to protected property CodeIgniter\\\\Encryption\\\\Encryption\\:\\:\\$digest\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Encryption/EncryptionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to protected property CodeIgniter\\\\Encryption\\\\Encryption\\:\\:\\$key\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Encryption/EncryptionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'encryption\\.key\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Encryption/EncryptionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Encryption\\\\EncrypterInterface\\:\\:\\$cipher\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Encryption/Handlers/OpenSSLHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Encryption\\\\EncrypterInterface\\:\\:\\$key\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Encryption/Handlers/OpenSSLHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Encryption\\\\EncrypterInterface\\:\\:\\$blockSize\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Encryption/Handlers/SodiumHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Encryption\\\\EncrypterInterface\\:\\:\\$driver\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Encryption/Handlers/SodiumHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Encryption\\\\EncrypterInterface\\:\\:\\$key\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Encryption/Handlers/SodiumHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property object\\:\\:\\$bar\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method object\\:\\:toRawArray\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Expression "\\$entity\\-\\>ninth" on a separate line does not do anything\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:getCastEntity\\(\\) has parameter \\$data with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:getCastNullableEntity\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:getCustomCastEntity\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:getEntity\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:getMappedEntity\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:getNewSetterGetterEntity\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:getPrivateMethodInvoker\\(\\) return type has no signature specified for Closure\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:getSimpleSwappedEntity\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:getSwappedEntity\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:setPrivateProperty\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:testNewGetterSetters\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:testSetArrayToPropertyNamedAttributes\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:testSetStringToPropertyNamedAttributes\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1076\\:\\:getBar\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1076\\:\\:getFakeBar\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1076\\:\\:setBar\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1076\\:\\:setBar\\(\\) has parameter \\$value with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1114\\:\\:_getBar\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1114\\:\\:_setBar\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1114\\:\\:_setBar\\(\\) has parameter \\$value with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1114\\:\\:getBar\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1114\\:\\:setBar\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1114\\:\\:setBar\\(\\) has parameter \\$value with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1160\\:\\:getSimple\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1227\\:\\:setSeventh\\(\\) has parameter \\$seventh with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1076\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1076\\:\\:\\$original type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1114\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1114\\:\\:\\$original type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1160\\:\\:\\$_original has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1160\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1190\\:\\:\\$_original has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1190\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1209\\:\\:\\$_original has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1209\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1227\\:\\:\\$_original has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1227\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1285\\:\\:\\$_original has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1285\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1314\\:\\:\\$_original has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1314\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:893\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Argument \\#1 \\$name \\(\'Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Events/EventsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\Events\\\\Events\\:\\:unInitialize\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Events/EventsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Events/EventsTest\\.php\\:283\\:\\:\\$logged has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Events/EventsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Filters\\\\CSRFTest\\:\\:\\$response \\(CodeIgniter\\\\HTTP\\\\Response\\|null\\) does not accept CodeIgniter\\\\HTTP\\\\ResponseInterface\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Filters/CSRFTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'GET\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/DebugToolbarTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Filters\\\\DebugToolbarTest\\:\\:\\$response \\(CodeIgniter\\\\HTTP\\\\Response\\) does not accept CodeIgniter\\\\HTTP\\\\ResponseInterface\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/DebugToolbarTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'DELETE\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'GET\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 35,
+	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning 2 directly on offset \'argc\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'spark\', \'list\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\FiltersTest\\:\\:createFilters\\(\\) has parameter \\$request with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\FiltersTest\\:\\:provideBeforeExcept\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\FiltersTest\\:\\:provideProcessMethodProcessGlobalsWithExcept\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\FiltersTest\\:\\:testBeforeExcept\\(\\) has parameter \\$except with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\FiltersTest\\:\\:testBeforeExcept\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\FiltersTest\\:\\:testFilterWithArgumentsIsDefined\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\FiltersTest\\:\\:testFilterWithoutArgumentsIsDefined\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\FiltersTest\\:\\:testFiltersWithArguments\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\FiltersTest\\:\\:testProcessMethodProcessGlobalsWithExcept\\(\\) has parameter \\$except with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Filters\\\\FiltersTest\\:\\:\\$response \\(CodeIgniter\\\\HTTP\\\\Response\\) does not accept CodeIgniter\\\\HTTP\\\\ResponseInterface\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'POST\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/HoneypotTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Filters\\\\HoneypotTest\\:\\:\\$response \\(CodeIgniter\\\\HTTP\\\\Response\\|null\\) does not accept CodeIgniter\\\\HTTP\\\\RequestInterface\\|CodeIgniter\\\\HTTP\\\\ResponseInterface\\|string\\|null\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Filters/HoneypotTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Filters\\\\HoneypotTest\\:\\:\\$response \\(CodeIgniter\\\\HTTP\\\\Response\\|null\\) does not accept CodeIgniter\\\\HTTP\\\\ResponseInterface\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/Filters/HoneypotTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset \'val\' of \\$_GET is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Filters/InvalidCharsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\InvalidCharsTest\\:\\:provideCheckControlStringWithControlCharsCausesException\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/InvalidCharsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\InvalidCharsTest\\:\\:provideCheckControlStringWithLineBreakAndTabReturnsTheString\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/InvalidCharsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Filters/InvalidCharsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\fixtures\\\\GoogleCurious\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/fixtures/GoogleCurious.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\fixtures\\\\GoogleCurious\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/fixtures/GoogleCurious.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\fixtures\\\\GoogleEmpty\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/fixtures/GoogleEmpty.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\fixtures\\\\GoogleEmpty\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/fixtures/GoogleEmpty.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\fixtures\\\\GoogleMe\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/fixtures/GoogleMe.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\fixtures\\\\GoogleMe\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/fixtures/GoogleMe.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\fixtures\\\\GoogleYou\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/fixtures/GoogleYou.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\fixtures\\\\GoogleYou\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/fixtures/GoogleYou.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\fixtures\\\\InvalidClass\\:\\:index\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/fixtures/InvalidClass.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\fixtures\\\\Multiple1\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/fixtures/Multiple1.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\fixtures\\\\Multiple1\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/fixtures/Multiple1.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\fixtures\\\\Multiple2\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/fixtures/Multiple2.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\fixtures\\\\Multiple2\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/fixtures/Multiple2.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\fixtures\\\\Role\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/fixtures/Role.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\fixtures\\\\Role\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Filters/fixtures/Role.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with incorrect case\\: assertInstanceof$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Format/FormatTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Format\\\\XMLFormatterTest\\:\\:provideValidatingInvalidTags\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Format/XMLFormatterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Format\\\\XMLFormatterTest\\:\\:testValidatingInvalidTags\\(\\) has parameter \\$input with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Format/XMLFormatterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'baz\' directly on offset \'bar\' of \\$_GET is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CLIRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'users\', \'21\', \'abc \\< def\', \'McDonald\\\\\'s\', \'\\<s\\>aaa\\</s\\>\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CLIRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'users\', \'21\', \'pro\\-file\', \'\\-\\-foo\', \'bar\', \'\\-\\-baz\', \'queue some stuff\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CLIRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'users\', \'21\', \'profile\', \'\\-\\-foo\', \'bar\', \'\\-\\-baz\', \'queue some stuff\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CLIRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'users\', \'21\', \'profile\', \'\\-\\-foo\', \'bar\', \'\\-\\-foo\\-bar\', \'yes\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CLIRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'users\', \'21\', \'profile\', \'\\-\\-foo\', \'bar\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/CLIRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'users\', \'21\', \'profile\', \'\\-\\-foo\', \'oops\', \'bar\', \'\\-\\-baz\', \'queue some stuff\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CLIRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'users\', \'21\', \'profile\', \'\\-\\-foo\', \'oops\\-bar\', \'\\-\\-baz\', \'queue some stuff\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CLIRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'users\', \'21\', \'profile\', \'\\-foo\', \'bar\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CLIRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'users\', \'21\', \'profile\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CLIRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'spark\', \'command\', \'param1\', \'param2\', \'\\-\\-opt1\', \'opt1val\', \'\\-\\-opt\\-2\', \'opt 2 val\', \'param3\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CLIRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CLIRequestTest\\:\\:provideValidIPAddress\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CLIRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CLIRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\HTTP\\\\CURLRequest\\:\\:\\$curl_options\\.$#',
+	'count' => 39,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'10\' directly on offset \'HTTP_CONTENT_LENGTH\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'en\\-US\' directly on offset \'HTTP_ACCEPT_LANGUAGE\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'gzip, deflate, br\' directly on offset \'HTTP_ACCEPT_ENCODING\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'site1\\.com\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\CURLRequest\\:\\:setOutput\\(\\)\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequestDoNotShareOptionsTest\\:\\:getRequest\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequestDoNotShareOptionsTest\\:\\:getRequest\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequestDoNotShareOptionsTest\\:\\:testProxyuOption\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\HTTP\\\\CURLRequest\\:\\:\\$curl_options\\.$#',
+	'count' => 39,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'10\' directly on offset \'HTTP_CONTENT_LENGTH\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'en\\-US\' directly on offset \'HTTP_ACCEPT_LANGUAGE\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'gzip, deflate, br\' directly on offset \'HTTP_ACCEPT_ENCODING\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'site1\\.com\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\CURLRequest\\:\\:setOutput\\(\\)\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequestTest\\:\\:getRequest\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequestTest\\:\\:getRequest\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequestTest\\:\\:testProxyuOption\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\ContentSecurityPolicyTest\\:\\:work\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/ContentSecurityPolicyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'HTTP_USER_AGENT\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/DownloadResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'Mozilla/5\\.0 \\(Linux; U; Android 2\\.0\\.3; ja\\-jp; SC\\-02C Build/IML74K\\) AppleWebKit/534\\.30 \\(KHTML, like Gecko\\) Version/4\\.0 Mobile Safari/534\\.30\' directly on offset \'HTTP_USER_AGENT\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/DownloadResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to method PHPUnit\\\\Framework\\\\Assert\\:\\:assertNull\\(\\) with incorrect case\\: AssertNull$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/Files/FileCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Files\\\\FileCollectionTest\\:\\:testClientPathReturnsNullWhenFullPathIsNull\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/Files/FileCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Files\\\\FileCollectionTest\\:\\:testClientPathReturnsValidFullPath\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/Files/FileCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Function CodeIgniter\\\\HTTP\\\\Files\\\\is_uploaded_file\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/Files/FileMovingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Function CodeIgniter\\\\HTTP\\\\Files\\\\is_uploaded_file\\(\\) has parameter \\$filename with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/Files/FileMovingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Function CodeIgniter\\\\HTTP\\\\Files\\\\move_uploaded_file\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/Files/FileMovingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Function CodeIgniter\\\\HTTP\\\\Files\\\\move_uploaded_file\\(\\) has parameter \\$destination with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/Files/FileMovingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Function CodeIgniter\\\\HTTP\\\\Files\\\\move_uploaded_file\\(\\) has parameter \\$filename with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/Files/FileMovingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Function CodeIgniter\\\\HTTP\\\\Files\\\\rrmdir\\(\\) has parameter \\$src with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/Files/FileMovingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$value of class CodeIgniter\\\\HTTP\\\\Header constructor expects array\\<int\\|string, array\\<string, string\\>\\|string\\>\\|string\\|null, int given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/HeaderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$value of class CodeIgniter\\\\HTTP\\\\Header constructor expects array\\<int\\|string, array\\<string, string\\>\\|string\\>\\|string\\|null, stdClass given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/HeaderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'\' directly on offset \'QUERY_STRING\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/\\?/ci/woot\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/ci/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/ci/index\\.php/popcorn/woot\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/ci/woot\' directly on offset \'QUERY_STRING\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/ci/woot\\?code\\=good\' directly on offset \'QUERY_STRING\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 11,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php/woot\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php/woot\\?code\\=good\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php\\?\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php\\?/ci/woot\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php\\?/ci/woot\\?code\\=good\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/sub/example\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/sub/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/woot\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestDetectingTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'10\\.0\\.1\\.200\' directly on offset \'REMOTE_ADDR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'10\\.10\\.1\\.200\' directly on offset \'REMOTE_ADDR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'123\\.123\\.123\\.123\' directly on offset \'HTTP_X_FORWARDED_FOR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 7,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'123\\.123\\.123\\.123\' directly on offset \'REMOTE_ADDR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'123\\.456\\.23\\.123\' directly on offset \'HTTP_X_FORWARDED_FOR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'192\\.168\\.5\\.21\' directly on offset \'REMOTE_ADDR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'2001\\:db8\\:1234\\:ffff\\:ffff\\:ffff\\:ffff\\:ffff\' directly on offset \'REMOTE_ADDR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'2001\\:db8\\:1235\\:ffff\\:ffff\\:ffff\\:ffff\\:ffff\' directly on offset \'REMOTE_ADDR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'2001\\:db8\\:\\:2\\:1\' directly on offset \'REMOTE_ADDR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'2001\\:db8\\:\\:2\\:2\' directly on offset \'REMOTE_ADDR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'2001\\:xyz\\:\\:1\' directly on offset \'HTTP_X_FORWARDED_FOR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'3\' directly on offset \'TEST\' of \\$_GET is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'3\' directly on offset \'get\' of \\$_GET is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'Mozilla\' directly on offset \'HTTP_USER_AGENT\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'fr\\-FR; q\\=1\\.0, en; q\\=0\\.5\' directly on offset \'HTTP_ACCEPT_LANGUAGE\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'fr; q\\=1\\.0, en; q\\=0\\.5\' directly on offset \'HTTP_ACCEPT_LANGUAGE\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'on\' directly on offset \'HTTPS\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning 3 directly on offset \'TEST\' of \\$_GET is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning 5 directly on offset \'TEST\' of \\$_GET is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning mixed directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning mixed directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getCookie\\(\\)\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getDefaultLocale\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getFile\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getFileMultiple\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getFiles\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getGet\\(\\)\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getGetPost\\(\\)\\.$#',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getLocale\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getOldInput\\(\\)\\.$#',
+	'count' => 9,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getPost\\(\\)\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getPostGet\\(\\)\\.$#',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getVar\\(\\)\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:is\\(\\)\\.$#',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:isAJAX\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:isCLI\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:isSecure\\(\\)\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:negotiate\\(\\)\\.$#',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\IncomingRequestTest\\:\\:createRequest\\(\\) has parameter \\$body with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\IncomingRequestTest\\:\\:provideCanGrabGetRawInputVar\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\IncomingRequestTest\\:\\:provideExtensionPHP\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\IncomingRequestTest\\:\\:provideIsHTTPMethods\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\IncomingRequestTest\\:\\:testSetValidLocales\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Config\\\\App\\:\\:\\$proxyIPs \\(array\\<string, string\\>\\) does not accept array\\<int, string\\>\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Config\\\\App\\:\\:\\$proxyIPs \\(array\\<string, string\\>\\) does not accept string\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\MessageTest\\:\\:provideArrayHeaderValue\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/MessageTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Log\\\\Logger constructor expects Config\\\\Logger, CodeIgniter\\\\Test\\\\Mock\\\\MockLogger given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/RedirectExceptionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'GET\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/RedirectResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'http\\://somewhere\\.com\' directly on offset \'HTTP_REFERER\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/RedirectResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^PHPDoc type CodeIgniter\\\\Router\\\\RouteCollection of property CodeIgniter\\\\HTTP\\\\RedirectResponseTest\\:\\:\\$routes is not the same as PHPDoc type CodeIgniter\\\\Router\\\\RouteCollection\\|null of overridden property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$routes\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/RedirectResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/RedirectResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'10\\.0\\.1\\.200\' directly on offset \'REMOTE_ADDR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/RequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'10\\.10\\.1\\.200\' directly on offset \'REMOTE_ADDR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/RequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'123\\.123\\.123\\.123\' directly on offset \'HTTP_X_FORWARDED_FOR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/HTTP/RequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'123\\.123\\.123\\.123\' directly on offset \'REMOTE_ADDR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/RequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'123\\.456\\.23\\.123\' directly on offset \'HTTP_X_FORWARDED_FOR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/RequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'192\\.168\\.5\\.21\' directly on offset \'REMOTE_ADDR\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/RequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'baz\' directly on offset \'bar\' of \\$_GET is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/RequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\RequestTest\\:\\:provideValidIPAddress\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/RequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/RequestTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\HTTP\\\\ResponseCookieTest\\:\\:\\$defaults type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseCookieTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$value of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int\\<1, max\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseSendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$expire of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseSendTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'SERVER_SOFTWARE\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'GET\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'HTTP/1\\.1\' directly on offset \'SERVER_PROTOCOL\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'Microsoft\\-IIS\' directly on offset \'SERVER_SOFTWARE\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'POST\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset \'SERVER_PROTOCOL\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset \'SERVER_SOFTWARE\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\ResponseTest\\:\\:provideRedirect\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\ResponseTest\\:\\:provideRedirectWithIIS\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$data of method CodeIgniter\\\\HTTP\\\\Message\\:\\:setBody\\(\\) expects string, array\\<string, array\\<int, int\\>\\|string\\> given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$value of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int\\<1, max\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$expire of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\HTTP\\\\ResponseTest\\:\\:\\$server type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'QUERY_STRING\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'\' directly on offset \'/ci/woot\' of \\$_GET is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/\\?/ci/woot\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/candy/snickers\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/ci/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/ci/index\\.php/popcorn/woot\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/ci/woot\' directly on offset \'QUERY_STRING\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/ci/woot\\?code\\=good\' directly on offset \'QUERY_STRING\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/ci431/public/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/ci431/public/index\\.php/woot\\?code\\=good\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/fruits/banana\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 13,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php/fruits/banana\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php/woot\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php/woot\\?code\\=good\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php\\?\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php\\?/ci/woot\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php\\?/ci/woot\\?code\\=good\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/sub/example\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/sub/folder/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/sub/folder/index\\.php/fruits/banana\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/sub/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/woot\' directly on offset \'PATH_INFO\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/woot\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'good\' directly on offset \'/ci/woot\\?code\' of \\$_GET is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:createSiteURIFactory\\(\\) has parameter \\$server with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:provideExtensionPHP\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testDefault\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testDefaultEmpty\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testExtensionPHP\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testPathInfoSubfolder\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testPathInfoUnset\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testQueryString\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testQueryStringEmpty\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testQueryStringWithQueryString\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURI\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURIGetPath\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURINested\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURINginx\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURINginxRedirecting\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURINoIndex\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURIPathIsNeverRediscovered\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURIPathIsRelative\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURIStoresDetectedPath\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURISubfolder\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURISuppressed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php/woot\\?code\\=good\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/woot\' directly on offset \'PATH_INFO\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'code\\=good\' directly on offset \'QUERY_STRING\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'good\' directly on offset \'code\' of \\$_GET is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'localhost\\:8080\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'users\\.example\\.jp\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryTest\\:\\:provideCreateFromStringWithIndexPage\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryTest\\:\\:provideCreateFromStringWithoutIndexPage\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryTest\\:\\:testCreateFromGlobals\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryTest\\:\\:testCreateFromGlobalsAllowedHost\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryTest\\:\\:testCreateFromStringWithIndexPage\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryTest\\:\\:testCreateFromStringWithoutIndexPage\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:provideConstructor\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:provideRelativePathWithQueryOrFragment\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:provideSetPath\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testConstructor\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testConstructor\\(\\) has parameter \\$expectedSegments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testConstructorEmptyScheme\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testConstructorForceGlobalSecureRequests\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testConstructorHost\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testConstructorInvalidBaseURL\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testConstructorScheme\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testGetBaseURL\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testGetRoutePath\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testGetSegmentOutOfRange\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testGetSegmentZero\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testGetSegments\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testGetTotalSegments\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetBaseURI\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetPath\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetPath\\(\\) has parameter \\$expectedSegments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetSegment\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetSegmentOutOfRange\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetSegmentSilentOutOfRange\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetSegmentSubfolder\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetSegmentZero\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetURI\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#4 \\$scheme of class CodeIgniter\\\\HTTP\\\\SiteURI constructor expects \'http\'\\|\'https\'\\|null, \'\' given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'\' directly on offset \'QUERY_STRING\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/ci/v4/controller/method\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/ci/v4/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/ci/v4/index\\.php/controller/method\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/controller/method\' directly on offset \'PATH_INFO\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'example\\.com\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\URI\\:\\:getRoutePath\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\URITest\\:\\:defaultResolutions\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\URITest\\:\\:provideAuthorityRemovesDefaultPorts\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\URITest\\:\\:provideAuthorityReturnsExceptedValues\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\URITest\\:\\:providePathGetsFiltered\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\URITest\\:\\:provideRemoveDotSegments\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\URITest\\:\\:provideSetPath\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\URITest\\:\\:provideSimpleUri\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\URITest\\:\\:testWithScheme\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\URITest\\:\\:testWithSchemeSetsEmpty\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\URITest\\:\\:testWithSchemeSetsHttps\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'HTTP_REFERER\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/UserAgentTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'HTTP_USER_AGENT\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/UserAgentTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'http\\://codeigniter\\.com/user_guide/\' directly on offset \'HTTP_REFERER\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/UserAgentTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset \'HTTP_USER_AGENT\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/HTTP/UserAgentTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:provideArrayDeepSearch\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:provideArrayFlattening\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:provideArrayGroupByExcludeEmpty\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:provideArrayGroupByIncludeEmpty\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:provideSortByMultipleKeys\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArrayDeepSearch\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArrayFlattening\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArrayFlattening\\(\\) has parameter \\$input with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArrayGroupByExcludeEmpty\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArrayGroupByExcludeEmpty\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArrayGroupByExcludeEmpty\\(\\) has parameter \\$indexes with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArrayGroupByIncludeEmpty\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArrayGroupByIncludeEmpty\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArrayGroupByIncludeEmpty\\(\\) has parameter \\$indexes with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArraySortByMultipleKeysFailsEmptyParameter\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArraySortByMultipleKeysFailsEmptyParameter\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArraySortByMultipleKeysFailsEmptyParameter\\(\\) has parameter \\$sortColumns with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArraySortByMultipleKeysWithArray\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArraySortByMultipleKeysWithArray\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArraySortByMultipleKeysWithArray\\(\\) has parameter \\$sortColumns with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArraySortByMultipleKeysWithObjects\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArraySortByMultipleKeysWithObjects\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:testArraySortByMultipleKeysWithObjects\\(\\) has parameter \\$sortColumns with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$expire of function set_cookie expects string, int given\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/Helpers/CookieHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$expire of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/CookieHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#7 \\$secure of function set_cookie expects bool\\|null, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/CookieHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#8 \\$httpOnly of function set_cookie expects bool\\|null, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/CookieHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Helpers\\\\CookieHelperTest\\:\\:\\$response \\(CodeIgniter\\\\HTTP\\\\Response\\) does not accept CodeIgniter\\\\HTTP\\\\ResponseInterface\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/CookieHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method org\\\\bovigo\\\\vfs\\\\visitor\\\\vfsStreamVisitor\\:\\:getStructure\\(\\)\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Helpers/FilesystemHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^PHPDoc tag @var for property CodeIgniter\\\\Helpers\\\\FilesystemHelperTest\\:\\:\\$structure with type mixed is not subtype of native type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/FilesystemHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$directoryDepth of function directory_map expects int, false given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/FilesystemHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Helpers\\\\FilesystemHelperTest\\:\\:\\$structure type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/FilesystemHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\FormHelperTest\\:\\:disableHtml5\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/FormHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\FormHelperTest\\:\\:enableHtml5\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/FormHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$value of function form_hidden expects array\\|string, null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/FormHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\HTMLHelperTest\\:\\:disableHtml5\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/HTMLHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\HTMLHelperTest\\:\\:enableHtml5\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/HTMLHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Helpers\\\\HTMLHelperTest\\:\\:\\$tracks type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/HTMLHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\InflectorHelperTest\\:\\:provideOrdinal\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/InflectorHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$num of function number_to_size expects int\\|string, float given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/NumberHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$first of function increment_string expects int, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/TextHelperTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/CurrentUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/assets/image\\.jpg\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/CurrentUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/foo/public/bar\\?baz\\=quip\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/CurrentUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/foo/public/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/CurrentUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/CurrentUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/public/\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/CurrentUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/public/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/CurrentUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/subfolder/assets/image\\.jpg\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/CurrentUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/subfolder/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/CurrentUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'8080\' directly on offset \'SERVER_PORT\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/CurrentUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'example\\.com\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 11,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/CurrentUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'invalid\\.example\\.org\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/CurrentUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'www\\.example\\.jp\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/CurrentUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning non\\-falsy\\-string directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/CurrentUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\CurrentUrlTest\\:\\:createRequest\\(\\) has parameter \\$body with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/CurrentUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\CurrentUrlTest\\:\\:provideUrlIs\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/CurrentUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'example\\.com\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'http\\://example\\.com/one\\?two\' directly on offset \'HTTP_REFERER\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\MiscUrlTest\\:\\:provideAnchor\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\MiscUrlTest\\:\\:provideAnchorExamples\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\MiscUrlTest\\:\\:provideAnchorNoindex\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\MiscUrlTest\\:\\:provideAnchorPopup\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\MiscUrlTest\\:\\:provideAnchorTargetted\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\MiscUrlTest\\:\\:provideAutoLinkEmail\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\MiscUrlTest\\:\\:provideAutoLinkPopup\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\MiscUrlTest\\:\\:provideAutoLinkUrl\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\MiscUrlTest\\:\\:provideAutolinkBoth\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\MiscUrlTest\\:\\:provideMailto\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\MiscUrlTest\\:\\:providePrepUrl\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\MiscUrlTest\\:\\:provideSafeMailto\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\MiscUrlTest\\:\\:provideUrlTo\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\MiscUrlTest\\:\\:provideUrlToThrowsOnEmptyOrMissingRoute\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\MiscUrlTest\\:\\:testUrlTo\\(\\) has parameter \\$args with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/MiscUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\SiteUrlCliTest\\:\\:provideUrls\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/SiteUrlCliTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'HTTP_HOST\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/SiteUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'REQUEST_URI\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/SiteUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/ci/v4/x/y\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/SiteUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/public\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/SiteUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/public/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/SiteUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/test\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/SiteUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/test/page\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/SiteUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'example\\.com\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/SiteUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'www\\.example\\.jp\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/SiteUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\SiteUrlTest\\:\\:createRequest\\(\\) has parameter \\$body with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/SiteUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\URLHelper\\\\SiteUrlTest\\:\\:provideUrls\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/URLHelper/SiteUrlTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'test\' directly on offset \'HTTPS\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HomeTest\\:\\:call\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HomeTest\\:\\:delete\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HomeTest\\:\\:get\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HomeTest\\:\\:options\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HomeTest\\:\\:patch\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HomeTest\\:\\:populateGlobals\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HomeTest\\:\\:post\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HomeTest\\:\\:put\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HomeTest\\:\\:setRequestBody\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HomeTest\\:\\:withHeaders\\(\\) has parameter \\$headers with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HomeTest\\:\\:withRoutes\\(\\) has parameter \\$routes with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HomeTest\\:\\:withSession\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, CodeIgniter\\\\Router\\\\RouteCollection\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$request of method CodeIgniter\\\\CodeIgniter\\:\\:setRequest\\(\\) expects CodeIgniter\\\\HTTP\\\\CLIRequest\\|CodeIgniter\\\\HTTP\\\\IncomingRequest, CodeIgniter\\\\HTTP\\\\Request given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$params of method CodeIgniter\\\\HomeTest\\:\\:populateGlobals\\(\\) expects non\\-empty\\-array\\|null, array\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$session \\(array\\) on left side of \\?\\? is not nullable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HomeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'POST\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Honeypot/HoneypotTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Filters\\\\Filters constructor expects Config\\\\Filters, object\\{aliases\\: array\\<string, string\\>, globals\\: array\\<string, array\\<int, string\\>\\>\\}&stdClass given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Honeypot/HoneypotTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$data of method CodeIgniter\\\\HTTP\\\\Message\\:\\:setBody\\(\\) expects string, null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Honeypot/HoneypotTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Honeypot\\\\HoneypotTest\\:\\:\\$response \\(CodeIgniter\\\\HTTP\\\\Response\\) does not accept CodeIgniter\\\\HTTP\\\\RequestInterface\\|CodeIgniter\\\\HTTP\\\\ResponseInterface\\|string\\|null\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Honeypot/HoneypotTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Honeypot\\\\HoneypotTest\\:\\:\\$response \\(CodeIgniter\\\\HTTP\\\\Response\\) does not accept CodeIgniter\\\\HTTP\\\\ResponseInterface\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Honeypot/HoneypotTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Config\\\\Honeypot\\:\\:\\$hidden \\(bool\\) does not accept string\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Honeypot/HoneypotTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HotReloader\\\\DirectoryHasherTest\\:\\:testHash\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HotReloader/DirectoryHasherTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HotReloader\\\\DirectoryHasherTest\\:\\:testHashApp\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HotReloader/DirectoryHasherTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HotReloader\\\\DirectoryHasherTest\\:\\:testHashDirectoryInvalid\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HotReloader/DirectoryHasherTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HotReloader\\\\DirectoryHasherTest\\:\\:testRepeatableHashes\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HotReloader/DirectoryHasherTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HotReloader\\\\DirectoryHasherTest\\:\\:testUniqueHashes\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HotReloader/DirectoryHasherTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\I18n\\\\TimeDifference\\:\\:\\$nonsense\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/I18n/TimeDifferenceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to protected property CodeIgniter\\\\I18n\\\\TimeDifference\\:\\:\\$days\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/I18n/TimeDifferenceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to protected property CodeIgniter\\\\I18n\\\\TimeDifference\\:\\:\\$hours\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/I18n/TimeDifferenceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to protected property CodeIgniter\\\\I18n\\\\TimeDifference\\:\\:\\$minutes\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/I18n/TimeDifferenceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to protected property CodeIgniter\\\\I18n\\\\TimeDifference\\:\\:\\$months\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/I18n/TimeDifferenceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to protected property CodeIgniter\\\\I18n\\\\TimeDifference\\:\\:\\$seconds\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/I18n/TimeDifferenceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to protected property CodeIgniter\\\\I18n\\\\TimeDifference\\:\\:\\$weeks\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/I18n/TimeDifferenceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to protected property CodeIgniter\\\\I18n\\\\TimeDifference\\:\\:\\$years\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/I18n/TimeDifferenceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\I18n\\\\TimeDifference\\:\\:\\$days \\(int\\) in isset\\(\\) is not nullable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/I18n/TimeDifferenceTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\I18n\\\\TimeLegacy\\:\\:\\$timezoneName\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/I18n/TimeLegacyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\I18n\\\\TimeLegacy\\:\\:\\$weekOfWeek\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/I18n/TimeLegacyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\I18n\\\\TimeLegacyTest\\:\\:provideToStringDoesNotDependOnLocale\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/I18n/TimeLegacyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\I18n\\\\TimeLegacyTest\\:\\:testUnserializeTimeObject\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/I18n/TimeLegacyTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\I18n\\\\Time\\:\\:\\$timezoneName\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/I18n/TimeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\I18n\\\\Time\\:\\:\\$weekOfWeek\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/I18n/TimeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\I18n\\\\TimeTest\\:\\:provideToStringDoesNotDependOnLocale\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/I18n/TimeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\I18n\\\\TimeTest\\:\\:testUnserializeTimeObject\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/I18n/TimeTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:getPathname\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Images/BaseHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method org\\\\bovigo\\\\vfs\\\\vfsStreamContent\\:\\:getContent\\(\\)\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Images/GDHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$image of function imagecolorat expects GdImage, resource given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Images/GDHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$image of function imagecolorsforindex expects GdImage, resource given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Images/GDHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$filename of function file_get_contents expects string, resource given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Images/ImageMagickHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\Language\\\\Language\\:\\:disableIntlSupport\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Language/LanguageTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\Language\\\\Language\\:\\:loaded\\(\\)\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Language/LanguageTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\Language\\\\Language\\:\\:loadem\\(\\)\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Language/LanguageTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\Language\\\\Language\\:\\:setData\\(\\)\\.$#',
+	'count' => 9,
+	'path' => __DIR__ . '/tests/system/Language/LanguageTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Language\\\\LanguageTest\\:\\:provideBundleUniqueKeys\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Language/LanguageTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$message of method CodeIgniter\\\\Log\\\\Handlers\\\\ChromeLoggerHandler\\:\\:handle\\(\\) expects string, stdClass given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Log/Handlers/ChromeLoggerHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Log\\\\Handlers\\\\ErrorlogHandlerTest\\:\\:getMockedHandler\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Log/Handlers/ErrorlogHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Log\\\\Logger constructor expects Config\\\\Logger, CodeIgniter\\\\Test\\\\Mock\\\\MockLogger given\\.$#',
+	'count' => 24,
+	'path' => __DIR__ . '/tests/system/Log/LoggerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$level of method CodeIgniter\\\\Log\\\\Logger\\:\\:log\\(\\) expects string, int given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Log/LoggerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$message of method CodeIgniter\\\\Log\\\\Logger\\:\\:log\\(\\) expects string, CodeIgniter\\\\Test\\\\Mock\\\\MockLogger given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Log/LoggerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Log/LoggerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\Model\\:\\:affectedRows\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/AffectedRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\DeleteModelTest\\:\\:emptyPkValues\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/DeleteModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^PHPDoc type Tests\\\\Support\\\\Models\\\\EventModel of property CodeIgniter\\\\Models\\\\EventsModelTest\\:\\:\\$model is not the same as PHPDoc type CodeIgniter\\\\Model of overridden property CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:\\$model\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/EventsModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\Model\\:\\:getLastQuery\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/FindModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$id on array\\.$#',
+	'count' => 8,
+	'path' => __DIR__ . '/tests/system/Models/FindModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$name on array\\.$#',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/system/Models/FindModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$total on array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/FindModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\FindModelTest\\:\\:provideAggregateAndGroupBy\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/FindModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\FindModelTest\\:\\:provideFirstAggregate\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/FindModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Models/FindModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, mixed given\\.$#',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/system/Models/FindModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in \\|\\|, mixed given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/FindModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property object\\:\\:\\$charset\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/GeneralModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\Model\\:\\:undefinedMethodCall\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/GeneralModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/GeneralModelTest\\.php\\:103\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/GeneralModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$country on array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$created_at on array\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:191\\:\\:\\$_options has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:191\\:\\:\\$country has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:191\\:\\:\\$created_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:191\\:\\:\\$deleted has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:191\\:\\:\\$email has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:191\\:\\:\\$id has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:191\\:\\:\\$name has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:191\\:\\:\\$updated_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:246\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:285\\:\\:\\$_options has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:285\\:\\:\\$country has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:285\\:\\:\\$created_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:285\\:\\:\\$deleted has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:285\\:\\:\\$email has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:285\\:\\:\\$id has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:285\\:\\:\\$name has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:285\\:\\:\\$updated_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:getPrivateMethodInvoker\\(\\) return type has no signature specified for Closure\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:setPrivateProperty\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$created_at on array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/MiscellaneousModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/PaginateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method class@anonymous/tests/system/Models/SaveModelTest\\.php\\:286\\:\\:truncate\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$description on array\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$id on array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$name on array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:237\\:\\:\\$_options has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:237\\:\\:\\$country has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:237\\:\\:\\$created_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:237\\:\\:\\$deleted has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:237\\:\\:\\$email has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:237\\:\\:\\$id has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:237\\:\\:\\$name has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:237\\:\\:\\$updated_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:270\\:\\:\\$_options has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:270\\:\\:\\$created_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:270\\:\\:\\$id has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:270\\:\\:\\$name has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:270\\:\\:\\$updated_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:286\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:286\\:\\:\\$name has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$country on array\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Models/TimestampModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$created_at on array\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Models/TimestampModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$id on array\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Models/TimestampModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$updated_at on array\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Models/TimestampModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\TimestampModelTest\\:\\:allowDatesPrepareOneRecord\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/TimestampModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\TimestampModelTest\\:\\:doNotAllowDatesPrepareOneRecord\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/TimestampModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Offset \'created_at\' does not exist on array\\{\\}\\.$#',
+	'count' => 6,
+	'path' => __DIR__ . '/tests/system/Models/TimestampModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Offset \'id\' does not exist on array\\{country\\: \'CA\'\\}\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Models/TimestampModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Models\\\\TimestampModelTest\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/TimestampModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$value on array\\<int, array\\>\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Models\\\\UpdateModelTest\\:\\:provideUpdateThrowDatabaseExceptionWithoutWhereClause\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$id of method CodeIgniter\\\\Model\\:\\:update\\(\\) expects array\\|int\\|string\\|null, false\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$row of method CodeIgniter\\\\BaseModel\\:\\:save\\(\\) expects array\\<int\\|string, float\\|int\\|object\\|string\\|null\\>\\|object, array\\<int, array\\>\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:193\\:\\:\\$_options has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:193\\:\\:\\$country has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:193\\:\\:\\$created_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:193\\:\\:\\$deleted has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:193\\:\\:\\$email has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:193\\:\\:\\$id has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:193\\:\\:\\$name has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:193\\:\\:\\$updated_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:212\\:\\:\\$_options has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:212\\:\\:\\$country has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:212\\:\\:\\$created_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:212\\:\\:\\$deleted has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:212\\:\\:\\$email has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:212\\:\\:\\$id has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:212\\:\\:\\$name has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:212\\:\\:\\$updated_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:345\\:\\:\\$_options has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:345\\:\\:\\$country has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:345\\:\\:\\$created_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:345\\:\\:\\$deleted has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:345\\:\\:\\$email has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:345\\:\\:\\$id has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:345\\:\\:\\$name has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:345\\:\\:\\$updated_at has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Unreachable statement \\- code above always terminates\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelRuleGroupTest\\.php\\:368\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/ValidationModelRuleGroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelRuleGroupTest\\.php\\:368\\:\\:\\$validationRules type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/ValidationModelRuleGroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelRuleGroupTest\\.php\\:406\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/ValidationModelRuleGroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelRuleGroupTest\\.php\\:406\\:\\:\\$validationRules type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/ValidationModelRuleGroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelRuleGroupTest\\.php\\:446\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/ValidationModelRuleGroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelRuleGroupTest\\.php\\:446\\:\\:\\$validationRules type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/ValidationModelRuleGroupTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:243\\:\\:\\$grouptest has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:380\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:380\\:\\:\\$validationRules type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:418\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:418\\:\\:\\$validationRules type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:458\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:458\\:\\:\\$validationRules type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$key on array\\.$#',
+	'count' => 7,
+	'path' => __DIR__ . '/tests/system/Models/WhenWhenNotModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$value on array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/WhenWhenNotModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'page\' directly on \\$_GET is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Pager/PagerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'page_foo\' directly on \\$_GET is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Pager/PagerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/ci/v4/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Pager/PagerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/ci/v4/x/y\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Pager/PagerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Pager/PagerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'bar\' directly on offset \'foo\' of \\$_GET is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Pager/PagerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'example\\.com\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Pager/PagerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning 2 directly on offset \'page\' of \\$_GET is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Pager/PagerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning 2 directly on offset \'page_foo\' of \\$_GET is discouraged\\.$#',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/system/Pager/PagerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning 3 directly on offset \'page\' of \\$_GET is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Pager/PagerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Pager/PagerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/system/Pager/PagerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Publisher\\\\PublisherOutputTest\\:\\:\\$structure type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Publisher/PublisherOutputTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Publisher\\\\PublisherRestrictionsTest\\:\\:provideDefaultPublicRestrictions\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Publisher/PublisherRestrictionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Publisher\\\\PublisherRestrictionsTest\\:\\:provideDestinations\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Publisher/PublisherRestrictionsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Publisher/PublisherSupportTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/work\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/work/1\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/work/1/edit\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/work/123\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/work/new\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'DELETE\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'GET\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'HTTP/1\\.1\' directly on offset \'SERVER_PROTOCOL\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'PATCH\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'POST\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'PUT\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning 2 directly on offset \'argc\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning 3 directly on offset \'argc\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning 4 directly on offset \'argc\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'work\', \'1\', \'edit\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'work\', \'1\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'work\', \'123\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'work\', \'new\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'work\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\ResponseInterface\\:\\:pretend\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\RESTful\\\\ResourceControllerTest\\:\\:invoke\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\RESTful\\\\ResourceControllerTest\\:\\:invoke\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^PHPDoc type CodeIgniter\\\\Router\\\\RouteCollection of property CodeIgniter\\\\RESTful\\\\ResourceControllerTest\\:\\:\\$routes is not the same as PHPDoc type CodeIgniter\\\\Router\\\\RouteCollection\\|null of overridden property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$routes\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$format of method CodeIgniter\\\\RESTful\\\\ResourceController\\:\\:setFormat\\(\\) expects \'json\'\\|\'xml\', \'Nonsense\' given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourceControllerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/work\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/work/create\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/work/delete/123\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/work/edit/1\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/work/new\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/work/remove/123\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/work/show/1\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/work/update/123\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'GET\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'HTTP/1\\.1\' directly on offset \'SERVER_PROTOCOL\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'POST\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning 2 directly on offset \'argc\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning 3 directly on offset \'argc\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning 4 directly on offset \'argc\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'work\', \'create\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'work\', \'delete\', \'123\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'work\', \'edit\', \'1\', \'edit\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'work\', \'new\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'work\', \'remove\', \'123\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'work\', \'show\', \'1\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'work\', \'update\', \'123\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning array\\{\'index\\.php\', \'work\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^PHPDoc type CodeIgniter\\\\Router\\\\RouteCollection of property CodeIgniter\\\\RESTful\\\\ResourcePresenterTest\\:\\:\\$routes is not the same as PHPDoc type CodeIgniter\\\\Router\\\\RouteCollection\\|null of overridden property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$routes\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:createNewAutoRouter\\(\\) has parameter \\$namespace with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testAutoRouteFallbackToDefaultControllerNoParams\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testAutoRouteFallbackToDefaultControllerOneParam\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testAutoRouteFallbackToDefaultControllerTwoParams\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testAutoRouteFallbackToDefaultMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testAutoRouteFindsControllerWithSubSubfolder\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testAutoRouteFindsModuleDefaultControllerAndMethodGet\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testDoesNotTranslateDashInParam\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testPermitsURIWithUnderscoreParam\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testRejectsURIWithUnderscoreController\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testRejectsURIWithUnderscoreFolder\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testRejectsURIWithUnderscoreMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\Index\\:\\:getIndex\\(\\) has parameter \\$p1 with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/Controllers/Index.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\Mycontroller\\:\\:getSomemethod\\(\\) has parameter \\$first with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/Controllers/Mycontroller.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\Remap\\:\\:_remap\\(\\) has parameter \\$params with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/Controllers/Remap.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\Subfolder\\\\Home\\:\\:getIndex\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/Controllers/Subfolder/Home.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\Subfolder\\\\Home\\:\\:getIndex\\(\\) has parameter \\$p1 with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/Controllers/Subfolder/Home.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\Subfolder\\\\Home\\:\\:getIndex\\(\\) has parameter \\$p2 with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/Controllers/Subfolder/Home.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\Subfolder\\\\Sub\\\\Mycontroller\\:\\:getSomemethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/Controllers/Subfolder/Sub/Mycontroller.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\DefinedRouteCollectorTest\\:\\:createRouteCollection\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/DefinedRouteCollectorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\DefinedRouteCollectorTest\\:\\:createRouteCollection\\(\\) has parameter \\$moduleConfig with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/DefinedRouteCollectorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\DefinedRouteCollectorTest\\:\\:testCollect\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/DefinedRouteCollectorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\DefinedRouteCollectorTest\\:\\:testCollectSameFromWithDifferentVerb\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/DefinedRouteCollectorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionReverseRouteTest\\:\\:getCollector\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionReverseRouteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionReverseRouteTest\\:\\:getCollector\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionReverseRouteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionReverseRouteTest\\:\\:getCollector\\(\\) has parameter \\$files with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionReverseRouteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionReverseRouteTest\\:\\:getCollector\\(\\) has parameter \\$moduleConfig with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionReverseRouteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionReverseRouteTest\\:\\:provideReverseRoutingDefaultNamespaceAppController\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionReverseRouteTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'adm\\.example\\.com\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'dev\\.example\\.com\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'doc\\.domain\\.com\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'doc\\.example\\.com\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'example\\.co\\.uk\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'example\\.com\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 5,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'www\\.example\\.com\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Class CodeIgniter\\\\Controller referenced with incorrect case\\: CodeIgniter\\\\controller\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionTest\\:\\:getCollector\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionTest\\:\\:getCollector\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionTest\\:\\:getCollector\\(\\) has parameter \\$files with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionTest\\:\\:getCollector\\(\\) has parameter \\$moduleConfig with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionTest\\:\\:provideNestedGroupingWorksWithRootPrefix\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionTest\\:\\:provideRouteDefaultNamespace\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionTest\\:\\:provideRoutesOptionsWithSameFromTwoRoutes\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionTest\\:\\:testNestedGroupingWorksWithRootPrefix\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionTest\\:\\:testRoutesOptionsWithSameFromTwoRoutes\\(\\) has parameter \\$options1 with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionTest\\:\\:testRoutesOptionsWithSameFromTwoRoutes\\(\\) has parameter \\$options2 with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\RouterTest\\:\\:provideRedirectRoute\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/RouterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'POST\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Security/SecurityCSRFCookieRandomizeTokenTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Config\\\\BaseConfig\\:\\:\\$regenerate\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Config\\\\BaseConfig\\:\\:\\$tokenRandomize\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'POST\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 10,
+	'path' => __DIR__ . '/tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'PUT\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Security\\\\SecurityCSRFSessionRandomizeTokenTest\\:\\:createSession\\(\\) has parameter \\$options with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Test\\\\Mock\\\\MockSecurity constructor expects Config\\\\Security, CodeIgniter\\\\Config\\\\BaseConfig\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Config\\\\BaseConfig\\:\\:\\$regenerate\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Security/SecurityCSRFSessionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'POST\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 8,
+	'path' => __DIR__ . '/tests/system/Security/SecurityCSRFSessionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'PUT\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Security/SecurityCSRFSessionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Security\\\\SecurityCSRFSessionTest\\:\\:createSession\\(\\) has parameter \\$options with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Security/SecurityCSRFSessionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'GET\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Security/SecurityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'POST\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 9,
+	'path' => __DIR__ . '/tests/system/Security/SecurityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'PUT\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Security/SecurityTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:getInstance\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:getInstance\\(\\) has parameter \\$options with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:getPrivateMethodInvoker\\(\\) return type has no signature specified for Closure\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:setPrivateProperty\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\MySQLiHandlerTest\\:\\:getInstance\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/MySQLiHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\MySQLiHandlerTest\\:\\:getInstance\\(\\) has parameter \\$options with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/MySQLiHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\PostgreHandlerTest\\:\\:getInstance\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/PostgreHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\PostgreHandlerTest\\:\\:getInstance\\(\\) has parameter \\$options with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/PostgreHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\RedisHandlerTest\\:\\:getInstance\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/RedisHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\RedisHandlerTest\\:\\:getInstance\\(\\) has parameter \\$options with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/RedisHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'xmlhttprequest\' directly on offset \'HTTP_X_REQUESTED_WITH\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Session/SessionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/SessionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\SessionTest\\:\\:getInstance\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/SessionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\SessionTest\\:\\:getInstance\\(\\) has parameter \\$options with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/SessionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property Config\\\\Cookie\\:\\:\\$samesite \\(\'\'\\|\'Lax\'\\|\'None\'\\|\'Strict\'\\) does not accept \'Invalid\'\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/SessionTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\SuperglobalsTest\\:\\:testSetGet\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/SuperglobalsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\BootstrapFCPATHTest\\:\\:correctFCPATH\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/BootstrapFCPATHTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\BootstrapFCPATHTest\\:\\:fileContents\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/BootstrapFCPATHTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\BootstrapFCPATHTest\\:\\:readOutput\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/BootstrapFCPATHTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\BootstrapFCPATHTest\\:\\:readOutput\\(\\) has parameter \\$file with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/BootstrapFCPATHTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\Test\\\\TestResponse\\:\\:ohno\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to method CodeIgniter\\\\Test\\\\ControllerTestTraitTest\\:\\:withUri\\(\\) with incorrect case\\: withURI$#',
+	'count' => 17,
+	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Class App\\\\Controllers\\\\NeverHeardOfIt not found\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\ControllerTestTraitTest\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\ControllerTestTraitTest\\:\\:testWithUriUpdatesUriStringAndCurrentUrlValues\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Log\\\\Logger constructor expects Config\\\\Logger, CodeIgniter\\\\Test\\\\Mock\\\\MockLogger given\\.$#',
+	'count' => 15,
+	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Test\\\\ControllerTestTraitTest\\:\\:\\$appConfig \\(Config\\\\App\\) in empty\\(\\) is not falsy\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Test\\\\ControllerTestTraitTest\\:\\:\\$logger \\(Psr\\\\Log\\\\LoggerInterface\\) in empty\\(\\) is not falsy\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Test\\\\ControllerTestTraitTest\\:\\:\\$request \\(CodeIgniter\\\\HTTP\\\\IncomingRequest\\) in empty\\(\\) is not falsy\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Test\\\\ControllerTestTraitTest\\:\\:\\$response \\(CodeIgniter\\\\HTTP\\\\ResponseInterface\\) in empty\\(\\) is not falsy\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\DOMParserTest\\:\\:provideText\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/DOMParserTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$created_at on array\\|object\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FabricatorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$deleted_at on array\\|object\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FabricatorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$id on array\\|object\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FabricatorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot access property \\$updated_at on array\\|object\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FabricatorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Test\\\\FabricatorTest\\:\\:\\$formatters type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FabricatorTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'test\' directly on offset \'HTTPS\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestAutoRoutingImprovedTest\\:\\:call\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestAutoRoutingImprovedTest\\:\\:delete\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestAutoRoutingImprovedTest\\:\\:get\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestAutoRoutingImprovedTest\\:\\:options\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestAutoRoutingImprovedTest\\:\\:patch\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestAutoRoutingImprovedTest\\:\\:populateGlobals\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestAutoRoutingImprovedTest\\:\\:post\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestAutoRoutingImprovedTest\\:\\:put\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestAutoRoutingImprovedTest\\:\\:setRequestBody\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestAutoRoutingImprovedTest\\:\\:withHeaders\\(\\) has parameter \\$headers with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestAutoRoutingImprovedTest\\:\\:withRoutes\\(\\) has parameter \\$routes with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestAutoRoutingImprovedTest\\:\\:withSession\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, CodeIgniter\\\\Router\\\\RouteCollection\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$request of method CodeIgniter\\\\CodeIgniter\\:\\:setRequest\\(\\) expects CodeIgniter\\\\HTTP\\\\CLIRequest\\|CodeIgniter\\\\HTTP\\\\IncomingRequest, CodeIgniter\\\\HTTP\\\\Request given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$params of method CodeIgniter\\\\Test\\\\FeatureTestAutoRoutingImprovedTest\\:\\:populateGlobals\\(\\) expects non\\-empty\\-array\\|null, array\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$session \\(array\\) on left side of \\?\\? is not nullable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'test\' directly on offset \'HTTPS\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:call\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:delete\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:get\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:options\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:patch\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:populateGlobals\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:post\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:provideOpenCliRoutesFromHttpGot404\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:put\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:setRequestBody\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:testAutoRoutingLegacy\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:testClosureWithEcho\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:testForceGlobalSecureRequests\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:withHeaders\\(\\) has parameter \\$headers with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:withRoutes\\(\\) has parameter \\$routes with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:withSession\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, CodeIgniter\\\\Router\\\\RouteCollection\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$request of method CodeIgniter\\\\CodeIgniter\\:\\:setRequest\\(\\) expects CodeIgniter\\\\HTTP\\\\CLIRequest\\|CodeIgniter\\\\HTTP\\\\IncomingRequest, CodeIgniter\\\\HTTP\\\\Request given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$params of method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:populateGlobals\\(\\) expects non\\-empty\\-array\\|null, array\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$session \\(array\\) on left side of \\?\\? is not nullable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FilterTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FilterTestTraitTest\\:\\:assertHasFilters\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FilterTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FilterTestTraitTest\\:\\:assertNotFilter\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FilterTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FilterTestTraitTest\\:\\:assertNotHasFilters\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FilterTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\FilterTestTraitTest\\:\\:getFilterCaller\\(\\) return type has no signature specified for Closure\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FilterTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, array\\<int, string\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FilterTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Test\\\\FilterTestTraitTest\\:\\:\\$request \\(CodeIgniter\\\\HTTP\\\\RequestInterface\\) on left side of \\?\\?\\= is not nullable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FilterTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Test\\\\FilterTestTraitTest\\:\\:\\$response \\(CodeIgniter\\\\HTTP\\\\ResponseInterface\\) on left side of \\?\\?\\= is not nullable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/FilterTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Variable \\$result might not be defined\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Test/FilterTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\IniTestTraitTest\\:\\:backupIniValues\\(\\) has parameter \\$keys with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/IniTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Test\\\\IniTestTraitTest\\:\\:\\$iniSettings type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/IniTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\TestLoggerTest\\:\\:provideDidLogMethod\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/TestLoggerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponseTest\\:\\:getTestResponse\\(\\) has parameter \\$headers with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/TestResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponseTest\\:\\:getTestResponse\\(\\) has parameter \\$responseOptions with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/TestResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponseTest\\:\\:provideHttpStatusCodes\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/TestResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$body of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setJSON\\(\\) expects array\\|object\\|string, false given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/TestResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$body of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setJSON\\(\\) expects array\\|object\\|string, true given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/TestResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$expire of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int\\<1, max\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/TestResponseTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Throttle\\\\ThrottleTest\\:\\:provideTokenTimeCalculationUCs\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Throttle/ThrottleTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Throttle\\\\ThrottleTest\\:\\:testTokenTimeCalculationUCs\\(\\) has parameter \\$checkInputs with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Throttle/ThrottleTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\CreditCardRulesTest\\:\\:calculateLuhnChecksum\\(\\) has parameter \\$digits with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/CreditCardRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\CreditCardRulesTest\\:\\:provideValidCCNumber\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/CreditCardRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Validation\\\\Validation constructor expects Config\\\\Validation, stdClass given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/CreditCardRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$prefix of static method CodeIgniter\\\\Validation\\\\CreditCardRulesTest\\:\\:generateCardNumber\\(\\) expects int, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/CreditCardRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Validation\\\\CreditCardRulesTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/CreditCardRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\DatabaseRelatedRulesTest\\:\\:createRules\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Validation\\\\DatabaseRelatedRulesTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunEarlyIndex\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunIgnoresLastWildcard\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunNestedArray\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunNestedNotFound\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunReturnEmptyArray\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunReturnEmptyArrayEmptyIndex\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunReturnEmptyArrayMissingValue\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunReturnOrderedIndices\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunWildcard\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunWildcardWithMultipleChoices\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Validation\\\\Validation constructor expects Config\\\\Validation, stdClass given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FileRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Validation\\\\FileRulesTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FileRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with incorrect case\\: assertsame$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:alphaNumericProvider\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideAlpha\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideAlphaDash\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideAlphaNumericPunct\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideAlphaSpace\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideBase64\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideDecimal\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideHex\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideInteger\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideInvalidIntegerType\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideJson\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideNatural\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideNaturalNoZero\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideNumeric\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideString\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideTimeZone\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideValidDate\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideValidEmail\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideValidEmails\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideValidIP\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:provideValidUrl\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Validation\\\\Validation constructor expects Config\\\\Validation, stdClass given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Validation\\\\FormatRulesTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideDiffers\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideEquals\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideExactLength\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideGreaterThan\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideGreaterThanEqual\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideIfExist\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideInList\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideLessThan\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideLessThanEqual\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideMatches\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideMatchesNestedCases\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideMinLengthCases\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:providePermitEmpty\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideRequired\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideRequiredWith\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideRequiredWithAndOtherRuleWithValueZero\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideRequiredWithAndOtherRules\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideRequiredWithout\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideRequiredWithoutMultiple\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideRequiredWithoutMultipleWithoutFields\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:testDiffers\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:testDiffersNested\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:testEquals\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:testIfExist\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:testIfExist\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:testMatches\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:testMatchesNested\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:testPermitEmpty\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:testPermitEmpty\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:testRequired\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:testRequiredWithAndOtherRuleWithValueZero\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:testRequiredWithAndOtherRules\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:testRequiredWithoutMultipleWithoutFields\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Validation\\\\Validation constructor expects Config\\\\Validation, stdClass given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Validation\\\\RulesTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\CreditCardRulesTest\\:\\:calculateLuhnChecksum\\(\\) has parameter \\$digits with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/CreditCardRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\CreditCardRulesTest\\:\\:provideValidCCNumber\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/CreditCardRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Validation\\\\Validation constructor expects Config\\\\Validation, stdClass given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/CreditCardRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$prefix of static method CodeIgniter\\\\Validation\\\\StrictRules\\\\CreditCardRulesTest\\:\\:generateCardNumber\\(\\) expects int, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/CreditCardRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Validation\\\\StrictRules\\\\CreditCardRulesTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/CreditCardRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:createRules\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:seed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Validation\\\\Validation constructor expects Config\\\\Validation, stdClass given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Validation\\\\StrictRules\\\\DatabaseRelatedRulesTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Validation\\\\Validation constructor expects Config\\\\Validation, stdClass given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/FileRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Validation\\\\StrictRules\\\\FileRulesTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/FileRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\FormatRulesTest\\:\\:provideAlphaSpace\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\FormatRulesTest\\:\\:provideInvalidIntegerType\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Validation\\\\StrictRules\\\\FormatRulesTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/FormatRulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\RulesTest\\:\\:provideDiffers\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\RulesTest\\:\\:provideGreaterThanEqualStrict\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\RulesTest\\:\\:provideGreaterThanStrict\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\RulesTest\\:\\:provideLessEqualThanStrict\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\RulesTest\\:\\:provideLessThanStrict\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\RulesTest\\:\\:provideMatches\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\RulesTest\\:\\:providePermitEmptyStrict\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\RulesTest\\:\\:testDiffers\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\RulesTest\\:\\:testMatches\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\RulesTest\\:\\:testPermitEmptyStrict\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\RulesTest\\:\\:testPermitEmptyStrict\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Validation\\\\StrictRules\\\\RulesTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Validation\\\\StrictRules\\\\ValidationTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/StrictRules/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'CONTENT_TYPE\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'application/json\' directly on offset \'CONTENT_TYPE\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:placeholderReplacementResultDetermination\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:provideCanValidatetArrayData\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:provideIfExistRuleWithAsterisk\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:provideIsIntWithInvalidTypeData\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:provideRulesForArrayField\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:provideRulesSetup\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:provideSetRuleRulesFormat\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:provideSplittingOfComplexStringRules\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:provideValidationOfArrayData\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:testIfExistRuleWithAsterisk\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:testIfExistRuleWithAsterisk\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:testRulesForArrayField\\(\\) has parameter \\$body with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:testRulesForArrayField\\(\\) has parameter \\$results with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:testRulesForArrayField\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:testRulesSetup\\(\\) has parameter \\$errors with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:testSplittingOfComplexStringRules\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:testValidationOfArrayData\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:testValidationOfArrayData\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Validation\\\\Validation constructor expects Config\\\\Validation, stdClass given\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\$errors of method CodeIgniter\\\\Validation\\\\Validation\\:\\:check\\(\\) expects array\\<int, string\\>, array\\<string, string\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$params of method CodeIgniter\\\\View\\\\Cell\\:\\:prepareParams\\(\\) expects array\\|string\\|null, float given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/CellTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\View\\\\ParserPluginTest\\:\\:setHints\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/ParserPluginTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\View\\\\ParserPluginTest\\:\\:setHints\\(\\) has parameter \\$output with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/ParserPluginTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\View\\\\ParserPluginTest\\:\\:\\$validator \\(CodeIgniter\\\\Validation\\\\Validation\\) does not accept CodeIgniter\\\\Validation\\\\ValidationInterface\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/ParserPluginTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\View\\\\ParserTest\\:\\:provideEscHandling\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/View/ParserTest\\.php\\:337\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$context of method CodeIgniter\\\\View\\\\Parser\\:\\:setData\\(\\) expects \'attr\'\\|\'css\'\\|\'html\'\\|\'js\'\\|\'raw\'\\|\'url\'\\|null, \'unknown\' given\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:337\\:\\:\\$bar has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:337\\:\\:\\$foo has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:367\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\View\\\\Table\\:\\:compileTemplate\\(\\)\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/View/TableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\View\\\\Table\\:\\:defaultTemplate\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/TableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\View\\\\Table\\:\\:prepArgs\\(\\)\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/View/TableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\View\\\\Table\\:\\:setFromArray\\(\\)\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/View/TableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\View\\\\Table\\:\\:setFromDBResult\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/TableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\View\\\\DBResultDummy\\:\\:getFieldNames\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/TableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\View\\\\DBResultDummy\\:\\:getResultArray\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/TableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\View\\\\TableTest\\:\\:orderedColumnUsecases\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/TableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\View\\\\TableTest\\:\\:testAddRowAndGenerateOrderedColumns\\(\\) has parameter \\$heading with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/TableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\View\\\\TableTest\\:\\:testAddRowAndGenerateOrderedColumns\\(\\) has parameter \\$row with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/TableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\View\\\\TableTest\\:\\:testGenerateOrderedColumns\\(\\) has parameter \\$heading with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/TableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\View\\\\TableTest\\:\\:testGenerateOrderedColumns\\(\\) has parameter \\$row with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/TableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$array of method CodeIgniter\\\\View\\\\Table\\:\\:makeColumns\\(\\) expects array, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/TableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$template of method CodeIgniter\\\\View\\\\Table\\:\\:setTemplate\\(\\) expects array, string given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/View/TableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$columnLimit of method CodeIgniter\\\\View\\\\Table\\:\\:makeColumns\\(\\) expects int, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/TableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\View\\\\Table\\:\\:\\$function \\(\\(callable\\(\\)\\: mixed\\)\\|null\\) does not accept \'ticklemyfancy\'\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/TableTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\View\\\\ViewTest\\:\\:testRenderSectionSavingData\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/ViewTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$node \\(PhpParser\\\\Node\\\\Stmt\\) of method Utils\\\\PHPStan\\\\CheckUseStatementsAfterLicenseRule\\:\\:processNode\\(\\) should be contravariant with parameter \\$node \\(PhpParser\\\\Node\\) of method PHPStan\\\\Rules\\\\Rule\\<PhpParser\\\\Node\\>\\:\\:processNode\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/utils/PHPStan/CheckUseStatementsAfterLicenseRule.php',

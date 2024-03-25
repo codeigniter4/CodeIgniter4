@@ -543,15 +543,18 @@ Validation Placeholders
 =======================
 
 The Validation class provides a simple method to replace parts of your rules based on data that's being passed into it. This
-sounds fairly obscure but can be especially handy with the ``is_unique`` validation rule. Placeholders are simply
+sounds fairly obscure but can be especially handy with the ``is_unique`` validation rule.
+
+Placeholders are simply
 the name of the field (or array key) that was passed in as ``$data`` surrounded by curly brackets. It will be
 replaced by the **value** of the matched incoming field. An example should clarify this:
 
 .. literalinclude:: validation/020.php
    :lines: 2-
 
-.. note:: Since v4.3.5, you must set the validation rules for the placeholder
-    field (the ``id`` field in the sample code above) for security.
+.. warning:: Since v4.3.5, you must set the validation rules for the placeholder
+    field (the ``id`` field in the sample code above) for security reasons. Because
+    attackers can send any data to your application.
 
 In this set of rules, it states that the email address should be unique in the database, except for the row
 that has an id matching the placeholder's value. Assuming that the form POST data had the following:
