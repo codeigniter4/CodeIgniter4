@@ -301,11 +301,12 @@
 </ul>
 </li>
 <li><p><a class="reference internal" href="#configuring-with-env-file" id="id7">Configuring with .env File</a></p></li>
-<li><p><a class="reference internal" href="#explanation-of-values" id="id8">Explanation of Values:</a></p>
+<li><p><a class="reference internal" href="#explanation-of-values" id="id8">Explanation of Values</a></p>
 <ul>
 <li><p><a class="reference internal" href="#mysqli" id="id9">MySQLi</a></p>
 <ul>
 <li><p><a class="reference internal" href="#hostname" id="id10">hostname</a></p></li>
+<li><p><a class="reference internal" href="#encrypt" id="id11">encrypt</a></p></li>
 </ul>
 </li>
 </ul>
@@ -617,7 +618,7 @@ values as a JSON string in your <strong>.env</strong> file:</p>
 </div>
 </section>
 <section id="explanation-of-values">
-<span id="database-config-explanation-of-values"></span><h2><a class="toc-backref" href="#id8" role="doc-backlink">Explanation of Values:</a><a class="headerlink" href="#explanation-of-values" title="Permalink to this heading"></a></h2>
+<span id="database-config-explanation-of-values"></span><h2><a class="toc-backref" href="#id8" role="doc-backlink">Explanation of Values</a><a class="headerlink" href="#explanation-of-values" title="Permalink to this heading"></a></h2>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Name Config</p></th>
@@ -665,7 +666,7 @@ installations to share one database.</p></td>
 <td><p>The character set used in communicating with the database.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>DBCollat</strong></p></td>
-<td><p>The character collation used in communicating with the database (<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only).</p></td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only) The character collation used in communicating with the database.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>swapPre</strong></p></td>
 <td><p>A default table prefix that should be swapped with <code class="docutils literal notranslate"><span class="pre">DBPrefix</span></code>. This is useful for distributed
@@ -673,31 +674,25 @@ applications where you might run manually written queries, and need the prefix t
 customizable by the end user.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>schema</strong></p></td>
-<td><p>The database schema, default value varies by driver. (Used by <code class="docutils literal notranslate"><span class="pre">Postgre</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code>.)</p></td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">Postgre</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> only) The database schema, default value varies by driver.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>encrypt</strong></p></td>
-<td><p>Whether or not to use an encrypted connection.
-<code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> driver accepts true/false
-<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> driver accepts an array with the following options:
-* <code class="docutils literal notranslate"><span class="pre">ssl_key</span></code>    - Path to the private key file
-* <code class="docutils literal notranslate"><span class="pre">ssl_cert</span></code>   - Path to the public key certificate file
-* <code class="docutils literal notranslate"><span class="pre">ssl_ca</span></code>     - Path to the certificate authority file
-* <code class="docutils literal notranslate"><span class="pre">ssl_capath</span></code> - Path to a directory containing trusted CA certificates in PEM format
-* <code class="docutils literal notranslate"><span class="pre">ssl_cipher</span></code> - List of <em>allowed</em> ciphers to be used for the encryption, separated by colons (<code class="docutils literal notranslate"><span class="pre">:</span></code>)
-* <code class="docutils literal notranslate"><span class="pre">ssl_verify</span></code> - true/false; Whether to verify the server certificate or not (<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only)</p></td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> only) Whether or not to use an encrypted connection.
+See <a class="reference internal" href="#mysqli-encrypt"><span class="std std-ref">MySQLi encrypt</span></a> for <code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> settings.
+<code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> driver accepts true/false.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>compress</strong></p></td>
-<td><p>Whether or not to use client compression (<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only).</p></td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only) Whether or not to use client compression.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>strictOn</strong></p></td>
-<td><p>true/false (boolean) - Whether to force “Strict Mode” connections, good for ensuring strict SQL
-while developing an application (<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only).</p></td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only) true/false (boolean) - Whether to force “Strict Mode” connections, good for ensuring
+strict SQL while developing an application.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>port</strong></p></td>
 <td><p>The database port number - Empty string <code class="docutils literal notranslate"><span class="pre">''</span></code> for default port (or dynamic port with <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code>).</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>foreignKeys</strong></p></td>
-<td><p>true/false (boolean) - Whether or not to enable Foreign Key constraint (<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only).</p>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only) true/false (boolean) - Whether or not to enable Foreign Key constraint.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>SQLite3 Foreign Key constraint is disabled by default.
@@ -707,10 +702,10 @@ To enforce Foreign Key constraint, set this config item to true.</p>
 </td>
 </tr>
 <tr class="row-even"><td><p><strong>busyTimeout</strong></p></td>
-<td><p>milliseconds (int) - Sleeps for a specified amount of time when a table is locked (<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only).</p></td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only) milliseconds (int) - Sleeps for a specified amount of time when a table is locked.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>numberNative</strong></p></td>
-<td><p>true/false (boolean) - Whether or not to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE (<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only).</p></td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only) true/false (boolean) - Whether or not to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE.</p></td>
 </tr>
 </tbody>
 </table>
@@ -742,6 +737,18 @@ connection properly.</p>
 </div>
 </section>
 </section>
+<section id="encrypt">
+<span id="mysqli-encrypt"></span><h4><a class="toc-backref" href="#id11" role="doc-backlink">encrypt</a><a class="headerlink" href="#encrypt" title="Permalink to this heading"></a></h4>
+<p>MySQLi driver accepts an array with the following options:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ssl_key</span></code>    - Path to the private key file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ssl_cert</span></code>   - Path to the public key certificate file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ssl_ca</span></code>     - Path to the certificate authority file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ssl_capath</span></code> - Path to a directory containing trusted CA certificates in PEM format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ssl_cipher</span></code> - List of <em>allowed</em> ciphers to be used for the encryption, separated by colons (<code class="docutils literal notranslate"><span class="pre">:</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ssl_verify</span></code> - true/false; Whether to verify the server certificate or not</p></li>
+</ul>
+</section>
 </section>
 </section>
 </section>
@@ -758,7 +765,7 @@ connection properly.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 24, 2024.
+      <span class="lastupdated">Last updated on Mar 25, 2024.
       </span></p>
   </div>
 
