@@ -74,12 +74,18 @@ class Cors
         return new self($config);
     }
 
+    /**
+     * Whether if the request is a preflight request.
+     */
     public function isPreflightRequest(IncomingRequest $request): bool
     {
         return $request->is('OPTIONS')
             && $request->hasHeader('Access-Control-Request-Method');
     }
 
+    /**
+     * Handles the preflight request, and returns the response.
+     */
     public function handlePreflightRequest(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $response->setStatusCode(204);
@@ -197,6 +203,9 @@ class Cors
         }
     }
 
+    /**
+     * Adds CORS headers to the Response.
+     */
     public function addResponseHeaders(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $this->setAllowOrigin($request, $response);
