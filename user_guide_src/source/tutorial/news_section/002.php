@@ -8,6 +8,11 @@ class NewsModel extends Model
 {
     protected $table = 'news';
 
+    /**
+     * @param false|string $slug
+     *
+     * @return array|null
+     */
     public function getNews($slug = false)
     {
         if ($slug === false) {
