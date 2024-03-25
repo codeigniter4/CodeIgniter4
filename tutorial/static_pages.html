@@ -377,7 +377,7 @@ server.</p>
         <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;welcome_message&#39;</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nv">$page</span> <span class="o">=</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$page</span> <span class="o">=</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="c1">// ...</span>
     <span class="p">}</span>
@@ -465,7 +465,7 @@ in the <code class="docutils literal notranslate"><span class="pre">Pages</span>
 <span class="p">{</span>
     <span class="c1">// ...</span>
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nv">$page</span> <span class="o">=</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$page</span> <span class="o">=</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">is_file</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Views/pages/&#39;</span> <span class="o">.</span> <span class="nv">$page</span> <span class="o">.</span> <span class="s1">&#39;.php&#39;</span><span class="p">))</span> <span class="p">{</span>
             <span class="c1">// Whoops, we don&#39;t have a page for that!</span>
@@ -494,7 +494,7 @@ displayed to the user.</p>
 <p>The first line in this method checks whether the page actually exists.
 PHP’s native <code class="docutils literal notranslate"><span class="pre">is_file()</span></code> function is used to check whether the file
 is where it’s expected to be. The <code class="docutils literal notranslate"><span class="pre">PageNotFoundException</span></code> is a CodeIgniter
-exception that causes the default error page to show.</p>
+exception that causes the 404 Page Not Found error page to show.</p>
 <p>In the header template, the <code class="docutils literal notranslate"><span class="pre">$title</span></code> variable was used to customize the
 page title. The value of title is defined in this method, but instead of
 assigning the value to a variable, it is assigned to the title element

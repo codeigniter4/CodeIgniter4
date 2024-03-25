@@ -399,7 +399,12 @@ supported database systems</span></a>. The Model class
 also allows you to easily work with the Query Builder and provides
 some additional tools to make working with data simpler. Add the
 following code to your model.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>    <span class="k">public</span> <span class="k">function</span> <span class="nf">getNews</span><span class="p">(</span><span class="nv">$slug</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>    <span class="sd">/**</span>
+<span class="sd">     * @param false|string $slug</span>
+<span class="sd">     *</span>
+<span class="sd">     * @return array|null</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getNews</span><span class="p">(</span><span class="nv">$slug</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nv">$slug</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
@@ -463,10 +468,10 @@ routes URI’s with a slug to the <code class="docutils literal notranslate"><sp
     <span class="p">{</span>
         <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">NewsModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
-        <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getNews</span><span class="p">();</span>
+        <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;news_list&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getNews</span><span class="p">();</span>
     <span class="p">}</span>
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">show</span><span class="p">(</span><span class="nv">$slug</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">show</span><span class="p">(</span><span class="o">?</span><span class="nx">string</span> <span class="nv">$slug</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">NewsModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
@@ -507,8 +512,8 @@ the views. Modify the <code class="docutils literal notranslate"><span class="pr
         <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">NewsModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
         <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;news&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getNews</span><span class="p">(),</span>
-            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;News archive&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;news_list&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getNews</span><span class="p">(),</span>
+            <span class="s1">&#39;title&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;News archive&#39;</span><span class="p">,</span>
         <span class="p">];</span>
 
         <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/header&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span>
@@ -530,9 +535,9 @@ view to render the news items.</p>
 <p>Create <strong>app/Views/news/index.php</strong> and add the next piece of code.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 
-<span class="cp">&lt;?php</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$news</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nb">is_array</span><span class="p">(</span><span class="nv">$news</span><span class="p">))</span><span class="o">:</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$news_list</span> <span class="o">!==</span> <span class="p">[])</span><span class="o">:</span> <span class="cp">?&gt;</span>
 
-    <span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$news</span> <span class="k">as</span> <span class="nv">$news_item</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
+    <span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$news_list</span> <span class="k">as</span> <span class="nv">$news_item</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
 
         <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$news_item</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">])</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
 
@@ -582,13 +587,13 @@ add some code to the controller and create a new view. Go back to the
 <span class="p">{</span>
     <span class="c1">// ...</span>
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">show</span><span class="p">(</span><span class="nv">$slug</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">show</span><span class="p">(</span><span class="o">?</span><span class="nx">string</span> <span class="nv">$slug</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">NewsModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
         <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getNews</span><span class="p">(</span><span class="nv">$slug</span><span class="p">);</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">]))</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">]</span> <span class="o">===</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">throw</span> <span class="k">new</span> <span class="nx">PageNotFoundException</span><span class="p">(</span><span class="s1">&#39;Cannot find the news item: &#39;</span> <span class="o">.</span> <span class="nv">$slug</span><span class="p">);</span>
         <span class="p">}</span>
 
