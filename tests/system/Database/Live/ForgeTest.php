@@ -60,6 +60,23 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertTrue($databaseCreated);
     }
 
+    public function testCreateDatabaseWithDots(): void
+    {
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->markTestSkipped('OCI8 does not support create database.');
+        }
+
+        $dbName = 'test_com.sitedb.web';
+
+        $databaseCreated = $this->forge->createDatabase($dbName);
+
+        $this->assertTrue($databaseCreated);
+
+        if ($this->db->DBDriver !== 'SQLite3') {
+            $this->forge->dropDatabase($dbName);
+        }
+    }
+
     public function testCreateDatabaseIfNotExists(): void
     {
         if ($this->db->DBDriver === 'OCI8') {
@@ -84,6 +101,24 @@ final class ForgeTest extends CIUnitTestCase
         }
 
         $dbName = 'test_forge_database_exist';
+
+        $this->forge->createDatabase($dbName);
+        $databaseExists = $this->forge->createDatabase($dbName, true);
+
+        $this->assertTrue($databaseExists);
+
+        if ($this->db->DBDriver !== 'SQLite3') {
+            $this->forge->dropDatabase($dbName);
+        }
+    }
+
+    public function testCreateDatabaseIfNotExistsWithDbWithDots(): void
+    {
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->markTestSkipped('OCI8 does not support create database.');
+        }
+
+        $dbName = 'test_forge.database.exist';
 
         $this->forge->createDatabase($dbName);
         $databaseExists = $this->forge->createDatabase($dbName, true);

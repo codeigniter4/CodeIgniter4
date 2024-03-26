@@ -229,7 +229,14 @@ class Forge
         }
 
         try {
-            if (! $this->db->query(sprintf($ifNotExists ? $this->createDatabaseIfStr : $this->createDatabaseStr, $dbName, $this->db->charset, $this->db->DBCollat))) {
+            if (! $this->db->query(
+                sprintf(
+                    $ifNotExists ? $this->createDatabaseIfStr : $this->createDatabaseStr,
+                    $this->db->escapeIdentifier($dbName),
+                    $this->db->charset,
+                    $this->db->DBCollat
+                )
+            )) {
                 // @codeCoverageIgnoreStart
                 if ($this->db->DBDebug) {
                     throw new DatabaseException('Unable to create the specified database.');
@@ -268,7 +275,10 @@ class Forge
             return false;
         }
 
-        return $this->db->query($this->checkDatabaseExistStr, $dbName)->getRow() !== null;
+        return $this->db->query(
+            $this->checkDatabaseExistStr,
+            $this->db->escapeIdentifier($dbName)
+        )->getRow() !== null;
     }
 
     /**
@@ -286,7 +296,9 @@ class Forge
             return false;
         }
 
-        if (! $this->db->query(sprintf($this->dropDatabaseStr, $dbName))) {
+        if (! $this->db->query(
+            sprintf($this->dropDatabaseStr, $this->db->escapeIdentifier($dbName))
+        )) {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('Unable to drop the specified database.');
             }
@@ -295,7 +307,11 @@ class Forge
         }
 
         if (! empty($this->db->dataCache['db_names'])) {
-            $key = array_search(strtolower($dbName), array_map('strtolower', $this->db->dataCache['db_names']), true);
+            $key = array_search(
+                strtolower($dbName),
+                array_map('strtolower', $this->db->dataCache['db_names']),
+                true
+            );
             if ($key !== false) {
                 unset($this->db->dataCache['db_names'][$key]);
             }
