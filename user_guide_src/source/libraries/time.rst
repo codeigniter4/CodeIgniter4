@@ -366,7 +366,9 @@ Viewing Differences
 ===================
 
 To compare two Times directly, you would use the ``difference()`` method, which returns a ``CodeIgniter\I18n\TimeDifference``
-instance. The first parameter is either a Time instance, a DateTime instance, or a string with the date/time. If
+instance.
+
+The first parameter is either a Time instance, a DateTime instance, or a string with the date/time. If
 a string is passed in the first parameter, the second parameter can be a timezone string:
 
 .. literalinclude:: time/038.php
