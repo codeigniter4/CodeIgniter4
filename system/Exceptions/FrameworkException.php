@@ -59,6 +59,8 @@ class FrameworkException extends RuntimeException implements ExceptionInterface
 
     /**
      * @return static
+     *
+     * @deprecated 4.5.0 No longer used.
      */
     public static function forMissingExtension(string $extension)
     {

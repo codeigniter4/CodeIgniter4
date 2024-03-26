@@ -11,11 +11,24 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+/**
+ * ---------------------------------------------------------------
+ * This file cannot be used. The code has moved to Boot.php.
+ * ---------------------------------------------------------------
+ */
+
 use CodeIgniter\Exceptions\FrameworkException;
 use Config\Autoload;
 use Config\Modules;
 use Config\Paths;
 use Config\Services;
+
+header('HTTP/1.1 503 Service Unavailable.', true, 503);
+
+$message = 'This "system/bootstrap.php" is no longer used. If you are seeing this error message,
+the upgrade is not complete. Please refer to the upgrade guide and complete the upgrade.
+See https://codeigniter4.github.io/userguide/installation/upgrade_450.html' . PHP_EOL;
+echo $message;
 
 /*
  * ---------------------------------------------------------------
@@ -146,3 +159,5 @@ if (! is_file(COMPOSER_PATH)) {
  */
 
 Services::autoloader()->initializeKint(CI_DEBUG);
+
+exit(1);
