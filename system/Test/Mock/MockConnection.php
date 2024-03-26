@@ -23,6 +23,9 @@ use CodeIgniter\Database\Query;
  */
 class MockConnection extends BaseConnection
 {
+    /**
+     * @var array{connect?: mixed, execute?: bool|object}
+     */
     protected $returnValues = [];
 
     /**

@@ -298,6 +298,9 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertSame($expected, $return);
     }
 
+    /**
+     * @return array<string, list<string>>
+     */
     public static function provideEscapeIdentifiers(): iterable
     {
         yield from [
@@ -319,6 +322,9 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertSame($expected, $return);
     }
 
+    /**
+     * @return array<string, list<string>>
+     */
     public static function provideEscapeIdentifier(): iterable
     {
         yield from [
