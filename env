@@ -38,12 +38,15 @@
 # database.default.DBPrefix =
 # database.default.port = 3306
 
+# If you use MySQLi as tests, first update the values of Config\Database::$tests.
 # database.tests.hostname = localhost
 # database.tests.database = ci4_test
 # database.tests.username = root
 # database.tests.password = root
 # database.tests.DBDriver = MySQLi
 # database.tests.DBPrefix =
+# database.tests.charset = utf8mb4
+# database.tests.DBCollat = utf8mb4_general_ci
 # database.tests.port = 3306
 
 #--------------------------------------------------------------------
