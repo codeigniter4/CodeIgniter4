@@ -100,6 +100,10 @@ following value in **app/Config/App.php**::
 
     public string $permittedURIChars = 'a-z 0-9~%.:_\-\x{0980}-\x{09ff}';
 
+A full list of Unicode ranges can be found at Wikipedia's `Unicode block`_.
+
+.. _Unicode block: https://en.wikipedia.org/wiki/Unicode_block
+
 .. _urls-remove-index-php:
 
 Removing the index.php file
