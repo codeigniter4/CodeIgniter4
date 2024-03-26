@@ -120,7 +120,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 1, 2017', 'America/Chicago');
         $diff    = $current->difference('May 1, 2017', 'America/Chicago');
 
-        $this->assertSame('in 1 month', $diff->humanize('en'));
+        $this->assertSame('in 2 months', $diff->humanize('en'));
     }
 
     public function testHumanizeDaysSingle(): void
@@ -211,12 +211,20 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $this->assertSame('2 weeks ago', $diff->humanize('en'));
     }
 
-    public function testHumanizeWeeksForward(): void
+    public function testHumanizeWeeksForwardDST(): void
     {
         $current = Time::parse('March 10, 2017', 'America/Chicago');
         $diff    = $current->difference('March 18, 2017', 'America/Chicago');
 
-        $this->assertSame('in 1 week', $diff->humanize('en'));
+        $this->assertSame('in 2 weeks', $diff->humanize('en'));
+    }
+
+    public function testHumanizeWeeksForwardUTC(): void
+    {
+        $current = Time::parse('2017-03-10');
+        $diff    = $current->difference('2017-03-18');
+
+        $this->assertSame('in 2 weeks', $diff->humanize('en'));
     }
 
     public function testHumanizeNoDifference(): void
@@ -238,14 +246,14 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $this->assertNull($diff->nonsense);
     }
 
-    public function testGetterChicagoTime(): void
+    public function testGetterDST(): void
     {
         $current = Time::parse('March 10, 2017', 'America/Chicago');
         $diff    = $current->difference('March 18, 2017', 'America/Chicago');
 
         // Daylight Saving Time had begun since Sun, 12 Mar, 02:00.
-        $this->assertSame(7, $diff->getDays());
-        $this->assertSame(7, $diff->days);
+        $this->assertSame(8, $diff->getDays());
+        $this->assertSame(8, $diff->days);
 
         // The raw value does not take Daylight Saving Time into account.
         $this->assertSame(-8, (int) round($diff->getDays(true)));
