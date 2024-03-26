@@ -570,24 +570,29 @@ to ensure that your script handles that:</p>
 or any of the shortcut methods.</p>
 <section id="allow-redirects">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">allow_redirects</a><a class="headerlink" href="#allow-redirects" title="Permalink to this heading"></a></h3>
-<p>By default, cURL will follow all “Location:” headers the remote servers send back. The <code class="docutils literal notranslate"><span class="pre">allow_redirects</span></code> option
-allows you to modify how that works.</p>
-<p>If you set the value to <code class="docutils literal notranslate"><span class="pre">false</span></code>, then it will not follow any redirects at all:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;allow_redirects&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
-</pre></div>
-</div>
-<p>Setting it to <code class="docutils literal notranslate"><span class="pre">true</span></code> will apply the default settings to the request:</p>
+<p>By default, cURL will not follow any “Location:” headers the remote servers send
+back. The <code class="docutils literal notranslate"><span class="pre">allow_redirects</span></code> option allows you to modify how that works.</p>
+<p>If you set the value to <code class="docutils literal notranslate"><span class="pre">true</span></code>, then it will follow redirects:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;allow_redirects&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Sets the following defaults:</span>
-<span class="cm"> * &#39;max&#39;       =&gt; 5, // Maximum number of redirects to follow before stopping</span>
-<span class="cm"> * &#39;strict&#39;    =&gt; true, // Ensure POST requests stay POST requests through redirects</span>
-<span class="cm"> * &#39;protocols&#39; =&gt; [&#39;http&#39;, &#39;https&#39;] // Restrict redirects to one or more protocols</span>
+<span class="cm"> *   &#39;max&#39;       =&gt; 5,                // Maximum number of redirects to follow before stopping</span>
+<span class="cm"> *   &#39;strict&#39;    =&gt; true,             // Ensure POST requests stay POST requests through redirects</span>
+<span class="cm"> *   &#39;protocols&#39; =&gt; [&#39;http&#39;, &#39;https&#39;] // Restrict redirects to one or more protocols</span>
 <span class="cm"> */</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please note that enabling redirects may redirect to a URL that you
+do not expect and may enable SSRF attacks.</p>
+</div>
+<p>Setting it to <code class="docutils literal notranslate"><span class="pre">false</span></code> will apply the default settings to the request:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;allow_redirects&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>You can pass in array as the value of the <code class="docutils literal notranslate"><span class="pre">allow_redirects</span></code> option to specify new settings in place of the defaults:</p>
@@ -884,7 +889,7 @@ or <code class="docutils literal notranslate"><span class="pre">1.1</span></code
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 25, 2024.
+      <span class="lastupdated">Last updated on Mar 26, 2024.
       </span></p>
   </div>
 
