@@ -1493,7 +1493,8 @@ class BaseBuilder
      */
     public function limit(?int $value = null, ?int $offset = 0)
     {
-        if (config(Feature::class)->limitZeroAsAll && $value === 0) {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll && $value === 0) {
             $value = null;
         }
 
@@ -1614,7 +1615,8 @@ class BaseBuilder
      */
     public function get(?int $limit = null, int $offset = 0, bool $reset = true)
     {
-        if (config(Feature::class)->limitZeroAsAll && $limit === 0) {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll && $limit === 0) {
             $limit = null;
         }
 
@@ -1751,7 +1753,8 @@ class BaseBuilder
             $this->where($where);
         }
 
-        if (config(Feature::class)->limitZeroAsAll && $limit === 0) {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll && $limit === 0) {
             $limit = null;
         }
 
@@ -2473,7 +2476,8 @@ class BaseBuilder
             $this->where($where);
         }
 
-        if (config(Feature::class)->limitZeroAsAll && $limit === 0) {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll && $limit === 0) {
             $limit = null;
         }
 
@@ -2518,7 +2522,8 @@ class BaseBuilder
             $valStr[] = $key . ' = ' . $val;
         }
 
-        if (config(Feature::class)->limitZeroAsAll) {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll) {
             return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . implode(', ', $valStr)
                 . $this->compileWhereHaving('QBWhere')
                 . $this->compileOrderBy()
@@ -2794,7 +2799,8 @@ class BaseBuilder
 
         $sql = $this->_delete($this->removeAlias($table));
 
-        if (config(Feature::class)->limitZeroAsAll && $limit === 0) {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll && $limit === 0) {
             $limit = null;
         }
 
@@ -3064,7 +3070,8 @@ class BaseBuilder
             . $this->compileWhereHaving('QBHaving')
             . $this->compileOrderBy();
 
-        if (config(Feature::class)->limitZeroAsAll) {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll) {
             if ($this->QBLimit) {
                 $sql = $this->_limit($sql . "\n");
             }

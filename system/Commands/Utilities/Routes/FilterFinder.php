@@ -57,7 +57,8 @@ final class FilterFinder
 
             $this->filters->enableFilters($routeFilters, 'before');
 
-            if (! config(Feature::class)->oldFilterOrder) {
+            $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false;
+            if (! $oldFilterOrder) {
                 $routeFilters = array_reverse($routeFilters);
             }
 

@@ -384,7 +384,8 @@ class Filters
             return $this;
         }
 
-        if (config(Feature::class)->oldFilterOrder) {
+        $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false;
+        if ($oldFilterOrder) {
             $this->processGlobals($uri);
             $this->processMethods();
             $this->processFilters($uri);
@@ -604,7 +605,8 @@ class Filters
         }
 
         if (isset($filters['before'])) {
-            if (config(Feature::class)->oldFilterOrder) {
+            $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false;
+            if ($oldFilterOrder) {
                 $this->filters['before'] = array_merge($this->filters['before'], $filters['before']);
             } else {
                 $this->filters['before'] = array_merge($filters['before'], $this->filters['before']);
@@ -649,7 +651,8 @@ class Filters
         }
 
         if ($found) {
-            if (config(Feature::class)->oldFilterOrder) {
+            $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false;
+            if ($oldFilterOrder) {
                 $this->filters['before'] = array_merge($this->filters['before'], $this->config->methods[$method]);
             } else {
                 $this->filters['before'] = array_merge($this->config->methods[$method], $this->filters['before']);
@@ -706,8 +709,10 @@ class Filters
             }
         }
 
+        $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false;
+
         if (isset($filters['before'])) {
-            if (config(Feature::class)->oldFilterOrder) {
+            if ($oldFilterOrder) {
                 $this->filters['before'] = array_merge($this->filters['before'], $filters['before']);
             } else {
                 $this->filters['before'] = array_merge($filters['before'], $this->filters['before']);
@@ -715,7 +720,7 @@ class Filters
         }
 
         if (isset($filters['after'])) {
-            if (! config(Feature::class)->oldFilterOrder) {
+            if (! $oldFilterOrder) {
                 $filters['after'] = array_reverse($filters['after']);
             }
 
