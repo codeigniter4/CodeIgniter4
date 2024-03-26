@@ -72,6 +72,15 @@ final class ForgeTest extends CIUnitTestCase
 
         $this->assertTrue($databaseCreated);
 
+        // Checks if tableExists() works.
+        $config             = config(Database::class)->{$this->DBGroup};
+        $config['database'] = $dbName;
+        $db                 = db_connect($config);
+        $result             = $db->tableExists('not_exist');
+
+        $this->assertFalse($result);
+
+        $db->close();
         if ($this->db->DBDriver !== 'SQLite3') {
             $this->forge->dropDatabase($dbName);
         }
