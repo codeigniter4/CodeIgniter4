@@ -87,7 +87,7 @@ class MockConnection extends BaseConnection
         $query->setDuration($startTime);
 
         // resultID is not false, so it must be successful
-        if ($query->isWriteType()) {
+        if ($query->isWriteType($sql)) {
             return true;
         }
 
