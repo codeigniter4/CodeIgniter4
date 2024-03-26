@@ -379,6 +379,12 @@ the original time:
 
 .. literalinclude:: time/039.php
 
+.. note:: When calculating the difference in the number of days, unexpected results
+    may be returned if a day is not 24 hours long due to Daylight Saving Time
+    (DST).
+
+        .. literalinclude:: time/042.php
+
 You can use either ``getX()`` methods, or access the calculate values as if they were properties:
 
 .. literalinclude:: time/040.php
