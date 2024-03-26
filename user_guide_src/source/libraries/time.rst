@@ -379,6 +379,15 @@ the original time:
 
 .. literalinclude:: time/039.php
 
+.. note:: Prior to v4.4.7, Time always converted the time zones to UTC before
+    comparison. This could lead to unexpected results when containing a day
+    differed from 24 hours due to Daylight Saving Time (DST).
+
+    Starting with v4.4.7, when comparing date/times that are in the same
+    time zone, the comparison is performed as is, without conversion to UTC.
+
+        .. literalinclude:: time/042.php
+
 You can use either ``getX()`` methods, or access the calculate values as if they were properties:
 
 .. literalinclude:: time/040.php
