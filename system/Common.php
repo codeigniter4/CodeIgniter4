@@ -133,48 +133,26 @@ if (! function_exists('command')) {
         $runner      = service('commands');
         $regexString = '([^\s]+?)(?:\s|(?<!\\\\)"|(?<!\\\\)\'|$)';
         $regexQuoted = '(?:"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\')';
+        $regexOption = '(-[^\s]+)'; // Pola regex untuk opsi
 
-        $args   = [];
-        $length = strlen($command);
-        $cursor = 0;
+        $args    = [];
+        $matches = [];
 
-        /**
-         * Adopted from Symfony's `StringInput::tokenize()` with few changes.
-         *
-         * @see https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Console/Input/StringInput.php
-         */
-        while ($cursor < $length) {
-            if (preg_match('/\s+/A', $command, $match, 0, $cursor)) {
-                // nothing to do
-            } elseif (preg_match('/' . $regexQuoted . '/A', $command, $match, 0, $cursor)) {
-                $args[] = stripcslashes(substr($match[0], 1, strlen($match[0]) - 2));
-            } elseif (preg_match('/' . $regexString . '/A', $command, $match, 0, $cursor)) {
-                $args[] = stripcslashes($match[1]);
-            } else {
-                // @codeCoverageIgnoreStart
-                throw new InvalidArgumentException(sprintf(
-                    'Unable to parse input near "... %s ...".',
-                    substr($command, $cursor, 10)
-                ));
-                // @codeCoverageIgnoreEnd
-            }
+        // Tokenisasi input menggunakan regular expressions
+        preg_match_all('/' . $regexQuoted . '|' . $regexString . '|' . $regexOption . '/A', $command, $matches, PREG_SET_ORDER);
 
-            $cursor += strlen($match[0]);
+        foreach ($matches as $match) {
+            // Menambahkan token ke dalam array $args
+            $args[] = stripcslashes(empty($match[3]) ? (empty($match[2]) ? $match[1] : $match[2]) : $match[3]);
         }
 
-        $command     = array_shift($args);
+        $command     = array_shift($args); // Mengambil command dari awal array
         $params      = [];
         $optionValue = false;
 
         foreach ($args as $i => $arg) {
-            if (mb_strpos($arg, '-') !== 0) {
-                if ($optionValue) {
-                    // if this was an option value, it was already
-                    // included in the previous iteration
-                    $optionValue = false;
-                } else {
-                    // add to segments if not starting with '-'
-                    // and not an option value
+            if ($arg[0] !== '-') {
+                if (! $optionValue) {
                     $params[] = $arg;
                 }
 
@@ -184,7 +162,7 @@ if (! function_exists('command')) {
             $arg   = ltrim($arg, '-');
             $value = null;
 
-            if (isset($args[$i + 1]) && mb_strpos($args[$i + 1], '-') !== 0) {
+            if (isset($args[$i + 1]) && $args[$i + 1][0] !== '-') {
                 $value       = $args[$i + 1];
                 $optionValue = true;
             }
