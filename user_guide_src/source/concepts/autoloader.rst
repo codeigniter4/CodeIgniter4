@@ -99,9 +99,8 @@ You will need to modify any existing files that are referencing the current name
 Classmap
 ========
 
-The classmap is used extensively by CodeIgniter to eke the last ounces of performance out of the system
-by not hitting the file-system with extra ``is_file()`` calls. You can use the classmap to link to
-third-party libraries that are not namespaced:
+If you use third-party libraries that are not Composer packages and are not namespaced,
+you can load those classes using the classmap:
 
 .. literalinclude:: autoloader/003.php
 
