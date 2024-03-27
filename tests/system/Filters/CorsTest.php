@@ -16,6 +16,7 @@ namespace CodeIgniter\Filters;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
@@ -75,6 +76,9 @@ final class CorsTest extends CIUnitTestCase
         return $request;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     private function createCors(array $options = []): Cors
     {
         $passedOptions = array_merge(
@@ -132,7 +136,7 @@ final class CorsTest extends CIUnitTestCase
         $this->assertFalse($response->hasHeader('Access-Control-Allow-Origin'));
     }
 
-    private function handle($request): ResponseInterface
+    private function handle(RequestInterface $request): ResponseInterface
     {
         $response = $this->cors->before($request);
         if ($response instanceof ResponseInterface) {
@@ -215,7 +219,7 @@ final class CorsTest extends CIUnitTestCase
         $this->handle($request);
     }
 
-    public function testItSetsAllowCredentialsHeaderWhenFlagIsSetOnValidActualRequest()
+    public function testItSetsAllowCredentialsHeaderWhenFlagIsSetOnValidActualRequest(): void
     {
         $this->cors = $this->createCors(['supportsCredentials' => true]);
         $request    = $this->createValidActualRequest();

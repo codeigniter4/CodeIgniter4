@@ -23,6 +23,17 @@ use Config\Services;
  */
 final class CorsTest extends CIUnitTestCase
 {
+    /**
+     * @param array{
+     *      allowedOrigins?: list<string>,
+     *      allowedOriginsPatterns?: list<string>,
+     *      supportsCredentials?: bool,
+     *      allowedHeaders?: list<string>,
+     *      exposedHeaders?: list<string>,
+     *      allowedMethods?: list<string>,
+     *      maxAge?: int,
+     *  } $config
+     */
     private function createCors(array $config = []): Cors
     {
         return new Cors($config);
@@ -33,6 +44,9 @@ final class CorsTest extends CIUnitTestCase
         return Services::incomingrequest(null, false);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getDefaultConfig(): array
     {
         return [
@@ -50,14 +64,14 @@ final class CorsTest extends CIUnitTestCase
         $this->assertSame($value, $response->getHeaderLine($name));
     }
 
-    public function testInstantiate()
+    public function testInstantiate(): void
     {
         $cors = $this->createCors();
 
         $this->assertInstanceOf(Cors::class, $cors);
     }
 
-    public function testIsPreflightRequestTrue()
+    public function testIsPreflightRequestTrue(): void
     {
         $cors = $this->createCors();
 
@@ -68,7 +82,7 @@ final class CorsTest extends CIUnitTestCase
         $this->assertTrue($cors->isPreflightRequest($request));
     }
 
-    public function testIsPreflightRequestFalse()
+    public function testIsPreflightRequestFalse(): void
     {
         $cors = $this->createCors();
 
@@ -78,7 +92,7 @@ final class CorsTest extends CIUnitTestCase
         $this->assertFalse($cors->isPreflightRequest($request));
     }
 
-    public function testHandlePreflightRequestSingleAllowedOrigin()
+    public function testHandlePreflightRequestSingleAllowedOrigin(): void
     {
         $config                   = $this->getDefaultConfig();
         $config['allowedOrigins'] = ['http://localhost:8080'];
@@ -113,7 +127,7 @@ final class CorsTest extends CIUnitTestCase
         );
     }
 
-    public function testHandlePreflightRequestMultipleAllowedOriginsAllowed()
+    public function testHandlePreflightRequestMultipleAllowedOriginsAllowed(): void
     {
         $config                   = $this->getDefaultConfig();
         $config['allowedOrigins'] = ['https://example.com', 'https://api.example.com'];
@@ -150,7 +164,7 @@ final class CorsTest extends CIUnitTestCase
         );
     }
 
-    public function testHandlePreflightRequestMultipleAllowedOriginsAllowedAlreadyVary()
+    public function testHandlePreflightRequestMultipleAllowedOriginsAllowedAlreadyVary(): void
     {
         $config                   = $this->getDefaultConfig();
         $config['allowedOrigins'] = ['https://example.com', 'https://api.example.com'];
@@ -188,7 +202,7 @@ final class CorsTest extends CIUnitTestCase
         );
     }
 
-    public function testHandlePreflightRequestMultipleAllowedOriginsNotAllowed()
+    public function testHandlePreflightRequestMultipleAllowedOriginsNotAllowed(): void
     {
         $config                   = $this->getDefaultConfig();
         $config['allowedOrigins'] = ['https://example.com', 'https://api.example.com'];
@@ -214,7 +228,7 @@ final class CorsTest extends CIUnitTestCase
         );
     }
 
-    public function testHandlePreflightRequestAllowedOriginsPatternsAllowed()
+    public function testHandlePreflightRequestAllowedOriginsPatternsAllowed(): void
     {
         $config                           = $this->getDefaultConfig();
         $config['allowedOriginsPatterns'] = ['https://\w+\.example\.com'];
@@ -251,7 +265,7 @@ final class CorsTest extends CIUnitTestCase
         );
     }
 
-    public function testHandlePreflightRequestAllowedOriginsPatternsNotAllowed()
+    public function testHandlePreflightRequestAllowedOriginsPatternsNotAllowed(): void
     {
         $config                           = $this->getDefaultConfig();
         $config['allowedOriginsPatterns'] = ['https://\w+\.example\.com'];
@@ -277,7 +291,7 @@ final class CorsTest extends CIUnitTestCase
         );
     }
 
-    public function testHandlePreflightRequestSingleAllowedOriginWithCredentials()
+    public function testHandlePreflightRequestSingleAllowedOriginWithCredentials(): void
     {
         $config                        = $this->getDefaultConfig();
         $config['allowedOrigins']      = ['http://localhost:8080'];
@@ -315,7 +329,7 @@ final class CorsTest extends CIUnitTestCase
         );
     }
 
-    public function testAddResponseHeadersSingleAllowedOriginSimpleRequest()
+    public function testAddResponseHeadersSingleAllowedOriginSimpleRequest(): void
     {
         $config                   = $this->getDefaultConfig();
         $config['allowedOrigins'] = ['http://localhost:8080'];
@@ -346,7 +360,7 @@ final class CorsTest extends CIUnitTestCase
         );
     }
 
-    public function testAddResponseHeadersSingleAllowedOriginRealRequest()
+    public function testAddResponseHeadersSingleAllowedOriginRealRequest(): void
     {
         $config                   = $this->getDefaultConfig();
         $config['allowedOrigins'] = ['http://localhost:8080'];
@@ -368,7 +382,7 @@ final class CorsTest extends CIUnitTestCase
         );
     }
 
-    public function testAddResponseHeadersSingleAllowedOriginWithCredentials()
+    public function testAddResponseHeadersSingleAllowedOriginWithCredentials(): void
     {
         $config                        = $this->getDefaultConfig();
         $config['allowedOrigins']      = ['http://localhost:8080'];
@@ -397,7 +411,7 @@ final class CorsTest extends CIUnitTestCase
         );
     }
 
-    public function testAddResponseHeadersSingleAllowedOriginWithExposeHeaders()
+    public function testAddResponseHeadersSingleAllowedOriginWithExposeHeaders(): void
     {
         $config                   = $this->getDefaultConfig();
         $config['allowedOrigins'] = ['http://localhost:8080'];
@@ -425,7 +439,7 @@ final class CorsTest extends CIUnitTestCase
         );
     }
 
-    public function testAddResponseHeadersMultipleAllowedOriginsAllowed()
+    public function testAddResponseHeadersMultipleAllowedOriginsAllowed(): void
     {
         $config                   = $this->getDefaultConfig();
         $config['allowedOrigins'] = ['https://example.com', 'https://api.example.com'];
@@ -457,7 +471,7 @@ final class CorsTest extends CIUnitTestCase
         );
     }
 
-    public function testAddResponseHeadersMultipleAllowedOriginsAllowedAlreadyVary()
+    public function testAddResponseHeadersMultipleAllowedOriginsAllowedAlreadyVary(): void
     {
         $config                   = $this->getDefaultConfig();
         $config['allowedOrigins'] = ['https://example.com', 'https://api.example.com'];
@@ -484,7 +498,7 @@ final class CorsTest extends CIUnitTestCase
         );
     }
 
-    public function testAddResponseHeadersMultipleAllowedOriginsNotAllowed()
+    public function testAddResponseHeadersMultipleAllowedOriginsNotAllowed(): void
     {
         $config                   = $this->getDefaultConfig();
         $config['allowedOrigins'] = ['https://example.com', 'https://api.example.com'];
