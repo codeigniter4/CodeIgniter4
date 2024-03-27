@@ -19,8 +19,9 @@ CodeIgniter4 Autoloader
 
 CodeIgniter provides a very flexible autoloader that can be used with very little configuration.
 It can locate individual namespaced classes that adhere to
-`PSR-4 <https://www.php-fig.org/psr/psr-4/>`_ autoloading
-directory structures.
+`PSR-4`_ autoloading directory structures.
+
+.. _PSR-4: https://www.php-fig.org/psr/psr-4/
 
 The autoloader works great by itself, but can also work with other autoloaders, like
 `Composer <https://getcomposer.org>`_, or even your own custom autoloaders, if needed.
@@ -59,6 +60,12 @@ those classes can be found in:
 
 The key of each row is the namespace itself. This does not need a trailing back slash.
 The value is the location to the directory the classes can be found in.
+
+By default, the namespace ``App`` is located in the **app** directory, and the
+namespace ``Config`` is located in the ``app/Config`` directory.
+
+If you create class files in the locations and according to `PSR-4`_, the autoloader
+will autoload them.
 
 .. _confirming-namespaces:
 
