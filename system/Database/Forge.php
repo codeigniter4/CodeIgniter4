@@ -275,10 +275,7 @@ class Forge
             return false;
         }
 
-        return $this->db->query(
-            $this->checkDatabaseExistStr,
-            $this->db->escapeIdentifier($dbName)
-        )->getRow() !== null;
+        return $this->db->query($this->checkDatabaseExistStr, $dbName)->getRow() !== null;
     }
 
     /**
