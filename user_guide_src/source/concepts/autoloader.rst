@@ -190,6 +190,10 @@ Or simply delete the **writable/cache/FileLocatorCache** file.
 How to Enable FileLocator Caching
 =================================
 
-Add the following code in **app/Config/Services.php**:
+Set the following property to ``true`` in **app/Config/Optimize.php**::
 
-.. literalinclude:: autoloader/004.php
+    public bool $locatorCacheEnabled = true;
+
+.. note::
+    This property cannot be overridden by
+    :ref:`environment variables <configuration-classes-and-environment-variables>`.
