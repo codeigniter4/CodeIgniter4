@@ -157,16 +157,19 @@ or any of the shortcut methods.
 allow_redirects
 ===============
 
-By default, cURL will follow all "Location:" headers the remote servers send back. The ``allow_redirects`` option
-allows you to modify how that works.
+By default, cURL will not follow any "Location:" headers the remote servers send
+back. The ``allow_redirects`` option allows you to modify how that works.
 
-If you set the value to ``false``, then it will not follow any redirects at all:
-
-.. literalinclude:: curlrequest/013.php
-
-Setting it to ``true`` will apply the default settings to the request:
+If you set the value to ``true``, then it will follow redirects:
 
 .. literalinclude:: curlrequest/014.php
+
+.. warning:: Please note that enabling redirects may redirect to a URL that you
+    do not expect and may enable SSRF attacks.
+
+Setting it to ``false`` will apply the default settings to the request:
+
+.. literalinclude:: curlrequest/013.php
 
 You can pass in array as the value of the ``allow_redirects`` option to specify new settings in place of the defaults:
 
