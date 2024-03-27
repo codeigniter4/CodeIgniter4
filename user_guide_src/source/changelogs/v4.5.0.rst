@@ -72,6 +72,8 @@ Forge
 Others
 ------
 
+- Added support for database names containing dots (``.``).
+
 Model
 =====
 
