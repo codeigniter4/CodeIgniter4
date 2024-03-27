@@ -13,6 +13,7 @@ classes that your project is using. Keeping track of where every single file is,
 hard-coding that location into your files in a series of ``requires()`` is a massive
 headache and very error-prone. That's where autoloaders come in.
 
+***********************
 CodeIgniter4 Autoloader
 ***********************
 
@@ -36,6 +37,7 @@ beginning of the framework's execution.
     file name case is incorrect, the autoloader cannot find the file on the
     server.
 
+*************
 Configuration
 *************
 
@@ -97,6 +99,7 @@ third-party libraries that are not namespaced:
 
 The key of each row is the name of the class that you want to locate. The value is the path to locate it at.
 
+****************
 Composer Support
 ****************
 
