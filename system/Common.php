@@ -133,26 +133,56 @@ if (! function_exists('command')) {
         $runner      = service('commands');
         $regexString = '([^\s]+?)(?:\s|(?<!\\\\)"|(?<!\\\\)\'|$)';
         $regexQuoted = '(?:"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\')';
-        $regexOption = '(-[^\s]+)'; // Pola regex untuk opsi
+        $regexOption = '(-[^\s]+)';
+        $args        = [];
+        $length      = strlen($command);
+        $cursor      = 0;
 
-        $args    = [];
-        $matches = [];
-
-        // Tokenisasi input menggunakan regular expressions
-        preg_match_all('/' . $regexQuoted . '|' . $regexString . '|' . $regexOption . '/A', $command, $matches, PREG_SET_ORDER);
-
-        foreach ($matches as $match) {
-            // Menambahkan token ke dalam array $args
-            $args[] = stripcslashes(empty($match[3]) ? (empty($match[2]) ? $match[1] : $match[2]) : $match[3]);
+        // Check for a match before entering the loop
+        if (! preg_match('/' . $regexQuoted . '|' . $regexString . '|' . $regexOption . '/A', $command, $match, 0, $cursor)) {
+            // @codeCoverageIgnoreStart
+            throw new InvalidArgumentException(sprintf(
+                'Unable to parse input near "... %s ...".',
+                substr($command, $cursor, 10)
+            ));
+            // @codeCoverageIgnoreEnd
         }
 
-        $command     = array_shift($args); // Mengambil command dari awal array
+        while ($cursor < $length) {
+            // Determine the value to add to $args based on preg_match match
+            $value = '';
+            if (! empty($match[1])) {
+                $value = stripcslashes($match[1]);
+            } elseif (! empty($match[2])) {
+                $value = stripcslashes($match[2]);
+            } elseif (! empty($match[3])) {
+                $value = stripcslashes($match[3]);
+            }
+            $args[] = $value;
+
+            // Add the length of the match to $cursor
+            $cursor += strlen($match[0]);
+
+            // Check for the next iteration
+            if ($cursor < $length && ! preg_match('/' . $regexQuoted . '|' . $regexString . '|' . $regexOption . '/A', $command, $match, 0, $cursor)) {
+                // @codeCoverageIgnoreStart
+                throw new InvalidArgumentException(sprintf(
+                    'Unable to parse input near "... %s ...".',
+                    substr($command, $cursor, 10)
+                ));
+                // @codeCoverageIgnoreEnd
+            }
+        }
+
+        $command     = array_shift($args);
         $params      = [];
         $optionValue = false;
 
         foreach ($args as $i => $arg) {
-            if ($arg[0] !== '-') {
-                if (! $optionValue) {
+            if (strpos($arg, '-') !== 0) {
+                if ($optionValue) {
+                    $optionValue = false;
+                } else {
                     $params[] = $arg;
                 }
 
@@ -162,7 +192,7 @@ if (! function_exists('command')) {
             $arg   = ltrim($arg, '-');
             $value = null;
 
-            if (isset($args[$i + 1]) && $args[$i + 1][0] !== '-') {
+            if (isset($args[$i + 1]) && strpos($args[$i + 1], '-') !== 0) {
                 $value       = $args[$i + 1];
                 $optionValue = true;
             }
