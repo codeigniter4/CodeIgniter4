@@ -8,5 +8,6 @@ $test    = Time::parse('2024-04-01', 'Europe/Madrid');
 
 $diff = $current->difference($test);
 
-echo $diff->getDays(); // 0 in v4.4.6 or before
-                       // 1 in v4.4.7 or later
+echo $diff->getDays();
+// 0 in v4.4.6 or before
+// 1 in v4.4.7 or later
