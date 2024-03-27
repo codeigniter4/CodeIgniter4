@@ -131,47 +131,18 @@ if (! function_exists('command')) {
     function command(string $command)
     {
         $runner      = service('commands');
-        $regexString = '([^\s]+?)(?:\s|(?<!\\\\)"|(?<!\\\\)\'|$)';
-        $regexQuoted = '(?:"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\')';
-        $regexOption = '(-[^\s]+)';
-        $args        = [];
-        $length      = strlen($command);
-        $cursor      = 0;
+        $regexString = '([^\s]+?)(?:\s|$)';
+        $regexQuoted = '"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\'';
 
-        // Check for a match before entering the loop
-        if (! preg_match('/' . $regexQuoted . '|' . $regexString . '|' . $regexOption . '/A', $command, $match, 0, $cursor)) {
-            // @codeCoverageIgnoreStart
-            throw new InvalidArgumentException(sprintf(
-                'Unable to parse input near "... %s ...".',
-                substr($command, $cursor, 10)
-            ));
-            // @codeCoverageIgnoreEnd
-        }
+        // Match all arguments at once
+        preg_match_all('/' . $regexQuoted . '|' . $regexString . '/', $command, $matches, PREG_SET_ORDER);
 
-        while ($cursor < $length) {
-            // Determine the value to add to $args based on preg_match match
-            $value = '';
-            if (! empty($match[1])) {
-                $value = stripcslashes($match[1]);
-            } elseif (! empty($match[2])) {
-                $value = stripcslashes($match[2]);
-            } elseif (! empty($match[3])) {
-                $value = stripcslashes($match[3]);
-            }
-            $args[] = $value;
+        $args = [];
 
-            // Add the length of the match to $cursor
-            $cursor += strlen($match[0]);
-
-            // Check for the next iteration
-            if ($cursor < $length && ! preg_match('/' . $regexQuoted . '|' . $regexString . '|' . $regexOption . '/A', $command, $match, 0, $cursor)) {
-                // @codeCoverageIgnoreStart
-                throw new InvalidArgumentException(sprintf(
-                    'Unable to parse input near "... %s ...".',
-                    substr($command, $cursor, 10)
-                ));
-                // @codeCoverageIgnoreEnd
-            }
+        foreach ($matches as $match) {
+            // Determine which part of the match is the actual argument
+            $arg    = $match[1] !== '' ? stripcslashes($match[1]) : (isset($match[3]) ? stripcslashes($match[3]) : stripcslashes($match[2]));
+            $args[] = $arg;
         }
 
         $command     = array_shift($args);
@@ -179,10 +150,14 @@ if (! function_exists('command')) {
         $optionValue = false;
 
         foreach ($args as $i => $arg) {
-            if (strpos($arg, '-') !== 0) {
+            if (mb_strpos($arg, '-') !== 0) {
                 if ($optionValue) {
+                    // if this was an option value, it was already
+                    // included in the previous iteration
                     $optionValue = false;
                 } else {
+                    // add to segments if not starting with '-'
+                    // and not an option value
                     $params[] = $arg;
                 }
 
@@ -192,7 +167,7 @@ if (! function_exists('command')) {
             $arg   = ltrim($arg, '-');
             $value = null;
 
-            if (isset($args[$i + 1]) && strpos($args[$i + 1], '-') !== 0) {
+            if (isset($args[$i + 1]) && mb_strpos($args[$i + 1], '-') !== 0) {
                 $value       = $args[$i + 1];
                 $optionValue = true;
             }
