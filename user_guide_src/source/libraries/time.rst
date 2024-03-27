@@ -362,6 +362,8 @@ Works exactly the same as ``isBefore()`` except checks if the time is after the 
 
 .. literalinclude:: time/037.php
 
+.. _time-viewing-differences:
+
 Viewing Differences
 ===================
 
