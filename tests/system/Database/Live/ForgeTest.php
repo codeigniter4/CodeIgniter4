@@ -155,17 +155,14 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testCreateDatabaseExceptionNoCreateStatement(): void
     {
-        $this->setPrivateProperty($this->forge, 'createDatabaseStr', false);
-
-        if ($this->db->DBDriver === 'SQLite3') {
-            $databaseCreated = $this->forge->createDatabase('test_forge_database');
-            $this->assertTrue($databaseCreated);
-        } else {
-            $this->expectException(DatabaseException::class);
-            $this->expectExceptionMessage('This feature is not available for the database you are using.');
-
-            $this->forge->createDatabase('test_forge_database');
+        if ($this->db->DBDriver !== 'OCI8') {
+            $this->markTestSkipped($this->db->DBDriver . ' does support drop database.');
         }
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('This feature is not available for the database you are using.');
+
+        $this->forge->createDatabase('test_forge_database');
     }
 
     public function testDropDatabaseExceptionNoDropStatement(): void
