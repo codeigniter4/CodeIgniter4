@@ -108,6 +108,8 @@ Then, specify the property name as the filter argument like ``cors:api``:
 
 .. literalinclude:: cors/005.php
 
+You can also use :ref:`filters-filters-filter-arguments`.
+
 ***************
 Class Reference
 ***************
