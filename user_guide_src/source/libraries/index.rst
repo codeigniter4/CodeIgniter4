@@ -7,6 +7,7 @@ Library Reference
 
     caching
     cookies
+    cors
     curlrequest
     email
     encryption
