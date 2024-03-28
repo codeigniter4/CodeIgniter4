@@ -7,7 +7,9 @@ extension's features to convert times across timezones and display the output co
 is the ``Time`` class and lives in the ``CodeIgniter\I18n`` namespace.
 
 .. note:: Since the Time class extends ``DateTimeImmutable``, if there are features that you need that this class doesn't provide,
-    you can likely find them within the `DateTimeImmutable <https://www.php.net/manual/en/class.datetimeimmutable.php>`_  class itself.
+    you can likely find them within the `DateTimeImmutable`_  class itself.
+
+.. _DateTimeImmutable: https://www.php.net/manual/en/class.datetimeimmutable.php
 
 .. note:: Prior to v4.3.0, the Time class extended ``DateTime`` and some inherited methods changed
     the current object state. The bug was fixed in v4.3.0. If you need the old Time class for backward
@@ -24,10 +26,11 @@ Instantiating
 There are several ways that a new Time instance can be created. The first is simply to create a new instance
 like any other class.
 
-When you do it this way, you can pass in a string representing the desired time. This can
-be any string that PHP's `strtotime()`_ function can parse:
+When you do it this way, you can pass in a string representing the desired time.
+This can be any string that PHP's `DateTimeImmutable`_ constructor can parse. See
+`Supported Date and Time Formats`_ for details.
 
-.. _strtotime(): https://www.php.net/manual/en/function.strtotime.php
+.. _Supported Date and Time Formats: https://www.php.net/manual/en/datetime.formats.php
 
 .. literalinclude:: time/001.php
 
