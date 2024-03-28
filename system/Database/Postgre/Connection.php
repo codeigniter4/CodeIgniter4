@@ -65,6 +65,9 @@ class Connection extends BaseConnection
         }
 
         // Convert DSN string
+        // @TODO This format is for PDO_PGSQL.
+        //      https://www.php.net/manual/en/ref.pdo-pgsql.connection.php
+        //      Should deprecate?
         if (mb_strpos($this->DSN, 'pgsql:') === 0) {
             $this->convertDSN();
         }
