@@ -10,7 +10,7 @@ We respect the `Open Web Application Security Project (OWASP) <https://owasp.org
 and follow their recommendations as much as possible.
 
 The following comes from
-`OWASP Top Ten Cheat Sheet <https://owasp.org/www-project-top-ten/>`_,
+`OWASP Top Ten <https://owasp.org/www-project-top-ten/>`_,
 identifying the top vulnerabilities for web applications.
 For each, we provide a brief description, the OWASP recommendations, and then
 the CodeIgniter provisions to address the problem.
