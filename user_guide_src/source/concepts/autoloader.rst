@@ -19,8 +19,9 @@ CodeIgniter4 Autoloader
 
 CodeIgniter provides a very flexible autoloader that can be used with very little configuration.
 It can locate individual namespaced classes that adhere to
-`PSR-4 <https://www.php-fig.org/psr/psr-4/>`_ autoloading
-directory structures.
+`PSR-4`_ autoloading directory structures.
+
+.. _PSR-4: https://www.php-fig.org/psr/psr-4/
 
 The autoloader works great by itself, but can also work with other autoloaders, like
 `Composer <https://getcomposer.org>`_, or even your own custom autoloaders, if needed.
@@ -49,15 +50,22 @@ arrays: one for the classmap, and one for PSR-4 compatible namespaces.
 Namespaces
 ==========
 
-The recommended method for organizing your classes is to create one or more namespaces for your
-application's files. This is most important for any business-logic related classes, entity classes,
-etc. The ``$psr4`` array in the configuration file allows you to map the namespace to the directory
+The recommended method for organizing your classes is to create one or more namespaces
+for your application's files.
+
+The ``$psr4`` array in the configuration file allows you to map the namespace to the directory
 those classes can be found in:
 
 .. literalinclude:: autoloader/001.php
 
 The key of each row is the namespace itself. This does not need a trailing back slash.
 The value is the location to the directory the classes can be found in.
+
+By default, the namespace ``App`` is located in the **app** directory, and the
+namespace ``Config`` is located in the ``app/Config`` directory.
+
+If you create class files in the locations and according to `PSR-4`_, the autoloader
+will autoload them.
 
 .. _confirming-namespaces:
 
@@ -119,9 +127,8 @@ You will need to modify any existing files that are referencing the current name
 Classmap
 ========
 
-The classmap is used extensively by CodeIgniter to eke the last ounces of performance out of the system
-by not hitting the file-system with extra ``is_file()`` calls. You can use the classmap to link to
-third-party libraries that are not namespaced:
+If you use third-party libraries that are not Composer packages and are not namespaced,
+you can load those classes using the classmap:
 
 .. literalinclude:: autoloader/003.php
 

@@ -200,6 +200,9 @@ final class ConfigTest extends CIUnitTestCase
      */
     public function testConvertDSN(string $input, string $expected): void
     {
+        // @TODO This format is for PDO_PGSQL.
+        //      https://www.php.net/manual/en/ref.pdo-pgsql.connection.php
+        //      Should deprecate?
         $this->dsnGroupPostgreNative['DSN'] = $input;
         $conn                               = Config::connect($this->dsnGroupPostgreNative, false);
         $this->assertInstanceOf(BaseConnection::class, $conn);
