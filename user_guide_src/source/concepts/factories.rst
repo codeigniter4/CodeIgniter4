@@ -313,6 +313,9 @@ You can use the ``spark cache:clear`` command:
 
 Or simply delete the **writable/cache/FactoriesCache_config** file.
 
+.. note::
+    Since v4.5.0, the ``spark optimize`` command clears the cache.
+
 How to Enable Config Caching
 ============================
 
@@ -321,6 +324,8 @@ How to Enable Config Caching
 Set the following property to ``true`` in **app/Config/Optimize.php**::
 
     public bool $configCacheEnabled = true;
+
+Since v4.5.0, you can enable this with the ``spark optimize`` command.
 
 .. note::
     This property cannot be overridden by

@@ -187,12 +187,17 @@ You can use the ``spark cache:clear`` command:
 
 Or simply delete the **writable/cache/FileLocatorCache** file.
 
+.. note::
+    The ``spark optimize`` command clears the cache.
+
 How to Enable FileLocator Caching
 =================================
 
 Set the following property to ``true`` in **app/Config/Optimize.php**::
 
     public bool $locatorCacheEnabled = true;
+
+Or you can enable it with the ``spark optimize`` command.
 
 .. note::
     This property cannot be overridden by
