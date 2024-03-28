@@ -260,11 +260,11 @@ class DOMParser
         $attr  = null;
 
         // ID?
-        if (strpos($selector, '#') !== false) {
+        if (str_contains($selector, '#')) {
             [$tag, $id] = explode('#', $selector);
         }
         // Attribute
-        elseif (strpos($selector, '[') !== false && strpos($selector, ']') !== false) {
+        elseif (str_contains($selector, '[') && str_contains($selector, ']')) {
             $open  = strpos($selector, '[');
             $close = strpos($selector, ']');
 
@@ -282,7 +282,7 @@ class DOMParser
             $attr  = [$name => trim($value, '] ')];
         }
         // Class?
-        elseif (strpos($selector, '.') !== false) {
+        elseif (str_contains($selector, '.')) {
             [$tag, $class] = explode('.', $selector);
         }
         // Otherwise, assume the entire string is our tag

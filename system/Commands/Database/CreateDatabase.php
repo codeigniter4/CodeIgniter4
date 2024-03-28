@@ -109,7 +109,7 @@ class CreateDatabase extends BaseCommand
                 $config->{$group}['database'] = $name;
 
                 if ($name !== ':memory:') {
-                    $dbName = strpos($name, DIRECTORY_SEPARATOR) === false ? WRITEPATH . $name : $name;
+                    $dbName = ! str_contains($name, DIRECTORY_SEPARATOR) ? WRITEPATH . $name : $name;
 
                     if (is_file($dbName)) {
                         CLI::error("Database \"{$dbName}\" already exists.", 'light_gray', 'red');

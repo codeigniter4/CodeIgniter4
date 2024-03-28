@@ -80,7 +80,7 @@ class Cell
         [$instance, $method] = $this->determineClass($library);
 
         $class = is_object($instance)
-            ? get_class($instance)
+            ? $instance::class
             : null;
 
         $params = $this->prepareParams($params);
@@ -134,7 +134,7 @@ class Cell
             $newParams = [];
             $separator = ' ';
 
-            if (strpos($params, ',') !== false) {
+            if (str_contains($params, ',')) {
                 $separator = ',';
             }
 
@@ -172,7 +172,7 @@ class Cell
 
         // controlled cells might be called with just
         // the class name, so add a default method
-        if (strpos($library, ':') === false) {
+        if (! str_contains($library, ':')) {
             $library .= ':render';
         }
 
@@ -253,7 +253,7 @@ class Cell
                     $mountParams[] = $params[$paramName];
                 }
             }
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException) {
             // do nothing
         }
 

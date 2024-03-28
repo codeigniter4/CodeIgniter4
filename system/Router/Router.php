@@ -408,7 +408,7 @@ class Router implements RouterInterface
             $matchedKey = $routeKey;
 
             // Are we dealing with a locale?
-            if (strpos($routeKey, '{locale}') !== false) {
+            if (str_contains($routeKey, '{locale}')) {
                 $routeKey = str_replace('{locale}', '[^/]+', $routeKey);
             }
 
@@ -430,7 +430,7 @@ class Router implements RouterInterface
                 }
                 // Store our locale so CodeIgniter object can
                 // assign it to the Request.
-                if (strpos($matchedKey, '{locale}') !== false) {
+                if (str_contains($matchedKey, '{locale}')) {
                     preg_match(
                         '#^' . str_replace('{locale}', '(?<locale>[^/]+)', $matchedKey) . '$#u',
                         $uri,
@@ -472,13 +472,13 @@ class Router implements RouterInterface
                 }
 
                 // Checks `/` in controller name
-                if (strpos($controller, '/') !== false) {
+                if (str_contains($controller, '/')) {
                     throw RouterException::forInvalidControllerName($handler);
                 }
 
-                if (strpos($handler, '$') !== false && strpos($routeKey, '(') !== false) {
+                if (str_contains($handler, '$') && str_contains($routeKey, '(')) {
                     // Checks dynamic controller
-                    if (strpos($controller, '$') !== false) {
+                    if (str_contains($controller, '$')) {
                         throw RouterException::forDynamicController($handler);
                     }
 

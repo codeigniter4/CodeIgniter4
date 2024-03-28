@@ -26,7 +26,7 @@ use CodeIgniter\HTTP\ResponseInterface;
  */
 class PageCache implements FilterInterface
 {
-    private ResponseCache $pageCache;
+    private readonly ResponseCache $pageCache;
 
     public function __construct()
     {

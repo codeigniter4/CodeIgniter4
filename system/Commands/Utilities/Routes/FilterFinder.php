@@ -26,8 +26,8 @@ use Config\Feature;
  */
 final class FilterFinder
 {
-    private Router $router;
-    private Filters $filters;
+    private readonly Router $router;
+    private readonly Filters $filters;
 
     public function __construct(?Router $router = null, ?Filters $filters = null)
     {
@@ -67,12 +67,12 @@ final class FilterFinder
             $this->filters->initialize($uri);
 
             return $this->filters->getFilters();
-        } catch (RedirectException $e) {
+        } catch (RedirectException) {
             return [
                 'before' => [],
                 'after'  => [],
             ];
-        } catch (PageNotFoundException $e) {
+        } catch (PageNotFoundException) {
             return [
                 'before' => ['<unknown>'],
                 'after'  => ['<unknown>'],

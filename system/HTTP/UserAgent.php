@@ -14,13 +14,14 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use Config\UserAgents;
+use Stringable;
 
 /**
  * Abstraction for an HTTP user agent
  *
  * @see \CodeIgniter\HTTP\UserAgentTest
  */
-class UserAgent
+class UserAgent implements Stringable
 {
     /**
      * Current user-agent

@@ -59,33 +59,22 @@ final class DataCaster
     ];
 
     /**
-     * Strict mode? Set to false for casts for Entity.
-     */
-    private readonly bool $strict;
-
-    /**
-     * Helper object.
-     */
-    private readonly ?object $helper;
-
-    /**
      * @param array<string, class-string>|null $castHandlers Custom convert handlers
      * @param array<string, string>|null       $types        [field => type]
+     * @param object|null                      $helper       Helper object.
+     * @param bool                             $strict       Strict mode? Set to false for casts for Entity.
      */
     public function __construct(
         ?array $castHandlers = null,
         ?array $types = null,
-        ?object $helper = null,
-        bool $strict = true
+        private readonly ?object $helper = null,
+        private readonly bool $strict = true
     ) {
         $this->castHandlers = array_merge($this->castHandlers, $castHandlers);
-        $this->helper       = $helper;
 
         if ($types !== null) {
             $this->setTypes($types);
         }
-
-        $this->strict = $strict;
 
         if ($this->strict) {
             foreach ($this->castHandlers as $handler) {

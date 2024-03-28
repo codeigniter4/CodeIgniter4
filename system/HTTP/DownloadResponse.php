@@ -38,7 +38,7 @@ class DownloadResponse extends Response
     /**
      * mime set flag
      */
-    private bool $setMime;
+    private readonly bool $setMime;
 
     /**
      * Download for binary

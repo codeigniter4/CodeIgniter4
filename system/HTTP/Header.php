@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use Stringable;
+
 /**
  * Class Header
  *
@@ -20,7 +22,7 @@ namespace CodeIgniter\HTTP;
  *
  * @see \CodeIgniter\HTTP\HeaderTest
  */
-class Header
+class Header implements Stringable
 {
     /**
      * The name of the header.

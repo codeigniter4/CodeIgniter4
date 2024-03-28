@@ -792,7 +792,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testIsWindows(): void
     {
-        $this->assertSame(strpos(php_uname(), 'Windows') !== false, is_windows());
+        $this->assertSame(str_contains(php_uname(), 'Windows'), is_windows());
         $this->assertSame(defined('PHP_WINDOWS_VERSION_MAJOR'), is_windows());
     }
 
@@ -807,7 +807,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertNotTrue(is_windows());
 
         is_windows(null);
-        $this->assertSame(strpos(php_uname(), 'Windows') !== false, is_windows());
+        $this->assertSame(str_contains(php_uname(), 'Windows'), is_windows());
         $this->assertSame(defined('PHP_WINDOWS_VERSION_MAJOR'), is_windows());
     }
 }

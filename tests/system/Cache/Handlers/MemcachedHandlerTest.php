@@ -122,7 +122,7 @@ final class MemcachedHandlerTest extends AbstractHandlerTest
         $this->assertFalse($this->handler->delete(self::$dummy));
     }
 
-    public function testDeleteMatching(): void
+    public function testDeleteMatching(): never
     {
         // Not implemented for Memcached, should throw an exception
         $this->expectException(Exception::class);
