@@ -21,9 +21,9 @@ use Generator;
  */
 final class DefinedRouteCollector
 {
-    private RouteCollection $routeCollection;
+    private RouteCollectionInterface $routeCollection;
 
-    public function __construct(RouteCollection $routes)
+    public function __construct(RouteCollectionInterface $routes)
     {
         $this->routeCollection = $routes;
     }
