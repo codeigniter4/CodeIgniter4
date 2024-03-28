@@ -20,7 +20,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\DataConverter\DataConverter;
-use CodeIgniter\Entity\Entity;
+use CodeIgniter\Entity\EntityInterface;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
@@ -1796,7 +1796,7 @@ abstract class BaseModel
     protected function objectToRawArray($object, bool $onlyChanged = true, bool $recursive = false): array
     {
         // Entity::toRawArray() returns array.
-        if (method_exists($object, 'toRawArray')) {
+        if ($object instanceof EntityInterface) {
             $properties = $object->toRawArray($onlyChanged, $recursive);
         } else {
             $mirror = new ReflectionClass($object);
