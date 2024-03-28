@@ -15,7 +15,7 @@ namespace Tests\Support\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
-use RuntimeException;
+use CodeIgniter\Exceptions\RuntimeException;
 
 /**
  * This is a testing only controller, intended to blow up in multiple

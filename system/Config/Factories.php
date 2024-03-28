@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\Config;
 
 use CodeIgniter\Database\ConnectionInterface;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Model;
-use InvalidArgumentException;
 
 /**
  * Factories for creating instances.

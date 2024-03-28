@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Format;
 
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
-use RuntimeException;
 
 /**
  * @internal

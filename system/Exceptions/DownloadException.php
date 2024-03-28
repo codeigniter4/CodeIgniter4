@@ -13,12 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Exceptions;
 
-use RuntimeException;
-
 /**
  * Class DownloadException
  */
-class DownloadException extends RuntimeException implements ExceptionInterface
+class DownloadException extends RuntimeException
 {
     use DebugTraceableTrait;
 

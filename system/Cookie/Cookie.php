@@ -15,11 +15,11 @@ namespace CodeIgniter\Cookie;
 
 use ArrayAccess;
 use CodeIgniter\Cookie\Exceptions\CookieException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
+use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\I18n\Time;
 use Config\Cookie as CookieConfig;
 use DateTimeInterface;
-use InvalidArgumentException;
-use LogicException;
 use ReturnTypeWillChange;
 
 /**

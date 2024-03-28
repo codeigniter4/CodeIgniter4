@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\SQLite3;
 
-use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Exceptions\BadMethodCallException;
 use Exception;
 use SQLite3;
 use SQLite3Result;

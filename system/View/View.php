@@ -15,12 +15,12 @@ namespace CodeIgniter\View;
 
 use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Debug\Toolbar\Collectors\Views;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\Toolbar;
 use Config\View as ViewConfig;
 use Psr\Log\LoggerInterface;
-use RuntimeException;
 
 /**
  * Class View

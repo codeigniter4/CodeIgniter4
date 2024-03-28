@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\Test;
 
 use Closure;
+use CodeIgniter\Exceptions\InvalidArgumentException;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\Filters\Filters;
@@ -21,8 +23,6 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\RouteCollection;
 use Config\Filters as FiltersConfig;
-use InvalidArgumentException;
-use RuntimeException;
 
 /**
  * Filter Test Trait

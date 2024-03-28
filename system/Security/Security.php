@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\Security;
 
 use CodeIgniter\Cookie\Cookie;
+use CodeIgniter\Exceptions\InvalidArgumentException;
+use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Request;
@@ -24,8 +26,6 @@ use CodeIgniter\Session\Session;
 use Config\Cookie as CookieConfig;
 use Config\Security as SecurityConfig;
 use ErrorException;
-use InvalidArgumentException;
-use LogicException;
 
 /**
  * Class Security

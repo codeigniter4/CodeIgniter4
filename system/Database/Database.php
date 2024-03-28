@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database;
 
-use InvalidArgumentException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 
 /**
  * Database Connection Factory

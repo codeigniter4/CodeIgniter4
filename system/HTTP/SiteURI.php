@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
-use BadMethodCallException;
+use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;

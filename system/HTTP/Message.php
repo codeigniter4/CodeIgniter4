@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
-use InvalidArgumentException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 
 /**
  * An HTTP message

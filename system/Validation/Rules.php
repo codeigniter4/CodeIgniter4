@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Helpers\Array\ArrayHelper;
 use Config\Database;
-use InvalidArgumentException;
 
 /**
  * Validation Rules.

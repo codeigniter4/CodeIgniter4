@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\CLI\Exceptions;
 
 use CodeIgniter\Exceptions\DebugTraceableTrait;
-use RuntimeException;
+use CodeIgniter\Exceptions\RuntimeException;
 
 /**
  * CLIException

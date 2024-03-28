@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Tests\Support\Autoloader;
 
 use CodeIgniter\Autoloader\FileLocator;
-use RuntimeException;
+use CodeIgniter\Exceptions\RuntimeException;
 
 /**
  * Class FatalLocator

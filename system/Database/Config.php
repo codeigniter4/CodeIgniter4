@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Database as DbConfig;
-use InvalidArgumentException;
 
 /**
  * Class Config

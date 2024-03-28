@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\MySQLi;
 
-use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Exceptions\BadMethodCallException;
 use mysqli;
 use mysqli_result;
 use mysqli_sql_exception;

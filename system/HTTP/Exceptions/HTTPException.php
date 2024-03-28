@@ -18,7 +18,7 @@ use CodeIgniter\Exceptions\FrameworkException;
 /**
  * Things that can go wrong with HTTP
  */
-class HTTPException extends FrameworkException
+class HTTPException extends FrameworkException implements ExceptionInterface
 {
     /**
      * For CurlRequest

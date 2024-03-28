@@ -16,8 +16,8 @@ namespace CodeIgniter\Commands\Database;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Database;
-use InvalidArgumentException;
 
 /**
  * Get table data if it exists in the database.

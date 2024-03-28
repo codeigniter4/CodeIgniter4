@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test\Mock;
 
-use BadMethodCallException;
+use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\View\Table;
 
 class MockTable extends Table
