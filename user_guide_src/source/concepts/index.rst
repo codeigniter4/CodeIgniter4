@@ -14,3 +14,4 @@ The following pages describe the architectural concepts behind CodeIgniter4:
     factories
     http
     security
+    goals
