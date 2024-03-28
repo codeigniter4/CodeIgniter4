@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge as BaseForge;
+use Throwable;
 
 /**
  * Forge for SQLSRV
@@ -42,7 +44,7 @@ class Forge extends BaseForge
      *
      * @var string
      */
-    protected $createDatabaseIfStr = "DECLARE @DBName VARCHAR(255) = '%s'\nDECLARE @SQL VARCHAR(max) = 'IF DB_ID( ''' + @DBName + ''' ) IS NULL CREATE DATABASE ' + @DBName\nEXEC( @SQL )";
+    protected $createDatabaseIfStr = "DECLARE @DBName VARCHAR(255) = '%s'\nDECLARE @SQL VARCHAR(max) = 'IF DB_ID( ''' + @DBName + ''' ) IS NULL CREATE DATABASE %s'\nEXEC( @SQL )";
 
     /**
      * CREATE DATABASE IF statement
@@ -117,6 +119,53 @@ class Forge extends BaseForge
 
         $this->dropConstraintStr = 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->schema) . '.%s DROP CONSTRAINT %s';
         $this->dropIndexStr      = 'DROP INDEX %s ON ' . $this->db->escapeIdentifiers($this->db->schema) . '.%s';
+    }
+
+    /**
+     * Create database
+     *
+     * @param bool $ifNotExists Whether to add IF NOT EXISTS condition
+     *
+     * @throws DatabaseException
+     */
+    public function createDatabase(string $dbName, bool $ifNotExists = false): bool
+    {
+        if ($ifNotExists) {
+            $sql = sprintf(
+                $this->createDatabaseIfStr,
+                $dbName,
+                $this->db->escapeIdentifier($dbName)
+            );
+        } else {
+            $sql = sprintf(
+                $this->createDatabaseStr,
+                $this->db->escapeIdentifier($dbName)
+            );
+        }
+
+        try {
+            if (! $this->db->query($sql)) {
+                // @codeCoverageIgnoreStart
+                if ($this->db->DBDebug) {
+                    throw new DatabaseException('Unable to create the specified database.');
+                }
+
+                return false;
+                // @codeCoverageIgnoreEnd
+            }
+
+            if (isset($this->db->dataCache['db_names'])) {
+                $this->db->dataCache['db_names'][] = $dbName;
+            }
+
+            return true;
+        } catch (Throwable $e) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('Unable to create the specified database.', 0, $e);
+            }
+
+            return false; // @codeCoverageIgnore
+        }
     }
 
     /**

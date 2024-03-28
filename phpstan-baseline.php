@@ -8982,11 +8982,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Test\\\\Mock\\\\MockConnection\\:\\:\\$returnValues has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Return type \\(array\\{code\\: int\\|string\\|null, message\\: string\\|null\\}\\) of method CodeIgniter\\\\Test\\\\Mock\\\\MockConnection\\:\\:error\\(\\) should be covariant with return type \\(array\\<string, int\\|string\\>\\) of method CodeIgniter\\\\Database\\\\ConnectionInterface\\<object\\|resource,object\\|resource\\>\\:\\:error\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
@@ -12673,11 +12668,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Database\\\\BaseConnectionTest\\:\\:\\$options type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/BaseConnectionTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Database/BaseConnectionTest\\.php\\:121\\:\\:\\$returnValues has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/BaseConnectionTest.php',
 ];

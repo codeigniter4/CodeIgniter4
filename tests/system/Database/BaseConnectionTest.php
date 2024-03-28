@@ -283,4 +283,54 @@ final class BaseConnectionTest extends CIUnitTestCase
             ],
         ];
     }
+
+    /**
+     * These tests are intended to confirm the current behavior.
+     *
+     * @dataProvider provideEscapeIdentifiers
+     */
+    public function testEscapeIdentifiers(string $item, string $expected): void
+    {
+        $db = new MockConnection($this->options);
+
+        $return = $db->escapeIdentifiers($item);
+
+        $this->assertSame($expected, $return);
+    }
+
+    /**
+     * @return array<string, list<string>>
+     */
+    public static function provideEscapeIdentifiers(): iterable
+    {
+        yield from [
+            // $item, $expected
+            'simple'    => ['test', '"test"'],
+            'with dots' => ['com.sitedb.web', '"com"."sitedb"."web"'],
+        ];
+    }
+
+    /**
+     * @dataProvider provideEscapeIdentifier
+     */
+    public function testEscapeIdentifier(string $item, string $expected): void
+    {
+        $db = new MockConnection($this->options);
+
+        $return = $db->escapeIdentifier($item);
+
+        $this->assertSame($expected, $return);
+    }
+
+    /**
+     * @return array<string, list<string>>
+     */
+    public static function provideEscapeIdentifier(): iterable
+    {
+        yield from [
+            // $item, $expected
+            'simple'    => ['test', '"test"'],
+            'with dots' => ['com.sitedb.web', '"com.sitedb.web"'],
+        ];
+    }
 }

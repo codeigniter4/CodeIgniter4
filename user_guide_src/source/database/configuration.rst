@@ -149,7 +149,8 @@ Explanation of Values
 **password**     The password used to connect to the database. (``SQLite3`` does not use this.)
 **database**     The name of the database you want to connect to.
 
-                 .. note:: CodeIgniter doesn't support dots (``.``) in the database, table, and column names.
+                 .. note:: CodeIgniter doesn't support dots (``.``) in the table and column names.
+                    Since v4.5.0, database names with dots are supported.
 **DBDriver**     The database driver name. The case must match the driver name.
                  You can set a fully qualified classname to use your custom driver.
                  Supported drivers: ``MySQLi``, ``Postgre``, ``SQLite3``, ``SQLSRV``, and ``OCI8``.
