@@ -151,6 +151,8 @@ configured to any name of your choice by using `$deletedField`_ property.
 
 .. important:: The ``deleted_at`` field in the database must be nullable.
 
+.. _model-allowed-fields:
+
 $allowedFields
 --------------
 
