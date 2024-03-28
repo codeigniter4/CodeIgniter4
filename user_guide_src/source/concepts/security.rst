@@ -73,9 +73,11 @@ where the attacker cannot modify the access control check or metadata.
 CodeIgniter provisions
 ======================
 
-- :ref:`Public <application-structure-public>` folder, with application and system outside
+- :ref:`Public <application-structure-public>` folder, with application and system
+  outside
 - :doc:`../libraries/validation` library
-- :doc:`Security </libraries/security>` library provides for :ref:`CSRF protection <cross-site-request-forgery>`
+- :doc:`Security </libraries/security>` library provides for
+  :ref:`CSRF protection <cross-site-request-forgery>`
 - :doc:`../libraries/throttler` for rate limit
 - :php:func:`log_message()` function for logging
 - An official authentication and authorization framework :ref:`CodeIgniter Shield <shield>`
@@ -165,7 +167,8 @@ CodeIgniter provisions
 - :php:func:`force_https()` function
 - :doc:`../libraries/encryption`
 - The :ref:`database config <database-config-explanation-of-values>` (``encrypt``)
-- An official authentication and authorization framework :ref:`CodeIgniter Shield <shield>`
+- An official authentication and authorization framework
+  :ref:`CodeIgniter Shield <shield>`
 
 ******************
 A03:2021 Injection
