@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\OCI8;
 
 use CodeIgniter\Database\BaseResult;
-use CodeIgniter\Entity\Entity;
+use CodeIgniter\Entity\EntityInterface;
 use stdClass;
 
 /**
@@ -95,7 +95,7 @@ class Result extends BaseResult
      *
      * Overridden by child classes.
      *
-     * @return Entity|false|object|stdClass
+     * @return EntityInterface|false|object|stdClass
      */
     protected function fetchObject(string $className = 'stdClass')
     {
@@ -104,7 +104,7 @@ class Result extends BaseResult
         if ($className === 'stdClass' || ! $row) {
             return $row;
         }
-        if (is_subclass_of($className, Entity::class)) {
+        if (is_subclass_of($className, EntityInterface::class)) {
             return (new $className())->injectRawData((array) $row);
         }
 

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\BaseResult;
-use CodeIgniter\Entity\Entity;
+use CodeIgniter\Entity\EntityInterface;
 use mysqli;
 use mysqli_result;
 use stdClass;
@@ -145,11 +145,11 @@ class Result extends BaseResult
      *
      * Overridden by child classes.
      *
-     * @return Entity|false|object|stdClass
+     * @return EntityInterface|false|object|stdClass
      */
     protected function fetchObject(string $className = 'stdClass')
     {
-        if (is_subclass_of($className, Entity::class)) {
+        if (is_subclass_of($className, EntityInterface::class)) {
             return empty($data = $this->fetchAssoc()) ? false : (new $className())->injectRawData($data);
         }
 

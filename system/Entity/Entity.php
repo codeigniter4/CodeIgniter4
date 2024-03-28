@@ -38,7 +38,7 @@ use ReturnTypeWillChange;
  *
  * @see \CodeIgniter\Entity\EntityTest
  */
-class Entity implements JsonSerializable
+class Entity implements EntityInterface, JsonSerializable
 {
     /**
      * Maps names used in sets and gets against unique
