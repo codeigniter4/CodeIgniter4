@@ -1,8 +1,8 @@
 {
     "title": [
         {
-            "pattern": "^(\\[\\d+\\.\\d+\\]\\s{1})?(feat|fix|chore|docs|perf|refactor|style|test)(\\([\\-.@:`a-zA-Z0-9]+\\))?!?:\\s{1}\\S.+\\S|Prep for \\d\\.\\d\\.\\d release|\\d\\.\\d\\.\\d Ready code$",
-            "message": "PR title must include the type (feat, fix, chore, docs, perf, refactor, style, test) of the commit per Conventional Commits specification. See https://www.conventionalcommits.org/en/v1.0.0/ for the discussion."
+            "pattern": "^(\\[\\d+\\.\\d+\\]\\s{1})?(feat|fix|chore|docs|perf|refactor|style|test|config|revert)(\\([\\-.@:`a-zA-Z0-9]+\\))?!?:\\s{1}\\S.+\\S|Prep for \\d\\.\\d\\.\\d release|\\d\\.\\d\\.\\d Ready code$",
+            "message": "PR title must include the type (feat, fix, chore, docs, perf, refactor, style, test, config, revert) of the commit per Conventional Commits specification. See https://www.conventionalcommits.org/en/v1.0.0/ for the discussion."
         }
     ]
 }
