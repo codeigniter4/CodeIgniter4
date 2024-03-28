@@ -23,59 +23,140 @@ the CodeIgniter provisions to address the problem.
 A01:2021 Broken Access Control
 ******************************
 
-Insecure Direct Object References occur when an application provides direct
-access to objects based on user-supplied input. As a result of this vulnerability
-attackers can bypass authorization and access resources in the system directly,
-for example database records or files.
+Access control enforces policy such that users cannot act outside of their intended
+permissions. Failures typically lead to unauthorized information disclosure,
+modification, or destruction of all data or performing a business function outside
+the user's limits.
 
-Sensitive data must be protected when it is transmitted through the network.
-Such data can include user credentials and credit cards. As a rule of thumb,
-if data must be protected when it is stored, it must be protected also during
-transmission.
+Common access control vulnerabilities include:
 
-CSRF is an attack that forces an end user to execute unwanted actions on a web
-application in which he/she is currently authenticated.
+- Violation of the principle of least privilege or deny by default, where access
+  should only be granted for particular capabilities, roles, or users, but is
+  available to anyone.
+- Bypassing access control checks by modifying the URL (parameter tampering or
+  force browsing), internal application state, or the HTML page, or by using an
+  attack tool modifying API requests.
+- Permitting viewing or editing someone else's account, by providing its unique
+  identifier (insecure direct object references)
+- Accessing API with missing access controls for POST, PUT and DELETE.
+- Elevation of privilege. Acting as a user without being logged in or acting as
+  an admin when logged in as a user.
+- Metadata manipulation, such as replaying or tampering with a JSON Web Token (JWT)
+  access control token, or a cookie or hidden field manipulated to elevate
+  privileges or abusing JWT invalidation.
+- CORS misconfiguration allows API access from unauthorized/untrusted origins.
+- Force browsing to authenticated pages as an unauthenticated user or to privileged
+  pages as a standard user.
 
 OWASP recommendations
 =====================
 
-- Presentation: don't expose internal data; use random reference maps
-- Controller: obtain data from trusted sources or random reference maps
-- Model: validate user roles before updating data
+Access control is only effective in trusted server-side code or server-less API,
+where the attacker cannot modify the access control check or metadata.
 
-- Presentation: ensure that non-web data is outside the web root; validate users and roles; send CSRF tokens
-- Controller: validate users and roles; validate CSRF tokens
-- Model: validate roles
-
-- Presentation: validate users and roles; send CSRF tokens
-- Controller: validate users and roles; validate CSRF tokens
-- Model: validate roles
+- Except for public resources, deny by default.
+- Implement access control mechanisms once and re-use them throughout the application,
+  including minimizing Cross-Origin Resource Sharing (CORS) usage.
+- Model access controls should enforce record ownership rather than accepting that
+  the user can create, read, update, or delete any record.
+- Unique application business limit requirements should be enforced by domain models.
+- Disable web server directory listing and ensure file metadata (e.g., .git) and
+  backup files are not present within web roots.
+- Log access control failures, alert admins when appropriate (e.g., repeated failures).
+- Rate limit API and controller access to minimize the harm from automated attack
+  tooling.
+- Stateful session identifiers should be invalidated on the server after logout.
+  Stateless JWT tokens should rather be short-lived so that the window of opportunity
+  for an attacker is minimized. For longer lived JWTs it's highly recommended to
+  follow the OAuth standards to revoke access.
 
 CodeIgniter provisions
 ======================
 
+- :ref:`Public <application-structure-public>` folder, with application and system outside
 - :doc:`../libraries/validation` library
+- :doc:`Security </libraries/security>` library provides for :ref:`CSRF protection <cross-site-request-forgery>`
+- :doc:`../libraries/throttler` for rate limit
+- :php:func:`log_message()` function for logging
 - An official authentication and authorization framework :ref:`CodeIgniter Shield <shield>`
 - Easy to add third party authentication
-
-- :ref:`Public <application-structure-public>` folder, with application and system outside
-- :doc:`Security </libraries/security>` library provides for :ref:`CSRF validation <cross-site-request-forgery>`
 
 *******************************
 A02:2021 Cryptographic Failures
 *******************************
 
-Sensitive data must be protected when it is transmitted through the network.
-Such data can include user credentials and credit cards. As a rule of thumb,
-if data must be protected when it is stored, it must be protected also during
-transmission.
+The first thing is to determine the protection needs of data in transit and at
+rest. For example, passwords, credit card numbers, health records, personal
+information, and business secrets require extra protection, mainly if that data
+falls under privacy laws, e.g., EU's General Data Protection Regulation (GDPR),
+or regulations, e.g., financial data protection such as PCI Data Security Standard
+(PCI DSS). For all such data:
+
+- Is any data transmitted in clear text? This concerns protocols such as HTTP,
+  SMTP, FTP also using TLS upgrades like STARTTLS. External internet traffic is
+  hazardous. Verify all internal traffic, e.g., between load balancers, web servers,
+  or back-end systems.
+- Are any old or weak cryptographic algorithms or protocols used either by default
+  or in older code?
+- Are default crypto keys in use, weak crypto keys generated or re-used, or is
+  proper key management or rotation missing? Are crypto keys checked into source
+  code repositories?
+- Is encryption not enforced, e.g., are any HTTP headers (browser) security
+  directives or headers missing?
+- Is the received server certificate and the trust chain properly validated?
+- Are initialization vectors ignored, reused, or not generated sufficiently secure
+  for the cryptographic mode of operation? Is an insecure mode of operation such
+  as ECB in use? Is encryption used when authenticated encryption is more appropriate?
+- Are passwords being used as cryptographic keys in absence of a password base key
+  derivation function?
+- Is randomness used for cryptographic purposes that was not designed to meet
+  cryptographic requirements? Even if the correct function is chosen, does it need
+  to be seeded by the developer, and if not, has the developer over-written the
+  strong seeding functionality built into it with a seed that lacks sufficient
+  entropy/unpredictability?
+- Are deprecated hash functions such as MD5 or SHA1 in use, or are non-cryptographic
+  hash functions used when cryptographic hash functions are needed?
+- Are deprecated cryptographic padding methods such as PKCS number 1 v1.5 in use?
+- Are cryptographic error messages or side channel information exploitable, for
+  example in the form of padding oracle attacks?
 
 OWASP recommendations
 =====================
 
-- Presentation: use TLS1.2; use strong ciphers and hashes; do not send keys or hashes to browser
-- Controller: use strong ciphers and hashes
-- Model: mandate strong encrypted communications with servers
+Do the following, at a minimum, and consult the references:
+
+- Classify data processed, stored, or transmitted by an application. Identify which
+  data is sensitive according to privacy laws, regulatory requirements, or business
+  needs.
+- Don't store sensitive data unnecessarily. Discard it as soon as possible or use
+  PCI DSS compliant tokenization or even truncation. Data that is not retained
+  cannot be stolen.
+- Make sure to encrypt all sensitive data at rest.
+- Ensure up-to-date and strong standard algorithms, protocols, and keys are in
+  place; use proper key management.
+- Encrypt all data in transit with secure protocols such as TLS with forward secrecy
+  (FS) ciphers, cipher prioritization by the server, and secure parameters. Enforce
+  encryption using directives like HTTP Strict Transport Security (HSTS).
+- Disable caching for response that contain sensitive data.
+- Apply required security controls as per the data classification.
+- Do not use legacy protocols such as FTP and SMTP for transporting sensitive data.
+- Store passwords using strong adaptive and salted hashing functions with a work
+  factor (delay factor), such as Argon2, scrypt, bcrypt or PBKDF2.
+- Initialization vectors must be chosen appropriate for the mode of operation.
+  For many modes, this means using a CSPRNG (cryptographically secure pseudo random
+  number generator). For modes that require a nonce, then the initialization vector
+  (IV) does not need a CSPRNG. In all cases, the IV should never be used twice for
+  a fixed key.
+- Always use authenticated encryption instead of just encryption.
+- Keys should be generated cryptographically randomly and stored in memory as byte
+  arrays. If a password is used, then it must be converted to a key via an
+  appropriate password base key derivation function.
+- Ensure that cryptographic randomness is used where appropriate, and that it has
+  not been seeded in a predictable way or with low entropy. Most modern APIs do
+  not require the developer to seed the CSPRNG to get security.
+- Avoid deprecated cryptographic functions and padding schemes, such as MD5, SHA1,
+  PKCS number 1 v1.5 .
+- Verify independently the effectiveness of configuration and settings.
 
 CodeIgniter provisions
 ======================
@@ -84,29 +165,52 @@ CodeIgniter provisions
 - :php:func:`force_https()` function
 - :doc:`../libraries/encryption`
 - The :ref:`database config <database-config-explanation-of-values>` (``encrypt``)
+- An official authentication and authorization framework :ref:`CodeIgniter Shield <shield>`
 
 ******************
 A03:2021 Injection
 ******************
 
-An injection is the inappropriate insertion of partial or complete data via
-the input data from the client to the application. Attack vectors include SQL,
-XML, ORM, code & buffer overflows.
+An application is vulnerable to attack when:
 
-Insufficient input validation where one user can add content to a web site
-that can be malicious when viewed by other users to the web site.
+- User-supplied data is not validated, filtered, or sanitized by the application.
+- Dynamic queries or non-parameterized calls without context-aware escaping are
+  used directly in the interpreter.
+- Hostile data is used within object-relational mapping (ORM) search parameters
+  to extract additional, sensitive records.
+- Hostile data is directly used or concatenated. The SQL or command contains the
+  structure and malicious data in dynamic queries, commands, or stored procedures.
+
+Some of the more common injections are SQL, NoSQL, OS command, Object Relational
+Mapping (ORM), LDAP, and Expression Language (EL) or Object Graph Navigation Library
+(OGNL) injection. The concept is identical among all interpreters. Source code
+review is the best method of detecting if applications are vulnerable to injections.
+Automated testing of all parameters, headers, URL, cookies, JSON, SOAP, and XML
+data inputs is strongly encouraged. Organizations can include static (SAST),
+dynamic (DAST), and interactive (IAST) application security testing tools into
+the CI/CD pipeline to identify introduced injection flaws before production deployment.
 
 OWASP recommendations
 =====================
 
-- Presentation: set correct content type, character set & locale
-- Submission: validate fields and provide feedback
-- Controller: sanitize input; positive input validation using correct character set
-- Model: parameterized queries
+Preventing injection requires keeping data separate from commands and queries:
 
-- Presentation: output encode all user data as per output context; set input constraints
-- Controller: positive input validation
-- Tips: only process trustworthy data; do not store data HTML encoded in DB
+- The preferred option is to use a safe API, which avoids using the interpreter
+  entirely, provides a parameterized interface, or migrates to Object Relational
+  Mapping Tools (ORMs).
+    - Note: Even when parameterized, stored procedures can still introduce SQL
+      injection if PL/SQL or T-SQL concatenates queries and data or executes hostile
+      data with EXECUTE IMMEDIATE or exec().
+- Use positive server-side input validation. This is not a complete defense as
+  many applications require special characters, such as text areas or APIs for
+  mobile applications.
+- For any residual dynamic queries, escape special characters using the specific
+  escape syntax for that interpreter.
+    - Note: SQL structures such as table names, column names, and so on cannot be
+      escaped, and thus user-supplied structure names are dangerous. This is a
+      common issue in report-writing software.
+- Use LIMIT and other SQL controls within queries to prevent mass disclosure of
+  records in case of SQL injection.
 
 CodeIgniter provisions
 ======================
@@ -114,11 +218,13 @@ CodeIgniter provisions
 - :ref:`urls-uri-security`
 - :ref:`invalidchars` filter
 - :doc:`../libraries/validation` library
-- :doc:`HTTP library <../incoming/incomingrequest>` provides for :ref:`input field filtering <incomingrequest-filtering-input-data>` & content metadata
-
 - :php:func:`esc()` function
-- :doc:`../libraries/validation` library
+- :doc:`HTTP library <../incoming/incomingrequest>` provides for
+  :ref:`input field filtering <incomingrequest-filtering-input-data>` & content metadata
 - Support for :ref:`content-security-policy`
+- :doc:`../database/query_builder`
+- :ref:`Database escape methods <database-queries-escaping>`
+- :ref:`database-queries-query-bindings`
 
 ************************
 A04:2021 Insecure Design
