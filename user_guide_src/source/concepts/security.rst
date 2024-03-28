@@ -10,8 +10,9 @@ We respect the `Open Web Application Security Project (OWASP) <https://owasp.org
 and follow their recommendations as much as possible.
 
 The following comes from
-`OWASP Top Ten <https://owasp.org/www-project-top-ten/>`_,
-identifying the top vulnerabilities for web applications.
+`OWASP Top Ten <https://owasp.org/www-project-top-ten/>`_ and
+`OWASP API Security Top 10 <https://owasp.org/API-Security/editions/2023/en/0x11-t10/>`_
+identifying the top vulnerabilities for web applications and apis.
 For each, we provide a brief description, the OWASP recommendations, and then
 the CodeIgniter provisions to address the problem.
 
@@ -577,3 +578,356 @@ CodeIgniter provisions
 - :doc:`../libraries/validation` library
 - :doc:`HTTP library <../incoming/incomingrequest>` provides for
   :ref:`input field filtering <incomingrequest-filtering-input-data>`
+
+******************************
+OWASP API Security Top 10 2023
+******************************
+
+API1:2023 Broken Object Level Authorization
+===========================================
+
+APIs tend to expose endpoints that handle object identifiers, creating a wide
+attack surface of Object Level Access Control issues. Object level authorization
+checks should be considered in every function that accesses a data source using
+an ID from the user.
+
+OWASP recommendations
+---------------------
+
+- Implement a proper authorization mechanism that relies on the user policies and
+  hierarchy.
+- Use the authorization mechanism to check if the logged-in user has access to
+  perform the requested action on the record in every function that uses an input
+  from the client to access a record in the database.
+- Prefer the use of random and unpredictable values as GUIDs for records' IDs.
+- Write tests to evaluate the vulnerability of the authorization mechanism. Do
+  not deploy changes that make the tests fail.
+
+CodeIgniter provisions
+----------------------
+
+- An official authentication and authorization framework
+  :ref:`CodeIgniter Shield <shield>`
+
+API2:2023 Broken Authentication
+===============================
+
+Authentication mechanisms are often implemented incorrectly, allowing attackers
+to compromise authentication tokens or to exploit implementation flaws to assume
+other user's identities temporarily or permanently. Compromising a system's
+ability to identify the client/user, compromises API security overall.
+
+OWASP recommendations
+---------------------
+
+- Make sure you know all the possible flows to authenticate to the API (mobile/
+  web/deep links that implement one-click authentication/etc.). Ask your engineers
+  what flows you missed.
+- Read about your authentication mechanisms. Make sure you understand what and
+  how they are used. OAuth is not authentication, and neither are API keys.
+- Don't reinvent the wheel in authentication, token generation, or password storage.
+  Use the standards.
+- Credential recovery/forgot password endpoints should be treated as login
+  endpoints in terms of brute force, rate limiting, and lockout protections.
+- Require re-authentication for sensitive operations (e.g. changing the account
+  owner email address/2FA phone number).
+- Use the OWASP Authentication Cheatsheet.
+- Where possible, implement multi-factor authentication.
+- Implement anti-brute force mechanisms to mitigate credential stuffing, dictionary
+  attacks, and brute force attacks on your authentication endpoints. This mechanism
+  should be stricter than the regular rate limiting mechanisms on your APIs.
+- Implement account lockout/captcha mechanisms to prevent brute force attacks
+  against specific users. Implement weak-password checks.
+- API keys should not be used for user authentication. They should only be used
+  for API clients authentication.
+
+CodeIgniter provisions
+----------------------
+
+- An official authentication and authorization framework
+  :ref:`CodeIgniter Shield <shield>`
+
+API3:2023 Broken Object Property Level Authorization
+====================================================
+
+This category combines API3:2019 Excessive Data Exposure and API6:2019 - Mass
+Assignment, focusing on the root cause: the lack of or improper authorization
+validation at the object property level. This leads to information exposure or
+manipulation by unauthorized parties.
+
+OWASP recommendations
+---------------------
+
+- When exposing an object using an API endpoint, always make sure that the user
+  should have access to the object's properties you expose.
+- Avoid using generic methods such as to_json() and to_string(). Instead,
+  cherry-pick specific object properties you specifically want to return.
+- If possible, avoid using functions that automatically bind a client's input
+  into code variables, internal objects, or object properties ("Mass Assignment").
+- Allow changes only to the object's properties that should be updated by the
+  client.
+- Implement a schema-based response validation mechanism as an extra layer of
+  security. As part of this mechanism, define and enforce data returned by all
+  API methods.
+- Keep returned data structures to the bare minimum, according to the
+  business/functional requirements for the endpoint.
+
+CodeIgniter provisions
+----------------------
+
+- Model's :ref:`model-allowed-fields`
+- An official authentication and authorization framework
+  :ref:`CodeIgniter Shield <shield>`
+
+API4:2023 Unrestricted Resource Consumption
+===========================================
+
+Satisfying API requests requires resources such as network bandwidth, CPU, memory,
+and storage. Other resources such as emails/SMS/phone calls or biometrics validation
+are made available by service providers via API integrations, and paid for per
+request. Successful attacks can lead to Denial of Service or an increase of
+operational costs.
+
+OWASP recommendations
+---------------------
+
+- Use a solution that makes it easy to limit memory, CPU, number of restarts,
+  file descriptors, and processes such as Containers / Serverless code (e.g. Lambdas).
+- Define and enforce a maximum size of data on all incoming parameters and payloads,
+  such as maximum length for strings, maximum number of elements in arrays, and
+  maximum upload file size (regardless of whether it is stored locally or in
+  cloud storage).
+- Implement a limit on how often a client can interact with the API within a
+  defined timeframe (rate limiting).
+- Rate limiting should be fine tuned based on the business needs. Some API Endpoints
+  might require stricter policies.
+- Limit/throttle how many times or how often a single API client/user can execute
+  a single operation (e.g. validate an OTP, or request password recovery without
+  visiting the one-time URL).
+- Add proper server-side validation for query string and request body parameters,
+  specifically the one that controls the number of records to be returned in the
+  response.
+- Configure spending limits for all service providers/API integrations. When setting
+  spending limits is not possible, billing alerts should be configured instead.
+
+CodeIgniter provisions
+----------------------
+
+- :doc:`../libraries/validation` library
+- :doc:`../libraries/throttler` for rate limit
+
+API5:2023 Broken Function Level Authorization
+=============================================
+
+Complex access control policies with different hierarchies, groups, and roles,
+and an unclear separation between administrative and regular functions, tend to
+lead to authorization flaws. By exploiting these issues, attackers can gain
+access to other users’ resources and/or administrative functions.
+
+OWASP recommendations
+---------------------
+
+Your application should have a consistent and easy-to-analyze authorization module
+that is invoked from all your business functions. Frequently, such protection is
+provided by one or more components external to the application code.
+
+- The enforcement mechanism(s) should deny all access by default, requiring explicit
+  grants to specific roles for access to every function.
+- Review your API endpoints against function level authorization flaws, while
+  keeping in mind the business logic of the application and groups hierarchy.
+- Make sure that all of your administrative controllers inherit from an
+  administrative abstract controller that implements authorization checks based
+  on the user's group/role.
+- Make sure that administrative functions inside a regular controller implement
+  authorization checks based on the user's group and role.
+
+CodeIgniter provisions
+----------------------
+
+- An official authentication and authorization framework
+  :ref:`CodeIgniter Shield <shield>`
+
+API6:2023 Unrestricted Access to Sensitive Business Flows
+=========================================================
+
+APIs vulnerable to this risk expose a business flow - such as buying a ticket,
+or posting a comment - without compensating for how the functionality could harm
+the business if used excessively in an automated manner. This doesn't necessarily
+come from implementation bugs.
+
+OWASP recommendations
+---------------------
+
+The mitigation planning should be done in two layers:
+
+- Business - identify the business flows that might harm the business if they
+  are excessively used.
+- Engineering - choose the right protection mechanisms to mitigate the business
+  risk.
+
+Some of the protection mechanisms are more simple while others are more difficult
+to implement. The following methods are used to slow down automated threats:
+
+- Device fingerprinting: denying service to unexpected client devices (e.g
+  headless browsers) tends to make threat actors use more sophisticated solutions,
+  thus more costly for them
+- Human detection: using either captcha or more advanced biometric solutions
+  (e.g. typing patterns)
+- Non-human patterns: analyze the user flow to detect non-human patterns
+  (e.g. the user accessed the "add to cart" and "complete purchase" functions in
+  less than one second)
+- Consider blocking IP addresses of Tor exit nodes and well-known proxies
+
+Secure and limit access to APIs that are consumed directly by machines (such as
+developer and B2B APIs). They tend to be an easy target for attackers because
+they often don't implement all the required protection mechanisms.
+
+CodeIgniter provisions
+----------------------
+
+- n/a
+
+API7:2023 Server Side Request Forgery
+=====================================
+
+Server-Side Request Forgery (SSRF) flaws can occur when an API is fetching a
+remote resource without validating the user-supplied URI. This enables an attacker
+to coerce the application to send a crafted request to an unexpected destination,
+even when protected by a firewall or a VPN.
+
+OWASP recommendations
+---------------------
+
+- Isolate the resource fetching mechanism in your network: usually these features
+  are aimed to retrieve remote resources and not internal ones.
+- Whenever possible, use allow lists of:
+
+   - Remote origins users are expected to download resources from (e.g. Google Drive,
+     Gravatar, etc.)
+   - URL schemes and ports
+   - Accepted media types for a given functionality
+- Disable HTTP redirections.
+- Use a well-tested and maintained URL parser to avoid issues caused by URL parsing inconsistencies.
+- Validate and sanitize all client-supplied input data.
+- Do not send raw responses to clients.
+
+CodeIgniter provisions
+----------------------
+
+- :doc:`../libraries/validation` library
+- :doc:`HTTP library <../incoming/incomingrequest>` provides for
+  :ref:`input field filtering <incomingrequest-filtering-input-data>`
+- :doc:`CURLRequest <../libraries/curlrequest>` class
+- :doc:`URI <../libraries/uri>` class
+
+API8:2023 Security Misconfiguration
+===================================
+
+APIs and the systems supporting them typically contain complex configurations,
+meant to make the APIs more customizable. Software and DevOps engineers can miss
+these configurations, or don't follow security best practices when it comes to
+configuration, opening the door for different types of attacks.
+
+OWASP recommendations
+---------------------
+
+The API life cycle should include:
+
+- A repeatable hardening process leading to fast and easy deployment of a properly
+  locked down environment
+- A task to review and update configurations across the entire API stack. The
+  review should include: orchestration files, API components, and cloud services
+  (e.g. S3 bucket permissions)
+- An automated process to continuously assess the effectiveness of the configuration
+  and settings in all environments
+
+Furthermore:
+
+- Ensure that all API communications from the client to the API server and any
+  downstream/upstream components happen over an encrypted communication channel
+  (TLS), regardless of whether it is an internal or public-facing API.
+- Be specific about which HTTP verbs each API can be accessed by: all other HTTP
+  verbs should be disabled (e.g. HEAD).
+- APIs expecting to be accessed from browser-based clients (e.g., WebApp front-end)
+  should, at least:
+
+    - implement a proper Cross-Origin Resource Sharing (CORS) policy
+    - include applicable Security Headers
+- Restrict incoming content types/data formats to those that meet the business/
+  functional requirements.
+- Ensure all servers in the HTTP server chain (e.g. load balancers, reverse and
+  forward proxies, and back-end servers) process incoming requests in a uniform
+  manner to avoid desync issues.
+- Where applicable, define and enforce all API response payload schemas, including
+  error responses, to prevent exception traces and other valuable information from
+  being sent back to attackers.
+
+CodeIgniter provisions
+----------------------
+
+- The config for global secure access (``Config\App::$forceGlobalSecureRequests``)
+- :php:func:`force_https()` function
+- :ref:`Defined Route Routing <defined-route-routing>`
+- :ref:`auto-routing-improved`
+
+API9:2023 Improper Inventory Management
+=======================================
+
+APIs tend to expose more endpoints than traditional web applications, making
+proper and updated documentation highly important. A proper inventory of hosts
+and deployed API versions also are important to mitigate issues such as deprecated
+API versions and exposed debug endpoints.
+
+OWASP recommendations
+---------------------
+
+- Inventory all API hosts and document important aspects of each one of them,
+  focusing on the API environment (e.g. production, staging, test, development),
+  who should have network access to the host (e.g. public, internal, partners)
+  and the API version.
+- Inventory integrated services and document important aspects such as their
+  role in the system, what data is exchanged (data flow), and their sensitivity.
+- Document all aspects of your API such as authentication, errors, redirects,
+  rate limiting, cross-origin resource sharing (CORS) policy, and endpoints,
+  including their parameters, requests, and responses.
+- Generate documentation automatically by adopting open standards. Include the
+  documentation build in your CI/CD pipeline.
+- Make API documentation available only to those authorized to use the API.
+- Use external protection measures such as API security specific solutions for
+  all exposed versions of your APIs, not just for the current production version.
+- Avoid using production data with non-production API deployments. If this is
+  unavoidable, these endpoints should get the same security treatment as the
+  production ones.
+- When newer versions of APIs include security improvements, perform a risk
+  analysis to inform the mitigation actions required for the older versions. For
+  example, whether it is possible to backport the improvements without breaking
+  API compatibility or if you need to take the older version out quickly and
+  force all clients to move to the latest version.
+
+CodeIgniter provisions
+----------------------
+
+- :ref:`routing-spark-routes` command
+
+API10:2023 Unsafe Consumption of APIs
+=====================================
+
+Developers tend to trust data received from third-party APIs more than user input,
+and so tend to adopt weaker security standards. In order to compromise APIs,
+attackers go after integrated third-party services instead of trying to compromise
+the target API directly.
+
+OWASP recommendations
+---------------------
+
+- When evaluating service providers, assess their API security posture.
+- Ensure all API interactions happen over a secure communication channel (TLS).
+- Always validate and properly sanitize data received from integrated APIs before
+  using it.
+- Maintain an allowlist of well-known locations integrated APIs may redirect yours
+  to: do not blindly follow redirects.
+
+CodeIgniter provisions
+----------------------
+
+- :doc:`../libraries/validation` library
