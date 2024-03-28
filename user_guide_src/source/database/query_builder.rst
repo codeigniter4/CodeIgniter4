@@ -16,6 +16,7 @@ for safer queries, since the values are escaped automatically by the
 system.
 
 .. note:: CodeIgniter doesn't support dots (``.``) in the table and column names.
+    Since v4.5.0, database names with dots are supported.
 
 .. contents::
     :local:

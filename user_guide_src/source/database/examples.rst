@@ -7,6 +7,7 @@ is used. For complete details please read the individual pages
 describing each function.
 
 .. note:: CodeIgniter doesn't support dots (``.``) in the table and column names.
+    Since v4.5.0, database names with dots are supported.
 
 .. contents::
     :local:
