@@ -1593,7 +1593,9 @@ class ValidationTest extends CIUnitTestCase
     {
         // to test if placeholderReplacementResultDetermination() works we provoke and expect an exception
         $this->expectException(ExpectationFailedException::class);
-        $this->expectExceptionMessage('Failed asserting that \'filter[{id}]\' does not contain "{id}".');
+        $this->expectExceptionMessage(
+            'Failed asserting that \'filter[{id}]\' [ASCII](length: 12) does not contain "{id}" [ASCII](length: 4).'
+        );
 
         $this->validation->setRule('foo', 'foo-label', 'required|filter[{id}]');
 

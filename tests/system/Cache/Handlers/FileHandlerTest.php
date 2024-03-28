@@ -23,7 +23,7 @@ use Config\Cache;
  *
  * @group Others
  */
-final class FileHandlerTest extends AbstractHandlerTest
+final class FileHandlerTest extends AbstractHandlerTestCase
 {
     private static string $directory = 'FileHandler';
     private Cache $config;

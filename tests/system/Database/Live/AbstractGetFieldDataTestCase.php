@@ -18,7 +18,7 @@ use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database;
 
-abstract class AbstractGetFieldDataTest extends CIUnitTestCase
+abstract class AbstractGetFieldDataTestCase extends CIUnitTestCase
 {
     /**
      * @var BaseConnection
