@@ -17,11 +17,14 @@ the CodeIgniter provisions to address the problem.
 
 .. contents::
     :local:
-    :depth: 1
+    :depth: 2
 
-******************************
+*****************
+OWASP Top 10 2021
+*****************
+
 A01:2021 Broken Access Control
-******************************
+==============================
 
 Access control enforces policy such that users cannot act outside of their intended
 permissions. Failures typically lead to unauthorized information disclosure,
@@ -49,7 +52,7 @@ Common access control vulnerabilities include:
   pages as a standard user.
 
 OWASP recommendations
-=====================
+---------------------
 
 Access control is only effective in trusted server-side code or server-less API,
 where the attacker cannot modify the access control check or metadata.
@@ -71,7 +74,7 @@ where the attacker cannot modify the access control check or metadata.
   follow the OAuth standards to revoke access.
 
 CodeIgniter provisions
-======================
+----------------------
 
 - :ref:`Public <application-structure-public>` folder, with application and system
   outside
@@ -83,9 +86,8 @@ CodeIgniter provisions
 - An official authentication and authorization framework :ref:`CodeIgniter Shield <shield>`
 - Easy to add third party authentication
 
-*******************************
 A02:2021 Cryptographic Failures
-*******************************
+===============================
 
 The first thing is to determine the protection needs of data in transit and at
 rest. For example, passwords, credit card numbers, health records, personal
@@ -123,7 +125,7 @@ or regulations, e.g., financial data protection such as PCI Data Security Standa
   example in the form of padding oracle attacks?
 
 OWASP recommendations
-=====================
+---------------------
 
 Do the following, at a minimum, and consult the references:
 
@@ -161,7 +163,7 @@ Do the following, at a minimum, and consult the references:
 - Verify independently the effectiveness of configuration and settings.
 
 CodeIgniter provisions
-======================
+----------------------
 
 - The config for global secure access (``Config\App::$forceGlobalSecureRequests``)
 - :php:func:`force_https()` function
@@ -170,9 +172,8 @@ CodeIgniter provisions
 - An official authentication and authorization framework
   :ref:`CodeIgniter Shield <shield>`
 
-******************
 A03:2021 Injection
-******************
+==================
 
 An application is vulnerable to attack when:
 
@@ -194,7 +195,7 @@ dynamic (DAST), and interactive (IAST) application security testing tools into
 the CI/CD pipeline to identify introduced injection flaws before production deployment.
 
 OWASP recommendations
-=====================
+---------------------
 
 Preventing injection requires keeping data separate from commands and queries:
 
@@ -218,7 +219,7 @@ Preventing injection requires keeping data separate from commands and queries:
   records in case of SQL injection.
 
 CodeIgniter provisions
-======================
+----------------------
 
 - :ref:`urls-uri-security`
 - :ref:`invalidchars` filter
@@ -231,9 +232,8 @@ CodeIgniter provisions
 - :ref:`Database escape methods <database-queries-escaping>`
 - :ref:`database-queries-query-bindings`
 
-************************
 A04:2021 Insecure Design
-************************
+========================
 
 Insecure design is a broad category representing different weaknesses, expressed
 as “missing or ineffective control design.” Insecure design is not the source for
@@ -249,7 +249,7 @@ lack of business risk profiling inherent in the software or system being develop
 and thus the failure to determine what level of security design is required.
 
 OWASP recommendations
-=====================
+---------------------
 
 - Establish and use a secure development lifecycle with AppSec professionals to
   help evaluate and design security and privacy-related controls
@@ -269,15 +269,14 @@ OWASP recommendations
 - Limit resource consumption by user or service
 
 CodeIgniter provisions
-======================
+----------------------
 
 - :doc:`PHPUnit testing <../testing/overview>`
 - :doc:`../libraries/throttler` for rate limit
 - An official authentication and authorization framework :ref:`CodeIgniter Shield <shield>`
 
-**********************************
 A05:2021 Security Misconfiguration
-**********************************
+==================================
 
 The application might be vulnerable if the application is:
 
@@ -301,7 +300,7 @@ Without a concerted, repeatable application security configuration process,
 systems are at a higher risk.
 
 OWASP recommendations
-=====================
+---------------------
 
 Secure installation processes should be implemented, including:
 
@@ -323,14 +322,13 @@ Secure installation processes should be implemented, including:
   settings in all environments.
 
 CodeIgniter provisions
-======================
+----------------------
 
 - :ref:`Production mode <environment-constant>` by default
 - :ref:`secureheaders` filter
 
-*******************************************
 A06:2021 Vulnerable and Outdated Components
-*******************************************
+===========================================
 
 You are likely vulnerable:
 
@@ -352,7 +350,7 @@ You are likely vulnerable:
   Misconfiguration).
 
 OWASP recommendations
-=====================
+---------------------
 
 There should be a patch management process in place to:
 
@@ -378,13 +376,12 @@ applying updates or configuration changes for the lifetime of the application or
 portfolio.
 
 CodeIgniter provisions
-======================
+----------------------
 
 - Easy :ref:`app-starter-upgrading` by Composer
 
-***************************************************
 A07:2021 Identification and Authentication Failures
-***************************************************
+===================================================
 
 Confirmation of the user's identity, authentication, and session management is
 critical to protect against authentication-related attacks. There may be
@@ -406,7 +403,7 @@ authentication weaknesses if the application:
   or a period of inactivity.
 
 OWASP recommendations
-=====================
+---------------------
 
 - Where possible, implement multi-factor authentication to prevent automated
   credential stuffing, brute force, and stolen credential reuse attacks.
@@ -427,15 +424,14 @@ OWASP recommendations
   timeouts.
 
 CodeIgniter provisions
-======================
+----------------------
 
 - :doc:`Session <../libraries/sessions>` library
 - An official authentication and authorization framework
   :ref:`CodeIgniter Shield <shield>`
 
-*********************************************
 A08:2021 Software and Data Integrity Failures
-*********************************************
+=============================================
 
 Software and data integrity failures relate to code and infrastructure that does
 not protect against integrity violations. An example of this is where an application
@@ -452,7 +448,7 @@ Another example is where objects or data are encoded or serialized into a struct
 that an attacker can see and modify is vulnerable to insecure deserialization.
 
 OWASP recommendations
-=====================
+---------------------
 
 - Use digital signatures or similar mechanisms to verify the software or data is
   from the expected source and has not been altered.
@@ -473,13 +469,12 @@ OWASP recommendations
   tampering or replay of the serialized data
 
 CodeIgniter provisions
-======================
+----------------------
 
 - n/a
 
-*************************************************
 A09:2021 Security Logging and Monitoring Failures
-*************************************************
+=================================================
 
 This category is to help detect, escalate, and respond to active breaches. Without
 logging and monitoring, breaches cannot be detected. Insufficient logging, detection,
@@ -501,7 +496,7 @@ You are vulnerable to information leakage by making logging and alerting events
 visible to a user or an attacker (see A01:2021-Broken Access Control).
 
 OWASP recommendations
-=====================
+---------------------
 
 Developers should implement some or all the following controls, depending on the risk of the application:
 
@@ -525,15 +520,14 @@ such as the Elasticsearch, Logstash, Kibana (ELK) stack, that feature custom
 dashboards and alerting.
 
 CodeIgniter provisions
-======================
+----------------------
 
 - :doc:`Logging <../general/logging>` library
 - An official authentication and authorization framework
   :ref:`CodeIgniter Shield <shield>`
 
-*******************************************
 A10:2021 Server-Side Request Forgery (SSRF)
-*******************************************
+===========================================
 
 SSRF flaws occur whenever a web application is fetching a remote resource without
 validating the user-supplied URL. It allows an attacker to coerce the application
@@ -546,7 +540,7 @@ Also, the severity of SSRF is becoming higher due to cloud services and the
 complexity of architectures.
 
 OWASP recommendations
-=====================
+---------------------
 
 Developers can prevent SSRF by implementing some or all the following defense in
 depth controls:
@@ -578,7 +572,7 @@ Do not mitigate SSRF via the use of a deny list or regular expression. Attackers
 have payload lists, tools, and skills to bypass deny lists.
 
 CodeIgniter provisions
-======================
+----------------------
 
 - :doc:`../libraries/validation` library
 - :doc:`HTTP library <../incoming/incomingrequest>` provides for
