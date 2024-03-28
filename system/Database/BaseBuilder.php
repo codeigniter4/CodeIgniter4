@@ -1526,7 +1526,7 @@ class BaseBuilder
     /**
      * Allows key/value pairs to be set for insert(), update() or replace().
      *
-     * @param array|object|string $key    Field name, or an array of field/value pairs
+     * @param array|object|string $key    Field name, or an array of field/value pairs, or an object
      * @param mixed               $value  Field value, if $key is a single field
      * @param bool|null           $escape Whether to escape values
      *
