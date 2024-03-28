@@ -342,14 +342,17 @@ compatibility, you can use deprecated <code class="docutils literal notranslate"
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Instantiating</a><a class="headerlink" href="#instantiating" title="Permalink to this heading"></a></h2>
 <p>There are several ways that a new Time instance can be created. The first is simply to create a new instance
 like any other class.</p>
-<p>When you do it this way, you can pass in a string representing the desired time. This can
-be any string that PHP’s <a class="reference external" href="https://www.php.net/manual/en/function.strtotime.php">strtotime()</a> function can parse:</p>
+<p>When you do it this way, you can pass in a string representing the desired time.
+This can be any string that PHP’s <a class="reference external" href="https://www.php.net/manual/en/class.datetimeimmutable.php">DateTimeImmutable</a> constructor can parse. See
+<a class="reference external" href="https://www.php.net/manual/en/datetime.formats.php">Supported Date and Time Formats</a> for details.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$myTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;+3 week&#39;</span><span class="p">);</span>
+<span class="nv">$myTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">);</span>
+<span class="nv">$myTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;2024-01-01 12:00:00&#39;</span><span class="p">);</span>
 <span class="nv">$myTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;now&#39;</span><span class="p">);</span>
+<span class="nv">$myTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;+3 week&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can pass in strings representing the timezone and the locale in the second and parameters, respectively. Timezones
