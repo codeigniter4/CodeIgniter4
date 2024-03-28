@@ -225,7 +225,7 @@ CodeIgniter provisions
 - :doc:`../libraries/validation` library
 - :php:func:`esc()` function
 - :doc:`HTTP library <../incoming/incomingrequest>` provides for
-  :ref:`input field filtering <incomingrequest-filtering-input-data>` & content metadata
+  :ref:`input field filtering <incomingrequest-filtering-input-data>`
 - Support for :ref:`content-security-policy`
 - :doc:`../database/query_builder`
 - :ref:`Database escape methods <database-queries-escaping>`
