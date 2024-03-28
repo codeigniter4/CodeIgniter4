@@ -28,6 +28,21 @@ The error page has been updated. Please update the following files:
 Breaking Changes
 ****************
 
+Time::difference() and DST
+==========================
+
+In previous versions, when comparing dates with ``Time::difference()``, unexpected
+results were returned if the date included a day different from 24 hours due to
+Daylight Saving Time (DST). See :ref:`Note in Times and Dates <time-viewing-differences>`
+for details.
+
+This bug has been fixed, so date comparisons will now be shifted by one day in
+such cases.
+
+In the unlikely event that you wish to maintain the behavior of the previous
+versions, change the time zone of both dates being compared to UTC before passing
+them to ``Time::difference()``.
+
 *********************
 Breaking Enhancements
 *********************
