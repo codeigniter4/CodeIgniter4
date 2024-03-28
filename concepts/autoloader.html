@@ -310,8 +310,7 @@ headache and very error-prone. That’s where autoloaders come in.</p>
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">CodeIgniter4 Autoloader</a><a class="headerlink" href="#codeigniter4-autoloader" title="Permalink to this heading"></a></h2>
 <p>CodeIgniter provides a very flexible autoloader that can be used with very little configuration.
 It can locate individual namespaced classes that adhere to
-<a class="reference external" href="https://www.php-fig.org/psr/psr-4/">PSR-4</a> autoloading
-directory structures.</p>
+<a class="reference external" href="https://www.php-fig.org/psr/psr-4/">PSR-4</a> autoloading directory structures.</p>
 <p>The autoloader works great by itself, but can also work with other autoloaders, like
 <a class="reference external" href="https://getcomposer.org">Composer</a>, or even your own custom autoloaders, if needed.
 Because they’re all registered through
@@ -334,9 +333,9 @@ server.</p>
 arrays: one for the classmap, and one for PSR-4 compatible namespaces.</p>
 <section id="namespaces">
 <span id="autoloader-namespaces"></span><h3><a class="toc-backref" href="#id4" role="doc-backlink">Namespaces</a><a class="headerlink" href="#namespaces" title="Permalink to this heading"></a></h3>
-<p>The recommended method for organizing your classes is to create one or more namespaces for your
-application’s files. This is most important for any business-logic related classes, entity classes,
-etc. The <code class="docutils literal notranslate"><span class="pre">$psr4</span></code> array in the configuration file allows you to map the namespace to the directory
+<p>The recommended method for organizing your classes is to create one or more namespaces
+for your application’s files.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$psr4</span></code> array in the configuration file allows you to map the namespace to the directory
 those classes can be found in:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -358,6 +357,10 @@ those classes can be found in:</p>
 </div>
 <p>The key of each row is the namespace itself. This does not need a trailing back slash.
 The value is the location to the directory the classes can be found in.</p>
+<p>By default, the namespace <code class="docutils literal notranslate"><span class="pre">App</span></code> is located in the <strong>app</strong> directory, and the
+namespace <code class="docutils literal notranslate"><span class="pre">Config</span></code> is located in the <code class="docutils literal notranslate"><span class="pre">app/Config</span></code> directory.</p>
+<p>If you create class files in the locations and according to <a class="reference external" href="https://www.php-fig.org/psr/psr-4/">PSR-4</a>, the autoloader
+will autoload them.</p>
 </section>
 <section id="confirming-namespaces">
 <span id="id1"></span><h3><a class="toc-backref" href="#id5" role="doc-backlink">Confirming Namespaces</a><a class="headerlink" href="#confirming-namespaces" title="Permalink to this heading"></a></h3>
@@ -385,9 +388,8 @@ namespace has changed.</p>
 </section>
 <section id="classmap">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">Classmap</a><a class="headerlink" href="#classmap" title="Permalink to this heading"></a></h3>
-<p>The classmap is used extensively by CodeIgniter to eke the last ounces of performance out of the system
-by not hitting the file-system with extra <code class="docutils literal notranslate"><span class="pre">is_file()</span></code> calls. You can use the classmap to link to
-third-party libraries that are not namespaced:</p>
+<p>If you use third-party libraries that are not Composer packages and are not namespaced,
+you can load those classes using the classmap:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -433,7 +435,7 @@ the first one to get a chance to locate the file.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 26, 2024.
+      <span class="lastupdated">Last updated on Mar 28, 2024.
       </span></p>
   </div>
 
