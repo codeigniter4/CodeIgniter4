@@ -378,6 +378,51 @@ final class UpdateModelTest extends LiveModelTestCase
         $this->model->update($id, $entity);
     }
 
+    public function testUpdateSetObject(): void
+    {
+        $this->createModel(UserModel::class);
+
+        $object          = new stdClass();
+        $object->name    = 'Jones Martin';
+        $object->email   = 'jones@example.org';
+        $object->country = 'India';
+
+        /** @var int|string $id */
+        $id = $this->model->insert($object);
+
+        /** @var stdClass $object */
+        $object       = $this->model->find($id);
+        $object->name = 'John Smith';
+
+        $return = $this->model->where('id', $id)->set($object)->update();
+
+        $this->assertTrue($return);
+    }
+
+    public function testUpdateSetEntity(): void
+    {
+        $this->createModel(UserModel::class);
+
+        $object          = new stdClass();
+        $object->id      = 1;
+        $object->name    = 'Jones Martin';
+        $object->email   = 'jones@example.org';
+        $object->country = 'India';
+
+        $id = $this->model->insert($object);
+
+        $entity = new Entity([
+            'id'      => 1,
+            'name'    => 'John Smith',
+            'email'   => 'john@example.org',
+            'country' => 'India',
+        ]);
+
+        $return = $this->model->where('id', $id)->set($entity)->update();
+
+        $this->assertTrue($return);
+    }
+
     public function testUpdateEntityWithPrimaryKeyCast(): void
     {
         if (
