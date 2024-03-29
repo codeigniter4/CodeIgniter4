@@ -327,6 +327,9 @@ Others
 - app/Config/Kint.php
     - It no longer extends ``BaseConfig`` because enabling
       :ref:`factories-config-caching` could cause errors.
+- app/Config/Security.php
+    - The property ``$redirect`` has been changed to ``true`` in ``production``
+      environment.
 
 All Changes
 ===========
