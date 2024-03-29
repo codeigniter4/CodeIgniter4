@@ -294,10 +294,15 @@
 <li><p><a class="reference internal" href="#base-url-contains-sub-folders" id="id3">Base URL contains Sub folders</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#removing-the-index-php-file" id="id4">Removing the index.php file</a></p>
+<li><p><a class="reference internal" href="#uri-security" id="id4">URI Security</a></p>
 <ul>
-<li><p><a class="reference internal" href="#apache-web-server" id="id5">Apache Web Server</a></p></li>
-<li><p><a class="reference internal" href="#nginx" id="id6">nginx</a></p></li>
+<li><p><a class="reference internal" href="#adding-permitted-characters" id="id5">Adding Permitted Characters</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#removing-the-index-php-file" id="id6">Removing the index.php file</a></p>
+<ul>
+<li><p><a class="reference internal" href="#apache-web-server" id="id7">Apache Web Server</a></p></li>
+<li><p><a class="reference internal" href="#nginx" id="id8">nginx</a></p></li>
 </ul>
 </li>
 </ul>
@@ -382,8 +387,52 @@ It is also called as <strong>URI string</strong>.</p></td>
 </table>
 </section>
 </section>
+<section id="uri-security">
+<span id="urls-uri-security"></span><h2><a class="toc-backref" href="#id4" role="doc-backlink">URI Security</a><a class="headerlink" href="#uri-security" title="Permalink to this heading"></a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.4.7.</span></p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Users upgrading from versions prior to v4.4.7 will need to add the following
+to <strong>app/Config/App.php</strong> in order to use this feature:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$permittedURIChars</span> <span class="o">=</span> <span class="s1">&#39;a-z 0-9~%.:_\-&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>CodeIgniter is fairly restrictive regarding which characters it allows in your
+URI strings (Route path) in order to help minimize the possibility that malicious
+data can be passed to your application. URIs may only contain the following:</p>
+<ul class="simple">
+<li><p>Alpha-numeric text (latin characters only)</p></li>
+<li><p>Tilde: <code class="docutils literal notranslate"><span class="pre">~</span></code></p></li>
+<li><p>Percent sign: <code class="docutils literal notranslate"><span class="pre">%</span></code></p></li>
+<li><p>Period: <code class="docutils literal notranslate"><span class="pre">.</span></code></p></li>
+<li><p>Colon: <code class="docutils literal notranslate"><span class="pre">:</span></code></p></li>
+<li><p>Underscore: <code class="docutils literal notranslate"><span class="pre">_</span></code></p></li>
+<li><p>Dash: <code class="docutils literal notranslate"><span class="pre">-</span></code></p></li>
+<li><p>Space: `` ``</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This check is performed by the <code class="docutils literal notranslate"><span class="pre">Router</span></code>. The Router takes the URL-encoded
+value held by the <code class="docutils literal notranslate"><span class="pre">SiteURI</span></code> class, decodes it, and then checks that it
+does not contain not permitted strings.</p>
+</div>
+<section id="adding-permitted-characters">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Adding Permitted Characters</a><a class="headerlink" href="#adding-permitted-characters" title="Permalink to this heading"></a></h3>
+<p>The permitted characters can be changed by <code class="docutils literal notranslate"><span class="pre">Config\App::$permittedURIChars</span></code>.</p>
+<p>If you want to use Unicode for URI paths, modify it to allow the characters to
+be used. For example, if you want to use Bengali, you will need to set the
+following value in <strong>app/Config/App.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$permittedURIChars</span> <span class="o">=</span> <span class="s1">&#39;a-z 0-9~%.:_\-\x{0980}-\x{09ff}&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>A full list of Unicode ranges can be found at Wikipedia’s <a class="reference external" href="https://en.wikipedia.org/wiki/Unicode_block">Unicode block</a>.</p>
+</section>
+</section>
 <section id="removing-the-index-php-file">
-<span id="urls-remove-index-php"></span><h2><a class="toc-backref" href="#id4" role="doc-backlink">Removing the index.php file</a><a class="headerlink" href="#removing-the-index-php-file" title="Permalink to this heading"></a></h2>
+<span id="urls-remove-index-php"></span><h2><a class="toc-backref" href="#id6" role="doc-backlink">Removing the index.php file</a><a class="headerlink" href="#removing-the-index-php-file" title="Permalink to this heading"></a></h2>
 <p>When you use Apache Web Server, by default, the <strong>index.php</strong> file will be needed in your URLs:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">news</span><span class="o">/</span><span class="nx">article</span><span class="o">/</span><span class="nx">my_article</span>
 </pre></div>
@@ -391,7 +440,7 @@ It is also called as <strong>URI string</strong>.</p></td>
 <p>If your server supports rewriting URLs you can easily remove this file with URL rewriting. This is handled differently
 by different servers, but we will show examples for the two most common web servers here.</p>
 <section id="apache-web-server">
-<span id="urls-remove-index-php-apache"></span><h3><a class="toc-backref" href="#id5" role="doc-backlink">Apache Web Server</a><a class="headerlink" href="#apache-web-server" title="Permalink to this heading"></a></h3>
+<span id="urls-remove-index-php-apache"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">Apache Web Server</a><a class="headerlink" href="#apache-web-server" title="Permalink to this heading"></a></h3>
 <p>Apache must have the <em>mod_rewrite</em> extension enabled. If it does, you can use a <code class="docutils literal notranslate"><span class="pre">.htaccess</span></code> file with some simple rules.
 Here is an example of such a file, using the “negative” method in which everything is redirected except the specified
 items:</p>
@@ -413,7 +462,7 @@ request for your index.php file.</p>
 </div>
 </section>
 <section id="nginx">
-<span id="urls-remove-index-php-nginx"></span><h3><a class="toc-backref" href="#id6" role="doc-backlink">nginx</a><a class="headerlink" href="#nginx" title="Permalink to this heading"></a></h3>
+<span id="urls-remove-index-php-nginx"></span><h3><a class="toc-backref" href="#id8" role="doc-backlink">nginx</a><a class="headerlink" href="#nginx" title="Permalink to this heading"></a></h3>
 <p>Under nginx, you can define a location block and use the <code class="docutils literal notranslate"><span class="pre">try_files</span></code> directive to get the same effect as we did with
 the above Apache configuration:</p>
 <div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>

@@ -297,27 +297,39 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="#mandatory-file-changes" id="id1">Mandatory File Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#error-files" id="id2">Error Files</a></p></li>
+<li><p><a class="reference internal" href="#uri-security" id="id2">URI Security</a></p></li>
+<li><p><a class="reference internal" href="#error-files" id="id3">Error Files</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#breaking-changes" id="id3">Breaking Changes</a></p>
+<li><p><a class="reference internal" href="#breaking-changes" id="id4">Breaking Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#time-difference-and-dst" id="id4">Time::difference() and DST</a></p></li>
+<li><p><a class="reference internal" href="#paths-in-controller-filters" id="id5">Paths in Controller Filters</a></p></li>
+<li><p><a class="reference internal" href="#time-difference-and-dst" id="id6">Time::difference() and DST</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#breaking-enhancements" id="id5">Breaking Enhancements</a></p></li>
-<li><p><a class="reference internal" href="#project-files" id="id6">Project Files</a></p>
+<li><p><a class="reference internal" href="#breaking-enhancements" id="id7">Breaking Enhancements</a></p></li>
+<li><p><a class="reference internal" href="#project-files" id="id8">Project Files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#content-changes" id="id7">Content Changes</a></p></li>
-<li><p><a class="reference internal" href="#all-changes" id="id8">All Changes</a></p></li>
+<li><p><a class="reference internal" href="#content-changes" id="id9">Content Changes</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id10">All Changes</a></p></li>
 </ul>
 </li>
 </ul>
 </nav>
 <section id="mandatory-file-changes">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Mandatory File Changes</a><a class="headerlink" href="#mandatory-file-changes" title="Permalink to this heading"></a></h2>
+<section id="uri-security">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">URI Security</a><a class="headerlink" href="#uri-security" title="Permalink to this heading"></a></h3>
+<p>The feature to check if URIs do not contain not permitted strings has been added.
+This check is equivalent to the URI Security found in CodeIgniter 3.</p>
+<p>We recommend you enable this feature. Add the following to <strong>app/Config/App.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$permittedURIChars</span> <span class="o">=</span> <span class="s1">&#39;a-z 0-9~%.:_\-&#39;</span><span class="p">;</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../general/urls.html#urls-uri-security"><span class="std std-ref">URI Security</span></a> for details.</p>
+</section>
 <section id="error-files">
-<h3><a class="toc-backref" href="#id2" role="doc-backlink">Error Files</a><a class="headerlink" href="#error-files" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Error Files</a><a class="headerlink" href="#error-files" title="Permalink to this heading"></a></h3>
 <p>The error page has been updated. Please update the following files:</p>
 <ul class="simple">
 <li><p>app/Views/errors/html/debug.css</p></li>
@@ -326,9 +338,37 @@
 </section>
 </section>
 <section id="breaking-changes">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this heading"></a></h2>
+<section id="paths-in-controller-filters">
+<span id="upgrade-447-filter-paths"></span><h3><a class="toc-backref" href="#id5" role="doc-backlink">Paths in Controller Filters</a><a class="headerlink" href="#paths-in-controller-filters" title="Permalink to this heading"></a></h3>
+<p>A bug where URI paths processed by <a class="reference internal" href="../incoming/filters.html"><span class="doc">Controller Filters</span></a> were not URL-decoded has been fixed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that <a class="reference internal" href="../incoming/routing.html"><span class="doc">Router</span></a> processes URL-decoded URI paths.</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Config\Filters</span></code> has some places to specify the URI paths. If the paths have
+different values when URL-decoded, change them to the URL-decoded values.</p>
+<p>E.g.,:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">public array $globals = [</span>
+<span class="x">    &#39;before&#39; =&gt; [</span>
+<span class="x">        &#39;csrf&#39; =&gt; [&#39;except&#39; =&gt; &#39;%E6%97%A5%E6%9C%AC%E8%AA%9E/*&#39;],</span>
+<span class="x">    ],</span>
+<span class="x">    // ...</span>
+<span class="x">];</span>
+</pre></div>
+</div>
+<p>↓</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">public array $globals = [</span>
+<span class="x">    &#39;before&#39; =&gt; [</span>
+<span class="x">        &#39;csrf&#39; =&gt; [&#39;except&#39; =&gt; &#39;日本語/*&#39;],</span>
+<span class="x">    ],</span>
+<span class="x">    // ...</span>
+<span class="x">];</span>
+</pre></div>
+</div>
+</section>
 <section id="time-difference-and-dst">
-<h3><a class="toc-backref" href="#id4" role="doc-backlink">Time::difference() and DST</a><a class="headerlink" href="#time-difference-and-dst" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Time::difference() and DST</a><a class="headerlink" href="#time-difference-and-dst" title="Permalink to this heading"></a></h3>
 <p>In previous versions, when comparing dates with <code class="docutils literal notranslate"><span class="pre">Time::difference()</span></code>, unexpected
 results were returned if the date included a day different from 24 hours due to
 Daylight Saving Time (DST). See <a class="reference internal" href="../libraries/time.html#time-viewing-differences"><span class="std std-ref">Note in Times and Dates</span></a>
@@ -341,27 +381,35 @@ them to <code class="docutils literal notranslate"><span class="pre">Time::diffe
 </section>
 </section>
 <section id="breaking-enhancements">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this heading"></a></h2>
 </section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this heading"></a></h2>
 <p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
 these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
 <p>There are some third-party CodeIgniter modules available to assist with merging changes to
 the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 <section id="content-changes">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this heading"></a></h3>
 <p>The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:</p>
 <section id="config">
 <h4>Config<a class="headerlink" href="#config" title="Permalink to this heading"></a></h4>
 <ul class="simple">
+<li><dl class="simple">
+<dt>app/Config/App.php</dt><dd><ul>
+<li><p>The property <code class="docutils literal notranslate"><span class="pre">$permittedURIChars</span></code> was added. See <a class="reference internal" href="../general/urls.html#urls-uri-security"><span class="std std-ref">URI Security</span></a>
+for details.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 <li><p>&#64;TODO</p></li>
 </ul>
 </section>
 </section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this heading"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">

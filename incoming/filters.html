@@ -532,6 +532,13 @@ an array with the <code class="docutils literal notranslate"><span class="pre">e
 <span class="p">}</span>
 </pre></div>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Prior to v4.4.7, due to a bug, the URI paths processed by the filter
+were not URL-decoded. In other words, the URI paths specified in the routing
+and the URI paths specified in the filter could be different.
+See <a class="reference internal" href="../installation/upgrade_447.html#upgrade-447-filter-paths"><span class="std std-ref">Paths in Controller Filters</span></a> for details.</p>
+</div>
 <p>Any place you can use a URI path (relative to BaseURL) in the filter settings, you can use a regular expression or, like in this example, use
 an asterisk (<code class="docutils literal notranslate"><span class="pre">*</span></code>) for a wildcard that will match all characters after that. In this example, any URI path starting with <code class="docutils literal notranslate"><span class="pre">api/</span></code>
 would be exempted from CSRF protection, but the site’s forms would all be protected.</p>
@@ -619,6 +626,13 @@ a list of URI path (relative to BaseURL) patterns that filter should apply to:</
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Prior to v4.4.7, due to a bug, the URI paths processed by the filter
+were not URL-decoded. In other words, the URI paths specified in the routing
+and the URI paths specified in the filter could be different.
+See <a class="reference internal" href="../installation/upgrade_447.html#upgrade-447-filter-paths"><span class="std std-ref">Paths in Controller Filters</span></a> for details.</p>
 </div>
 <section id="filter-arguments">
 <span id="filters-filters-filter-arguments"></span><h4>Filter Arguments<a class="headerlink" href="#filter-arguments" title="Permalink to this heading"></a></h4>

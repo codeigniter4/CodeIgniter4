@@ -291,15 +291,30 @@
 <p><strong>4.4.7 release of CodeIgniter4</strong></p>
 <nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#breaking" id="id1">BREAKING</a></p></li>
-<li><p><a class="reference internal" href="#message-changes" id="id2">Message Changes</a></p></li>
-<li><p><a class="reference internal" href="#changes" id="id3">Changes</a></p></li>
-<li><p><a class="reference internal" href="#deprecations" id="id4">Deprecations</a></p></li>
-<li><p><a class="reference internal" href="#bugs-fixed" id="id5">Bugs Fixed</a></p></li>
+<li><p><a class="reference internal" href="#security" id="id1">SECURITY</a></p></li>
+<li><p><a class="reference internal" href="#breaking" id="id2">BREAKING</a></p></li>
+<li><p><a class="reference internal" href="#message-changes" id="id3">Message Changes</a></p></li>
+<li><p><a class="reference internal" href="#changes" id="id4">Changes</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id5">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id6">Bugs Fixed</a></p></li>
 </ul>
 </nav>
+<section id="security">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">SECURITY</a><a class="headerlink" href="#security" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Language:</strong> <em>Language class DoS Vulnerability</em> was fixed.
+See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-39fp-mqmm-gxj6">Security advisory GHSA-39fp-mqmm-gxj6</a>
+for more information.</p></li>
+<li><p><strong>URI Security:</strong> The feature to check if URIs do not contain not permitted
+strings has been added. This check is equivalent to the URI Security found in
+CodeIgniter 3. This is enabled by default, but upgraded users need to add
+a setting to enable it. See <a class="reference internal" href="../general/urls.html#urls-uri-security"><span class="std std-ref">URI Security</span></a> for details.</p></li>
+<li><p><strong>Filters:</strong> A bug where URI paths processed by Filters were not URL-decoded
+has been fixed. See <a class="reference internal" href="../installation/upgrade_447.html#upgrade-447-filter-paths"><span class="std std-ref">Paths in Controller Filters</span></a> for details.</p></li>
+</ul>
+</section>
 <section id="breaking">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>In previous versions, when comparing dates with <code class="docutils literal notranslate"><span class="pre">Time::difference()</span></code>,
 unexpected results were returned if the date included a day different from 24
@@ -308,16 +323,16 @@ hours due to Daylight Saving Time (DST). This bug has been fixed. See
 </ul>
 </section>
 <section id="message-changes">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this heading"></a></h2>
 </section>
 <section id="changes">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Changes</a><a class="headerlink" href="#changes" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Changes</a><a class="headerlink" href="#changes" title="Permalink to this heading"></a></h2>
 </section>
 <section id="deprecations">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this heading"></a></h2>
 </section>
 <section id="bugs-fixed">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this heading"></a></h2>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
 for a complete list of bugs fixed.</p>
