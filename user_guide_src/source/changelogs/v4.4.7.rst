@@ -2,7 +2,7 @@
 Version 4.4.7
 #############
 
-Release Date: Unreleased
+Release Date: March 29, 2024
 
 **4.4.7 release of CodeIgniter4**
 
@@ -32,18 +32,6 @@ BREAKING
   unexpected results were returned if the date included a day different from 24
   hours due to Daylight Saving Time (DST). This bug has been fixed. See
   :ref:`Note in Times and Dates <time-viewing-differences>` for details.
-
-***************
-Message Changes
-***************
-
-*******
-Changes
-*******
-
-************
-Deprecations
-************
 
 **********
 Bugs Fixed

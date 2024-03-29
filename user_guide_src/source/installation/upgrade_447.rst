@@ -89,10 +89,6 @@ In the unlikely event that you wish to maintain the behavior of the previous
 versions, change the time zone of both dates being compared to UTC before passing
 them to ``Time::difference()``.
 
-*********************
-Breaking Enhancements
-*********************
-
 *************
 Project Files
 *************
@@ -115,7 +111,6 @@ Config
 - app/Config/App.php
     - The property ``$permittedURIChars`` was added. See :ref:`urls-uri-security`
       for details.
-- @TODO
 
 All Changes
 ===========
@@ -123,4 +118,19 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- app/Config/Cache.php
+- app/Config/ContentSecurityPolicy.php
+- app/Config/Database.php
+- app/Config/Exceptions.php
+- app/Config/Filters.php
+- app/Config/Format.php
+- app/Config/Logger.php
+- app/Config/Mimes.php
+- app/Config/Routing.php
+- app/Config/Toolbar.php
+- app/Config/Validation.php
+- app/Config/View.php
+- app/Controllers/BaseController.php
+- app/Views/errors/html/debug.css
+- app/Views/errors/html/error_exception.php
+- composer.json
