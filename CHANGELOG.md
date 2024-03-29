@@ -3,6 +3,18 @@
 ## [v4.4.7](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.7) (2024-03-29)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.6...v4.4.7)
 
+### SECURITY
+
+* **Language:** *Language class DoS Vulnerability* was fixed. See the
+  [Security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-39fp-mqmm-gxj6)
+  for more information.
+* **URI Security:** The feature to check if URIs do not contain not permitted
+  strings has been added. This check is equivalent to the URI Security found in
+  CodeIgniter 3. This is enabled by default, but upgraded users need to add
+  a setting to enable it.
+* **Filters:** A bug where URI paths processed by Filters were not URL-decoded
+  has been fixed.
+
 ### Breaking Changes
 * fix: Time::difference() DST bug by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8661
 
