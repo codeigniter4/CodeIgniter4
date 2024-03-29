@@ -28,6 +28,7 @@ use CodeIgniter\Validation\ValidationInterface;
 use Config\Database;
 use Config\Feature;
 use ReflectionException;
+use stdClass;
 
 /**
  * The Model class extends BaseModel and provides additional
@@ -715,7 +716,7 @@ class Model extends BaseModel
      * data here. This allows it to be used with any of the other
      * builder methods and still get validated data, like replace.
      *
-     * @param array|object|string               $key    Field name, or an array of field/value pairs
+     * @param array|object|string               $key    Field name, or an array of field/value pairs, or an object
      * @param bool|float|int|object|string|null $value  Field value, if $key is a single field
      * @param bool|null                         $escape Whether to escape values
      *
@@ -723,6 +724,10 @@ class Model extends BaseModel
      */
     public function set($key, $value = '', ?bool $escape = null)
     {
+        if (is_object($key)) {
+            $key = $key instanceof stdClass ? (array) $key : $this->objectToArray($key);
+        }
+
         $data = is_array($key) ? $key : [$key => $value];
 
         foreach (array_keys($data) as $k) {

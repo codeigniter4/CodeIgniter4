@@ -365,11 +365,15 @@ Works exactly the same as ``isBefore()`` except checks if the time is after the 
 
 .. literalinclude:: time/037.php
 
+.. _time-viewing-differences:
+
 Viewing Differences
 ===================
 
 To compare two Times directly, you would use the ``difference()`` method, which returns a ``CodeIgniter\I18n\TimeDifference``
-instance. The first parameter is either a Time instance, a DateTime instance, or a string with the date/time. If
+instance.
+
+The first parameter is either a Time instance, a DateTime instance, or a string with the date/time. If
 a string is passed in the first parameter, the second parameter can be a timezone string:
 
 .. literalinclude:: time/038.php
@@ -379,6 +383,15 @@ between the two times. The value returned will be negative if it was in the past
 the original time:
 
 .. literalinclude:: time/039.php
+
+.. note:: Prior to v4.4.7, Time always converted the time zones to UTC before
+    comparison. This could lead to unexpected results when containing a day
+    differed from 24 hours due to Daylight Saving Time (DST).
+
+    Starting with v4.4.7, when comparing date/times that are in the same
+    time zone, the comparison is performed as is, without conversion to UTC.
+
+        .. literalinclude:: time/042.php
 
 You can use either ``getX()`` methods, or access the calculate values as if they were properties:
 
