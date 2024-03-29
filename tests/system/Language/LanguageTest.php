@@ -16,7 +16,6 @@ namespace CodeIgniter\Language;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLanguage;
 use Config\Services;
-use InvalidArgumentException;
 use MessageFormatter;
 use Tests\Support\Language\SecondMockLanguage;
 
@@ -139,18 +138,14 @@ final class LanguageTest extends CIUnitTestCase
             $this->markTestSkipped('No intl support.');
         }
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(
-            'Invalid message format: "تم الكشف عن كلمة المرور {0} بسبب اختراق البيانات وشوهدت {1 ، عدد} مرة في {2} في كلمات المرور المخترقة.", args: "password,hits,wording"'
-        );
-
         $this->lang->setLocale('ar');
 
-        $this->lang->setData('Auth', [
-            'errorPasswordPwned' => 'تم الكشف عن كلمة المرور {0} بسبب اختراق البيانات وشوهدت {1 ، عدد} مرة في {2} في كلمات المرور المخترقة.',
-        ]);
+        $line = 'تم الكشف عن كلمة المرور {0} بسبب اختراق البيانات وشوهدت {1 ، عدد} مرة في {2} في كلمات المرور المخترقة.';
+        $this->lang->setData('Auth', ['errorPasswordPwned' => $line]);
 
-        $this->lang->getLine('Auth.errorPasswordPwned', ['password', 'hits', 'wording']);
+        $output = $this->lang->getLine('Auth.errorPasswordPwned', ['password', 'hits', 'wording']);
+
+        $this->assertSame($line . "\n【Warning】Also, invalid string(s) was passed to the Language class. See log file for details.", $output);
     }
 
     /**

@@ -1058,6 +1058,52 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
+    public function testMatchesURIWithUnicode(): void
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $config = [
+            'aliases' => [
+                'foo'  => '',
+                'bar'  => '',
+                'frak' => '',
+                'baz'  => '',
+            ],
+            'globals' => [
+                'before' => [
+                    'foo' => ['except' => '日本語/*'],
+                    'bar',
+                ],
+                'after' => [
+                    'foo' => ['except' => '日本語/*'],
+                    'baz',
+                ],
+            ],
+            'filters' => [
+                'frak' => [
+                    'before' => ['日本語/*'],
+                    'after'  => ['日本語/*'],
+                ],
+            ],
+        ];
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
+
+        // URIs passed to Filters are URL-encoded.
+        $uri      = '%E6%97%A5%E6%9C%AC%E8%AA%9E/foo/bar';
+        $expected = [
+            'before' => [
+                'bar',
+                'frak',
+            ],
+            'after' => [
+                'baz',
+                'frak',
+            ],
+        ];
+        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
+    }
+
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1907
      */

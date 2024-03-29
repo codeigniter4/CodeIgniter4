@@ -56,7 +56,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.4.6';
+    public const CI_VERSION = '4.4.7';
 
     /**
      * App startup time.
@@ -456,6 +456,7 @@ class CodeIgniter
 
         $routeFilters = $this->tryToRouteIt($routes);
 
+        // $uri is URL-encoded.
         $uri = $this->request->getPath();
 
         if ($this->enableFilters) {
@@ -823,6 +824,7 @@ class CodeIgniter
         // $routes is defined in Config/Routes.php
         $this->router = Services::router($routes, $this->request);
 
+        // $uri is URL-encoded.
         $uri = $this->request->getPath();
 
         $this->outputBufferingStart();

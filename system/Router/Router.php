@@ -15,6 +15,7 @@ namespace CodeIgniter\Router;
 
 use Closure;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\Exceptions\BadRequestException;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Request;
@@ -131,10 +132,22 @@ class Router implements RouterInterface
     protected ?AutoRouterInterface $autoRouter = null;
 
     /**
+     * Permitted URI chars
+     *
+     * The default value is `''` (do not check) for backward compatibility.
+     */
+    protected string $permittedURIChars = '';
+
+    /**
      * Stores a reference to the RouteCollection object.
      */
     public function __construct(RouteCollectionInterface $routes, ?Request $request = null)
     {
+        $config = config(App::class);
+        if (isset($config->permittedURIChars)) {
+            $this->permittedURIChars = $config->permittedURIChars;
+        }
+
         $this->collection = $routes;
 
         // These are only for auto-routing
@@ -186,6 +199,8 @@ class Router implements RouterInterface
 
         // Decode URL-encoded string
         $uri = urldecode($uri);
+
+        $this->checkDisallowedChars($uri);
 
         // Restart filterInfo
         $this->filtersInfo = [];
@@ -424,7 +439,7 @@ class Router implements RouterInterface
                     }, is_array($handler) ? key($handler) : $handler);
 
                     throw new RedirectException(
-                        preg_replace('#^' . $routeKey . '$#u', $redirectTo, $uri),
+                        preg_replace('#\A' . $routeKey . '\z#u', $redirectTo, $uri),
                         $this->collection->getRedirectCode($routeKey)
                     );
                 }
@@ -484,7 +499,7 @@ class Router implements RouterInterface
 
                     if (config(Routing::class)->multipleSegmentsOneParam === false) {
                         // Using back-references
-                        $segments = explode('/', preg_replace('#^' . $routeKey . '$#u', $handler, $uri));
+                        $segments = explode('/', preg_replace('#\A' . $routeKey . '\z#u', $handler, $uri));
                     } else {
                         if (str_contains($methodAndParams, '/')) {
                             [$method, $handlerParams] = explode('/', $methodAndParams, 2);
@@ -707,5 +722,21 @@ class Router implements RouterInterface
         $this->matchedRoute = [$route, $handler];
 
         $this->matchedRouteOptions = $this->collection->getRoutesOptions($route);
+    }
+
+    /**
+     * Checks disallowed characters
+     */
+    private function checkDisallowedChars(string $uri): void
+    {
+        foreach (explode('/', $uri) as $segment) {
+            if ($segment !== '' && $this->permittedURIChars !== ''
+                && preg_match('/\A[' . $this->permittedURIChars . ']+\z/iu', $segment) !== 1
+            ) {
+                throw new BadRequestException(
+                    'The URI you submitted has disallowed characters: "' . $segment . '"'
+                );
+            }
+        }
     }
 }
