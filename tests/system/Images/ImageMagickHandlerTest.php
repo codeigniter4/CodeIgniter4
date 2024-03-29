@@ -14,6 +14,7 @@ namespace CodeIgniter\Images;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Handlers\BaseHandler;
+use CodeIgniter\Images\Handlers\ImageMagickHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Images;
 use Imagick;
@@ -75,6 +76,33 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         }
 
         $this->handler = Services::image('imagick', $config, false);
+    }
+
+    /**
+     * @dataProvider provideNonexistentLibraryPathTerminatesProcessing
+     */
+    public function testNonexistentLibraryPathTerminatesProcessing(string $path, string $invalidPath): void
+    {
+        $this->expectException(ImageException::class);
+        $this->expectExceptionMessage(lang('Images.libPathInvalid', [$invalidPath]));
+
+        $config = new Images();
+
+        $config->libraryPath = $path;
+
+        new ImageMagickHandler($config);
+    }
+
+    /**
+     * @return iterable<string, list<string>>
+     */
+    public static function provideNonexistentLibraryPathTerminatesProcessing(): iterable
+    {
+        yield 'empty string' => ['', ''];
+
+        yield 'invalid file' => ['/var/log/convert', '/var/log/convert'];
+
+        yield 'nonexistent file' => ['/var/www/file', '/var/www/file/convert'];
     }
 
     public function testGetVersion(): void

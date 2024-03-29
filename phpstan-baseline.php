@@ -7723,7 +7723,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 9,
+	'count' => 8,
 	'path' => __DIR__ . '/system/Images/Handlers/ImageMagickHandler.php',
 ];
 $ignoreErrors[] = [
