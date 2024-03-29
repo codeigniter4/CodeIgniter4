@@ -16,6 +16,18 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Mandatory File Changes
 **********************
 
+URI Security
+============
+
+The feature to check if URIs do not contain not permitted strings has been added.
+This check is equivalent to the URI Security found in CodeIgniter 3.
+
+We recommend you enable this feature. Add the following to **app/Config/App.php**::
+
+        public string $permittedURIChars = 'a-z 0-9~%.:_\-';.
+
+See :ref:`urls-uri-security` for details.
+
 Error Files
 ===========
 
@@ -27,6 +39,40 @@ The error page has been updated. Please update the following files:
 ****************
 Breaking Changes
 ****************
+
+.. _upgrade-447-filter-paths:
+
+Paths in Controller Filters
+===========================
+
+A bug where URI paths processed by :doc:`../incoming/filters` were not URL-decoded has been fixed.
+
+.. note:: Note that :doc:`Router <../incoming/routing>` processes URL-decoded URI paths.
+
+``Config\Filters`` has some places to specify the URI paths. If the paths have
+different values when URL-decoded, change them to the URL-decoded values.
+
+E.g.,:
+
+.. code-block:: php
+
+    public array $globals = [
+        'before' => [
+            'csrf' => ['except' => '%E6%97%A5%E6%9C%AC%E8%AA%9E/*'],
+        ],
+        // ...
+    ];
+
+↓
+
+.. code-block:: php
+
+    public array $globals = [
+        'before' => [
+            'csrf' => ['except' => '日本語/*'],
+        ],
+        // ...
+    ];
 
 Time::difference() and DST
 ==========================
@@ -66,6 +112,9 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
+- app/Config/App.php
+    - The property ``$permittedURIChars`` was added. See :ref:`urls-uri-security`
+      for details.
 - @TODO
 
 All Changes

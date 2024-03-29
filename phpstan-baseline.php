@@ -13713,7 +13713,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Assigning \'GET\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 35,
+	'count' => 36,
 	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
 ];
 $ignoreErrors[] = [

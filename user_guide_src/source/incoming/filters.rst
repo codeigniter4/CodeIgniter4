@@ -140,6 +140,11 @@ an array with the ``except`` key and a URI path (relative to BaseURL) to match a
 
 .. literalinclude:: filters/006.php
 
+.. Warning:: Prior to v4.4.7, due to a bug, the URI paths processed by the filter
+    were not URL-decoded. In other words, the URI paths specified in the routing
+    and the URI paths specified in the filter could be different.
+    See :ref:`upgrade-447-filter-paths` for details.
+
 Any place you can use a URI path (relative to BaseURL) in the filter settings, you can use a regular expression or, like in this example, use
 an asterisk (``*``) for a wildcard that will match all characters after that. In this example, any URI path starting with ``api/``
 would be exempted from CSRF protection, but the site's forms would all be protected.
@@ -174,6 +179,11 @@ This property is an array of filter aliases. For each alias, you can specify ``b
 a list of URI path (relative to BaseURL) patterns that filter should apply to:
 
 .. literalinclude:: filters/009.php
+
+.. Warning:: Prior to v4.4.7, due to a bug, the URI paths processed by the filter
+    were not URL-decoded. In other words, the URI paths specified in the routing
+    and the URI paths specified in the filter could be different.
+    See :ref:`upgrade-447-filter-paths` for details.
 
 .. _filters-filters-filter-arguments:
 
