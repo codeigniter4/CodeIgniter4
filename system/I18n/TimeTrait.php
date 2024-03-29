@@ -1069,8 +1069,21 @@ trait TimeTrait
      */
     public function difference($testTime, ?string $timezone = null)
     {
-        $testTime = $this->getUTCObject($testTime, $timezone);
-        $ourTime  = $this->getUTCObject($this);
+        if (is_string($testTime)) {
+            $timezone = ($timezone !== null) ? new DateTimeZone($timezone) : $this->timezone;
+            $testTime = new DateTime($testTime, $timezone);
+        } elseif ($testTime instanceof self) {
+            $testTime = $testTime->toDateTime();
+        }
+
+        assert($testTime instanceof DateTime);
+
+        if ($this->timezone->getOffset($this) !== $testTime->getTimezone()->getOffset($this)) {
+            $testTime = $this->getUTCObject($testTime, $timezone);
+            $ourTime  = $this->getUTCObject($this);
+        } else {
+            $ourTime = $this->toDateTime();
+        }
 
         return new TimeDifference($ourTime, $testTime);
     }
