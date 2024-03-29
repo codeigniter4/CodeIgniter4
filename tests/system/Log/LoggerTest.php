@@ -12,6 +12,7 @@
 namespace CodeIgniter\Log;
 
 use CodeIgniter\Exceptions\FrameworkException;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Log\Exceptions\LogException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
@@ -25,6 +26,14 @@ use Tests\Support\Log\Handlers\TestHandler;
  */
 final class LoggerTest extends CIUnitTestCase
 {
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        // Reset the current time.
+        Time::setTestNow();
+    }
+
     public function testThrowsExceptionWithBadHandlerSettings(): void
     {
         $config           = new LoggerConfig();
@@ -63,7 +72,9 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message';
         $logger->log('debug', 'Test message');
 
         $logs = TestHandler::getLogs();
@@ -93,7 +104,9 @@ final class LoggerTest extends CIUnitTestCase
 
         $logger = new Logger($config);
 
-        $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message bar baz';
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message bar baz';
 
         $logger->log('debug', 'Test message {foo} {bar}', ['foo' => 'bar', 'bar' => 'baz']);
 
@@ -109,8 +122,10 @@ final class LoggerTest extends CIUnitTestCase
 
         $logger = new Logger($config);
 
+        Time::setTestNow('2023-11-25 12:00:00');
+
         $_POST    = ['foo' => 'bar'];
-        $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message $_POST: ' . print_r($_POST, true);
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message $_POST: ' . print_r($_POST, true);
 
         $logger->log('debug', 'Test message {post_vars}');
 
@@ -126,8 +141,10 @@ final class LoggerTest extends CIUnitTestCase
 
         $logger = new Logger($config);
 
+        Time::setTestNow('2023-11-25 12:00:00');
+
         $_GET     = ['bar' => 'baz'];
-        $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message $_GET: ' . print_r($_GET, true);
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message $_GET: ' . print_r($_GET, true);
 
         $logger->log('debug', 'Test message {get_vars}');
 
@@ -143,8 +160,10 @@ final class LoggerTest extends CIUnitTestCase
 
         $logger = new Logger($config);
 
+        Time::setTestNow('2023-11-25 12:00:00');
+
         $_SESSION = ['xxx' => 'yyy'];
-        $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message $_SESSION: ' . print_r($_SESSION, true);
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message $_SESSION: ' . print_r($_SESSION, true);
 
         $logger->log('debug', 'Test message {session_vars}');
 
@@ -160,7 +179,9 @@ final class LoggerTest extends CIUnitTestCase
 
         $logger = new Logger($config);
 
-        $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message ' . ENVIRONMENT;
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message ' . ENVIRONMENT;
 
         $logger->log('debug', 'Test message {env}');
 
@@ -176,9 +197,11 @@ final class LoggerTest extends CIUnitTestCase
 
         $logger = new Logger($config);
 
+        Time::setTestNow('2023-11-25 12:00:00');
+
         $_ENV['foo'] = 'bar';
 
-        $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message bar';
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message bar';
 
         $logger->log('debug', 'Test message {env:foo}');
 
@@ -210,7 +233,9 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'ERROR - ' . date('Y-m-d') . ' --> [ERROR] These are not the droids you are looking for';
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $expected = 'ERROR - ' . Time::now()->format('Y-m-d') . ' --> [ERROR] These are not the droids you are looking for';
 
         try {
             throw new Exception('These are not the droids you are looking for');
@@ -229,7 +254,9 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'EMERGENCY - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $expected = 'EMERGENCY - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
         $logger->emergency('Test message');
 
@@ -244,7 +271,9 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'ALERT - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $expected = 'ALERT - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
         $logger->alert('Test message');
 
@@ -259,7 +288,9 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'CRITICAL - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $expected = 'CRITICAL - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
         $logger->critical('Test message');
 
@@ -274,7 +305,9 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'ERROR - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $expected = 'ERROR - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
         $logger->error('Test message');
 
@@ -289,7 +322,9 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'WARNING - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $expected = 'WARNING - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
         $logger->warning('Test message');
 
@@ -304,7 +339,9 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'NOTICE - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $expected = 'NOTICE - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
         $logger->notice('Test message');
 
@@ -319,7 +356,9 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'INFO - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $expected = 'INFO - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
         $logger->info('Test message');
 
@@ -334,7 +373,9 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
         $logger->debug('Test message');
 
@@ -349,7 +390,9 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'WARNING - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
+
+        $expected = 'WARNING - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
         $logger->log(5, 'Test message');
 

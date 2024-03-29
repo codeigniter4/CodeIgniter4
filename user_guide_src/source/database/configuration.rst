@@ -136,9 +136,9 @@ and decode it in the constructor in the Config class:
 
 .. _database-config-explanation-of-values:
 
-**********************
-Explanation of Values:
-**********************
+*********************
+Explanation of Values
+*********************
 
 ================ ===========================================================================================================
  Name Config     Description
@@ -159,34 +159,58 @@ Explanation of Values:
 **pConnect**     true/false (boolean) - Whether to use a persistent connection.
 **DBDebug**      true/false (boolean) - Whether to throw exceptions or not when database errors occur.
 **charset**      The character set used in communicating with the database.
-**DBCollat**     The character collation used in communicating with the database (``MySQLi`` only).
+**DBCollat**     (``MySQLi`` only) The character collation used in communicating with the database.
 **swapPre**      A default table prefix that should be swapped with ``DBPrefix``. This is useful for distributed
                  applications where you might run manually written queries, and need the prefix to still be
                  customizable by the end user.
-**schema**       The database schema, default value varies by driver. (Used by ``Postgre`` and ``SQLSRV``.)
-**encrypt**      Whether or not to use an encrypted connection.
-                 ``SQLSRV`` driver accepts true/false
-                 ``MySQLi`` driver accepts an array with the following options:
-                 * ``ssl_key``    - Path to the private key file
-                 * ``ssl_cert``   - Path to the public key certificate file
-                 * ``ssl_ca``     - Path to the certificate authority file
-                 * ``ssl_capath`` - Path to a directory containing trusted CA certificates in PEM format
-                 * ``ssl_cipher`` - List of *allowed* ciphers to be used for the encryption, separated by colons (``:``)
-                 * ``ssl_verify`` - true/false; Whether to verify the server certificate or not (``MySQLi`` only)
-**compress**     Whether or not to use client compression (``MySQLi`` only).
-**strictOn**     true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring strict SQL
-                 while developing an application (``MySQLi`` only).
+**schema**       (``Postgre`` and ``SQLSRV`` only) The database schema, default value varies by driver.
+**encrypt**      (``MySQLi`` and ``SQLSRV`` only) Whether or not to use an encrypted connection.
+                 See :ref:`MySQLi encrypt <mysqli-encrypt>` for ``MySQLi`` settings.
+                 ``SQLSRV`` driver accepts true/false.
+**compress**     (``MySQLi`` only) Whether or not to use client compression.
+**strictOn**     (``MySQLi`` only) true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring
+                 strict SQL while developing an application.
 **port**         The database port number - Empty string ``''`` for default port (or dynamic port with ``SQLSRV``).
-**foreignKeys**  true/false (boolean) - Whether or not to enable Foreign Key constraint (``SQLite3`` only).
+**foreignKeys**  (``SQLite3`` only) true/false (boolean) - Whether or not to enable Foreign Key constraint.
 
                  .. important:: SQLite3 Foreign Key constraint is disabled by default.
                      See `SQLite documentation <https://www.sqlite.org/pragma.html#pragma_foreign_keys>`_.
                      To enforce Foreign Key constraint, set this config item to true.
-**busyTimeout**  milliseconds (int) - Sleeps for a specified amount of time when a table is locked (``SQLite3`` only).
-**numberNative** true/false (boolean) - Whether or not to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE (``MySQLi`` only).
+**busyTimeout**  (``SQLite3`` only) milliseconds (int) - Sleeps for a specified amount of time when a table is locked.
+**numberNative** (``MySQLi`` only) true/false (boolean) - Whether or not to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE.
 ================ ===========================================================================================================
 
 .. note:: Depending on what database driver you are using (``MySQLi``, ``Postgre``,
     etc.) not all values will be needed. For example, when using ``SQLite3`` you
     will not need to supply a username or password, and the database name
     will be the path to your database file.
+
+MySQLi
+======
+
+hostname
+--------
+
+Configuring a Socket Connection
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To connect to a MySQL server over a filesystem socket, the path to the socket should be specified in
+the ``'hostname'`` setting. CodeIgniter's MySQLi driver will notice this and configure the
+connection properly.
+
+.. literalinclude:: configuration/011.php
+    :lines: 11-18
+
+.. _mysqli-encrypt:
+
+encrypt
+-------
+
+MySQLi driver accepts an array with the following options:
+
+* ``ssl_key``    - Path to the private key file
+* ``ssl_cert``   - Path to the public key certificate file
+* ``ssl_ca``     - Path to the certificate authority file
+* ``ssl_capath`` - Path to a directory containing trusted CA certificates in PEM format
+* ``ssl_cipher`` - List of *allowed* ciphers to be used for the encryption, separated by colons (``:``)
+* ``ssl_verify`` - true/false; Whether to verify the server certificate or not

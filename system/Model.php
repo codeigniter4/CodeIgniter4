@@ -28,6 +28,7 @@ use Config\Database;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
+use stdClass;
 
 /**
  * The Model class extends BaseModel and provides additional
@@ -137,7 +138,7 @@ class Model extends BaseModel
     /**
      * Builder method names that should not be used in the Model.
      *
-     * @var string[] method name
+     * @var list<string> method name
      */
     private array $builderMethodsNotAvailable = [
         'getCompiledInsert',
@@ -402,7 +403,7 @@ class Model extends BaseModel
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
+     * @return false|int|list<string> Number of rows affected or FALSE on failure, SQL array when testMode
      *
      * @throws DatabaseException
      */
@@ -674,7 +675,7 @@ class Model extends BaseModel
      * data here. This allows it to be used with any of the other
      * builder methods and still get validated data, like replace.
      *
-     * @param array|object|string               $key    Field name, or an array of field/value pairs
+     * @param array|object|string               $key    Field name, or an array of field/value pairs, or an object
      * @param bool|float|int|object|string|null $value  Field value, if $key is a single field
      * @param bool|null                         $escape Whether to escape values
      *
@@ -682,6 +683,10 @@ class Model extends BaseModel
      */
     public function set($key, $value = '', ?bool $escape = null)
     {
+        if (is_object($key)) {
+            $key = $key instanceof stdClass ? (array) $key : $this->objectToArray($key);
+        }
+
         $data = is_array($key) ? $key : [$key => $value];
 
         foreach (array_keys($data) as $k) {

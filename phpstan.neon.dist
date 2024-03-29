@@ -14,8 +14,10 @@ parameters:
 	bootstrapFiles:
 		- phpstan-bootstrap.php
 	paths:
+		- admin/starter/tests
 		- app
 		- system
+		- tests
 		- utils/PHPStan
 	excludePaths:
 		- app/Views/errors/cli/*
@@ -26,9 +28,9 @@ parameters:
 		- system/Test/Filters/CITestStreamFilter.php
 		- system/ThirdParty/*
 		- system/Validation/Views/single.php
+		- tests/system/View/Views/*
 	scanDirectories:
 		- system/Helpers
-	checkMissingIterableValueType: false
 	checkGenericClassInNonGenericObjectType: false
 	checkMissingCallableSignature: true
 	treatPhpDocTypesAsCertain: false

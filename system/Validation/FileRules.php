@@ -242,7 +242,13 @@ class FileRules
             $allowedHeight = $params[1] ?? 0;
 
             // Get uploaded image size
-            $info       = getimagesize($file->getTempName());
+            $info = getimagesize($file->getTempName());
+
+            if ($info === false) {
+                // Cannot get the image size.
+                return false;
+            }
+
             $fileWidth  = $info[0];
             $fileHeight = $info[1];
 

@@ -159,7 +159,7 @@ If the requested page doesn't exist, a "404 Page not found" error is shown.
 The first line in this method checks whether the page actually exists.
 PHP's native ``is_file()`` function is used to check whether the file
 is where it's expected to be. The ``PageNotFoundException`` is a CodeIgniter
-exception that causes the default error page to show.
+exception that causes the 404 Page Not Found error page to show.
 
 In the header template, the ``$title`` variable was used to customize the
 page title. The value of title is defined in this method, but instead of
@@ -219,7 +219,7 @@ controller you made above produces...
     | localhost:8080/pages            | the results from the ``index()`` method inside our ``Pages``    |
     |                                 | controller, which is to display the CodeIgniter "welcome" page. |
     +---------------------------------+-----------------------------------------------------------------+
-    | localhost:8080/home             | show the "home" page that you made above, because we explicitly |
+    | localhost:8080/home             | the "home" page that you made above, because we explicitly      |
     |                                 | asked for it. the results from the ``view()`` method inside our |
     |                                 | ``Pages`` controller.                                           |
     +---------------------------------+-----------------------------------------------------------------+

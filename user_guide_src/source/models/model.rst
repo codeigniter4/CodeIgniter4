@@ -123,12 +123,16 @@ default value is ``true``.
 $returnType
 -----------
 
-The Model's CRUD methods will take a step of work away from you and automatically return
-the resulting data, instead of the Result object. This setting allows you to define
-the type of data that is returned. Valid values are '**array**' (the default), '**object**', or the **fully
-qualified name of a class** that can be used with the Result object's ``getCustomResultObject()``
-method. Using the special ``::class`` constant of the class will allow most IDEs to
-auto-complete the name and allow functions like refactoring to better understand your code.
+The Model's **find*()** methods will take a step of work away from you and automatically
+return the resulting data, instead of the Result object.
+
+This setting allows you to define the type of data that is returned. Valid values
+are '**array**' (the default), '**object**', or the **fully qualified name of a class**
+that can be used with the Result object's ``getCustomResultObject()`` method.
+
+Using the special ``::class`` constant of the class will allow most IDEs to
+auto-complete the name and allow functions like refactoring to better understand
+your code.
 
 .. _model-use-soft-deletes:
 
@@ -145,7 +149,7 @@ This requires either a DATETIME or INTEGER field in the database as per the mode
 `$dateFormat`_ setting. The default field name is ``deleted_at`` however this name can be
 configured to any name of your choice by using `$deletedField`_ property.
 
-.. important:: The ``deleted_at`` field must be nullable.
+.. important:: The ``deleted_at`` field in the database must be nullable.
 
 $allowedFields
 --------------

@@ -281,7 +281,7 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with field data
      *
-     * @return stdClass[]
+     * @return list<stdClass>
      *
      * @throws DatabaseException
      */
@@ -325,7 +325,7 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with index data
      *
-     * @return stdClass[]
+     * @return list<stdClass>
      *
      * @throws DatabaseException
      */
@@ -374,7 +374,7 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with Foreign key data
      *
-     * @return stdClass[]
+     * @return list<stdClass>
      *
      * @throws DatabaseException
      */
@@ -578,7 +578,7 @@ class Connection extends BaseConnection
         $indexs     = $this->getIndexData($this->lastInsertedTableName);
         $fieldDatas = $this->getFieldData($this->lastInsertedTableName);
 
-        if (! $indexs || ! $fieldDatas) {
+        if ($indexs === [] || $fieldDatas === []) {
             return 0;
         }
 

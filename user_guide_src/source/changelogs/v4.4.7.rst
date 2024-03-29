@@ -1,0 +1,42 @@
+#############
+Version 4.4.7
+#############
+
+Release Date: March 29, 2024
+
+**4.4.7 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+********
+SECURITY
+********
+
+- **Language:** *Language class DoS Vulnerability* was fixed.
+  See the `Security advisory GHSA-39fp-mqmm-gxj6 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-39fp-mqmm-gxj6>`_
+  for more information.
+- **URI Security:** The feature to check if URIs do not contain not permitted
+  strings has been added. This check is equivalent to the URI Security found in
+  CodeIgniter 3. This is enabled by default, but upgraded users need to add
+  a setting to enable it. See :ref:`urls-uri-security` for details.
+- **Filters:** A bug where URI paths processed by Filters were not URL-decoded
+  has been fixed. See :ref:`upgrade-447-filter-paths` for details.
+
+********
+BREAKING
+********
+
+- In previous versions, when comparing dates with ``Time::difference()``,
+  unexpected results were returned if the date included a day different from 24
+  hours due to Daylight Saving Time (DST). This bug has been fixed. See
+  :ref:`Note in Times and Dates <time-viewing-differences>` for details.
+
+**********
+Bugs Fixed
+**********
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

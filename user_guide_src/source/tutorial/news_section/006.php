@@ -9,13 +9,13 @@ class News extends BaseController
 {
     // ...
 
-    public function show($slug = null)
+    public function show(?string $slug = null)
     {
         $model = model(NewsModel::class);
 
         $data['news'] = $model->getNews($slug);
 
-        if (empty($data['news'])) {
+        if ($data['news'] === null) {
             throw new PageNotFoundException('Cannot find the news item: ' . $slug);
         }
 

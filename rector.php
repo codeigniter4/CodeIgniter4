@@ -9,6 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\BooleanAnd\SimplifyEmptyArrayCheckRector;
 use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
 use Rector\CodeQuality\Rector\Empty_\SimplifyEmptyCheckOnEmptyArrayRector;
@@ -28,6 +29,7 @@ use Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector;
 use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
+use Rector\CodingStyle\Rector\FuncCall\VersionCompareFuncCallToConstantRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
@@ -60,6 +62,12 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->parallel(120, 8, 10);
+
+    // Github action cache
+    $rectorConfig->cacheClass(FileCacheStorage::class);
+    if (is_dir('/tmp')) {
+        $rectorConfig->cacheDirectory('/tmp/rector');
+    }
 
     // paths to refactor; solid alternative to CLI arguments
     $rectorConfig->paths([__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils']);
@@ -149,6 +157,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(CompleteDynamicPropertiesRector::class);
     $rectorConfig->rule(BooleanInIfConditionRuleFixerRector::class);
     $rectorConfig->rule(SingleInArrayToCompareRector::class);
+    $rectorConfig->rule(VersionCompareFuncCallToConstantRector::class);
 
     $rectorConfig
         ->ruleWithConfiguration(StringClassNameToClassConstantRector::class, [

@@ -137,7 +137,7 @@ class View implements RendererInterface
      * The name of the current section being rendered,
      * if any.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $sectionStack = [];
 

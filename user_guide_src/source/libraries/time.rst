@@ -7,7 +7,9 @@ extension's features to convert times across timezones and display the output co
 is the ``Time`` class and lives in the ``CodeIgniter\I18n`` namespace.
 
 .. note:: Since the Time class extends ``DateTimeImmutable``, if there are features that you need that this class doesn't provide,
-    you can likely find them within the `DateTimeImmutable <https://www.php.net/manual/en/class.datetimeimmutable.php>`_  class itself.
+    you can likely find them within the `DateTimeImmutable`_  class itself.
+
+.. _DateTimeImmutable: https://www.php.net/manual/en/class.datetimeimmutable.php
 
 .. note:: Prior to v4.3.0, the Time class extended ``DateTime`` and some inherited methods changed
     the current object state. The bug was fixed in v4.3.0. If you need the old Time class for backward
@@ -24,10 +26,11 @@ Instantiating
 There are several ways that a new Time instance can be created. The first is simply to create a new instance
 like any other class.
 
-When you do it this way, you can pass in a string representing the desired time. This can
-be any string that PHP's `strtotime()`_ function can parse:
+When you do it this way, you can pass in a string representing the desired time.
+This can be any string that PHP's `DateTimeImmutable`_ constructor can parse. See
+`Supported Date and Time Formats`_ for details.
 
-.. _strtotime(): https://www.php.net/manual/en/function.strtotime.php
+.. _Supported Date and Time Formats: https://www.php.net/manual/en/datetime.formats.php
 
 .. literalinclude:: time/001.php
 
@@ -362,11 +365,15 @@ Works exactly the same as ``isBefore()`` except checks if the time is after the 
 
 .. literalinclude:: time/037.php
 
+.. _time-viewing-differences:
+
 Viewing Differences
 ===================
 
 To compare two Times directly, you would use the ``difference()`` method, which returns a ``CodeIgniter\I18n\TimeDifference``
-instance. The first parameter is either a Time instance, a DateTime instance, or a string with the date/time. If
+instance.
+
+The first parameter is either a Time instance, a DateTime instance, or a string with the date/time. If
 a string is passed in the first parameter, the second parameter can be a timezone string:
 
 .. literalinclude:: time/038.php
@@ -376,6 +383,15 @@ between the two times. The value returned will be negative if it was in the past
 the original time:
 
 .. literalinclude:: time/039.php
+
+.. note:: Prior to v4.4.7, Time always converted the time zones to UTC before
+    comparison. This could lead to unexpected results when containing a day
+    differed from 24 hours due to Daylight Saving Time (DST).
+
+    Starting with v4.4.7, when comparing date/times that are in the same
+    time zone, the comparison is performed as is, without conversion to UTC.
+
+        .. literalinclude:: time/042.php
 
 You can use either ``getX()`` methods, or access the calculate values as if they were properties:
 

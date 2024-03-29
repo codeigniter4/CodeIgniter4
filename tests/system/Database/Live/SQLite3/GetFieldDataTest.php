@@ -32,7 +32,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             'database' => 'database.db',
             'DBDebug'  => true,
         ];
-        $this->db    = db_connect($config);
+        $this->db    = db_connect($config, false);
         $this->forge = Database::forge($config);
     }
 

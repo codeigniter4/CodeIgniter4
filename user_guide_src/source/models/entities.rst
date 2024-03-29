@@ -60,11 +60,20 @@ Create the model first at **app/Models/UserModel.php** so that we can interact w
 
 .. literalinclude:: entities/002.php
 
-The model uses the ``users`` table in the database for all of its activities. We've set the ``$allowedFields`` property
-to include all of the fields that we want outside classes to change. The ``id``, ``created_at``, and ``updated_at`` fields
-are handled automatically by the class or the database, so we don't want to change those. Finally, we've set our Entity
-class as the ``$returnType``. This ensures that all methods on the model that return rows from the database will return
+The model uses the ``users`` table in the database for all of its activities.
+
+We've set the ``$allowedFields`` property to include all of the fields that we
+want outside classes to change. The ``id``, ``created_at``, and ``updated_at``
+fields are handled automatically by the class or the database, so we don't want
+to change those.
+
+Finally, we've set our Entity class as the ``$returnType``. This ensures that all
+built-in methods on the model that return rows from the database will return
 instances of our User Entity class instead of an object or array like normal.
+
+.. note::
+    Of course, if you add a custom method to your model, you must implement it
+    so that instances of ``$returnType`` are returned.
 
 Working with the Entity Class
 =============================

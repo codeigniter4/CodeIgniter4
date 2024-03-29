@@ -195,7 +195,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Connection ID
      *
-     * @var false|object|resource
+     * @var         false|object|resource
      * @phpstan-var false|TConnection
      */
     public $connID = false;
@@ -203,7 +203,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Result ID
      *
-     * @var false|object|resource
+     * @var         false|object|resource
      * @phpstan-var false|TResult
      */
     public $resultID = false;
@@ -1279,10 +1279,10 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Escape String
      *
-     * @param string|string[] $str  Input string
-     * @param bool            $like Whether or not the string will be used in a LIKE condition
+     * @param list<string>|string $str  Input string
+     * @param bool                $like Whether or not the string will be used in a LIKE condition
      *
-     * @return string|string[]
+     * @return list<string>|string
      */
     public function escapeString($str, bool $like = false)
     {
@@ -1322,9 +1322,9 @@ abstract class BaseConnection implements ConnectionInterface
      * Calls the individual driver for platform
      * specific escaping for LIKE conditions
      *
-     * @param string|string[] $str
+     * @param list<string>|string $str
      *
-     * @return string|string[]
+     * @return list<string>|string
      */
     public function escapeLikeString($str)
     {
@@ -1517,7 +1517,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns an object with field data
      *
-     * @return stdClass[]
+     * @return list<stdClass>
      */
     public function getFieldData(string $table)
     {
@@ -1657,7 +1657,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function isWriteType($sql): bool
     {
-        return (bool) preg_match('/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX|MERGE)\s/i', $sql);
+        return (bool) preg_match('/^\s*(WITH\s.+(\s|[)]))?"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX|MERGE)\s(?!.*\sRETURNING\s)/is', $sql);
     }
 
     /**

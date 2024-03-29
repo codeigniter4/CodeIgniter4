@@ -54,7 +54,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.4.6';
+    public const CI_VERSION = '4.4.7';
 
     /**
      * App startup time.
@@ -449,6 +449,7 @@ class CodeIgniter
 
         $routeFilter = $this->tryToRouteIt($routes);
 
+        // $uri is URL-encoded.
         $uri = $this->determinePath();
 
         if ($this->enableFilters) {
@@ -800,7 +801,7 @@ class CodeIgniter
      * @param RouteCollectionInterface|null $routes A collection interface to use in place
      *                                              of the config file.
      *
-     * @return string|string[]|null Route filters, that is, the filters specified in the routes file
+     * @return list<string>|string|null Route filters, that is, the filters specified in the routes file
      *
      * @throws RedirectException
      */
@@ -813,6 +814,7 @@ class CodeIgniter
         // $routes is defined in Config/Routes.php
         $this->router = Services::router($routes, $this->request);
 
+        // $path is URL-encoded.
         $path = $this->determinePath();
 
         $this->benchmark->stop('bootstrap');

@@ -94,7 +94,7 @@ class Filters
     /**
      * Any arguments to be passed to filtersClass.
      *
-     * @var array<class-string, array<string, list<string>>|null> [classname => arguments]
+     * @var array<class-string, list<string>|null> [classname => arguments]
      */
     protected $argumentsClass = [];
 
@@ -244,6 +244,9 @@ class Filters
         if ($this->initialized === true) {
             return $this;
         }
+
+        // Decode URL-encoded string
+        $uri = urldecode($uri);
 
         $this->processGlobals($uri);
         $this->processMethods();
@@ -639,7 +642,7 @@ class Filters
     /**
      * Check the URI path as pseudo-regex
      *
-     * @param string $uri   URI path relative to baseURL (all lowercase)
+     * @param string $uri   URI path relative to baseURL (all lowercase, URL-decoded)
      * @param array  $paths The except path patterns
      */
     private function checkPseudoRegex(string $uri, array $paths): bool
@@ -652,7 +655,7 @@ class Filters
             $path = strtolower(str_replace('*', '.*', $path));
 
             // Does this rule apply here?
-            if (preg_match('#^' . $path . '$#', $uri, $match) === 1) {
+            if (preg_match('#\A' . $path . '\z#u', $uri, $match) === 1) {
                 return true;
             }
         }

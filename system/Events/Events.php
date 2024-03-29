@@ -52,14 +52,14 @@ class Events
      * Stores information about the events
      * for display in the debug toolbar.
      *
-     * @var array<array<string, float|string>>
+     * @var list<array<string, float|string>>
      */
     protected static $performanceLog = [];
 
     /**
      * A list of found files.
      *
-     * @var string[]
+     * @var list<string>
      */
     protected static $files = [];
 
@@ -253,7 +253,7 @@ class Events
     /**
      * Returns the files that were found/loaded during this request.
      *
-     * @return string[]
+     * @return list<string>
      */
     public static function getFiles()
     {
@@ -275,7 +275,7 @@ class Events
     /**
      * Getter for the performance log records.
      *
-     * @return array<array<string, float|string>>
+     * @return list<array<string, float|string>>
      */
     public static function getPerformanceLogs()
     {

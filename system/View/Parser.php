@@ -63,7 +63,7 @@ class Parser extends View
     /**
      * Stores any plugins registered at run-time.
      *
-     * @var array<string, array<string>|callable|string>
+     * @var         array<string, callable|list<string>|string>
      * @phpstan-var array<string, array<parser_callable_string>|parser_callable_string|parser_callable>
      */
     protected $plugins = [];

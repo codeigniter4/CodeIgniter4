@@ -35,7 +35,7 @@ final class ResponseCache
      *    array('q') = Enabled, but only take into account the specified list
      *                 of query parameters.
      *
-     * @var bool|string[]
+     * @var bool|list<string>
      */
     private $cacheQueryString = false;
 

@@ -406,10 +406,15 @@ final class TimeTest extends CIUnitTestCase
      */
     public function testGetAge(): void
     {
+        // setTestNow() does not work to parse().
         $time = Time::parse('5 years ago');
 
-        $this->assertSame(5, $time->getAge());
-        $this->assertSame(5, $time->age);
+        // Considers leap year
+        $now      = Time::now();
+        $expected = ($now->day === '29' && $now->month === '2') ? 4 : 5;
+
+        $this->assertSame($expected, $time->getAge());
+        $this->assertSame($expected, $time->age);
     }
 
     public function testAgeNow(): void
@@ -421,7 +426,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testAgeFuture(): void
     {
-        Time::setTestNow('June 20, 2022', 'America/Chicago');
+        Time::setTestNow('June 20, 2022');
         $time = Time::parse('August 12, 2116 4:15:23pm');
 
         $this->assertSame(0, $time->getAge());
@@ -429,7 +434,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testGetAgeSameDayOfBirthday(): void
     {
-        Time::setTestNow('December 31, 2022', 'America/Chicago');
+        Time::setTestNow('December 31, 2022');
         $time = Time::parse('December 31, 2020');
 
         $this->assertSame(2, $time->getAge());
@@ -437,7 +442,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testGetAgeNextDayOfBirthday(): void
     {
-        Time::setTestNow('January 1, 2022', 'America/Chicago');
+        Time::setTestNow('January 1, 2022');
         $time = Time::parse('December 31, 2020');
 
         $this->assertSame(1, $time->getAge());
@@ -445,7 +450,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testGetAgeBeforeDayOfBirthday(): void
     {
-        Time::setTestNow('December 30, 2021', 'America/Chicago');
+        Time::setTestNow('December 30, 2021');
         $time = Time::parse('December 31, 2020');
 
         $this->assertSame(0, $time->getAge());

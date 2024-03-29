@@ -43,7 +43,7 @@ class Toolbar
     /**
      * Collectors to be used and displayed.
      *
-     * @var BaseCollector[]
+     * @var list<BaseCollector>
      */
     protected $collectors = [];
 

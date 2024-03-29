@@ -43,35 +43,7 @@ $finder = Finder::create()
         __DIR__ . '/spark',
     ]);
 
-$overrides = [
-    'phpdoc_no_alias_tag' => [
-        'replacements' => [
-            'type' => 'var',
-            'link' => 'see',
-        ],
-    ],
-    'phpdoc_align' => [
-        'align'   => 'vertical',
-        'spacing' => 1,
-        'tags'    => [
-            'method',
-            'param',
-            'phpstan-assert',
-            'phpstan-assert-if-true',
-            'phpstan-assert-if-false',
-            'phpstan-param',
-            'phpstan-property',
-            'phpstan-return',
-            'property',
-            'property-read',
-            'property-write',
-            'return',
-            'throws',
-            'type',
-            'var',
-        ],
-    ],
-];
+$overrides = [];
 
 $options = [
     'cacheFile' => 'build/.php-cs-fixer.cache',

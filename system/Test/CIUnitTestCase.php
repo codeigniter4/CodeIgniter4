@@ -50,7 +50,7 @@ abstract class CIUnitTestCase extends TestCase
      * WARNING: Do not override unless you know exactly what you are doing.
      *          This property may be deprecated in the future.
      *
-     * @var array of methods
+     * @var list<string> array of methods
      */
     protected $setUpMethods = [
         'resetFactories',
@@ -64,7 +64,7 @@ abstract class CIUnitTestCase extends TestCase
      *
      * WARNING: This property may be deprecated in the future.
      *
-     * @var array of methods
+     * @var list<string> array of methods
      */
     protected $tearDownMethods = [];
 
@@ -109,7 +109,7 @@ abstract class CIUnitTestCase extends TestCase
      * The seed file(s) used for all tests within this test case.
      * Should be fully-namespaced or relative to $basePath
      *
-     * @var array|string
+     * @var class-string<Seeder>|list<class-string<Seeder>>
      */
     protected $seed = '';
 

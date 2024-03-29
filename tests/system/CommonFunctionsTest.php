@@ -247,6 +247,27 @@ final class CommonFunctionsTest extends CIUnitTestCase
         esc('<script>', '0');
     }
 
+    public function testEscapeArray(): void
+    {
+        $data = [
+            'a' => [
+                'b' => 'c&',
+            ],
+            'd' => 'e>',
+        ];
+        $expected           = $data;
+        $expected['a']['b'] = 'c&amp;';
+        $expected['d']      = 'e&gt;';
+        $this->assertSame($expected, esc($data));
+    }
+
+    public function testEscapeRecursiveArrayRaw(): void
+    {
+        $data      = ['a' => 'b', 'c' => 'd'];
+        $data['e'] = &$data;
+        $this->assertSame($data, esc($data, 'raw'));
+    }
+
     /**
      * @runInSeparateProcess
      * @preserveGlobalState disabled

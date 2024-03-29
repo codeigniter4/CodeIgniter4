@@ -234,7 +234,7 @@ trait ResponseTrait
     /**
      * Used when the data provided by the client cannot be validated on one or more fields.
      *
-     * @param string|string[] $errors
+     * @param list<string>|string $errors
      *
      * @return ResponseInterface
      */

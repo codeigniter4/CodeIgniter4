@@ -163,7 +163,7 @@ class FileCollection
      * Given a file array, will create UploadedFile instances. Will
      * loop over an array and create objects for each.
      *
-     * @return UploadedFile|UploadedFile[]
+     * @return list<UploadedFile>|UploadedFile
      */
     protected function createFileObject(array $array)
     {

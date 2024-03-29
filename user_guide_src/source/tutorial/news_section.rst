@@ -98,7 +98,7 @@ some additional tools to make working with data simpler. Add the
 following code to your model.
 
 .. literalinclude:: news_section/002.php
-    :lines: 11-18
+    :lines: 11-23
 
 With this code, you can perform two different queries. You can get all
 news records, or get a news item by its slug. You might have
@@ -176,7 +176,7 @@ Create **app/Views/news/index.php** and add the next piece of code.
 
 .. literalinclude:: news_section/005.php
 
-.. note:: We are again using using :php:func:`esc()` to help prevent XSS attacks.
+.. note:: We are again using :php:func:`esc()` to help prevent XSS attacks.
     But this time we also passed "url" as a second parameter. That's because
     attack patterns are different depending on the context in which the output
     is used.

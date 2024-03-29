@@ -58,6 +58,52 @@ Route path /blog/news/2022/10                   The URI path relative to the Bas
 Query      page=2
 ========== ==================================== =========================================
 
+.. _urls-uri-security:
+
+URI Security
+============
+
+.. versionadded:: 4.4.7
+
+.. important::
+    Users upgrading from versions prior to v4.4.7 will need to add the following
+    to **app/Config/App.php** in order to use this feature::
+
+        public string $permittedURIChars = 'a-z 0-9~%.:_\-';
+
+CodeIgniter is fairly restrictive regarding which characters it allows in your
+URI strings (Route path) in order to help minimize the possibility that malicious
+data can be passed to your application. URIs may only contain the following:
+
+-  Alpha-numeric text (latin characters only)
+-  Tilde: ``~``
+-  Percent sign: ``%``
+-  Period: ``.``
+-  Colon: ``:``
+-  Underscore: ``_``
+-  Dash: ``-``
+-  Space: `` ``
+
+.. note::
+    This check is performed by the ``Router``. The Router takes the URL-encoded
+    value held by the ``SiteURI`` class, decodes it, and then checks that it
+    does not contain not permitted strings.
+
+Adding Permitted Characters
+---------------------------
+
+The permitted characters can be changed by ``Config\App::$permittedURIChars``.
+
+If you want to use Unicode for URI paths, modify it to allow the characters to
+be used. For example, if you want to use Bengali, you will need to set the
+following value in **app/Config/App.php**::
+
+    public string $permittedURIChars = 'a-z 0-9~%.:_\-\x{0980}-\x{09ff}';
+
+A full list of Unicode ranges can be found at Wikipedia's `Unicode block`_.
+
+.. _Unicode block: https://en.wikipedia.org/wiki/Unicode_block
+
 .. _urls-remove-index-php:
 
 Removing the index.php file

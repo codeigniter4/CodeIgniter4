@@ -11,8 +11,8 @@ class News extends BaseController
         $model = model(NewsModel::class);
 
         $data = [
-            'news'  => $model->getNews(),
-            'title' => 'News archive',
+            'news_list' => $model->getNews(),
+            'title'     => 'News archive',
         ];
 
         return view('templates/header', $data)

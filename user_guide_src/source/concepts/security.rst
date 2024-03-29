@@ -38,6 +38,7 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
+- :ref:`urls-uri-security`
 - :ref:`invalidchars` filter
 - :doc:`../libraries/validation` library
 - :doc:`HTTP library <../incoming/incomingrequest>` provides for :ref:`input field filtering <incomingrequest-filtering-input-data>` & content metadata

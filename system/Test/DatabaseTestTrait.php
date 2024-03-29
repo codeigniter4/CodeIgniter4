@@ -48,6 +48,8 @@ trait DatabaseTestTrait
 
     /**
      * Runs the trait set up methods.
+     *
+     * @return void
      */
     protected function setUpDatabase()
     {
@@ -58,6 +60,8 @@ trait DatabaseTestTrait
 
     /**
      * Runs the trait set up methods.
+     *
+     * @return void
      */
     protected function tearDownDatabase()
     {
@@ -66,6 +70,8 @@ trait DatabaseTestTrait
 
     /**
      * Load any database test dependencies.
+     *
+     * @return void
      */
     public function loadDependencies()
     {
@@ -95,6 +101,8 @@ trait DatabaseTestTrait
 
     /**
      * Migrate on setUp
+     *
+     * @return void
      */
     protected function setUpMigrate()
     {
@@ -112,6 +120,8 @@ trait DatabaseTestTrait
 
     /**
      * Regress migrations as defined by the class
+     *
+     * @return void
      */
     protected function regressDatabase()
     {
@@ -138,6 +148,8 @@ trait DatabaseTestTrait
 
     /**
      * Run migrations as defined by the class
+     *
+     * @return void
      */
     protected function migrateDatabase()
     {
@@ -169,6 +181,8 @@ trait DatabaseTestTrait
 
     /**
      * Seed on setUp
+     *
+     * @return void
      */
     protected function setUpSeed()
     {
@@ -179,6 +193,8 @@ trait DatabaseTestTrait
 
     /**
      * Run seeds as defined by the class
+     *
+     * @return void
      */
     protected function runSeeds()
     {
@@ -199,6 +215,8 @@ trait DatabaseTestTrait
 
     /**
      * Seeds that database with a specific seeder.
+     *
+     * @return void
      */
     public function seed(string $name)
     {
@@ -213,6 +231,8 @@ trait DatabaseTestTrait
      * Reset $doneMigration and $doneSeed
      *
      * @afterClass
+     *
+     * @return void
      */
     public static function resetMigrationSeedCount()
     {
@@ -222,6 +242,8 @@ trait DatabaseTestTrait
 
     /**
      * Removes any rows inserted via $this->hasInDatabase()
+     *
+     * @return void
      */
     protected function clearInsertCache()
     {
@@ -248,6 +270,8 @@ trait DatabaseTestTrait
      * Fetches a single column from a database row with criteria
      * matching $where.
      *
+     * @param array<string, mixed> $where
+     *
      * @return bool
      *
      * @throws DatabaseException
@@ -272,6 +296,10 @@ trait DatabaseTestTrait
      * Asserts that records that match the conditions in $where DO
      * exist in the database.
      *
+     * @param array<string, mixed> $where
+     *
+     * @return void
+     *
      * @throws DatabaseException
      */
     public function seeInDatabase(string $table, array $where)
@@ -283,6 +311,10 @@ trait DatabaseTestTrait
     /**
      * Asserts that records that match the conditions in $where do
      * not exist in the database.
+     *
+     * @param array<string, mixed> $where
+     *
+     * @return void
      */
     public function dontSeeInDatabase(string $table, array $where)
     {
@@ -296,6 +328,8 @@ trait DatabaseTestTrait
     /**
      * Inserts a row into to the database. This row will be removed
      * after the test has run.
+     *
+     * @param array<string, mixed> $data
      *
      * @return bool
      */
@@ -312,6 +346,10 @@ trait DatabaseTestTrait
     /**
      * Asserts that the number of rows in the database that match $where
      * is equal to $expected.
+     *
+     * @param array<string, mixed> $where
+     *
+     * @return void
      *
      * @throws DatabaseException
      */

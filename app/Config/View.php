@@ -6,8 +6,8 @@ use CodeIgniter\Config\View as BaseView;
 use CodeIgniter\View\ViewDecoratorInterface;
 
 /**
- * @phpstan-type ParserCallable (callable(mixed): mixed)
- * @phpstan-type ParserCallableString (callable(mixed): mixed)&string
+ * @phpstan-type parser_callable (callable(mixed): mixed)
+ * @phpstan-type parser_callable_string (callable(mixed): mixed)&string
  */
 class View extends BaseView
 {
@@ -34,8 +34,8 @@ class View extends BaseView
      *  { title|esc(js) }
      *  { created_on|date(Y-m-d)|esc(attr) }
      *
-     * @var array<string, string>
-     * @phpstan-var array<string, ParserCallableString>
+     * @var         array<string, string>
+     * @phpstan-var array<string, parser_callable_string>
      */
     public $filters = [];
 
@@ -44,8 +44,8 @@ class View extends BaseView
      * by the core Parser by creating aliases that will be replaced with
      * any callable. Can be single or tag pair.
      *
-     * @var array<string, array<string>|callable|string>
-     * @phpstan-var array<string, array<ParserCallableString>|ParserCallableString|ParserCallable>
+     * @var         array<string, callable|list<string>|string>
+     * @phpstan-var array<string, list<parser_callable_string>|parser_callable_string|parser_callable>
      */
     public $plugins = [];
 
@@ -56,7 +56,7 @@ class View extends BaseView
      *
      * All classes must implement CodeIgniter\View\ViewDecoratorInterface
      *
-     * @var class-string<ViewDecoratorInterface>[]
+     * @var list<class-string<ViewDecoratorInterface>>
      */
     public array $decorators = [];
 }

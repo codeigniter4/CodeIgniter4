@@ -65,6 +65,9 @@ class Connection extends BaseConnection
         }
 
         // Convert DSN string
+        // @TODO This format is for PDO_PGSQL.
+        //      https://www.php.net/manual/en/ref.pdo-pgsql.connection.php
+        //      Should deprecate?
         if (mb_strpos($this->DSN, 'pgsql:') === 0) {
             $this->convertDSN();
         }
@@ -294,7 +297,7 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with field data
      *
-     * @return stdClass[]
+     * @return list<stdClass>
      *
      * @throws DatabaseException
      */
@@ -329,7 +332,7 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with index data
      *
-     * @return stdClass[]
+     * @return list<stdClass>
      *
      * @throws DatabaseException
      */
@@ -368,7 +371,7 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with Foreign key data
      *
-     * @return stdClass[]
+     * @return list<stdClass>
      *
      * @throws DatabaseException
      */
@@ -566,21 +569,5 @@ class Connection extends BaseConnection
     protected function _transRollback(): bool
     {
         return (bool) pg_query($this->connID, 'ROLLBACK');
-    }
-
-    /**
-     * Determines if a query is a "write" type.
-     *
-     * Overrides BaseConnection::isWriteType, adding additional read query types.
-     *
-     * @param string $sql
-     */
-    public function isWriteType($sql): bool
-    {
-        if (preg_match('#^(INSERT|UPDATE).*RETURNING\s.+(\,\s?.+)*$#is', $sql)) {
-            return false;
-        }
-
-        return parent::isWriteType($sql);
     }
 }

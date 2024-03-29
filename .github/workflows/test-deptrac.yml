@@ -43,7 +43,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-          tools: composer, phive
+          tools: composer
           extensions: intl, json, mbstring, gd, mysqlnd, xdebug, xml, sqlite3
 
       - name: Validate composer.json
@@ -74,7 +74,7 @@ jobs:
 
       - name: Run architectural inspection
         run: |
-            sudo phive --no-progress install --global qossmic/deptrac --trust-gpg-keys B8F640134AB1782E
-            deptrac analyze --cache-file=build/deptrac.cache
+            composer require --dev qossmic/deptrac-shim
+            vendor/bin/deptrac analyze --cache-file=build/deptrac.cache
         env:
           GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

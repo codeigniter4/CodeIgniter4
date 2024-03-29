@@ -13,10 +13,12 @@ namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\Exceptions\BadRequestException;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\App;
 use Config\Modules;
 use Config\Routing;
 use Tests\Support\Filters\Customfilter;
@@ -85,6 +87,16 @@ final class RouterTest extends CIUnitTestCase
         $this->expectException(PageNotFoundException::class);
 
         $router->handle('0');
+    }
+
+    public function testNotPermittedChars(): void
+    {
+        $router = new Router($this->collection, $this->request);
+
+        $this->expectException(BadRequestException::class);
+        $this->expectExceptionMessage('The URI you submitted has disallowed characters: "<a>"');
+
+        $router->handle('test/%3Ca%3E');
     }
 
     public function testURIMapsToController(): void
@@ -783,6 +795,9 @@ final class RouterTest extends CIUnitTestCase
      */
     public function testRegularExpressionWithUnicode(): void
     {
+        $config                    = config(App::class);
+        $config->permittedURIChars = 'a-z 0-9~%.:_\-\x{0980}-\x{09ff}';
+
         $this->collection->get('news/([a-z0-9\x{0980}-\x{09ff}-]+)', 'News::view/$1');
 
         $router = new Router($this->collection, $this->request);
@@ -802,6 +817,9 @@ final class RouterTest extends CIUnitTestCase
      */
     public function testRegularExpressionPlaceholderWithUnicode(): void
     {
+        $config                    = config(App::class);
+        $config->permittedURIChars = 'a-z 0-9~%.:_\-\x{0980}-\x{09ff}';
+
         $this->collection->addPlaceholder('custom', '[a-z0-9\x{0980}-\x{09ff}-]+');
         $this->collection->get('news/(:custom)', 'News::view/$1');
 

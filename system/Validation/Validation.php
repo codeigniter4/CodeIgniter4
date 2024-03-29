@@ -234,7 +234,7 @@ class Validation implements ValidationInterface
      *
      * @param array|bool|float|int|object|string|null $value   The data to validate.
      * @param array|string                            $rules   The validation rules.
-     * @param string[]                                $errors  The custom error message.
+     * @param list<string>                            $errors  The custom error message.
      * @param string|null                             $dbGroup The database group to use.
      */
     public function check($value, $rules, array $errors = [], $dbGroup = null): bool
@@ -626,7 +626,7 @@ class Validation implements ValidationInterface
      *
      * @param string $group Group.
      *
-     * @return string[] Rule group.
+     * @return list<string> Rule group.
      *
      * @throws ValidationException If group not found.
      */
@@ -790,7 +790,9 @@ class Validation implements ValidationInterface
                         // Check if the validation rule for the placeholder exists
                         if ($placeholderRules === null) {
                             throw new LogicException(
-                                'No validation rules for the placeholder: ' . $field
+                                'No validation rules for the placeholder: "' . $field
+                                . '". You must set the validation rules for the field.'
+                                . ' See <https://codeigniter4.github.io/userguide/libraries/validation.html#validation-placeholders>.'
                             );
                         }
 

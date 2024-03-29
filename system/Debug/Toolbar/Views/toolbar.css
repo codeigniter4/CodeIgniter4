@@ -17,6 +17,7 @@
   padding: 0px;
   clear: both;
   text-align: center;
+  cursor: pointer;
 }
 #debug-icon a svg {
   margin: 8px;
@@ -29,6 +30,10 @@
 }
 #debug-icon .debug-bar-ndisplay {
   display: none;
+}
+
+.debug-bar-vars {
+  cursor: pointer;
 }
 
 #debug-bar {
@@ -156,19 +161,21 @@
   bottom: auto;
   top: 36px;
 }
-#debug-bar #toolbar-position a,
-#debug-bar #toolbar-theme a {
+#debug-bar #toolbar-position,
+#debug-bar #toolbar-theme {
   padding: 0 6px;
   display: inline-flex;
   vertical-align: top;
+  cursor: pointer;
 }
-#debug-bar #toolbar-position a:hover,
-#debug-bar #toolbar-theme a:hover {
+#debug-bar #toolbar-position:hover,
+#debug-bar #toolbar-theme:hover {
   text-decoration: none;
 }
 #debug-bar #debug-bar-link {
   display: flex;
   padding: 6px;
+  cursor: pointer;
 }
 #debug-bar .ci-label {
   display: inline-flex;

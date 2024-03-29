@@ -640,8 +640,8 @@ class ValidationTest extends CIUnitTestCase
     /**
      * @dataProvider provideRulesSetup
      *
-     * @param string|string[] $rules
-     * @param string          $expected
+     * @param list<string>|string $rules
+     * @param string              $expected
      */
     public function testRulesSetup($rules, $expected, array $errors = []): void
     {
