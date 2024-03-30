@@ -32,8 +32,6 @@ class ImageMagickHandler extends BaseHandler
     protected $resource;
 
     /**
-     * Constructor.
-     *
      * @param Images $config
      *
      * @throws ImageException
@@ -44,6 +42,22 @@ class ImageMagickHandler extends BaseHandler
 
         if (! (extension_loaded('imagick') || class_exists(Imagick::class))) {
             throw ImageException::forMissingExtension('IMAGICK'); // @codeCoverageIgnore
+        }
+
+        $cmd = $this->config->libraryPath;
+
+        if ($cmd === '') {
+            throw ImageException::forInvalidImageLibraryPath($cmd);
+        }
+
+        if (preg_match('/convert$/i', $cmd) !== 1) {
+            $cmd = rtrim($cmd, '\/') . '/convert';
+
+            $this->config->libraryPath = $cmd;
+        }
+
+        if (! is_file($cmd)) {
+            throw ImageException::forInvalidImageLibraryPath($cmd);
         }
     }
 
@@ -184,17 +198,8 @@ class ImageMagickHandler extends BaseHandler
      */
     protected function process(string $action, int $quality = 100): array
     {
-        // Do we have a vaild library path?
-        if (empty($this->config->libraryPath)) {
-            throw ImageException::forInvalidImageLibraryPath($this->config->libraryPath);
-        }
-
         if ($action !== '-version') {
             $this->supportedFormatCheck();
-        }
-
-        if (! preg_match('/convert$/i', $this->config->libraryPath)) {
-            $this->config->libraryPath = rtrim($this->config->libraryPath, '/') . '/convert';
         }
 
         $cmd = $this->config->libraryPath;
