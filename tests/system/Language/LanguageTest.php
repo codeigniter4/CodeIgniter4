@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Language;
 
-use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLanguage;
 use Config\Services;
