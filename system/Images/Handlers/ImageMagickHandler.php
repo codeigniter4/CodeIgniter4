@@ -181,12 +181,10 @@ class ImageMagickHandler extends BaseHandler
      */
     public function getVersion(): string
     {
-        $result = $this->process('-version');
+        $versionString = $this->process('-version')[0];
+        preg_match('/ImageMagick\s(?P<version>[\S]+)/', $versionString, $matches);
 
-        // The first line has the version in it...
-        preg_match('/(ImageMagick\s[\S]+)/', $result[0], $matches);
-
-        return str_replace('ImageMagick ', '', $matches[0]);
+        return $matches['version'];
     }
 
     /**
