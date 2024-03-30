@@ -26,6 +26,7 @@ $minor        = $versionParts[0] . '.' . $versionParts[1];
 
 // Creates a branch for release.
 system('git switch develop');
+system('git branch -D release-' . $version);
 system('git switch -c release-' . $version);
 
 // Updates version number in "CodeIgniter.php".
