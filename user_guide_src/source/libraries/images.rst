@@ -49,6 +49,7 @@ Regardless of the type of processing you would like to perform
 (resizing, cropping, rotation, or watermarking), the general process is
 identical. You will set some preferences corresponding to the action you
 intend to perform, then call one of the available processing functions.
+
 For example, to create an image thumbnail you'll do this:
 
 .. literalinclude:: images/003.php
