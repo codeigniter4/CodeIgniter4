@@ -69,7 +69,7 @@ previous results:
 .. literalinclude:: images/004.php
 
 This example would take the same image and first fix any mobile phone orientation issues,
-rotate the image by 90 degrees, and then crop the result into a 100x100 pixel image,
+rotate the image by 90 degrees, and then crop the result into a 100 x 100 pixel image,
 starting at the top left corner. The result would be saved as the thumbnail.
 
 .. note:: In order for the image class to be allowed to do any
@@ -136,7 +136,7 @@ thumbnail images that should match a certain size/aspect ratio. This is handled 
 - ``$maintainRatio`` will, if true, adjust the final dimensions as needed to maintain the image's original aspect ratio.
 - ``$masterDim`` specifies which dimension should be left untouched when ``$maintainRatio`` is true. Values can be: ``'width'``, ``'height'``, or ``'auto'``.
 
-To take a 50x50 pixel square out of the center of an image, you would need to first calculate the appropriate x and y
+To take a 50 x 50 pixel square out of the center of an image, you would need to first calculate the appropriate x and y
 offset values:
 
 .. literalinclude:: images/008.php
