@@ -96,6 +96,7 @@ final class ConfigCheckTest extends CIUnitTestCase
                     public 'allowedHostnames' -> array (0) []
                     public 'indexPage' -> string (9) "index.php"
                     public 'uriProtocol' -> string (11) "REQUEST_URI"
+                    public 'permittedURIChars' -> string (14) "a-z 0-9~%.:_\-"
                     public 'defaultLocale' -> string (2) "en"
                     public 'negotiateLocale' -> boolean false
                     public 'supportedLocales' -> array (1) [
@@ -150,6 +151,8 @@ final class ConfigCheckTest extends CIUnitTestCase
                       string(9) "index.php"
                       public string $uriProtocol =>
                       string(11) "REQUEST_URI"
+                      public string $permittedURIChars =>
+                      string(14) "a-z 0-9~%.:_\-"
                       public string $defaultLocale =>
                       string(2) "en"
                       public bool $negotiateLocale =>
@@ -192,6 +195,8 @@ final class ConfigCheckTest extends CIUnitTestCase
                       string(9) "index.php"
                       ["uriProtocol"]=>
                       string(11) "REQUEST_URI"
+                      ["permittedURIChars"]=>
+                      string(14) "a-z 0-9~%.:_\-"
                       ["defaultLocale"]=>
                       string(2) "en"
                       ["negotiateLocale"]=>
