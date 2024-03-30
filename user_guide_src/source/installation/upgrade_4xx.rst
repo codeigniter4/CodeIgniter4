@@ -240,6 +240,7 @@ Upgrading Libraries
     upgrade_encryption
     upgrade_file_upload
     upgrade_html_tables
+    upgrade_images
     upgrade_localization
     upgrade_migrations
     upgrade_pagination
