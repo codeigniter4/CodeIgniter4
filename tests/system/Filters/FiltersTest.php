@@ -1097,8 +1097,8 @@ final class FiltersTest extends CIUnitTestCase
                 'frak',
             ],
             'after' => [
-                'baz',
                 'frak',
+                'baz',
             ],
         ];
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
