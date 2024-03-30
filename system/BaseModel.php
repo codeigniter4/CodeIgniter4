@@ -173,11 +173,14 @@ abstract class BaseModel
     protected $db;
 
     /**
-     * Rules used to validate data in insert, update, and save methods.
+     * Rules used to validate data in insert(), update(), and save() methods.
+     *
      * The array must match the format of data passed to the Validation
      * library.
      *
-     * @var list<string>|string
+     * @see https://codeigniter4.github.io/userguide/models/model.html#setting-validation-rules
+     *
+     * @var array<string, array<string, array<string, string>|string>|string>|string
      */
     protected $validationRules = [];
 
@@ -1448,7 +1451,7 @@ abstract class BaseModel
      * Allows to set (and reset) validation rules.
      * It could be used when you have to change default or override current validate rules.
      *
-     * @param array $validationRules Value
+     * @param array<string, array<string, array<string, string>|string>|string> $validationRules Value
      *
      * @return $this
      */

@@ -227,11 +227,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:setValidationRules\\(\\) has parameter \\$validationRules with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:transformDataToArray\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
@@ -11392,16 +11387,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/_support/Models/UserModel.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\ValidErrorsModel\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, array\\<int\\|string, array\\<string, string\\>\\|string\\>\\|string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/ValidErrorsModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\ValidModel\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, array\\<int, string\\>\\|string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/ValidModel.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property Tests\\\\Support\\\\SomeEntity\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/SomeEntity.php',
@@ -16302,37 +16287,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelRuleGroupTest\\.php\\:368\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelRuleGroupTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelRuleGroupTest\\.php\\:406\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelRuleGroupTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelRuleGroupTest\\.php\\:446\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelRuleGroupTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:243\\:\\:\\$grouptest has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:380\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:418\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:458\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
 ];
