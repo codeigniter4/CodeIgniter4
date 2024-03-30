@@ -460,6 +460,7 @@ class CodeIgniter
         $uri = $this->request->getPath();
 
         if ($this->enableFilters) {
+            /** @var Filters $filters */
             $filters = service('filters');
 
             // If any filters were specified within the routes file,
@@ -517,6 +518,7 @@ class CodeIgniter
         $this->gatherOutput($cacheConfig, $returned);
 
         if ($this->enableFilters) {
+            /** @var Filters $filters */
             $filters = service('filters');
             $filters->setResponse($this->response);
 

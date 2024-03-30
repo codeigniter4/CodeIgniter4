@@ -287,6 +287,7 @@ Provided Filters
 
 The filters bundled with CodeIgniter4 are:
 
+- ``cors`` => :doc:`../libraries/cors`
 - ``csrf`` => :ref:`CSRF <cross-site-request-forgery>`
 - ``toolbar`` => :ref:`DebugToolbar <the-debug-toolbar>`
 - ``honeypot`` => :doc:`Honeypot <../libraries/honeypot>`
