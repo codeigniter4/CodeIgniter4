@@ -252,17 +252,17 @@ that allow you to specify how the text should be displayed:
 
 The possible options that are recognized are as follows:
 
-- ``color``         Text Color (hex number), i.e., #ff0000
-- ``opacity``        A number between 0 and 1 that represents the opacity of the text.
+- ``color``         Text Color (hex number), i.e., ``'#ff0000'``
+- ``opacity``        A number between ``0`` and ``1`` that represents the opacity of the text.
 - ``withShadow``    Boolean value whether to display a shadow or not.
 - ``shadowColor``   Color of the shadow (hex number)
 - ``shadowOffset``    How many pixels to offset the shadow. Applies to both the vertical and horizontal values.
-- ``hAlign``        Horizontal alignment: left, center, right
-- ``vAlign``        Vertical alignment: top, middle, bottom
+- ``hAlign``        Horizontal alignment: ``'left'``, ``'center'``, ``'right'``
+- ``vAlign``        Vertical alignment: ``'top'``, ``'middle'``, ``'bottom'``
 - ``hOffset``        Additional offset on the x axis, in pixels
 - ``vOffset``        Additional offset on the y axis, in pixels
 - ``fontPath``        The full server path to the TTF font you wish to use. System font will be used if none is given.
-- ``fontSize``        The font size to use. When using the GD handler with the system font, valid values are between 1-5.
+- ``fontSize``        The font size to use. When using the GD handler with the system font, valid values are between ``1`` to ``5``.
 
 .. note:: The ImageMagick driver does not recognize full server path for fontPath. Instead, simply provide the
         name of one of the installed system fonts that you wish to use, i.e., Calibri.
