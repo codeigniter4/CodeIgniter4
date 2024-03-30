@@ -55,9 +55,9 @@ For example, to create an image thumbnail you'll do this:
 .. literalinclude:: images/003.php
 
 The above code tells the library to look for an image
-called *mypic.jpg* located in the source_image folder, then create a
-new image from it that is 100 x 100pixels using the GD2 image_library,
-and save it to a new file (the thumb). Since it is using the ``fit()`` method,
+called **mypic.jpg** located in the **/path/to/image** folder, then create a
+new image from it that is 100 x 100 pixels,
+and save it to a new file **mypic_thumb.jpg**. Since it is using the ``fit()`` method,
 it will attempt to find the best portion of the image to crop based on the
 desired aspect ratio, and then crop and resize the result.
 
