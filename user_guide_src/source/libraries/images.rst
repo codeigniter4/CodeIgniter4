@@ -232,7 +232,7 @@ The ``rotate()`` method allows you to rotate an image in 90 degree increments::
 - ``$angle`` is the number of degrees to rotate. One of ``90``, ``180``, ``270``.
 
 .. note:: While the ``$angle`` parameter accepts a float, it will convert it to an integer during the process.
-        If the value is any other than the three values listed above, it will throw a CodeIgniter\Images\ImageException.
+        If the value is any other than the three values listed above, it will throw a ``CodeIgniter\Images\ImageException``.
 
 Adding a Text Watermark
 =======================
