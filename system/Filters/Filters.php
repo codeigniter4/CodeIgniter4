@@ -376,6 +376,8 @@ class Filters
      *
      * @param string|null $uri URI path relative to baseURL (all lowercase)
      *
+     * @TODO We don't need to accept null as $uri.
+     *
      * @return Filters
      */
     public function initialize(?string $uri = null)
@@ -385,7 +387,7 @@ class Filters
         }
 
         // Decode URL-encoded string
-        $uri = urldecode($uri);
+        $uri = urldecode($uri ?? '');
 
         $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false;
         if ($oldFilterOrder) {
