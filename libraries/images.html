@@ -351,8 +351,8 @@ server in <strong>app/Config/Images.php</strong>.</p>
 <p>Regardless of the type of processing you would like to perform
 (resizing, cropping, rotation, or watermarking), the general process is
 identical. You will set some preferences corresponding to the action you
-intend to perform, then call one of the available processing functions.
-For example, to create an image thumbnail you’ll do this:</p>
+intend to perform, then call one of the available processing functions.</p>
+<p>For example, to create an image thumbnail you’ll do this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
@@ -361,9 +361,9 @@ For example, to create an image thumbnail you’ll do this:</p>
 </pre></div>
 </div>
 <p>The above code tells the library to look for an image
-called <em>mypic.jpg</em> located in the source_image folder, then create a
-new image from it that is 100 x 100pixels using the GD2 image_library,
-and save it to a new file (the thumb). Since it is using the <code class="docutils literal notranslate"><span class="pre">fit()</span></code> method,
+called <strong>mypic.jpg</strong> located in the <strong>/path/to/image</strong> folder, then create a
+new image from it that is 100 x 100 pixels,
+and save it to a new file <strong>mypic_thumb.jpg</strong>. Since it is using the <code class="docutils literal notranslate"><span class="pre">fit()</span></code> method,
 it will attempt to find the best portion of the image to crop based on the
 desired aspect ratio, and then crop and resize the result.</p>
 <p>An image can be processed through as many of the available methods as
@@ -380,7 +380,7 @@ previous results:</p>
 </pre></div>
 </div>
 <p>This example would take the same image and first fix any mobile phone orientation issues,
-rotate the image by 90 degrees, and then crop the result into a 100x100 pixel image,
+rotate the image by 90 degrees, and then crop the result into a 100 x 100 pixel image,
 starting at the top left corner. The result would be saved as the thumbnail.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -399,7 +399,7 @@ adjust PHP memory limits.</p>
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">Image Quality</a><a class="headerlink" href="#image-quality" title="Permalink to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">save()</span></code> can take an additional parameter <code class="docutils literal notranslate"><span class="pre">$quality</span></code> to alter the resulting image
 quality. Values range from 0 to 100 with 90 being the framework default. This parameter
-only applies to JPEG and WEBP images, will be ignored otherwise:</p>
+only applies to JPEG and WebP images, will be ignored otherwise:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The parameter <code class="docutils literal notranslate"><span class="pre">$quality</span></code> for WebP can be used since v4.4.0.</p>
@@ -471,7 +471,7 @@ thumbnail images that should match a certain size/aspect ratio. This is handled 
 <li><p><code class="docutils literal notranslate"><span class="pre">$maintainRatio</span></code> will, if true, adjust the final dimensions as needed to maintain the image’s original aspect ratio.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$masterDim</span></code> specifies which dimension should be left untouched when <code class="docutils literal notranslate"><span class="pre">$maintainRatio</span></code> is true. Values can be: <code class="docutils literal notranslate"><span class="pre">'width'</span></code>, <code class="docutils literal notranslate"><span class="pre">'height'</span></code>, or <code class="docutils literal notranslate"><span class="pre">'auto'</span></code>.</p></li>
 </ul>
-<p>To take a 50x50 pixel square out of the center of an image, you would need to first calculate the appropriate x and y
+<p>To take a 50 x 50 pixel square out of the center of an image, you would need to first calculate the appropriate x and y
 offset values:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -622,7 +622,7 @@ while the other dimension will be altered to match the original image’s aspect
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>While the <code class="docutils literal notranslate"><span class="pre">$angle</span></code> parameter accepts a float, it will convert it to an integer during the process.
-If the value is any other than the three values listed above, it will throw a CodeIgniterImagesImageException.</p>
+If the value is any other than the three values listed above, it will throw a <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Images\ImageException</span></code>.</p>
 </div>
 </section>
 <section id="adding-a-text-watermark">
@@ -652,17 +652,17 @@ that allow you to specify how the text should be displayed:</p>
 </div>
 <p>The possible options that are recognized are as follows:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>         Text Color (hex number), i.e., #ff0000</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">opacity</span></code>        A number between 0 and 1 that represents the opacity of the text.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>         Text Color (hex number), i.e., <code class="docutils literal notranslate"><span class="pre">'#ff0000'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">opacity</span></code>        A number between <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">1</span></code> that represents the opacity of the text.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">withShadow</span></code>    Boolean value whether to display a shadow or not.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">shadowColor</span></code>   Color of the shadow (hex number)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">shadowOffset</span></code>    How many pixels to offset the shadow. Applies to both the vertical and horizontal values.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">hAlign</span></code>        Horizontal alignment: left, center, right</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">vAlign</span></code>        Vertical alignment: top, middle, bottom</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hAlign</span></code>        Horizontal alignment: <code class="docutils literal notranslate"><span class="pre">'left'</span></code>, <code class="docutils literal notranslate"><span class="pre">'center'</span></code>, <code class="docutils literal notranslate"><span class="pre">'right'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vAlign</span></code>        Vertical alignment: <code class="docutils literal notranslate"><span class="pre">'top'</span></code>, <code class="docutils literal notranslate"><span class="pre">'middle'</span></code>, <code class="docutils literal notranslate"><span class="pre">'bottom'</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">hOffset</span></code>        Additional offset on the x axis, in pixels</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">vOffset</span></code>        Additional offset on the y axis, in pixels</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">fontPath</span></code>        The full server path to the TTF font you wish to use. System font will be used if none is given.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fontSize</span></code>        The font size to use. When using the GD handler with the system font, valid values are between 1-5.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fontSize</span></code>        The font size to use. When using the GD handler with the system font, valid values are between <code class="docutils literal notranslate"><span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">5</span></code>.</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
