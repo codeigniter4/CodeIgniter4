@@ -199,6 +199,9 @@ Others
   if the HTTP method is different.
 - **Bootstrap:** The ``CodeIgniter\Boot`` class has been introduced, replacing
   **system/bootstrap.php**.
+- **Security:** ``Config\Security::$redirect`` is now, by default, environment-specific.
+  For production environment, changed to ``true`` but is still ``false`` for other
+  environments.
 
 ********
 BREAKING
