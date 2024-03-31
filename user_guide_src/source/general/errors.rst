@@ -41,7 +41,7 @@ Catching Specific Exceptions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In the example above, we catch any type of Exception. If we only want to watch for specific types of exceptions, like
-a ``UnknownFileException``, we can specify that in the catch parameter. Any other exceptions that are thrown and are
+a ``DataException``, we can specify that in the catch parameter. Any other exceptions that are thrown and are
 not child classes of the caught exception will be passed on to the error handler:
 
 .. literalinclude:: errors/003.php
