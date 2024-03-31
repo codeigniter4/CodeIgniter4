@@ -67,11 +67,11 @@ Strict Mode can be disabled as follows:
 Managing Errors
 ===============
 
-When you have ``DBDebug`` true in your **app/Config/Database.php** file,
-if a query error occurs, all the queries will be rolled backed, and an exception
-will be thrown. So you'll see a standard error page.
+.. note::
+    Since v4.3.0, during transactions, exceptions are not thrown by default
+    even if ``DBDebug`` is true.
 
-If the ``DBDebug`` is false, you can manage your own errors like this:
+You can manage your own errors like this:
 
 .. literalinclude:: transactions/003.php
 
