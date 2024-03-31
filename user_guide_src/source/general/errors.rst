@@ -19,10 +19,16 @@ Using Exceptions
 
 This section is a quick overview for newer programmers, or for developers who are not experienced with using exceptions.
 
+What is Exceptions
+------------------
+
 Exceptions are simply events that happen when the exception is "thrown". This halts the current flow of the script, and
 execution is then sent to the error handler which displays the appropriate error page:
 
 .. literalinclude:: errors/001.php
+
+Catching Exceptions
+-------------------
 
 If you are calling a method that might throw an exception, you can catch that exception using a ``try/catch`` block:
 
@@ -30,6 +36,9 @@ If you are calling a method that might throw an exception, you can catch that ex
 
 If the ``$userModel`` throws an exception, it is caught and the code within the catch block is executed. In this example,
 the scripts dies, echoing the error message that the ``UserModel`` defined.
+
+Catching Specific Exceptions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In the example above, we catch any type of Exception. If we only want to watch for specific types of exceptions, like
 a ``UnknownFileException``, we can specify that in the catch parameter. Any other exceptions that are thrown and are
