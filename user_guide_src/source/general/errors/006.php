@@ -6,5 +6,7 @@ use CodeIgniter\Config\BaseConfig;
 
 class Exceptions extends BaseConfig
 {
-    public $ignoredCodes = [404];
+    // ...
+    public array $ignoreCodes = [404];
+    // ...
 }
