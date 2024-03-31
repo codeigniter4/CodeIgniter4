@@ -95,14 +95,17 @@ The following framework exceptions are available:
 PageNotFoundException
 ---------------------
 
-This is used to signal a 404, Page Not Found error. When thrown, the system will show the view found at
-**app/Views/errors/html/error_404.php**. You should customize all of the error views for your site.
-If, in **app/Config/Routes.php**, you have specified a 404 Override, that will be called instead of the standard
-404 page:
+This is used to signal a 404, Page Not Found error:
 
 .. literalinclude:: errors/007.php
 
 You can pass a message into the exception that will be displayed in place of the default message on the 404 page.
+
+When thrown, the system will show the view found at
+**app/Views/errors/html/error_404.php**. You should customize all of the error views for your site.
+
+If, in **app/Config/Routing.php** or **app/Config/Routes.php**, you have specified
+a :ref:`404-override`, that will be called instead of the standard 404 page.
 
 ConfigException
 ---------------
