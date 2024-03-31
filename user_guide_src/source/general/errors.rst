@@ -197,7 +197,7 @@ HTTP Status Code and Error Views
 ================================
 
 The exception handler displays the error view corresponding to the HTTP status
-code, if it exists.
+code, if one exists.
 
 For example, ``PageNotFoundException`` implements the ``HTTPExceptionInterface``,
 so its exception code ``404`` will be the HTTP status code. Therefore if it is
@@ -205,8 +205,14 @@ thrown, the system will show the **error_404.php** in the **app/Views/errors/htm
 folder when it is a web request. If it is invoked via CLI, the system will show
 the **error_404.php** in the **app/Views/errors/cli** folder.
 
-You should customize all of the error views in the **app/Views/error** folder for
-your site.
+If there is no view file corresponding to the HTTP status code, **production.php**
+or **error_exception.php** will be displayed.
+
+.. note:: If ``display_errors`` is on in the PHP INI configuration,
+    **error_exception.php** is selected and a detailed error report is displayed.
+
+You should customize all of the error views in the **app/Views/errors/html** folder
+for your site.
 
 You can also create error views for specific HTTP status code. For example, if
 you want to create an error view for "400 Bad Request", add **error_400.php**.
