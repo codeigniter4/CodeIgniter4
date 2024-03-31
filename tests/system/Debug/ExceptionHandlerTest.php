@@ -69,7 +69,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         $templatePath = APPPATH . 'Views/errors/html';
         $viewFile     = $determineView($exception, $templatePath);
 
-        $this->assertSame('error_404.php', $viewFile);
+        $this->assertSame('error_exception.php', $viewFile);
     }
 
     public function testDetermineViewsDisplayErrorsOffRuntimeException(): void
