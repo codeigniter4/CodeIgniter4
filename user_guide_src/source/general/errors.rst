@@ -74,7 +74,7 @@ See :ref:`setting-environment`.
 Logging Exceptions
 ------------------
 
-By default, all Exceptions other than 404 - Page Not Found exceptions are logged. This can be turned on and off
+By default, all Exceptions other than "404 - Page Not Found" exceptions are logged. This can be turned on and off
 by setting the ``$log`` value of **app/Config/Exceptions.php**:
 
 .. literalinclude:: errors/005.php
