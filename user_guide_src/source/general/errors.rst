@@ -101,8 +101,7 @@ This is used to signal a 404, Page Not Found error:
 
 You can pass a message into the exception that will be displayed in place of the default message on the 404 page.
 
-When thrown, the system will show the view found at
-**app/Views/errors/html/error_404.php**. You should customize all of the error views for your site.
+For the default 404 view file location, see :ref:`http-status-code-and-error-views`.
 
 If, in **app/Config/Routing.php** or **app/Config/Routes.php**, you have specified
 a :ref:`404-override`, that will be called instead of the standard 404 page.
@@ -160,6 +159,31 @@ Since v4.3.0, you can specify the HTTP status code for your Exception class to i
 ``HTTPExceptionInterface``.
 
 When an exception implementing ``HTTPExceptionInterface`` is caught by CodeIgniter's exception handler, the Exception code will become the HTTP status code.
+
+.. _http-status-code-and-error-views:
+
+HTTP Status Code and Error Views
+================================
+
+The exception handler displays the error view corresponding to the HTTP status
+code, if it exists.
+
+For example, ``PageNotFoundException`` implements the ``HTTPExceptionInterface``,
+so its exception code ``404`` will be the HTTP status code. Therefore if it is
+thrown, the system will show the **error_404.php** in the **app/Views/errors/html**
+folder when it is a web request. If it is invoked via CLI, the system will show
+the **error_404.php** in the **app/Views/errors/cli** folder.
+
+You should customize all of the error views in the **app/Views/error** folder for
+your site.
+
+You can also create error views for specific HTTP status code. For example, if
+you want to create an error view for "400 Bad Request", add **error_400.php**.
+
+.. warning:: If an error view file with the corresponding HTTP status code exists,
+    the exception handler will display that file regardless of the environment.
+    The view file must be implemented in such a way that it does not display
+    detailed error messages in production environment by yourself.
 
 .. _error-specify-exit-code:
 
