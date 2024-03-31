@@ -187,7 +187,7 @@ Specify HTTP Status Code in Your Exception
 .. versionadded:: 4.3.0
 
 Since v4.3.0, you can specify the HTTP status code for your Exception class to implement
-``HTTPExceptionInterface``.
+``CodeIgniter\Exceptions\HTTPExceptionInterface``.
 
 When an exception implementing ``HTTPExceptionInterface`` is caught by CodeIgniter's exception handler, the Exception code will become the HTTP status code.
 
@@ -230,7 +230,7 @@ Specify Exit Code in Your Exception
 .. versionadded:: 4.3.0
 
 Since v4.3.0, you can specify the exit code for your Exception class to implement
-``HasExitCodeInterface``.
+``CodeIgniter\Exceptions\HasExitCodeInterface``.
 
 When an exception implementing ``HasExitCodeInterface`` is caught by CodeIgniter's exception handler, the code returned from the ``getExitCode()`` method will become the exit code.
 
