@@ -144,7 +144,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var string
      */
-    protected $charset = 'utf8mb4';
+    protected $charset = '';
 
     /**
      * Collation
@@ -153,7 +153,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var string
      */
-    protected $DBCollat = 'utf8mb4_general_ci';
+    protected $DBCollat = '';
 
     /**
      * Swap Prefix
