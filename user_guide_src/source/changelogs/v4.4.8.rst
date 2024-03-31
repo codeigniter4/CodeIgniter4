@@ -14,6 +14,11 @@ Release Date: Unreleased
 BREAKING
 ********
 
+- A bug that caused the :doc:`Exception handler <../general/errors>` to display
+  incorrect error view file corresponding to the exception code has been fixed.
+  The third parameter ``int $statusCode = 500`` has been added to
+  ``CodeIgniter\Debug\ExceptionHandler::determineView()`` for this purpose.
+
 ***************
 Message Changes
 ***************
