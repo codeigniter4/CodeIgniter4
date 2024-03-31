@@ -222,11 +222,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:setValidationRules\\(\\) has parameter \\$validationRules with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:transformDataToArray\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
@@ -7368,7 +7363,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 9,
+	'count' => 8,
 	'path' => __DIR__ . '/system/Images/Handlers/ImageMagickHandler.php',
 ];
 $ignoreErrors[] = [
@@ -10820,16 +10815,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property Tests\\\\Support\\\\Models\\\\UserModel\\:\\:\\$name has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Models/UserModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\ValidErrorsModel\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, array\\<int\\|string, array\\<string, string\\>\\|string\\>\\|string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/ValidErrorsModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\ValidModel\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, array\\<int, string\\>\\|string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/ValidModel.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Tests\\\\Support\\\\Services\\\\Translation\\\\Nested\\\\TranslationFour\\:\\:list\\(\\) has no return type specified\\.$#',
@@ -16032,37 +16017,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelRuleGroupTest\\.php\\:370\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelRuleGroupTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelRuleGroupTest\\.php\\:408\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelRuleGroupTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelRuleGroupTest\\.php\\:448\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelRuleGroupTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:245\\:\\:\\$grouptest has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:382\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:420\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:460\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
 ];

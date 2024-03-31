@@ -49,14 +49,15 @@ Regardless of the type of processing you would like to perform
 (resizing, cropping, rotation, or watermarking), the general process is
 identical. You will set some preferences corresponding to the action you
 intend to perform, then call one of the available processing functions.
+
 For example, to create an image thumbnail you'll do this:
 
 .. literalinclude:: images/003.php
 
 The above code tells the library to look for an image
-called *mypic.jpg* located in the source_image folder, then create a
-new image from it that is 100 x 100pixels using the GD2 image_library,
-and save it to a new file (the thumb). Since it is using the ``fit()`` method,
+called **mypic.jpg** located in the **/path/to/image** folder, then create a
+new image from it that is 100 x 100 pixels,
+and save it to a new file **mypic_thumb.jpg**. Since it is using the ``fit()`` method,
 it will attempt to find the best portion of the image to crop based on the
 desired aspect ratio, and then crop and resize the result.
 
@@ -68,7 +69,7 @@ previous results:
 .. literalinclude:: images/004.php
 
 This example would take the same image and first fix any mobile phone orientation issues,
-rotate the image by 90 degrees, and then crop the result into a 100x100 pixel image,
+rotate the image by 90 degrees, and then crop the result into a 100 x 100 pixel image,
 starting at the top left corner. The result would be saved as the thumbnail.
 
 .. note:: In order for the image class to be allowed to do any
@@ -85,7 +86,7 @@ Image Quality
 
 ``save()`` can take an additional parameter ``$quality`` to alter the resulting image
 quality. Values range from 0 to 100 with 90 being the framework default. This parameter
-only applies to JPEG and WEBP images, will be ignored otherwise:
+only applies to JPEG and WebP images, will be ignored otherwise:
 
 .. note:: The parameter ``$quality`` for WebP can be used since v4.4.0.
 
@@ -135,7 +136,7 @@ thumbnail images that should match a certain size/aspect ratio. This is handled 
 - ``$maintainRatio`` will, if true, adjust the final dimensions as needed to maintain the image's original aspect ratio.
 - ``$masterDim`` specifies which dimension should be left untouched when ``$maintainRatio`` is true. Values can be: ``'width'``, ``'height'``, or ``'auto'``.
 
-To take a 50x50 pixel square out of the center of an image, you would need to first calculate the appropriate x and y
+To take a 50 x 50 pixel square out of the center of an image, you would need to first calculate the appropriate x and y
 offset values:
 
 .. literalinclude:: images/008.php
@@ -231,7 +232,7 @@ The ``rotate()`` method allows you to rotate an image in 90 degree increments::
 - ``$angle`` is the number of degrees to rotate. One of ``90``, ``180``, ``270``.
 
 .. note:: While the ``$angle`` parameter accepts a float, it will convert it to an integer during the process.
-        If the value is any other than the three values listed above, it will throw a CodeIgniter\Images\ImageException.
+        If the value is any other than the three values listed above, it will throw a ``CodeIgniter\Images\ImageException``.
 
 Adding a Text Watermark
 =======================
@@ -251,17 +252,17 @@ that allow you to specify how the text should be displayed:
 
 The possible options that are recognized are as follows:
 
-- ``color``         Text Color (hex number), i.e., #ff0000
-- ``opacity``        A number between 0 and 1 that represents the opacity of the text.
+- ``color``         Text Color (hex number), i.e., ``'#ff0000'``
+- ``opacity``        A number between ``0`` and ``1`` that represents the opacity of the text.
 - ``withShadow``    Boolean value whether to display a shadow or not.
 - ``shadowColor``   Color of the shadow (hex number)
 - ``shadowOffset``    How many pixels to offset the shadow. Applies to both the vertical and horizontal values.
-- ``hAlign``        Horizontal alignment: left, center, right
-- ``vAlign``        Vertical alignment: top, middle, bottom
+- ``hAlign``        Horizontal alignment: ``'left'``, ``'center'``, ``'right'``
+- ``vAlign``        Vertical alignment: ``'top'``, ``'middle'``, ``'bottom'``
 - ``hOffset``        Additional offset on the x axis, in pixels
 - ``vOffset``        Additional offset on the y axis, in pixels
 - ``fontPath``        The full server path to the TTF font you wish to use. System font will be used if none is given.
-- ``fontSize``        The font size to use. When using the GD handler with the system font, valid values are between 1-5.
+- ``fontSize``        The font size to use. When using the GD handler with the system font, valid values are between ``1`` to ``5``.
 
 .. note:: The ImageMagick driver does not recognize full server path for fontPath. Instead, simply provide the
         name of one of the installed system fonts that you wish to use, i.e., Calibri.
