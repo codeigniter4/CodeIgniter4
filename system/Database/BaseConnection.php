@@ -898,7 +898,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns a non-shared new instance of the query builder for this connection.
      *
-     * @param array|string $tableName
+     * @param array|string|TableName $tableName
      *
      * @return BaseBuilder
      *
@@ -1311,6 +1311,10 @@ abstract class BaseConnection implements ConnectionInterface
             return array_map([&$this, 'escape'], $str);
         }
 
+        if ($str instanceof TableName) {
+            return $str->getEscapedTableName();
+        }
+
         /** @psalm-suppress NoValue I don't know why ERROR. */
         if (is_string($str) || (is_object($str) && method_exists($str, '__toString'))) {
             if ($str instanceof RawSql) {
@@ -1511,12 +1515,16 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Fetch Field Names
      *
+     * @param string|TableName $tableName
+     *
      * @return array|false
      *
      * @throws DatabaseException
      */
-    public function getFieldNames(string $table)
+    public function getFieldNames($tableName)
     {
+        $table = ($tableName instanceof TableName) ? $tableName->getTableName() : $tableName;
+
         // Is there a cached result?
         if (isset($this->dataCache['field_names'][$table])) {
             return $this->dataCache['field_names'][$table];
@@ -1526,7 +1534,7 @@ abstract class BaseConnection implements ConnectionInterface
             $this->initialize();
         }
 
-        if (false === ($sql = $this->_listColumns($table))) {
+        if (false === ($sql = $this->_listColumns($tableName))) {
             if ($this->DBDebug) {
                 throw new DatabaseException('This feature is not available for the database you are using.');
             }
@@ -1740,9 +1748,11 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Generates a platform-specific query string so that the column names can be fetched.
      *
+     * @param string|TableName $table
+     *
      * @return false|string
      */
-    abstract protected function _listColumns(string $table = '');
+    abstract protected function _listColumns($table = '');
 
     /**
      * Platform-specific field data information.

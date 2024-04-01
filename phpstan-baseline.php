@@ -2537,11 +2537,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/BaseConnection.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$aliasedTables type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseConnection.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$dataCache type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseConnection.php',
