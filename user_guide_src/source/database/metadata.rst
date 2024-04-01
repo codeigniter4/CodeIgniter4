@@ -51,7 +51,7 @@ $db->getFieldNames()
 Returns an array containing the field names. This query can be called
 two ways:
 
-1. You can supply the table name and call it from the ``$db->object``:
+1. You can supply the table name and call it from the ``$db`` object:
 
    .. literalinclude:: metadata/003.php
 
