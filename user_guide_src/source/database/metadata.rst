@@ -53,12 +53,12 @@ two ways:
 
 1. You can supply the table name and call it from the ``$db`` object:
 
-   .. literalinclude:: metadata/003.php
+    .. literalinclude:: metadata/003.php
 
 2. You can gather the field names associated with any query you run by
-calling the function from your query result object:
+   calling the function from your query result object:
 
-.. literalinclude:: metadata/004.php
+    .. literalinclude:: metadata/004.php
 
 Determine If a Field is Present in a Table
 ==========================================
