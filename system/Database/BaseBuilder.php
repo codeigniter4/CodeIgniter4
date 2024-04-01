@@ -3018,10 +3018,10 @@ class BaseBuilder
             $table = preg_replace('/\s+AS\s+/i', ' ', $table);
 
             // Grab the alias
-            $table = trim(strrchr($table, ' '));
+            $alias = trim(strrchr($table, ' '));
 
             // Store the alias, if it doesn't already exist
-            $this->db->addTableAlias($table);
+            $this->db->addTableAlias($alias);
         }
     }
 
