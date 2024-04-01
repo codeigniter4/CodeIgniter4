@@ -181,7 +181,9 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * Whether we're running in strict SQL mode.
      *
-     * @var bool
+     * @var bool|null
+     *
+     * @deprecated 4.5.0 Will move to MySQLi\Connection.
      */
     protected $strictOn;
 
