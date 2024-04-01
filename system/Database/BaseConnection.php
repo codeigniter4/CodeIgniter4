@@ -1507,11 +1507,13 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Fetch Field Names
      *
+     * @param bool $prefixed Set true if it already has the DB prefix.
+     *
      * @return array|false
      *
      * @throws DatabaseException
      */
-    public function getFieldNames(string $table)
+    public function getFieldNames(string $table, bool $prefixed = false)
     {
         // Is there a cached result?
         if (isset($this->dataCache['field_names'][$table])) {
@@ -1522,7 +1524,7 @@ abstract class BaseConnection implements ConnectionInterface
             $this->initialize();
         }
 
-        if (false === ($sql = $this->_listColumns($table))) {
+        if (false === ($sql = $this->_listColumns($table, $prefixed))) {
             if ($this->DBDebug) {
                 throw new DatabaseException('This feature is not available for the database you are using.');
             }
@@ -1736,9 +1738,14 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Generates a platform-specific query string so that the column names can be fetched.
      *
+     * @param bool $prefixed Set true if it already has the DB prefix.
+     *
      * @return false|string
      */
-    abstract protected function _listColumns(string $table = '');
+    abstract protected function _listColumns(
+        string $table = '',
+        bool $prefixed = false
+    );
 
     /**
      * Platform-specific field data information.

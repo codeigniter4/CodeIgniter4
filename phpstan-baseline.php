@@ -1907,11 +1907,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:__construct\\(\\) has parameter \\$tableName with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:_deleteBatch\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',

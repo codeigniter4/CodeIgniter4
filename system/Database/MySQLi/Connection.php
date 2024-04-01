@@ -404,10 +404,14 @@ class Connection extends BaseConnection
 
     /**
      * Generates a platform-specific query string so that the column names can be fetched.
+     *
+     * @param bool $prefixed Set true if it already has the DB prefix.
      */
-    protected function _listColumns(string $table = ''): string
+    protected function _listColumns(string $table = '', bool $prefixed = false): string
     {
-        return 'SHOW COLUMNS FROM ' . $this->protectIdentifiers($table, true, null, false);
+        $tableName = $prefixed ? $this->escapeIdentifier($table) : $this->protectIdentifiers($table, true, null, false);
+
+        return 'SHOW COLUMNS FROM ' . $tableName;
     }
 
     /**

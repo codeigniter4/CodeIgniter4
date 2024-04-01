@@ -298,14 +298,19 @@ class BaseBuilder
     /**
      * Constructor
      *
-     * @param array|string $tableName tablename or tablenames with or without aliases
+     * @param list<string>|string $tableName     A table name w/o prefix or table names with or without aliases
+     * @param bool                $realTableName Set true if $tableName is a single real table name (w/z prefix) w/o alias.
      *
-     * Examples of $tableName: `mytable`, `jobs j`, `jobs j, users u`, `['jobs j','users u']`
+     * Examples of $tableName: 'mytable', 'jobs j', 'jobs j, users u', ['jobs j','users u']
      *
      * @throws DatabaseException
      */
-    public function __construct($tableName, ConnectionInterface $db, ?array $options = null)
-    {
+    public function __construct(
+        $tableName,
+        ConnectionInterface $db,
+        ?array $options = null,
+        bool $realTableName = false
+    ) {
         if (empty($tableName)) {
             throw new DatabaseException('A table must be specified when creating a new Query Builder.');
         }
@@ -315,14 +320,18 @@ class BaseBuilder
          */
         $this->db = $db;
 
+        if ($realTableName) {
+            $this->tableName = $tableName;
+            $this->QBFrom[]  = $this->db->escapeIdentifier($tableName);
+        }
         // If it contains `,`, it has multiple tables
-        if (is_string($tableName) && strpos($tableName, ',') === false) {
+        elseif (is_string($tableName) && strpos($tableName, ',') === false) {
             $this->tableName = $tableName;  // @TODO remove alias if exists
+            $this->from($tableName);
         } else {
             $this->tableName = '';
+            $this->from($tableName);
         }
-
-        $this->from($tableName);
 
         if ($options !== null && $options !== []) {
             foreach ($options as $key => $value) {

@@ -267,7 +267,7 @@ class Connection extends BaseConnection
     /**
      * Generates a platform-specific query string so that the column names can be fetched.
      */
-    protected function _listColumns(string $table = ''): string
+    protected function _listColumns(string $table = '', bool $prefixed = false): string
     {
         if (strpos($table, '.') !== false) {
             sscanf($table, '%[^.].%s', $owner, $table);
