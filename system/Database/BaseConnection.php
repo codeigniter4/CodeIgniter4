@@ -340,7 +340,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Array of table aliases.
      *
-     * @var array
+     * @var list<string>
      */
     protected $aliasedTables = [];
 
@@ -576,10 +576,10 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @return $this
      */
-    public function addTableAlias(string $table)
+    public function addTableAlias(string $alias)
     {
-        if (! in_array($table, $this->aliasedTables, true)) {
-            $this->aliasedTables[] = $table;
+        if (! in_array($alias, $this->aliasedTables, true)) {
+            $this->aliasedTables[] = $alias;
         }
 
         return $this;
