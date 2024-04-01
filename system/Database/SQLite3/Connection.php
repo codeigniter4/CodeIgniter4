@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\TableName;
 use Exception;
 use SQLite3;
 use SQLite3Result;
@@ -209,19 +210,31 @@ class Connection extends BaseConnection
 
     /**
      * Generates a platform-specific query string so that the column names can be fetched.
+     *
+     * @param string|TableName $table
      */
-    protected function _listColumns(string $table = ''): string
+    protected function _listColumns($table = ''): string
     {
-        return 'PRAGMA TABLE_INFO(' . $this->protectIdentifiers($table, true, null, false) . ')';
+        if ($table instanceof TableName) {
+            $tableName = $this->escapeIdentifier($table);
+        } else {
+            $tableName = $this->protectIdentifiers($table, true, null, false);
+        }
+
+        return 'PRAGMA TABLE_INFO(' . $tableName . ')';
     }
 
     /**
+     * @param string|TableName $tableName
+     *
      * @return false|list<string>
      *
      * @throws DatabaseException
      */
-    public function getFieldNames(string $table)
+    public function getFieldNames($tableName)
     {
+        $table = ($tableName instanceof TableName) ? $tableName->getTableName() : $tableName;
+
         // Is there a cached result?
         if (isset($this->dataCache['field_names'][$table])) {
             return $this->dataCache['field_names'][$table];
@@ -231,7 +244,7 @@ class Connection extends BaseConnection
             $this->initialize();
         }
 
-        $sql = $this->_listColumns($table);
+        $sql = $this->_listColumns($tableName);
 
         $query                                  = $this->query($sql);
         $this->dataCache['field_names'][$table] = [];

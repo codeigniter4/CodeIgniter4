@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands\Database;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\TableName;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Database;
 
@@ -199,7 +200,7 @@ class ShowTableInfo extends BaseCommand
         CLI::newLine();
 
         $this->removeDBPrefix();
-        $thead = $this->db->getFieldNames($tableName);
+        $thead = $this->db->getFieldNames(TableName::fromActualName($this->db, $tableName));
         $this->restoreDBPrefix();
 
         // If there is a field named `id`, sort by it.
@@ -277,7 +278,7 @@ class ShowTableInfo extends BaseCommand
         $this->tbody = [];
 
         $this->removeDBPrefix();
-        $builder = $this->db->table($tableName);
+        $builder = $this->db->table(TableName::fromActualName($this->db, $tableName));
         $builder->limit($limitRows);
         if ($sortField !== null) {
             $builder->orderBy($sortField, $this->sortDesc ? 'DESC' : 'ASC');

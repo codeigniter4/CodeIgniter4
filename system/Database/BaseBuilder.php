@@ -298,7 +298,7 @@ class BaseBuilder
     /**
      * Constructor
      *
-     * @param array|string $tableName tablename or tablenames with or without aliases
+     * @param array|string|TableName $tableName tablename or tablenames with or without aliases
      *
      * Examples of $tableName: `mytable`, `jobs j`, `jobs j, users u`, `['jobs j','users u']`
      *
@@ -315,14 +315,19 @@ class BaseBuilder
          */
         $this->db = $db;
 
+        if ($tableName instanceof TableName) {
+            $this->tableName = $tableName->getTableName();
+            $this->QBFrom[]  = $this->db->escapeIdentifier($tableName);
+            $this->db->addTableAlias($tableName->getAlias());
+        }
         // If it contains `,`, it has multiple tables
-        if (is_string($tableName) && ! str_contains($tableName, ',')) {
+        elseif (is_string($tableName) && ! str_contains($tableName, ',')) {
             $this->tableName = $tableName;  // @TODO remove alias if exists
+            $this->from($tableName);
         } else {
             $this->tableName = '';
+            $this->from($tableName);
         }
-
-        $this->from($tableName);
 
         if ($options !== null && $options !== []) {
             foreach ($options as $key => $value) {
