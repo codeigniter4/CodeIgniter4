@@ -360,10 +360,12 @@ group will not affect any others.</p>
 </section>
 <section id="managing-errors">
 <span id="transactions-managing-errors"></span><h2><a class="toc-backref" href="#id4" role="doc-backlink">Managing Errors</a><a class="headerlink" href="#managing-errors" title="Permalink to this heading"></a></h2>
-<p>When you have <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> true in your <strong>app/Config/Database.php</strong> file,
-if a query error occurs, all the queries will be rolled backed, and an exception
-will be thrown. So you’ll see a standard error page.</p>
-<p>If the <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> is false, you can manage your own errors like this:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.3.0, during transactions, exceptions are not thrown by default
+even if <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> is true.</p>
+</div>
+<p>You can manage your own errors like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transStart</span><span class="p">();</span>
