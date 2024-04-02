@@ -1,5 +1,9 @@
 <?php
 
-if (! $page = $pageModel->find($id)) {
-    throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+use CodeIgniter\Exceptions\PageNotFoundException;
+
+$page = $pageModel->find($id);
+
+if ($page === null) {
+    throw PageNotFoundException::forPageNotFound();
 }
