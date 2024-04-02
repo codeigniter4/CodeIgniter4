@@ -287,7 +287,7 @@ final class EventsTest extends CIUnitTestCase
     public function testHandleEventCallableClass(): void
     {
         $box = new class () {
-            public $logged;
+            public string $logged;
 
             public function hold(string $value): void
             {
