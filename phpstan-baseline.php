@@ -11197,26 +11197,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Cache/FactoriesCacheFileVarExportHandlerTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\AbstractHandlerTest\\:\\:\\$dummy has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/Handlers/AbstractHandlerTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\AbstractHandlerTest\\:\\:\\$key1 has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/Handlers/AbstractHandlerTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\AbstractHandlerTest\\:\\:\\$key2 has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/Handlers/AbstractHandlerTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\AbstractHandlerTest\\:\\:\\$key3 has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/Handlers/AbstractHandlerTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\BaseHandlerTest\\:\\:provideValidateKeyInvalidType\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Cache/Handlers/BaseHandlerTest.php',
@@ -12462,31 +12442,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AbstractGetFieldDataTest\\:\\:assertSameFieldData\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/Live/AbstractGetFieldDataTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AbstractGetFieldDataTest\\:\\:assertSameFieldData\\(\\) has parameter \\$actual with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/Live/AbstractGetFieldDataTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AbstractGetFieldDataTest\\:\\:assertSameFieldData\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/Live/AbstractGetFieldDataTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AbstractGetFieldDataTest\\:\\:createTableForDefault\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/Live/AbstractGetFieldDataTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AbstractGetFieldDataTest\\:\\:createTableForType\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/Live/AbstractGetFieldDataTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:\\$group1 has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
@@ -12655,11 +12610,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:\\$forge \\(CodeIgniter\\\\Database\\\\SQLite3\\\\Forge\\) does not accept CodeIgniter\\\\Database\\\\Forge\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\GetFieldDataTest\\:\\:createTableCompositePrimaryKey\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/GetFieldDataTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^PHPDoc type CodeIgniter\\\\Database\\\\SQLite3\\\\Connection of property CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\GetIndexDataTest\\:\\:\\$db is not the same as PHPDoc type CodeIgniter\\\\Database\\\\BaseConnection of overridden property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$db\\.$#',
@@ -13068,11 +13018,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Call to an undefined method CodeIgniter\\\\Events\\\\Events\\:\\:unInitialize\\(\\)\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Events/EventsTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Events/EventsTest\\.php\\:285\\:\\:\\$logged has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Events/EventsTest.php',
 ];
