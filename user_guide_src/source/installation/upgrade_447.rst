@@ -118,6 +118,7 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
+- app/Config/App.php
 - app/Config/Cache.php
 - app/Config/ContentSecurityPolicy.php
 - app/Config/Database.php
