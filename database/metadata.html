@@ -361,8 +361,9 @@ running an operation on it. Returns a boolean true/false. Usage example:</p>
 <p>Returns an array containing the field names. This query can be called
 two ways:</p>
 <ol class="arabic">
-<li><p>You can supply the table name and call it from the <code class="docutils literal notranslate"><span class="pre">$db-&gt;object</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+<li><p>You can supply the table name and call it from the <code class="docutils literal notranslate"><span class="pre">$db</span></code> object:</p>
+<blockquote>
+<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$db</span> <span class="o">=</span> <span class="nx">db_connect</span><span class="p">();</span>
 
@@ -373,11 +374,12 @@ two ways:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
+</div></blockquote>
 </li>
-</ol>
-<p>2. You can gather the field names associated with any query you run by
+<li><p>You can gather the field names associated with any query you run by
 calling the function from your query result object:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+<blockquote>
+<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$db</span> <span class="o">=</span> <span class="nx">db_connect</span><span class="p">();</span>
 
@@ -388,6 +390,9 @@ calling the function from your query result object:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
+</div></blockquote>
+</li>
+</ol>
 </section>
 </section>
 <section id="determine-if-a-field-is-present-in-a-table">
