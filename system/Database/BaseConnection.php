@@ -144,7 +144,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var string
      */
-    protected $charset = 'utf8mb4';
+    protected $charset = '';
 
     /**
      * Collation
@@ -153,7 +153,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var string
      */
-    protected $DBCollat = 'utf8mb4_general_ci';
+    protected $DBCollat = '';
 
     /**
      * Swap Prefix
@@ -181,7 +181,9 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * Whether we're running in strict SQL mode.
      *
-     * @var bool
+     * @var bool|null
+     *
+     * @deprecated 4.5.0 Will move to MySQLi\Connection.
      */
     protected $strictOn;
 

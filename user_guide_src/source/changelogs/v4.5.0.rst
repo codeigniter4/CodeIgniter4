@@ -502,6 +502,8 @@ Deprecations
 - **FeatureTestTrait:** The feature that the ``call()`` and ``withRoutes()``
   methods accept the lowercase HTTP methods has been deprecated. Use correct
   uppercase HTTP methods instead.
+- **Database:** The ``BaseConnection::$strictOn`` has been deprecated. It will be
+  moved to ``MySQLi\Connection`` in the future.
 
 **********
 Bugs Fixed
