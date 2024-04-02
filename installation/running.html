@@ -604,6 +604,28 @@ and create the <strong>.htaccess</strong> file:</p>
 <span class="nt">&lt;/FilesMatch&gt;</span>
 </pre></div>
 </div>
+<p>And remove the redirect settings in <strong>public/.htaccess</strong>:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">--- a/public/.htaccess</span>
+<span class="gi">+++ b/public/.htaccess</span>
+<span class="gu">@@ -16,16 +16,6 @@ Options -Indexes</span>
+<span class="w"> </span>   # http://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewritebase
+<span class="w"> </span>   # RewriteBase /
+
+<span class="gd">-   # Redirect Trailing Slashes...</span>
+<span class="gd">-   RewriteCond %{REQUEST_FILENAME} !-d</span>
+<span class="gd">-   RewriteCond %{REQUEST_URI} (.+)/$</span>
+<span class="gd">-   RewriteRule ^ %1 [L,R=301]</span>
+<span class="gd">-</span>
+<span class="gd">-   # Rewrite &quot;www.example.com -&gt; example.com&quot;</span>
+<span class="gd">-   RewriteCond %{HTTPS} !=on</span>
+<span class="gd">-   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]</span>
+<span class="gd">-   RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]</span>
+<span class="gd">-</span>
+<span class="w"> </span>   # Checks to see if the user is attempting to access a valid file,
+<span class="w"> </span>   # such as an image or css document, if this isn&#39;t true it sends the
+<span class="w"> </span>   # request to the front controller, index.php
+</pre></div>
+</div>
 </section>
 </section>
 <section id="hosting-with-mod-userdir-shared-hosts">
@@ -786,6 +808,28 @@ and create the <strong>.htaccess</strong> file:</p>
 <span class="w">    </span><span class="nb">Require</span><span class="w"> </span><span class="k">all</span><span class="w"> </span>denied
 <span class="w">    </span><span class="nb">Satisfy</span><span class="w"> </span><span class="k">All</span>
 <span class="nt">&lt;/FilesMatch&gt;</span>
+</pre></div>
+</div>
+<p>And remove the redirect settings in <strong>public/.htaccess</strong>:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">--- a/public/.htaccess</span>
+<span class="gi">+++ b/public/.htaccess</span>
+<span class="gu">@@ -16,16 +16,6 @@ Options -Indexes</span>
+<span class="w"> </span>   # http://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewritebase
+<span class="w"> </span>   # RewriteBase /
+
+<span class="gd">-   # Redirect Trailing Slashes...</span>
+<span class="gd">-   RewriteCond %{REQUEST_FILENAME} !-d</span>
+<span class="gd">-   RewriteCond %{REQUEST_URI} (.+)/$</span>
+<span class="gd">-   RewriteRule ^ %1 [L,R=301]</span>
+<span class="gd">-</span>
+<span class="gd">-   # Rewrite &quot;www.example.com -&gt; example.com&quot;</span>
+<span class="gd">-   RewriteCond %{HTTPS} !=on</span>
+<span class="gd">-   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]</span>
+<span class="gd">-   RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]</span>
+<span class="gd">-</span>
+<span class="w"> </span>   # Checks to see if the user is attempting to access a valid file,
+<span class="w"> </span>   # such as an image or css document, if this isn&#39;t true it sends the
+<span class="w"> </span>   # request to the front controller, index.php
 </pre></div>
 </div>
 </section>
