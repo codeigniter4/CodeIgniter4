@@ -19,10 +19,16 @@ Using Exceptions
 
 This section is a quick overview for newer programmers, or for developers who are not experienced with using exceptions.
 
+What is Exceptions
+------------------
+
 Exceptions are simply events that happen when the exception is "thrown". This halts the current flow of the script, and
 execution is then sent to the error handler which displays the appropriate error page:
 
 .. literalinclude:: errors/001.php
+
+Catching Exceptions
+-------------------
 
 If you are calling a method that might throw an exception, you can catch that exception using a ``try/catch`` block:
 
@@ -31,8 +37,11 @@ If you are calling a method that might throw an exception, you can catch that ex
 If the ``$userModel`` throws an exception, it is caught and the code within the catch block is executed. In this example,
 the scripts dies, echoing the error message that the ``UserModel`` defined.
 
+Catching Specific Exceptions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 In the example above, we catch any type of Exception. If we only want to watch for specific types of exceptions, like
-a ``UnknownFileException``, we can specify that in the catch parameter. Any other exceptions that are thrown and are
+a ``DataException``, we can specify that in the catch parameter. Any other exceptions that are thrown and are
 not child classes of the caught exception will be passed on to the error handler:
 
 .. literalinclude:: errors/003.php
@@ -65,7 +74,7 @@ See :ref:`setting-environment`.
 Logging Exceptions
 ------------------
 
-By default, all Exceptions other than 404 - Page Not Found exceptions are logged. This can be turned on and off
+By default, all Exceptions other than "404 - Page Not Found" exceptions are logged. This can be turned on and off
 by setting the ``$log`` value of **app/Config/Exceptions.php**:
 
 .. literalinclude:: errors/005.php
@@ -74,8 +83,40 @@ To ignore logging on other status codes, you can set the status code to ignore i
 
 .. literalinclude:: errors/006.php
 
-.. note:: It is possible that logging still will not happen for exceptions if your current Log settings
-    are not set up to log **critical** errors, which all exceptions are logged as.
+.. note:: It is possible that logging still will not happen for exceptions if your current
+    :ref:`Log settings <logging-configuration>`
+    are not set up to log ``critical`` errors, which all exceptions are logged as.
+
+.. _logging_deprecation_warnings:
+
+Logging Deprecation Warnings
+----------------------------
+
+.. versionadded:: 4.3.0
+
+By default, all errors reported by ``error_reporting()`` will be thrown as an ``ErrorException`` object. These
+include both ``E_DEPRECATED`` and ``E_USER_DEPRECATED`` errors. With the surge in use of PHP 8.1+, many users
+may see exceptions thrown for `passing null to non-nullable arguments of internal functions <https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg>`_.
+To ease the migration to PHP 8.1, you can instruct CodeIgniter to log the deprecations instead of throwing them.
+
+First, make sure your copy of ``Config\Exceptions`` is updated with the two new properties and set as follows:
+
+.. literalinclude:: errors/012.php
+
+Next, depending on the log level you set in ``Config\Exceptions::$deprecationLogLevel``, check whether the
+logger threshold defined in ``Config\Logger::$threshold`` covers the deprecation log level. If not, adjust
+it accordingly.
+
+.. literalinclude:: errors/013.php
+
+After that, subsequent deprecations will be logged instead of thrown.
+
+This feature also works with user deprecations:
+
+.. literalinclude:: errors/014.php
+
+For testing your application you may want to always throw on deprecations. You may configure this by
+setting the environment variable ``CODEIGNITER_SCREAM_DEPRECATIONS`` to a truthy value.
 
 Framework Exceptions
 ====================
@@ -85,14 +126,16 @@ The following framework exceptions are available:
 PageNotFoundException
 ---------------------
 
-This is used to signal a 404, Page Not Found error. When thrown, the system will show the view found at
-**app/Views/errors/html/error_404.php**. You should customize all of the error views for your site.
-If, in **app/Config/Routes.php**, you have specified a 404 Override, that will be called instead of the standard
-404 page:
+This is used to signal a 404, Page Not Found error:
 
 .. literalinclude:: errors/007.php
 
 You can pass a message into the exception that will be displayed in place of the default message on the 404 page.
+
+For the default 404 view file location, see :ref:`http-status-code-and-error-views`.
+
+If, in **app/Config/Routing.php** or **app/Config/Routes.php**, you have specified
+a :ref:`404-override`, that will be called instead of the standard 404 page.
 
 ConfigException
 ---------------
@@ -144,9 +187,40 @@ Specify HTTP Status Code in Your Exception
 .. versionadded:: 4.3.0
 
 Since v4.3.0, you can specify the HTTP status code for your Exception class to implement
-``HTTPExceptionInterface``.
+``CodeIgniter\Exceptions\HTTPExceptionInterface``.
 
 When an exception implementing ``HTTPExceptionInterface`` is caught by CodeIgniter's exception handler, the Exception code will become the HTTP status code.
+
+.. _http-status-code-and-error-views:
+
+HTTP Status Code and Error Views
+================================
+
+The exception handler displays the error view corresponding to the HTTP status
+code, if one exists.
+
+For example, ``PageNotFoundException`` implements the ``HTTPExceptionInterface``,
+so its exception code ``404`` will be the HTTP status code. Therefore if it is
+thrown, the system will show the **error_404.php** in the **app/Views/errors/html**
+folder when it is a web request. If it is invoked via CLI, the system will show
+the **error_404.php** in the **app/Views/errors/cli** folder.
+
+If there is no view file corresponding to the HTTP status code, **production.php**
+or **error_exception.php** will be displayed.
+
+.. note:: If ``display_errors`` is on in the PHP INI configuration,
+    **error_exception.php** is selected and a detailed error report is displayed.
+
+You should customize all of the error views in the **app/Views/errors/html** folder
+for your site.
+
+You can also create error views for specific HTTP status code. For example, if
+you want to create an error view for "400 Bad Request", add **error_400.php**.
+
+.. warning:: If an error view file with the corresponding HTTP status code exists,
+    the exception handler will display that file regardless of the environment.
+    The view file must be implemented in such a way that it does not display
+    detailed error messages in production environment by yourself.
 
 .. _error-specify-exit-code:
 
@@ -156,40 +230,9 @@ Specify Exit Code in Your Exception
 .. versionadded:: 4.3.0
 
 Since v4.3.0, you can specify the exit code for your Exception class to implement
-``HasExitCodeInterface``.
+``CodeIgniter\Exceptions\HasExitCodeInterface``.
 
 When an exception implementing ``HasExitCodeInterface`` is caught by CodeIgniter's exception handler, the code returned from the ``getExitCode()`` method will become the exit code.
-
-.. _logging_deprecation_warnings:
-
-Logging Deprecation Warnings
-============================
-
-.. versionadded:: 4.3.0
-
-By default, all errors reported by ``error_reporting()`` will be thrown as an ``ErrorException`` object. These
-include both ``E_DEPRECATED`` and ``E_USER_DEPRECATED`` errors. With the surge in use of PHP 8.1+, many users
-may see exceptions thrown for `passing null to non-nullable arguments of internal functions <https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg>`_.
-To ease the migration to PHP 8.1, you can instruct CodeIgniter to log the deprecations instead of throwing them.
-
-First, make sure your copy of ``Config\Exceptions`` is updated with the two new properties and set as follows:
-
-.. literalinclude:: errors/012.php
-
-Next, depending on the log level you set in ``Config\Exceptions::$deprecationLogLevel``, check whether the
-logger threshold defined in ``Config\Logger::$threshold`` covers the deprecation log level. If not, adjust
-it accordingly.
-
-.. literalinclude:: errors/013.php
-
-After that, subsequent deprecations will be logged instead of thrown.
-
-This feature also works with user deprecations:
-
-.. literalinclude:: errors/014.php
-
-For testing your application you may want to always throw on deprecations. You may configure this by
-setting the environment variable ``CODEIGNITER_SCREAM_DEPRECATIONS`` to a truthy value.
 
 .. _custom-exception-handlers:
 
