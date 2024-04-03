@@ -60,9 +60,9 @@ class Pager implements PagerInterface
     /**
      * List of only permitted queries
      *
-     * @var array
+     * @var list<string>|null
      */
-    protected $only = [];
+    protected $only;
 
     /**
      * Constructor.
@@ -276,7 +276,7 @@ class Pager implements PagerInterface
             $uri->addQuery($this->groups[$group]['pageSelector'], $page);
         }
 
-        if ($this->only) {
+        if ($this->only !== null) {
             $query = array_intersect_key($_GET, array_flip($this->only));
 
             if (! $segment) {
