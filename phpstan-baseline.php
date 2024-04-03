@@ -2852,16 +2852,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/BaseConnection.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:_foreignKeyData\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseConnection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:_indexData\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseConnection.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:callFunction\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseConnection.php',
@@ -2897,22 +2887,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/BaseConnection.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:foreignKeyDataToObjects\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseConnection.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:getFieldNames\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseConnection.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:getForeignKeyData\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseConnection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:getIndexData\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseConnection.php',
 ];
@@ -9388,16 +9368,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockConnection\\:\\:_fieldData\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockConnection\\:\\:_foreignKeyData\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockConnection\\:\\:_indexData\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
 ];
