@@ -332,6 +332,8 @@ class BaseBuilder
 
     /**
      * Returns the current database connection
+     *
+     * @return BaseConnection
      */
     public function db(): ConnectionInterface
     {
