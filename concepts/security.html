@@ -292,234 +292,590 @@ good security practices, or to enable you to do so easily.</p>
 <p>We respect the <a class="reference external" href="https://owasp.org">Open Web Application Security Project (OWASP)</a>
 and follow their recommendations as much as possible.</p>
 <p>The following comes from
-<a class="reference external" href="https://owasp.org/www-project-top-ten/">OWASP Top Ten Cheat Sheet</a>,
+<a class="reference external" href="https://owasp.org/www-project-top-ten/">OWASP Top Ten</a>,
 identifying the top vulnerabilities for web applications.
 For each, we provide a brief description, the OWASP recommendations, and then
 the CodeIgniter provisions to address the problem.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#a1-injection" id="id19">A1 Injection</a></p></li>
-<li><p><a class="reference internal" href="#a2-weak-authentication-and-session-management" id="id20">A2 Weak authentication and session management</a></p></li>
-<li><p><a class="reference internal" href="#a3-cross-site-scripting-xss" id="id21">A3 Cross Site Scripting (XSS)</a></p></li>
-<li><p><a class="reference internal" href="#a4-insecure-direct-object-reference" id="id22">A4 Insecure Direct Object Reference</a></p></li>
-<li><p><a class="reference internal" href="#a5-security-misconfiguration" id="id23">A5 Security Misconfiguration</a></p></li>
-<li><p><a class="reference internal" href="#a6-sensitive-data-exposure" id="id24">A6 Sensitive Data Exposure</a></p></li>
-<li><p><a class="reference internal" href="#a7-missing-function-level-access-control" id="id25">A7 Missing Function Level Access Control</a></p></li>
-<li><p><a class="reference internal" href="#a8-cross-site-request-forgery-csrf" id="id26">A8 Cross Site Request Forgery (CSRF)</a></p></li>
-<li><p><a class="reference internal" href="#a9-using-components-with-known-vulnerabilities" id="id27">A9 Using Components with Known Vulnerabilities</a></p></li>
-<li><p><a class="reference internal" href="#a10-unvalidated-redirects-and-forwards" id="id28">A10 Unvalidated Redirects and Forwards</a></p></li>
+<li><p><a class="reference internal" href="#a01-2021-broken-access-control" id="id19">A01:2021 Broken Access Control</a></p></li>
+<li><p><a class="reference internal" href="#a02-2021-cryptographic-failures" id="id20">A02:2021 Cryptographic Failures</a></p></li>
+<li><p><a class="reference internal" href="#a03-2021-injection" id="id21">A03:2021 Injection</a></p></li>
+<li><p><a class="reference internal" href="#a04-2021-insecure-design" id="id22">A04:2021 Insecure Design</a></p></li>
+<li><p><a class="reference internal" href="#a05-2021-security-misconfiguration" id="id23">A05:2021 Security Misconfiguration</a></p></li>
+<li><p><a class="reference internal" href="#a06-2021-vulnerable-and-outdated-components" id="id24">A06:2021 Vulnerable and Outdated Components</a></p></li>
+<li><p><a class="reference internal" href="#a07-2021-identification-and-authentication-failures" id="id25">A07:2021 Identification and Authentication Failures</a></p></li>
+<li><p><a class="reference internal" href="#a08-2021-software-and-data-integrity-failures" id="id26">A08:2021 Software and Data Integrity Failures</a></p></li>
+<li><p><a class="reference internal" href="#a09-2021-security-logging-and-monitoring-failures" id="id27">A09:2021 Security Logging and Monitoring Failures</a></p></li>
+<li><p><a class="reference internal" href="#a10-2021-server-side-request-forgery-ssrf" id="id28">A10:2021 Server-Side Request Forgery (SSRF)</a></p></li>
 </ul>
 </nav>
-<section id="a1-injection">
-<h2><a class="toc-backref" href="#id19" role="doc-backlink">A1 Injection</a><a class="headerlink" href="#a1-injection" title="Permalink to this heading"></a></h2>
-<p>An injection is the inappropriate insertion of partial or complete data via
-the input data from the client to the application. Attack vectors include SQL,
-XML, ORM, code &amp; buffer overflows.</p>
+<section id="a01-2021-broken-access-control">
+<h2><a class="toc-backref" href="#id19" role="doc-backlink">A01:2021 Broken Access Control</a><a class="headerlink" href="#a01-2021-broken-access-control" title="Permalink to this heading"></a></h2>
+<p>Access control enforces policy such that users cannot act outside of their intended
+permissions. Failures typically lead to unauthorized information disclosure,
+modification, or destruction of all data or performing a business function outside
+the user’s limits.</p>
+<p>Common access control vulnerabilities include:</p>
+<ul class="simple">
+<li><p>Violation of the principle of least privilege or deny by default, where access
+should only be granted for particular capabilities, roles, or users, but is
+available to anyone.</p></li>
+<li><p>Bypassing access control checks by modifying the URL (parameter tampering or
+force browsing), internal application state, or the HTML page, or by using an
+attack tool modifying API requests.</p></li>
+<li><p>Permitting viewing or editing someone else’s account, by providing its unique
+identifier (insecure direct object references)</p></li>
+<li><p>Accessing API with missing access controls for POST, PUT and DELETE.</p></li>
+<li><p>Elevation of privilege. Acting as a user without being logged in or acting as
+an admin when logged in as a user.</p></li>
+<li><p>Metadata manipulation, such as replaying or tampering with a JSON Web Token (JWT)
+access control token, or a cookie or hidden field manipulated to elevate
+privileges or abusing JWT invalidation.</p></li>
+<li><p>CORS misconfiguration allows API access from unauthorized/untrusted origins.</p></li>
+<li><p>Force browsing to authenticated pages as an unauthenticated user or to privileged
+pages as a standard user.</p></li>
+</ul>
 <section id="owasp-recommendations">
 <h3>OWASP recommendations<a class="headerlink" href="#owasp-recommendations" title="Permalink to this heading"></a></h3>
+<p>Access control is only effective in trusted server-side code or server-less API,
+where the attacker cannot modify the access control check or metadata.</p>
 <ul class="simple">
-<li><p>Presentation: set correct content type, character set &amp; locale</p></li>
-<li><p>Submission: validate fields and provide feedback</p></li>
-<li><p>Controller: sanitize input; positive input validation using correct character set</p></li>
-<li><p>Model: parameterized queries</p></li>
+<li><p>Except for public resources, deny by default.</p></li>
+<li><p>Implement access control mechanisms once and re-use them throughout the application,
+including minimizing Cross-Origin Resource Sharing (CORS) usage.</p></li>
+<li><p>Model access controls should enforce record ownership rather than accepting that
+the user can create, read, update, or delete any record.</p></li>
+<li><p>Unique application business limit requirements should be enforced by domain models.</p></li>
+<li><p>Disable web server directory listing and ensure file metadata (e.g., .git) and
+backup files are not present within web roots.</p></li>
+<li><p>Log access control failures, alert admins when appropriate (e.g., repeated failures).</p></li>
+<li><p>Rate limit API and controller access to minimize the harm from automated attack
+tooling.</p></li>
+<li><p>Stateful session identifiers should be invalidated on the server after logout.
+Stateless JWT tokens should rather be short-lived so that the window of opportunity
+for an attacker is minimized. For longer lived JWTs it’s highly recommended to
+follow the OAuth standards to revoke access.</p></li>
 </ul>
 </section>
 <section id="codeigniter-provisions">
 <h3>CodeIgniter provisions<a class="headerlink" href="#codeigniter-provisions" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p><a class="reference internal" href="../general/urls.html#urls-uri-security"><span class="std std-ref">URI Security</span></a></p></li>
-<li><p><a class="reference internal" href="../incoming/filters.html#invalidchars"><span class="std std-ref">InvalidChars</span></a> filter</p></li>
+<li><p><a class="reference internal" href="structure.html#application-structure-public"><span class="std std-ref">Public</span></a> folder, with application and system
+outside</p></li>
 <li><p><a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation</span></a> library</p></li>
-<li><p><a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">HTTP library</span></a> provides for <a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-filtering-input-data"><span class="std std-ref">input field filtering</span></a> &amp; content metadata</p></li>
+<li><p><a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library provides for
+<a class="reference internal" href="../libraries/security.html#cross-site-request-forgery"><span class="std std-ref">CSRF protection</span></a></p></li>
+<li><p><a class="reference internal" href="../libraries/throttler.html"><span class="doc">Throttler</span></a> for rate limit</p></li>
+<li><p><a class="reference internal" href="../general/common_functions.html#log_message" title="log_message"><code class="xref php php-func docutils literal notranslate"><span class="pre">log_message()</span></code></a> function for logging</p></li>
+<li><p>An official authentication and authorization framework <a class="reference internal" href="../libraries/official_packages.html#shield"><span class="std std-ref">CodeIgniter Shield</span></a></p></li>
+<li><p>Easy to add third party authentication</p></li>
 </ul>
 </section>
 </section>
-<section id="a2-weak-authentication-and-session-management">
-<h2><a class="toc-backref" href="#id20" role="doc-backlink">A2 Weak authentication and session management</a><a class="headerlink" href="#a2-weak-authentication-and-session-management" title="Permalink to this heading"></a></h2>
-<p>Inadequate authentication or improper session management can lead to a user
-getting more privileges than they are entitled to.</p>
+<section id="a02-2021-cryptographic-failures">
+<h2><a class="toc-backref" href="#id20" role="doc-backlink">A02:2021 Cryptographic Failures</a><a class="headerlink" href="#a02-2021-cryptographic-failures" title="Permalink to this heading"></a></h2>
+<p>The first thing is to determine the protection needs of data in transit and at
+rest. For example, passwords, credit card numbers, health records, personal
+information, and business secrets require extra protection, mainly if that data
+falls under privacy laws, e.g., EU’s General Data Protection Regulation (GDPR),
+or regulations, e.g., financial data protection such as PCI Data Security Standard
+(PCI DSS). For all such data:</p>
+<ul class="simple">
+<li><p>Is any data transmitted in clear text? This concerns protocols such as HTTP,
+SMTP, FTP also using TLS upgrades like STARTTLS. External internet traffic is
+hazardous. Verify all internal traffic, e.g., between load balancers, web servers,
+or back-end systems.</p></li>
+<li><p>Are any old or weak cryptographic algorithms or protocols used either by default
+or in older code?</p></li>
+<li><p>Are default crypto keys in use, weak crypto keys generated or re-used, or is
+proper key management or rotation missing? Are crypto keys checked into source
+code repositories?</p></li>
+<li><p>Is encryption not enforced, e.g., are any HTTP headers (browser) security
+directives or headers missing?</p></li>
+<li><p>Is the received server certificate and the trust chain properly validated?</p></li>
+<li><p>Are initialization vectors ignored, reused, or not generated sufficiently secure
+for the cryptographic mode of operation? Is an insecure mode of operation such
+as ECB in use? Is encryption used when authenticated encryption is more appropriate?</p></li>
+<li><p>Are passwords being used as cryptographic keys in absence of a password base key
+derivation function?</p></li>
+<li><p>Is randomness used for cryptographic purposes that was not designed to meet
+cryptographic requirements? Even if the correct function is chosen, does it need
+to be seeded by the developer, and if not, has the developer over-written the
+strong seeding functionality built into it with a seed that lacks sufficient
+entropy/unpredictability?</p></li>
+<li><p>Are deprecated hash functions such as MD5 or SHA1 in use, or are non-cryptographic
+hash functions used when cryptographic hash functions are needed?</p></li>
+<li><p>Are deprecated cryptographic padding methods such as PKCS number 1 v1.5 in use?</p></li>
+<li><p>Are cryptographic error messages or side channel information exploitable, for
+example in the form of padding oracle attacks?</p></li>
+</ul>
 <section id="id1">
 <h3>OWASP recommendations<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<p>Do the following, at a minimum, and consult the references:</p>
 <ul class="simple">
-<li><p>Presentation: validate authentication &amp; role; send CSRF token with forms</p></li>
-<li><p>Design: only use built-in session management</p></li>
-<li><p>Controller: validate user, role, CSRF token</p></li>
-<li><p>Model: validate role</p></li>
-<li><p>Tip: consider the use of a request governor</p></li>
+<li><p>Classify data processed, stored, or transmitted by an application. Identify which
+data is sensitive according to privacy laws, regulatory requirements, or business
+needs.</p></li>
+<li><p>Don’t store sensitive data unnecessarily. Discard it as soon as possible or use
+PCI DSS compliant tokenization or even truncation. Data that is not retained
+cannot be stolen.</p></li>
+<li><p>Make sure to encrypt all sensitive data at rest.</p></li>
+<li><p>Ensure up-to-date and strong standard algorithms, protocols, and keys are in
+place; use proper key management.</p></li>
+<li><p>Encrypt all data in transit with secure protocols such as TLS with forward secrecy
+(FS) ciphers, cipher prioritization by the server, and secure parameters. Enforce
+encryption using directives like HTTP Strict Transport Security (HSTS).</p></li>
+<li><p>Disable caching for response that contain sensitive data.</p></li>
+<li><p>Apply required security controls as per the data classification.</p></li>
+<li><p>Do not use legacy protocols such as FTP and SMTP for transporting sensitive data.</p></li>
+<li><p>Store passwords using strong adaptive and salted hashing functions with a work
+factor (delay factor), such as Argon2, scrypt, bcrypt or PBKDF2.</p></li>
+<li><p>Initialization vectors must be chosen appropriate for the mode of operation.
+For many modes, this means using a CSPRNG (cryptographically secure pseudo random
+number generator). For modes that require a nonce, then the initialization vector
+(IV) does not need a CSPRNG. In all cases, the IV should never be used twice for
+a fixed key.</p></li>
+<li><p>Always use authenticated encryption instead of just encryption.</p></li>
+<li><p>Keys should be generated cryptographically randomly and stored in memory as byte
+arrays. If a password is used, then it must be converted to a key via an
+appropriate password base key derivation function.</p></li>
+<li><p>Ensure that cryptographic randomness is used where appropriate, and that it has
+not been seeded in a predictable way or with low entropy. Most modern APIs do
+not require the developer to seed the CSPRNG to get security.</p></li>
+<li><p>Avoid deprecated cryptographic functions and padding schemes, such as MD5, SHA1,
+PKCS number 1 v1.5 .</p></li>
+<li><p>Verify independently the effectiveness of configuration and settings.</p></li>
 </ul>
 </section>
 <section id="id2">
 <h3>CodeIgniter provisions<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p><a class="reference internal" href="../libraries/sessions.html"><span class="doc">Session</span></a> library</p></li>
-<li><p><a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library provides for CSRF validation</p></li>
-<li><p>An official authentication and authorization framework <a class="reference internal" href="../libraries/official_packages.html#shield"><span class="std std-ref">CodeIgniter Shield</span></a></p></li>
-<li><p>Easy to add third party authentication</p></li>
+<li><p>The config for global secure access (<code class="docutils literal notranslate"><span class="pre">Config\App::$forceGlobalSecureRequests</span></code>)</p></li>
+<li><p><a class="reference internal" href="../general/common_functions.html#force_https" title="force_https"><code class="xref php php-func docutils literal notranslate"><span class="pre">force_https()</span></code></a> function</p></li>
+<li><p><a class="reference internal" href="../libraries/encryption.html"><span class="doc">Encryption Service</span></a></p></li>
+<li><p>The <a class="reference internal" href="../database/configuration.html#database-config-explanation-of-values"><span class="std std-ref">database config</span></a> (<code class="docutils literal notranslate"><span class="pre">encrypt</span></code>)</p></li>
+<li><p>An official authentication and authorization framework
+<a class="reference internal" href="../libraries/official_packages.html#shield"><span class="std std-ref">CodeIgniter Shield</span></a></p></li>
 </ul>
 </section>
 </section>
-<section id="a3-cross-site-scripting-xss">
-<h2><a class="toc-backref" href="#id21" role="doc-backlink">A3 Cross Site Scripting (XSS)</a><a class="headerlink" href="#a3-cross-site-scripting-xss" title="Permalink to this heading"></a></h2>
-<p>Insufficient input validation where one user can add content to a web site
-that can be malicious when viewed by other users to the web site.</p>
+<section id="a03-2021-injection">
+<h2><a class="toc-backref" href="#id21" role="doc-backlink">A03:2021 Injection</a><a class="headerlink" href="#a03-2021-injection" title="Permalink to this heading"></a></h2>
+<p>An application is vulnerable to attack when:</p>
+<ul class="simple">
+<li><p>User-supplied data is not validated, filtered, or sanitized by the application.</p></li>
+<li><p>Dynamic queries or non-parameterized calls without context-aware escaping are
+used directly in the interpreter.</p></li>
+<li><p>Hostile data is used within object-relational mapping (ORM) search parameters
+to extract additional, sensitive records.</p></li>
+<li><p>Hostile data is directly used or concatenated. The SQL or command contains the
+structure and malicious data in dynamic queries, commands, or stored procedures.</p></li>
+</ul>
+<p>Some of the more common injections are SQL, NoSQL, OS command, Object Relational
+Mapping (ORM), LDAP, and Expression Language (EL) or Object Graph Navigation Library
+(OGNL) injection. The concept is identical among all interpreters. Source code
+review is the best method of detecting if applications are vulnerable to injections.
+Automated testing of all parameters, headers, URL, cookies, JSON, SOAP, and XML
+data inputs is strongly encouraged. Organizations can include static (SAST),
+dynamic (DAST), and interactive (IAST) application security testing tools into
+the CI/CD pipeline to identify introduced injection flaws before production deployment.</p>
 <section id="id3">
 <h3>OWASP recommendations<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p>Presentation: output encode all user data as per output context; set input constraints</p></li>
-<li><p>Controller: positive input validation</p></li>
-<li><p>Tips: only process trustworthy data; do not store data HTML encoded in DB</p></li>
+<p>Preventing injection requires keeping data separate from commands and queries:</p>
+<ul>
+<li><p>The preferred option is to use a safe API, which avoids using the interpreter
+entirely, provides a parameterized interface, or migrates to Object Relational
+Mapping Tools (ORMs).</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Note: Even when parameterized, stored procedures can still introduce SQL
+injection if PL/SQL or T-SQL concatenates queries and data or executes hostile
+data with EXECUTE IMMEDIATE or exec().</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Use positive server-side input validation. This is not a complete defense as
+many applications require special characters, such as text areas or APIs for
+mobile applications.</p></li>
+<li><p>For any residual dynamic queries, escape special characters using the specific
+escape syntax for that interpreter.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Note: SQL structures such as table names, column names, and so on cannot be
+escaped, and thus user-supplied structure names are dangerous. This is a
+common issue in report-writing software.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Use LIMIT and other SQL controls within queries to prevent mass disclosure of
+records in case of SQL injection.</p></li>
 </ul>
 </section>
 <section id="id4">
 <h3>CodeIgniter provisions<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p><a class="reference internal" href="../general/common_functions.html#esc" title="esc"><code class="xref php php-func docutils literal notranslate"><span class="pre">esc()</span></code></a> function</p></li>
+<li><p><a class="reference internal" href="../general/urls.html#urls-uri-security"><span class="std std-ref">URI Security</span></a></p></li>
+<li><p><a class="reference internal" href="../incoming/filters.html#invalidchars"><span class="std std-ref">InvalidChars</span></a> filter</p></li>
 <li><p><a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation</span></a> library</p></li>
+<li><p><a class="reference internal" href="../general/common_functions.html#esc" title="esc"><code class="xref php php-func docutils literal notranslate"><span class="pre">esc()</span></code></a> function</p></li>
+<li><p><a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">HTTP library</span></a> provides for
+<a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-filtering-input-data"><span class="std std-ref">input field filtering</span></a></p></li>
 <li><p>Support for <a class="reference internal" href="../outgoing/csp.html#content-security-policy"><span class="std std-ref">Content Security Policy</span></a></p></li>
+<li><p><a class="reference internal" href="../database/query_builder.html"><span class="doc">Query Builder Class</span></a></p></li>
+<li><p><a class="reference internal" href="../database/queries.html#database-queries-escaping"><span class="std std-ref">Database escape methods</span></a></p></li>
+<li><p><a class="reference internal" href="../database/queries.html#database-queries-query-bindings"><span class="std std-ref">Query Bindings</span></a></p></li>
 </ul>
 </section>
 </section>
-<section id="a4-insecure-direct-object-reference">
-<h2><a class="toc-backref" href="#id22" role="doc-backlink">A4 Insecure Direct Object Reference</a><a class="headerlink" href="#a4-insecure-direct-object-reference" title="Permalink to this heading"></a></h2>
-<p>Insecure Direct Object References occur when an application provides direct
-access to objects based on user-supplied input. As a result of this vulnerability
-attackers can bypass authorization and access resources in the system directly,
-for example database records or files.</p>
+<section id="a04-2021-insecure-design">
+<h2><a class="toc-backref" href="#id22" role="doc-backlink">A04:2021 Insecure Design</a><a class="headerlink" href="#a04-2021-insecure-design" title="Permalink to this heading"></a></h2>
+<p>Insecure design is a broad category representing different weaknesses, expressed
+as “missing or ineffective control design.” Insecure design is not the source for
+all other Top 10 risk categories. There is a difference between insecure design
+and insecure implementation. We differentiate between design flaws and implementation
+defects for a reason, they have different root causes and remediation.</p>
+<p>A secure design can still have implementation defects leading to vulnerabilities
+that may be exploited. An insecure design cannot be fixed by a perfect implementation
+as by definition, needed security controls were never created to defend against
+specific attacks. One of the factors that contribute to insecure design is the
+lack of business risk profiling inherent in the software or system being developed,
+and thus the failure to determine what level of security design is required.</p>
 <section id="id5">
 <h3>OWASP recommendations<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p>Presentation: don’t expose internal data; use random reference maps</p></li>
-<li><p>Controller: obtain data from trusted sources or random reference maps</p></li>
-<li><p>Model: validate user roles before updating data</p></li>
+<li><p>Establish and use a secure development lifecycle with AppSec professionals to
+help evaluate and design security and privacy-related controls</p></li>
+<li><p>Establish and use a library of secure design patterns or paved road ready to
+use components</p></li>
+<li><p>Use threat modeling for critical authentication, access control, business logic,
+and key flows</p></li>
+<li><p>Integrate security language and controls into user stories</p></li>
+<li><p>Integrate plausibility checks at each tier of your application (from frontend
+to backend)</p></li>
+<li><p>Write unit and integration tests to validate that all critical flows are resistant
+to the threat model. Compile use-cases and misuse-cases for each tier of your
+application.</p></li>
+<li><p>Segregate tier layers on the system and network layers depending on the exposure
+and protection needs</p></li>
+<li><p>Segregate tenants robustly by design throughout all tiers</p></li>
+<li><p>Limit resource consumption by user or service</p></li>
 </ul>
 </section>
 <section id="id6">
 <h3>CodeIgniter provisions<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p><a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation</span></a> library</p></li>
+<li><p><a class="reference internal" href="../testing/overview.html"><span class="doc">PHPUnit testing</span></a></p></li>
+<li><p><a class="reference internal" href="../libraries/throttler.html"><span class="doc">Throttler</span></a> for rate limit</p></li>
 <li><p>An official authentication and authorization framework <a class="reference internal" href="../libraries/official_packages.html#shield"><span class="std std-ref">CodeIgniter Shield</span></a></p></li>
-<li><p>Easy to add third party authentication</p></li>
 </ul>
 </section>
 </section>
-<section id="a5-security-misconfiguration">
-<h2><a class="toc-backref" href="#id23" role="doc-backlink">A5 Security Misconfiguration</a><a class="headerlink" href="#a5-security-misconfiguration" title="Permalink to this heading"></a></h2>
-<p>Improper configuration of an application architecture can lead to mistakes
-that might compromise the security of the whole architecture.</p>
+<section id="a05-2021-security-misconfiguration">
+<h2><a class="toc-backref" href="#id23" role="doc-backlink">A05:2021 Security Misconfiguration</a><a class="headerlink" href="#a05-2021-security-misconfiguration" title="Permalink to this heading"></a></h2>
+<p>The application might be vulnerable if the application is:</p>
+<ul class="simple">
+<li><p>Missing appropriate security hardening across any part of the application stack
+or improperly configured permissions on cloud services.</p></li>
+<li><p>Unnecessary features are enabled or installed (e.g., unnecessary ports, services,
+pages, accounts, or privileges).</p></li>
+<li><p>Default accounts and their passwords are still enabled and unchanged.</p></li>
+<li><p>Error handling reveals stack traces or other overly informative error messages
+to users.</p></li>
+<li><p>For upgraded systems, the latest security features are disabled or not configured
+securely.</p></li>
+<li><p>The security settings in the application servers, application frameworks (e.g.,
+Struts, Spring, ASP.NET), libraries, databases, etc., are not set to secure values.</p></li>
+<li><p>The server does not send security headers or directives, or they are not set to
+secure values.</p></li>
+<li><p>The software is out of date or vulnerable (see A06:2021-Vulnerable and Outdated
+Components).</p></li>
+</ul>
+<p>Without a concerted, repeatable application security configuration process,
+systems are at a higher risk.</p>
 <section id="id7">
 <h3>OWASP recommendations<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<p>Secure installation processes should be implemented, including:</p>
 <ul class="simple">
-<li><p>Presentation: harden web and application servers; use HTTP strict transport security</p></li>
-<li><p>Controller: harden web and application servers; protect your XML stack</p></li>
-<li><p>Model: harden database servers</p></li>
+<li><p>A repeatable hardening process makes it fast and easy to deploy another environment
+that is appropriately locked down. Development, QA, and production environments
+should all be configured identically, with different credentials used in each
+environment. This process should be automated to minimize the effort required
+to set up a new secure environment.</p></li>
+<li><p>A minimal platform without any unnecessary features, components, documentation,
+and samples. Remove or do not install unused features and frameworks.</p></li>
+<li><p>A task to review and update the configurations appropriate to all security notes,
+updates, and patches as part of the patch management process (see A06:2021-Vulnerable
+and Outdated Components). Review cloud storage permissions (e.g., S3 bucket permissions).</p></li>
+<li><p>A segmented application architecture provides effective and secure separation
+between components or tenants, with segmentation, containerization, or cloud
+security groups (ACLs).</p></li>
+<li><p>Sending security directives to clients, e.g., Security Headers.</p></li>
+<li><p>An automated process to verify the effectiveness of the configurations and
+settings in all environments.</p></li>
 </ul>
 </section>
 <section id="id8">
 <h3>CodeIgniter provisions<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p>Sanity checks during bootstrap</p></li>
+<li><p><a class="reference internal" href="../general/environments.html#environment-constant"><span class="std std-ref">Production mode</span></a> by default</p></li>
+<li><p><a class="reference internal" href="../incoming/filters.html#secureheaders"><span class="std std-ref">SecureHeaders</span></a> filter</p></li>
 </ul>
 </section>
 </section>
-<section id="a6-sensitive-data-exposure">
-<h2><a class="toc-backref" href="#id24" role="doc-backlink">A6 Sensitive Data Exposure</a><a class="headerlink" href="#a6-sensitive-data-exposure" title="Permalink to this heading"></a></h2>
-<p>Sensitive data must be protected when it is transmitted through the network.
-Such data can include user credentials and credit cards. As a rule of thumb,
-if data must be protected when it is stored, it must be protected also during
-transmission.</p>
+<section id="a06-2021-vulnerable-and-outdated-components">
+<h2><a class="toc-backref" href="#id24" role="doc-backlink">A06:2021 Vulnerable and Outdated Components</a><a class="headerlink" href="#a06-2021-vulnerable-and-outdated-components" title="Permalink to this heading"></a></h2>
+<p>You are likely vulnerable:</p>
+<ul class="simple">
+<li><p>If you do not know the versions of all components you use (both client-side
+and server-side). This includes components you directly use as well as nested
+dependencies.</p></li>
+<li><p>If the software is vulnerable, unsupported, or out of date. This includes the OS,
+web/application server, database management system (DBMS), applications, APIs
+and all components, runtime environments, and libraries.</p></li>
+<li><p>If you do not scan for vulnerabilities regularly and subscribe to security
+bulletins related to the components you use.</p></li>
+<li><p>If you do not fix or upgrade the underlying platform, frameworks, and dependencies
+in a risk-based, timely fashion. This commonly happens in environments when
+patching is a monthly or quarterly task under change control, leaving organizations
+open to days or months of unnecessary exposure to fixed vulnerabilities.</p></li>
+<li><p>If software developers do not test the compatibility of updated, upgraded, or
+patched libraries.</p></li>
+<li><p>If you do not secure the components’ configurations (see A05:2021-Security
+Misconfiguration).</p></li>
+</ul>
 <section id="id9">
 <h3>OWASP recommendations<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
+<p>There should be a patch management process in place to:</p>
 <ul class="simple">
-<li><p>Presentation: use TLS1.2; use strong ciphers and hashes; do not send keys or hashes to browser</p></li>
-<li><p>Controller: use strong ciphers and hashes</p></li>
-<li><p>Model: mandate strong encrypted communications with servers</p></li>
+<li><p>Remove unused dependencies, unnecessary features, components, files, and
+documentation.</p></li>
+<li><p>Continuously inventory the versions of both client-side and server-side components
+(e.g., frameworks, libraries) and their dependencies using tools like versions,
+OWASP Dependency Check, retire.js, etc. Continuously monitor sources like Common
+Vulnerability and Exposures (CVE) and National Vulnerability Database (NVD) for
+vulnerabilities in the components. Use software composition analysis tools to
+automate the process. Subscribe to email alerts for security vulnerabilities
+related to components you use.</p></li>
+<li><p>Only obtain components from official sources over secure links. Prefer signed
+packages to reduce the chance of including a modified, malicious component
+(See A08:2021-Software and Data Integrity Failures).</p></li>
+<li><p>Monitor for libraries and components that are unmaintained or do not create
+security patches for older versions. If patching is not possible, consider
+deploying a virtual patch to monitor, detect, or protect against the discovered
+issue.</p></li>
 </ul>
+<p>Every organization must ensure an ongoing plan for monitoring, triaging, and
+applying updates or configuration changes for the lifetime of the application or
+portfolio.</p>
 </section>
 <section id="id10">
 <h3>CodeIgniter provisions<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p>The config for global secure access (<code class="docutils literal notranslate"><span class="pre">Config\App::$forceGlobalSecureRequests</span></code>)</p></li>
-<li><p><a class="reference internal" href="../general/common_functions.html#force_https" title="force_https"><code class="xref php php-func docutils literal notranslate"><span class="pre">force_https()</span></code></a> function</p></li>
-<li><p><a class="reference internal" href="../libraries/encryption.html"><span class="doc">Encryption Service</span></a></p></li>
-<li><p>The <a class="reference internal" href="../database/configuration.html#database-config-explanation-of-values"><span class="std std-ref">database config</span></a> (<code class="docutils literal notranslate"><span class="pre">encrypt</span></code>)</p></li>
+<li><p>Easy <a class="reference internal" href="../installation/installing_composer.html#app-starter-upgrading"><span class="std std-ref">Upgrading</span></a> by Composer</p></li>
 </ul>
 </section>
 </section>
-<section id="a7-missing-function-level-access-control">
-<h2><a class="toc-backref" href="#id25" role="doc-backlink">A7 Missing Function Level Access Control</a><a class="headerlink" href="#a7-missing-function-level-access-control" title="Permalink to this heading"></a></h2>
-<p>Sensitive data must be protected when it is transmitted through the network.
-Such data can include user credentials and credit cards. As a rule of thumb,
-if data must be protected when it is stored, it must be protected also during
-transmission.</p>
+<section id="a07-2021-identification-and-authentication-failures">
+<h2><a class="toc-backref" href="#id25" role="doc-backlink">A07:2021 Identification and Authentication Failures</a><a class="headerlink" href="#a07-2021-identification-and-authentication-failures" title="Permalink to this heading"></a></h2>
+<p>Confirmation of the user’s identity, authentication, and session management is
+critical to protect against authentication-related attacks. There may be
+authentication weaknesses if the application:</p>
+<ul class="simple">
+<li><p>Permits automated attacks such as credential stuffing, where the attacker has
+a list of valid usernames and passwords.</p></li>
+<li><p>Permits brute force or other automated attacks.</p></li>
+<li><p>Permits default, weak, or well-known passwords, such as “Password1” or “admin/admin”.</p></li>
+<li><p>Uses weak or ineffective credential recovery and forgot-password processes,
+such as “knowledge-based answers,” which cannot be made safe.</p></li>
+<li><p>Uses plain text, encrypted, or weakly hashed passwords data stores
+(see A02:2021-Cryptographic Failures).</p></li>
+<li><p>Has missing or ineffective multi-factor authentication.</p></li>
+<li><p>Exposes session identifier in the URL.</p></li>
+<li><p>Reuse session identifier after successful login.</p></li>
+<li><p>Does not correctly invalidate Session IDs. User sessions or authentication tokens
+(mainly single sign-on (SSO) tokens) aren’t properly invalidated during logout
+or a period of inactivity.</p></li>
+</ul>
 <section id="id11">
 <h3>OWASP recommendations<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p>Presentation: ensure that non-web data is outside the web root; validate users and roles; send CSRF tokens</p></li>
-<li><p>Controller: validate users and roles; validate CSRF tokens</p></li>
-<li><p>Model: validate roles</p></li>
+<li><p>Where possible, implement multi-factor authentication to prevent automated
+credential stuffing, brute force, and stolen credential reuse attacks.</p></li>
+<li><p>Do not ship or deploy with any default credentials, particularly for admin users.</p></li>
+<li><p>Implement weak password checks, such as testing new or changed passwords against
+the top 10,000 worst passwords list.</p></li>
+<li><p>Align password length, complexity, and rotation policies with National Institute
+of Standards and Technology (NIST) 800-63b’s guidelines in section 5.1.1 for
+Memorized Secrets or other modern, evidence-based password policies.</p></li>
+<li><p>Ensure registration, credential recovery, and API pathways are hardened against
+account enumeration attacks by using the same messages for all outcomes.</p></li>
+<li><p>Limit or increasingly delay failed login attempts, but be careful not to create
+a denial of service scenario. Log all failures and alert administrators when
+credential stuffing, brute force, or other attacks are detected.</p></li>
+<li><p>Use a server-side, secure, built-in session manager that generates a new random
+session ID with high entropy after login. Session identifier should not be in
+the URL, be securely stored, and invalidated after logout, idle, and absolute
+timeouts.</p></li>
 </ul>
 </section>
 <section id="id12">
 <h3>CodeIgniter provisions<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p><a class="reference internal" href="structure.html#application-structure-public"><span class="std std-ref">Public</span></a> folder, with application and system outside</p></li>
-<li><p><a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library provides for <a class="reference internal" href="../libraries/security.html#cross-site-request-forgery"><span class="std std-ref">CSRF validation</span></a></p></li>
+<li><p><a class="reference internal" href="../libraries/sessions.html"><span class="doc">Session</span></a> library</p></li>
+<li><p>An official authentication and authorization framework
+<a class="reference internal" href="../libraries/official_packages.html#shield"><span class="std std-ref">CodeIgniter Shield</span></a></p></li>
 </ul>
 </section>
 </section>
-<section id="a8-cross-site-request-forgery-csrf">
-<h2><a class="toc-backref" href="#id26" role="doc-backlink">A8 Cross Site Request Forgery (CSRF)</a><a class="headerlink" href="#a8-cross-site-request-forgery-csrf" title="Permalink to this heading"></a></h2>
-<p>CSRF is an attack that forces an end user to execute unwanted actions on a web
-application in which he/she is currently authenticated.</p>
+<section id="a08-2021-software-and-data-integrity-failures">
+<h2><a class="toc-backref" href="#id26" role="doc-backlink">A08:2021 Software and Data Integrity Failures</a><a class="headerlink" href="#a08-2021-software-and-data-integrity-failures" title="Permalink to this heading"></a></h2>
+<p>Software and data integrity failures relate to code and infrastructure that does
+not protect against integrity violations. An example of this is where an application
+relies upon plugins, libraries, or modules from untrusted sources, repositories,
+and content delivery networks (CDNs). An insecure CI/CD pipeline can introduce
+the potential for unauthorized access, malicious code, or system compromise.</p>
+<p>Lastly, many applications now include auto-update functionality, where updates
+are downloaded without sufficient integrity verification and applied to the previously
+trusted application. Attackers could potentially upload their own updates to be
+distributed and run on all installations.</p>
+<p>Another example is where objects or data are encoded or serialized into a structure
+that an attacker can see and modify is vulnerable to insecure deserialization.</p>
 <section id="id13">
 <h3>OWASP recommendations<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p>Presentation: validate users and roles; send CSRF tokens</p></li>
-<li><p>Controller: validate users and roles; validate CSRF tokens</p></li>
-<li><p>Model: validate roles</p></li>
+<li><p>Use digital signatures or similar mechanisms to verify the software or data is
+from the expected source and has not been altered.</p></li>
+<li><p>Ensure libraries and dependencies, such as npm or Maven, are consuming trusted
+repositories. If you have a higher risk profile, consider hosting an internal
+known-good repository that’s vetted.</p></li>
+<li><p>Ensure that a software supply chain security tool, such as OWASP Dependency
+Check or OWASP CycloneDX, is used to verify that components do not contain
+known vulnerabilities</p></li>
+<li><p>Ensure that there is a review process for code and configuration changes to
+minimize the chance that malicious code or configuration could be introduced
+into your software pipeline.</p></li>
+<li><p>Ensure that your CI/CD pipeline has proper segregation, configuration, and
+access control to ensure the integrity of the code flowing through the build
+and deploy processes.</p></li>
+<li><p>Ensure that unsigned or unencrypted serialized data is not sent to untrusted
+clients without some form of integrity check or digital signature to detect
+tampering or replay of the serialized data</p></li>
 </ul>
 </section>
 <section id="id14">
 <h3>CodeIgniter provisions<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p><a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library provides for <a class="reference internal" href="../libraries/security.html#cross-site-request-forgery"><span class="std std-ref">CSRF validation</span></a></p></li>
+<li><p>n/a</p></li>
 </ul>
 </section>
 </section>
-<section id="a9-using-components-with-known-vulnerabilities">
-<h2><a class="toc-backref" href="#id27" role="doc-backlink">A9 Using Components with Known Vulnerabilities</a><a class="headerlink" href="#a9-using-components-with-known-vulnerabilities" title="Permalink to this heading"></a></h2>
-<p>Many applications have known vulnerabilities and known attack strategies that
-can be exploited in order to gain remote control or to exploit data.</p>
+<section id="a09-2021-security-logging-and-monitoring-failures">
+<h2><a class="toc-backref" href="#id27" role="doc-backlink">A09:2021 Security Logging and Monitoring Failures</a><a class="headerlink" href="#a09-2021-security-logging-and-monitoring-failures" title="Permalink to this heading"></a></h2>
+<p>This category is to help detect, escalate, and respond to active breaches. Without
+logging and monitoring, breaches cannot be detected. Insufficient logging, detection,
+monitoring, and active response occurs any time:</p>
+<ul class="simple">
+<li><p>Auditable events, such as logins, failed logins, and high-value transactions,
+are not logged.</p></li>
+<li><p>Warnings and errors generate no, inadequate, or unclear log messages.</p></li>
+<li><p>Logs of applications and APIs are not monitored for suspicious activity.</p></li>
+<li><p>Logs are only stored locally.</p></li>
+<li><p>Appropriate alerting thresholds and response escalation processes are not in
+place or effective.</p></li>
+<li><p>Penetration testing and scans by dynamic application security testing (DAST)
+tools (such as OWASP ZAP) do not trigger alerts.</p></li>
+<li><p>The application cannot detect, escalate, or alert for active attacks in real-time
+or near real-time.</p></li>
+</ul>
+<p>You are vulnerable to information leakage by making logging and alerting events
+visible to a user or an attacker (see A01:2021-Broken Access Control).</p>
 <section id="id15">
 <h3>OWASP recommendations<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h3>
+<p>Developers should implement some or all the following controls, depending on the risk of the application:</p>
 <ul class="simple">
-<li><p>Don’t use any of these</p></li>
+<li><p>Ensure all login, access control, and server-side input validation failures can
+be logged with sufficient user context to identify suspicious or malicious
+accounts and held for enough time to allow delayed forensic analysis.</p></li>
+<li><p>Ensure that logs are generated in a format that log management solutions can
+easily consume.</p></li>
+<li><p>Ensure log data is encoded correctly to prevent injections or attacks on the
+logging or monitoring systems.</p></li>
+<li><p>Ensure high-value transactions have an audit trail with integrity controls to
+prevent tampering or deletion, such as append-only database tables or similar.</p></li>
+<li><p>DevSecOps teams should establish effective monitoring and alerting such that
+suspicious activities are detected and responded to quickly.</p></li>
+<li><p>Establish or adopt an incident response and recovery plan, such as National
+Institute of Standards and Technology (NIST) 800-61r2 or later.</p></li>
 </ul>
+<p>There are commercial and open-source application protection frameworks such as
+the OWASP ModSecurity Core Rule Set, and open-source log correlation software,
+such as the Elasticsearch, Logstash, Kibana (ELK) stack, that feature custom
+dashboards and alerting.</p>
 </section>
 <section id="id16">
 <h3>CodeIgniter provisions<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p>Third party libraries incorporated must be vetted</p></li>
+<li><p><a class="reference internal" href="../general/logging.html"><span class="doc">Logging</span></a> library</p></li>
+<li><p>An official authentication and authorization framework
+<a class="reference internal" href="../libraries/official_packages.html#shield"><span class="std std-ref">CodeIgniter Shield</span></a></p></li>
 </ul>
 </section>
 </section>
-<section id="a10-unvalidated-redirects-and-forwards">
-<h2><a class="toc-backref" href="#id28" role="doc-backlink">A10 Unvalidated Redirects and Forwards</a><a class="headerlink" href="#a10-unvalidated-redirects-and-forwards" title="Permalink to this heading"></a></h2>
-<p>Faulty business logic or injected actionable code could redirect the user
-inappropriately.</p>
+<section id="a10-2021-server-side-request-forgery-ssrf">
+<h2><a class="toc-backref" href="#id28" role="doc-backlink">A10:2021 Server-Side Request Forgery (SSRF)</a><a class="headerlink" href="#a10-2021-server-side-request-forgery-ssrf" title="Permalink to this heading"></a></h2>
+<p>SSRF flaws occur whenever a web application is fetching a remote resource without
+validating the user-supplied URL. It allows an attacker to coerce the application
+to send a crafted request to an unexpected destination, even when protected by a
+firewall, VPN, or another type of network access control list (ACL).</p>
+<p>As modern web applications provide end-users with convenient features, fetching
+a URL becomes a common scenario. As a result, the incidence of SSRF is increasing.
+Also, the severity of SSRF is becoming higher due to cloud services and the
+complexity of architectures.</p>
 <section id="id17">
 <h3>OWASP recommendations<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p>Presentation: don’t use URL redirection; use random indirect references</p></li>
-<li><p>Controller: don’t use URL redirection; use random indirect references</p></li>
-<li><p>Model: validate roles</p></li>
+<p>Developers can prevent SSRF by implementing some or all the following defense in
+depth controls:</p>
+<p>From Network layer:</p>
+<ul>
+<li><p>Segment remote resource access functionality in separate networks to reduce the
+impact of SSRF</p></li>
+<li><p>Enforce “deny by default” firewall policies or network access control rules to
+block all but essential intranet traffic.</p>
+<blockquote>
+<div><ul>
+<li><p>Hints:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Establish an ownership and a lifecycle for firewall rules based on
+applications.</p></li>
+<li><p>Log all accepted and blocked network flows on firewalls
+(see A09:2021-Security Logging and Monitoring Failures).</p></li>
 </ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>From Application layer:</p>
+<ul class="simple">
+<li><p>Sanitize and validate all client-supplied input data</p></li>
+<li><p>Enforce the URL schema, port, and destination with a positive allow list</p></li>
+<li><p>Do not send raw responses to clients</p></li>
+<li><p>Disable HTTP redirections</p></li>
+<li><p>Be aware of the URL consistency to avoid attacks such as DNS rebinding and
+“time of check, time of use” (TOCTOU) race conditions</p></li>
+</ul>
+<p>Do not mitigate SSRF via the use of a deny list or regular expression. Attackers
+have payload lists, tools, and skills to bypass deny lists.</p>
 </section>
 <section id="id18">
 <h3>CodeIgniter provisions<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p><a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">HTTP library</span></a> provides for …</p></li>
-<li><p><a class="reference internal" href="../libraries/sessions.html"><span class="doc">Session</span></a> library provides <a class="reference internal" href="../libraries/sessions.html#sessions-flashdata"><span class="std std-ref">Flashdata</span></a></p></li>
+<li><p><a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation</span></a> library</p></li>
+<li><p><a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">HTTP library</span></a> provides for
+<a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-filtering-input-data"><span class="std std-ref">input field filtering</span></a></p></li>
 </ul>
 </section>
 </section>
@@ -537,7 +893,7 @@ inappropriately.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 02, 2024.
+      <span class="lastupdated">Last updated on Apr 03, 2024.
       </span></p>
   </div>
 
