@@ -447,16 +447,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/CLI/CLI.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a ternary operator condition, string\\|null given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/CLI/CLI.php',
@@ -763,11 +753,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/MigrateStatus.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, array\\<int\\<0, max\\>, array\\<int, mixed\\>\\> given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Database/MigrateStatus.php',
 ];
@@ -2132,11 +2117,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Config/DotEnv.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/DotEnv.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Config\\\\Factories\\:\\:__callStatic\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/Factories.php',
@@ -2283,11 +2263,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Controller\\:\\:validateData\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Controller.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Controller.php',
 ];
@@ -3728,11 +3703,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\OCI8\\\\Builder\\:\\:resetSelect\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
 ];
@@ -6217,11 +6187,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Return type \\(CodeIgniter\\\\HTTP\\\\DownloadResponse\\) of method CodeIgniter\\\\HTTP\\\\DownloadResponse\\:\\:sendBody\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\HTTP\\\\Response\\)\\) of method CodeIgniter\\\\HTTP\\\\Response\\:\\:sendBody\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
@@ -7117,66 +7082,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 1024\\> given\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 128\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 16\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 1\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 2048\\> given\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 256\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 2\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 32\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 4\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 512\\> given\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 64\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 8\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Right side of && is always true\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
@@ -7387,11 +7292,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Helpers/form_helper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/form_helper.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Function _list\\(\\) has parameter \\$attributes with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/html_helper.php',
@@ -7468,11 +7368,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Function video\\(\\) has parameter \\$tracks with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/html_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/html_helper.php',
 ];
@@ -7573,11 +7468,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Implicit array creation is not allowed \\- variable \\$atts might not exist\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/url_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/url_helper.php',
 ];
@@ -8387,11 +8277,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Router/RouteCollection.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/RouteCollection.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a ternary operator condition, string\\|null given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/RouteCollection.php',
@@ -8638,11 +8523,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\FileHandler\\:\\:configureSessionIDRegex\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Session/Handlers/FileHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Session/Handlers/FileHandler.php',
 ];
@@ -10607,11 +10487,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/View/Table.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, float given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Table.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in an if condition, string\\|null given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/Table.php',
@@ -12033,11 +11908,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:testUnserializeError\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, array given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
 ];

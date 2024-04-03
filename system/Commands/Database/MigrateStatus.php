@@ -144,7 +144,7 @@ class MigrateStatus extends BaseCommand
             }
         }
 
-        if (! $status) {
+        if ($status === []) {
             // @codeCoverageIgnoreStart
             CLI::error(lang('Migrations.noneFound'), 'light_gray', 'red');
             CLI::newLine();
