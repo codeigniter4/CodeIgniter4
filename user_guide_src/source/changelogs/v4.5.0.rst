@@ -21,6 +21,53 @@ Highlights
 Enhancements
 ************
 
+.. _v450-required-filters:
+
+Required Filters
+================
+
+New :ref:`Required Filters <filters-required>` have been introduced. They are
+special filters that are applied before and after other kinds of filters, and
+always applied even if a route does not exist.
+
+The following existing functionalities have been reimplemented as Required Filters.
+
+- :ref:`Force Global Secure Requests <forcehttps>`
+- :doc:`../general/caching`
+- :ref:`performancemetrics`
+- :ref:`the-debug-toolbar`
+
+The Benchmark **Timers** used by Debug Toolbar now collect *Required Before Filters*
+and *Required After Filters* data.
+
+The benchmark points have been changed:
+
+- Before
+
+   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``, Instantiating RouteCollection object, Loading Routes files, Instantiating Router object,
+   - ``routing``: Routing,
+- After
+
+   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``.
+   - ``required_before_filters``: Instantiating Filters object, Running *Required Before Filters*.
+   - ``routing``: Instantiating RouteCollection object, Loading Routes files, Instantiating Router object, Routing,
+
+Routing
+=======
+
+- **AutoRouting Improved:** The ``$translateUriToCamelCase`` option has been added
+  that allows using CamelCase controller and method names. See
+  :ref:`controller-translate-uri-to-camelcase`.
+- **Others:**
+    - Added option ``$multipleSegmentsOneParam``. When this option is
+      enabled, a placeholder that matches multiple segments, such as ``(:any)``, will
+      be passed directly as it is to one parameter, even if it contains multiple segments.
+      See :ref:`multiple-uri-segments-as-one-parameter` for details.
+    - Now the 404 controller's method that you set in ``$override404`` also receive
+      a ``PageNotFoundException`` message as the first parameter.
+    - Now you can use the ``__invoke()`` method as the default method. See
+      :ref:`routing-default-method`.
+
 Commands
 ========
 
@@ -136,53 +183,6 @@ Libraries
 
 Helpers and Functions
 =====================
-
-.. _v450-required-filters:
-
-Required Filters
-================
-
-New :ref:`Required Filters <filters-required>` have been introduced. They are
-special filters that are applied before and after other kinds of filters, and
-always applied even if a route does not exist.
-
-The following existing functionalities have been reimplemented as Required Filters.
-
-- :ref:`Force Global Secure Requests <forcehttps>`
-- :doc:`../general/caching`
-- :ref:`performancemetrics`
-- :ref:`the-debug-toolbar`
-
-The Benchmark **Timers** used by Debug Toolbar now collect *Required Before Filters*
-and *Required After Filters* data.
-
-The benchmark points have been changed:
-
-- Before
-
-   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``, Instantiating RouteCollection object, Loading Routes files, Instantiating Router object,
-   - ``routing``: Routing,
-- After
-
-   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``.
-   - ``required_before_filters``: Instantiating Filters object, Running *Required Before Filters*.
-   - ``routing``: Instantiating RouteCollection object, Loading Routes files, Instantiating Router object, Routing,
-
-Routing
-=======
-
-- **AutoRouting Improved:** The ``$translateUriToCamelCase`` option has been added
-  that allows using CamelCase controller and method names. See
-  :ref:`controller-translate-uri-to-camelcase`.
-- **Others:**
-    - Added option ``$multipleSegmentsOneParam``. When this option is
-      enabled, a placeholder that matches multiple segments, such as ``(:any)``, will
-      be passed directly as it is to one parameter, even if it contains multiple segments.
-      See :ref:`multiple-uri-segments-as-one-parameter` for details.
-    - Now the 404 controller's method that you set in ``$override404`` also receive
-      a ``PageNotFoundException`` message as the first parameter.
-    - Now you can use the ``__invoke()`` method as the default method. See
-      :ref:`routing-default-method`.
 
 Others
 ======
