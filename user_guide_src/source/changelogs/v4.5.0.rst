@@ -187,6 +187,8 @@ Routing
 Others
 ======
 
+- **Bootstrap:** The ``CodeIgniter\Boot`` class has been introduced, replacing
+  **system/bootstrap.php**.
 - **Autoloader:**
     - Autoloading performance when using Composer has been improved.
       Adding the ``App`` namespace in the ``autoload.psr4`` setting in **composer.json**
@@ -195,8 +197,6 @@ Others
     - ``FileLocatorInterface`` has been added.
 - **CodeIgniter:** Added a pseudo-variable ``{memory_usage}`` to show your memory
   usage in your view files, which was supported by CodeIgniter 3.
-- **CSP:** Added ``ContentSecurityPolicy::clearDirective()`` method to clear
-  existing CSP directives. See :ref:`csp-clear-directives`.
 - **Events:** Added event points ``pre_command`` and ``post_command`` for Spark
   commands. See :ref:`Event Points <event-points-for-cli-apps>`.
 - **HTTP:** Added ``Message::addHeader()`` method to add another header with
@@ -204,8 +204,8 @@ Others
 - **Web Page Caching:** ``ResponseCache`` has been improved to include the request
   HTTP method in the cache key. This means that the same URI will be cached separately
   if the HTTP method is different.
-- **Bootstrap:** The ``CodeIgniter\Boot`` class has been introduced, replacing
-  **system/bootstrap.php**.
+- **CSP:** Added ``ContentSecurityPolicy::clearDirective()`` method to clear
+  existing CSP directives. See :ref:`csp-clear-directives`.
 
 ********
 BREAKING
