@@ -455,10 +455,6 @@ class Table
      */
     protected function formatKeys($keys)
     {
-        if (! is_array($keys)) {
-            return $keys;
-        }
-
         $return = [];
 
         foreach ($keys as $name => $key) {
