@@ -15,6 +15,7 @@ Highlights
 **********
 
 - Update minimal PHP requirement to 8.1.
+- Update minimal PHPUnit requirement to 10.5.
 - TBD
 
 ************
