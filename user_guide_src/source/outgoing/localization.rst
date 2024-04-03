@@ -104,12 +104,19 @@ Setting the Current Locale
 
 If you want to set the locale directly, you may use
 ``IncomingRequest::setLocale(string $locale)``.
-You must set supported locales in **app/Config/App.php**:
+
+Before setting the locale, you must set valid locales. Because any attempt to
+set a locale that are not valid will result in
+the :ref:`default locale <setting-the-default-locale>` being set.
+
+By default, the valid locales are defined in ``Config\App::$supportedLocales``
+in **app/Config/App.php**:
 
 .. literalinclude:: localization/003.php
 
-.. note:: Any attempt to set a locale not included in this array will result in
-    the :ref:`default locale <setting-the-default-locale>` being set.
+.. note:: Since v4.4.0, ``IncomingRequest::setValidLocales()`` has been added to
+    set (and reset) valid locales. Use it if you want to change the valid locales
+    dynamically.
 
 Retrieving the Current Locale
 =============================
