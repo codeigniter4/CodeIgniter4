@@ -2,7 +2,7 @@
 
 <?php foreach ($todo as $item): ?>
 
-    <li><?= $item ?></li>
+    <li><?= esc($item) ?></li>
 
 <?php endforeach ?>
 
