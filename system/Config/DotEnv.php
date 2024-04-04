@@ -140,7 +140,7 @@ class DotEnv
      */
     protected function sanitizeValue(string $value): string
     {
-        if ($value === '' || $value === '0') {
+        if ($value === '') {
             return $value;
         }
 

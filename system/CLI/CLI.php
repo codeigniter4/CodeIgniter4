@@ -262,7 +262,7 @@ class CLI
             $default = $options[0];
         }
 
-        static::fwrite(STDOUT, $field . (trim($field) !== '' && trim($field) !== '0' ? ' ' : '') . $extraOutput . ': ');
+        static::fwrite(STDOUT, $field . (trim($field) !== '' ? ' ' : '') . $extraOutput . ': ');
 
         // Read the input from keyboard.
         $input = trim(static::input()) ?: $default;
