@@ -6,5 +6,9 @@ use CodeIgniter\Model;
 
 class MyModel extends Model
 {
+    // ...
+
     protected $allowCallbacks = false;
+
+    // ...
 }
