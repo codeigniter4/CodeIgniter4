@@ -48,7 +48,7 @@ final class ResponseCacheTest extends CIUnitTestCase
     ): IncomingRequest {
         $_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
 
-        $_SERVER['REQUEST_URI'] = '/' . $uri . ($query ? '?' . http_build_query($query) : '');
+        $_SERVER['REQUEST_URI'] = '/' . $uri . ($query !== [] ? '?' . http_build_query($query) : '');
         $_SERVER['SCRIPT_NAME'] = '/index.php';
 
         $appConfig ??= $this->appConfig;

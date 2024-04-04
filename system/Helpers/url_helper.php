@@ -318,7 +318,7 @@ if (! function_exists('safe_mailto')) {
 
         // improve obfuscation by eliminating newlines & whitespace
         $cspNonce = csp_script_nonce();
-        $cspNonce = $cspNonce ? ' ' . $cspNonce : $cspNonce;
+        $cspNonce = $cspNonce !== '' ? ' ' . $cspNonce : $cspNonce;
         $output   = '<script' . $cspNonce . '>'
                 . 'var l=new Array();';
 

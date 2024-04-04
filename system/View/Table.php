@@ -365,7 +365,7 @@ class Table
 
             foreach ($this->rows as $row) {
                 // We use modulus to alternate the row colors
-                $name = fmod($i++, 2) ? '' : 'alt_';
+                $name = fmod($i++, 2) !== 0.0 ? '' : 'alt_';
 
                 $out .= $this->template['row_' . $name . 'start'] . $this->newline;
 
