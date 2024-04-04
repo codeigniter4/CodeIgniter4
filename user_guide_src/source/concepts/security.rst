@@ -78,7 +78,9 @@ CodeIgniter provisions
 - :doc:`../libraries/validation` library
 - :doc:`Security </libraries/security>` library provides for
   :ref:`CSRF protection <cross-site-request-forgery>`
+- :doc:`../libraries/sessions` library
 - :doc:`../libraries/throttler` for rate limit
+- :doc:`../libraries/cors` filter
 - :php:func:`log_message()` function for logging
 - An official authentication and authorization framework :ref:`CodeIgniter Shield <shield>`
 - Easy to add third party authentication
@@ -325,6 +327,8 @@ Secure installation processes should be implemented, including:
 CodeIgniter provisions
 ======================
 
+- :ref:`spark config:check <confirming-config-values>` command
+- :ref:`spark phpini:check <spark-phpini-check>` command
 - :ref:`Production mode <environment-constant>` by default
 - :ref:`secureheaders` filter
 
