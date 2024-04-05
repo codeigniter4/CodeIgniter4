@@ -110,6 +110,7 @@ class Image extends File
             IMAGETYPE_JPEG => 'jpeg',
             IMAGETYPE_PNG  => 'png',
             IMAGETYPE_WEBP => 'webp',
+            IMAGETYPE_AVIF => 'avif',
         ];
 
         $mime = 'image/' . ($types[$vals[2]] ?? 'jpg');
