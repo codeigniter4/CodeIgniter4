@@ -6,6 +6,8 @@ use CodeIgniter\Model;
 
 class UserModel extends Model
 {
+    // ...
+
     protected $validationRules = [
         'username'     => 'required|max_length[30]|alpha_numeric_space|min_length[3]',
         'email'        => 'required|max_length[254]|valid_email|is_unique[users.email]',

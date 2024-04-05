@@ -6,6 +6,8 @@ use CodeIgniter\Model;
 
 class MyModel extends Model
 {
+    // ...
+
     protected $beforeFind = ['checkCache'];
 
     // ...
