@@ -15,11 +15,11 @@ Alternative Echos
 
 Normally to echo, or print out a variable you would do this::
 
-    <?php echo $variable; ?>
+    <?php echo esc($variable); ?>
 
 With the alternative syntax you can instead do it this way::
 
-    <?= $variable ?>
+    <?= esc($variable) ?>
 
 Alternative Control Structures
 ==============================
