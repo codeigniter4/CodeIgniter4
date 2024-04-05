@@ -15,11 +15,59 @@ Highlights
 **********
 
 - Update minimal PHP requirement to 8.1.
+- Update minimal PHPUnit requirement to 10.5.
 - TBD
 
 ************
 Enhancements
 ************
+
+.. _v450-required-filters:
+
+Required Filters
+================
+
+New :ref:`Required Filters <filters-required>` have been introduced. They are
+special filters that are applied before and after other kinds of filters, and
+always applied even if a route does not exist.
+
+The following existing functionalities have been reimplemented as Required Filters.
+
+- :ref:`Force Global Secure Requests <forcehttps>`
+- :doc:`../general/caching`
+- :ref:`performancemetrics`
+- :ref:`the-debug-toolbar`
+
+The Benchmark **Timers** used by Debug Toolbar now collect *Required Before Filters*
+and *Required After Filters* data.
+
+The benchmark points have been changed:
+
+- Before
+
+   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``, Instantiating RouteCollection object, Loading Routes files, Instantiating Router object,
+   - ``routing``: Routing,
+- After
+
+   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``.
+   - ``required_before_filters``: Instantiating Filters object, Running *Required Before Filters*.
+   - ``routing``: Instantiating RouteCollection object, Loading Routes files, Instantiating Router object, Routing,
+
+Routing
+=======
+
+- **AutoRouting Improved:** The ``$translateUriToCamelCase`` option has been added
+  that allows using CamelCase controller and method names. See
+  :ref:`controller-translate-uri-to-camelcase`.
+- **Others:**
+    - Added option ``$multipleSegmentsOneParam``. When this option is
+      enabled, a placeholder that matches multiple segments, such as ``(:any)``, will
+      be passed directly as it is to one parameter, even if it contains multiple segments.
+      See :ref:`multiple-uri-segments-as-one-parameter` for details.
+    - Now the 404 controller's method that you set in ``$override404`` also receive
+      a ``PageNotFoundException`` message as the first parameter.
+    - Now you can use the ``__invoke()`` method as the default method. See
+      :ref:`routing-default-method`.
 
 Commands
 ========
@@ -130,56 +178,18 @@ Libraries
       (``$lockRetryInterval``) and the number of retries (``$lockMaxRetries``).
     - Now you can use Redis ACL (username and password) with ``RedisHandler``.
       See :ref:`sessions-redishandler-driver` for details.
+- **Security:** ``Config\Security::$redirect`` is now, by default, environment-specific.
+  For production environment, changed to ``true`` but is still ``false`` for other
+  environments.
 
 Helpers and Functions
 =====================
 
-.. _v450-required-filters:
-
-Required Filters
-================
-
-New :ref:`Required Filters <filters-required>` have been introduced. They are
-special filters that are applied before and after other kinds of filters, and
-always applied even if a route does not exist.
-
-The following existing functionalities have been reimplemented as Required Filters.
-
-- :ref:`Force Global Secure Requests <forcehttps>`
-- :doc:`../general/caching`
-- :ref:`performancemetrics`
-- :ref:`the-debug-toolbar`
-
-The Benchmark **Timers** used by Debug Toolbar now collect *Required Before Filters*
-and *Required After Filters* data.
-
-The benchmark points have been changed:
-
-- Before
-
-   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``, Instantiating RouteCollection object, Loading Routes files, Instantiating Router object,
-   - ``routing``: Routing,
-- After
-
-   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``.
-   - ``required_before_filters``: Instantiating Filters object, Running *Required Before Filters*.
-   - ``routing``: Instantiating RouteCollection object, Loading Routes files, Instantiating Router object, Routing,
-
 Others
 ======
 
-- **AutoRouting Improved:** The ``$translateUriToCamelCase`` option has been added
-  that allows using CamelCase controller and method names. See
-  :ref:`controller-translate-uri-to-camelcase`.
-- **Routing:**
-    - Added option ``$multipleSegmentsOneParam``. When this option is
-      enabled, a placeholder that matches multiple segments, such as ``(:any)``, will
-      be passed directly as it is to one parameter, even if it contains multiple segments.
-      See :ref:`multiple-uri-segments-as-one-parameter` for details.
-    - Now the 404 controller's method that you set in ``$override404`` also receive
-      a ``PageNotFoundException`` message as the first parameter.
-    - Now you can use the ``__invoke()`` method as the default method. See
-      :ref:`routing-default-method`.
+- **Bootstrap:** The ``CodeIgniter\Boot`` class has been introduced, replacing
+  **system/bootstrap.php**.
 - **Autoloader:**
     - Autoloading performance when using Composer has been improved.
       Adding the ``App`` namespace in the ``autoload.psr4`` setting in **composer.json**
@@ -188,8 +198,6 @@ Others
     - ``FileLocatorInterface`` has been added.
 - **CodeIgniter:** Added a pseudo-variable ``{memory_usage}`` to show your memory
   usage in your view files, which was supported by CodeIgniter 3.
-- **CSP:** Added ``ContentSecurityPolicy::clearDirective()`` method to clear
-  existing CSP directives. See :ref:`csp-clear-directives`.
 - **Events:** Added event points ``pre_command`` and ``post_command`` for Spark
   commands. See :ref:`Event Points <event-points-for-cli-apps>`.
 - **HTTP:** Added ``Message::addHeader()`` method to add another header with
@@ -197,11 +205,8 @@ Others
 - **Web Page Caching:** ``ResponseCache`` has been improved to include the request
   HTTP method in the cache key. This means that the same URI will be cached separately
   if the HTTP method is different.
-- **Bootstrap:** The ``CodeIgniter\Boot`` class has been introduced, replacing
-  **system/bootstrap.php**.
-- **Security:** ``Config\Security::$redirect`` is now, by default, environment-specific.
-  For production environment, changed to ``true`` but is still ``false`` for other
-  environments.
+- **CSP:** Added ``ContentSecurityPolicy::clearDirective()`` method to clear
+  existing CSP directives. See :ref:`csp-clear-directives`.
 
 ********
 BREAKING
