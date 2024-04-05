@@ -260,7 +260,7 @@ abstract class BaseResult implements ResultInterface
      * @param         string                           $type The type of result object. 'array', 'object' or class name.
      * @phpstan-param class-string<T>|'array'|'object' $type
      *
-     * @return         array|object|stdClass|null|string
+     * @return         array|float|int|object|stdClass|string|null
      * @phpstan-return ($type is 'object' ? stdClass|null : ($type is 'array' ? array|null : T|null))
      */
     public function getRow($n = 0, string $type = 'object')
