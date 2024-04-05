@@ -233,7 +233,7 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with index data
      *
-     * @return list<stdClass>
+     * @return array<string, stdClass>
      *
      * @throws DatabaseException
      */
@@ -271,7 +271,7 @@ class Connection extends BaseConnection
      * Returns an array of objects with Foreign key data
      * referenced_object_id  parent_object_id
      *
-     * @return list<stdClass>
+     * @return array<string, stdClass>
      *
      * @throws DatabaseException
      */

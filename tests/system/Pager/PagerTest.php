@@ -167,6 +167,10 @@ final class PagerTest extends CIUnitTestCase
             'http://example.com/?foo=bar&page=5',
             $this->pager->only(['foo'])->getPageURI(5)
         );
+        $this->assertSame(
+            'http://example.com/?page=5',
+            $this->pager->only([])->getPageURI(5)
+        );
     }
 
     public function testStoreWithSegments(): void
@@ -182,6 +186,10 @@ final class PagerTest extends CIUnitTestCase
         $this->assertSame(
             'http://example.com/5?foo=bar',
             $this->pager->only(['foo'])->getPageURI(5)
+        );
+        $this->assertSame(
+            'http://example.com/5',
+            $this->pager->only([])->getPageURI(5)
         );
     }
 
