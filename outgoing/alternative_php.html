@@ -296,11 +296,11 @@ braces from your code, and eliminate “echo” statements.</p>
 <section id="alternative-echos">
 <h2>Alternative Echos<a class="headerlink" href="#alternative-echos" title="Permalink to this heading"></a></h2>
 <p>Normally to echo, or print out a variable you would do this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nv">$variable</span><span class="p">;</span> <span class="cp">?&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$variable</span><span class="p">);</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <p>With the alternative syntax you can instead do it this way:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$variable</span> <span class="cp">?&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$variable</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </section>
@@ -312,7 +312,7 @@ a simplified format as well. Here is an example using <code class="docutils lite
 
 <span class="o">&lt;?</span><span class="nx">php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$todo</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
 
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$item</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$item</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
 
 <span class="cp">&lt;?php</span> <span class="k">endforeach</span> <span class="cp">?&gt;</span>
 
