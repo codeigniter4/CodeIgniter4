@@ -378,10 +378,11 @@ Confirming Config Values
 ************************
 
 The actual Config object property values are changed at runtime by the :ref:`registrars`
-and :ref:`Environment Variables <configuration-classes-and-environment-variables>`.
+and :ref:`Environment Variables <configuration-classes-and-environment-variables>`,
+and :ref:`factories-config-caching`.
 
 CodeIgniter has the following :doc:`command <../cli/spark_commands>` to check
-Config values.
+the actual Config values.
 
 .. _spark-config-check:
 
@@ -417,3 +418,9 @@ The output is like the following:
         public 'CSPEnabled' -> boolean false
     )
 
+    Config Caching: Disabled
+
+You can see if Config Caching is eabled or not.
+
+.. note:: If Config Caching is enabled, the cached values are used permanently.
+    See :ref:`factories-config-caching` for details.
