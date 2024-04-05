@@ -13,9 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities;
 
+use CodeIgniter\Cache\FactoriesCache;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\BaseConfig;
+use Config\Optimize;
 use Kint\Kint;
 
 /**
@@ -87,6 +89,14 @@ final class ConfigCheck extends BaseCommand
         /** @var class-string<BaseConfig> $class */
         $class = $params[0];
 
+        // Load Config cache if it is enabled.
+        $configCacheEnabled = class_exists(Optimize::class)
+            && (new Optimize())->configCacheEnabled;
+        if ($configCacheEnabled) {
+            $factoriesCache = new FactoriesCache();
+            $factoriesCache->load('config');
+        }
+
         $config = config($class);
 
         if ($config === null) {
@@ -102,6 +112,10 @@ final class ConfigCheck extends BaseCommand
                 CLI::color($this->getVarDump($config), 'cyan')
             );
         }
+
+        CLI::newLine();
+        $state = CLI::color($configCacheEnabled ? 'Enabled' : 'Disabled', 'green');
+        CLI::write('Config Caching: ' . $state);
 
         return EXIT_SUCCESS;
     }
