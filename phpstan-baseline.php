@@ -262,66 +262,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$afterDelete type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$afterFind type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$afterInsert type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$afterInsertBatch type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$afterUpdate type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$afterUpdateBatch type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$beforeDelete type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$beforeFind type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$beforeInsert type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$beforeInsertBatch type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$beforeUpdate type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$beforeUpdateBatch type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Strict comparison using \\!\\=\\= between mixed and null will always evaluate to true\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
@@ -11117,67 +11057,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterDelete type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterFind type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterInsert type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterInsertBatch type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterUpdate type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterUpdateBatch type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeDelete type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeFind type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeFindReturnData has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeInsert type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeInsertBatch type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeUpdate type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeUpdateBatch type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
 ];
