@@ -1,5 +1,22 @@
 # Changelog
 
+## [v4.4.8](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.8) (2024-04-07)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.7...v4.4.8)
+
+### Fixed Bugs
+
+* fix: [ImageMagickHandler] early terminate processing of invalid library path by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/8680
+* docs: fix PHPDoc types in BaseModel by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8679
+* fix: the error view is determined by Exception code by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8689
+* fix: `Pager::only([])` does not work by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8702
+* refactor: remove unneeded code in SQLite3\Table and fix PHPDoc types in Database by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8703
+* docs: fix return type in BaseResult by @Pebryan354 in https://github.com/codeigniter4/CodeIgniter4/pull/8709
+
+### Refactoring
+
+* refactor: simplify ImageMagickHandler::getVersion() by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/8681
+* refactor: [Rector] Apply ExplicitBoolCompareRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/8704
+
 ## [v4.4.7](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.7) (2024-03-29)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.6...v4.4.7)
 
