@@ -612,6 +612,7 @@ CodeIgniter provisions
 
 - An official authentication and authorization framework
   :ref:`CodeIgniter Shield <shield>`
+- :doc:`PHPUnit testing <../testing/overview>`
 
 API2:2023 Broken Authentication
 ===============================
@@ -648,8 +649,11 @@ OWASP recommendations
 CodeIgniter provisions
 ----------------------
 
+- :doc:`../incoming/filters`
+- :ref:`routing-spark-routes` command
 - An official authentication and authorization framework
   :ref:`CodeIgniter Shield <shield>`
+- :doc:`../libraries/throttler` for rate limit
 
 API3:2023 Broken Object Property Level Authorization
 ====================================================
@@ -748,6 +752,7 @@ provided by one or more components external to the application code.
 CodeIgniter provisions
 ----------------------
 
+- :doc:`../incoming/filters`
 - An official authentication and authorization framework
   :ref:`CodeIgniter Shield <shield>`
 
@@ -873,6 +878,7 @@ CodeIgniter provisions
 - :php:func:`force_https()` function
 - :ref:`Defined Route Routing <defined-route-routing>`
 - :ref:`auto-routing-improved`
+- :doc:`../libraries/cors` filter
 
 API9:2023 Improper Inventory Management
 =======================================
@@ -934,4 +940,5 @@ OWASP recommendations
 CodeIgniter provisions
 ----------------------
 
+- :doc:`CURLRequest <../libraries/curlrequest>` class
 - :doc:`../libraries/validation` library
