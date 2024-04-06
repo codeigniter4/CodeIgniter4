@@ -8,8 +8,8 @@ Upgrade Database
 Documentations
 ==============
 
-- `Database Reference Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/database/index.html>`_
-- :doc:`Working with Databases Documentation CodeIgniter 4.X </database/index>`
+- `Database Reference Documentation CodeIgniter 3.x <http://codeigniter.com/userguide3/database/index.html>`_
+- :doc:`Working with Databases Documentation CodeIgniter 4.x </database/index>`
 
 What has been changed
 =====================

@@ -8,8 +8,8 @@ Upgrade Routing
 Documentations
 ==============
 
-- `URI Routing Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/general/routing.html>`_
-- :doc:`URI Routing Documentation CodeIgniter 4.X </incoming/routing>`
+- `URI Routing Documentation CodeIgniter 3.x <http://codeigniter.com/userguide3/general/routing.html>`_
+- :doc:`URI Routing Documentation CodeIgniter 4.x </incoming/routing>`
 
 What has been changed
 =====================

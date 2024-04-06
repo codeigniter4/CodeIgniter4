@@ -8,8 +8,8 @@ Upgrade Encryption
 Documentations
 **************
 
-- `Encryption Library Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/encryption.html>`_
-- :doc:`Encryption Service Documentation CodeIgniter 4.X </libraries/encryption>`
+- `Encryption Library Documentation CodeIgniter 3.x <http://codeigniter.com/userguide3/libraries/encryption.html>`_
+- :doc:`Encryption Service Documentation CodeIgniter 4.x </libraries/encryption>`
 
 What has been changed
 *********************

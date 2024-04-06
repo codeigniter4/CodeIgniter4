@@ -7,7 +7,7 @@ or using `Composer <https://getcomposer.org>`_.
 Which is right for you?
 
 - We recommend the Composer installation because it keeps CodeIgniter up to date easily.
-- If you would like the simple "download & go" install that CodeIgniter3
+- If you would like the simple "download & go" install that CodeIgniter 3
   is known for, choose the manual installation.
 
 However you choose to install and run CodeIgniter4, the latest
