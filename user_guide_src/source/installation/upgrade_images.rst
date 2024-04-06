@@ -8,8 +8,8 @@ Upgrade Image Manipulation Class
 Documentations
 ==============
 
-- `Image Manipulation Class Documentation CodeIgniter 3.X <https://www.codeigniter.com/userguide3/libraries/image_lib.html>`_
-- :doc:`Image Manipulation Class Documentation CodeIgniter 4.X <../libraries/images>`
+- `Image Manipulation Class Documentation CodeIgniter 3.x <https://www.codeigniter.com/userguide3/libraries/image_lib.html>`_
+- :doc:`Image Manipulation Class Documentation CodeIgniter 4.x <../libraries/images>`
 
 What has been changed
 =====================

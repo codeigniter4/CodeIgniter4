@@ -8,8 +8,8 @@ Upgrade View Parser
 Documentations
 ==============
 
-- `Template Parser Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/parser.html>`_
-- :doc:`View Parser Documentation CodeIgniter 4.X </outgoing/view_parser>`
+- `Template Parser Documentation CodeIgniter 3.x <http://codeigniter.com/userguide3/libraries/parser.html>`_
+- :doc:`View Parser Documentation CodeIgniter 4.x </outgoing/view_parser>`
 
 What has been changed
 =====================

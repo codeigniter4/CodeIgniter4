@@ -8,8 +8,8 @@ Upgrade Sessions
 Documentations
 ==============
 
-- `Session Library Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/sessions.html>`_
-- :doc:`Session Library Documentation CodeIgniter 4.X </libraries/sessions>`
+- `Session Library Documentation CodeIgniter 3.x <http://codeigniter.com/userguide3/libraries/sessions.html>`_
+- :doc:`Session Library Documentation CodeIgniter 4.x </libraries/sessions>`
 
 What has been changed
 =====================

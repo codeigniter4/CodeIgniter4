@@ -7,8 +7,8 @@ Upgrade HTTP Responses
 
 Documentations
 ==============
-- `Output Class Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/output.html>`_
-- :doc:`HTTP Responses Documentation CodeIgniter 4.X </outgoing/response>`
+- `Output Class Documentation CodeIgniter 3.x <http://codeigniter.com/userguide3/libraries/output.html>`_
+- :doc:`HTTP Responses Documentation CodeIgniter 4.x </outgoing/response>`
 
 What has been changed
 =====================
