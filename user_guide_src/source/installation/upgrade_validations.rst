@@ -8,8 +8,8 @@ Upgrade Validations
 Documentations of Library
 =========================
 
-- `Form Validation Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/form_validation.html>`_
-- :doc:`Validation Documentation CodeIgniter 4.X </libraries/validation>`
+- `Form Validation Documentation CodeIgniter 3.x <http://codeigniter.com/userguide3/libraries/form_validation.html>`_
+- :doc:`Validation Documentation CodeIgniter 4.x </libraries/validation>`
 
 What has been changed
 =====================

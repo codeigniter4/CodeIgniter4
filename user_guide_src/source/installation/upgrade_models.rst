@@ -8,8 +8,8 @@ Upgrade Models
 Documentations
 ==============
 
-- `Model Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/general/models.html>`_
-- :doc:`Model Documentation CodeIgniter 4.X </models/model>`
+- `Model Documentation CodeIgniter 3.x <http://codeigniter.com/userguide3/general/models.html>`_
+- :doc:`Model Documentation CodeIgniter 4.x </models/model>`
 
 What has been changed
 =====================

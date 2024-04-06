@@ -8,8 +8,8 @@ Upgrade Configuration
 Documentations
 ==============
 
-- `Config Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/config.html>`_
-- :doc:`Configuration Documentation CodeIgniter 4.X </general/configuration>`
+- `Config Documentation CodeIgniter 3.x <http://codeigniter.com/userguide3/libraries/config.html>`_
+- :doc:`Configuration Documentation CodeIgniter 4.x </general/configuration>`
 
 What has been changed
 =====================
