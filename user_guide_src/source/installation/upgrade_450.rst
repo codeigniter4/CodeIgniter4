@@ -88,7 +88,7 @@ you would get the error response::
         'http_errors' => false,
     ]);
     $response->getStatusCode(); // In previous versions: 200
-                                //     In this verrsion: 405
+                                //      In this version: 405
 
 .. _upgrade-450-nested-route-groups-and-options:
 
