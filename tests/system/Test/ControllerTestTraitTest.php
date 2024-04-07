@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -36,6 +38,15 @@ use Tests\Support\Controllers\Popcorn;
 final class ControllerTestTraitTest extends CIUnitTestCase
 {
     use ControllerTestTrait;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+    }
 
     public function testBadController(): void
     {
@@ -150,7 +161,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('popper');
 
         $req = $result->request();
-        $this->assertSame('get', $req->getMethod());
+        $this->assertSame('GET', $req->getMethod());
     }
 
     public function testFailureResponse(): void
@@ -173,9 +184,9 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->controller(Popcorn::class)
             ->execute('weasel');
 
-        $body = $result->response()->getBody(); // empty
-        $this->assertEmpty($body);
-        $this->assertFalse($result->isOK());
+        $body = $result->response()->getBody(); // empty string as JSON
+        $this->assertSame('""', $body);
+        $this->assertTrue($result->isOK());
     }
 
     public function testRedirect(): void
@@ -248,7 +259,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
     public function testUsesRequestBody(): void
     {
         $this->controller = new class () extends Controller {
-            public function throwsBody(): void
+            public function throwsBody(): never
             {
                 throw new Exception($this->request->getBody());
             }

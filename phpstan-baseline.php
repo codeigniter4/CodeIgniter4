@@ -2,12 +2,17 @@
 
 $ignoreErrors = [];
 $ignoreErrors[] = [
-	'message' => '#^Call to function method_exists\\(\\) with \'Composer\\\\\\\\InstalledVersions\' and \'getAllRawData\' will always evaluate to true\\.$#',
+	'message' => '#^PHPDoc type array\\<string, array\\<int, string\\>\\> of property Config\\\\Filters\\:\\:\\$methods is not the same as PHPDoc type array of overridden property CodeIgniter\\\\Config\\\\Filters\\:\\:\\$methods\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
+	'path' => __DIR__ . '/app/Config/Filters.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\Autoloader\\:\\:getNamespace\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'message' => '#^PHPDoc type array\\<string, array\\<string, array\\<int, string\\>\\>\\> of property Config\\\\Filters\\:\\:\\$filters is not the same as PHPDoc type array of overridden property CodeIgniter\\\\Config\\\\Filters\\:\\:\\$filters\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/app/Config/Filters.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to function method_exists\\(\\) with \'Composer\\\\\\\\InstalledVersions\' and \'getAllRawData\' will always evaluate to true\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
 ];
@@ -22,11 +27,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\FileLocator\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\|string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
@@ -35,6 +35,21 @@ $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 6,
 	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\FileLocatorCached\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Autoloader/FileLocatorCached.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Autoloader\\\\FileLocatorCached\\:\\:\\$cache type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Autoloader/FileLocatorCached.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Autoloader/FileLocatorInterface.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:__call\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
@@ -58,6 +73,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:cleanValidationRules\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/BaseModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:convertToReturnType\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
@@ -127,21 +147,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:fillPlaceholders\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:fillPlaceholders\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:fillPlaceholders\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:find\\(\\) has parameter \\$id with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
@@ -178,16 +183,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:getValidationRules\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:idValue\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:idValue\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
@@ -322,11 +317,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/CLI/CLI.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLI\\:\\:prompt\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLI\\:\\:prompt\\(\\) has parameter \\$validation with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/CLI/CLI.php',
@@ -368,11 +358,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLI\\:\\:validate\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, array given on the right side\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/CLI/CLI.php',
 ];
@@ -752,27 +737,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Encryption/GenerateKey.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\CellGenerator\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\CellGenerator\\:\\:generateClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\CellGenerator\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\CellGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
 ];
@@ -802,34 +772,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\CellGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/CommandGenerator.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\CommandGenerator\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
@@ -837,17 +782,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/CommandGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\CommandGenerator\\:\\:generateClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/CommandGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\CommandGenerator\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/CommandGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\CommandGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/CommandGenerator.php',
 ];
@@ -877,34 +812,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/CommandGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/CommandGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/CommandGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/CommandGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\CommandGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/CommandGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/CommandGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ConfigGenerator\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
@@ -912,17 +822,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ConfigGenerator\\:\\:generateClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ConfigGenerator\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ConfigGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
 ];
@@ -952,34 +852,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\ConfigGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ControllerGenerator\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
@@ -987,17 +862,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ControllerGenerator\\:\\:generateClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ControllerGenerator\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ControllerGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
 ];
@@ -1027,54 +892,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an elseif condition, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in \\|\\|, mixed given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in \\|\\|, mixed given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\ControllerGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\EntityGenerator\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
@@ -1082,17 +902,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\EntityGenerator\\:\\:generateClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\EntityGenerator\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\EntityGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
 ];
@@ -1122,34 +932,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\EntityGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/FilterGenerator.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\FilterGenerator\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
@@ -1157,17 +942,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/FilterGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\FilterGenerator\\:\\:generateClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/FilterGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\FilterGenerator\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/FilterGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\FilterGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/FilterGenerator.php',
 ];
@@ -1197,34 +972,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/FilterGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/FilterGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/FilterGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/FilterGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\FilterGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/FilterGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/FilterGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\MigrationGenerator\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
@@ -1232,17 +982,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\MigrationGenerator\\:\\:generateClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\MigrationGenerator\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\MigrationGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
 ];
@@ -1272,39 +1012,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\MigrationGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ModelGenerator\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
@@ -1312,17 +1022,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ModelGenerator\\:\\:generateClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ModelGenerator\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ModelGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
 ];
@@ -1352,39 +1052,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\ModelGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ScaffoldGenerator\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
@@ -1392,17 +1062,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ScaffoldGenerator\\:\\:generateClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ScaffoldGenerator\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ScaffoldGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
 ];
@@ -1432,44 +1092,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an elseif condition, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, mixed given\\.$#',
-	'count' => 4,
-	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\ScaffoldGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/SeederGenerator.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\SeederGenerator\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
@@ -1477,17 +1102,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/SeederGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\SeederGenerator\\:\\:generateClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SeederGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\SeederGenerator\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SeederGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\SeederGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/SeederGenerator.php',
 ];
@@ -1517,109 +1132,49 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/SeederGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SeederGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SeederGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SeederGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\SeederGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/SeederGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/SeederGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\SessionMigrationGenerator\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\TestGenerator\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
+	'path' => __DIR__ . '/system/Commands/Generators/TestGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\SessionMigrationGenerator\\:\\:generateClass\\(\\) has no return type specified\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\TestGenerator\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
+	'path' => __DIR__ . '/system/Commands/Generators/TestGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\SessionMigrationGenerator\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\TestGenerator\\:\\:generateView\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
+	'path' => __DIR__ . '/system/Commands/Generators/TestGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\SessionMigrationGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\TestGenerator\\:\\:parseTemplate\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
+	'path' => __DIR__ . '/system/Commands/Generators/TestGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\SessionMigrationGenerator\\:\\:generateView\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\TestGenerator\\:\\:parseTemplate\\(\\) has parameter \\$replace with no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
+	'path' => __DIR__ . '/system/Commands/Generators/TestGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\SessionMigrationGenerator\\:\\:parseTemplate\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\TestGenerator\\:\\:parseTemplate\\(\\) has parameter \\$search with no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
+	'path' => __DIR__ . '/system/Commands/Generators/TestGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\SessionMigrationGenerator\\:\\:parseTemplate\\(\\) has parameter \\$replace with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\TestGenerator\\:\\:renderTemplate\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
+	'path' => __DIR__ . '/system/Commands/Generators/TestGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\SessionMigrationGenerator\\:\\:parseTemplate\\(\\) has parameter \\$search with no value type specified in iterable type array\\.$#',
+	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\TestGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\SessionMigrationGenerator\\:\\:renderTemplate\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\SessionMigrationGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
+	'path' => __DIR__ . '/system/Commands/Generators/TestGenerator.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ValidationGenerator\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
@@ -1627,17 +1182,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ValidationGenerator\\:\\:generateClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ValidationGenerator\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ValidationGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
 ];
@@ -1667,28 +1212,8 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\ValidationGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
 ];
 $ignoreErrors[] = [
@@ -1717,9 +1242,49 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Server/Serve.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Translation\\\\LocalizationFinder\\:\\:arrayToTableRows\\(\\) has parameter \\$array with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Translation/LocalizationFinder.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Translation\\\\LocalizationFinder\\:\\:arrayToTableRows\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Translation/LocalizationFinder.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Translation\\\\LocalizationFinder\\:\\:buildMultiArray\\(\\) has parameter \\$fromKeys with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Translation/LocalizationFinder.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Translation\\\\LocalizationFinder\\:\\:buildMultiArray\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Translation/LocalizationFinder.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Translation\\\\LocalizationFinder\\:\\:findTranslationsInFile\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Translation/LocalizationFinder.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Translation\\\\LocalizationFinder\\:\\:templateFile\\(\\) has parameter \\$language with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Translation/LocalizationFinder.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Accessing offset \'CI_ENVIRONMENT\' directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 3,
 	'path' => __DIR__ . '/system/Commands/Utilities/Environment.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\FilterCheck\\:\\:addRequiredFilters\\(\\) has parameter \\$filters with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Utilities/FilterCheck.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\FilterCheck\\:\\:addRequiredFilters\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Utilities/FilterCheck.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Namespaces\\:\\:outputAllNamespaces\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
@@ -1777,11 +1342,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\AutoRouteCollector\\:\\:__construct\\(\\) has parameter \\$protectedControllers with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\AutoRouteCollector\\:\\:addFilters\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php',
@@ -1795,16 +1355,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\AutoRouteCollector\\:\\:generateSampleUri\\(\\) has parameter \\$route with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\AutoRouteCollector\\:\\:\\$httpMethods type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\ControllerMethodReader\\:\\:__construct\\(\\) has parameter \\$httpMethods with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/ControllerMethodReader.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\ControllerMethodReader\\:\\:getParameters\\(\\) return type has no value type specified in iterable type array\\.$#',
@@ -1993,7 +1543,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
+	'count' => 2,
 	'path' => __DIR__ . '/system/Config/BaseService.php',
 ];
 $ignoreErrors[] = [
@@ -2002,27 +1552,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Config/BaseService.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\BaseService\\:\\:discoverServices\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/BaseService.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Config\\\\BaseService\\:\\:getSharedInstance\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/BaseService.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/BaseService.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Config\\\\BaseService\\:\\:\\$instances type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/BaseService.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Config\\\\BaseService\\:\\:\\$mocks type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/BaseService.php',
 ];
@@ -2107,11 +1637,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Config/Factories.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, string given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Factories.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/Factories.php',
@@ -2130,6 +1655,16 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Config\\\\Factory\\:\\:\\$models type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/Factory.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Config\\\\Filters\\:\\:\\$filters type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/Filters.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Config\\\\Filters\\:\\:\\$methods type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/Filters.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Accessing offset \'SERVER_PROTOCOL\' directly on \\$_SERVER is discouraged\\.$#',
@@ -2235,6 +1770,31 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Cookie\\\\CookieStore\\:\\:validateCookies\\(\\) has parameter \\$cookies with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Cookie/CookieStore.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataCaster\\\\Cast\\\\ArrayCast\\:\\:get\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/DataCaster/Cast/ArrayCast.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataCaster\\\\Cast\\\\CSVCast\\:\\:get\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/DataCaster/Cast/CSVCast.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataCaster\\\\Cast\\\\JsonCast\\:\\:get\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/DataCaster/Cast/JsonCast.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverter\\:\\:fromDataSource\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/DataConverter/DataConverter.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverter\\:\\:toDataSource\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/DataConverter/DataConverter.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -3433,7 +2993,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, max\\> given\\.$#',
-	'count' => 4,
+	'count' => 3,
 	'path' => __DIR__ . '/system/Database/MigrationRunner.php',
 ];
 $ignoreErrors[] = [
@@ -3450,16 +3010,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Database\\\\MigrationRunner\\:\\:\\$cliMessages type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/MigrationRunner.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactory\\:\\:injectMock\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/ModelFactory.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactory\\:\\:reset\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/ModelFactory.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Database\\\\MySQLi\\\\Builder\\:\\:\\$supportedIgnoreStatements type has no value type specified in iterable type array\\.$#',
@@ -3498,7 +3048,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 6,
+	'count' => 4,
 	'path' => __DIR__ . '/system/Database/MySQLi/Forge.php',
 ];
 $ignoreErrors[] = [
@@ -5418,7 +4968,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
+	'count' => 1,
 	'path' => __DIR__ . '/system/Entity/Entity.php',
 ];
 $ignoreErrors[] = [
@@ -5548,11 +5098,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Expression on left side of \\?\\? is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/Filters.php',
 ];
@@ -5582,12 +5127,32 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Filters/Filters.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:getRequiredFilters\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Filters/Filters.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:pathApplies\\(\\) has parameter \\$paths with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/Filters.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:registerArguments\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Filters/Filters.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:runAfter\\(\\) has parameter \\$filterClasses with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Filters/Filters.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:runBefore\\(\\) has parameter \\$filterClasses with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Filters/Filters.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:setToolbarToLast\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/Filters.php',
 ];
@@ -5605,6 +5170,16 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Filters\\\\Filters\\:\\:\\$filtersClass type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/Filters.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\ForceHTTPS\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Filters/ForceHTTPS.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\ForceHTTPS\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Filters/ForceHTTPS.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Filters\\\\InvalidChars\\:\\:checkControl\\(\\) has parameter \\$value with no value type specified in iterable type array\\.$#',
@@ -5625,6 +5200,26 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Filters\\\\InvalidChars\\:\\:checkEncoding\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/InvalidChars.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\PageCache\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Filters/PageCache.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\PageCache\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Filters/PageCache.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\PerformanceMetrics\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Filters/PerformanceMetrics.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Filters\\\\PerformanceMetrics\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Filters/PerformanceMetrics.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Format\\\\FormatterInterface\\:\\:format\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
@@ -6437,11 +6032,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/Message.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Message\\:\\:header\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Message.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Message\\:\\:setHeader\\(\\) has parameter \\$value with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/Message.php',
@@ -6460,11 +6050,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\HTTP\\\\Message\\:\\:\\$validProtocolVersions type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/Message.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\MessageInterface\\:\\:header\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/MessageInterface.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\HTTP\\\\MessageInterface\\:\\:setHeader\\(\\) has parameter \\$value with no value type specified in iterable type array\\.$#',
@@ -6702,11 +6287,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/Response.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\HTTP\\\\Response\\:\\:\\$cookies type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Response.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\HTTP\\\\Response\\:\\:\\$statusCodes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/Response.php',
@@ -6877,39 +6457,89 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/UserAgent.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Function _array_attach_indexed_value\\(\\) has parameter \\$indexes with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:arrayAttachIndexedValue\\(\\) has parameter \\$indexes with no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/array_helper.php',
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Function _array_attach_indexed_value\\(\\) has parameter \\$result with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:arrayAttachIndexedValue\\(\\) has parameter \\$result with no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/array_helper.php',
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Function _array_attach_indexed_value\\(\\) has parameter \\$row with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:arrayAttachIndexedValue\\(\\) has parameter \\$row with no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/array_helper.php',
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Function _array_attach_indexed_value\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:arrayAttachIndexedValue\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/array_helper.php',
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Function _array_search_dot\\(\\) has parameter \\$array with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:arraySearchDot\\(\\) has parameter \\$array with no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/array_helper.php',
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Function _array_search_dot\\(\\) has parameter \\$indexes with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:arraySearchDot\\(\\) has parameter \\$indexes with no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/array_helper.php',
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Function _array_search_dot\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:arraySearchDot\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/array_helper.php',
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:dotKeyExists\\(\\) has parameter \\$array with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:dotSearch\\(\\) has parameter \\$array with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:dotSearch\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:groupBy\\(\\) has parameter \\$array with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:groupBy\\(\\) has parameter \\$indexes with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:groupBy\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:recursiveCount\\(\\) has parameter \\$array with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:recursiveDiff\\(\\) has parameter \\$compareWith with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:recursiveDiff\\(\\) has parameter \\$original with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelper\\:\\:recursiveDiff\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/Array/ArrayHelper.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Function array_deep_search\\(\\) has parameter \\$array with no value type specified in iterable type array\\.$#',
@@ -7727,11 +7357,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Model.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Model\\:\\:classToArray\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Model.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Model\\:\\:doDelete\\(\\) has parameter \\$id with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Model.php',
@@ -7763,16 +7388,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Model\\:\\:getIdValue\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Model.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Model\\:\\:idValue\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Model.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Model\\:\\:idValue\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Model.php',
 ];
@@ -7932,11 +7547,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/RESTful/ResourceController.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouter\\:\\:__construct\\(\\) has parameter \\$cliRoutes with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/AutoRouter.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouter\\:\\:getRoute\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/AutoRouter.php',
@@ -7977,7 +7587,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Router/AutoRouterImproved.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, Config\\\\Routing given on the right side\\.$#',
+	'message' => '#^Property CodeIgniter\\\\Router\\\\AutoRouterImproved\\:\\:\\$moduleRoutes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/AutoRouterImproved.php',
 ];
@@ -8197,11 +7807,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Router/RouteCollection.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Router\\\\RouteCollection\\:\\:\\$defaultHTTPMethods type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/RouteCollection.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Router\\\\RouteCollection\\:\\:\\$routeFiles type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/RouteCollection.php',
@@ -8257,11 +7862,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Router/Router.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getFilterForRoute\\(\\)\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/Router.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getFiltersForRoute\\(\\)\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/Router.php',
@@ -8288,7 +7888,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
+	'count' => 2,
 	'path' => __DIR__ . '/system/Router/Router.php',
 ];
 $ignoreErrors[] = [
@@ -8313,6 +7913,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\Router\\:\\:params\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Router/Router.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\Router\\:\\:replaceBackReferences\\(\\) has parameter \\$matches with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/Router.php',
 ];
@@ -8365,6 +7970,41 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\RouterInterface\\:\\:params\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/RouterInterface.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Security\\\\CheckPhpIni\\:\\:checkIni\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Security/CheckPhpIni.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Security\\\\CheckPhpIni\\:\\:outputForCli\\(\\) has parameter \\$output with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Security/CheckPhpIni.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Security\\\\CheckPhpIni\\:\\:outputForCli\\(\\) has parameter \\$tbody with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Security/CheckPhpIni.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Security\\\\CheckPhpIni\\:\\:outputForCli\\(\\) has parameter \\$thead with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Security/CheckPhpIni.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Security\\\\CheckPhpIni\\:\\:outputForWeb\\(\\) has parameter \\$output with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Security/CheckPhpIni.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Security\\\\CheckPhpIni\\:\\:outputForWeb\\(\\) has parameter \\$tbody with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Security/CheckPhpIni.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Security\\\\CheckPhpIni\\:\\:outputForWeb\\(\\) has parameter \\$thead with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Security/CheckPhpIni.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Session\\\\Exceptions\\\\SessionException\\:\\:forEmptySavepath\\(\\) has no return type specified\\.$#',
@@ -8458,12 +8098,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 4,
-	'path' => __DIR__ . '/system/Session/Handlers/RedisHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, string given on the right side\\.$#',
-	'count' => 1,
+	'count' => 2,
 	'path' => __DIR__ . '/system/Session/Handlers/RedisHandler.php',
 ];
 $ignoreErrors[] = [
@@ -9012,96 +8647,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/Fabricator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Assigning \'test\' directly on offset \'HTTPS\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Assigning string directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:call\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:delete\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:get\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:options\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:patch\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:populateGlobals\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:post\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:put\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:setRequestBody\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:withHeaders\\(\\) has parameter \\$headers with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:withRoutes\\(\\) has parameter \\$routes with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:withSession\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, CodeIgniter\\\\Router\\\\RouteCollection\\|null given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$bodyFormat \\(string\\) in isset\\(\\) is not nullable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$clean \\(bool\\) in isset\\(\\) is not nullable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$session \\(array\\) on left side of \\?\\? is not nullable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Interfaces\\\\FabricatorModel\\:\\:find\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Interfaces/FabricatorModel.php',
@@ -9192,11 +8737,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Test\\\\Mock\\\\MockConnection\\:\\:\\$returnValues has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Return type \\(array\\{code\\: int\\|string\\|null, message\\: string\\|null\\}\\) of method CodeIgniter\\\\Test\\\\Mock\\\\MockConnection\\:\\:error\\(\\) should be covariant with return type \\(array\\<string, int\\|string\\>\\) of method CodeIgniter\\\\Database\\\\ConnectionInterface\\<object\\|resource,object\\|resource\\>\\:\\:error\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
@@ -9255,6 +8795,11 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Test\\\\Mock\\\\MockFileLogger\\:\\:\\$destination has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Mock/MockFileLogger.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockInputOutput\\:\\:getOutputs\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Test/Mock/MockInputOutput.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockLanguage\\:\\:disableIntlSupport\\(\\) has no return type specified\\.$#',
@@ -9377,11 +8922,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/Mock/MockResult.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Test\\\\Mock\\\\MockSecurityConfig\\:\\:\\$excludeURIs has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockSecurityConfig.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Test\\\\Mock\\\\MockServices\\:\\:\\$classmap has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Mock/MockServices.php',
@@ -9452,122 +8992,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/PhpStreamWrapper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:__call\\(\\) should return mixed but return statement is missing\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertCookie\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertCookieExpired\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertCookieMissing\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertDontSee\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertDontSeeElement\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertHeader\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertHeaderMissing\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertJSONExact\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertJSONExact\\(\\) has parameter \\$test with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/TestResponse.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertJSONFragment\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertJSONFragment\\(\\) has parameter \\$fragment with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertNotOK\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertNotRedirect\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertOK\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertRedirect\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertRedirectTo\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertSee\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertSeeElement\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertSeeInField\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertSeeLink\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertSessionHas\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertSessionMissing\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertStatus\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/TestResponse.php',
 ];
@@ -9628,6 +9058,16 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Validation\\\\Rules\\:\\:differs\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Validation/Rules.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\Rules\\:\\:field_exists\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Validation/Rules.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\Rules\\:\\:field_exists\\(\\) has parameter \\$value with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Validation/Rules.php',
 ];
@@ -9798,6 +9238,16 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\Rules\\:\\:exact_length\\(\\) has parameter \\$str with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Validation/StrictRules/Rules.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\Rules\\:\\:field_exists\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Validation/StrictRules/Rules.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\StrictRules\\\\Rules\\:\\:field_exists\\(\\) has parameter \\$value with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Validation/StrictRules/Rules.php',
 ];
@@ -10017,6 +9467,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Validation/Validation.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\Validation\\:\\:run\\(\\) has parameter \\$dbGroup with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Validation/Validation.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Validation\\\\Validation\\:\\:setRule\\(\\) has parameter \\$errors with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Validation/Validation.php',
@@ -10108,6 +9563,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationInterface\\:\\:run\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Validation/ValidationInterface.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationInterface\\:\\:run\\(\\) has parameter \\$dbGroup with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Validation/ValidationInterface.php',
 ];
@@ -10207,7 +9667,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/View/Cells/Cell.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/system/Traits/PropertiesTrait\\.php\\:47\\:\\:getProperties\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/system/Traits/PropertiesTrait\\.php\\:49\\:\\:getProperties\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/Cells/Cell.php',
 ];
@@ -10477,11 +9937,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/View/View.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method Tests\\\\Support\\\\Autoloader\\\\FatalLocator\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Autoloader/FatalLocator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Tests\\\\Support\\\\Cells\\\\StarterCell\\:\\:hello\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Cells/StarterCell.php',
@@ -10492,27 +9947,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/_support/Cells/StarterCell.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\LanguageCommand\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\LanguageCommand\\:\\:generateClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\LanguageCommand\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\LanguageCommand\\:\\:generateView\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
 ];
@@ -10542,28 +9982,13 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property Tests\\\\Support\\\\Commands\\\\LanguageCommand\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 3,
+	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
 ];
 $ignoreErrors[] = [
@@ -10572,27 +9997,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/_support/Commands/ParamsReveal.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\Unsuffixable\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\Unsuffixable\\:\\:generateClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\Unsuffixable\\:\\:generateClass\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Tests\\\\Support\\\\Commands\\\\Unsuffixable\\:\\:generateView\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
 ];
@@ -10622,28 +10032,8 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property Tests\\\\Support\\\\Commands\\\\Unsuffixable\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
 ];
 $ignoreErrors[] = [
@@ -10897,6 +10287,26 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/_support/Entity/Cast/CastPassParameters.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Entity\\\\CustomUser\\:\\:__construct\\(\\) has parameter \\$email with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/CustomUser.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Entity\\\\CustomUser\\:\\:__get\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/CustomUser.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Entity\\\\CustomUser\\:\\:reconstruct\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/CustomUser.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Unsafe usage of new static\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Entity/CustomUser.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Property Tests\\\\Support\\\\Entity\\\\User\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Entity/User.php',
@@ -11102,6 +10512,26 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/_support/Models/UserModel.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Services\\\\Translation\\\\Nested\\\\TranslationFour\\:\\:list\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Services/Translation/TranslationNested/TranslationFour.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Services\\\\Translation\\\\TranslationOne\\:\\:list\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Services/Translation/TranslationOne.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Services\\\\Translation\\\\TranslationThree\\:\\:list\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Services/Translation/TranslationThree.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method Tests\\\\Support\\\\Services\\\\Translation\\\\TranslationTwo\\:\\:list\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/Services/Translation/TranslationTwo.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Property Tests\\\\Support\\\\SomeEntity\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/SomeEntity.php',
@@ -11297,7 +10727,22 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/_support/View/Views/simple.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method App\\\\Controllers\\\\Mycontroller\\:\\:getSomemethod\\(\\) has parameter \\$first with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/_controller/Mycontroller.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method App\\\\Controllers\\\\foo\\\\bar\\\\baz\\\\Some_controller\\:\\:some_method\\(\\) has parameter \\$first with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/_support/_controller/foo/bar/baz/Some_controller.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Assigning mixed directly on offset \'CONTENT_TYPE\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\API\\\\ResponseTraitTest\\:\\:createRequestAndResponse\\(\\) has parameter \\$userHeaders with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
@@ -11317,11 +10762,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\API\\\\ResponseTraitTest\\:\\:makeController\\(\\) has parameter \\$userConfig with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\API\\\\ResponseTraitTest\\:\\:makeController\\(\\) has parameter \\$userHeaders with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
@@ -11337,112 +10777,237 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:__construct\\(\\) has parameter \\$request with no type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:116\\:\\:__construct\\(\\) has parameter \\$formatter with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:__construct\\(\\) has parameter \\$response with no type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:116\\:\\:__construct\\(\\) has parameter \\$request with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:fail\\(\\) has parameter \\$messages with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:116\\:\\:__construct\\(\\) has parameter \\$response with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:format\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:116\\:\\:fail\\(\\) has parameter \\$messages with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:respond\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:116\\:\\:format\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:respondCreated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:116\\:\\:respond\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:respondDeleted\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:116\\:\\:respondCreated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:respondUpdated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:116\\:\\:respondDeleted\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:__construct\\(\\) has parameter \\$formatter with no type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:116\\:\\:respondUpdated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:__construct\\(\\) has parameter \\$request with no type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:177\\:\\:__construct\\(\\) has parameter \\$formatter with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:__construct\\(\\) has parameter \\$response with no type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:177\\:\\:__construct\\(\\) has parameter \\$request with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:fail\\(\\) has parameter \\$messages with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:177\\:\\:__construct\\(\\) has parameter \\$response with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:format\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:177\\:\\:fail\\(\\) has parameter \\$messages with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:respond\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:177\\:\\:format\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:respondCreated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:177\\:\\:respond\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:respondDeleted\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:177\\:\\:respondCreated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:respondUpdated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:177\\:\\:respondDeleted\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:\\$request has no type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:177\\:\\:respondUpdated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:561\\:\\:\\$response has no type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:299\\:\\:__construct\\(\\) has parameter \\$formatter with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:\\$formatter has no type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:299\\:\\:__construct\\(\\) has parameter \\$request with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:299\\:\\:__construct\\(\\) has parameter \\$response with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:299\\:\\:fail\\(\\) has parameter \\$messages with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:299\\:\\:format\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:299\\:\\:respond\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:299\\:\\:respondCreated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:299\\:\\:respondDeleted\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:299\\:\\:respondUpdated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:__construct\\(\\) has parameter \\$request with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:__construct\\(\\) has parameter \\$response with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:fail\\(\\) has parameter \\$messages with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:format\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:respond\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:respondCreated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:respondDeleted\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:respondUpdated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:116\\:\\:\\$formatter has no type specified\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:\\$request has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:116\\:\\:\\$request has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:94\\:\\:\\$response has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:116\\:\\:\\$response has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:177\\:\\:\\$formatter has no type specified\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:177\\:\\:\\$request has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:177\\:\\:\\$response has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:299\\:\\:\\$formatter has no type specified\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:299\\:\\:\\$request has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:299\\:\\:\\$response has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:\\$format \\(\'html\'\\|\'json\'\\|\'xml\'\\|null\\) does not accept \'txt\'\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:\\$request has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:\\$response has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
@@ -11510,6 +11075,21 @@ $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/tests/system/Autoloader/AutoloaderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\:\\:__destruct\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Autoloader/FileLocatorCachedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Call to an undefined method CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\:\\:deleteCache\\(\\)\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Autoloader/FileLocatorCachedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\FileLocatorCachedTest\\:\\:testDeleteCache\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Autoloader/FileLocatorCachedTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Assigning 3 directly on offset \'argc\' of \\$_SERVER is discouraged\\.$#',
@@ -11617,26 +11197,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Cache/FactoriesCacheFileVarExportHandlerTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\AbstractHandlerTest\\:\\:\\$dummy has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/Handlers/AbstractHandlerTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\AbstractHandlerTest\\:\\:\\$key1 has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/Handlers/AbstractHandlerTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\AbstractHandlerTest\\:\\:\\$key2 has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/Handlers/AbstractHandlerTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\AbstractHandlerTest\\:\\:\\$key3 has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/Handlers/AbstractHandlerTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\BaseHandlerTest\\:\\:provideValidateKeyInvalidType\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Cache/Handlers/BaseHandlerTest.php',
@@ -11742,6 +11302,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:testCachePageIncomingRequestWithHttpMethods\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:testInvalidCacheError\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
@@ -11762,6 +11327,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Assigning \'/cannotFound\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Assigning \'/cli\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
@@ -11778,12 +11348,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Assigning \'/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 18,
+	'count' => 20,
 	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Assigning \'/pages/about\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 7,
+	'count' => 8,
 	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
 ];
 $ignoreErrors[] = [
@@ -11798,7 +11368,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Assigning \'GET\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 3,
+	'count' => 4,
 	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
 ];
 $ignoreErrors[] = [
@@ -11828,17 +11398,17 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Assigning 1 directly on offset \'argc\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 4,
+	'count' => 5,
 	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Assigning 2 directly on offset \'argc\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 28,
+	'count' => 27,
 	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Assigning array\\{\'index\\.php\', \'/\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 13,
+	'count' => 12,
 	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
 ];
 $ignoreErrors[] = [
@@ -11863,7 +11433,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Assigning array\\{\'index\\.php\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 4,
+	'count' => 5,
 	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
 ];
 $ignoreErrors[] = [
@@ -11930,16 +11500,6 @@ $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Commands/CellGeneratorTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$search of function str_replace expects array\\|string, int given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Commands/ClearDebugbarTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#2 \\$replace of function str_replace expects array\\|string, int given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Commands/ClearDebugbarTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
@@ -12032,6 +11592,36 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Commands/ScaffoldGeneratorTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Translation\\\\LocalizationFinderTest\\:\\:getActualTranslationFourKeys\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Translation/LocalizationFinderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Translation\\\\LocalizationFinderTest\\:\\:getActualTranslationOneKeys\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Translation/LocalizationFinderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Translation\\\\LocalizationFinderTest\\:\\:getActualTranslationThreeKeys\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Translation/LocalizationFinderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\ConfigCheckTest\\:\\:getBuffer\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Utilities/ConfigCheckTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\ConfigCheckTest\\:\\:testGetKintD\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Utilities/ConfigCheckTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\ConfigCheckTest\\:\\:testGetVarDump\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Utilities/ConfigCheckTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\NamespacesTest\\:\\:getBuffer\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Commands/Utilities/NamespacesTest.php',
@@ -12057,6 +11647,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/AutoRouterImproved/Controllers/Dash_folder/Dash_controller.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\Controllers\\\\SubDir\\\\BlogController\\:\\:getSomeMethod\\(\\) has parameter \\$first with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/AutoRouterImproved/Controllers/SubDir/BlogController.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\FilterFinderTest\\:\\:createFilters\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/FilterFinderTest.php',
@@ -12068,6 +11663,16 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\FilterFinderTest\\:\\:createRouteCollection\\(\\) should return CodeIgniter\\\\Router\\\\RouteCollection but returns CodeIgniter\\\\Router\\\\RouteCollectionInterface\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/FilterFinderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\FilterFinderTest\\:\\:testFilterOrder\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/FilterFinderTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\FilterFinderTest\\:\\:testFilterOrderWithOldFilterOrder\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/FilterFinderTest.php',
 ];
@@ -12084,16 +11689,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Accessing offset \'foo\' directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/tests/system/CommonFunctionsSendTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#2 \\$value of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int\\<1, max\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/CommonFunctionsSendTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#3 \\$expire of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int given\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/tests/system/CommonFunctionsSendTest.php',
 ];
 $ignoreErrors[] = [
@@ -12152,16 +11747,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#2 \\$value of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int\\<1, max\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#3 \\$expire of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int given\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
 	'count' => 3,
 	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
@@ -12214,11 +11799,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\CommonSingleServiceTest\\:\\:provideServiceNames\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/tests/system/CommonSingleServiceTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$expected of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) expects class\\-string\\<object\\>, false given\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/tests/system/CommonSingleServiceTest.php',
 ];
 $ignoreErrors[] = [
@@ -12332,6 +11912,21 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testGetCreatesConfigInstanceAndFactoriesConfigReturnsIt\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testGetNonexistentClass\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testGetReturnsFactoriesConfigInstance\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testIsUpdated\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
@@ -12372,7 +11967,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Config/FactoriesTest\\.php\\:86\\:\\:\\$widgets has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Config/FactoriesTest\\.php\\:88\\:\\:\\$widgets has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
 ];
@@ -12557,17 +12152,17 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/ControllerTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/ControllerTest\\.php\\:126\\:\\:\\$signup has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/ControllerTest\\.php\\:128\\:\\:\\$signup has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/ControllerTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/ControllerTest\\.php\\:126\\:\\:\\$signup_errors has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/ControllerTest\\.php\\:128\\:\\:\\$signup_errors has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/ControllerTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/ControllerTest\\.php\\:149\\:\\:\\$signup has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/ControllerTest\\.php\\:151\\:\\:\\$signup has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/ControllerTest.php',
 ];
@@ -12617,17 +12212,97 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Cookie/CookieTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Implicit array creation is not allowed \\- variable \\$array does not exist\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:createDataConverter\\(\\) has parameter \\$extractor with no signature specified for Closure\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:createDataConverter\\(\\) has parameter \\$handlers with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:createDataConverter\\(\\) has parameter \\$reconstructor with no signature specified for Closure\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:createDataConverter\\(\\) has parameter \\$types with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:provideConvertDataFromDB\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:provideConvertDataToDB\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:testConvertDataFromDB\\(\\) has parameter \\$dbData with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:testConvertDataFromDB\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:testConvertDataFromDB\\(\\) has parameter \\$types with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:testConvertDataToDB\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:testConvertDataToDB\\(\\) has parameter \\$phpData with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:testConvertDataToDB\\(\\) has parameter \\$types with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:testExtract\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:testExtractWithClosure\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:testExtractWithExtractMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:testReconstructObjectWithClosure\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:testReconstructObjectWithReconstructMethod\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Access to an undefined property CodeIgniter\\\\Test\\\\Mock\\\\MockConnection\\:\\:\\$foobar\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/BaseConnectionTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Access to protected property CodeIgniter\\\\Test\\\\Mock\\\\MockConnection\\:\\:\\$username\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/BaseConnectionTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Access to protected property class@anonymous/tests/system/Database/BaseConnectionTest\\.php\\:107\\:\\:\\$username\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/BaseConnectionTest.php',
 ];
@@ -12643,11 +12318,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Database\\\\BaseConnectionTest\\:\\:\\$options type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/BaseConnectionTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Database/BaseConnectionTest\\.php\\:107\\:\\:\\$returnValues has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/BaseConnectionTest.php',
 ];
@@ -12673,7 +12343,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, CodeIgniter\\\\Database\\\\ResultInterface\\|false given\\.$#',
-	'count' => 3,
+	'count' => 6,
 	'path' => __DIR__ . '/tests/system/Database/Builder/GetTest.php',
 ];
 $ignoreErrors[] = [
@@ -12772,31 +12442,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Database/DatabaseTestCaseTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AbstractGetFieldDataTest\\:\\:assertSameFieldData\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/Live/AbstractGetFieldDataTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AbstractGetFieldDataTest\\:\\:assertSameFieldData\\(\\) has parameter \\$actual with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/Live/AbstractGetFieldDataTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AbstractGetFieldDataTest\\:\\:assertSameFieldData\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/Live/AbstractGetFieldDataTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AbstractGetFieldDataTest\\:\\:createTableForDefault\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/Live/AbstractGetFieldDataTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\AbstractGetFieldDataTest\\:\\:createTableForType\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/Live/AbstractGetFieldDataTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\ConnectTest\\:\\:\\$group1 has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
@@ -12847,37 +12492,37 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:232\\:\\:\\$country has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:256\\:\\:\\$country has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:232\\:\\:\\$created_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:256\\:\\:\\$created_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:232\\:\\:\\$deleted_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:256\\:\\:\\$deleted_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:232\\:\\:\\$email has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:256\\:\\:\\$email has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:232\\:\\:\\$id has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:256\\:\\:\\$id has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:232\\:\\:\\$name has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:256\\:\\:\\$name has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:232\\:\\:\\$updated_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Database/Live/GetTest\\.php\\:256\\:\\:\\$updated_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
 ];
@@ -12965,11 +12610,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\AlterTableTest\\:\\:\\$forge \\(CodeIgniter\\\\Database\\\\SQLite3\\\\Forge\\) does not accept CodeIgniter\\\\Database\\\\Forge\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/AlterTableTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\GetFieldDataTest\\:\\:createTableCompositePrimaryKey\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/Live/SQLite3/GetFieldDataTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^PHPDoc type CodeIgniter\\\\Database\\\\SQLite3\\\\Connection of property CodeIgniter\\\\Database\\\\Live\\\\SQLite3\\\\GetIndexDataTest\\:\\:\\$db is not the same as PHPDoc type CodeIgniter\\\\Database\\\\BaseConnection of overridden property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$db\\.$#',
@@ -13227,147 +12867,147 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1076\\:\\:getBar\\(\\) has no return type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1078\\:\\:getBar\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1076\\:\\:getFakeBar\\(\\) has no return type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1078\\:\\:getFakeBar\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1076\\:\\:setBar\\(\\) has no return type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1078\\:\\:setBar\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1076\\:\\:setBar\\(\\) has parameter \\$value with no type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1078\\:\\:setBar\\(\\) has parameter \\$value with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1114\\:\\:_getBar\\(\\) has no return type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1116\\:\\:_getBar\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1114\\:\\:_setBar\\(\\) has no return type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1116\\:\\:_setBar\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1114\\:\\:_setBar\\(\\) has parameter \\$value with no type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1116\\:\\:_setBar\\(\\) has parameter \\$value with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1114\\:\\:getBar\\(\\) has no return type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1116\\:\\:getBar\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1114\\:\\:setBar\\(\\) has no return type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1116\\:\\:setBar\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1114\\:\\:setBar\\(\\) has parameter \\$value with no type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1116\\:\\:setBar\\(\\) has parameter \\$value with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1160\\:\\:getSimple\\(\\) has no return type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1162\\:\\:getSimple\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1227\\:\\:setSeventh\\(\\) has parameter \\$seventh with no type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1229\\:\\:setSeventh\\(\\) has parameter \\$seventh with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1076\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1078\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1076\\:\\:\\$original type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1078\\:\\:\\$original type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1114\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1116\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1114\\:\\:\\$original type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1116\\:\\:\\$original type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1160\\:\\:\\$_original has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1162\\:\\:\\$_original has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1160\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1162\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1190\\:\\:\\$_original has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1192\\:\\:\\$_original has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1190\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1192\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1209\\:\\:\\$_original has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1211\\:\\:\\$_original has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1209\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1211\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1227\\:\\:\\$_original has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1229\\:\\:\\$_original has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1227\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1229\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1285\\:\\:\\$_original has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1287\\:\\:\\$_original has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1285\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1287\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1314\\:\\:\\$_original has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1316\\:\\:\\$_original has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1314\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1316\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:893\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:895\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
@@ -13378,11 +13018,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Call to an undefined method CodeIgniter\\\\Events\\\\Events\\:\\:unInitialize\\(\\)\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Events/EventsTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Events/EventsTest\\.php\\:283\\:\\:\\$logged has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Events/EventsTest.php',
 ];
@@ -13578,11 +13213,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Assigning array\\{\'spark\', \'command\', \'param1\', \'param2\', \'\\-\\-opt1\', \'opt1val\', \'\\-\\-opt\\-2\', \'opt 2 val\', \'param3\'\\} directly on offset \'argv\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/CLIRequestTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CLIRequestTest\\:\\:provideValidIPAddress\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/CLIRequestTest.php',
 ];
@@ -14077,6 +13707,16 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/HTTP/MessageTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\MessageTest\\:\\:testSetHeaderWithExistingArrayValuesAppendArrayValue\\(\\) has parameter \\$arrayHeaderValue with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/MessageTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\MessageTest\\:\\:testSetHeaderWithExistingArrayValuesAppendStringValue\\(\\) has parameter \\$arrayHeaderValue with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/HTTP/MessageTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Log\\\\Logger constructor expects Config\\\\Logger, CodeIgniter\\\\Test\\\\Mock\\\\MockLogger given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/RedirectExceptionTest.php',
@@ -14137,11 +13777,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/HTTP/RequestTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\RequestTest\\:\\:provideValidIPAddress\\(\\) return type has no value type specified in iterable type iterable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/RequestTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/RequestTest.php',
@@ -14152,13 +13787,8 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/HTTP/ResponseCookieTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#2 \\$value of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int\\<1, max\\> given\\.$#',
+	'message' => '#^Parameter \\#3 \\$expire of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects int, string given\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/ResponseSendTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#3 \\$expire of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int given\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/tests/system/HTTP/ResponseSendTest.php',
 ];
 $ignoreErrors[] = [
@@ -14217,12 +13847,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#2 \\$value of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int\\<1, max\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#3 \\$expire of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int given\\.$#',
+	'message' => '#^Parameter \\#3 \\$expire of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects int, string given\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/tests/system/HTTP/ResponseTest.php',
 ];
@@ -14792,6 +14417,26 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/HTTP/UserAgentTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelperDotKeyExistsTest\\:\\:\\$array type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/Array/ArrayHelperDotKeyExistsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelperRecursiveDiffTest\\:\\:\\$compareWith type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/Array/ArrayHelperRecursiveDiffTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelperSortValuesByNaturalTest\\:\\:\\$arrayWithArrayValues type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/Array/ArrayHelperSortValuesByNaturalTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Helpers\\\\Array\\\\ArrayHelperSortValuesByNaturalTest\\:\\:\\$arrayWithStringValues type has no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Helpers/Array/ArrayHelperSortValuesByNaturalTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Helpers\\\\ArrayHelperTest\\:\\:provideArrayDeepSearch\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
@@ -14907,26 +14552,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Helpers/ArrayHelperTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#3 \\$expire of function set_cookie expects string, int given\\.$#',
-	'count' => 4,
-	'path' => __DIR__ . '/tests/system/Helpers/CookieHelperTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#3 \\$expire of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Helpers/CookieHelperTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#7 \\$secure of function set_cookie expects bool\\|null, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Helpers/CookieHelperTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#8 \\$httpOnly of function set_cookie expects bool\\|null, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Helpers/CookieHelperTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Helpers\\\\CookieHelperTest\\:\\:\\$response \\(CodeIgniter\\\\HTTP\\\\Response\\) does not accept CodeIgniter\\\\HTTP\\\\ResponseInterface\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Helpers/CookieHelperTest.php',
@@ -14938,11 +14563,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^PHPDoc tag @var for property CodeIgniter\\\\Helpers\\\\FilesystemHelperTest\\:\\:\\$structure with type mixed is not subtype of native type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Helpers/FilesystemHelperTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#2 \\$directoryDepth of function directory_map expects int, false given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Helpers/FilesystemHelperTest.php',
 ];
@@ -14990,11 +14610,6 @@ $ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$num of function number_to_size expects int\\|string, float given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Helpers/NumberHelperTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#3 \\$first of function increment_string expects int, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Helpers/TextHelperTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Assigning \'/\' directly on offset \'REQUEST_URI\' of \\$_SERVER is discouraged\\.$#',
@@ -15342,11 +14957,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Honeypot/HoneypotTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Honeypot\\:\\:\\$hidden \\(bool\\) does not accept string\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Honeypot/HoneypotTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\HotReloader\\\\DirectoryHasherTest\\:\\:testHash\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HotReloader/DirectoryHasherTest.php',
@@ -15527,7 +15137,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Log/LoggerTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#2 \\$message of method CodeIgniter\\\\Log\\\\Logger\\:\\:log\\(\\) expects string, CodeIgniter\\\\Test\\\\Mock\\\\MockLogger given\\.$#',
+	'message' => '#^Parameter \\#2 \\$message of method CodeIgniter\\\\Log\\\\Logger\\:\\:log\\(\\) expects string\\|Stringable, CodeIgniter\\\\Test\\\\Mock\\\\MockLogger given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Log/LoggerTest.php',
 ];
@@ -15537,9 +15147,49 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Log/LoggerTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Result of method CodeIgniter\\\\Log\\\\Logger\\:\\:log\\(\\) \\(void\\) is used\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Log/LoggerTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Call to an undefined method CodeIgniter\\\\Model\\:\\:affectedRows\\(\\)\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/AffectedRowsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Offset \'email\' does not exist on array\\<int, array\\{\\}\\>\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Models/DataConverterModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Offset \'email\' does not exist on array\\{\\}\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/Models/DataConverterModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Offset \'id\' does not exist on array\\{email\\: array\\{\'private@example\\.org\'\\}\\}\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/DataConverterModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Offset \'id\' does not exist on array\\{\\}\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/tests/system/Models/DataConverterModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$row of method CodeIgniter\\\\BaseModel\\:\\:save\\(\\) expects array\\<int\\|string, float\\|int\\|object\\|string\\|null\\>\\|object, array\\<string, array\\<int, string\\>\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/DataConverterModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#2 \\$row of method CodeIgniter\\\\Model\\:\\:update\\(\\) expects array\\<int\\|string, float\\|int\\|object\\|string\\|null\\>\\|object\\|null, array\\<string, array\\<int, string\\>\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/DataConverterModelTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Models\\\\DataConverterModelTest\\:\\:\\$seed \\(array\\<int, class\\-string\\<CodeIgniter\\\\Database\\\\Seeder\\>\\>\\|class\\-string\\<CodeIgniter\\\\Database\\\\Seeder\\>\\) does not accept default value of type string\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Models/DataConverterModelTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Models\\\\DeleteModelTest\\:\\:emptyPkValues\\(\\) return type has no value type specified in iterable type iterable\\.$#',
@@ -15617,82 +15267,82 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:191\\:\\:\\$_options has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:193\\:\\:\\$_options has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:191\\:\\:\\$country has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:193\\:\\:\\$country has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:191\\:\\:\\$created_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:193\\:\\:\\$created_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:191\\:\\:\\$deleted has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:193\\:\\:\\$deleted has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:191\\:\\:\\$email has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:193\\:\\:\\$email has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:191\\:\\:\\$id has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:193\\:\\:\\$id has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:191\\:\\:\\$name has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:193\\:\\:\\$name has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:191\\:\\:\\$updated_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:193\\:\\:\\$updated_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:285\\:\\:\\$_options has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:287\\:\\:\\$_options has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:285\\:\\:\\$country has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:287\\:\\:\\$country has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:285\\:\\:\\$created_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:287\\:\\:\\$created_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:285\\:\\:\\$deleted has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:287\\:\\:\\$deleted has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:285\\:\\:\\$email has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:287\\:\\:\\$email has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:285\\:\\:\\$id has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:287\\:\\:\\$id has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:285\\:\\:\\$name has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:287\\:\\:\\$name has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:285\\:\\:\\$updated_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/InsertModelTest\\.php\\:287\\:\\:\\$updated_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
@@ -15717,7 +15367,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Models/PaginateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Call to an undefined method class@anonymous/tests/system/Models/SaveModelTest\\.php\\:286\\:\\:truncate\\(\\)\\.$#',
+	'message' => '#^Call to an undefined method class@anonymous/tests/system/Models/SaveModelTest\\.php\\:288\\:\\:truncate\\(\\)\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
 ];
@@ -15737,72 +15387,72 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:237\\:\\:\\$_options has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:239\\:\\:\\$_options has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:237\\:\\:\\$country has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:239\\:\\:\\$country has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:237\\:\\:\\$created_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:239\\:\\:\\$created_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:237\\:\\:\\$deleted has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:239\\:\\:\\$deleted has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:237\\:\\:\\$email has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:239\\:\\:\\$email has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:237\\:\\:\\$id has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:239\\:\\:\\$id has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:237\\:\\:\\$name has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:239\\:\\:\\$name has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:237\\:\\:\\$updated_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:239\\:\\:\\$updated_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:270\\:\\:\\$_options has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:272\\:\\:\\$_options has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:270\\:\\:\\$created_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:272\\:\\:\\$created_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:270\\:\\:\\$id has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:272\\:\\:\\$id has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:270\\:\\:\\$name has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:272\\:\\:\\$name has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:270\\:\\:\\$updated_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:272\\:\\:\\$updated_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:286\\:\\:\\$name has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/SaveModelTest\\.php\\:288\\:\\:\\$name has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
 ];
@@ -15872,122 +15522,122 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:193\\:\\:\\$_options has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:197\\:\\:\\$_options has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:193\\:\\:\\$country has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:197\\:\\:\\$country has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:193\\:\\:\\$created_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:197\\:\\:\\$created_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:193\\:\\:\\$deleted has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:197\\:\\:\\$deleted has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:193\\:\\:\\$email has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:197\\:\\:\\$email has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:193\\:\\:\\$id has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:197\\:\\:\\$id has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:193\\:\\:\\$name has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:197\\:\\:\\$name has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:193\\:\\:\\$updated_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:197\\:\\:\\$updated_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:212\\:\\:\\$_options has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:216\\:\\:\\$_options has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:212\\:\\:\\$country has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:216\\:\\:\\$country has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:212\\:\\:\\$created_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:216\\:\\:\\$created_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:212\\:\\:\\$deleted has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:216\\:\\:\\$deleted has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:212\\:\\:\\$email has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:216\\:\\:\\$email has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:212\\:\\:\\$id has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:216\\:\\:\\$id has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:212\\:\\:\\$name has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:216\\:\\:\\$name has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:212\\:\\:\\$updated_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:216\\:\\:\\$updated_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:345\\:\\:\\$_options has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:349\\:\\:\\$_options has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:345\\:\\:\\$country has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:349\\:\\:\\$country has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:345\\:\\:\\$created_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:349\\:\\:\\$created_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:345\\:\\:\\$deleted has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:349\\:\\:\\$deleted has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:345\\:\\:\\$email has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:349\\:\\:\\$email has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:345\\:\\:\\$id has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:349\\:\\:\\$id has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:345\\:\\:\\$name has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:349\\:\\:\\$name has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:345\\:\\:\\$updated_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:349\\:\\:\\$updated_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
@@ -15997,7 +15647,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:243\\:\\:\\$grouptest has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:245\\:\\:\\$grouptest has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
 ];
@@ -16332,6 +15982,16 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:provideRejectTranslateUriToCamelCase\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:provideTranslateUriToCamelCase\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testAutoRouteFallbackToDefaultControllerNoParams\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
@@ -16372,6 +16032,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testRejectTranslateUriToCamelCase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testRejectsURIWithUnderscoreController\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
@@ -16385,6 +16050,16 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testRejectsURIWithUnderscoreMethod\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testTranslateUriToCamelCase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\BlogController\\:\\:getSomeMethod\\(\\) has parameter \\$first with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/Controllers/BlogController.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\Index\\:\\:getIndex\\(\\) has parameter \\$p1 with no type specified\\.$#',
@@ -16402,6 +16077,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Router/Controllers/Remap.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\SubDir\\\\BlogController\\:\\:getSomeMethod\\(\\) has parameter \\$first with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/Controllers/SubDir/BlogController.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\Subfolder\\\\Home\\:\\:getIndex\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Router/Controllers/Subfolder/Home.php',
@@ -16415,6 +16095,11 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\Subfolder\\\\Home\\:\\:getIndex\\(\\) has parameter \\$p2 with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Router/Controllers/Subfolder/Home.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\Subfolder\\\\Sub\\\\BlogController\\:\\:getSomeMethod\\(\\) has parameter \\$first with no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Router/Controllers/Subfolder/Sub/BlogController.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\Subfolder\\\\Sub\\\\Mycontroller\\:\\:getSomemethod\\(\\) has no return type specified\\.$#',
@@ -16562,6 +16247,21 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Router/RouterTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Security\\\\CheckPhpIniTest\\:\\:testCheckIni\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Security/CheckPhpIniTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Security\\\\CheckPhpIniTest\\:\\:testRunCli\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Security/CheckPhpIniTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Security\\\\CheckPhpIniTest\\:\\:testRunWeb\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Security/CheckPhpIniTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Assigning \'POST\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Security/SecurityCSRFCookieRandomizeTokenTest.php',
@@ -16682,6 +16382,16 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/RedisHandlerTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\RedisHandlerTest\\:\\:provideSetSavePath\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/RedisHandlerTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\RedisHandlerTest\\:\\:testSetSavePath\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/RedisHandlerTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Assigning \'xmlhttprequest\' directly on offset \'HTTP_X_REQUESTED_WITH\' of \\$_SERVER is discouraged\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/tests/system/Session/SessionTest.php',
@@ -16784,6 +16494,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Test\\\\ControllerTestTraitTest\\:\\:\\$response \\(CodeIgniter\\\\HTTP\\\\ResponseInterface\\) in empty\\(\\) is not falsy\\.$#',
 	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Test\\\\ControllerTestTraitTest\\:\\:\\$uri \\(string\\) does not accept CodeIgniter\\\\HTTP\\\\SiteURI\\.$#',
+	'count' => 2,
 	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
 ];
 $ignoreErrors[] = [
@@ -17112,11 +16827,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Test/TestResponseTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#3 \\$expire of method CodeIgniter\\\\HTTP\\\\Response\\:\\:setCookie\\(\\) expects string, int\\<1, max\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Test/TestResponseTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Throttle\\\\ThrottleTest\\:\\:provideTokenTimeCalculationUCs\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Throttle/ThrottleTest.php',
@@ -17138,11 +16848,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Validation\\\\Validation constructor expects Config\\\\Validation, stdClass given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Validation/CreditCardRulesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$prefix of static method CodeIgniter\\\\Validation\\\\CreditCardRulesTest\\:\\:generateCardNumber\\(\\) expects int, string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Validation/CreditCardRulesTest.php',
 ];
@@ -17357,6 +17062,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideFieldExists\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:provideGreaterThan\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
@@ -17457,6 +17167,16 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:testFieldExists\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:testFieldExists\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Validation\\\\RulesTest\\:\\:testIfExist\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Validation/RulesTest.php',
@@ -17528,11 +17248,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Validation\\\\Validation constructor expects Config\\\\Validation, stdClass given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Validation/StrictRules/CreditCardRulesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$prefix of static method CodeIgniter\\\\Validation\\\\StrictRules\\\\CreditCardRulesTest\\:\\:generateCardNumber\\(\\) expects int, string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Validation/StrictRules/CreditCardRulesTest.php',
 ];
@@ -17702,6 +17417,21 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:rule1\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:rule2\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:rule2\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:testIfExistRuleWithAsterisk\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
@@ -17767,6 +17497,16 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/View/CellTest.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\View\\\\DecoratorsTest\\:\\:\\$loader \\(CodeIgniter\\\\Autoloader\\\\FileLocator\\) does not accept CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/DecoratorsTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\View\\\\ParserFilterTest\\:\\:\\$loader \\(CodeIgniter\\\\Autoloader\\\\FileLocator\\) does not accept CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/ParserFilterTest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\View\\\\ParserPluginTest\\:\\:setHints\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/ParserPluginTest.php',
@@ -17787,7 +17527,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/View/ParserTest\\.php\\:337\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/View/ParserTest\\.php\\:339\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
 ];
@@ -17797,17 +17537,22 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:337\\:\\:\\$bar has no type specified\\.$#',
+	'message' => '#^Property CodeIgniter\\\\View\\\\ParserTest\\:\\:\\$loader \\(CodeIgniter\\\\Autoloader\\\\FileLocator\\) does not accept CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:337\\:\\:\\$foo has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:339\\:\\:\\$bar has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:367\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:339\\:\\:\\$foo has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:369\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
 ];
@@ -17893,6 +17638,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\View\\\\ViewTest\\:\\:testRenderSectionSavingData\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/tests/system/View/ViewTest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\View\\\\ViewTest\\:\\:\\$loader \\(CodeIgniter\\\\Autoloader\\\\FileLocator\\) does not accept CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/ViewTest.php',
 ];

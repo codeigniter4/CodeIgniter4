@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -90,7 +92,7 @@ class AutoloadConfig
      */
     protected $corePsr4 = [
         'CodeIgniter' => SYSTEMPATH,
-        'App'         => APPPATH, // To ensure filters, etc still found,
+        'Config'      => APPPATH . 'Config',
     ];
 
     /**
@@ -103,7 +105,7 @@ class AutoloadConfig
      * searched for within one or more directories as they would if they
      * were being autoloaded through a namespace.
      *
-     * @var array<string, string>
+     * @var array<class-string, string>
      */
     protected $coreClassmap = [
         AbstractLogger::class                  => SYSTEMPATH . 'ThirdParty/PSR/Log/AbstractLogger.php',

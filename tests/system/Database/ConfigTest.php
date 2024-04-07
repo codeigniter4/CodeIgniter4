@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -33,8 +35,8 @@ final class ConfigTest extends CIUnitTestCase
         'DBPrefix' => 'test_',
         'pConnect' => true,
         'DBDebug'  => true,
-        'charset'  => 'utf8',
-        'DBCollat' => 'utf8_general_ci',
+        'charset'  => 'utf8mb4',
+        'DBCollat' => 'utf8mb4_general_ci',
         'swapPre'  => '',
         'encrypt'  => false,
         'compress' => false,
@@ -52,8 +54,8 @@ final class ConfigTest extends CIUnitTestCase
         'DBPrefix' => 't_',
         'pConnect' => false,
         'DBDebug'  => true,
-        'charset'  => 'utf8',
-        'DBCollat' => 'utf8_general_ci',
+        'charset'  => 'utf8mb4',
+        'DBCollat' => 'utf8mb4_general_ci',
         'swapPre'  => '',
         'encrypt'  => false,
         'compress' => false,
@@ -71,8 +73,8 @@ final class ConfigTest extends CIUnitTestCase
         'DBPrefix' => 't_',
         'pConnect' => false,
         'DBDebug'  => true,
-        'charset'  => 'utf8',
-        'DBCollat' => 'utf8_general_ci',
+        'charset'  => 'utf8mb4',
+        'DBCollat' => 'utf8mb4_general_ci',
         'swapPre'  => '',
         'encrypt'  => false,
         'compress' => false,
@@ -90,8 +92,8 @@ final class ConfigTest extends CIUnitTestCase
         'DBPrefix' => 't_',
         'pConnect' => false,
         'DBDebug'  => true,
-        'charset'  => 'utf8',
-        'DBCollat' => 'utf8_general_ci',
+        'charset'  => 'utf8mb4',
+        'DBCollat' => 'utf8mb4_general_ci',
         'swapPre'  => '',
         'encrypt'  => false,
         'compress' => false,
@@ -157,8 +159,8 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertSame('Postgre', $this->getPrivateProperty($conn, 'DBDriver'));
         $this->assertSame('test_', $this->getPrivateProperty($conn, 'DBPrefix'));
         $this->assertFalse($this->getPrivateProperty($conn, 'pConnect'));
-        $this->assertSame('utf8', $this->getPrivateProperty($conn, 'charset'));
-        $this->assertSame('utf8_general_ci', $this->getPrivateProperty($conn, 'DBCollat'));
+        $this->assertSame('utf8mb4', $this->getPrivateProperty($conn, 'charset'));
+        $this->assertSame('utf8mb4_general_ci', $this->getPrivateProperty($conn, 'DBCollat'));
         $this->assertTrue($this->getPrivateProperty($conn, 'strictOn'));
         $this->assertSame([], $this->getPrivateProperty($conn, 'failover'));
         $this->assertSame('5', $this->getPrivateProperty($conn, 'connect_timeout'));
@@ -185,8 +187,8 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertSame('Postgre', $this->getPrivateProperty($conn, 'DBDriver'));
         $this->assertSame('t_', $this->getPrivateProperty($conn, 'DBPrefix'));
         $this->assertFalse($this->getPrivateProperty($conn, 'pConnect'));
-        $this->assertSame('utf8', $this->getPrivateProperty($conn, 'charset'));
-        $this->assertSame('utf8_general_ci', $this->getPrivateProperty($conn, 'DBCollat'));
+        $this->assertSame('utf8mb4', $this->getPrivateProperty($conn, 'charset'));
+        $this->assertSame('utf8mb4_general_ci', $this->getPrivateProperty($conn, 'DBCollat'));
         $this->assertTrue($this->getPrivateProperty($conn, 'strictOn'));
         $this->assertSame([], $this->getPrivateProperty($conn, 'failover'));
     }

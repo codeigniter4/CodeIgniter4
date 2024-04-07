@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -30,6 +32,15 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 {
     private ?Response $response         = null;
     private ?ContentSecurityPolicy $csp = null;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+    }
 
     // Having this method as setUp() doesn't work - can't find Config\App !?
     protected function prepare(bool $CSPEnabled = true): void
@@ -469,7 +480,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result     = $this->work($body);
         $nonceStyle = array_filter(
             $this->getPrivateProperty($this->csp, 'styleSrc'),
-            static fn ($value) => strpos($value, 'nonce-') === 0
+            static fn ($value) => str_starts_with($value, 'nonce-')
         );
 
         $this->assertStringContainsString('nonce=', $this->response->getBody());
@@ -546,7 +557,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result      = $this->work($body);
         $nonceScript = array_filter(
             $this->getPrivateProperty($this->csp, 'scriptSrc'),
-            static fn ($value) => strpos($value, 'nonce-') === 0
+            static fn ($value) => str_starts_with($value, 'nonce-')
         );
 
         $this->assertStringContainsString('nonce=', $this->response->getBody());
@@ -641,5 +652,23 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $result = $this->getHeaderEmitted('Content-Security-Policy');
         $this->assertStringContainsString("script-src 'self' 'nonce-", $result);
+    }
+
+    public function testClearDirective(): void
+    {
+        $this->prepare();
+
+        $this->csp->addStyleSrc('css.example.com');
+        $this->csp->clearDirective('style-src');
+
+        $this->csp->setReportURI('http://example.com/csp/reports');
+        $this->csp->clearDirective('report-uri');
+        $this->csp->finalize($this->response);
+
+        $header = $this->response->getHeaderLine('Content-Security-Policy');
+
+        $this->assertStringNotContainsString('style-src ', $header);
+        $this->assertStringNotContainsString('css.example.com', $header);
+        $this->assertStringNotContainsString('report-uri', $header);
     }
 }

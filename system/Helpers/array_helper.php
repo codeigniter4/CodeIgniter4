@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -8,6 +10,8 @@
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+use CodeIgniter\Helpers\Array\ArrayHelper;
 
 // CodeIgniter Array Helpers
 
@@ -20,78 +24,7 @@ if (! function_exists('dot_array_search')) {
      */
     function dot_array_search(string $index, array $array)
     {
-        // See https://regex101.com/r/44Ipql/1
-        $segments = preg_split(
-            '/(?<!\\\\)\./',
-            rtrim($index, '* '),
-            0,
-            PREG_SPLIT_NO_EMPTY
-        );
-
-        $segments = array_map(static fn ($key) => str_replace('\.', '.', $key), $segments);
-
-        return _array_search_dot($segments, $array);
-    }
-}
-
-if (! function_exists('_array_search_dot')) {
-    /**
-     * Used by `dot_array_search` to recursively search the
-     * array with wildcards.
-     *
-     * @internal This should not be used on its own.
-     *
-     * @return array|bool|float|int|object|string|null
-     */
-    function _array_search_dot(array $indexes, array $array)
-    {
-        // If index is empty, returns null.
-        if ($indexes === []) {
-            return null;
-        }
-
-        // Grab the current index
-        $currentIndex = array_shift($indexes);
-
-        if (! isset($array[$currentIndex]) && $currentIndex !== '*') {
-            return null;
-        }
-
-        // Handle Wildcard (*)
-        if ($currentIndex === '*') {
-            $answer = [];
-
-            foreach ($array as $value) {
-                if (! is_array($value)) {
-                    return null;
-                }
-
-                $answer[] = _array_search_dot($indexes, $value);
-            }
-
-            $answer = array_filter($answer, static fn ($value) => $value !== null);
-
-            if ($answer !== []) {
-                // If array only has one element, we return that element for BC.
-                return count($answer) === 1 ? current($answer) : $answer;
-            }
-
-            return null;
-        }
-
-        // If this is the last index, make sure to return it now,
-        // and not try to recurse through things.
-        if ($indexes === []) {
-            return $array[$currentIndex];
-        }
-
-        // Do we need to recursively search this value?
-        if (is_array($array[$currentIndex]) && $array[$currentIndex] !== []) {
-            return _array_search_dot($indexes, $array[$currentIndex]);
-        }
-
-        // Otherwise, not found.
-        return null;
+        return ArrayHelper::dotSearch($index, $array);
     }
 }
 
@@ -227,55 +160,6 @@ if (! function_exists('array_group_by')) {
      */
     function array_group_by(array $array, array $indexes, bool $includeEmpty = false): array
     {
-        if ($indexes === []) {
-            return $array;
-        }
-
-        $result = [];
-
-        foreach ($array as $row) {
-            $result = _array_attach_indexed_value($result, $row, $indexes, $includeEmpty);
-        }
-
-        return $result;
-    }
-}
-
-if (! function_exists('_array_attach_indexed_value')) {
-    /**
-     * Used by `array_group_by` to recursively attach $row to the $indexes path of values found by
-     * `dot_array_search`
-     *
-     * @internal This should not be used on its own
-     */
-    function _array_attach_indexed_value(array $result, array $row, array $indexes, bool $includeEmpty): array
-    {
-        if (($index = array_shift($indexes)) === null) {
-            $result[] = $row;
-
-            return $result;
-        }
-
-        $value = dot_array_search($index, $row);
-
-        if (! is_scalar($value)) {
-            $value = '';
-        }
-
-        if (is_bool($value)) {
-            $value = (int) $value;
-        }
-
-        if (! $includeEmpty && $value === '') {
-            return $result;
-        }
-
-        if (! array_key_exists($value, $result)) {
-            $result[$value] = [];
-        }
-
-        $result[$value] = _array_attach_indexed_value($result[$value], $row, $indexes, $includeEmpty);
-
-        return $result;
+        return ArrayHelper::groupBy($array, $indexes, $includeEmpty);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -61,7 +63,7 @@ final class HistoryTest extends CIUnitTestCase
 
         // create 20 dummy debugbar json files
         for ($i = 0; $i < 20; $i++) {
-            $path = str_replace($time, sprintf('%.6f', $time - self::STEP), $path);
+            $path = str_replace((string) $time, sprintf('%.6f', $time - self::STEP), $path);
             file_put_contents($path, json_encode($dummyData));
             $time = sprintf('%.6f', $time - self::STEP);
         }

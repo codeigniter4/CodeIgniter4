@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -12,6 +14,7 @@
 namespace Tests\Support\Log\Handlers;
 
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Log\Handlers\FileHandler;
 
 /**
  * Class TestHandler
@@ -19,7 +22,7 @@ use CodeIgniter\I18n\Time;
  * A simple LogHandler that stores the logs in memory.
  * Only used for testing purposes.
  */
-class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
+class TestHandler extends FileHandler
 {
     /**
      * Local storage for logs.

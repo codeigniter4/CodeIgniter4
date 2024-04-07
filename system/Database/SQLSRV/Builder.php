@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -16,6 +18,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\ResultInterface;
+use Config\Feature;
 
 /**
  * Builder for SQLSRV
@@ -69,7 +72,7 @@ class Builder extends BaseBuilder
         $from = [];
 
         foreach ($this->QBFrom as $value) {
-            $from[] = strpos($value, '(SELECT') === 0 ? $value : $this->getFullName($value);
+            $from[] = str_starts_with($value, '(SELECT') ? $value : $this->getFullName($value);
         }
 
         return implode(', ', $from);
@@ -280,7 +283,7 @@ class Builder extends BaseBuilder
     {
         $alias = '';
 
-        if (strpos($table, ' ') !== false) {
+        if (str_contains($table, ' ')) {
             $alias = explode(' ', $table);
             $table = array_shift($alias);
             $alias = ' ' . implode(' ', $alias);
@@ -306,6 +309,15 @@ class Builder extends BaseBuilder
      */
     protected function _limit(string $sql, bool $offsetIgnore = false): string
     {
+        // SQL Server cannot handle `LIMIT 0`.
+        // DatabaseException:
+        //   [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The number of
+        //   rows provided for a FETCH clause must be greater then zero.
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if (! $limitZeroAsAll && $this->QBLimit === 0) {
+            return "SELECT * \nFROM " . $this->_fromTables() . ' WHERE 1=0 ';
+        }
+
         if (empty($this->QBOrderBy)) {
             $sql .= ' ORDER BY (SELECT NULL) ';
         }
@@ -439,7 +451,7 @@ class Builder extends BaseBuilder
             throw DataException::forEmptyInputGiven('Select');
         }
 
-        if (strpos($select, ',') !== false) {
+        if (str_contains($select, ',')) {
             throw DataException::forInvalidArgument('Column name not separated by comma');
         }
 
@@ -588,7 +600,12 @@ class Builder extends BaseBuilder
             . $this->compileOrderBy(); // ORDER BY
 
         // LIMIT
-        if ($this->QBLimit) {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll) {
+            if ($this->QBLimit) {
+                $sql = $this->_limit($sql . "\n");
+            }
+        } elseif ($this->QBLimit !== false || $this->QBOffset) {
             $sql = $this->_limit($sql . "\n");
         }
 
@@ -603,6 +620,11 @@ class Builder extends BaseBuilder
      */
     public function get(?int $limit = null, int $offset = 0, bool $reset = true)
     {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll && $limit === 0) {
+            $limit = null;
+        }
+
         if ($limit !== null) {
             $this->limit($limit, $offset);
         }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -13,6 +15,7 @@ namespace CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved;
 
 use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\Dash_folder\Dash_controller;
 use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\Home;
+use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\SubDir\BlogController;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Routing;
@@ -99,6 +102,41 @@ final class ControllerMethodReaderTest extends CIUnitTestCase
                 'params'       => [
                     'p1' => true,
                     'p2' => false,
+                ],
+            ],
+        ];
+
+        $this->assertSame($expected, $routes);
+    }
+
+    public function testReadTranslateUriToCamelCase(): void
+    {
+        $config                          = config(Routing::class);
+        $config->translateUriToCamelCase = true;
+        Factories::injectMock('config', Routing::class, $config);
+
+        $reader = $this->createControllerMethodReader(
+            'CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers'
+        );
+
+        $routes = $reader->read(BlogController::class);
+
+        $expected = [
+            0 => [
+                'method'       => 'get',
+                'route'        => 'sub-dir/blog-controller',
+                'route_params' => '',
+                'handler'      => '\CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\SubDir\BlogController::getIndex',
+                'params'       => [
+                ],
+            ],
+            [
+                'method'       => 'get',
+                'route'        => 'sub-dir/blog-controller/some-method',
+                'route_params' => '[/..]',
+                'handler'      => '\CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\SubDir\BlogController::getSomeMethod',
+                'params'       => [
+                    'first' => false,
                 ],
             ],
         ];

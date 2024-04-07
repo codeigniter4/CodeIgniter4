@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -12,6 +14,7 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Log\Logger;
+use Stringable;
 
 /**
  * @see \CodeIgniter\Test\TestLoggerTest
@@ -30,7 +33,7 @@ class TestLogger extends Logger
      * @param mixed  $level
      * @param string $message
      */
-    public function log($level, $message, array $context = []): bool
+    public function log($level, string|Stringable $message, array $context = []): void
     {
         // While this requires duplicate work, we want to ensure
         // we have the final message to test against.
@@ -55,7 +58,7 @@ class TestLogger extends Logger
         ];
 
         // Let the parent do it's thing.
-        return parent::log($level, $message, $context);
+        parent::log($level, $message, $context);
     }
 
     /**
@@ -82,7 +85,7 @@ class TestLogger extends Logger
                 continue;
             }
 
-            if (strpos($log['message'], $message) !== false) {
+            if (str_contains($log['message'], $message)) {
                 return true;
             }
         }

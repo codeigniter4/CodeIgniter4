@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -56,8 +58,8 @@ final class NamespacesTest extends CIUnitTestCase
             | Namespace     | Path                    | Found? |
             +---------------+-------------------------+--------+
             | CodeIgniter   | ROOTPATH/system         | Yes    |
-            | App           | ROOTPATH/app            | Yes    |
             | Config        | APPPATH/Config          | Yes    |
+            | App           | ROOTPATH/app            | Yes    |
             | Tests\Support | ROOTPATH/tests/_support | Yes    |
             +---------------+-------------------------+--------+
             EOL;

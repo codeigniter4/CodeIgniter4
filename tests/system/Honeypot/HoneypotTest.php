@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -138,13 +140,6 @@ final class HoneypotTest extends CIUnitTestCase
     public function testHasContent(): void
     {
         $this->assertTrue($this->honeypot->hasContent($this->request));
-    }
-
-    public function testConfigHidden(): void
-    {
-        $this->config->hidden = '';
-        $this->expectException(HoneypotException::class);
-        $this->honeypot = new Honeypot($this->config);
     }
 
     public function testConfigTemplate(): void

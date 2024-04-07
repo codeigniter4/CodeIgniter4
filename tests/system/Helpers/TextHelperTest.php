@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -136,7 +138,7 @@ final class TextHelperTest extends CIUnitTestCase
         $this->assertSame('file_5', increment_string('file_4'));
         $this->assertSame('file-5', increment_string('file-4', '-'));
         $this->assertSame('file-5', increment_string('file-4', '-'));
-        $this->assertSame('file-1', increment_string('file', '-', '1'));
+        $this->assertSame('file-1', increment_string('file', '-', 1));
         $this->assertSame('124', increment_string('123', ''));
     }
 

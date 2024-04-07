@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -18,6 +20,7 @@ use CodeIgniter\Debug\Toolbar\Collectors\History;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
 use CodeIgniter\HTTP\DownloadResponse;
+use CodeIgniter\HTTP\Header;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -79,7 +82,7 @@ class Toolbar
         $data = [];
         // Data items used within the view.
         $data['url']             = current_url();
-        $data['method']          = strtoupper($request->getMethod());
+        $data['method']          = $request->getMethod();
         $data['isAJAX']          = $request->isAJAX();
         $data['startTime']       = $startTime;
         $data['totalTime']       = $totalTime * 1000;
@@ -140,8 +143,17 @@ class Toolbar
             $data['vars']['post'][esc($name)] = is_array($value) ? '<pre>' . esc(print_r($value, true)) . '</pre>' : esc($value);
         }
 
-        foreach ($request->headers() as $header) {
-            $data['vars']['headers'][esc($header->getName())] = esc($header->getValueLine());
+        foreach ($request->headers() as $name => $value) {
+            if ($value instanceof Header) {
+                $data['vars']['headers'][esc($name)] = esc($value->getValueLine());
+            } else {
+                foreach ($value as $i => $header) {
+                    $index = $i + 1;
+                    $data['vars']['headers'][esc($name)] ??= '';
+                    $data['vars']['headers'][esc($name)] .= ' (' . $index . ') '
+                        . esc($header->getValueLine());
+                }
+            }
         }
 
         foreach ($request->getCookie() as $name => $value) {
@@ -157,8 +169,17 @@ class Toolbar
             'headers'     => [],
         ];
 
-        foreach ($response->headers() as $header) {
-            $data['vars']['response']['headers'][esc($header->getName())] = esc($header->getValueLine());
+        foreach ($response->headers() as $name => $value) {
+            if ($value instanceof Header) {
+                $data['vars']['response']['headers'][esc($name)] = esc($value->getValueLine());
+            } else {
+                foreach ($value as $i => $header) {
+                    $index = $i + 1;
+                    $data['vars']['response']['headers'][esc($name)] ??= '';
+                    $data['vars']['response']['headers'][esc($name)] .= ' (' . $index . ') '
+                        . esc($header->getValueLine());
+                }
+            }
         }
 
         $data['config'] = Config::display();
@@ -354,10 +375,10 @@ class Toolbar
          * @var IncomingRequest|null $request
          */
         if (CI_DEBUG && ! is_cli()) {
-            $app = Services::codeigniter();
+            $app = service('codeigniter');
 
-            $request ??= Services::request();
-            $response ??= Services::response();
+            $request ??= service('request');
+            $response ??= service('response');
 
             // Disable the toolbar for downloads
             if ($response instanceof DownloadResponse) {
@@ -389,7 +410,7 @@ class Toolbar
             // Non-HTML formats should not include the debugbar
             // then we send headers saying where to find the debug data
             // for this response
-            if ($request->isAJAX() || strpos($format, 'html') === false) {
+            if ($request->isAJAX() || ! str_contains($format, 'html')) {
                 $response->setHeader('Debugbar-Time', "{$time}")
                     ->setHeader('Debugbar-Link', site_url("?debugbar_time={$time}"));
 
@@ -412,7 +433,7 @@ class Toolbar
                 . $kintScript
                 . PHP_EOL;
 
-            if (strpos($response->getBody(), '<head>') !== false) {
+            if (str_contains($response->getBody(), '<head>')) {
                 $response->setBody(
                     preg_replace(
                         '/<head>/',
@@ -442,7 +463,7 @@ class Toolbar
             return;
         }
 
-        $request = Services::request();
+        $request = service('request');
 
         // If the request contains '?debugbar then we're
         // simply returning the loading script
@@ -491,7 +512,7 @@ class Toolbar
     {
         $data = json_decode($data, true);
 
-        if ($this->config->maxHistory !== 0 && preg_match('/\d+\.\d{6}/s', (string) Services::request()->getGet('debugbar_time'), $debugbarTime)) {
+        if ($this->config->maxHistory !== 0 && preg_match('/\d+\.\d{6}/s', (string) service('request')->getGet('debugbar_time'), $debugbarTime)) {
             $history = new History();
             $history->setFiles(
                 $debugbarTime[0],

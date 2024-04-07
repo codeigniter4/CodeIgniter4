@@ -158,6 +158,14 @@ TEXT
 ``TEXT`` should not be used on SQLSRV. It is deprecated.
 See `ntext, text, and image (Transact-SQL) - SQL Server | Microsoft Learn <https://learn.microsoft.com/en-us/sql/t-sql/data-types/ntext-text-and-image-transact-sql?view=sql-server-ver16>`_.
 
+ENUM
+^^^^
+
+Not all databases support ``ENUM``.
+
+Starting with v4.5.0, ``SQLSRV`` Forge converts ``ENUM`` data types to ``VARCHAR(n)``.
+Previous versions converted to ``TEXT``.
+
 .. _forge-addfield-default-value-rawsql:
 
 Raw Sql Strings as Default Values

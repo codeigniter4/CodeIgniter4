@@ -297,7 +297,7 @@
 <footer>
     <div class="environment">
 
-        <p>Page rendered in {elapsed_time} seconds</p>
+        <p>Page rendered in {elapsed_time} seconds using {memory_usage} MB of memory.</p>
 
         <p>Environment: <?= ENVIRONMENT ?></p>
 

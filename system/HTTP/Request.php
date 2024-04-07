@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,7 +13,6 @@
 
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\Validation\FormatRules;
 use Config\App;
 
 /**
@@ -24,59 +25,21 @@ class Request extends OutgoingRequest implements RequestInterface
     use RequestTrait;
 
     /**
-     * Proxy IPs
-     *
-     * @var array<string, string>
-     *
-     * @deprecated 4.0.5 No longer used. Check the App config directly
-     */
-    protected $proxyIPs;
-
-    /**
      * Constructor.
      *
      * @param App $config
-     *
-     * @deprecated 4.0.5 The $config is no longer needed and will be removed in a future version
      */
-    public function __construct($config = null) // @phpstan-ignore-line
+    public function __construct($config = null)
     {
+        $this->config = $config ?? config(App::class);
+
         if (empty($this->method)) {
-            $this->method = $this->getServer('REQUEST_METHOD') ?? 'GET';
+            $this->method = $this->getServer('REQUEST_METHOD') ?? Method::GET;
         }
 
         if (empty($this->uri)) {
             $this->uri = new URI();
         }
-    }
-
-    /**
-     * Validate an IP address
-     *
-     * @param string $ip    IP Address
-     * @param string $which IP protocol: 'ipv4' or 'ipv6'
-     *
-     * @deprecated 4.0.5 Use Validation instead
-     *
-     * @codeCoverageIgnore
-     */
-    public function isValidIP(?string $ip = null, ?string $which = null): bool
-    {
-        return (new FormatRules())->valid_ip($ip, $which);
-    }
-
-    /**
-     * Get the request method.
-     *
-     * @param bool $upper Whether to return in upper or lower case.
-     *
-     * @deprecated 4.0.5 The $upper functionality will be removed and this will revert to its PSR-7 equivalent
-     *
-     * @codeCoverageIgnore
-     */
-    public function getMethod(bool $upper = false): string
-    {
-        return ($upper) ? strtoupper($this->method) : strtolower($this->method);
     }
 
     /**

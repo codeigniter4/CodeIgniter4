@@ -218,6 +218,10 @@ Then save the file to your **app/Controllers** directory.
 
 .. important:: The file must be called **Helloworld.php**, with a capital ``H``. When you use Auto Routing, Controller class names MUST start with an uppercase letter and ONLY the first character can be uppercase.
 
+    Since v4.5.0, if you enable the ``$translateUriToCamelCase`` option, you can
+    use CamelCase classnames. See :ref:`controller-translate-uri-to-camelcase`
+    for details.
+
 .. important:: A controller method that will be executed by Auto Routing (Improved) needs HTTP verb (``get``, ``post``, ``put``, etc.) prefix like ``getIndex()``, ``postCreate()``.
 
 Now visit your site using a URL similar to this::
@@ -239,6 +243,10 @@ This is **not** valid:
 This is **not** valid:
 
 .. literalinclude:: controllers/011.php
+
+.. note:: Since v4.5.0, if you enable the ``$translateUriToCamelCase`` option,
+    you can use CamelCase classnames like above. See
+    :ref:`controller-translate-uri-to-camelcase` for details.
 
 Also, always make sure your controller extends the parent controller
 class so that it can inherit all its methods.
@@ -399,6 +407,10 @@ and place your controller classes within them.
 
 .. important:: Directory names MUST start with an uppercase letter and ONLY the first character can be uppercase.
 
+    Since v4.5.0, if you enable the ``$translateUriToCamelCase`` option, you can
+    use CamelCase directory names. See :ref:`controller-translate-uri-to-camelcase`
+    for details.
+
 When using this feature the first segment of your URI must
 specify the directory. For example, let's say you have a controller located here::
 
@@ -420,6 +432,34 @@ your **app/Config/Routing.php** file.
 
 CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Routing <defined-route-routing>`..
 
+.. _controller-translate-uri-to-camelcase:
+
+Translate URI To CamelCase
+==========================
+
+.. versionadded:: 4.5.0
+
+Since v4.5.0, the ``$translateUriToCamelCase`` option has been implemented,
+which works well with the current CodeIgniter's coding standards.
+
+This option enables you to automatically translate URI with dashes (``-``) to
+CamelCase in the controller and method URI segments.
+
+For example, the URI ``sub-dir/hello-controller/some-method`` will execute the
+``SubDir\HelloController::getSomeMethod()`` method.
+
+.. note:: When this option is enabled, the ``$translateURIDashes`` option is
+    ignored.
+
+Enable Translate URI To CamelCase
+---------------------------------
+
+To enable it, you need to change the setting ``$translateUriToCamelCase`` option
+to ``true`` in **app/Config/Routing.php**::
+
+    public bool $translateUriToCamelCase = true;
+
+
 .. _controller-auto-routing-legacy:
 
 Auto Routing (Legacy)
@@ -438,6 +478,10 @@ without route definitions. The auto-routing is disabled by default.
     or CSRF protection are bypassed.
 
 .. important:: Auto Routing (Legacy) routes a HTTP request with **any** HTTP method to a controller method.
+
+.. important:: Since v4.5.0, if Auto Routing (Legacy) doesn't find the controller,
+    it will throw ``PageNotFoundException`` exception before the Controller Filters
+    execute.
 
 Consider this URI::
 

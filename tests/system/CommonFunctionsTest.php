@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -24,7 +26,6 @@ use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockSecurity;
 use CodeIgniter\Test\Mock\MockSession;
@@ -274,6 +275,10 @@ final class CommonFunctionsTest extends CIUnitTestCase
      */
     public function testSessionInstance(): void
     {
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+
         $this->injectSessionMock();
 
         $this->assertInstanceOf(Session::class, session());
@@ -285,6 +290,10 @@ final class CommonFunctionsTest extends CIUnitTestCase
      */
     public function testSessionVariable(): void
     {
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+
         $this->injectSessionMock();
 
         $_SESSION['notbogus'] = 'Hi there';
@@ -298,6 +307,10 @@ final class CommonFunctionsTest extends CIUnitTestCase
      */
     public function testSessionVariableNotThere(): void
     {
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+
         $this->injectSessionMock();
 
         $_SESSION['bogus'] = 'Hi there';
@@ -422,6 +435,10 @@ final class CommonFunctionsTest extends CIUnitTestCase
      */
     public function testOldInput(): void
     {
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+
         $this->injectSessionMock();
         // setup from RedirectResponseTest...
         $_SERVER['REQUEST_METHOD'] = 'GET';
@@ -457,6 +474,10 @@ final class CommonFunctionsTest extends CIUnitTestCase
      */
     public function testOldInputSerializeData(): void
     {
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+
         $this->injectSessionMock();
         // setup from RedirectResponseTest...
         $_SERVER['REQUEST_METHOD'] = 'GET';
@@ -492,6 +513,10 @@ final class CommonFunctionsTest extends CIUnitTestCase
      */
     public function testOldInputArray(): void
     {
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+
         $this->injectSessionMock();
         // setup from RedirectResponseTest...
         $_SERVER['REQUEST_METHOD'] = 'GET';
@@ -597,7 +622,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
         $answer1 = redirect()->route('login')
             ->setCookie('foo', 'onething', YEAR)
-            ->setCookie('login_time', $loginTime, YEAR);
+            ->setCookie('login_time', (string) $loginTime, YEAR);
 
         $this->assertTrue($answer1->hasCookie('foo', 'onething'));
         $this->assertTrue($answer1->hasCookie('login_time'));
@@ -609,6 +634,10 @@ final class CommonFunctionsTest extends CIUnitTestCase
      */
     public function testTrace(): void
     {
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+
         ob_start();
         trace();
         $content = ob_get_clean();
@@ -632,6 +661,10 @@ final class CommonFunctionsTest extends CIUnitTestCase
      */
     public function testForceHttpsNullRequestAndResponse(): void
     {
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+
         $this->assertNull(Services::response()->header('Location'));
 
         Services::response()->setCookie('force', 'cookie');
@@ -729,8 +762,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $config->CSPEnabled = true;
 
         // Initialize Kint
-        $app = new MockCodeIgniter($config);
-        $app->initialize();
+        Services::autoloader()->initializeKint(CI_DEBUG);
 
         $cliDetection        = Kint::$cli_detection;
         Kint::$cli_detection = false;
@@ -748,6 +780,10 @@ final class CommonFunctionsTest extends CIUnitTestCase
      */
     public function testTraceWithCSP(): void
     {
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+
         $this->resetServices();
 
         /** @var App $config */
@@ -755,10 +791,14 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $config->CSPEnabled = true;
 
         // Initialize Kint
-        $app = new MockCodeIgniter($config);
-        $app->initialize();
+        Services::autoloader()->initializeKint(CI_DEBUG);
 
         Kint::$cli_detection = false;
+
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        // `$app->initialize()` sets error handler.
+        restore_error_handler();
 
         $this->expectOutputRegex('/<style class="kint-rich-style" nonce="[0-9a-z]{24}">/u');
         trace();
@@ -793,7 +833,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testIsWindows(): void
     {
-        $this->assertSame(strpos(php_uname(), 'Windows') !== false, is_windows());
+        $this->assertSame(str_contains(php_uname(), 'Windows'), is_windows());
         $this->assertSame(defined('PHP_WINDOWS_VERSION_MAJOR'), is_windows());
     }
 
@@ -808,7 +848,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertNotTrue(is_windows());
 
         is_windows(null);
-        $this->assertSame(strpos(php_uname(), 'Windows') !== false, is_windows());
+        $this->assertSame(str_contains(php_uname(), 'Windows'), is_windows());
         $this->assertSame(defined('PHP_WINDOWS_VERSION_MAJOR'), is_windows());
     }
 }

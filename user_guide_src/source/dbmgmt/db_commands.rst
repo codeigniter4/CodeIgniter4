@@ -28,6 +28,22 @@ you can use the ``db:table --show`` command:
 When using this command it is assumed that a table exists.
 Otherwise, CodeIgniter will complain that the database has no tables.
 
+.. _db-command-specify-the-dbgroup:
+
+Specify the Database Group
+==========================
+
+db:table --dbgroup
+------------------
+
+.. versionadded:: 4.5.0
+
+You can specify the database group to use with the ``--dbgroup`` option:
+
+.. code-block:: console
+
+    php spark db:table --show --dbgroup tests
+
 Retrieve Some Records
 =====================
 

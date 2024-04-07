@@ -24,6 +24,8 @@ exist for the most common use cases:
 
 .. literalinclude:: api_responses/002.php
 
+.. _api-response-trait-handling-response-types:
+
 ***********************
 Handling Response Types
 ***********************
@@ -31,12 +33,17 @@ Handling Response Types
 When you pass your data in any of these methods, they will determine the data type to format the results as based on
 the following criteria:
 
-* If data is a string, it will be treated as HTML to send back to the client.
-* If data is an array, it will be formatted according to the controller's ``$this->format`` value. If that is empty,
-  it will try to negotiate the content type with what the client asked for, defaulting to JSON
-  if nothing else has been specified within **Config/Format.php**, the ``$supportedResponseFormats`` property.
+* The format is determined according to the controller's ``$this->format`` value.
+  If that is ``null``, it will try to negotiate the content type with what the
+  client asked for, defaulting to the first element (JSON by default) in the
+  ``$supportedResponseFormats`` property within **app/Config/Format.php**.
+* The data will be formatted according to the format. If the format is not JSON
+  and data is a string, it will be treated as HTML to send back to the client.
 
-To define the formatter that is used, edit **Config/Format.php**. The ``$supportedResponseFormats`` contains a list of
+.. note:: Prior to v4.5.0, due to a bug, if data is a string, it will be treated
+    as HTML even if the format is JSON.
+
+To define the formatter that is used, edit **app/Config/Format.php**. The ``$supportedResponseFormats`` contains a list of
 mime types that your application can automatically format the response for. By default, the system knows how to
 format both XML and JSON responses:
 

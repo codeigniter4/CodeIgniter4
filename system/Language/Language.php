@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,7 +13,6 @@
 
 namespace CodeIgniter\Language;
 
-use Config\Services;
 use IntlException;
 use MessageFormatter;
 
@@ -93,7 +94,7 @@ class Language
     public function getLine(string $line, array $args = [])
     {
         // if no file is given, just parse the line
-        if (strpos($line, '.') === false) {
+        if (! str_contains($line, '.')) {
             return $this->formatMessage($line, $args);
         }
 
@@ -272,7 +273,7 @@ class Language
      */
     protected function requireFile(string $path): array
     {
-        $files   = Services::locator()->search($path, 'php', false);
+        $files   = service('locator')->search($path, 'php', false);
         $strings = [];
 
         foreach ($files as $file) {

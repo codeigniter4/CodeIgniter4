@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -16,7 +18,7 @@ use CodeIgniter\Model;
 class EntityModel extends Model
 {
     protected $table          = 'job';
-    protected $returnType     = '\Tests\Support\Models\SimpleEntity';
+    protected $returnType     = '\\' . SimpleEntity::class;
     protected $useSoftDeletes = false;
     protected $dateFormat     = 'int';
     protected $deletedField   = 'deleted_at';

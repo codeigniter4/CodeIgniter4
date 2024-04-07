@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -83,13 +85,13 @@ class Publish extends BaseCommand
         foreach ($publishers as $publisher) {
             if ($publisher->publish()) {
                 CLI::write(lang('Publisher.publishSuccess', [
-                    get_class($publisher),
+                    $publisher::class,
                     count($publisher->getPublished()),
                     $publisher->getDestination(),
                 ]), 'green');
             } else {
                 CLI::error(lang('Publisher.publishFailure', [
-                    get_class($publisher),
+                    $publisher::class,
                     $publisher->getDestination(),
                 ]), 'light_gray', 'red');
 

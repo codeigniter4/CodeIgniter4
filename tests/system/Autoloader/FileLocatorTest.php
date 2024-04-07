@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -20,10 +22,11 @@ use Config\Modules;
  * @internal
  *
  * @group Others
+ * @no-final
  */
-final class FileLocatorTest extends CIUnitTestCase
+class FileLocatorTest extends CIUnitTestCase
 {
-    private FileLocator $locator;
+    protected FileLocatorInterface $locator;
 
     protected function setUp(): void
     {
@@ -278,7 +281,7 @@ final class FileLocatorTest extends CIUnitTestCase
     public function testFindQNameFromPathSimple(): void
     {
         $ClassName = $this->locator->findQualifiedNameFromPath(SYSTEMPATH . 'HTTP/Header.php');
-        $expected  = '\\' . Header::class;
+        $expected  = Header::class;
 
         $this->assertSame($expected, $ClassName);
     }

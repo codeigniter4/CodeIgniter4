@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -21,7 +23,7 @@ use Config\Cache;
  *
  * @group Others
  */
-final class FileHandlerTest extends AbstractHandlerTest
+final class FileHandlerTest extends AbstractHandlerTestCase
 {
     private static string $directory = 'FileHandler';
     private Cache $config;
@@ -377,7 +379,7 @@ final class FileHandlerTest extends AbstractHandlerTest
 final class BaseTestFileHandler extends FileHandler
 {
     private static string $directory = 'FileHandler';
-    private Cache $config;
+    private readonly Cache $config;
 
     public function __construct()
     {

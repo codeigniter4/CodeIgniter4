@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -57,10 +59,12 @@ class FrameworkException extends RuntimeException implements ExceptionInterface
 
     /**
      * @return static
+     *
+     * @deprecated 4.5.0 No longer used.
      */
     public static function forMissingExtension(string $extension)
     {
-        if (strpos($extension, 'intl') !== false) {
+        if (str_contains($extension, 'intl')) {
             // @codeCoverageIgnoreStart
             $message = sprintf(
                 'The framework needs the following extension(s) installed and loaded: %s.',

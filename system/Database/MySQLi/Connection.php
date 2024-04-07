@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -387,7 +389,7 @@ class Connection extends BaseConnection
      */
     protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
-        $sql = 'SHOW TABLES FROM ' . $this->escapeIdentifiers($this->database);
+        $sql = 'SHOW TABLES FROM ' . $this->escapeIdentifier($this->database);
 
         if ($tableName !== null) {
             return $sql . ' LIKE ' . $this->escape($tableName);

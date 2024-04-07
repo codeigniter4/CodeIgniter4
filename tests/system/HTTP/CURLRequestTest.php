@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -103,7 +105,7 @@ final class CURLRequestTest extends CIUnitTestCase
     {
         $this->request->get('http://example.com');
 
-        $this->assertSame('get', $this->request->getMethod());
+        $this->assertSame('GET', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
@@ -115,7 +117,7 @@ final class CURLRequestTest extends CIUnitTestCase
     {
         $this->request->delete('http://example.com');
 
-        $this->assertSame('delete', $this->request->getMethod());
+        $this->assertSame('DELETE', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
@@ -127,7 +129,7 @@ final class CURLRequestTest extends CIUnitTestCase
     {
         $this->request->head('http://example.com');
 
-        $this->assertSame('head', $this->request->getMethod());
+        $this->assertSame('HEAD', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
@@ -139,7 +141,7 @@ final class CURLRequestTest extends CIUnitTestCase
     {
         $this->request->options('http://example.com');
 
-        $this->assertSame('options', $this->request->getMethod());
+        $this->assertSame('OPTIONS', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
@@ -264,7 +266,7 @@ final class CURLRequestTest extends CIUnitTestCase
     {
         $this->request->patch('http://example.com');
 
-        $this->assertSame('patch', $this->request->getMethod());
+        $this->assertSame('PATCH', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
@@ -276,7 +278,7 @@ final class CURLRequestTest extends CIUnitTestCase
     {
         $this->request->post('http://example.com');
 
-        $this->assertSame('post', $this->request->getMethod());
+        $this->assertSame('POST', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
@@ -288,7 +290,7 @@ final class CURLRequestTest extends CIUnitTestCase
     {
         $this->request->put('http://example.com');
 
-        $this->assertSame('put', $this->request->getMethod());
+        $this->assertSame('PUT', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
@@ -305,19 +307,19 @@ final class CURLRequestTest extends CIUnitTestCase
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
-        $this->assertSame('CUSTOM', $options[CURLOPT_CUSTOMREQUEST]);
+        $this->assertSame('custom', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
     public function testRequestMethodGetsSanitized(): void
     {
         $this->request->request('<script>Custom</script>', 'http://example.com');
 
-        $this->assertSame('custom', $this->request->getMethod());
+        $this->assertSame('Custom', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
-        $this->assertSame('CUSTOM', $options[CURLOPT_CUSTOMREQUEST]);
+        $this->assertSame('Custom', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
     public function testRequestSetsBasicCurlOptions(): void
@@ -950,7 +952,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
             'form_params' => $params,
         ]);
 
-        $this->assertSame('post', $this->request->getMethod());
+        $this->assertSame('POST', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
@@ -973,7 +975,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
             'multipart' => $params,
         ]);
 
-        $this->assertSame('post', $this->request->getMethod());
+        $this->assertSame('POST', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
@@ -1021,7 +1023,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
             'json' => $params,
         ]);
 
-        $this->assertSame('post', $this->request->getMethod());
+        $this->assertSame('POST', $this->request->getMethod());
 
         $expected = json_encode($params);
         $this->assertSame($expected, $this->request->getBody());

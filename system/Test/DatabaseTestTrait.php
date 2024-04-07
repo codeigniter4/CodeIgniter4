@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -261,7 +263,7 @@ trait DatabaseTestTrait
      */
     public function loadBuilder(string $tableName)
     {
-        $builderClass = str_replace('Connection', 'Builder', get_class($this->db));
+        $builderClass = str_replace('Connection', 'Builder', $this->db::class);
 
         return new $builderClass($tableName, $this->db);
     }

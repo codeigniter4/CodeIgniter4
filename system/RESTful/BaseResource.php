@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -69,7 +71,7 @@ abstract class BaseResource extends Controller
         }
 
         if (! empty($this->model) && empty($this->modelName)) {
-            $this->modelName = get_class($this->model);
+            $this->modelName = $this->model::class;
         }
     }
 }

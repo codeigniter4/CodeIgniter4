@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -27,6 +29,7 @@ return [
             'migration'  => 'Migration class name',
             'model'      => 'Model class name',
             'seeder'     => 'Seeder class name',
+            'test'       => 'Test class name',
             'validation' => 'Validation class name',
         ],
         'commandType'      => 'Command type',

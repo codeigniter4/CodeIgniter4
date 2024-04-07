@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,6 +13,7 @@
 
 namespace CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved;
 
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Filters;
 use Config\Services;
@@ -47,7 +50,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
             $namespace,
             'Home',
             'index',
-            ['get', 'post'],
+            [Method::GET, Method::POST],
             [],
         );
     }
@@ -66,7 +69,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
                 '',
                 '\\Tests\\Support\\Controllers\\Newautorouting::getIndex',
                 '',
-                'toolbar',
+                '',
             ],
             1 => [
                 'POST(auto)',
@@ -74,7 +77,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
                 '',
                 '\\Tests\\Support\\Controllers\\Newautorouting::postSave',
                 'honeypot',
-                'toolbar',
+                '',
             ],
         ];
         $this->assertSame($expected, $routes);
@@ -94,7 +97,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
                 '',
                 '\\Tests\\Support\\Controllers\\Newautorouting::getIndex',
                 '',
-                'toolbar',
+                '',
             ],
             1 => [
                 'POST(auto)',
@@ -102,7 +105,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
                 '',
                 '\\Tests\\Support\\Controllers\\Newautorouting::postSave',
                 '',
-                'toolbar',
+                '',
             ],
         ];
         $this->assertSame($expected, $routes);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -32,6 +34,10 @@ final class FormHelperTest extends CIUnitTestCase
         parent::setUp();
 
         helper('form');
+
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
     }
 
     private function setRequest(): void
@@ -1020,7 +1026,10 @@ final class FormHelperTest extends CIUnitTestCase
 
         $html = validation_show_error('id');
 
-        $this->assertSame('<span class="help-block">The ID field is required.</span>' . "\n", $html);
+        $this->assertSame('<!-- DEBUG-VIEW START 1 SYSTEMPATH/Validation/Views/single.php -->
+<span class="help-block">The ID field is required.</span>
+
+<!-- DEBUG-VIEW ENDED 1 SYSTEMPATH/Validation/Views/single.php -->' . "\n", $html);
     }
 
     public function testValidationShowErrorForWildcards(): void
@@ -1039,7 +1048,10 @@ final class FormHelperTest extends CIUnitTestCase
 
         $html = validation_show_error('user.*.name');
 
-        $this->assertSame('<span class="help-block">The Name field is required.</span>' . "\n", $html);
+        $this->assertSame('<!-- DEBUG-VIEW START 1 SYSTEMPATH/Validation/Views/single.php -->
+<span class="help-block">The Name field is required.</span>
+
+<!-- DEBUG-VIEW ENDED 1 SYSTEMPATH/Validation/Views/single.php -->' . "\n", $html);
     }
 
     public function testFormParseFormAttributesTrue(): void

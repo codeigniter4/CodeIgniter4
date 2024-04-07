@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -26,7 +28,7 @@ class SiteURI extends URI
     /**
      * The current baseURL.
      */
-    private URI $baseURL;
+    private readonly URI $baseURL;
 
     /**
      * The path part of baseURL.

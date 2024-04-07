@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -21,7 +23,7 @@ use Exception;
  *
  * @internal
  */
-final class MemcachedHandlerTest extends AbstractHandlerTest
+final class MemcachedHandlerTest extends AbstractHandlerTestCase
 {
     private Cache $config;
 

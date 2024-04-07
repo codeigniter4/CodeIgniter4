@@ -82,7 +82,9 @@ CodeIgniter provisions
 - :doc:`../libraries/validation` library
 - :doc:`Security </libraries/security>` library provides for
   :ref:`CSRF protection <cross-site-request-forgery>`
+- :doc:`../libraries/sessions` library
 - :doc:`../libraries/throttler` for rate limit
+- :doc:`../libraries/cors` filter
 - :php:func:`log_message()` function for logging
 - An official authentication and authorization framework :ref:`CodeIgniter Shield <shield>`
 - Easy to add third party authentication
@@ -325,6 +327,8 @@ Secure installation processes should be implemented, including:
 CodeIgniter provisions
 ----------------------
 
+- :ref:`spark config:check <confirming-config-values>` command
+- :ref:`spark phpini:check <spark-phpini-check>` command
 - :ref:`Production mode <environment-constant>` by default
 - :ref:`secureheaders` filter
 
@@ -608,6 +612,7 @@ CodeIgniter provisions
 
 - An official authentication and authorization framework
   :ref:`CodeIgniter Shield <shield>`
+- :doc:`PHPUnit testing <../testing/overview>`
 
 API2:2023 Broken Authentication
 ===============================
@@ -644,8 +649,11 @@ OWASP recommendations
 CodeIgniter provisions
 ----------------------
 
+- :doc:`../incoming/filters`
+- :ref:`routing-spark-routes` command
 - An official authentication and authorization framework
   :ref:`CodeIgniter Shield <shield>`
+- :doc:`../libraries/throttler` for rate limit
 
 API3:2023 Broken Object Property Level Authorization
 ====================================================
@@ -744,6 +752,7 @@ provided by one or more components external to the application code.
 CodeIgniter provisions
 ----------------------
 
+- :doc:`../incoming/filters`
 - An official authentication and authorization framework
   :ref:`CodeIgniter Shield <shield>`
 
@@ -869,6 +878,7 @@ CodeIgniter provisions
 - :php:func:`force_https()` function
 - :ref:`Defined Route Routing <defined-route-routing>`
 - :ref:`auto-routing-improved`
+- :doc:`../libraries/cors` filter
 
 API9:2023 Improper Inventory Management
 =======================================
@@ -930,4 +940,5 @@ OWASP recommendations
 CodeIgniter provisions
 ----------------------
 
+- :doc:`CURLRequest <../libraries/curlrequest>` class
 - :doc:`../libraries/validation` library

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -44,7 +46,7 @@ class Database
             throw new InvalidArgumentException('You must supply the parameter: alias.');
         }
 
-        if (! empty($params['DSN']) && strpos($params['DSN'], '://') !== false) {
+        if (! empty($params['DSN']) && str_contains($params['DSN'], '://')) {
             $params = $this->parseDSN($params);
         }
 
@@ -130,7 +132,7 @@ class Database
      */
     protected function initDriver(string $driver, string $class, $argument): object
     {
-        $classname = (strpos($driver, '\\') === false)
+        $classname = (! str_contains($driver, '\\'))
             ? "CodeIgniter\\Database\\{$driver}\\{$class}"
             : $driver . '\\' . $class;
 

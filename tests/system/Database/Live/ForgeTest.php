@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -52,9 +54,36 @@ final class ForgeTest extends CIUnitTestCase
         if ($this->db->DBDriver === 'OCI8') {
             $this->markTestSkipped('OCI8 does not support create database.');
         }
+
         $databaseCreated = $this->forge->createDatabase('test_forge_database');
 
         $this->assertTrue($databaseCreated);
+    }
+
+    public function testCreateDatabaseWithDots(): void
+    {
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->markTestSkipped('OCI8 does not support create database.');
+        }
+
+        $dbName = 'test_com.sitedb.web';
+
+        $databaseCreated = $this->forge->createDatabase($dbName);
+
+        $this->assertTrue($databaseCreated);
+
+        // Checks if tableExists() works.
+        $config             = config(Database::class)->{$this->DBGroup};
+        $config['database'] = $dbName;
+        $db                 = db_connect($config);
+        $result             = $db->tableExists('not_exist');
+
+        $this->assertFalse($result);
+
+        $db->close();
+        if ($this->db->DBDriver !== 'SQLite3') {
+            $this->forge->dropDatabase($dbName);
+        }
     }
 
     public function testCreateDatabaseIfNotExists(): void
@@ -62,14 +91,16 @@ final class ForgeTest extends CIUnitTestCase
         if ($this->db->DBDriver === 'OCI8') {
             $this->markTestSkipped('OCI8 does not support create database.');
         }
+
         $dbName = 'test_forge_database_exist';
 
         $databaseCreateIfNotExists = $this->forge->createDatabase($dbName, true);
+
+        $this->assertTrue($databaseCreateIfNotExists);
+
         if ($this->db->DBDriver !== 'SQLite3') {
             $this->forge->dropDatabase($dbName);
         }
-
-        $this->assertTrue($databaseCreateIfNotExists);
     }
 
     public function testCreateDatabaseIfNotExistsWithDb(): void
@@ -77,15 +108,35 @@ final class ForgeTest extends CIUnitTestCase
         if ($this->db->DBDriver === 'OCI8') {
             $this->markTestSkipped('OCI8 does not support create database.');
         }
+
         $dbName = 'test_forge_database_exist';
 
         $this->forge->createDatabase($dbName);
         $databaseExists = $this->forge->createDatabase($dbName, true);
+
+        $this->assertTrue($databaseExists);
+
         if ($this->db->DBDriver !== 'SQLite3') {
             $this->forge->dropDatabase($dbName);
         }
+    }
+
+    public function testCreateDatabaseIfNotExistsWithDbWithDots(): void
+    {
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->markTestSkipped('OCI8 does not support create database.');
+        }
+
+        $dbName = 'test_forge.database.exist';
+
+        $this->forge->createDatabase($dbName);
+        $databaseExists = $this->forge->createDatabase($dbName, true);
 
         $this->assertTrue($databaseExists);
+
+        if ($this->db->DBDriver !== 'SQLite3') {
+            $this->forge->dropDatabase($dbName);
+        }
     }
 
     public function testDropDatabase(): void
@@ -104,17 +155,14 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testCreateDatabaseExceptionNoCreateStatement(): void
     {
-        $this->setPrivateProperty($this->forge, 'createDatabaseStr', false);
-
-        if ($this->db->DBDriver === 'SQLite3') {
-            $databaseCreated = $this->forge->createDatabase('test_forge_database');
-            $this->assertTrue($databaseCreated);
-        } else {
-            $this->expectException(DatabaseException::class);
-            $this->expectExceptionMessage('This feature is not available for the database you are using.');
-
-            $this->forge->createDatabase('test_forge_database');
+        if ($this->db->DBDriver !== 'OCI8') {
+            $this->markTestSkipped($this->db->DBDriver . ' does support drop database.');
         }
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('This feature is not available for the database you are using.');
+
+        $this->forge->createDatabase('test_forge_database');
     }
 
     public function testDropDatabaseExceptionNoDropStatement(): void
@@ -941,7 +989,7 @@ final class ForgeTest extends CIUnitTestCase
                 ],
             ];
 
-            if (version_compare($this->db->getVersion(), '8.0.17', '>=') && strpos($this->db->getVersion(), 'MariaDB') === false) {
+            if (version_compare($this->db->getVersion(), '8.0.17', '>=') && ! str_contains($this->db->getVersion(), 'MariaDB')) {
                 // As of MySQL 8.0.17, the display width attribute for integer data types
                 // is deprecated and is not reported back anymore.
                 // @see https://dev.mysql.com/doc/refman/8.0/en/numeric-type-attributes.html

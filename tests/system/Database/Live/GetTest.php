@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -14,6 +16,7 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Config\Feature;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
@@ -46,6 +49,26 @@ final class GetTest extends CIUnitTestCase
         $this->assertCount(2, $jobs);
         $this->assertSame('Accountant', $jobs[0]->name);
         $this->assertSame('Musician', $jobs[1]->name);
+    }
+
+    public function testGetWithLimitZero(): void
+    {
+        $config                 = config(Feature::class);
+        $config->limitZeroAsAll = false;
+
+        $jobs = $this->db->table('job')->limit(0)->get()->getResult();
+
+        $this->assertCount(0, $jobs);
+    }
+
+    public function testGetWithLimitZeroAsAll(): void
+    {
+        $config                 = config(Feature::class);
+        $config->limitZeroAsAll = true;
+
+        $jobs = $this->db->table('job')->limit(0)->get()->getResult();
+
+        $this->assertCount(4, $jobs);
     }
 
     public function testGetWhereArray(): void
@@ -165,7 +188,8 @@ final class GetTest extends CIUnitTestCase
             $this->assertNull($typeTest[10]->type_name);  // DATETIME
             $this->assertSame('bigint', $typeTest[11]->type_name); // BIGINT
             $this->assertSame('real', $typeTest[12]->type_name);  // REAL
-            $this->assertSame('decimal', $typeTest[13]->type_name);  // DECIMAL
+            $this->assertSame('varchar', $typeTest[13]->type_name);  // ENUM
+            $this->assertSame('decimal', $typeTest[14]->type_name);  // DECIMAL
         }
     }
 
@@ -239,7 +263,7 @@ final class GetTest extends CIUnitTestCase
             public $deleted_at;
         };
 
-        $user = $this->db->table('user')->get()->getRow(0, get_class($testClass));
+        $user = $this->db->table('user')->get()->getRow(0, $testClass::class);
 
         $this->assertSame('Derek Jones', $user->name);
     }

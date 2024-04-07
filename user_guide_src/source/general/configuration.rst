@@ -191,6 +191,8 @@ Some environments, e.g., Docker, CloudFormation, do not permit variable name wit
     app_forceGlobalSecureRequests = true
     app_CSPEnabled = true
 
+.. _configuration-classes-and-environment-variables:
+
 Configuration Classes and Environment Variables
 ***********************************************
 
@@ -369,3 +371,56 @@ the three properties declared, but the value of the ``$target`` property will be
 by treating ``RegionalSales`` as a "registrar". The resulting configuration properties:
 
 .. literalinclude:: configuration/011.php
+
+.. _confirming-config-values:
+
+Confirming Config Values
+************************
+
+The actual Config object property values are changed at runtime by the :ref:`registrars`
+and :ref:`Environment Variables <configuration-classes-and-environment-variables>`,
+and :ref:`factories-config-caching`.
+
+CodeIgniter has the following :doc:`command <../cli/spark_commands>` to check
+the actual Config values.
+
+.. _spark-config-check:
+
+config:check
+============
+
+.. versionadded:: 4.5.0
+
+For example, if you want to check the ``Config\App`` instance:
+
+.. code-block:: console
+
+    php spark config:check App
+
+The output is like the following:
+
+.. code-block:: none
+
+    Config\App#6 (12) (
+        public 'baseURL' -> string (22) "http://localhost:8080/"
+        public 'allowedHostnames' -> array (0) []
+        public 'indexPage' -> string (9) "index.php"
+        public 'uriProtocol' -> string (11) "REQUEST_URI"
+        public 'defaultLocale' -> string (2) "en"
+        public 'negotiateLocale' -> boolean false
+        public 'supportedLocales' -> array (1) [
+            0 => string (2) "en"
+        ]
+        public 'appTimezone' -> string (3) "UTC"
+        public 'charset' -> string (5) "UTF-8"
+        public 'forceGlobalSecureRequests' -> boolean false
+        public 'proxyIPs' -> array (0) []
+        public 'CSPEnabled' -> boolean false
+    )
+
+    Config Caching: Disabled
+
+You can see if Config Caching is eabled or not.
+
+.. note:: If Config Caching is enabled, the cached values are used permanently.
+    See :ref:`factories-config-caching` for details.

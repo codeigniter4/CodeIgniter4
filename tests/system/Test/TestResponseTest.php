@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -386,7 +388,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->getTestResponse('<h1>Hello World!</h1>');
 
         $this->expectException(AssertionFailedError::class);
-        $this->expectExceptionMessage('Response does not have valid json');
+        $this->expectExceptionMessage('Response is not a valid JSON.');
 
         $this->testResponse->assertJSONFragment(['foo' => 'bar']);
     }

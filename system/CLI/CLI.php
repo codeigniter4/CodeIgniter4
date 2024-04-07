@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -27,13 +29,6 @@ use Throwable;
  * possible to test using travis-ci. It has been phpunit-annotated
  * to prevent messing up code coverage.
  *
- * Some of the methods require keyboard input, and are not unit-testable
- * as a result: input() and prompt().
- * validate() is internal, and not testable if prompt() isn't.
- * The wait() method is mostly testable, as long as you don't give it
- * an argument of "0".
- * These have been flagged to ignore for code coverage purposes.
- *
  * @see \CodeIgniter\CLI\CLITest
  */
 class CLI
@@ -43,7 +38,7 @@ class CLI
      *
      * @var bool
      *
-     * @deprecated 4.4.2 Should be protected.
+     * @deprecated 4.4.2 Should be protected, and no longer used.
      * @TODO Fix to camelCase in the next major version.
      */
     public static $readline_support = false;
@@ -153,6 +148,11 @@ class CLI
     protected static $isColored = false;
 
     /**
+     * Input and Output for CLI.
+     */
+    protected static ?InputOutput $io = null;
+
+    /**
      * Static "constructor".
      *
      * @return void
@@ -181,6 +181,8 @@ class CLI
             // For "! defined('STDOUT')" see: https://github.com/codeigniter4/CodeIgniter4/issues/7047
             define('STDOUT', 'php://output'); // @codeCoverageIgnore
         }
+
+        static::resetInputOutput();
     }
 
     /**
@@ -193,14 +195,7 @@ class CLI
      */
     public static function input(?string $prefix = null): string
     {
-        // readline() can't be tested.
-        if (static::$readline_support && ENVIRONMENT !== 'testing') {
-            return readline($prefix); // @codeCoverageIgnore
-        }
-
-        echo $prefix;
-
-        return fgets(fopen('php://stdin', 'rb'));
+        return static::$io->input($prefix);
     }
 
     /**
@@ -220,13 +215,11 @@ class CLI
      * // Do not provide options but requires a valid email
      * $email = CLI::prompt('What is your email?', null, 'required|valid_email');
      *
-     * @param string            $field      Output "field" question
-     * @param array|string      $options    String to a default value, array to a list of options (the first option will be the default value)
-     * @param array|string|null $validation Validation rules
+     * @param string                  $field      Output "field" question
+     * @param list<int|string>|string $options    String to a default value, array to a list of options (the first option will be the default value)
+     * @param array|string|null       $validation Validation rules
      *
      * @return string The user input
-     *
-     * @codeCoverageIgnore
      */
     public static function prompt(string $field, $options = null, $validation = null): string
     {
@@ -246,9 +239,9 @@ class CLI
             $default     = $options;
         }
 
-        if (is_array($options) && $options) {
+        if (is_array($options) && $options !== []) {
             $opts               = $options;
-            $extraOutputDefault = static::color($opts[0], 'green');
+            $extraOutputDefault = static::color((string) $opts[0], 'green');
 
             unset($opts[0]);
 
@@ -265,7 +258,7 @@ class CLI
         static::fwrite(STDOUT, $field . (trim($field) !== '' ? ' ' : '') . $extraOutput . ': ');
 
         // Read the input from keyboard.
-        $input = trim(static::input()) ?: $default;
+        $input = trim(static::$io->input()) ?: (string) $default;
 
         if ($validation !== []) {
             while (! static::validate('"' . trim($field) . '"', $input, $validation)) {
@@ -285,8 +278,6 @@ class CLI
      * @param array|string|null $validation Validation rules
      *
      * @return string The selected key of $options
-     *
-     * @codeCoverageIgnore
      */
     public static function promptByKey($text, array $options, $validation = null): string
     {
@@ -415,8 +406,6 @@ class CLI
      * @param string       $field Prompt "field" output
      * @param string       $value Input value
      * @param array|string $rules Validation rules
-     *
-     * @codeCoverageIgnore
      */
     protected static function validate(string $field, string $value, $rules): bool
     {
@@ -533,11 +522,8 @@ class CLI
         } elseif ($seconds > 0) {
             sleep($seconds);
         } else {
-            // this chunk cannot be tested because of keyboard input
-            // @codeCoverageIgnoreStart
             static::write(static::$wait_msg);
-            static::input();
-            // @codeCoverageIgnoreEnd
+            static::$io->input();
         }
     }
 
@@ -566,8 +552,6 @@ class CLI
 
     /**
      * Clears the screen of output
-     *
-     * @codeCoverageIgnore
      *
      * @return void
      */
@@ -608,7 +592,7 @@ class CLI
         $newText = '';
 
         // Detect if color method was already in use with this text
-        if (strpos($text, "\033[0m") !== false) {
+        if (str_contains($text, "\033[0m")) {
             $pattern = '/\\033\\[0;.+?\\033\\[0m/u';
 
             preg_match_all($pattern, $text, $matches);
@@ -761,8 +745,6 @@ class CLI
 
     /**
      * Populates the CLI's dimensions.
-     *
-     * @codeCoverageIgnore
      *
      * @return void
      */
@@ -1066,7 +1048,7 @@ class CLI
 
             foreach ($tableRows[$row] as $col) {
                 // Sets the size of this column in the current row
-                $allColsLengths[$row][$column] = static::strlen($col);
+                $allColsLengths[$row][$column] = static::strlen((string) $col);
 
                 // If the current column does not have a value among the larger ones
                 // or the value of this is greater than the existing one
@@ -1086,7 +1068,7 @@ class CLI
             $column = 0;
 
             foreach ($tableRows[$row] as $col) {
-                $diff = $maxColsLengths[$column] - static::strlen($col);
+                $diff = $maxColsLengths[$column] - static::strlen((string) $col);
 
                 if ($diff !== 0) {
                     $tableRows[$row][$column] .= str_repeat(' ', $diff);
@@ -1106,7 +1088,7 @@ class CLI
                 $cols = '+';
 
                 foreach ($tableRows[$row] as $col) {
-                    $cols .= str_repeat('-', static::strlen($col) + 2) . '+';
+                    $cols .= str_repeat('-', static::strlen((string) $col) + 2) . '+';
                 }
                 $table .= $cols . PHP_EOL;
             }
@@ -1137,15 +1119,27 @@ class CLI
      */
     protected static function fwrite($handle, string $string)
     {
-        if (! is_cli()) {
-            // @codeCoverageIgnoreStart
-            echo $string;
+        static::$io->fwrite($handle, $string);
+    }
 
-            return;
-            // @codeCoverageIgnoreEnd
-        }
+    /**
+     * Testing purpose only
+     *
+     * @testTag
+     */
+    public static function setInputOutput(InputOutput $io): void
+    {
+        static::$io = $io;
+    }
 
-        fwrite($handle, $string);
+    /**
+     * Testing purpose only
+     *
+     * @testTag
+     */
+    public static function resetInputOutput(): void
+    {
+        static::$io = new InputOutput();
     }
 }
 

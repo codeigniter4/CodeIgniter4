@@ -1,0 +1,517 @@
+#############
+Version 4.5.0
+#############
+
+Release Date: April 7, 2024
+
+**4.5.0 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+**********
+Highlights
+**********
+
+- Update minimal PHP requirement to 8.1.
+- Update minimal PHPUnit requirement to 10.5.
+- **CORS filter** (*contributed by* `kenjis <https://github.com/kenjis>`_)
+  See :doc:`../libraries/cors`.
+- The **spark optimize** command for performance improvement on production
+  environment (*contributed by* `kenjis <https://github.com/kenjis>`_).
+  See :ref:`spark_optimize`.
+
+************
+Enhancements
+************
+
+.. _v450-required-filters:
+
+Required Filters
+================
+
+New :ref:`Required Filters <filters-required>` have been introduced. They are
+special filters that are applied before and after other kinds of filters, and
+always applied even if a route does not exist.
+
+The following existing functionalities have been reimplemented as Required Filters.
+
+- :ref:`Force Global Secure Requests <forcehttps>`
+- :doc:`../general/caching`
+- :ref:`performancemetrics`
+- :ref:`the-debug-toolbar`
+
+The Benchmark **Timers** used by Debug Toolbar now collect *Required Before Filters*
+and *Required After Filters* data.
+
+The benchmark points have been changed:
+
+- Before
+
+   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``, Instantiating RouteCollection object, Loading Routes files, Instantiating Router object,
+   - ``routing``: Routing,
+- After
+
+   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``.
+   - ``required_before_filters``: Instantiating Filters object, Running *Required Before Filters*.
+   - ``routing``: Instantiating RouteCollection object, Loading Routes files, Instantiating Router object, Routing,
+
+Routing
+=======
+
+- **AutoRouting Improved:** The ``$translateUriToCamelCase`` option has been added
+  that allows using CamelCase controller and method names. See
+  :ref:`controller-translate-uri-to-camelcase`.
+- **Others:**
+    - Added option ``$multipleSegmentsOneParam``. When this option is
+      enabled, a placeholder that matches multiple segments, such as ``(:any)``, will
+      be passed directly as it is to one parameter, even if it contains multiple segments.
+      See :ref:`multiple-uri-segments-as-one-parameter` for details.
+    - Now the 404 controller's method that you set in ``$override404`` also receive
+      a ``PageNotFoundException`` message as the first parameter.
+    - Now you can use the ``__invoke()`` method as the default method. See
+      :ref:`routing-default-method`.
+
+Commands
+========
+
+- Added ``spark optimize`` command to optimize configuration for production environment.
+  See :ref:`spark_optimize` for the details.
+- Added ``spark make:test`` command to generate a skeleton test file. See
+  :ref:`cli-generators-make-test` for the details.
+- Added ``spark config:check`` command to check Config values. See
+  :ref:`confirming-config-values` for the details.
+- Added ``spark phpini:check`` command to check important PHP ini settings. See
+  :ref:`spark-phpini-check` for the details.
+- Added ``spark lang:find`` command to update translations keys. See :ref:`generating-translation-files-via-command` for the details.
+- The ``--dbgroup`` option has been added to the ``spark db:table`` command.
+  See :ref:`Database Commands <db-command-specify-the-dbgroup>`.
+
+Testing
+=======
+
+- **DomParser:** The new methods were added ``seeXPath()`` and ``dontSeeXPath()``
+  which allows users to work directly with DOMXPath object, using complex expressions.
+- **CLI:** The new ``InputOutput`` class was added and now you can write tests
+  for commands more easily if you use ``MockInputOutput``.
+  See :ref:`using-mock-input-output`.
+- **Fabricator:** The Fabricator class now has the ``setUnique()``, ``setOptional()`` and ``setValid()``
+  methods to allow calling of Faker's modifiers on each field before faking their values.
+- **TestResponse:** TestResponse no longer extends ``PHPUnit\Framework\TestCase`` as it
+  is not a test. Assertions' return types are now natively typed ``void``.
+
+Database
+========
+
+Query Builder
+-------------
+
+.. _v450-query-builder-limit-0-behavior:
+
+limit(0) Behavior
+^^^^^^^^^^^^^^^^^
+
+- Added a feature flag ``Feature::$limitZeroAsAll`` to fix the incorrect behavior
+  of ``limit(0)``.
+- If ``LIMIT 0`` is specified in a SQL statement, 0 records are returned. However,
+  there is a bug in the Query Builder, and if ``limit(0)`` is specified, the
+  generated SQL statement will have no ``LIMIT`` clause and all records will be
+  returned.
+- It is recommended that ``$limitZeroAsAll`` in **app/Config/Feature.php** be set
+  to ``false`` as this incorrect behavior will be fixed in a future version. See
+  also :ref:`v450-model-findall-limit-0-behavior`.
+
+Others
+------
+
+- Added support for database names containing dots (``.``).
+
+Model
+=====
+
+Model Field Casting
+-------------------
+
+Added a feature to convert data retrieved from a database into the appropriate
+PHP type. See :ref:`model-field-casting` for details.
+
+.. _v450-model-findall-limit-0-behavior:
+
+findAll(0) Behavior
+-------------------
+
+- Added a feature flag ``Feature::$limitZeroAsAll`` to fix the incorrect behavior
+  of ``limit(0)`` for Query Builder. See :ref:`v450-query-builder-limit-0-behavior`
+  for details.
+- If you disable this flag, you need to change code like ``findAll(0, $offset)``
+  to ``findAll(null, $offset)``.
+
+$updateOnlyChanged
+------------------
+
+Added a property ``$updateOnlyChanged`` whether to update
+:doc:`Entity <../models/entities>`'s only changed fields. If you set this property
+to ``false``, when you are updating an Entity, ``DataException``
+"There is no data to update" will not raise even if the values in the Entity have
+not changed.
+
+See :ref:`Using CodeIgniter’s Model <model-update-only-changed>` for details.
+
+Saving Dates
+------------
+
+Now you can configure the date/time format when you save :doc:`Time <../libraries/time>`
+instances. See :ref:`model-saving-dates` for details.
+
+Libraries
+=========
+
+- **CORS:** Added :doc:`../libraries/cors` filter and class.
+- **Validation:**
+    - Added the new rule ``field_exists`` that checks the filed exists in the
+      data to be validated.
+    - The ``$dbGroup`` parameter of ``Validation::run()`` now accepts not only
+      a database group name, but also a database connection instance or an array
+      of database settings.
+- **Session:**
+    - ``RedisHandler`` now can configure the interval time for acquiring locks
+      (``$lockRetryInterval``) and the number of retries (``$lockMaxRetries``).
+    - Now you can use Redis ACL (username and password) with ``RedisHandler``.
+      See :ref:`sessions-redishandler-driver` for details.
+- **Security:** ``Config\Security::$redirect`` is now, by default, environment-specific.
+  For production environment, changed to ``true`` but is still ``false`` for other
+  environments.
+
+Others
+======
+
+- **Bootstrap:** The ``CodeIgniter\Boot`` class has been introduced, replacing
+  **system/bootstrap.php**.
+- **Autoloader:**
+    - Autoloading performance when using Composer has been improved.
+      Adding the ``App`` namespace in the ``autoload.psr4`` setting in **composer.json**
+      may also improve the performance of your app. See :ref:`autoloader-application-namespace`.
+    - FileLocator Caching implemented. See :ref:`file-locator-caching` for details.
+    - ``FileLocatorInterface`` has been added.
+- **CodeIgniter:** Added a pseudo-variable ``{memory_usage}`` to show your memory
+  usage in your view files, which was supported by CodeIgniter 3.
+- **Events:** Added event points ``pre_command`` and ``post_command`` for Spark
+  commands. See :ref:`Event Points <event-points-for-cli-apps>`.
+- **HTTP:** Added ``Message::addHeader()`` method to add another header with
+  the same name. See :php:meth:`CodeIgniter\\HTTP\\Message::addHeader()`.
+- **Web Page Caching:** ``ResponseCache`` has been improved to include the request
+  HTTP method in the cache key. This means that the same URI will be cached separately
+  if the HTTP method is different.
+- **CSP:** Added ``ContentSecurityPolicy::clearDirective()`` method to clear
+  existing CSP directives. See :ref:`csp-clear-directives`.
+
+********
+BREAKING
+********
+
+Behavior Changes
+================
+
+Lowercase HTTP Method Name
+--------------------------
+
+For historical reasons, the framework used HTTP method names in lower case like
+"get", "post".
+But the method token is case-sensitive because it might be used as a gateway
+to object-based systems with case-sensitive method names. By convention,
+standardized methods are defined in all-uppercase US-ASCII letters.
+See https://www.rfc-editor.org/rfc/rfc9110#name-overview.
+
+Now the framework uses the correct HTTP method names like "GET", "POST".
+
+- ``Request::getMethod()`` returns uppercase HTTP methods.
+- ``CURLRequest::request()`` does not change the accepted HTTP methods to uppercase.
+
+See :ref:`upgrade-450-lowercase-http-method-name` for details.
+
+Filter Execution Order
+----------------------
+
+The order in which Controller Filters are executed has changed. See
+:ref:`Upgrading Guide <upgrade-450-filter-execution-order>` for details.
+
+Nested Route Groups and Options
+-------------------------------
+
+Due to a bug fix, the behavior has changed so that options passed to the outer
+``group()`` are merged with the options of the inner ``group()``.
+See :ref:`Upgrading Guide <upgrade-450-nested-route-groups-and-options>` for details.
+
+API\\ResponseTrait
+------------------
+
+Now when a response format is JSON, if you pass string data, the framework returns
+a JSON response. In previous versions, it returned a HTML response.
+See :ref:`Upgrading Guide <upgrade-450-api-response-trait>` for details.
+
+Factories class
+---------------
+
+:doc:`../concepts/factories` has been changed to a final class. It is a static
+class, and even if it were extended, there is no way to replace it.
+
+Others
+------
+
+- **AutoRouting Legacy:** Changed so that a ``PageNotFoundException`` is thrown
+  if the controller corresponding to the request URI does not exist.
+- **Logger:** The :php:func:`log_message()` function and the logger methods in
+  ``CodeIgniter\Log\Logger`` now do not return ``bool`` values. The return types
+  have been fixed to ``void`` to follow the PSR-3 interface.
+- **Autoloader:** The prefix ``\`` in the fully qualified classname returned by
+  ``FileLocator::findQualifiedNameFromPath()`` has been removed.
+- **BaseModel:** The ``getIdValue()`` method has been changed to ``abstract``.
+- **Routing:** The :ref:`404-override` feature does change the Response status
+  code to 404 by default. See :ref:`Upgrading Guide <upgrade-450-404-override>`.
+- **system/bootstrap.php:** This file cannot be used. The code has been moved to
+  the new ``CodeIgniter\Boot`` class.
+
+Interface Changes
+=================
+
+.. note:: As long as you have not extended the relevant CodeIgniter core classes
+    or implemented these interfaces, all these changes are backward compatible
+    and require no intervention.
+
+- **ResponseInterface:** The default value of the third parameter ``$expire`` of
+  the ``ResponseInterface::setCookie()`` has been fixed from ``''`` to ``0``.
+- **Logger:** The `psr/log <https://packagist.org/packages/psr/log>`_ package has
+  been upgraded to v3.0.0.
+- **Validation:** The method signature of ``ValidationInterface::run()`` has been
+  changed. The ``?string`` typehint on the ``$dbGroup`` parameter was removed.
+
+.. _v450-method-signature-changes:
+
+Method Signature Changes
+========================
+
+Setting Cookies
+---------------
+
+The third parameter ``$expire`` in :php:func:`set_cookie()` and
+:php:meth:`CodeIgniter\\HTTP\\Response::setCookie()` has been fixed.
+
+The type has been changed from ``string`` to ``int``, and the default value has
+been changed from ``''`` to  ``0``.
+
+FileLocatorInterface
+--------------------
+
+- **Router:** The first parameter of the ``RouteCollection`` constructor has been changed
+  from ``FileLocator`` to ``FileLocatorInterface``.
+- **View:** The third parameter of the ``View`` constructor has been changed
+  from ``FileLocator`` to ``FileLocatorInterface``.
+
+Return Type Changes
+-------------------
+
+- **Model:** The return type of the ``objectToRawArray()`` method in the ``Model``
+  and ``BaseModel`` classes has been changed from ``?array`` to ``array``.
+
+Traditional Validation Rules
+----------------------------
+
+To add ``declare(strict_types=1)`` to the framework codebase, the method parameter
+type ``?string`` for a value to validate in the all Traditional Validation rule
+classes ``CodeIgniter\Validation\FormatRules`` and ``CodeIgniter\Validation\Rules``
+are removed.
+
+For example, the method signature changed as follows::
+
+    Before: public function integer(?string $str = null): bool
+    After:  public function integer($str = null): bool
+
+Others
+------
+
+- **Logger:** The method signatures of the methods in ``CodeIgniter\Log\Logger``
+  that implements the PSR-3 interface have been fixed. The ``bool`` return
+  types are changed to ``void``. The ``$message`` parameters now have
+  ``string|Stringable`` types.
+- **Validation:** The method signature of ``Validation::run()`` has been
+  changed. The ``?string`` typehint on the ``$dbGroup`` parameter was removed.
+
+.. _v450-removed-deprecated-items:
+
+Removed Deprecated Items
+========================
+
+Request
+-------
+
+- The ``$upper`` parameter in ``getMethod()`` in ``RequestInterface`` and ``Request``
+  has been removed. See :ref:`upgrade-450-lowercase-http-method-name`.
+- The deprecated ``isValidIP()`` method in ``RequestInterface`` and ``Request``
+  has been removed.
+- The visibility of the deprecated properties ``$uri`` and ``$config`` in
+  ``IncomingRequest`` has been changed to protected.
+- The ``$enableCSRF`` property in ``IncomingRequest`` has been removed.
+- The ``removeRelativeDirectory()`` method in ``IncomingRequest`` has been removed.
+- The ``$proxyIPs`` property in ``Request`` has been removed.
+
+Filters
+-------
+
+- The following deprecated items have been removed, because now :ref:`multiple-filters` are always enabled.
+
+    - ``Filters::enableFilter()``
+    - ``RouteCollection::getFilterForRoute()``
+    - ``Router::$filterInfo``
+    - ``Router::getFilter()``
+
+Database
+--------
+
+- ``ModelFactory``
+
+Model
+-----
+
+- ``BaseModel::idValue()``
+- ``BaseModel::fillPlaceholders()``
+- ``Model::idValue()``
+- ``Model::classToArray()``
+
+Response
+--------
+
+- The visibility of the deprecated property ``ResponseTrait::$CSP`` has been
+  changed to protected.
+- The following deprecated properties have been removed.
+
+    - ``ResponseTrait::$CSPEnabled``
+    - ``ResponseTrait::$cookiePrefix``
+    - ``ResponseTrait::$cookieDomain``
+    - ``ResponseTrait::$cookiePath``
+    - ``ResponseTrait::$cookieSecure``
+    - ``ResponseTrait::$cookieHTTPOnly``
+    - ``ResponseTrait::$cookieSameSite``
+    - ``ResponseTrait::$cookies``
+
+Security
+--------
+
+- ``SecurityInterface::isExpired()``
+- ``Security::isExpired()``
+- ``Security::CSRFVerify()``
+- ``Security::getCSRFHash()``
+- ``Security::getCSRFTokenName()``
+- ``Security::sendCookie()``
+- ``Security::doSendCookie()``
+
+CodeIgniter
+-----------
+
+- ``$path``
+- ``$useSafeOutput``
+- ``useSafeOutput()``
+- ``setPath()``
+
+Test
+----
+
+- ``CIDatabaseTestCase``
+- ``ControllerResponse``
+- ``ControllerTester``
+- ``FeatureResponse``
+- ``FeatureTestCase``
+- ``Mock\MockSecurityConfig``
+
+Spark Commands
+--------------
+
+- ``migrate:create``
+- ``session:migration``
+
+Others
+------
+
+- **Cache:** The deprecated ``CodeIgniter\Cache\Exceptions\ExceptionInterface`` has been removed.
+- **Config:**
+    - The deprecated ``CodeIgniter\Config\Config`` class has been removed.
+    - The deprecated ``CodeIgniter\Config\BaseService::discoverServices()`` method
+      has been removed.
+- **Controller:** The deprecated ``Controller::loadHelpers()`` method has been removed.
+- **Exceptions:** The deprecated ``CodeIgniter\Exceptions\CastException`` class has been removed.
+- **Entity:** The deprecated ``CodeIgniter\Entity`` class has been removed. Use
+  ``CodeIgniter\Entity\Entity`` instead.
+- **spark:** The deprecated constant ``SPARKED`` has been removed.
+
+***************
+Message Changes
+***************
+
+- Added ``CLI.generator.className.test`` message.
+- Added ``Validation.field_exists`` error message.
+
+*******
+Changes
+*******
+
+- **Bootstrap:** The loading of **.env** and defining ``ENVIRONMENT`` have been
+  moved before loading of **bootstrap.php**.
+- **Config:**
+    - ``Config\Feature::$multipleFilters`` has been removed, because now
+      :ref:`multiple-filters` are always enabled.
+    - The default error level in the production environment
+      (**app/Config/Boot/production.php**) has been changed to ``E_ALL & ~E_DEPRECATED``
+      to match the default **php.ini** for production.
+- **RouteCollection:** The HTTP method keys in the protected property ``$routes``
+  has been fixed from lowercase to uppercase.
+- **Exceptions:** Unused ``CodeIgniter\Exceptions\AlertError`` and
+  ``CodeIgniter\Exceptions\EmergencyError`` were removed.
+- **Forge:** ``SQLSRV`` Forge now converts ``ENUM`` data types to ``VARCHAR(n)``
+  when you add table columns. In previous version, it converted to ``TEXT`` that
+  is deprecated in SQL Server.
+- ``declare(strict_types=1)`` has been added to most framework codebase.
+
+************
+Deprecations
+************
+
+- **Services:** The ``BaseService::$services`` property has been deprecated. No
+  longer used.
+- **CodeIgniter:**
+    - The ``determinePath()`` method has been deprecated. No longer used.
+    - The ``resolvePlatformExtensions()`` method has been deprecated. No longer
+      used. It has been moved to the ``CodeIgniter\Boot::checkMissingExtensions()``
+      method.
+    - The ``bootstrapEnvironment()`` method has been deprecated. No longer used.
+      It has been moved to the ``CodeIgniter\Boot::loadEnvironmentBootstrap()``
+      method.
+    - The ``initializeKint()`` method has been deprecated. No longer used. It has
+      been moved to the ``Autoloader``.
+    - The ``autoloadKint()`` method has been deprecated. No longer used. It has
+      been moved to the ``Autoloader``.
+    - The ``configureKint()`` method has been deprecated. No longer used. It has
+      been moved to the ``Autoloader``.
+- **Response:** The constructor parameter ``$config`` has been deprecated. No
+  longer used.
+- **Filters:**
+    - The feature that ``Filters`` accept the lowercase HTTP method keys
+      of ``Config\Filters::$methods`` has been deprecated. Use correct uppercase
+      HTTP method keys instead.
+    - The feature that the ``spark filter:check`` command accepts the lowercase
+      HTTP method has been deprecated. Use correct uppercase HTTP method instead.
+- **RouteCollection:** The feature that the ``match()`` and ``setHTTPVerb()``
+  methods accept the lowercase HTTP methods has been deprecated. Use correct
+  uppercase HTTP methods instead.
+- **FeatureTestTrait:** The feature that the ``call()`` and ``withRoutes()``
+  methods accept the lowercase HTTP methods has been deprecated. Use correct
+  uppercase HTTP methods instead.
+- **Database:** The ``BaseConnection::$strictOn`` has been deprecated. It will be
+  moved to ``MySQLi\Connection`` in the future.
+
+**********
+Bugs Fixed
+**********
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

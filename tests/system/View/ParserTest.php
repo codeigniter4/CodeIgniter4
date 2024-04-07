@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -375,6 +377,8 @@ final class ParserTest extends CIUnitTestCase
 
             public function __construct()
             {
+                parent::__construct();
+
                 $this->obj1       = new stdClass();
                 $this->obj2       = new stdClass();
                 $this->obj1->name = 'first';

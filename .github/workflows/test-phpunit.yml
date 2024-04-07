@@ -47,7 +47,7 @@ jobs:
     steps:
       - id: coverage-php-version
         run: |
-          echo "version=8.1" >> $GITHUB_OUTPUT
+          echo "version=8.2" >> $GITHUB_OUTPUT
 
   sanity-tests:
     name: Others
@@ -56,8 +56,6 @@ jobs:
     strategy:
       matrix:
         php-version:
-          - '7.4'
-          - '8.0'
           - '8.1'
           - '8.2'
           - '8.3'
@@ -87,8 +85,6 @@ jobs:
       fail-fast: false
       matrix:
         php-version:
-          - '7.4'
-          - '8.0'
           - '8.1'
           - '8.2'
           - '8.3'
@@ -101,7 +97,7 @@ jobs:
         mysql-version:
           - '8.0'
         include:
-          - php-version: '7.4'
+          - php-version: '8.1'
             db-platform: MySQLi
             mysql-version: '5.7'
           - php-version: '8.3'
@@ -130,8 +126,6 @@ jobs:
     strategy:
       matrix:
         php-version:
-          - '7.4'
-          - '8.0'
           - '8.1'
           - '8.2'
           - '8.3'
@@ -160,8 +154,6 @@ jobs:
     strategy:
       matrix:
         php-version:
-          - '7.4'
-          - '8.0'
           - '8.1'
           - '8.2'
           - '8.3'

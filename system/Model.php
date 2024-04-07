@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -22,12 +24,10 @@ use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\ModelException;
-use CodeIgniter\I18n\Time;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Database;
-use ReflectionClass;
+use Config\Feature;
 use ReflectionException;
-use ReflectionProperty;
 use stdClass;
 
 /**
@@ -187,6 +187,12 @@ class Model extends BaseModel
     {
         $builder = $this->builder();
 
+        $useCast = $this->useCasts();
+        if ($useCast) {
+            $returnType = $this->tempReturnType;
+            $this->asArray();
+        }
+
         if ($this->tempUseSoftDeletes) {
             $builder->where($this->table . '.' . $this->deletedField, null);
         }
@@ -203,6 +209,12 @@ class Model extends BaseModel
             $row = $builder->get()->getResult($this->tempReturnType);
         }
 
+        if ($useCast) {
+            $row = $this->convertToReturnType($row, $returnType);
+
+            $this->tempReturnType = $returnType;
+        }
+
         return $row;
     }
 
@@ -217,7 +229,15 @@ class Model extends BaseModel
      */
     protected function doFindColumn(string $columnName)
     {
-        return $this->select($columnName)->asArray()->find();
+        $results = $this->select($columnName)->asArray()->find();
+
+        if ($this->useCasts()) {
+            foreach ($results as $i => $row) {
+                $results[$i] = $this->converter->fromDataSource($row);
+            }
+        }
+
+        return $results;
     }
 
     /**
@@ -225,23 +245,44 @@ class Model extends BaseModel
      * all results, while optionally limiting them.
      * This method works only with dbCalls.
      *
-     * @param int $limit  Limit
-     * @param int $offset Offset
+     * @param int|null $limit  Limit
+     * @param int      $offset Offset
      *
      * @return         array
      * @phpstan-return list<row_array|object>
      */
-    protected function doFindAll(int $limit = 0, int $offset = 0)
+    protected function doFindAll(?int $limit = null, int $offset = 0)
     {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll) {
+            $limit ??= 0;
+        }
+
         $builder = $this->builder();
+
+        $useCast = $this->useCasts();
+        if ($useCast) {
+            $returnType = $this->tempReturnType;
+            $this->asArray();
+        }
 
         if ($this->tempUseSoftDeletes) {
             $builder->where($this->table . '.' . $this->deletedField, null);
         }
 
-        return $builder->limit($limit, $offset)
+        $results = $builder->limit($limit, $offset)
             ->get()
             ->getResult($this->tempReturnType);
+
+        if ($useCast) {
+            foreach ($results as $i => $row) {
+                $results[$i] = $this->convertToReturnType($row, $returnType);
+            }
+
+            $this->tempReturnType = $returnType;
+        }
+
+        return $results;
     }
 
     /**
@@ -256,6 +297,12 @@ class Model extends BaseModel
     {
         $builder = $this->builder();
 
+        $useCast = $this->useCasts();
+        if ($useCast) {
+            $returnType = $this->tempReturnType;
+            $this->asArray();
+        }
+
         if ($this->tempUseSoftDeletes) {
             $builder->where($this->table . '.' . $this->deletedField, null);
         } elseif ($this->useSoftDeletes && ($builder->QBGroupBy === []) && $this->primaryKey) {
@@ -268,7 +315,15 @@ class Model extends BaseModel
             $builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
         }
 
-        return $builder->limit(1, 0)->get()->getFirstRow($this->tempReturnType);
+        $row = $builder->limit(1, 0)->get()->getFirstRow($this->tempReturnType);
+
+        if ($useCast) {
+            $row = $this->convertToReturnType($row, $returnType);
+
+            $this->tempReturnType = $returnType;
+        }
+
+        return $row;
     }
 
     /**
@@ -512,21 +567,7 @@ class Model extends BaseModel
             return [];
         }
 
-        return [get_class($this->db) => $error['message']];
-    }
-
-    /**
-     * Returns the id value for the data array or object
-     *
-     * @param array|object $data Data
-     *
-     * @return array|int|string|null
-     *
-     * @deprecated Use getIdValue() instead. Will be removed in version 5.0.
-     */
-    protected function idValue($data)
-    {
-        return $this->getIdValue($data);
+        return [$this->db::class => $error['message']];
     }
 
     /**
@@ -819,7 +860,7 @@ class Model extends BaseModel
      * @param object $object    Object
      * @param bool   $recursive If true, inner entities will be cast as array as well
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed> Array with raw values.
      *
      * @throws ReflectionException
      */
@@ -894,71 +935,5 @@ class Model extends BaseModel
         if (in_array($name, $this->builderMethodsNotAvailable, true)) {
             throw ModelException::forMethodNotAvailable(static::class, $name . '()');
         }
-    }
-
-    /**
-     * Takes a class an returns an array of it's public and protected
-     * properties as an array suitable for use in creates and updates.
-     *
-     * @param object|string $data
-     * @param string|null   $primaryKey
-     *
-     * @throws ReflectionException
-     *
-     * @codeCoverageIgnore
-     *
-     * @deprecated 4.1.0
-     */
-    public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = true): array
-    {
-        if (method_exists($data, 'toRawArray')) {
-            $properties = $data->toRawArray($onlyChanged);
-
-            // Always grab the primary key otherwise updates will fail.
-            if ($properties !== [] && isset($primaryKey) && ! in_array($primaryKey, $properties, true) && isset($data->{$primaryKey})) {
-                $properties[$primaryKey] = $data->{$primaryKey};
-            }
-        } else {
-            $mirror = new ReflectionClass($data);
-            $props  = $mirror->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
-
-            $properties = [];
-
-            // Loop over each property,
-            // saving the name/value in a new array we can return.
-            foreach ($props as $prop) {
-                // Must make protected values accessible.
-                $prop->setAccessible(true);
-                $properties[$prop->getName()] = $prop->getValue($data);
-            }
-        }
-
-        // Convert any Time instances to appropriate $dateFormat
-        if ($properties) {
-            foreach ($properties as $key => $value) {
-                if ($value instanceof Time) {
-                    switch ($dateFormat) {
-                        case 'datetime':
-                            $converted = $value->format('Y-m-d H:i:s');
-                            break;
-
-                        case 'date':
-                            $converted = $value->format('Y-m-d');
-                            break;
-
-                        case 'int':
-                            $converted = $value->getTimestamp();
-                            break;
-
-                        default:
-                            $converted = (string) $value;
-                    }
-
-                    $properties[$key] = $converted;
-                }
-            }
-        }
-
-        return $properties;
     }
 }

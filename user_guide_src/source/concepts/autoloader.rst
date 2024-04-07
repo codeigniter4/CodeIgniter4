@@ -78,11 +78,23 @@ You can check the namespace configuration by ``spark namespaces`` command:
 
     php spark namespaces
 
+.. _autoloader-application-namespace:
+
 Application Namespace
 =====================
 
 By default, the application directory is namespace to the ``App`` namespace. You must namespace the controllers,
 libraries, or models in the application directory, and they will be found under the ``App`` namespace.
+
+Config Namespace
+----------------
+
+Config files are namespaced in the ``Config`` namespace, not in ``App\Config`` as you might
+expect. This allows the core system files to always be able to locate them, even when the application
+namespace has changed.
+
+Changing App Namespace
+----------------------
 
 You may change this namespace by editing the **app/Config/Constants.php** file and setting the
 new namespace value under the ``APP_NAMESPACE`` setting:
@@ -90,11 +102,27 @@ new namespace value under the ``APP_NAMESPACE`` setting:
 .. literalinclude:: autoloader/002.php
    :lines: 2-
 
-You will need to modify any existing files that are referencing the current namespace.
+And if you use Composer autoloader, you also need to change the ``App`` namespace
+in your **composer.json**, and run ``composer dump-autoload``.
 
-.. important:: Config files are namespaced in the ``Config`` namespace, not in ``App\Config`` as you might
-    expect. This allows the core system files to always be able to locate them, even when the application
-    namespace has changed.
+.. code-block:: text
+
+    {
+        ...
+        "autoload": {
+            "psr-4": {
+                "App\\": "app/"    <-- Change
+            },
+            ...
+        },
+        ...
+    }
+
+.. note:: Since v4.5.0 appstarter, the ``App\\`` namespace has been added to
+    **composer.json**'s ``autoload.psr-4``. If your **composer.json** does not
+    have it, adding it may improve your app's autoloading performance.
+
+You will need to modify any existing files that are referencing the current namespace.
 
 Classmap
 ========
@@ -110,9 +138,74 @@ The key of each row is the name of the class that you want to locate. The value 
 Composer Support
 ****************
 
-Composer support is automatically initialized by default. By default, it looks for Composer's autoload file at
+Composer support is automatically initialized by default.
+
+By default, it looks for Composer's autoload file at
 ``ROOTPATH . 'vendor/autoload.php'``. If you need to change the location of that file for any reason, you can modify
 the value defined in **app/Config/Constants.php**.
 
-.. note:: If the same namespace is defined in both CodeIgniter and Composer, CodeIgniter's autoloader will be
+Priority of Autoloaders
+=======================
+
+If the same namespace is defined in both CodeIgniter and Composer, Composer's
+autoloader will be the first one to get a chance to locate the file.
+
+.. note:: Prior to v4.5.0, if the same namespace was defined in both CodeIgniter and Composer, CodeIgniter's autoloader was
     the first one to get a chance to locate the file.
+
+.. _file-locator-caching:
+
+*******************
+FileLocator Caching
+*******************
+
+.. versionadded:: 4.5.0
+
+**FileLocator** is responsible for finding files or getting a classname from a file,
+which cannot be achieved with PHP autoloading.
+
+To improve its performance, FileLocator Caching has been implemented.
+
+How It Works
+============
+
+- Save the all found data by FileLocator into a cache file when destructing,
+  if the cache data is updated.
+- Restore cached data when instantiating if cached data is available.
+
+The cached data are used permanently.
+
+How to Delete Cached Data
+=========================
+
+Once stored, the cached data never expire.
+
+So if you add or remove files or change existing file paths, or namespaces, old
+cached data will be returned and your app may not work properly.
+
+In that case, you must manually delete the cache file. If you add a CodeIgniter
+package via Composer, you also need to delete the cache file.
+
+You can use the ``spark cache:clear`` command:
+
+.. code-block:: console
+
+    php spark cache:clear
+
+Or simply delete the **writable/cache/FileLocatorCache** file.
+
+.. note::
+    The ``spark optimize`` command clears the cache.
+
+How to Enable FileLocator Caching
+=================================
+
+Set the following property to ``true`` in **app/Config/Optimize.php**::
+
+    public bool $locatorCacheEnabled = true;
+
+Or you can enable it with the ``spark optimize`` command.
+
+.. note::
+    This property cannot be overridden by
+    :ref:`environment variables <configuration-classes-and-environment-variables>`.

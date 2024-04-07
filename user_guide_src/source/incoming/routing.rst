@@ -50,7 +50,7 @@ Examples
 Here are a few basic routing examples.
 
 A URL containing the word **journals** in the first segment will be mapped to the ``\App\Controllers\Blogs`` class,
-and the default method, which is usually ``index()``:
+and the :ref:`default method <routing-default-method>`, which is usually ``index()``:
 
 .. literalinclude:: routing/006.php
 
@@ -200,9 +200,12 @@ For example the route:
 
 will match **product/123**, **product/123/456**, **product/123/456/789** and so on.
 
-In the above example, if the ``$1`` placeholder contains a slash
+By default, in the above example, if the ``$1`` placeholder contains a slash
 (``/``), it will still be split into multiple parameters when passed to
 ``Catalog::productLookup()``.
+
+.. note:: Since v4.5.0, you can change the behavior with the config option.
+    See :ref:`multiple-uri-segments-as-one-parameter` for details.
 
 The implementation in the
 Controller should take into account the maximum parameters:
@@ -257,9 +260,12 @@ redirect them back to the same page after they log in, you may find this example
 
 .. literalinclude:: routing/019.php
 
-In the above example, if the ``$1`` placeholder contains a slash
+By default, in the above example, if the ``$1`` placeholder contains a slash
 (``/``), it will still be split into multiple parameters when passed to
 ``Auth::login()``.
+
+.. note:: Since v4.5.0, you can change the behavior with the config option.
+    See :ref:`multiple-uri-segments-as-one-parameter` for details.
 
 For those of you who don't know regular expressions and want to learn more about them,
 `regular-expressions.info <https://www.regular-expressions.info/>`_ might be a good starting point.
@@ -417,12 +423,18 @@ You specify a filter classname for the filter value:
 
 .. literalinclude:: routing/036.php
 
+.. _multiple-filters:
+
 Multiple Filters
 ----------------
 
 .. versionadded:: 4.1.5
 
-.. important:: *Multiple filters* is disabled by default. Because it breaks backward compatibility. If you want to use it, you need to configure. See :ref:`upgrade-415-multiple-filters-for-a-route` for the details.
+.. important:: Since v4.5.0, *Multiple Filters* are always enabled.
+    Prior to v4.5.0, *Multiple Filters* were disabled by default.
+    If you want to use with prior to v4.5.0, See
+    :ref:`Upgrading from 4.1.4 to 4.1.5 <upgrade-415-multiple-filters-for-a-route>`
+    for the details.
 
 You specify an array for the filter value:
 
@@ -562,6 +574,8 @@ given route config options:
 
 .. literalinclude:: routing/027.php
 
+.. _routing-nesting-groups:
+
 Nesting Groups
 ==============
 
@@ -571,7 +585,15 @@ It is possible to nest groups within groups for finer organization if you need i
 
 This would handle the URL at **admin/users/list**.
 
-.. note:: Options passed to the outer ``group()`` (for example ``namespace`` and ``filter``) are not merged with the inner ``group()`` options.
+**Filter** option passed to the outer ``group()`` are merged with the inner
+``group()`` filter option.
+The above code runs ``myfilter:config`` for the route ``admin``, and ``myfilter:config``
+and ``myfilter:region`` for the route ``admin/users/list``.
+
+Any other overlapping options passed to the inner `group()` will overwrite their values.
+
+.. note:: Prior to v4.5.0, due to a bug, options passed to the outer ``group()``
+    are not merged with the inner ``group()`` options.
 
 .. _routing-priority:
 
@@ -632,6 +654,32 @@ then you can change this value to save typing:
 
 .. literalinclude:: routing/046.php
 
+.. _routing-default-method:
+
+Default Method
+==============
+
+This setting is used when the route handler only has the controller name and no
+method name listed. The default value is ``index``.
+::
+
+    // In app/Config/Routing.php
+    public string $defaultMethod = 'index';
+
+.. note:: The ``$defaultMethod`` is also common with Auto Routing.
+    See :ref:`Auto Routing (Improved) <routing-auto-routing-improved-default-method>`
+    or :ref:`Auto Routing (Legacy) <routing-auto-routing-legacy-default-method>`.
+
+If you define the following route::
+
+    $routes->get('/', 'Home');
+
+the ``index()`` method of the ``App\Controllers\Home`` controller is executed
+when the route matches.
+
+.. note:: Method names beginning with ``_`` cannot be used as the default method.
+    However, starting with v4.5.0, ``__invoke`` method is allowed.
+
 Translate URI Dashes
 ====================
 
@@ -681,10 +729,11 @@ valid class/method pair, or a Closure:
 
 .. literalinclude:: routing/069.php
 
-.. note:: The 404 Override feature does not change the Response status code to ``404``.
-    If you don't set the status code in the controller you set, the default status code ``200``
-    will be returned. See :php:meth:`CodeIgniter\\HTTP\\Response::setStatusCode()` for
-    information on how to set the status code.
+.. note:: Starting with v4.5.0, the 404 Override feature sets the Response status
+    code to ``404`` by default. In previous versions, the code was ``200``.
+    If you want to change the status code in the controller, see
+    :php:meth:`CodeIgniter\\HTTP\\Response::setStatusCode()` for information on
+    how to set the status code.
 
 Route Processing by Priority
 ============================
@@ -694,6 +743,27 @@ Disabled by default. This functionality affects all routes.
 For an example use of lowering the priority see :ref:`routing-priority`:
 
 .. literalinclude:: routing/052.php
+
+.. _multiple-uri-segments-as-one-parameter:
+
+Multiple URI Segments as One Parameter
+======================================
+
+.. versionadded:: 4.5.0
+
+When this option is enabled, a placeholder that matches multiple segments, such
+as ``(:any)``, will be passed directly as it is to one parameter, even if it
+contains multiple segments.
+
+.. literalinclude:: routing/070.php
+
+For example the route:
+
+.. literalinclude:: routing/010.php
+
+will match **product/123**, **product/123/456**, **product/123/456/789** and so on.
+And if the URI is **product/123/456**, ``123/456`` will be passed to the first
+parameter of the ``Catalog::productLookup()`` method.
 
 .. _auto-routing-improved:
 
@@ -786,6 +856,8 @@ in the controllers directory. For example, if the user visits **example.com/admi
     When the default controller is ``Home``, you can access **example.com/**, but if you access **example.com/home**, it will be not found.
 
 See :ref:`Auto Routing in Controllers <controller-auto-routing-improved>` for more info.
+
+.. _routing-auto-routing-improved-default-method:
 
 Default Method
 --------------
@@ -912,6 +984,8 @@ in the controllers directory. For example, if the user visits **example.com/admi
 **app/Controllers/Admin/Home.php**, it would be used.
 
 See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing-legacy>` for more info.
+
+.. _routing-auto-routing-legacy-default-method:
 
 Default Method (Legacy)
 -----------------------

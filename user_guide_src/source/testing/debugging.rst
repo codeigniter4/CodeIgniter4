@@ -98,7 +98,9 @@ constant ``CI_DEBUG`` is defined and its value is truthy. This is defined in the
 .. note:: The Debug Toolbar is not displayed when your ``baseURL`` setting (in **app/Config/App.php** or ``app.baseURL`` in **.env**) does not match your actual URL.
 
 The toolbar itself is displayed as an :doc:`After Filter </incoming/filters>`. You can stop it from ever
-running by removing it from the ``$globals`` property of **app/Config/Filters.php**.
+running by removing ``'toolbar'`` from the ``$required`` (or ``$globals``) property of **app/Config/Filters.php**.
+
+.. note:: Prior to v4.5.0, the toolbar was set to ``$globals`` by default.
 
 Choosing What to Show
 ---------------------

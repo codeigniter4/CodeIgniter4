@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -45,7 +47,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 
         try {
             $this->query->close();
-        } catch (BadMethodCallException $e) {
+        } catch (BadMethodCallException) {
             $this->query = null;
         }
     }

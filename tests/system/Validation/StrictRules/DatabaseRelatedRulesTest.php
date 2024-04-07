@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -84,10 +86,21 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
+    public function testIsUniqueWithDBConnection(): void
+    {
+        $db = db_connect();
+        $this->validation->setRules(['email' => 'is_unique[user.email]']);
+
+        $data   = ['email' => 'derek@world.co.uk'];
+        $result = $this->validation->run($data, null, $db);
+
+        $this->assertTrue($result);
+    }
+
     public function testIsUniqueWithInvalidDBGroup(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('invalidGroup is not a valid database connection group');
+        $this->expectExceptionMessage('"invalidGroup" is not a valid database connection group');
 
         $this->validation->setRules(['email' => 'is_unique[user.email]']);
         $data = ['email' => 'derek@world.co.uk'];

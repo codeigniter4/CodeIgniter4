@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -12,6 +14,7 @@
 namespace Tests\Support\Models;
 
 use CodeIgniter\Model;
+use Tests\Support\Entity\User;
 
 class UserObjModel extends Model
 {
@@ -22,7 +25,7 @@ class UserObjModel extends Model
         'country',
         'deleted_at',
     ];
-    protected $returnType     = \Tests\Support\Entity\User::class;
+    protected $returnType     = User::class;
     protected $useSoftDeletes = true;
     protected $dateFormat     = 'datetime';
 }

@@ -43,6 +43,7 @@ Upgrade Guide
     - ``$this->db->having('user_id',  45);`` to ``$builder->having('user_id',  45);``
 6. CI4 does not provide `Database Caching <https://www.codeigniter.com/userguide3/database/caching.html>`_
    layer known from CI3, so if you need to cache the result, use :doc:`../libraries/caching` instead.
+7. If you use ``limit(0)`` in Query Builder, CI4 returns all records in stead of no records due to a bug. But since v4.5.0, you can change the incorrect behavior with a setting. So change the setting. See :ref:`v450-query-builder-limit-0-behavior` for details.
 
 Code Example
 ============

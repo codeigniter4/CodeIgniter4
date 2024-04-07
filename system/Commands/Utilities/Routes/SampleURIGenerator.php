@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,7 +13,6 @@
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
-use CodeIgniter\Config\Services;
 use CodeIgniter\Router\RouteCollection;
 use Config\App;
 
@@ -22,7 +23,7 @@ use Config\App;
  */
 final class SampleURIGenerator
 {
-    private RouteCollection $routes;
+    private readonly RouteCollection $routes;
 
     /**
      * Sample URI path for placeholder.
@@ -40,7 +41,7 @@ final class SampleURIGenerator
 
     public function __construct(?RouteCollection $routes = null)
     {
-        $this->routes = $routes ?? Services::routes();
+        $this->routes = $routes ?? service('routes');
     }
 
     /**
@@ -52,7 +53,7 @@ final class SampleURIGenerator
     {
         $sampleUri = $routeKey;
 
-        if (strpos($routeKey, '{locale}') !== false) {
+        if (str_contains($routeKey, '{locale}')) {
             $sampleUri = str_replace(
                 '{locale}',
                 config(App::class)->defaultLocale,

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -13,7 +15,6 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\Services;
 
 /**
  * Displays a list of all migrations and whether they've been run or not.
@@ -81,11 +82,11 @@ class MigrateStatus extends BaseCommand
      */
     public function run(array $params)
     {
-        $runner     = Services::migrations();
+        $runner     = service('migrations');
         $paramGroup = $params['g'] ?? CLI::getOption('g');
 
         // Get all namespaces
-        $namespaces = Services::autoloader()->getNamespace();
+        $namespaces = service('autoloader')->getNamespace();
 
         // Collection of migration status
         $status = [];
@@ -115,7 +116,7 @@ class MigrateStatus extends BaseCommand
             ksort($migrations);
 
             foreach ($migrations as $uid => $migration) {
-                $migrations[$uid]->name = mb_substr($migration->name, mb_strpos($migration->name, $uid . '_'));
+                $migrations[$uid]->name = mb_substr($migration->name, (int) mb_strpos($migration->name, $uid . '_'));
 
                 $date  = '---';
                 $group = '---';
@@ -127,7 +128,7 @@ class MigrateStatus extends BaseCommand
                         continue;
                     }
 
-                    $date  = date('Y-m-d H:i:s', $row->time);
+                    $date  = date('Y-m-d H:i:s', (int) $row->time);
                     $group = $row->group;
                     $batch = $row->batch;
                     // @codeCoverageIgnoreEnd

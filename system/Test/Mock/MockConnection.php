@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -21,6 +23,9 @@ use CodeIgniter\Database\Query;
  */
 class MockConnection extends BaseConnection
 {
+    /**
+     * @var array{connect?: mixed, execute?: bool|object}
+     */
     protected $returnValues = [];
 
     /**
@@ -82,7 +87,7 @@ class MockConnection extends BaseConnection
         $query->setDuration($startTime);
 
         // resultID is not false, so it must be successful
-        if ($query->isWriteType()) {
+        if ($query->isWriteType($sql)) {
             return true;
         }
 

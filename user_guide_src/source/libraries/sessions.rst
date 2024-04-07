@@ -679,7 +679,9 @@ RedisHandler Driver
 
 .. note:: Since Redis doesn't have a locking mechanism exposed, locks for
     this driver are emulated by a separate value that is kept for up
-    to 300 seconds. With ``v4.3.2`` or above, you can connect ``Redis`` with **TLS** protocol.
+    to 300 seconds.
+
+.. note:: Starting with v4.3.2, you can connect Redis with **TLS** protocol.
 
 Redis is a storage engine typically used for caching and popular because
 of its high performance, which is also probably your reason to use the
@@ -712,6 +714,14 @@ For the most common case however, a simple ``host:port`` pair should be
 sufficient:
 
 .. literalinclude:: sessions/041.php
+
+Starting with v4.5.0, you can use Redis ACL (username and password)::
+
+    public string $savePath = 'tcp://localhost:6379?auth[user]=username&auth[pass]=password';
+
+.. note:: Starting with v4.5.0, the interval time for acquiring locks
+    (``$lockRetryInterval``) and the number of retries (``$lockMaxRetries``) are
+    configurable.
 
 .. _sessions-memcachedhandler-driver:
 

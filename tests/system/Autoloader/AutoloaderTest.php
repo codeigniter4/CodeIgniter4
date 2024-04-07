@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -394,6 +396,10 @@ final class AutoloaderTest extends CIUnitTestCase
      */
     public function testLoadHelpers(): void
     {
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+
         $config            = new Autoload();
         $config->helpers[] = 'form';
 

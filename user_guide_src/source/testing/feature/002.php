@@ -1,7 +1,7 @@
 <?php
 
 // Get a simple page
-$result = $this->call('get', '/');
+$result = $this->call('GET', '/');
 
 // Submit a form
 $result = $this->call('post', 'contact', [

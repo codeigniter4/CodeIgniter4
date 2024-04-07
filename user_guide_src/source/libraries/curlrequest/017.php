@@ -1,3 +1,3 @@
 <?php
 
-$client->setBody($body)->request('put', 'http://example.com');
+$client->setBody($body)->request('PUT', 'http://example.com');

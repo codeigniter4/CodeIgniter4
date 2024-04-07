@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -90,6 +92,8 @@ class XMLFormatter implements FormatterInterface
             '\\x{2C00}-\\x{2FEF}\\x{3001}-\\x{D7FF}\\x{F900}-\\x{FDCF}' .
             '\\x{FDF0}-\\x{FFFD}\\x{10000}-\\x{EFFFF}';
         $validName = $startChar . '\\.\\d\\x{B7}\\x{300}-\\x{36F}\\x{203F}-\\x{2040}';
+
+        $key = (string) $key;
 
         $key = trim($key);
         $key = preg_replace("/[^{$validName}-]+/u", '', $key);

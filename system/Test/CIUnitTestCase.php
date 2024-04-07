@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -439,7 +441,7 @@ abstract class CIUnitTestCase extends TestCase
      * where the result is close but not exactly equal to the
      * expected time, for reasons beyond our control.
      *
-     * @param mixed $actual
+     * @param float|int $actual
      *
      * @throws Exception
      */
@@ -477,7 +479,7 @@ abstract class CIUnitTestCase extends TestCase
             $difference = abs($expected - $actual);
 
             $this->assertLessThanOrEqual($tolerance, $difference, $message);
-        } catch (Exception $e) {
+        } catch (Exception) {
             return false;
         }
     }
@@ -495,7 +497,7 @@ abstract class CIUnitTestCase extends TestCase
     protected function createApplication()
     {
         // Initialize the autoloader.
-        Services::autoloader()->initialize(new Autoload(), new Modules());
+        service('autoloader')->initialize(new Autoload(), new Modules());
 
         $app = new MockCodeIgniter(new App());
         $app->initialize();
@@ -515,7 +517,7 @@ abstract class CIUnitTestCase extends TestCase
         foreach (xdebug_get_headers() as $emittedHeader) {
             $found = $ignoreCase
                 ? (stripos($emittedHeader, $header) === 0)
-                : (strpos($emittedHeader, $header) === 0);
+                : (str_starts_with($emittedHeader, $header));
 
             if ($found) {
                 return $emittedHeader;

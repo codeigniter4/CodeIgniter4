@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -32,7 +34,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
         if (is_file($file)) {
             unlink($file);
         }
-        if (is_dir($dir) && strpos($dir, 'Commands') !== false) {
+        if (is_dir($dir) && str_contains($dir, 'Commands')) {
             rmdir($dir);
         }
     }

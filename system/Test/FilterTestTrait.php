@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -19,7 +21,6 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\RouteCollection;
 use Config\Filters as FiltersConfig;
-use Config\Services;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -94,15 +95,15 @@ trait FilterTestTrait
         // Create our own Request and Response so we can
         // use the same ones for Filters and FilterInterface
         // yet isolate them from outside influence
-        $this->request ??= clone Services::request();
-        $this->response ??= clone Services::response();
+        $this->request ??= clone service('request');
+        $this->response ??= clone service('response');
 
         // Create our config and Filters instance to reuse for performance
         $this->filtersConfig ??= config(FiltersConfig::class);
         $this->filters ??= new Filters($this->filtersConfig, $this->request, $this->response);
 
         if ($this->collection === null) {
-            $this->collection = Services::routes()->loadRoutes();
+            $this->collection = service('routes')->loadRoutes();
         }
 
         $this->doneFilterSetUp = true;
@@ -131,7 +132,7 @@ trait FilterTestTrait
 
         if (is_string($filter)) {
             // Check for an alias (no namespace)
-            if (strpos($filter, '\\') === false) {
+            if (! str_contains($filter, '\\')) {
                 if (! isset($this->filtersConfig->aliases[$filter])) {
                     throw new RuntimeException("No filter found with alias '{$filter}'");
                 }
@@ -149,7 +150,7 @@ trait FilterTestTrait
                 $filter = new $class();
 
                 if (! $filter instanceof FilterInterface) {
-                    throw FilterException::forIncorrectInterface(get_class($filter));
+                    throw FilterException::forIncorrectInterface($filter::class);
                 }
 
                 $filterInstances[] = $filter;

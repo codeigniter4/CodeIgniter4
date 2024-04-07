@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,6 +13,7 @@
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 
@@ -30,13 +33,12 @@ final class FilterCollectorTest extends CIUnitTestCase
 
         $collector = new FilterCollector();
 
-        $filters = $collector->get('get', '/');
+        $filters = $collector->get(Method::GET, '/');
 
         $expected = [
             'before' => [
             ],
             'after' => [
-                'toolbar',
             ],
         ];
         $this->assertSame($expected, $filters);

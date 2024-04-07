@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -23,6 +25,7 @@ use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Router\Router;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ConfigFromArrayTrait;
+use Config\Feature;
 use Config\Filters as FiltersConfig;
 use Config\Modules;
 use Config\Routing;
@@ -86,7 +89,7 @@ final class FilterFinderTest extends CIUnitTestCase
                 ],
             ],
             'methods' => [
-                'get' => [],
+                'GET' => [],
             ],
             'filters' => [
                 'honeypot' => ['before' => ['form/*', 'survey/*']],
@@ -145,7 +148,7 @@ final class FilterFinderTest extends CIUnitTestCase
         $filters = $finder->find('admin');
 
         $expected = [
-            'before' => ['honeypot', 'csrf'],
+            'before' => ['csrf', 'honeypot'],
             'after'  => ['honeypot', 'toolbar'],
         ];
         $this->assertSame($expected, $filters);
@@ -163,7 +166,7 @@ final class FilterFinderTest extends CIUnitTestCase
         $filters = $finder->find('admin');
 
         $expected = [
-            'before' => [InvalidChars::class, 'csrf'],
+            'before' => ['csrf', InvalidChars::class],
             'after'  => [InvalidChars::class, 'toolbar'],
         ];
         $this->assertSame($expected, $filters);
@@ -171,8 +174,6 @@ final class FilterFinderTest extends CIUnitTestCase
 
     public function testFindGlobalsAndRouteMultipleFilters(): void
     {
-        config('Feature')->multipleFilters = true;
-
         $collection = $this->createRouteCollection();
         $collection->get('admin', ' AdminController::index', ['filter' => ['honeypot', InvalidChars::class]]);
         $router  = $this->createRouter($collection);
@@ -183,11 +184,136 @@ final class FilterFinderTest extends CIUnitTestCase
         $filters = $finder->find('admin');
 
         $expected = [
-            'before' => ['honeypot', InvalidChars::class, 'csrf'],
-            'after'  => ['honeypot', InvalidChars::class, 'toolbar'],
+            'before' => ['csrf', 'honeypot', InvalidChars::class],
+            'after'  => [InvalidChars::class, 'honeypot', 'toolbar'],
         ];
         $this->assertSame($expected, $filters);
+    }
 
-        config('Feature')->multipleFilters = false;
+    public function testFilterOrder()
+    {
+        $collection = $this->createRouteCollection([]);
+        $collection->get('/', ' Home::index', ['filter' => ['route1', 'route2']]);
+        $router  = $this->createRouter($collection);
+        $filters = $this->createFilters([
+            'aliases' => [
+                'global1' => 'Dummy',
+                'global2' => 'Dummy',
+                'method1' => 'Dummy',
+                'method2' => 'Dummy',
+                'filter1' => 'Dummy',
+                'filter2' => 'Dummy',
+                'route1'  => 'Dummy',
+                'route2'  => 'Dummy',
+            ],
+            'globals' => [
+                'before' => [
+                    'global1',
+                    'global2',
+                ],
+                'after' => [
+                    'global2',
+                    'global1',
+                ],
+            ],
+            'methods' => [
+                'GET' => ['method1', 'method2'],
+            ],
+            'filters' => [
+                'filter1' => ['before' => '*', 'after' => '*'],
+                'filter2' => ['before' => '*', 'after' => '*'],
+            ],
+        ]);
+
+        $finder = new FilterFinder($router, $filters);
+
+        $filters = $finder->find('/');
+
+        $expected = [
+            'before' => [
+                'global1',
+                'global2',
+                'method1',
+                'method2',
+                'filter1',
+                'filter2',
+                'route1',
+                'route2',
+            ],
+            'after' => [
+                'route2',
+                'route1',
+                'filter2',
+                'filter1',
+                'global2',
+                'global1',
+            ],
+        ];
+        $this->assertSame($expected, $filters);
+    }
+
+    public function testFilterOrderWithOldFilterOrder()
+    {
+        $feature                 = config(Feature::class);
+        $feature->oldFilterOrder = true;
+
+        $collection = $this->createRouteCollection([]);
+        $collection->get('/', ' Home::index', ['filter' => ['route1', 'route2']]);
+        $router  = $this->createRouter($collection);
+        $filters = $this->createFilters([
+            'aliases' => [
+                'global1' => 'Dummy',
+                'global2' => 'Dummy',
+                'method1' => 'Dummy',
+                'method2' => 'Dummy',
+                'filter1' => 'Dummy',
+                'filter2' => 'Dummy',
+                'route1'  => 'Dummy',
+                'route2'  => 'Dummy',
+            ],
+            'globals' => [
+                'before' => [
+                    'global1',
+                    'global2',
+                ],
+                'after' => [
+                    'global1',
+                    'global2',
+                ],
+            ],
+            'methods' => [
+                'GET' => ['method1', 'method2'],
+            ],
+            'filters' => [
+                'filter1' => ['before' => '*', 'after' => '*'],
+                'filter2' => ['before' => '*', 'after' => '*'],
+            ],
+        ]);
+
+        $finder = new FilterFinder($router, $filters);
+
+        $filters = $finder->find('/');
+
+        $expected = [
+            'before' => [
+                'route1',
+                'route2',
+                'global1',
+                'global2',
+                'method1',
+                'method2',
+                'filter1',
+                'filter2',
+            ],
+            'after' => [
+                'route1',
+                'route2',
+                'global1',
+                'global2',
+                'filter1',
+                'filter2',
+            ],
+        ];
+        $this->assertSame($expected, $filters);
     }
 }

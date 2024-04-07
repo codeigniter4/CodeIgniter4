@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -15,6 +17,7 @@ use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Traits\ConditionalTrait;
+use Config\Feature;
 use InvalidArgumentException;
 
 /**
@@ -313,7 +316,7 @@ class BaseBuilder
         $this->db = $db;
 
         // If it contains `,`, it has multiple tables
-        if (is_string($tableName) && strpos($tableName, ',') === false) {
+        if (is_string($tableName) && ! str_contains($tableName, ',')) {
             $this->tableName = $tableName;  // @TODO remove alias if exists
         } else {
             $this->tableName = '';
@@ -511,7 +514,7 @@ class BaseBuilder
             throw DataException::forEmptyInputGiven('Select');
         }
 
-        if (strpos($select, ',') !== false) {
+        if (str_contains($select, ',')) {
             throw DataException::forInvalidArgument('column name not separated by comma');
         }
 
@@ -538,7 +541,7 @@ class BaseBuilder
      */
     protected function createAliasFromTable(string $item): string
     {
-        if (strpos($item, '.') !== false) {
+        if (str_contains($item, '.')) {
             $item = explode('.', $item);
 
             return end($item);
@@ -574,7 +577,7 @@ class BaseBuilder
         }
 
         foreach ((array) $from as $table) {
-            if (strpos($table, ',') !== false) {
+            if (str_contains($table, ',')) {
                 $this->from(explode(',', $table));
             } else {
                 $table = trim($table);
@@ -763,7 +766,7 @@ class BaseBuilder
                     $op = trim(current($op));
 
                     // Does the key end with operator?
-                    if (substr($k, -strlen($op)) === $op) {
+                    if (str_ends_with($k, $op)) {
                         $k  = rtrim(substr($k, 0, -strlen($op)));
                         $op = " {$op}";
                     } else {
@@ -1490,6 +1493,11 @@ class BaseBuilder
      */
     public function limit(?int $value = null, ?int $offset = 0)
     {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll && $value === 0) {
+            $value = null;
+        }
+
         if ($value !== null) {
             $this->QBLimit = $value;
         }
@@ -1607,6 +1615,11 @@ class BaseBuilder
      */
     public function get(?int $limit = null, int $offset = 0, bool $reset = true)
     {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll && $limit === 0) {
+            $limit = null;
+        }
+
         if ($limit !== null) {
             $this->limit($limit, $offset);
         }
@@ -1740,7 +1753,12 @@ class BaseBuilder
             $this->where($where);
         }
 
-        if ($limit !== null && $limit !== 0) {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll && $limit === 0) {
+            $limit = null;
+        }
+
+        if ($limit !== null) {
             $this->limit($limit, $offset);
         }
 
@@ -2324,7 +2342,7 @@ class BaseBuilder
      */
     protected function removeAlias(string $from): string
     {
-        if (strpos($from, ' ') !== false) {
+        if (str_contains($from, ' ')) {
             // if the alias is written with the AS keyword, remove it
             $from = preg_replace('/\s+AS\s+/i', ' ', $from);
 
@@ -2458,7 +2476,12 @@ class BaseBuilder
             $this->where($where);
         }
 
-        if ($limit !== null && $limit !== 0) {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll && $limit === 0) {
+            $limit = null;
+        }
+
+        if ($limit !== null) {
             if (! $this->canLimitWhereUpdates) {
                 throw new DatabaseException('This driver does not allow LIMITs on UPDATE queries using WHERE.');
             }
@@ -2499,10 +2522,18 @@ class BaseBuilder
             $valStr[] = $key . ' = ' . $val;
         }
 
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll) {
+            return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . implode(', ', $valStr)
+                . $this->compileWhereHaving('QBWhere')
+                . $this->compileOrderBy()
+                . ($this->QBLimit ? $this->_limit(' ', true) : '');
+        }
+
         return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . implode(', ', $valStr)
             . $this->compileWhereHaving('QBWhere')
             . $this->compileOrderBy()
-            . ($this->QBLimit ? $this->_limit(' ', true) : '');
+            . ($this->QBLimit !== false ? $this->_limit(' ', true) : '');
     }
 
     /**
@@ -2768,7 +2799,12 @@ class BaseBuilder
 
         $sql = $this->_delete($this->removeAlias($table));
 
-        if ($limit !== null && $limit !== 0) {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll && $limit === 0) {
+            $limit = null;
+        }
+
+        if ($limit !== null) {
             $this->QBLimit = $limit;
         }
 
@@ -2972,12 +3008,12 @@ class BaseBuilder
 
         // Does the string contain a comma?  If so, we need to separate
         // the string into discreet statements
-        if (strpos($table, ',') !== false) {
+        if (str_contains($table, ',')) {
             return $this->trackAliases(explode(',', $table));
         }
 
         // if a table alias is used we can recognize it by a space
-        if (strpos($table, ' ') !== false) {
+        if (str_contains($table, ' ')) {
             // if the alias is written with the AS keyword, remove it
             $table = preg_replace('/\s+AS\s+/i', ' ', $table);
 
@@ -3034,7 +3070,12 @@ class BaseBuilder
             . $this->compileWhereHaving('QBHaving')
             . $this->compileOrderBy();
 
-        if ($this->QBLimit) {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll) {
+            if ($this->QBLimit) {
+                $sql = $this->_limit($sql . "\n");
+            }
+        } elseif ($this->QBLimit !== false || $this->QBOffset) {
             $sql = $this->_limit($sql . "\n");
         }
 
@@ -3117,11 +3158,11 @@ class BaseBuilder
 
                     if (! empty($matches[4])) {
                         $protectIdentifiers = false;
-                        if (strpos($matches[4], '.') !== false) {
+                        if (str_contains($matches[4], '.')) {
                             $protectIdentifiers = true;
                         }
 
-                        if (strpos($matches[4], ':') === false) {
+                        if (! str_contains($matches[4], ':')) {
                             $matches[4] = $this->db->protectIdentifiers(trim($matches[4]), false, $protectIdentifiers);
                         }
 

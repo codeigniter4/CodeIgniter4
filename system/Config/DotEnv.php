@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -68,12 +70,12 @@ class DotEnv
 
         foreach ($lines as $line) {
             // Is it a comment?
-            if (strpos(trim($line), '#') === 0) {
+            if (str_starts_with(trim($line), '#')) {
                 continue;
             }
 
             // If there is an equal sign, then we know we are assigning a variable.
-            if (strpos($line, '=') !== false) {
+            if (str_contains($line, '=')) {
                 [$name, $value] = $this->normaliseVariable($line);
                 $vars[$name]    = $value;
                 $this->setVariable($name, $value);
@@ -112,7 +114,7 @@ class DotEnv
     public function normaliseVariable(string $name, string $value = ''): array
     {
         // Split our compound string into its parts.
-        if (strpos($name, '=') !== false) {
+        if (str_contains($name, '=')) {
             [$name, $value] = explode('=', $name, 2);
         }
 
@@ -192,7 +194,7 @@ class DotEnv
      */
     protected function resolveNestedVariables(string $value): string
     {
-        if (strpos($value, '$') !== false) {
+        if (str_contains($value, '$')) {
             $value = preg_replace_callback(
                 '/\${([a-zA-Z0-9_\.]+)}/',
                 function ($matchedPatterns) {
