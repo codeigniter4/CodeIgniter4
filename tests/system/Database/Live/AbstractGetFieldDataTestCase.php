@@ -17,8 +17,9 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database;
+use stdClass;
 
-abstract class AbstractGetFieldDataTest extends CIUnitTestCase
+abstract class AbstractGetFieldDataTestCase extends CIUnitTestCase
 {
     /**
      * @var BaseConnection
@@ -56,7 +57,7 @@ abstract class AbstractGetFieldDataTest extends CIUnitTestCase
         $this->forge->dropTable($this->table, true);
     }
 
-    protected function createTableForDefault()
+    protected function createTableForDefault(): void
     {
         $this->forge->dropTable($this->table, true);
 
@@ -98,7 +99,7 @@ abstract class AbstractGetFieldDataTest extends CIUnitTestCase
         $this->forge->createTable($this->table);
     }
 
-    protected function createTableForType()
+    protected function createTableForType(): void
     {
         $this->forge->dropTable($this->table, true);
 
@@ -158,7 +159,11 @@ abstract class AbstractGetFieldDataTest extends CIUnitTestCase
 
     abstract public function testGetFieldDataDefault(): void;
 
-    protected function assertSameFieldData(array $expected, array $actual)
+    /**
+     * @param list<stdClass> $expected
+     * @param list<stdClass> $actual
+     */
+    protected function assertSameFieldData(array $expected, array $actual): void
     {
         $expectedArray = json_decode(json_encode($expected), true);
         array_sort_by_multiple_keys($expectedArray, ['name' => SORT_ASC]);

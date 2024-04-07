@@ -48,6 +48,10 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
      */
     public function testHeadersEmitted(): void
     {
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+
         $response = new Response(new App());
         $response->pretend(false);
 
@@ -76,6 +80,10 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
      */
     public function testHeadersNotEmitted(): void
     {
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+
         $response = new Response(new App());
         $response->pretend(false);
 

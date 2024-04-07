@@ -33,6 +33,15 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     private ?Response $response         = null;
     private ?ContentSecurityPolicy $csp = null;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+    }
+
     // Having this method as setUp() doesn't work - can't find Config\App !?
     protected function prepare(bool $CSPEnabled = true): void
     {

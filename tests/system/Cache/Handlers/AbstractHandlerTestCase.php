@@ -19,13 +19,13 @@ use CodeIgniter\Test\CIUnitTestCase;
 /**
  * @internal
  */
-abstract class AbstractHandlerTest extends CIUnitTestCase
+abstract class AbstractHandlerTestCase extends CIUnitTestCase
 {
     protected BaseHandler $handler;
-    protected static $key1  = 'key1';
-    protected static $key2  = 'key2';
-    protected static $key3  = 'key3';
-    protected static $dummy = 'dymmy';
+    protected static string $key1  = 'key1';
+    protected static string $key2  = 'key2';
+    protected static string $key3  = 'key3';
+    protected static string $dummy = 'dymmy';
 
     public function testGetMetaDataMiss(): void
     {

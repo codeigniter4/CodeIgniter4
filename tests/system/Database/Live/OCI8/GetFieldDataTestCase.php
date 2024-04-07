@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live\OCI8;
 
-use CodeIgniter\Database\Live\AbstractGetFieldDataTest;
+use CodeIgniter\Database\Live\AbstractGetFieldDataTestCase;
 use Config\Database;
 use LogicException;
 use stdClass;
@@ -23,7 +23,7 @@ use stdClass;
  *
  * @internal
  */
-final class GetFieldDataTest extends AbstractGetFieldDataTest
+final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
 {
     protected function createForge(): void
     {

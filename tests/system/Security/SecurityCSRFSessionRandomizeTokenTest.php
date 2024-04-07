@@ -32,6 +32,7 @@ use Config\Cookie;
 use Config\Logger as LoggerConfig;
 use Config\Security as SecurityConfig;
 use Config\Session as SessionConfig;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 
 /**
  * @runTestsInSeparateProcesses
@@ -69,6 +70,10 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         Factories::injectMock('config', 'Security', $this->config);
 
         $this->injectSession($this->hash);
+
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
     }
 
     private function createSession($options = []): Session
@@ -166,8 +171,11 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $security->verify($request);
     }
 
+    #[WithoutErrorHandler]
     public function testCSRFVerifyPostInvalidToken(): void
     {
+        Services::exceptions()->initialize();
+
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('The action you requested is not allowed.');
 

@@ -22,7 +22,7 @@ use Config\Cache;
  *
  * @internal
  */
-final class PredisHandlerTest extends AbstractHandlerTest
+final class PredisHandlerTest extends AbstractHandlerTestCase
 {
     private Cache $config;
 

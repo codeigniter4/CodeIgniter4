@@ -11,9 +11,9 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Live\SQLite3;
+namespace CodeIgniter\Database\Live\MySQLi;
 
-use CodeIgniter\Database\Live\AbstractGetFieldDataTest;
+use CodeIgniter\Database\Live\AbstractGetFieldDataTestCase;
 use Config\Database;
 
 /**
@@ -21,21 +21,29 @@ use Config\Database;
  *
  * @internal
  */
-final class GetFieldDataTest extends AbstractGetFieldDataTest
+final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
 {
     protected function createForge(): void
     {
-        if ($this->db->DBDriver !== 'SQLite3') {
-            $this->markTestSkipped('This test is only for SQLite3.');
+        if ($this->db->DBDriver !== 'MySQLi') {
+            $this->markTestSkipped('This test is only for MySQLi.');
         }
 
-        $config = [
-            'DBDriver' => 'SQLite3',
-            'database' => 'database.db',
-            'DBDebug'  => true,
-        ];
-        $this->db    = db_connect($config, false);
-        $this->forge = Database::forge($config);
+        $this->forge = Database::forge($this->db);
+    }
+
+    /**
+     * As of MySQL 8.0.17, the display width attribute for integer data types
+     * is deprecated and is not reported back anymore.
+     *
+     * @see https://dev.mysql.com/doc/refman/8.0/en/numeric-type-attributes.html
+     */
+    private function isOldMySQL(): bool
+    {
+        return ! (
+            version_compare($this->db->getVersion(), '8.0.17', '>=')
+            && ! str_contains($this->db->getVersion(), 'MariaDB')
+        );
     }
 
     public function testGetFieldDataDefault(): void
@@ -47,115 +55,58 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
         $expected = [
             (object) [
                 'name'        => 'id',
-                'type'        => 'INTEGER',
-                'max_length'  => null,
-                'nullable'    => true,
+                'type'        => 'int',
+                'max_length'  => $this->isOldMySQL() ? 11 : null,
+                'nullable'    => false,
                 'default'     => null, // The default value is not defined.
                 'primary_key' => 1,
             ],
             (object) [
                 'name'        => 'text_not_null',
-                'type'        => 'VARCHAR',
-                'max_length'  => null,
+                'type'        => 'varchar',
+                'max_length'  => 64,
                 'nullable'    => false,
                 'default'     => null, // The default value is not defined.
                 'primary_key' => 0,
             ],
             (object) [
                 'name'        => 'text_null',
-                'type'        => 'VARCHAR',
-                'max_length'  => null,
+                'type'        => 'varchar',
+                'max_length'  => 64,
                 'nullable'    => true,
                 'default'     => null, // The default value is not defined.
                 'primary_key' => 0,
             ],
             (object) [
                 'name'        => 'int_default_0',
-                'type'        => 'INT',
-                'max_length'  => null,
+                'type'        => 'int',
+                'max_length'  => $this->isOldMySQL() ? 11 : null,
                 'nullable'    => false,
                 'default'     => '0', // int 0
                 'primary_key' => 0,
             ],
             (object) [
                 'name'        => 'text_default_null',
-                'type'        => 'VARCHAR',
-                'max_length'  => null,
+                'type'        => 'varchar',
+                'max_length'  => 64,
                 'nullable'    => true,
-                'default'     => 'NULL', // NULL value
+                'default'     => null, // NULL value
                 'primary_key' => 0,
             ],
             (object) [
                 'name'        => 'text_default_text_null',
-                'type'        => 'VARCHAR',
-                'max_length'  => null,
+                'type'        => 'varchar',
+                'max_length'  => 64,
                 'nullable'    => false,
-                'default'     => "'null'", // string "null"
+                'default'     => 'null', // string "null"
                 'primary_key' => 0,
             ],
             (object) [
                 'name'        => 'text_default_abc',
-                'type'        => 'VARCHAR',
-                'max_length'  => null,
+                'type'        => 'varchar',
+                'max_length'  => 64,
                 'nullable'    => false,
-                'default'     => "'abc'", // string "abc"
-                'primary_key' => 0,
-            ],
-        ];
-        $this->assertSameFieldData($expected, $fields);
-    }
-
-    protected function createTableCompositePrimaryKey()
-    {
-        $this->forge->dropTable($this->table, true);
-
-        $this->forge->addField([
-            'pk1' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 64,
-            ],
-            'pk2' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 64,
-            ],
-            'text' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 64,
-            ],
-        ]);
-        $this->forge->addPrimaryKey(['pk1', 'pk2']);
-        $this->forge->createTable($this->table);
-    }
-
-    public function testGetFieldDataCompositePrimaryKey(): void
-    {
-        $this->createTableCompositePrimaryKey();
-
-        $fields = $this->db->getFieldData($this->table);
-
-        $expected = [
-            (object) [
-                'name'        => 'pk1',
-                'type'        => 'VARCHAR',
-                'max_length'  => null,
-                'nullable'    => false,
-                'default'     => null,
-                'primary_key' => 1,
-            ],
-            (object) [
-                'name'        => 'pk2',
-                'type'        => 'VARCHAR',
-                'max_length'  => null,
-                'nullable'    => false,
-                'default'     => null,
-                'primary_key' => 1,
-            ],
-            (object) [
-                'name'        => 'text',
-                'type'        => 'VARCHAR',
-                'max_length'  => null,
-                'nullable'    => false,
-                'default'     => null,
+                'default'     => 'abc', // string "abc"
                 'primary_key' => 0,
             ],
         ];
@@ -171,31 +122,31 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
         $expected = [
             0 => (object) [
                 'name'        => 'id',
-                'type'        => 'INTEGER',
-                'max_length'  => null,
-                'nullable'    => true,
+                'type'        => 'int',
+                'max_length'  => $this->isOldMySQL() ? 20 : null,
+                'nullable'    => false,
                 'default'     => null,
                 'primary_key' => 1,
             ],
             1 => (object) [
                 'name'        => 'type_varchar',
-                'type'        => 'VARCHAR',
-                'max_length'  => null,
+                'type'        => 'varchar',
+                'max_length'  => 40,
                 'nullable'    => true,
                 'default'     => null,
                 'primary_key' => 0,
             ],
             2 => (object) [
                 'name'        => 'type_char',
-                'type'        => 'CHAR',
-                'max_length'  => null,
+                'type'        => 'char',
+                'max_length'  => 10,
                 'nullable'    => true,
                 'default'     => null,
                 'primary_key' => 0,
             ],
             3 => (object) [
                 'name'        => 'type_text',
-                'type'        => 'TEXT',
+                'type'        => 'text',
                 'max_length'  => null,
                 'nullable'    => true,
                 'default'     => null,
@@ -203,23 +154,23 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             ],
             4 => (object) [
                 'name'        => 'type_smallint',
-                'type'        => 'SMALLINT',
-                'max_length'  => null,
+                'type'        => 'smallint',
+                'max_length'  => $this->isOldMySQL() ? 6 : null,
                 'nullable'    => true,
                 'default'     => null,
                 'primary_key' => 0,
             ],
             5 => (object) [
                 'name'        => 'type_integer',
-                'type'        => 'INTEGER',
-                'max_length'  => null,
+                'type'        => 'int',
+                'max_length'  => $this->isOldMySQL() ? 11 : null,
                 'nullable'    => true,
                 'default'     => null,
                 'primary_key' => 0,
             ],
             6 => (object) [
                 'name'        => 'type_float',
-                'type'        => 'FLOAT',
+                'type'        => 'float',
                 'max_length'  => null,
                 'nullable'    => true,
                 'default'     => null,
@@ -227,15 +178,15 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             ],
             7 => (object) [
                 'name'        => 'type_numeric',
-                'type'        => 'NUMERIC',
-                'max_length'  => null,
+                'type'        => 'decimal',
+                'max_length'  => 18,
                 'nullable'    => true,
                 'default'     => null,
                 'primary_key' => 0,
             ],
             8 => (object) [
                 'name'        => 'type_date',
-                'type'        => 'DATE',
+                'type'        => 'date',
                 'max_length'  => null,
                 'nullable'    => true,
                 'default'     => null,
@@ -243,7 +194,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             ],
             9 => (object) [
                 'name'        => 'type_time',
-                'type'        => 'TIME',
+                'type'        => 'time',
                 'max_length'  => null,
                 'nullable'    => true,
                 'default'     => null,
@@ -251,7 +202,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             ],
             10 => (object) [
                 'name'        => 'type_datetime',
-                'type'        => 'DATETIME',
+                'type'        => 'datetime',
                 'max_length'  => null,
                 'nullable'    => true,
                 'default'     => null,
@@ -259,7 +210,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             ],
             11 => (object) [
                 'name'        => 'type_timestamp',
-                'type'        => 'TIMESTAMP',
+                'type'        => 'timestamp',
                 'max_length'  => null,
                 'nullable'    => true,
                 'default'     => null,
@@ -267,15 +218,15 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             ],
             12 => (object) [
                 'name'        => 'type_bigint',
-                'type'        => 'BIGINT',
-                'max_length'  => null,
+                'type'        => 'bigint',
+                'max_length'  => $this->isOldMySQL() ? 20 : null,
                 'nullable'    => true,
                 'default'     => null,
                 'primary_key' => 0,
             ],
             13 => (object) [
                 'name'        => 'type_real',
-                'type'        => 'REAL',
+                'type'        => 'double',
                 'max_length'  => null,
                 'nullable'    => true,
                 'default'     => null,
@@ -283,7 +234,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             ],
             14 => (object) [
                 'name'        => 'type_enum',
-                'type'        => 'TEXT',
+                'type'        => 'enum',
                 'max_length'  => null,
                 'nullable'    => true,
                 'default'     => null,
@@ -291,7 +242,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             ],
             15 => (object) [
                 'name'        => 'type_set',
-                'type'        => 'TEXT',
+                'type'        => 'set',
                 'max_length'  => null,
                 'nullable'    => true,
                 'default'     => null,
@@ -299,7 +250,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             ],
             16 => (object) [
                 'name'        => 'type_mediumtext',
-                'type'        => 'MEDIUMTEXT',
+                'type'        => 'mediumtext',
                 'max_length'  => null,
                 'nullable'    => true,
                 'default'     => null,
@@ -307,7 +258,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             ],
             17 => (object) [
                 'name'        => 'type_double',
-                'type'        => 'DOUBLE',
+                'type'        => 'double',
                 'max_length'  => null,
                 'nullable'    => true,
                 'default'     => null,
@@ -315,15 +266,15 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             ],
             18 => (object) [
                 'name'        => 'type_decimal',
-                'type'        => 'DECIMAL',
-                'max_length'  => null,
+                'type'        => 'decimal',
+                'max_length'  => 18,
                 'nullable'    => true,
                 'default'     => null,
                 'primary_key' => 0,
             ],
             19 => (object) [
                 'name'        => 'type_blob',
-                'type'        => 'BLOB',
+                'type'        => 'blob',
                 'max_length'  => null,
                 'nullable'    => true,
                 'default'     => null,
@@ -331,8 +282,8 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             ],
             20 => (object) [
                 'name'        => 'type_boolean',
-                'type'        => 'INT',
-                'max_length'  => null,
+                'type'        => 'tinyint',
+                'max_length'  => 1,
                 'nullable'    => true,
                 'default'     => null,
                 'primary_key' => 0,
