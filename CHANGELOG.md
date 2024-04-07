@@ -1,5 +1,137 @@
 # Changelog
 
+## [v4.5.0](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.0) (2024-04-07)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.8...v4.5.0)
+
+### Breaking Changes
+
+* refactor: always use multiple filters by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7903
+* fix: update psr/log to v2 and fix Logger interface by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7967
+* fix: incorrect return type for Model::objectToRawArray() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7986
+* fix: filter exec order by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7955
+* refactor: Remove deprecated Config\Config by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8016
+* fix: `FileLocator::findQualifiedNameFromPath()` behavior by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8010
+* refactor: remove deprecated methods in Model by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8032
+* fix: route options are not merged (outer filter is merged with inner filter) by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8033
+* fix: route options are not merged (inner filter overrides outer filter) by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7981
+* feat: FileLocator caching by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8017
+* refactor: remove deprecated properties and methods in CodeIgniter class by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8050
+* fix: make Factories final by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8056
+* refactor: remove deprecated test classes by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8057
+* refactor: make IncomingRequest::$uri protected by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8067
+* refactor: remove deprecated spark commands by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8086
+* refactor: remove deprecated Request::isValidIP() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8090
+* fix: set_cookie() $expire type by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8080
+* fix: remove traditional validation rule param types (1/2) by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8078
+* fix: filters are executed when controller does not exist with Auto Routing (Legacy). by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/7925
+* fix: remove traditional validation rule param types (2/2) by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8124
+* refactor: remove deprecated ModelFactory by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8139
+* refactor: remove deprecated properties in Response by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8142
+* fix: remove deprecated upper functionality in `Request::getMethod()` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8186
+* feat: new Required Filters by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8053
+* refactor: remove deprecated CastException exception by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8469
+* refactor: remove deprecated MockSecurityConfig by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8472
+* refactor: remove deprecated CodeIgniter\Entity by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8497
+* refactor: remove deprecated Cache\Exceptions\ExceptionInterface by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8498
+* fix: API\ResponseTrait can't return string as JSON by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8490
+* feat: Validation::run() accepts DB connection by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8499
+* feat: 404 Override sets 404 by default by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8535
+* refactor: remove deprecated const SPARKED by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8559
+* refactor: remove deprecated BaseService::discoverServices() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8589
+* fix: move Kint loading to Autoloader by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8603
+* feat: add Boot class by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8604
+
+### Fixed Bugs
+
+* fix: error on `Config\Kint` with Config Caching by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8003
+* fix: route key lowercase HTTP verbs by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8235
+* fix: use `addHeader()` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8240
+* fix: QueryBuilder limit(0) bug by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8280
+* fix: SQLite3 may not throw DatabaseException by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8467
+* [4.5] fix: DEBUG-VIEW comments are not output by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8523
+* [4.5] fix: $db->dateFormat merge by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8539
+* [4.5] fix: spark does not work with composer install --no-dev by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8534
+* [4.5] fix: Composer autoload.psr4 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8569
+* [4.5] fix: errors when not updating Config\Feature by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8570
+* [4.5] fix: TypeError in Filters  by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8683
+
+### New Features
+
+* feat: Language translations finder and update by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/7896
+
+### Enhancements
+
+* feat: domparser - ability to write more advanced expressions by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/7946
+* feat: [Validation] Callable Rules by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7933
+* perf: autoloader by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8005
+* feat: db:table shows db config by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7972
+* feat: add `{memory_usage}` replacement by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8008
+* perf: replace $locator->getClassname() with findQualifiedNameFromPath() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8012
+* feat: add Method/Route logging in exceptionHandler() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8108
+* feat: add `config:check` command to check Config vaules by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8110
+* feat: one generator command could have multiple views by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8119
+* feat: improve CLI input testability by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7978
+* feat: add ArrayHelper::dotKeyExists() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8131
+* feat: add CSP clearDirective() to clear existing directive by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8220
+* feat: [Validation] add `field_exists` rule by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8123
+* feat: add Message::addHeader() to add header with the same name by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8194
+* feat: `spark filter:check` shows "Required Filters" by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8236
+* feat: [Commands] `lang:find` show bad keys when scanning (v2) by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/8285
+* feat: add `--dbgroup` option to `spark db:table` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8292
+* feat: [Auto Routing Improved] add option to translate uri to camel case by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8321
+* feat: `spark routes` shows "Required Filters" by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8237
+* feat: HTTP method-aware web page caching by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8364
+* feat: `spark make:test` creates test files in `/tests/` directory v2 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8388
+* feat: [Routing] add option to pass multiple URI segments to one Controller parameter by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8348
+* feat: add DataConverter to convert types by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8230
+* feat: [Model] add option $updateOnlyChanged by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8455
+* feat: add event points for spark commands by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8496
+* feat: 404 controller also can get PageNotFoundException message by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8491
+* feat: add DB config `dateFormat` to provide default date/time formats by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8525
+* feat: use $db->dateFormat in Model by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8538
+* feat: permit __invoke() method as Controller default method by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8533
+* feat: add Model field casting by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8243
+* feat: add spark command to check php.ini by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8581
+* feat: improve Redis Session by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8578
+* feat: add Config\Optimize by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8605
+* feat: support database name with dots by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8664
+* feat: add `spark optimize` command by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8610
+* feat: add CORS filter by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8649
+* feat: Support faker modifiers on Fabricator by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/8671
+* feat: environment-specific Config\Security::$redirect by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8673
+* feat: `spark config:check` detects Config Caching by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8711
+
+### Refactoring
+
+* Drop PHP 7.4 support by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7924
+* [4.5] refactor: remove unused `use` in Model by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8045
+* [4.5] refactor: remove BaseModel assert() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8046
+* [4.5] refactor: Filters by rector by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8071
+* perf: defer instantiation of Validation in Model by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8087
+* refactor: fix types by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8091
+* refactor: move ArrayHelper class by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8130
+* [4.5] refactor: fix types by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8138
+* refactor: fix param types by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8175
+* refactor: Validation rule field_exists by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8242
+* refactor: `TestResponse` is now a class of its own by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/8264
+* refactor: fix TypeError in strict mode by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8270
+* refactor: add `declare(strict_types=1)` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8072
+* refactor: remove deprecated Controller::loadHelpers() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8286
+* refactor: remove deprecated methods in Security by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8287
+* refactor: HTTP verbs in Router by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8317
+* refactor: remove unused exception classes by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8468
+* [4.5] refactor: add `declare(strict_types=1)` to ForgeModifyColumnTest by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8502
+* [4.5] refactor: use local variables in Model by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8565
+* refactor: remove unnecessary BaseService::$services assignment by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8609
+* perf: add Factories::get() v2 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8600
+* perf: add Services::get() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8607
+* refactor: remove deprecated items in Request by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8617
+* refactor: followup performance `service()` by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/8623
+* [4.5] refactor: add declare(strict_types=1) in BadRequestException by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8682
+* refactor: DB config properties by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8693
+* refactor: upgrade to PHP 8.1 with rector by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8354
+* refactor: update PHPUnit to 10 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8069
+
 ## [v4.4.8](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.8) (2024-04-07)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.7...v4.4.8)
 

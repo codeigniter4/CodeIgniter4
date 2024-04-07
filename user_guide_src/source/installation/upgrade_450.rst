@@ -1,5 +1,5 @@
 #############################
-Upgrading from 4.4.x to 4.5.0
+Upgrading from 4.4.8 to 4.5.0
 #############################
 
 Please refer to the upgrade instructions corresponding to your installation method.
@@ -279,7 +279,7 @@ app/Config/Filters.php
 ^^^^^^^^^^^^^^^^^^^^^^
 
 Required Filters have been added, so the following changes were made. See also
-:ref:`Upgrading <v450-required-filters>`.
+:ref:`ChangeLog <v450-required-filters>`.
 
 The base class has been changed::
 
@@ -315,6 +315,8 @@ Others
 
 - app/Config/Boot/production.php
     - The default error level to ``error_reporting()`` has been changed to ``E_ALL & ~E_DEPRECATED``.
+- app/Config/Cors.php
+    - Added to handle CORS configuration.
 - app/Config/Database.php
     - The default value of ``charset`` in ``$default`` has been change to ``utf8mb4``.
     - The default value of ``DBCollat`` in ``$default`` has been change to ``utf8mb4_general_ci``.
@@ -327,6 +329,8 @@ Others
 - app/Config/Kint.php
     - It no longer extends ``BaseConfig`` because enabling
       :ref:`factories-config-caching` could cause errors.
+- app/Config/Optimize.php
+    - Added to handle optimization configuration.
 - app/Config/Security.php
     - The property ``$redirect`` has been changed to ``true`` in ``production``
       environment.
@@ -337,4 +341,25 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- app/Config/Autoload.php
+- app/Config/Boot/production.php
+- app/Config/Cache.php
+- app/Config/Cors.php
+- app/Config/Database.php
+- app/Config/Feature.php
+- app/Config/Filters.php
+- app/Config/Generators.php
+- app/Config/Kint.php
+- app/Config/Optimize.php
+- app/Config/Routing.php
+- app/Config/Security.php
+- app/Config/Session.php
+- app/Views/errors/cli/error_exception.php
+- app/Views/errors/html/error_exception.php
+- app/Views/welcome_message.php
+- composer.json
+- env
+- phpunit.xml.dist
+- preload.php
+- public/index.php
+- spark

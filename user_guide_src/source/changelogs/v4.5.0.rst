@@ -2,7 +2,7 @@
 Version 4.5.0
 #############
 
-Release Date: Unreleased
+Release Date: April 7, 2024
 
 **4.5.0 release of CodeIgniter4**
 
@@ -16,7 +16,11 @@ Highlights
 
 - Update minimal PHP requirement to 8.1.
 - Update minimal PHPUnit requirement to 10.5.
-- TBD
+- **CORS filter** (*contributed by* `kenjis <https://github.com/kenjis>`_)
+  See :doc:`../libraries/cors`.
+- The **spark optimize** command for performance improvement on production
+  environment (*contributed by* `kenjis <https://github.com/kenjis>`_).
+  See :ref:`spark_optimize`.
 
 ************
 Enhancements
@@ -118,9 +122,6 @@ limit(0) Behavior
   to ``false`` as this incorrect behavior will be fixed in a future version. See
   also :ref:`v450-model-findall-limit-0-behavior`.
 
-Forge
------
-
 Others
 ------
 
@@ -181,9 +182,6 @@ Libraries
 - **Security:** ``Config\Security::$redirect`` is now, by default, environment-specific.
   For production environment, changed to ``true`` but is still ``false`` for other
   environments.
-
-Helpers and Functions
-=====================
 
 Others
 ======
