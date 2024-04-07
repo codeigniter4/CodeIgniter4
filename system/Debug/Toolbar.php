@@ -365,7 +365,7 @@ class Toolbar
     }
 
     /**
-     * Prepare for debugging..
+     * Prepare for debugging.
      *
      * @return void
      */
