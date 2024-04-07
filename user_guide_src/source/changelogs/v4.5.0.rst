@@ -16,7 +16,11 @@ Highlights
 
 - Update minimal PHP requirement to 8.1.
 - Update minimal PHPUnit requirement to 10.5.
-- TBD
+- **CORS filter** (*contributed by* `kenjis <https://github.com/kenjis>`_)
+  See :doc:`../libraries/cors`.
+- The **spark optimize** command for performance improvement on production
+  environment (*contributed by* `kenjis <https://github.com/kenjis>`_).
+  See :ref:`spark_optimize`.
 
 ************
 Enhancements
