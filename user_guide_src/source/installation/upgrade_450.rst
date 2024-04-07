@@ -1,5 +1,5 @@
 #############################
-Upgrading from 4.4.x to 4.5.0
+Upgrading from 4.4.8 to 4.5.0
 #############################
 
 Please refer to the upgrade instructions corresponding to your installation method.
@@ -337,4 +337,25 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- app/Config/Autoload.php
+- app/Config/Boot/production.php
+- app/Config/Cache.php
+- app/Config/Cors.php
+- app/Config/Database.php
+- app/Config/Feature.php
+- app/Config/Filters.php
+- app/Config/Generators.php
+- app/Config/Kint.php
+- app/Config/Optimize.php
+- app/Config/Routing.php
+- app/Config/Security.php
+- app/Config/Session.phpå
+- app/Views/errors/cli/error_exception.php
+- app/Views/errors/html/error_exception.php
+- app/Views/welcome_message.php
+- composer.json
+- env
+- phpunit.xml.dist
+- preload.php
+- public/index.php
+- spark
