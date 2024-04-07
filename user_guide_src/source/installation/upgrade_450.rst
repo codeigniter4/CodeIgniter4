@@ -279,7 +279,7 @@ app/Config/Filters.php
 ^^^^^^^^^^^^^^^^^^^^^^
 
 Required Filters have been added, so the following changes were made. See also
-:ref:`Upgrading <v450-required-filters>`.
+:ref:`ChangeLog <v450-required-filters>`.
 
 The base class has been changed::
 
