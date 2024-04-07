@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upgrading from 4.4.x to 4.5.0 &mdash; CodeIgniter 4.4.8 documentation</title>
+  <title>Upgrading from 4.4.8 to 4.5.0 &mdash; CodeIgniter 4.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -279,7 +279,7 @@
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Installation</a></li>
           <li class="breadcrumb-item"><a href="upgrading.html">Upgrading From a Previous Version</a></li>
-      <li class="breadcrumb-item active">Upgrading from 4.4.x to 4.5.0</li>
+      <li class="breadcrumb-item active">Upgrading from 4.4.8 to 4.5.0</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -288,8 +288,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="upgrading-from-4-4-x-to-4-5-0">
-<h1>Upgrading from 4.4.x to 4.5.0<a class="headerlink" href="#upgrading-from-4-4-x-to-4-5-0" title="Permalink to this heading"></a></h1>
+  <section id="upgrading-from-4-4-8-to-4-5-0">
+<h1>Upgrading from 4.4.8 to 4.5.0<a class="headerlink" href="#upgrading-from-4-4-8-to-4-5-0" title="Permalink to this heading"></a></h1>
 <p>Please refer to the upgrade instructions corresponding to your installation method.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="installing_composer.html#app-starter-upgrading"><span class="std std-ref">Composer Installation App Starter Upgrading</span></a></p></li>
@@ -558,7 +558,7 @@ and it is recommended that you merge the updated versions with your application:
 <section id="id1">
 <h5>app/Config/Filters.php<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h5>
 <p>Required Filters have been added, so the following changes were made. See also
-<a class="reference internal" href="../changelogs/v4.5.0.html#v450-required-filters"><span class="std std-ref">Upgrading</span></a>.</p>
+<a class="reference internal" href="../changelogs/v4.5.0.html#v450-required-filters"><span class="std std-ref">ChangeLog</span></a>.</p>
 <p>The base class has been changed:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Filters</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Config\Filters</span>
 </pre></div>
@@ -599,6 +599,13 @@ and it is recommended that you merge the updated versions with your application:
 </dl>
 </li>
 <li><dl class="simple">
+<dt>app/Config/Cors.php</dt><dd><ul>
+<li><p>Added to handle CORS configuration.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
 <dt>app/Config/Database.php</dt><dd><ul>
 <li><p>The default value of <code class="docutils literal notranslate"><span class="pre">charset</span></code> in <code class="docutils literal notranslate"><span class="pre">$default</span></code> has been change to <code class="docutils literal notranslate"><span class="pre">utf8mb4</span></code>.</p></li>
 <li><p>The default value of <code class="docutils literal notranslate"><span class="pre">DBCollat</span></code> in <code class="docutils literal notranslate"><span class="pre">$default</span></code> has been change to <code class="docutils literal notranslate"><span class="pre">utf8mb4_general_ci</span></code>.</p></li>
@@ -626,6 +633,13 @@ and it is recommended that you merge the updated versions with your application:
 </dl>
 </li>
 <li><dl class="simple">
+<dt>app/Config/Optimize.php</dt><dd><ul>
+<li><p>Added to handle optimization configuration.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
 <dt>app/Config/Security.php</dt><dd><ul>
 <li><p>The property <code class="docutils literal notranslate"><span class="pre">$redirect</span></code> has been changed to <code class="docutils literal notranslate"><span class="pre">true</span></code> in <code class="docutils literal notranslate"><span class="pre">production</span></code>
 environment.</p></li>
@@ -642,7 +656,28 @@ environment.</p></li>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
-<li><p>&#64;TODO</p></li>
+<li><p>app/Config/Autoload.php</p></li>
+<li><p>app/Config/Boot/production.php</p></li>
+<li><p>app/Config/Cache.php</p></li>
+<li><p>app/Config/Cors.php</p></li>
+<li><p>app/Config/Database.php</p></li>
+<li><p>app/Config/Feature.php</p></li>
+<li><p>app/Config/Filters.php</p></li>
+<li><p>app/Config/Generators.php</p></li>
+<li><p>app/Config/Kint.php</p></li>
+<li><p>app/Config/Optimize.php</p></li>
+<li><p>app/Config/Routing.php</p></li>
+<li><p>app/Config/Security.php</p></li>
+<li><p>app/Config/Session.php</p></li>
+<li><p>app/Views/errors/cli/error_exception.php</p></li>
+<li><p>app/Views/errors/html/error_exception.php</p></li>
+<li><p>app/Views/welcome_message.php</p></li>
+<li><p>composer.json</p></li>
+<li><p>env</p></li>
+<li><p>phpunit.xml.dist</p></li>
+<li><p>preload.php</p></li>
+<li><p>public/index.php</p></li>
+<li><p>spark</p></li>
 </ul>
 </section>
 </section>

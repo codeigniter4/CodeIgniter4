@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Version 4.5.0 &mdash; CodeIgniter 4.4.8 documentation</title>
+  <title>Version 4.5.0 &mdash; CodeIgniter 4.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -290,21 +290,20 @@
              
   <section id="version-4-5-0">
 <h1>Version 4.5.0<a class="headerlink" href="#version-4-5-0" title="Permalink to this heading"></a></h1>
-<p>Release Date: Unreleased</p>
+<p>Release Date: April 7, 2024</p>
 <p><strong>4.5.0 release of CodeIgniter4</strong></p>
 <nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#highlights" id="id7">Highlights</a></p></li>
-<li><p><a class="reference internal" href="#enhancements" id="id8">Enhancements</a></p>
+<li><p><a class="reference internal" href="#highlights" id="id8">Highlights</a></p></li>
+<li><p><a class="reference internal" href="#enhancements" id="id9">Enhancements</a></p>
 <ul>
-<li><p><a class="reference internal" href="#required-filters" id="id9">Required Filters</a></p></li>
-<li><p><a class="reference internal" href="#routing" id="id10">Routing</a></p></li>
-<li><p><a class="reference internal" href="#commands" id="id11">Commands</a></p></li>
-<li><p><a class="reference internal" href="#testing" id="id12">Testing</a></p></li>
-<li><p><a class="reference internal" href="#database" id="id13">Database</a></p>
+<li><p><a class="reference internal" href="#required-filters" id="id10">Required Filters</a></p></li>
+<li><p><a class="reference internal" href="#routing" id="id11">Routing</a></p></li>
+<li><p><a class="reference internal" href="#commands" id="id12">Commands</a></p></li>
+<li><p><a class="reference internal" href="#testing" id="id13">Testing</a></p></li>
+<li><p><a class="reference internal" href="#database" id="id14">Database</a></p>
 <ul>
-<li><p><a class="reference internal" href="#query-builder" id="id14">Query Builder</a></p></li>
-<li><p><a class="reference internal" href="#forge" id="id15">Forge</a></p></li>
+<li><p><a class="reference internal" href="#query-builder" id="id15">Query Builder</a></p></li>
 <li><p><a class="reference internal" href="#others" id="id16">Others</a></p></li>
 </ul>
 </li>
@@ -317,66 +316,69 @@
 </ul>
 </li>
 <li><p><a class="reference internal" href="#libraries" id="id22">Libraries</a></p></li>
-<li><p><a class="reference internal" href="#helpers-and-functions" id="id23">Helpers and Functions</a></p></li>
-<li><p><a class="reference internal" href="#id1" id="id24">Others</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id23">Others</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#breaking" id="id25">BREAKING</a></p>
+<li><p><a class="reference internal" href="#breaking" id="id24">BREAKING</a></p>
 <ul>
-<li><p><a class="reference internal" href="#behavior-changes" id="id26">Behavior Changes</a></p>
+<li><p><a class="reference internal" href="#behavior-changes" id="id25">Behavior Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#lowercase-http-method-name" id="id27">Lowercase HTTP Method Name</a></p></li>
-<li><p><a class="reference internal" href="#filter-execution-order" id="id28">Filter Execution Order</a></p></li>
-<li><p><a class="reference internal" href="#nested-route-groups-and-options" id="id29">Nested Route Groups and Options</a></p></li>
-<li><p><a class="reference internal" href="#api-responsetrait" id="id30">API\ResponseTrait</a></p></li>
-<li><p><a class="reference internal" href="#factories-class" id="id31">Factories class</a></p></li>
-<li><p><a class="reference internal" href="#id2" id="id32">Others</a></p></li>
+<li><p><a class="reference internal" href="#lowercase-http-method-name" id="id26">Lowercase HTTP Method Name</a></p></li>
+<li><p><a class="reference internal" href="#filter-execution-order" id="id27">Filter Execution Order</a></p></li>
+<li><p><a class="reference internal" href="#nested-route-groups-and-options" id="id28">Nested Route Groups and Options</a></p></li>
+<li><p><a class="reference internal" href="#api-responsetrait" id="id29">API\ResponseTrait</a></p></li>
+<li><p><a class="reference internal" href="#factories-class" id="id30">Factories class</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id31">Others</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#interface-changes" id="id33">Interface Changes</a></p></li>
-<li><p><a class="reference internal" href="#method-signature-changes" id="id34">Method Signature Changes</a></p>
+<li><p><a class="reference internal" href="#interface-changes" id="id32">Interface Changes</a></p></li>
+<li><p><a class="reference internal" href="#method-signature-changes" id="id33">Method Signature Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#setting-cookies" id="id35">Setting Cookies</a></p></li>
-<li><p><a class="reference internal" href="#filelocatorinterface" id="id36">FileLocatorInterface</a></p></li>
-<li><p><a class="reference internal" href="#return-type-changes" id="id37">Return Type Changes</a></p></li>
-<li><p><a class="reference internal" href="#traditional-validation-rules" id="id38">Traditional Validation Rules</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id39">Others</a></p></li>
+<li><p><a class="reference internal" href="#setting-cookies" id="id34">Setting Cookies</a></p></li>
+<li><p><a class="reference internal" href="#filelocatorinterface" id="id35">FileLocatorInterface</a></p></li>
+<li><p><a class="reference internal" href="#return-type-changes" id="id36">Return Type Changes</a></p></li>
+<li><p><a class="reference internal" href="#traditional-validation-rules" id="id37">Traditional Validation Rules</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id38">Others</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#removed-deprecated-items" id="id40">Removed Deprecated Items</a></p>
+<li><p><a class="reference internal" href="#removed-deprecated-items" id="id39">Removed Deprecated Items</a></p>
 <ul>
-<li><p><a class="reference internal" href="#request" id="id41">Request</a></p></li>
-<li><p><a class="reference internal" href="#filters" id="id42">Filters</a></p></li>
-<li><p><a class="reference internal" href="#id4" id="id43">Database</a></p></li>
-<li><p><a class="reference internal" href="#id5" id="id44">Model</a></p></li>
-<li><p><a class="reference internal" href="#response" id="id45">Response</a></p></li>
-<li><p><a class="reference internal" href="#security" id="id46">Security</a></p></li>
-<li><p><a class="reference internal" href="#codeigniter" id="id47">CodeIgniter</a></p></li>
-<li><p><a class="reference internal" href="#test" id="id48">Test</a></p></li>
-<li><p><a class="reference internal" href="#spark-commands" id="id49">Spark Commands</a></p></li>
-<li><p><a class="reference internal" href="#id6" id="id50">Others</a></p></li>
+<li><p><a class="reference internal" href="#request" id="id40">Request</a></p></li>
+<li><p><a class="reference internal" href="#filters" id="id41">Filters</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id42">Database</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id43">Model</a></p></li>
+<li><p><a class="reference internal" href="#response" id="id44">Response</a></p></li>
+<li><p><a class="reference internal" href="#security" id="id45">Security</a></p></li>
+<li><p><a class="reference internal" href="#codeigniter" id="id46">CodeIgniter</a></p></li>
+<li><p><a class="reference internal" href="#test" id="id47">Test</a></p></li>
+<li><p><a class="reference internal" href="#spark-commands" id="id48">Spark Commands</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id49">Others</a></p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#message-changes" id="id51">Message Changes</a></p></li>
-<li><p><a class="reference internal" href="#changes" id="id52">Changes</a></p></li>
-<li><p><a class="reference internal" href="#deprecations" id="id53">Deprecations</a></p></li>
-<li><p><a class="reference internal" href="#bugs-fixed" id="id54">Bugs Fixed</a></p></li>
+<li><p><a class="reference internal" href="#message-changes" id="id50">Message Changes</a></p></li>
+<li><p><a class="reference internal" href="#changes" id="id51">Changes</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id52">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id53">Bugs Fixed</a></p></li>
 </ul>
 </nav>
 <section id="highlights">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Highlights</a><a class="headerlink" href="#highlights" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Highlights</a><a class="headerlink" href="#highlights" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Update minimal PHP requirement to 8.1.</p></li>
 <li><p>Update minimal PHPUnit requirement to 10.5.</p></li>
-<li><p>TBD</p></li>
+<li><p><strong>CORS filter</strong> (<em>contributed by</em> <a class="reference external" href="https://github.com/kenjis">kenjis</a>)
+See <a class="reference internal" href="../libraries/cors.html"><span class="doc">Cross-Origin Resource Sharing (CORS)</span></a>.</p></li>
+<li><p>The <strong>spark optimize</strong> command for performance improvement on production
+environment (<em>contributed by</em> <a class="reference external" href="https://github.com/kenjis">kenjis</a>).
+See <a class="reference internal" href="../installation/deployment.html#spark-optimize"><span class="std std-ref">spark optimize</span></a>.</p></li>
 </ul>
 </section>
 <section id="enhancements">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this heading"></a></h2>
 <section id="required-filters">
-<span id="v450-required-filters"></span><h3><a class="toc-backref" href="#id9" role="doc-backlink">Required Filters</a><a class="headerlink" href="#required-filters" title="Permalink to this heading"></a></h3>
+<span id="v450-required-filters"></span><h3><a class="toc-backref" href="#id10" role="doc-backlink">Required Filters</a><a class="headerlink" href="#required-filters" title="Permalink to this heading"></a></h3>
 <p>New <a class="reference internal" href="../incoming/filters.html#filters-required"><span class="std std-ref">Required Filters</span></a> have been introduced. They are
 special filters that are applied before and after other kinds of filters, and
 always applied even if a route does not exist.</p>
@@ -411,7 +413,7 @@ and <em>Required After Filters</em> data.</p>
 </ul>
 </section>
 <section id="routing">
-<h3><a class="toc-backref" href="#id10" role="doc-backlink">Routing</a><a class="headerlink" href="#routing" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Routing</a><a class="headerlink" href="#routing" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>AutoRouting Improved:</strong> The <code class="docutils literal notranslate"><span class="pre">$translateUriToCamelCase</span></code> option has been added
 that allows using CamelCase controller and method names. See
@@ -433,7 +435,7 @@ a <code class="docutils literal notranslate"><span class="pre">PageNotFoundExcep
 </ul>
 </section>
 <section id="commands">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">Commands</a><a class="headerlink" href="#commands" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Commands</a><a class="headerlink" href="#commands" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">optimize</span></code> command to optimize configuration for production environment.
 See <a class="reference internal" href="../installation/deployment.html#spark-optimize"><span class="std std-ref">spark optimize</span></a> for the details.</p></li>
@@ -449,7 +451,7 @@ See <a class="reference internal" href="../dbmgmt/db_commands.html#db-command-sp
 </ul>
 </section>
 <section id="testing">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">Testing</a><a class="headerlink" href="#testing" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Testing</a><a class="headerlink" href="#testing" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>DomParser:</strong> The new methods were added <code class="docutils literal notranslate"><span class="pre">seeXPath()</span></code> and <code class="docutils literal notranslate"><span class="pre">dontSeeXPath()</span></code>
 which allows users to work directly with DOMXPath object, using complex expressions.</p></li>
@@ -463,9 +465,9 @@ is not a test. Assertions’ return types are now natively typed <code class="do
 </ul>
 </section>
 <section id="database">
-<h3><a class="toc-backref" href="#id13" role="doc-backlink">Database</a><a class="headerlink" href="#database" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Database</a><a class="headerlink" href="#database" title="Permalink to this heading"></a></h3>
 <section id="query-builder">
-<h4><a class="toc-backref" href="#id14" role="doc-backlink">Query Builder</a><a class="headerlink" href="#query-builder" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id15" role="doc-backlink">Query Builder</a><a class="headerlink" href="#query-builder" title="Permalink to this heading"></a></h4>
 <section id="limit-0-behavior">
 <span id="v450-query-builder-limit-0-behavior"></span><h5>limit(0) Behavior<a class="headerlink" href="#limit-0-behavior" title="Permalink to this heading"></a></h5>
 <ul class="simple">
@@ -480,9 +482,6 @@ to <code class="docutils literal notranslate"><span class="pre">false</span></co
 also <a class="reference internal" href="#v450-model-findall-limit-0-behavior"><span class="std std-ref">findAll(0) Behavior</span></a>.</p></li>
 </ul>
 </section>
-</section>
-<section id="forge">
-<h4><a class="toc-backref" href="#id15" role="doc-backlink">Forge</a><a class="headerlink" href="#forge" title="Permalink to this heading"></a></h4>
 </section>
 <section id="others">
 <h4><a class="toc-backref" href="#id16" role="doc-backlink">Others</a><a class="headerlink" href="#others" title="Permalink to this heading"></a></h4>
@@ -553,11 +552,8 @@ For production environment, changed to <code class="docutils literal notranslate
 environments.</p></li>
 </ul>
 </section>
-<section id="helpers-and-functions">
-<h3><a class="toc-backref" href="#id23" role="doc-backlink">Helpers and Functions</a><a class="headerlink" href="#helpers-and-functions" title="Permalink to this heading"></a></h3>
-</section>
-<section id="id1">
-<h3><a class="toc-backref" href="#id24" role="doc-backlink">Others</a><a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<section id="id2">
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">Others</a><a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Bootstrap:</strong> The <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Boot</span></code> class has been introduced, replacing
 <strong>system/bootstrap.php</strong>.</p></li>
@@ -587,11 +583,11 @@ existing CSP directives. See <a class="reference internal" href="../outgoing/csp
 </section>
 </section>
 <section id="breaking">
-<h2><a class="toc-backref" href="#id25" role="doc-backlink">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id24" role="doc-backlink">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this heading"></a></h2>
 <section id="behavior-changes">
-<h3><a class="toc-backref" href="#id26" role="doc-backlink">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Permalink to this heading"></a></h3>
 <section id="lowercase-http-method-name">
-<h4><a class="toc-backref" href="#id27" role="doc-backlink">Lowercase HTTP Method Name</a><a class="headerlink" href="#lowercase-http-method-name" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id26" role="doc-backlink">Lowercase HTTP Method Name</a><a class="headerlink" href="#lowercase-http-method-name" title="Permalink to this heading"></a></h4>
 <p>For historical reasons, the framework used HTTP method names in lower case like
 “get”, “post”.
 But the method token is case-sensitive because it might be used as a gateway
@@ -606,29 +602,29 @@ See <a class="reference external" href="https://www.rfc-editor.org/rfc/rfc9110#n
 <p>See <a class="reference internal" href="../installation/upgrade_450.html#upgrade-450-lowercase-http-method-name"><span class="std std-ref">Lowercase HTTP Method Name</span></a> for details.</p>
 </section>
 <section id="filter-execution-order">
-<h4><a class="toc-backref" href="#id28" role="doc-backlink">Filter Execution Order</a><a class="headerlink" href="#filter-execution-order" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id27" role="doc-backlink">Filter Execution Order</a><a class="headerlink" href="#filter-execution-order" title="Permalink to this heading"></a></h4>
 <p>The order in which Controller Filters are executed has changed. See
 <a class="reference internal" href="../installation/upgrade_450.html#upgrade-450-filter-execution-order"><span class="std std-ref">Upgrading Guide</span></a> for details.</p>
 </section>
 <section id="nested-route-groups-and-options">
-<h4><a class="toc-backref" href="#id29" role="doc-backlink">Nested Route Groups and Options</a><a class="headerlink" href="#nested-route-groups-and-options" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id28" role="doc-backlink">Nested Route Groups and Options</a><a class="headerlink" href="#nested-route-groups-and-options" title="Permalink to this heading"></a></h4>
 <p>Due to a bug fix, the behavior has changed so that options passed to the outer
 <code class="docutils literal notranslate"><span class="pre">group()</span></code> are merged with the options of the inner <code class="docutils literal notranslate"><span class="pre">group()</span></code>.
 See <a class="reference internal" href="../installation/upgrade_450.html#upgrade-450-nested-route-groups-and-options"><span class="std std-ref">Upgrading Guide</span></a> for details.</p>
 </section>
 <section id="api-responsetrait">
-<h4><a class="toc-backref" href="#id30" role="doc-backlink">API\ResponseTrait</a><a class="headerlink" href="#api-responsetrait" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id29" role="doc-backlink">API\ResponseTrait</a><a class="headerlink" href="#api-responsetrait" title="Permalink to this heading"></a></h4>
 <p>Now when a response format is JSON, if you pass string data, the framework returns
 a JSON response. In previous versions, it returned a HTML response.
 See <a class="reference internal" href="../installation/upgrade_450.html#upgrade-450-api-response-trait"><span class="std std-ref">Upgrading Guide</span></a> for details.</p>
 </section>
 <section id="factories-class">
-<h4><a class="toc-backref" href="#id31" role="doc-backlink">Factories class</a><a class="headerlink" href="#factories-class" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id30" role="doc-backlink">Factories class</a><a class="headerlink" href="#factories-class" title="Permalink to this heading"></a></h4>
 <p><a class="reference internal" href="../concepts/factories.html"><span class="doc">Factories</span></a> has been changed to a final class. It is a static
 class, and even if it were extended, there is no way to replace it.</p>
 </section>
-<section id="id2">
-<h4><a class="toc-backref" href="#id32" role="doc-backlink">Others</a><a class="headerlink" href="#id2" title="Permalink to this heading"></a></h4>
+<section id="id3">
+<h4><a class="toc-backref" href="#id31" role="doc-backlink">Others</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p><strong>AutoRouting Legacy:</strong> Changed so that a <code class="docutils literal notranslate"><span class="pre">PageNotFoundException</span></code> is thrown
 if the controller corresponding to the request URI does not exist.</p></li>
@@ -646,7 +642,7 @@ the new <code class="docutils literal notranslate"><span class="pre">CodeIgniter
 </section>
 </section>
 <section id="interface-changes">
-<h3><a class="toc-backref" href="#id33" role="doc-backlink">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id32" role="doc-backlink">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Permalink to this heading"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>As long as you have not extended the relevant CodeIgniter core classes
@@ -663,16 +659,16 @@ changed. The <code class="docutils literal notranslate"><span class="pre">?strin
 </ul>
 </section>
 <section id="method-signature-changes">
-<span id="v450-method-signature-changes"></span><h3><a class="toc-backref" href="#id34" role="doc-backlink">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Permalink to this heading"></a></h3>
+<span id="v450-method-signature-changes"></span><h3><a class="toc-backref" href="#id33" role="doc-backlink">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Permalink to this heading"></a></h3>
 <section id="setting-cookies">
-<h4><a class="toc-backref" href="#id35" role="doc-backlink">Setting Cookies</a><a class="headerlink" href="#setting-cookies" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id34" role="doc-backlink">Setting Cookies</a><a class="headerlink" href="#setting-cookies" title="Permalink to this heading"></a></h4>
 <p>The third parameter <code class="docutils literal notranslate"><span class="pre">$expire</span></code> in <a class="reference internal" href="../helpers/cookie_helper.html#set_cookie" title="set_cookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_cookie()</span></code></a> and
 <a class="reference internal" href="../outgoing/response.html#CodeIgniter\HTTP\Response::setCookie" title="CodeIgniter\HTTP\Response::setCookie"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response::setCookie()</span></code></a> has been fixed.</p>
 <p>The type has been changed from <code class="docutils literal notranslate"><span class="pre">string</span></code> to <code class="docutils literal notranslate"><span class="pre">int</span></code>, and the default value has
 been changed from <code class="docutils literal notranslate"><span class="pre">''</span></code> to  <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
 </section>
 <section id="filelocatorinterface">
-<h4><a class="toc-backref" href="#id36" role="doc-backlink">FileLocatorInterface</a><a class="headerlink" href="#filelocatorinterface" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id35" role="doc-backlink">FileLocatorInterface</a><a class="headerlink" href="#filelocatorinterface" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p><strong>Router:</strong> The first parameter of the <code class="docutils literal notranslate"><span class="pre">RouteCollection</span></code> constructor has been changed
 from <code class="docutils literal notranslate"><span class="pre">FileLocator</span></code> to <code class="docutils literal notranslate"><span class="pre">FileLocatorInterface</span></code>.</p></li>
@@ -681,14 +677,14 @@ from <code class="docutils literal notranslate"><span class="pre">FileLocator</s
 </ul>
 </section>
 <section id="return-type-changes">
-<h4><a class="toc-backref" href="#id37" role="doc-backlink">Return Type Changes</a><a class="headerlink" href="#return-type-changes" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id36" role="doc-backlink">Return Type Changes</a><a class="headerlink" href="#return-type-changes" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p><strong>Model:</strong> The return type of the <code class="docutils literal notranslate"><span class="pre">objectToRawArray()</span></code> method in the <code class="docutils literal notranslate"><span class="pre">Model</span></code>
 and <code class="docutils literal notranslate"><span class="pre">BaseModel</span></code> classes has been changed from <code class="docutils literal notranslate"><span class="pre">?array</span></code> to <code class="docutils literal notranslate"><span class="pre">array</span></code>.</p></li>
 </ul>
 </section>
 <section id="traditional-validation-rules">
-<h4><a class="toc-backref" href="#id38" role="doc-backlink">Traditional Validation Rules</a><a class="headerlink" href="#traditional-validation-rules" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id37" role="doc-backlink">Traditional Validation Rules</a><a class="headerlink" href="#traditional-validation-rules" title="Permalink to this heading"></a></h4>
 <p>To add <code class="docutils literal notranslate"><span class="pre">declare(strict_types=1)</span></code> to the framework codebase, the method parameter
 type <code class="docutils literal notranslate"><span class="pre">?string</span></code> for a value to validate in the all Traditional Validation rule
 classes <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Validation\FormatRules</span></code> and <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Validation\Rules</span></code>
@@ -699,8 +695,8 @@ are removed.</p>
 </pre></div>
 </div>
 </section>
-<section id="id3">
-<h4><a class="toc-backref" href="#id39" role="doc-backlink">Others</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h4>
+<section id="id4">
+<h4><a class="toc-backref" href="#id38" role="doc-backlink">Others</a><a class="headerlink" href="#id4" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p><strong>Logger:</strong> The method signatures of the methods in <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Log\Logger</span></code>
 that implements the PSR-3 interface have been fixed. The <code class="docutils literal notranslate"><span class="pre">bool</span></code> return
@@ -712,9 +708,9 @@ changed. The <code class="docutils literal notranslate"><span class="pre">?strin
 </section>
 </section>
 <section id="removed-deprecated-items">
-<span id="v450-removed-deprecated-items"></span><h3><a class="toc-backref" href="#id40" role="doc-backlink">Removed Deprecated Items</a><a class="headerlink" href="#removed-deprecated-items" title="Permalink to this heading"></a></h3>
+<span id="v450-removed-deprecated-items"></span><h3><a class="toc-backref" href="#id39" role="doc-backlink">Removed Deprecated Items</a><a class="headerlink" href="#removed-deprecated-items" title="Permalink to this heading"></a></h3>
 <section id="request">
-<h4><a class="toc-backref" href="#id41" role="doc-backlink">Request</a><a class="headerlink" href="#request" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id40" role="doc-backlink">Request</a><a class="headerlink" href="#request" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">$upper</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">getMethod()</span></code> in <code class="docutils literal notranslate"><span class="pre">RequestInterface</span></code> and <code class="docutils literal notranslate"><span class="pre">Request</span></code>
 has been removed. See <a class="reference internal" href="../installation/upgrade_450.html#upgrade-450-lowercase-http-method-name"><span class="std std-ref">Lowercase HTTP Method Name</span></a>.</p></li>
@@ -728,7 +724,7 @@ has been removed.</p></li>
 </ul>
 </section>
 <section id="filters">
-<h4><a class="toc-backref" href="#id42" role="doc-backlink">Filters</a><a class="headerlink" href="#filters" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id41" role="doc-backlink">Filters</a><a class="headerlink" href="#filters" title="Permalink to this heading"></a></h4>
 <ul>
 <li><p>The following deprecated items have been removed, because now <a class="reference internal" href="../incoming/routing.html#multiple-filters"><span class="std std-ref">Multiple Filters</span></a> are always enabled.</p>
 <blockquote>
@@ -742,14 +738,14 @@ has been removed.</p></li>
 </li>
 </ul>
 </section>
-<section id="id4">
-<h4><a class="toc-backref" href="#id43" role="doc-backlink">Database</a><a class="headerlink" href="#id4" title="Permalink to this heading"></a></h4>
+<section id="id5">
+<h4><a class="toc-backref" href="#id42" role="doc-backlink">Database</a><a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">ModelFactory</span></code></p></li>
 </ul>
 </section>
-<section id="id5">
-<h4><a class="toc-backref" href="#id44" role="doc-backlink">Model</a><a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
+<section id="id6">
+<h4><a class="toc-backref" href="#id43" role="doc-backlink">Model</a><a class="headerlink" href="#id6" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">BaseModel::idValue()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">BaseModel::fillPlaceholders()</span></code></p></li>
@@ -758,7 +754,7 @@ has been removed.</p></li>
 </ul>
 </section>
 <section id="response">
-<h4><a class="toc-backref" href="#id45" role="doc-backlink">Response</a><a class="headerlink" href="#response" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id44" role="doc-backlink">Response</a><a class="headerlink" href="#response" title="Permalink to this heading"></a></h4>
 <ul>
 <li><p>The visibility of the deprecated property <code class="docutils literal notranslate"><span class="pre">ResponseTrait::$CSP</span></code> has been
 changed to protected.</p></li>
@@ -779,7 +775,7 @@ changed to protected.</p></li>
 </ul>
 </section>
 <section id="security">
-<h4><a class="toc-backref" href="#id46" role="doc-backlink">Security</a><a class="headerlink" href="#security" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id45" role="doc-backlink">Security</a><a class="headerlink" href="#security" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">SecurityInterface::isExpired()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Security::isExpired()</span></code></p></li>
@@ -791,7 +787,7 @@ changed to protected.</p></li>
 </ul>
 </section>
 <section id="codeigniter">
-<h4><a class="toc-backref" href="#id47" role="doc-backlink">CodeIgniter</a><a class="headerlink" href="#codeigniter" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id46" role="doc-backlink">CodeIgniter</a><a class="headerlink" href="#codeigniter" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$path</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$useSafeOutput</span></code></p></li>
@@ -800,7 +796,7 @@ changed to protected.</p></li>
 </ul>
 </section>
 <section id="test">
-<h4><a class="toc-backref" href="#id48" role="doc-backlink">Test</a><a class="headerlink" href="#test" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id47" role="doc-backlink">Test</a><a class="headerlink" href="#test" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">CIDatabaseTestCase</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ControllerResponse</span></code></p></li>
@@ -811,14 +807,14 @@ changed to protected.</p></li>
 </ul>
 </section>
 <section id="spark-commands">
-<h4><a class="toc-backref" href="#id49" role="doc-backlink">Spark Commands</a><a class="headerlink" href="#spark-commands" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id48" role="doc-backlink">Spark Commands</a><a class="headerlink" href="#spark-commands" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">migrate:create</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">session:migration</span></code></p></li>
 </ul>
 </section>
-<section id="id6">
-<h4><a class="toc-backref" href="#id50" role="doc-backlink">Others</a><a class="headerlink" href="#id6" title="Permalink to this heading"></a></h4>
+<section id="id7">
+<h4><a class="toc-backref" href="#id49" role="doc-backlink">Others</a><a class="headerlink" href="#id7" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p><strong>Cache:</strong> The deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Cache\Exceptions\ExceptionInterface</span></code> has been removed.</p></li>
 <li><dl class="simple">
@@ -840,14 +836,14 @@ has been removed.</p></li>
 </section>
 </section>
 <section id="message-changes">
-<h2><a class="toc-backref" href="#id51" role="doc-backlink">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id50" role="doc-backlink">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">CLI.generator.className.test</span></code> message.</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">Validation.field_exists</span></code> error message.</p></li>
 </ul>
 </section>
 <section id="changes">
-<h2><a class="toc-backref" href="#id52" role="doc-backlink">Changes</a><a class="headerlink" href="#changes" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id51" role="doc-backlink">Changes</a><a class="headerlink" href="#changes" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Bootstrap:</strong> The loading of <strong>.env</strong> and defining <code class="docutils literal notranslate"><span class="pre">ENVIRONMENT</span></code> have been
 moved before loading of <strong>bootstrap.php</strong>.</p></li>
@@ -873,7 +869,7 @@ is deprecated in SQL Server.</p></li>
 </ul>
 </section>
 <section id="deprecations">
-<h2><a class="toc-backref" href="#id53" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id52" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Services:</strong> The <code class="docutils literal notranslate"><span class="pre">BaseService::$services</span></code> property has been deprecated. No
 longer used.</p></li>
@@ -920,7 +916,7 @@ moved to <code class="docutils literal notranslate"><span class="pre">MySQLi\Con
 </ul>
 </section>
 <section id="bugs-fixed">
-<h2><a class="toc-backref" href="#id54" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id53" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this heading"></a></h2>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
 for a complete list of bugs fixed.</p>
