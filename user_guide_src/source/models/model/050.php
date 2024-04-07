@@ -6,6 +6,8 @@ use CodeIgniter\Model;
 
 class MyModel extends Model
 {
+    // ...
+
     protected function hashPassword(array $data)
     {
         if (! isset($data['data']['password'])) {

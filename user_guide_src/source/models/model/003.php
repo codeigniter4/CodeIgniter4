@@ -6,6 +6,8 @@ use Modules\Authentication\Models\UserAuthModel;
 
 class UserModel extends UserAuthModel
 {
+    // ...
+
     /**
      * Called during initialization. Appends
      * our custom field to the module's model.

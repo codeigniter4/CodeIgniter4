@@ -5,8 +5,8 @@ Working with Uploaded Files
 CodeIgniter makes working with files uploaded through a form much simpler and more secure than using PHP's ``$_FILES``
 array directly. This extends the :doc:`File class </libraries/files>` and thus gains all of the features of that class.
 
-.. note:: This is not the same as the File Uploading class in CodeIgniter v3.x. This provides a raw
-    interface to the uploaded files with a few small features.
+.. note:: This is not the same as the File Uploading class in CodeIgniter 3.
+    This provides a raw interface to the uploaded files with a few small features.
 
 .. contents::
     :local:
@@ -309,7 +309,7 @@ getClientPath()
 
 .. versionadded:: 4.4.0
 
-Returns the `webkit relative path <https://developer.mozilla.org/en-US/docs/Web/API/File/webkitRelativePath>`_ of the uploaded file when the client has uploaded files via directory upload.  
+Returns the `webkit relative path <https://developer.mozilla.org/en-US/docs/Web/API/File/webkitRelativePath>`_ of the uploaded file when the client has uploaded files via directory upload.
 In PHP versions below 8.1, this returns ``null``
 
 .. literalinclude:: uploaded_files/023.php

@@ -6,6 +6,10 @@ use CodeIgniter\Model;
 
 class MyModel extends Model
 {
+    // ...
+
     protected $beforeInsert = ['hashPassword'];
     protected $beforeUpdate = ['hashPassword'];
+
+    // ...
 }

@@ -73,7 +73,7 @@ class FileHandler extends BaseHandler
         } else {
             $sessionPath = rtrim(ini_get('session.save_path'), '/\\');
 
-            if (! $sessionPath) {
+            if ($sessionPath === '') {
                 $sessionPath = WRITEPATH . 'session';
             }
 

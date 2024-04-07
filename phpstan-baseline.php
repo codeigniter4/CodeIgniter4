@@ -227,11 +227,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:setValidationRules\\(\\) has parameter \\$validationRules with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:transformDataToArray\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
@@ -263,66 +258,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a ternary operator condition, array\\|null given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$afterDelete type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$afterFind type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$afterInsert type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$afterInsertBatch type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$afterUpdate type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$afterUpdateBatch type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$beforeDelete type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$beforeFind type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$beforeInsert type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$beforeInsertBatch type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$beforeUpdate type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$beforeUpdateBatch type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
@@ -448,16 +383,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in &&, array\\|string\\|null given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/CLI/CLI.php',
 ];
@@ -768,11 +693,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/MigrateStatus.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, array\\<int\\<0, max\\>, array\\<int, mixed\\>\\> given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Database/MigrateStatus.php',
 ];
@@ -2137,11 +2057,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Config/DotEnv.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/DotEnv.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Config\\\\Factories\\:\\:__callStatic\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/Factories.php',
@@ -2288,11 +2203,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Controller\\:\\:validateData\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Controller.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Controller.php',
 ];
@@ -2857,16 +2767,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/BaseConnection.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:_foreignKeyData\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseConnection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:_indexData\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseConnection.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:callFunction\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseConnection.php',
@@ -2902,22 +2802,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/BaseConnection.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:foreignKeyDataToObjects\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseConnection.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:getFieldNames\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseConnection.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:getForeignKeyData\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseConnection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:getIndexData\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseConnection.php',
 ];
@@ -3733,11 +3623,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\OCI8\\\\Builder\\:\\:resetSelect\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
 ];
@@ -6222,11 +6107,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Return type \\(CodeIgniter\\\\HTTP\\\\DownloadResponse\\) of method CodeIgniter\\\\HTTP\\\\DownloadResponse\\:\\:sendBody\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\HTTP\\\\Response\\)\\) of method CodeIgniter\\\\HTTP\\\\Response\\:\\:sendBody\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
@@ -7122,66 +7002,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 1024\\> given\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 128\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 16\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 1\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 2048\\> given\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 256\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 2\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 32\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 4\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 512\\> given\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 64\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 8\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Right side of && is always true\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
@@ -7392,11 +7212,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Helpers/form_helper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/form_helper.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Function _list\\(\\) has parameter \\$attributes with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/html_helper.php',
@@ -7473,11 +7288,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Function video\\(\\) has parameter \\$tracks with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/html_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/html_helper.php',
 ];
@@ -7578,11 +7388,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Implicit array creation is not allowed \\- variable \\$atts might not exist\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/url_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/url_helper.php',
 ];
@@ -7723,7 +7528,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 9,
+	'count' => 8,
 	'path' => __DIR__ . '/system/Images/Handlers/ImageMagickHandler.php',
 ];
 $ignoreErrors[] = [
@@ -8047,17 +7852,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Pager/Pager.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, array given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Pager/Pager.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Pager\\\\Pager\\:\\:\\$groups type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Pager/Pager.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Pager\\\\Pager\\:\\:\\$only type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Pager/Pager.php',
 ];
@@ -8392,11 +8187,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Router/RouteCollection.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/RouteCollection.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a ternary operator condition, string\\|null given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/RouteCollection.php',
@@ -8643,11 +8433,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\FileHandler\\:\\:configureSessionIDRegex\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Session/Handlers/FileHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Session/Handlers/FileHandler.php',
 ];
@@ -9393,16 +9178,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockConnection\\:\\:_fieldData\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockConnection\\:\\:_foreignKeyData\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockConnection\\:\\:_indexData\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
 ];
@@ -10612,11 +10387,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/View/Table.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, float given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Table.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in an if condition, string\\|null given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/Table.php',
@@ -11287,67 +11057,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterDelete type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterFind type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterInsert type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterInsertBatch type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterUpdate type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$afterUpdateBatch type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeDelete type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeFind type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeFindReturnData has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeInsert type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeInsertBatch type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeUpdate type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$beforeUpdateBatch type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
 ];
@@ -11390,16 +11100,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property Tests\\\\Support\\\\Models\\\\UserModel\\:\\:\\$name has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Models/UserModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\ValidErrorsModel\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, array\\<int\\|string, array\\<string, string\\>\\|string\\>\\|string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/ValidErrorsModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Models\\\\ValidModel\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, array\\<int, string\\>\\|string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/ValidModel.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property Tests\\\\Support\\\\SomeEntity\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
@@ -12048,11 +11748,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:testUnserializeError\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a ternary operator condition, array given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
 ];
@@ -16302,37 +15997,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelRuleGroupTest\\.php\\:368\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelRuleGroupTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelRuleGroupTest\\.php\\:406\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelRuleGroupTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelRuleGroupTest\\.php\\:446\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelRuleGroupTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:243\\:\\:\\$grouptest has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:380\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:418\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/ValidationModelTest\\.php\\:458\\:\\:\\$validationRules \\(array\\<int, string\\>\\|string\\) does not accept default value of type array\\<string, string\\>\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/ValidationModelTest.php',
 ];

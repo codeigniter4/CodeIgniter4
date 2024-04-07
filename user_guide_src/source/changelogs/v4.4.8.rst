@@ -1,0 +1,28 @@
+#############
+Version 4.4.8
+#############
+
+Release Date: April 7, 2024
+
+**4.4.8 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+********
+BREAKING
+********
+
+- A bug that caused the :doc:`Exception handler <../general/errors>` to display
+  incorrect error view file corresponding to the exception code has been fixed.
+  The third parameter ``int $statusCode = 500`` has been added to
+  ``CodeIgniter\Debug\ExceptionHandler::determineView()`` for this purpose.
+
+**********
+Bugs Fixed
+**********
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

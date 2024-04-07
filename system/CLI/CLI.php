@@ -262,7 +262,7 @@ class CLI
             $default = $options[0];
         }
 
-        static::fwrite(STDOUT, $field . (trim($field) ? ' ' : '') . $extraOutput . ': ');
+        static::fwrite(STDOUT, $field . (trim($field) !== '' ? ' ' : '') . $extraOutput . ': ');
 
         // Read the input from keyboard.
         $input = trim(static::input()) ?: $default;
@@ -386,7 +386,7 @@ class CLI
      */
     private static function isZeroOptions(array $options): void
     {
-        if (! $options) {
+        if ($options === []) {
             throw new InvalidArgumentException('No options to select from were provided');
         }
     }

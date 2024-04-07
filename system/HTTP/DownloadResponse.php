@@ -194,7 +194,7 @@ class DownloadResponse extends Response
 
         $result = sprintf('attachment; filename="%s"', $downloadFilename);
 
-        if ($utf8Filename) {
+        if ($utf8Filename !== '') {
             $result .= '; filename*=UTF-8\'\'' . rawurlencode($utf8Filename);
         }
 

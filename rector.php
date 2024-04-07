@@ -21,6 +21,7 @@ use Rector\CodeQuality\Rector\FuncCall\SimplifyStrposLowerRector;
 use Rector\CodeQuality\Rector\FuncCall\SingleInArrayToCompareRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
+use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
@@ -158,6 +159,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(BooleanInIfConditionRuleFixerRector::class);
     $rectorConfig->rule(SingleInArrayToCompareRector::class);
     $rectorConfig->rule(VersionCompareFuncCallToConstantRector::class);
+    $rectorConfig->rule(ExplicitBoolCompareRector::class);
 
     $rectorConfig
         ->ruleWithConfiguration(StringClassNameToClassConstantRector::class, [

@@ -280,7 +280,7 @@ class Table
     /**
      * Creates the new table based on our current fields.
      *
-     * @return mixed
+     * @return bool
      */
     protected function createTable()
     {
@@ -449,16 +449,12 @@ class Table
      * Converts keys retrieved from the database to
      * the format needed to create later.
      *
-     * @param mixed $keys
+     * @param array<string, stdClass> $keys
      *
-     * @return mixed
+     * @return array<string, array{fields: string, type: string}>
      */
     protected function formatKeys($keys)
     {
-        if (! is_array($keys)) {
-            return $keys;
-        }
-
         $return = [];
 
         foreach ($keys as $name => $key) {

@@ -32,8 +32,6 @@ class ImageMagickHandler extends BaseHandler
     protected $resource;
 
     /**
-     * Constructor.
-     *
      * @param Images $config
      *
      * @throws ImageException
@@ -44,6 +42,22 @@ class ImageMagickHandler extends BaseHandler
 
         if (! (extension_loaded('imagick') || class_exists(Imagick::class))) {
             throw ImageException::forMissingExtension('IMAGICK'); // @codeCoverageIgnore
+        }
+
+        $cmd = $this->config->libraryPath;
+
+        if ($cmd === '') {
+            throw ImageException::forInvalidImageLibraryPath($cmd);
+        }
+
+        if (preg_match('/convert$/i', $cmd) !== 1) {
+            $cmd = rtrim($cmd, '\/') . '/convert';
+
+            $this->config->libraryPath = $cmd;
+        }
+
+        if (! is_file($cmd)) {
+            throw ImageException::forInvalidImageLibraryPath($cmd);
         }
     }
 
@@ -167,12 +181,10 @@ class ImageMagickHandler extends BaseHandler
      */
     public function getVersion(): string
     {
-        $result = $this->process('-version');
+        $versionString = $this->process('-version')[0];
+        preg_match('/ImageMagick\s(?P<version>[\S]+)/', $versionString, $matches);
 
-        // The first line has the version in it...
-        preg_match('/(ImageMagick\s[\S]+)/', $result[0], $matches);
-
-        return str_replace('ImageMagick ', '', $matches[0]);
+        return $matches['version'];
     }
 
     /**
@@ -184,17 +196,8 @@ class ImageMagickHandler extends BaseHandler
      */
     protected function process(string $action, int $quality = 100): array
     {
-        // Do we have a vaild library path?
-        if (empty($this->config->libraryPath)) {
-            throw ImageException::forInvalidImageLibraryPath($this->config->libraryPath);
-        }
-
         if ($action !== '-version') {
             $this->supportedFormatCheck();
-        }
-
-        if (! preg_match('/convert$/i', $this->config->libraryPath)) {
-            $this->config->libraryPath = rtrim($this->config->libraryPath, '/') . '/convert';
         }
 
         $cmd = $this->config->libraryPath;

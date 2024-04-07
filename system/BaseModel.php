@@ -173,11 +173,14 @@ abstract class BaseModel
     protected $db;
 
     /**
-     * Rules used to validate data in insert, update, and save methods.
+     * Rules used to validate data in insert(), update(), and save() methods.
+     *
      * The array must match the format of data passed to the Validation
      * library.
      *
-     * @var list<string>|string
+     * @see https://codeigniter4.github.io/userguide/models/model.html#setting-validation-rules
+     *
+     * @var array<string, array<string, array<string, string>|string>|string>|string
      */
     protected $validationRules = [];
 
@@ -243,84 +246,84 @@ abstract class BaseModel
     /**
      * Callbacks for beforeInsert
      *
-     * @var array
+     * @var list<string>
      */
     protected $beforeInsert = [];
 
     /**
      * Callbacks for afterInsert
      *
-     * @var array
+     * @var list<string>
      */
     protected $afterInsert = [];
 
     /**
      * Callbacks for beforeUpdate
      *
-     * @var array
+     * @var list<string>
      */
     protected $beforeUpdate = [];
 
     /**
      * Callbacks for afterUpdate
      *
-     * @var array
+     * @var list<string>
      */
     protected $afterUpdate = [];
 
     /**
      * Callbacks for beforeInsertBatch
      *
-     * @var array
+     * @var list<string>
      */
     protected $beforeInsertBatch = [];
 
     /**
      * Callbacks for afterInsertBatch
      *
-     * @var array
+     * @var list<string>
      */
     protected $afterInsertBatch = [];
 
     /**
      * Callbacks for beforeUpdateBatch
      *
-     * @var array
+     * @var list<string>
      */
     protected $beforeUpdateBatch = [];
 
     /**
      * Callbacks for afterUpdateBatch
      *
-     * @var array
+     * @var list<string>
      */
     protected $afterUpdateBatch = [];
 
     /**
      * Callbacks for beforeFind
      *
-     * @var array
+     * @var list<string>
      */
     protected $beforeFind = [];
 
     /**
      * Callbacks for afterFind
      *
-     * @var array
+     * @var list<string>
      */
     protected $afterFind = [];
 
     /**
      * Callbacks for beforeDelete
      *
-     * @var array
+     * @var list<string>
      */
     protected $beforeDelete = [];
 
     /**
      * Callbacks for afterDelete
      *
-     * @var array
+     * @var list<string>
      */
     protected $afterDelete = [];
 
@@ -1448,7 +1451,7 @@ abstract class BaseModel
      * Allows to set (and reset) validation rules.
      * It could be used when you have to change default or override current validate rules.
      *
-     * @param array $validationRules Value
+     * @param array<string, array<string, array<string, string>|string>|string> $validationRules Value
      *
      * @return $this
      */

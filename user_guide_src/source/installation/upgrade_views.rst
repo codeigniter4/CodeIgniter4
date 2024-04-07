@@ -8,8 +8,8 @@ Upgrade Views
 Documentations
 ==============
 
-- `View Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/general/views.html>`_
-- :doc:`View Documentation CodeIgniter 4.X </outgoing/views>`
+- `View Documentation CodeIgniter 3.x <http://codeigniter.com/userguide3/general/views.html>`_
+- :doc:`View Documentation CodeIgniter 4.x </outgoing/views>`
 
 What has been changed
 =====================

@@ -664,6 +664,8 @@ to only those defined by you, by setting the ``$autoRoute`` property to false:
 .. warning:: If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
     requests. If the URI is accessible by the GET method, the CSRF protection will not work.
 
+.. _404-override:
+
 404 Override
 ============
 
@@ -703,7 +705,7 @@ Auto Routing (Improved)
 Since v4.2.0, the new more secure Auto Routing has been introduced.
 
 .. note:: If you are familiar with Auto Routing, which was enabled by default
-    from CodeIgniter 3 through 4.1.x, you can see the differences in
+    from CodeIgniter 3.x through 4.1.x, you can see the differences in
     :ref:`ChangeLog v4.2.0 <v420-new-improved-auto-routing>`.
 
 When no defined route is found that matches the URI, the system will attempt to match that URI against the controllers and methods when Auto Routing is enabled.

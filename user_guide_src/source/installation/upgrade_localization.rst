@@ -8,8 +8,8 @@ Upgrade Localization
 Documentations
 ==============
 
-- `Language Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/language.html>`_
-- :doc:`Localization Documentation CodeIgniter 4.X </outgoing/localization>`
+- `Language Documentation CodeIgniter 3.x <http://codeigniter.com/userguide3/libraries/language.html>`_
+- :doc:`Localization Documentation CodeIgniter 4.x </outgoing/localization>`
 
 What has been changed
 =====================

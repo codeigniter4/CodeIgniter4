@@ -8,8 +8,8 @@ Upgrade HTML Tables
 Documentations
 ==============
 
-- `HTML Table Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/table.html>`_
-- :doc:`HTML Table Documentation CodeIgniter 4.X </outgoing/table>`
+- `HTML Table Documentation CodeIgniter 3.x <http://codeigniter.com/userguide3/libraries/table.html>`_
+- :doc:`HTML Table Documentation CodeIgniter 4.x </outgoing/table>`
 
 What has been changed
 =====================

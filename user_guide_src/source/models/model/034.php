@@ -6,5 +6,7 @@ use CodeIgniter\Model;
 
 class UserModel extends Model
 {
+    // ...
+
     protected $validationRules = 'users';
 }

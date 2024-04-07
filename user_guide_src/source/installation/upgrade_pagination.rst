@@ -8,8 +8,8 @@ Upgrade Pagination
 Documentations
 ==============
 
-- `Pagination Class Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/pagination.html>`_
-- :doc:`Pagination Documentation CodeIgniter 4.X </libraries/pagination>`
+- `Pagination Class Documentation CodeIgniter 3.x <http://codeigniter.com/userguide3/libraries/pagination.html>`_
+- :doc:`Pagination Documentation CodeIgniter 4.x </libraries/pagination>`
 
 What has been changed
 =====================
