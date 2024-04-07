@@ -2,7 +2,7 @@
 Version 4.4.8
 #############
 
-Release Date: Unreleased
+Release Date: April 7, 2024
 
 **4.4.8 release of CodeIgniter4**
 
@@ -18,18 +18,6 @@ BREAKING
   incorrect error view file corresponding to the exception code has been fixed.
   The third parameter ``int $statusCode = 500`` has been added to
   ``CodeIgniter\Debug\ExceptionHandler::determineView()`` for this purpose.
-
-***************
-Message Changes
-***************
-
-*******
-Changes
-*******
-
-************
-Deprecations
-************
 
 **********
 Bugs Fixed
