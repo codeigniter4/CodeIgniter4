@@ -177,3 +177,27 @@ And edit **.htaccess** as follows:
         Require all denied
         Satisfy All
     </FilesMatch>
+
+And remove the redirect settings in **public/.htaccess**:
+
+.. code-block:: diff
+
+    --- a/public/.htaccess
+    +++ b/public/.htaccess
+    @@ -16,16 +16,6 @@ Options -Indexes
+        # http://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewritebase
+        # RewriteBase /
+
+    -   # Redirect Trailing Slashes...
+    -   RewriteCond %{REQUEST_FILENAME} !-d
+    -   RewriteCond %{REQUEST_URI} (.+)/$
+    -   RewriteRule ^ %1 [L,R=301]
+    -
+    -   # Rewrite "www.example.com -> example.com"
+    -   RewriteCond %{HTTPS} !=on
+    -   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    -   RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
+    -
+        # Checks to see if the user is attempting to access a valid file,
+        # such as an image or css document, if this isn't true it sends the
+        # request to the front controller, index.php
