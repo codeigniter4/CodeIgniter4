@@ -378,6 +378,7 @@ class Toolbar
             $app = service('codeigniter');
 
             $request ??= service('request');
+            /** @var ResponseInterface $response */
             $response ??= service('response');
 
             // Disable the toolbar for downloads
