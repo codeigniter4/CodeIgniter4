@@ -16,9 +16,11 @@ PHP and Required Extensions
   - `mbstring <https://www.php.net/manual/en/mbstring.requirements.php>`_
   - `json <https://www.php.net/manual/en/json.requirements.php>`_
 
-.. warning:: The end of life date for PHP 7.4 was November 28, 2022. If you are
-    still using PHP 7.4, you should upgrade immediately. The end of life date
-    for PHP 8.0 will be November 26, 2023.
+.. warning::
+    - The end of life date for PHP 7.4 was November 28, 2022.
+    - The end of life date for PHP 8.0 was November 26, 2023.
+    - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
+    - The end of life date for PHP 8.1 will be November 25, 2024.
 
 ***********************
 Optional PHP Extensions
