@@ -434,7 +434,7 @@ class Toolbar
                 . $kintScript
                 . PHP_EOL;
 
-            if (str_contains($response->getBody(), '<head>')) {
+            if (str_contains((string) $response->getBody(), '<head>')) {
                 $response->setBody(
                     preg_replace(
                         '/<head>/',
