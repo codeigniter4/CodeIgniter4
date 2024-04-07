@@ -349,7 +349,7 @@ many will be simple comments or formatting that have no effect on the runtime:
 - app/Config/Optimize.php
 - app/Config/Routing.php
 - app/Config/Security.php
-- app/Config/Session.phpå
+- app/Config/Session.php
 - app/Views/errors/cli/error_exception.php
 - app/Views/errors/html/error_exception.php
 - app/Views/welcome_message.php
