@@ -23,11 +23,8 @@ use Generator;
  */
 final class DefinedRouteCollector
 {
-    private RouteCollection $routeCollection;
-
-    public function __construct(RouteCollection $routes)
+    public function __construct(private readonly RouteCollection $routeCollection)
     {
-        $this->routeCollection = $routes;
     }
 
     /**

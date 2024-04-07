@@ -42,7 +42,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
     {
         return ! (
             version_compare($this->db->getVersion(), '8.0.17', '>=')
-            && strpos($this->db->getVersion(), 'MariaDB') === false
+            && ! str_contains($this->db->getVersion(), 'MariaDB')
         );
     }
 

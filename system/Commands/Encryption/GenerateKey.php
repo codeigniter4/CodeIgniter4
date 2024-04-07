@@ -168,7 +168,7 @@ class GenerateKey extends BaseCommand
         $oldFileContents = (string) file_get_contents($envFile);
         $replacementKey  = "\nencryption.key = {$newKey}";
 
-        if (strpos($oldFileContents, 'encryption.key') === false) {
+        if (! str_contains($oldFileContents, 'encryption.key')) {
             return file_put_contents($envFile, $replacementKey, FILE_APPEND) !== false;
         }
 

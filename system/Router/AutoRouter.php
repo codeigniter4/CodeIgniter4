@@ -23,52 +23,36 @@ use CodeIgniter\HTTP\ResponseInterface;
 final class AutoRouter implements AutoRouterInterface
 {
     /**
-     * List of CLI routes that do not contain '*' routes.
-     *
-     * @var array<string, (Closure(mixed...): (ResponseInterface|string|void))|string> [routeKey => handler]
-     */
-    private array $cliRoutes;
-
-    /**
      * Sub-directory that contains the requested controller class.
      * Primarily used by 'autoRoute'.
      */
     private ?string $directory = null;
 
-    /**
-     * The name of the controller class.
-     */
-    private string $controller;
-
-    /**
-     * The name of the method to use.
-     */
-    private string $method;
-
-    /**
-     * Whether dashes in URI's should be converted
-     * to underscores when determining method names.
-     */
-    private bool $translateURIDashes;
-
-    /**
-     * Default namespace for controllers.
-     */
-    private string $defaultNamespace;
-
     public function __construct(
-        array $cliRoutes,
-        string $defaultNamespace,
-        string $defaultController,
-        string $defaultMethod,
-        bool $translateURIDashes
+        /**
+         * List of CLI routes that do not contain '*' routes.
+         *
+         * @var array<string, (Closure(mixed...): (ResponseInterface|string|void))|string> [routeKey => handler]
+         */
+        private readonly array $cliRoutes,
+        /**
+         * Default namespace for controllers.
+         */
+        private readonly string $defaultNamespace,
+        /**
+         * The name of the controller class.
+         */
+        private string $controller,
+        /**
+         * The name of the method to use.
+         */
+        private string $method,
+        /**
+         * Whether dashes in URI's should be converted
+         * to underscores when determining method names.
+         */
+        private bool $translateURIDashes
     ) {
-        $this->cliRoutes          = $cliRoutes;
-        $this->defaultNamespace   = $defaultNamespace;
-        $this->translateURIDashes = $translateURIDashes;
-
-        $this->controller = $defaultController;
-        $this->method     = $defaultMethod;
     }
 
     /**
@@ -132,13 +116,13 @@ final class AutoRouter implements AutoRouterInterface
                     $handler = strtolower($handler);
 
                     // Like $routes->cli('hello/(:segment)', 'Home::$1')
-                    if (strpos($handler, '::$') !== false) {
+                    if (str_contains($handler, '::$')) {
                         throw new PageNotFoundException(
                             'Cannot access CLI Route: ' . $uri
                         );
                     }
 
-                    if (strpos($handler, $controller . '::' . $methodName) === 0) {
+                    if (str_starts_with($handler, $controller . '::' . $methodName)) {
                         throw new PageNotFoundException(
                             'Cannot access CLI Route: ' . $uri
                         );
@@ -164,7 +148,7 @@ final class AutoRouter implements AutoRouterInterface
 
         // Ensure the controller stores the fully-qualified class name
         // We have to check for a length over 1, since by default it will be '\'
-        if (strpos($this->controller, '\\') === false && strlen($this->defaultNamespace) > 1) {
+        if (! str_contains($this->controller, '\\') && strlen($this->defaultNamespace) > 1) {
             $this->controller = '\\' . ltrim(
                 str_replace(
                     '/',

@@ -427,7 +427,7 @@ class Pager implements PagerInterface
             try {
                 $this->groups[$group]['currentPage'] = (int) $this->groups[$group]['currentUri']
                     ->setSilent(false)->getSegment($this->segment[$group]);
-            } catch (HTTPException $e) {
+            } catch (HTTPException) {
                 $this->groups[$group]['currentPage'] = 1;
             }
         } else {

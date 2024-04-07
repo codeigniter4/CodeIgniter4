@@ -22,7 +22,7 @@ use CodeIgniter\Validation\FormatRules as NonStrictFormatRules;
  */
 class FormatRules
 {
-    private NonStrictFormatRules $nonStrictFormatRules;
+    private readonly NonStrictFormatRules $nonStrictFormatRules;
 
     public function __construct()
     {

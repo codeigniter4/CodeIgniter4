@@ -204,7 +204,7 @@ trait ControllerTestTrait
             // getStatusCode() throws for empty codes
             try {
                 $response->getStatusCode();
-            } catch (HTTPException $e) {
+            } catch (HTTPException) {
                 // If no code has been set then assume success
                 $response->setStatusCode(200);
             }

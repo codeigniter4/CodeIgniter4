@@ -43,25 +43,14 @@ class CastException extends FrameworkException implements HasExitCodeInterface
      */
     public static function forInvalidJsonFormat(int $error)
     {
-        switch ($error) {
-            case JSON_ERROR_DEPTH:
-                return new static(lang('Cast.jsonErrorDepth'));
-
-            case JSON_ERROR_STATE_MISMATCH:
-                return new static(lang('Cast.jsonErrorStateMismatch'));
-
-            case JSON_ERROR_CTRL_CHAR:
-                return new static(lang('Cast.jsonErrorCtrlChar'));
-
-            case JSON_ERROR_SYNTAX:
-                return new static(lang('Cast.jsonErrorSyntax'));
-
-            case JSON_ERROR_UTF8:
-                return new static(lang('Cast.jsonErrorUtf8'));
-
-            default:
-                return new static(lang('Cast.jsonErrorUnknown'));
-        }
+        return match ($error) {
+            JSON_ERROR_DEPTH          => new static(lang('Cast.jsonErrorDepth')),
+            JSON_ERROR_STATE_MISMATCH => new static(lang('Cast.jsonErrorStateMismatch')),
+            JSON_ERROR_CTRL_CHAR      => new static(lang('Cast.jsonErrorCtrlChar')),
+            JSON_ERROR_SYNTAX         => new static(lang('Cast.jsonErrorSyntax')),
+            JSON_ERROR_UTF8           => new static(lang('Cast.jsonErrorUtf8')),
+            default                   => new static(lang('Cast.jsonErrorUnknown')),
+        };
     }
 
     /**

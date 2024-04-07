@@ -46,6 +46,10 @@ use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
+use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
+use Rector\Php80\Rector\FunctionLike\MixedTypeRector;
+use Rector\Php81\Rector\ClassConst\FinalizePublicClassConstantRector;
+use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\AnnotationWithValueToAttributeRector;
 use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\CoversAnnotationWithValueToAttributeRector;
 use Rector\PHPUnit\AnnotationsToAttributes\Rector\ClassMethod\DataProviderAnnotationToAttributeRector;
@@ -57,6 +61,7 @@ use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
 use Rector\TypeDeclaration\Rector\Empty_\EmptyOnNullableObjectToInstanceOfRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
@@ -66,7 +71,7 @@ use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
         SetList::DEAD_CODE,
-        LevelSetList::UP_TO_PHP_74,
+        LevelSetList::UP_TO_PHP_81,
         PHPUnitSetList::PHPUNIT_CODE_QUALITY,
         PHPUnitSetList::PHPUNIT_100,
     ]);
@@ -154,6 +159,49 @@ return static function (RectorConfig $rectorConfig): void {
         RandomFunctionRector::class,
 
         SimplifyRegexPatternRector::class,
+
+        // PHP 8.0 features but cause breaking changes
+        ClassPropertyAssignToConstructorPromotionRector::class => [
+            __DIR__ . '/system/Database/BaseResult.php',
+            __DIR__ . '/system/Database/RawSql.php',
+            __DIR__ . '/system/Debug/BaseExceptionHandler.php',
+            __DIR__ . '/system/Filters/Filters.php',
+            __DIR__ . '/system/HTTP/CURLRequest.php',
+            __DIR__ . '/system/HTTP/DownloadResponse.php',
+            __DIR__ . '/system/HTTP/IncomingRequest.php',
+            __DIR__ . '/system/Security/Security.php',
+            __DIR__ . '/system/Session/Session.php',
+        ],
+        MixedTypeRector::class,
+
+        // PHP 8.1 features but cause breaking changes
+        FinalizePublicClassConstantRector::class => [
+            __DIR__ . '/system/Cache/Handlers/BaseHandler.php',
+            __DIR__ . '/system/Cache/Handlers/FileHandler.php',
+            __DIR__ . '/system/CodeIgniter.php',
+            __DIR__ . '/system/Events/Events.php',
+            __DIR__ . '/system/Log/Handlers/ChromeLoggerHandler.php',
+            __DIR__ . '/system/Log/Handlers/ErrorlogHandler.php',
+            __DIR__ . '/system/Security/Security.php',
+        ],
+        ReturnNeverTypeRector::class => [
+            __DIR__ . '/system/Cache/Handlers/BaseHandler.php',
+            __DIR__ . '/system/Cache/Handlers/MemcachedHandler.php',
+            __DIR__ . '/system/Cache/Handlers/WincacheHandler.php',
+            __DIR__ . '/system/CodeIgniter.php',
+            __DIR__ . '/system/Database/MySQLi/Utils.php',
+            __DIR__ . '/system/Database/OCI8/Utils.php',
+            __DIR__ . '/system/Database/Postgre/Utils.php',
+            __DIR__ . '/system/Database/SQLSRV/Utils.php',
+            __DIR__ . '/system/Database/SQLite3/Utils.php',
+            __DIR__ . '/system/HTTP/DownloadResponse.php',
+            __DIR__ . '/system/HTTP/SiteURI.php',
+            __DIR__ . '/system/Helpers/kint_helper.php',
+            __DIR__ . '/tests/_support/Autoloader/FatalLocator.php',
+        ],
+
+        // Unnecessary (string) is inserted
+        NullToStrictStringFuncCallArgRector::class,
 
         // PHPUnit 10 (requires PHP 8.1) features
         DataProviderAnnotationToAttributeRector::class,

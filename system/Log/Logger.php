@@ -341,7 +341,7 @@ class Logger implements LoggerInterface
         $replace['{env}']       = ENVIRONMENT;
 
         // Allow us to log the file/line that we are logging from
-        if (strpos($message, '{file}') !== false) {
+        if (str_contains($message, '{file}')) {
             [$file, $line] = $this->determineFile();
 
             $replace['{file}'] = $file;
@@ -349,7 +349,7 @@ class Logger implements LoggerInterface
         }
 
         // Match up environment variables in {env:foo} tags.
-        if (strpos($message, 'env:') !== false) {
+        if (str_contains($message, 'env:')) {
             preg_match('/env:[^}]+/', $message, $matches);
 
             foreach ($matches as $str) {

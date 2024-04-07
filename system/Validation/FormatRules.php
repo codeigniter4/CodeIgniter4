@@ -242,7 +242,7 @@ class FormatRules
             $str = (string) $str;
         }
 
-        if (strpos($pattern, '/') !== 0) {
+        if (! str_starts_with($pattern, '/')) {
             $pattern = "/{$pattern}/";
         }
 
@@ -367,18 +367,11 @@ class FormatRules
             return false;
         }
 
-        switch (strtolower($which ?? '')) {
-            case 'ipv4':
-                $option = FILTER_FLAG_IPV4;
-                break;
-
-            case 'ipv6':
-                $option = FILTER_FLAG_IPV6;
-                break;
-
-            default:
-                $option = 0;
-        }
+        $option = match (strtolower($which ?? '')) {
+            'ipv4'  => FILTER_FLAG_IPV4,
+            'ipv6'  => FILTER_FLAG_IPV6,
+            default => 0,
+        };
 
         return filter_var($ip, FILTER_VALIDATE_IP, $option) !== false
             || (! ctype_print($ip) && filter_var(inet_ntop($ip), FILTER_VALIDATE_IP, $option) !== false);

@@ -448,7 +448,7 @@ trait ResponseTrait
         if (
             $method === 'auto'
             && isset($_SERVER['SERVER_SOFTWARE'])
-            && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false
+            && str_contains($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS')
         ) {
             $method = 'refresh';
         } elseif ($method !== 'refresh' && $code === null) {
@@ -472,15 +472,10 @@ trait ResponseTrait
             $code = 302;
         }
 
-        switch ($method) {
-            case 'refresh':
-                $this->setHeader('Refresh', '0;url=' . $uri);
-                break;
-
-            default:
-                $this->setHeader('Location', $uri);
-                break;
-        }
+        match ($method) {
+            'refresh' => $this->setHeader('Refresh', '0;url=' . $uri),
+            default   => $this->setHeader('Location', $uri),
+        };
 
         $this->setStatusCode($code);
 

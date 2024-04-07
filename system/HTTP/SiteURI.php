@@ -28,7 +28,7 @@ class SiteURI extends URI
     /**
      * The current baseURL.
      */
-    private URI $baseURL;
+    private readonly URI $baseURL;
 
     /**
      * The path part of baseURL.

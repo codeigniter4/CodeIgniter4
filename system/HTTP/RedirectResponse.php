@@ -37,7 +37,7 @@ class RedirectResponse extends Response
     {
         // If it appears to be a relative URL, then convert to full URL
         // for better security.
-        if (strpos($uri, 'http') !== 0) {
+        if (! str_starts_with($uri, 'http')) {
             $uri = site_url($uri);
         }
 

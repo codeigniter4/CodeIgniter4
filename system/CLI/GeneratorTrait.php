@@ -268,7 +268,7 @@ trait GeneratorTrait
         // Gets the namespace from input. Don't forget the ending backslash!
         $namespace = $this->getNamespace() . '\\';
 
-        if (strncmp($class, $namespace, strlen($namespace)) === 0) {
+        if (str_starts_with($class, $namespace)) {
             return $class; // @codeCoverageIgnore
         }
 

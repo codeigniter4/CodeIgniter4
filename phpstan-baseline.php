@@ -1342,11 +1342,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\AutoRouteCollector\\:\\:__construct\\(\\) has parameter \\$protectedControllers with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\AutoRouteCollector\\:\\:addFilters\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php',
@@ -1360,16 +1355,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\AutoRouteCollector\\:\\:generateSampleUri\\(\\) has parameter \\$route with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\AutoRouteCollector\\:\\:\\$httpMethods type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\ControllerMethodReader\\:\\:__construct\\(\\) has parameter \\$httpMethods with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/ControllerMethodReader.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\ControllerMethodReader\\:\\:getParameters\\(\\) return type has no value type specified in iterable type array\\.$#',
@@ -7562,11 +7547,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/RESTful/ResourceController.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouter\\:\\:__construct\\(\\) has parameter \\$cliRoutes with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/AutoRouter.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouter\\:\\:getRoute\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/AutoRouter.php',
@@ -11839,11 +11819,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\CommonSingleServiceTest\\:\\:provideServiceNames\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/tests/system/CommonSingleServiceTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$expected of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) expects class\\-string\\<object\\>, false given\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/tests/system/CommonSingleServiceTest.php',
 ];
 $ignoreErrors[] = [
