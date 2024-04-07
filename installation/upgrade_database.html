@@ -66,6 +66,7 @@
 <li class="toctree-l2"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
@@ -177,6 +178,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
@@ -224,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
@@ -350,6 +353,7 @@ now needs to be initialized before you can run queries on it.</p></li>
 </li>
 <li><p>CI4 does not provide <a class="reference external" href="https://www.codeigniter.com/userguide3/database/caching.html">Database Caching</a>
 layer known from CI3, so if you need to cache the result, use <a class="reference internal" href="../libraries/caching.html"><span class="doc">Caching Driver</span></a> instead.</p></li>
+<li><p>If you use <code class="docutils literal notranslate"><span class="pre">limit(0)</span></code> in Query Builder, CI4 returns all records in stead of no records due to a bug. But since v4.5.0, you can change the incorrect behavior with a setting. So change the setting. See <a class="reference internal" href="../changelogs/v4.5.0.html#v450-query-builder-limit-0-behavior"><span class="std std-ref">limit(0) Behavior</span></a> for details.</p></li>
 </ol>
 </section>
 <section id="code-example">

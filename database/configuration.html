@@ -66,6 +66,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
@@ -177,6 +178,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
@@ -224,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
@@ -347,8 +350,8 @@ prototype:</p>
         <span class="s1">&#39;DBPrefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
         <span class="s1">&#39;pConnect&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
         <span class="s1">&#39;DBDebug&#39;</span>  <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-        <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8_general_ci&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4_general_ci&#39;</span><span class="p">,</span>
         <span class="s1">&#39;swapPre&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
         <span class="s1">&#39;encrypt&#39;</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
         <span class="s1">&#39;compress&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
@@ -395,7 +398,7 @@ you’re using the driver’s underlying native PHP extension, like this:</p>
 add the config variables as a query string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// MySQLi</span>
     <span class="k">public</span> <span class="k">array</span> <span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;DSN&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MySQLi://username:password@hostname:3306/database?charset=utf8&amp;DBCollat=utf8_general_ci&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;DSN&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MySQLi://username:password@hostname:3306/database?charset=utf8mb4&amp;DBCollat=utf8mb4_general_ci&#39;</span><span class="p">,</span>
         <span class="c1">// ...</span>
     <span class="p">];</span>
 </pre></div>
@@ -441,8 +444,8 @@ These failovers can be specified by setting the failover for a connection like t
                 <span class="s1">&#39;DBPrefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;pConnect&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
                 <span class="s1">&#39;DBDebug&#39;</span>  <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-                <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8_general_ci&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4_general_ci&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;swapPre&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;encrypt&#39;</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
                 <span class="s1">&#39;compress&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
@@ -457,8 +460,8 @@ These failovers can be specified by setting the failover for a connection like t
                 <span class="s1">&#39;DBPrefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;pConnect&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
                 <span class="s1">&#39;DBDebug&#39;</span>  <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-                <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8_general_ci&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4_general_ci&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;swapPre&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;encrypt&#39;</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
                 <span class="s1">&#39;compress&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
@@ -502,8 +505,8 @@ example, to set up a “test” environment you would do this:</p>
         <span class="s1">&#39;DBPrefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
         <span class="s1">&#39;pConnect&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
         <span class="s1">&#39;DBDebug&#39;</span>  <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-        <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8_general_ci&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;DBCollat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4_general_ci&#39;</span><span class="p">,</span>
         <span class="s1">&#39;swapPre&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
         <span class="s1">&#39;compress&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
         <span class="s1">&#39;encrypt&#39;</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
@@ -642,7 +645,8 @@ values as a JSON string in your <strong>.env</strong> file:</p>
 <td><p>The name of the database you want to connect to.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>CodeIgniter doesn’t support dots (<code class="docutils literal notranslate"><span class="pre">.</span></code>) in the database, table, and column names.</p>
+<p>CodeIgniter doesn’t support dots (<code class="docutils literal notranslate"><span class="pre">.</span></code>) in the table and column names.
+Since v4.5.0, database names with dots are supported.</p>
 </div>
 </td>
 </tr>
@@ -706,6 +710,17 @@ To enforce Foreign Key constraint, set this config item to true.</p>
 </tr>
 <tr class="row-odd"><td><p><strong>numberNative</strong></p></td>
 <td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only) true/false (boolean) - Whether or not to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>dateFormat</strong></p></td>
+<td><p>The default date/time formats as PHP’s <a class="reference external" href="https://www.php.net/manual/en/datetime.format.php">DateTime format</a>.
+* <code class="docutils literal notranslate"><span class="pre">date</span></code>        - date format
+* <code class="docutils literal notranslate"><span class="pre">datetime</span></code>    - date and time format
+* <code class="docutils literal notranslate"><span class="pre">datetime-ms</span></code> - date and time with millisecond format
+* <code class="docutils literal notranslate"><span class="pre">datetime-us</span></code> - date and time with microsecond format
+* <code class="docutils literal notranslate"><span class="pre">time</span></code>        - time format
+This can be used since v4.5.0, and you can get the value, e.g., <code class="docutils literal notranslate"><span class="pre">$db-&gt;dateFormat['datetime']</span></code>.
+Currently, the database drivers do not use these values directly,
+but <a class="reference internal" href="../models/model.html#model-saving-dates"><span class="std std-ref">Model</span></a> uses them.</p></td>
 </tr>
 </tbody>
 </table>

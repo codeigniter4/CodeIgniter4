@@ -66,6 +66,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
@@ -177,6 +178,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
@@ -224,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
@@ -299,7 +302,8 @@ for safer queries, since the values are escaped automatically by the
 system.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>CodeIgniter doesn’t support dots (<code class="docutils literal notranslate"><span class="pre">.</span></code>) in the database, table, and column names.</p>
+<p>CodeIgniter doesn’t support dots (<code class="docutils literal notranslate"><span class="pre">.</span></code>) in the table and column names.
+Since v4.5.0, database names with dots are supported.</p>
 </div>
 <nav class="contents local" id="contents">
 <ul class="simple">
@@ -1448,6 +1452,16 @@ be ignored, unless you specify a numeric seed value.</p>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
 <span class="c1">// Produces: LIMIT 10</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">LIMIT</span> <span class="pre">0</span></code> is specified in a SQL statement, 0 records are returned.
+However, there is a bug in the Query Builder, and if <code class="docutils literal notranslate"><span class="pre">limit(0)</span></code> is specified,
+the generated SQL statement will have no <code class="docutils literal notranslate"><span class="pre">LIMIT</span></code> clause and all records will
+be returned. To fix the incorrect behavior, a setting was added in v4.5.0. See
+<a class="reference internal" href="../changelogs/v4.5.0.html#v450-query-builder-limit-0-behavior"><span class="std std-ref">limit(0) Behavior</span></a> for details. The incorrect behavior
+will be fixed in a future version, so it is recommended that you change the
+default setting.</p>
 </div>
 <p>The second parameter lets you set a result offset.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>

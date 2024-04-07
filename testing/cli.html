@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Testing CLI Commands &mdash; CodeIgniter 4.4.8 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Mocking System Classes" href="mocking.html" />
+    <link rel="prev" title="Testing Responses" href="response.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/ci-logo-text.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/requirements.html">Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/credits.html">Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/psr.html">PSR Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License Agreement</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create News Items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/factories.html">Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/http.html">Working with HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/security.html">Security Guidelines</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../general/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/logging.html">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/ajax.html">AJAX Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/methodspoofing.html">HTTP Method Spoofing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/restful.html">RESTful Resource Handling</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/views.html">Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_cells.html">View Cells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_renderer.html">View Renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_layouts.html">View Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_parser.html">View Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/csp.html">Content Security Policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working with Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../database/examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/helpers.html">Query Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/metadata.html">Getting MetaData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/events.html">Database Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/utilities.html">Database Utilities</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../models/model.html">Using CodeIgniter's Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/entities.html">Using Entity Classes</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/forge.html">Database Manipulation with Database Forge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/migration.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/seeds.html">Database Seeding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/db_commands.html">Database Commands</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/file_collections.html">File Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/honeypot.html">Honeypot Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/images.html">Image Manipulation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/publisher.html">Publisher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/security.html">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/sessions.html">Session Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/throttler.html">Throttler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/time.html">Times and Dates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/typography.html">Typography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uploaded_files.html">Working with Uploaded Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uri.html">Working with URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/user_agent.html">User Agent Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/validation.html">Validation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/array_helper.html">Array Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/cookie_helper.html">Cookie Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/date_helper.html">Date Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/filesystem_helper.html">Filesystem Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/form_helper.html">Form Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/html_helper.html">HTML Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/inflector_helper.html">Inflector Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/number_helper.html">Number Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/security_helper.html">Security Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/test_helper.html">Test Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/text_helper.html">Text Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/url_helper.html">URL Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/xml_helper.html">XML Helper</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Testing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fabricator.html">Generating Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controllers.html">Controller Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature.html">HTTP Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="response.html">Testing Responses</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Testing CLI Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mocking.html">Mocking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html">Debugging Your Application</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_overview.html">CLI Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_controllers.html">Running Controllers via CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/spark_commands.html">Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/core_classes.html">Creating Core System Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/common.html">Replacing Common Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/basecontroller.html">Extending the Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/authentication.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/composer_packages.html">Creating Composer Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/contributing.html">Contributing to CodeIgniter</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/official_packages.html">Official Packages</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/testing/cli.rst">Edit this page</a>
+
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Testing</a></li>
+      <li class="breadcrumb-item active">Testing CLI Commands</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="testing-cli-commands">
+<h1>Testing CLI Commands<a class="headerlink" href="#testing-cli-commands" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#using-mockinputoutput" id="id6">Using MockInputOutput</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mockinputoutput" id="id7">MockInputOutput</a></p>
+<ul>
+<li><p><a class="reference internal" href="#helper-methods" id="id8">Helper Methods</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#how-to-use" id="id9">How to Use</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#without-mockinputoutput" id="id10">Without MockInputOutput</a></p>
+<ul>
+<li><p><a class="reference internal" href="#testing-cli-output" id="id11">Testing CLI Output</a></p>
+<ul>
+<li><p><a class="reference internal" href="#streamfiltertrait" id="id12">StreamFilterTrait</a></p></li>
+<li><p><a class="reference internal" href="#citeststreamfilter" id="id13">CITestStreamFilter</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#testing-cli-input" id="id14">Testing CLI Input</a></p>
+<ul>
+<li><p><a class="reference internal" href="#phpstreamwrapper" id="id15">PhpStreamWrapper</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="using-mockinputoutput">
+<span id="using-mock-input-output"></span><h2><a class="toc-backref" href="#id6" role="doc-backlink">Using MockInputOutput</a><a class="headerlink" href="#using-mockinputoutput" title="Permalink to this heading"></a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.5.0.</span></p>
+</div>
+<section id="mockinputoutput">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">MockInputOutput</a><a class="headerlink" href="#mockinputoutput" title="Permalink to this heading"></a></h3>
+<p><strong>MockInputOutput</strong> provides an easy way to write tests for commands that require
+user input, such as <code class="docutils literal notranslate"><span class="pre">CLI::prompt()</span></code>, <code class="docutils literal notranslate"><span class="pre">CLI::wait()</span></code>, and <code class="docutils literal notranslate"><span class="pre">CLI::input()</span></code>.</p>
+<p>You can replace the <code class="docutils literal notranslate"><span class="pre">InputOutput</span></code> class with <code class="docutils literal notranslate"><span class="pre">MockInputOutput</span></code> during test
+execution to capture inputs and outputs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">MockInputOutput</span></code>, you don’t need to use
+<a class="reference internal" href="#stream-filter-trait"><span class="std std-ref">StreamFilterTrait</span></a>, <a class="reference internal" href="#ci-test-stream-filter"><span class="std std-ref">CITestStreamFilter</span></a>, and
+<a class="reference internal" href="#php-stream-wrapper"><span class="std std-ref">PhpStreamWrapper</span></a>.</p>
+</div>
+<section id="helper-methods">
+<h4><a class="toc-backref" href="#id8" role="doc-backlink">Helper Methods</a><a class="headerlink" href="#helper-methods" title="Permalink to this heading"></a></h4>
+<section id="getoutput-int-index-null-string">
+<h5>getOutput(?int $index = null): string<a class="headerlink" href="#getoutput-int-index-null-string" title="Permalink to this heading"></a></h5>
+<p>Gets the output.</p>
+<ul class="simple">
+<li><p>If you call it like <code class="docutils literal notranslate"><span class="pre">$io-&gt;getOutput()</span></code>, it returns the whole output string.</p></li>
+<li><p>If you specify <code class="docutils literal notranslate"><span class="pre">0</span></code> or a positive number, it returns the output array item.
+Each item has the output of a <code class="docutils literal notranslate"><span class="pre">CLI::fwrite()</span></code> call.</p></li>
+<li><p>If you specify a negative number <code class="docutils literal notranslate"><span class="pre">-n</span></code>, it returns the last <code class="docutils literal notranslate"><span class="pre">n</span></code>-th item of
+the output array.</p></li>
+</ul>
+</section>
+<section id="getoutputs-array">
+<h5>getOutputs(): array<a class="headerlink" href="#getoutputs-array" title="Permalink to this heading"></a></h5>
+<p>Returns the output array. Each item has the output of a <code class="docutils literal notranslate"><span class="pre">CLI::fwrite()</span></code> call.</p>
+</section>
+</section>
+</section>
+<section id="how-to-use">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">How to Use</a><a class="headerlink" href="#how-to-use" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CLI::setInputOutput()</span></code> can set the <code class="docutils literal notranslate"><span class="pre">MockInputOutput</span></code> instance to the <code class="docutils literal notranslate"><span class="pre">CLI</span></code> class.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CLI::resetInputOutput()</span></code> resets the <code class="docutils literal notranslate"><span class="pre">InputOutput</span></code> instance in the <code class="docutils literal notranslate"><span class="pre">CLI</span></code> class.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MockInputOutput::setInputs()</span></code> sets the user input array.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MockInputOutput::getOutput()</span></code> gets the command output.</p></li>
+</ul>
+<p>The following test code is to test the command <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">db:table</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestTrait</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\Mock\MockInputOutput</span><span class="p">;</span>
+
+<span class="k">final</span> <span class="k">class</span> <span class="nc">DbTableTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
+<span class="p">{</span>
+    <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
+
+    <span class="k">protected</span> <span class="nv">$migrateOnce</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">testDbTable</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="c1">// Set MockInputOutput to CLI.</span>
+        <span class="nv">$io</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MockInputOutput</span><span class="p">();</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">setInputOutput</span><span class="p">(</span><span class="nv">$io</span><span class="p">);</span>
+
+        <span class="c1">// User will input &quot;a&quot; (invalid value) and &quot;0&quot;.</span>
+        <span class="nv">$io</span><span class="o">-&gt;</span><span class="na">setInputs</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">]);</span>
+
+        <span class="nx">command</span><span class="p">(</span><span class="s1">&#39;db:table&#39;</span><span class="p">);</span>
+
+        <span class="c1">// Get the whole output string.</span>
+        <span class="nv">$output</span> <span class="o">=</span> <span class="nv">$io</span><span class="o">-&gt;</span><span class="na">getOutput</span><span class="p">();</span>
+
+        <span class="nv">$expected</span> <span class="o">=</span> <span class="s1">&#39;Which table do you want to see? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]: a&#39;</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertStringContainsString</span><span class="p">(</span><span class="nv">$expected</span><span class="p">,</span> <span class="nv">$output</span><span class="p">);</span>
+
+        <span class="nv">$expected</span> <span class="o">=</span> <span class="s1">&#39;Data of Table &quot;db_migrations&quot;:&#39;</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertStringContainsString</span><span class="p">(</span><span class="nv">$expected</span><span class="p">,</span> <span class="nv">$output</span><span class="p">);</span>
+
+        <span class="c1">// Remove MockInputOutput.</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">resetInputOutput</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="without-mockinputoutput">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Without MockInputOutput</a><a class="headerlink" href="#without-mockinputoutput" title="Permalink to this heading"></a></h2>
+<section id="testing-cli-output">
+<span id="id1"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">Testing CLI Output</a><a class="headerlink" href="#testing-cli-output" title="Permalink to this heading"></a></h3>
+<section id="streamfiltertrait">
+<span id="stream-filter-trait"></span><h4><a class="toc-backref" href="#id12" role="doc-backlink">StreamFilterTrait</a><a class="headerlink" href="#streamfiltertrait" title="Permalink to this heading"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p><strong>StreamFilterTrait</strong> provides an alternate to these helper methods.</p>
+<p>You may need to test things that are difficult to test. Sometimes, capturing a stream, like PHP’s own STDOUT, or STDERR,
+might be helpful. The <code class="docutils literal notranslate"><span class="pre">StreamFilterTrait</span></code> helps you capture the output from the stream of your choice.</p>
+<section id="id2">
+<h5>How to Use<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h5>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">StreamFilterTrait::getStreamFilterBuffer()</span></code> gets the captured data from the buffer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">StreamFilterTrait::resetStreamFilterBuffer()</span></code> resets captured data.</p></li>
+</ul>
+<p>An example demonstrating this inside one of your test cases:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Tests</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\StreamFilterTrait</span><span class="p">;</span>
+
+<span class="k">final</span> <span class="k">class</span> <span class="nc">SomeTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
+<span class="p">{</span>
+    <span class="k">use</span> <span class="nx">StreamFilterTrait</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">testSomeOutput</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;first.&#39;</span><span class="p">);</span>
+
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">first.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getStreamFilterBuffer</span><span class="p">());</span>
+
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resetStreamFilterBuffer</span><span class="p">();</span>
+
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;second.&#39;</span><span class="p">);</span>
+
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="s2">&quot;second.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getStreamFilterBuffer</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">StreamFilterTrait</span></code> has a configurator that is called automatically.
+See <a class="reference internal" href="overview.html#testing-overview-traits"><span class="std std-ref">Testing Traits</span></a>.</p>
+<p>If you override the <code class="docutils literal notranslate"><span class="pre">setUp()</span></code> or <code class="docutils literal notranslate"><span class="pre">tearDown()</span></code> methods in your test, then you must call the <code class="docutils literal notranslate"><span class="pre">parent::setUp()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">parent::tearDown()</span></code> methods respectively to configure the <code class="docutils literal notranslate"><span class="pre">StreamFilterTrait</span></code>.</p>
+</section>
+</section>
+<section id="citeststreamfilter">
+<span id="ci-test-stream-filter"></span><h4><a class="toc-backref" href="#id13" role="doc-backlink">CITestStreamFilter</a><a class="headerlink" href="#citeststreamfilter" title="Permalink to this heading"></a></h4>
+<p><strong>CITestStreamFilter</strong> for manual/single use.</p>
+<p>If you need to capture streams in only one test, then instead of using the StreamFilterTrait trait, you can manually
+add a filter to streams.</p>
+<section id="id3">
+<h5>How to Use<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h5>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CITestStreamFilter::registration()</span></code> Filter registration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CITestStreamFilter::addOutputFilter()</span></code> Adding a filter to the output stream.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CITestStreamFilter::addErrorFilter()</span></code> Adding a filter to the error stream.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CITestStreamFilter::removeOutputFilter()</span></code> Removing a filter from the output stream.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CITestStreamFilter::removeErrorFilter()</span></code> Removing a filter from the error stream.</p></li>
+</ul>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Tests</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\Filters\CITestStreamFilter</span><span class="p">;</span>
+
+<span class="k">final</span> <span class="k">class</span> <span class="nc">SomeTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">testSomeOutput</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="na">registration</span><span class="p">();</span>
+        <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="na">addOutputFilter</span><span class="p">();</span>
+
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;first.&#39;</span><span class="p">);</span>
+
+        <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="na">removeOutputFilter</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="testing-cli-input">
+<span id="id4"></span><h3><a class="toc-backref" href="#id14" role="doc-backlink">Testing CLI Input</a><a class="headerlink" href="#testing-cli-input" title="Permalink to this heading"></a></h3>
+<section id="phpstreamwrapper">
+<span id="php-stream-wrapper"></span><h4><a class="toc-backref" href="#id15" role="doc-backlink">PhpStreamWrapper</a><a class="headerlink" href="#phpstreamwrapper" title="Permalink to this heading"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p><strong>PhpStreamWrapper</strong> provides a way to write tests for methods that require user input,
+such as <code class="docutils literal notranslate"><span class="pre">CLI::prompt()</span></code>, <code class="docutils literal notranslate"><span class="pre">CLI::wait()</span></code>, and <code class="docutils literal notranslate"><span class="pre">CLI::input()</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The PhpStreamWrapper is a stream wrapper class.
+If you don’t know PHP’s stream wrapper,
+see <a class="reference external" href="https://www.php.net/manual/en/class.streamwrapper.php">The streamWrapper class</a>
+in the PHP maual.</p>
+</div>
+<section id="id5">
+<h5>How to Use<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h5>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PhpStreamWrapper::register()</span></code> Register the <code class="docutils literal notranslate"><span class="pre">PhpStreamWrapper</span></code> to the <code class="docutils literal notranslate"><span class="pre">php</span></code> protocol.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PhpStreamWrapper::restore()</span></code> Restore the php protocol wrapper back to the PHP built-in wrapper.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PhpStreamWrapper::setContent()</span></code> Set the input data.</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The PhpStreamWrapper is intended for only testing <code class="docutils literal notranslate"><span class="pre">php://stdin</span></code>.
+But when you register it, it handles all the <a class="reference external" href="https://www.php.net/manual/en/wrappers.php.php">php protocol</a> streams,
+such as <code class="docutils literal notranslate"><span class="pre">php://stdout</span></code>, <code class="docutils literal notranslate"><span class="pre">php://stderr</span></code>, <code class="docutils literal notranslate"><span class="pre">php://memory</span></code>.
+So it is strongly recommended that <code class="docutils literal notranslate"><span class="pre">PhpStreamWrapper</span></code> be registered/unregistered
+only when needed. Otherwise, it will interfere with other built-in php streams
+while registered.</p>
+</div>
+<p>An example demonstrating this inside one of your test cases:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Tests</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\PhpStreamWrapper</span><span class="p">;</span>
+
+<span class="k">final</span> <span class="k">class</span> <span class="nc">SomeTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">testPrompt</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="c1">// Register the PhpStreamWrapper.</span>
+        <span class="nx">PhpStreamWrapper</span><span class="o">::</span><span class="na">register</span><span class="p">();</span>
+
+        <span class="c1">// Set the user input to &#39;red&#39;. It will be provided as `php://stdin` output.</span>
+        <span class="nv">$expected</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">;</span>
+        <span class="nx">PhpStreamWrapper</span><span class="o">::</span><span class="na">setContent</span><span class="p">(</span><span class="nv">$expected</span><span class="p">);</span>
+
+        <span class="nv">$output</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;What is your favorite color?&#39;</span><span class="p">);</span>
+
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="nv">$expected</span><span class="p">,</span> <span class="nv">$output</span><span class="p">);</span>
+
+        <span class="c1">// Restore php protocol wrapper.</span>
+        <span class="nx">PhpStreamWrapper</span><span class="o">::</span><span class="na">restore</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="response.html" class="btn btn-neutral float-left" title="Testing Responses" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mocking.html" class="btn btn-neutral float-right" title="Mocking System Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Apr 07, 2024.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

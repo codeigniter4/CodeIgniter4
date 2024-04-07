@@ -66,6 +66,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
@@ -177,6 +178,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
@@ -224,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
@@ -297,7 +300,18 @@
 <li><p><a class="reference internal" href="#classmap" id="id7">Classmap</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#composer-support" id="id8">Composer Support</a></p></li>
+<li><p><a class="reference internal" href="#composer-support" id="id8">Composer Support</a></p>
+<ul>
+<li><p><a class="reference internal" href="#priority-of-autoloaders" id="id9">Priority of Autoloaders</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#filelocator-caching" id="id10">FileLocator Caching</a></p>
+<ul>
+<li><p><a class="reference internal" href="#how-it-works" id="id11">How It Works</a></p></li>
+<li><p><a class="reference internal" href="#how-to-delete-cached-data" id="id12">How to Delete Cached Data</a></p></li>
+<li><p><a class="reference internal" href="#how-to-enable-filelocator-caching" id="id13">How to Enable FileLocator Caching</a></p></li>
+</ul>
+</li>
 </ul>
 </nav>
 <p>Every application consists of a large number of classes in many different locations.
@@ -347,8 +361,7 @@ those classes can be found in:</p>
 <span class="p">{</span>
     <span class="c1">// ...</span>
     <span class="k">public</span> <span class="nv">$psr4</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="nx">APP_NAMESPACE</span> <span class="o">=&gt;</span> <span class="nx">APPPATH</span><span class="p">,</span> <span class="c1">// For custom app namespace</span>
-        <span class="s1">&#39;Config&#39;</span>      <span class="o">=&gt;</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config&#39;</span><span class="p">,</span>
+        <span class="nx">APP_NAMESPACE</span> <span class="o">=&gt;</span> <span class="nx">APPPATH</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -370,21 +383,44 @@ will autoload them.</p>
 </div>
 </section>
 <section id="application-namespace">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Application Namespace</a><a class="headerlink" href="#application-namespace" title="Permalink to this heading"></a></h3>
+<span id="autoloader-application-namespace"></span><h3><a class="toc-backref" href="#id6" role="doc-backlink">Application Namespace</a><a class="headerlink" href="#application-namespace" title="Permalink to this heading"></a></h3>
 <p>By default, the application directory is namespace to the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace. You must namespace the controllers,
 libraries, or models in the application directory, and they will be found under the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace.</p>
+<section id="config-namespace">
+<h4>Config Namespace<a class="headerlink" href="#config-namespace" title="Permalink to this heading"></a></h4>
+<p>Config files are namespaced in the <code class="docutils literal notranslate"><span class="pre">Config</span></code> namespace, not in <code class="docutils literal notranslate"><span class="pre">App\Config</span></code> as you might
+expect. This allows the core system files to always be able to locate them, even when the application
+namespace has changed.</p>
+</section>
+<section id="changing-app-namespace">
+<h4>Changing App Namespace<a class="headerlink" href="#changing-app-namespace" title="Permalink to this heading"></a></h4>
 <p>You may change this namespace by editing the <strong>app/Config/Constants.php</strong> file and setting the
 new namespace value under the <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code> setting:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;APP_NAMESPACE&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;APP_NAMESPACE&#39;</span><span class="p">,</span> <span class="s1">&#39;App&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You will need to modify any existing files that are referencing the current namespace.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>Config files are namespaced in the <code class="docutils literal notranslate"><span class="pre">Config</span></code> namespace, not in <code class="docutils literal notranslate"><span class="pre">App\Config</span></code> as you might
-expect. This allows the core system files to always be able to locate them, even when the application
-namespace has changed.</p>
+<p>And if you use Composer autoloader, you also need to change the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace
+in your <strong>composer.json</strong>, and run <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">dump-autoload</span></code>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>{
+    ...
+    &quot;autoload&quot;: {
+        &quot;psr-4&quot;: {
+            &quot;App\\&quot;: &quot;app/&quot;    &lt;-- Change
+        },
+        ...
+    },
+    ...
+}
+</pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.5.0 appstarter, the <code class="docutils literal notranslate"><span class="pre">App\\</span></code> namespace has been added to
+<strong>composer.json</strong>’s <code class="docutils literal notranslate"><span class="pre">autoload.psr-4</span></code>. If your <strong>composer.json</strong> does not
+have it, adding it may improve your app’s autoloading performance.</p>
+</div>
+<p>You will need to modify any existing files that are referencing the current namespace.</p>
+</section>
 </section>
 <section id="classmap">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">Classmap</a><a class="headerlink" href="#classmap" title="Permalink to this heading"></a></h3>
@@ -412,14 +448,68 @@ you can load those classes using the classmap:</p>
 </section>
 <section id="composer-support">
 <h2><a class="toc-backref" href="#id8" role="doc-backlink">Composer Support</a><a class="headerlink" href="#composer-support" title="Permalink to this heading"></a></h2>
-<p>Composer support is automatically initialized by default. By default, it looks for Composer’s autoload file at
+<p>Composer support is automatically initialized by default.</p>
+<p>By default, it looks for Composer’s autoload file at
 <code class="docutils literal notranslate"><span class="pre">ROOTPATH</span> <span class="pre">.</span> <span class="pre">'vendor/autoload.php'</span></code>. If you need to change the location of that file for any reason, you can modify
 the value defined in <strong>app/Config/Constants.php</strong>.</p>
+<section id="priority-of-autoloaders">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Priority of Autoloaders</a><a class="headerlink" href="#priority-of-autoloaders" title="Permalink to this heading"></a></h3>
+<p>If the same namespace is defined in both CodeIgniter and Composer, Composer’s
+autoloader will be the first one to get a chance to locate the file.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If the same namespace is defined in both CodeIgniter and Composer, CodeIgniter’s autoloader will be
+<p>Prior to v4.5.0, if the same namespace was defined in both CodeIgniter and Composer, CodeIgniter’s autoloader was
 the first one to get a chance to locate the file.</p>
 </div>
+</section>
+</section>
+<section id="filelocator-caching">
+<span id="file-locator-caching"></span><h2><a class="toc-backref" href="#id10" role="doc-backlink">FileLocator Caching</a><a class="headerlink" href="#filelocator-caching" title="Permalink to this heading"></a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.5.0.</span></p>
+</div>
+<p><strong>FileLocator</strong> is responsible for finding files or getting a classname from a file,
+which cannot be achieved with PHP autoloading.</p>
+<p>To improve its performance, FileLocator Caching has been implemented.</p>
+<section id="how-it-works">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">How It Works</a><a class="headerlink" href="#how-it-works" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Save the all found data by FileLocator into a cache file when destructing,
+if the cache data is updated.</p></li>
+<li><p>Restore cached data when instantiating if cached data is available.</p></li>
+</ul>
+<p>The cached data are used permanently.</p>
+</section>
+<section id="how-to-delete-cached-data">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">How to Delete Cached Data</a><a class="headerlink" href="#how-to-delete-cached-data" title="Permalink to this heading"></a></h3>
+<p>Once stored, the cached data never expire.</p>
+<p>So if you add or remove files or change existing file paths, or namespaces, old
+cached data will be returned and your app may not work properly.</p>
+<p>In that case, you must manually delete the cache file. If you add a CodeIgniter
+package via Composer, you also need to delete the cache file.</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">cache:clear</span></code> command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark cache:clear</span>
+</pre></div>
+</div>
+<p>Or simply delete the <strong>writable/cache/FileLocatorCache</strong> file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">optimize</span></code> command clears the cache.</p>
+</div>
+</section>
+<section id="how-to-enable-filelocator-caching">
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">How to Enable FileLocator Caching</a><a class="headerlink" href="#how-to-enable-filelocator-caching" title="Permalink to this heading"></a></h3>
+<p>Set the following property to <code class="docutils literal notranslate"><span class="pre">true</span></code> in <strong>app/Config/Optimize.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">bool</span> <span class="nv">$locatorCacheEnabled</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Or you can enable it with the <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">optimize</span></code> command.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This property cannot be overridden by
+<a class="reference internal" href="../general/configuration.html#configuration-classes-and-environment-variables"><span class="std std-ref">environment variables</span></a>.</p>
+</div>
+</section>
 </section>
 </section>
 

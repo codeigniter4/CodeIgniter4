@@ -26,7 +26,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Mocking System Classes" href="mocking.html" />
+    <link rel="next" title="Testing CLI Commands" href="cli.html" />
     <link rel="prev" title="HTTP Feature Testing" href="feature.html" /> 
 </head>
 
@@ -66,6 +66,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
@@ -177,6 +178,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
@@ -224,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="controllers.html">Controller Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feature.html">HTTP Testing</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli.html">Testing CLI Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mocking.html">Mocking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="debugging.html">Debugging Your Application</a></li>
@@ -562,6 +565,38 @@ values of the elements. Instead, they simply check that the elements exist on th
 </pre></div>
 </div>
 </section>
+<section id="seexpath">
+<h4>seeXPath()<a class="headerlink" href="#seexpath" title="Permalink to this heading"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.5.0.</span></p>
+</div>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">seeXPath()</span></code> to take advantage of the full power that xpath gives you.
+This method is aimed at more advanced users who want to write a more complex expressions
+using the DOMXPath object directly:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that h1 element which contains class &quot;heading&quot; is on the page</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeXPath</span><span class="p">(</span><span class="s1">&#39;//h1[contains(@class, &quot;heading&quot;)]&#39;</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="c1">// Check that h1 element which contains class &quot;heading&quot; have a text &quot;Hello World&quot;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeXPath</span><span class="p">(</span><span class="s1">&#39;//h1[contains(@class, &quot;heading&quot;)][contains(.,&quot;Hello world&quot;)]&#39;</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">dontSeeXPath()</span></code> method is the exact opposite:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check that h1 element which contains class &quot;heading&quot; does NOT exist on the page</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSeeXPath</span><span class="p">(</span><span class="s1">&#39;//h1[contains(@class, &quot;heading&quot;)]&#39;</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="c1">// Check that h1 element which contains class &quot;heading&quot; and text &quot;Hello World&quot; does NOT exist on the page</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSeeXPath</span><span class="p">(</span><span class="s1">&#39;//h1[contains(@class, &quot;heading&quot;)][contains(.,&quot;Hello world&quot;)]&#39;</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="dom-assertions">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">DOM Assertions</a><a class="headerlink" href="#dom-assertions" title="Permalink to this heading"></a></h3>
@@ -705,7 +740,7 @@ can help to test the responses.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="feature.html" class="btn btn-neutral float-left" title="HTTP Feature Testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="mocking.html" class="btn btn-neutral float-right" title="Mocking System Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cli.html" class="btn btn-neutral float-right" title="Testing CLI Commands" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

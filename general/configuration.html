@@ -66,6 +66,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
@@ -177,6 +178,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
@@ -224,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
@@ -295,36 +298,41 @@ configuration file with the same name as the class that uses it. You will find
 the application configuration files in the <strong>app/Config</strong> folder.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#what-are-configuration-classes" id="id3">What are Configuration Classes?</a></p></li>
-<li><p><a class="reference internal" href="#working-with-configuration-files" id="id4">Working with Configuration Files</a></p>
+<li><p><a class="reference internal" href="#what-are-configuration-classes" id="id5">What are Configuration Classes?</a></p></li>
+<li><p><a class="reference internal" href="#working-with-configuration-files" id="id6">Working with Configuration Files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#getting-a-config-object" id="id5">Getting a Config Object</a></p></li>
-<li><p><a class="reference internal" href="#getting-a-config-property" id="id6">Getting a Config Property</a></p></li>
+<li><p><a class="reference internal" href="#getting-a-config-object" id="id7">Getting a Config Object</a></p></li>
+<li><p><a class="reference internal" href="#getting-a-config-property" id="id8">Getting a Config Property</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#creating-configuration-files" id="id7">Creating Configuration Files</a></p></li>
-<li><p><a class="reference internal" href="#environment-variables" id="id8">Environment Variables</a></p>
+<li><p><a class="reference internal" href="#creating-configuration-files" id="id9">Creating Configuration Files</a></p></li>
+<li><p><a class="reference internal" href="#environment-variables" id="id10">Environment Variables</a></p>
 <ul>
-<li><p><a class="reference internal" href="#dotenv-file" id="id9">Dotenv File</a></p></li>
+<li><p><a class="reference internal" href="#dotenv-file" id="id11">Dotenv File</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#configuration-classes-and-environment-variables" id="id10">Configuration Classes and Environment Variables</a></p>
+<li><p><a class="reference internal" href="#configuration-classes-and-environment-variables" id="id12">Configuration Classes and Environment Variables</a></p>
 <ul>
-<li><p><a class="reference internal" href="#environment-variables-as-replacements-for-data" id="id11">Environment Variables as Replacements for Data</a></p></li>
-<li><p><a class="reference internal" href="#treating-environment-variables-as-arrays" id="id12">Treating Environment Variables as Arrays</a></p></li>
+<li><p><a class="reference internal" href="#environment-variables-as-replacements-for-data" id="id13">Environment Variables as Replacements for Data</a></p></li>
+<li><p><a class="reference internal" href="#treating-environment-variables-as-arrays" id="id14">Treating Environment Variables as Arrays</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#handling-different-environments" id="id13">Handling Different Environments</a></p></li>
-<li><p><a class="reference internal" href="#registrars" id="id14">Registrars</a></p>
+<li><p><a class="reference internal" href="#handling-different-environments" id="id15">Handling Different Environments</a></p></li>
+<li><p><a class="reference internal" href="#registrars" id="id16">Registrars</a></p>
 <ul>
-<li><p><a class="reference internal" href="#implicit-registrars" id="id15">Implicit Registrars</a></p></li>
-<li><p><a class="reference internal" href="#explicit-registrars" id="id16">Explicit Registrars</a></p></li>
+<li><p><a class="reference internal" href="#implicit-registrars" id="id17">Implicit Registrars</a></p></li>
+<li><p><a class="reference internal" href="#explicit-registrars" id="id18">Explicit Registrars</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#confirming-config-values" id="id19">Confirming Config Values</a></p>
+<ul>
+<li><p><a class="reference internal" href="#config-check" id="id20">config:check</a></p></li>
 </ul>
 </li>
 </ul>
 </nav>
 <section id="what-are-configuration-classes">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">What are Configuration Classes?</a><a class="headerlink" href="#what-are-configuration-classes" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">What are Configuration Classes?</a><a class="headerlink" href="#what-are-configuration-classes" title="Permalink to this heading"></a></h2>
 <p>Configuration classes are utilized to define system default configuration values.
 System configuration values are typically <em>static</em>. Configuration classes are
 intended to retain the settings that configure how the application operates,
@@ -337,9 +345,9 @@ important if you utilize <a class="reference internal" href="../concepts/factori
 environment variables at instantiation.</p>
 </section>
 <section id="working-with-configuration-files">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Working with Configuration Files</a><a class="headerlink" href="#working-with-configuration-files" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Working with Configuration Files</a><a class="headerlink" href="#working-with-configuration-files" title="Permalink to this heading"></a></h2>
 <section id="getting-a-config-object">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Getting a Config Object</a><a class="headerlink" href="#getting-a-config-object" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Getting a Config Object</a><a class="headerlink" href="#getting-a-config-object" title="Permalink to this heading"></a></h3>
 <p>You can access configuration files for your classes in several different ways.</p>
 <section id="new-keyword">
 <h4>new keyword<a class="headerlink" href="#new-keyword" title="Permalink to this heading"></a></h4>
@@ -383,7 +391,7 @@ This behavior has been fixed in v4.4.0, and returns the specified instance.</p>
 </section>
 </section>
 <section id="getting-a-config-property">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Getting a Config Property</a><a class="headerlink" href="#getting-a-config-property" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Getting a Config Property</a><a class="headerlink" href="#getting-a-config-property" title="Permalink to this heading"></a></h3>
 <p>All configuration object properties are public, so you access the settings like any other property:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -395,7 +403,7 @@ This behavior has been fixed in v4.4.0, and returns the specified instance.</p>
 </section>
 </section>
 <section id="creating-configuration-files">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Creating Configuration Files</a><a class="headerlink" href="#creating-configuration-files" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Creating Configuration Files</a><a class="headerlink" href="#creating-configuration-files" title="Permalink to this heading"></a></h2>
 <p>When you need a new configuration, first you create a new file at your desired location.
 The default file location (recommended for most cases) is <strong>app/Config</strong>.</p>
 <p>You can put configuration files in any <strong>Config</strong> folder by using a different namespace.</p>
@@ -418,11 +426,11 @@ The default file location (recommended for most cases) is <strong>app/Config</st
 </div>
 </section>
 <section id="environment-variables">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Environment Variables</a><a class="headerlink" href="#environment-variables" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Environment Variables</a><a class="headerlink" href="#environment-variables" title="Permalink to this heading"></a></h2>
 <p>One of today’s best practices for application setup is to use Environment Variables. One reason for this is that Environment Variables are easy to change between deploys without changing any code. Configuration can change a lot across deploys, but code does not. For instance, multiple environments, such as the developer’s local machine and the production server, usually need different configuration values for each particular setup.</p>
 <p>Environment Variables should also be used for anything private such as passwords, API keys, or other sensitive data.</p>
 <section id="dotenv-file">
-<span id="id1"></span><h3><a class="toc-backref" href="#id9" role="doc-backlink">Dotenv File</a><a class="headerlink" href="#dotenv-file" title="Permalink to this heading"></a></h3>
+<span id="id1"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">Dotenv File</a><a class="headerlink" href="#dotenv-file" title="Permalink to this heading"></a></h3>
 <p>CodeIgniter makes it simple and painless to set Environment Variables by using a “dotenv” file. The term comes from the file name, which starts with a dot before the text “env”.</p>
 <section id="creating-dotenv-file">
 <h4>Creating Dotenv File<a class="headerlink" href="#creating-dotenv-file" title="Permalink to this heading"></a></h4>
@@ -508,7 +516,7 @@ prefix followed by a dot (.), and then the variable name itself.</p>
 </section>
 </section>
 <section id="configuration-classes-and-environment-variables">
-<h2><a class="toc-backref" href="#id10" role="doc-backlink">Configuration Classes and Environment Variables</a><a class="headerlink" href="#configuration-classes-and-environment-variables" title="Permalink to this heading"></a></h2>
+<span id="id2"></span><h2><a class="toc-backref" href="#id12" role="doc-backlink">Configuration Classes and Environment Variables</a><a class="headerlink" href="#configuration-classes-and-environment-variables" title="Permalink to this heading"></a></h2>
 <p>When you instantiate a configuration class, any <em>namespaced</em> environment variables
 are considered for merging into the configuration object’s properties.</p>
 <div class="admonition important">
@@ -553,7 +561,7 @@ the value from <strong>.env</strong> replaces the configuration file value.</p>
 <p>When using the <em>short prefix</em> the property names must still exactly match the class defined name.</p>
 </div>
 <section id="environment-variables-as-replacements-for-data">
-<span id="env-var-replacements-for-data"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">Environment Variables as Replacements for Data</a><a class="headerlink" href="#environment-variables-as-replacements-for-data" title="Permalink to this heading"></a></h3>
+<span id="env-var-replacements-for-data"></span><h3><a class="toc-backref" href="#id13" role="doc-backlink">Environment Variables as Replacements for Data</a><a class="headerlink" href="#environment-variables-as-replacements-for-data" title="Permalink to this heading"></a></h3>
 <p>It is very important to always remember that environment variables contained in
 your <strong>.env</strong> are <strong>only replacements for existing scalar values</strong>.</p>
 <p>Simply put, you can change only the property’s scalar value that exists in the
@@ -574,7 +582,7 @@ If you want to do like that, see
 <a class="reference internal" href="../database/configuration.html#database-config-with-env-file"><span class="std std-ref">Database Configuration</span></a>.</p>
 </section>
 <section id="treating-environment-variables-as-arrays">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">Treating Environment Variables as Arrays</a><a class="headerlink" href="#treating-environment-variables-as-arrays" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Treating Environment Variables as Arrays</a><a class="headerlink" href="#treating-environment-variables-as-arrays" title="Permalink to this heading"></a></h3>
 <p>A namespaced environment variable can be further treated as an array.
 If the prefix matches the configuration class, then the remainder of the
 environment variable name is treated as an array reference if it also
@@ -605,14 +613,14 @@ held the following then the result would be the same as above.</p>
 </section>
 </section>
 <section id="handling-different-environments">
-<h2><a class="toc-backref" href="#id13" role="doc-backlink">Handling Different Environments</a><a class="headerlink" href="#handling-different-environments" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">Handling Different Environments</a><a class="headerlink" href="#handling-different-environments" title="Permalink to this heading"></a></h2>
 <p>Configuring multiple environments is easily accomplished by using a separate <strong>.env</strong> file with values modified to meet that environment’s needs.</p>
 <p>The file should not contain every possible setting for every configuration class used by the application. In truth, it should include only those items that are specific to the environment or are sensitive details like passwords and API keys and other information that should not be exposed. But anything that changes between deployments is fair-game.</p>
 <p>In each environment, place the <strong>.env</strong> file in the project’s root folder. For most setups, this will be the same level as the <code class="docutils literal notranslate"><span class="pre">app</span></code> directories.</p>
 <p>Do not track <strong>.env</strong> files with your version control system. If you do, and the repository is made public, you will have put sensitive information where everybody can find it.</p>
 </section>
 <section id="registrars">
-<span id="id2"></span><h2><a class="toc-backref" href="#id14" role="doc-backlink">Registrars</a><a class="headerlink" href="#registrars" title="Permalink to this heading"></a></h2>
+<span id="id3"></span><h2><a class="toc-backref" href="#id16" role="doc-backlink">Registrars</a><a class="headerlink" href="#registrars" title="Permalink to this heading"></a></h2>
 <p>“Registrars” are any other classes which might provide additional configuration properties.
 Registrars provide a means of altering a configuration at runtime across namespaces and files.</p>
 <p>Registrars work if <a class="reference internal" href="modules.html#auto-discovery"><span class="std std-ref">Auto-Discovery</span></a> is enabled in <a class="reference internal" href="modules.html"><span class="doc">Modules</span></a>.
@@ -623,7 +631,7 @@ It alters configuration properties when the Config object is instantiated.</p>
 <p>Values from <strong>.env</strong> always take priority over Registrars.</p>
 </div>
 <section id="implicit-registrars">
-<h3><a class="toc-backref" href="#id15" role="doc-backlink">Implicit Registrars</a><a class="headerlink" href="#implicit-registrars" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Implicit Registrars</a><a class="headerlink" href="#implicit-registrars" title="Permalink to this heading"></a></h3>
 <p>Implicit Registrars can change any Config class properties.</p>
 <p>Any namespace may define implicit registrars by using the <strong>Config/Registrar.php</strong>
 file. These files are classes whose methods are named for each configuration class
@@ -654,7 +662,7 @@ of the target config file. Existing values are merged, and Registrar properties 
 overwrite priority.</p>
 </section>
 <section id="explicit-registrars">
-<h3><a class="toc-backref" href="#id16" role="doc-backlink">Explicit Registrars</a><a class="headerlink" href="#explicit-registrars" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">Explicit Registrars</a><a class="headerlink" href="#explicit-registrars" title="Permalink to this heading"></a></h3>
 <p>Explicit Registrars can only change the Config class properties in which they are
 registered.</p>
 <p>A configuration file can also specify any number of registrars explicitly.
@@ -723,6 +731,51 @@ by treating <code class="docutils literal notranslate"><span class="pre">Regiona
 <span class="nv">$target</span>   <span class="o">=</span> <span class="mi">45</span><span class="p">;</span>
 <span class="nv">$campaign</span> <span class="o">=</span> <span class="s1">&#39;Winter Wonderland&#39;</span><span class="p">;</span>
 </pre></div>
+</div>
+</section>
+</section>
+<section id="confirming-config-values">
+<span id="id4"></span><h2><a class="toc-backref" href="#id19" role="doc-backlink">Confirming Config Values</a><a class="headerlink" href="#confirming-config-values" title="Permalink to this heading"></a></h2>
+<p>The actual Config object property values are changed at runtime by the <a class="reference internal" href="#registrars"><span class="std std-ref">Registrars</span></a>
+and <a class="reference internal" href="#configuration-classes-and-environment-variables"><span class="std std-ref">Environment Variables</span></a>,
+and <a class="reference internal" href="../concepts/factories.html#factories-config-caching"><span class="std std-ref">Config Caching</span></a>.</p>
+<p>CodeIgniter has the following <a class="reference internal" href="../cli/spark_commands.html"><span class="doc">command</span></a> to check
+the actual Config values.</p>
+<section id="config-check">
+<span id="spark-config-check"></span><h3><a class="toc-backref" href="#id20" role="doc-backlink">config:check</a><a class="headerlink" href="#config-check" title="Permalink to this heading"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.5.0.</span></p>
+</div>
+<p>For example, if you want to check the <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> instance:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark config:check App</span>
+</pre></div>
+</div>
+<p>The output is like the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Config\App#6 (12) (
+    public &#39;baseURL&#39; -&gt; string (22) &quot;http://localhost:8080/&quot;
+    public &#39;allowedHostnames&#39; -&gt; array (0) []
+    public &#39;indexPage&#39; -&gt; string (9) &quot;index.php&quot;
+    public &#39;uriProtocol&#39; -&gt; string (11) &quot;REQUEST_URI&quot;
+    public &#39;defaultLocale&#39; -&gt; string (2) &quot;en&quot;
+    public &#39;negotiateLocale&#39; -&gt; boolean false
+    public &#39;supportedLocales&#39; -&gt; array (1) [
+        0 =&gt; string (2) &quot;en&quot;
+    ]
+    public &#39;appTimezone&#39; -&gt; string (3) &quot;UTC&quot;
+    public &#39;charset&#39; -&gt; string (5) &quot;UTF-8&quot;
+    public &#39;forceGlobalSecureRequests&#39; -&gt; boolean false
+    public &#39;proxyIPs&#39; -&gt; array (0) []
+    public &#39;CSPEnabled&#39; -&gt; boolean false
+)
+
+Config Caching: Disabled
+</pre></div>
+</div>
+<p>You can see if Config Caching is eabled or not.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If Config Caching is enabled, the cached values are used permanently.
+See <a class="reference internal" href="../concepts/factories.html#factories-config-caching"><span class="std std-ref">Config Caching</span></a> for details.</p>
 </div>
 </section>
 </section>

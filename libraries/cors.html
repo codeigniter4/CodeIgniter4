@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cross-Origin Resource Sharing (CORS) &mdash; CodeIgniter 4.4.8 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CURLRequest Class" href="curlrequest.html" />
+    <link rel="prev" title="Cookies" href="cookies.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/ci-logo-text.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/requirements.html">Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/credits.html">Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/psr.html">PSR Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License Agreement</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create News Items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/factories.html">Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/http.html">Working with HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/security.html">Security Guidelines</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../general/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/logging.html">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/ajax.html">AJAX Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/methodspoofing.html">HTTP Method Spoofing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/restful.html">RESTful Resource Handling</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/views.html">Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_cells.html">View Cells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_renderer.html">View Renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_layouts.html">View Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_parser.html">View Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/csp.html">Content Security Policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working with Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../database/examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/helpers.html">Query Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/metadata.html">Getting MetaData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/events.html">Database Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/utilities.html">Database Utilities</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../models/model.html">Using CodeIgniter's Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/entities.html">Using Entity Classes</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/forge.html">Database Manipulation with Database Forge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/migration.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/seeds.html">Database Seeding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/db_commands.html">Database Commands</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cookies.html">Cookies</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Cross-Origin Resource Sharing (CORS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="curlrequest.html">CURLRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="email.html">Email Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encryption.html">Encryption Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_collections.html">File Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="honeypot.html">Honeypot Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html">Image Manipulation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="publisher.html">Publisher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html">Session Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="throttler.html">Throttler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="time.html">Times and Dates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typography.html">Typography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uploaded_files.html">Working with Uploaded Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uri.html">Working with URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_agent.html">User Agent Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html">Validation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/array_helper.html">Array Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/cookie_helper.html">Cookie Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/date_helper.html">Date Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/filesystem_helper.html">Filesystem Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/form_helper.html">Form Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/html_helper.html">HTML Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/inflector_helper.html">Inflector Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/number_helper.html">Number Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/security_helper.html">Security Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/test_helper.html">Test Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/text_helper.html">Text Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/url_helper.html">URL Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/xml_helper.html">XML Helper</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../testing/overview.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/fabricator.html">Generating Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_overview.html">CLI Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_controllers.html">Running Controllers via CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/spark_commands.html">Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/core_classes.html">Creating Core System Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/common.html">Replacing Common Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/basecontroller.html">Extending the Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/authentication.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/composer_packages.html">Creating Composer Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/contributing.html">Contributing to CodeIgniter</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="official_packages.html">Official Packages</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/libraries/cors.rst">Edit this page</a>
+
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Library Reference</a></li>
+      <li class="breadcrumb-item active">Cross-Origin Resource Sharing (CORS)</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cross-origin-resource-sharing-cors">
+<h1>Cross-Origin Resource Sharing (CORS)<a class="headerlink" href="#cross-origin-resource-sharing-cors" title="Permalink to this heading"></a></h1>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.5.0.</span></p>
+</div>
+<p>Cross-Origin Resource Sharing (CORS) is an HTTP-header based security mechanism
+that allows a server to indicate any origins (domain, scheme, or port) other than
+its own from which a browser should permit loading resources.</p>
+<p>CORS works by adding headers to HTTP requests and responses to indicate whether
+the requested resource can be shared across different origins, helping to prevent
+malicious attacks like cross-site request forgery (CSRF) and data theft.</p>
+<p>If you are not familiar with CORS and CORS headers, please read the
+<a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#the_http_response_headers">MDN documentation on CORS</a>.</p>
+<p>CodeIgniter provides the CORS filter and helper class.</p>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#configuring-cors" id="id1">Configuring CORS</a></p>
+<ul>
+<li><p><a class="reference internal" href="#setting-default-config" id="id2">Setting Default Config</a></p></li>
+<li><p><a class="reference internal" href="#enabling-cors" id="id3">Enabling CORS</a></p></li>
+<li><p><a class="reference internal" href="#checking-routes-and-filters" id="id4">Checking Routes and Filters</a></p></li>
+<li><p><a class="reference internal" href="#setting-another-config" id="id5">Setting Another Config</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\HTTP" id="id6">Class Reference</a></p></li>
+</ul>
+</nav>
+<section id="configuring-cors">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Configuring CORS</a><a class="headerlink" href="#configuring-cors" title="Permalink to this heading"></a></h2>
+<section id="setting-default-config">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Setting Default Config</a><a class="headerlink" href="#setting-default-config" title="Permalink to this heading"></a></h3>
+<p>CORS can be configured by <strong>app/Config/Cors.php</strong>.</p>
+<p>At a minimum, the following items in the <code class="docutils literal notranslate"><span class="pre">$default</span></code> property must be set:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">allowedOrigins</span></code>: List explicitly the Origin(s) you want to allow.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">allowedHeaders</span></code>: List explicitly the HTTP headers you want to allow.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">allowedMethods</span></code>: List explicitly the HTTP methods you want to allow.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Based on the principle of least privilege, only the minimum necessary
+Origin, Methods, and Headers should be allowed.</p>
+</div>
+<p>If you send credentials (e.g., cookies) with a cross-origin request, set
+<code class="docutils literal notranslate"><span class="pre">supportsCredentials</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+</section>
+<section id="enabling-cors">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Enabling CORS</a><a class="headerlink" href="#enabling-cors" title="Permalink to this heading"></a></h3>
+<p>To enable CORS, you need to do two things:</p>
+<ol class="arabic simple">
+<li><p>Specify the <code class="docutils literal notranslate"><span class="pre">cors</span></code> filter to routes that you permit CORS.</p></li>
+<li><p>Add <strong>OPTIONS</strong> routes for CORS Preflight Requests.</p></li>
+</ol>
+<section id="set-against-routes">
+<h4>Set against Routes<a class="headerlink" href="#set-against-routes" title="Permalink to this heading"></a></h4>
+<p>You can set the <code class="docutils literal notranslate"><span class="pre">cors</span></code> filter to routes with <strong>app/Config/Routes.php</strong>.</p>
+<p>E.g.,</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Router\RouteCollection</span><span class="p">;</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;cors&#39;</span><span class="p">],</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nx">RouteCollection</span> <span class="nv">$routes</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span> <span class="p">{</span>
+    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;product&#39;</span><span class="p">);</span>
+
+    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">(</span><span class="s1">&#39;product&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// Implement processing for normal non-preflight OPTIONS requests,</span>
+        <span class="c1">// if necessary.</span>
+        <span class="nv">$response</span> <span class="o">=</span> <span class="nx">response</span><span class="p">();</span>
+        <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">204</span><span class="p">);</span>
+        <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Allow:&#39;</span><span class="p">,</span> <span class="s1">&#39;OPTIONS, GET, POST, PUT, PATCH, DELETE&#39;</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nv">$response</span><span class="p">;</span>
+    <span class="p">});</span>
+    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">(</span><span class="s1">&#39;product/(:any)&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>Don’t forget to add OPTIONS routes for Preflight Requests. Because Controller
+Filters (except for Required Filters) do not work if the route does not exist.</p>
+<p>The CORS filter handles all Preflight Requests, so the closure controllers
+for the OPTIONS routes are not normally called.</p>
+</section>
+<section id="set-in-config-filters">
+<h4>Set in Config\Filters<a class="headerlink" href="#set-in-config-filters" title="Permalink to this heading"></a></h4>
+<p>Alternatively, you can set the <code class="docutils literal notranslate"><span class="pre">cors</span></code> filter to URI paths in <strong>app/Config/Filters.php</strong>.</p>
+<p>E.g.,</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\Filters</span> <span class="k">as</span> <span class="nx">BaseFilters</span><span class="p">;</span>
+
+<span class="c1">// ...</span>
+
+<span class="k">class</span> <span class="nc">Filters</span> <span class="k">extends</span> <span class="nx">BaseFilters</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="k">public</span> <span class="k">array</span> <span class="nv">$filters</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1">// ...</span>
+        <span class="s1">&#39;cors&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/*&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;after&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/*&#39;</span><span class="p">],</span>
+        <span class="p">],</span>
+    <span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Don’t forget to add OPTIONS routes for Preflight Requests. Because Controller
+Filters (except for Required Filters) do not work if the route does not exist.</p>
+<p>E.g.,</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Router\RouteCollection</span><span class="p">;</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;cors&#39;</span><span class="p">],</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nx">RouteCollection</span> <span class="nv">$routes</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span> <span class="p">{</span>
+    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">(</span><span class="s1">&#39;api/(:any)&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>The CORS filter handles all Preflight Requests, so the closure controller
+for the OPTIONS routes is not normally called.</p>
+</section>
+</section>
+<section id="checking-routes-and-filters">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Checking Routes and Filters</a><a class="headerlink" href="#checking-routes-and-filters" title="Permalink to this heading"></a></h3>
+<p>After configuration, you can check the routes and filters with the <a class="reference internal" href="../incoming/routing.html#routing-spark-routes"><span class="std std-ref">spark routes</span></a>
+command.</p>
+</section>
+<section id="setting-another-config">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Setting Another Config</a><a class="headerlink" href="#setting-another-config" title="Permalink to this heading"></a></h3>
+<p>If you want to use a different configuration than the default configuration, add
+a property to <strong>app/Config/Cors.php</strong>.</p>
+<p>For example, add the <code class="docutils literal notranslate"><span class="pre">$api</span></code> property.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Cross-Origin Resource Sharing (CORS) Configuration</span>
+<span class="sd"> *</span>
+<span class="sd"> * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS</span>
+<span class="sd"> */</span>
+<span class="k">class</span> <span class="nc">Cors</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">public</span> <span class="k">array</span> <span class="nv">$api</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;allowedOrigins&#39;</span>         <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;https://app.example.com&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;allowedOriginsPatterns&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span>
+        <span class="s1">&#39;supportsCredentials&#39;</span>    <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="s1">&#39;allowedHeaders&#39;</span>         <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;Authorization&#39;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;exposedHeaders&#39;</span>         <span class="o">=&gt;</span> <span class="p">[],</span>
+        <span class="s1">&#39;allowedMethods&#39;</span>         <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="s1">&#39;DELETE&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;maxAge&#39;</span>                 <span class="o">=&gt;</span> <span class="mi">7200</span><span class="p">,</span>
+    <span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The property name (<code class="docutils literal notranslate"><span class="pre">api</span></code> in the above example) will become the configuration name.</p>
+<p>Then, specify the property name as the filter argument like <code class="docutils literal notranslate"><span class="pre">cors:api</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Router\RouteCollection</span><span class="p">;</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;cors:api&#39;</span><span class="p">],</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nx">RouteCollection</span> <span class="nv">$routes</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span> <span class="p">{</span>
+    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">);</span>
+
+    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{});</span>
+    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">(</span><span class="s1">&#39;user/(:any)&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>You can also use <a class="reference internal" href="../incoming/filters.html#filters-filters-filter-arguments"><span class="std std-ref">Filter Arguments</span></a>.</p>
+</section>
+</section>
+<section id="namespace-CodeIgniter\HTTP">
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id6" role="doc-backlink">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\HTTP" title="Permalink to this heading"></a></h2>
+<dl class="php class">
+<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cors">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\HTTP\</span></span><span class="sig-name descname"><span class="pre">Cors</span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cors::addResponseHeaders">
+<span class="sig-prename descclassname"><span class="pre">CodeIgniter\HTTP\Cors::</span></span><span class="sig-name descname"><span class="pre">addResponseHeaders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">RequestInterface</span> <span class="pre">$request</span></em>, <em class="sig-param"><span class="pre">ResponseInterface</span> <span class="pre">$response</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ResponseInterface</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cors::addResponseHeaders" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$request</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">RequestInterface</span></code></span>) – Request instance</p></li>
+<li><p><strong>$response</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">ResponseInterface</span></code></span>) – Response instance</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Response instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">ResponseInterface</span></code></span></p>
+</dd>
+</dl>
+<p>Adds response headers for CORS.</p>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cors::handlePreflightRequest">
+<span class="sig-prename descclassname"><span class="pre">CodeIgniter\HTTP\Cors::</span></span><span class="sig-name descname"><span class="pre">handlePreflightRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">RequestInterface</span> <span class="pre">$request</span></em>, <em class="sig-param"><span class="pre">ResponseInterface</span> <span class="pre">$response</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ResponseInterface</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cors::handlePreflightRequest" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$request</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">RequestInterface</span></code></span>) – Request instance</p></li>
+<li><p><strong>$response</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">ResponseInterface</span></code></span>) – Response instance</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Response instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">ResponseInterface</span></code></span></p>
+</dd>
+</dl>
+<p>Handles Preflight Requests.</p>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cors::isPreflightRequest">
+<span class="sig-prename descclassname"><span class="pre">CodeIgniter\HTTP\Cors::</span></span><span class="sig-name descname"><span class="pre">isPreflightRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">IncomingRequest</span> <span class="pre">$request</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cors::isPreflightRequest" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$request</strong> (<span><a class="reference internal" href="../incoming/incomingrequest.html#CodeIgniter\HTTP\IncomingRequest" title="CodeIgniter\HTTP\IncomingRequest"><code class="xref php php-obj docutils literal notranslate"><span class="pre">IncomingRequest</span></code></a></span>) – Request instance</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if it is a Preflight Request.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+<p>Checks if the request is a Preflight Request.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cookies.html" class="btn btn-neutral float-left" title="Cookies" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="curlrequest.html" class="btn btn-neutral float-right" title="CURLRequest Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Apr 07, 2024.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

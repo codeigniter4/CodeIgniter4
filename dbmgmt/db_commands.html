@@ -66,6 +66,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
@@ -177,6 +178,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
@@ -224,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
@@ -292,8 +295,9 @@
 <li><p><a class="reference internal" href="#showing-table-information" id="id1">Showing Table Information</a></p>
 <ul>
 <li><p><a class="reference internal" href="#list-the-tables-in-your-database" id="id2">List the Tables in Your Database</a></p></li>
-<li><p><a class="reference internal" href="#retrieve-some-records" id="id3">Retrieve Some Records</a></p></li>
-<li><p><a class="reference internal" href="#retrieve-field-metadata" id="id4">Retrieve Field Metadata</a></p></li>
+<li><p><a class="reference internal" href="#specify-the-database-group" id="id3">Specify the Database Group</a></p></li>
+<li><p><a class="reference internal" href="#retrieve-some-records" id="id4">Retrieve Some Records</a></p></li>
+<li><p><a class="reference internal" href="#retrieve-field-metadata" id="id5">Retrieve Field Metadata</a></p></li>
 </ul>
 </li>
 </ul>
@@ -313,8 +317,21 @@ you can use the <code class="docutils literal notranslate"><span class="pre">db:
 Otherwise, CodeIgniter will complain that the database has no tables.</p>
 </section>
 </section>
+<section id="specify-the-database-group">
+<span id="db-command-specify-the-dbgroup"></span><h3><a class="toc-backref" href="#id3" role="doc-backlink">Specify the Database Group</a><a class="headerlink" href="#specify-the-database-group" title="Permalink to this heading"></a></h3>
+<section id="db-table-dbgroup">
+<h4>db:table –dbgroup<a class="headerlink" href="#db-table-dbgroup" title="Permalink to this heading"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.5.0.</span></p>
+</div>
+<p>You can specify the database group to use with the <code class="docutils literal notranslate"><span class="pre">--dbgroup</span></code> option:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:table --show --dbgroup tests</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="retrieve-some-records">
-<h3><a class="toc-backref" href="#id3" role="doc-backlink">Retrieve Some Records</a><a class="headerlink" href="#retrieve-some-records" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Retrieve Some Records</a><a class="headerlink" href="#retrieve-some-records" title="Permalink to this heading"></a></h3>
 <section id="db-table">
 <h4>db:table<a class="headerlink" href="#db-table" title="Permalink to this heading"></a></h4>
 <p>When you have a table named <code class="docutils literal notranslate"><span class="pre">my_table</span></code>, you can see the field names and the records of a table:</p>
@@ -337,7 +354,7 @@ Otherwise, CodeIgniter will complain that the database has no tables.</p>
 </section>
 </section>
 <section id="retrieve-field-metadata">
-<h3><a class="toc-backref" href="#id4" role="doc-backlink">Retrieve Field Metadata</a><a class="headerlink" href="#retrieve-field-metadata" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Retrieve Field Metadata</a><a class="headerlink" href="#retrieve-field-metadata" title="Permalink to this heading"></a></h3>
 <section id="db-table-metadata">
 <h4>db:table –metadata<a class="headerlink" href="#db-table-metadata" title="Permalink to this heading"></a></h4>
 <p>When you have a table named <code class="docutils literal notranslate"><span class="pre">my_table</span></code>, you can see metadata like the column type, max length of the table with the <code class="docutils literal notranslate"><span class="pre">--metadata</span></code> option:</p>

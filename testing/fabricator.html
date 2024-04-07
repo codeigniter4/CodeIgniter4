@@ -66,6 +66,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
@@ -177,6 +178,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
@@ -224,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="controllers.html">Controller Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feature.html">HTTP Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli.html">Testing CLI Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mocking.html">Mocking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="debugging.html">Debugging Your Application</a></li>
@@ -298,13 +301,14 @@ of random data. Use fabricators in your seeds or test cases to stage fake data f
 <li><p><a class="reference internal" href="#advanced-formatting" id="id4">Advanced Formatting</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#localization" id="id5">Localization</a></p></li>
-<li><p><a class="reference internal" href="#faking-the-data" id="id6">Faking the Data</a></p></li>
-<li><p><a class="reference internal" href="#specifying-test-data" id="id7">Specifying Test Data</a></p></li>
-<li><p><a class="reference internal" href="#test-helper" id="id8">Test Helper</a></p></li>
-<li><p><a class="reference internal" href="#table-counts" id="id9">Table Counts</a></p>
+<li><p><a class="reference internal" href="#setting-modifiers" id="id5">Setting Modifiers</a></p></li>
+<li><p><a class="reference internal" href="#localization" id="id6">Localization</a></p></li>
+<li><p><a class="reference internal" href="#faking-the-data" id="id7">Faking the Data</a></p></li>
+<li><p><a class="reference internal" href="#specifying-test-data" id="id8">Specifying Test Data</a></p></li>
+<li><p><a class="reference internal" href="#test-helper" id="id9">Test Helper</a></p></li>
+<li><p><a class="reference internal" href="#table-counts" id="id10">Table Counts</a></p>
 <ul>
-<li><p><a class="reference internal" href="#methods" id="id10">Methods</a></p></li>
+<li><p><a class="reference internal" href="#methods" id="id11">Methods</a></p></li>
 </ul>
 </li>
 </ul>
@@ -440,8 +444,56 @@ a child class in your test support folder:</p>
 </div>
 </section>
 </section>
+<section id="setting-modifiers">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Setting Modifiers</a><a class="headerlink" href="#setting-modifiers" title="Permalink to this heading"></a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.5.0.</span></p>
+</div>
+<p>Faker provides three special providers, <code class="docutils literal notranslate"><span class="pre">unique()</span></code>, <code class="docutils literal notranslate"><span class="pre">optional()</span></code>, and <code class="docutils literal notranslate"><span class="pre">valid()</span></code>,
+to be called before any provider. Fabricator fully supports these modifiers by providing
+dedicated methods.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">App\Models\UserModel</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\Fabricator</span><span class="p">;</span>
+
+<span class="nv">$fabricator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Fabricator</span><span class="p">(</span><span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+<span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setUnique</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">);</span> <span class="c1">// sets generated emails to be always unique</span>
+<span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setOptional</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">);</span> <span class="c1">// sets group id to be optional, with 50% chance to be `null`</span>
+<span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">setValid</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="nx">fn</span> <span class="p">(</span><span class="nx">int</span> <span class="nv">$age</span><span class="p">)</span><span class="o">:</span> <span class="nx">bool</span> <span class="o">=&gt;</span> <span class="nv">$age</span> <span class="o">&gt;=</span> <span class="mi">18</span><span class="p">);</span> <span class="c1">// sets age to be 18 and above only</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$fabricator</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The arguments passed after the field name are passed directly to the modifiers as-is. You can refer
+to <a class="reference external" href="https://fakerphp.github.io/#modifiers">Faker’s documentation on modifiers</a> for details.</p>
+<p>Instead of calling each method on Fabricator, you may use Faker’s modifiers directly if you are using
+the <code class="docutils literal notranslate"><span class="pre">fake()</span></code> method on your models.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\Fabricator</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Faker\Generator</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserModel</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">&#39;users&#39;</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">fake</span><span class="p">(</span><span class="nx">Generator</span> <span class="o">&amp;</span><span class="nv">$faker</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;first&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">(),</span>
+            <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">unique</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">(),</span>
+            <span class="s1">&#39;group_id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">optional</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">passthrough</span><span class="p">(</span><span class="nb">mt_rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">Fabricator</span><span class="o">::</span><span class="na">getCount</span><span class="p">(</span><span class="s1">&#39;groups&#39;</span><span class="p">))),</span>
+        <span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
 <section id="localization">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Localization</a><a class="headerlink" href="#localization" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Localization</a><a class="headerlink" href="#localization" title="Permalink to this heading"></a></h2>
 <p>Faker supports a lot of different locales. Check their documentation to determine which providers
 support your locale. Specify a locale in the third parameter while initiating a fabricator:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -456,7 +508,7 @@ support your locale. Specify a locale in the third parameter while initiating a 
 You can check the locale of an existing fabricator using its <code class="docutils literal notranslate"><span class="pre">getLocale()</span></code> method.</p>
 </section>
 <section id="faking-the-data">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Faking the Data</a><a class="headerlink" href="#faking-the-data" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Faking the Data</a><a class="headerlink" href="#faking-the-data" title="Permalink to this heading"></a></h2>
 <p>Once you have a properly-initialized fabricator it is easy to generate test data with the <code class="docutils literal notranslate"><span class="pre">make()</span></code> command:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -532,7 +584,7 @@ the object with extra database fields above without actually touching the databa
 </div>
 </section>
 <section id="specifying-test-data">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Specifying Test Data</a><a class="headerlink" href="#specifying-test-data" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Specifying Test Data</a><a class="headerlink" href="#specifying-test-data" title="Permalink to this heading"></a></h2>
 <p>Generated data is great, but sometimes you may want to supply a specific field for a test without
 compromising your formatters configuration. Rather then creating a new fabricator for each variant
 you can use <code class="docutils literal notranslate"><span class="pre">setOverrides()</span></code> to specify the value for any fields:</p>
@@ -594,7 +646,7 @@ override or only for a single action:</p>
 <p>If no second parameter is supplied then passed values will persist by default.</p>
 </section>
 <section id="test-helper">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Test Helper</a><a class="headerlink" href="#test-helper" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Test Helper</a><a class="headerlink" href="#test-helper" title="Permalink to this heading"></a></h2>
 <p>Often all you will need is a one-and-done fake object for testing. The Test Helper provides
 the <code class="docutils literal notranslate"><span class="pre">fake($model,</span> <span class="pre">$overrides,</span> <span class="pre">$persist</span> <span class="pre">=</span> <span class="pre">true)</span></code> function to do just this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -616,7 +668,7 @@ the <code class="docutils literal notranslate"><span class="pre">fake($model,</s
 <p>If you just need a fake object without saving it to the database you can pass false into the persist parameter.</p>
 </section>
 <section id="table-counts">
-<h2><a class="toc-backref" href="#id9" role="doc-backlink">Table Counts</a><a class="headerlink" href="#table-counts" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Table Counts</a><a class="headerlink" href="#table-counts" title="Permalink to this heading"></a></h2>
 <p>Frequently your faked data will depend on other faked data. <code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> provides a static
 count of the number of faked items you have created for each table. Consider the following
 example:</p>
@@ -648,7 +700,7 @@ Your model’s fake method could look like this:</p>
 </div>
 <p>Now creating a new user will ensure it is a part of a valid group: <code class="docutils literal notranslate"><span class="pre">$user</span> <span class="pre">=</span> <span class="pre">fake(UserModel::class);</span></code></p>
 <section id="methods">
-<h3><a class="toc-backref" href="#id10" role="doc-backlink">Methods</a><a class="headerlink" href="#methods" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Methods</a><a class="headerlink" href="#methods" title="Permalink to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> handles the counts internally but you can also access these static methods
 to assist with using them:</p>
 <section id="getcount-string-table-int">

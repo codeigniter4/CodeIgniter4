@@ -66,6 +66,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
@@ -177,6 +178,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
@@ -224,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
@@ -304,7 +307,13 @@ action when that event is triggered.</p>
 </li>
 <li><p><a class="reference internal" href="#publishing-your-own-events" id="id5">Publishing your own Events</a></p></li>
 <li><p><a class="reference internal" href="#simulating-events" id="id6">Simulating Events</a></p></li>
-<li><p><a class="reference internal" href="#event-points" id="id7">Event Points</a></p></li>
+<li><p><a class="reference internal" href="#event-points" id="id7">Event Points</a></p>
+<ul>
+<li><p><a class="reference internal" href="#for-web-apps" id="id8">For Web Apps</a></p></li>
+<li><p><a class="reference internal" href="#for-cli-apps" id="id9">For CLI Apps</a></p></li>
+<li><p><a class="reference internal" href="#others" id="id10">Others</a></p></li>
+</ul>
+</li>
 </ul>
 </nav>
 <section id="enabling-events">
@@ -424,7 +433,10 @@ When <strong>true</strong>, all events will be skipped over during the trigger m
 </section>
 <section id="event-points">
 <span id="id1"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Event Points</a><a class="headerlink" href="#event-points" title="Permalink to this heading"></a></h2>
-<p>The following is a list of available event points within the CodeIgniter core code:</p>
+<section id="for-web-apps">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">For Web Apps</a><a class="headerlink" href="#for-web-apps" title="Permalink to this heading"></a></h3>
+<p>The following is a list of available event points for web applications that are
+invoked by <strong>public/index.php</strong>:</p>
 <ul class="simple">
 <li><p><strong>pre_system</strong> Called early during system execution. The URI, Request, and
 Response have been instantiated, but page cache checking, routing, and execution
@@ -432,10 +444,25 @@ of “before” controller filters have not yet occurred.</p></li>
 <li><p><strong>post_controller_constructor</strong> Called immediately after your controller is instantiated, but prior to any method calls happening.</p></li>
 <li><p><strong>post_system</strong> Called right before the final rendered page is sent to the browser,
 at the end of system execution, after the execution of “after” controller filters.</p></li>
+</ul>
+</section>
+<section id="for-cli-apps">
+<span id="event-points-for-cli-apps"></span><h3><a class="toc-backref" href="#id9" role="doc-backlink">For CLI Apps</a><a class="headerlink" href="#for-cli-apps" title="Permalink to this heading"></a></h3>
+<p>The following is a list of available event points for <a class="reference internal" href="../cli/spark_commands.html"><span class="doc">Spark Commands</span></a>:</p>
+<ul class="simple">
+<li><p><strong>pre_command</strong> Called right before the command code execution.</p></li>
+<li><p><strong>post_command</strong> Called right after the command code execution.</p></li>
+</ul>
+</section>
+<section id="others">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Others</a><a class="headerlink" href="#others" title="Permalink to this heading"></a></h3>
+<p>The following is a list of event points available for each of the libraries:</p>
+<ul class="simple">
 <li><p><strong>email</strong> Called after an email sent successfully from <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code>. Receives an array of the <code class="docutils literal notranslate"><span class="pre">Email</span></code> class’s properties as a parameter.</p></li>
 <li><p><strong>DBQuery</strong> Called after a database query whether successful or not. Receives the <code class="docutils literal notranslate"><span class="pre">Query</span></code> object.</p></li>
 <li><p><strong>migrate</strong> Called after a successful migration call to <code class="docutils literal notranslate"><span class="pre">latest()</span></code> or <code class="docutils literal notranslate"><span class="pre">regress()</span></code>. Receives the current properties of <code class="docutils literal notranslate"><span class="pre">MigrationRunner</span></code> as well as the name of the method.</p></li>
 </ul>
+</section>
 </section>
 </section>
 

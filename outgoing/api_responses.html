@@ -66,6 +66,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
@@ -177,6 +178,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
@@ -224,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
@@ -365,16 +368,23 @@ exist for the most common use cases:</p>
 </div>
 </section>
 <section id="handling-response-types">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Handling Response Types</a><a class="headerlink" href="#handling-response-types" title="Permalink to this heading"></a></h2>
+<span id="api-response-trait-handling-response-types"></span><h2><a class="toc-backref" href="#id2" role="doc-backlink">Handling Response Types</a><a class="headerlink" href="#handling-response-types" title="Permalink to this heading"></a></h2>
 <p>When you pass your data in any of these methods, they will determine the data type to format the results as based on
 the following criteria:</p>
 <ul class="simple">
-<li><p>If data is a string, it will be treated as HTML to send back to the client.</p></li>
-<li><p>If data is an array, it will be formatted according to the controller’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;format</span></code> value. If that is empty,
-it will try to negotiate the content type with what the client asked for, defaulting to JSON
-if nothing else has been specified within <strong>Config/Format.php</strong>, the <code class="docutils literal notranslate"><span class="pre">$supportedResponseFormats</span></code> property.</p></li>
+<li><p>The format is determined according to the controller’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;format</span></code> value.
+If that is <code class="docutils literal notranslate"><span class="pre">null</span></code>, it will try to negotiate the content type with what the
+client asked for, defaulting to the first element (JSON by default) in the
+<code class="docutils literal notranslate"><span class="pre">$supportedResponseFormats</span></code> property within <strong>app/Config/Format.php</strong>.</p></li>
+<li><p>The data will be formatted according to the format. If the format is not JSON
+and data is a string, it will be treated as HTML to send back to the client.</p></li>
 </ul>
-<p>To define the formatter that is used, edit <strong>Config/Format.php</strong>. The <code class="docutils literal notranslate"><span class="pre">$supportedResponseFormats</span></code> contains a list of
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to v4.5.0, due to a bug, if data is a string, it will be treated
+as HTML even if the format is JSON.</p>
+</div>
+<p>To define the formatter that is used, edit <strong>app/Config/Format.php</strong>. The <code class="docutils literal notranslate"><span class="pre">$supportedResponseFormats</span></code> contains a list of
 mime types that your application can automatically format the response for. By default, the system knows how to
 format both XML and JSON responses:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>

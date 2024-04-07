@@ -66,6 +66,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
@@ -177,6 +178,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
@@ -224,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
@@ -387,7 +390,9 @@ outside</p></li>
 <li><p><a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation</span></a> library</p></li>
 <li><p><a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library provides for
 <a class="reference internal" href="../libraries/security.html#cross-site-request-forgery"><span class="std std-ref">CSRF protection</span></a></p></li>
+<li><p><a class="reference internal" href="../libraries/sessions.html"><span class="doc">Session Library</span></a> library</p></li>
 <li><p><a class="reference internal" href="../libraries/throttler.html"><span class="doc">Throttler</span></a> for rate limit</p></li>
+<li><p><a class="reference internal" href="../libraries/cors.html"><span class="doc">Cross-Origin Resource Sharing (CORS)</span></a> filter</p></li>
 <li><p><a class="reference internal" href="../general/common_functions.html#log_message" title="log_message"><code class="xref php php-func docutils literal notranslate"><span class="pre">log_message()</span></code></a> function for logging</p></li>
 <li><p>An official authentication and authorization framework <a class="reference internal" href="../libraries/official_packages.html#shield"><span class="std std-ref">CodeIgniter Shield</span></a></p></li>
 <li><p>Easy to add third party authentication</p></li>
@@ -639,6 +644,8 @@ settings in all environments.</p></li>
 <section id="id8">
 <h4>CodeIgniter provisions<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h4>
 <ul class="simple">
+<li><p><a class="reference internal" href="../general/configuration.html#confirming-config-values"><span class="std std-ref">spark config:check</span></a> command</p></li>
+<li><p><a class="reference internal" href="../installation/running.html#spark-phpini-check"><span class="std std-ref">spark phpini:check</span></a> command</p></li>
 <li><p><a class="reference internal" href="../general/environments.html#environment-constant"><span class="std std-ref">Production mode</span></a> by default</p></li>
 <li><p><a class="reference internal" href="../incoming/filters.html#secureheaders"><span class="std std-ref">SecureHeaders</span></a> filter</p></li>
 </ul>
@@ -927,6 +934,7 @@ not deploy changes that make the tests fail.</p></li>
 <ul class="simple">
 <li><p>An official authentication and authorization framework
 <a class="reference internal" href="../libraries/official_packages.html#shield"><span class="std std-ref">CodeIgniter Shield</span></a></p></li>
+<li><p><a class="reference internal" href="../testing/overview.html"><span class="doc">PHPUnit testing</span></a></p></li>
 </ul>
 </section>
 </section>
@@ -964,8 +972,11 @@ for API clients authentication.</p></li>
 <section id="id22">
 <h4>CodeIgniter provisions<a class="headerlink" href="#id22" title="Permalink to this heading"></a></h4>
 <ul class="simple">
+<li><p><a class="reference internal" href="../incoming/filters.html"><span class="doc">Controller Filters</span></a></p></li>
+<li><p><a class="reference internal" href="../incoming/routing.html#routing-spark-routes"><span class="std std-ref">spark routes</span></a> command</p></li>
 <li><p>An official authentication and authorization framework
 <a class="reference internal" href="../libraries/official_packages.html#shield"><span class="std std-ref">CodeIgniter Shield</span></a></p></li>
+<li><p><a class="reference internal" href="../libraries/throttler.html"><span class="doc">Throttler</span></a> for rate limit</p></li>
 </ul>
 </section>
 </section>
@@ -1066,6 +1077,7 @@ authorization checks based on the user’s group and role.</p></li>
 <section id="id28">
 <h4>CodeIgniter provisions<a class="headerlink" href="#id28" title="Permalink to this heading"></a></h4>
 <ul class="simple">
+<li><p><a class="reference internal" href="../incoming/filters.html"><span class="doc">Controller Filters</span></a></p></li>
 <li><p>An official authentication and authorization framework
 <a class="reference internal" href="../libraries/official_packages.html#shield"><span class="std std-ref">CodeIgniter Shield</span></a></p></li>
 </ul>
@@ -1199,6 +1211,7 @@ being sent back to attackers.</p></li>
 <li><p><a class="reference internal" href="../general/common_functions.html#force_https" title="force_https"><code class="xref php php-func docutils literal notranslate"><span class="pre">force_https()</span></code></a> function</p></li>
 <li><p><a class="reference internal" href="../incoming/routing.html#defined-route-routing"><span class="std std-ref">Defined Route Routing</span></a></p></li>
 <li><p><a class="reference internal" href="../incoming/routing.html#auto-routing-improved"><span class="std std-ref">Auto Routing (Improved)</span></a></p></li>
+<li><p><a class="reference internal" href="../libraries/cors.html"><span class="doc">Cross-Origin Resource Sharing (CORS)</span></a> filter</p></li>
 </ul>
 </section>
 </section>
@@ -1262,6 +1275,7 @@ to: do not blindly follow redirects.</p></li>
 <section id="id38">
 <h4>CodeIgniter provisions<a class="headerlink" href="#id38" title="Permalink to this heading"></a></h4>
 <ul class="simple">
+<li><p><a class="reference internal" href="../libraries/curlrequest.html"><span class="doc">CURLRequest</span></a> class</p></li>
 <li><p><a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation</span></a> library</p></li>
 </ul>
 </section>

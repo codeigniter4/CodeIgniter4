@@ -66,6 +66,7 @@
 <li class="toctree-l2"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
@@ -177,6 +178,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
@@ -224,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
@@ -314,15 +317,16 @@ them one by one.</p>
 <li><p><a class="reference internal" href="#application-structure" id="id5">Application Structure</a></p></li>
 <li><p><a class="reference internal" href="#routing" id="id6">Routing</a></p></li>
 <li><p><a class="reference internal" href="#model-view-and-controller" id="id7">Model, View and Controller</a></p></li>
-<li><p><a class="reference internal" href="#class-loading" id="id8">Class Loading</a></p></li>
-<li><p><a class="reference internal" href="#libraries" id="id9">Libraries</a></p></li>
-<li><p><a class="reference internal" href="#helpers" id="id10">Helpers</a></p></li>
-<li><p><a class="reference internal" href="#hooks" id="id11">Hooks</a></p></li>
-<li><p><a class="reference internal" href="#error-handling" id="id12">Error Handling</a></p></li>
-<li><p><a class="reference internal" href="#extending-the-framework" id="id13">Extending the Framework</a></p></li>
+<li><p><a class="reference internal" href="#core-class-changes" id="id8">Core Class Changes</a></p></li>
+<li><p><a class="reference internal" href="#class-loading" id="id9">Class Loading</a></p></li>
+<li><p><a class="reference internal" href="#libraries" id="id10">Libraries</a></p></li>
+<li><p><a class="reference internal" href="#helpers" id="id11">Helpers</a></p></li>
+<li><p><a class="reference internal" href="#hooks" id="id12">Hooks</a></p></li>
+<li><p><a class="reference internal" href="#error-handling" id="id13">Error Handling</a></p></li>
+<li><p><a class="reference internal" href="#extending-the-framework" id="id14">Extending the Framework</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#upgrading-libraries" id="id14">Upgrading Libraries</a></p></li>
+<li><p><a class="reference internal" href="#upgrading-libraries" id="id15">Upgrading Libraries</a></p></li>
 </ul>
 </nav>
 <section id="general-adjustments">
@@ -337,7 +341,7 @@ them one by one.</p>
 <section id="namespaces">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">Namespaces</a><a class="headerlink" href="#namespaces" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p>CI4 is built for PHP 7.4+, and everything in the framework is namespaced,
+<li><p>CI4 is built for PHP 8.1+, and everything in the framework is namespaced,
 except for the helper and lang files.</p></li>
 </ul>
 </section>
@@ -349,7 +353,7 @@ except for the helper and lang files.</p></li>
 the <strong>public</strong> folder, for better security and separation of components.</p>
 <p>This means that you should configure your web server to “point” to your project’s
 <strong>public</strong> folder, and not to the project root.</p>
-<p>If you would use Shared Hosting, see <a class="reference internal" href="running.html#deployment-to-shared-hosting-services"><span class="std std-ref">Deployment to Shared Hosting Services</span></a>.</p>
+<p>If you would use Shared Hosting, see <a class="reference internal" href="deployment.html#deployment-to-shared-hosting-services"><span class="std std-ref">Deployment to Shared Hosting Services</span></a>.</p>
 </div>
 <ul class="simple">
 <li><p>The <strong>application</strong> folder is renamed as <strong>app</strong> and the framework still has <strong>system</strong> folders,
@@ -399,8 +403,32 @@ you some step-by-step instructions to convert the MVC classes in CodeIgniter4:</
 </ul>
 </div>
 </section>
+<section id="core-class-changes">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Core Class Changes</a><a class="headerlink" href="#core-class-changes" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Input</dt><dd><ul>
+<li><p>CI3’s <a class="reference external" href="http://codeigniter.com/userguide3/libraries/input.html">Input</a>
+corresponds to CI4’s <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest</span></a>.</p></li>
+<li><p>For historical reasons, CI3 and CI4 used incorrect HTTP method names like
+“get”, “post”. Since v4.5.0, CI4 uses the correct HTTP method names like
+“GET”, “POST”.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Output</dt><dd><ul>
+<li><p>CI3’s <a class="reference external" href="http://codeigniter.com/userguide3/libraries/output.html">Output</a>
+corresponds to CI4’s <a class="reference internal" href="../outgoing/response.html"><span class="doc">Responses</span></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
 <section id="class-loading">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">Class Loading</a><a class="headerlink" href="#class-loading" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Class Loading</a><a class="headerlink" href="#class-loading" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>There is no longer a CodeIgniter “superobject”, with framework component
 references magically injected as properties of your controller.</p></li>
@@ -416,7 +444,7 @@ instance like <code class="docutils literal notranslate"><span class="pre">$this
 </ul>
 </section>
 <section id="libraries">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">Libraries</a><a class="headerlink" href="#libraries" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Libraries</a><a class="headerlink" href="#libraries" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Your app classes can still go inside <strong>app/Libraries</strong>, but they don’t have to.</p></li>
 <li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library('x');</span></code> you can now use
@@ -426,7 +454,7 @@ your component. Alternatively, you can use <a class="reference internal" href=".
 </ul>
 </section>
 <section id="helpers">
-<h3><a class="toc-backref" href="#id10" role="doc-backlink">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="../general/helpers.html"><span class="doc">Helpers</span></a> are pretty much the same as before, though some have been simplified.</p></li>
 <li><p>Since v4.3.0, you can autoload helpers by <strong>app/Config/Autoload.php</strong> as well as CI3.</p></li>
@@ -466,7 +494,7 @@ or <code class="docutils literal notranslate"><span class="pre">withHeaders()</s
 </ul>
 </section>
 <section id="hooks">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">Hooks</a><a class="headerlink" href="#hooks" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Hooks</a><a class="headerlink" href="#hooks" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.codeigniter.com/userguide3/general/hooks.html">Hooks</a> have been
 replaced by <a class="reference internal" href="../extending/events.html"><span class="doc">Events</span></a>.</p></li>
@@ -482,7 +510,7 @@ page.</p></li>
 </ul>
 </section>
 <section id="error-handling">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">Error Handling</a><a class="headerlink" href="#error-handling" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Error Handling</a><a class="headerlink" href="#error-handling" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p>The behavior in CI4 has been slightly changed.</p>
 <ul>
@@ -515,7 +543,7 @@ framework processing.</p></li>
 </ul>
 </section>
 <section id="extending-the-framework">
-<h3><a class="toc-backref" href="#id13" role="doc-backlink">Extending the Framework</a><a class="headerlink" href="#extending-the-framework" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Extending the Framework</a><a class="headerlink" href="#extending-the-framework" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>You don’t need a <strong>core</strong> folder to hold <code class="docutils literal notranslate"><span class="pre">MY_...</span></code> framework
 component extensions or replacements.</p></li>
@@ -529,7 +557,7 @@ your components instead of the default ones.</p></li>
 </section>
 </section>
 <section id="upgrading-libraries">
-<h2><a class="toc-backref" href="#id14" role="doc-backlink">Upgrading Libraries</a><a class="headerlink" href="#upgrading-libraries" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">Upgrading Libraries</a><a class="headerlink" href="#upgrading-libraries" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Your app classes can still go inside <strong>app/Libraries</strong>, but they don’t have to.</p></li>
 <li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library('x');</span></code> you can now use
@@ -545,8 +573,6 @@ libraries are <a class="reference external" href="http://codeigniter.com/usergui
 <a class="reference external" href="http://codeigniter.com/userguide3/libraries/trackback.html">Trackback</a>,
 <a class="reference external" href="http://codeigniter.com/userguide3/libraries/xmlrpc.html">XML-RPC /-Server</a>,
 and <a class="reference external" href="http://codeigniter.com/userguide3/libraries/zip.html">Zip Encoding</a>.</p></li>
-<li><p>CI3’s <a class="reference external" href="http://codeigniter.com/userguide3/libraries/input.html">Input</a> corresponds to CI4’s <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest</span></a>.</p></li>
-<li><p>CI3’s <a class="reference external" href="http://codeigniter.com/userguide3/libraries/output.html">Output</a> corresponds to CI4’s <a class="reference internal" href="../outgoing/response.html"><span class="doc">Responses</span></a>.</p></li>
 <li><p>All the other libraries, which exist in both CodeIgniter versions, can be upgraded with some adjustments.
 The most important and mostly used libraries received an Upgrade Guide, which will help you with simple
 steps and examples to adjust your code.</p></li>

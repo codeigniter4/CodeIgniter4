@@ -63,6 +63,7 @@
 <li class="toctree-l2"><a class="reference internal" href="installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation/running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation/upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation/repositories.html">CodeIgniter Repositories</a></li>
@@ -174,6 +175,7 @@
 <li class="toctree-l1"><a class="reference internal" href="libraries/index.html">Library Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="libraries/caching.html">Caching Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="libraries/curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="libraries/encryption.html">Encryption Service</a></li>
@@ -221,6 +223,7 @@
 <li class="toctree-l2"><a class="reference internal" href="testing/controllers.html">Controller Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing/feature.html">HTTP Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing/cli.html">Testing CLI Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing/mocking.html">Mocking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing/benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing/debugging.html">Debugging Your Application</a></li>
@@ -341,9 +344,13 @@
 </li>
       <li><a href="dbmgmt/forge.html#CodeIgniter\Database\Forge::addForeignKey"><strong>addForeignKey() (CodeIgniter\Database\Forge method)</strong></a>
 </li>
+      <li><a href="incoming/message.html#CodeIgniter\HTTP\Message::addHeader"><strong>addHeader() (CodeIgniter\HTTP\Message method)</strong></a>
+</li>
       <li><a href="dbmgmt/forge.html#CodeIgniter\Database\Forge::addKey"><strong>addKey() (CodeIgniter\Database\Forge method)</strong></a>
 </li>
       <li><a href="dbmgmt/forge.html#CodeIgniter\Database\Forge::addPrimaryKey"><strong>addPrimaryKey() (CodeIgniter\Database\Forge method)</strong></a>
+</li>
+      <li><a href="libraries/cors.html#CodeIgniter\HTTP\Cors::addResponseHeaders"><strong>addResponseHeaders() (CodeIgniter\HTTP\Cors method)</strong></a>
 </li>
       <li><a href="outgoing/table.html#CodeIgniter\View\Table::addRow"><strong>addRow() (CodeIgniter\View\Table method)</strong></a>
 </li>
@@ -355,10 +362,10 @@
 </li>
       <li><a href="helpers/url_helper.html#anchor_popup"><strong>anchor_popup() (global function)</strong></a>
 </li>
-      <li><a href="general/common_functions.html#app_timezone"><strong>app_timezone() (global function)</strong></a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="general/common_functions.html#app_timezone"><strong>app_timezone() (global function)</strong></a>
+</li>
       <li><a href="incoming/message.html#CodeIgniter\HTTP\Message::appendBody"><strong>appendBody() (CodeIgniter\HTTP\Message method)</strong></a>
 </li>
       <li><a href="incoming/message.html#CodeIgniter\HTTP\Message::appendHeader"><strong>appendHeader() (CodeIgniter\HTTP\Message method)</strong></a>
@@ -439,7 +446,7 @@
 </li>
       <li><a href="libraries/encryption.html#namespace-CodeIgniter\Encryption"><strong>CodeIgniter\Encryption (namespace)</strong></a>
 </li>
-      <li><a href="incoming/incomingrequest.html#namespace-CodeIgniter\HTTP"><strong>CodeIgniter\HTTP (namespace)</strong></a>, <a href="incoming/message.html#namespace-CodeIgniter\HTTP"><strong>[1]</strong></a>, <a href="incoming/request.html#namespace-CodeIgniter\HTTP"><strong>[2]</strong></a>, <a href="libraries/user_agent.html#namespace-CodeIgniter\HTTP"><strong>[3]</strong></a>, <a href="outgoing/response.html#namespace-CodeIgniter\HTTP"><strong>[4]</strong></a>
+      <li><a href="incoming/incomingrequest.html#namespace-CodeIgniter\HTTP"><strong>CodeIgniter\HTTP (namespace)</strong></a>, <a href="incoming/message.html#namespace-CodeIgniter\HTTP"><strong>[1]</strong></a>, <a href="incoming/request.html#namespace-CodeIgniter\HTTP"><strong>[2]</strong></a>, <a href="libraries/cors.html#namespace-CodeIgniter\HTTP"><strong>[3]</strong></a>, <a href="libraries/user_agent.html#namespace-CodeIgniter\HTTP"><strong>[4]</strong></a>, <a href="outgoing/response.html#namespace-CodeIgniter\HTTP"><strong>[5]</strong></a>
 </li>
       <li><a href="outgoing/table.html#namespace-CodeIgniter\View"><strong>CodeIgniter\View (namespace)</strong></a>, <a href="outgoing/view_parser.html#namespace-CodeIgniter\View"><strong>[1]</strong></a>, <a href="outgoing/view_renderer.html#namespace-CodeIgniter\View"><strong>[2]</strong></a>
 </li>
@@ -456,6 +463,8 @@
       <li><a href="general/common_functions.html#cookies"><strong>cookies() (global function)</strong></a>
 </li>
       <li><a href="libraries/cookies.html#CodeIgniter\Cookie\CookieStore"><strong>CookieStore (class in CodeIgniter\Cookie)</strong></a>
+</li>
+      <li><a href="libraries/cors.html#CodeIgniter\HTTP\Cors"><strong>Cors (class in CodeIgniter\HTTP)</strong></a>
 </li>
       <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::countAll"><strong>countAll() (CodeIgniter\Database\BaseBuilder method)</strong></a>
 </li>
@@ -831,6 +840,8 @@
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="libraries/cors.html#CodeIgniter\HTTP\Cors::handlePreflightRequest"><strong>handlePreflightRequest() (CodeIgniter\HTTP\Cors method)</strong></a>
+</li>
       <li><a href="libraries/cookies.html#CodeIgniter\Cookie\CookieStore::has"><strong>has() (CodeIgniter\Cookie\CookieStore method)</strong></a>
 </li>
       <li><a href="helpers/cookie_helper.html#has_cookie"><strong>has_cookie() (global function)</strong></a>
@@ -901,10 +912,10 @@
 </li>
       <li><a href="general/common_functions.html#is_really_writable"><strong>is_really_writable() (global function)</strong></a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="general/common_functions.html#is_windows"><strong>is_windows() (global function)</strong></a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="incoming/incomingrequest.html#CodeIgniter\HTTP\IncomingRequest::isAJAX"><strong>isAJAX() (CodeIgniter\HTTP\IncomingRequest method)</strong></a>
 </li>
       <li><a href="libraries/user_agent.html#CodeIgniter\HTTP\UserAgent::isBrowser"><strong>isBrowser() (CodeIgniter\HTTP\UserAgent method)</strong></a>
@@ -916,6 +927,8 @@
       <li><a href="libraries/cookies.html#CodeIgniter\Cookie\Cookie::isHTTPOnly"><strong>isHTTPOnly() (CodeIgniter\Cookie\Cookie method)</strong></a>
 </li>
       <li><a href="libraries/user_agent.html#CodeIgniter\HTTP\UserAgent::isMobile"><strong>isMobile() (CodeIgniter\HTTP\UserAgent method)</strong></a>
+</li>
+      <li><a href="libraries/cors.html#CodeIgniter\HTTP\Cors::isPreflightRequest"><strong>isPreflightRequest() (CodeIgniter\HTTP\Cors method)</strong></a>
 </li>
       <li><a href="libraries/cookies.html#CodeIgniter\Cookie\Cookie::isRaw"><strong>isRaw() (CodeIgniter\Cookie\Cookie method)</strong></a>
 </li>
