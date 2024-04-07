@@ -315,6 +315,8 @@ Others
 
 - app/Config/Boot/production.php
     - The default error level to ``error_reporting()`` has been changed to ``E_ALL & ~E_DEPRECATED``.
+- app/Config/Cors.php
+    - Added to handle CORS configuration.
 - app/Config/Database.php
     - The default value of ``charset`` in ``$default`` has been change to ``utf8mb4``.
     - The default value of ``DBCollat`` in ``$default`` has been change to ``utf8mb4_general_ci``.
@@ -327,6 +329,8 @@ Others
 - app/Config/Kint.php
     - It no longer extends ``BaseConfig`` because enabling
       :ref:`factories-config-caching` could cause errors.
+- app/Config/Optimize.php
+    - Added to handle optimization configuration.
 - app/Config/Security.php
     - The property ``$redirect`` has been changed to ``true`` in ``production``
       environment.
