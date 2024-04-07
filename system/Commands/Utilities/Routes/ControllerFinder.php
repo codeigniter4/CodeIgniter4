@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,8 +13,7 @@
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
-use CodeIgniter\Autoloader\FileLocator;
-use CodeIgniter\Config\Services;
+use CodeIgniter\Autoloader\FileLocatorInterface;
 
 /**
  * Finds all controllers in a namespace for auto route listing.
@@ -21,20 +22,15 @@ use CodeIgniter\Config\Services;
  */
 final class ControllerFinder
 {
-    /**
-     * @var string namespace to search
-     */
-    private string $namespace;
-
-    private FileLocator $locator;
+    private readonly FileLocatorInterface $locator;
 
     /**
      * @param string $namespace namespace to search
      */
-    public function __construct(string $namespace)
-    {
-        $this->namespace = $namespace;
-        $this->locator   = Services::locator();
+    public function __construct(
+        private readonly string $namespace
+    ) {
+        $this->locator = service('locator');
     }
 
     /**

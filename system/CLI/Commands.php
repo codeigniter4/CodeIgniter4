@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,7 +13,8 @@
 
 namespace CodeIgniter\CLI;
 
-use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Autoloader\FileLocatorInterface;
+use CodeIgniter\Events\Events;
 use CodeIgniter\Log\Logger;
 use ReflectionClass;
 use ReflectionException;
@@ -49,7 +52,7 @@ class Commands
     /**
      * Runs a command given
      *
-     * @return int|void
+     * @return int|void Exit code
      */
     public function run(string $command, array $params)
     {
@@ -62,7 +65,13 @@ class Commands
         $className = $this->commands[$command]['class'];
         $class     = new $className($this->logger, $this);
 
-        return $class->run($params);
+        Events::trigger('pre_command');
+
+        $exit = $class->run($params);
+
+        Events::trigger('post_command');
+
+        return $exit;
     }
 
     /**
@@ -87,7 +96,7 @@ class Commands
             return;
         }
 
-        /** @var FileLocator $locator */
+        /** @var FileLocatorInterface $locator */
         $locator = service('locator');
         $files   = $locator->listFiles('Commands/');
 
@@ -100,9 +109,9 @@ class Commands
         // Loop over each file checking to see if a command with that
         // alias exists in the class.
         foreach ($files as $file) {
-            $className = $locator->getClassname($file);
+            $className = $locator->findQualifiedNameFromPath($file);
 
-            if ($className === '' || ! class_exists($className)) {
+            if ($className === false || ! class_exists($className)) {
                 continue;
             }
 
@@ -174,7 +183,7 @@ class Commands
         foreach (array_keys($collection) as $commandName) {
             $lev = levenshtein($name, $commandName);
 
-            if ($lev <= strlen($commandName) / 3 || strpos($commandName, $name) !== false) {
+            if ($lev <= strlen($commandName) / 3 || str_contains($commandName, $name)) {
                 $alternatives[$commandName] = $lev;
             }
         }

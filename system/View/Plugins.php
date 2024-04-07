@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -12,7 +14,6 @@
 namespace CodeIgniter\View;
 
 use CodeIgniter\HTTP\URI;
-use Config\Services;
 
 /**
  * View plugins
@@ -78,7 +79,7 @@ class Plugins
      */
     public static function ValidationErrors(array $params = []): string
     {
-        $validator = Services::validation();
+        $validator = service('validation');
         if ($params === []) {
             return $validator->listErrors();
         }

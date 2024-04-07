@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -61,6 +63,26 @@ final class ShowTableInfoTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, $result);
 
         $expectedPattern = '/\| id[[:blank:]]+\| version[[:blank:]]+\| class[[:blank:]]+\| group[[:blank:]]+\| namespace[[:blank:]]+\| time[[:blank:]]+\| batch \|/';
+        $this->assertMatchesRegularExpression($expectedPattern, $result);
+    }
+
+    public function testDbTableShowsWithInvalidDBGroup(): void
+    {
+        command('db:table --show --dbgroup invalid');
+
+        $result = $this->getNormalizedResult();
+
+        $expected = '"invalid" is not a valid database connection group.';
+        $this->assertStringContainsString($expected, $result);
+    }
+
+    public function testDbTableShowsDBConfig(): void
+    {
+        command('db:table --show');
+
+        $result = $this->getNormalizedResult();
+
+        $expectedPattern = '/\| hostname[[:blank:]]+\| database[[:blank:]]+\| username[[:blank:]]+\| DBDriver[[:blank:]]+\| DBPrefix[[:blank:]]+\| port[[:blank:]]+\|/';
         $this->assertMatchesRegularExpression($expectedPattern, $result);
     }
 

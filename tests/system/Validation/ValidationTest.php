@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -330,6 +332,101 @@ class ValidationTest extends CIUnitTestCase
                 'rules'  => ['required', static fn ($value) => $value === 'abc'],
                 'errors' => [
                     // Specify the array key for the closure rule.
+                    1 => 'The {field} is invalid',
+                ],
+            ],
+        ]);
+
+        $data   = ['secret' => 'xyz'];
+        $result = $this->validation->run($data);
+
+        $this->assertFalse($result);
+        $this->assertSame(
+            ['secret' => 'The シークレット is invalid'],
+            $this->validation->getErrors()
+        );
+    }
+
+    /**
+     * Validation rule1
+     *
+     * @param mixed $value
+     */
+    public function rule1($value)
+    {
+        return $value === 'abc';
+    }
+
+    public function testCallableRule(): void
+    {
+        $this->validation->setRules(
+            [
+                'foo' => ['required', $this->rule1(...)],
+            ],
+            [
+                // Errors
+                'foo' => [
+                    // Specify the array key for the callable rule.
+                    1 => 'The value is not "abc"',
+                ],
+            ],
+        );
+
+        $data   = ['foo' => 'xyz'];
+        $result = $this->validation->run($data);
+
+        $this->assertFalse($result);
+        $this->assertSame(
+            ['foo' => 'The value is not "abc"'],
+            $this->validation->getErrors()
+        );
+        $this->assertSame([], $this->validation->getValidated());
+    }
+
+    /**
+     * Validation rule1
+     *
+     * @param mixed $value
+     */
+    public function rule2($value, array $data, ?string &$error, string $field)
+    {
+        if ($value !== 'abc') {
+            $error = 'The ' . $field . ' value is not "abc"';
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public function testCallableRuleWithParamError(): void
+    {
+        $this->validation->setRules([
+            'foo' => [
+                'required',
+                $this->rule2(...),
+            ],
+        ]);
+
+        $data   = ['foo' => 'xyz'];
+        $result = $this->validation->run($data);
+
+        $this->assertFalse($result);
+        $this->assertSame(
+            ['foo' => 'The foo value is not "abc"'],
+            $this->validation->getErrors()
+        );
+        $this->assertSame([], $this->validation->getValidated());
+    }
+
+    public function testCallableRuleWithLabel(): void
+    {
+        $this->validation->setRules([
+            'secret' => [
+                'label'  => 'シークレット',
+                'rules'  => ['required', $this->rule1(...)],
+                'errors' => [
+                    // Specify the array key for the callable rule.
                     1 => 'The {field} is invalid',
                 ],
             ],
@@ -755,7 +852,7 @@ class ValidationTest extends CIUnitTestCase
         $rules = [
             'role' => 'required|min_length[5]',
         ];
-        $result = $this->validation->withRequest($request->withMethod('patch'))->setRules($rules)->run();
+        $result = $this->validation->withRequest($request->withMethod('PATCH'))->setRules($rules)->run();
 
         $this->assertTrue($result);
         $this->assertSame([], $this->validation->getErrors());
@@ -780,7 +877,7 @@ class ValidationTest extends CIUnitTestCase
             'role' => 'required|min_length[5]',
         ];
         $result = $this->validation
-            ->withRequest($request->withMethod('patch'))
+            ->withRequest($request->withMethod('PATCH'))
             ->setRules($rules)
             ->run();
 
@@ -855,7 +952,7 @@ class ValidationTest extends CIUnitTestCase
             'p' => 'required|array_count[2]',
         ];
         $result = $this->validation
-            ->withRequest($request->withMethod('patch'))
+            ->withRequest($request->withMethod('PATCH'))
             ->setRules($rules)
             ->run();
 
@@ -1046,7 +1143,7 @@ class ValidationTest extends CIUnitTestCase
         $request = new IncomingRequest($config, new SiteURI($config), http_build_query($body), new UserAgent());
 
         $this->validation->setRules($rules);
-        $this->validation->withRequest($request->withMethod('post'))->run($body);
+        $this->validation->withRequest($request->withMethod('POST'))->run($body);
         $this->assertSame($results, $this->validation->getErrors());
     }
 
@@ -1129,7 +1226,7 @@ class ValidationTest extends CIUnitTestCase
             'name_user.*' => 'alpha_numeric',
         ]);
 
-        $this->validation->withRequest($request->withMethod('post'))->run();
+        $this->validation->withRequest($request->withMethod('POST'))->run();
         $this->assertSame([], $this->validation->getErrors());
     }
 
@@ -1164,7 +1261,7 @@ class ValidationTest extends CIUnitTestCase
             'contacts.friends.*.name' => 'required',
         ]);
 
-        $this->validation->withRequest($request->withMethod('post'))->run();
+        $this->validation->withRequest($request->withMethod('POST'))->run();
         $this->assertSame([
             'id_user.0'               => 'The id_user.* field must contain only numbers.',
             'name_user.0'             => 'The name_user.* field may only contain alphabetical characters.',
@@ -1198,7 +1295,7 @@ class ValidationTest extends CIUnitTestCase
             'id_user' => 'numeric',
         ]);
 
-        $this->validation->withRequest($request->withMethod('post'))->run();
+        $this->validation->withRequest($request->withMethod('POST'))->run();
         $this->assertSame([
             'id_user' => 'The id_user field must contain only numbers.',
         ], $this->validation->getErrors());
@@ -1496,7 +1593,9 @@ class ValidationTest extends CIUnitTestCase
     {
         // to test if placeholderReplacementResultDetermination() works we provoke and expect an exception
         $this->expectException(ExpectationFailedException::class);
-        $this->expectExceptionMessage('Failed asserting that \'filter[{id}]\' does not contain "{id}".');
+        $this->expectExceptionMessage(
+            'Failed asserting that \'filter[{id}]\' [ASCII](length: 12) does not contain "{id}" [ASCII](length: 4).'
+        );
 
         $this->validation->setRule('foo', 'foo-label', 'required|filter[{id}]');
 

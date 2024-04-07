@@ -17,6 +17,7 @@ class UserModel extends Model
     protected $allowedFields = ['name', 'email'];
 
     protected bool $allowEmptyInserts = false;
+    protected bool $updateOnlyChanged = true;
 
     // Dates
     protected $useTimestamps = false;

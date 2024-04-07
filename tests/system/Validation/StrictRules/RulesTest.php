@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -53,6 +55,11 @@ final class RulesTest extends TraditionalRulesTest
     public static function providePermitEmptyStrict(): iterable
     {
         yield from [
+            [
+                ['foo' => 'permit_empty'],
+                [],
+                true,
+            ],
             [
                 ['foo' => 'permit_empty'],
                 ['foo' => ''],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -227,7 +229,14 @@ class Forge
         }
 
         try {
-            if (! $this->db->query(sprintf($ifNotExists ? $this->createDatabaseIfStr : $this->createDatabaseStr, $dbName, $this->db->charset, $this->db->DBCollat))) {
+            if (! $this->db->query(
+                sprintf(
+                    $ifNotExists ? $this->createDatabaseIfStr : $this->createDatabaseStr,
+                    $this->db->escapeIdentifier($dbName),
+                    $this->db->charset,
+                    $this->db->DBCollat
+                )
+            )) {
                 // @codeCoverageIgnoreStart
                 if ($this->db->DBDebug) {
                     throw new DatabaseException('Unable to create the specified database.');
@@ -284,7 +293,9 @@ class Forge
             return false;
         }
 
-        if (! $this->db->query(sprintf($this->dropDatabaseStr, $dbName))) {
+        if (! $this->db->query(
+            sprintf($this->dropDatabaseStr, $this->db->escapeIdentifier($dbName))
+        )) {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('Unable to drop the specified database.');
             }
@@ -293,7 +304,11 @@ class Forge
         }
 
         if (! empty($this->db->dataCache['db_names'])) {
-            $key = array_search(strtolower($dbName), array_map('strtolower', $this->db->dataCache['db_names']), true);
+            $key = array_search(
+                strtolower($dbName),
+                array_map('strtolower', $this->db->dataCache['db_names']),
+                true
+            );
             if ($key !== false) {
                 unset($this->db->dataCache['db_names'][$key]);
             }
@@ -368,7 +383,7 @@ class Forge
                 ]);
                 $this->addKey('id', true);
             } else {
-                if (strpos($fields, ' ') === false) {
+                if (! str_contains($fields, ' ')) {
                     throw new InvalidArgumentException('Field information is required for that operation.');
                 }
 
@@ -635,7 +650,7 @@ class Forge
             return false;
         }
 
-        if ($this->db->DBPrefix && strpos($tableName, $this->db->DBPrefix) === 0) {
+        if ($this->db->DBPrefix && str_starts_with($tableName, $this->db->DBPrefix)) {
             $tableName = substr($tableName, strlen($this->db->DBPrefix));
         }
 

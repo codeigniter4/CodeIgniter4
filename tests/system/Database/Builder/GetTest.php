@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -13,6 +15,7 @@ namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use Config\Feature;
 
 /**
  * @internal
@@ -44,6 +47,25 @@ final class GetTest extends CIUnitTestCase
      */
     public function testGetWithReset(): void
     {
+        $config                 = config(Feature::class);
+        $config->limitZeroAsAll = false;
+
+        $builder = $this->db->table('users');
+        $builder->testMode()->where('username', 'bogus');
+
+        $expectedSQL           = 'SELECT * FROM "users" WHERE "username" = \'bogus\'  LIMIT 50, 0';
+        $expectedSQLafterreset = 'SELECT * FROM "users"  LIMIT 50, 0';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->get(0, 50, false)));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->get(0, 50, true)));
+        $this->assertSame($expectedSQLafterreset, str_replace("\n", ' ', $builder->get(0, 50, true)));
+    }
+
+    public function testGetWithResetWithLimitZeroAsAll(): void
+    {
+        $config                 = config(Feature::class);
+        $config->limitZeroAsAll = true;
+
         $builder = $this->db->table('users');
         $builder->testMode()->where('username', 'bogus');
 

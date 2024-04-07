@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -38,7 +40,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
 
         assert($service1 !== null);
 
-        $this->assertInstanceOf(get_class($service1), $service2);
+        $this->assertInstanceOf($service1::class, $service2);
         $this->assertNotSame($service1, $service2);
     }
 
@@ -68,7 +70,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
 
         assert($service1 !== null);
 
-        $this->assertInstanceOf(get_class($service1), $service2);
+        $this->assertInstanceOf($service1::class, $service2);
         $this->assertNotSame($service1, $service2);
 
         if ($service === 'commands') {
@@ -86,7 +88,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
 
         // Assert that even passing true as last param this will
         // not create a shared instance.
-        $this->assertInstanceOf(get_class($cache1), $cache2);
+        $this->assertInstanceOf($cache1::class, $cache2);
         $this->assertNotSame($cache1, $cache2);
     }
 
@@ -103,6 +105,9 @@ final class CommonSingleServiceTest extends CIUnitTestCase
     {
         static $services = [];
         static $excl     = [
+            'get',
+            'set',
+            'override',
             '__callStatic',
             'createRequest',
             'serviceExists',

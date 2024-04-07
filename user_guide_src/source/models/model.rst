@@ -169,10 +169,35 @@ $allowEmptyInserts
 .. versionadded:: 4.3.0
 
 Whether to allow inserting empty data. The default value is ``false``, meaning
-that if you try to insert empty data, an exception with
+that if you try to insert empty data, ``DataException`` with
 "There is no data to insert." will raise.
 
 You may also change this setting with the :ref:`model-allow-empty-inserts` method.
+
+.. _model-update-only-changed:
+
+$updateOnlyChanged
+------------------
+
+.. versionadded:: 4.5.0
+
+Whether to update :doc:`Entity <./entities>`'s only changed fields. The default
+value is ``true``, meaning that only changed field data is used when updating to
+the database. So if you try to update an Entity without changes, ``DataException``
+with "There is no data to update." will raise.
+
+Setting this property to ``false`` will ensure that all allowed fields of an Entity
+are submitted to the database and updated at any time.
+
+$casts
+------
+
+.. versionadded:: 4.5.0
+
+This allows you to convert data retrieved from a database into the appropriate
+PHP type.
+This option should be an array where the key is the name of the field, and the
+value is the data type. See :ref:`model-field-casting` for details.
 
 Dates
 -----
@@ -284,6 +309,132 @@ $afterUpdateBatch
 
 These arrays allow you to specify callback methods that will be run on the data at the
 time specified in the property name. See :ref:`model-events`.
+
+.. _model-field-casting:
+
+Model Field Casting
+*******************
+
+.. versionadded:: 4.5.0
+
+When retrieving data from a database, data of integer type may be converted to
+string type in PHP. You may also want to convert date/time data into a Time
+object in PHP.
+
+Model Field Casting allows you to convert data retrieved from a database into
+the appropriate PHP type.
+
+.. important::
+    If you use this feature with the :doc:`Entity <./entities>`, do not use
+    :ref:`Entity Property Casting <entities-property-casting>`. Using both casting
+    at the same time does not work.
+
+    Entity Property Casting works at (1)(4), but this casting works at (2)(3)::
+
+        [App Code] --- (1) --> [Entity] --- (2) --> [Database]
+        [App Code] <-- (4) --- [Entity] <-- (3) --- [Database]
+
+    When using this casting, Entity will have correct typed PHP values in the
+    attributes. This behavior is completely different from the previous behavior.
+    Do not expect the attributes hold raw data from database.
+
+Defining Data Types
+===================
+
+The ``$casts`` property sets its definition. This option should be an array
+where the key is the name of the field, and the value is the data type:
+
+.. literalinclude:: model/057.php
+
+Data Types
+==========
+
+The following types are provided by default. Add a question mark at the beginning
+of type to mark the field as nullable, i.e., ``?int``, ``?datetime``.
+
++---------------+----------------+---------------------------+
+| Type          | PHP Value Type | DB Column Type            |
++===============+================+===========================+
+|``int``        | int            | int type                  |
++---------------+----------------+---------------------------+
+|``float``      | float          | float (numeric) type      |
++---------------+----------------+---------------------------+
+|``bool``       | bool           | bool/int/string type      |
++---------------+----------------+---------------------------+
+|``int-bool``   | bool           | int type (1 or 0)         |
++---------------+----------------+---------------------------+
+|``array``      | array          | string type (serialized)  |
++---------------+----------------+---------------------------+
+|``csv``        | array          | string type (CSV)         |
++---------------+----------------+---------------------------+
+|``json``       | stdClass       | json/string type          |
++---------------+----------------+---------------------------+
+|``json-array`` | array          | json/string type          |
++---------------+----------------+---------------------------+
+|``datetime``   | Time           | datetime type             |
++---------------+----------------+---------------------------+
+|``timestamp``  | Time           | int type (UNIX timestamp) |
++---------------+----------------+---------------------------+
+|``uri``        | URI            | string type               |
++---------------+----------------+---------------------------+
+
+csv
+---
+
+Casting as ``csv`` uses PHP's internal ``implode()`` and ``explode()`` functions
+and assumes all values are string-safe and free of commas. For more complex data
+casts try ``array`` or ``json``.
+
+datetime
+--------
+
+You can pass a parameter like ``datetime[ms]`` for date/time with milliseconds,
+or ``datetime[us]`` for date/time with microseconds.
+
+The datetime format is set in the ``dateFormat`` array of the
+:ref:`database configuration <database-config-explanation-of-values>` in the
+**app/Config/Database.php** file.
+
+Custom Casting
+==============
+
+You can define your own conversion types.
+
+Creating Custom Handlers
+------------------------
+
+At first you need to create a handler class for your type.
+Let's say the class will be located in the **app/Models/Cast** directory:
+
+.. literalinclude:: model/058.php
+
+If you don't need to change values when getting or setting a value. Then just
+don't implement the appropriate method:
+
+.. literalinclude:: model/060.php
+
+Registering Custom Handlers
+---------------------------
+
+Now you need to register it:
+
+.. literalinclude:: model/059.php
+
+Parameters
+----------
+
+In some cases, one type is not enough. In this situation, you can use additional
+parameters. Additional parameters are indicated in square brackets and listed
+with a comma like ``type[param1, param2]``.
+
+.. literalinclude:: model/061.php
+
+.. literalinclude:: model/062.php
+
+.. note:: If the casting type is marked as nullable like ``?bool`` and the passed
+    value is not null, then the parameter with the value ``nullable`` will be
+    passed to the casting type handler. If casting type has predefined parameters,
+    then ``nullable`` will be added to the end of the list.
 
 Working with Data
 *****************
@@ -448,6 +599,21 @@ model's ``save()`` method to inspect the class, grab any public and private prop
 
 .. note:: If you find yourself working with Entities a lot, CodeIgniter provides a built-in :doc:`Entity class </models/entities>`
     that provides several handy features that make developing Entities simpler.
+
+.. _model-saving-dates:
+
+Saving Dates
+------------
+
+.. versionadded:: 4.5.0
+
+When saving data, if you pass :doc:`Time <../libraries/time>` instances, they are
+converted to strings with the format defined in ``dateFormat['datetime']`` and
+``dateFormat['date']`` in the
+:ref:`database configuration <database-config-explanation-of-values>`.
+
+.. note:: Prior to v4.5.0, the date/time formats were hard coded as ``Y-m-d H:i:s``
+    and ``Y-m-d`` in the Model class.
 
 Deleting Data
 =============

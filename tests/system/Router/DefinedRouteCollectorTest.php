@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -12,6 +14,7 @@
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
 use Config\Routing;
@@ -40,7 +43,7 @@ final class DefinedRouteCollectorTest extends CIUnitTestCase
             $moduleConfig->enabled = false;
         }
 
-        return (new RouteCollection($loader, $moduleConfig, new Routing()))->setHTTPVerb('get');
+        return (new RouteCollection($loader, $moduleConfig, new Routing()))->setHTTPVerb(Method::GET);
     }
 
     public function testCollect()
@@ -61,25 +64,25 @@ final class DefinedRouteCollectorTest extends CIUnitTestCase
 
         $expected = [
             [
-                'method'  => 'get',
+                'method'  => 'GET',
                 'route'   => 'journals',
                 'name'    => 'journals',
                 'handler' => '\App\Controllers\Blogs',
             ],
             [
-                'method'  => 'get',
+                'method'  => 'GET',
                 'route'   => 'product/([0-9]+)',
                 'name'    => 'product/([0-9]+)',
                 'handler' => '\App\Controllers\Catalog::productLookupByID/$1',
             ],
             [
-                'method'  => 'get',
+                'method'  => 'GET',
                 'route'   => 'feed',
                 'name'    => 'feed',
                 'handler' => '(Closure)',
             ],
             [
-                'method'  => 'get',
+                'method'  => 'GET',
                 'route'   => 'about',
                 'name'    => 'about',
                 'handler' => '(View) pages/about',
@@ -108,19 +111,19 @@ final class DefinedRouteCollectorTest extends CIUnitTestCase
 
         $expected = [
             [
-                'method'  => 'get',
+                'method'  => 'GET',
                 'route'   => 'login',
                 'name'    => 'loginShow',
                 'handler' => '\\App\\Controllers\\AuthController::showLogin',
             ],
             [
-                'method'  => 'get',
+                'method'  => 'GET',
                 'route'   => 'logout',
                 'name'    => 'logout',
                 'handler' => '\\App\\Controllers\\AuthController::logout',
             ],
             [
-                'method'  => 'post',
+                'method'  => 'POST',
                 'route'   => 'login',
                 'name'    => 'login',
                 'handler' => '\\App\\Controllers\\AuthController::login',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -96,7 +98,7 @@ class Table
 
         $prefix = $this->db->DBPrefix;
 
-        if (! empty($prefix) && strpos($table, $prefix) === 0) {
+        if (! empty($prefix) && str_starts_with($table, $prefix)) {
             $table = substr($table, strlen($prefix));
         }
 
@@ -430,7 +432,7 @@ class Table
      */
     private function isIntegerType(string $type): bool
     {
-        return strpos(strtoupper($type), 'INT') !== false;
+        return str_contains(strtoupper($type), 'INT');
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -78,7 +80,7 @@ class Cell
         [$instance, $method] = $this->determineClass($library);
 
         $class = is_object($instance)
-            ? get_class($instance)
+            ? $instance::class
             : null;
 
         $params = $this->prepareParams($params);
@@ -91,7 +93,7 @@ class Cell
         }
 
         if (method_exists($instance, 'initController')) {
-            $instance->initController(Services::request(), Services::response(), Services::logger());
+            $instance->initController(Services::request(), service('response'), service('logger'));
         }
 
         if (! method_exists($instance, $method)) {
@@ -132,7 +134,7 @@ class Cell
             $newParams = [];
             $separator = ' ';
 
-            if (strpos($params, ',') !== false) {
+            if (str_contains($params, ',')) {
                 $separator = ',';
             }
 
@@ -170,7 +172,7 @@ class Cell
 
         // controlled cells might be called with just
         // the class name, so add a default method
-        if (strpos($library, ':') === false) {
+        if (! str_contains($library, ':')) {
             $library .= ':render';
         }
 
@@ -209,7 +211,7 @@ class Cell
         $publicParams      = array_intersect_key($params, $publicProperties);
 
         foreach ($params as $key => $value) {
-            $getter = 'get' . ucfirst($key) . 'Property';
+            $getter = 'get' . ucfirst((string) $key) . 'Property';
             if (in_array($key, $privateProperties, true) && method_exists($instance, $getter)) {
                 $publicParams[$key] = $value;
             }
@@ -251,7 +253,7 @@ class Cell
                     $mountParams[] = $params[$paramName];
                 }
             }
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException) {
             // do nothing
         }
 

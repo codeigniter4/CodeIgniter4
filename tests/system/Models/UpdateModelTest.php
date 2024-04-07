@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -17,11 +19,13 @@ use CodeIgniter\Entity\Entity;
 use Config\Database;
 use InvalidArgumentException;
 use stdClass;
+use Tests\Support\Entity\User;
 use Tests\Support\Entity\UUID;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
 use Tests\Support\Models\UserModel;
+use Tests\Support\Models\UserTimestampModel;
 use Tests\Support\Models\UUIDPkeyModel;
 use Tests\Support\Models\ValidModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
@@ -577,5 +581,25 @@ final class UpdateModelTest extends LiveModelTestCase
                 'update(): argument #1 ($id) should not be boolean.',
             ],
         ];
+    }
+
+    public function testUpdateEntityUpdateOnlyChangedFalse(): void
+    {
+        $model = new class () extends UserTimestampModel {
+            protected $returnType             = User::class;
+            protected bool $updateOnlyChanged = false;
+        };
+
+        $user           = $model->find(1);
+        $updateAtBefore = $user->updated_at;
+
+        // updates the Entity without changes.
+        $result = $model->update(1, $user);
+
+        $user          = $model->find(1);
+        $updateAtAfter = $user->updated_at;
+
+        $this->assertTrue($result);
+        $this->assertNotSame($updateAtBefore, $updateAtAfter);
     }
 }

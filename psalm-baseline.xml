@@ -85,11 +85,6 @@
       <code><![CDATA[#[ReturnTypeWillChange]]]></code>
     </MissingImmutableAnnotation>
   </file>
-  <file src="system/Test/ControllerResponse.php">
-    <UnsupportedPropertyReferenceUsage>
-      <code><![CDATA[$this->dom = &$this->domParser]]></code>
-    </UnsupportedPropertyReferenceUsage>
-  </file>
   <file src="system/View/Parser.php">
     <UndefinedDocblockClass>
       <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>

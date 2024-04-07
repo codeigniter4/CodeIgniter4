@@ -63,6 +63,8 @@ jobs:
           vendor/bin/phpcov merge --clover build/logs/clover.xml build/cov
 
       - name: Upload coverage to Coveralls
-        run: vendor/bin/php-coveralls --verbose --exclude-no-stmt --ansi
+        run: |
+          composer global require php-coveralls/php-coveralls
+          php-coveralls --verbose --exclude-no-stmt --ansi
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}

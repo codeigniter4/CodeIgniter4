@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -36,7 +38,7 @@ class DownloadResponse extends Response
     /**
      * mime set flag
      */
-    private bool $setMime;
+    private readonly bool $setMime;
 
     /**
      * Download for binary

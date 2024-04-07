@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -69,7 +71,7 @@ if (! function_exists('cache')) {
      */
     function cache(?string $key = null)
     {
-        $cache = Services::cache();
+        $cache = service('cache');
 
         // No params - return cache object
         if ($key === null) {
@@ -92,29 +94,18 @@ if (! function_exists('clean_path')) {
         // Resolve relative paths
         try {
             $path = realpath($path) ?: $path;
-        } catch (ErrorException|ValueError $e) {
+        } catch (ErrorException|ValueError) {
             $path = 'error file path: ' . urlencode($path);
         }
 
-        switch (true) {
-            case strpos($path, APPPATH) === 0:
-                return 'APPPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(APPPATH));
-
-            case strpos($path, SYSTEMPATH) === 0:
-                return 'SYSTEMPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(SYSTEMPATH));
-
-            case strpos($path, FCPATH) === 0:
-                return 'FCPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(FCPATH));
-
-            case defined('VENDORPATH') && strpos($path, VENDORPATH) === 0:
-                return 'VENDORPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(VENDORPATH));
-
-            case strpos($path, ROOTPATH) === 0:
-                return 'ROOTPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(ROOTPATH));
-
-            default:
-                return $path;
-        }
+        return match (true) {
+            str_starts_with($path, APPPATH)                             => 'APPPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(APPPATH)),
+            str_starts_with($path, SYSTEMPATH)                          => 'SYSTEMPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(SYSTEMPATH)),
+            str_starts_with($path, FCPATH)                              => 'FCPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(FCPATH)),
+            defined('VENDORPATH') && str_starts_with($path, VENDORPATH) => 'VENDORPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(VENDORPATH)),
+            str_starts_with($path, ROOTPATH)                            => 'ROOTPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(ROOTPATH)),
+            default                                                     => $path,
+        };
     }
 }
 
@@ -212,6 +203,10 @@ if (! function_exists('config')) {
      */
     function config(string $name, bool $getShared = true)
     {
+        if ($getShared) {
+            return Factories::get('config', $name);
+        }
+
         return Factories::config($name, ['getShared' => $getShared]);
     }
 }
@@ -242,7 +237,7 @@ if (! function_exists('cookies')) {
     function cookies(array $cookies = [], bool $getGlobal = true): CookieStore
     {
         if ($getGlobal) {
-            return Services::response()->getCookieStore();
+            return service('response')->getCookieStore();
         }
 
         return new CookieStore($cookies);
@@ -257,7 +252,7 @@ if (! function_exists('csrf_token')) {
      */
     function csrf_token(): string
     {
-        return Services::security()->getTokenName();
+        return service('security')->getTokenName();
     }
 }
 
@@ -269,7 +264,7 @@ if (! function_exists('csrf_header')) {
      */
     function csrf_header(): string
     {
-        return Services::security()->getHeaderName();
+        return service('security')->getHeaderName();
     }
 }
 
@@ -281,7 +276,7 @@ if (! function_exists('csrf_hash')) {
      */
     function csrf_hash(): string
     {
-        return Services::security()->getHash();
+        return service('security')->getHash();
     }
 }
 
@@ -315,7 +310,7 @@ if (! function_exists('csp_style_nonce')) {
      */
     function csp_style_nonce(): string
     {
-        $csp = Services::csp();
+        $csp = service('csp');
 
         if (! $csp->enabled()) {
             return '';
@@ -331,7 +326,7 @@ if (! function_exists('csp_script_nonce')) {
      */
     function csp_script_nonce(): string
     {
-        $csp = Services::csp();
+        $csp = service('csp');
 
         if (! $csp->enabled()) {
             return '';
@@ -387,21 +382,13 @@ if (! function_exists('env')) {
         }
 
         // Handle any boolean values
-        switch (strtolower($value)) {
-            case 'true':
-                return true;
-
-            case 'false':
-                return false;
-
-            case 'empty':
-                return '';
-
-            case 'null':
-                return null;
-        }
-
-        return $value;
+        return match (strtolower($value)) {
+            'true'  => true,
+            'false' => false,
+            'empty' => '',
+            'null'  => null,
+            default => $value,
+        };
     }
 }
 
@@ -484,13 +471,13 @@ if (! function_exists('force_https')) {
         ?RequestInterface $request = null,
         ?ResponseInterface $response = null
     ): void {
-        $request ??= Services::request();
+        $request ??= service('request');
 
         if (! $request instanceof IncomingRequest) {
             return;
         }
 
-        $response ??= Services::response();
+        $response ??= service('response');
 
         if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure()))
             || $request->getServer('HTTPS') === 'test'
@@ -501,7 +488,7 @@ if (! function_exists('force_https')) {
         // If the session status is active, we should regenerate
         // the session ID for safety sake.
         if (ENVIRONMENT !== 'testing' && session_status() === PHP_SESSION_ACTIVE) {
-            Services::session()->regenerate(); // @codeCoverageIgnore
+            service('session')->regenerate(); // @codeCoverageIgnore
         }
 
         $uri = $request->getUri()->withScheme('https');
@@ -580,7 +567,7 @@ if (! function_exists('helper')) {
     {
         static $loaded = [];
 
-        $loader = Services::locator();
+        $loader = service('locator');
 
         if (! is_array($filenames)) {
             $filenames = [$filenames];
@@ -596,7 +583,7 @@ if (! function_exists('helper')) {
             $appHelper     = null;
             $localIncludes = [];
 
-            if (strpos($filename, '_helper') === false) {
+            if (! str_contains($filename, '_helper')) {
                 $filename .= '_helper';
             }
 
@@ -607,7 +594,7 @@ if (! function_exists('helper')) {
 
             // If the file is namespaced, we'll just grab that
             // file and not search for any others
-            if (strpos($filename, '\\') !== false) {
+            if (str_contains($filename, '\\')) {
                 $path = $loader->locateFile($filename, 'Helpers');
 
                 if (empty($path)) {
@@ -621,9 +608,9 @@ if (! function_exists('helper')) {
                 $paths = $loader->search('Helpers/' . $filename);
 
                 foreach ($paths as $path) {
-                    if (strpos($path, APPPATH . 'Helpers' . DIRECTORY_SEPARATOR) === 0) {
+                    if (str_starts_with($path, APPPATH . 'Helpers' . DIRECTORY_SEPARATOR)) {
                         $appHelper = $path;
-                    } elseif (strpos($path, SYSTEMPATH . 'Helpers' . DIRECTORY_SEPARATOR) === 0) {
+                    } elseif (str_starts_with($path, SYSTEMPATH . 'Helpers' . DIRECTORY_SEPARATOR)) {
                         $systemHelper = $path;
                     } else {
                         $localIncludes[] = $path;
@@ -745,7 +732,7 @@ if (! function_exists('lang')) {
      */
     function lang(string $line, array $args = [], ?string $locale = null)
     {
-        $language = Services::language();
+        $language = service('language');
 
         // Get active locale
         $activeLocale = $language->getLocale();
@@ -754,14 +741,14 @@ if (! function_exists('lang')) {
             $language->setLocale($locale);
         }
 
-        $line = $language->getLine($line, $args);
+        $lines = $language->getLine($line, $args);
 
         if ($locale && $locale !== $activeLocale) {
             // Reset to active locale
             $language->setLocale($activeLocale);
         }
 
-        return $line;
+        return $lines;
     }
 }
 
@@ -780,7 +767,7 @@ if (! function_exists('log_message')) {
      *  - info
      *  - debug
      *
-     * @return bool
+     * @return void
      */
     function log_message(string $level, string $message, array $context = [])
     {
@@ -790,10 +777,12 @@ if (! function_exists('log_message')) {
         if (ENVIRONMENT === 'testing') {
             $logger = new TestLogger(new Logger());
 
-            return $logger->log($level, $message, $context);
+            $logger->log($level, $message, $context);
+
+            return;
         }
 
-        return Services::logger(true)->log($level, $message, $context); // @codeCoverageIgnore
+        service('logger')->log($level, $message, $context); // @codeCoverageIgnore
     }
 }
 
@@ -832,7 +821,7 @@ if (! function_exists('old')) {
             session(); // @codeCoverageIgnore
         }
 
-        $request = Services::request();
+        $request = service('request');
 
         $value = $request->getOldInput($key);
 
@@ -858,7 +847,7 @@ if (! function_exists('redirect')) {
      */
     function redirect(?string $route = null): RedirectResponse
     {
-        $response = Services::redirectresponse(null, true);
+        $response = service('redirectresponse');
 
         if ($route !== null) {
             return $response->route($route);
@@ -930,7 +919,7 @@ if (! function_exists('request')) {
      */
     function request()
     {
-        return Services::request();
+        return service('request');
     }
 }
 
@@ -940,7 +929,7 @@ if (! function_exists('response')) {
      */
     function response(): ResponseInterface
     {
-        return Services::response();
+        return service('response');
     }
 }
 
@@ -961,7 +950,7 @@ if (! function_exists('route_to')) {
      */
     function route_to(string $method, ...$params)
     {
-        return Services::routes()->reverseRoute($method, ...$params);
+        return service('routes')->reverseRoute($method, ...$params);
     }
 }
 
@@ -979,7 +968,7 @@ if (! function_exists('session')) {
      */
     function session(?string $val = null)
     {
-        $session = Services::session();
+        $session = service('session');
 
         // Returning a single item?
         if (is_string($val)) {
@@ -1005,6 +994,10 @@ if (! function_exists('service')) {
      */
     function service(string $name, ...$params): ?object
     {
+        if ($params === []) {
+            return Services::get($name);
+        }
+
         return Services::$name(...$params);
     }
 }
@@ -1133,7 +1126,7 @@ if (! function_exists('timer')) {
      */
     function timer(?string $name = null, ?callable $callable = null)
     {
-        $timer = Services::timer();
+        $timer = service('timer');
 
         if ($name === null) {
             return $timer;
@@ -1165,7 +1158,7 @@ if (! function_exists('view')) {
      */
     function view(string $name, array $data = [], array $options = []): string
     {
-        $renderer = Services::renderer();
+        $renderer = service('renderer');
 
         $config   = config(View::class);
         $saveData = $config->saveData;
@@ -1190,7 +1183,7 @@ if (! function_exists('view_cell')) {
      */
     function view_cell(string $library, $params = null, int $ttl = 0, ?string $cacheName = null): string
     {
-        return Services::viewcell()
+        return service('viewcell')
             ->render($library, $params, $ttl, $cacheName);
     }
 }
@@ -1213,7 +1206,7 @@ if (! function_exists('class_basename')) {
      */
     function class_basename($class)
     {
-        $class = is_object($class) ? get_class($class) : $class;
+        $class = is_object($class) ? $class::class : $class;
 
         return basename(str_replace('\\', '/', $class));
     }
@@ -1232,7 +1225,7 @@ if (! function_exists('class_uses_recursive')) {
     function class_uses_recursive($class)
     {
         if (is_object($class)) {
-            $class = get_class($class);
+            $class = $class::class;
         }
 
         $results = [];

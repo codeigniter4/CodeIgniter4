@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -356,10 +358,10 @@ class Connection extends BaseConnection
             $_fields     = explode(',', preg_replace('/^.*\((.+?)\)$/', '$1', trim($row->indexdef)));
             $obj->fields = array_map(static fn ($v) => trim($v), $_fields);
 
-            if (strpos($row->indexdef, 'CREATE UNIQUE INDEX pk') === 0) {
+            if (str_starts_with($row->indexdef, 'CREATE UNIQUE INDEX pk')) {
                 $obj->type = 'PRIMARY';
             } else {
-                $obj->type = (strpos($row->indexdef, 'CREATE UNIQUE') === 0) ? 'UNIQUE' : 'INDEX';
+                $obj->type = (str_starts_with($row->indexdef, 'CREATE UNIQUE')) ? 'UNIQUE' : 'INDEX';
             }
 
             $retVal[$obj->name] = $obj;
@@ -496,7 +498,7 @@ class Connection extends BaseConnection
         }
 
         // If UNIX sockets are used, we shouldn't set a port
-        if (strpos($this->hostname, '/') !== false) {
+        if (str_contains($this->hostname, '/')) {
             $this->port = '';
         }
 

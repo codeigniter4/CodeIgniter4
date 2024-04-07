@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -20,7 +22,7 @@ use Config\Cache;
  *
  * @internal
  */
-final class PredisHandlerTest extends AbstractHandlerTest
+final class PredisHandlerTest extends AbstractHandlerTestCase
 {
     private Cache $config;
 

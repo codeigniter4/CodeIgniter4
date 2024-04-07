@@ -213,10 +213,23 @@ Traditional and Strict Rules
 ============================
 
 CodeIgniter 4 has two kinds of Validation rule classes.
-The traditional rule classes (**Traditional Rules**) have the namespace ``CodeIgniter\Validation``,
-and the new classes (**Strict Rules**) have ``CodeIgniter\Validation\StrictRules``, which provide strict validation.
+
+The default rule classes (**Strict Rules**) have the namespace
+``CodeIgniter\Validation\StrictRules``, and they provide strict validation.
+
+The traditional rule classes (**Traditional Rules**) have the namespace
+``CodeIgniter\Validation``. They are provided for backward compatibility only.
+They may not validate non-string values correctly and need not be used in new
+projects.
 
 .. note:: Since v4.3.0, **Strict Rules** are used by default for better security.
+
+Strict Rules
+------------
+
+.. versionadded:: 4.2.0
+
+The **Strict Rules** don't use implicit type conversion.
 
 Traditional Rules
 -----------------
@@ -225,7 +238,8 @@ Traditional Rules
     use them in new projects. Even if you are already using them, we recommend
     switching to Strict Rules.
 
-.. warning:: When validating data that contains non-string values, such as JSON data, it is recommended to use **Strict Rules**.
+.. warning:: When validating data that contains non-string values, such as JSON data,
+    you should use **Strict Rules**.
 
 The **Traditional Rules** implicitly assume that string values are validated,
 and the input value may be converted implicitly to a string value.
@@ -235,15 +249,12 @@ However, for example, if you use JSON input data, it may be a type of bool/null/
 When you validate the boolean ``true``, it is converted to string ``'1'`` with the Traditional rule classes.
 If you validate it with the ``integer`` rule, ``'1'`` passes the validation.
 
-Strict Rules
-------------
-
-.. versionadded:: 4.2.0
-
-The **Strict Rules** don't use implicit type conversion.
-
 Using Traditional Rules
 -----------------------
+
+.. warning:: The **Traditional Rules** are provided for backward compatibility only.
+    They may not validate non-string values correctly and need not be used in new
+    projects.
 
 If you want to use traditional rules, you need to change the rule classes in **app/Config/Validation.php**:
 
@@ -263,6 +274,21 @@ for including multiple Rulesets, and collections of rules that can be easily reu
 
 .. note:: You may never need to use this method, as both the :doc:`Controller </incoming/controllers>` and
     the :doc:`Model </models/model>` provide methods to make validation even easier.
+
+********************
+How Validation Works
+********************
+
+- The validation never changes data to be validated.
+- The validation checks each field in turn according to the Validation Rules you
+  set. If any rule returns false, the check for that field ends there.
+- The Format Rules do not permit empty string. If you want to permit empty string,
+  add the ``permit_empty`` rule.
+- If a field does not exist in the data to be validated, the value is interpreted
+  as ``null``. If you want to check that the field exists, add the ``field_exists``
+  rule.
+
+.. note:: The ``field_exists`` rule can be used since v4.5.0.
 
 ************************
 Setting Validation Rules
@@ -826,6 +852,29 @@ Or you can use the following parameters:
 .. literalinclude:: validation/041.php
    :lines: 2-
 
+.. _validation-using-callable-rule:
+
+Using Callable Rule
+===================
+
+.. versionadded:: 4.5.0
+
+If you like to use an array callback as a rule, you may use it instead of a Closure Rule.
+
+You need to use an array for validation rules:
+
+.. literalinclude:: validation/046.php
+   :lines: 2-
+
+You must set the error message for the callable rule.
+When you specify the error message, set the array key for the callable rule.
+In the above code, the ``required`` rule has the key ``0``, and the callable has ``1``.
+
+Or you can use the following parameters:
+
+.. literalinclude:: validation/047.php
+   :lines: 2-
+
 ***************
 Available Rules
 ***************
@@ -872,6 +921,8 @@ differs                 Yes        Fails if field does not differ from the one  
                                    in the parameter.
 exact_length            Yes        Fails if field is not exactly the parameter   ``exact_length[5]`` or ``exact_length[5,8,12]``
                                    value. One or more comma-separated values.
+field_exists            Yes        Fails if field does not exist. (This rule was
+                                   added in v4.5.0.)
 greater_than            Yes        Fails if field is less than or equal to       ``greater_than[8]``
                                    the parameter value or not numeric.
 greater_than_equal_to   Yes        Fails if field is less than the parameter     ``greater_than_equal_to[5]``

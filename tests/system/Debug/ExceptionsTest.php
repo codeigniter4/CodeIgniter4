@@ -71,9 +71,10 @@ final class ExceptionsTest extends CIUnitTestCase
         $maybeNull = PHP_VERSION_ID >= 80100 ? null : 'random string';
 
         try {
+            // We test DEPRECATED error, so cannot set `declare(strict_types=1)` in this file.
             strlen($maybeNull);
             $this->assertLogContains('error', '[DEPRECATED] strlen(): ');
-        } catch (ErrorException $e) {
+        } catch (ErrorException) {
             $this->fail('The catch block should not be reached.');
         } finally {
             restore_error_handler();

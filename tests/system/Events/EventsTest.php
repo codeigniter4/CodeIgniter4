@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -34,6 +36,10 @@ final class EventsTest extends CIUnitTestCase
         $this->manager = new MockEvents();
 
         Events::removeAllListeners();
+
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
     }
 
     protected function tearDown(): void
@@ -281,7 +287,7 @@ final class EventsTest extends CIUnitTestCase
     public function testHandleEventCallableClass(): void
     {
         $box = new class () {
-            public $logged;
+            public string $logged;
 
             public function hold(string $value): void
             {
@@ -289,7 +295,7 @@ final class EventsTest extends CIUnitTestCase
             }
         };
 
-        Events::on('foo', [$box, 'hold']);
+        Events::on('foo', $box->hold(...));
 
         $this->assertTrue(Events::trigger('foo', 'bar'));
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,13 +13,14 @@
 
 namespace CodeIgniter\Filters;
 
+use CodeIgniter\Config\Filters as BaseFiltersConfig;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Config\Feature;
 use Config\Filters as FiltersConfig;
 use Config\Modules;
-use Config\Services;
 
 /**
  * Filters
@@ -66,6 +69,8 @@ class Filters
      * The processed filters that will
      * be used to check against.
      *
+     * This does not include "Required Filters".
+     *
      * @var array<string, array>
      */
     protected $filters = [
@@ -76,6 +81,8 @@ class Filters
     /**
      * The collection of filters' class names that will
      * be used to execute in each position.
+     *
+     * This does not include "Required Filters".
      *
      * @var array<string, array>
      */
@@ -128,7 +135,7 @@ class Filters
      */
     private function discoverFilters(): void
     {
-        $locator = Services::locator();
+        $locator = service('locator');
 
         // for access by custom filters
         $filters = $this->config;
@@ -136,10 +143,11 @@ class Filters
         $files = $locator->search('Config/Filters.php');
 
         foreach ($files as $file) {
+            // The $file may not be a class file.
             $className = $locator->getClassname($file);
 
             // Don't include our main Filter config again...
-            if ($className === FiltersConfig::class) {
+            if ($className === FiltersConfig::class || $className === BaseFiltersConfig::class) {
                 continue;
             }
 
@@ -161,7 +169,8 @@ class Filters
      * Runs through all of the filters for the specified
      * uri and position.
      *
-     * @param string $uri URI path relative to baseURL
+     * @param         string           $uri      URI path relative to baseURL
+     * @phpstan-param 'before'|'after' $position
      *
      * @return RequestInterface|ResponseInterface|string|null
      *
@@ -171,55 +180,185 @@ class Filters
     {
         $this->initialize(strtolower($uri));
 
-        foreach ($this->filtersClass[$position] as $className) {
+        if ($position === 'before') {
+            return $this->runBefore($this->filtersClass[$position]);
+        }
+
+        // After
+        return $this->runAfter($this->filtersClass[$position]);
+    }
+
+    /**
+     * @return RequestInterface|ResponseInterface|string
+     */
+    private function runBefore(array $filterClasses)
+    {
+        foreach ($filterClasses as $className) {
             $class = new $className();
 
             if (! $class instanceof FilterInterface) {
-                throw FilterException::forIncorrectInterface(get_class($class));
+                throw FilterException::forIncorrectInterface($class::class);
             }
 
-            if ($position === 'before') {
-                $result = $class->before(
-                    $this->request,
-                    $this->argumentsClass[$className] ?? null
-                );
+            $result = $class->before(
+                $this->request,
+                $this->argumentsClass[$className] ?? null
+            );
 
-                if ($result instanceof RequestInterface) {
-                    $this->request = $result;
+            if ($result instanceof RequestInterface) {
+                $this->request = $result;
 
-                    continue;
-                }
+                continue;
+            }
 
-                // If the response object was sent back,
-                // then send it and quit.
-                if ($result instanceof ResponseInterface) {
-                    // short circuit - bypass any other filters
-                    return $result;
-                }
-                // Ignore an empty result
-                if (empty($result)) {
-                    continue;
-                }
-
+            // If the response object was sent back,
+            // then send it and quit.
+            if ($result instanceof ResponseInterface) {
+                // short circuit - bypass any other filters
                 return $result;
             }
 
-            if ($position === 'after') {
-                $result = $class->after(
-                    $this->request,
-                    $this->response,
-                    $this->argumentsClass[$className] ?? null
-                );
+            // Ignore an empty result
+            if (empty($result)) {
+                continue;
+            }
 
-                if ($result instanceof ResponseInterface) {
-                    $this->response = $result;
+            return $result;
+        }
 
-                    continue;
-                }
+        return $this->request;
+    }
+
+    private function runAfter(array $filterClasses): ResponseInterface
+    {
+        foreach ($filterClasses as $className) {
+            $class = new $className();
+
+            if (! $class instanceof FilterInterface) {
+                throw FilterException::forIncorrectInterface($class::class);
+            }
+
+            $result = $class->after(
+                $this->request,
+                $this->response,
+                $this->argumentsClass[$className] ?? null
+            );
+
+            if ($result instanceof ResponseInterface) {
+                $this->response = $result;
+
+                continue;
             }
         }
 
-        return $position === 'before' ? $this->request : $this->response;
+        return $this->response;
+    }
+
+    /**
+     * Runs "Required Filters" for the specified position.
+     *
+     * @return RequestInterface|ResponseInterface|string|null
+     *
+     * @phpstan-param 'before'|'after' $position
+     *
+     * @throws FilterException
+     *
+     * @internal
+     */
+    public function runRequired(string $position = 'before')
+    {
+        [$filters, $aliases] = $this->getRequiredFilters($position);
+
+        if ($filters === []) {
+            return $position === 'before' ? $this->request : $this->response;
+        }
+
+        $filterClasses = [];
+
+        foreach ($filters as $alias) {
+            if (is_array($aliases[$alias])) {
+                $filterClasses[$position] = array_merge($filterClasses[$position], $aliases[$alias]);
+            } else {
+                $filterClasses[$position][] = $aliases[$alias];
+            }
+        }
+
+        if ($position === 'before') {
+            return $this->runBefore($filterClasses[$position]);
+        }
+
+        // After
+        return $this->runAfter($filterClasses[$position]);
+    }
+
+    /**
+     * Returns "Required Filters" for the specified position.
+     *
+     * @phpstan-param 'before'|'after' $position
+     *
+     * @internal
+     */
+    public function getRequiredFilters(string $position = 'before'): array
+    {
+        // For backward compatibility. For users who do not update Config\Filters.
+        if (! isset($this->config->required[$position])) {
+            $baseConfig = config(BaseFiltersConfig::class); // @phpstan-ignore-line
+            $filters    = $baseConfig->required[$position];
+            $aliases    = $baseConfig->aliases;
+        } else {
+            $filters = $this->config->required[$position];
+            $aliases = $this->config->aliases;
+        }
+
+        if ($filters === []) {
+            return [[], $aliases];
+        }
+
+        if ($position === 'after') {
+            if (in_array('toolbar', $this->filters['after'], true)) {
+                // It was already run in globals filters. So remove it.
+                $filters = $this->setToolbarToLast($filters, true);
+            } else {
+                // Set the toolbar filter to the last position to be executed
+                $filters = $this->setToolbarToLast($filters);
+            }
+        }
+
+        foreach ($filters as $alias) {
+            if (! array_key_exists($alias, $aliases)) {
+                throw FilterException::forNoAlias($alias);
+            }
+        }
+
+        return [$filters, $aliases];
+    }
+
+    /**
+     * Set the toolbar filter to the last position to be executed.
+     *
+     * @param list<string> $filters `after` filter array
+     * @param bool         $remove  if true, remove `toolbar` filter
+     */
+    private function setToolbarToLast(array $filters, bool $remove = false): array
+    {
+        $afters = [];
+        $found  = false;
+
+        foreach ($filters as $alias) {
+            if ($alias === 'toolbar') {
+                $found = true;
+
+                continue;
+            }
+
+            $afters[] = $alias;
+        }
+
+        if ($found && ! $remove) {
+            $afters[] = 'toolbar';
+        }
+
+        return $afters;
     }
 
     /**
@@ -237,6 +376,8 @@ class Filters
      *
      * @param string|null $uri URI path relative to baseURL (all lowercase)
      *
+     * @TODO We don't need to accept null as $uri.
+     *
      * @return Filters
      */
     public function initialize(?string $uri = null)
@@ -246,20 +387,21 @@ class Filters
         }
 
         // Decode URL-encoded string
-        $uri = urldecode($uri);
+        $uri = urldecode($uri ?? '');
 
-        $this->processGlobals($uri);
-        $this->processMethods();
-        $this->processFilters($uri);
+        $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false;
+        if ($oldFilterOrder) {
+            $this->processGlobals($uri);
+            $this->processMethods();
+            $this->processFilters($uri);
+        } else {
+            $this->processFilters($uri);
+            $this->processMethods();
+            $this->processGlobals($uri);
+        }
 
         // Set the toolbar filter to the last position to be executed
-        if (in_array('toolbar', $this->filters['after'], true)
-            && ($count = count($this->filters['after'])) > 1
-            && $this->filters['after'][$count - 1] !== 'toolbar'
-        ) {
-            array_splice($this->filters['after'], array_search('toolbar', $this->filters['after'], true), 1);
-            $this->filters['after'][] = 'toolbar';
-        }
+        $this->filters['after'] = $this->setToolbarToLast($this->filters['after']);
 
         $this->processAliasesToClass('before');
         $this->processAliasesToClass('after');
@@ -290,6 +432,7 @@ class Filters
 
     /**
      * Returns the processed filters array.
+     * This does not include "Required Filters".
      */
     public function getFilters(): array
     {
@@ -298,6 +441,7 @@ class Filters
 
     /**
      * Returns the filtersClass array.
+     * This does not include "Required Filters".
      */
     public function getFiltersClass(): array
     {
@@ -338,12 +482,8 @@ class Filters
      * are passed to the filter when executed.
      *
      * @param string $name filter_name or filter_name:arguments like 'role:admin,manager'
-     *
-     * @return $this
-     *
-     * @deprecated Use enableFilters(). This method will be private.
      */
-    public function enableFilter(string $name, string $when = 'before')
+    private function enableFilter(string $name, string $when = 'before'): void
     {
         // Get arguments and clean name
         [$name, $arguments]     = $this->getCleanName($name);
@@ -365,8 +505,6 @@ class Filters
             $this->filters[$when][]    = $name;
             $this->filtersClass[$when] = array_merge($this->filtersClass[$when], $classNames);
         }
-
-        return $this;
     }
 
     /**
@@ -380,7 +518,7 @@ class Filters
     {
         $arguments = [];
 
-        if (strpos($name, ':') !== false) {
+        if (str_contains($name, ':')) {
             [$name, $arguments] = explode(':', $name);
 
             $arguments = explode(',', $arguments);
@@ -444,6 +582,8 @@ class Filters
         // Add any global filters, unless they are excluded for this URI
         $sets = ['before', 'after'];
 
+        $filters = [];
+
         foreach ($sets as $set) {
             if (isset($this->config->globals[$set])) {
                 // look at each alias in the group
@@ -463,10 +603,23 @@ class Filters
                     }
 
                     if ($keep) {
-                        $this->filters[$set][] = $alias;
+                        $filters[$set][] = $alias;
                     }
                 }
             }
+        }
+
+        if (isset($filters['before'])) {
+            $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false;
+            if ($oldFilterOrder) {
+                $this->filters['before'] = array_merge($this->filters['before'], $filters['before']);
+            } else {
+                $this->filters['before'] = array_merge($filters['before'], $this->filters['before']);
+            }
+        }
+
+        if (isset($filters['after'])) {
+            $this->filters['after'] = array_merge($this->filters['after'], $filters['after']);
         }
     }
 
@@ -481,11 +634,34 @@ class Filters
             return;
         }
 
-        // Request method won't be set for CLI-based requests
-        $method = strtolower($this->request->getMethod()) ?? 'cli';
+        $method = $this->request->getMethod();
+
+        $found = false;
 
         if (array_key_exists($method, $this->config->methods)) {
-            $this->filters['before'] = array_merge($this->filters['before'], $this->config->methods[$method]);
+            $found = true;
+        }
+        // Checks lowercase HTTP method for backward compatibility.
+        // @deprecated 4.5.0
+        // @TODO remove this in the future.
+        elseif (array_key_exists(strtolower($method), $this->config->methods)) {
+            @trigger_error(
+                'Setting lowercase HTTP method key "' . strtolower($method) . '" is deprecated.'
+                . ' Use uppercase HTTP method like "' . strtoupper($method) . '".',
+                E_USER_DEPRECATED
+            );
+
+            $found  = true;
+            $method = strtolower($method);
+        }
+
+        if ($found) {
+            $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false;
+            if ($oldFilterOrder) {
+                $this->filters['before'] = array_merge($this->filters['before'], $this->config->methods[$method]);
+            } else {
+                $this->filters['before'] = array_merge($this->config->methods[$method], $this->filters['before']);
+            }
         }
     }
 
@@ -505,6 +681,8 @@ class Filters
         $uri = strtolower(trim($uri, '/ '));
 
         // Add any filters that apply to this URI
+        $filters = [];
+
         foreach ($this->config->filters as $alias => $settings) {
             // Look for inclusion rules
             if (isset($settings['before'])) {
@@ -514,7 +692,7 @@ class Filters
                     // Get arguments and clean name
                     [$name, $arguments] = $this->getCleanName($alias);
 
-                    $this->filters['before'][] = $name;
+                    $filters['before'][] = $name;
 
                     $this->registerArguments($name, $arguments);
                 }
@@ -527,13 +705,31 @@ class Filters
                     // Get arguments and clean name
                     [$name, $arguments] = $this->getCleanName($alias);
 
-                    $this->filters['after'][] = $name;
+                    $filters['after'][] = $name;
 
                     // The arguments may have already been registered in the before filter.
                     // So disable check.
                     $this->registerArguments($name, $arguments, false);
                 }
             }
+        }
+
+        $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false;
+
+        if (isset($filters['before'])) {
+            if ($oldFilterOrder) {
+                $this->filters['before'] = array_merge($this->filters['before'], $filters['before']);
+            } else {
+                $this->filters['before'] = array_merge($filters['before'], $this->filters['before']);
+            }
+        }
+
+        if (isset($filters['after'])) {
+            if (! $oldFilterOrder) {
+                $filters['after'] = array_reverse($filters['after']);
+            }
+
+            $this->filters['after'] = array_merge($this->filters['after'], $filters['after']);
         }
     }
 
@@ -571,6 +767,8 @@ class Filters
      */
     protected function processAliasesToClass(string $position)
     {
+        $filterClasses = [];
+
         foreach ($this->filters[$position] as $alias => $rules) {
             if (is_numeric($alias) && is_string($rules)) {
                 $alias = $rules;
@@ -581,14 +779,20 @@ class Filters
             }
 
             if (is_array($this->config->aliases[$alias])) {
-                $this->filtersClass[$position] = array_merge($this->filtersClass[$position], $this->config->aliases[$alias]);
+                $filterClasses = [...$filterClasses, ...$this->config->aliases[$alias]];
             } else {
-                $this->filtersClass[$position][] = $this->config->aliases[$alias];
+                $filterClasses[] = $this->config->aliases[$alias];
             }
         }
 
-        // when using enableFilter() we already write the class name in $filtersClass as well as the
+        // when using enableFilter() we already write the class name in $filterClasses as well as the
         // alias in $filters. This leads to duplicates when using route filters.
+        if ($position === 'before') {
+            $this->filtersClass[$position] = array_merge($filterClasses, $this->filtersClass[$position]);
+        } else {
+            $this->filtersClass[$position] = array_merge($this->filtersClass[$position], $filterClasses);
+        }
+
         // Since some filters like rate limiters rely on being executed once a request we filter em here.
         $this->filtersClass[$position] = array_values(array_unique($this->filtersClass[$position]));
     }
@@ -604,7 +808,7 @@ class Filters
     private function pathApplies(string $uri, $paths)
     {
         // empty path matches all
-        if (empty($paths)) {
+        if ($paths === '' || $paths === []) {
             return true;
         }
 

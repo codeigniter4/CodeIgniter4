@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -82,7 +84,7 @@ final class ControllerTest extends CIUnitTestCase
                 protected $forceHTTPS = 1;
             };
             $this->controller->initController($this->request, $this->response, $this->logger);
-        } catch (RedirectException $e) {
+        } catch (RedirectException) {
         }
 
         $this->assertInstanceOf(Controller::class, $this->controller);

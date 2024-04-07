@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -79,6 +81,6 @@ class SeederGenerator extends BaseCommand
         $this->template  = 'seeder.tpl.php';
 
         $this->classNameLang = 'CLI.generator.className.seeder';
-        $this->execute($params);
+        $this->generateClass($params);
     }
 }

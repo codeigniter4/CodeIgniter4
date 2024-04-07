@@ -62,6 +62,27 @@ a child class in your test support folder:
 
 .. literalinclude:: fabricator/006.php
 
+Setting Modifiers
+=================
+
+.. versionadded:: 4.5.0
+
+Faker provides three special providers, ``unique()``, ``optional()``, and ``valid()``,
+to be called before any provider. Fabricator fully supports these modifiers by providing
+dedicated methods.
+
+.. literalinclude:: fabricator/022.php
+
+The arguments passed after the field name are passed directly to the modifiers as-is. You can refer
+to `Faker's documentation on modifiers`_ for details.
+
+.. _Faker's documentation on modifiers: https://fakerphp.github.io/#modifiers
+
+Instead of calling each method on Fabricator, you may use Faker's modifiers directly if you are using
+the ``fake()`` method on your models.
+
+.. literalinclude:: fabricator/023.php
+
 Localization
 ============
 

@@ -4,7 +4,7 @@ Controller Filters
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 Controller Filters allow you to perform actions either before or after the controllers execute. Unlike :doc:`events <../extending/events>`,
 you can choose the specific URIs or routes in which the filters will be applied to. Before filters may
@@ -85,10 +85,10 @@ There are two ways to configure filters when they get run. One is done in
 If you want to specify filter to a specific route, use **app/Config/Routes.php**
 and see :ref:`URI Routing <applying-filters>`.
 
-The filters that are specified to a route (in **app/Config/Routes.php**) are
-executed before the filters specified in **app/Config/Filters.php**.
-
 .. Note:: The safest way to apply filters is to :ref:`disable auto-routing <use-defined-routes-only>`, and :ref:`set filters to routes <applying-filters>`.
+
+app/Config/Filters.php
+======================
 
 The **app/Config/Filters.php** file contains four properties that allow you to
 configure exactly when the filters run.
@@ -99,7 +99,7 @@ configure exactly when the filters run.
     it can be accessible with ``blog``, ``blog/index``, and ``blog/index/1``, etc.
 
 $aliases
-========
+--------
 
 The ``$aliases`` array is used to associate a simple name with one or more fully-qualified class names that are the
 filters to run:
@@ -116,10 +116,33 @@ You can combine multiple filters into one alias, making complex sets of filters 
 
 You should define as many aliases as you need.
 
-$globals
-========
+.. _filters-required:
 
-The second section allows you to define any filters that should be applied to every valid request made by the framework.
+$required
+---------
+
+.. versionadded:: 4.5.0
+
+The second section allows you to define **Required Filters**.
+They are special filters that are applied to every request made by the
+framework. They are applied before and after other kinds of filters that are
+explained below.
+
+.. note:: The Required Filters are always executed even if a route does not exist.
+
+You should take care with how many you use here, since it could have performance
+implications to have too many run on every request. But the filters set by default
+provide framework functionality. If removed, those functions will no longer work.
+See :ref:`provided-filters` for details.
+
+Filters can be specified by adding their alias to either the ``before`` or ``after`` array:
+
+.. literalinclude:: filters/013.php
+
+$globals
+--------
+
+The third section allows you to define any filters that should be applied to every valid request made by the framework.
 
 You should take care with how many you use here, since it could have performance implications to have too many
 run on every request.
@@ -129,7 +152,7 @@ Filters can be specified by adding their alias to either the ``before`` or ``aft
 .. literalinclude:: filters/005.php
 
 Except for a Few URIs
----------------------
+^^^^^^^^^^^^^^^^^^^^^
 
 There are times where you want to apply a filter to almost every request, but have a few that should be left alone.
 One common example is if you need to exclude a few URI's from the CSRF protection filter to allow requests from
@@ -155,7 +178,7 @@ URI paths, you can use an array of URI path patterns:
 .. literalinclude:: filters/007.php
 
 $methods
-========
+--------
 
 .. Warning:: If you use ``$methods`` filters, you should :ref:`disable Auto Routing (Legacy) <use-defined-routes-only>`
     because :ref:`auto-routing-legacy` permits any HTTP method to access a controller.
@@ -173,7 +196,7 @@ In addition to the standard HTTP methods, this also supports one special case: `
 all requests that were run from the command line.
 
 $filters
-========
+--------
 
 This property is an array of filter aliases. For each alias, you can specify ``before`` and ``after`` arrays that contain
 a list of URI path (relative to BaseURL) patterns that filter should apply to:
@@ -188,7 +211,7 @@ a list of URI path (relative to BaseURL) patterns that filter should apply to:
 .. _filters-filters-filter-arguments:
 
 Filter Arguments
-----------------
+^^^^^^^^^^^^^^^^
 
 .. versionadded:: 4.4.0
 
@@ -200,6 +223,28 @@ In this example, when the URI matches ``admin/*'``, the array ``['admin', 'super
 will be passed in ``$arguments`` to the ``group`` filter's ``before()`` methods.
 When the URI matches ``admin/users/*'``, the array ``['users.manage']``
 will be passed in ``$arguments`` to the ``permission`` filter's ``before()`` methods.
+
+.. _filter-execution-order:
+
+Filter Execution Order
+======================
+
+.. important:: Starting with v4.5.0, the order in which filters are executed has
+    changed. If you wish to maintain the same execution order as in previous versions,
+    you must set ``true`` to ``Config\Feature::$oldFilterOrder``.
+
+Filters are executed in the following order:
+
+- **Before Filters**: required → globals → methods → filters → route
+- **After Filters**: route → filters → globals → required
+
+.. note:: The *required* filters can be used since v4.5.0.
+
+.. note:: Prior to v4.5.0, the filters that are specified to a route
+    (in **app/Config/Routes.php**) are executed before the filters specified in
+    **app/Config/Filters.php**. And the After Filters in Route filters and Filters
+    filters execution order were not reversed.
+    See :ref:`Upgrading Guide <upgrade-450-filter-execution-order>` for details.
 
 ******************
 Confirming Filters
@@ -234,13 +279,62 @@ You can also see the routes and filters by the ``spark routes`` command,
 but it might not show accurate filters when you use regular expressions for routes.
 See :ref:`URI Routing <routing-spark-routes>` for details.
 
+.. _provided-filters:
+
 ****************
 Provided Filters
 ****************
 
-The filters bundled with CodeIgniter4 are: :doc:`Honeypot <../libraries/honeypot>`, :ref:`CSRF <cross-site-request-forgery>`, ``InvalidChars``, ``SecureHeaders``, and :ref:`DebugToolbar <the-debug-toolbar>`.
+The filters bundled with CodeIgniter4 are:
+
+- ``cors`` => :doc:`../libraries/cors`
+- ``csrf`` => :ref:`CSRF <cross-site-request-forgery>`
+- ``toolbar`` => :ref:`DebugToolbar <the-debug-toolbar>`
+- ``honeypot`` => :doc:`Honeypot <../libraries/honeypot>`
+- ``invalidchars`` => :ref:`invalidchars`
+- ``secureheaders`` => :ref:`secureheaders`
+- ``forcehttps`` => :ref:`forcehttps`
+- ``pagecache`` => :doc:`PageCache <../general/caching>`
+- ``performance`` => :ref:`performancemetrics`
 
 .. note:: The filters are executed in the order defined in the config file. However, if enabled, ``DebugToolbar`` is always executed last because it should be able to capture everything that happens in the other filters.
+
+.. _forcehttps:
+
+ForceHTTPS
+==========
+
+.. versionadded:: 4.5.0
+
+This filter provides the "Force Global Secure Requests" feature.
+
+If you set ``Config\App:$forceGlobalSecureRequests`` to true, this will force
+every request made to this application to be made via a secure connection (HTTPS).
+If the incoming request is not secure, the user will be redirected to a secure
+version of the page and the HTTP Strict Transport Security (HSTS) header will be
+set.
+
+.. _performancemetrics:
+
+PerformanceMetrics
+==================
+
+.. versionadded:: 4.5.0
+
+This filter provides the pseudo-variables for performance metrics.
+
+If you would like to display the total elapsed time from the moment CodeIgniter
+starts to the moment right before the final output is sent to the browser,
+simply place this pseudo-variable in one of your views::
+
+    {elapsed_time}
+
+If you would like to show your memory usage in your view files, use this
+pseudo-variable::
+
+    {memory_usage}
+
+If you don't need this feature, remove ``'performance'`` from ``$required['after']``.
 
 .. _invalidchars:
 

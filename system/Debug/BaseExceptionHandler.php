@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -81,8 +83,8 @@ abstract class BaseExceptionHandler
         }
 
         return [
-            'title'   => get_class($exception),
-            'type'    => get_class($exception),
+            'title'   => $exception::class,
+            'type'    => $exception::class,
             'code'    => $statusCode,
             'message' => $exception->getMessage(),
             'file'    => $exception->getFile(),
@@ -114,7 +116,7 @@ abstract class BaseExceptionHandler
             $explode = explode('/', $keyToMask);
             $index   = end($explode);
 
-            if (strpos(strrev($path . '/' . $index), strrev($keyToMask)) === 0) {
+            if (str_starts_with(strrev($path . '/' . $index), strrev($keyToMask))) {
                 if (is_array($args) && array_key_exists($index, $args)) {
                     $args[$index] = '******************';
                 } elseif (
@@ -176,7 +178,7 @@ abstract class BaseExceptionHandler
 
         try {
             $source = file_get_contents($file);
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             return false;
         }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -74,16 +76,11 @@ class File extends SplFileInfo
      */
     public function getSizeByUnit(string $unit = 'b')
     {
-        switch (strtolower($unit)) {
-            case 'kb':
-                return number_format($this->getSize() / 1024, 3);
-
-            case 'mb':
-                return number_format(($this->getSize() / 1024) / 1024, 3);
-
-            default:
-                return $this->getSize();
-        }
+        return match (strtolower($unit)) {
+            'kb'    => number_format($this->getSize() / 1024, 3),
+            'mb'    => number_format(($this->getSize() / 1024) / 1024, 3),
+            default => $this->getSize(),
+        };
     }
 
     /**
@@ -173,7 +170,7 @@ class File extends SplFileInfo
             $info      = pathinfo($destination);
             $extension = isset($info['extension']) ? '.' . $info['extension'] : '';
 
-            if (strpos($info['filename'], $delimiter) !== false) {
+            if (str_contains($info['filename'], $delimiter)) {
                 $parts = explode($delimiter, $info['filename']);
 
                 if (is_numeric(end($parts))) {

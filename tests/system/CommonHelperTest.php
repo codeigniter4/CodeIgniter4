@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -94,7 +96,7 @@ final class CommonHelperTest extends CIUnitTestCase
         try {
             helper('baguette');
             $exception = false;
-        } catch (RuntimeException $e) {
+        } catch (RuntimeException) {
             $exception = true;
         }
 
@@ -113,7 +115,7 @@ final class CommonHelperTest extends CIUnitTestCase
         try {
             helper('baguette');
             $exception = false;
-        } catch (RuntimeException $e) {
+        } catch (RuntimeException) {
             $exception = true;
         }
 

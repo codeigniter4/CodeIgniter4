@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -49,7 +51,7 @@ final class FabricatorLiveTest extends CIUnitTestCase
 
         // Some countries violate the 40 character limit so override that
         $fabricator->setOverrides(['country' => 'France']);
-
+        $fabricator->setUnique('email');
         $fabricator->create($count);
 
         $this->seeNumRecords($count, 'user', []);

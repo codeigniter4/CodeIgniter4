@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -462,5 +464,26 @@ final class FactoriesTest extends CIUnitTestCase
         Factories::setComponentInstances('config', $data);
 
         $this->assertFalse(Factories::isUpdated('config'));
+    }
+
+    public function testGetReturnsFactoriesConfigInstance()
+    {
+        $config = Factories::config('App');
+
+        $this->assertSame($config, Factories::get('config', 'App'));
+    }
+
+    public function testGetCreatesConfigInstanceAndFactoriesConfigReturnsIt()
+    {
+        $config = Factories::get('config', 'App');
+
+        $this->assertSame($config, Factories::config('App'));
+    }
+
+    public function testGetNonexistentClass()
+    {
+        $config = Factories::get('config', 'NonexistentClass');
+
+        $this->assertNull($config);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -89,7 +91,7 @@ final class FiltersTest extends CIUnitTestCase
             'aliases' => ['foo' => ''],
             'globals' => [],
             'methods' => [
-                'cli' => ['foo'],
+                'CLI' => ['foo'],
             ],
         ];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
@@ -113,7 +115,7 @@ final class FiltersTest extends CIUnitTestCase
             'aliases' => ['foo' => ''],
             'globals' => [],
             'methods' => [
-                'get' => ['foo'],
+                'GET' => ['foo'],
             ],
         ];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
@@ -137,8 +139,8 @@ final class FiltersTest extends CIUnitTestCase
             ],
             'globals' => [],
             'methods' => [
-                'post' => ['foo'],
-                'get'  => ['bar'],
+                'POST' => ['foo'],
+                'GET'  => ['bar'],
             ],
         ];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
@@ -162,8 +164,8 @@ final class FiltersTest extends CIUnitTestCase
             ],
             'globals' => [],
             'methods' => [
-                'post' => ['foo'],
-                'get'  => ['bar'],
+                'POST' => ['foo'],
+                'GET'  => ['bar'],
             ],
         ];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
@@ -348,8 +350,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
             'methods' => [
-                'post' => ['foo'],
-                'get'  => ['bar'],
+                'POST' => ['foo'],
+                'GET'  => ['bar'],
             ],
             'filters' => [
                 'foof' => [
@@ -391,7 +393,7 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
             'methods' => [
-                'get' => ['bar'],
+                'GET' => ['bar'],
             ],
             'filters' => [
                 'foof' => [
@@ -406,8 +408,8 @@ final class FiltersTest extends CIUnitTestCase
         $expected = [
             'before' => ['bar'],
             'after'  => [
-                'bazg',
                 'foof',
+                'bazg',
                 'toolbar',
             ],
         ];
@@ -834,7 +836,7 @@ final class FiltersTest extends CIUnitTestCase
         $filters       = $this->createFilters($filtersConfig);
 
         $filters = $filters->initialize('admin/foo/bar');
-        $filters->enableFilter('google', 'before');
+        $filters->enableFilters(['google'], 'before');
         $filters = $filters->getFilters();
 
         $this->assertContains('google', $filters['before']);
@@ -941,8 +943,8 @@ final class FiltersTest extends CIUnitTestCase
         $filters       = $this->createFilters($filtersConfig);
 
         $filters = $filters->initialize('admin/foo/bar');
-        $filters->enableFilter('role:admin , super', 'before');
-        $filters->enableFilter('role:admin , super', 'after');
+        $filters->enableFilters(['role:admin , super'], 'before');
+        $filters->enableFilters(['role:admin , super'], 'after');
         $found = $filters->getFilters();
 
         $this->assertContains('role', $found['before']);
@@ -973,8 +975,8 @@ final class FiltersTest extends CIUnitTestCase
         $filters       = $this->createFilters($filtersConfig);
 
         $filters = $filters->initialize('admin/foo/bar');
-        $filters->enableFilter('role', 'before');
-        $filters->enableFilter('role', 'after');
+        $filters->enableFilters(['role'], 'before');
+        $filters->enableFilters(['role'], 'after');
         $found = $filters->getFilters();
 
         $this->assertContains('role', $found['before']);
@@ -1005,7 +1007,7 @@ final class FiltersTest extends CIUnitTestCase
         $filters       = $this->createFilters($filtersConfig);
 
         $filters = $filters->initialize('admin/foo/bar');
-        $filters->enableFilter('goggle', 'before');
+        $filters->enableFilters(['goggle'], 'before');
     }
 
     /**
@@ -1049,8 +1051,8 @@ final class FiltersTest extends CIUnitTestCase
                 'frak',
             ],
             'after' => [
-                'baz',
                 'frak',
+                'baz',
             ],
         ];
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
@@ -1095,8 +1097,8 @@ final class FiltersTest extends CIUnitTestCase
                 'frak',
             ],
             'after' => [
-                'baz',
                 'frak',
+                'baz',
             ],
         ];
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());

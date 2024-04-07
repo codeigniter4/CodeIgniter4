@@ -74,6 +74,47 @@ you will need to modify the permissions for the **writable** folder inside
 your project, so that it is writable by the user or account used by your
 web server.
 
+.. _spark-phpini-check:
+
+Checking PHP ini Settings
+=========================
+
+.. versionadded:: 4.5.0
+
+`PHP ini settings`_ change the behaviors of PHP. CodeIgniter provides a command to
+check important PHP settings.
+
+.. _PHP ini settings: https://www.php.net/manual/en/ini.list.php
+
+.. code-block:: console
+
+    php spark phpini:check
+
+The *Recommended* column shows the recommended values for production environment.
+They may differ in development environments.
+
+.. note::
+    If you cannot use the spark command, you can use ``CheckPhpIni::run(false)``
+    in your controller.
+
+    E.g.,
+
+    .. code-block:: php
+
+        <?php
+
+        namespace App\Controllers;
+
+        use CodeIgniter\Security\CheckPhpIni;
+
+        class Home extends BaseController
+        {
+            public function index(): string
+            {
+                return CheckPhpIni::run(false);
+            }
+        }
+
 ************************
 Local Development Server
 ************************
@@ -450,84 +491,11 @@ Setting Environment
 
 See :ref:`Handling Multiple Environments <environment-nginx>`.
 
-
-.. _deployment-to-shared-hosting-services:
-
 *************************************
 Deployment to Shared Hosting Services
 *************************************
 
-.. important::
-    **index.php** is no longer in the root of the project! It has been moved inside
-    the **public** folder, for better security and separation of components.
-
-    This means that you should configure your web server to "point" to your project's
-    **public** folder, and not to the project root.
-
-Specifying the Document Root
-============================
-
-The best way is to set the document root to the **public** folder in the server
-configuration::
-
-    └── example.com/ (project folder)
-        └── public/  (document root)
-
-Check with your hosting service provider to see if you can change the document root.
-Unfortunately, if you cannot change the document root, go to the next way.
-
-Using Two Directories
-=====================
-
-The second way is to use two directories, and adjust the path.
-One is for the application and the other is the default document root.
-
-Upload the contents of the **public** folder to **public_html** (the default
-document root) and the other files to the directory for the application::
-
-    ├── example.com/ (for the application)
-    │       ├── app/
-    │       ├── vendor/ (or system/)
-    │       └── writable/
-    └── public_html/ (the default document root)
-            ├── .htaccess
-            ├── favicon.ico
-            ├── index.php
-            └── robots.txt
-
-See
-`Install CodeIgniter 4 on Shared Hosting (cPanel) <https://forum.codeigniter.com/showthread.php?tid=76779>`_
-for details.
-
-Adding .htaccess
-================
-
-The last resort is to add **.htaccess** to the project root.
-
-It is not recommended that you place the project folder in the document root.
-However, if you have no other choice, you can use this.
-
-Place your project folder as follows, where **public_html** is the document root,
-and create the **.htaccess** file::
-
-    └── public_html/     (the default document root)
-        └── example.com/ (project folder)
-            ├── .htaccess
-            └── public/
-
-And edit **.htaccess** as follows:
-
-.. code-block:: apache
-
-    <IfModule mod_rewrite.c>
-        RewriteEngine On
-        RewriteRule ^(.*)$ public/$1 [L]
-    </IfModule>
-
-    <FilesMatch "^\.">
-        Require all denied
-        Satisfy All
-    </FilesMatch>
+See :ref:`Deployment <deployment-to-shared-hosting-services>`.
 
 
 And remove the redirect settings in **public/.htaccess**:

@@ -41,7 +41,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.1'
           tools: phpcpd
           extensions: dom, mbstring
 
@@ -57,4 +57,6 @@ jobs:
             --exclude system/Debug/Exceptions.php
             --exclude system/HTTP/SiteURI.php
             --exclude system/Validation/Rules.php
+            --exclude system/Autoloader/Autoloader.php
+            --exclude system/Config/Filters.php
             -- app/ public/ system/

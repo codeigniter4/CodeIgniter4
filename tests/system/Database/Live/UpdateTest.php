@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -69,7 +71,7 @@ final class UpdateTest extends CIUnitTestCase
 
             $this->assertSame('Richard A Causey', $result[2]->name);
             $this->assertSame('Chris Martin', $result[3]->name);
-        } catch (DatabaseException $e) {
+        } catch (DatabaseException) {
             // This DB doesn't support Where and Limit together
             // but we don't want it called a "Risky" test.
             $this->assertTrue(true);
@@ -104,7 +106,7 @@ final class UpdateTest extends CIUnitTestCase
             $this->assertSame('Ahmadinejad', $result[1]->name);
             $this->assertSame('Richard A Causey', $result[2]->name);
             $this->assertSame('Chris Martin', $result[3]->name);
-        } catch (DatabaseException $e) {
+        } catch (DatabaseException) {
             // This DB doesn't support Where and Limit together
             // but we don't want it called a "Risky" test.
             $this->assertTrue(true);

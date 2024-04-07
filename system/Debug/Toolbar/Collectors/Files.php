@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -60,7 +62,7 @@ class Files extends BaseCollector
         foreach ($rawFiles as $file) {
             $path = clean_path($file);
 
-            if (strpos($path, 'SYSTEMPATH') !== false) {
+            if (str_contains($path, 'SYSTEMPATH')) {
                 $coreFiles[] = [
                     'path' => $path,
                     'name' => basename($file),

@@ -35,6 +35,14 @@ parameters:
       collectors:
         - type: className
           regex: ^Codeigniter\\Database\\.*
+    - name: DataCaster
+      collectors:
+        - type: className
+          regex: ^Codeigniter\\DataCaster\\.*
+    - name: DataConverter
+      collectors:
+        - type: className
+          regex: ^Codeigniter\\DataConverter\\.*
     - name: Email
       collectors:
         - type: className
@@ -166,10 +174,17 @@ parameters:
       - Entity
       - Events
       - I18n
+    DataCaster:
+      - I18n
+      - URI
+      - Database
+    DataConverter:
+      - DataCaster
     Email:
       - I18n
       - Events
     Entity:
+      - DataCaster
       - I18n
     Files:
       - I18n
@@ -189,6 +204,7 @@ parameters:
       - I18n
     Model:
       - Database
+      - DataConverter
       - Entity
       - I18n
       - Pager
@@ -219,18 +235,29 @@ parameters:
       - I18n
     Validation:
       - HTTP
+      - Database
     View:
       - Cache
   skip_violations:
     # Individual class exemptions
     CodeIgniter\Cache\ResponseCache:
       - CodeIgniter\HTTP\CLIRequest
+      - CodeIgniter\HTTP\Header
       - CodeIgniter\HTTP\IncomingRequest
       - CodeIgniter\HTTP\ResponseInterface
+    CodeIgniter\DataCaster\DataCaster:
+      - CodeIgniter\Entity\Cast\CastInterface
+      - CodeIgniter\Entity\Exceptions\CastException
+    CodeIgniter\DataCaster\Exceptions\CastException:
+      - CodeIgniter\Entity\Exceptions\CastException
+    CodeIgniter\DataConverter\DataConverter:
+      - CodeIgniter\Entity\Entity
     CodeIgniter\Entity\Cast\URICast:
       - CodeIgniter\HTTP\URI
     CodeIgniter\Log\Handlers\ChromeLoggerHandler:
       - CodeIgniter\HTTP\ResponseInterface
+    CodeIgniter\Security\CheckPhpIni:
+      - CodeIgniter\View\Table
     CodeIgniter\View\Table:
       - CodeIgniter\Database\BaseResult
     CodeIgniter\View\Plugins:

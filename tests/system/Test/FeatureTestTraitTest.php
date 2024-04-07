@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -14,6 +16,7 @@ namespace CodeIgniter\Test;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
@@ -49,7 +52,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'get',
+                'GET',
                 'home',
                 static fn () => 'Hello World',
             ],
@@ -69,7 +72,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'get',
+                'GET',
                 'foo/bar/1/2/3',
                 static fn () => 'Hello World',
             ],
@@ -85,7 +88,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'get',
+                'GET',
                 'admin',
                 static fn () => 'Admin Area',
                 ['filter' => 'test-redirectfilter'],
@@ -100,7 +103,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'get',
+                'GET',
                 'home',
                 static function () { echo 'test echo'; },
             ],
@@ -118,7 +121,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'post',
+                'POST',
                 'home',
                 static fn () => 'Hello Mars',
             ],
@@ -132,7 +135,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'post',
+                'POST',
                 'home',
                 static fn () => 'Hello ' . service('request')->getPost('foo') . '!',
             ],
@@ -146,7 +149,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'post',
+                'POST',
                 'section/create',
                 static function () {
                     $validation = Services::validation();
@@ -176,7 +179,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'put',
+                'PUT',
                 'home',
                 static fn () => 'Hello Pluto',
             ],
@@ -190,7 +193,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'patch',
+                'PATCH',
                 'home',
                 static fn () => 'Hello Jupiter',
             ],
@@ -204,7 +207,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'options',
+                'OPTIONS',
                 'home',
                 static fn () => 'Hello George',
             ],
@@ -218,7 +221,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'delete',
+                'DELETE',
                 'home',
                 static fn () => 'Hello Wonka',
             ],
@@ -232,7 +235,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $response = $this->withRoutes([
             [
-                'get',
+                'GET',
                 'home',
                 static fn () => 'Home',
             ],
@@ -254,7 +257,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
 
         $response = $this->withRoutes([
             [
-                'get',
+                'GET',
                 'home',
                 static fn () => 'Home',
             ],
@@ -268,7 +271,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'get',
+                'GET',
                 'home',
                 '\Tests\Support\Controllers\Popcorn::index',
             ],
@@ -281,20 +284,20 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'get',
+                'GET',
                 'home',
                 '\Tests\Support\Controllers\Popcorn::cat',
             ],
         ]);
         $response = $this->get('home');
-        $response->assertEmpty($response->response()->getBody());
+        $this->assertEmpty($response->response()->getBody());
     }
 
     public function testEchoesWithParams(): void
     {
         $this->withRoutes([
             [
-                'get',
+                'GET',
                 'home',
                 '\Tests\Support\Controllers\Popcorn::canyon',
             ],
@@ -308,7 +311,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'get',
+                'GET',
                 'home',
                 '\Tests\Support\Controllers\Popcorn::canyon',
             ],
@@ -373,7 +376,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
 
         $this->withRoutes([
             [
-                'cli',
+                'CLI',
                 $from,
                 $to,
             ],
@@ -388,7 +391,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'get',
+                'GET',
                 'home',
                 '\Tests\Support\Controllers\Popcorn::goaway',
             ],
@@ -402,7 +405,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'get',
+                'GET',
                 'home',
                 static fn () => json_encode(Services::request()->getGet()),
             ],
@@ -429,7 +432,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'get',
+                'GET',
                 'home',
                 static fn () => json_encode(Services::request()->fetchGlobal('request')),
             ],
@@ -456,7 +459,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'post',
+                'POST',
                 'home',
                 static fn () => json_encode(Services::request()->getPost()),
             ],
@@ -483,7 +486,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'post',
+                'POST',
                 'home',
                 static fn () => json_encode(Services::request()->fetchGlobal('request')),
             ],
@@ -510,7 +513,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'put',
+                'PUT',
                 'home',
                 '\Tests\Support\Controllers\Popcorn::echoJson',
             ],
@@ -524,7 +527,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             'string' => 'foo',
         ];
         $response = $this->withBodyFormat('json')
-            ->call('put', 'home', $data);
+            ->call(Method::PUT, 'home', $data);
 
         $response->assertOK();
         $response->assertJSONExact($data);
@@ -534,7 +537,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'put',
+                'PUT',
                 'home',
                 static fn () => json_encode(Services::request()->fetchGlobal('request')),
             ],
@@ -548,7 +551,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             'string' => 'foo',
         ];
         $response = $this->withBodyFormat('json')
-            ->call('put', 'home', $data);
+            ->call(Method::PUT, 'home', $data);
 
         $response->assertOK();
         $this->assertStringContainsString('[]', $response->getBody());
@@ -558,7 +561,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'post',
+                'POST',
                 'home',
                 '\Tests\Support\Controllers\Popcorn::echoJson',
             ],
@@ -572,7 +575,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             'string' => 'foo',
         ];
         $response = $this->withBodyFormat('json')
-            ->call('post', 'home', $data);
+            ->call(Method::POST, 'home', $data);
 
         $response->assertOK();
         $response->assertJSONExact($data);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -53,7 +55,7 @@ if (! function_exists('directory_map')) {
             closedir($fp);
 
             return $fileData;
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             return [];
         }
     }
@@ -129,7 +131,7 @@ if (! function_exists('write_file')) {
             fclose($fp);
 
             return is_int($result);
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             return false;
         }
     }
@@ -178,7 +180,7 @@ if (! function_exists('delete_files')) {
             }
 
             return true;
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             return false;
         }
     }
@@ -227,7 +229,7 @@ if (! function_exists('get_filenames')) {
                     }
                 }
             }
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             return [];
         }
 
@@ -277,7 +279,7 @@ if (! function_exists('get_dir_file_info')) {
             closedir($fp);
 
             return $fileData;
-        } catch (Throwable $fe) {
+        } catch (Throwable) {
             return [];
         }
     }

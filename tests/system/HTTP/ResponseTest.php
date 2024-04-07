@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -551,7 +553,7 @@ final class ResponseTest extends CIUnitTestCase
         $response = new Response(new App());
         $answer1  = $response->redirect('/login')
             ->setCookie('foo', 'bar', YEAR)
-            ->setCookie('login_time', $loginTime, YEAR);
+            ->setCookie('login_time', (string) $loginTime, YEAR);
 
         $this->assertTrue($answer1->hasCookie('foo'));
         $this->assertTrue($answer1->hasCookie('login_time'));

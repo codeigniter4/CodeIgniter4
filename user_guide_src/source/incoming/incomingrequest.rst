@@ -47,7 +47,10 @@ is()
 
 .. versionadded:: 4.3.0
 
-Since v4.3.0, you can use the ``is()`` method. It returns boolean.
+Since v4.3.0, you can use the ``is()`` method. It accepts a HTTP method, ``'ajax'``,
+or ``'json'``, and returns boolean.
+
+.. note:: HTTP method should be case-sensitive, but the parameter is case-insensitive.
 
 .. literalinclude:: incomingrequest/040.php
 
@@ -58,16 +61,16 @@ You can check the HTTP method that this request represents with the ``getMethod(
 
 .. literalinclude:: incomingrequest/005.php
 
-By default, the method is returned as a lower-case string (i.e., ``'get'``, ``'post'``, etc).
+The HTTP method is case-sensitive, and by convention, standardized methods are
+defined in all-uppercase US-ASCII letters.
 
-.. important:: The functionality to convert the return value to lower case is deprecated.
-    It will be removed in the future version, and this method will be PSR-7 equivalent.
+.. note:: Prior to v4.5.0, by default, the method was returned as a lower-case
+    string (i.e., ``'get'``, ``'post'``, etc). But it was a bug.
 
-You can get an
-uppercase version by wrapping the call in ``strtoupper()``::
+You can get an lowercase version by wrapping the call in ``strtolower()``::
 
-    // Returns 'GET'
-    $method = strtoupper($request->getMethod());
+    // Returns 'get'
+    $method = strtolower($request->getMethod());
 
 You can also check if the request was made through and HTTPS connection with the ``isSecure()`` method:
 

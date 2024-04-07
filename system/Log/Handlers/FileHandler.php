@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -88,7 +90,7 @@ class FileHandler extends BaseHandler
         }
 
         // Instantiating DateTime with microseconds appended to initial date is needed for proper support of this format
-        if (strpos($this->dateFormat, 'u') !== false) {
+        if (str_contains($this->dateFormat, 'u')) {
             $microtimeFull  = microtime(true);
             $microtimeShort = sprintf('%06d', ($microtimeFull - floor($microtimeFull)) * 1_000_000);
             $date           = new DateTime(date('Y-m-d H:i:s.' . $microtimeShort, (int) $microtimeFull));

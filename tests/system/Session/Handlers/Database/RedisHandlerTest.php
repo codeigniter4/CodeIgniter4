@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -48,63 +50,6 @@ final class RedisHandlerTest extends CIUnitTestCase
         }
 
         return new RedisHandler($sessionConfig, $this->userIpAddress);
-    }
-
-    public function testSavePathWithoutProtocol(): void
-    {
-        $handler = $this->getInstance(
-            ['savePath' => '127.0.0.1:6379']
-        );
-
-        $savePath = $this->getPrivateProperty($handler, 'savePath');
-
-        $this->assertSame('tcp', $savePath['protocol']);
-    }
-
-    public function testSavePathTLSAuth(): void
-    {
-        $handler = $this->getInstance(
-            ['savePath' => 'tls://127.0.0.1:6379?auth=password']
-        );
-
-        $savePath = $this->getPrivateProperty($handler, 'savePath');
-
-        $this->assertSame('tls', $savePath['protocol']);
-        $this->assertSame('password', $savePath['password']);
-    }
-
-    public function testSavePathTCPAuth(): void
-    {
-        $handler = $this->getInstance(
-            ['savePath' => 'tcp://127.0.0.1:6379?auth=password']
-        );
-
-        $savePath = $this->getPrivateProperty($handler, 'savePath');
-
-        $this->assertSame('tcp', $savePath['protocol']);
-        $this->assertSame('password', $savePath['password']);
-    }
-
-    public function testSavePathTimeoutFloat(): void
-    {
-        $handler = $this->getInstance(
-            ['savePath' => 'tcp://127.0.0.1:6379?timeout=2.5']
-        );
-
-        $savePath = $this->getPrivateProperty($handler, 'savePath');
-
-        $this->assertEqualsWithDelta(2.5, $savePath['timeout'], PHP_FLOAT_EPSILON);
-    }
-
-    public function testSavePathTimeoutInt(): void
-    {
-        $handler = $this->getInstance(
-            ['savePath' => 'tcp://127.0.0.1:6379?timeout=10']
-        );
-
-        $savePath = $this->getPrivateProperty($handler, 'savePath');
-
-        $this->assertEqualsWithDelta(10.0, $savePath['timeout'], PHP_FLOAT_EPSILON);
     }
 
     public function testOpen(): void
@@ -189,5 +134,104 @@ final class RedisHandlerTest extends CIUnitTestCase
         $this->assertSame($expected, $handler->read('555556b43phsnnf8if6bo33b635e4447'));
 
         $handler->close();
+    }
+
+    /**
+     * @dataProvider provideSetSavePath
+     */
+    public function testSetSavePath(string $savePath, array $expected): void
+    {
+        $option  = ['savePath' => $savePath];
+        $handler = $this->getInstance($option);
+
+        $savePath = $this->getPrivateProperty($handler, 'savePath');
+
+        $this->assertSame($expected, $savePath);
+    }
+
+    public static function provideSetSavePath(): iterable
+    {
+        yield from [
+            'w/o protocol' => [
+                '127.0.0.1:6379',
+                [
+                    'host'     => 'tcp://127.0.0.1',
+                    'port'     => 6379,
+                    'password' => null,
+                    'database' => 0,
+                    'timeout'  => 0.0,
+                ],
+            ],
+            'tls auth' => [
+                'tls://127.0.0.1:6379?auth=password',
+                [
+                    'host'     => 'tls://127.0.0.1',
+                    'port'     => 6379,
+                    'password' => 'password',
+                    'database' => 0,
+                    'timeout'  => 0.0,
+                ],
+            ],
+            'tcp auth' => [
+                'tcp://127.0.0.1:6379?auth=password',
+                [
+                    'host'     => 'tcp://127.0.0.1',
+                    'port'     => 6379,
+                    'password' => 'password',
+                    'database' => 0,
+                    'timeout'  => 0.0,
+                ],
+            ],
+            'timeout float' => [
+                'tcp://127.0.0.1:6379?timeout=2.5',
+                [
+                    'host'     => 'tcp://127.0.0.1',
+                    'port'     => 6379,
+                    'password' => null,
+                    'database' => 0,
+                    'timeout'  => 2.5,
+                ],
+            ],
+            'timeout int' => [
+                'tcp://127.0.0.1:6379?timeout=10',
+                [
+                    'host'     => 'tcp://127.0.0.1',
+                    'port'     => 6379,
+                    'password' => null,
+                    'database' => 0,
+                    'timeout'  => 10.0,
+                ],
+            ],
+            'auth acl' => [
+                'tcp://localhost:6379?auth[user]=redis-admin&auth[pass]=admin-password',
+                [
+                    'host'     => 'tcp://localhost',
+                    'port'     => 6379,
+                    'password' => ['user' => 'redis-admin', 'pass' => 'admin-password'],
+                    'database' => 0,
+                    'timeout'  => 0.0,
+                ],
+            ],
+            'unix domain socket' => [
+                'unix:///tmp/redis.sock',
+                [
+                    'host'     => '/tmp/redis.sock',
+                    'port'     => 0,
+                    'password' => null,
+                    'database' => 0,
+                    'timeout'  => 0.0,
+                ],
+            ],
+            'unix domain socket w/o protocol' => [
+                '/tmp/redis.sock',
+                [
+                    'host'     => '/tmp/redis.sock',
+                    'port'     => 0,
+                    'password' => null,
+                    'database' => 0,
+                    'timeout'  => 0.0,
+                ],
+            ],
+        ];
     }
 }

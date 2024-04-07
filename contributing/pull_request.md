@@ -154,7 +154,7 @@ See [Contribution CSS](./css.md).
 
 ### Compatibility
 
-CodeIgniter4 requires [PHP 7.4](https://php.net/releases/7_4_0.php).
+CodeIgniter4 requires [PHP 8.1](https://php.net/releases/8_1_0.php).
 
 ### Backwards Compatibility
 

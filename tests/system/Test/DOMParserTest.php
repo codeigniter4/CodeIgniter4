@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -425,5 +427,49 @@ final class DOMParserTest extends CIUnitTestCase
 
         $this->assertTrue($dom->see(null, '*[ name = user ]'));
         $this->assertFalse($dom->see(null, '*[ name = notthere ]'));
+    }
+
+    public function testSeeXPathSuccess(): void
+    {
+        $dom = new DOMParser();
+
+        $html = '<html><body><h1 class="heading gap-2">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
+
+        $this->assertTrue($dom->seeXPath('//h1[contains(@class, "heading")]'));
+        $this->assertTrue($dom->seeXPath('//h1[contains(@class, "heading")][contains(.,"Hello World")]'));
+    }
+
+    public function testSeeXPathFail(): void
+    {
+        $dom = new DOMParser();
+
+        $html = '<html><body><h1 class="heading gap-2">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
+
+        $this->assertFalse($dom->seeXPath('//h1[contains(@class, "heading123")]'));
+        $this->assertFalse($dom->seeXPath('//h1[contains(@class, "heading")][contains(.,"Hello World 123")]'));
+    }
+
+    public function testDontSeeXPathSuccess(): void
+    {
+        $dom = new DOMParser();
+
+        $html = '<html><body><h1 class="heading gap-2">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
+
+        $this->assertTrue($dom->dontSeeXPath('//h1[contains(@class, "heading123")]'));
+        $this->assertTrue($dom->dontSeeXPath('//h1[contains(@class, "heading")][contains(.,"Hello World 123")]'));
+    }
+
+    public function testDontSeeXPathFail(): void
+    {
+        $dom = new DOMParser();
+
+        $html = '<html><body><h1 class="heading gap-2">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
+
+        $this->assertFalse($dom->dontSeeXPath('//h1[contains(@class, "heading")]'));
+        $this->assertFalse($dom->dontSeeXPath('//h1[contains(@class, "heading")][contains(.,"Hello World")]'));
     }
 }

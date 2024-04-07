@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -42,17 +44,17 @@ final class FilterCheckTest extends CIUnitTestCase
 
     public function testFilterCheckDefinedRoute(): void
     {
-        command('filter:check get /');
+        command('filter:check GET /');
 
         $this->assertStringContainsString(
-            '|GET|/||toolbar|',
-            str_replace(' ', '', $this->getBuffer())
+            '| GET    | /     | forcehttps pagecache | pagecache performance toolbar |',
+            preg_replace('/\033\[.+?m/u', '', $this->getBuffer())
         );
     }
 
     public function testFilterCheckInvalidRoute(): void
     {
-        command('filter:check put product/123');
+        command('filter:check PUT product/123');
 
         $this->assertStringContainsString(
             'Can\'t find a route: "PUT product/123"',

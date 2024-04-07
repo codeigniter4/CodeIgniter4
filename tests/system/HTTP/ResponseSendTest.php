@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -48,6 +50,10 @@ final class ResponseSendTest extends CIUnitTestCase
      */
     public function testHeadersMissingDate(): void
     {
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+
         $response = new Response(new App());
         $response->pretend(false);
 
@@ -81,6 +87,10 @@ final class ResponseSendTest extends CIUnitTestCase
      */
     public function testHeadersWithCSP(): void
     {
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+
         $this->resetFactories();
         $this->resetServices();
 
@@ -117,6 +127,10 @@ final class ResponseSendTest extends CIUnitTestCase
      */
     public function testRedirectResponseCookies(): void
     {
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+
         $loginTime = time();
 
         $response = new Response(new App());
@@ -127,9 +141,11 @@ final class ResponseSendTest extends CIUnitTestCase
 
         $answer1 = $response->redirect('/login')
             ->setCookie('foo', 'bar', YEAR)
-            ->setCookie('login_time', $loginTime, YEAR);
+            ->setCookie('login_time', (string) $loginTime, YEAR);
+
         $this->assertTrue($answer1->hasCookie('foo', 'bar'));
         $this->assertTrue($answer1->hasCookie('login_time'));
+
         $response->setBody('Hello');
 
         // send it

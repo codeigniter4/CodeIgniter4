@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -22,16 +24,10 @@ use ReflectionMethod;
 final class ControllerMethodReader
 {
     /**
-     * @var string the default namespace
-     */
-    private string $namespace;
-
-    /**
      * @param string $namespace the default namespace
      */
-    public function __construct(string $namespace)
+    public function __construct(private readonly string $namespace)
     {
-        $this->namespace = $namespace;
     }
 
     /**

@@ -130,15 +130,17 @@ may alter this behavior by editing the following config parameter value in
 Redirection on Failure
 ----------------------
 
-Since v4.3.0, when a request fails the CSRF validation check,
-it will throw a SecurityException by default,
+Starting with v4.5.0, when a request fails the CSRF validation check, by default,
+the user is redirected to the previous page in production environment, or a
+SecurityException is thrown in other environments.
 
 .. note:: In production environment, when you use HTML forms, it is recommended
     to enable this redirection for a better user experience.
 
-If you want to make it redirect to the previous page,
-change the following config parameter value in
-**app/Config/Security.php**:
+    Upgrade users should check their configuration files.
+
+If you want to make it redirect to the previous page, set the following config
+parameter value to ``true`` in **app/Config/Security.php**:
 
 .. literalinclude:: security/005.php
 

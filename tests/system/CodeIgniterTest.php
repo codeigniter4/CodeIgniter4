@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,8 +13,12 @@
 
 namespace CodeIgniter;
 
+use App\Controllers\Home;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Debug\Timer;
 use CodeIgniter\Exceptions\ConfigException;
+use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\RouteCollection;
@@ -25,6 +31,7 @@ use Config\Filters as FiltersConfig;
 use Config\Modules;
 use Config\Routing;
 use Tests\Support\Filters\Customfilter;
+use Tests\Support\Filters\RedirectFilter;
 
 /**
  * @runTestsInSeparateProcesses
@@ -44,6 +51,10 @@ final class CodeIgniterTest extends CIUnitTestCase
     {
         parent::setUp();
         $this->resetServices();
+
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
 
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 
@@ -87,7 +98,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argv'] = ['index.php'];
         $_SERVER['argc'] = 1;
 
-        $response = $this->codeigniter->useSafeOutput(true)->run(null, true);
+        $response = $this->codeigniter->run(null, true);
 
         $this->assertStringContainsString('Welcome to CodeIgniter', $response->getBody());
     }
@@ -117,13 +128,14 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRun404Override(): void
     {
-        $_SERVER['argv'] = ['index.php', '/'];
-        $_SERVER['argc'] = 2;
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['REQUEST_URI']    = '/pages/about';
+        $_SERVER['SCRIPT_NAME']    = '/index.php';
 
         // Inject mock router.
         $routes = Services::routes();
         $routes->setAutoRoute(false);
-        $routes->set404Override('Tests\Support\Controllers\Hello::index');
+        $routes->set404Override('Tests\Support\Errors::show404');
         $router = Services::router($routes, Services::incomingrequest());
         Services::injectMock('router', $router);
 
@@ -131,7 +143,8 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run($routes);
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('Hello', $output);
+        $this->assertStringContainsString("Can't find a route for 'GET: pages/about'.", $output);
+        $this->assertSame(404, response()->getStatusCode());
     }
 
     public function testRun404OverrideControllerReturnsResponse(): void
@@ -164,7 +177,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $router = Services::router($routes, Services::incomingrequest());
         Services::injectMock('router', $router);
 
-        $response = $this->codeigniter->useSafeOutput(true)->run($routes, true);
+        $response = $this->codeigniter->run($routes, true);
 
         $this->assertStringContainsString('Oops', $response->getBody());
     }
@@ -188,6 +201,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $this->assertStringContainsString('404 Override by Closure.', $output);
+        $this->assertSame(404, response()->getStatusCode());
     }
 
     public function testControllersCanReturnString(): void
@@ -437,8 +451,10 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
 
-        $config = new App();
+        $filterConfig                       = config(FiltersConfig::class);
+        $filterConfig->required['before'][] = 'forcehttps';
 
+        $config                            = config(App::class);
         $config->forceGlobalSecureRequests = true;
 
         $codeigniter = new MockCodeIgniter($config);
@@ -593,7 +609,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = Services::routes();
-        $routes->get('/', static function () {
+        $routes->get('/', static function (): never {
             throw new RedirectException('redirect-exception', 503);
         });
 
@@ -719,7 +735,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
         $_SERVER['REQUEST_METHOD']  = 'POST';
 
-        $_POST['_method'] = 'PUT';
+        $_POST['_method'] = Method::PUT;
 
         $routes = \Config\Services::routes();
         $routes->setDefaultNamespace('App\Controllers');
@@ -731,7 +747,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         ob_get_clean();
 
-        $this->assertSame('put', Services::incomingrequest()->getMethod());
+        $this->assertSame(Method::PUT, Services::incomingrequest()->getMethod());
     }
 
     public function testSpoofRequestMethodCannotUseGET(): void
@@ -756,7 +772,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         ob_get_clean();
 
-        $this->assertSame('post', Services::incomingrequest()->getMethod());
+        $this->assertSame('POST', Services::incomingrequest()->getMethod());
     }
 
     /**
@@ -925,5 +941,44 @@ final class CodeIgniterTest extends CIUnitTestCase
             // page for URL #2
             '$cacheQueryString=array' => [['important_parameter'], 3, $testingUrls],
         ];
+    }
+
+    /**
+     * See https://github.com/codeigniter4/CodeIgniter4/issues/7205
+     */
+    public function testRunControllerNotFoundBeforeFilter(): void
+    {
+        $_SERVER['argv'] = ['index.php'];
+        $_SERVER['argc'] = 1;
+
+        $_SERVER['REQUEST_URI'] = '/cannotFound';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+
+        // Inject mock router.
+        $routes = Services::routes();
+        $routes->setAutoRoute(true);
+
+        // Inject the before filter.
+        $filterConfig                            = config('Filters');
+        $filterConfig->aliases['redirectFilter'] = RedirectFilter::class;
+        $filterConfig->globals['before']         = ['redirectFilter'];
+        Services::filters($filterConfig);
+
+        $this->expectException(PageNotFoundException::class);
+
+        $this->codeigniter->run($routes);
+    }
+
+    public function testStartControllerPermitsInvoke(): void
+    {
+        $this->setPrivateProperty($this->codeigniter, 'benchmark', new Timer());
+        $this->setPrivateProperty($this->codeigniter, 'controller', '\\' . Home::class);
+        $startController = $this->getPrivateMethodInvoker($this->codeigniter, 'startController');
+
+        $this->setPrivateProperty($this->codeigniter, 'method', '__invoke');
+        $startController();
+
+        // No PageNotFoundException
+        $this->assertTrue(true);
     }
 }

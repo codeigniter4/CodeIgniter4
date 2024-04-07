@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -223,7 +225,7 @@ class CookieStore implements Countable, IteratorAggregate
     protected function validateCookies(array $cookies): void
     {
         foreach ($cookies as $index => $cookie) {
-            $type = is_object($cookie) ? get_class($cookie) : gettype($cookie);
+            $type = get_debug_type($cookie);
 
             if (! $cookie instanceof Cookie) {
                 throw CookieException::forInvalidCookieInstance([static::class, Cookie::class, $type, $index]);

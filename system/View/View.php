@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,11 +13,10 @@
 
 namespace CodeIgniter\View;
 
-use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Debug\Toolbar\Collectors\Views;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\View\Exceptions\ViewException;
-use Config\Services;
 use Config\Toolbar;
 use Config\View as ViewConfig;
 use Psr\Log\LoggerInterface;
@@ -63,7 +64,7 @@ class View implements RendererInterface
      * we need to attempt to find a view
      * that's not in standard place.
      *
-     * @var FileLocator
+     * @var FileLocatorInterface
      */
     protected $loader;
 
@@ -141,12 +142,17 @@ class View implements RendererInterface
      */
     protected $sectionStack = [];
 
-    public function __construct(ViewConfig $config, ?string $viewPath = null, ?FileLocator $loader = null, ?bool $debug = null, ?LoggerInterface $logger = null)
-    {
+    public function __construct(
+        ViewConfig $config,
+        ?string $viewPath = null,
+        ?FileLocatorInterface $loader = null,
+        ?bool $debug = null,
+        ?LoggerInterface $logger = null
+    ) {
         $this->config   = $config;
         $this->viewPath = rtrim($viewPath, '\\/ ') . DIRECTORY_SEPARATOR;
-        $this->loader   = $loader ?? Services::locator();
-        $this->logger   = $logger ?? Services::logger();
+        $this->loader   = $loader ?? service('locator');
+        $this->logger   = $logger ?? service('logger');
         $this->debug    = $debug ?? CI_DEBUG;
         $this->saveData = (bool) $config->saveData;
     }
@@ -254,10 +260,19 @@ class View implements RendererInterface
             $this->renderVars['view']
         );
 
-        $afterFilters = service('filters')->getFiltersClass()['after'];
+        // Check if DebugToolbar is enabled.
+        $filters              = service('filters');
+        $requiredAfterFilters = $filters->getRequiredFilters('after')[0];
+        if (in_array('toolbar', $requiredAfterFilters, true)) {
+            $debugBarEnabled = true;
+        } else {
+            $afterFilters    = $filters->getFiltersClass()['after'];
+            $debugBarEnabled = in_array(DebugToolbar::class, $afterFilters, true);
+        }
+
         if (
-            ($this->debug && (! isset($options['debug']) || $options['debug'] === true))
-            && in_array(DebugToolbar::class, $afterFilters, true)
+            $this->debug && $debugBarEnabled
+            && (! isset($options['debug']) || $options['debug'] === true)
         ) {
             $toolbarCollectors = config(Toolbar::class)->collectors;
 

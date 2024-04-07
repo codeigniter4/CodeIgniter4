@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -443,7 +445,7 @@ class MigrationRunner
      */
     protected function migrationFromFile(string $path, string $namespace)
     {
-        if (substr($path, -4) !== '.php') {
+        if (! str_ends_with($path, '.php')) {
             return false;
         }
 
@@ -745,7 +747,7 @@ class MigrationRunner
             ->get()
             ->getResultObject();
 
-        return count($migration) ? $migration[0]->version : 0;
+        return $migration === [] ? '0' : $migration[0]->version;
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -12,6 +14,7 @@
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
@@ -49,7 +52,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
             $moduleConfig->enabled = false;
         }
 
-        return (new RouteCollection($loader, $moduleConfig, new Routing()))->setHTTPVerb('get');
+        return (new RouteCollection($loader, $moduleConfig, new Routing()))->setHTTPVerb(Method::GET);
     }
 
     public function testReverseRoutingEmptyString(): void

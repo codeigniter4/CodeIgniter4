@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -15,11 +17,13 @@ use Closure;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Exceptions\BadRequestException;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
 use Config\Feature;
+use Config\Routing;
 
 /**
  * Request router.
@@ -28,6 +32,22 @@ use Config\Feature;
  */
 class Router implements RouterInterface
 {
+    /**
+     * List of allowed HTTP methods (and CLI for command line use).
+     */
+    public const HTTP_METHODS = [
+        Method::GET,
+        Method::HEAD,
+        Method::POST,
+        Method::PATCH,
+        Method::PUT,
+        Method::DELETE,
+        Method::OPTIONS,
+        Method::TRACE,
+        Method::CONNECT,
+        'CLI',
+    ];
+
     /**
      * A RouteCollection instance.
      *
@@ -105,16 +125,6 @@ class Router implements RouterInterface
      * The filter info from Route Collection
      * if the matched route should be filtered.
      *
-     * @var string|null
-     *
-     * @deprecated Use $filtersInfo
-     */
-    protected $filterInfo;
-
-    /**
-     * The filter info from Route Collection
-     * if the matched route should be filtered.
-     *
      * @var list<string>
      */
     protected $filtersInfo = [];
@@ -156,17 +166,15 @@ class Router implements RouterInterface
                     $this->collection->getDefaultNamespace(),
                     $this->collection->getDefaultController(),
                     $this->collection->getDefaultMethod(),
-                    $this->translateURIDashes,
-                    $this->collection->getHTTPVerb()
+                    $this->translateURIDashes
                 );
             } else {
                 $this->autoRouter = new AutoRouter(
-                    $this->collection->getRoutes('cli', false), // @phpstan-ignore-line
+                    $this->collection->getRoutes('CLI', false), // @phpstan-ignore-line
                     $this->collection->getDefaultNamespace(),
                     $this->collection->getDefaultController(),
                     $this->collection->getDefaultMethod(),
-                    $this->translateURIDashes,
-                    $this->collection->getHTTPVerb()
+                    $this->translateURIDashes
                 );
             }
         }
@@ -195,19 +203,12 @@ class Router implements RouterInterface
         $this->checkDisallowedChars($uri);
 
         // Restart filterInfo
-        $this->filterInfo  = null;
         $this->filtersInfo = [];
 
         // Checks defined routes
         if ($this->checkRoutes($uri)) {
             if ($this->collection->isFiltered($this->matchedRoute[0])) {
-                $multipleFiltersEnabled = config(Feature::class)->multipleFilters ?? false;
-                if ($multipleFiltersEnabled) {
-                    $this->filtersInfo = $this->collection->getFiltersForRoute($this->matchedRoute[0]);
-                } else {
-                    // for backward compatibility
-                    $this->filterInfo = $this->collection->getFilterForRoute($this->matchedRoute[0]);
-                }
+                $this->filtersInfo = $this->collection->getFiltersForRoute($this->matchedRoute[0]);
             }
 
             return $this->controller;
@@ -226,18 +227,6 @@ class Router implements RouterInterface
         $this->autoRoute($uri);
 
         return $this->controllerName();
-    }
-
-    /**
-     * Returns the filter info for the matched route, if any.
-     *
-     * @return string|null
-     *
-     * @deprecated Use getFilters()
-     */
-    public function getFilter()
-    {
-        return $this->filterInfo;
     }
 
     /**
@@ -415,7 +404,7 @@ class Router implements RouterInterface
         $routes = $this->collection->getRoutes($this->collection->getHTTPVerb());
 
         // Don't waste any time
-        if (empty($routes)) {
+        if ($routes === []) {
             return false;
         }
 
@@ -427,12 +416,14 @@ class Router implements RouterInterface
         foreach ($routes as $routeKey => $handler) {
             $routeKey = $routeKey === '/'
                 ? $routeKey
-                : ltrim($routeKey, '/ ');
+                // $routeKey may be int, because it is an array key,
+                // and the URI `/1` is valid. The leading `/` is removed.
+                : ltrim((string) $routeKey, '/ ');
 
             $matchedKey = $routeKey;
 
             // Are we dealing with a locale?
-            if (strpos($routeKey, '{locale}') !== false) {
+            if (str_contains($routeKey, '{locale}')) {
                 $routeKey = str_replace('{locale}', '[^/]+', $routeKey);
             }
 
@@ -454,7 +445,7 @@ class Router implements RouterInterface
                 }
                 // Store our locale so CodeIgniter object can
                 // assign it to the Request.
-                if (strpos($matchedKey, '{locale}') !== false) {
+                if (str_contains($matchedKey, '{locale}')) {
                     preg_match(
                         '#^' . str_replace('{locale}', '(?<locale>[^/]+)', $matchedKey) . '$#u',
                         $uri,
@@ -488,24 +479,47 @@ class Router implements RouterInterface
                     return true;
                 }
 
-                [$controller] = explode('::', $handler);
+                if (str_contains($handler, '::')) {
+                    [$controller, $methodAndParams] = explode('::', $handler);
+                } else {
+                    $controller      = $handler;
+                    $methodAndParams = '';
+                }
 
                 // Checks `/` in controller name
-                if (strpos($controller, '/') !== false) {
+                if (str_contains($controller, '/')) {
                     throw RouterException::forInvalidControllerName($handler);
                 }
 
-                if (strpos($handler, '$') !== false && strpos($routeKey, '(') !== false) {
+                if (str_contains($handler, '$') && str_contains($routeKey, '(')) {
                     // Checks dynamic controller
-                    if (strpos($controller, '$') !== false) {
+                    if (str_contains($controller, '$')) {
                         throw RouterException::forDynamicController($handler);
                     }
 
-                    // Using back-references
-                    $handler = preg_replace('#\A' . $routeKey . '\z#u', $handler, $uri);
+                    if (config(Routing::class)->multipleSegmentsOneParam === false) {
+                        // Using back-references
+                        $segments = explode('/', preg_replace('#\A' . $routeKey . '\z#u', $handler, $uri));
+                    } else {
+                        if (str_contains($methodAndParams, '/')) {
+                            [$method, $handlerParams] = explode('/', $methodAndParams, 2);
+                            $params                   = explode('/', $handlerParams);
+                            $handlerSegments          = array_merge([$controller . '::' . $method], $params);
+                        } else {
+                            $handlerSegments = [$handler];
+                        }
+
+                        $segments = [];
+
+                        foreach ($handlerSegments as $segment) {
+                            $segments[] = $this->replaceBackReferences($segment, $matches);
+                        }
+                    }
+                } else {
+                    $segments = explode('/', $handler);
                 }
 
-                $this->setRequest(explode('/', $handler));
+                $this->setRequest($segments);
 
                 $this->setMatchedRoute($matchedKey, $handler);
 
@@ -514,6 +528,24 @@ class Router implements RouterInterface
         }
 
         return false;
+    }
+
+    /**
+     * Replace string `$n` with `$matches[n]` value.
+     */
+    private function replaceBackReferences(string $input, array $matches): string
+    {
+        $pattern = '/\$([1-' . count($matches) . '])/u';
+
+        return preg_replace_callback(
+            $pattern,
+            static function ($match) use ($matches) {
+                $index = (int) $match[1];
+
+                return $matches[$index] ?? '';
+            },
+            $input
+        );
     }
 
     /**

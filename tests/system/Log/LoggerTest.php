@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -18,6 +20,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Exception;
 use Tests\Support\Log\Handlers\TestHandler;
+use TypeError;
 
 /**
  * @internal
@@ -57,14 +60,14 @@ final class LoggerTest extends CIUnitTestCase
         $logger->log('foo', '');
     }
 
-    public function testLogReturnsFalseWhenLogNotHandled(): void
+    public function testLogAlwaysReturnsVoid(): void
     {
         $config            = new LoggerConfig();
         $config->threshold = 3;
 
         $logger = new Logger($config);
 
-        $this->assertFalse($logger->log('debug', ''));
+        $this->assertNull($logger->log('debug', ''));
     }
 
     public function testLogActuallyLogs(): void
@@ -404,16 +407,12 @@ final class LoggerTest extends CIUnitTestCase
 
     public function testNonStringMessage(): void
     {
+        $this->expectException(TypeError::class);
+
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = '[Tests\Support\Log\Handlers\TestHandler]';
         $logger->log(5, $config);
-
-        $logs = TestHandler::getLogs();
-
-        $this->assertCount(1, $logs);
-        $this->assertStringContainsString($expected, $logs[0]);
     }
 
     public function testDetermineFileNoStackTrace(): void

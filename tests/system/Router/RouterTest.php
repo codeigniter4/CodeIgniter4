@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,11 +13,13 @@
 
 namespace CodeIgniter\Router;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Exceptions\BadRequestException;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
@@ -37,13 +41,21 @@ final class RouterTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        $this->createRouteCollection();
+
+        $this->request = Services::request();
+        $this->request->setMethod(Method::GET);
+    }
+
+    private function createRouteCollection(?Routing $routingConfig = null): void
+    {
         $moduleConfig          = new Modules();
         $moduleConfig->enabled = false;
 
-        $routerConfig                   = new Routing();
-        $routerConfig->defaultNamespace = '\\';
+        $routingConfig ??= new Routing();
+        $routingConfig->defaultNamespace = '\\';
 
-        $this->collection = new RouteCollection(Services::locator(), $moduleConfig, $routerConfig);
+        $this->collection = new RouteCollection(Services::locator(), $moduleConfig, $routingConfig);
 
         $routes = [
             '/'                                               => 'Home::index',
@@ -65,9 +77,6 @@ final class RouterTest extends CIUnitTestCase
             '(:segment)/(:segment)/(:segment)'                => '$2::$3/$1',
         ];
         $this->collection->map($routes);
-
-        $this->request = Services::request();
-        $this->request->setMethod('get');
     }
 
     public function testEmptyURIMatchesRoot(): void
@@ -209,14 +218,18 @@ final class RouterTest extends CIUnitTestCase
     public function testAutoRouteFindsDefaultControllerAndMethod(): void
     {
         $this->collection->setAutoRoute(true);
-        $this->collection->setDefaultController('Test');
-        $this->collection->setDefaultMethod('test');
+        $this->collection->setDefaultController('Mycontroller');
+        $this->collection->setDefaultMethod('getSomemethod');
         $router = new Router($this->collection, $this->request);
+
+        copy(TESTPATH . '_support/_controller/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
 
         $router->autoRoute('/');
 
-        $this->assertSame('Test', $router->controllerName());
-        $this->assertSame('test', $router->methodName());
+        unlink(APPPATH . 'Controllers/Mycontroller.php');
+
+        $this->assertSame('Mycontroller', $router->controllerName());
+        $this->assertSame('getSomemethod', $router->methodName());
     }
 
     public function testAutoRouteFindsControllerWithFileAndMethod(): void
@@ -224,10 +237,14 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->setAutoRoute(true);
         $router = new Router($this->collection, $this->request);
 
-        $router->autoRoute('myController/someMethod');
+        copy(TESTPATH . '_support/_controller/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
 
-        $this->assertSame('MyController', $router->controllerName());
-        $this->assertSame('someMethod', $router->methodName());
+        $router->autoRoute('mycontroller/getSomemethod');
+
+        unlink(APPPATH . 'Controllers/Mycontroller.php');
+
+        $this->assertSame('Mycontroller', $router->controllerName());
+        $this->assertSame('getSomemethod', $router->methodName());
     }
 
     public function testAutoRouteFindsControllerWithFile(): void
@@ -235,9 +252,13 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->setAutoRoute(true);
         $router = new Router($this->collection, $this->request);
 
-        $router->autoRoute('myController');
+        copy(TESTPATH . '_support/_controller/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
 
-        $this->assertSame('MyController', $router->controllerName());
+        $router->autoRoute('mycontroller');
+
+        unlink(APPPATH . 'Controllers/Mycontroller.php');
+
+        $this->assertSame('Mycontroller', $router->controllerName());
         $this->assertSame('index', $router->methodName());
     }
 
@@ -248,12 +269,16 @@ final class RouterTest extends CIUnitTestCase
 
         mkdir(APPPATH . 'Controllers/Subfolder');
 
-        $router->autoRoute('subfolder/myController/someMethod');
+        copy(TESTPATH . '_support/_controller/Subfolder/Mycontroller.php', APPPATH . 'Controllers/Subfolder/Mycontroller.php');
+
+        $router->autoRoute('subfolder/mycontroller/getSomemethod');
+
+        unlink(APPPATH . 'Controllers/Subfolder/Mycontroller.php');
 
         rmdir(APPPATH . 'Controllers/Subfolder');
 
-        $this->assertSame('MyController', $router->controllerName());
-        $this->assertSame('someMethod', $router->methodName());
+        $this->assertSame('Mycontroller', $router->controllerName());
+        $this->assertSame('getSomemethod', $router->methodName());
     }
 
     public function testAutoRouteFindsDashedSubfolder(): void
@@ -263,9 +288,11 @@ final class RouterTest extends CIUnitTestCase
         $router->setTranslateURIDashes(true);
 
         mkdir(APPPATH . 'Controllers/Dash_folder');
+        copy(TESTPATH . '_support/_controller/Dash_folder/Mycontroller.php', APPPATH . 'Controllers/Dash_folder/Mycontroller.php');
 
         $router->autoRoute('dash-folder/mycontroller/somemethod');
 
+        unlink(APPPATH . 'Controllers/Dash_folder/Mycontroller.php');
         rmdir(APPPATH . 'Controllers/Dash_folder');
 
         $this->assertSame('Dash_folder/', $router->directory());
@@ -280,16 +307,16 @@ final class RouterTest extends CIUnitTestCase
         $router->setTranslateURIDashes(true);
 
         mkdir(APPPATH . 'Controllers/Dash_folder');
-        file_put_contents(APPPATH . 'Controllers/Dash_folder/Dash_controller.php', '');
+        copy(TESTPATH . '_support/_controller/Dash_folder/Dash_controller.php', APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
 
-        $router->autoRoute('dash-folder/dash-controller/somemethod');
+        $router->autoRoute('dash-folder/dash-controller/getSomemethod');
 
         unlink(APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
         rmdir(APPPATH . 'Controllers/Dash_folder');
 
         $this->assertSame('Dash_folder/', $router->directory());
         $this->assertSame('Dash_controller', $router->controllerName());
-        $this->assertSame('somemethod', $router->methodName());
+        $this->assertSame('getSomemethod', $router->methodName());
     }
 
     public function testAutoRouteFindsDashedMethod(): void
@@ -299,16 +326,16 @@ final class RouterTest extends CIUnitTestCase
         $router->setTranslateURIDashes(true);
 
         mkdir(APPPATH . 'Controllers/Dash_folder');
-        file_put_contents(APPPATH . 'Controllers/Dash_folder/Dash_controller.php', '');
+        copy(TESTPATH . '_support/_controller/Dash_folder/Dash_controller.php', APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
 
-        $router->autoRoute('dash-folder/dash-controller/dash-method');
+        $router->autoRoute('dash-folder/dash-controller/getDash_method');
 
         unlink(APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
         rmdir(APPPATH . 'Controllers/Dash_folder');
 
         $this->assertSame('Dash_folder/', $router->directory());
         $this->assertSame('Dash_controller', $router->controllerName());
-        $this->assertSame('dash_method', $router->methodName());
+        $this->assertSame('getDash_method', $router->methodName());
     }
 
     public function testAutoRouteFindsDefaultDashFolder(): void
@@ -318,9 +345,11 @@ final class RouterTest extends CIUnitTestCase
         $router->setTranslateURIDashes(true);
 
         mkdir(APPPATH . 'Controllers/Dash_folder');
+        copy(TESTPATH . '_support/_controller/Dash_folder/Home.php', APPPATH . 'Controllers/Dash_folder/Home.php');
 
         $router->autoRoute('dash-folder');
 
+        unlink(APPPATH . 'Controllers/Dash_folder/Home.php');
         rmdir(APPPATH . 'Controllers/Dash_folder');
 
         $this->assertSame('Dash_folder/', $router->directory());
@@ -335,9 +364,11 @@ final class RouterTest extends CIUnitTestCase
         $router->setTranslateURIDashes(true);
 
         mkdir(APPPATH . 'Controllers/Φ');
+        copy(TESTPATH . '_support/_controller/Φ/Home.php', APPPATH . 'Controllers/Φ/Home.php');
 
         $router->autoRoute('Φ');
 
+        unlink(APPPATH . 'Controllers/Φ/Home.php');
         rmdir(APPPATH . 'Controllers/Φ');
 
         $this->assertSame('Φ/', $router->directory());
@@ -351,11 +382,11 @@ final class RouterTest extends CIUnitTestCase
         $router = new Router($this->collection, $this->request);
         $router->setTranslateURIDashes(true);
 
-        file_put_contents(APPPATH . 'Controllers/Φ', '');
+        copy(TESTPATH . '_support/_controller/Φ.php', APPPATH . 'Controllers/Φ.php');
 
         $router->autoRoute('Φ');
 
-        unlink(APPPATH . 'Controllers/Φ');
+        unlink(APPPATH . 'Controllers/Φ.php');
 
         $this->assertSame('Φ', $router->controllerName());
         $this->assertSame('index', $router->methodName());
@@ -410,7 +441,7 @@ final class RouterTest extends CIUnitTestCase
         $router = new Router($this->collection, $this->request);
 
         $this->expectException(PageNotFoundException::class);
-        $this->expectExceptionMessage("Can't find a route for 'get: url/not-exists'");
+        $this->expectExceptionMessage("Can't find a route for 'GET: url/not-exists'");
 
         $router->handle('url/not-exists');
     }
@@ -508,7 +539,7 @@ final class RouterTest extends CIUnitTestCase
 
         $this->assertSame('\TestController', $router->controllerName());
         $this->assertSame('foobar', $router->methodName());
-        $this->assertSame('test', $router->getFilter());
+        $this->assertSame(['test'], $router->getFilters());
     }
 
     /**
@@ -538,73 +569,73 @@ final class RouterTest extends CIUnitTestCase
 
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('index', $router->methodName());
-        $this->assertSame('api-auth', $router->getFilter());
+        $this->assertSame(['api-auth'], $router->getFilters());
 
         $router->handle('api/posts/new');
 
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('new', $router->methodName());
-        $this->assertSame('api-auth', $router->getFilter());
+        $this->assertSame(['api-auth'], $router->getFilters());
 
         $router->handle('api/posts/50');
 
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('show', $router->methodName());
-        $this->assertSame('api-auth', $router->getFilter());
+        $this->assertSame(['api-auth'], $router->getFilters());
 
         $router->handle('api/posts/50/edit');
 
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('edit', $router->methodName());
-        $this->assertSame('api-auth', $router->getFilter());
+        $this->assertSame(['api-auth'], $router->getFilters());
 
         // POST
         $this->collection->group(...$group);
 
         $router = new Router($this->collection, $this->request);
-        $this->collection->setHTTPVerb('post');
+        $this->collection->setHTTPVerb(Method::POST);
 
         $router->handle('api/posts');
 
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('create', $router->methodName());
-        $this->assertSame('api-auth', $router->getFilter());
+        $this->assertSame(['api-auth'], $router->getFilters());
 
         // PUT
         $this->collection->group(...$group);
 
         $router = new Router($this->collection, $this->request);
-        $this->collection->setHTTPVerb('put');
+        $this->collection->setHTTPVerb(Method::PUT);
 
         $router->handle('api/posts/50');
 
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('update', $router->methodName());
-        $this->assertSame('api-auth', $router->getFilter());
+        $this->assertSame(['api-auth'], $router->getFilters());
 
         // PATCH
         $this->collection->group(...$group);
 
         $router = new Router($this->collection, $this->request);
-        $this->collection->setHTTPVerb('patch');
+        $this->collection->setHTTPVerb(Method::PATCH);
 
         $router->handle('api/posts/50');
 
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('update', $router->methodName());
-        $this->assertSame('api-auth', $router->getFilter());
+        $this->assertSame(['api-auth'], $router->getFilters());
 
         // DELETE
         $this->collection->group(...$group);
 
         $router = new Router($this->collection, $this->request);
-        $this->collection->setHTTPVerb('delete');
+        $this->collection->setHTTPVerb(Method::DELETE);
 
         $router->handle('api/posts/50');
 
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('delete', $router->methodName());
-        $this->assertSame('api-auth', $router->getFilter());
+        $this->assertSame(['api-auth'], $router->getFilters());
     }
 
     public function testRouteWorksWithClassnameFilter(): void
@@ -618,16 +649,13 @@ final class RouterTest extends CIUnitTestCase
 
         $this->assertSame('\TestController', $router->controllerName());
         $this->assertSame('foo', $router->methodName());
-        $this->assertSame(Customfilter::class, $router->getFilter());
+        $this->assertSame([Customfilter::class], $router->getFilters());
 
         $this->resetServices();
     }
 
     public function testRouteWorksWithMultipleFilters(): void
     {
-        $feature                  = config('Feature');
-        $feature->multipleFilters = true;
-
         $collection = $this->collection;
 
         $collection->add('foo', 'TestController::foo', ['filter' => ['filter1', 'filter2:param']]);
@@ -638,8 +666,6 @@ final class RouterTest extends CIUnitTestCase
         $this->assertSame('\TestController', $router->controllerName());
         $this->assertSame('foo', $router->methodName());
         $this->assertSame(['filter1', 'filter2:param'], $router->getFilters());
-
-        $feature->multipleFilters = false;
     }
 
     /**
@@ -647,7 +673,7 @@ final class RouterTest extends CIUnitTestCase
      */
     public function testMatchesCorrectlyWithMixedVerbs(): void
     {
-        $this->collection->setHTTPVerb('get');
+        $this->collection->setHTTPVerb(Method::GET);
 
         $this->collection->add('/', 'Home::index');
         $this->collection->get('news', 'News::index');
@@ -682,7 +708,7 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->add('auth', 'Main::index');
 
         $router = new Router($this->collection, $this->request);
-        $this->collection->setHTTPVerb('post');
+        $this->collection->setHTTPVerb(Method::POST);
 
         $router->handle('auth');
         $this->assertSame('\Main', $router->controllerName());
@@ -697,7 +723,7 @@ final class RouterTest extends CIUnitTestCase
 
         $router = new Router($this->collection, $this->request);
 
-        $this->collection->setHTTPVerb('get');
+        $this->collection->setHTTPVerb(Method::GET);
 
         $router->handle('module');
         $this->assertSame('\Main', $router->controllerName());
@@ -749,7 +775,11 @@ final class RouterTest extends CIUnitTestCase
         $router = new Router($this->collection, $this->request);
         $router->setTranslateURIDashes(true);
 
-        $router->autoRoute('admin-user/show-list');
+        copy(TESTPATH . '_support/_controller/Admin_user.php', APPPATH . 'Controllers/Admin_user.php');
+
+        $router->autoRoute('admin_user/show_list');
+
+        unlink(APPPATH . 'Controllers/Admin_user.php');
 
         $this->assertSame('Admin_user', $router->controllerName());
         $this->assertSame('show_list', $router->methodName());
@@ -763,10 +793,14 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->setAutoRoute(true);
         $router = new Router($this->collection, $this->request);
 
-        $router->autoRoute('myController/someMethod/0/abc');
+        copy(TESTPATH . '_support/_controller/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
 
-        $this->assertSame('MyController', $router->controllerName());
-        $this->assertSame('someMethod', $router->methodName());
+        $router->autoRoute('mycontroller/getSomemethod/0/abc');
+
+        $this->assertSame('Mycontroller', $router->controllerName());
+        $this->assertSame('getSomemethod', $router->methodName());
+
+        unlink(APPPATH . 'Controllers/Mycontroller.php');
 
         $expected = [
             '0',
@@ -840,8 +874,18 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->setAutoRoute(true);
         $router = new Router($this->collection, $this->request);
 
+        mkdir(APPPATH . 'Controllers/foo');
+        mkdir(APPPATH . 'Controllers/foo/bar');
+        mkdir(APPPATH . 'Controllers/foo/bar/baz');
+        copy(TESTPATH . '_support/_controller/foo/bar/baz/Some_controller.php', APPPATH . 'Controllers/foo/bar/baz/Some_controller.php');
+
         $router->setDirectory('foo/bar/baz', false, true);
         $router->handle('Some_controller/some_method/param1/param2/param3');
+
+        unlink(APPPATH . 'Controllers/foo/bar/baz/Some_controller.php');
+        rmdir(APPPATH . 'Controllers/foo/bar/baz');
+        rmdir(APPPATH . 'Controllers/foo/bar');
+        rmdir(APPPATH . 'Controllers/foo');
 
         $this->assertSame('foo/bar/baz/', $router->directory());
         $this->assertSame('Some_controller', $router->controllerName());
@@ -904,5 +948,35 @@ final class RouterTest extends CIUnitTestCase
             ['post/(:num)/comment/(:any)', 'article/(:num)/(:any)', 'post/$1/comment/$2', '/article/1/2', 'post/1/comment/2', 'alias'],
             ['post/(:segment)/comment/(:any)', 'article/(:num)/(:any)', 'alias', '/article/1/2', 'post/1/comment/2', 'alias'],
         ];
+    }
+
+    public function testRoutePlaceholderAnyWithMultipleSegmentsParamFalse(): void
+    {
+        $this->createRouteCollection();
+        $this->collection->get('product/(:any)', 'Catalog::productLookup/$1');
+        $router = new Router($this->collection, $this->request);
+
+        $router->handle('product/123/456');
+
+        $this->assertSame('\Catalog', $router->controllerName());
+        $this->assertSame('productLookup', $router->methodName());
+        $this->assertSame(['123', '456'], $router->params());
+    }
+
+    public function testRoutePlaceholderAnyWithMultipleSegmentsParamTrue(): void
+    {
+        $routingConfig                           = new Routing();
+        $routingConfig->multipleSegmentsOneParam = true;
+        Factories::injectMock('config', Routing::class, $routingConfig);
+
+        $this->createRouteCollection($routingConfig);
+        $this->collection->get('product/(:any)', 'Catalog::productLookup/$1');
+        $router = new Router($this->collection, $this->request);
+
+        $router->handle('product/123/456');
+
+        $this->assertSame('\Catalog', $router->controllerName());
+        $this->assertSame('productLookup', $router->methodName());
+        $this->assertSame(['123/456'], $router->params());
     }
 }

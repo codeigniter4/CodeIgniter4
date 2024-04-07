@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -517,64 +519,6 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', 'clients[]'));
     }
 
-    public static function provideValidIPAddress(): iterable
-    {
-        return [
-            'empty' => [
-                false,
-                '',
-            ],
-            'zero' => [
-                false,
-                0,
-            ],
-            'large_ipv4' => [
-                false,
-                '256.256.256.999',
-                'ipv4',
-            ],
-            'good_ipv4' => [
-                true,
-                '100.100.100.0',
-                'ipv4',
-            ],
-            'good_default' => [
-                true,
-                '100.100.100.0',
-            ],
-            'zeroed_ipv4' => [
-                true,
-                '0.0.0.0',
-            ],
-            'large_ipv6' => [
-                false,
-                'h123:0000:0000:0000:0000:0000:0000:0000',
-                'ipv6',
-            ],
-            'good_ipv6' => [
-                true,
-                '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
-            ],
-            'confused_ipv6' => [
-                false,
-                '255.255.255.255',
-                'ipv6',
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider provideValidIPAddress
-     *
-     * @param mixed      $expected
-     * @param mixed      $address
-     * @param mixed|null $type
-     */
-    public function testValidIPAddress($expected, $address, $type = null): void
-    {
-        $this->assertSame($expected, $this->request->isValidIP($address, $type));
-    }
-
     public function testGetIPAddressDefault(): void
     {
         $this->assertSame('0.0.0.0', $this->request->getIPAddress());
@@ -583,8 +527,7 @@ final class CLIRequestTest extends CIUnitTestCase
     public function testMethodReturnsRightStuff(): void
     {
         // Defaults method to CLI now.
-        $this->assertSame('cli', $this->request->getMethod());
-        $this->assertSame('CLI', $this->request->getMethod(true));
+        $this->assertSame('CLI', $this->request->getMethod());
     }
 
     public function testMethodIsCliReturnsAlwaysTrue(): void

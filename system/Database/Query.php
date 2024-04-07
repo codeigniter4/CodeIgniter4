@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,10 +13,12 @@
 
 namespace CodeIgniter\Database;
 
+use Stringable;
+
 /**
  * Query builder
  */
-class Query implements QueryInterface
+class Query implements QueryInterface, Stringable
 {
     /**
      * The query string, as provided by the user.
@@ -357,7 +361,7 @@ class Query implements QueryInterface
                 $escapedValue = '(' . implode(',', $escapedValue) . ')';
             }
 
-            $sql = substr_replace($sql, $escapedValue, $matches[0][$c][1], $ml);
+            $sql = substr_replace($sql, (string) $escapedValue, $matches[0][$c][1], $ml);
         } while ($c !== 0);
 
         return $sql;

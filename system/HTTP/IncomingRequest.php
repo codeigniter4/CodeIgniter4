@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -48,18 +50,6 @@ use stdClass;
 class IncomingRequest extends Request
 {
     /**
-     * Enable CSRF flag
-     *
-     * Enables a CSRF cookie token to be set.
-     * Set automatically based on Config setting.
-     *
-     * @var bool
-     *
-     * @deprecated Not used
-     */
-    protected $enableCSRF = false;
-
-    /**
      * The URI for this request.
      *
      * Note: This WILL NOT match the actual URL in the browser since for
@@ -67,11 +57,9 @@ class IncomingRequest extends Request
      * AFTER the baseURL. So, if hosted in a sub-folder this will
      * appear different than actual URI path. If you need that use getPath().
      *
-     * @deprecated Will be protected. Use getUri() instead.
-     *
      * @var URI
      */
-    public $uri;
+    protected $uri;
 
     /**
      * The detected URI path (relative to the baseURL).
@@ -122,15 +110,6 @@ class IncomingRequest extends Request
     protected $validLocales = [];
 
     /**
-     * Configuration settings.
-     *
-     * @var App
-     *
-     * @deprecated Will be protected.
-     */
-    public $config;
-
-    /**
      * Holds the old data from a redirect.
      *
      * @var array
@@ -162,7 +141,7 @@ class IncomingRequest extends Request
             $body === 'php://input'
             // php://input is not available with enctype="multipart/form-data".
             // See https://www.php.net/manual/en/wrappers.php.php#wrappers.php.input
-            && strpos($this->getHeaderLine('Content-Type'), 'multipart/form-data') === false
+            && ! str_contains($this->getHeaderLine('Content-Type'), 'multipart/form-data')
             && (int) $this->getHeaderLine('Content-Length') <= $this->getPostMaxSize()
         ) {
             // Get our body from php://input
@@ -174,7 +153,6 @@ class IncomingRequest extends Request
             $body = null;
         }
 
-        $this->config       = $config;
         $this->uri          = $uri;
         $this->body         = $body;
         $this->userAgent    = $userAgent;
@@ -195,24 +173,12 @@ class IncomingRequest extends Request
     {
         $postMaxSize = ini_get('post_max_size');
 
-        switch (strtoupper(substr($postMaxSize, -1))) {
-            case 'G':
-                $postMaxSize = (int) str_replace('G', '', $postMaxSize) * 1024 ** 3;
-                break;
-
-            case 'M':
-                $postMaxSize = (int) str_replace('M', '', $postMaxSize) * 1024 ** 2;
-                break;
-
-            case 'K':
-                $postMaxSize = (int) str_replace('K', '', $postMaxSize) * 1024;
-                break;
-
-            default:
-                $postMaxSize = (int) $postMaxSize;
-        }
-
-        return $postMaxSize;
+        return match (strtoupper(substr($postMaxSize, -1))) {
+            'G'     => (int) str_replace('G', '', $postMaxSize) * 1024 ** 3,
+            'M'     => (int) str_replace('M', '', $postMaxSize) * 1024 ** 2,
+            'K'     => (int) str_replace('K', '', $postMaxSize) * 1024,
+            default => (int) $postMaxSize,
+        };
     }
 
     /**
@@ -260,20 +226,11 @@ class IncomingRequest extends Request
             $protocol = 'REQUEST_URI';
         }
 
-        switch ($protocol) {
-            case 'REQUEST_URI':
-                $this->path = $this->parseRequestURI();
-                break;
-
-            case 'QUERY_STRING':
-                $this->path = $this->parseQueryString();
-                break;
-
-            case 'PATH_INFO':
-            default:
-                $this->path = $this->fetchGlobal('server', $protocol) ?? $this->parseRequestURI();
-                break;
-        }
+        $this->path = match ($protocol) {
+            'REQUEST_URI'  => $this->parseRequestURI(),
+            'QUERY_STRING' => $this->parseQueryString(),
+            default        => $this->fetchGlobal('server', $protocol) ?? $this->parseRequestURI(),
+        };
 
         return $this->path;
     }
@@ -321,7 +278,7 @@ class IncomingRequest extends Request
 
         // This section ensures that even on servers that require the URI to contain the query string (Nginx) a correct
         // URI is found, and also fixes the QUERY_STRING Server var and $_GET array.
-        if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0) {
+        if (trim($uri, '/') === '' && str_starts_with($query, '/')) {
             $query                   = explode('?', $query, 2);
             $uri                     = $query[0];
             $_SERVER['QUERY_STRING'] = $query[1] ?? '';
@@ -354,7 +311,7 @@ class IncomingRequest extends Request
             return '/';
         }
 
-        if (strncmp($uri, '/', 1) === 0) {
+        if (str_starts_with($uri, '/')) {
             $uri                     = explode('?', $uri, 2);
             $_SERVER['QUERY_STRING'] = $uri[1] ?? '';
             $uri                     = $uri[0];
@@ -380,21 +337,13 @@ class IncomingRequest extends Request
             $this->negotiator = Services::negotiator($this, true);
         }
 
-        switch (strtolower($type)) {
-            case 'media':
-                return $this->negotiator->media($supported, $strictMatch);
-
-            case 'charset':
-                return $this->negotiator->charset($supported);
-
-            case 'encoding':
-                return $this->negotiator->encoding($supported);
-
-            case 'language':
-                return $this->negotiator->language($supported);
-        }
-
-        throw HTTPException::forInvalidNegotiationType($type);
+        return match (strtolower($type)) {
+            'media'    => $this->negotiator->media($supported, $strictMatch),
+            'charset'  => $this->negotiator->charset($supported),
+            'encoding' => $this->negotiator->encoding($supported),
+            'language' => $this->negotiator->language($supported),
+            default    => throw HTTPException::forInvalidNegotiationType($type),
+        };
     }
 
     /**
@@ -407,14 +356,14 @@ class IncomingRequest extends Request
     {
         $valueUpper = strtoupper($type);
 
-        $httpMethods = ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS'];
+        $httpMethods = Method::all();
 
         if (in_array($valueUpper, $httpMethods, true)) {
-            return strtoupper($this->getMethod()) === $valueUpper;
+            return $this->getMethod() === $valueUpper;
         }
 
         if ($valueUpper === 'JSON') {
-            return strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false;
+            return str_contains($this->getHeaderLine('Content-Type'), 'application/json');
         }
 
         if ($valueUpper === 'AJAX') {
@@ -550,7 +499,7 @@ class IncomingRequest extends Request
     public function getVar($index = null, $filter = null, $flags = null)
     {
         if (
-            strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false
+            str_contains($this->getHeaderLine('Content-Type'), 'application/json')
             && $this->body !== null
         ) {
             return $this->getJsonVar($index, false, $filter, $flags);
@@ -930,19 +879,5 @@ class IncomingRequest extends Request
         }
 
         return $this->files->getFile($fileID);
-    }
-
-    /**
-     * Remove relative directory (../) and multi slashes (///)
-     *
-     * Do some final cleaning of the URI and return it, currently only used in static::_parse_request_uri()
-     *
-     * @deprecated 4.1.2 Use URI::removeDotSegments() directly
-     */
-    protected function removeRelativeDirectory(string $uri): string
-    {
-        $uri = URI::removeDotSegments($uri);
-
-        return $uri === '/' ? $uri : ltrim($uri, '/');
     }
 }

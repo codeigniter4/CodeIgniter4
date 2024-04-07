@@ -7,7 +7,7 @@ requests and responses, including the message body, protocol version, utilities 
 the headers, and methods for handling content negotiation.
 
 This class is the parent class that both the :doc:`Request Class <../incoming/request>` and the
-:doc:`Response Class <../outgoing/response>` extend from.
+:doc:`Response Class <../outgoing/response>` extend from, and it is not used directly.
 
 ***************
 Class Reference
@@ -145,6 +145,20 @@ Class Reference
         If it is a string then a LogicException will be thrown.
 
         .. literalinclude:: message/009.php
+
+    .. php:method:: addHeader($name, $value)
+
+        .. versionadded:: 4.5.0
+
+        :param string $name: The name of the header to add.
+        :param string  $value: The value of the header.
+        :returns: The current message instance
+        :rtype: CodeIgniter\\HTTP\\Message
+
+        Adds a header (not a header value) with the same name.
+        Use this only when you set multiple headers with the same name,
+
+        .. literalinclude:: message/011.php
 
     .. php:method:: getProtocolVersion()
 

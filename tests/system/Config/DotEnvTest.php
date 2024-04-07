@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -14,6 +16,7 @@ namespace CodeIgniter\Config;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use TypeError;
 
 /**
  * @backupGlobals enabled
@@ -40,6 +43,10 @@ final class DotEnvTest extends CIUnitTestCase
         $file = 'unreadable.env';
         $path = rtrim($this->fixturesFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
         chmod($path, 0644);
+
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
     }
 
     protected function tearDown(): void
@@ -110,12 +117,9 @@ final class DotEnvTest extends CIUnitTestCase
 
     public function testLoadsNoneStringFiles(): void
     {
-        $dotenv = new DotEnv($this->fixturesFolder, 2);
-        $dotenv->load();
-        $this->assertSame('bar', getenv('FOO'));
-        $this->assertSame('baz', getenv('BAR'));
-        $this->assertSame('with spaces', getenv('SPACED'));
-        $this->assertSame('', getenv('NULL'));
+        $this->expectException(TypeError::class);
+
+        new DotEnv($this->fixturesFolder, 2);
     }
 
     public function testCommentedLoadsVars(): void

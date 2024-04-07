@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -162,6 +164,26 @@ final class ResponseCacheTest extends CIUnitTestCase
         // Check cache with another request with the different URI path.
         $request = $this->createIncomingRequest('another');
 
+        $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
+
+        $this->assertNull($cachedResponse);
+    }
+
+    public function testCachePageIncomingRequestWithHttpMethods()
+    {
+        $pageCache = $this->createResponseCache();
+
+        $request = $this->createIncomingRequest('foo/bar');
+
+        $response = new Response($this->appConfig);
+        $response->setBody('The response body.');
+
+        $return = $pageCache->make($request, $response);
+
+        $this->assertTrue($return);
+
+        // Check cache with a request with the same URI path and different HTTP method
+        $request        = $this->createIncomingRequest('foo/bar')->withMethod('POST');
         $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
 
         $this->assertNull($cachedResponse);

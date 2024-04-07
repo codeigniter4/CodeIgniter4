@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -108,7 +110,7 @@ if (! function_exists('img')) {
         $img = '<img';
 
         // Check for a relative URI
-        if (! preg_match('#^([a-z]+:)?//#i', $src['src']) && strpos($src['src'], 'data:') !== 0) {
+        if (! preg_match('#^([a-z]+:)?//#i', $src['src']) && ! str_starts_with($src['src'], 'data:')) {
             if ($indexPage === true) {
                 $img .= ' src="' . site_url($src['src']) . '"';
             } else {
@@ -179,7 +181,7 @@ if (! function_exists('doctype')) {
         $config   = new DocTypes();
         $doctypes = $config->list;
 
-        return $doctypes[$type] ?? false;
+        return $doctypes[$type] ?? '';
     }
 }
 

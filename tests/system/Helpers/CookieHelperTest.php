@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -250,10 +252,12 @@ final class CookieHelperTest extends CIUnitTestCase
 
     public function testSameSiteParam(): void
     {
-        set_cookie($this->name, $this->value, $this->expire, '', '', '', '', '', 'Strict');
+        set_cookie($this->name, $this->value, $this->expire, '', '', '', null, null, 'Strict');
 
         $this->assertTrue($this->response->hasCookie($this->name));
+
         $theCookie = $this->response->getCookie($this->name);
+
         $this->assertSame('Strict', $theCookie->getSameSite());
 
         delete_cookie($this->name);

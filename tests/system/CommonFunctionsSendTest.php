@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -25,6 +27,10 @@ final class CommonFunctionsSendTest extends CIUnitTestCase
         parent::setUp();
 
         unset($_ENV['foo'], $_SERVER['foo']);
+
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
     }
 
     /**
@@ -43,7 +49,7 @@ final class CommonFunctionsSendTest extends CIUnitTestCase
 
         $response = redirect()->route('login')
             ->setCookie('foo', 'onething', YEAR)
-            ->setCookie('login_time', $loginTime, YEAR);
+            ->setCookie('login_time', (string) $loginTime, YEAR);
         $response->pretend(false);
         $this->assertTrue($response->hasCookie('foo', 'onething'));
         $this->assertTrue($response->hasCookie('login_time'));

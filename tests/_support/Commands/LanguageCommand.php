@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -39,7 +41,7 @@ class LanguageCommand extends BaseCommand
         $sort = (isset($params['sort']) && $params['sort'] === 'off') ? false : true;
         $this->setSortImports($sort);
 
-        $this->execute($params);
+        $this->generateClass($params);
     }
 
     protected function prepare(string $class): string

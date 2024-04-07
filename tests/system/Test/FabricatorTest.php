@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -12,6 +14,7 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Model;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\FabricatorModel;
@@ -488,5 +491,61 @@ final class FabricatorTest extends CIUnitTestCase
         Fabricator::resetCounts();
 
         $this->assertSame(0, Fabricator::getCount('giants'));
+    }
+
+    public function testUniqueSetsOutUniqueFieldValues(): void
+    {
+        $model = new class () extends Model {
+            protected $allowedFields = ['email'];
+            protected $returnType    = 'array';
+        };
+
+        $result = (new Fabricator($model))
+            ->setUnique('email')
+            ->make(5000);
+
+        $result = array_map(static fn (array $email): string => $email['email'], $result);
+
+        $this->assertSame(array_unique($result), $result);
+    }
+
+    public function testOptionalSetsOutOptionalFieldValues(): void
+    {
+        $model = new class () extends Model {
+            protected $allowedFields = ['email'];
+            protected $returnType    = 'array';
+        };
+
+        $result = (new Fabricator($model))
+            ->setOptional('email', 0.5, false) // 50% probability of email being `false`
+            ->make(5000);
+
+        $result = array_map(static fn (array $email) => $email['email'], $result);
+
+        $this->assertLessThan(
+            count($result),
+            count(array_filter($result))
+        );
+    }
+
+    public function testValidSetsOutValidValuesUsingCallback(): void
+    {
+        $model = new class () extends Model {
+            protected $allowedFields = ['digit'];
+            protected $returnType    = 'array';
+        };
+
+        $result = (new Fabricator($model, ['digit' => 'numberBetween']))
+            ->setValid('digit', static fn (int $digit): bool => $digit % 2 === 0)
+            ->make(5000);
+        $result = array_map(static fn (array $digit): int => $digit['digit'], $result);
+
+        foreach ($result as $digit) {
+            $this->assertSame(
+                0,
+                $digit % 2,
+                sprintf('Failed asserting that %s is even.', number_format($digit))
+            );
+        }
     }
 }

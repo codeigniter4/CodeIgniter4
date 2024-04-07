@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -15,13 +17,14 @@ use BadMethodCallException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 use InvalidArgumentException;
+use Stringable;
 
 /**
  * Abstraction for a uniform resource identifier (URI).
  *
  * @see \CodeIgniter\HTTP\URITest
  */
-class URI
+class URI implements Stringable
 {
     /**
      * Sub-delimiters used in query strings and fragments.
@@ -172,7 +175,7 @@ class URI
         }
 
         if (isset($path) && $path !== '') {
-            $uri .= substr($uri, -1, 1) !== '/'
+            $uri .= ! str_ends_with($uri, '/')
                 ? '/' . ltrim($path, '/')
                 : ltrim($path, '/');
         }
@@ -228,12 +231,12 @@ class URI
         $output = trim($output, '/ ');
 
         // Add leading slash if necessary
-        if (strpos($path, '/') === 0) {
+        if (str_starts_with($path, '/')) {
             $output = '/' . $output;
         }
 
         // Add trailing slash if necessary
-        if ($output !== '/' && substr($path, -1, 1) === '/') {
+        if ($output !== '/' && str_ends_with($path, '/')) {
             $output .= '/';
         }
 
@@ -652,14 +655,14 @@ class URI
         $baseUri = new self($config->baseURL);
 
         if (
-            substr($this->getScheme(), 0, 4) === 'http'
+            str_starts_with($this->getScheme(), 'http')
             && $this->getHost() === $baseUri->getHost()
         ) {
             // Check for additional segments
             $basePath = trim($baseUri->getPath(), '/') . '/';
             $trimPath = ltrim($path, '/');
 
-            if ($basePath !== '/' && strpos($trimPath, $basePath) !== 0) {
+            if ($basePath !== '/' && ! str_starts_with($trimPath, $basePath)) {
                 $path = $basePath . $trimPath;
             }
 
@@ -877,7 +880,7 @@ class URI
      */
     public function setQuery(string $query)
     {
-        if (strpos($query, '#') !== false) {
+        if (str_contains($query, '#')) {
             if ($this->silent) {
                 return $this;
             }
@@ -886,7 +889,7 @@ class URI
         }
 
         // Can't have leading ?
-        if ($query !== '' && strpos($query, '?') === 0) {
+        if ($query !== '' && str_starts_with($query, '?')) {
             $query = substr($query, 1);
         }
 
@@ -1008,10 +1011,10 @@ class URI
         $path = self::removeDotSegments($path);
 
         // Fix up some leading slash edge cases...
-        if (strpos($orig, './') === 0) {
+        if (str_starts_with($orig, './')) {
             $path = '/' . $path;
         }
-        if (strpos($orig, '../') === 0) {
+        if (str_starts_with($orig, '../')) {
             $path = '/' . $path;
         }
 
@@ -1112,7 +1115,7 @@ class URI
                     $transformed->setQuery($this->getQuery());
                 }
             } else {
-                if (strpos($relative->getPath(), '/') === 0) {
+                if (str_starts_with($relative->getPath(), '/')) {
                     $transformed->setPath($relative->getPath());
                 } else {
                     $transformed->setPath($this->mergePaths($this, $relative));

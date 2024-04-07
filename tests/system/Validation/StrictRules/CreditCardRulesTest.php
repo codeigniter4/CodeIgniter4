@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -74,7 +76,7 @@ final class CreditCardRulesTest extends CIUnitTestCase
             ],
             'random_test' => [
                 'amex',
-                self::generateCardNumber('37', 16),
+                self::generateCardNumber(37, 16),
                 false,
             ],
             'invalid_type' => [

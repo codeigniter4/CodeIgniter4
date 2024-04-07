@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -39,6 +41,7 @@ final class FilterTestTraitTest extends CIUnitTestCase
         // Apply the Custom Filter
         $this->filtersConfig->aliases['test-customfilter'] = Customfilter::class;
         $this->filtersConfig->globals['before']            = ['test-customfilter'];
+        $this->filtersConfig->globals['after']             = ['secureheaders'];
     }
 
     public function testDidRunTraitSetUp(): void
@@ -110,7 +113,7 @@ final class FilterTestTraitTest extends CIUnitTestCase
     public function testAssertFilter(): void
     {
         $this->assertFilter('/', 'before', 'test-customfilter');
-        $this->assertFilter('/', 'after', 'toolbar');
+        $this->assertFilter('/', 'after', 'secureheaders');
     }
 
     public function testAssertNotFilter(): void

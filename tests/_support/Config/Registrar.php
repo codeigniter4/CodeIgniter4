@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -34,8 +36,8 @@ class Registrar
             'DBPrefix' => 'db_',
             'pConnect' => false,
             'DBDebug'  => true,
-            'charset'  => 'utf8',
-            'DBCollat' => 'utf8_general_ci',
+            'charset'  => 'utf8mb4',
+            'DBCollat' => 'utf8mb4_general_ci',
             'swapPre'  => '',
             'encrypt'  => false,
             'compress' => false,
@@ -54,7 +56,7 @@ class Registrar
             'pConnect' => false,
             'DBDebug'  => true,
             'charset'  => 'utf8',
-            'DBCollat' => 'utf8_general_ci',
+            'DBCollat' => '',
             'swapPre'  => '',
             'encrypt'  => false,
             'compress' => false,
@@ -73,7 +75,7 @@ class Registrar
             'pConnect'    => false,
             'DBDebug'     => true,
             'charset'     => 'utf8',
-            'DBCollat'    => 'utf8_general_ci',
+            'DBCollat'    => '',
             'swapPre'     => '',
             'encrypt'     => false,
             'compress'    => false,
@@ -93,7 +95,7 @@ class Registrar
             'pConnect' => false,
             'DBDebug'  => true,
             'charset'  => 'utf8',
-            'DBCollat' => 'utf8_general_ci',
+            'DBCollat' => '',
             'swapPre'  => '',
             'encrypt'  => false,
             'compress' => false,
@@ -112,7 +114,7 @@ class Registrar
             'pConnect' => false,
             'DBDebug'  => true,
             'charset'  => 'AL32UTF8',
-            'DBCollat' => 'utf8_general_ci',
+            'DBCollat' => '',
             'swapPre'  => '',
             'encrypt'  => false,
             'compress' => false,
@@ -132,10 +134,8 @@ class Registrar
 
         // Under GitHub Actions, we can set an ENV var named 'DB'
         // so that we can test against multiple databases.
-        if ($group = getenv('DB')) {
-            if (! empty(self::$dbConfig[$group])) {
-                $config['tests'] = self::$dbConfig[$group];
-            }
+        if (($group = getenv('DB')) && ! empty(self::$dbConfig[$group])) {
+            $config['tests'] = self::$dbConfig[$group];
         }
 
         return $config;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -13,7 +15,6 @@ namespace CodeIgniter\Debug;
 
 use ArgumentCountError;
 use CodeIgniter\Test\CIUnitTestCase;
-use ErrorException;
 use RuntimeException;
 
 /**
@@ -167,16 +168,12 @@ final class TimerTest extends CIUnitTestCase
         $this->expectException(RuntimeException::class);
 
         $timer = new Timer();
-        $timer->record('ex', static function (): void { throw new RuntimeException(); });
+        $timer->record('ex', static function (): never { throw new RuntimeException(); });
     }
 
     public function testRecordThrowsErrorOnCallableWithParams(): void
     {
-        if (PHP_VERSION_ID >= 80000) {
-            $this->expectException(ArgumentCountError::class);
-        } else {
-            $this->expectException(ErrorException::class);
-        }
+        $this->expectException(ArgumentCountError::class);
 
         $timer = new Timer();
         $timer->record('error', 'strlen');

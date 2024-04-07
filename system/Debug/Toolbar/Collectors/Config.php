@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -13,7 +15,6 @@ namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\CodeIgniter;
 use Config\App;
-use Config\Services;
 
 /**
  * Debug toolbar configuration
@@ -34,7 +35,7 @@ class Config
             'environment' => ENVIRONMENT,
             'baseURL'     => $config->baseURL,
             'timezone'    => app_timezone(),
-            'locale'      => Services::request()->getLocale(),
+            'locale'      => service('request')->getLocale(),
             'cspEnabled'  => $config->CSPEnabled,
         ];
     }

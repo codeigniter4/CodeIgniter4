@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -14,12 +16,14 @@ namespace CodeIgniter\API;
 use CodeIgniter\Format\FormatterInterface;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\ResponseInterface;
-use Config\Services;
 
 /**
  * Provides common, more readable, methods to provide
  * consistent HTTP responses under a variety of common
  * situations when working as an API.
+ *
+ * @property bool $stringAsHtml Whether to treat string data as HTML in JSON response.
+ *                              Setting `true` is only for backward compatibility.
  */
 trait ResponseTrait
 {
@@ -62,10 +66,11 @@ trait ResponseTrait
 
     /**
      * How to format the response data.
-     * Either 'json' or 'xml'. If blank will be
-     * determined through content negotiation.
+     * Either 'json' or 'xml'. If null is set, it will be determined through
+     * content negotiation.
      *
-     * @var string
+     * @var         string|null
+     * @phpstan-var 'html'|'json'|'xml'|null
      */
     protected $format = 'json';
 
@@ -292,7 +297,7 @@ trait ResponseTrait
     // --------------------------------------------------------------------
 
     /**
-     * Handles formatting a response. Currently makes some heavy assumptions
+     * Handles formatting a response. Currently, makes some heavy assumptions
      * and needs updating! :)
      *
      * @param array|string|null $data
@@ -301,20 +306,10 @@ trait ResponseTrait
      */
     protected function format($data = null)
     {
-        // If the data is a string, there's not much we can do to it...
-        if (is_string($data)) {
-            // The content type should be text/... and not application/...
-            $contentType = $this->response->getHeaderLine('Content-Type');
-            $contentType = str_replace('application/json', 'text/html', $contentType);
-            $contentType = str_replace('application/', 'text/', $contentType);
-            $this->response->setContentType($contentType);
-            $this->format = 'html';
+        $format = service('format');
 
-            return $data;
-        }
-
-        $format = Services::format();
-        $mime   = "application/{$this->format}";
+        $mime = ($this->format === null) ? $format->getConfig()->supportedResponseFormats[0]
+            : "application/{$this->format}";
 
         // Determine correct response type through content negotiation if not explicitly declared
         if (
@@ -336,6 +331,23 @@ trait ResponseTrait
             $this->formatter = $format->getFormatter($mime);
         }
 
+        $asHtml = $this->stringAsHtml ?? false;
+
+        // Returns as HTML.
+        if (
+            ($mime === 'application/json' && $asHtml && is_string($data))
+            || ($mime !== 'application/json' && is_string($data))
+        ) {
+            // The content type should be text/... and not application/...
+            $contentType = $this->response->getHeaderLine('Content-Type');
+            $contentType = str_replace('application/json', 'text/html', $contentType);
+            $contentType = str_replace('application/', 'text/', $contentType);
+            $this->response->setContentType($contentType);
+            $this->format = 'html';
+
+            return $data;
+        }
+
         if ($mime !== 'application/json') {
             // Recursively convert objects into associative arrays
             // Conversion not required for JSONFormatter
@@ -348,11 +360,14 @@ trait ResponseTrait
     /**
      * Sets the format the response should be in.
      *
+     * @param         string|null  $format Response format
+     * @phpstan-param 'json'|'xml' $format
+     *
      * @return $this
      */
     protected function setResponseFormat(?string $format = null)
     {
-        $this->format = strtolower($format);
+        $this->format = ($format === null) ? null : strtolower($format);
 
         return $this;
     }

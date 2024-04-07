@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -249,18 +251,10 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         $highlightFile = $this->getPrivateMethodInvoker($this->handler, 'highlightFile');
         $result        = $highlightFile(SUPPORTPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Hello.php', 16);
 
-        switch (true) {
-            case PHP_VERSION_ID < 80000:
-                $resultFile = 'highlightFile_pre_80000.html';
-                break;
-
-            case PHP_VERSION_ID < 80300:
-                $resultFile = 'highlightFile_pre_80300.html';
-                break;
-
-            default:
-                $resultFile = 'highlightFile.html';
-        }
+        $resultFile = match (true) {
+            PHP_VERSION_ID < 80300 => 'highlightFile_pre_80300.html',
+            default                => 'highlightFile.html',
+        };
 
         $expected = file_get_contents(SUPPORTPATH . 'Debug' . DIRECTORY_SEPARATOR . $resultFile);
 
