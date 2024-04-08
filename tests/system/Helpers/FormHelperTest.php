@@ -52,25 +52,40 @@ final class FormHelperTest extends CIUnitTestCase
         Services::injectMock('request', $request);
     }
 
+    private function setCsrfFilter(): void
+    {
+        $filters                      = config(Filters::class);
+        $filters->globals['before'][] = 'csrf';
+        service('filters')->initialize();
+    }
+
     public function testFormOpenBasic(): void
     {
         $this->setRequest();
 
-        $before = (new Filters())->globals['before'];
-        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
-            $Value    = csrf_hash();
-            $Name     = csrf_token();
-            $expected = <<<EOH
-                <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
-                <input type="hidden" name="{$Name}" value="{$Value}" style="display:none;">
+        $expected = <<<'EOH'
+            <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 
-                EOH;
-        } else {
-            $expected = <<<'EOH'
-                <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
+            EOH;
+        $attributes = [
+            'name'   => 'form',
+            'id'     => 'form',
+            'method' => 'POST',
+        ];
+        $this->assertSame($expected, form_open('foo/bar', $attributes));
+    }
 
-                EOH;
-        }
+    public function testFormOpenBasicWithCSRF(): void
+    {
+        $this->setRequest();
+        $this->setCsrfFilter();
+
+        $Value    = csrf_hash();
+        $Name     = csrf_token();
+        $expected = <<<EOH
+            <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
+            <input type="hidden" name="{$Name}" value="{$Value}">
+            EOH;
 
         $attributes = [
             'name'   => 'form',
@@ -116,11 +131,7 @@ final class FormHelperTest extends CIUnitTestCase
     public function testFormOpenWithoutActionWithCSRF(): void
     {
         $this->setRequest();
-
-        // Sets csrf filter.
-        $filters                      = config(Filters::class);
-        $filters->globals['before'][] = 'csrf';
-        service('filters')->initialize();
+        $this->setCsrfFilter();
 
         $Value    = csrf_hash();
         $Name     = csrf_token();
@@ -140,22 +151,29 @@ final class FormHelperTest extends CIUnitTestCase
     {
         $this->setRequest();
 
-        $before = (new Filters())->globals['before'];
-        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
-            $Value    = csrf_hash();
-            $Name     = csrf_token();
-            $expected = <<<EOH
-                <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="post" accept-charset="utf-8">
-                <input type="hidden" name="{$Name}" value="{$Value}" style="display:none;">
+        $expected = <<<'EOH'
+            <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="post" accept-charset="utf-8">
 
-                EOH;
-        } else {
-            $expected = <<<'EOH'
-                <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="post" accept-charset="utf-8">
+            EOH;
 
-                EOH;
-        }
+        $attributes = [
+            'name' => 'form',
+            'id'   => 'form',
+        ];
+        $this->assertSame($expected, form_open('foo/bar', $attributes));
+    }
 
+    public function testFormOpenWithoutMethodWithCSRF(): void
+    {
+        $this->setRequest();
+        $this->setCsrfFilter();
+
+        $Value    = csrf_hash();
+        $Name     = csrf_token();
+        $expected = <<<EOH
+            <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="post" accept-charset="utf-8">
+            <input type="hidden" name="{$Name}" value="{$Value}">
+            EOH;
         $attributes = [
             'name' => 'form',
             'id'   => 'form',
@@ -167,25 +185,36 @@ final class FormHelperTest extends CIUnitTestCase
     {
         $this->setRequest();
 
-        $before = (new Filters())->globals['before'];
-        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
-            $Value    = csrf_hash();
-            $Name     = csrf_token();
-            $expected = <<<EOH
-                <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
-                <input type="hidden" name="foo" value="bar">
-                <input type="hidden" name="{$Name}" value="{$Value}">
+        $expected = <<<'EOH'
+            <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 
-                EOH;
-        } else {
-            $expected = <<<'EOH'
-                <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
+            <input type="hidden" name="foo" value="bar">
 
-                <input type="hidden" name="foo" value="bar">
+            EOH;
+        $attributes = [
+            'name'   => 'form',
+            'id'     => 'form',
+            'method' => 'POST',
+        ];
+        $hidden = [
+            'foo' => 'bar',
+        ];
+        $this->assertSame($expected, form_open('foo/bar', $attributes, $hidden));
+    }
 
-                EOH;
-        }
+    public function testFormOpenWithHiddenWithCSRF(): void
+    {
+        $this->setRequest();
+        $this->setCsrfFilter();
 
+        $Value    = csrf_hash();
+        $Name     = csrf_token();
+        $expected = <<<EOH
+            <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
+            <input type="hidden" name="{$Name}" value="{$Value}">
+            <input type="hidden" name="foo" value="bar">
+
+            EOH;
         $attributes = [
             'name'   => 'form',
             'id'     => 'form',
@@ -201,21 +230,33 @@ final class FormHelperTest extends CIUnitTestCase
     {
         $this->setRequest();
 
-        $before = (new Filters())->globals['before'];
-        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
-            $Value    = csrf_hash();
-            $Name     = csrf_token();
-            $expected = <<<EOH
-                <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
-                <input type="hidden" name="{$Name}" value="{$Value}" style="display:none;">
+        $expected = <<<'EOH'
+            <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
 
-                EOH;
-        } else {
-            $expected = <<<'EOH'
-                <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
+            EOH;
+        $attributes = [
+            'name'   => 'form',
+            'id'     => 'form',
+            'method' => 'POST',
+        ];
+        $this->assertSame($expected, form_open_multipart('foo/bar', $attributes));
 
-                EOH;
-        }
+        // make sure it works with attributes as a string too
+        $attributesString = 'name="form" id="form" method="POST"';
+        $this->assertSame($expected, form_open_multipart('foo/bar', $attributesString));
+    }
+
+    public function testFormOpenMultipartWithCSRF(): void
+    {
+        $this->setRequest();
+        $this->setCsrfFilter();
+
+        $Value    = csrf_hash();
+        $Name     = csrf_token();
+        $expected = <<<EOH
+            <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
+            <input type="hidden" name="{$Name}" value="{$Value}">
+            EOH;
         $attributes = [
             'name'   => 'form',
             'id'     => 'form',
