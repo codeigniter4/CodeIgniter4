@@ -75,7 +75,7 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_open('foo/bar', $attributes));
     }
 
-    public function testFormOpenBasicWithCSRF(): void
+    public function testFormOpenBasicWithCsrf(): void
     {
         $this->setRequest();
         $this->setCsrfFilter();
@@ -128,7 +128,7 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_open('', $attributes));
     }
 
-    public function testFormOpenWithoutActionWithCSRF(): void
+    public function testFormOpenWithoutActionWithCsrf(): void
     {
         $this->setRequest();
         $this->setCsrfFilter();
@@ -163,7 +163,7 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_open('foo/bar', $attributes));
     }
 
-    public function testFormOpenWithoutMethodWithCSRF(): void
+    public function testFormOpenWithoutMethodWithCsrf(): void
     {
         $this->setRequest();
         $this->setCsrfFilter();
@@ -202,7 +202,7 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_open('foo/bar', $attributes, $hidden));
     }
 
-    public function testFormOpenWithHiddenWithCSRF(): void
+    public function testFormOpenWithHiddenWithCsrf(): void
     {
         $this->setRequest();
         $this->setCsrfFilter();
@@ -246,7 +246,7 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_open_multipart('foo/bar', $attributesString));
     }
 
-    public function testFormOpenMultipartWithCSRF(): void
+    public function testFormOpenMultipartWithCsrf(): void
     {
         $this->setRequest();
         $this->setCsrfFilter();
@@ -320,7 +320,7 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_input($data));
     }
 
-    public function testFormInputXHTML(): void
+    public function testFormInputXhtml(): void
     {
         $this->disableHtml5();
 
@@ -385,7 +385,7 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_upload('attachment'));
     }
 
-    public function testFormUploadXHTML(): void
+    public function testFormUploadXhtml(): void
     {
         $this->disableHtml5();
 
@@ -721,7 +721,7 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_checkbox('newsletter', 'accept', true));
     }
 
-    public function testFormCheckboxXHTML(): void
+    public function testFormCheckboxXhtml(): void
     {
         $this->disableHtml5();
 
