@@ -2,7 +2,8 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Exceptions\PageNotFoundException; // Add this line
+// Add this line to import the class.
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Pages extends BaseController
 {
