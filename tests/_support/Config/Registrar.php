@@ -23,9 +23,9 @@ class Registrar
     /**
      * DB config array for testing purposes.
      *
-     * @var array
+     * @var array<string, array<string, array<string, bool|int|string>|bool|int|string>>
      */
-    protected static $dbConfig = [
+    protected static array $dbConfig = [
         'MySQLi' => [
             'DSN'      => '',
             'hostname' => '127.0.0.1',
@@ -126,9 +126,9 @@ class Registrar
     /**
      * Override database config
      *
-     * @return array
+     * @return array<string, array<string, bool|int|string>|bool|int|string>
      */
-    public static function Database()
+    public static function Database(): array
     {
         $config = [];
 
@@ -146,9 +146,9 @@ class Registrar
      *
      * @see PublisherRestrictionsTest::testRegistrarsNotAllowed()
      *
-     * @return array
+     * @return array<string, array<string, string>>
      */
-    public static function Publisher()
+    public static function Publisher(): array
     {
         return [
             'restrictions' => [SUPPORTPATH => '*'],
