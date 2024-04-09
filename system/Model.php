@@ -40,7 +40,7 @@ use stdClass;
  *      - allow intermingling calls to the builder
  *      - removes the need to use Result object directly in most cases
  *
- * @property BaseConnection $db
+ * @property-read BaseConnection $db
  *
  * @method $this groupBy($by, ?bool $escape = null)
  * @method $this groupEnd()
@@ -123,7 +123,8 @@ class Model extends BaseModel
      * so that we can capture it (not the builder)
      * and ensure it gets validated first.
      *
-     * @var array
+     * @var         array{escape: array, data: array}|array{}
+     * @phpstan-var array{escape: array<int|string, bool|null>, data: row_array}|array{}
      */
     protected $tempData = [];
 

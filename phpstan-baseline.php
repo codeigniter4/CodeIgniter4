@@ -7432,11 +7432,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Model.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Model\\:\\:\\$tempData type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Model.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Return type \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Model\\:\\:__call\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\BaseModel\\)\\|null\\) of method CodeIgniter\\\\BaseModel\\:\\:__call\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Model.php',
