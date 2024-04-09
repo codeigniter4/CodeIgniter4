@@ -20,6 +20,7 @@ use mysqli;
 use mysqli_result;
 use mysqli_sql_exception;
 use stdClass;
+use Stringable;
 use Throwable;
 
 /**
@@ -342,7 +343,7 @@ class Connection extends BaseConnection
     /**
      * Platform-dependant string escape
      */
-    protected function _escapeString(string $str): string
+    protected function _escapeString(string|Stringable $str): string
     {
         if (! $this->connID) {
             $this->initialize();

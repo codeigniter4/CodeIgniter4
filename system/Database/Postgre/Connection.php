@@ -20,6 +20,7 @@ use ErrorException;
 use PgSql\Connection as PgSqlConnection;
 use PgSql\Result as PgSqlResult;
 use stdClass;
+use Stringable;
 
 /**
  * Connection for Postgre
@@ -253,7 +254,7 @@ class Connection extends BaseConnection
     /**
      * Platform-dependant string escape
      */
-    protected function _escapeString(string $str): string
+    protected function _escapeString(string|Stringable $str): string
     {
         if (! $this->connID) {
             $this->initialize();

@@ -17,6 +17,7 @@ use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Events\Events;
 use stdClass;
+use Stringable;
 use Throwable;
 
 /**
@@ -1328,8 +1329,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Escape String
      *
-     * @param list<string>|string $str  Input string
-     * @param bool                $like Whether or not the string will be used in a LIKE condition
+     * @param list<string|Stringable>|string|Stringable $str  Input string
+     * @param bool                                      $like Whether the string will be used in a LIKE condition
      *
      * @return list<string>|string
      */
@@ -1371,7 +1372,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Calls the individual driver for platform
      * specific escaping for LIKE conditions
      *
-     * @param list<string>|string $str
+     * @param list<string|Stringable>|string|Stringable $str
      *
      * @return list<string>|string
      */
@@ -1385,7 +1386,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * Will likely be overridden in child classes.
      */
-    protected function _escapeString(string $str): string
+    protected function _escapeString(string|Stringable $str): string
     {
         return str_replace("'", "''", remove_invisible_characters($str, false));
     }

@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\SQLSRV;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use stdClass;
+use Stringable;
 
 /**
  * Connection for SQLSRV
@@ -182,7 +183,7 @@ class Connection extends BaseConnection
     /**
      * Platform-dependant string escape
      */
-    protected function _escapeString(string $str): string
+    protected function _escapeString(string|Stringable $str): string
     {
         return str_replace("'", "''", remove_invisible_characters($str, false));
     }

@@ -19,6 +19,7 @@ use Exception;
 use SQLite3;
 use SQLite3Result;
 use stdClass;
+use Stringable;
 
 /**
  * Connection for SQLite3
@@ -171,7 +172,7 @@ class Connection extends BaseConnection
     /**
      * Platform-dependant string escape
      */
-    protected function _escapeString(string $str): string
+    protected function _escapeString(string|Stringable $str): string
     {
         if (! $this->connID instanceof SQLite3) {
             $this->initialize();
