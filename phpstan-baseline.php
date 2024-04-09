@@ -262,26 +262,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/CLI/BaseCommand.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:__get\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/BaseCommand.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:call\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/BaseCommand.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:getPad\\(\\) has parameter \\$array with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/BaseCommand.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Accessing offset \'ANSICON\' directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/CLI/CLI.php',
