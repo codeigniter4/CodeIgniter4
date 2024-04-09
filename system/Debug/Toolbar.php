@@ -365,7 +365,7 @@ class Toolbar
     }
 
     /**
-     * Prepare for debugging..
+     * Prepare for debugging.
      *
      * @return void
      */
@@ -378,6 +378,7 @@ class Toolbar
             $app = service('codeigniter');
 
             $request ??= service('request');
+            /** @var ResponseInterface $response */
             $response ??= service('response');
 
             // Disable the toolbar for downloads
@@ -433,7 +434,7 @@ class Toolbar
                 . $kintScript
                 . PHP_EOL;
 
-            if (str_contains($response->getBody(), '<head>')) {
+            if (str_contains((string) $response->getBody(), '<head>')) {
                 $response->setBody(
                     preg_replace(
                         '/<head>/',
