@@ -926,6 +926,9 @@ abstract class BaseModel
                     $row = (array) $row;
                 }
 
+                // Convert any Time instances to appropriate $dateFormat
+                $row = $this->timeToString($row);
+
                 // Validate every row.
                 if (! $this->skipValidation && ! $this->validate($row)) {
                     // Restore $cleanValidationRules
@@ -1845,8 +1848,6 @@ abstract class BaseModel
                 $row = $this->converter->toDataSource($row);
             } elseif ($row instanceof Entity) {
                 $row = $this->converter->extract($row, $onlyChanged);
-                // Convert any Time instances to appropriate $dateFormat
-                $row = $this->timeToString($row);
             } elseif (is_object($row)) {
                 $row = $this->converter->extract($row, $onlyChanged);
             }
@@ -1870,7 +1871,8 @@ abstract class BaseModel
             throw DataException::forEmptyDataset($type);
         }
 
-        return $row;
+        // Convert any Time instances to appropriate $dateFormat
+        return $this->timeToString($row);
     }
 
     /**
