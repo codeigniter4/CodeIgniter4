@@ -101,21 +101,33 @@ final class FormHelperTest extends CIUnitTestCase
     {
         $this->setRequest();
 
-        $before = (new Filters())->globals['before'];
-        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
-            $Value    = csrf_hash();
-            $Name     = csrf_token();
-            $expected = <<<EOH
-                <form action="http://example.com/index.php" name="form" id="form" method="POST" accept-charset="utf-8">
-                <input type="hidden" name="{$Name}" value="{$Value}" style="display:none;">
+        $expected = <<<'EOH'
+            <form action="http://example.com/index.php" name="form" id="form" method="POST" accept-charset="utf-8">
 
-                EOH;
-        } else {
-            $expected = <<<'EOH'
-                <form action="http://example.com/index.php" name="form" id="form" method="POST" accept-charset="utf-8">
+            EOH;
+        $attributes = [
+            'name'   => 'form',
+            'id'     => 'form',
+            'method' => 'POST',
+        ];
+        $this->assertSame($expected, form_open('', $attributes));
+    }
 
-                EOH;
-        }
+    public function testFormOpenWithoutActionWithCSRF(): void
+    {
+        $this->setRequest();
+
+        // Sets csrf filter.
+        $filters                      = config(Filters::class);
+        $filters->globals['before'][] = 'csrf';
+        service('filters')->initialize();
+
+        $Value    = csrf_hash();
+        $Name     = csrf_token();
+        $expected = <<<EOH
+            <form action="http://example.com/index.php" name="form" id="form" method="POST" accept-charset="utf-8">
+            <input type="hidden" name="{$Name}" value="{$Value}">
+            EOH;
         $attributes = [
             'name'   => 'form',
             'id'     => 'form',
