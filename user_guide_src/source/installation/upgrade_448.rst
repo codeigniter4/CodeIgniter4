@@ -29,6 +29,5 @@ This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
 - app/.htaccess
-- composer.json
 - public/.htaccess
-- tests/.htaccess
+- writable/.htaccess
