@@ -72,7 +72,7 @@ final class ConfigCheckTest extends CIUnitTestCase
         );
     }
 
-    public function testGetKintD()
+    public function testGetKintD(): void
     {
         $command  = new ConfigCheck(Services::logger(), Services::commands());
         $getKintD = $this->getPrivateMethodInvoker($command, 'getKintD');
@@ -112,7 +112,7 @@ final class ConfigCheckTest extends CIUnitTestCase
         );
     }
 
-    public function testGetVarDump()
+    public function testGetVarDump(): void
     {
         $command    = new ConfigCheck(Services::logger(), Services::commands());
         $getVarDump = $this->getPrivateMethodInvoker($command, 'getVarDump');

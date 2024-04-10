@@ -74,7 +74,7 @@ final class FileLocatorCachedTest extends FileLocatorTest
         parent::tearDown();
     }
 
-    public function testDeleteCache()
+    public function testDeleteCache(): void
     {
         $this->assertNotSame([], $this->handler->get('FileLocatorCache'));
 

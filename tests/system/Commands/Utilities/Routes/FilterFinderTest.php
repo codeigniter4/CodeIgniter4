@@ -190,7 +190,7 @@ final class FilterFinderTest extends CIUnitTestCase
         $this->assertSame($expected, $filters);
     }
 
-    public function testFilterOrder()
+    public function testFilterOrder(): void
     {
         $collection = $this->createRouteCollection([]);
         $collection->get('/', ' Home::index', ['filter' => ['route1', 'route2']]);
@@ -252,7 +252,7 @@ final class FilterFinderTest extends CIUnitTestCase
         $this->assertSame($expected, $filters);
     }
 
-    public function testFilterOrderWithOldFilterOrder()
+    public function testFilterOrderWithOldFilterOrder(): void
     {
         $feature                 = config(Feature::class);
         $feature->oldFilterOrder = true;

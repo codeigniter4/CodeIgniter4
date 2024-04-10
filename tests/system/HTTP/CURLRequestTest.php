@@ -560,7 +560,7 @@ final class CURLRequestTest extends CIUnitTestCase
         ]);
     }
 
-    public function testProxyuOption()
+    public function testProxyuOption(): void
     {
         $this->request->request('get', 'http://example.com', [
             'proxy' => 'http://localhost:3128',

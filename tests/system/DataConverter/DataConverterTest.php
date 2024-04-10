@@ -538,7 +538,7 @@ final class DataConverterTest extends CIUnitTestCase
         return new DataConverter($types, $handlers, $helper, $reconstructor, $extractor);
     }
 
-    public function testReconstructObjectWithReconstructMethod()
+    public function testReconstructObjectWithReconstructMethod(): void
     {
         $types = [
             'id'         => 'int',
@@ -565,7 +565,7 @@ final class DataConverterTest extends CIUnitTestCase
         $this->assertInstanceOf(Time::class, $obj->updated_at);
     }
 
-    public function testReconstructObjectWithClosure()
+    public function testReconstructObjectWithClosure(): void
     {
         $types = [
             'id'         => 'int',
@@ -598,7 +598,7 @@ final class DataConverterTest extends CIUnitTestCase
         $this->assertInstanceOf(Time::class, $obj->updated_at);
     }
 
-    public function testExtract()
+    public function testExtract(): void
     {
         $types = [
             'id'         => 'int',
@@ -630,7 +630,7 @@ final class DataConverterTest extends CIUnitTestCase
         ], $array);
     }
 
-    public function testExtractWithExtractMethod()
+    public function testExtractWithExtractMethod(): void
     {
         $types = [
             'id'         => 'int',
@@ -662,7 +662,7 @@ final class DataConverterTest extends CIUnitTestCase
         ], $array);
     }
 
-    public function testExtractWithClosure()
+    public function testExtractWithClosure(): void
     {
         $types = [
             'id'         => 'int',

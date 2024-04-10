@@ -875,7 +875,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertSame('username', $fieldNames[1]);
     }
 
-    public function testAddColumnNull()
+    public function testAddColumnNull(): void
     {
         $this->forge->dropTable('forge_test_table', true);
 

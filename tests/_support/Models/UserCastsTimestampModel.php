@@ -39,7 +39,7 @@ class UserCastsTimestampModel extends Model
     protected $useTimestamps  = true;
     protected $dateFormat     = 'datetime';
 
-    protected function initialize()
+    protected function initialize(): void
     {
         parent::initialize();
 

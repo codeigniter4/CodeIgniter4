@@ -242,7 +242,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
-    public function testWithScheme()
+    public function testWithScheme(): void
     {
         $url = 'example.com';
         $uri = new URI('http://' . $url);
@@ -253,7 +253,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('http://' . $url, (string) $uri);
     }
 
-    public function testWithSchemeSetsHttps()
+    public function testWithSchemeSetsHttps(): void
     {
         $url = 'http://example.com/path';
         $uri = new URI($url);
@@ -269,7 +269,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
-    public function testWithSchemeSetsEmpty()
+    public function testWithSchemeSetsEmpty(): void
     {
         $url = 'example.com';
         $uri = new URI('http://' . $url);

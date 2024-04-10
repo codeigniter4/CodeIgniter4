@@ -36,7 +36,7 @@ final class EntityTest extends CIUnitTestCase
 {
     use ReflectionHelper;
 
-    public function testSetStringToPropertyNamedAttributes()
+    public function testSetStringToPropertyNamedAttributes(): void
     {
         $entity = $this->getEntity();
 
@@ -48,7 +48,7 @@ final class EntityTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues
      */
-    public function testSetArrayToPropertyNamedAttributes()
+    public function testSetArrayToPropertyNamedAttributes(): void
     {
         $entity = new Entity();
 
@@ -84,7 +84,7 @@ final class EntityTest extends CIUnitTestCase
         $this->assertSame('bar:thanks:bar', $entity->bar);
     }
 
-    public function testNewGetterSetters()
+    public function testNewGetterSetters(): void
     {
         $entity = $this->getNewSetterGetterEntity();
 

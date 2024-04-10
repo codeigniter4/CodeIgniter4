@@ -1137,7 +1137,7 @@ final class TimeTest extends CIUnitTestCase
         $this->assertNull($time->weekOfWeek);
     }
 
-    public function testUnserializeTimeObject()
+    public function testUnserializeTimeObject(): void
     {
         $time1     = new Time('August 28, 2020 10:04:00pm', 'Asia/Manila', 'en');
         $timeCache = serialize($time1);

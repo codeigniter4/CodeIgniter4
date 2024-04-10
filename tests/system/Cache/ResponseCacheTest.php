@@ -93,7 +93,7 @@ final class ResponseCacheTest extends CIUnitTestCase
         return (new ResponseCache($cacheConfig, $cache))->setTtl(300);
     }
 
-    public function testCachePageIncomingRequest()
+    public function testCachePageIncomingRequest(): void
     {
         $pageCache = $this->createResponseCache();
 
@@ -131,7 +131,7 @@ final class ResponseCacheTest extends CIUnitTestCase
         $this->assertNull($cachedResponse);
     }
 
-    public function testCachePageIncomingRequestWithCacheQueryString()
+    public function testCachePageIncomingRequestWithCacheQueryString(): void
     {
         $cacheConfig                   = new CacheConfig();
         $cacheConfig->cacheQueryString = true;
@@ -169,7 +169,7 @@ final class ResponseCacheTest extends CIUnitTestCase
         $this->assertNull($cachedResponse);
     }
 
-    public function testCachePageIncomingRequestWithHttpMethods()
+    public function testCachePageIncomingRequestWithHttpMethods(): void
     {
         $pageCache = $this->createResponseCache();
 
@@ -189,7 +189,7 @@ final class ResponseCacheTest extends CIUnitTestCase
         $this->assertNull($cachedResponse);
     }
 
-    public function testCachePageCLIRequest()
+    public function testCachePageCLIRequest(): void
     {
         $pageCache = $this->createResponseCache();
 
@@ -217,7 +217,7 @@ final class ResponseCacheTest extends CIUnitTestCase
         $this->assertNull($cachedResponse);
     }
 
-    public function testUnserializeError()
+    public function testUnserializeError(): void
     {
         $this->expectException(ErrorException::class);
         $this->expectExceptionMessage('unserialize(): Error at offset 0 of 12 bytes');
@@ -243,7 +243,7 @@ final class ResponseCacheTest extends CIUnitTestCase
         $pageCache->get($request, new Response($this->appConfig));
     }
 
-    public function testInvalidCacheError()
+    public function testInvalidCacheError(): void
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Error unserializing page cache');
