@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\RawSql;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 
@@ -50,6 +51,14 @@ final class EscapeTest extends CIUnitTestCase
     {
         $expected = "SELECT * FROM brands WHERE name = 'O" . $this->char . "'Doules'";
         $sql      = 'SELECT * FROM brands WHERE name = ' . $this->db->escape("O'Doules");
+
+        $this->assertSame($expected, $sql);
+    }
+
+    public function testEscapeStringable(): void
+    {
+        $expected = "SELECT * FROM brands WHERE name = '2024-01-01 12:00:00'";
+        $sql      = 'SELECT * FROM brands WHERE name = ' . $this->db->escape(new Time('2024-01-01 12:00:00'));
 
         $this->assertSame($expected, $sql);
     }
