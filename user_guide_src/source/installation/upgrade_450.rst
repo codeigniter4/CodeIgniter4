@@ -227,8 +227,9 @@ for details.
 Removed Deprecated Items
 ========================
 
-Some deprecated items have been removed. If you extend these classes and are
-using them, upgrade your code. See :ref:`ChangeLog <v450-removed-deprecated-items>` for details.
+Some deprecated items have been removed. If you are still using these items, or
+extending these classes, upgrade your code. See :ref:`ChangeLog <v450-removed-deprecated-items>`
+for details.
 
 Breaking Enhancements
 *********************
