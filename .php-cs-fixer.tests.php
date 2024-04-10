@@ -35,6 +35,8 @@ $finder = Finder::create()
 
 $overrides = [
     'void_return' => true,
+    // for updating to coding-standard
+    'modernize_strpos' => true,
 ];
 
 $options = [

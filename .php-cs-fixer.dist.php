@@ -40,7 +40,10 @@ $finder = Finder::create()
         __DIR__ . '/spark',
     ]);
 
-$overrides = [];
+$overrides = [
+    // for updating to coding-standard
+    'modernize_strpos' => true,
+];
 
 $options = [
     'cacheFile' => 'build/.php-cs-fixer.cache',
