@@ -10042,26 +10042,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/_support/Config/Filters.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Config/Registrar.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Tests\\\\Support\\\\Config\\\\Registrar\\:\\:Database\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Config/Registrar.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Tests\\\\Support\\\\Config\\\\Registrar\\:\\:Publisher\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Config/Registrar.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Config\\\\Registrar\\:\\:\\$dbConfig type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Config/Registrar.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Variable \\$routes might not be defined\\.$#',
 	'count' => 5,
 	'path' => __DIR__ . '/tests/_support/Config/Routes.php',
