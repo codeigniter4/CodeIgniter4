@@ -1332,8 +1332,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Escape String
      *
-     * @param list<string>|string $str  Input string
-     * @param bool                $like Whether or not the string will be used in a LIKE condition
+     * @param list<string|Stringable>|string|Stringable $str  Input string
+     * @param bool                                      $like Whether the string will be used in a LIKE condition
      *
      * @return list<string>|string
      */
@@ -1345,6 +1345,14 @@ abstract class BaseConnection implements ConnectionInterface
             }
 
             return $str;
+        }
+
+        if ($str instanceof Stringable) {
+            if ($str instanceof RawSql) {
+                return $str->__toString();
+            }
+
+            $str = (string) $str;
         }
 
         $str = $this->_escapeString($str);

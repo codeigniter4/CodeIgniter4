@@ -71,10 +71,28 @@ final class EscapeTest extends CIUnitTestCase
         $this->assertSame($expected, $sql);
     }
 
+    public function testEscapeStringStringable(): void
+    {
+        $expected = "SELECT * FROM brands WHERE name = '2024-01-01 12:00:00'";
+        $sql      = "SELECT * FROM brands WHERE name = '"
+            . $this->db->escapeString(new Time('2024-01-01 12:00:00')) . "'";
+
+        $this->assertSame($expected, $sql);
+    }
+
     public function testEscapeLikeString(): void
     {
         $expected = "SELECT * FROM brands WHERE column LIKE '%10!% more%' ESCAPE '!'";
         $sql      = "SELECT * FROM brands WHERE column LIKE '%" . $this->db->escapeLikeString('10% more') . "%' ESCAPE '!'";
+
+        $this->assertSame($expected, $sql);
+    }
+
+    public function testEscapeLikeStringStringable(): void
+    {
+        $expected = "SELECT * FROM brands WHERE column LIKE '%2024-01-01 12:00:00%' ESCAPE '!'";
+        $sql      = "SELECT * FROM brands WHERE column LIKE '%"
+            . $this->db->escapeLikeString(new Time('2024-01-01 12:00:00')) . "%' ESCAPE '!'";
 
         $this->assertSame($expected, $sql);
     }
