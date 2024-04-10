@@ -20,30 +20,25 @@ use PhpCsFixer\Finder;
 $finder = Finder::create()
     ->files()
     ->in([
-        __DIR__ . '/system',
-        __DIR__ . '/utils',
+        __DIR__ . '/tests',
     ])
     ->exclude([
-        'Pager/Views',
-        'ThirdParty',
-        'Validation/Views',
     ])
     ->notPath([
+        '_support/View/Cells/multiplier.php',
+        '_support/View/Cells/colors.php',
+        '_support/View/Cells/addition.php',
     ])
     ->notName('#Foobar.php$#')
     ->append([
-        __FILE__,
-        __DIR__ . '/.php-cs-fixer.no-header.php',
-        __DIR__ . '/.php-cs-fixer.tests.php',
-        __DIR__ . '/.php-cs-fixer.user-guide.php',
-        __DIR__ . '/rector.php',
-        __DIR__ . '/spark',
     ]);
 
-$overrides = [];
+$overrides = [
+    'void_return' => true,
+];
 
 $options = [
-    'cacheFile' => 'build/.php-cs-fixer.cache',
+    'cacheFile' => 'build/.php-cs-fixer.tests.cache',
     'finder'    => $finder,
 ];
 
