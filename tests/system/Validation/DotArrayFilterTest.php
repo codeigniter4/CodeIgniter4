@@ -22,7 +22,7 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class DotArrayFilterTest extends CIUnitTestCase
 {
-    public function testRunReturnEmptyArray()
+    public function testRunReturnEmptyArray(): void
     {
         $data = [];
 
@@ -31,7 +31,7 @@ final class DotArrayFilterTest extends CIUnitTestCase
         $this->assertSame([], $result);
     }
 
-    public function testRunReturnEmptyArrayMissingValue()
+    public function testRunReturnEmptyArrayMissingValue(): void
     {
         $data = [
             'foo' => [
@@ -44,7 +44,7 @@ final class DotArrayFilterTest extends CIUnitTestCase
         $this->assertSame([], $result);
     }
 
-    public function testRunReturnEmptyArrayEmptyIndex()
+    public function testRunReturnEmptyArrayEmptyIndex(): void
     {
         $data = [
             'foo' => [
@@ -57,7 +57,7 @@ final class DotArrayFilterTest extends CIUnitTestCase
         $this->assertSame([], $result);
     }
 
-    public function testRunEarlyIndex()
+    public function testRunEarlyIndex(): void
     {
         $data = [
             'foo' => [
@@ -70,7 +70,7 @@ final class DotArrayFilterTest extends CIUnitTestCase
         $this->assertSame($data, $result);
     }
 
-    public function testRunWildcard()
+    public function testRunWildcard(): void
     {
         $data = [
             'foo' => [
@@ -85,7 +85,7 @@ final class DotArrayFilterTest extends CIUnitTestCase
         $this->assertSame($data, $result);
     }
 
-    public function testRunWildcardWithMultipleChoices()
+    public function testRunWildcardWithMultipleChoices(): void
     {
         $data = [
             'foo' => [
@@ -103,7 +103,7 @@ final class DotArrayFilterTest extends CIUnitTestCase
         $this->assertSame($data, $result);
     }
 
-    public function testRunNestedNotFound()
+    public function testRunNestedNotFound(): void
     {
         $data = [
             'foo' => [
@@ -121,7 +121,7 @@ final class DotArrayFilterTest extends CIUnitTestCase
         $this->assertSame([], $result);
     }
 
-    public function testRunIgnoresLastWildcard()
+    public function testRunIgnoresLastWildcard(): void
     {
         $data = [
             'foo' => [
@@ -136,7 +136,7 @@ final class DotArrayFilterTest extends CIUnitTestCase
         $this->assertSame($data, $result);
     }
 
-    public function testRunNestedArray()
+    public function testRunNestedArray(): void
     {
         $array = [
             'user' => [
@@ -183,7 +183,7 @@ final class DotArrayFilterTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testRunReturnOrderedIndices()
+    public function testRunReturnOrderedIndices(): void
     {
         $data = [
             'foo' => [

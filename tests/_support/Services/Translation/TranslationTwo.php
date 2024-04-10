@@ -15,7 +15,7 @@ namespace Tests\Support\Services\Translation;
 
 class TranslationTwo
 {
-    public function list()
+    public function list(): void
     {
         // Error language keys
         lang('TranslationTwo');

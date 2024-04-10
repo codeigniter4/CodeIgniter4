@@ -75,7 +75,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         ], $router->getPos());
     }
 
-    public function testAutoRouteFindsModuleDefaultControllerAndMethodGet()
+    public function testAutoRouteFindsModuleDefaultControllerAndMethodGet(): void
     {
         $config               = config(Routing::class);
         $config->moduleRoutes = [
@@ -190,7 +190,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         ], $router->getPos());
     }
 
-    public function testAutoRouteFindsControllerWithSubSubfolder()
+    public function testAutoRouteFindsControllerWithSubSubfolder(): void
     {
         $router = $this->createNewAutoRouter();
 
@@ -258,7 +258,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame([], $params);
     }
 
-    public function testAutoRouteFallbackToDefaultMethod()
+    public function testAutoRouteFallbackToDefaultMethod(): void
     {
         $router = $this->createNewAutoRouter();
 
@@ -276,7 +276,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         ], $router->getPos());
     }
 
-    public function testAutoRouteFallbackToDefaultControllerOneParam()
+    public function testAutoRouteFallbackToDefaultControllerOneParam(): void
     {
         $router = $this->createNewAutoRouter();
 
@@ -294,7 +294,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         ], $router->getPos());
     }
 
-    public function testAutoRouteFallbackToDefaultControllerTwoParams()
+    public function testAutoRouteFallbackToDefaultControllerTwoParams(): void
     {
         $router = $this->createNewAutoRouter();
 
@@ -312,7 +312,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         ], $router->getPos());
     }
 
-    public function testAutoRouteFallbackToDefaultControllerNoParams()
+    public function testAutoRouteFallbackToDefaultControllerNoParams(): void
     {
         $router = $this->createNewAutoRouter();
 
@@ -396,7 +396,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router->getRoute('remap/test', Method::GET);
     }
 
-    public function testRejectsURIWithUnderscoreFolder()
+    public function testRejectsURIWithUnderscoreFolder(): void
     {
         $this->expectException(PageNotFoundException::class);
         $this->expectExceptionMessage(
@@ -408,7 +408,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router->getRoute('dash_folder', Method::GET);
     }
 
-    public function testRejectsURIWithUnderscoreController()
+    public function testRejectsURIWithUnderscoreController(): void
     {
         $this->expectException(PageNotFoundException::class);
         $this->expectExceptionMessage(
@@ -420,7 +420,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router->getRoute('dash-folder/dash_controller/dash-method', Method::GET);
     }
 
-    public function testRejectsURIWithUnderscoreMethod()
+    public function testRejectsURIWithUnderscoreMethod(): void
     {
         $this->expectException(PageNotFoundException::class);
         $this->expectExceptionMessage(
@@ -432,7 +432,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router->getRoute('dash-folder/dash-controller/dash_method', Method::GET);
     }
 
-    public function testPermitsURIWithUnderscoreParam()
+    public function testPermitsURIWithUnderscoreParam(): void
     {
         $router = $this->createNewAutoRouter();
 
@@ -445,7 +445,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame(['a_b'], $params);
     }
 
-    public function testDoesNotTranslateDashInParam()
+    public function testDoesNotTranslateDashInParam(): void
     {
         $router = $this->createNewAutoRouter();
 
@@ -469,7 +469,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         int $controllerPos,
         ?int $methodPos,
         ?int $paramPos
-    ) {
+    ): void {
         $config                          = config(Routing::class);
         $config->translateUriToCamelCase = true;
         Factories::injectMock('config', Routing::class, $config);
@@ -535,7 +535,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
     /**
      * @dataProvider provideRejectTranslateUriToCamelCase
      */
-    public function testRejectTranslateUriToCamelCase(string $uri, string $expMsg)
+    public function testRejectTranslateUriToCamelCase(string $uri, string $expMsg): void
     {
         $this->expectException(PageNotFoundException::class);
         $this->expectExceptionMessage(

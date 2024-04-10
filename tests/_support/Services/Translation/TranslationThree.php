@@ -15,7 +15,7 @@ namespace Tests\Support\Services\Translation;
 
 class TranslationThree
 {
-    public function list()
+    public function list(): void
     {
         lang('TranslationOne.title');
         lang('TranslationOne.DESCRIPTION');

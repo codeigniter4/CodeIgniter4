@@ -272,7 +272,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->withBody('banana')->execute('throwsBody');
     }
 
-    public function testWithUriUpdatesUriStringAndCurrentUrlValues()
+    public function testWithUriUpdatesUriStringAndCurrentUrlValues(): void
     {
         $result = $this->withURI('http://example.com/foo/bar/1/2/3')
             ->controller(Newautorouting::class)

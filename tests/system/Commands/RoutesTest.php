@@ -116,7 +116,7 @@ final class RoutesTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, $this->getBuffer());
     }
 
-    public function testRoutesCommandHostHostname()
+    public function testRoutesCommandHostHostname(): void
     {
         Services::injectMock('routes', null);
 
@@ -145,7 +145,7 @@ final class RoutesTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, $this->getBuffer());
     }
 
-    public function testRoutesCommandHostSubdomain()
+    public function testRoutesCommandHostSubdomain(): void
     {
         Services::injectMock('routes', null);
 

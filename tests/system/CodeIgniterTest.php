@@ -83,7 +83,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
     }
 
-    public function testOutputBufferingControl()
+    public function testOutputBufferingControl(): void
     {
         ob_start();
         $this->codeigniter->run();
@@ -310,7 +310,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->resetServices();
     }
 
-    public function testRegisterSameFilterTwiceWithDifferentArgument()
+    public function testRegisterSameFilterTwiceWithDifferentArgument(): void
     {
         $this->expectException(ConfigException::class);
         $this->expectExceptionMessage('"test-customfilter" already has arguments: null');
