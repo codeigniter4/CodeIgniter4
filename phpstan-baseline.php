@@ -10487,26 +10487,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/_support/Models/UserModel.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method Tests\\\\Support\\\\Services\\\\Translation\\\\Nested\\\\TranslationFour\\:\\:list\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Services/Translation/TranslationNested/TranslationFour.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Tests\\\\Support\\\\Services\\\\Translation\\\\TranslationOne\\:\\:list\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Services/Translation/TranslationOne.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Tests\\\\Support\\\\Services\\\\Translation\\\\TranslationThree\\:\\:list\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Services/Translation/TranslationThree.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Tests\\\\Support\\\\Services\\\\Translation\\\\TranslationTwo\\:\\:list\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Services/Translation/TranslationTwo.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property Tests\\\\Support\\\\SomeEntity\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/SomeEntity.php',
@@ -11062,11 +11042,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Autoloader/FileLocatorCachedTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\FileLocatorCachedTest\\:\\:testDeleteCache\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Autoloader/FileLocatorCachedTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Assigning 3 directly on offset \'argc\' of \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/CLI/CLITest.php',
@@ -11148,26 +11123,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Access to an undefined property CodeIgniter\\\\Config\\\\BaseConfig\\:\\:\\$baseURL\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/FactoriesCacheFileVarExportHandlerTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\FactoriesCacheFileVarExportHandlerTest\\:\\:testDelete\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/FactoriesCacheFileVarExportHandlerTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\FactoriesCacheFileVarExportHandlerTest\\:\\:testInstantiate\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/FactoriesCacheFileVarExportHandlerTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\FactoriesCacheFileVarExportHandlerTest\\:\\:testLoad\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/FactoriesCacheFileVarExportHandlerTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\FactoriesCacheFileVarExportHandlerTest\\:\\:testSave\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Cache/FactoriesCacheFileVarExportHandlerTest.php',
 ];
@@ -11258,36 +11213,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:createIncomingRequest\\(\\) has parameter \\$query with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:testCachePageCLIRequest\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:testCachePageIncomingRequest\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:testCachePageIncomingRequestWithCacheQueryString\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:testCachePageIncomingRequestWithHttpMethods\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:testInvalidCacheError\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\ResponseCacheTest\\:\\:testUnserializeError\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Cache/ResponseCacheTest.php',
 ];
@@ -11427,22 +11352,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CodeIgniterTest\\:\\:testOutputBufferingControl\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\CodeIgniterTest\\:\\:testPageCacheWithCacheQueryString\\(\\) has parameter \\$cacheQueryStringValue with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\CodeIgniterTest\\:\\:testPageCacheWithCacheQueryString\\(\\) has parameter \\$testingUrls with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CodeIgniterTest\\:\\:testRegisterSameFilterTwiceWithDifferentArgument\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/CodeIgniterTest.php',
 ];
@@ -11547,16 +11462,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Commands/RoutesTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\RoutesTest\\:\\:testRoutesCommandHostHostname\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Commands/RoutesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\RoutesTest\\:\\:testRoutesCommandHostSubdomain\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Commands/RoutesTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Parameter \\#2 \\$mock of static method CodeIgniter\\\\Config\\\\BaseService\\:\\:injectMock\\(\\) expects object, null given\\.$#',
 	'count' => 4,
 	'path' => __DIR__ . '/tests/system/Commands/RoutesTest.php',
@@ -11583,16 +11488,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\ConfigCheckTest\\:\\:getBuffer\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Commands/Utilities/ConfigCheckTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\ConfigCheckTest\\:\\:testGetKintD\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Commands/Utilities/ConfigCheckTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\ConfigCheckTest\\:\\:testGetVarDump\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Commands/Utilities/ConfigCheckTest.php',
 ];
@@ -11642,16 +11537,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/FilterFinderTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\FilterFinderTest\\:\\:testFilterOrder\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/FilterFinderTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\FilterFinderTest\\:\\:testFilterOrderWithOldFilterOrder\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/FilterFinderTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\FilterFinderTest\\:\\:\\$response \\(CodeIgniter\\\\HTTP\\\\Response\\) does not accept CodeIgniter\\\\HTTP\\\\ResponseInterface\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Commands/Utilities/Routes/FilterFinderTest.php',
@@ -11688,16 +11573,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Class CodeIgniter\\\\UnexsistenceClass not found\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CommonFunctionsTest\\:\\:disableHtml5\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CommonFunctionsTest\\:\\:enableHtml5\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
 ];
@@ -11842,67 +11717,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testCanLoadSharedConfigWithDifferentAlias\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testCanLoadTwoCellsWithSameShortName\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testDefineAfterLoading\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testDefineAndLoad\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testDefineNonExistentClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testDefineSameAliasAndSameClassTwice\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testDefineSameAliasTwiceWithDifferentClasses\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testFullClassnameIgnoresPreferApp\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testGetComponentInstances\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testGetCreatesConfigInstanceAndFactoriesConfigReturnsIt\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testGetNonexistentClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testGetReturnsFactoriesConfigInstance\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testIsUpdated\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
 ];
@@ -11918,11 +11733,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testSetComponentInstances\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\FactoriesTest\\:\\:testShortnameReturnsConfigInApp\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
 ];
@@ -12252,31 +12062,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:testExtract\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:testExtractWithClosure\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:testExtractWithExtractMethod\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:testReconstructObjectWithClosure\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverterTest\\:\\:testReconstructObjectWithReconstructMethod\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Access to an undefined property CodeIgniter\\\\Test\\\\Mock\\\\MockConnection\\:\\:\\$foobar\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/BaseConnectionTest.php',
@@ -12442,11 +12227,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Database/Live/FabricatorLiveTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\ForgeTest\\:\\:testAddColumnNull\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$fields of method CodeIgniter\\\\Database\\\\Forge\\:\\:addField\\(\\) expects array\\<string, array\\|string\\>\\|string, array\\<int, string\\> given\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
@@ -12519,26 +12299,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$numberNative\\.$#',
 	'count' => 2,
-	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:testDisableNumberNative\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:testEnableNumberNative\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:testQueryDataAfterDisableNumberNative\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:testQueryDataAfterEnableNumberNative\\(\\) has no return type specified\\.$#',
-	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
 ];
 $ignoreErrors[] = [
@@ -12827,21 +12587,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:testNewGetterSetters\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:testSetArrayToPropertyNamedAttributes\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:testSetStringToPropertyNamedAttributes\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1078\\:\\:getBar\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
@@ -13057,21 +12802,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\FiltersTest\\:\\:testFilterWithArgumentsIsDefined\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\FiltersTest\\:\\:testFilterWithoutArgumentsIsDefined\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\FiltersTest\\:\\:testFiltersWithArguments\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Filters\\\\FiltersTest\\:\\:testProcessMethodProcessGlobalsWithExcept\\(\\) has parameter \\$except with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
@@ -13237,11 +12967,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequestDoNotShareOptionsTest\\:\\:testProxyuOption\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Access to an undefined property CodeIgniter\\\\HTTP\\\\CURLRequest\\:\\:\\$curl_options\\.$#',
 	'count' => 39,
 	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
@@ -13282,11 +13007,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequestTest\\:\\:testProxyuOption\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\HTTP\\\\ContentSecurityPolicyTest\\:\\:work\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/ContentSecurityPolicyTest.php',
@@ -13303,16 +13023,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Call to method PHPUnit\\\\Framework\\\\Assert\\:\\:assertNull\\(\\) with incorrect case\\: AssertNull$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/Files/FileCollectionTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Files\\\\FileCollectionTest\\:\\:testClientPathReturnsNullWhenFullPathIsNull\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/Files/FileCollectionTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Files\\\\FileCollectionTest\\:\\:testClientPathReturnsValidFullPath\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/Files/FileCollectionTest.php',
 ];
@@ -13657,11 +13367,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\IncomingRequestTest\\:\\:testSetValidLocales\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property Config\\\\App\\:\\:\\$proxyIPs \\(array\\<string, string\\>\\) does not accept array\\<int, string\\>\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/IncomingRequestTest.php',
@@ -13987,101 +13692,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testDefault\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testDefaultEmpty\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testExtensionPHP\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testPathInfoSubfolder\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testPathInfoUnset\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testQueryString\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testQueryStringEmpty\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testQueryStringWithQueryString\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURI\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURIGetPath\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURINested\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURINginx\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURINginxRedirecting\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURINoIndex\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURIPathIsNeverRediscovered\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURIPathIsRelative\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURIStoresDetectedPath\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURISubfolder\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryDetectRoutePathTest\\:\\:testRequestURISuppressed\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php',
@@ -14132,26 +13742,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryTest\\:\\:testCreateFromGlobals\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryTest\\:\\:testCreateFromGlobalsAllowedHost\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryTest\\:\\:testCreateFromStringWithIndexPage\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURIFactoryTest\\:\\:testCreateFromStringWithoutIndexPage\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Re\\-assigning arrays to \\$_GET directly is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/SiteURIFactoryTest.php',
@@ -14172,112 +13762,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testConstructor\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testConstructor\\(\\) has parameter \\$expectedSegments with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testConstructorEmptyScheme\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testConstructorForceGlobalSecureRequests\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testConstructorHost\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testConstructorInvalidBaseURL\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testConstructorScheme\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testGetBaseURL\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testGetRoutePath\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testGetSegmentOutOfRange\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testGetSegmentZero\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testGetSegments\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testGetTotalSegments\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetBaseURI\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetPath\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetPath\\(\\) has parameter \\$expectedSegments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetSegment\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetSegmentOutOfRange\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetSegmentSilentOutOfRange\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetSegmentSubfolder\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetSegmentZero\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURITest\\:\\:testSetURI\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/SiteURITest.php',
 ];
@@ -14353,21 +13843,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\HTTP\\\\URITest\\:\\:provideSimpleUri\\(\\) return type has no value type specified in iterable type iterable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\URITest\\:\\:testWithScheme\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\URITest\\:\\:testWithSchemeSetsEmpty\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\URITest\\:\\:testWithSchemeSetsHttps\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/URITest.php',
 ];
@@ -14547,29 +14022,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Helpers/FilesystemHelperTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Helpers\\\\FormHelperTest\\:\\:disableHtml5\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Helpers/FormHelperTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Helpers\\\\FormHelperTest\\:\\:enableHtml5\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Helpers/FormHelperTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Parameter \\#2 \\$value of function form_hidden expects array\\|string, null given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Helpers/FormHelperTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Helpers\\\\HTMLHelperTest\\:\\:disableHtml5\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Helpers/HTMLHelperTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Helpers\\\\HTMLHelperTest\\:\\:enableHtml5\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Helpers/HTMLHelperTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Helpers\\\\HTMLHelperTest\\:\\:\\$tracks type has no value type specified in iterable type array\\.$#',
@@ -14932,31 +14387,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Honeypot/HoneypotTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HotReloader\\\\DirectoryHasherTest\\:\\:testHash\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HotReloader/DirectoryHasherTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HotReloader\\\\DirectoryHasherTest\\:\\:testHashApp\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HotReloader/DirectoryHasherTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HotReloader\\\\DirectoryHasherTest\\:\\:testHashDirectoryInvalid\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HotReloader/DirectoryHasherTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HotReloader\\\\DirectoryHasherTest\\:\\:testRepeatableHashes\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HotReloader/DirectoryHasherTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HotReloader\\\\DirectoryHasherTest\\:\\:testUniqueHashes\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HotReloader/DirectoryHasherTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Access to an undefined property CodeIgniter\\\\I18n\\\\TimeDifference\\:\\:\\$nonsense\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/tests/system/I18n/TimeDifferenceTest.php',
@@ -15017,11 +14447,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/I18n/TimeLegacyTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\I18n\\\\TimeLegacyTest\\:\\:testUnserializeTimeObject\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/I18n/TimeLegacyTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Access to an undefined property CodeIgniter\\\\I18n\\\\Time\\:\\:\\$timezoneName\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/I18n/TimeTest.php',
@@ -15033,11 +14458,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\I18n\\\\TimeTest\\:\\:provideToStringDoesNotDependOnLocale\\(\\) return type has no value type specified in iterable type iterable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/I18n/TimeTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\I18n\\\\TimeTest\\:\\:testUnserializeTimeObject\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/I18n/TimeTest.php',
 ];
@@ -15967,71 +15387,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testAutoRouteFallbackToDefaultControllerNoParams\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testAutoRouteFallbackToDefaultControllerOneParam\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testAutoRouteFallbackToDefaultControllerTwoParams\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testAutoRouteFallbackToDefaultMethod\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testAutoRouteFindsControllerWithSubSubfolder\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testAutoRouteFindsModuleDefaultControllerAndMethodGet\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testDoesNotTranslateDashInParam\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testPermitsURIWithUnderscoreParam\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testRejectTranslateUriToCamelCase\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testRejectsURIWithUnderscoreController\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testRejectsURIWithUnderscoreFolder\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testRejectsURIWithUnderscoreMethod\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:testTranslateUriToCamelCase\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\BlogController\\:\\:getSomeMethod\\(\\) has parameter \\$first with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Router/Controllers/BlogController.php',
@@ -16057,11 +15412,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Router/Controllers/SubDir/BlogController.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\Subfolder\\\\Home\\:\\:getIndex\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/Controllers/Subfolder/Home.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\Subfolder\\\\Home\\:\\:getIndex\\(\\) has parameter \\$p1 with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Router/Controllers/Subfolder/Home.php',
@@ -16077,27 +15427,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Router/Controllers/Subfolder/Sub/BlogController.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\Controllers\\\\Subfolder\\\\Sub\\\\Mycontroller\\:\\:getSomemethod\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/Controllers/Subfolder/Sub/Mycontroller.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\DefinedRouteCollectorTest\\:\\:createRouteCollection\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Router/DefinedRouteCollectorTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\DefinedRouteCollectorTest\\:\\:createRouteCollection\\(\\) has parameter \\$moduleConfig with no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/DefinedRouteCollectorTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\DefinedRouteCollectorTest\\:\\:testCollect\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/DefinedRouteCollectorTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\DefinedRouteCollectorTest\\:\\:testCollectSameFromWithDifferentVerb\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Router/DefinedRouteCollectorTest.php',
 ];
@@ -16220,21 +15555,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\RouterTest\\:\\:provideRedirectRoute\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Router/RouterTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Security\\\\CheckPhpIniTest\\:\\:testCheckIni\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Security/CheckPhpIniTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Security\\\\CheckPhpIniTest\\:\\:testRunCli\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Security/CheckPhpIniTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Security\\\\CheckPhpIniTest\\:\\:testRunWeb\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Security/CheckPhpIniTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Assigning \'POST\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
@@ -16392,11 +15712,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Session/SessionTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\SuperglobalsTest\\:\\:testSetGet\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/SuperglobalsTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\BootstrapFCPATHTest\\:\\:correctFCPATH\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Test/BootstrapFCPATHTest.php',
@@ -16438,11 +15753,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\ControllerTestTraitTest\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\ControllerTestTraitTest\\:\\:testWithUriUpdatesUriStringAndCurrentUrlValues\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
 ];
@@ -16667,21 +15977,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:testAutoRoutingLegacy\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:testClosureWithEcho\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:testForceGlobalSecureRequests\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestTraitTest\\:\\:withHeaders\\(\\) has parameter \\$headers with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
@@ -16840,56 +16135,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Validation\\\\DatabaseRelatedRulesTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Validation/DatabaseRelatedRulesTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunEarlyIndex\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunIgnoresLastWildcard\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunNestedArray\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunNestedNotFound\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunReturnEmptyArray\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunReturnEmptyArrayEmptyIndex\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunReturnEmptyArrayMissingValue\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunReturnOrderedIndices\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunWildcard\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\DotArrayFilterTest\\:\\:testRunWildcardWithMultipleChoices\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Validation/DotArrayFilterTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Validation\\\\Validation constructor expects Config\\\\Validation, stdClass given\\.$#',
@@ -17610,11 +16855,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\View\\\\Table\\:\\:\\$function \\(\\(callable\\(\\)\\: mixed\\)\\|null\\) does not accept \'ticklemyfancy\'\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/TableTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\ViewTest\\:\\:testRenderSectionSavingData\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/View/ViewTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\View\\\\ViewTest\\:\\:\\$loader \\(CodeIgniter\\\\Autoloader\\\\FileLocator\\) does not accept CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\.$#',
