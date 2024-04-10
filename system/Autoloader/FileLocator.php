@@ -28,6 +28,13 @@ class FileLocator implements FileLocatorInterface
      */
     protected $autoloader;
 
+    /**
+     * List of classnames that did not exist.
+     *
+     * @var list<class-string>
+     */
+    private array $invalidClassnames = [];
+
     public function __construct(Autoloader $autoloader)
     {
         $this->autoloader = $autoloader;
@@ -288,14 +295,20 @@ class FileLocator implements FileLocatorInterface
                         ),
                         '\\'
                     );
-
                 // Remove the file extension (.php)
                 $className = mb_substr($className, 0, -4);
+
+                if (in_array($className, $this->invalidClassnames, true)) {
+                    continue;
+                }
 
                 // Check if this exists
                 if (class_exists($className)) {
                     return $className;
                 }
+
+                // If the class does not exist, it is an invalid classname.
+                $this->invalidClassnames[] = $className;
             }
         }
 
