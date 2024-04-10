@@ -17,6 +17,7 @@ use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Events\Events;
 use stdClass;
+use Stringable;
 use Throwable;
 
 /**
@@ -1309,12 +1310,15 @@ abstract class BaseConnection implements ConnectionInterface
             return array_map($this->escape(...), $str);
         }
 
-        /** @psalm-suppress NoValue I don't know why ERROR. */
-        if (is_string($str) || (is_object($str) && method_exists($str, '__toString'))) {
+        if ($str instanceof Stringable) {
             if ($str instanceof RawSql) {
                 return $str->__toString();
             }
 
+            $str = (string) $str;
+        }
+
+        if (is_string($str)) {
             return "'" . $this->escapeString($str) . "'";
         }
 
