@@ -22,7 +22,7 @@ Breaking Changes
 
 - **QueryBuilder:** Due to a bug fix, the parameter type of ``BaseBuilder::_escapeString()``
   has been changed from ``string`` to ``string|Stringable``. If you are extending
-  this method, update the method paramtere type.
+  this method, update the method parameter type.
 
 *********************
 Breaking Enhancements
