@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\I18n;
 
 use DateTimeImmutable;
+use Stringable;
 
 /**
  * A localized date/time package inspired
@@ -40,7 +41,7 @@ use DateTimeImmutable;
  *
  * @see \CodeIgniter\I18n\TimeTest
  */
-class Time extends DateTimeImmutable
+class Time extends DateTimeImmutable implements Stringable
 {
     use TimeTrait;
 }
