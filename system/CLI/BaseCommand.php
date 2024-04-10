@@ -216,7 +216,7 @@ abstract class BaseCommand
     /**
      * Makes it simple to access our protected properties.
      *
-     * @return Commands|list<mixed>|LoggerInterface|string|null
+     * @return array<string, string>|Commands|LoggerInterface|string|null
      */
     public function __get(string $key)
     {
