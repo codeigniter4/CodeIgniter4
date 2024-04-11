@@ -122,8 +122,7 @@ Or using ``use`` keyword:
    :lines: 2-
 
 If you forget to add ``use App\Controllers\Home;``, the controller classname is
-interpreted as ``Config\Home``, not ``App\Controllers\Home`` because
-**app/Config/Routes.php** has ``namespace Config;`` at the top.
+interpreted as ``\Home``, not ``App\Controllers\Home``.
 
 .. note:: When you use Array Callable Syntax, the classname is always interpreted
     as a fully qualified classname. So :ref:`routing-default-namespace` and
