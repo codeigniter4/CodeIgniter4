@@ -88,7 +88,7 @@ and check Breaking Changes and Enhancements.
 Upgrading to a Specified Version
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-For example, you may want to upgrade to v4.4.8 after v4.5.0 has been released.
+For example, you may want to upgrade from v4.4.7 to v4.4.8 after v4.5.0 has been released.
 
 In that case, open **composer.json** in your project root folder, and specify
 the framework version:
