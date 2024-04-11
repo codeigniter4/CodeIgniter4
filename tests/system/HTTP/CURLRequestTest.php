@@ -41,6 +41,9 @@ class CURLRequestTest extends CIUnitTestCase
         $this->request = $this->getRequest();
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     protected function getRequest(array $options = []): MockCURLRequest
     {
         $uri = isset($options['base_uri']) ? new URI($options['base_uri']) : new URI();
