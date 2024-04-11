@@ -29,7 +29,7 @@ use CURLFile;
  */
 final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
 {
-    private CURLRequest $request;
+    private MockCURLRequest $request;
 
     protected function setUp(): void
     {
@@ -39,7 +39,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->request = $this->getRequest();
     }
 
-    protected function getRequest(array $options = [])
+    protected function getRequest(array $options = []): MockCURLRequest
     {
         $uri = isset($options['base_uri']) ? new URI($options['base_uri']) : new URI();
         $app = new App();
