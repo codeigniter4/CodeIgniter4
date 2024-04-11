@@ -1383,7 +1383,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Calls the individual driver for platform
      * specific escaping for LIKE conditions
      *
-     * @param list<string>|string $str
+     * @param list<string|Stringable>|string|Stringable $str
      *
      * @return list<string>|string
      */
