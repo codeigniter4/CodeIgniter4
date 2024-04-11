@@ -85,6 +85,23 @@ Whenever there is a new release, then from the command line in your project root
 Read the :doc:`upgrade instructions <upgrading>` and :doc:`change log <../changelogs/index>`,
 and check Breaking Changes and Enhancements.
 
+Upgrading to a Specified Version
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For example, you may want to upgrade to v4.4.8 after v4.5.0 has been released.
+
+In that case, open **composer.json** in your project root folder, and specify
+the framework version:
+
+.. code-block:: text
+
+    "require": {
+        ...
+        "codeigniter4/framework": "4.4.8"
+    },
+
+Then, run the ``composer update`` command.
+
 Pros
 ----
 
@@ -218,6 +235,23 @@ Whenever there is a new release, then from the command line in your project root
 
 Read the :doc:`upgrade instructions <upgrading>` and :doc:`change log <../changelogs/index>`,
 and check Breaking Changes and Enhancements.
+
+Upgrading to a Specified Version
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For example, you may want to upgrade to v4.4.8 after v4.5.0 has been released.
+
+In that case, open **composer.json** in your project root folder, and specify
+the framework version:
+
+.. code-block:: text
+
+    "require": {
+        ...
+        "codeigniter4/framework": "4.4.8"
+    },
+
+Then, run the ``composer update`` command.
 
 Pros
 ----
