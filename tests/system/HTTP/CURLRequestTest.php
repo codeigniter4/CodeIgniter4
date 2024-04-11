@@ -782,7 +782,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 
         $responseHeaderKeys = [
             'Cache-Control',
-            'Content-Type',
             'Server',
             'Connection',
             'Keep-Alive',
@@ -790,6 +789,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
             'Date',
             'Expires',
             'Pragma',
+            'Content-Type',
             'Transfer-Encoding',
         ];
         $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
@@ -836,10 +836,10 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello1</title>";
 
         $responseHeaderKeys = [
             'Cache-Control',
-            'Content-Type',
             'Server',
             'Expires',
             'Pragma',
+            'Content-Type',
             'Transfer-Encoding',
         ];
         $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
@@ -859,8 +859,8 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
 
         $responseHeaderKeys = [
             'Cache-Control',
-            'Content-Type',
             'Expires',
+            'Content-Type',
             'Transfer-Encoding',
         ];
         $this->assertSame($responseHeaderKeys, array_keys($response->headers()));

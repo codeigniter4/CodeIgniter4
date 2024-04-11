@@ -784,7 +784,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 
         $responseHeaderKeys = [
             'Cache-Control',
-            'Content-Type',
             'Server',
             'Connection',
             'Keep-Alive',
@@ -792,6 +791,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
             'Date',
             'Expires',
             'Pragma',
+            'Content-Type',
             'Transfer-Encoding',
         ];
         $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
@@ -823,10 +823,10 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello1</title>";
 
         $responseHeaderKeys = [
             'Cache-Control',
-            'Content-Type',
             'Server',
             'Expires',
             'Pragma',
+            'Content-Type',
             'Transfer-Encoding',
         ];
         $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
@@ -846,8 +846,8 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
 
         $responseHeaderKeys = [
             'Cache-Control',
-            'Content-Type',
             'Expires',
+            'Content-Type',
             'Transfer-Encoding',
         ];
         $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
@@ -1140,5 +1140,22 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
 
         $this->assertArrayHasKey(CURLOPT_USERAGENT, $options);
         $this->assertSame($agent, $options[CURLOPT_USERAGENT]);
+    }
+
+    public function testGetHeaderLineContentType(): void
+    {
+        $output = 'HTTP/2 200
+date: Thu, 11 Apr 2024 07:26:00 GMT
+content-type: text/html; charset=UTF-8
+cache-control: no-store, max-age=0, no-cache
+server: cloudflare
+content-encoding: br
+alt-svc: h3=":443"; ma=86400' . "\x0d\x0a\x0d\x0aResponse Body";
+
+        $this->request->setOutput($output);
+
+        $response = $this->request->request('get', 'http://example.com');
+
+        $this->assertSame('text/html; charset=UTF-8', $response->getHeaderLine('Content-Type'));
     }
 }

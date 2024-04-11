@@ -116,7 +116,10 @@ class CURLRequest extends OutgoingRequest
 
         parent::__construct(Method::GET, $uri);
 
-        $this->responseOrig   = $response ?? new Response(config(App::class));
+        $this->responseOrig = $response ?? new Response(config(App::class));
+        // Remove the default Content-Type header.
+        $this->responseOrig->removeHeader('Content-Type');
+
         $this->baseURI        = $uri->useRawQueryString();
         $this->defaultOptions = $options;
 
