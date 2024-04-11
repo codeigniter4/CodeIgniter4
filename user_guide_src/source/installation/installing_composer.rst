@@ -65,6 +65,35 @@ If you omit the "project-root" argument, the command will create an
     that are not needed in the production environment. This will greatly reduce
     the vendor folder size.
 
+Installing Previous Versions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For example, you may want to install v4.4.8 after v4.5.0 has been released.
+
+In that case, specify the version in the command:
+
+.. code-block:: console
+
+    composer create-project codeigniter4/appstarter:4.4.8 project-root
+
+Then, open **composer.json** in your project root folder, and specify
+the framework version:
+
+.. code-block:: text
+
+    "require": {
+        ...
+        "codeigniter4/framework": "4.4.8"
+    },
+
+Then, run the ``composer update`` command.
+
+.. note:: If you fix the version number like ``"codeigniter4/framework": "4.4.8"``
+    in your **composer.json**, ``composer update``  command will not update the
+    framework. See `Writing Version Constraints`_ for how to specify the version.
+
+.. _Writing Version Constraints: https://getcomposer.org/doc/articles/versions.md#writing-version-constraints
+
 Initial Configuration
 ---------------------
 
@@ -101,6 +130,10 @@ the framework version:
     },
 
 Then, run the ``composer update`` command.
+
+.. note:: If you fix the version number like ``"codeigniter4/framework": "4.4.8"``
+    in your **composer.json**, ``composer update``  command will not update the
+    framework. See `Writing Version Constraints`_ for how to specify the version.
 
 Pros
 ----
