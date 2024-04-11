@@ -221,7 +221,7 @@ class CLI
      *
      * @return string The user input
      */
-    public static function prompt(string $field, $options = null, $validation = null): string
+    public static function prompt(string $field, $options = null, $validation = null, ?string $DBGroup = null): string
     {
         $extraOutput = '';
         $default     = '';
@@ -261,8 +261,8 @@ class CLI
         $input = trim(static::$io->input()) ?: (string) $default;
 
         if ($validation !== []) {
-            while (! static::validate('"' . trim($field) . '"', $input, $validation)) {
-                $input = static::prompt($field, $options, $validation);
+            while (! static::validate('"' . trim($field) . '"', $input, $validation, $DBGroup)) {
+                $input = static::prompt($field, $options, $validation, $DBGroup);
             }
         }
 
@@ -407,7 +407,7 @@ class CLI
      * @param string       $value Input value
      * @param array|string $rules Validation rules
      */
-    protected static function validate(string $field, string $value, $rules): bool
+    protected static function validate(string $field, string $value, $rules, ?string $DBGroup = null): bool
     {
         $label      = $field;
         $field      = 'temp';
@@ -418,7 +418,7 @@ class CLI
                 'rules' => $rules,
             ],
         ]);
-        $validation->run([$field => $value]);
+        $validation->run([$field => $value], null, $DBGroup);
 
         if ($validation->hasError($field)) {
             static::error($validation->getError($field));
