@@ -411,6 +411,19 @@ final class FactoriesTest extends CIUnitTestCase
         $this->assertInstanceOf(EntityModel::class, $model);
     }
 
+    public function testDefineAndGet(): void
+    {
+        Factories::define(
+            'models',
+            UserModel::class,
+            EntityModel::class
+        );
+
+        $model = Factories::get('models', UserModel::class);
+
+        $this->assertInstanceOf(EntityModel::class, $model);
+    }
+
     public function testGetComponentInstances()
     {
         Factories::config('App');
