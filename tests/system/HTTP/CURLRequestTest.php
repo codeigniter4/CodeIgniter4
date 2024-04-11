@@ -45,7 +45,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $app = new App();
 
         $config               = new ConfigCURLRequest();
-        $config->shareOptions = true;
+        $config->shareOptions = false;
         Factories::injectMock('config', 'CURLRequest', $config);
 
         return new MockCURLRequest(($app), $uri, new Response($app), $options);
@@ -224,6 +224,23 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('https://realestate2.example.com', $request->curl_options[CURLOPT_URL]);
         $this->assertSame('studio=1', $request->curl_options[CURLOPT_POSTFIELDS]);
         $this->assertSame('CodeIgniter Framework v4', $request->curl_options[CURLOPT_USERAGENT]);
+    }
+
+    public function testHeaderContentLengthNotSharedBetweenRequests(): void
+    {
+        $options = [
+            'base_uri' => 'http://www.foo.com/api/v1/',
+        ];
+        $request = $this->getRequest($options);
+
+        $request->post('example', [
+            'form_params' => [
+                'q' => 'keyword',
+            ],
+        ]);
+        $request->get('example');
+
+        $this->assertNull($request->header('Content-Length'));
     }
 
     /**
@@ -943,6 +960,21 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
         $this->assertSame('name=George', $request->curl_options[CURLOPT_POSTFIELDS]);
     }
 
+    public function testBodyIsResetOnSecondRequest(): void
+    {
+        $request = $this->getRequest([
+            'base_uri' => 'http://www.foo.com/api/v1/',
+            'delay'    => 100,
+        ]);
+        $request->setBody('name=George');
+        $request->setOutput('Hi there');
+
+        $request->post('answer');
+        $request->post('answer');
+
+        $this->assertArrayNotHasKey(CURLOPT_POSTFIELDS, $request->curl_options);
+    }
+
     public function testResponseHeaders(): void
     {
         $request = $this->getRequest([
@@ -1062,7 +1094,6 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
             $expected,
             $this->request->curl_options[CURLOPT_POSTFIELDS]
         );
-        $this->assertSame($expected, $this->request->getBody());
     }
 
     public function testSetJSON(): void
@@ -1081,8 +1112,6 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
             $expected,
             $this->request->curl_options[CURLOPT_POSTFIELDS]
         );
-        $this->assertSame($expected, $this->request->getBody());
-
         $this->assertSame(
             'Content-Type: application/json',
             $this->request->curl_options[CURLOPT_HTTPHEADER][0]
