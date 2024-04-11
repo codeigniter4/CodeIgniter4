@@ -82,7 +82,8 @@ Whenever there is a new release, then from the command line in your project root
 
     composer update
 
-Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
+Read the :doc:`upgrade instructions <upgrading>` and :doc:`change log <../changelogs/index>`,
+and check Breaking Changes and Enhancements.
 
 Pros
 ----
@@ -215,7 +216,8 @@ Whenever there is a new release, then from the command line in your project root
 
     composer update
 
-Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
+Read the :doc:`upgrade instructions <upgrading>` and :doc:`change log <../changelogs/index>`,
+and check Breaking Changes and Enhancements.
 
 Pros
 ----
