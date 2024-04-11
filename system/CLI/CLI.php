@@ -262,7 +262,7 @@ class CLI
 
         if ($validation !== []) {
             while (! static::validate('"' . trim($field) . '"', $input, $validation, $DBGroup )) {
-                $input = static::prompt($field, $options, $validation, $DBGroup);
+                $input = static::prompt( $field, $options, $validation, $DBGroup);
             }
         }
 
