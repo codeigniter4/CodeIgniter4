@@ -35,7 +35,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        Services::reset();
+        $this->resetServices();
         $this->request = $this->getRequest();
     }
 
@@ -552,6 +552,21 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame(2, $options[CURLOPT_SSL_VERIFYHOST]);
     }
 
+    public function testNoSSL(): void
+    {
+        $this->request->request('get', 'http://example.com', [
+            'verify' => false,
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_SSL_VERIFYPEER, $options);
+        $this->assertFalse($options[CURLOPT_SSL_VERIFYPEER]);
+
+        $this->assertArrayHasKey(CURLOPT_SSL_VERIFYHOST, $options);
+        $this->assertSame(0, $options[CURLOPT_SSL_VERIFYHOST]);
+    }
+
     public function testSSLWithBadKey(): void
     {
         $file = 'something_obviously_bogus';
@@ -797,6 +812,21 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
 
         $this->assertSame(200, $response->getStatusCode());
+    }
+
+    public function testSendProxied(): void
+    {
+        $request = $this->getRequest([
+            'base_uri' => 'http://www.foo.com/api/v1/',
+            'delay'    => 100,
+        ]);
+
+        $output = "HTTP/1.1 200 Connection established
+Proxy-Agent: Fortinet-Proxy/1.0\x0d\x0a\x0d\x0aHTTP/1.1 200 OK\x0d\x0a\x0d\x0aHi there";
+        $request->setOutput($output);
+
+        $response = $request->get('answer');
+        $this->assertSame('Hi there', $response->getBody());
     }
 
     /**
@@ -1082,7 +1112,6 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
             $expected,
             $this->request->curl_options[CURLOPT_POSTFIELDS]
         );
-
         $this->assertSame(
             'Content-Type: application/json',
             $this->request->curl_options[CURLOPT_HTTPHEADER][0]
@@ -1113,6 +1142,18 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
         $this->assertSame(CURL_HTTP_VERSION_1_1, $options[CURLOPT_HTTP_VERSION]);
     }
 
+    public function testHTTPv2(): void
+    {
+        $this->request->request('POST', '/post', [
+            'version' => 2.0,
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_HTTP_VERSION, $options);
+        $this->assertSame(CURL_HTTP_VERSION_2_0, $options[CURLOPT_HTTP_VERSION]);
+    }
+
     public function testCookieOption(): void
     {
         $holder = SUPPORTPATH . 'HTTP/Files/CookiesHolder.txt';
@@ -1140,6 +1181,32 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
 
         $this->assertArrayHasKey(CURLOPT_USERAGENT, $options);
         $this->assertSame($agent, $options[CURLOPT_USERAGENT]);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/8347
+     */
+    public function testMultipleHTTP100(): void
+    {
+        $jsonBody = '{"name":"John Doe","age":30}';
+
+        $output = "HTTP/1.1 100 Continue
+Mark bundle as not supporting multiuse
+HTTP/1.1 100 Continue
+Mark bundle as not supporting multiuse
+HTTP/1.1 200 OK
+Server: Werkzeug/2.2.2 Python/3.7.17
+Date: Sun, 28 Jan 2024 06:05:36 GMT
+Content-Type: application/json
+Content-Length: 33\r\n\r\n" . $jsonBody;
+
+        $this->request->setOutput($output);
+
+        $response = $this->request->request('GET', 'http://example.com');
+
+        $this->assertSame($jsonBody, $response->getBody());
+
+        $this->assertSame(200, $response->getStatusCode());
     }
 
     public function testGetHeaderLineContentType(): void
