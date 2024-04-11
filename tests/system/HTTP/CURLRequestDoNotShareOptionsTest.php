@@ -29,7 +29,7 @@ use CURLFile;
  */
 final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
 {
-    private CURLRequest $request;
+    private MockCURLRequest $request;
 
     protected function setUp(): void
     {
@@ -39,7 +39,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->request = $this->getRequest();
     }
 
-    protected function getRequest(array $options = [])
+    protected function getRequest(array $options = []): MockCURLRequest
     {
         $uri = isset($options['base_uri']) ? new URI($options['base_uri']) : new URI();
         $app = new App();
@@ -404,20 +404,20 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
     public function testAuthDigestOption(): void
     {
         $output = "HTTP/1.1 401 Unauthorized
-		Server: ddos-guard
-		Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
-		WWW-Authenticate: Digest\x0d\x0a\x0d\x0aHTTP/1.1 200 OK
-		Server: ddos-guard
-		Connection: keep-alive
-		Keep-Alive: timeout=60
-		Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
-		Date: Tue, 07 Jul 2020 15:13:14 GMT
-		Expires: Thu, 19 Nov 1981 08:52:00 GMT
-		Cache-Control: no-store, no-cache, must-revalidate
-		Pragma: no-cache
-		Set-Cookie: PHPSESSID=80pd3hlg38mvjnelpvokp9lad0; path=/
-		Content-Type: application/xml; charset=utf-8
-		Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>";
+Server: ddos-guard
+Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
+WWW-Authenticate: Digest\x0d\x0a\x0d\x0aHTTP/1.1 200 OK
+Server: ddos-guard
+Connection: keep-alive
+Keep-Alive: timeout=60
+Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
+Date: Tue, 07 Jul 2020 15:13:14 GMT
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: PHPSESSID=80pd3hlg38mvjnelpvokp9lad0; path=/
+Content-Type: application/xml; charset=utf-8
+Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>";
 
         $this->request->setOutput($output);
 
@@ -457,20 +457,20 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
     public function testSetAuthDigest(): void
     {
         $output = "HTTP/1.1 401 Unauthorized
-		Server: ddos-guard
-		Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
-		WWW-Authenticate: Digest\x0d\x0a\x0d\x0aHTTP/1.1 200 OK
-		Server: ddos-guard
-		Connection: keep-alive
-		Keep-Alive: timeout=60
-		Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
-		Date: Tue, 07 Jul 2020 15:13:14 GMT
-		Expires: Thu, 19 Nov 1981 08:52:00 GMT
-		Cache-Control: no-store, no-cache, must-revalidate
-		Pragma: no-cache
-		Set-Cookie: PHPSESSID=80pd3hlg38mvjnelpvokp9lad0; path=/
-		Content-Type: application/xml; charset=utf-8
-		Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>";
+Server: ddos-guard
+Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
+WWW-Authenticate: Digest\x0d\x0a\x0d\x0aHTTP/1.1 200 OK
+Server: ddos-guard
+Connection: keep-alive
+Keep-Alive: timeout=60
+Set-Cookie: __ddg1=z177j4mLtqzC07v0zviU; Domain=.site.ru; HttpOnly; Path=/; Expires=Wed, 07-Jul-2021 15:13:14 GMT
+Date: Tue, 07 Jul 2020 15:13:14 GMT
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: PHPSESSID=80pd3hlg38mvjnelpvokp9lad0; path=/
+Content-Type: application/xml; charset=utf-8
+Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>";
 
         $this->request->setOutput($output);
 
@@ -784,7 +784,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 
         $responseHeaderKeys = [
             'Cache-Control',
-            'Content-Type',
             'Server',
             'Connection',
             'Keep-Alive',
@@ -792,6 +791,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
             'Date',
             'Expires',
             'Pragma',
+            'Content-Type',
             'Transfer-Encoding',
         ];
         $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
@@ -823,10 +823,10 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello1</title>";
 
         $responseHeaderKeys = [
             'Cache-Control',
-            'Content-Type',
             'Server',
             'Expires',
             'Pragma',
+            'Content-Type',
             'Transfer-Encoding',
         ];
         $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
@@ -846,8 +846,8 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
 
         $responseHeaderKeys = [
             'Cache-Control',
-            'Content-Type',
             'Expires',
+            'Content-Type',
             'Transfer-Encoding',
         ];
         $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
@@ -1140,5 +1140,22 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
 
         $this->assertArrayHasKey(CURLOPT_USERAGENT, $options);
         $this->assertSame($agent, $options[CURLOPT_USERAGENT]);
+    }
+
+    public function testGetHeaderLineContentType(): void
+    {
+        $output = 'HTTP/2 200
+date: Thu, 11 Apr 2024 07:26:00 GMT
+content-type: text/html; charset=UTF-8
+cache-control: no-store, max-age=0, no-cache
+server: cloudflare
+content-encoding: br
+alt-svc: h3=":443"; ma=86400' . "\x0d\x0a\x0d\x0aResponse Body";
+
+        $this->request->setOutput($output);
+
+        $response = $this->request->request('get', 'http://example.com');
+
+        $this->assertSame('text/html; charset=UTF-8', $response->getHeaderLine('Content-Type'));
     }
 }

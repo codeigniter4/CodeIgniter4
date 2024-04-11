@@ -12907,11 +12907,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/HTTP/CLIRequestTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Access to an undefined property CodeIgniter\\\\HTTP\\\\CURLRequest\\:\\:\\$curl_options\\.$#',
-	'count' => 39,
-	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Assigning \'10\' directly on offset \'HTTP_CONTENT_LENGTH\' of \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
@@ -12928,16 +12923,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Assigning \'site1\\.com\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\CURLRequest\\:\\:setOutput\\(\\)\\.$#',
-	'count' => 3,
-	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequestDoNotShareOptionsTest\\:\\:getRequest\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
 ];
