@@ -26,10 +26,12 @@ use CURLFile;
  * @internal
  *
  * @group Others
+ *
+ * @no-final
  */
-final class CURLRequestTest extends CIUnitTestCase
+class CURLRequestTest extends CIUnitTestCase
 {
-    private MockCURLRequest $request;
+    protected MockCURLRequest $request;
 
     protected function setUp(): void
     {
