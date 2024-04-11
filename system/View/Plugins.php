@@ -85,7 +85,7 @@ class Plugins
      *
      * @param array{field?: string} $params
      */
-    public static function ValidationErrors(array $params = []): string
+    public static function validationErrors(array $params = []): string
     {
         $validator = service('validation');
         if ($params === []) {
