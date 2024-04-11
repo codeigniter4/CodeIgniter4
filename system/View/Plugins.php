@@ -57,7 +57,7 @@ class Plugins
     /**
      * Wrap helper function to use as view plugin.
      *
-     * @param array{email?: string, title?: string, attributes?: string} $params
+     * @param array{email?: string, title?: string, attributes?: array<string, string>|object|string} $params
      */
     public static function safeMailto(array $params = []): string
     {
