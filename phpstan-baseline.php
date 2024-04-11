@@ -5337,11 +5337,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Constructor of class CodeIgniter\\\\HTTP\\\\CURLRequest has an unused parameter \\$config\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequest\\:\\:__construct\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
