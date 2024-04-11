@@ -98,7 +98,7 @@ class Plugins
     /**
      * Wrap helper function to use as view plugin.
      *
-     * @param list<int|string> $params
+     * @param list<string> $params
      *
      * @return false|string
      */
