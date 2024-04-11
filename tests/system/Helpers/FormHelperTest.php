@@ -80,11 +80,11 @@ final class FormHelperTest extends CIUnitTestCase
         $this->setRequest();
         $this->setCsrfFilter();
 
-        $Value    = csrf_hash();
-        $Name     = csrf_token();
+        $value    = csrf_hash();
+        $name     = csrf_token();
         $expected = <<<EOH
             <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
-            <input type="hidden" name="{$Name}" value="{$Value}">
+            <input type="hidden" name="{$name}" value="{$value}">
             EOH;
 
         $attributes = [
@@ -133,11 +133,11 @@ final class FormHelperTest extends CIUnitTestCase
         $this->setRequest();
         $this->setCsrfFilter();
 
-        $Value    = csrf_hash();
-        $Name     = csrf_token();
+        $value    = csrf_hash();
+        $name     = csrf_token();
         $expected = <<<EOH
             <form action="http://example.com/index.php" name="form" id="form" method="POST" accept-charset="utf-8">
-            <input type="hidden" name="{$Name}" value="{$Value}">
+            <input type="hidden" name="{$name}" value="{$value}">
             EOH;
         $attributes = [
             'name'   => 'form',
@@ -168,11 +168,11 @@ final class FormHelperTest extends CIUnitTestCase
         $this->setRequest();
         $this->setCsrfFilter();
 
-        $Value    = csrf_hash();
-        $Name     = csrf_token();
+        $value    = csrf_hash();
+        $name     = csrf_token();
         $expected = <<<EOH
             <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="post" accept-charset="utf-8">
-            <input type="hidden" name="{$Name}" value="{$Value}">
+            <input type="hidden" name="{$name}" value="{$value}">
             EOH;
         $attributes = [
             'name' => 'form',
@@ -207,11 +207,11 @@ final class FormHelperTest extends CIUnitTestCase
         $this->setRequest();
         $this->setCsrfFilter();
 
-        $Value    = csrf_hash();
-        $Name     = csrf_token();
+        $value    = csrf_hash();
+        $name     = csrf_token();
         $expected = <<<EOH
             <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
-            <input type="hidden" name="{$Name}" value="{$Value}">
+            <input type="hidden" name="{$name}" value="{$value}">
             <input type="hidden" name="foo" value="bar">
 
             EOH;
@@ -251,11 +251,11 @@ final class FormHelperTest extends CIUnitTestCase
         $this->setRequest();
         $this->setCsrfFilter();
 
-        $Value    = csrf_hash();
-        $Name     = csrf_token();
+        $value    = csrf_hash();
+        $name     = csrf_token();
         $expected = <<<EOH
             <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
-            <input type="hidden" name="{$Name}" value="{$Value}">
+            <input type="hidden" name="{$name}" value="{$value}">
             EOH;
         $attributes = [
             'name'   => 'form',
