@@ -58,12 +58,12 @@ class Routes extends BaseCollector
      *          method: string,
      *          paramCount: int,
      *          truePCount: int,
-     *          params: array<array{
+     *          params: list<array{
      *              name: string,
      *              value: mixed
      *          }>
      *      }>,
-     *      routes: array<array{
+     *      routes: list<array{
      *          method: string,
      *          route: string,
      *          handler: string
