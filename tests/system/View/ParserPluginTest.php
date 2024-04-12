@@ -93,6 +93,10 @@ final class ParserPluginTest extends CIUnitTestCase
         $template = '{+ lang Number.terabyteAbbr +}';
 
         $this->assertSame('TB', $this->parser->renderString($template));
+
+        $template = '{+ lang Time.years 2024 +}';
+
+        $this->assertSame('2,024 years', $this->parser->renderString($template));
     }
 
     public function testValidationErrors(): void
@@ -122,6 +126,10 @@ final class ParserPluginTest extends CIUnitTestCase
         $template = '{+ siteURL +}';
 
         $this->assertSame('http://example.com/index.php', $this->parser->renderString($template));
+
+        $template = '{+ siteURL login +}';
+
+        $this->assertSame('http://example.com/index.php/login', $this->parser->renderString($template));
     }
 
     public function testValidationErrorsList(): void
