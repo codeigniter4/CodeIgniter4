@@ -9727,36 +9727,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/View/Parser.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Plugins\\:\\:ValidationErrors\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Plugins.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Plugins\\:\\:lang\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Plugins.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Plugins\\:\\:mailto\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Plugins.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Plugins\\:\\:route\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Plugins.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Plugins\\:\\:safeMailto\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Plugins.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Plugins\\:\\:siteURL\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Plugins.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\View\\\\RendererInterface\\:\\:render\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/RendererInterface.php',
