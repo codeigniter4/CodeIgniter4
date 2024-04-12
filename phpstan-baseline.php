@@ -4122,11 +4122,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/Seeder.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/BaseExceptionHandler.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Debug\\\\BaseExceptionHandler\\:\\:collectVars\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Debug/BaseExceptionHandler.php',
