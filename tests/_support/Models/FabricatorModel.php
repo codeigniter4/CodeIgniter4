@@ -28,8 +28,10 @@ class FabricatorModel extends Model
         'description',
     ];
 
-    // Return a faked entity
-    public function fake(Generator &$faker)
+    /**
+     * Return a faked entity
+     */
+    public function fake(Generator &$faker): object
     {
         return (object) [
             'name'        => $faker->ipv4(),
