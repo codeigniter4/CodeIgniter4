@@ -88,9 +88,9 @@ the framework version:
 
 Then, run the ``composer update`` command.
 
-.. note:: If you fix the version number like ``"codeigniter4/framework": "4.4.8"``
+.. note:: When you use a fixed version number like ``"codeigniter4/framework": "4.4.8"``
     in your **composer.json**, ``composer update`` command will not update the
-    framework. See `Writing Version Constraints`_ for how to specify the version.
+    framework to the latest version. See `Writing Version Constraints`_ for how to specify the version.
 
 .. _Writing Version Constraints: https://getcomposer.org/doc/articles/versions.md#writing-version-constraints
 
@@ -131,9 +131,9 @@ the framework version:
 
 Then, run the ``composer update`` command.
 
-.. note:: If you fix the version number like ``"codeigniter4/framework": "4.4.8"``
+.. note:: When you use a fixed version number like ``"codeigniter4/framework": "4.4.8"``
     in your **composer.json**, ``composer update`` command will not update the
-    framework. See `Writing Version Constraints`_ for how to specify the version.
+    framework to the latest version. See `Writing Version Constraints`_ for how to specify the version.
 
 Pros
 ----
@@ -272,7 +272,7 @@ and check Breaking Changes and Enhancements.
 Upgrading to a Specified Version
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-For example, you may want to upgrade to v4.4.8 after v4.5.0 has been released.
+For example, you may want to upgrade from v4.4.7 to v4.4.8 after v4.5.0 has been released.
 
 In that case, open **composer.json** in your project root folder, and specify
 the framework version:
