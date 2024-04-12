@@ -51,6 +51,25 @@ class Routes extends BaseCollector
     /**
      * Returns the data of this collector to be formatted in the toolbar
      *
+     * @return array{
+     *      matchedRoute: array<array{
+     *          directory: string,
+     *          controller: string,
+     *          method: string,
+     *          paramCount: int,
+     *          truePCount: int,
+     *          params: list<array{
+     *              name: string,
+     *              value: mixed
+     *          }>
+     *      }>,
+     *      routes: list<array{
+     *          method: string,
+     *          route: string,
+     *          handler: string
+     *      }>
+     * }
+     *
      * @throws ReflectionException
      */
     public function display(): array

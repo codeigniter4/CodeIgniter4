@@ -4447,11 +4447,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Logs.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\Toolbar\\\\Collectors\\\\Routes\\:\\:display\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Routes.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Debug\\\\Toolbar\\\\Collectors\\\\Timers\\:\\:formatTimelineData\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Timers.php',
