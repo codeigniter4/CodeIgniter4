@@ -51,7 +51,7 @@ interface FabricatorModel
      *
      * @throws ReflectionException
      */
-    public function insert($data = null, bool $returnID = true);
+    public function insert($row = null, bool $returnID = true);
 
     /**
      * The following properties and methods are optional, but if present should
