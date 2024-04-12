@@ -89,7 +89,7 @@ the framework version:
 Then, run the ``composer update`` command.
 
 .. note:: If you fix the version number like ``"codeigniter4/framework": "4.4.8"``
-    in your **composer.json**, ``composer update``  command will not update the
+    in your **composer.json**, ``composer update`` command will not update the
     framework. See `Writing Version Constraints`_ for how to specify the version.
 
 .. _Writing Version Constraints: https://getcomposer.org/doc/articles/versions.md#writing-version-constraints
@@ -132,7 +132,7 @@ the framework version:
 Then, run the ``composer update`` command.
 
 .. note:: If you fix the version number like ``"codeigniter4/framework": "4.4.8"``
-    in your **composer.json**, ``composer update``  command will not update the
+    in your **composer.json**, ``composer update`` command will not update the
     framework. See `Writing Version Constraints`_ for how to specify the version.
 
 Pros
