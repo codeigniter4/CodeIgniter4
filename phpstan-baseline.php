@@ -5332,11 +5332,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequest\\:\\:__construct\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequest\\:\\:applyBody\\(\\) has parameter \\$curlOptions with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
@@ -12869,36 +12864,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Assigning \'10\' directly on offset \'HTTP_CONTENT_LENGTH\' of \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Assigning \'en\\-US\' directly on offset \'HTTP_ACCEPT_LANGUAGE\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Assigning \'gzip, deflate, br\' directly on offset \'HTTP_ACCEPT_ENCODING\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Assigning \'site1\\.com\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequestDoNotShareOptionsTest\\:\\:getRequest\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestDoNotShareOptionsTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Access to an undefined property CodeIgniter\\\\HTTP\\\\CURLRequest\\:\\:\\$curl_options\\.$#',
-	'count' => 39,
-	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Assigning \'10\' directly on offset \'HTTP_CONTENT_LENGTH\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
 ];
 $ignoreErrors[] = [
@@ -12913,21 +12878,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Assigning \'site1\\.com\' directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\CURLRequest\\:\\:setOutput\\(\\)\\.$#',
-	'count' => 4,
-	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequestTest\\:\\:getRequest\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequestTest\\:\\:getRequest\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/CURLRequestTest.php',
 ];
