@@ -8602,16 +8602,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/Fabricator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\Interfaces\\\\FabricatorModel\\:\\:find\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Interfaces/FabricatorModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\Interfaces\\\\FabricatorModel\\:\\:insert\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Interfaces/FabricatorModel.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Test\\\\Mock\\\\MockBuilder\\:\\:\\$supportedIgnoreStatements type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Mock/MockBuilder.php',
@@ -10385,11 +10375,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property Tests\\\\Support\\\\Models\\\\EventModel\\:\\:\\$tokens has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Models/EventModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method Tests\\\\Support\\\\Models\\\\FabricatorModel\\:\\:fake\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Models/FabricatorModel.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property Tests\\\\Support\\\\Models\\\\JobModel\\:\\:\\$description has no type specified\\.$#',
