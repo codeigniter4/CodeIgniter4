@@ -14,7 +14,7 @@ transactions.
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 CodeIgniter's Approach to Transactions
 ======================================
@@ -63,6 +63,21 @@ of one group will not affect any others.
 Strict Mode can be disabled as follows:
 
 .. literalinclude:: transactions/002.php
+
+.. _transactions-resetting-transaction-status:
+
+Resetting Transaction Status
+----------------------------
+
+.. versionadded:: 4.6.0
+
+When strict mode is enabled, if one transaction fails, all subsequent transactions
+will be rolled back.
+
+If you wan to restart transactions after a failure, you can reset the transaction
+status:
+
+.. literalinclude:: transactions/009.php
 
 .. _transactions-managing-errors:
 
