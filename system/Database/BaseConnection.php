@@ -898,6 +898,16 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
+     * Reset transaction status - to restart transactions after strict mode failure
+     */
+    public function resetTransStatus(): static
+    {
+        $this->transStatus = true;
+
+        return $this;
+    }
+
+    /**
      * Begin Transaction
      */
     abstract protected function _transBegin(): bool;
