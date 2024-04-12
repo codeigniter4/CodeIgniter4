@@ -29,7 +29,9 @@ $minor               = $versionParts[0] . '.' . $versionParts[1];
 $isMinorUpdate       = ($minorCurrent !== $minor);
 
 // Creates a branch for release.
-system('git switch develop');
+if (! $isMinorUpdate) {
+    system('git switch develop');
+}
 system('git switch -c docs-changelog-' . $version);
 system('git switch docs-changelog-' . $version);
 
