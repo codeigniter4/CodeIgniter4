@@ -814,7 +814,7 @@ Consider this URI::
 
     example.com/index.php/helloworld/hello/1
 
-In the above example, when you send a HTTP request with **GET** method,
+In the above example, when you send an HTTP request with **GET** method,
 Auto Routing would attempt to find a controller named ``App\Controllers\Helloworld``
 and executes ``getHello()`` method with passing ``'1'`` as the first argument.
 
@@ -918,7 +918,7 @@ or to use :ref:`auto-routing-improved`,
     Auto Routing (Legacy) feature. It is easy to create vulnerable apps where controller filters
     or CSRF protection are bypassed.
 
-.. important:: Auto Routing (Legacy) routes a HTTP request with **any** HTTP method to a controller method.
+.. important:: Auto Routing (Legacy) routes an HTTP request with **any** HTTP method to a controller method.
 
 Enable Auto Routing (Legacy)
 ============================
