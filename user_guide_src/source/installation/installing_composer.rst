@@ -65,6 +65,35 @@ If you omit the "project-root" argument, the command will create an
     that are not needed in the production environment. This will greatly reduce
     the vendor folder size.
 
+Installing Previous Versions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For example, you may want to install v4.4.8 after v4.5.0 has been released.
+
+In that case, specify the version in the command:
+
+.. code-block:: console
+
+    composer create-project codeigniter4/appstarter:4.4.8 project-root
+
+Then, open **composer.json** in your project root folder, and specify
+the framework version:
+
+.. code-block:: text
+
+    "require": {
+        ...
+        "codeigniter4/framework": "4.4.8"
+    },
+
+Then, run the ``composer update`` command.
+
+.. note:: When you use a fixed version number like ``"codeigniter4/framework": "4.4.8"``
+    in your **composer.json**, ``composer update`` command will not update the
+    framework to the latest version. See `Writing Version Constraints`_ for how to specify the version.
+
+.. _Writing Version Constraints: https://getcomposer.org/doc/articles/versions.md#writing-version-constraints
+
 Initial Configuration
 ---------------------
 
@@ -82,7 +111,29 @@ Whenever there is a new release, then from the command line in your project root
 
     composer update
 
-Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
+Read the :doc:`upgrade instructions <upgrading>` and :doc:`change log <../changelogs/index>`,
+and check Breaking Changes and Enhancements.
+
+Upgrading to a Specified Version
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For example, you may want to upgrade from v4.4.7 to v4.4.8 after v4.5.0 has been released.
+
+In that case, open **composer.json** in your project root folder, and specify
+the framework version:
+
+.. code-block:: text
+
+    "require": {
+        ...
+        "codeigniter4/framework": "4.4.8"
+    },
+
+Then, run the ``composer update`` command.
+
+.. note:: When you use a fixed version number like ``"codeigniter4/framework": "4.4.8"``
+    in your **composer.json**, ``composer update`` command will not update the
+    framework to the latest version. See `Writing Version Constraints`_ for how to specify the version.
 
 Pros
 ----
@@ -215,7 +266,25 @@ Whenever there is a new release, then from the command line in your project root
 
     composer update
 
-Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
+Read the :doc:`upgrade instructions <upgrading>` and :doc:`change log <../changelogs/index>`,
+and check Breaking Changes and Enhancements.
+
+Upgrading to a Specified Version
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For example, you may want to upgrade from v4.4.7 to v4.4.8 after v4.5.0 has been released.
+
+In that case, open **composer.json** in your project root folder, and specify
+the framework version:
+
+.. code-block:: text
+
+    "require": {
+        ...
+        "codeigniter4/framework": "4.4.8"
+    },
+
+Then, run the ``composer update`` command.
 
 Pros
 ----
