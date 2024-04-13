@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
     bootstrap="system/Test/bootstrap.php"
     backupGlobals="false"
+    beStrictAboutOutputDuringTests="true"
     colors="true"
-    stopOnError="false"
-    stopOnFailure="false"
-    stopOnIncomplete="false"
-    stopOnSkipped="false"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+    columns="max"
+    failOnRisky="true"
+    failOnWarning="true"
     cacheDirectory="build/.phpunit.cache">
     <coverage includeUncoveredFiles="true">
         <report>
