@@ -9,7 +9,7 @@
     stopOnIncomplete="false"
     stopOnSkipped="false"
     xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
-    cacheDirectory=".phpunit.cache">
+    cacheDirectory="build/.phpunit.cache">
     <coverage includeUncoveredFiles="true">
         <report>
             <clover outputFile="build/logs/clover.xml"/>
