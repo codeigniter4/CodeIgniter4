@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.4/phpunit.xsd"
-         bootstrap="system/Test/bootstrap.php" backupGlobals="false"
-         beStrictAboutOutputDuringTests="true" colors="true" columns="max"
-         failOnRisky="true" failOnWarning="true"
-         cacheDirectory="build/.phpunit.cache">
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.4/phpunit.xsd"
+    bootstrap="system/Test/bootstrap.php"
+    backupGlobals="false"
+    beStrictAboutOutputDuringTests="true"
+    colors="true"
+    columns="max"
+    failOnRisky="true"
+    failOnWarning="true"
+    cacheDirectory="build/.phpunit.cache">
     <coverage ignoreDeprecatedCodeUnits="true">
         <report>
             <clover outputFile="build/logs/clover.xml"/>
