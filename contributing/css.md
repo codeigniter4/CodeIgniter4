@@ -10,7 +10,7 @@ Open your terminal, and navigate to CodeIgniter's root folder. To
 generate the CSS file, use the following command:
 
 ```console
-sass --no-source-map admin/css/debug-toolbar/toolbar.scss system/Debug/Toolbar/Views/toolbar.css`
+sass --no-source-map admin/css/debug-toolbar/toolbar.scss system/Debug/Toolbar/Views/toolbar.css
 ```
 
 Details:

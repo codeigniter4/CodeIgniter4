@@ -28,8 +28,8 @@
     width: 36px;
 
     // Spacing
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
 
     // Content
     clear: both;
@@ -85,6 +85,8 @@
         display: flex;
         font-weight: normal;
         margin: 0 0 0 auto;
+        padding: 0;
+        font-family: $base-font;
 
         svg {
             width: 16px;
