@@ -4,7 +4,7 @@
          bootstrap="system/Test/bootstrap.php" backupGlobals="false"
          beStrictAboutOutputDuringTests="true" colors="true" columns="max"
          failOnRisky="true" failOnWarning="true"
-         cacheDirectory=".phpunit.cache">
+         cacheDirectory="build/.phpunit.cache">
     <coverage ignoreDeprecatedCodeUnits="true">
         <report>
             <clover outputFile="build/logs/clover.xml"/>
