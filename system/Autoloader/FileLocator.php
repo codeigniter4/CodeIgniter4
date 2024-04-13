@@ -265,14 +265,22 @@ class FileLocator implements FileLocatorInterface
     }
 
     /**
-     * Find the qualified name of a file according to
-     * the namespace of the first matched namespace path.
+     * Find the qualified name of a file according to the namespace of the first
+     * matched namespace path.
+     *
+     * This does not find files in `CodeIgniter` namespace.
      *
      * @return false|string The qualified name or false if the path is not found
      */
     public function findQualifiedNameFromPath(string $path)
     {
         $path = realpath($path) ?: $path;
+
+        // Does not search `CodeIgniter` namespace to prevent from loading twice.
+        $systemPath = $this->autoloader->getNamespace('CodeIgniter')[0];
+        if (str_starts_with($path, $systemPath)) {
+            return false;
+        }
 
         if (! is_file($path)) {
             return false;
