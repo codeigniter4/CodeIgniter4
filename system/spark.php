@@ -1,5 +1,7 @@
-#!/usr/bin/env php
 <?php
+
+
+declare(strict_types=1);
 
 /**
  * This file is part of CodeIgniter 4 framework.
@@ -9,6 +11,9 @@
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+use CodeIgniter\Boot;
+use Config\Paths;
 
 /*
  * --------------------------------------------------------------------
@@ -25,7 +30,7 @@
  */
 
 // Refuse to run when called from php-cgi
-if (strpos(PHP_SAPI, 'cgi') === 0) {
+if (str_starts_with(PHP_SAPI, 'cgi')) {
     exit("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
 }
 
@@ -80,9 +85,9 @@ chdir(FCPATH);
 require FCPATH . '../app/Config/Paths.php';
 // ^^^ Change this line if you move your application folder
 
-$paths = new Config\Paths();
+$paths = new Paths();
 
 // LOAD THE FRAMEWORK BOOTSTRAP FILE
 require $paths->systemDirectory . '/Boot.php';
 
-exit(CodeIgniter\Boot::bootSpark($paths));
+exit(Boot::bootSpark($paths));

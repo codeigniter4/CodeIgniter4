@@ -134,6 +134,7 @@ return static function (RectorConfig $rectorConfig): void {
         // check on constant compare
         UnwrapFutureCompatibleIfPhpVersionRector::class => [
             __DIR__ . '/system/Autoloader/Autoloader.php',
+            __DIR__ . '/system/spark.php',
         ],
 
         UnderscoreToCamelCaseVariableNameRector::class => [
