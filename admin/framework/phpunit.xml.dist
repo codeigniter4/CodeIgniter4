@@ -32,6 +32,15 @@
         <testdoxText outputFile="build/logs/testdox.txt"/>
         <junit outputFile="build/logs/logfile.xml"/>
     </logging>
+    <source>
+        <include>
+            <directory suffix=".php">./app</directory>
+        </include>
+        <exclude>
+            <directory suffix=".php">./app/Views</directory>
+            <file>./app/Config/Routes.php</file>
+        </exclude>
+    </source>
     <php>
         <server name="app.baseURL" value="http://example.com/"/>
         <!-- Directory containing phpunit.xml -->
@@ -50,13 +59,4 @@
             <env name="database.tests.DBPrefix" value="tests_"/>
             -->
     </php>
-    <source>
-        <include>
-            <directory suffix=".php">./app</directory>
-        </include>
-        <exclude>
-            <directory suffix=".php">./app/Views</directory>
-            <file>./app/Config/Routes.php</file>
-        </exclude>
-    </source>
 </phpunit>
