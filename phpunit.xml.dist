@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.4/phpunit.xsd"
-         bootstrap="system/Test/bootstrap.php" backupGlobals="false"
-         beStrictAboutOutputDuringTests="true" colors="true" columns="max"
-         failOnRisky="true" failOnWarning="true"
-         cacheDirectory=".phpunit.cache">
-    <coverage ignoreDeprecatedCodeUnits="true">
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+    bootstrap="system/Test/bootstrap.php"
+    backupGlobals="false"
+    beStrictAboutOutputDuringTests="true"
+    colors="true"
+    columns="max"
+    failOnRisky="true"
+    failOnWarning="true"
+    cacheDirectory="build/.phpunit.cache">
+    <coverage
+        includeUncoveredFiles="true"
+        pathCoverage="false"
+        ignoreDeprecatedCodeUnits="true"
+        disableCodeCoverageIgnore="true">
         <report>
             <clover outputFile="build/logs/clover.xml"/>
             <html outputDirectory="build/coverage/html" highLowerBound="80"/>
