@@ -155,9 +155,7 @@ final class FromTest extends CIUnitTestCase
     }
 
     /**
-     * See https://github.com/codeigniter4/CodeIgniter4/issues/8697
-     *
-     * @return void
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/8697
      */
     public function testConstructorWithMultipleSegmentTableWithSQLSRV(): void
     {
