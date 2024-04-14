@@ -23,9 +23,9 @@ class Registrar
     /**
      * DB config array for testing purposes.
      *
-     * @var array
+     * @var array<string, array<string, array<string, bool|int|string>|bool|int|string>>
      */
-    protected static $dbConfig = [
+    protected static array $dbConfig = [
         'MySQLi' => [
             'DSN'      => '',
             'hostname' => '127.0.0.1',
@@ -126,15 +126,15 @@ class Registrar
     /**
      * Override database config
      *
-     * @return array
+     * @return array<string, array<string, bool|int|string>|bool|int|string>
      */
-    public static function Database()
+    public static function Database(): array
     {
         $config = [];
 
         // Under GitHub Actions, we can set an ENV var named 'DB'
         // so that we can test against multiple databases.
-        if (($group = getenv('DB')) && ! empty(self::$dbConfig[$group])) {
+        if (($group = getenv('DB')) && isset(self::$dbConfig[$group])) {
             $config['tests'] = self::$dbConfig[$group];
         }
 
@@ -146,9 +146,9 @@ class Registrar
      *
      * @see PublisherRestrictionsTest::testRegistrarsNotAllowed()
      *
-     * @return array
+     * @return array<string, array<string, string>>
      */
-    public static function Publisher()
+    public static function Publisher(): array
     {
         return [
             'restrictions' => [SUPPORTPATH => '*'],

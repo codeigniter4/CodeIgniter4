@@ -180,7 +180,9 @@ final class Factories
         if (isset(self::$aliases[$component][$alias])) {
             $class = self::$aliases[$component][$alias];
 
-            return self::$instances[$component][$class];
+            if (isset(self::$instances[$component][$class])) {
+                return self::$instances[$component][$class];
+            }
         }
 
         return self::__callStatic($component, [$alias]);

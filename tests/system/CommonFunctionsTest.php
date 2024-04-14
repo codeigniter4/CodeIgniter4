@@ -189,14 +189,14 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->enableHtml5();
     }
 
-    private function disableHtml5()
+    private function disableHtml5(): void
     {
         $doctypes        = new DocTypes();
         $doctypes->html5 = false;
         _solidus($doctypes);
     }
 
-    private function enableHtml5()
+    private function enableHtml5(): void
     {
         $doctypes = new DocTypes();
         _solidus($doctypes);

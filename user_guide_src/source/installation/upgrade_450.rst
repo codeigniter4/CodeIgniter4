@@ -88,7 +88,7 @@ you would get the error response::
         'http_errors' => false,
     ]);
     $response->getStatusCode(); // In previous versions: 200
-                                //     In this verrsion: 405
+                                //      In this version: 405
 
 .. _upgrade-450-nested-route-groups-and-options:
 
@@ -227,8 +227,9 @@ for details.
 Removed Deprecated Items
 ========================
 
-Some deprecated items have been removed. If you extend these classes and are
-using them, upgrade your code. See :ref:`ChangeLog <v450-removed-deprecated-items>` for details.
+Some deprecated items have been removed. If you are still using these items, or
+extending these classes, upgrade your code. See :ref:`ChangeLog <v450-removed-deprecated-items>`
+for details.
 
 Breaking Enhancements
 *********************
@@ -322,6 +323,8 @@ Others
     - The default value of ``DBCollat`` in ``$default`` has been change to ``utf8mb4_general_ci``.
     - The default value of ``DBCollat`` in ``$tests`` has been change to ``''``.
 - app/Config/Feature.php
+    - ``Config\Feature::$oldFilterOrder`` has been added. See
+      :ref:`filter-execution-order`.
     - ``Config\Feature::$limitZeroAsAll`` has been added. See
       :ref:`v450-query-builder-limit-0-behavior`.
     - ``Config\Feature::$multipleFilters`` has been removed, because now

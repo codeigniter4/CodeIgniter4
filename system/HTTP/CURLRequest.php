@@ -107,6 +107,8 @@ class CURLRequest extends OutgoingRequest
      *  - baseURI
      *  - timeout
      *  - any other request options to use as defaults.
+     *
+     * @param array<string, mixed> $options
      */
     public function __construct(App $config, URI $uri, ?ResponseInterface $response = null, array $options = [])
     {
@@ -116,7 +118,10 @@ class CURLRequest extends OutgoingRequest
 
         parent::__construct(Method::GET, $uri);
 
-        $this->responseOrig   = $response ?? new Response(config(App::class));
+        $this->responseOrig = $response ?? new Response($config);
+        // Remove the default Content-Type header.
+        $this->responseOrig->removeHeader('Content-Type');
+
         $this->baseURI        = $uri->useRawQueryString();
         $this->defaultOptions = $options;
 

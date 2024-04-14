@@ -57,7 +57,7 @@ class ClearDebugbar extends BaseCommand
     {
         helper('filesystem');
 
-        if (! delete_files(WRITEPATH . 'debugbar')) {
+        if (! delete_files(WRITEPATH . 'debugbar', false, true)) {
             // @codeCoverageIgnoreStart
             CLI::error('Error deleting the debugbar JSON files.');
             CLI::newLine();

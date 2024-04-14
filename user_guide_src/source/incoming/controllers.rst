@@ -11,7 +11,7 @@ Controllers are the heart of your application, as they determine how HTTP reques
 What is a Controller?
 *********************
 
-A Controller is simply a class file that handles a HTTP request.
+A Controller is simply a class file that handles an HTTP request.
 :doc:`URI Routing <routing>` associates a URI with a controller. It returns a
 view string or ``Response`` object.
 
@@ -477,7 +477,7 @@ without route definitions. The auto-routing is disabled by default.
     Auto Routing (Legacy). It is easy to create vulnerable apps where controller filters
     or CSRF protection are bypassed.
 
-.. important:: Auto Routing (Legacy) routes a HTTP request with **any** HTTP method to a controller method.
+.. important:: Auto Routing (Legacy) routes an HTTP request with **any** HTTP method to a controller method.
 
 .. important:: Since v4.5.0, if Auto Routing (Legacy) doesn't find the controller,
     it will throw ``PageNotFoundException`` exception before the Controller Filters

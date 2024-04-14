@@ -42,7 +42,8 @@ Upgrading
 
 Download a new copy of the framework, and then replace the **system** folder.
 
-Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
+Read the :doc:`upgrade instructions <upgrading>` and :doc:`change log <../changelogs/index>`,
+and check Breaking Changes and Enhancements.
 
 Pros
 ====

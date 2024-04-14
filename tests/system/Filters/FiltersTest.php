@@ -842,7 +842,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertContains('google', $filters['before']);
     }
 
-    public function testFiltersWithArguments()
+    public function testFiltersWithArguments(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -876,7 +876,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame('admin;super', $response->getBody());
     }
 
-    public function testFilterWithArgumentsIsDefined()
+    public function testFilterWithArgumentsIsDefined(): void
     {
         $this->expectException(ConfigException::class);
         $this->expectExceptionMessage('"role" already has arguments: admin,super');
@@ -901,7 +901,7 @@ final class FiltersTest extends CIUnitTestCase
         $filters->initialize('admin/user/bar');
     }
 
-    public function testFilterWithoutArgumentsIsDefined()
+    public function testFilterWithoutArgumentsIsDefined(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 

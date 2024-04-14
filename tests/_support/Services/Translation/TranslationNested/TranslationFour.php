@@ -15,7 +15,7 @@ namespace Tests\Support\Services\Translation\Nested;
 
 class TranslationFour
 {
-    public function list()
+    public function list(): void
     {
         lang('TranslationOne.title');
         lang('TranslationOne.last_operation_success');

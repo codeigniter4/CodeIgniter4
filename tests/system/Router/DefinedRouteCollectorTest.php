@@ -46,7 +46,7 @@ final class DefinedRouteCollectorTest extends CIUnitTestCase
         return (new RouteCollection($loader, $moduleConfig, new Routing()))->setHTTPVerb(Method::GET);
     }
 
-    public function testCollect()
+    public function testCollect(): void
     {
         $routes = $this->createRouteCollection();
         $routes->get('journals', 'Blogs');
@@ -94,7 +94,7 @@ final class DefinedRouteCollectorTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/8039
      */
-    public function testCollectSameFromWithDifferentVerb()
+    public function testCollectSameFromWithDifferentVerb(): void
     {
         $routes = $this->createRouteCollection();
         $routes->get('login', 'AuthController::showLogin', ['as' => 'loginShow']);

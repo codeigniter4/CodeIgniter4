@@ -122,8 +122,7 @@ Or using ``use`` keyword:
    :lines: 2-
 
 If you forget to add ``use App\Controllers\Home;``, the controller classname is
-interpreted as ``Config\Home``, not ``App\Controllers\Home`` because
-**app/Config/Routes.php** has ``namespace Config;`` at the top.
+interpreted as ``\Home``, not ``App\Controllers\Home``.
 
 .. note:: When you use Array Callable Syntax, the classname is always interpreted
     as a fully qualified classname. So :ref:`routing-default-namespace` and
@@ -815,7 +814,7 @@ Consider this URI::
 
     example.com/index.php/helloworld/hello/1
 
-In the above example, when you send a HTTP request with **GET** method,
+In the above example, when you send an HTTP request with **GET** method,
 Auto Routing would attempt to find a controller named ``App\Controllers\Helloworld``
 and executes ``getHello()`` method with passing ``'1'`` as the first argument.
 
@@ -919,7 +918,7 @@ or to use :ref:`auto-routing-improved`,
     Auto Routing (Legacy) feature. It is easy to create vulnerable apps where controller filters
     or CSRF protection are bypassed.
 
-.. important:: Auto Routing (Legacy) routes a HTTP request with **any** HTTP method to a controller method.
+.. important:: Auto Routing (Legacy) routes an HTTP request with **any** HTTP method to a controller method.
 
 Enable Auto Routing (Legacy)
 ============================

@@ -40,7 +40,7 @@ final class NumberNativeTest extends CIUnitTestCase
         $this->tests = $config->tests;
     }
 
-    public function testEnableNumberNative()
+    public function testEnableNumberNative(): void
     {
         $this->tests['numberNative'] = true;
 
@@ -53,7 +53,7 @@ final class NumberNativeTest extends CIUnitTestCase
         $this->assertTrue($db1->numberNative);
     }
 
-    public function testDisableNumberNative()
+    public function testDisableNumberNative(): void
     {
         $this->tests['numberNative'] = false;
 
@@ -66,7 +66,7 @@ final class NumberNativeTest extends CIUnitTestCase
         $this->assertFalse($db1->numberNative);
     }
 
-    public function testQueryDataAfterEnableNumberNative()
+    public function testQueryDataAfterEnableNumberNative(): void
     {
         $this->tests['numberNative'] = true;
 
@@ -84,7 +84,7 @@ final class NumberNativeTest extends CIUnitTestCase
         $this->assertIsInt($data->type_integer);
     }
 
-    public function testQueryDataAfterDisableNumberNative()
+    public function testQueryDataAfterDisableNumberNative(): void
     {
         $this->tests['numberNative'] = false;
 

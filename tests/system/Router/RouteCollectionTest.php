@@ -348,12 +348,12 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->group(
             'admin',
             ['namespace' => 'Admin', 'filter' => ['csrf']],
-            static function ($routes) {
-                $routes->get('dashboard', static function () {
+            static function ($routes): void {
+                $routes->get('dashboard', static function (): void {
                 });
 
-                $routes->group('profile', static function ($routes) {
-                    $routes->get('/', static function () {
+                $routes->group('profile', static function ($routes): void {
+                    $routes->get('/', static function (): void {
                     });
                 });
             }
@@ -379,15 +379,15 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->group(
             'admin',
             ['filter' => ['csrf']],
-            static function ($routes) {
-                $routes->get('dashboard', static function () {
+            static function ($routes): void {
+                $routes->get('dashboard', static function (): void {
                 });
 
                 $routes->group(
                     'profile',
                     ['filter' => ['honeypot']],
-                    static function ($routes) {
-                        $routes->get('/', static function () {
+                    static function ($routes): void {
+                        $routes->get('/', static function (): void {
                         });
                     }
                 );
@@ -412,15 +412,15 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->group(
             'admin',
             ['filter' => 'csrf'],
-            static function ($routes) {
-                $routes->get('dashboard', static function () {
+            static function ($routes): void {
+                $routes->get('dashboard', static function (): void {
                 });
 
                 $routes->group(
                     'profile',
                     ['namespace' => 'Admin'],
-                    static function ($routes) {
-                        $routes->get('/', static function () {
+                    static function ($routes): void {
+                        $routes->get('/', static function (): void {
                         });
                     }
                 );

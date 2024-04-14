@@ -42,7 +42,7 @@ final class WhenWhenNotModelTest extends LiveModelTestCase
 
         $this->createModel(SecondaryModel::class)->insertBatch($secondaryData);
 
-        $result = $this->model->when($filter, static function ($query, $filter) {
+        $result = $this->model->when($filter, static function ($query, $filter): void {
             $query->where('value', $filter);
         })->find();
 
@@ -71,9 +71,9 @@ final class WhenWhenNotModelTest extends LiveModelTestCase
 
         $this->createModel(SecondaryModel::class)->insertBatch($secondaryData);
 
-        $result = $this->model->when($filter, static function ($query, $filter) {
+        $result = $this->model->when($filter, static function ($query, $filter): void {
             $query->where('value', $filter);
-        }, static function ($query) {
+        }, static function ($query): void {
             $query->where('value', 'foobar');
         })->find();
 
@@ -102,7 +102,7 @@ final class WhenWhenNotModelTest extends LiveModelTestCase
 
         $this->createModel(SecondaryModel::class)->insertBatch($secondaryData);
 
-        $result = $this->model->whenNot($filter, static function ($query, $filter) {
+        $result = $this->model->whenNot($filter, static function ($query, $filter): void {
             $query->where('value !=', 'foobar');
         })->find();
 
@@ -131,9 +131,9 @@ final class WhenWhenNotModelTest extends LiveModelTestCase
 
         $this->createModel(SecondaryModel::class)->insertBatch($secondaryData);
 
-        $result = $this->model->whenNot($filter, static function ($query, $filter) {
+        $result = $this->model->whenNot($filter, static function ($query, $filter): void {
             $query->where('value !=', 'foobar');
-        }, static function ($query) {
+        }, static function ($query): void {
             $query->where('value', 'foobar');
         })->find();
 

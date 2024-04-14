@@ -2,7 +2,7 @@
 
 > Documentation guide based on the releases of `4.0.5` and `4.1.0` on January 31, 2021.
 >
-> Updated for `4.4.3` on October 27, 2023.
+> Updated for `4.5.0` on April 7, 2024.
 >
 > -MGatner, kenjis
 
@@ -25,10 +25,10 @@ git push upstream HEAD
 If you release a new minor version.
 
 * [ ] Create PR to merge `4.x` into `develop` and merge it
-* [ ] Rename the current minor version (e.g., `4.4`) in Setting > Branches >
-  "Branch protection rules" to the next minor version. E.g. `4.4` → `4.5`
+* [ ] Rename the current minor version (e.g., `4.5`) in Setting > Branches >
+  "Branch protection rules" to the next minor version. E.g. `4.5` → `4.6`
 * [ ] Delete the merged `4.x` branch (This closes all PRs to the branch)
-* [ ] Do the regular release process. Go to the next "Changelog" section
+* Do the regular release process. Go to the next "Changelog" section
 
 ## Changelog
 
@@ -91,10 +91,11 @@ Work off direct clones of the repos so the release branches persist for a time.
 * [ ] Update **user_guide_src/source/changelogs/v4.x.x.rst**
   * Remove the section titles that have no items
 * [ ] Update **user_guide_src/source/installation/upgrade_{ver}.rst**
-  * fill in the "All Changes" section, and add it to **upgrading.rst**
-    * git diff --name-status origin/master -- . ':!system'
-  * Remove the section titles that have no items
-  * [Minor version only] Update the "from" version in the title. E.g., `from 4.3.x` → `from 4.3.8`
+  * [ ] fill in the "All Changes" section, and add it to **upgrading.rst**
+    * git diff --name-status origin/master -- . ':!system' ':!tests' ':!user_guide_src'
+    * Note: `tests/` is not used for distribution repos. See `admin/starter/tests/`
+  * [ ] Remove the section titles that have no items
+  * [ ] [Minor version only] Update the "from" version in the title. E.g., `from 4.3.x` → `from 4.3.8`
 * [ ] Run `php admin/prepare-release.php 4.x.x` and push to origin
   * The above command does the following:
     * Create a new branch `release-4.x.x`

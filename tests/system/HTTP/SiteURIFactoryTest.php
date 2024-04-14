@@ -41,7 +41,7 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         return new SiteURIFactory($config, $superglobals);
     }
 
-    public function testCreateFromGlobals()
+    public function testCreateFromGlobals(): void
     {
         // http://localhost:8080/index.php/woot?code=good#pos
         $_SERVER['REQUEST_URI']  = '/index.php/woot?code=good';
@@ -62,7 +62,7 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         $this->assertSame('woot', $uri->getRoutePath());
     }
 
-    public function testCreateFromGlobalsAllowedHost()
+    public function testCreateFromGlobalsAllowedHost(): void
     {
         // http://users.example.jp/index.php/woot?code=good#pos
         $_SERVER['REQUEST_URI']  = '/index.php/woot?code=good';
@@ -95,7 +95,7 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         string $expectUriString,
         string $expectedPath,
         string $expectedRoutePath
-    ) {
+    ): void {
         $factory = $this->createSiteURIFactory();
 
         $uri = $factory->createFromString($uriString);
@@ -138,7 +138,7 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         string $expectUriString,
         string $expectedPath,
         string $expectedRoutePath
-    ) {
+    ): void {
         $config            = new App();
         $config->indexPage = '';
         $factory           = $this->createSiteURIFactory($config);

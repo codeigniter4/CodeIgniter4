@@ -940,7 +940,7 @@ final class MiscUrlTest extends CIUnitTestCase
             'version' => 'master|\d+\.(?:\d+|x)',
             'page'    => '[a-z0-9-]+',
         ]);
-        $routes->get('docs/(:version)/(:page)', static function () {
+        $routes->get('docs/(:version)/(:page)', static function (): void {
             echo 'Test the documentation segment';
         }, ['as' => 'docs.version']);
 

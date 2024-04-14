@@ -39,14 +39,14 @@ class FactoriesCacheFileVarExportHandlerTest extends CIUnitTestCase
         $this->cache   = new FactoriesCache($this->handler);
     }
 
-    public function testInstantiate()
+    public function testInstantiate(): void
     {
         $this->createFactoriesCache();
 
         $this->assertInstanceOf(FactoriesCache::class, $this->cache);
     }
 
-    public function testSave()
+    public function testSave(): void
     {
         Factories::reset();
         Factories::config('App');
@@ -62,7 +62,7 @@ class FactoriesCacheFileVarExportHandlerTest extends CIUnitTestCase
         $this->assertArrayHasKey('App', $cachedData['aliases']);
     }
 
-    public function testLoad()
+    public function testLoad(): void
     {
         Factories::reset();
         /** @var App $appConfig */
@@ -80,7 +80,7 @@ class FactoriesCacheFileVarExportHandlerTest extends CIUnitTestCase
         $this->assertSame('http://test.example.jp/this-is-test/', $appConfig->baseURL);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->createFactoriesCache();
 

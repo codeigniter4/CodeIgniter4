@@ -1,5 +1,5 @@
 #############################
-Upgrading from 4.4.7 to 4.4.8
+Upgrading from 4.5.0 to 4.5.1
 #############################
 
 Please refer to the upgrade instructions corresponding to your installation method.
@@ -28,6 +28,11 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- app/.htaccess
-- public/.htaccess
-- writable/.htaccess
+- .gitignore
+- composer.json
+- phpunit.xml.dist
+- tests/.htaccess
+- tests/index.html
+- writable/debugbar/.gitkeep (Removed)
+- writable/debugbar/index.html
+- writable/index.html

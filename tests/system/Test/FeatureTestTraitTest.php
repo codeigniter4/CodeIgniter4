@@ -99,13 +99,13 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertRedirectTo('login');
     }
 
-    public function testClosureWithEcho()
+    public function testClosureWithEcho(): void
     {
         $this->withRoutes([
             [
                 'GET',
                 'home',
-                static function () { echo 'test echo'; },
+                static function (): void { echo 'test echo'; },
             ],
         ]);
 
@@ -639,7 +639,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertSame('test', $request->getBody());
     }
 
-    public function testAutoRoutingLegacy()
+    public function testAutoRoutingLegacy(): void
     {
         $config            = config(Routing::class);
         $config->autoRoute = true;
@@ -650,7 +650,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertOK();
     }
 
-    public function testForceGlobalSecureRequests()
+    public function testForceGlobalSecureRequests(): void
     {
         $config                            = config(App::class);
         $config->forceGlobalSecureRequests = true;

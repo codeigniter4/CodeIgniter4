@@ -24,7 +24,7 @@ use CodeIgniter\Test\Mock\MockInputOutput;
  */
 final class CheckPhpIniTest extends CIUnitTestCase
 {
-    public function testCheckIni()
+    public function testCheckIni(): void
     {
         $output = CheckPhpIni::checkIni();
 
@@ -37,7 +37,7 @@ final class CheckPhpIniTest extends CIUnitTestCase
         $this->assertSame($expected, $output['display_errors']);
     }
 
-    public function testRunCli()
+    public function testRunCli(): void
     {
         // Set MockInputOutput to CLI.
         $io = new MockInputOutput();
@@ -54,7 +54,7 @@ final class CheckPhpIniTest extends CIUnitTestCase
         CLI::resetInputOutput();
     }
 
-    public function testRunWeb()
+    public function testRunWeb(): void
     {
         $output = CheckPhpIni::run(false);
 

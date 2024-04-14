@@ -61,7 +61,7 @@ final class ClearDebugbarTest extends CIUnitTestCase
         $result = $this->getStreamFilterBuffer();
 
         $this->assertFileDoesNotExist(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
-        $this->assertFileExists(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . '.gitkeep');
+        $this->assertFileExists(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . 'index.html');
         $this->assertStringContainsString('Debugbar cleared.', $result);
     }
 }

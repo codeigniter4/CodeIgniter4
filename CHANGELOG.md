@@ -1,5 +1,34 @@
 # Changelog
 
+## [v4.5.1](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.1) (2024-04-14)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.0...v4.5.1)
+
+### Fixed Bugs
+
+* fix: TypeError in form() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8736
+* fix: [DebugBar] TypeError in Toolbar by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8727
+* fix: TypeError when Time is passed to Model by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8738
+* docs: added Config\Feature::$oldFilterOrder to app/Config/Feature.php… by @mullernato in https://github.com/codeigniter4/CodeIgniter4/pull/8749
+* fix: Factories::get() cannot get defined classes by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8744
+* fix: `BaseConnection::escape()` does not accept Stringable by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8756
+* fix: [CURLRequest] `getHeaderLine('Content-Type')` causes InvalidArgumentException by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8760
+* fix: [CURLRequest] construct param $config is not used by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8761
+* fix: [FileLocator] Cannot declare class XXX, because the name is already in use by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8745
+* fix: [DebugBar] Toolbar display may be broken by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8772
+* fix: Cannot declare class CodeIgniter\Config\Services, because the name is already in use by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8776
+* docs: fix Postgre DSN sample by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8774
+
+### Refactoring
+
+* test: refactor Config/Registrar.php by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8731
+* test: add return void by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8746
+* refactor: system/CLI/BaseCommand.php by @mcsaygili in https://github.com/codeigniter4/CodeIgniter4/pull/8741
+* refactor: system/View/Plugins.php by @mcsaygili in https://github.com/codeigniter4/CodeIgniter4/pull/8742
+* refactor: fix method name `ValidationErrors` in View\Plugins by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8758
+* refactor: system/Debug/Toolbar/Collectors/Routes.php by @mcsaygili in https://github.com/codeigniter4/CodeIgniter4/pull/8751
+* refactor: improve error message in BaseExceptionHandler by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8766
+* refactor: FabricatorModel by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8770
+
 ## [v4.5.0](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.0) (2024-04-07)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.8...v4.5.0)
 

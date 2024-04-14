@@ -245,8 +245,14 @@ abstract class BaseExceptionHandler
      */
     protected function render(Throwable $exception, int $statusCode, $viewFile = null): void
     {
-        if (empty($viewFile) || ! is_file($viewFile)) {
-            echo 'The error view files were not found. Cannot render exception trace.';
+        if ($viewFile === null) {
+            echo 'The error view file was not specified. Cannot display error view.';
+
+            exit(1);
+        }
+
+        if (! is_file($viewFile)) {
+            echo 'The error view file "' . $viewFile . '" was not found. Cannot display error view.';
 
             exit(1);
         }

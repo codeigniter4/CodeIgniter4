@@ -101,12 +101,14 @@
             "Composer\\Config::disableProcessTimeout",
             "php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.user-guide.php",
             "php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.no-header.php",
+            "php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.tests.php",
             "php-cs-fixer fix --ansi --verbose --dry-run --diff"
         ],
         "cs-fix": [
             "Composer\\Config::disableProcessTimeout",
             "php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.user-guide.php",
             "php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.no-header.php",
+            "php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.tests.php",
             "php-cs-fixer fix --ansi --verbose --diff"
         ],
         "metrics": "tools/phpmetrics/vendor/bin/phpmetrics --config=phpmetrics.json",
