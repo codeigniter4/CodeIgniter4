@@ -17,18 +17,21 @@ CONTRIBUTING.md    export-ignore
 
 # contributor/development files
 tests/                       export-ignore
+tools/                       export-ignore
 utils/                       export-ignore
 .php-cs-fixer.dist.php       export-ignore
 .php-cs-fixer.no-header.php  export-ignore
+.php-cs-fixer.tests.php      export-ignore
 .php-cs-fixer.user-guide.php export-ignore
 deptrac.yaml                 export-ignore
-phpstan-baseline.neon.dist   export-ignore
+phpmetrics.json              export-ignore
+phpstan-baseline.php         export-ignore
 phpstan-bootstrap.php        export-ignore
 phpstan.neon.dist            export-ignore
 phpunit.xml.dist             export-ignore
-psalm_autoload.php           export-ignore
-psalm-baseline.php           export-ignore
+psalm-baseline.xml           export-ignore
 psalm.xml                    export-ignore
+psalm_autoload.php           export-ignore
 rector.php                   export-ignore
 
 # source user guide
