@@ -2,29 +2,13 @@
 Version 4.5.1
 #############
 
-Release Date: Unreleased
+Release Date: April 14, 2024
 
 **4.5.1 release of CodeIgniter4**
 
 .. contents::
     :local:
     :depth: 3
-
-********
-BREAKING
-********
-
-***************
-Message Changes
-***************
-
-*******
-Changes
-*******
-
-************
-Deprecations
-************
 
 **********
 Bugs Fixed
