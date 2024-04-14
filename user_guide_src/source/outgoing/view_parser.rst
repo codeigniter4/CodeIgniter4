@@ -95,7 +95,7 @@ array of data to be replaced in the template.
 In the above example, the template would contain two variables: ``{blog_title}`` and ``{blog_heading}``
 
 The first parameter to ``render()`` contains the name of the template, where
-``blog_template``` is the name of your view template file.
+``blog_template`` is the name of your view template file.
 
 .. important:: If the file extension is omitted, then the views are expected to end with the .php extension.
 
