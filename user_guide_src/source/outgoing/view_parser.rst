@@ -81,7 +81,7 @@ need to be unique, or a later parameter setting will over-ride an earlier one.
 This also impacts escaping parameter values for different contexts inside your
 script. You will have to give each escaped value a unique parameter name.
 
-Parser templates
+Parser Templates
 ================
 
 You can use the ``render()`` method to parse (or render) simple templates,
