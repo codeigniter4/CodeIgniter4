@@ -298,7 +298,7 @@ class Builder extends BaseBuilder
 
                 return '"' . $database . '"."' . $schema . '"."' . str_replace('"', '', $tableName) . '"' . $alias;
             }
-            
+
             return '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '"."' . str_replace('"', '', $table) . '"' . $alias;
         }
 
