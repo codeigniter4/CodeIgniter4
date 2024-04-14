@@ -10,4 +10,4 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-require_once __DIR__ . '/system/spark.php';
+require __DIR__ . '/system/spark.php';
