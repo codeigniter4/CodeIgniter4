@@ -395,7 +395,7 @@ See the <a class="reference internal" href="../general/ajax.html"><span class="d
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.3.0.</span></p>
 </div>
-<p>Since v4.3.0, you can use the <code class="docutils literal notranslate"><span class="pre">is()</span></code> method. It accepts a HTTP method, <code class="docutils literal notranslate"><span class="pre">'ajax'</span></code>,
+<p>Since v4.3.0, you can use the <code class="docutils literal notranslate"><span class="pre">is()</span></code> method. It accepts an HTTP method, <code class="docutils literal notranslate"><span class="pre">'ajax'</span></code>,
 or <code class="docutils literal notranslate"><span class="pre">'json'</span></code>, and returns boolean.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -433,10 +433,10 @@ or <code class="docutils literal notranslate"><span class="pre">'json'</span></c
 defined in all-uppercase US-ASCII letters.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Prior to v4.5.0, by default, the method was returned as a lower-case
+<p>Prior to v4.5.0, by default, the method was returned as a lowercase
 string (i.e., <code class="docutils literal notranslate"><span class="pre">'get'</span></code>, <code class="docutils literal notranslate"><span class="pre">'post'</span></code>, etc). But it was a bug.</p>
 </div>
-<p>You can get an lowercase version by wrapping the call in <code class="docutils literal notranslate"><span class="pre">strtolower()</span></code>:</p>
+<p>You can get a lowercase version by wrapping the call in <code class="docutils literal notranslate"><span class="pre">strtolower()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Returns &#39;get&#39;</span>
 <span class="nv">$method</span> <span class="o">=</span> <span class="nb">strtolower</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">());</span>
 </pre></div>
@@ -1225,7 +1225,7 @@ underlying <code class="docutils literal notranslate"><span class="pre">URI</spa
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 14, 2024.
+      <span class="lastupdated">Last updated on Apr 15, 2024.
       </span></p>
   </div>
 
