@@ -47,7 +47,7 @@ is()
 
 .. versionadded:: 4.3.0
 
-Since v4.3.0, you can use the ``is()`` method. It accepts a HTTP method, ``'ajax'``,
+Since v4.3.0, you can use the ``is()`` method. It accepts an HTTP method, ``'ajax'``,
 or ``'json'``, and returns boolean.
 
 .. note:: HTTP method should be case-sensitive, but the parameter is case-insensitive.
