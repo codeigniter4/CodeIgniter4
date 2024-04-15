@@ -291,10 +291,16 @@ class Builder extends BaseBuilder
 
         if ($this->db->escapeChar === '"') {
             if (str_contains($table, '.')) {
-                $dbInfo    = explode('.', $table);
-                $database  = str_replace('"', '', $dbInfo[0]);
-                $schema    = str_replace('"', '', $dbInfo[1]);
-                $tableName = str_replace('"', '', $dbInfo[2]);
+                $dbInfo   = explode('.', $table);
+                $database = $this->db->getDatabase();
+                $schema   = $this->db->schema;
+                $table    = $dbInfo[0];
+
+                if (isset($dbInfo[1], $dbInfo[2])) {
+                    $database  = str_replace('"', '', $dbInfo[0]);
+                    $schema    = str_replace('"', '', $dbInfo[1]);
+                    $tableName = str_replace('"', '', $dbInfo[2]);
+                }
 
                 return '"' . $database . '"."' . $schema . '"."' . str_replace('"', '', $tableName) . '"' . $alias;
             }
