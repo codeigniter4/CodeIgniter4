@@ -29,6 +29,7 @@ use CodeIgniter\Debug\Timer;
 use CodeIgniter\Debug\Toolbar;
 use CodeIgniter\Email\Email;
 use CodeIgniter\Encryption\EncrypterInterface;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Format\Format;
 use CodeIgniter\Honeypot\Honeypot;
@@ -78,7 +79,6 @@ use Config\Services as AppServices;
 use Config\Toolbar as ConfigToolbar;
 use Config\Validation as ConfigValidation;
 use Config\View as ConfigView;
-use InvalidArgumentException;
 
 /**
  * Services Configuration file.

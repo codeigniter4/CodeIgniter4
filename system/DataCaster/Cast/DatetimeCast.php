@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\DataCaster\Cast;
 
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
-use InvalidArgumentException;
 
 /**
  * Class DatetimeCast
