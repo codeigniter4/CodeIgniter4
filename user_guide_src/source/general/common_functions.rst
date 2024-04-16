@@ -180,6 +180,7 @@ Service Accessors
     :rtype: string
 
     Grabs the current RendererInterface-compatible class
+    (:doc:`View <../outgoing/view_renderer>` class by default)
     and tells it to render the specified view. Simply provides
     a convenience method that can be used in Controllers,
     libraries, and routed closures.
