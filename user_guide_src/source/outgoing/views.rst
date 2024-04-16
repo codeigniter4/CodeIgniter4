@@ -47,6 +47,8 @@ Where *name* is the name of your view file.
 
 .. important:: If the file extension is omitted, then the views are expected to end with the **.php** extension.
 
+.. note:: The ``view()`` function uses :doc:`view_renderer` internally.
+
 Now, create a file called **Blog.php** in the **app/Controllers** directory,
 and put this in it:
 
