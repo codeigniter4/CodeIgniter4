@@ -27,7 +27,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="View Decorators" href="view_decorators.html" />
-    <link rel="prev" title="View Layouts" href="view_layouts.html" /> 
+    <link rel="prev" title="View Cells" href="view_cells.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -127,9 +127,9 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Building Responses</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="views.html">Views</a></li>
-<li class="toctree-l2"><a class="reference internal" href="view_cells.html">View Cells</a></li>
 <li class="toctree-l2"><a class="reference internal" href="view_renderer.html">View Renderer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="view_layouts.html">View Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="view_cells.html">View Cells</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">View Parser</a></li>
 <li class="toctree-l2"><a class="reference internal" href="view_decorators.html">View Decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="table.html">HTML Table Class</a></li>
@@ -294,7 +294,7 @@
 <li><p><a class="reference internal" href="#using-the-view-parser-class" id="id1">Using the View Parser Class</a></p>
 <ul>
 <li><p><a class="reference internal" href="#what-it-does" id="id2">What It Does</a></p></li>
-<li><p><a class="reference internal" href="#parser-templates" id="id3">Parser templates</a></p></li>
+<li><p><a class="reference internal" href="#parser-templates" id="id3">Parser Templates</a></p></li>
 <li><p><a class="reference internal" href="#parser-configuration-options" id="id4">Parser Configuration Options</a></p></li>
 </ul>
 </li>
@@ -393,7 +393,7 @@ need to be unique, or a later parameter setting will over-ride an earlier one.</
 script. You will have to give each escaped value a unique parameter name.</p>
 </section>
 <section id="parser-templates">
-<h3><a class="toc-backref" href="#id3" role="doc-backlink">Parser templates</a><a class="headerlink" href="#parser-templates" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Parser Templates</a><a class="headerlink" href="#parser-templates" title="Permalink to this heading"></a></h3>
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">render()</span></code> method to parse (or render) simple templates,
 like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -407,10 +407,10 @@ like this:</p>
 </pre></div>
 </div>
 <p>View parameters are passed to <code class="docutils literal notranslate"><span class="pre">setData()</span></code> as an associative
-array of data to be replaced in the template. In the above example, the
-template would contain two variables: <code class="docutils literal notranslate"><span class="pre">{blog_title}</span></code> and <code class="docutils literal notranslate"><span class="pre">{blog_heading}</span></code>
-The first parameter to <code class="docutils literal notranslate"><span class="pre">render()</span></code> contains the name of the <a class="reference internal" href="views.html"><span class="doc">view
-file</span></a>, Where <em>blog_template</em> is the name of your view file.</p>
+array of data to be replaced in the template.</p>
+<p>In the above example, the template would contain two variables: <code class="docutils literal notranslate"><span class="pre">{blog_title}</span></code> and <code class="docutils literal notranslate"><span class="pre">{blog_heading}</span></code></p>
+<p>The first parameter to <code class="docutils literal notranslate"><span class="pre">render()</span></code> contains the name of the template, where
+<code class="docutils literal notranslate"><span class="pre">blog_template</span></code> is the name of your view template file.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>If the file extension is omitted, then the views are expected to end with the .php extension.</p>
@@ -420,7 +420,7 @@ file</span></a>, Where <em>blog_template</em> is the name of your view file.</p>
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">Parser Configuration Options</a><a class="headerlink" href="#parser-configuration-options" title="Permalink to this heading"></a></h3>
 <p>Several options can be passed to the <code class="docutils literal notranslate"><span class="pre">render()</span></code> or <code class="docutils literal notranslate"><span class="pre">renderString()</span></code> methods.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">cache</span></code> - the time in seconds, to save a view’s results; ignored for renderString()</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cache</span></code> - the time in seconds, to save a view’s results; ignored for <code class="docutils literal notranslate"><span class="pre">renderString()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">cache_name</span></code> - the ID used to save/retrieve a cached view result; defaults to the viewpath;
 ignored for renderString()</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">saveData</span></code> - true if the view data parameters should be retained for subsequent calls;
@@ -1375,7 +1375,7 @@ If ‘raw’, no escaping will happen.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="view_layouts.html" class="btn btn-neutral float-left" title="View Layouts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="view_cells.html" class="btn btn-neutral float-left" title="View Cells" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="view_decorators.html" class="btn btn-neutral float-right" title="View Decorators" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
@@ -1383,7 +1383,7 @@ If ‘raw’, no escaping will happen.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 15, 2024.
+      <span class="lastupdated">Last updated on Apr 16, 2024.
       </span></p>
   </div>
 

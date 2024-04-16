@@ -127,9 +127,9 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Building Responses</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="views.html">Views</a></li>
-<li class="toctree-l2"><a class="reference internal" href="view_cells.html">View Cells</a></li>
 <li class="toctree-l2"><a class="reference internal" href="view_renderer.html">View Renderer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="view_layouts.html">View Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="view_cells.html">View Cells</a></li>
 <li class="toctree-l2"><a class="reference internal" href="view_parser.html">View Parser</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">View Decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="table.html">HTML Table Class</a></li>
@@ -289,10 +289,27 @@
              
   <section id="view-decorators">
 <h1>View Decorators<a class="headerlink" href="#view-decorators" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#what-are-view-decorators" id="id1">What are View Decorators?</a></p></li>
+<li><p><a class="reference internal" href="#creating-decorators" id="id2">Creating Decorators</a></p>
+<ul>
+<li><p><a class="reference internal" href="#creating-decorator-class" id="id3">Creating Decorator Class</a></p></li>
+<li><p><a class="reference internal" href="#registering-decorator-class" id="id4">Registering Decorator Class</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="what-are-view-decorators">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">What are View Decorators?</a><a class="headerlink" href="#what-are-view-decorators" title="Permalink to this heading"></a></h2>
 <p>View Decorators allow your application to modify the HTML output during the rendering process. This happens just
 prior to being cached, and allows you to apply custom functionality to your views.</p>
+<p>You can use View Decorators with <a class="reference internal" href="view_renderer.html"><span class="doc">View Renderer</span></a> or <a class="reference internal" href="view_parser.html"><span class="doc">View Parser</span></a>.</p>
+</section>
 <section id="creating-decorators">
-<h2>Creating Decorators<a class="headerlink" href="#creating-decorators" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Creating Decorators</a><a class="headerlink" href="#creating-decorators" title="Permalink to this heading"></a></h2>
+<section id="creating-decorator-class">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Creating Decorator Class</a><a class="headerlink" href="#creating-decorator-class" title="Permalink to this heading"></a></h3>
 <p>Creating your own view decorators requires creating a new class that implements <code class="docutils literal notranslate"><span class="pre">CodeIgniter\View\ViewDecoratorInterface</span></code>.
 This requires a single method that takes the generated HTML string, performs any modifications on it, and returns
 the resulting HTML.</p>
@@ -313,7 +330,10 @@ the resulting HTML.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Once created, the class must be registered in <code class="docutils literal notranslate"><span class="pre">app/Config/View.php</span></code>:</p>
+</section>
+<section id="registering-decorator-class">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Registering Decorator Class</a><a class="headerlink" href="#registering-decorator-class" title="Permalink to this heading"></a></h3>
+<p>Once created, the class must be registered in <strong>app/Config/View.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -322,16 +342,17 @@ the resulting HTML.</p>
 
 <span class="k">class</span> <span class="nc">View</span> <span class="k">extends</span> <span class="nx">BaseView</span>
 <span class="p">{</span>
+    <span class="c1">// ...</span>
+
     <span class="k">public</span> <span class="k">array</span> <span class="nv">$decorators</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;App\Views\Decorators\MyDecorator&#39;</span><span class="p">,</span>
     <span class="p">];</span>
-
-    <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>Now that it’s registered the decorator will be called for every view that is rendered or parsed.
 Decorators are called in the order specified in this configuration setting.</p>
+</section>
 </section>
 </section>
 
@@ -347,7 +368,7 @@ Decorators are called in the order specified in this configuration setting.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 15, 2024.
+      <span class="lastupdated">Last updated on Apr 16, 2024.
       </span></p>
   </div>
 
