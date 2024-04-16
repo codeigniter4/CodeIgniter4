@@ -23,6 +23,26 @@ BREAKING
 Behavior Changes
 ================
 
+.. _v460-behavior-changes-exceptions:
+
+Exceptions
+----------
+
+The exception class has been redesigned. See :ref:`exception-design` for details.
+The following breaking changes have been made accordingly:
+
+- ``Validation::setRule()`` now throws ``CodeIgniter\Exceptions\InvalidArgumentException``
+  instead of ``TypeError``.
+
+- ``CriticalError`` now extends ``CodeIgniter\Exceptions\RuntimeException``
+  instead of ``Error``.
+- ``DatabaseException`` now extends ``CodeIgniter\Exceptions\RuntimeException``
+  instead of ``Error``.
+- ``ConfigException`` now extends ``CodeIgniter\Exceptions\RuntimeException``
+  instead of ``CodeIgniter\Exceptions\CriticalError``.
+- ``TestException`` now extends ``CodeIgniter\Exceptions\LogicException``
+  instead of ``CodeIgniter\Exceptions\CriticalError``.
+
 Interface Changes
 =================
 
@@ -45,6 +65,24 @@ Removed Deprecated Items
 ************
 Enhancements
 ************
+
+Exceptions
+==========
+
+The exception class has been redesigned. See :ref:`exception-design` for details.
+The following new Exception classes have been added accordingly:
+
+- ``CodeIgniter\Exceptions\LogicException``
+- ``CodeIgniter\Exceptions\RuntimeException``
+- ``CodeIgniter\Exceptions\BadFunctionCallException``
+- ``CodeIgniter\Exceptions\BadMethodCallException``
+- ``CodeIgniter\Exceptions\InvalidArgumentException``
+
+The following new Exception interfaces have been added:
+
+- ``CodeIgniter\Files\Exceptions\ExceptionInterface``
+- ``CodeIgniter\HTTP\Exceptions\ExceptionInterface``
+- ``CodeIgniter\Router\Exceptions\ExceptionInterface``
 
 Commands
 ========
@@ -83,6 +121,32 @@ Message Changes
 *******
 Changes
 *******
+
+Exceptions
+==========
+
+The exception classes have been redesigned. See :ref:`exception-design` for details.
+The following changes have been made accordingly:
+
+- The ``deleteMatching()`` method in Cache Handler classes now throws
+  ``CodeIgniter\Exceptions\BadMethodCallException`` instead of ``Exception``.
+- ``Cache\ResponseCache::get()`` now throws ``CodeIgniter\Exceptions\RuntimeException``
+  instead of ``Exception``.
+- Classes that threw ``RuntimeException`` have been changed to throw
+  ``CodeIgniter\Exceptions\RuntimeException``.
+- Classes that threw ``InvalidArgumentException`` have been changed to throw
+  ``CodeIgniter\Exceptions\InvalidArgumentException``.
+- Classes that threw ``LogicException`` have been changed to throw
+  ``CodeIgniter\Exceptions\LogicException``.
+- Classes that threw ``BadMethodCallException`` have been changed to throw
+  ``CodeIgniter\Exceptions\BadMethodCallException``.
+- Classes that threw ``BadFunctionCallException`` have been changed to throw
+  ``CodeIgniter\Exceptions\BadFunctionCallException``.
+
+- ``RedirectException`` now extends ``CodeIgniter\Exceptions\RuntimeException``
+  instead of ``Exception``.
+- ``PageNotFoundException`` now extends ``CodeIgniter\Exceptions\RuntimeException``
+  instead of ``OutOfBoundsException``.
 
 ************
 Deprecations
