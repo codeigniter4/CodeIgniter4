@@ -29,6 +29,14 @@ Interface Changes
 Method Signature Changes
 ========================
 
+.. _v460-removed-deprecated-items:
+
+Removed Deprecated Items
+========================
+
+- **API:** The deprecated ``failValidationError()`` method in ``CodeIgniter\API\ResponseTrait``
+  has been removed. Use ``failValidationErrors()`` instead.
+
 ************
 Enhancements
 ************
