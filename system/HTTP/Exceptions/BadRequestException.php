@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP\Exceptions;
 
 use CodeIgniter\Exceptions\HTTPExceptionInterface;
-use RuntimeException;
+use CodeIgniter\Exceptions\RuntimeException;
 
 /**
  * 400 Bad Request
