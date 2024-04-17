@@ -479,7 +479,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Platform dependent way method for closing the connection.
      *
-     * @return mixed
+     * @return void
      */
     abstract protected function _close();
 

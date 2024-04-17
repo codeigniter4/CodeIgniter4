@@ -110,6 +110,8 @@ class Connection extends BaseConnection
 
     /**
      * Close the database connection.
+     *
+     * @return void
      */
     protected function _close()
     {
