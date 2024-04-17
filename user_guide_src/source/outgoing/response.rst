@@ -255,7 +255,7 @@ Class Reference
 .. note:: In addition to the methods listed here, this class inherits the methods from the
     :doc:`Message Class </incoming/message>`.
 
-The methods provided by the parent class that are available are:
+The methods inherited from the Message Class are:
 
 * :meth:`CodeIgniter\\HTTP\\Message::body`
 * :meth:`CodeIgniter\\HTTP\\Message::setBody`
