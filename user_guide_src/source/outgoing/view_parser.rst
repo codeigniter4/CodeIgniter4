@@ -495,7 +495,7 @@ You can also use closures, but these can only be defined in the config file's co
 
 .. literalinclude:: view_parser/015.php
 
-If the callable is on its own, it is treated as a single tag, not a open/close one. It will be replaced by
+If the callable is on its own, it is treated as a single tag, not an open/close one. It will be replaced by
 the return value from the plugin:
 
 .. literalinclude:: view_parser/016.php
