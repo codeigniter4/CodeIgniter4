@@ -295,10 +295,15 @@ class Builder extends BaseBuilder
                 $database = $this->db->getDatabase();
                 $table    = $dbInfo[0];
 
-                if (isset($dbInfo[2])) {
-                    $database  = str_replace('"', '', $dbInfo[0]);
-                    $schema    = str_replace('"', '', $dbInfo[1]);
-                    $tableName = str_replace('"', '', $dbInfo[2]);
+                if (count($dbInfo) >= 2) {
+                    if (count($dbInfo) === 3) {
+                        $database  = str_replace('"', '', $dbInfo[0]);
+                        $schema    = str_replace('"', '', $dbInfo[1]);
+                        $tableName = str_replace('"', '', $dbInfo[2]);
+                    } else {
+                        $schema    = str_replace('"', '', $dbInfo[0]);
+                        $tableName = str_replace('"', '', $dbInfo[1]);
+                    }
 
                     return '"' . $database . '"."' . $schema . '"."' . str_replace('"', '', $tableName) . '"' . $alias;
                 }
