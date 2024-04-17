@@ -295,8 +295,8 @@ class Builder extends BaseBuilder
                 $database = $this->db->getDatabase();
                 $table    = $dbInfo[0];
 
-                if (count($dbInfo) >= 2) {
-                    if (count($dbInfo) === 3) {
+                if (count($dbInfo) >= 2 && isset($dbInfo[1])) {
+                    if (count($dbInfo) === 3 && isset($dbInfo[2])) {
                         $database  = str_replace('"', '', $dbInfo[0]);
                         $schema    = str_replace('"', '', $dbInfo[1]);
                         $tableName = str_replace('"', '', $dbInfo[2]);
