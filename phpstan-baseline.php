@@ -3002,11 +3002,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/MySQLi/Connection.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\MySQLi\\\\Connection\\:\\:_close\\(\\) should return mixed but return statement is missing\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/MySQLi/Connection.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in &&, int given on the left side\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/MySQLi/Connection.php',
@@ -3392,11 +3387,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/Postgre/Connection.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Postgre\\\\Connection\\:\\:_close\\(\\) should return mixed but return statement is missing\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/Postgre/Connection.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\Postgre\\\\Connection\\:\\:buildDSN\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/Postgre/Connection.php',
@@ -3757,11 +3747,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/SQLSRV/Connection.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\SQLSRV\\\\Connection\\:\\:_close\\(\\) should return mixed but return statement is missing\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/SQLSRV/Connection.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^PHPDoc type string of property CodeIgniter\\\\Database\\\\SQLSRV\\\\Connection\\:\\:\\$escapeChar is not the same as PHPDoc type array\\|string of overridden property CodeIgniter\\\\Database\\\\BaseConnection\\<resource,resource\\>\\:\\:\\$escapeChar\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/SQLSRV/Connection.php',
@@ -3948,11 +3933,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/SQLite3/Connection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\SQLite3\\\\Connection\\:\\:_close\\(\\) should return mixed but return statement is missing\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/SQLite3/Connection.php',
 ];
@@ -8658,11 +8638,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Cannot access property \\$insert_id on object\\|resource\\|false\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockConnection\\:\\:_close\\(\\) should return mixed but return statement is missing\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
 ];
