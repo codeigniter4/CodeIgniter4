@@ -560,7 +560,7 @@ methods. The most commonly used methods let you determine the response itself.</
 to ensure that your script handles that:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;content-type&#39;</span><span class="p">),</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">str_contains</span><span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;content-type&#39;</span><span class="p">),</span> <span class="s1">&#39;application/json&#39;</span><span class="p">))</span> <span class="p">{</span>
     <span class="nv">$body</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$body</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
@@ -892,7 +892,7 @@ or <code class="docutils literal notranslate"><span class="pre">1.1</span></code
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 17, 2024.
+      <span class="lastupdated">Last updated on Apr 18, 2024.
       </span></p>
   </div>
 
