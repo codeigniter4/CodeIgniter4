@@ -142,8 +142,8 @@ class CheckPhpIni
 
         foreach ($items as $key => $values) {
             $output[$key] = [
-                'global'      => $ini[$key]['global_value'],
-                'current'     => $ini[$key]['local_value'],
+                'global'      => array_key_exists($key, $ini) ? $ini[$key]['global_value'] : 'disabled',
+                'current'     => array_key_exists($key, $ini) ? $ini[$key]['local_value'] : 'disabled',
                 'recommended' => $values['recommended'] ?? '',
                 'remark'      => $values['remark'] ?? '',
             ];
