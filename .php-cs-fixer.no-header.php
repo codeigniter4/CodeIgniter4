@@ -29,19 +29,18 @@ $finder = Finder::create()
         __DIR__ . '/admin/starter/builds',
     ]);
 
-$overrides = [];
-
-$options = [
-    'cacheFile' => 'build/.php-cs-fixer.no-header.cache',
-    'finder'    => $finder,
+$overrides = [
+    // for updating to coding-standard
+    'modernize_strpos' => true,
 ];
 
-$config = Factory::create(new CodeIgniter4(), $overrides, $options)->forProjects();
-
-$config
-    ->registerCustomFixers(FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'))
-    ->setRules(array_merge($config->getRules(), [
+$options = [
+    'cacheFile'    => 'build/.php-cs-fixer.no-header.cache',
+    'finder'       => $finder,
+    'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
+    'customRules'  => [
         NoCodeSeparatorCommentFixer::name() => true,
-    ]));
+    ],
+];
 
-return $config;
+return Factory::create(new CodeIgniter4(), $overrides, $options)->forProjects();

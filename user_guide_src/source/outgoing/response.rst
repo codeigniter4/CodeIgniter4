@@ -234,7 +234,7 @@ Built into the HTTP specification are tools help the client (often the web brows
 this can lead to a huge performance boost to your application because it will tell the client that they don't need
 to contact the server at all since nothing has changed. And you can't get faster than that.
 
-This are handled through the ``Cache-Control`` and ``ETag`` headers. This guide is not the proper place for a thorough
+This is handled through the ``Cache-Control`` and ``ETag`` headers. This guide is not the proper place for a thorough
 introduction to all of the cache headers power, but you can get a good understanding over at
 `Google Developers <https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching>`_.
 
@@ -255,7 +255,7 @@ Class Reference
 .. note:: In addition to the methods listed here, this class inherits the methods from the
     :doc:`Message Class </incoming/message>`.
 
-The methods provided by the parent class that are available are:
+The methods inherited from the Message Class are:
 
 * :meth:`CodeIgniter\\HTTP\\Message::body`
 * :meth:`CodeIgniter\\HTTP\\Message::setBody`
