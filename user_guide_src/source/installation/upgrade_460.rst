@@ -20,6 +20,13 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+Removed Deprecated Items
+========================
+
+Some deprecated items have been removed. If you are still using these items, or
+extending these classes, upgrade your code.
+See :ref:`ChangeLog <v460-removed-deprecated-items>` for details.
+
 *********************
 Breaking Enhancements
 *********************

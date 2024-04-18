@@ -10757,42 +10757,42 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:__construct\\(\\) has parameter \\$request with no type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:621\\:\\:__construct\\(\\) has parameter \\$request with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:__construct\\(\\) has parameter \\$response with no type specified\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:621\\:\\:__construct\\(\\) has parameter \\$response with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:fail\\(\\) has parameter \\$messages with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:621\\:\\:fail\\(\\) has parameter \\$messages with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:format\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:621\\:\\:format\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:respond\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:621\\:\\:respond\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:respondCreated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:621\\:\\:respondCreated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:respondDeleted\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:621\\:\\:respondDeleted\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:respondUpdated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:621\\:\\:respondUpdated\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
@@ -10842,17 +10842,17 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:\\$format \\(\'html\'\\|\'json\'\\|\'xml\'\\|null\\) does not accept \'txt\'\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:621\\:\\:\\$format \\(\'html\'\\|\'json\'\\|\'xml\'\\|null\\) does not accept \'txt\'\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:\\$request has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:621\\:\\:\\$request has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:639\\:\\:\\$response has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/API/ResponseTraitTest\\.php\\:621\\:\\:\\$response has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
