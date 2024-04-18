@@ -25,7 +25,7 @@
  */
 
 // Refuse to run when called from php-cgi
-if (strpos(PHP_SAPI, 'cgi') === 0) {
+if (str_starts_with(PHP_SAPI, 'cgi')) {
     exit("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
 }
 

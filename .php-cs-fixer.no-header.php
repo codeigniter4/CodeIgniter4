@@ -29,7 +29,10 @@ $finder = Finder::create()
         __DIR__ . '/admin/starter/builds',
     ]);
 
-$overrides = [];
+$overrides = [
+    // for updating to coding-standard
+    'modernize_strpos' => true,
+];
 
 $options = [
     'cacheFile'    => 'build/.php-cs-fixer.no-header.cache',
