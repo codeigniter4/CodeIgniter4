@@ -42,16 +42,12 @@ $overrides = [
 ];
 
 $options = [
-    'cacheFile' => 'build/.php-cs-fixer.user-guide.cache',
-    'finder'    => $finder,
+    'cacheFile'    => 'build/.php-cs-fixer.user-guide.cache',
+    'finder'       => $finder,
+    'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
+    'customRules'  => [
+        NoCodeSeparatorCommentFixer::name() => true,
+    ],
 ];
 
-$config = Factory::create(new CodeIgniter4(), $overrides, $options)->forProjects();
-
-$config
-    ->registerCustomFixers(FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'))
-    ->setRules(array_merge($config->getRules(), [
-        NoCodeSeparatorCommentFixer::name() => true,
-    ]));
-
-return $config;
+return Factory::create(new CodeIgniter4(), $overrides, $options)->forProjects();
