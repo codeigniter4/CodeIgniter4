@@ -1792,32 +1792,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:_deleteBatch\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:_insert\\(\\) has parameter \\$keys with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:_insert\\(\\) has parameter \\$unescapedKeys with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:_like\\(\\) has parameter \\$field with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:_replace\\(\\) has parameter \\$keys with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:_replace\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
 ];
@@ -2203,6 +2178,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in an if condition, TWhen given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\.\\.\\.\\$arrays of function array_map expects array, int\\|string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
 ];
@@ -3122,21 +3102,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\OCI8\\\\Builder\\:\\:_deleteBatch\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\OCI8\\\\Builder\\:\\:_replace\\(\\) has parameter \\$keys with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\OCI8\\\\Builder\\:\\:_replace\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\OCI8\\\\Builder\\:\\:_update\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
@@ -3153,6 +3118,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^PHPDoc type CodeIgniter\\\\Database\\\\OCI8\\\\Connection of property CodeIgniter\\\\Database\\\\OCI8\\\\Builder\\:\\:\\$db is not the same as PHPDoc type CodeIgniter\\\\Database\\\\BaseConnection of overridden property CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:\\$db\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\.\\.\\.\\$arrays of function array_map expects array, int\\|string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
 ];
@@ -3317,27 +3287,17 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Postgre\\\\Builder\\:\\:_deleteBatch\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Postgre\\\\Builder\\:\\:_insert\\(\\) has parameter \\$keys with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Postgre\\\\Builder\\:\\:_insert\\(\\) has parameter \\$unescapedKeys with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\Postgre\\\\Builder\\:\\:_update\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\Postgre\\\\Builder\\:\\:replace\\(\\) has parameter \\$set with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#3 \\.\\.\\.\\$arrays of function array_map expects array, int\\|string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
 ];
@@ -3677,26 +3637,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/SQLSRV/Builder.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\SQLSRV\\\\Builder\\:\\:_insert\\(\\) has parameter \\$keys with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/SQLSRV/Builder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\SQLSRV\\\\Builder\\:\\:_insert\\(\\) has parameter \\$unescapedKeys with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/SQLSRV/Builder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\SQLSRV\\\\Builder\\:\\:_replace\\(\\) has parameter \\$keys with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/SQLSRV/Builder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\SQLSRV\\\\Builder\\:\\:_replace\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/SQLSRV/Builder.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\SQLSRV\\\\Builder\\:\\:_update\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/SQLSRV/Builder.php',
@@ -3907,17 +3847,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/SQLite3/Builder.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\SQLite3\\\\Builder\\:\\:_deleteBatch\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/SQLite3/Builder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\SQLite3\\\\Builder\\:\\:_replace\\(\\) has parameter \\$keys with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/SQLite3/Builder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\SQLite3\\\\Builder\\:\\:_replace\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
+	'message' => '#^Parameter \\#3 \\.\\.\\.\\$arrays of function array_map expects array, int\\|string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/SQLite3/Builder.php',
 ];
