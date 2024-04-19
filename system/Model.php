@@ -210,7 +210,7 @@ class Model extends BaseModel
             $row = $builder->get()->getResult($this->tempReturnType);
         }
 
-        if ($useCast) {
+        if ($useCast && $row !== null) {
             $row = $this->convertToReturnType($row, $returnType);
 
             $this->tempReturnType = $returnType;
