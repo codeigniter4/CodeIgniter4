@@ -1402,7 +1402,7 @@ abstract class BaseModel
     {
         return match ($this->dateFormat) {
             'int'      => $value,
-            'datetime' => date($this->db->dateFormat['datetime'], $value),
+            'datetime' => date($this->db->dateFormat[($this->db->getPlatform() === 'OCI8'?'datetime-oci8':'datetime')], $value),
             'date'     => date($this->db->dateFormat['date'], $value),
             default    => throw ModelException::forNoDateFormat(static::class),
         };
