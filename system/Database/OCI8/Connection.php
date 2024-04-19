@@ -632,7 +632,7 @@ class Connection extends BaseConnection
         }
 
         $isEasyConnectableHostName = $this->hostname !== '' && ! str_contains($this->hostname, '/') && ! str_contains($this->hostname, ':');
-        $easyConnectablePort       = ! empty($this->port) && ctype_digit($this->port) ? ':' . $this->port : '';
+        $easyConnectablePort       = ! empty($this->port) && ctype_digit((string)$this->port) ? ':' . $this->port : '';
         $easyConnectableDatabase   = $this->database !== '' ? '/' . ltrim($this->database, '/') : '';
 
         if ($isEasyConnectableHostName && ($easyConnectablePort !== '' || $easyConnectableDatabase !== '')) {
