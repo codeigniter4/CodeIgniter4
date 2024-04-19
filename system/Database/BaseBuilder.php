@@ -2865,7 +2865,7 @@ class BaseBuilder
      *
      * @param string       $table Protected table name
      * @param list<string> $keys  QBKeys
-     * @paramst<string|int>> $values QBSet
+     * @param list<string|int> $values QBSet
      */
     protected function _deleteBatch(string $table, array $keys, array $values): string
     {
