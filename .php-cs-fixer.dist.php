@@ -36,6 +36,7 @@ $finder = Finder::create()
         __DIR__ . '/.php-cs-fixer.no-header.php',
         __DIR__ . '/.php-cs-fixer.tests.php',
         __DIR__ . '/.php-cs-fixer.user-guide.php',
+        __DIR__ . '/preload.php',
         __DIR__ . '/rector.php',
         __DIR__ . '/spark',
     ]);
