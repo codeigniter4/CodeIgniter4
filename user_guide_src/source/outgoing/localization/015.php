@@ -37,4 +37,4 @@ echo lang('Tests.fullDate', [time()]);
 echo lang('Tests.spelledOut', [34]);
 
 // Displays "It has been 408,676:24:35"
-echo lang('Tests.ordinal', [time()]);
+echo lang('Tests.duration', [time()]);
