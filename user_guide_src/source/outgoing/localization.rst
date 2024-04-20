@@ -147,7 +147,7 @@ Within the file, you would return an array, where each element in the array has 
 
 .. literalinclude:: localization/007.php
 
-It also support nested definition:
+It also supports nested definition:
 
 .. literalinclude:: localization/008.php
 
@@ -204,9 +204,9 @@ Here are a few examples:
 
 .. literalinclude:: localization/015.php
 
-You should be sure to read up on the MessageFormatter class and the underlying ICU formatting to get a better
+You should be sure to read up on the `MessageFormatter <https://www.php.net/manual/en/class.messageformatter.php>`_ class and the underlying ICU formatting to get a better
 idea on what capabilities it has, like performing the conditional replacement, pluralization, and more. Both of the links provided
-earlier will give you an excellent idea as to the options available.
+previously (`Sitepoint <https://www.sitepoint.com/localization-demystified-understanding-php-intl/>`_, `official ICU docs <https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classMessageFormat.html#details>`_) will give you an excellent idea as to the options available.
 
 Specifying Locale
 -----------------
