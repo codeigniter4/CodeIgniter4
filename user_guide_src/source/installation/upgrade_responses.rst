@@ -12,7 +12,8 @@ Documentations
 
 What has been changed
 =====================
-- The methods have been renamed
+- The Output class has been changed to the Response class.
+- The methods have been renamed.
 
 Upgrade Guide
 =============
