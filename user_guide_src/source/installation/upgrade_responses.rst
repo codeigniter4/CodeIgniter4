@@ -1,5 +1,5 @@
-Upgrade HTTP Responses
-######################
+Upgrade Output Class
+####################
 
 .. contents::
     :local:
