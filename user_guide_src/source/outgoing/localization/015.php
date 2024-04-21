@@ -36,5 +36,8 @@ echo lang('Tests.fullDate', [time()]);
 // Displays "34 is thirty-four"
 echo lang('Tests.spelledOut', [34]);
 
+// Displays "The ordinal is 1.713.683.859."
+echo lang('Tests.ordinal', [time()]);
+
 // Displays "It has been 408,676:24:35"
 echo lang('Tests.duration', [time()]);
