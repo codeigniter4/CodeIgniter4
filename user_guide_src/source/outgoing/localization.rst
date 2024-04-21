@@ -147,7 +147,7 @@ Within the file, you would return an array, where each element in the array has 
 
 .. literalinclude:: localization/007.php
 
-It also support nested definition:
+It also supports nested definition:
 
 .. literalinclude:: localization/008.php
 
@@ -174,7 +174,9 @@ Replacing Parameters
 
 .. note:: The following functions all require the `intl <https://www.php.net/manual/en/book.intl.php>`_ extension to
     be loaded on your system in order to work. If the extension is not loaded, no replacement will be attempted.
-    A great overview can be found over at `Sitepoint <https://www.sitepoint.com/localization-demystified-understanding-php-intl/>`_.
+    A great overview can be found over at `Sitepoint`_.
+
+.. _Sitepoint: https://www.sitepoint.com/localization-demystified-understanding-php-intl/
 
 You can pass an array of values to replace placeholders in the language string as the second parameter to the
 ``lang()`` function. This allows for very simple number translations and formatting:
@@ -190,7 +192,7 @@ You can also use named keys to make it easier to keep things straight, if you'd 
 .. literalinclude:: localization/014.php
 
 Obviously, you can do more than just number replacement. According to the
-`official ICU docs <https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classMessageFormat.html#details>`_ for the underlying
+`official ICU docs`_ for the underlying
 library, the following types of data can be replaced:
 
 * numbers - integer, currency, percent
@@ -200,13 +202,15 @@ library, the following types of data can be replaced:
 * ordinal
 * duration
 
+.. _official ICU docs: https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classMessageFormat.html#details
+
 Here are a few examples:
 
 .. literalinclude:: localization/015.php
 
-You should be sure to read up on the MessageFormatter class and the underlying ICU formatting to get a better
+You should be sure to read up on the `MessageFormatter <https://www.php.net/manual/en/class.messageformatter.php>`_ class and the underlying ICU formatting to get a better
 idea on what capabilities it has, like performing the conditional replacement, pluralization, and more. Both of the links provided
-earlier will give you an excellent idea as to the options available.
+previously (`Sitepoint`_, `official ICU docs`_) will give you an excellent idea as to the options available.
 
 Specifying Locale
 -----------------
