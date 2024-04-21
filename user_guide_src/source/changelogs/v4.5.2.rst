@@ -18,6 +18,8 @@ BREAKING
 Message Changes
 ***************
 
+- Added ``Security.insecureCookie`` message.
+
 *******
 Changes
 *******
