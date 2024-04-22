@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\TestResponse;
@@ -20,7 +21,7 @@ use CodeIgniter\Test\TestResponse;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class HomeTest extends CIUnitTestCase
 {
     use FeatureTestTrait;

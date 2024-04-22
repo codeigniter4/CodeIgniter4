@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Exceptions\ModelException;
 use Tests\Support\Entity\UserWithCasts;
@@ -24,7 +26,7 @@ use Tests\Support\Models\UserModel;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
+#[Group('DatabaseLive')]
 final class FindModelTest extends LiveModelTestCase
 {
     public function testFindReturnsRow(): void
@@ -181,7 +183,7 @@ final class FindModelTest extends LiveModelTestCase
      * @param mixed $groupBy
      * @param mixed $total
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideFirstAggregate')]
+    #[DataProvider('provideFirstAggregate')]
     public function testFirstAggregate($groupBy, $total): void
     {
         $this->createModel(UserModel::class);
@@ -216,7 +218,7 @@ final class FindModelTest extends LiveModelTestCase
      * @param mixed $aggregate
      * @param mixed $groupBy
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideAggregateAndGroupBy')]
+    #[DataProvider('provideAggregateAndGroupBy')]
     public function testFirstRespectsSoftDeletes($aggregate, $groupBy): void
     {
         $this->db->table('user')
@@ -261,7 +263,7 @@ final class FindModelTest extends LiveModelTestCase
      * @param mixed $aggregate
      * @param mixed $groupBy
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideAggregateAndGroupBy')]
+    #[DataProvider('provideAggregateAndGroupBy')]
     public function testFirstRecoverTempUseSoftDeletes($aggregate, $groupBy): void
     {
         $this->createModel(UserModel::class);

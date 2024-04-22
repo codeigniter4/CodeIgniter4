@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
+use PHPUnit\Framework\Attributes\Group;
 /**
  * Class BootstrapFCPATHTest
  *
@@ -25,7 +26,7 @@ namespace CodeIgniter\Test;
  *
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class BootstrapFCPATHTest extends CIUnitTestCase
 {
     private string $currentDir = __DIR__;

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\HTTP\RequestInterface;
 use Config\Services;
 use Tests\Support\Filters\Customfilter;
@@ -28,7 +29,7 @@ use Tests\Support\Filters\Customfilter;
  *
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class FilterTestTraitTest extends CIUnitTestCase
 {
     use FilterTestTrait;

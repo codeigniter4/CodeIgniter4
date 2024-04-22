@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation\StrictRules;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Validation;
 use Config\Services;
@@ -21,7 +23,7 @@ use Tests\Support\Validation\TestRules;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class CreditCardRulesTest extends CIUnitTestCase
 {
     private Validation $validation;
@@ -50,7 +52,7 @@ final class CreditCardRulesTest extends CIUnitTestCase
         $this->validation->reset();
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidCCNumber')]
+    #[DataProvider('provideValidCCNumber')]
     public function testValidCCNumber(string $type, ?string $number, bool $expected): void
     {
         $data = ['cc' => $number];

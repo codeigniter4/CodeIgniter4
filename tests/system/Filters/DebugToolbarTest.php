@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -23,8 +25,8 @@ use Config\Filters as FilterConfig;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class DebugToolbarTest extends CIUnitTestCase
 {
     /**

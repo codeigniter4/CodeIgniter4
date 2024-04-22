@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
@@ -24,7 +25,7 @@ use Tests\Support\View\WorldDecorator;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class DecoratorsTest extends CIUnitTestCase
 {
     private FileLocator $loader;

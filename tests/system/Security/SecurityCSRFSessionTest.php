@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Security;
 
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -35,9 +38,9 @@ use Config\Session as SessionConfig;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses]
-#[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
-#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
+#[RunTestsInSeparateProcesses]
+#[PreserveGlobalState(false)]
+#[Group('SeparateProcess')]
 final class SecurityCSRFSessionTest extends CIUnitTestCase
 {
     /**

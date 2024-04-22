@@ -13,10 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
+use PHPUnit\Framework\Attributes\Group;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
+#[Group('DatabaseLive')]
 final class TransactionDBDebugFalseTest extends TransactionDBDebugTrueTest
 {
     protected function setUp(): void

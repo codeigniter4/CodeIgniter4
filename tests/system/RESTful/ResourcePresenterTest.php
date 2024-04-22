@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\RESTful;
 
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Model;
@@ -33,9 +36,9 @@ use Tests\Support\RESTful\Worker2;
  *
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses]
-#[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
-#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
+#[RunTestsInSeparateProcesses]
+#[PreserveGlobalState(false)]
+#[Group('SeparateProcess')]
 final class ResourcePresenterTest extends CIUnitTestCase
 {
     private CodeIgniter $codeigniter;

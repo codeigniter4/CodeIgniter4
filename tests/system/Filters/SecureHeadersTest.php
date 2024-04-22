@@ -13,13 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class SecureHeadersTest extends CIUnitTestCase
 {
     public function testAfter(): void

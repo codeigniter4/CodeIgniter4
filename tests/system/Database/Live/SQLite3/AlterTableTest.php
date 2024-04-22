@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live\SQLite3;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\SQLite3\Forge;
 use CodeIgniter\Database\SQLite3\Table;
@@ -23,8 +25,8 @@ use Config\Database;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
-#[\PHPUnit\Framework\Attributes\RequiresPhpExtension('sqlite3')]
+#[Group('DatabaseLive')]
+#[RequiresPhpExtension('sqlite3')]
 final class AlterTableTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

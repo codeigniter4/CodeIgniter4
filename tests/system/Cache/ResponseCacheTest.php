@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache;
 
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
@@ -28,8 +30,8 @@ use Exception;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class ResponseCacheTest extends CIUnitTestCase
 {
     private AppConfig $appConfig;

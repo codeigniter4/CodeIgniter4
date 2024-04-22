@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Log;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Log\Exceptions\LogException;
@@ -25,7 +26,7 @@ use TypeError;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class LoggerTest extends CIUnitTestCase
 {
     protected function tearDown(): void

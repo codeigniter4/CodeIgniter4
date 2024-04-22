@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
@@ -21,7 +24,7 @@ use Config\Cache;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class FileHandlerTest extends AbstractHandlerTestCase
 {
     private static string $directory = 'FileHandler';
@@ -86,7 +89,7 @@ final class FileHandlerTest extends AbstractHandlerTestCase
     /**
      * chmod('path', 0444) does not work on Windows
      */
-    #[\PHPUnit\Framework\Attributes\RequiresOperatingSystem('Linux|Darwin')]
+    #[RequiresOperatingSystem('Linux|Darwin')]
     public function testNewWithNonWritablePath(): void
     {
         $this->expectException(CacheException::class);
@@ -144,7 +147,7 @@ final class FileHandlerTest extends AbstractHandlerTestCase
     /**
      * chmod('path', 0444) does not work on Windows
      */
-    #[\PHPUnit\Framework\Attributes\RequiresOperatingSystem('Linux|Darwin')]
+    #[RequiresOperatingSystem('Linux|Darwin')]
     public function testSave(): void
     {
         $this->assertTrue($this->handler->save(self::$key1, 'value'));
@@ -306,8 +309,8 @@ final class FileHandlerTest extends AbstractHandlerTestCase
         $this->assertTrue($this->handler->isSupported());
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideSaveMode')]
-    #[\PHPUnit\Framework\Attributes\RequiresOperatingSystem('Linux|Darwin')]
+    #[DataProvider('provideSaveMode')]
+    #[RequiresOperatingSystem('Linux|Darwin')]
     public function testSaveMode(int $int, string $string): void
     {
         // Initialize mode

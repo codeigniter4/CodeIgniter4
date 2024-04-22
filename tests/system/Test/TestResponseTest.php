@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
 use Config\App;
@@ -22,7 +24,7 @@ use PHPUnit\Framework\AssertionFailedError;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class TestResponseTest extends CIUnitTestCase
 {
     private ?TestResponse $testResponse = null;
@@ -33,7 +35,7 @@ final class TestResponseTest extends CIUnitTestCase
         parent::setUp();
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideHttpStatusCodes')]
+    #[DataProvider('provideHttpStatusCodes')]
     public function testIsOK(int $code, bool $isOk): void
     {
         $this->getTestResponse('Hello World');
@@ -221,7 +223,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->testResponse->assertStatus(201);
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideHttpStatusCodes')]
+    #[DataProvider('provideHttpStatusCodes')]
     public function testAssertIsOK(int $code, bool $isOk): void
     {
         $this->getTestResponse('<h1>Hello World</h1>', ['statusCode' => $code]);

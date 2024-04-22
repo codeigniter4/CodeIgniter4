@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\SecondaryModel;
 
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
+#[Group('DatabaseLive')]
 final class WhenWhenNotModelTest extends LiveModelTestCase
 {
     public function testWhenWithTrueCondition(): void

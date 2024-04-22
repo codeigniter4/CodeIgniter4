@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
@@ -20,7 +21,7 @@ use Config\Services;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class FilterCollectorTest extends CIUnitTestCase
 {
     public function testGet(): void

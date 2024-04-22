@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
@@ -23,7 +26,7 @@ use Config\Services;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
+#[Group('SeparateProcess')]
 final class FormHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -952,8 +955,8 @@ final class FormHelperTest extends CIUnitTestCase
         );
     }
 
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testSetRadioFromSessionOldInput(): void
     {
         $_SESSION = [
@@ -970,8 +973,8 @@ final class FormHelperTest extends CIUnitTestCase
         unset($_SESSION['_ci_old_input']);
     }
 
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testSetRadioFromPost(): void
     {
         $_POST['bar'] = 'baz';
@@ -981,8 +984,8 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame('', set_radio('bar', 'boop', true));
     }
 
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testSetRadioFromPostWithValueZero(): void
     {
         $_POST['bar'] = '0';

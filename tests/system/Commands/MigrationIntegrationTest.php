@@ -13,13 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
+#[Group('DatabaseLive')]
 final class MigrationIntegrationTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

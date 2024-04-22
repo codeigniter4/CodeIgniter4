@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -23,7 +24,7 @@ use RuntimeException;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class ViewTest extends CIUnitTestCase
 {
     private FileLocator $loader;

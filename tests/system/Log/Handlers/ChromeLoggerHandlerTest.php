@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Log\Handlers;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use CodeIgniter\Test\Mock\MockResponse;
@@ -23,7 +24,7 @@ use stdClass;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class ChromeLoggerHandlerTest extends CIUnitTestCase
 {
     public function testCanHandleLogLevel(): void

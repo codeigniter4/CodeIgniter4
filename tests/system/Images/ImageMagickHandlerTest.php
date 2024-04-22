@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Images;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Handlers\BaseHandler;
@@ -32,8 +35,8 @@ use Imagick;
  *
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
-#[\PHPUnit\Framework\Attributes\RequiresPhpExtension('imagick')]
+#[Group('Others')]
+#[RequiresPhpExtension('imagick')]
 final class ImageMagickHandlerTest extends CIUnitTestCase
 {
     private string $root;
@@ -78,7 +81,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         $this->handler = Services::image('imagick', $config, false);
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideNonexistentLibraryPathTerminatesProcessing')]
+    #[DataProvider('provideNonexistentLibraryPathTerminatesProcessing')]
     public function testNonexistentLibraryPathTerminatesProcessing(string $path, string $invalidPath): void
     {
         $this->expectException(ImageException::class);

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\CoversFunction;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
@@ -23,8 +25,8 @@ use Tests\Support\Autoloader\FatalLocator;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
-#[\PHPUnit\Framework\Attributes\CoversFunction('helper')]
+#[Group('Others')]
+#[CoversFunction('helper')]
 final class CommonHelperTest extends CIUnitTestCase
 {
     private array $dummyHelpers = [

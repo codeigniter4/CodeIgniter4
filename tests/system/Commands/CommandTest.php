@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\CLI\Commands;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -23,7 +25,7 @@ use Tests\Support\Commands\ParamsReveal;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class CommandTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
@@ -128,7 +130,7 @@ final class CommandTest extends CIUnitTestCase
         $this->assertStringContainsString(':clear', $this->getBuffer());
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideCommandParsesArgsCorrectly')]
+    #[DataProvider('provideCommandParsesArgsCorrectly')]
     public function testCommandParsesArgsCorrectly(string $input, array $expected): void
     {
         ParamsReveal::$args = null;

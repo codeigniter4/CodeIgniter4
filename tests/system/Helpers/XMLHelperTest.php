@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class XMLHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Encryption\Handlers;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Encryption\Encryption;
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -21,7 +22,7 @@ use Config\Encryption as EncryptionConfig;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class SodiumHandlerTest extends CIUnitTestCase
 {
     private Encryption $encryption;

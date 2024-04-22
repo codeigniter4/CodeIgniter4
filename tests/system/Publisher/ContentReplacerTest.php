@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Publisher;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class ContentReplacerTest extends CIUnitTestCase
 {
     public function testReplace(): void

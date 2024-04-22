@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Format;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Format\Exceptions\FormatException;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -20,7 +21,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class FormatTest extends CIUnitTestCase
 {
     private Format $format;

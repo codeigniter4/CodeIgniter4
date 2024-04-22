@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Session\Handlers\Database;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Session\Handlers\RedisHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Session as SessionConfig;
@@ -20,8 +23,8 @@ use Config\Session as SessionConfig;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
-#[\PHPUnit\Framework\Attributes\RequiresPhpExtension('redis')]
+#[Group('DatabaseLive')]
+#[RequiresPhpExtension('redis')]
 final class RedisHandlerTest extends CIUnitTestCase
 {
     private string $sessionDriver   = RedisHandler::class;
@@ -134,7 +137,7 @@ final class RedisHandlerTest extends CIUnitTestCase
         $handler->close();
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideSetSavePath')]
+    #[DataProvider('provideSetSavePath')]
     public function testSetSavePath(string $savePath, array $expected): void
     {
         $option  = ['savePath' => $savePath];

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Publisher;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Publisher\Exceptions\PublisherException;
 use CodeIgniter\Test\CIUnitTestCase;
 
@@ -24,7 +26,7 @@ use CodeIgniter\Test\CIUnitTestCase;
  *
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class PublisherRestrictionsTest extends CIUnitTestCase
 {
     /**
@@ -47,7 +49,7 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
         $this->assertArrayNotHasKey(SUPPORTPATH, $restrictions);
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideDefaultPublicRestrictions')]
+    #[DataProvider('provideDefaultPublicRestrictions')]
     public function testDefaultPublicRestrictions(string $path): void
     {
         $publisher = new Publisher(ROOTPATH, FCPATH);
@@ -77,7 +79,7 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
         ];
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideDestinations')]
+    #[DataProvider('provideDestinations')]
     public function testDestinations(string $destination, bool $allowed): void
     {
         config('Publisher')->restrictions = [

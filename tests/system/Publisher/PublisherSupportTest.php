@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Publisher;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Publisher\Exceptions\PublisherException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Tests\Support\Publishers\TestPublisher;
@@ -20,7 +21,7 @@ use Tests\Support\Publishers\TestPublisher;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class PublisherSupportTest extends CIUnitTestCase
 {
     /**

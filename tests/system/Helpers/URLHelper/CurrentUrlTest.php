@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers\URLHelper;
 
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -30,8 +33,8 @@ use Config\App;
  *
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class CurrentUrlTest extends CIUnitTestCase
 {
     private App $config;
@@ -280,7 +283,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         ];
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideUrlIs')]
+    #[DataProvider('provideUrlIs')]
     public function testUrlIs(string $currentPath, string $testPath, bool $expected): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
@@ -291,7 +294,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame($expected, url_is($testPath));
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideUrlIs')]
+    #[DataProvider('provideUrlIs')]
     public function testUrlIsNoIndex(string $currentPath, string $testPath, bool $expected): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
@@ -304,7 +307,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame($expected, url_is($testPath));
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideUrlIs')]
+    #[DataProvider('provideUrlIs')]
     public function testUrlIsWithSubfolder(string $currentPath, string $testPath, bool $expected): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';

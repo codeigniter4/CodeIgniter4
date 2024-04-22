@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\I18n\Time;
 use Tests\Support\Entity\CustomUser;
 use Tests\Support\Entity\User;
@@ -21,7 +22,7 @@ use Tests\Support\Models\UserCastsTimestampModel;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
+#[Group('DatabaseLive')]
 final class DataConverterModelTest extends LiveModelTestCase
 {
     protected $migrate     = true;

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Language;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLanguage;
 use Config\Services;
@@ -22,7 +24,7 @@ use Tests\Support\Language\SecondMockLanguage;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class LanguageTest extends CIUnitTestCase
 {
     private Language $lang;
@@ -267,7 +269,7 @@ final class LanguageTest extends CIUnitTestCase
      *
      * @param mixed $bundle
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideBundleUniqueKeys')]
+    #[DataProvider('provideBundleUniqueKeys')]
     public function testBundleUniqueKeys($bundle): void
     {
         $messages = require SYSTEMPATH . 'Language/en/' . $bundle . '.php';

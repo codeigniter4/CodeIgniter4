@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use CodeIgniter\HTTP\Response;
 use Config\App;
 
@@ -24,7 +27,7 @@ use Config\App;
  *
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
+#[Group('SeparateProcess')]
 final class TestCaseEmissionsTest extends CIUnitTestCase
 {
     /**
@@ -40,8 +43,8 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
      * The tests includes a basic sanity check, to make sure that
      * the body we thought would be sent actually was.
      */
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testHeadersEmitted(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -70,8 +73,8 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
         $this->assertHeaderEmitted('set-cookie: FOO=bar', true);
     }
 
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testHeadersNotEmitted(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.

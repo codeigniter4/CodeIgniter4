@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use DateTimeZone;
@@ -20,7 +21,7 @@ use DateTimeZone;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class DateHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void

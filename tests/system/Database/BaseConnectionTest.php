@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
@@ -21,7 +23,7 @@ use Throwable;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class BaseConnectionTest extends CIUnitTestCase
 {
     private array $options = [
@@ -180,7 +182,7 @@ final class BaseConnectionTest extends CIUnitTestCase
      * These tests are intended to confirm the current behavior.
      * We do not know if all of these are the correct behavior.
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideProtectIdentifiers')]
+    #[DataProvider('provideProtectIdentifiers')]
     public function testProtectIdentifiers(
         bool $prefixSingle,
         bool $protectIdentifiers,
@@ -285,7 +287,7 @@ final class BaseConnectionTest extends CIUnitTestCase
     /**
      * These tests are intended to confirm the current behavior.
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideEscapeIdentifiers')]
+    #[DataProvider('provideEscapeIdentifiers')]
     public function testEscapeIdentifiers(string $item, string $expected): void
     {
         $db = new MockConnection($this->options);
@@ -307,7 +309,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         ];
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideEscapeIdentifier')]
+    #[DataProvider('provideEscapeIdentifier')]
     public function testEscapeIdentifier(string $item, string $expected): void
     {
         $db = new MockConnection($this->options);

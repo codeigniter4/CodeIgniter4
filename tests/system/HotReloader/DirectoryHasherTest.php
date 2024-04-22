@@ -13,13 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HotReloader;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class DirectoryHasherTest extends CIUnitTestCase
 {
     private DirectoryHasher $hasher;

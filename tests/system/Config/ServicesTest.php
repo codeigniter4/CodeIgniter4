@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Config;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use CodeIgniter\Autoloader\Autoloader;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Database\MigrationRunner;
@@ -52,7 +55,7 @@ use Tests\Support\Config\Services;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
+#[Group('SeparateProcess')]
 final class ServicesTest extends CIUnitTestCase
 {
     private array $original;
@@ -240,24 +243,24 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertInstanceOf(Cell::class, $actual);
     }
 
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testNewSession(): void
     {
         $actual = Services::session();
         $this->assertInstanceOf(Session::class, $actual);
     }
 
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testNewSessionWithNullConfig(): void
     {
         $actual = Services::session(null, false);
         $this->assertInstanceOf(Session::class, $actual);
     }
 
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testCallStatic(): void
     {
         // __callStatic should kick in for this but fail
@@ -268,8 +271,8 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertInstanceOf(Session::class, $actual);
     }
 
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testCallStaticDirectly(): void
     {
         //      $actual = \CodeIgniter\Config\Services::SeSsIoN(null, false); // original
@@ -277,8 +280,8 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertInstanceOf(Session::class, $actual);
     }
 
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testMockInjection(): void
     {
         Services::injectMock('response', new MockResponse(new App()));
@@ -297,8 +300,8 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertSame($response, $response3);
     }
 
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testReset(): void
     {
         Services::injectMock('response', new MockResponse(new App()));
@@ -314,8 +317,8 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertNotSame($response2, $response);
     }
 
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testResetSingle(): void
     {
         Services::injectMock('response', new MockResponse(new App()));

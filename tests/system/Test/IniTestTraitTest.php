@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
+use PHPUnit\Framework\Attributes\Group;
 use ReflectionException;
 
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class IniTestTraitTest extends CIUnitTestCase
 {
     use IniTestTrait;

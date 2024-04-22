@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Database;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
@@ -23,7 +24,7 @@ use Tests\Support\Database\Seeds\CITestSeeder;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
+#[Group('DatabaseLive')]
 final class ShowTableInfoTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

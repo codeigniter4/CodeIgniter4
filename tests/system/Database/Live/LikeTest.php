@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
@@ -21,7 +22,7 @@ use Tests\Support\Database\Seeds\CITestSeeder;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
+#[Group('DatabaseLive')]
 final class LikeTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
@@ -131,11 +132,7 @@ final class LikeTest extends CIUnitTestCase
     {
         $builder = $this->db->table('job');
 
-        if ($this->db->DBDriver === 'OCI8') {
-            $key = new RawSql('"name"');
-        } else {
-            $key = new RawSql('name');
-        }
+        $key = $this->db->DBDriver === 'OCI8' ? new RawSql('"name"') : new RawSql('name');
 
         $builder->like($key, 'Developer');
         $count   = $builder->countAllResults(false);
@@ -152,11 +149,7 @@ final class LikeTest extends CIUnitTestCase
     {
         $builder = $this->db->table('job');
 
-        if ($this->db->DBDriver === 'OCI8') {
-            $key = new RawSql('"name"');
-        } else {
-            $key = new RawSql('name');
-        }
+        $key = $this->db->DBDriver === 'OCI8' ? new RawSql('"name"') : new RawSql('name');
 
         $builder->like($key, 'Developer');
         $results = $builder->get(null, 0, false)->getResult();

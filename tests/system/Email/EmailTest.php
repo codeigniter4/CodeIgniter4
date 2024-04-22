@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Email;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockEmail;
@@ -21,7 +23,7 @@ use ErrorException;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class EmailTest extends CIUnitTestCase
 {
     public function testEmailValidation(): void
@@ -44,7 +46,7 @@ final class EmailTest extends CIUnitTestCase
     /**
      * @param mixed $autoClear
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideEmailSendWithClearance')]
+    #[DataProvider('provideEmailSendWithClearance')]
     public function testEmailSendWithClearance($autoClear): void
     {
         $email = $this->createMockEmail();

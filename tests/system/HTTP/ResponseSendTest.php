@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
@@ -26,7 +29,7 @@ use Config\Services;
  *
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
+#[Group('SeparateProcess')]
 final class ResponseSendTest extends CIUnitTestCase
 {
     /**
@@ -42,8 +45,8 @@ final class ResponseSendTest extends CIUnitTestCase
      * The tests includes a basic sanity check, to make sure that
      * the body we thought would be sent actually was.
      */
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testHeadersMissingDate(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -78,8 +81,8 @@ final class ResponseSendTest extends CIUnitTestCase
      * This test does not test that CSP is handled properly -
      * it makes sure that sending gives CSP a chance to do its thing.
      */
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testHeadersWithCSP(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -117,8 +120,8 @@ final class ResponseSendTest extends CIUnitTestCase
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1393
      */
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testRedirectResponseCookies(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.

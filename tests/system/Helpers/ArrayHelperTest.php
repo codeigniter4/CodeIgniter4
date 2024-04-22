@@ -13,13 +13,15 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Test\CIUnitTestCase;
 use ValueError;
 
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class ArrayHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -212,7 +214,7 @@ final class ArrayHelperTest extends CIUnitTestCase
      * @param int|string        $key
      * @param array|string|null $expected
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideArrayDeepSearch')]
+    #[DataProvider('provideArrayDeepSearch')]
     public function testArrayDeepSearch($key, $expected): void
     {
         $data = [
@@ -246,7 +248,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertNull(array_deep_search('key644', $data));
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideSortByMultipleKeys')]
+    #[DataProvider('provideSortByMultipleKeys')]
     public function testArraySortByMultipleKeysWithArray(array $data, array $sortColumns, array $expected): void
     {
         $success = array_sort_by_multiple_keys($data, $sortColumns);
@@ -255,7 +257,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame($expected, array_column($data, 'name'));
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideSortByMultipleKeys')]
+    #[DataProvider('provideSortByMultipleKeys')]
     public function testArraySortByMultipleKeysWithObjects(array $data, array $sortColumns, array $expected): void
     {
         // Morph to objects
@@ -269,7 +271,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame($expected, array_column((array) $data, 'name'));
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideSortByMultipleKeys')]
+    #[DataProvider('provideSortByMultipleKeys')]
     public function testArraySortByMultipleKeysFailsEmptyParameter(array $data, array $sortColumns, array $expected): void
     {
         // Both filled
@@ -292,7 +294,7 @@ final class ArrayHelperTest extends CIUnitTestCase
     /**
      * @param mixed $data
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideSortByMultipleKeys')]
+    #[DataProvider('provideSortByMultipleKeys')]
     public function testArraySortByMultipleKeysFailsInconsistentArraySizes($data): void
     {
         $this->expectException(ValueError::class);
@@ -385,7 +387,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideArrayFlattening')]
+    #[DataProvider('provideArrayFlattening')]
     public function testArrayFlattening(array $input, array $expected): void
     {
         $this->assertSame($expected, array_flatten_with_dots($input));
@@ -483,7 +485,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideArrayGroupByIncludeEmpty')]
+    #[DataProvider('provideArrayGroupByIncludeEmpty')]
     public function testArrayGroupByIncludeEmpty(array $indexes, array $data, array $expected): void
     {
         $actual = array_group_by($data, $indexes, true);
@@ -491,7 +493,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $actual, 'array including empty not the same');
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideArrayGroupByExcludeEmpty')]
+    #[DataProvider('provideArrayGroupByExcludeEmpty')]
     public function testArrayGroupByExcludeEmpty(array $indexes, array $data, array $expected): void
     {
         $actual = array_group_by($data, $indexes, false);

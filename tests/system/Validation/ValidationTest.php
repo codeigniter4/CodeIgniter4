@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SiteURI;
@@ -31,7 +33,7 @@ use TypeError;
  *
  * @no-final
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 class ValidationTest extends CIUnitTestCase
 {
     protected Validation $validation;
@@ -191,7 +193,7 @@ class ValidationTest extends CIUnitTestCase
     /**
      * @param mixed $rules
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideSetRuleRulesFormat')]
+    #[DataProvider('provideSetRuleRulesFormat')]
     public function testSetRuleRulesFormat(bool $expected, $rules): void
     {
         if (! $expected) {
@@ -445,7 +447,7 @@ class ValidationTest extends CIUnitTestCase
      *
      * @param mixed $value
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideCanValidatetArrayData')]
+    #[DataProvider('provideCanValidatetArrayData')]
     public function testCanValidatetArrayData($value, bool $expected): void
     {
         $data = [];
@@ -497,7 +499,7 @@ class ValidationTest extends CIUnitTestCase
      *
      * @param mixed $value
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideIsIntWithInvalidTypeData')]
+    #[DataProvider('provideIsIntWithInvalidTypeData')]
     public function testIsIntWithInvalidTypeData($value, bool $expected): void
     {
         $this->validation->setRules(['foo' => 'is_int']);
@@ -734,7 +736,7 @@ class ValidationTest extends CIUnitTestCase
      * @param list<string>|string $rules
      * @param string              $expected
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideRulesSetup')]
+    #[DataProvider('provideRulesSetup')]
     public function testRulesSetup($rules, $expected, array $errors = []): void
     {
         $data = ['foo' => ''];
@@ -1127,7 +1129,7 @@ class ValidationTest extends CIUnitTestCase
         ], $this->validation->getErrors());
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideRulesForArrayField')]
+    #[DataProvider('provideRulesForArrayField')]
     public function testRulesForArrayField(array $body, array $rules, array $results): void
     {
         $config          = new App();
@@ -1368,7 +1370,7 @@ class ValidationTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4521
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideIfExistRuleWithAsterisk')]
+    #[DataProvider('provideIfExistRuleWithAsterisk')]
     public function testIfExistRuleWithAsterisk(bool $expected, array $rules, array $data): void
     {
         $actual = $this->validation->setRules($rules)->run($data);
@@ -1437,7 +1439,7 @@ class ValidationTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4510
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidationOfArrayData')]
+    #[DataProvider('provideValidationOfArrayData')]
     public function testValidationOfArrayData(bool $expected, array $rules, array $data): void
     {
         $actual = $this->validation->setRules($rules)->run($data);
@@ -1492,7 +1494,7 @@ class ValidationTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4929
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideSplittingOfComplexStringRules')]
+    #[DataProvider('provideSplittingOfComplexStringRules')]
     public function testSplittingOfComplexStringRules(string $input, array $expected): void
     {
         $splitter = $this->getPrivateMethodInvoker($this->validation, 'splitRules');

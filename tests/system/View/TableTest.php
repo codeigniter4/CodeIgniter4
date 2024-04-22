@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Database\MySQLi\Result;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockTable;
@@ -21,7 +24,7 @@ use stdClass;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class TableTest extends CIUnitTestCase
 {
     private Table $table;
@@ -57,7 +60,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertSame('awesome cap', $this->table->caption);
     }
 
-    #[\PHPUnit\Framework\Attributes\Depends('testPrepArgs')]
+    #[Depends('testPrepArgs')]
     public function testSetHeading(): void
     {
         // uses _prep_args internally, so we'll just do a quick
@@ -147,7 +150,7 @@ final class TableTest extends CIUnitTestCase
         );
     }
 
-    #[\PHPUnit\Framework\Attributes\Depends('testPrepArgs')]
+    #[Depends('testPrepArgs')]
     public function testAddRow(): void
     {
         // uses _prep_args internally, so we'll just do a quick
@@ -778,7 +781,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<td>Fred</td><td><strong>Blue</strong></td><td>Small</td>', $generated);
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('orderedColumnUsecases')]
+    #[DataProvider('orderedColumnUsecases')]
     public function testAddRowAndGenerateOrderedColumns(array $heading, array $row, string $expectContainsString): void
     {
         $this->table->setHeading($heading);
@@ -790,7 +793,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString($expectContainsString, $generated);
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('orderedColumnUsecases')]
+    #[DataProvider('orderedColumnUsecases')]
     public function testGenerateOrderedColumns(array $heading, array $row, string $expectContainsString): void
     {
         $this->table->setHeading($heading);

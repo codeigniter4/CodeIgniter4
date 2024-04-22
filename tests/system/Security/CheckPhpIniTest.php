@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Security;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
@@ -20,7 +21,7 @@ use CodeIgniter\Test\Mock\MockInputOutput;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class CheckPhpIniTest extends CIUnitTestCase
 {
     public function testCheckIni(): void

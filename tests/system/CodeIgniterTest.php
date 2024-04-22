@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Controllers\Home;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Debug\Timer;
@@ -36,9 +40,9 @@ use Tests\Support\Filters\RedirectFilter;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses]
-#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[RunTestsInSeparateProcesses]
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class CodeIgniterTest extends CIUnitTestCase
 {
     private CodeIgniter $codeigniter;
@@ -838,7 +842,7 @@ final class CodeIgniterTest extends CIUnitTestCase
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/pull/6410
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('providePageCacheWithCacheQueryString')]
+    #[DataProvider('providePageCacheWithCacheQueryString')]
     public function testPageCacheWithCacheQueryString(
         $cacheQueryStringValue,
         int $expectedPagesInCache,

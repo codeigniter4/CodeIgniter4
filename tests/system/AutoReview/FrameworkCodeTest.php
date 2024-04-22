@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\AutoReview;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use FilesystemIterator;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -44,7 +45,7 @@ final class FrameworkCodeTest extends TestCase
     /**
      * @param class-string $class
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideEachTestClassHasCorrectGroupAttributeName')]
+    #[DataProvider('provideEachTestClassHasCorrectGroupAttributeName')]
     public function testEachTestClassHasCorrectGroupAttributeName(string $class): void
     {
         $reflection = new ReflectionClass($class);

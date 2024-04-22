@@ -13,13 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
+#[Group('DatabaseLive')]
 final class PaginateModelTest extends LiveModelTestCase
 {
     public function testPaginate(): void

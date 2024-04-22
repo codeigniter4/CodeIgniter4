@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use InvalidArgumentException;
@@ -20,7 +22,7 @@ use InvalidArgumentException;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class MessageTest extends CIUnitTestCase
 {
     private ?Message $message;
@@ -209,7 +211,7 @@ final class MessageTest extends CIUnitTestCase
     /**
      * @param array $arrayHeaderValue
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideArrayHeaderValue')]
+    #[DataProvider('provideArrayHeaderValue')]
     public function testSetHeaderWithExistingArrayValuesAppendStringValue($arrayHeaderValue): void
     {
         $this->message->setHeader('Accept', $arrayHeaderValue);
@@ -221,7 +223,7 @@ final class MessageTest extends CIUnitTestCase
     /**
      * @param array $arrayHeaderValue
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideArrayHeaderValue')]
+    #[DataProvider('provideArrayHeaderValue')]
     public function testSetHeaderWithExistingArrayValuesAppendArrayValue($arrayHeaderValue): void
     {
         $this->message->setHeader('Accept', $arrayHeaderValue);

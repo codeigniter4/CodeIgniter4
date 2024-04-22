@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
@@ -20,8 +23,8 @@ use Config\App;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -281,7 +284,7 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
      * @param string $path
      * @param string $detectPath
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideExtensionPHP')]
+    #[DataProvider('provideExtensionPHP')]
     public function testExtensionPHP($path, $detectPath): void
     {
         $config          = new App();

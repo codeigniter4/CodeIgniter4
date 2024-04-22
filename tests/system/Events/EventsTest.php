@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Events;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockEvents;
 use Config\Modules;
@@ -20,7 +23,7 @@ use Config\Modules;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
+#[Group('SeparateProcess')]
 final class EventsTest extends CIUnitTestCase
 {
     /**
@@ -46,8 +49,8 @@ final class EventsTest extends CIUnitTestCase
         Events::simulate(false);
     }
 
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testInitialize(): void
     {
         /**

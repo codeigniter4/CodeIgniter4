@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Log\Handlers;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Log\Exceptions\LogException;
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -20,7 +21,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class ErrorlogHandlerTest extends CIUnitTestCase
 {
     public function testHandlerThrowsOnInvalidMessageType(): void

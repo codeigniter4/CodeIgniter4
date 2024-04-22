@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\Dash_folder\Dash_controller;
 use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\Home;
 use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\SubDir\BlogController;
@@ -25,7 +26,7 @@ use Tests\Support\Controllers\Remap;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class ControllerMethodReaderTest extends CIUnitTestCase
 {
     private function createControllerMethodReader(

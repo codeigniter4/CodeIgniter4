@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Encryption;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
@@ -21,7 +22,7 @@ use Config\Services;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class EncryptionTest extends CIUnitTestCase
 {
     private Encryption $encryption;

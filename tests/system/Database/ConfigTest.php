@@ -13,13 +13,15 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class ConfigTest extends CIUnitTestCase
 {
     use ReflectionHelper;
@@ -195,7 +197,7 @@ final class ConfigTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/7550
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideConvertDSN')]
+    #[DataProvider('provideConvertDSN')]
     public function testConvertDSN(string $input, string $expected): void
     {
         // @TODO This format is for PDO_PGSQL.

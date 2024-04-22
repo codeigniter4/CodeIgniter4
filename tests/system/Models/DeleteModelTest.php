@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Exceptions\ModelException;
 use Tests\Support\Models\JobModel;
@@ -22,7 +24,7 @@ use Tests\Support\Models\UserModel;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
+#[Group('DatabaseLive')]
 final class DeleteModelTest extends LiveModelTestCase
 {
     public function testDeleteBasics(): void
@@ -155,7 +157,7 @@ final class DeleteModelTest extends LiveModelTestCase
      *
      * @param int|string|null $emptyValue
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('emptyPkValues')]
+    #[DataProvider('emptyPkValues')]
     public function testDontThrowExceptionWhenSoftDeleteConditionIsSetWithEmptyValue($emptyValue): void
     {
         $this->createModel(UserModel::class);
@@ -168,7 +170,7 @@ final class DeleteModelTest extends LiveModelTestCase
     /**
      * @param int|string|null $emptyValue
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('emptyPkValues')]
+    #[DataProvider('emptyPkValues')]
     public function testThrowExceptionWhenSoftDeleteParamIsEmptyValue($emptyValue): void
     {
         $this->expectException(DatabaseException::class);
@@ -182,7 +184,7 @@ final class DeleteModelTest extends LiveModelTestCase
     /**
      * @param int|string|null $emptyValue
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('emptyPkValues')]
+    #[DataProvider('emptyPkValues')]
     public function testDontDeleteRowsWhenSoftDeleteParamIsEmpty($emptyValue): void
     {
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
@@ -241,7 +243,7 @@ final class DeleteModelTest extends LiveModelTestCase
     /**
      * @param int|string|null $id
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('emptyPkValues')]
+    #[DataProvider('emptyPkValues')]
     public function testDeleteThrowDatabaseExceptionWithoutWhereClause($id): void
     {
         // BaseBuilder throws Exception.
@@ -259,7 +261,7 @@ final class DeleteModelTest extends LiveModelTestCase
     /**
      * @param int|string|null $id
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('emptyPkValues')]
+    #[DataProvider('emptyPkValues')]
     public function testDeleteWithSoftDeleteThrowDatabaseExceptionWithoutWhereClause($id): void
     {
         // Model throws Exception.

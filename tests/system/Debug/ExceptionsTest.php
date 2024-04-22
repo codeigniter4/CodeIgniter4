@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Debug;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresPhp;
 use App\Controllers\Home;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Entity\Exceptions\CastException;
@@ -25,7 +27,7 @@ use RuntimeException;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class ExceptionsTest extends CIUnitTestCase
 {
     use ReflectionHelper;
@@ -53,7 +55,7 @@ final class ExceptionsTest extends CIUnitTestCase
         $this->exception = new Exceptions(new ExceptionsConfig());
     }
 
-    #[\PHPUnit\Framework\Attributes\RequiresPhp('>= 8.1')]
+    #[RequiresPhp('>= 8.1')]
     public function testDeprecationsOnPhp81DoNotThrow(): void
     {
         $config = new ExceptionsConfig();

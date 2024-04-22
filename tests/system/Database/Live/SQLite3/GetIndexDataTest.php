@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live\SQLite3;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Database\SQLite3\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -22,7 +23,7 @@ use stdClass;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
+#[Group('DatabaseLive')]
 final class GetIndexDataTest extends CIUnitTestCase
 {
     /**

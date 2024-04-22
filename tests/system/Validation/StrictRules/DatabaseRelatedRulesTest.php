@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation\StrictRules;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Validation\Validation;
@@ -27,7 +28,7 @@ use Tests\Support\Validation\TestRules;
  *
  * @no-final
  */
-#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
+#[Group('DatabaseLive')]
 class DatabaseRelatedRulesTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

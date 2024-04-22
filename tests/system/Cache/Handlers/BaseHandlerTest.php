@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Test\CIUnitTestCase;
 use stdClass;
 use Tests\Support\Cache\RestrictiveHandler;
@@ -20,13 +22,13 @@ use Tests\Support\Cache\RestrictiveHandler;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class BaseHandlerTest extends CIUnitTestCase
 {
     /**
      * @param mixed $input
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidateKeyInvalidType')]
+    #[DataProvider('provideValidateKeyInvalidType')]
     public function testValidateKeyInvalidType($input): void
     {
         $this->expectException('InvalidArgumentException');

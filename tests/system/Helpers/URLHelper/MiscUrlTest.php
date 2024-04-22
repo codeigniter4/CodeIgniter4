@@ -13,6 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers\URLHelper;
 
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -27,8 +32,8 @@ use InvalidArgumentException;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class MiscUrlTest extends CIUnitTestCase
 {
     private App $config;
@@ -53,9 +58,9 @@ final class MiscUrlTest extends CIUnitTestCase
         $_SERVER = [];
     }
 
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
-    #[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
+    #[Group('SeparateProcess')]
     public function testPreviousURLUsesSessionFirst(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -88,9 +93,9 @@ final class MiscUrlTest extends CIUnitTestCase
         Factories::injectMock('config', 'App', $this->config);
     }
 
-    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
-    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
-    #[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
+    #[Group('SeparateProcess')]
     public function testPreviousURLUsesRefererIfNeeded(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -180,7 +185,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $title
      * @param mixed $attributes
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideAnchor')]
+    #[DataProvider('provideAnchor')]
     public function testAnchor($expected = '', $uri = '', $title = '', $attributes = ''): void
     {
         $uriString = 'http://example.com/';
@@ -244,7 +249,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $title
      * @param mixed $attributes
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideAnchorNoindex')]
+    #[DataProvider('provideAnchorNoindex')]
     public function testAnchorNoindex($expected = '', $uri = '', $title = '', $attributes = ''): void
     {
         $this->config->indexPage = '';
@@ -300,7 +305,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $title
      * @param mixed $attributes
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideAnchorTargetted')]
+    #[DataProvider('provideAnchorTargetted')]
     public function testAnchorTargetted($expected = '', $uri = '', $title = '', $attributes = ''): void
     {
         $this->config->indexPage = '';
@@ -345,7 +350,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $title
      * @param mixed $attributes
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideAnchorExamples')]
+    #[DataProvider('provideAnchorExamples')]
     public function testAnchorExamples($expected = '', $uri = '', $title = '', $attributes = ''): void
     {
         $uriString = 'http://example.com/';
@@ -402,7 +407,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $title
      * @param mixed $attributes
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideAnchorPopup')]
+    #[DataProvider('provideAnchorPopup')]
     public function testAnchorPopup($expected = '', $uri = '', $title = '', $attributes = false): void
     {
         $uriString = 'http://example.com/';
@@ -440,7 +445,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $title
      * @param mixed $attributes
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideMailto')]
+    #[DataProvider('provideMailto')]
     public function testMailto($expected = '', $email = '', $title = '', $attributes = ''): void
     {
         $uriString = 'http://example.com/';
@@ -478,7 +483,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $title
      * @param mixed $attributes
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideSafeMailto')]
+    #[DataProvider('provideSafeMailto')]
     public function testSafeMailto($expected = '', $email = '', $title = '', $attributes = ''): void
     {
         $uriString = 'http://example.com/';
@@ -541,7 +546,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $in
      * @param mixed $out
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideAutoLinkUrl')]
+    #[DataProvider('provideAutoLinkUrl')]
     public function testAutoLinkUrl($in, $out): void
     {
         $this->assertSame($out, auto_link($in, 'url'));
@@ -589,7 +594,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $in
      * @param mixed $out
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideAutoLinkEmail')]
+    #[DataProvider('provideAutoLinkEmail')]
     public function testAutoLinkEmail($in, $out): void
     {
         $this->assertSame($out, auto_link($in, 'email'));
@@ -637,7 +642,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $in
      * @param mixed $out
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideAutolinkBoth')]
+    #[DataProvider('provideAutolinkBoth')]
     public function testAutolinkBoth($in, $out): void
     {
         $this->assertSame($out, auto_link($in));
@@ -685,7 +690,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $in
      * @param mixed $out
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideAutoLinkPopup')]
+    #[DataProvider('provideAutoLinkPopup')]
     public function testAutoLinkPopup($in, $out): void
     {
         $this->assertSame($out, auto_link($in, 'url', true));
@@ -770,7 +775,7 @@ final class MiscUrlTest extends CIUnitTestCase
         ];
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('providePrepUrl')]
+    #[DataProvider('providePrepUrl')]
     public function testPrepUrl(string $input, string $expected, bool $secure): void
     {
         $this->assertSame($expected, prep_url($input, $secure));
@@ -834,7 +839,7 @@ final class MiscUrlTest extends CIUnitTestCase
         }
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideUrlTo')]
+    #[DataProvider('provideUrlTo')]
     public function testUrlTo(string $expected, string $input, ...$args): void
     {
         $_SERVER['HTTP_HOST'] = 'example.com';
@@ -848,7 +853,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, url_to($input, ...$args));
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideUrlToThrowsOnEmptyOrMissingRoute')]
+    #[DataProvider('provideUrlToThrowsOnEmptyOrMissingRoute')]
     public function testUrlToThrowsOnEmptyOrMissingRoute(string $route): void
     {
         $this->expectException(RouterException::class);

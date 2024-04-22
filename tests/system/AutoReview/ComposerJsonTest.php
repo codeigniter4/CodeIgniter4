@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\AutoReview;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Group;
 use InvalidArgumentException;
 use JsonException;
 use PHPUnit\Framework\TestCase;
@@ -20,8 +22,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\CoversNothing]
-#[\PHPUnit\Framework\Attributes\Group('AutoReview')]
+#[CoversNothing]
+#[Group('AutoReview')]
 final class ComposerJsonTest extends TestCase
 {
     private array $devComposer;

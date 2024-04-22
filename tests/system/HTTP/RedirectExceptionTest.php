@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Log\Logger;
@@ -25,7 +26,7 @@ use Tests\Support\Log\Handlers\TestHandler;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class RedirectExceptionTest extends TestCase
 {
     protected function setUp(): void

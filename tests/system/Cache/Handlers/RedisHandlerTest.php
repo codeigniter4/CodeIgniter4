@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
@@ -20,7 +21,7 @@ use Config\Cache;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('CacheLive')]
+#[Group('CacheLive')]
 final class RedisHandlerTest extends AbstractHandlerTestCase
 {
     private Cache $config;

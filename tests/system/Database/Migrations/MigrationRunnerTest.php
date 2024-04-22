@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Migrations;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Events\Events;
@@ -30,7 +31,7 @@ use Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_mig
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
+#[Group('DatabaseLive')]
 final class MigrationRunnerTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Files;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 use ZipArchive;
@@ -20,7 +21,7 @@ use ZipArchive;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class FileTest extends CIUnitTestCase
 {
     public function testNewGoodChecked(): void

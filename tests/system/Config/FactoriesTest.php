@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Config;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Depends;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Database;
@@ -29,7 +31,7 @@ use Tests\Support\Widgets\SomeWidget;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class FactoriesTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -437,7 +439,7 @@ final class FactoriesTest extends CIUnitTestCase
         return $data;
     }
 
-    #[\PHPUnit\Framework\Attributes\Depends('testGetComponentInstances')]
+    #[Depends('testGetComponentInstances')]
     public function testSetComponentInstances(array $data)
     {
         $before = Factories::getComponentInstances('config');
@@ -454,7 +456,7 @@ final class FactoriesTest extends CIUnitTestCase
         return $data;
     }
 
-    #[\PHPUnit\Framework\Attributes\Depends('testSetComponentInstances')]
+    #[Depends('testSetComponentInstances')]
     public function testIsUpdated(array $data): void
     {
         Factories::reset();

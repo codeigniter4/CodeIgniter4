@@ -13,15 +13,17 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Config\Logger;
 
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class TestLoggerTest extends CIUnitTestCase
 {
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideDidLogMethod')]
+    #[DataProvider('provideDidLogMethod')]
     public function testDidLogMethod(bool $expected, string $level, string $message, bool $exact): void
     {
         (new TestLogger(new Logger()))->log('error', 'Some variable did not contain a value.');

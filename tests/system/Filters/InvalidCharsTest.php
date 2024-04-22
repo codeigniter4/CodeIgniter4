@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SiteURI;
@@ -24,7 +27,7 @@ use CodeIgniter\Test\Mock\MockAppConfig;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class InvalidCharsTest extends CIUnitTestCase
 {
     private InvalidChars $invalidChars;
@@ -65,7 +68,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         return $request;
     }
 
-    #[\PHPUnit\Framework\Attributes\DoesNotPerformAssertions]
+    #[DoesNotPerformAssertions]
     public function testBeforeDoNothingWhenCLIRequest(): void
     {
         $cliRequest = new CLIRequest(new MockAppConfig());
@@ -73,7 +76,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($cliRequest);
     }
 
-    #[\PHPUnit\Framework\Attributes\DoesNotPerformAssertions]
+    #[DoesNotPerformAssertions]
     public function testBeforeValidString(): void
     {
         $_POST['val'] = [
@@ -109,8 +112,8 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($this->request);
     }
 
-    #[\PHPUnit\Framework\Attributes\DoesNotPerformAssertions]
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideCheckControlStringWithLineBreakAndTabReturnsTheString')]
+    #[DoesNotPerformAssertions]
+    #[DataProvider('provideCheckControlStringWithLineBreakAndTabReturnsTheString')]
     public function testCheckControlStringWithLineBreakAndTabReturnsTheString(string $input): void
     {
         $_GET['val'] = $input;
@@ -129,7 +132,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         ];
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideCheckControlStringWithControlCharsCausesException')]
+    #[DataProvider('provideCheckControlStringWithControlCharsCausesException')]
     public function testCheckControlStringWithControlCharsCausesException(string $input): void
     {
         $this->expectException(SecurityException::class);

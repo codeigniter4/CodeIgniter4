@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\I18n;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\I18n\Exceptions\I18nException;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -25,7 +27,7 @@ use Locale;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class TimeTest extends CIUnitTestCase
 {
     private string $currentLocale;
@@ -1167,7 +1169,7 @@ final class TimeTest extends CIUnitTestCase
         $this->assertSame('2017-03-10T12:00:00+09:00', $now);
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideToStringDoesNotDependOnLocale')]
+    #[DataProvider('provideToStringDoesNotDependOnLocale')]
     public function testToStringDoesNotDependOnLocale(string $locale): void
     {
         Locale::setDefault($locale);

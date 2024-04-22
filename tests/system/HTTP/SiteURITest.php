@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use BadMethodCallException;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
@@ -22,11 +25,11 @@ use Config\App;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class SiteURITest extends CIUnitTestCase
 {
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideConstructor')]
+    #[DataProvider('provideConstructor')]
     public function testConstructor(
         string $baseURL,
         string $indexPage,
@@ -323,7 +326,7 @@ final class SiteURITest extends CIUnitTestCase
         new SiteURI($config);
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideSetPath')]
+    #[DataProvider('provideSetPath')]
     public function testSetPath(
         string $baseURL,
         string $indexPage,

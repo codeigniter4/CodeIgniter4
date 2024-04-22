@@ -13,13 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers\Array;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use InvalidArgumentException;
 
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class ArrayHelperDotKeyExistsTest extends CIUnitTestCase
 {
     private array $array = [

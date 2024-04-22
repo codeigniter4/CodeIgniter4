@@ -13,13 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live\SQLite3;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\Live\AbstractGetFieldDataTestCase;
 use Config\Database;
 
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
+#[Group('DatabaseLive')]
 final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
 {
     protected function createForge(): void

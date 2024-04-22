@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\BackupGlobals;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
@@ -27,7 +29,7 @@ use CURLFile;
  *
  * @no-final
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 class CURLRequestTest extends CIUnitTestCase
 {
     protected MockCURLRequest $request;
@@ -185,7 +187,7 @@ class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('apple', $request->header('fruit')->getValue());
     }
 
-    #[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+    #[BackupGlobals(true)]
     public function testOptionsHeadersNotUsingPopulate(): void
     {
         $_SERVER['HTTP_HOST']            = 'site1.com';
@@ -245,7 +247,7 @@ class CURLRequestTest extends CIUnitTestCase
         $this->assertNull($request->header('Content-Length'));
     }
 
-    #[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+    #[BackupGlobals(true)]
     public function testHeaderContentLengthNotSharedBetweenClients(): void
     {
         $_SERVER['HTTP_CONTENT_LENGTH'] = '10';

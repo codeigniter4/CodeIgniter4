@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Cache\Handlers\BaseHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCache;
@@ -20,7 +21,7 @@ use CodeIgniter\Test\Mock\MockCache;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class CacheMockTest extends CIUnitTestCase
 {
     public function testMockReturnsMockCacheClass(): void

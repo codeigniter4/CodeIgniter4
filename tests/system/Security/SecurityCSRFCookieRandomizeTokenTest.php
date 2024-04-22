@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Security;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -26,7 +27,7 @@ use Config\Security as SecurityConfig;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
 {
     /**

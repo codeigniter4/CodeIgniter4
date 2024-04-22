@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation\StrictRules;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Validation\RulesTest as TraditionalRulesTest;
 use CodeIgniter\Validation\Validation;
 use Tests\Support\Validation\TestRules;
@@ -20,7 +22,7 @@ use Tests\Support\Validation\TestRules;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class RulesTest extends TraditionalRulesTest
 {
     protected Validation $validation;
@@ -42,7 +44,7 @@ final class RulesTest extends TraditionalRulesTest
         ],
     ];
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('providePermitEmptyStrict')]
+    #[DataProvider('providePermitEmptyStrict')]
     public function testPermitEmptyStrict(array $rules, array $data, bool $expected): void
     {
         $this->validation->setRules($rules);
@@ -99,7 +101,7 @@ final class RulesTest extends TraditionalRulesTest
     /**
      * @param int $value
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideGreaterThanEqualStrict')]
+    #[DataProvider('provideGreaterThanEqualStrict')]
     public function testGreaterThanEqualStrict($value, string $param, bool $expected): void
     {
         $this->validation->setRules(['foo' => "greater_than_equal_to[{$param}]"]);
@@ -124,7 +126,7 @@ final class RulesTest extends TraditionalRulesTest
     /**
      * @param int $value
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideGreaterThanStrict')]
+    #[DataProvider('provideGreaterThanStrict')]
     public function testGreaterThanStrict($value, string $param, bool $expected): void
     {
         $this->validation->setRules(['foo' => "greater_than[{$param}]"]);
@@ -150,7 +152,7 @@ final class RulesTest extends TraditionalRulesTest
     /**
      * @param int $value
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideLessThanStrict')]
+    #[DataProvider('provideLessThanStrict')]
     public function testLessThanStrict($value, string $param, bool $expected): void
     {
         $this->validation->setRules(['foo' => "less_than[{$param}]"]);
@@ -177,7 +179,7 @@ final class RulesTest extends TraditionalRulesTest
     /**
      * @param int $value
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideLessEqualThanStrict')]
+    #[DataProvider('provideLessEqualThanStrict')]
     public function testLessEqualThanStrict($value, ?string $param, bool $expected): void
     {
         $this->validation->setRules(['foo' => "less_than_equal_to[{$param}]"]);
@@ -199,7 +201,7 @@ final class RulesTest extends TraditionalRulesTest
         ];
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideMatches')]
+    #[DataProvider('provideMatches')]
     public function testMatches(array $data, bool $expected): void
     {
         $this->validation->setRules(['foo' => 'matches[bar]']);
@@ -221,7 +223,7 @@ final class RulesTest extends TraditionalRulesTest
         ];
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideDiffers')]
+    #[DataProvider('provideDiffers')]
     public function testDiffers(array $data, bool $expected): void
     {
         $this->validation->setRules(['foo' => 'differs[bar]']);

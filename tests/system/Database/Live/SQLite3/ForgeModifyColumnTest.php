@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live\SQLite3;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database;
@@ -20,7 +21,7 @@ use Config\Database;
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
+#[Group('DatabaseLive')]
 final class ForgeModifyColumnTest extends CIUnitTestCase
 {
     private Forge $forge;

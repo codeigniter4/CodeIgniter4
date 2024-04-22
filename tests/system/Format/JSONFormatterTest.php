@@ -13,13 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Format;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use RuntimeException;
 
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class JSONFormatterTest extends CIUnitTestCase
 {
     private JSONFormatter $jsonFormatter;

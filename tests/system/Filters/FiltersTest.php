@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Filters\Exceptions\FilterException;
@@ -44,8 +47,8 @@ require_once __DIR__ . '/fixtures/Role.php';
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class FiltersTest extends CIUnitTestCase
 {
     use ConfigFromArrayTrait;
@@ -230,7 +233,7 @@ final class FiltersTest extends CIUnitTestCase
     /**
      * @param array|string $except
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideProcessMethodProcessGlobalsWithExcept')]
+    #[DataProvider('provideProcessMethodProcessGlobalsWithExcept')]
     public function testProcessMethodProcessGlobalsWithExcept($except): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
@@ -583,7 +586,7 @@ final class FiltersTest extends CIUnitTestCase
     /**
      * @param array|string $except
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideBeforeExcept')]
+    #[DataProvider('provideBeforeExcept')]
     public function testBeforeExcept(string $uri, $except, array $expected): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
