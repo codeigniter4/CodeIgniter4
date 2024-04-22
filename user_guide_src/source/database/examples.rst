@@ -66,7 +66,7 @@ Standard Insert
 Query Builder Query
 ===================
 
-The :doc:`Query Builder Pattern <query_builder>` gives you a simplified
+The :doc:`Query Builder <query_builder>` gives you a simplified
 means of retrieving data:
 
 .. literalinclude:: examples/007.php
