@@ -24,9 +24,8 @@ use Tests\Support\Controllers\Remap;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ControllerMethodReaderTest extends CIUnitTestCase
 {
     private function createControllerMethodReader(

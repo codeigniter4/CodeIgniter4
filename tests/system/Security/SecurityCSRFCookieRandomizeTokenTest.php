@@ -25,9 +25,8 @@ use Config\Security as SecurityConfig;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
 {
     /**

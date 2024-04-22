@@ -20,9 +20,8 @@ use Config\Encryption as EncryptionConfig;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class SodiumHandlerTest extends CIUnitTestCase
 {
     private Encryption $encryption;

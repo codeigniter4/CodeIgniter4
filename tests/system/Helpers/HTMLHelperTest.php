@@ -21,9 +21,8 @@ use Config\DocTypes;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class HTMLHelperTest extends CIUnitTestCase
 {
     private array $tracks;

@@ -23,10 +23,9 @@ use stdclass;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class UpsertTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

@@ -20,10 +20,9 @@ use Config\Database;
 use stdClass;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class GetIndexDataTest extends CIUnitTestCase
 {
     /**

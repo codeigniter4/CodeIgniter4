@@ -22,9 +22,8 @@ use Config\Routing;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class RouteCollectionReverseRouteTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -143,9 +142,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideReverseRoutingDefaultNamespaceAppController
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideReverseRoutingDefaultNamespaceAppController')]
     public function testReverseRoutingDefaultNamespaceAppController(string $controller): void
     {
         $routes = $this->getCollector();

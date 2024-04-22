@@ -22,9 +22,8 @@ use Tests\Support\Commands\ParamsReveal;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class CommandTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
@@ -129,9 +128,7 @@ final class CommandTest extends CIUnitTestCase
         $this->assertStringContainsString(':clear', $this->getBuffer());
     }
 
-    /**
-     * @dataProvider provideCommandParsesArgsCorrectly
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideCommandParsesArgsCorrectly')]
     public function testCommandParsesArgsCorrectly(string $input, array $expected): void
     {
         ParamsReveal::$args = null;

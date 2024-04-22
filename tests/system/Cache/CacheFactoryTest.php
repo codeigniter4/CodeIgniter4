@@ -20,9 +20,8 @@ use Config\Cache;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class CacheFactoryTest extends CIUnitTestCase
 {
     private static string $directory = 'CacheFactory';

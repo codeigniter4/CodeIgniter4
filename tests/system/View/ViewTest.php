@@ -22,9 +22,8 @@ use RuntimeException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ViewTest extends CIUnitTestCase
 {
     private FileLocator $loader;

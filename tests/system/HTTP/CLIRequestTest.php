@@ -20,12 +20,10 @@ use Config\App;
  * This should be the same as RequestTest,
  * except also testing the methods added by CLIRequest
  *
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class CLIRequestTest extends CIUnitTestCase
 {
     private CLIRequest $request;

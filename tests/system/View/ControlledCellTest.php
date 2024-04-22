@@ -29,9 +29,8 @@ use Tests\Support\View\Cells\SimpleNotice;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ControlledCellTest extends CIUnitTestCase
 {
     public function testCellRendersDefaultValues(): void

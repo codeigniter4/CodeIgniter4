@@ -23,9 +23,8 @@ use Config\CURLRequest as ConfigCURLRequest;
  * The shareOptions should be set to false.
  *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class CURLRequestShareOptionsTest extends CURLRequestTest
 {
     protected function getRequest(array $options = []): MockCURLRequest

@@ -25,10 +25,9 @@ use CURLFile;
 /**
  * @internal
  *
- * @group Others
- *
  * @no-final
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 class CURLRequestTest extends CIUnitTestCase
 {
     protected MockCURLRequest $request;
@@ -186,9 +185,7 @@ class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('apple', $request->header('fruit')->getValue());
     }
 
-    /**
-     * @backupGlobals enabled
-     */
+    #[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
     public function testOptionsHeadersNotUsingPopulate(): void
     {
         $_SERVER['HTTP_HOST']            = 'site1.com';
@@ -248,9 +245,7 @@ class CURLRequestTest extends CIUnitTestCase
         $this->assertNull($request->header('Content-Length'));
     }
 
-    /**
-     * @backupGlobals enabled
-     */
+    #[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
     public function testHeaderContentLengthNotSharedBetweenClients(): void
     {
         $_SERVER['HTTP_CONTENT_LENGTH'] = '10';

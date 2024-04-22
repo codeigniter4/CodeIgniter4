@@ -26,9 +26,8 @@ use Tests\Support\Config\TestRegistrar;
 
 /**
  * @internal
- *
- * @group SeparateProcess
  */
+#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
 final class BaseConfigTest extends CIUnitTestCase
 {
     private string $fixturesFolder;
@@ -99,10 +98,8 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('123456', $config->password);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testServerValues(): void
     {
         $_SERVER = [
@@ -195,10 +192,8 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->second);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testSetsDefaultValuesEncryptionUsingHex2Bin(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
@@ -210,10 +205,8 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('OpenSSL', $config->driver);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testSetDefaultValuesEncryptionUsingBase64(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');

@@ -32,12 +32,10 @@ use Psr\Log\LoggerInterface;
  * Not a lot of business logic, so concentrate on making sure
  * we can exercise everything without blowing up :-/
  *
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ControllerTest extends CIUnitTestCase
 {
     private App $config;

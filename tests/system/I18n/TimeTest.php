@@ -24,9 +24,8 @@ use Locale;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class TimeTest extends CIUnitTestCase
 {
     private string $currentLocale;
@@ -1168,9 +1167,7 @@ final class TimeTest extends CIUnitTestCase
         $this->assertSame('2017-03-10T12:00:00+09:00', $now);
     }
 
-    /**
-     * @dataProvider provideToStringDoesNotDependOnLocale
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideToStringDoesNotDependOnLocale')]
     public function testToStringDoesNotDependOnLocale(string $locale): void
     {
         Locale::setDefault($locale);

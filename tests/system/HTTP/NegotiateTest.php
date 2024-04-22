@@ -19,9 +19,8 @@ use Config\App;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class NegotiateTest extends CIUnitTestCase
 {
     private ?IncomingRequest $request;

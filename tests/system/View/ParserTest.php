@@ -23,9 +23,8 @@ use stdClass;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ParserTest extends CIUnitTestCase
 {
     private FileLocator $loader;
@@ -477,11 +476,10 @@ final class ParserTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideEscHandling
-     *
      * @param mixed      $value
      * @param mixed|null $expected
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideEscHandling')]
     public function testEscHandling($value, $expected = null): void
     {
         if ($expected === null) {

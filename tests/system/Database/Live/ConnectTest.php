@@ -20,10 +20,9 @@ use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class ConnectTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

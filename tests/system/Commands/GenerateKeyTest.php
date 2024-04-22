@@ -19,9 +19,8 @@ use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
- *
- * @group SeparateProcess
  */
+#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
 final class GenerateKeyTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
@@ -86,10 +85,8 @@ final class GenerateKeyTest extends CIUnitTestCase
         $this->assertStringContainsString('hex2bin:', $this->getBuffer());
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testGenerateKeyCreatesNewKey(): void
     {
         command('key:generate');

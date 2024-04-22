@@ -31,10 +31,9 @@ use Tests\Support\Models\ValidModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class UpdateModelTest extends LiveModelTestCase
 {
     public function testSetWorksWithUpdate(): void
@@ -552,10 +551,9 @@ final class UpdateModelTest extends LiveModelTestCase
     }
 
     /**
-     * @dataProvider provideUpdateThrowDatabaseExceptionWithoutWhereClause
-     *
      * @param false|null $id
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideUpdateThrowDatabaseExceptionWithoutWhereClause')]
     public function testUpdateThrowDatabaseExceptionWithoutWhereClause($id, string $exception, string $exceptionMessage): void
     {
         $this->expectException($exception);

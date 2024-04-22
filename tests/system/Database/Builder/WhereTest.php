@@ -24,9 +24,8 @@ use stdClass;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class WhereTest extends CIUnitTestCase
 {
     /**
@@ -403,10 +402,9 @@ final class WhereTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideWhereInvalidKeyThrowInvalidArgumentException
-     *
      * @param mixed $key
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideWhereInvalidKeyThrowInvalidArgumentException')]
     public function testWhereInvalidKeyThrowInvalidArgumentException($key): void
     {
         $this->expectException('InvalidArgumentException');
@@ -425,10 +423,9 @@ final class WhereTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideWhereInEmptyValuesThrowInvalidArgumentException
-     *
      * @param mixed $values
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideWhereInEmptyValuesThrowInvalidArgumentException')]
     public function testWhereInEmptyValuesThrowInvalidArgumentException($values): void
     {
         $this->expectException('InvalidArgumentException');

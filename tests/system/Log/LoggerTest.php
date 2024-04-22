@@ -24,9 +24,8 @@ use TypeError;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class LoggerTest extends CIUnitTestCase
 {
     protected function tearDown(): void

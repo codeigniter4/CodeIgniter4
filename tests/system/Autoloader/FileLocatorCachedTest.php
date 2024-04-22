@@ -19,9 +19,8 @@ use Config\Modules;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class FileLocatorCachedTest extends FileLocatorTest
 {
     private FileVarExportHandler $handler;

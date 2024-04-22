@@ -21,12 +21,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 
 /**
- * @group DatabaseLive
- *
- * @requires extension sqlite3
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
+#[\PHPUnit\Framework\Attributes\RequiresPhpExtension('sqlite3')]
 final class AlterTableTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

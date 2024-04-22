@@ -19,11 +19,9 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
- *
- * @group Others
- *
- * @covers \CodeIgniter\Exceptions\DebugTraceableTrait
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[\PHPUnit\Framework\Attributes\CoversClass(DebugTraceableTrait::class)]
 final class DebugTraceableTraitTest extends CIUnitTestCase
 {
     public function testFactoryInstanceReturnsWhereItIsRaised(): void

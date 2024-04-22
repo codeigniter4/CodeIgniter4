@@ -17,9 +17,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class SparkTest extends CIUnitTestCase
 {
     public function testCanUseOption(): void

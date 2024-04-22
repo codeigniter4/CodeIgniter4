@@ -27,14 +27,11 @@ use Tests\Support\Controllers\Popcorn;
 /**
  * Exercise our Controller class.
  *
- * @runTestsInSeparateProcesses
- *
- * @preserveGlobalState         disabled
- *
  * @internal
- *
- * @group SeparateProcess
  */
+#[\PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses]
+#[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
 final class ControllerTestTraitTest extends CIUnitTestCase
 {
     use ControllerTestTrait;

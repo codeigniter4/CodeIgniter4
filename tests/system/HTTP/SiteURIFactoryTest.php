@@ -18,12 +18,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class SiteURIFactoryTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -87,9 +85,7 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         $this->assertSame('woot', $uri->getRoutePath());
     }
 
-    /**
-     * @dataProvider provideCreateFromStringWithIndexPage
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideCreateFromStringWithIndexPage')]
     public function testCreateFromStringWithIndexPage(
         string $uriString,
         string $expectUriString,
@@ -130,9 +126,7 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideCreateFromStringWithoutIndexPage
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideCreateFromStringWithoutIndexPage')]
     public function testCreateFromStringWithoutIndexPage(
         string $uriString,
         string $expectUriString,

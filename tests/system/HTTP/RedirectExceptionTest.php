@@ -24,9 +24,8 @@ use Tests\Support\Log\Handlers\TestHandler;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class RedirectExceptionTest extends TestCase
 {
     protected function setUp(): void

@@ -23,9 +23,8 @@ use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ConsoleTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

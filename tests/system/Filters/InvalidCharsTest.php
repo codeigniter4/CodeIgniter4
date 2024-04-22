@@ -23,9 +23,8 @@ use CodeIgniter\Test\Mock\MockAppConfig;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class InvalidCharsTest extends CIUnitTestCase
 {
     private InvalidChars $invalidChars;
@@ -66,9 +65,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         return $request;
     }
 
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[\PHPUnit\Framework\Attributes\DoesNotPerformAssertions]
     public function testBeforeDoNothingWhenCLIRequest(): void
     {
         $cliRequest = new CLIRequest(new MockAppConfig());
@@ -76,9 +73,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($cliRequest);
     }
 
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[\PHPUnit\Framework\Attributes\DoesNotPerformAssertions]
     public function testBeforeValidString(): void
     {
         $_POST['val'] = [
@@ -114,11 +109,8 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($this->request);
     }
 
-    /**
-     * @doesNotPerformAssertions
-     *
-     * @dataProvider provideCheckControlStringWithLineBreakAndTabReturnsTheString
-     */
+    #[\PHPUnit\Framework\Attributes\DoesNotPerformAssertions]
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideCheckControlStringWithLineBreakAndTabReturnsTheString')]
     public function testCheckControlStringWithLineBreakAndTabReturnsTheString(string $input): void
     {
         $_GET['val'] = $input;
@@ -137,9 +129,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideCheckControlStringWithControlCharsCausesException
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideCheckControlStringWithControlCharsCausesException')]
     public function testCheckControlStringWithControlCharsCausesException(string $input): void
     {
         $this->expectException(SecurityException::class);

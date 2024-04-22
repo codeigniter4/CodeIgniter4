@@ -19,9 +19,8 @@ use DateTime;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class HistoryTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

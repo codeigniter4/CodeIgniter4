@@ -18,9 +18,8 @@ use RuntimeException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class JSONFormatterTest extends CIUnitTestCase
 {
     private JSONFormatter $jsonFormatter;

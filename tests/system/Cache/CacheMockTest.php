@@ -19,9 +19,8 @@ use CodeIgniter\Test\Mock\MockCache;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class CacheMockTest extends CIUnitTestCase
 {
     public function testMockReturnsMockCacheClass(): void

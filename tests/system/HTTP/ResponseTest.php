@@ -24,9 +24,8 @@ use DateTimeZone;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ResponseTest extends CIUnitTestCase
 {
     private array $server;
@@ -270,9 +269,7 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame(302, $response->getStatusCode());
     }
 
-    /**
-     * @dataProvider provideRedirect
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideRedirect')]
     public function testRedirect(
         string $server,
         string $protocol,
@@ -316,9 +313,7 @@ final class ResponseTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideRedirectWithIIS
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideRedirectWithIIS')]
     public function testRedirectWithIIS(
         string $protocol,
         string $method,

@@ -28,9 +28,8 @@ use Config\Routing;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class AutoRouterImprovedTest extends CIUnitTestCase
 {
     private RouteCollection $collection;
@@ -458,9 +457,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame(['a-b'], $params);
     }
 
-    /**
-     * @dataProvider provideTranslateUriToCamelCase
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideTranslateUriToCamelCase')]
     public function testTranslateUriToCamelCase(
         string $uri,
         ?string $expDirectory,
@@ -532,9 +529,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideRejectTranslateUriToCamelCase
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideRejectTranslateUriToCamelCase')]
     public function testRejectTranslateUriToCamelCase(string $uri, string $expMsg): void
     {
         $this->expectException(PageNotFoundException::class);

@@ -19,9 +19,8 @@ use Tests\Support\Test\TestForReflectionHelper;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class TestCaseTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

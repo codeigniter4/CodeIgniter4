@@ -21,10 +21,9 @@ use Tests\Support\Database\Seeds\AnotherSeeder;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class DatabaseTestCaseTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

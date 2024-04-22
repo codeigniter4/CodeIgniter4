@@ -21,9 +21,8 @@ use Tests\Support\Language\SecondMockLanguage;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class LanguageTest extends CIUnitTestCase
 {
     private Language $lang;
@@ -266,10 +265,9 @@ final class LanguageTest extends CIUnitTestCase
      * There's not a whole lot that can be done with message bundles,
      * but we can at least try loading them ... more accurate code coverage?
      *
-     * @dataProvider provideBundleUniqueKeys
-     *
      * @param mixed $bundle
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideBundleUniqueKeys')]
     public function testBundleUniqueKeys($bundle): void
     {
         $messages = require SYSTEMPATH . 'Language/en/' . $bundle . '.php';

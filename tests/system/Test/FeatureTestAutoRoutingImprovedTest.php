@@ -18,10 +18,9 @@ use Config\Feature;
 use Config\Services;
 
 /**
- * @group Others
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class FeatureTestAutoRoutingImprovedTest extends CIUnitTestCase
 {
     use FeatureTestTrait;

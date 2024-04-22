@@ -18,10 +18,9 @@ use CodeIgniter\I18n\Time;
 use Config\Cache;
 
 /**
- * @group CacheLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('CacheLive')]
 final class RedisHandlerTest extends AbstractHandlerTestCase
 {
     private Cache $config;

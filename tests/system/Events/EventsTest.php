@@ -19,9 +19,8 @@ use Config\Modules;
 
 /**
  * @internal
- *
- * @group SeparateProcess
  */
+#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
 final class EventsTest extends CIUnitTestCase
 {
     /**
@@ -47,10 +46,8 @@ final class EventsTest extends CIUnitTestCase
         Events::simulate(false);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testInitialize(): void
     {
         /**

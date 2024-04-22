@@ -19,9 +19,8 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ErrorlogHandlerTest extends CIUnitTestCase
 {
     public function testHandlerThrowsOnInvalidMessageType(): void

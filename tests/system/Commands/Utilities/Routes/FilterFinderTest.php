@@ -32,9 +32,8 @@ use Config\Routing;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class FilterFinderTest extends CIUnitTestCase
 {
     use ConfigFromArrayTrait;

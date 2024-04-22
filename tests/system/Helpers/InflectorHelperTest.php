@@ -17,9 +17,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class InflectorHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -261,9 +260,7 @@ final class InflectorHelperTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideOrdinal
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideOrdinal')]
     public function testOrdinal(string $suffix, int $number): void
     {
         $this->assertSame($suffix, ordinal($number));

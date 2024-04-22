@@ -26,10 +26,9 @@ use Tests\Support\Models\UserObjModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class InsertModelTest extends LiveModelTestCase
 {
     public function testSetWorksWithInsert(): void

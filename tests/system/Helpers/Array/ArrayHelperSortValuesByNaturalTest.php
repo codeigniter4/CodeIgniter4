@@ -16,10 +16,9 @@ namespace CodeIgniter\Helpers\Array;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
- * @group Others
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ArrayHelperSortValuesByNaturalTest extends CIUnitTestCase
 {
     private array $arrayWithStringValues = [

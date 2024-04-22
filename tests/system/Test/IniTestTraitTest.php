@@ -17,9 +17,8 @@ use ReflectionException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class IniTestTraitTest extends CIUnitTestCase
 {
     use IniTestTrait;

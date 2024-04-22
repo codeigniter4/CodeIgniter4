@@ -20,9 +20,8 @@ use CodeIgniter\View\Exceptions\ViewException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class CellTest extends CIUnitTestCase
 {
     private MockCache $cache;

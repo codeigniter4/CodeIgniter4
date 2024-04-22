@@ -19,9 +19,8 @@ use Config\Feature;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class GetTest extends CIUnitTestCase
 {
     protected $db;

@@ -34,14 +34,11 @@ use Tests\Support\Filters\Customfilter;
 use Tests\Support\Filters\RedirectFilter;
 
 /**
- * @runTestsInSeparateProcesses
- *
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses]
+#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class CodeIgniterTest extends CIUnitTestCase
 {
     private CodeIgniter $codeigniter;
@@ -839,10 +836,9 @@ final class CodeIgniterTest extends CIUnitTestCase
     /**
      * @param array|bool $cacheQueryStringValue
      *
-     * @dataProvider providePageCacheWithCacheQueryString
-     *
      * @see https://github.com/codeigniter4/CodeIgniter4/pull/6410
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providePageCacheWithCacheQueryString')]
     public function testPageCacheWithCacheQueryString(
         $cacheQueryStringValue,
         int $expectedPagesInCache,

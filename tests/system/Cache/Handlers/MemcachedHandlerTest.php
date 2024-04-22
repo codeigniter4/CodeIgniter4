@@ -19,10 +19,9 @@ use Config\Cache;
 use Exception;
 
 /**
- * @group CacheLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('CacheLive')]
 final class MemcachedHandlerTest extends AbstractHandlerTestCase
 {
     private Cache $config;

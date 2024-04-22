@@ -17,10 +17,9 @@ use CodeIgniter\Database\Live\AbstractGetFieldDataTestCase;
 use Config\Database;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
 {
     protected function createForge(): void

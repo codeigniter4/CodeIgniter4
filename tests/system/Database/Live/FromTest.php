@@ -18,10 +18,9 @@ use CodeIgniter\Test\DatabaseTestTrait;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class FromTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

@@ -21,9 +21,8 @@ use Config\App;
 /**
  * @internal
  * @no-final
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 class FactoriesCacheFileVarExportHandlerTest extends CIUnitTestCase
 {
     protected FactoriesCache $cache;

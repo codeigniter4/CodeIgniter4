@@ -21,9 +21,8 @@ use DateTimeZone;
 
 /**
  * @internal
- *
- * @group SeparateProcess
  */
+#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
 final class DownloadResponseTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -317,10 +316,8 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame(file_get_contents(__FILE__), $actual);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testRealOutput(): void
     {
         $response = new DownloadResponse('unit-test.php', false);

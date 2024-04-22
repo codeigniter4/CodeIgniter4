@@ -18,9 +18,8 @@ use DOMDocument;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class XMLFormatterTest extends CIUnitTestCase
 {
     private XMLFormatter $xmlFormatter;
@@ -103,9 +102,7 @@ final class XMLFormatterTest extends CIUnitTestCase
         $this->assertSame($expected, $this->xmlFormatter->format($data));
     }
 
-    /**
-     * @dataProvider provideValidatingInvalidTags
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidatingInvalidTags')]
     public function testValidatingInvalidTags(string $expected, array $input): void
     {
         $expectedXML = <<<EOH

@@ -19,9 +19,8 @@ use DateTimeZone;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class DateHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void

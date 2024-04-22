@@ -25,12 +25,10 @@ use Config\Pager as PagerConfig;
 use Config\Services;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class PagerTest extends CIUnitTestCase
 {
     private ?Pager $pager        = null;

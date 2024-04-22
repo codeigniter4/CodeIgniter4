@@ -24,9 +24,8 @@ use RuntimeException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ExceptionHandlerTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

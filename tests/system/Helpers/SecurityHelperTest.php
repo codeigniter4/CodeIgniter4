@@ -20,9 +20,8 @@ use Tests\Support\Config\Services;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class SecurityHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void

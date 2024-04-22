@@ -25,9 +25,8 @@ use Config\Services;
  * test cases need to be run as separate processes.
  *
  * @internal
- *
- * @group SeparateProcess
  */
+#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
 final class ResponseSendTest extends CIUnitTestCase
 {
     /**
@@ -43,11 +42,8 @@ final class ResponseSendTest extends CIUnitTestCase
      * The tests includes a basic sanity check, to make sure that
      * the body we thought would be sent actually was.
      */
-
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testHeadersMissingDate(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -81,10 +77,9 @@ final class ResponseSendTest extends CIUnitTestCase
     /**
      * This test does not test that CSP is handled properly -
      * it makes sure that sending gives CSP a chance to do its thing.
-     *
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
      */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testHeadersWithCSP(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -121,10 +116,9 @@ final class ResponseSendTest extends CIUnitTestCase
      * Make sure cookies are set by RedirectResponse this way
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1393
-     *
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
      */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testRedirectResponseCookies(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.

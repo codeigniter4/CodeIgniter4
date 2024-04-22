@@ -19,10 +19,9 @@ use Tests\Support\Entity\User;
 use Tests\Support\Models\UserCastsTimestampModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class DataConverterModelTest extends LiveModelTestCase
 {
     protected $migrate     = true;

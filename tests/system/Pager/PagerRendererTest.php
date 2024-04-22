@@ -18,9 +18,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class PagerRendererTest extends CIUnitTestCase
 {
     private string $expect;

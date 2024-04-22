@@ -19,9 +19,8 @@ use org\bovigo\vfs\vfsStreamDirectory;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class FileWithVfsTest extends CIUnitTestCase
 {
     // For VFS stuff

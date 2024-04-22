@@ -28,12 +28,10 @@ use Config\App;
  * that rely on the "current" URL.
  * Includes: current_url, uri_string, uri_is
  *
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class CurrentUrlTest extends CIUnitTestCase
 {
     private App $config;
@@ -282,9 +280,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideUrlIs
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideUrlIs')]
     public function testUrlIs(string $currentPath, string $testPath, bool $expected): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
@@ -295,9 +291,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame($expected, url_is($testPath));
     }
 
-    /**
-     * @dataProvider provideUrlIs
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideUrlIs')]
     public function testUrlIsNoIndex(string $currentPath, string $testPath, bool $expected): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
@@ -310,9 +304,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame($expected, url_is($testPath));
     }
 
-    /**
-     * @dataProvider provideUrlIs
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideUrlIs')]
     public function testUrlIsWithSubfolder(string $currentPath, string $testPath, bool $expected): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';

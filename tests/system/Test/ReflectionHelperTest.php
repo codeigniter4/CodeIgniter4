@@ -17,9 +17,8 @@ use Tests\Support\Test\TestForReflectionHelper;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ReflectionHelperTest extends CIUnitTestCase
 {
     public function testGetPrivatePropertyWithObject(): void

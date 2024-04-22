@@ -24,14 +24,11 @@ use Config\Logger as LoggerConfig;
 use Config\Session as SessionConfig;
 
 /**
- * @runTestsInSeparateProcesses
- *
- * @preserveGlobalState disabled
- *
  * @internal
- *
- * @group SeparateProcess
  */
+#[\PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses]
+#[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
 final class SessionTest extends CIUnitTestCase
 {
     protected function setUp(): void

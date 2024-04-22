@@ -19,9 +19,8 @@ use InvalidArgumentException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class MessageTest extends CIUnitTestCase
 {
     private ?Message $message;
@@ -208,10 +207,9 @@ final class MessageTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideArrayHeaderValue
-     *
      * @param array $arrayHeaderValue
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideArrayHeaderValue')]
     public function testSetHeaderWithExistingArrayValuesAppendStringValue($arrayHeaderValue): void
     {
         $this->message->setHeader('Accept', $arrayHeaderValue);
@@ -221,10 +219,9 @@ final class MessageTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideArrayHeaderValue
-     *
      * @param array $arrayHeaderValue
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideArrayHeaderValue')]
     public function testSetHeaderWithExistingArrayValuesAppendArrayValue($arrayHeaderValue): void
     {
         $this->message->setHeader('Accept', $arrayHeaderValue);

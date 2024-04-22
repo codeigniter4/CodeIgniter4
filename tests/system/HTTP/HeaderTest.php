@@ -19,9 +19,8 @@ use stdClass;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class HeaderTest extends CIUnitTestCase
 {
     public function testHeaderStoresBasics(): void

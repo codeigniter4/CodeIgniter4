@@ -20,12 +20,11 @@ use Config\Database;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  *
  * @no-final
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 class TransactionDBDebugTrueTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

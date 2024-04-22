@@ -20,9 +20,8 @@ use Tests\Support\Commands\AppInfo;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class BaseCommandTest extends CIUnitTestCase
 {
     private Logger $logger;

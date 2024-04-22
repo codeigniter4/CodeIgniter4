@@ -21,9 +21,8 @@ use Config\Routing;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class DefinedRouteCollectorTest extends CIUnitTestCase
 {
     private function createRouteCollection(array $config = [], $moduleConfig = null): RouteCollection

@@ -20,9 +20,8 @@ use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class FileRulesTest extends CIUnitTestCase
 {
     private Validation $validation;

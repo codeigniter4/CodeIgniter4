@@ -22,10 +22,9 @@ use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class MiscellaneousModelTest extends LiveModelTestCase
 {
     public function testChunk(): void

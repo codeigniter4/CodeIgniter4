@@ -28,9 +28,8 @@ use Tests\Support\Widgets\SomeWidget;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class FactoriesTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -438,9 +437,7 @@ final class FactoriesTest extends CIUnitTestCase
         return $data;
     }
 
-    /**
-     * @depends testGetComponentInstances
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testGetComponentInstances')]
     public function testSetComponentInstances(array $data)
     {
         $before = Factories::getComponentInstances('config');
@@ -457,9 +454,7 @@ final class FactoriesTest extends CIUnitTestCase
         return $data;
     }
 
-    /**
-     * @depends testSetComponentInstances
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testSetComponentInstances')]
     public function testIsUpdated(array $data): void
     {
         Factories::reset();

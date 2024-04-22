@@ -42,12 +42,10 @@ require_once __DIR__ . '/fixtures/Multiple2.php';
 require_once __DIR__ . '/fixtures/Role.php';
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class FiltersTest extends CIUnitTestCase
 {
     use ConfigFromArrayTrait;
@@ -230,10 +228,9 @@ final class FiltersTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideProcessMethodProcessGlobalsWithExcept
-     *
      * @param array|string $except
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideProcessMethodProcessGlobalsWithExcept')]
     public function testProcessMethodProcessGlobalsWithExcept($except): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
@@ -584,10 +581,9 @@ final class FiltersTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideBeforeExcept
-     *
      * @param array|string $except
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideBeforeExcept')]
     public function testBeforeExcept(string $uri, $except, array $expected): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';

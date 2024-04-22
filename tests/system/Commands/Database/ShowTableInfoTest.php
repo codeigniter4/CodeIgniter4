@@ -21,10 +21,9 @@ use Config\Database;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class ShowTableInfoTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

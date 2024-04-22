@@ -18,9 +18,8 @@ use InvalidArgumentException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class TextHelperTest extends CIUnitTestCase
 {
     private string $_long_string = 'Once upon a time, a framework had no tests. It sad. So some nice people began to write tests. The more time that went on, the happier it became. Everyone was happy.';

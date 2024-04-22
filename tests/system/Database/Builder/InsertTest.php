@@ -22,9 +22,8 @@ use InvalidArgumentException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class InsertTest extends CIUnitTestCase
 {
     /**

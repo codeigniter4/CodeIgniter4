@@ -22,9 +22,8 @@ use LogicException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class CookieTest extends CIUnitTestCase
 {
     private array $defaults;
@@ -80,9 +79,7 @@ final class CookieTest extends CIUnitTestCase
         Cookie::setDefaults($old);
     }
 
-    /**
-     * @dataProvider provideConfigPrefix
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideConfigPrefix')]
     public function testConfigPrefix(string $configPrefix, string $optionPrefix, string $expected): void
     {
         $config         = new CookieConfig();
@@ -167,10 +164,9 @@ final class CookieTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideInvalidExpires
-     *
      * @param bool|float|string $expires
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideInvalidExpires')]
     public function testInvalidExpires($expires): void
     {
         $this->expectException(CookieException::class);
@@ -190,9 +186,7 @@ final class CookieTest extends CIUnitTestCase
         }
     }
 
-    /**
-     * @dataProvider provideSetCookieHeaderCreation
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideSetCookieHeaderCreation')]
     public function testSetCookieHeaderCreation(string $header, array $changed): void
     {
         $cookie = Cookie::fromHeaderString($header);

@@ -19,9 +19,8 @@ use Config\Services;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ParserPluginTest extends CIUnitTestCase
 {
     private Parser $parser;
@@ -44,12 +43,9 @@ final class ParserPluginTest extends CIUnitTestCase
         $this->assertSame(current_url(), $this->parser->renderString($template));
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     *
-     * @group SeparateProcess
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+    #[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
     public function testPreviousURL(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.

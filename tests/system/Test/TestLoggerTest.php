@@ -17,14 +17,11 @@ use Config\Logger;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class TestLoggerTest extends CIUnitTestCase
 {
-    /**
-     * @dataProvider provideDidLogMethod
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideDidLogMethod')]
     public function testDidLogMethod(bool $expected, string $level, string $message, bool $exact): void
     {
         (new TestLogger(new Logger()))->log('error', 'Some variable did not contain a value.');

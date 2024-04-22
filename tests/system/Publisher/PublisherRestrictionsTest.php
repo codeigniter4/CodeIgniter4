@@ -23,9 +23,8 @@ use CodeIgniter\Test\CIUnitTestCase;
  * file properly prevent disallowed actions.
  *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class PublisherRestrictionsTest extends CIUnitTestCase
 {
     /**
@@ -48,9 +47,7 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
         $this->assertArrayNotHasKey(SUPPORTPATH, $restrictions);
     }
 
-    /**
-     * @dataProvider provideDefaultPublicRestrictions
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideDefaultPublicRestrictions')]
     public function testDefaultPublicRestrictions(string $path): void
     {
         $publisher = new Publisher(ROOTPATH, FCPATH);
@@ -80,9 +77,7 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideDestinations
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideDestinations')]
     public function testDestinations(string $destination, bool $allowed): void
     {
         config('Publisher')->restrictions = [

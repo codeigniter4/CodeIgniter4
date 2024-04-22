@@ -20,9 +20,8 @@ use org\bovigo\vfs\vfsStreamDirectory;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ImageTest extends CIUnitTestCase
 {
     private vfsStreamDirectory $root;

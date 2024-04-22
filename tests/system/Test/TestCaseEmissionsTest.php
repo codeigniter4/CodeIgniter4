@@ -23,9 +23,8 @@ use Config\App;
  * test cases need to be run as separate processes.
  *
  * @internal
- *
- * @group SeparateProcess
  */
+#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
 final class TestCaseEmissionsTest extends CIUnitTestCase
 {
     /**
@@ -41,11 +40,8 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
      * The tests includes a basic sanity check, to make sure that
      * the body we thought would be sent actually was.
      */
-
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testHeadersEmitted(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -74,10 +70,8 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
         $this->assertHeaderEmitted('set-cookie: FOO=bar', true);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testHeadersNotEmitted(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.

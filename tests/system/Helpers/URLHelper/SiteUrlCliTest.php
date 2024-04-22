@@ -24,12 +24,10 @@ use Config\App;
  * site_url() these functions are tested
  * simultaneously.
  *
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class SiteUrlCliTest extends CIUnitTestCase
 {
     private App $config;
@@ -71,9 +69,8 @@ final class SiteUrlCliTest extends CIUnitTestCase
      * @param string      $path
      * @param string      $expectedSiteUrl
      * @param string      $expectedBaseUrl
-     *
-     * @dataProvider provideUrls
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideUrls')]
     public function testUrls(
         $baseURL,
         $indexPage,

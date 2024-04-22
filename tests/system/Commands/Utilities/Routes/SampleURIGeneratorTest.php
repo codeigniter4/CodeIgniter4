@@ -18,14 +18,11 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class SampleURIGeneratorTest extends CIUnitTestCase
 {
-    /**
-     * @dataProvider provideGet
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideGet')]
     public function testGet(string $routeKey, string $expected): void
     {
         $generator = new SampleURIGenerator();

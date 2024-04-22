@@ -19,11 +19,9 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- *
- * @coversNothing
- *
- * @group AutoReview
  */
+#[\PHPUnit\Framework\Attributes\CoversNothing]
+#[\PHPUnit\Framework\Attributes\Group('AutoReview')]
 final class ComposerJsonTest extends TestCase
 {
     private array $devComposer;

@@ -17,12 +17,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class IncomingRequestDetectingTest extends CIUnitTestCase
 {
     private IncomingRequest $request;

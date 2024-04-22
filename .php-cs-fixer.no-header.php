@@ -31,7 +31,8 @@ $finder = Finder::create()
 
 $overrides = [
     // for updating to coding-standard
-    'modernize_strpos' => true,
+    'modernize_strpos'    => true,
+    'php_unit_attributes' => true,
 ];
 
 $options = [

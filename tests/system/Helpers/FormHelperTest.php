@@ -22,9 +22,8 @@ use Config\Services;
 
 /**
  * @internal
- *
- * @group SeparateProcess
  */
+#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
 final class FormHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -953,10 +952,8 @@ final class FormHelperTest extends CIUnitTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testSetRadioFromSessionOldInput(): void
     {
         $_SESSION = [
@@ -973,10 +970,8 @@ final class FormHelperTest extends CIUnitTestCase
         unset($_SESSION['_ci_old_input']);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testSetRadioFromPost(): void
     {
         $_POST['bar'] = 'baz';
@@ -986,10 +981,8 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame('', set_radio('bar', 'boop', true));
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testSetRadioFromPostWithValueZero(): void
     {
         $_POST['bar'] = '0';

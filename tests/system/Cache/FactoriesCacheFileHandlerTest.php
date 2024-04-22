@@ -17,9 +17,8 @@ use Config\Cache as CacheConfig;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class FactoriesCacheFileHandlerTest extends FactoriesCacheFileVarExportHandlerTest
 {
     /**

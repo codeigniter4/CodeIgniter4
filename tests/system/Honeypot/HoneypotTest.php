@@ -25,12 +25,10 @@ use Config\App;
 use Config\Honeypot as HoneypotConfig;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class HoneypotTest extends CIUnitTestCase
 {
     private HoneypotConfig $config;

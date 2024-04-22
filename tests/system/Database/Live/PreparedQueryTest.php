@@ -23,10 +23,9 @@ use CodeIgniter\Test\DatabaseTestTrait;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class PreparedQueryTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

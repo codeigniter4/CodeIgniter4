@@ -16,10 +16,9 @@ namespace CodeIgniter\Models;
 use Tests\Support\Models\UserModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class ReplaceModelTest extends LiveModelTestCase
 {
     public function testReplaceRespectsUseTimestamps(): void

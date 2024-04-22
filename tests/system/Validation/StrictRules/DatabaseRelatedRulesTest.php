@@ -26,9 +26,8 @@ use Tests\Support\Validation\TestRules;
  * @internal
  *
  * @no-final
- *
- * @group DatabaseLive
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 class DatabaseRelatedRulesTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

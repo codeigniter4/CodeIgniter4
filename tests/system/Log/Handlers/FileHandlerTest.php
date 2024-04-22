@@ -22,9 +22,8 @@ use Tests\Support\Log\Handlers\TestHandler;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class FileHandlerTest extends CIUnitTestCase
 {
     private vfsStreamDirectory $root;

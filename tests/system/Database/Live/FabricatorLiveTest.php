@@ -21,10 +21,9 @@ use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class FabricatorLiveTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

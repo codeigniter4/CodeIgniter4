@@ -19,16 +19,14 @@ use Tests\Support\Cache\RestrictiveHandler;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class BaseHandlerTest extends CIUnitTestCase
 {
     /**
-     * @dataProvider provideValidateKeyInvalidType
-     *
      * @param mixed $input
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidateKeyInvalidType')]
     public function testValidateKeyInvalidType($input): void
     {
         $this->expectException('InvalidArgumentException');

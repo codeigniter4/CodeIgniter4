@@ -18,9 +18,8 @@ use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class FormatRulesTest extends TraditionalFormatRulesTest
 {
     protected array $config = [

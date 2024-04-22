@@ -23,10 +23,9 @@ use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class ValidationModelTest extends LiveModelTestCase
 {
     protected function setUp(): void

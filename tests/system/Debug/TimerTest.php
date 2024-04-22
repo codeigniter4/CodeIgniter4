@@ -19,9 +19,8 @@ use RuntimeException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class TimerTest extends CIUnitTestCase
 {
     /**

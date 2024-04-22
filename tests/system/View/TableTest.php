@@ -20,9 +20,8 @@ use stdClass;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class TableTest extends CIUnitTestCase
 {
     private Table $table;
@@ -58,9 +57,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertSame('awesome cap', $this->table->caption);
     }
 
-    /**
-     * @depends testPrepArgs
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testPrepArgs')]
     public function testSetHeading(): void
     {
         // uses _prep_args internally, so we'll just do a quick
@@ -150,9 +147,7 @@ final class TableTest extends CIUnitTestCase
         );
     }
 
-    /**
-     * @depends testPrepArgs
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testPrepArgs')]
     public function testAddRow(): void
     {
         // uses _prep_args internally, so we'll just do a quick
@@ -783,9 +778,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<td>Fred</td><td><strong>Blue</strong></td><td>Small</td>', $generated);
     }
 
-    /**
-     * @dataProvider orderedColumnUsecases
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('orderedColumnUsecases')]
     public function testAddRowAndGenerateOrderedColumns(array $heading, array $row, string $expectContainsString): void
     {
         $this->table->setHeading($heading);
@@ -797,9 +790,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString($expectContainsString, $generated);
     }
 
-    /**
-     * @dataProvider orderedColumnUsecases
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('orderedColumnUsecases')]
     public function testGenerateOrderedColumns(array $heading, array $row, string $expectContainsString): void
     {
         $this->table->setHeading($heading);

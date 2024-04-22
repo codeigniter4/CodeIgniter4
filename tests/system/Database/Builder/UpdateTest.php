@@ -21,9 +21,8 @@ use CodeIgniter\Test\Mock\MockQuery;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class UpdateTest extends CIUnitTestCase
 {
     /**

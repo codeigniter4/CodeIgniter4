@@ -31,11 +31,9 @@ use Imagick;
  * Was unable to test fontPath & related logic.
  *
  * @internal
- *
- * @group Others
- *
- * @requires extension imagick
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[\PHPUnit\Framework\Attributes\RequiresPhpExtension('imagick')]
 final class ImageMagickHandlerTest extends CIUnitTestCase
 {
     private string $root;
@@ -80,9 +78,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         $this->handler = Services::image('imagick', $config, false);
     }
 
-    /**
-     * @dataProvider provideNonexistentLibraryPathTerminatesProcessing
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideNonexistentLibraryPathTerminatesProcessing')]
     public function testNonexistentLibraryPathTerminatesProcessing(string $path, string $invalidPath): void
     {
         $this->expectException(ImageException::class);

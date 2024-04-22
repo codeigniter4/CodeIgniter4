@@ -17,10 +17,9 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class CallStoredProcedureTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

@@ -21,9 +21,8 @@ use Tests\Support\Models\UserObjModel;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class GetCompiledModelTest extends CIUnitTestCase
 {
     private ?object $model = null;

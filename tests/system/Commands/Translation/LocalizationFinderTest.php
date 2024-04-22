@@ -20,10 +20,9 @@ use Config\Services;
 use Locale;
 
 /**
- * @group Others
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class LocalizationFinderTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

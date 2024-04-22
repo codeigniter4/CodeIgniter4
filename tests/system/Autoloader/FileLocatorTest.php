@@ -21,9 +21,9 @@ use Config\Modules;
 /**
  * @internal
  *
- * @group Others
  * @no-final
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 class FileLocatorTest extends CIUnitTestCase
 {
     protected FileLocatorInterface $locator;

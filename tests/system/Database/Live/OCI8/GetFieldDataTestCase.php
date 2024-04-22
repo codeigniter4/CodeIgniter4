@@ -19,10 +19,9 @@ use LogicException;
 use stdClass;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
 {
     protected function createForge(): void

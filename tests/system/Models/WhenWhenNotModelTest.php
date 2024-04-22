@@ -16,10 +16,9 @@ namespace CodeIgniter\Models;
 use Tests\Support\Models\SecondaryModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class WhenWhenNotModelTest extends LiveModelTestCase
 {
     public function testWhenWithTrueCondition(): void

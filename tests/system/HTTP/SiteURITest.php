@@ -20,17 +20,13 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class SiteURITest extends CIUnitTestCase
 {
-    /**
-     * @dataProvider provideConstructor
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideConstructor')]
     public function testConstructor(
         string $baseURL,
         string $indexPage,
@@ -327,9 +323,7 @@ final class SiteURITest extends CIUnitTestCase
         new SiteURI($config);
     }
 
-    /**
-     * @dataProvider provideSetPath
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideSetPath')]
     public function testSetPath(
         string $baseURL,
         string $indexPage,

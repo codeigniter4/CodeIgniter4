@@ -22,10 +22,9 @@ use Tests\Support\Models\UserEntityWithCastsModel;
 use Tests\Support\Models\UserModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class FindModelTest extends LiveModelTestCase
 {
     public function testFindReturnsRow(): void
@@ -179,11 +178,10 @@ final class FindModelTest extends LiveModelTestCase
     }
 
     /**
-     * @dataProvider provideFirstAggregate
-     *
      * @param mixed $groupBy
      * @param mixed $total
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideFirstAggregate')]
     public function testFirstAggregate($groupBy, $total): void
     {
         $this->createModel(UserModel::class);
@@ -215,11 +213,10 @@ final class FindModelTest extends LiveModelTestCase
     }
 
     /**
-     * @dataProvider provideAggregateAndGroupBy
-     *
      * @param mixed $aggregate
      * @param mixed $groupBy
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideAggregateAndGroupBy')]
     public function testFirstRespectsSoftDeletes($aggregate, $groupBy): void
     {
         $this->db->table('user')
@@ -261,11 +258,10 @@ final class FindModelTest extends LiveModelTestCase
     }
 
     /**
-     * @dataProvider provideAggregateAndGroupBy
-     *
      * @param mixed $aggregate
      * @param mixed $groupBy
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideAggregateAndGroupBy')]
     public function testFirstRecoverTempUseSoftDeletes($aggregate, $groupBy): void
     {
         $this->createModel(UserModel::class);

@@ -18,9 +18,8 @@ use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
- *
- * @group DatabaseLive
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class DatabaseRelatedRulesTest extends StrictDatabaseRelatedRulesTest
 {
     protected array $config = [

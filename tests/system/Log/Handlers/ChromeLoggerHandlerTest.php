@@ -22,9 +22,8 @@ use stdClass;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ChromeLoggerHandlerTest extends CIUnitTestCase
 {
     public function testCanHandleLogLevel(): void

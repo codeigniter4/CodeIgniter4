@@ -25,9 +25,8 @@ use Tests\Support\Models\UserModel;
  * features without requiring a database connection.
  *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class GeneralModelTest extends CIUnitTestCase
 {
     /**

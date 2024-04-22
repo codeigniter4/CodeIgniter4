@@ -24,12 +24,10 @@ use JsonException;
 use TypeError;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group SeparateProcess
  */
+#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
 final class IncomingRequestTest extends CIUnitTestCase
 {
     private Request $request;
@@ -144,10 +142,9 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
-     *
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
      */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testCanGetOldInputArrayWithSessionService(): void
     {
         $locations = [
@@ -659,14 +656,13 @@ final class IncomingRequestTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideCanGrabGetRawInputVar
-     *
      * @param string $rawstring
      * @param mixed  $var
      * @param mixed  $expected
      * @param mixed  $filter
      * @param mixed  $flag
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideCanGrabGetRawInputVar')]
     public function testCanGrabGetRawInputVar($rawstring, $var, $expected, $filter, $flag): void
     {
         $config          = new App();
@@ -677,9 +673,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $request->getRawInputVar($var, $filter, $flag));
     }
 
-    /**
-     * @dataProvider provideIsHTTPMethods
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideIsHTTPMethods')]
     public function testIsHTTPMethodLowerCase(string $value): void
     {
         $request = $this->request->withMethod($value);
@@ -700,9 +694,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideIsHTTPMethods
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideIsHTTPMethods')]
     public function testIsHTTPMethodUpperCase(string $value): void
     {
         $request = $this->request->withMethod($value);
@@ -922,11 +914,10 @@ final class IncomingRequestTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideExtensionPHP
-     *
      * @param mixed $path
      * @param mixed $detectPath
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideExtensionPHP')]
     public function testExtensionPHP($path, $detectPath): void
     {
         $config          = new App();

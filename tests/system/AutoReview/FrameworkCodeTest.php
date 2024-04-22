@@ -22,9 +22,8 @@ use SplFileInfo;
 
 /**
  * @internal
- *
- * @group AutoReview
  */
+#[\PHPUnit\Framework\Attributes\Group('AutoReview')]
 final class FrameworkCodeTest extends TestCase
 {
     /**
@@ -41,10 +40,9 @@ final class FrameworkCodeTest extends TestCase
     ];
 
     /**
-     * @dataProvider provideEachTestClassHasCorrectGroupAnnotation
-     *
      * @param class-string $class
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideEachTestClassHasCorrectGroupAnnotation')]
     public function testEachTestClassHasCorrectGroupAnnotation(string $class): void
     {
         $reflection = new ReflectionClass($class);

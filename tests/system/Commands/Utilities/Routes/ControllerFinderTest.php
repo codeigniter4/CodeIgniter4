@@ -18,9 +18,8 @@ use Tests\Support\Controllers\Hello;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ControllerFinderTest extends CIUnitTestCase
 {
     public function testFind(): void

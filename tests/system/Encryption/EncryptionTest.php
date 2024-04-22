@@ -20,9 +20,8 @@ use Config\Services;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class EncryptionTest extends CIUnitTestCase
 {
     private Encryption $encryption;

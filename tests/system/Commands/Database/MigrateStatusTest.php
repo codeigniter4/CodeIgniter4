@@ -19,10 +19,9 @@ use CodeIgniter\Test\StreamFilterTrait;
 use Config\Database;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class MigrateStatusTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

@@ -22,9 +22,8 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class JoinTest extends CIUnitTestCase
 {
     protected $db;

@@ -19,9 +19,8 @@ use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class CreditCardRulesTest extends CIUnitTestCase
 {
     private Validation $validation;
@@ -50,9 +49,7 @@ final class CreditCardRulesTest extends CIUnitTestCase
         $this->validation->reset();
     }
 
-    /**
-     * @dataProvider provideValidCCNumber
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidCCNumber')]
     public function testValidCCNumber(string $type, ?string $number, bool $expected): void
     {
         $data = ['cc' => $number];

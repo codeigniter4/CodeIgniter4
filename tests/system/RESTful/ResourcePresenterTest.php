@@ -31,14 +31,11 @@ use Tests\Support\RESTful\Worker2;
  * so we need to make sure that the methods routed to
  * return correct responses.
  *
- * @runTestsInSeparateProcesses
- *
- * @preserveGlobalState         disabled
- *
  * @internal
- *
- * @group SeparateProcess
  */
+#[\PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses]
+#[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
 final class ResourcePresenterTest extends CIUnitTestCase
 {
     private CodeIgniter $codeigniter;

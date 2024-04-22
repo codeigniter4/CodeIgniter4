@@ -17,9 +17,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class OutgoingRequestTest extends CIUnitTestCase
 {
     public function testCreateWithHeader(): void

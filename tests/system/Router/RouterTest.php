@@ -29,9 +29,8 @@ use Tests\Support\Filters\Customfilter;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class RouterTest extends CIUnitTestCase
 {
     private RouteCollection $collection;
@@ -913,9 +912,7 @@ final class RouterTest extends CIUnitTestCase
         $this->assertSame('', $router->directory());
     }
 
-    /**
-     * @dataProvider provideRedirectRoute
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideRedirectRoute')]
     public function testRedirectRoute(
         string $route,
         string $redirectFrom,

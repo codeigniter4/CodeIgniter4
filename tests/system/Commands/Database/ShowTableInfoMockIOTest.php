@@ -19,10 +19,9 @@ use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\Mock\MockInputOutput;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class ShowTableInfoMockIOTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

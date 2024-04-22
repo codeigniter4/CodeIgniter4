@@ -20,9 +20,8 @@ use ErrorException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class EmailTest extends CIUnitTestCase
 {
     public function testEmailValidation(): void
@@ -43,10 +42,9 @@ final class EmailTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideEmailSendWithClearance
-     *
      * @param mixed $autoClear
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideEmailSendWithClearance')]
     public function testEmailSendWithClearance($autoClear): void
     {
         $email = $this->createMockEmail();

@@ -20,9 +20,8 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class CreateTableTest extends CIUnitTestCase
 {
     public function testCreateTableWithDefaultRawSql(): void

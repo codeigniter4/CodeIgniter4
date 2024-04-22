@@ -23,9 +23,8 @@ use Config\Cookie as CookieConfig;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ResponseCookieTest extends CIUnitTestCase
 {
     private array $defaults;

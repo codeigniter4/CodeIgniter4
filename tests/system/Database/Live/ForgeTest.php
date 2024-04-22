@@ -24,10 +24,9 @@ use stdClass;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class ForgeTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

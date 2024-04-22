@@ -17,9 +17,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
- *
- * @group SeparateProcess
  */
+#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
 final class CommonFunctionsSendTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -36,10 +35,9 @@ final class CommonFunctionsSendTest extends CIUnitTestCase
     /**
      * Make sure cookies are set by RedirectResponse this way
      * See https://github.com/codeigniter4/CodeIgniter4/issues/1393
-     *
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
      */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testRedirectResponseCookiesSent(): void
     {
         $loginTime = time();

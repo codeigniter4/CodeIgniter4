@@ -17,10 +17,9 @@ use Config\Database as DatabaseConfig;
 use Config\Session as SessionConfig;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class MySQLiHandlerTest extends AbstractHandlerTestCase
 {
     protected function setUp(): void

@@ -22,10 +22,9 @@ use Config\Database;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class UpdateTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
@@ -113,9 +112,7 @@ final class UpdateTest extends CIUnitTestCase
         }
     }
 
-    /**
-     * @dataProvider provideUpdateBatch
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideUpdateBatch')]
     public function testUpdateBatch(string $constraints, array $data, array $expected): void
     {
         $table = 'type_test';

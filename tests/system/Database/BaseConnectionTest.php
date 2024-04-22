@@ -20,9 +20,8 @@ use Throwable;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class BaseConnectionTest extends CIUnitTestCase
 {
     private array $options = [
@@ -180,9 +179,8 @@ final class BaseConnectionTest extends CIUnitTestCase
     /**
      * These tests are intended to confirm the current behavior.
      * We do not know if all of these are the correct behavior.
-     *
-     * @dataProvider provideProtectIdentifiers
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideProtectIdentifiers')]
     public function testProtectIdentifiers(
         bool $prefixSingle,
         bool $protectIdentifiers,
@@ -286,9 +284,8 @@ final class BaseConnectionTest extends CIUnitTestCase
 
     /**
      * These tests are intended to confirm the current behavior.
-     *
-     * @dataProvider provideEscapeIdentifiers
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideEscapeIdentifiers')]
     public function testEscapeIdentifiers(string $item, string $expected): void
     {
         $db = new MockConnection($this->options);
@@ -310,9 +307,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideEscapeIdentifier
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideEscapeIdentifier')]
     public function testEscapeIdentifier(string $item, string $expected): void
     {
         $db = new MockConnection($this->options);

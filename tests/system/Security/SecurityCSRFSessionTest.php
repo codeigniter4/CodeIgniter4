@@ -33,14 +33,11 @@ use Config\Security as SecurityConfig;
 use Config\Session as SessionConfig;
 
 /**
- * @runTestsInSeparateProcesses
- *
- * @preserveGlobalState disabled
- *
  * @internal
- *
- * @group SeparateProcess
  */
+#[\PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses]
+#[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
+#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
 final class SecurityCSRFSessionTest extends CIUnitTestCase
 {
     /**

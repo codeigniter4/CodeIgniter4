@@ -18,9 +18,8 @@ use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ValidationTest extends TraditionalValidationTest
 {
     protected static array $config = [

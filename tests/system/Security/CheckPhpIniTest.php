@@ -19,9 +19,8 @@ use CodeIgniter\Test\Mock\MockInputOutput;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class CheckPhpIniTest extends CIUnitTestCase
 {
     public function testCheckIni(): void

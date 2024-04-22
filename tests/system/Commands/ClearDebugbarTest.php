@@ -18,9 +18,8 @@ use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ClearDebugbarTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

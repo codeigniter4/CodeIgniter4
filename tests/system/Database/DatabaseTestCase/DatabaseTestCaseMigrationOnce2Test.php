@@ -22,10 +22,9 @@ use Config\Services;
  * DatabaseTestCaseMigrationOnce1Test and DatabaseTestCaseMigrationOnce2Test
  * show $migrateOnce applies per test case file.
  *
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class DatabaseTestCaseMigrationOnce2Test extends CIUnitTestCase
 {
     use DatabaseTestTrait;

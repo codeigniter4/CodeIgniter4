@@ -19,9 +19,8 @@ use Tests\Support\Publishers\TestPublisher;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class PublishCommandTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

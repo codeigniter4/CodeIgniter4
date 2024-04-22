@@ -18,9 +18,8 @@ use Locale;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class TimeDifferenceTest extends CIUnitTestCase
 {
     private string $currentLocale;

@@ -28,10 +28,9 @@ use Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_
 use Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class MigrationRunnerTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

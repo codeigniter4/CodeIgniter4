@@ -30,9 +30,8 @@ use org\bovigo\vfs\vfsStreamDirectory;
  * testing saving only.
  *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class BaseHandlerTest extends CIUnitTestCase
 {
     private vfsStreamDirectory $root;

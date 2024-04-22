@@ -27,9 +27,8 @@ use Tests\Support\Filters\Customfilter;
  *  - class: \Tests\Support\Filters\Customfilter::class
  *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class FilterTestTraitTest extends CIUnitTestCase
 {
     use FilterTestTrait;

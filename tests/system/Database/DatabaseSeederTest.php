@@ -19,9 +19,8 @@ use Faker\Generator;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class DatabaseSeederTest extends CIUnitTestCase
 {
     public function testInstantiateNoSeedPath(): void

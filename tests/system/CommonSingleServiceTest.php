@@ -23,14 +23,11 @@ use ReflectionMethod;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class CommonSingleServiceTest extends CIUnitTestCase
 {
-    /**
-     * @dataProvider provideServiceNames
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideServiceNames')]
     public function testSingleServiceWithNoParamsSupplied(string $service): void
     {
         Services::injectMock('security', new MockSecurity(new SecurityConfig()));
@@ -44,9 +41,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         $this->assertNotSame($service1, $service2);
     }
 
-    /**
-     * @dataProvider provideServiceNames
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideServiceNames')]
     public function testSingleServiceWithAtLeastOneParamSupplied(string $service): void
     {
         if ($service === 'commands') {

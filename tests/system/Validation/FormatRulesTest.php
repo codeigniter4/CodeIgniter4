@@ -21,10 +21,9 @@ use Tests\Support\Validation\TestRules;
 /**
  * @internal
  *
- * @group Others
- *
  * @no-final
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 class FormatRulesTest extends CIUnitTestCase
 {
     public const ALPHABET     = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ';
@@ -86,9 +85,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    /**
-     * @dataProvider provideValidUrl
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidUrl')]
     public function testValidURL(?string $url, bool $isLoose, bool $isStrict): void
     {
         $data = [
@@ -102,9 +99,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($isLoose, $this->validation->run($data));
     }
 
-    /**
-     * @dataProvider provideValidUrl
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidUrl')]
     public function testValidURLStrict(?string $url, bool $isLoose, bool $isStrict): void
     {
         $data = [
@@ -230,9 +225,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideValidEmail
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidEmail')]
     public function testValidEmail(?string $email, bool $expected): void
     {
         $data = [
@@ -246,9 +239,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    /**
-     * @dataProvider provideValidEmails
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidEmails')]
     public function testValidEmails(?string $email, bool $expected): void
     {
         $data = [
@@ -310,9 +301,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideValidIP
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidIP')]
     public function testValidIP(?string $ip, ?string $which, bool $expected): void
     {
         $data = [
@@ -378,10 +367,9 @@ class FormatRulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideString
-     *
      * @param int|string $str
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideString')]
     public function testString($str, bool $expected): void
     {
         $data = [
@@ -413,9 +401,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideAlpha
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideAlpha')]
     public function testAlpha(?string $str, bool $expected): void
     {
         $data = [
@@ -455,9 +441,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideAlphaSpace
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideAlphaSpace')]
     public function testAlphaSpace(?string $value, bool $expected): void
     {
         $data = [
@@ -501,9 +485,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider alphaNumericProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('alphaNumericProvider')]
     public function testAlphaNumeric(?string $str, bool $expected): void
     {
         $data = [
@@ -539,9 +521,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideAlphaNumericPunct
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideAlphaNumericPunct')]
     public function testAlphaNumericPunct(?string $str, bool $expected): void
     {
         $data = [
@@ -633,9 +613,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider alphaNumericProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('alphaNumericProvider')]
     public function testAlphaNumericSpace(?string $str, bool $expected): void
     {
         $data = [
@@ -671,9 +649,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideAlphaDash
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideAlphaDash')]
     public function testAlphaDash(?string $str, bool $expected): void
     {
         $data = [
@@ -709,9 +685,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideHex
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideHex')]
     public function testHex(?string $str, bool $expected): void
     {
         $data = [
@@ -747,9 +721,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideNumeric
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideNumeric')]
     public function testNumeric(?string $str, bool $expected): void
     {
         $data = [
@@ -804,10 +776,9 @@ class FormatRulesTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5374
      *
-     * @dataProvider provideInvalidIntegerType
-     *
      * @param mixed $value
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideInvalidIntegerType')]
     public function testIntegerWithInvalidTypeData($value, bool $expected): void
     {
         $this->validation->setRules([
@@ -823,10 +794,9 @@ class FormatRulesTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5374
      *
-     * @dataProvider provideInvalidIntegerType
-     *
      * @param mixed $value
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideInvalidIntegerType')]
     public function testNumericWithInvalidTypeData($value, bool $expected): void
     {
         $this->validation->setRules([
@@ -869,9 +839,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideInteger
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideInteger')]
     public function testInteger(?string $str, bool $expected): void
     {
         $data = [
@@ -923,9 +891,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideDecimal
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideDecimal')]
     public function testDecimal(?string $str, bool $expected): void
     {
         $data = [
@@ -981,9 +947,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideNatural
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideNatural')]
     public function testNatural(?string $str, bool $expected): void
     {
         $data = [
@@ -1023,9 +987,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideNaturalNoZero
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideNaturalNoZero')]
     public function testNaturalNoZero(?string $str, bool $expected): void
     {
         $data = [
@@ -1065,9 +1027,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideBase64
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideBase64')]
     public function testBase64(?string $str, bool $expected): void
     {
         $data = [
@@ -1099,9 +1059,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideJson
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideJson')]
     public function testJson(?string $str, bool $expected): void
     {
         $data = [
@@ -1157,9 +1115,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideTimeZone
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideTimeZone')]
     public function testTimeZone(?string $str, bool $expected): void
     {
         $data = [
@@ -1195,9 +1151,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideValidDate
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidDate')]
     public function testValidDate(?string $str, ?string $format, bool $expected): void
     {
         $data = [

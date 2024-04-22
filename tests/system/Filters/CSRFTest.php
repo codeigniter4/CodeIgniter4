@@ -20,12 +20,10 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class CSRFTest extends CIUnitTestCase
 {
     private \Config\Filters $config;

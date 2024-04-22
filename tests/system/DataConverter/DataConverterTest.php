@@ -23,9 +23,8 @@ use Tests\Support\Entity\User;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class DataConverterTest extends CIUnitTestCase
 {
     public function testInstantiate(): void
@@ -39,9 +38,7 @@ final class DataConverterTest extends CIUnitTestCase
         $this->assertInstanceOf(DataConverter::class, $converter);
     }
 
-    /**
-     * @dataProvider provideConvertDataFromDB
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideConvertDataFromDB')]
     public function testConvertDataFromDB(array $types, array $dbData, array $expected): void
     {
         $converter = $this->createDataConverter($types);
@@ -51,9 +48,7 @@ final class DataConverterTest extends CIUnitTestCase
         $this->assertSame($expected, $data);
     }
 
-    /**
-     * @dataProvider provideConvertDataToDB
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideConvertDataToDB')]
     public function testConvertDataToDB(array $types, array $phpData, array $expected): void
     {
         $converter = $this->createDataConverter($types);

@@ -23,9 +23,8 @@ use Tests\Support\View\WorldDecorator;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class DecoratorsTest extends CIUnitTestCase
 {
     private FileLocator $loader;

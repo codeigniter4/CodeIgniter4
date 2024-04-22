@@ -27,9 +27,8 @@ use UnnamespacedClass;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class AutoloaderTest extends CIUnitTestCase
 {
     use ReflectionHelper;
@@ -390,10 +389,8 @@ final class AutoloaderTest extends CIUnitTestCase
         $loader->unregister();
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testLoadHelpers(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.

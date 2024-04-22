@@ -21,9 +21,8 @@ use RuntimeException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class CLITest extends CIUnitTestCase
 {
     use StreamFilterTrait;
@@ -452,12 +451,11 @@ final class CLITest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideTable
-     *
      * @param array $tbody
      * @param array $thead
      * @param array $expected
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideTable')]
     public function testTable($tbody, $thead, $expected): void
     {
         CLI::table($tbody, $thead);

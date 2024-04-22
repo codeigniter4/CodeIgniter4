@@ -19,9 +19,8 @@ use CodeIgniter\Test\TestResponse;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class HomeTest extends CIUnitTestCase
 {
     use FeatureTestTrait;

@@ -22,12 +22,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Honeypot;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group SeparateProcess
  */
+#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
 final class HoneypotTest extends CIUnitTestCase
 {
     private \Config\Filters $config;
@@ -92,10 +90,8 @@ final class HoneypotTest extends CIUnitTestCase
         $this->assertSame($expected, $request);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testAfter(): void
     {
         $this->config->globals = [
@@ -114,10 +110,8 @@ final class HoneypotTest extends CIUnitTestCase
         $this->assertStringContainsString($this->honey->name, $this->response->getBody());
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testAfterNotApplicable(): void
     {
         $this->config->globals = [

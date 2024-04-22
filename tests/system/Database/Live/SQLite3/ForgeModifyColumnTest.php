@@ -18,10 +18,9 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class ForgeModifyColumnTest extends CIUnitTestCase
 {
     private Forge $forge;

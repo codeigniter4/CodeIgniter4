@@ -19,9 +19,8 @@ use DateTimeImmutable;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class CookieStoreTest extends CIUnitTestCase
 {
     private array $defaults;

@@ -20,10 +20,9 @@ use Config\Feature;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class GetTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

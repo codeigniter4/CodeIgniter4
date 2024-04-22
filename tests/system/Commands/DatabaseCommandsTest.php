@@ -17,10 +17,9 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class DatabaseCommandsTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

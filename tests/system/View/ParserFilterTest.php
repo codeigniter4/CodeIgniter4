@@ -20,9 +20,8 @@ use Config\View;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ParserFilterTest extends CIUnitTestCase
 {
     private FileLocator $loader;

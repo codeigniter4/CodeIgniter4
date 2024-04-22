@@ -25,9 +25,8 @@ use Tests\Support\Controllers\Hello;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class RouteCollectionTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -485,9 +484,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
     }
 
-    /**
-     * @dataProvider provideNestedGroupingWorksWithRootPrefix
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideNestedGroupingWorksWithRootPrefix')]
     public function testNestedGroupingWorksWithRootPrefix(
         string $group,
         string $subgroup,
@@ -1323,9 +1320,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($options, ['as' => 'admin', 'foo' => 'baz']);
     }
 
-    /**
-     * @dataProvider provideRoutesOptionsWithSameFromTwoRoutes
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideRoutesOptionsWithSameFromTwoRoutes')]
     public function testRoutesOptionsWithSameFromTwoRoutes(array $options1, array $options2): void
     {
         $routes = $this->getCollector();
@@ -1772,10 +1767,9 @@ final class RouteCollectionTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideRouteDefaultNamespace
-     *
      * @param mixed $namespace
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideRouteDefaultNamespace')]
     public function testAutoRoutesControllerNameReturnsFQCN($namespace): void
     {
         $routes = $this->getCollector();
@@ -1793,10 +1787,9 @@ final class RouteCollectionTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideRouteDefaultNamespace
-     *
      * @param mixed $namespace
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideRouteDefaultNamespace')]
     public function testRoutesControllerNameReturnsFQCN($namespace): void
     {
         Services::request()->setMethod(Method::GET);

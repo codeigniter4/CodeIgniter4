@@ -18,9 +18,8 @@ use Config\Mimes;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class MimesTest extends CIUnitTestCase
 {
     public static function provideGuessExtensionFromType(): iterable
@@ -49,9 +48,7 @@ final class MimesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideGuessExtensionFromType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideGuessExtensionFromType')]
     public function testGuessExtensionFromType(?string $expected, string $mime): void
     {
         $this->assertSame($expected, Mimes::guessExtensionFromType($mime));
@@ -83,9 +80,7 @@ final class MimesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideGuessTypeFromExtension
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideGuessTypeFromExtension')]
     public function testGuessTypeFromExtension(?string $expected, string $ext): void
     {
         $this->assertSame($expected, Mimes::guessTypeFromExtension($ext));

@@ -17,10 +17,9 @@ use CodeIgniter\Test\CIUnitTestCase;
 use InvalidArgumentException;
 
 /**
- * @group Others
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ArrayHelperDotKeyExistsTest extends CIUnitTestCase
 {
     private array $array = [

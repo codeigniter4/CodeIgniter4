@@ -18,9 +18,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class FileCollectionTest extends CIUnitTestCase
 {
     /**

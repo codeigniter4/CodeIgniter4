@@ -29,9 +29,8 @@ use Tests\Support\SomeEntity;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class EntityTest extends CIUnitTestCase
 {
     use ReflectionHelper;

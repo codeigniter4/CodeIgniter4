@@ -19,12 +19,10 @@ use org\bovigo\vfs\vfsStreamDirectory;
 use TypeError;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group SeparateProcess
  */
+#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+#[\PHPUnit\Framework\Attributes\Group('SeparateProcess')]
 final class DotEnvTest extends CIUnitTestCase
 {
     private ?vfsStreamDirectory $root;
@@ -62,9 +60,7 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertFalse($dotenv->load());
     }
 
-    /**
-     * @dataProvider provideLoadsVars
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideLoadsVars')]
     public function testLoadsVars(string $expected, string $varname): void
     {
         $dotenv = new DotEnv($this->fixturesFolder);
@@ -88,10 +84,8 @@ final class DotEnvTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testLoadsHex2Bin(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
@@ -102,10 +96,8 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertSame('OpenSSL', getenv('encryption.driver'));
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
+    #[\PHPUnit\Framework\Attributes\PreserveGlobalState(false)]
     public function testLoadsBase64(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');

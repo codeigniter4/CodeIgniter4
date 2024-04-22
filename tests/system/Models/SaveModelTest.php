@@ -26,10 +26,9 @@ use Tests\Support\Models\ValidModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\Group('DatabaseLive')]
 final class SaveModelTest extends LiveModelTestCase
 {
     public function testSaveNewRecordObject(): void

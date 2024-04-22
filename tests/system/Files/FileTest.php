@@ -19,9 +19,8 @@ use ZipArchive;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class FileTest extends CIUnitTestCase
 {
     public function testNewGoodChecked(): void

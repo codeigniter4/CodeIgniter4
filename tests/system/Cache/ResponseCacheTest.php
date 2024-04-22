@@ -26,12 +26,10 @@ use ErrorException;
 use Exception;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\BackupGlobals(true)]
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class ResponseCacheTest extends CIUnitTestCase
 {
     private AppConfig $appConfig;

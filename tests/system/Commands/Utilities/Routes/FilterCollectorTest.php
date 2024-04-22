@@ -19,9 +19,8 @@ use Config\Services;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class FilterCollectorTest extends CIUnitTestCase
 {
     public function testGet(): void

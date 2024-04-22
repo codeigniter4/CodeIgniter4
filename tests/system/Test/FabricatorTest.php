@@ -23,9 +23,8 @@ use Tests\Support\Models\UserModel;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[\PHPUnit\Framework\Attributes\Group('Others')]
 final class FabricatorTest extends CIUnitTestCase
 {
     /**
