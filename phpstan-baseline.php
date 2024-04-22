@@ -1797,11 +1797,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:_update\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:_whereIn\\(\\) has parameter \\$values with no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
@@ -3102,11 +3097,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\OCI8\\\\Builder\\:\\:_update\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\OCI8\\\\Builder\\:\\:fieldsFromQuery\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
@@ -3284,11 +3274,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 7,
-	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Postgre\\\\Builder\\:\\:_update\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
-	'count' => 1,
 	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
 ];
 $ignoreErrors[] = [
@@ -3634,11 +3619,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 9,
-	'path' => __DIR__ . '/system/Database/SQLSRV/Builder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\SQLSRV\\\\Builder\\:\\:_update\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
-	'count' => 1,
 	'path' => __DIR__ . '/system/Database/SQLSRV/Builder.php',
 ];
 $ignoreErrors[] = [

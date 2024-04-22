@@ -2377,8 +2377,8 @@ class BaseBuilder
      * Generates a platform-specific insert string from the supplied data
      *
      * @param string           $table         Protected table name
-     * @param list<string>     $keys          QBKeys
-     * @param list<int|string> $unescapedKeys QBSet
+     * @param list<string>     $keys          Keys of QBSet
+     * @param list<int|string> $unescapedKeys Values of QBSet
      */
     protected function _insert(string $table, array $keys, array $unescapedKeys): string
     {
@@ -2419,8 +2419,8 @@ class BaseBuilder
      * Generates a platform-specific replace string from the supplied data
      *
      * @param string           $table  Protected table name
-     * @param list<string>     $keys   QBKeys
-     * @param list<int|string> $values QBSet
+     * @param list<string>     $keys   Keys of QBSet
+     * @param list<int|string> $values Values of QBSet
      */
     protected function _replace(string $table, array $keys, array $values): string
     {
@@ -2516,7 +2516,8 @@ class BaseBuilder
     /**
      * Generates a platform-specific update string from the supplied data
      *
-     * @param string $table Protected table name
+     * @param string                $table  Protected table name
+     * @param array<string, string> $values QBSet
      */
     protected function _update(string $table, array $values): string
     {
