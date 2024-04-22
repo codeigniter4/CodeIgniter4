@@ -1,6 +1,6 @@
-##################################
-Database Quick Start: Example Code
-##################################
+###########################
+Quick Start: Usage Examples
+###########################
 
 The following page contains example code showing how the database class
 is used. For complete details please read the individual pages
