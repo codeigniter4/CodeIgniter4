@@ -14,16 +14,18 @@ declare(strict_types=1);
 namespace CodeIgniter\AutoReview;
 
 use FilesystemIterator;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use ReflectionAttribute;
 use ReflectionClass;
 use SplFileInfo;
 
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('AutoReview')]
+#[Group('AutoReview')]
 final class FrameworkCodeTest extends TestCase
 {
     /**
@@ -31,7 +33,7 @@ final class FrameworkCodeTest extends TestCase
      */
     private static array $testClasses = [];
 
-    private static array $recognizedGroupAnnotations = [
+    private static array $recognizedGroupAttributeNames = [
         'AutoReview',
         'CacheLive',
         'DatabaseLive',
@@ -42,8 +44,8 @@ final class FrameworkCodeTest extends TestCase
     /**
      * @param class-string $class
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideEachTestClassHasCorrectGroupAnnotation')]
-    public function testEachTestClassHasCorrectGroupAnnotation(string $class): void
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideEachTestClassHasCorrectGroupAttributeName')]
+    public function testEachTestClassHasCorrectGroupAttributeName(string $class): void
     {
         $reflection = new ReflectionClass($class);
 
@@ -53,27 +55,31 @@ final class FrameworkCodeTest extends TestCase
             return;
         }
 
-        $docComment = (string) $reflection->getDocComment();
-        $this->assertNotEmpty($docComment, sprintf('[%s] Test class is missing a class-level PHPDoc.', $class));
+        $attributes = $reflection->getAttributes(Group::class);
+        $this->assertNotEmpty($attributes, sprintf('[%s] Test class is missing a #[Group] attribute.', $class));
 
-        preg_match_all('/@group (\S+)/', $docComment, $matches);
-        array_shift($matches);
-        $this->assertNotEmpty($matches[0], sprintf('[%s] Test class is missing a @group annotation.', $class));
+        $unrecognizedGroups = array_diff(
+            array_map(static function (ReflectionAttribute $attribute): string {
+                $groupAttribute = $attribute->newInstance();
+                assert($groupAttribute instanceof Group);
 
-        $unrecognizedGroups = array_diff($matches[0], self::$recognizedGroupAnnotations);
+                return $groupAttribute->name();
+            }, $attributes),
+            self::$recognizedGroupAttributeNames
+        );
         $this->assertEmpty($unrecognizedGroups, sprintf(
-            "[%s] Unexpected @group annotation%s:\n%s\nExpected annotations to be in \"%s\".",
+            "[%s] Unexpected #[Group] attribute%s:\n%s\nExpected group names to be in \"%s\".",
             $class,
             count($unrecognizedGroups) > 1 ? 's' : '',
             implode("\n", array_map(
-                static fn (string $group): string => sprintf('  * @group %s', $group),
+                static fn (string $group): string => sprintf('  * #[Group(\'%s\')]', $group),
                 $unrecognizedGroups
             )),
-            implode(', ', self::$recognizedGroupAnnotations)
+            implode(', ', self::$recognizedGroupAttributeNames)
         ));
     }
 
-    public static function provideEachTestClassHasCorrectGroupAnnotation(): iterable
+    public static function provideEachTestClassHasCorrectGroupAttributeName(): iterable
     {
         foreach (self::getTestClasses() as $class) {
             yield $class => [$class];
