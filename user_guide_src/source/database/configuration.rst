@@ -29,13 +29,13 @@ prototype:
 The name of the class property is the connection name, and can be used
 while connecting to specify a group name.
 
-.. note:: The default location of the SQLite3 database is in the **writable** folder.
-    If you want to change the location, you must set the full path to the new folder.
+.. note:: The default location of the SQLite3 database is the **writable** folder.
+    If you want to change the location, you must set the full path to the new folder (e.g., 'database' => '../db/database_name').
 
 DSN
 ---
 
-Some database drivers (such as Postgre, OCI8) requires a full DSN string to connect.
+Some database drivers (such as Postgre, OCI8) requires a full DSN (Data Source Name) string to connect.
 But if you do not specify a DSN string for a driver that requires it, CodeIgniter
 will try to build it with the rest of the provided settings.
 
@@ -48,7 +48,7 @@ you're using the driver's underlying native PHP extension, like this:
 DSN in Universal Manner
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-You can also set a Data Source Name in universal manner (URL like). In that case DSNs must have this prototype:
+You can also set a DSN in universal manner (URL like). In that case DSNs must have this prototype:
 
 .. literalinclude:: configuration/003.php
     :lines: 11-14
@@ -113,7 +113,7 @@ Configuring with .env File
 
 You can also save your configuration values within a **.env** file with the current server's
 database settings. You only need to enter the values that change from what is in the
-default group's configuration settings. The values should be name following this format, where
+default group's configuration settings. The values should follow this format, where
 ``default`` is the group name::
 
     database.default.username = 'root';
@@ -137,11 +137,11 @@ and decode it in the constructor in the Config class:
 .. _database-config-explanation-of-values:
 
 *********************
-Explanation of Values
+Description of Values
 *********************
 
 ================ ===========================================================================================================
- Name Config     Description
+ Config Name     Description
 ================ ===========================================================================================================
 **DSN**          The DSN connect string (an all-in-one configuration sequence).
 **hostname**     The hostname of your database server. Often this is 'localhost'.
