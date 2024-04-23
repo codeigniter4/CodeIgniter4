@@ -1090,7 +1090,7 @@ class BaseBuilder
      * @used-by notHavingLike()
      * @used-by orNotHavingLike()
      *
-     * @param list<int|string>|RawSql|string $field
+     * @param array<string, string>|RawSql|string $field
      *
      * @return $this
      */
