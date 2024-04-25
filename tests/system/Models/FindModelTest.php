@@ -45,6 +45,7 @@ final class FindModelTest extends LiveModelTestCase
         ]);
         $id = $this->model->insert($user, true);
 
+        /** @var UserWithCasts $user */
         $user = $this->model->find($id);
 
         $this->assertSame('John Smith', $user->name);
