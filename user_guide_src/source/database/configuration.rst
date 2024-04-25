@@ -30,7 +30,7 @@ The name of the class property is the connection name, and can be used
 while connecting to specify a group name.
 
 .. note:: The default location of the SQLite3 database is the **writable** folder.
-    If you want to change the location, you must set the full path to the new folder (e.g., 'database' => '../db/database_name').
+    If you want to change the location, you must set the full path to the new folder (e.g., 'database' => WRITEPATH . 'db/database_name.db').
 
 DSN
 ---
