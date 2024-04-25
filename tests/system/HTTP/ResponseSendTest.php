@@ -162,14 +162,11 @@ final class ResponseSendTest extends CIUnitTestCase
 
     /**
      * Make sure secure cookies are not sent with HTTP request
-     *
-     * @ runInSeparateProcess
-     * @ preserveGlobalState  disabled
      */
     public function testDoNotSendUnSecureCookie(): void
     {
         $this->expectException(SecurityException::class);
-        $this->expectExceptionMessage('The action you requested is not allowed');
+        $this->expectExceptionMessage('Attempted to send a secure cookie over a non-secure connection.');
 
         $request = $this->createMock(IncomingRequest::class);
         $request->method('isSecure')->willReturn(false);
