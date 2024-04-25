@@ -15,8 +15,10 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Exceptions\ModelException;
+use Tests\Support\Entity\UserWithCasts;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
+use Tests\Support\Models\UserEntityWithCastsModel;
 use Tests\Support\Models\UserModel;
 
 /**
@@ -30,6 +32,23 @@ final class FindModelTest extends LiveModelTestCase
     {
         $this->createModel(JobModel::class);
         $this->assertSame('Musician', $this->model->find(4)->name);
+    }
+
+    public function testFindReturnsEntityWithCasts(): void
+    {
+        $this->createModel(UserEntityWithCastsModel::class);
+        $this->model->builder()->truncate();
+        $user = new UserWithCasts([
+            'name'    => 'John Smith',
+            'email'   => ['foo@example.jp', 'bar@example.com'],
+            'country' => 'US',
+        ]);
+        $id = $this->model->insert($user, true);
+
+        $user = $this->model->find($id);
+
+        $this->assertSame('John Smith', $user->name);
+        $this->assertSame(['foo@example.jp', 'bar@example.com'], $user->email);
     }
 
     public function testFindReturnsMultipleRows(): void
