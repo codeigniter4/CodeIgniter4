@@ -12,6 +12,8 @@ There are several ways to generate query results:
 Result Arrays
 *************
 
+.. _getresult:
+
 getResult()
 ===========
 
