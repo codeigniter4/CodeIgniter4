@@ -88,7 +88,7 @@ $query, which can be used to show the results:
 
 .. literalinclude:: query_builder/004.php
 
-Please visit the :doc:`getResult() method <getResult>` method for a full
+Please visit the :doc:`getResult() method <getresult>` method for a full
 discussion regarding result generation.
 
 $builder->getCompiledSelect()
