@@ -101,8 +101,8 @@ Example:
 
 .. literalinclude:: query_builder/005.php
 
-The parameter in the first query (false) enables you to set whether or not the query builder
-will be reset (by default it will be reset, just like when using ``$builder->get()``):
+The parameter (false) in the first query below enables you to set whether or not the query builder
+will be reset (because the default value of the parameter is true, ``getCompiledSelect(bool $reset = true)``, by default it will be reset just like when using ``$builder->get()``):
 
 .. literalinclude:: query_builder/006.php
 
