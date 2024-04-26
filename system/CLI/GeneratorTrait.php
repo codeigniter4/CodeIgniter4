@@ -96,7 +96,7 @@ trait GeneratorTrait
      *
      * @internal
      *
-     * @var array
+     * @var array<int|string, string|null>
      */
     private $params = [];
 

@@ -707,66 +707,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Encryption/GenerateKey.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\CellGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\CommandGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/CommandGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\ConfigGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\ControllerGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\EntityGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\FilterGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/FilterGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\MigrationGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\ModelGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\ScaffoldGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\SeederGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SeederGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\TestGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/TestGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Commands\\\\Generators\\\\ValidationGenerator\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\ListCommands\\:\\:listFull\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/ListCommands.php',
@@ -9312,11 +9252,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/_support/Cells/StarterCell.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Commands\\\\LanguageCommand\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
@@ -9325,11 +9260,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property Tests\\\\Support\\\\Commands\\\\ParamsReveal\\:\\:\\$args has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Commands/ParamsReveal.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Tests\\\\Support\\\\Commands\\\\Unsuffixable\\:\\:\\$params type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Commands/Unsuffixable.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method Tests\\\\Support\\\\Config\\\\BadRegistrar\\:\\:RegistrarConfig\\(\\) has no return type specified\\.$#',
