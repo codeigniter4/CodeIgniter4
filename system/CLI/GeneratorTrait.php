@@ -336,6 +336,8 @@ trait GeneratorTrait
     /**
      * Gets the generator view as defined in the `Config\Generators::$views`,
      * with fallback to `$template` when the defined view does not exist.
+     *
+     * @param array<string, bool|string|null> $data
      */
     protected function renderTemplate(array $data = []): string
     {
