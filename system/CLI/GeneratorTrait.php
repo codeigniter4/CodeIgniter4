@@ -103,6 +103,8 @@ trait GeneratorTrait
     /**
      * Execute the command.
      *
+     * @param array<int|string, string|null> $params
+     *
      * @deprecated use generateClass() instead
      */
     protected function execute(array $params): void
@@ -112,6 +114,8 @@ trait GeneratorTrait
 
     /**
      * Generates a class file from an existing template.
+     *
+     * @param array<int|string, string|null> $params
      */
     protected function generateClass(array $params): void
     {
@@ -134,7 +138,8 @@ trait GeneratorTrait
     /**
      * Generate a view file from an existing template.
      *
-     * @param string $view namespaced view name that is generated
+     * @param string                         $view   namespaced view name that is generated
+     * @param array<int|string, string|null> $params
      */
     protected function generateView(string $view, array $params): void
     {
