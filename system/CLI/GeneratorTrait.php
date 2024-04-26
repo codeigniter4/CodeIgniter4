@@ -357,7 +357,10 @@ trait GeneratorTrait
     /**
      * Performs pseudo-variables contained within view file.
      *
-     * @param string $class namespaced classname or namespaced view.
+     * @param string                          $class   namespaced classname or namespaced view.
+     * @param list<string>                    $search
+     * @param list<string>                    $replace
+     * @param array<string, bool|string|null> $data
      *
      * @return string generated file content
      */
