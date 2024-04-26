@@ -1090,7 +1090,7 @@ class BaseBuilder
      * @used-by notHavingLike()
      * @used-by orNotHavingLike()
      *
-     * @param array|RawSql|string $field
+     * @param array<string, string>|RawSql|string $field
      *
      * @return $this
      */
@@ -2376,7 +2376,9 @@ class BaseBuilder
     /**
      * Generates a platform-specific insert string from the supplied data
      *
-     * @param string $table Protected table name
+     * @param string           $table         Protected table name
+     * @param list<string>     $keys          Keys of QBSet
+     * @param list<int|string> $unescapedKeys Values of QBSet
      */
     protected function _insert(string $table, array $keys, array $unescapedKeys): string
     {
@@ -2416,7 +2418,9 @@ class BaseBuilder
     /**
      * Generates a platform-specific replace string from the supplied data
      *
-     * @param string $table Protected table name
+     * @param string           $table  Protected table name
+     * @param list<string>     $keys   Keys of QBSet
+     * @param list<int|string> $values Values of QBSet
      */
     protected function _replace(string $table, array $keys, array $values): string
     {
@@ -2512,7 +2516,8 @@ class BaseBuilder
     /**
      * Generates a platform-specific update string from the supplied data
      *
-     * @param string $table Protected table name
+     * @param string                $table  Protected table name
+     * @param array<string, string> $values QBSet
      */
     protected function _update(string $table, array $values): string
     {
@@ -2863,9 +2868,9 @@ class BaseBuilder
      *
      * @used-by batchExecute()
      *
-     * @param string       $table Protected table name
-     * @param list<string> $keys  QBKeys
-     * @paramst<string|int>> $values QBSet
+     * @param string           $table  Protected table name
+     * @param list<string>     $keys   QBKeys
+     * @param list<int|string> $values QBSet
      */
     protected function _deleteBatch(string $table, array $keys, array $values): string
     {

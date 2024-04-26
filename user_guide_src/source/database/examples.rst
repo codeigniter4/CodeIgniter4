@@ -1,6 +1,6 @@
-##################################
-Database Quick Start: Example Code
-##################################
+###########################
+Quick Start: Usage Examples
+###########################
 
 The following page contains example code showing how the database class
 is used. For complete details please read the individual pages
@@ -24,7 +24,7 @@ your :doc:`configuration <configuration>` settings:
 Once loaded the class is ready to be used as described below.
 
 .. note:: If all your pages require database access you can connect
-    automatically. See the :doc:`connecting <connecting>` page for details.
+    automatically. See the :doc:`Connecting to a Database <connecting>` page for details.
 
 Standard Query With Multiple Results (Object Version)
 =====================================================
@@ -66,7 +66,7 @@ Standard Insert
 Query Builder Query
 ===================
 
-The :doc:`Query Builder Pattern <query_builder>` gives you a simplified
+The :doc:`Query Builder <query_builder>` gives you a simplified
 means of retrieving data:
 
 .. literalinclude:: examples/007.php
