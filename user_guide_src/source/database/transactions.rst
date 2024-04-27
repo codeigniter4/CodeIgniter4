@@ -32,10 +32,6 @@ contrast, we've implemented a smart transaction system that does all
 this for you automatically (you can also manage your transactions
 manually if you choose to, but there's really no benefit).
 
-.. note::
-    Since v4.3.0, during transactions, exceptions are not thrown by default
-    even if ``DBDebug`` is true.
-
 Running Transactions
 ====================
 
@@ -66,10 +62,6 @@ Strict Mode can be disabled as follows:
 
 Managing Errors
 ===============
-
-.. note::
-    Since v4.3.0, during transactions, exceptions are not thrown by default
-    even if ``DBDebug`` is true.
 
 You can manage your own errors like this:
 
