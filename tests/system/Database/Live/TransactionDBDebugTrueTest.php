@@ -234,4 +234,90 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
 
         $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
     }
+
+    public function testNestedTransactions(): void
+    {
+        $builder = $this->db->table('job');
+
+        $this->db->transStart() or $this->fail('Failed to start transaction');
+
+        $jobData = [
+            'name'        => 'Grocery Sales',
+            'description' => 'Fresh!',
+        ];
+        $builder->insert($jobData);
+
+        $this->db->transStart() or $this->fail('Failed to start inner transaction');
+
+        $jobData = [
+            'name'        => 'Comedian',
+            'description' => 'Theres something in your teeth',
+        ];
+        $builder->insert($jobData);
+
+        $this->db->transComplete() or $this->fail('Failed to complete inner transaction');
+
+        $this->db->transComplete() or $this->fail('Failed to complete outer transaction');
+
+        $this->seeInDatabase('job', ['name' => 'Grocery Sales']);
+        $this->seeInDatabase('job', ['name' => 'Comedian']);
+    }
+
+
+    public function testNestedTransactionsRollbackOuter(): void
+    {
+        $builder = $this->db->table('job');
+
+        $this->db->transStart() or $this->fail('Failed to start transaction');
+
+        $jobData = [
+            'name'        => 'Grocery Sales',
+            'description' => 'Fresh!',
+        ];
+        $builder->insert($jobData);
+
+        $this->db->transStart() or $this->fail('Failed to start inner transaction');
+
+        $jobData = [
+            'name'        => 'Comedian',
+            'description' => 'Theres something in your teeth',
+        ];
+        $builder->insert($jobData);
+
+        $this->db->transComplete() or $this->fail('Failed to complete inner transaction');
+
+        $this->db->transRollback() or $this->fail('Failed to rollback outer transaction');
+
+        $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
+        $this->dontSeeInDatabase('job', ['name' => 'Comedian']);
+    }
+
+
+    public function testNestedTransactionsRollbackInner(): void
+    {
+        $builder = $this->db->table('job');
+
+        $this->db->transStart() or $this->fail('Failed to start transaction');
+
+        $jobData = [
+            'name'        => 'Grocery Sales',
+            'description' => 'Fresh!',
+        ];
+        $builder->insert($jobData);
+
+        $this->db->transStart() or $this->fail('Failed to start inner transaction');
+
+        $jobData = [
+            'name'        => 'Comedian',
+            'description' => 'Theres something in your teeth',
+        ];
+        $builder->insert($jobData);
+
+        $this->db->transRollback() or $this->fail('Failed to rollback inner transaction');
+
+        $this->db->transComplete() or $this->fail('Failed to complete outer transaction');
+
+        $this->seeInDatabase('job', ['name' => 'Grocery Sales']);
+        $this->dontSeeInDatabase('job', ['name' => 'Comedian']);
+    }
 }
