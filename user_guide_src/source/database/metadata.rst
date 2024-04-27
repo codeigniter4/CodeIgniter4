@@ -7,7 +7,7 @@ Getting Metadata
     :depth: 2
 
 **************
-Table MetaData
+Table Metadata
 **************
 
 These functions let you fetch table information.
@@ -39,7 +39,7 @@ running an operation on it. Returns a boolean true/false. Usage example:
 .. note:: Replace *table_name* with the name of the table you are looking for.
 
 **************
-Field MetaData
+Field Metadata
 **************
 
 List the Fields in a Table
