@@ -1,6 +1,6 @@
-#################
-Database Metadata
-#################
+################
+Getting Metadata
+################
 
 .. contents::
     :local:
@@ -71,9 +71,7 @@ performing an action. Returns a boolean true/false. Usage example:
 
 .. literalinclude:: metadata/005.php
 
-.. note:: Replace *field_name* with the name of the column you are looking
-    for, and replace *table_name* with the name of the table you are
-    looking for.
+.. note:: Replace *field_name* and *table_name* with the column name and the table name you are looking for.
 
 Retrieve Field Metadata
 =======================
@@ -88,7 +86,7 @@ Returns an array of objects containing field information.
 Sometimes it's helpful to gather the field names or other metadata, like
 the column type, max length, etc.
 
-.. note:: Not all databases provide meta-data.
+.. note:: Not all databases provide metadata.
 
 Usage example:
 
