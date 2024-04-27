@@ -76,7 +76,7 @@ class SplFileInfoRepresentation extends Representation
             }
         } catch (RuntimeException $e) {
             if (false === \strpos($e->getMessage(), ' open_basedir ')) {
-                throw $e;
+                throw $e; // @codeCoverageIgnore
             }
         }
 

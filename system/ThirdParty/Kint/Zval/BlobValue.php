@@ -182,7 +182,9 @@ class BlobValue extends Value
         if (\function_exists('iconv')) {
             foreach (self::$legacy_encodings as $encoding) {
                 // Iconv detection works by triggering
-                // "Detected an illegal character in input string" warnings
+                // "Detected an illegal character in input string" notices
+                // This notice does not become a TypeError with strict_types
+                // so we don't have to wrap this in a try catch
                 if (@\iconv($encoding, $encoding, $string) === $string) {
                     return $encoding;
                 }

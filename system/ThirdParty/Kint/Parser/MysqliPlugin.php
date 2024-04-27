@@ -105,7 +105,8 @@ class MysqliPlugin extends AbstractPlugin
         foreach ($o->value->contents as $key => $obj) {
             if (isset($this->connected_readable[$obj->name])) {
                 if (!$connected) {
-                    continue;
+                    // No failed connections after PHP 8.1
+                    continue; // @codeCoverageIgnore
                 }
             } elseif (isset($this->empty_readable[$obj->name])) {
                 // No failed connections after PHP 8.1
