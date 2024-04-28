@@ -860,7 +860,7 @@ abstract class BaseConnection implements ConnectionInterface
         $started = false;
 
         try {
-            return $started = ($this->transDepth > 0 ? $this->_transBegin() : $this->_transBeginNested());
+            return $started = ($this->transDepth < 1 ? $this->_transBegin() : $this->_transBeginNested());
         } finally {
             if ($started) {
                 $this->transDepth++;

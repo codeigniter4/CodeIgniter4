@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\SavepointsForNestedTransactions;
 use LogicException;
 use mysqli;
 use mysqli_result;
@@ -29,6 +30,8 @@ use Throwable;
  */
 class Connection extends BaseConnection
 {
+    use SavepointsForNestedTransactions;
+
     /**
      * Database driver
      *

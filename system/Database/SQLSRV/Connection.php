@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\SQLSRV;
 
+use BadMethodCallException;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use stdClass;
@@ -94,6 +95,8 @@ class Connection extends BaseConnection
         if ($this->scrollable === null) {
             $this->scrollable = defined('SQLSRV_CURSOR_CLIENT_BUFFERED') ? SQLSRV_CURSOR_CLIENT_BUFFERED : false;
         }
+
+        $this->enableNestedTransactions = false; // not implemented so disable it
     }
 
     /**
@@ -563,5 +566,20 @@ class Connection extends BaseConnection
         }
 
         return parent::isWriteType($sql);
+    }
+
+    protected function _transBeginNested(): bool
+    {
+        throw new BadMethodCallException("Nested transactions for the {$this->DBDriver} are not implemented.");
+    }
+
+    protected function _transCommitNested(): bool
+    {
+        throw new BadMethodCallException("Nested transactions for the {$this->DBDriver} are not implemented.");
+    }
+
+    protected function _transRollbackNested(): bool
+    {
+        throw new BadMethodCallException("Nested transactions for the {$this->DBDriver} are not implemented.");
     }
 }

@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\SavepointsForNestedTransactions;
 use Exception;
 use SQLite3;
 use SQLite3Result;
@@ -27,6 +28,8 @@ use stdClass;
  */
 class Connection extends BaseConnection
 {
+    use SavepointsForNestedTransactions;
+
     /**
      * Database driver
      *
