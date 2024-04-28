@@ -130,6 +130,8 @@ Alternatively, you can use the :doc:`Services class </concepts/services>` to ret
 
 .. literalinclude:: localization/006.php
 
+.. _language-localization:
+
 *********************
 Language Localization
 *********************

@@ -106,13 +106,15 @@ Service Accessors
 
 .. php:function:: lang($line[, $args[, $locale]])
 
-    :param string $line: The line of text to retrieve
+    :param string $line: The language filename and the key of the text to retrieve.
     :param array  $args: An array of data to substitute for placeholders.
-    :param string $locale: Specify a different locale to be used instead of default one.
+    :param string $locale: Specify a different locale to be used instead of the current locale.
+    :returns: The text in the language file
+    :rtype: list<string>|string
 
-    Retrieves a locale-specific file based on an alias string.
+    Retrieves text from the language files.
 
-    For more information, see the :doc:`Localization </outgoing/localization>` page.
+    For more information, see the :ref:`language-localization`.
 
 .. php:function:: model($name[, $getShared = true[, &$conn = null]])
 
