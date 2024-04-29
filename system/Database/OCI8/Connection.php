@@ -734,6 +734,12 @@ class Connection extends BaseConnection
         return 'oci_';
     }
 
+    public function transNested(bool $enabled): self
+    {
+        log_message('warning', 'Nested transactions are currently not supported by the SQLSRV driver.');
+        $this->enableNestedTransactions = false;
+    }
+
     protected function _transBeginNested(): bool
     {
         throw new BadMethodCallException("Nested transactions for the {$this->DBDriver} are not implemented.");
