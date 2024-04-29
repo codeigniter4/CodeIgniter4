@@ -250,4 +250,19 @@ class MockConnection extends BaseConnection
     {
         return true;
     }
+
+    protected function _transBeginNested(): bool
+    {
+        return true;
+    }
+
+    protected function _transCommitNested(): bool
+    {
+        return true;
+    }
+
+    protected function _transRollbackNested(): bool
+    {
+        return true;
+    }
 }
