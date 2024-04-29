@@ -34,7 +34,7 @@ See :ref:`factories-loading-class` for details on the first parameter.
 CodeIgniter's Model
 *******************
 
-CodeIgniter does provide a model class that provides a few nice features, including:
+CodeIgniter does provide a model class that has a few nice features, including:
 
 - automatic database connection
 - basic CRUD methods
@@ -580,7 +580,7 @@ automatically, based on whether it finds an array key matching the **primary key
 The save method also can make working with custom class result objects much simpler by recognizing a non-simple
 object and grabbing its public and protected values into an array, which is then passed to the appropriate
 insert or update method. This allows you to work with Entity classes in a very clean way. Entity classes are
-simple classes that represent a single instance of an object type, like a user, a blog post, job, etc. This
+simple classes that represent a single instance of an object type, like a user, a blog post, a job, etc. This
 class is responsible for maintaining the business logic surrounding the object itself, like formatting
 elements in a certain way, etc. They shouldn't have any idea about how they are saved to the database. At their
 simplest, they might look like this:
