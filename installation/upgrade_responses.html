@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upgrade HTTP Responses &mdash; CodeIgniter 4.5.1 documentation</title>
+  <title>Upgrade Output Class &mdash; CodeIgniter 4.5.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -26,8 +26,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Upgrade Routing" href="upgrade_routing.html" />
-    <link rel="prev" title="Upgrade Pagination" href="upgrade_pagination.html" /> 
+    <link rel="next" title="Upgrade Pagination" href="upgrade_pagination.html" />
+    <link rel="prev" title="Upgrade Migrations" href="upgrade_migrations.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -280,7 +280,7 @@
           <li class="breadcrumb-item"><a href="index.html">Installation</a></li>
           <li class="breadcrumb-item"><a href="upgrading.html">Upgrading From a Previous Version</a></li>
           <li class="breadcrumb-item"><a href="upgrade_4xx.html">Upgrading from 3.x to 4.x</a></li>
-      <li class="breadcrumb-item active">Upgrade HTTP Responses</li>
+      <li class="breadcrumb-item active">Upgrade Output Class</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -289,8 +289,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="upgrade-http-responses">
-<h1>Upgrade HTTP Responses<a class="headerlink" href="#upgrade-http-responses" title="Permalink to this heading"></a></h1>
+  <section id="upgrade-output-class">
+<h1>Upgrade Output Class<a class="headerlink" href="#upgrade-output-class" title="Permalink to this heading"></a></h1>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#documentations" id="id1">Documentations</a></p></li>
@@ -314,13 +314,14 @@
 <section id="what-has-been-changed">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">What has been changed</a><a class="headerlink" href="#what-has-been-changed" title="Permalink to this heading"></a></h2>
 <ul class="simple">
-<li><p>The methods have been renamed</p></li>
+<li><p>The Output class has been changed to the Response class.</p></li>
+<li><p>The methods have been renamed.</p></li>
 </ul>
 </section>
 <section id="upgrade-guide">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
-<li><p>The methods in the HTTP Responses class are named slightly different. The most important change in the naming is the switch from underscored method names to camelCase. The method <code class="docutils literal notranslate"><span class="pre">set_content_type()</span></code> from version 3 is now named <code class="docutils literal notranslate"><span class="pre">setContentType()</span></code> and so on.</p></li>
+<li><p>The methods in the HTTP Response class are named slightly different. The most important change in the naming is the switch from underscored method names to camelCase. The method <code class="docutils literal notranslate"><span class="pre">set_content_type()</span></code> from version 3 is now named <code class="docutils literal notranslate"><span class="pre">setContentType()</span></code> and so on.</p></li>
 <li><p>In the most cases you have to change <code class="docutils literal notranslate"><span class="pre">$this-&gt;output</span></code> to <code class="docutils literal notranslate"><span class="pre">$this-&gt;response</span></code> followed by the method. You can find all methods in <a class="reference internal" href="../outgoing/response.html"><span class="doc">HTTP Responses</span></a>.</p></li>
 </ol>
 </section>
@@ -359,8 +360,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="upgrade_pagination.html" class="btn btn-neutral float-left" title="Upgrade Pagination" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="upgrade_routing.html" class="btn btn-neutral float-right" title="Upgrade Routing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="upgrade_migrations.html" class="btn btn-neutral float-left" title="Upgrade Migrations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upgrade_pagination.html" class="btn btn-neutral float-right" title="Upgrade Pagination" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
