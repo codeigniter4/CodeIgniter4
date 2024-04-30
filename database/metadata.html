@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Database Metadata &mdash; CodeIgniter 4.5.1 documentation</title>
+  <title>Getting Metadata &mdash; CodeIgniter 4.5.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -151,7 +151,7 @@
 <li class="toctree-l2"><a class="reference internal" href="helpers.html">Query Helper Methods</a></li>
 <li class="toctree-l2"><a class="reference internal" href="query_builder.html">Query Builder Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transactions.html">Transactions</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Getting MetaData</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Getting Metadata</a></li>
 <li class="toctree-l2"><a class="reference internal" href="call_function.html">Custom Function Calls</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events.html">Database Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utilities.html">Database Utilities</a></li>
@@ -278,7 +278,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Working with Databases</a></li>
-      <li class="breadcrumb-item active">Database Metadata</li>
+      <li class="breadcrumb-item active">Getting Metadata</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -287,17 +287,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="database-metadata">
-<h1>Database Metadata<a class="headerlink" href="#database-metadata" title="Permalink to this heading"></a></h1>
+  <section id="getting-metadata">
+<h1>Getting Metadata<a class="headerlink" href="#getting-metadata" title="Permalink to this heading"></a></h1>
 <nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#table-metadata" id="id1">Table MetaData</a></p>
+<li><p><a class="reference internal" href="#table-metadata" id="id1">Table Metadata</a></p>
 <ul>
 <li><p><a class="reference internal" href="#list-the-tables-in-your-database" id="id2">List the Tables in Your Database</a></p></li>
 <li><p><a class="reference internal" href="#determine-if-a-table-exists" id="id3">Determine If a Table Exists</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#field-metadata" id="id4">Field MetaData</a></p>
+<li><p><a class="reference internal" href="#field-metadata" id="id4">Field Metadata</a></p>
 <ul>
 <li><p><a class="reference internal" href="#list-the-fields-in-a-table" id="id5">List the Fields in a Table</a></p></li>
 <li><p><a class="reference internal" href="#determine-if-a-field-is-present-in-a-table" id="id6">Determine If a Field is Present in a Table</a></p></li>
@@ -308,7 +308,7 @@
 </ul>
 </nav>
 <section id="table-metadata">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Table MetaData</a><a class="headerlink" href="#table-metadata" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Table Metadata</a><a class="headerlink" href="#table-metadata" title="Permalink to this heading"></a></h2>
 <p>These functions let you fetch table information.</p>
 <section id="list-the-tables-in-your-database">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">List the Tables in Your Database</a><a class="headerlink" href="#list-the-tables-in-your-database" title="Permalink to this heading"></a></h3>
@@ -356,7 +356,7 @@ running an operation on it. Returns a boolean true/false. Usage example:</p>
 </section>
 </section>
 <section id="field-metadata">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Field MetaData</a><a class="headerlink" href="#field-metadata" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Field Metadata</a><a class="headerlink" href="#field-metadata" title="Permalink to this heading"></a></h2>
 <section id="list-the-fields-in-a-table">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">List the Fields in a Table</a><a class="headerlink" href="#list-the-fields-in-a-table" title="Permalink to this heading"></a></h3>
 <section id="db-getfieldnames">
@@ -415,9 +415,7 @@ performing an action. Returns a boolean true/false. Usage example:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Replace <em>field_name</em> with the name of the column you are looking
-for, and replace <em>table_name</em> with the name of the table you are
-looking for.</p>
+<p>Replace <em>field_name</em> and <em>table_name</em> with the column name and the table name you are looking for.</p>
 </div>
 </section>
 </section>
@@ -430,7 +428,7 @@ looking for.</p>
 the column type, max length, etc.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Not all databases provide meta-data.</p>
+<p>Not all databases provide metadata.</p>
 </div>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
