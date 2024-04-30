@@ -410,19 +410,4 @@ class Logger implements LoggerInterface
             'unknown',
         ];
     }
-
-    /**
-     * Cleans the paths of filenames by replacing APPPATH, SYSTEMPATH, FCPATH
-     * with the actual var. i.e.
-     *
-     *  /var/www/site/app/Controllers/Home.php
-     *      becomes:
-     *  APPPATH/Controllers/Home.php
-     *
-     * @deprecated Use dedicated `clean_path()` function.
-     */
-    protected function cleanFileNames(string $file): string
-    {
-        return clean_path($file);
-    }
 }
