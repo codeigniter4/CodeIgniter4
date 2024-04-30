@@ -1,4 +1,4 @@
 <?php
 
-$code   = $response->getStatusCode(); // 200
-$reason = $response->getReason(); // OK
+$code   = $response->getStatusCode();   // 200
+$reason = $response->getReasonPhrase(); // OK
