@@ -254,8 +254,8 @@ Upgrading Libraries
     upgrade_images
     upgrade_localization
     upgrade_migrations
-    upgrade_pagination
     upgrade_responses
+    upgrade_pagination
     upgrade_routing
     upgrade_security
     upgrade_sessions
