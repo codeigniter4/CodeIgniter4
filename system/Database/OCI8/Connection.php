@@ -27,6 +27,9 @@ use stdClass;
  */
 class Connection extends BaseConnection
 {
+    use SavepointsForNestedTransactions {
+        _savepointQueryDefault as _savePointQuery;
+    }
     /**
      * Database driver
      *
@@ -732,26 +735,5 @@ class Connection extends BaseConnection
     protected function getDriverFunctionPrefix(): string
     {
         return 'oci_';
-    }
-
-    public function transNested(bool $enabled): self
-    {
-        log_message('warning', 'Nested transactions are currently not supported by the SQLSRV driver.');
-        $this->enableNestedTransactions = false;
-    }
-
-    protected function _transBeginNested(): bool
-    {
-        throw new BadMethodCallException("Nested transactions for the {$this->DBDriver} are not implemented.");
-    }
-
-    protected function _transCommitNested(): bool
-    {
-        throw new BadMethodCallException("Nested transactions for the {$this->DBDriver} are not implemented.");
-    }
-
-    protected function _transRollbackNested(): bool
-    {
-        throw new BadMethodCallException("Nested transactions for the {$this->DBDriver} are not implemented.");
     }
 }
