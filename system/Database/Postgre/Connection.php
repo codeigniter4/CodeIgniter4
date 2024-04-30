@@ -30,7 +30,9 @@ use Stringable;
  */
 class Connection extends BaseConnection
 {
-    use SavepointsForNestedTransactions;
+    use SavepointsForNestedTransactions {
+        _savepointQueryDefault as _savePointQuery;
+    }
 
     /**
      * Database driver

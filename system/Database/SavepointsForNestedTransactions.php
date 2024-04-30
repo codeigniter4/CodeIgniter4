@@ -15,15 +15,22 @@ namespace CodeIgniter\Database;
 
 trait SavepointsForNestedTransactions
 {
+    private function _savepointQueryDefault(bool $create, bool $commit): string
+    {
+        return ($create ? '' : ($commit ? 'RELEASE' : 'ROLLBACK TO') . ' ') . 'SAVEPOINT';
+    }
+
+    abstract private function _savepointQuery(bool $begin, bool $commit): string;
+
     /**
      * Generates the SQL for managing savepoints, which
      * are used to support nested transactions with SQLite3
      */
-    private function _savepoint(int $savepoint, string $action = ''): string
+    private function _savepoint(int $savepoint, bool $create, bool $commit): string
     {
         $savepointIdentifier = $this->escapeIdentifier('__ci4_savepoint_' . $savepoint . '__');
 
-        return ($action === '' ? '' : $action . ' ') . 'SAVEPOINT ' . $savepointIdentifier;
+        return $this->_savepointQuery($create, $commit);
     }
 
     /**
@@ -31,7 +38,7 @@ trait SavepointsForNestedTransactions
      */
     protected function _transBeginNested(): bool
     {
-        return false !== $this->execute($this->_savepoint($this->transDepth + 1));
+        return false !== $this->execute($this->_savepoint($this->transDepth + 1, true));
     }
 
     /**
@@ -39,7 +46,7 @@ trait SavepointsForNestedTransactions
      */
     protected function _transCommitNested(): bool
     {
-        return false !== $this->execute($this->_savepoint($this->transDepth, 'RELEASE'));
+        return false !== $this->execute($this->_savepoint($this->transDepth, false, true));
     }
 
     /**
@@ -47,6 +54,6 @@ trait SavepointsForNestedTransactions
      */
     protected function _transRollbackNested(): bool
     {
-        return false !== $this->execute($this->_savepoint($this->transDepth, 'ROLLBACK TO'));
+        return false !== $this->execute($this->_savepoint($this->transDepth, false, true));
     }
 }
