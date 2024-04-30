@@ -209,7 +209,7 @@ creates is the Pascal case version of the filename.
 
   php spark make:migration <class> [options]
 
-You can use (``make:migration``) with the following options:
+You can use (make:migration) with the following options:
 
 - ``--namespace`` - Set root namespace. Default: ``APP_NAMESPACE``.
 - ``--suffix``    - Append the component title to the class name.
