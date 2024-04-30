@@ -36,6 +36,8 @@ Removed Deprecated Items
 
 - **API:** The deprecated ``failValidationError()`` method in ``CodeIgniter\API\ResponseTrait``
   has been removed. Use ``failValidationErrors()`` instead.
+- **HTTP:** The deprecated ``getReason()`` method in ``CodeIgniter\HTTP\Response``
+  and ``ResponseInterface`` has been removed. Use ``getReasonPhrase()`` instead.
 
 ************
 Enhancements
