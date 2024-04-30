@@ -67,7 +67,7 @@ This is an array of settings specific to the  ``File`` handler to determine how 
 $memcached
 ==========
 
-This is an array of servers that will be used when using the ``Memcache(d)`` handler.
+This is an array of servers that will be used when using the ``Memcached`` handler.
 
 $redis
 ======
@@ -155,7 +155,7 @@ Class Reference
 
         .. literalinclude:: caching/004.php
 
-        .. note:: The ``$raw`` parameter is only utilized by Memcache,
+        .. note:: The ``$raw`` parameter is only utilized by Memcached,
             in order to allow usage of ``increment()`` and ``decrement()``.
 
     .. php:method:: delete($key): bool
@@ -280,7 +280,7 @@ Drivers
 File-based Caching
 ==================
 
-Unlike caching from the Output Class, the driver file-based caching
+Unlike caching from the Output Class, the file-based caching 
 allows for pieces of view files to be cached. Use this with care, and
 make sure to benchmark your application, as a point can come where disk
 I/O will negate positive gains by caching. This requires a cache
