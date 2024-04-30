@@ -148,7 +148,7 @@
 <li class="toctree-l2"><a class="reference internal" href="connecting.html">Connecting to a Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="queries.html">Running Queries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="results.html">Generating Query Results</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html">Query Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Query Helper Methods</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Query Builder Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transactions.html">Transactions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metadata.html">Getting MetaData</a></li>
@@ -462,7 +462,7 @@ $query, which can be used to show the results:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Please visit the <a class="reference internal" href="results.html"><span class="doc">getResult*() method</span></a> page for a full
+<p>Please visit the <a class="reference internal" href="results.html#getresult"><span class="std std-ref">getResult()</span></a> method for a full
 discussion regarding result generation.</p>
 </section>
 <section id="builder-getcompiledselect">
@@ -477,8 +477,8 @@ the query. This method simply returns the SQL query as a string.</p>
 <span class="c1">// Prints string: SELECT * FROM mytable</span>
 </pre></div>
 </div>
-<p>The first parameter enables you to set whether or not the query builder query
-will be reset (by default it will be reset, just like when using <code class="docutils literal notranslate"><span class="pre">$builder-&gt;get()</span></code>):</p>
+<p>The parameter (false) in the first query below enables you to set whether or not the query builder
+will be reset (because the default value of the parameter is true, <code class="docutils literal notranslate"><span class="pre">getCompiledSelect(bool</span> <span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true)</span></code>, by default it will be reset just like when using <code class="docutils literal notranslate"><span class="pre">$builder-&gt;get()</span></code>):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCompiledSelect</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
@@ -493,7 +493,7 @@ will be reset (by default it will be reset, just like when using <code class="do
 </div>
 <p>The key thing to notice in the above example is that the second query did not
 utilize <code class="docutils literal notranslate"><span class="pre">limit(10,</span> <span class="pre">20)</span></code> but the generated SQL query has <code class="docutils literal notranslate"><span class="pre">LIMIT</span> <span class="pre">20,</span> <span class="pre">10</span></code>.
-The reason for this outcome is because the first parameter is set to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+The reason for this outcome is because the parameter in the first query is set to <code class="docutils literal notranslate"><span class="pre">false</span></code>, <code class="docutils literal notranslate"><span class="pre">limit(10,</span> <span class="pre">20)</span></code> remained in the second query.</p>
 </section>
 <section id="builder-getwhere">
 <h4>$builder-&gt;getWhere()<a class="headerlink" href="#builder-getwhere" title="Permalink to this heading"></a></h4>
@@ -576,7 +576,7 @@ include a second parameter to rename the resulting field.</p>
 <section id="builder-selectmin">
 <h4>$builder-&gt;selectMin()<a class="headerlink" href="#builder-selectmin" title="Permalink to this heading"></a></h4>
 <p>Writes a <strong>SELECT MIN(field)</strong> portion for your query. As with
-<code class="docutils literal notranslate"><span class="pre">selectMax()</span></code>, You can optionally include a second parameter to rename
+<code class="docutils literal notranslate"><span class="pre">selectMax()</span></code>, you can optionally include a second parameter to rename
 the resulting field.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -589,7 +589,7 @@ the resulting field.</p>
 <section id="builder-selectavg">
 <h4>$builder-&gt;selectAvg()<a class="headerlink" href="#builder-selectavg" title="Permalink to this heading"></a></h4>
 <p>Writes a <strong>SELECT AVG(field)</strong> portion for your query. As with
-<code class="docutils literal notranslate"><span class="pre">selectMax()</span></code>, You can optionally include a second parameter to rename
+<code class="docutils literal notranslate"><span class="pre">selectMax()</span></code>, you can optionally include a second parameter to rename
 the resulting field.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -602,7 +602,7 @@ the resulting field.</p>
 <section id="builder-selectsum">
 <h4>$builder-&gt;selectSum()<a class="headerlink" href="#builder-selectsum" title="Permalink to this heading"></a></h4>
 <p>Writes a <strong>SELECT SUM(field)</strong> portion for your query. As with
-<code class="docutils literal notranslate"><span class="pre">selectMax()</span></code>, You can optionally include a second parameter to rename
+<code class="docutils literal notranslate"><span class="pre">selectMax()</span></code>, you can optionally include a second parameter to rename
 the resulting field.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -615,7 +615,7 @@ the resulting field.</p>
 <section id="builder-selectcount">
 <h4>$builder-&gt;selectCount()<a class="headerlink" href="#builder-selectcount" title="Permalink to this heading"></a></h4>
 <p>Writes a <strong>SELECT COUNT(field)</strong> portion for your query. As with
-<code class="docutils literal notranslate"><span class="pre">selectMax()</span></code>, You can optionally include a second parameter to rename
+<code class="docutils literal notranslate"><span class="pre">selectMax()</span></code>, you can optionally include a second parameter to rename
 the resulting field.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>

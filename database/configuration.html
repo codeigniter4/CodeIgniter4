@@ -148,7 +148,7 @@
 <li class="toctree-l2"><a class="reference internal" href="connecting.html">Connecting to a Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="queries.html">Running Queries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="results.html">Generating Query Results</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html">Query Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Query Helper Methods</a></li>
 <li class="toctree-l2"><a class="reference internal" href="query_builder.html">Query Builder Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transactions.html">Transactions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metadata.html">Getting MetaData</a></li>
@@ -304,7 +304,7 @@
 </ul>
 </li>
 <li><p><a class="reference internal" href="#configuring-with-env-file" id="id7">Configuring with .env File</a></p></li>
-<li><p><a class="reference internal" href="#explanation-of-values" id="id8">Explanation of Values</a></p>
+<li><p><a class="reference internal" href="#description-of-values" id="id8">Description of Values</a></p>
 <ul>
 <li><p><a class="reference internal" href="#mysqli" id="id9">MySQLi</a></p>
 <ul>
@@ -368,12 +368,12 @@ prototype:</p>
 while connecting to specify a group name.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The default location of the SQLite3 database is in the <strong>writable</strong> folder.
-If you want to change the location, you must set the full path to the new folder.</p>
+<p>The default location of the SQLite3 database is the <strong>writable</strong> folder.
+If you want to change the location, you must set the full path to the new folder (e.g., ‘database’ =&gt; WRITEPATH . ‘db/database_name.db’).</p>
 </div>
 <section id="dsn">
 <h4><a class="toc-backref" href="#id3" role="doc-backlink">DSN</a><a class="headerlink" href="#dsn" title="Permalink to this heading"></a></h4>
-<p>Some database drivers (such as Postgre, OCI8) requires a full DSN string to connect.
+<p>Some database drivers (such as Postgre, OCI8) requires a full DSN (Data Source Name) string to connect.
 But if you do not specify a DSN string for a driver that requires it, CodeIgniter
 will try to build it with the rest of the provided settings.</p>
 <p>If you specify a DSN, you should use the <code class="docutils literal notranslate"><span class="pre">'DSN'</span></code> configuration setting, as if
@@ -387,7 +387,7 @@ you’re using the driver’s underlying native PHP extension, like this:</p>
 </div>
 <section id="dsn-in-universal-manner">
 <h5>DSN in Universal Manner<a class="headerlink" href="#dsn-in-universal-manner" title="Permalink to this heading"></a></h5>
-<p>You can also set a Data Source Name in universal manner (URL like). In that case DSNs must have this prototype:</p>
+<p>You can also set a DSN in universal manner (URL like). In that case DSNs must have this prototype:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>    <span class="k">public</span> <span class="k">array</span> <span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;DSN&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;DBDriver://username:password@hostname:port/database&#39;</span><span class="p">,</span>
         <span class="c1">// ...</span>
@@ -579,7 +579,7 @@ within the class’ constructor:</p>
 <span id="database-config-with-env-file"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Configuring with .env File</a><a class="headerlink" href="#configuring-with-env-file" title="Permalink to this heading"></a></h2>
 <p>You can also save your configuration values within a <strong>.env</strong> file with the current server’s
 database settings. You only need to enter the values that change from what is in the
-default group’s configuration settings. The values should be name following this format, where
+default group’s configuration settings. The values should follow this format, where
 <code class="docutils literal notranslate"><span class="pre">default</span></code> is the group name:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">username</span> <span class="o">=</span> <span class="s1">&#39;root&#39;</span><span class="p">;</span>
 <span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">password</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
@@ -620,11 +620,11 @@ values as a JSON string in your <strong>.env</strong> file:</p>
 </pre></div>
 </div>
 </section>
-<section id="explanation-of-values">
-<span id="database-config-explanation-of-values"></span><h2><a class="toc-backref" href="#id8" role="doc-backlink">Explanation of Values</a><a class="headerlink" href="#explanation-of-values" title="Permalink to this heading"></a></h2>
+<section id="description-of-values">
+<span id="database-config-explanation-of-values"></span><h2><a class="toc-backref" href="#id8" role="doc-backlink">Description of Values</a><a class="headerlink" href="#description-of-values" title="Permalink to this heading"></a></h2>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>Name Config</p></th>
+<tr class="row-odd"><th class="head"><p>Config Name</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
 </thead>
@@ -656,7 +656,7 @@ You can set a fully qualified classname to use your custom driver.
 Supported drivers: <code class="docutils literal notranslate"><span class="pre">MySQLi</span></code>, <code class="docutils literal notranslate"><span class="pre">Postgre</span></code>, <code class="docutils literal notranslate"><span class="pre">SQLite3</span></code>, <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code>, and <code class="docutils literal notranslate"><span class="pre">OCI8</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>DBPrefix</strong></p></td>
-<td><p>An optional table prefix which will added to the table name when running
+<td><p>An optional table prefix which will be added to the table name when running
 <a class="reference internal" href="query_builder.html"><span class="doc">Query Builder</span></a> queries. This permits multiple CodeIgniter
 installations to share one database.</p></td>
 </tr>
@@ -664,7 +664,7 @@ installations to share one database.</p></td>
 <td><p>true/false (boolean) - Whether to use a persistent connection.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>DBDebug</strong></p></td>
-<td><p>true/false (boolean) - Whether to throw exceptions or not when database errors occur.</p></td>
+<td><p>true/false (boolean) - Whether to throw exceptions when database errors occur.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>charset</strong></p></td>
 <td><p>The character set used in communicating with the database.</p></td>
@@ -681,12 +681,12 @@ customizable by the end user.</p></td>
 <td><p>(<code class="docutils literal notranslate"><span class="pre">Postgre</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> only) The database schema, default value varies by driver.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>encrypt</strong></p></td>
-<td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> only) Whether or not to use an encrypted connection.
+<td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> only) Whether to use an encrypted connection.
 See <a class="reference internal" href="#mysqli-encrypt"><span class="std std-ref">MySQLi encrypt</span></a> for <code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> settings.
 <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> driver accepts true/false.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>compress</strong></p></td>
-<td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only) Whether or not to use client compression.</p></td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only) Whether to use client compression.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>strictOn</strong></p></td>
 <td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only) true/false (boolean) - Whether to force “Strict Mode” connections, good for ensuring
@@ -696,7 +696,7 @@ strict SQL while developing an application.</p></td>
 <td><p>The database port number - Empty string <code class="docutils literal notranslate"><span class="pre">''</span></code> for default port (or dynamic port with <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code>).</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>foreignKeys</strong></p></td>
-<td><p>(<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only) true/false (boolean) - Whether or not to enable Foreign Key constraint.</p>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only) true/false (boolean) - Whether to enable Foreign Key constraint.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>SQLite3 Foreign Key constraint is disabled by default.
@@ -709,7 +709,7 @@ To enforce Foreign Key constraint, set this config item to true.</p>
 <td><p>(<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only) milliseconds (int) - Sleeps for a specified amount of time when a table is locked.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>numberNative</strong></p></td>
-<td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only) true/false (boolean) - Whether or not to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE.</p></td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only) true/false (boolean) - Whether to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>dateFormat</strong></p></td>
 <td><p>The default date/time formats as PHP’s <a class="reference external" href="https://www.php.net/manual/en/datetime.format.php">DateTime format</a>.
@@ -761,7 +761,7 @@ connection properly.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">ssl_ca</span></code>     - Path to the certificate authority file</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ssl_capath</span></code> - Path to a directory containing trusted CA certificates in PEM format</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ssl_cipher</span></code> - List of <em>allowed</em> ciphers to be used for the encryption, separated by colons (<code class="docutils literal notranslate"><span class="pre">:</span></code>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ssl_verify</span></code> - true/false; Whether to verify the server certificate or not</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ssl_verify</span></code> - true/false (boolean) - Whether to verify the server certificate or not</p></li>
 </ul>
 </section>
 </section>
