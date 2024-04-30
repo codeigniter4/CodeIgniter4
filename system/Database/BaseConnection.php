@@ -788,7 +788,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * If set to true, enables the use of nested transactions
      * If set to false (default), only the outermost transaction
-     * actually gets started and committed or rolled back.
+     * actually gets started and ended or rolled back.
      */
     public function transNested(bool $enable): self
     {
@@ -809,13 +809,6 @@ abstract class BaseConnection implements ConnectionInterface
         // The query() function will set this flag to FALSE in the event that a query failed
         if ($this->transStatus === false || $this->transFailure === true) {
             $this->transRollback();
-
-            // If we are NOT running in strict mode, we will reset
-            // the _trans_status flag so that subsequent groups of
-            // transactions will be permitted.
-            if ($this->transStrict === false) {
-                $this->transStatus = true;
-            }
 
             return false;
         }
@@ -886,13 +879,13 @@ abstract class BaseConnection implements ConnectionInterface
 
     private function _transEnd(bool $commit = false): bool
     {
-        $committed            = false;
+        $ended                = false;
         $transEndMethod       = $commit ? '_transCommit' : '_transRollback';
         $transEndNestedMethod = $transEndMethod . 'Nested';
 
         try {
             // if nested transactions are disabled and transactions are nested we only begin/commit/rollback the outermost ones
-            return $committed = match (true) {
+            return $ended = match (true) {
                 ! $this->transEnabled                                    => false,
                 $this->transDepth === 1                                  => $this->{$transEndMethod}(),
                 $this->enableNestedTransactions && $this->transDepth > 1 => $this->{$transEndNestedMethod}(),
@@ -900,8 +893,15 @@ abstract class BaseConnection implements ConnectionInterface
                 default                                                  => false,
             };
         } finally {
-            if ($committed) {
+            if ($ended) {
                 $this->transDepth = max(0, $this->transDepth - 1);
+
+                // If we are NOT running in strict mode, we will reset
+                // the _trans_status flag so that subsequent groups of
+                // transactions will be permitted.
+                if ($this->transStrict === false) {
+                    $this->transStatus = true;
+                }
             }
         }
     }
