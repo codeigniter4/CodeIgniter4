@@ -14,7 +14,7 @@ patterns. The database functions offer clear, simple syntax.
     Connecting to a Database <connecting>
     Running Queries <queries>
     Generating Query Results <results>
-    Query Helper Functions <helpers>
+    Query Helper Methods <helpers>
     Query Builder Class <query_builder>
     Transactions <transactions>
     Getting MetaData <metadata>

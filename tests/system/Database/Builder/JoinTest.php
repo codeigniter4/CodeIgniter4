@@ -81,6 +81,25 @@ final class JoinTest extends CIUnitTestCase
     }
 
     /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/8791
+     */
+    public function testJoinMultipleConditionsBetween(): void
+    {
+        $builder = new BaseBuilder('table1', $this->db);
+
+        $builder->join(
+            'leases',
+            'units.unit_id = leases.unit_id AND CURDATE() BETWEEN lease_start_date AND lease_exp_date',
+            'LEFT'
+        );
+
+        // @TODO Should be `... CURDATE() BETWEEN "lease_start_date" AND "lease_exp_date"`
+        $expectedSQL = 'SELECT * FROM "table1" LEFT JOIN "leases" ON "units"."unit_id" = "leases"."unit_id" AND CURDATE() BETWEEN lease_start_date AND lease_exp_date';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/3832
      */
     public function testJoinRawSql(): void

@@ -88,7 +88,7 @@ $query, which can be used to show the results:
 
 .. literalinclude:: query_builder/004.php
 
-Please visit the :doc:`getResult*() method <results>` page for a full
+Please visit the :ref:`getResult() <getresult>` method for a full
 discussion regarding result generation.
 
 $builder->getCompiledSelect()
@@ -101,14 +101,14 @@ Example:
 
 .. literalinclude:: query_builder/005.php
 
-The first parameter enables you to set whether or not the query builder query
-will be reset (by default it will be reset, just like when using ``$builder->get()``):
+The parameter (false) in the first query below enables you to set whether or not the query builder
+will be reset (because the default value of the parameter is true, ``getCompiledSelect(bool $reset = true)``, by default it will be reset just like when using ``$builder->get()``):
 
 .. literalinclude:: query_builder/006.php
 
 The key thing to notice in the above example is that the second query did not
 utilize ``limit(10, 20)`` but the generated SQL query has ``LIMIT 20, 10``.
-The reason for this outcome is because the first parameter is set to ``false``.
+The reason for this outcome is because the parameter in the first query is set to ``false``, ``limit(10, 20)`` remained in the second query.
 
 $builder->getWhere()
 --------------------
@@ -169,7 +169,7 @@ $builder->selectMin()
 ---------------------
 
 Writes a **SELECT MIN(field)** portion for your query. As with
-``selectMax()``, You can optionally include a second parameter to rename
+``selectMax()``, you can optionally include a second parameter to rename
 the resulting field.
 
 .. literalinclude:: query_builder/011.php
@@ -178,7 +178,7 @@ $builder->selectAvg()
 ---------------------
 
 Writes a **SELECT AVG(field)** portion for your query. As with
-``selectMax()``, You can optionally include a second parameter to rename
+``selectMax()``, you can optionally include a second parameter to rename
 the resulting field.
 
 .. literalinclude:: query_builder/012.php
@@ -187,7 +187,7 @@ $builder->selectSum()
 ---------------------
 
 Writes a **SELECT SUM(field)** portion for your query. As with
-``selectMax()``, You can optionally include a second parameter to rename
+``selectMax()``, you can optionally include a second parameter to rename
 the resulting field.
 
 .. literalinclude:: query_builder/013.php
@@ -196,7 +196,7 @@ $builder->selectCount()
 -----------------------
 
 Writes a **SELECT COUNT(field)** portion for your query. As with
-``selectMax()``, You can optionally include a second parameter to rename
+``selectMax()``, you can optionally include a second parameter to rename
 the resulting field.
 
 .. note:: This method is particularly helpful when used with ``groupBy()``. For

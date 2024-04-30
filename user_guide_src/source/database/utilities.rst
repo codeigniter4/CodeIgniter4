@@ -1,6 +1,6 @@
-######################
-Database Utility Class
-######################
+##################
+Database Utilities
+##################
 
 The Database Utility Class contains methods that help you manage your database.
 
