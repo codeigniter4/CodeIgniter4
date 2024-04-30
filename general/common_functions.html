@@ -477,14 +477,20 @@ If $data is an array, then it loops over it, escaping each ‘value’ of the ke
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$line</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The line of text to retrieve</p></li>
+<li><p><strong>$line</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The language filename and the key of the text to retrieve.</p></li>
 <li><p><strong>$args</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – An array of data to substitute for placeholders.</p></li>
-<li><p><strong>$locale</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Specify a different locale to be used instead of default one.</p></li>
+<li><p><strong>$locale</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Specify a different locale to be used instead of the current locale.</p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The text in the language file</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">list&lt;string&gt;|string</span></code></span></p>
+</dd>
 </dl>
-<p>Retrieves a locale-specific file based on an alias string.</p>
-<p>For more information, see the <a class="reference internal" href="../outgoing/localization.html"><span class="doc">Localization</span></a> page.</p>
+<p>Retrieves text from the language files.</p>
+<p>For more information, see the <a class="reference internal" href="../outgoing/localization.html#language-localization"><span class="std std-ref">Language Localization</span></a>.</p>
 </dd></dl>
 
 <dl class="php function">
