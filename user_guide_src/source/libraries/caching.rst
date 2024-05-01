@@ -280,8 +280,7 @@ Drivers
 File-based Caching
 ==================
 
-Unlike caching from the Output Class, the file-based caching 
-allows for pieces of view files to be cached. Use this with care, and
+File-based caching allows for pieces of view files to be cached. Use this with care, and
 make sure to benchmark your application, as a point can come where disk
 I/O will negate positive gains by caching. This requires a cache
 directory to be really writable by the application.
