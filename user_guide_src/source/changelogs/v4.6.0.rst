@@ -38,6 +38,9 @@ Removed Deprecated Items
   has been removed. Use ``failValidationErrors()`` instead.
 - **HTTP:** The deprecated ``getReason()`` method in ``CodeIgniter\HTTP\Response``
   and ``ResponseInterface`` has been removed. Use ``getReasonPhrase()`` instead.
+- **Logger:** The deprecated ``CodeIgniter\Log\Logger::cleanFilenames()`` and
+  ``CodeIgniter\Test\TestLogger::cleanup()`` have been removed. Use the
+  ``clean_path()`` function instead.
 
 ************
 Enhancements
