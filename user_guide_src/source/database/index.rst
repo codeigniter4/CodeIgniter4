@@ -17,7 +17,7 @@ patterns. The database functions offer clear, simple syntax.
     Query Helper Methods <helpers>
     Query Builder Class <query_builder>
     Transactions <transactions>
-    Getting MetaData <metadata>
+    Getting Metadata <metadata>
     Custom Function Calls <call_function>
     Database Events <events>
     Database Utilities <utilities>
