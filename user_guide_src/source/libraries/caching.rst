@@ -139,12 +139,11 @@ Class Reference
         Gets an item from the cache. If ``null`` was returned, this will invoke the callback
         and save the result. Either way, this will return the value.
 
-    .. php:method:: save(string $key, $data[, int $ttl = 60[, $raw = false]])
+    .. php:method:: save(string $key, $data[, int $ttl = 60])
 
         :param string $key: Cache item name
         :param mixed $data: the data to save
         :param int $ttl: Time To Live, in seconds (default 60)
-        :param bool $raw: Whether to store the raw value
         :returns: ``true`` on success, ``false`` on failure
         :rtype: bool
 
@@ -154,9 +153,6 @@ Class Reference
         Example:
 
         .. literalinclude:: caching/004.php
-
-        .. note:: The ``$raw`` parameter is only utilized by Memcached,
-            in order to allow usage of ``increment()`` and ``decrement()``.
 
     .. php:method:: delete($key): bool
 
