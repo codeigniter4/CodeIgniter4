@@ -153,4 +153,32 @@ final class FromTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/8697
+     */
+    public function testConstructorWithMultipleSegmentTableWithSQLSRV(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('database.dbo.table', $this->db);
+
+        $expectedSQL = 'SELECT * FROM "database"."dbo"."table"';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/8697
+     */
+    public function testConstructorWithMultipleSegmentTableWithoutDatabaseWithSQLSRV(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('dbo.table', $this->db);
+
+        $expectedSQL = 'SELECT * FROM "test"."dbo"."table"';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 }
