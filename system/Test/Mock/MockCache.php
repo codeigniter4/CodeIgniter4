@@ -92,11 +92,10 @@ class MockCache extends BaseHandler implements CacheInterface
      * @param string $key   Cache item name
      * @param mixed  $value the data to save
      * @param int    $ttl   Time To Live, in seconds (default 60)
-     * @param bool   $raw   Whether to store the raw value.
      *
      * @return bool
      */
-    public function save(string $key, $value, int $ttl = 60, bool $raw = false)
+    public function save(string $key, $value, int $ttl = 60)
     {
         if ($this->bypass) {
             return false;
