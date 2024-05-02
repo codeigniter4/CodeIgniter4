@@ -36,14 +36,14 @@ $handler
 ========
 
 The is the name of the handler that should be used as the primary handler when starting up the engine.
-Available names are: dummy, file, memcached, redis, predis, wincache.
+Available names are: dummy, file, memcached, redis, predis, wincache. This is commonly the **File** handler
+since the file system is always available, but may not fit more complex, multi-server setups.
 
 $backupHandler
 ==============
 
 In the case that the first choice ``$handler`` is not available, this is the next cache handler to load.
-This is commonly the ``File`` handler since the file system is always available, but may not fit
-more complex, multi-server setups.
+The default backup handler is **dummy**.
 
 $prefix
 =======
@@ -62,17 +62,17 @@ to projects and modules. This will replace the hard-coded value in a future rele
 $file
 =====
 
-This is an array of settings specific to the  ``File`` handler to determine how it should save the cache files.
+This is an array of settings specific to the  **File** handler to determine how it should save the cache files.
 
 $memcached
 ==========
 
-This is an array of servers that will be used when using the ``Memcached`` handler.
+This is an array of servers that will be used when using the **Memcached** handler.
 
 $redis
 ======
 
-The settings for the Redis server that you wish to use when using the ``Redis`` and ``Predis`` handler.
+The settings for the Redis server that you wish to use when using the **Redis** and **Predis** handler.
 
 ******************
 Command-Line Tools
