@@ -9007,139 +9007,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/View/Parser.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Parser\\:\\:applyFilters\\(\\) has parameter \\$filters with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Parser\\:\\:objectToArray\\(\\) has parameter \\$value with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Parser\\:\\:objectToArray\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Parser\\:\\:parse\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Parser\\:\\:parse\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Parser\\:\\:parsePair\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Parser\\:\\:parsePair\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Parser\\:\\:parseSingle\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Parser\\:\\:prepareReplacement\\(\\) has parameter \\$matches with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Parser\\:\\:render\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Parser\\:\\:renderString\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\View\\\\Parser\\:\\:replaceSingle\\(\\) has parameter \\$pattern with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Parser\\:\\:setData\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\View\\\\Parser\\:\\:\\$dataContexts type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\View\\\\Parser\\:\\:\\$noparseBlocks type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\RendererInterface\\:\\:render\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/RendererInterface.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\RendererInterface\\:\\:renderString\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/RendererInterface.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\RendererInterface\\:\\:setData\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/RendererInterface.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Table\\:\\:__construct\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Table.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Table\\:\\:_defaultTemplate\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Table.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Table\\:\\:_prepArgs\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Table.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Table\\:\\:_prepArgs\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Table.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Table\\:\\:_setFromArray\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Table.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Table\\:\\:generate\\(\\) has parameter \\$tableData with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Table.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Table\\:\\:makeColumns\\(\\) has parameter \\$array with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Table.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Table\\:\\:makeColumns\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Table.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Table\\:\\:setTemplate\\(\\) has parameter \\$template with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Table.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in an if condition, string\\|null given\\.$#',
@@ -9147,27 +9017,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/View/Table.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\View\\\\Table\\:\\:\\$footing type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Table.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\View\\\\Table\\:\\:\\$function type has no signature specified for callable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Table.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\View\\\\Table\\:\\:\\$heading type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Table.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\View\\\\Table\\:\\:\\$rows type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Table.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\View\\\\Table\\:\\:\\$template type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/Table.php',
 ];
@@ -9187,26 +9037,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/View/View.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\View\\:\\:render\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\View\\:\\:renderString\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\View\\:\\:setData\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\View\\\\View\\:\\:\\$data type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\View\\\\View\\:\\:\\$performanceData type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/View.php',
@@ -9218,11 +9048,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\View\\\\View\\:\\:\\$sections type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\View\\\\View\\:\\:\\$tempData type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/View.php',
 ];
@@ -15992,13 +15817,8 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/View/TableTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$array of method CodeIgniter\\\\View\\\\Table\\:\\:makeColumns\\(\\) expects array, string given\\.$#',
+	'message' => '#^Parameter \\#1 \\$array of method CodeIgniter\\\\View\\\\Table\\:\\:makeColumns\\(\\) expects array\\<int, string\\>, string given\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/tests/system/View/TableTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$template of method CodeIgniter\\\\View\\\\Table\\:\\:setTemplate\\(\\) expects array, string given\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/tests/system/View/TableTest.php',
 ];
 $ignoreErrors[] = [

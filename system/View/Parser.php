@@ -56,7 +56,7 @@ class Parser extends View
     /**
      * Stores extracted noparse blocks.
      *
-     * @var array
+     * @var list<string>
      */
     protected $noparseBlocks = [];
 
@@ -72,7 +72,7 @@ class Parser extends View
      * Stores the context for each data element
      * when set by `setData` so the context is respected.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $dataContexts = [];
 
@@ -99,6 +99,10 @@ class Parser extends View
      *
      * Parses pseudo-variables contained in the specified template view,
      * replacing them with any data that has already been set.
+     *
+     * @param array<string, mixed>|null $options Reserved for 3rd-party uses since
+     *                                           it might be needed to pass additional info
+     *                                           to other template engines.
      */
     public function render(string $view, ?array $options = null, ?bool $saveData = null): string
     {
@@ -159,6 +163,10 @@ class Parser extends View
      *
      * Parses pseudo-variables contained in the specified string,
      * replacing them with any data that has already been set.
+     *
+     * @param array<string, mixed>|null $options Reserved for 3rd-party uses since
+     *                                           it might be needed to pass additional info
+     *                                           to other template engines.
      */
     public function renderString(string $template, ?array $options = null, ?bool $saveData = null): string
     {
@@ -190,6 +198,7 @@ class Parser extends View
      * so that the variable is correctly handled within the
      * parsing itself, and contexts (including raw) are respected.
      *
+     * @param         array<string, mixed>                      $data
      * @param         non-empty-string|null                     $context The context to escape it for.
      *                                                                   If 'raw', no escaping will happen.
      * @phpstan-param null|'html'|'js'|'css'|'url'|'attr'|'raw' $context
@@ -222,7 +231,8 @@ class Parser extends View
      * Parses pseudo-variables contained in the specified template,
      * replacing them with the data in the second param
      *
-     * @param array $options Future options
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $options Future options
      */
     protected function parse(string $template, array $data = [], ?array $options = null): string
     {
@@ -266,6 +276,8 @@ class Parser extends View
 
     /**
      * Parse a single key/value, extracting it
+     *
+     * @return array<string, string>
      */
     protected function parseSingle(string $key, string $val): array
     {
@@ -280,6 +292,10 @@ class Parser extends View
      * Parse a tag pair
      *
      * Parses tag pairs: {some_tag} string... {/some_tag}
+     *
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, string>
      */
     protected function parsePair(string $variable, array $data, string $template): array
     {
@@ -533,6 +549,8 @@ class Parser extends View
 
     /**
      * Callback used during parse() to apply any filters to the value.
+     *
+     * @param list<string> $matches
      */
     protected function prepareReplacement(array $matches, string $replace, bool $escape = true): string
     {
@@ -586,6 +604,8 @@ class Parser extends View
     /**
      * Given a set of filters, will apply each of the filters in turn
      * to $replace, and return the modified string.
+     *
+     * @param list<string> $filters
      */
     protected function applyFilters(string $replace, array $filters): string
     {
@@ -708,9 +728,9 @@ class Parser extends View
      * Converts an object to an array, respecting any
      * toArray() methods on an object.
      *
-     * @param array|bool|float|int|object|string|null $value
+     * @param array<string, mixed>|bool|float|int|object|string|null $value
      *
-     * @return array|bool|float|int|string|null
+     * @return array<string, mixed>|bool|float|int|string|null
      */
     protected function objectToArray($value)
     {

@@ -34,14 +34,14 @@ class View implements RendererInterface
     /**
      * Saved Data.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $data = [];
 
     /**
      * Data for the variables that are available in the Views.
      *
-     * @var array|null
+     * @var array<string, mixed>|null
      */
     protected $tempData;
 
@@ -165,13 +165,13 @@ class View implements RendererInterface
      *  - cache      Number of seconds to cache for
      *  - cache_name Name to use for cache
      *
-     * @param string     $view     File name of the view source
-     * @param array|null $options  Reserved for 3rd-party uses since
-     *                             it might be needed to pass additional info
-     *                             to other template engines.
-     * @param bool|null  $saveData If true, saves data for subsequent calls,
-     *                             if false, cleans the data after displaying,
-     *                             if null, uses the config setting.
+     * @param string                    $view     File name of the view source
+     * @param array<string, mixed>|null $options  Reserved for 3rd-party uses since
+     *                                            it might be needed to pass additional info
+     *                                            to other template engines.
+     * @param bool|null                 $saveData If true, saves data for subsequent calls,
+     *                                            if false, cleans the data after displaying,
+     *                                            if null, uses the config setting.
      */
     public function render(string $view, ?array $options = null, ?bool $saveData = null): string
     {
@@ -306,13 +306,13 @@ class View implements RendererInterface
      * data that has already been set.
      * Cache does not apply, because there is no "key".
      *
-     * @param string     $view     The view contents
-     * @param array|null $options  Reserved for 3rd-party uses since
-     *                             it might be needed to pass additional info
-     *                             to other template engines.
-     * @param bool|null  $saveData If true, saves data for subsequent calls,
-     *                             if false, cleans the data after displaying,
-     *                             if null, uses the config setting.
+     * @param string                    $view     The view contents
+     * @param array<string, mixed>|null $options  Reserved for 3rd-party uses since
+     *                                            it might be needed to pass additional info
+     *                                            to other template engines.
+     * @param bool|null                 $saveData If true, saves data for subsequent calls,
+     *                                            if false, cleans the data after displaying,
+     *                                            if null, uses the config setting.
      */
     public function renderString(string $view, ?array $options = null, ?bool $saveData = null): string
     {
