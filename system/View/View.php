@@ -55,7 +55,7 @@ class View implements RendererInterface
     /**
      * Data for rendering including Caching and Debug Toolbar data.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $renderVars = [];
 
@@ -86,7 +86,7 @@ class View implements RendererInterface
      * Cache stats about our performance here,
      * when CI_DEBUG = true
      *
-     * @var array
+     * @var list<float|string>
      */
     protected $performanceData = [];
 
@@ -120,7 +120,7 @@ class View implements RendererInterface
     /**
      * Holds the sections and their data.
      *
-     * @var array
+     * @var array<string, list<string>>
      */
     protected $sections = [];
 
@@ -393,6 +393,8 @@ class View implements RendererInterface
 
     /**
      * Returns the current data that will be displayed in the view.
+     *
+     * @return array<string, mixed>
      */
     public function getData(): array
     {
@@ -477,7 +479,8 @@ class View implements RendererInterface
     /**
      * Used within layout views to include additional views.
      *
-     * @param bool $saveData
+     * @param array<string, mixed>|null $options
+     * @param bool                      $saveData
      */
     public function include(string $view, ?array $options = null, $saveData = true): string
     {
@@ -487,6 +490,8 @@ class View implements RendererInterface
     /**
      * Returns the performance data that might have been collected
      * during the execution. Used primarily in the Debug Toolbar.
+     *
+     * @return list<float|string>
      */
     public function getPerformanceData(): array
     {

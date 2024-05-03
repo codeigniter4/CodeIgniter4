@@ -8937,21 +8937,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/View/Cell.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Cell\\:\\:prepareParams\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Cell.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Cell\\:\\:prepareParams\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Cell.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Cell\\:\\:render\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Cell.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\View\\\\Cell\\:\\:renderCell\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/Cell.php',
@@ -8997,11 +8982,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/View/Cells/Cell.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\Filters\\:\\:default\\(\\) has parameter \\$value with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Filters.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\View\\\\Parser\\:\\:addPlugin\\(\\) has parameter \\$callback with no signature specified for callable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/Parser.php',
@@ -9020,36 +9000,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\View\\\\Table\\:\\:\\$function type has no signature specified for callable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/Table.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\View\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\View\\:\\:getPerformanceData\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\View\\\\View\\:\\:include\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\View\\\\View\\:\\:\\$performanceData type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\View\\\\View\\:\\:\\$renderVars type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\View\\\\View\\:\\:\\$sections type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/View.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
@@ -15690,11 +15640,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Validation\\\\ValidationTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$params of method CodeIgniter\\\\View\\\\Cell\\:\\:prepareParams\\(\\) expects array\\|string\\|null, float given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/View/CellTest.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\View\\\\DecoratorsTest\\:\\:\\$loader \\(CodeIgniter\\\\Autoloader\\\\FileLocator\\) does not accept CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\.$#',
