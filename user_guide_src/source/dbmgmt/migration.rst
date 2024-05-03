@@ -121,7 +121,7 @@ Migrates a database group with all available migrations:
 
     php spark migrate
 
-You can use (migrate) with the following options:
+You can use ``migrate`` with the following options:
 
 - ``-g`` - to specify database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.
 - ``-n`` - to choose namespace, otherwise ``App`` namespace will be used.
@@ -145,8 +145,8 @@ When using the ``--all`` option, it will scan through all namespaces attempting 
 not been run. These will all be collected and then sorted as a group by date created. This should help
 to minimize any potential conflicts between the main application and any modules.
 
-rollback
-========
+migrate:rollback
+================
 
 Rolls back all migrations to a blank slate, effectively migration 0:
 
@@ -154,13 +154,13 @@ Rolls back all migrations to a blank slate, effectively migration 0:
 
   php spark migrate:rollback
 
-You can use (rollback) with the following options:
+You can use ``migrate:rollback`` with the following options:
 
 - ``-b`` - to choose a batch: natural numbers specify the batch.
 - ``-f`` - to force a bypass confirmation question, it is only asked in a production environment.
 
-refresh
-=======
+migrate:refresh
+===============
 
 Refreshes the database state by first rolling back all migrations, and then migrating all:
 
@@ -168,15 +168,15 @@ Refreshes the database state by first rolling back all migrations, and then migr
 
   php spark migrate:refresh
 
-You can use (refresh) with the following options:
+You can use ``migrate:refresh`` with the following options:
 
 - ``-g`` - to specify database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.
 - ``-n`` - to choose namespace, otherwise ``App`` namespace will be used.
 - ``--all`` - to refresh all namespaces.
 - ``-f`` - to force a bypass confirmation question, it is only asked in a production environment.
 
-status
-======
+migrate:status
+==============
 
 Displays a list of all migrations and the date and time they ran, or '--' if they have not been run:
 
@@ -194,7 +194,7 @@ Displays a list of all migrations and the date and time they ran, or '--' if the
   | CodeIgniter\Settings | 2021-11-14-143905 | AddContextColumn      | default | 2022-04-06 01:23:08 | 1     |
   +----------------------+-------------------+-----------------------+---------+---------------------+-------+
 
-You can use (status) with the following options:
+You can use ``migrate:status`` with the following options:
 
 - ``-g`` - to specify database group. If specified, only migrations for the specified database group will be checked. If not specified, all migrations will be checked.
 
@@ -209,7 +209,7 @@ creates is the Pascal case version of the filename.
 
   php spark make:migration <class> [options]
 
-You can use (``make:migration``) with the following options:
+You can use ``make:migration`` with the following options:
 
 - ``--namespace`` - Set root namespace. Default: ``APP_NAMESPACE``.
 - ``--suffix``    - Append the component title to the class name.
