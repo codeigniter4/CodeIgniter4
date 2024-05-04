@@ -35,6 +35,7 @@ use Throwable;
  * @property-read string     $DSN
  * @property-read array|bool $encrypt
  * @property-read array      $failover
+ * @property-read string     $application_name
  * @property-read string     $hostname
  * @property-read Query      $lastQuery
  * @property-read string     $password
@@ -194,7 +195,14 @@ abstract class BaseConnection implements ConnectionInterface
      * @var array
      */
     protected $failover = [];
-
+    
+    /**
+     * Application name for Postgres DSN.
+     *
+     * @var array
+     */
+    protected $application_name = [];
+    
     /**
      * The last query object that was executed
      * on this connection.
