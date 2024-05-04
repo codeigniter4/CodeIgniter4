@@ -542,7 +542,9 @@ class Connection extends BaseConnection
                 $this->DSN .= "{$key}='{$this->{$key}}' ";
             }
         }
-
+        if ($this->application_name !== '') {
+            $this->DSN .= "options='--application_name={$this->application_name}' ";
+        }
         $this->DSN = rtrim($this->DSN);
     }
 
