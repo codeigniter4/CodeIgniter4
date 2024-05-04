@@ -256,7 +256,7 @@ Setting              Options/Types                         Default   Description
 **$domain**          ``string``                            ``''``    The domain property of the cookie.with trailing slash.
 **$secure**          ``true/false``                        ``false`` If to be sent over secure HTTPS.
 **$httponly**        ``true/false``                        ``true``  If not accessible to JavaScript.
-**$samesite**        ``Lax|None|Strict``                   ``Lax``   The SameSite attribute.
+**$samesite**        ``Lax``/``None``/``Strict``           ``Lax``   The SameSite attribute.
 **$raw**             ``true/false``                        ``false`` If to be dispatched using ``setrawcookie()``.
 ==================== ===================================== ========= =====================================================
 
