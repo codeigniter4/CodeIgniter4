@@ -257,7 +257,7 @@ Setting              Options/Types                         Default   Description
 **$secure**          ``true/false``                        ``false`` If to be sent over secure HTTPS.
 **$httponly**        ``true/false``                        ``true``  If not accessible to JavaScript.
 **$samesite**        ``Lax``/``None``/``Strict``           ``Lax``   The SameSite attribute.
-**$raw**             ``true/false``                        ``false`` If to be dispatched using ``setrawcookie()``.
+**$raw**             ``true``/``false``                    ``false`` If to be dispatched using ``setrawcookie()``.
 ==================== ===================================== ========= =====================================================
 
 In runtime, you can manually supply a new default using the ``Cookie::setDefaults()`` method.
