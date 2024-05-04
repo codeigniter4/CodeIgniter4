@@ -254,8 +254,8 @@ Setting              Options/Types                         Default   Description
 **$expires**         ``DateTimeInterface|string|int``      ``0``     The expires timestamp.
 **$path**            ``string``                            ``/``     The path property of the cookie.
 **$domain**          ``string``                            ``''``    The domain property of the cookie.with trailing slash.
-**$secure**          ``true/false``                        ``false`` If to be sent over secure HTTPS.
-**$httponly**        ``true/false``                        ``true``  If not accessible to JavaScript.
+**$secure**          ``true``/``false``                    ``false`` If to be sent over secure HTTPS.
+**$httponly**        ``true``/``false``                    ``true``  If not accessible to JavaScript.
 **$samesite**        ``Lax``/``None``/``Strict``           ``Lax``   The SameSite attribute.
 **$raw**             ``true``/``false``                    ``false`` If to be dispatched using ``setrawcookie()``.
 ==================== ===================================== ========= =====================================================
