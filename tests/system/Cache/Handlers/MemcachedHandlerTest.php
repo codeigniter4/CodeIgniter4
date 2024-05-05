@@ -13,16 +13,16 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 use Exception;
 
 /**
- * @group CacheLive
- *
  * @internal
  */
+#[Group('CacheLive')]
 final class MemcachedHandlerTest extends AbstractHandlerTestCase
 {
     private Cache $config;

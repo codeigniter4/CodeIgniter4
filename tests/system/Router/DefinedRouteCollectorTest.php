@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Router;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -21,9 +22,8 @@ use Config\Routing;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class DefinedRouteCollectorTest extends CIUnitTestCase
 {
     private function createRouteCollection(array $config = [], $moduleConfig = null): RouteCollection

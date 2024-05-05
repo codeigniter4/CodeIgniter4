@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -30,9 +31,8 @@ use Config\Services;
  *   https://github.com/asm89/stack-cors/blob/b6920bd8996449400ac976e083b55fb45f035467/tests/CorsTest.php
  *
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class CorsTest extends CIUnitTestCase
 {
     private Cors $cors;

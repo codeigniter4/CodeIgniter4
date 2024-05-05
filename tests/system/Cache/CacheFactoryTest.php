@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\Cache\Handlers\DummyHandler;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -20,9 +21,8 @@ use Config\Cache;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class CacheFactoryTest extends CIUnitTestCase
 {
     private static string $directory = 'CacheFactory';

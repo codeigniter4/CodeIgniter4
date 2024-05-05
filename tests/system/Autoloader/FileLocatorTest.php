@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Autoloader;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\HTTP\Header;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
@@ -21,9 +22,9 @@ use Config\Modules;
 /**
  * @internal
  *
- * @group Others
  * @no-final
  */
+#[Group('Others')]
 class FileLocatorTest extends CIUnitTestCase
 {
     protected FileLocatorInterface $locator;

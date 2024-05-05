@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\API;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Format\FormatterInterface;
 use CodeIgniter\Format\JSONFormatter;
@@ -28,9 +29,8 @@ use stdClass;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ResponseTraitTest extends CIUnitTestCase
 {
     private ?MockIncomingRequest $request  = null;

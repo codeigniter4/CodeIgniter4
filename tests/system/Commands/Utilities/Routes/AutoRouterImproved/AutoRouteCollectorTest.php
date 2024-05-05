@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Filters;
@@ -20,9 +21,8 @@ use Config\Services;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class AutoRouteCollectorTest extends CIUnitTestCase
 {
     protected function setUp(): void

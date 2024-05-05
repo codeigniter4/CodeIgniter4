@@ -13,6 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\BaseService;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\CLIRequest;
@@ -46,12 +51,10 @@ use stdClass;
 use Tests\Support\Models\JobModel;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group SeparateProcess
  */
+#[BackupGlobals(true)]
+#[Group('SeparateProcess')]
 final class CommonFunctionsTest extends CIUnitTestCase
 {
     private ?App $config = null;
@@ -269,10 +272,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame($data, esc($data, 'raw'));
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testSessionInstance(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -284,10 +285,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertInstanceOf(Session::class, session());
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testSessionVariable(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -301,10 +300,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame('Hi there', session('notbogus'));
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testSessionVariableNotThere(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -429,10 +426,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertInstanceOf(JobModel::class, model(JobModel::class));
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testOldInput(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -468,10 +463,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame('fritz', old('zibble'));
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testOldInputSerializeData(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -507,10 +500,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
-     *
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
      */
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testOldInputArray(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -628,10 +620,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertTrue($answer1->hasCookie('login_time'));
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testTrace(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -655,10 +645,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertStringContainsString('<h1>is_not</h1>', view('\Tests\Support\View\Views\simples'));
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testForceHttpsNullRequestAndResponse(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -709,11 +697,10 @@ final class CommonFunctionsTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideCleanPathActuallyCleaningThePaths
-     *
      * @param mixed $input
      * @param mixed $expected
      */
+    #[DataProvider('provideCleanPathActuallyCleaningThePaths')]
     public function testCleanPathActuallyCleaningThePaths($input, $expected): void
     {
         $this->assertSame($expected, clean_path($input));
@@ -774,10 +761,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         Kint::$cli_detection = $cliDetection;
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testTraceWithCSP(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.

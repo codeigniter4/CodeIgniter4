@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Images;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Handlers\BaseHandler;
@@ -30,9 +31,8 @@ use org\bovigo\vfs\vfsStreamDirectory;
  * Was unable to test fontPath & related logic.
  *
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class GDHandlerTest extends CIUnitTestCase
 {
     private vfsStreamDirectory $root;

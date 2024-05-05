@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers\Array;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
- * @group Others
- *
  * @internal
  */
+#[Group('Others')]
 final class ArrayHelperRecursiveDiffTest extends CIUnitTestCase
 {
     private array $compareWith;

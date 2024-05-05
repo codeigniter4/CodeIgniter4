@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -24,10 +26,9 @@ use Config\Routing;
 use Config\Services;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class FeatureTestTraitTest extends CIUnitTestCase
 {
     use FeatureTestTrait;
@@ -359,12 +360,11 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideOpenCliRoutesFromHttpGot404
-     *
      * @param mixed $from
      * @param mixed $to
      * @param mixed $httpGet
      */
+    #[DataProvider('provideOpenCliRoutesFromHttpGot404')]
     public function testOpenCliRoutesFromHttpGot404($from, $to, $httpGet): void
     {
         $this->expectException(PageNotFoundException::class);

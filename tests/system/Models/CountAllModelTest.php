@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\UserModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class CountAllModelTest extends LiveModelTestCase
 {
     /**

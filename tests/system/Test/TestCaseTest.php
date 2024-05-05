@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Events\Events;
 use Tests\Support\Test\TestForReflectionHelper;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class TestCaseTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

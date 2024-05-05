@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Builder;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\SQLSRV\Connection as SQLSRVConnection;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -20,9 +21,8 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class UnionTest extends CIUnitTestCase
 {
     /**

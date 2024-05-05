@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Database as DatabaseFactory;
 use CodeIgniter\Database\OCI8\Connection as OCI8Connection;
@@ -22,10 +23,9 @@ use CodeIgniter\Test\StreamFilterTrait;
 use Config\Database;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class CreateDatabaseTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

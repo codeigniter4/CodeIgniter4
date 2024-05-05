@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP\Files;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
@@ -20,9 +21,8 @@ use org\bovigo\vfs\vfsStreamDirectory;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FileMovingTest extends CIUnitTestCase
 {
     private ?vfsStreamDirectory $root;

@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cookie;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Test\CIUnitTestCase;
 use DateTimeImmutable;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class CookieStoreTest extends CIUnitTestCase
 {
     private array $defaults;

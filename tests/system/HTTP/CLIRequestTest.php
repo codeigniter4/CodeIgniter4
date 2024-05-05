@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
@@ -20,12 +22,10 @@ use Config\App;
  * This should be the same as RequestTest,
  * except also testing the methods added by CLIRequest
  *
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class CLIRequestTest extends CIUnitTestCase
 {
     private CLIRequest $request;

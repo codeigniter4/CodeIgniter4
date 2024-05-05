@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use Error;
 use stdClass;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class HeaderTest extends CIUnitTestCase
 {
     public function testHeaderStoresBasics(): void

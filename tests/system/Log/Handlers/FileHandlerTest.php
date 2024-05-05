@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Log\Handlers;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockFileLogger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
@@ -22,9 +23,8 @@ use Tests\Support\Log\Handlers\TestHandler;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FileHandlerTest extends CIUnitTestCase
 {
     private vfsStreamDirectory $root;

@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class RawSqlTest extends CIUnitTestCase
 {
     public function testCanConvertToString(): void

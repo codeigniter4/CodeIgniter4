@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Forge;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\Forge;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -20,9 +21,8 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class CreateTableTest extends CIUnitTestCase
 {
     public function testCreateTableWithDefaultRawSql(): void

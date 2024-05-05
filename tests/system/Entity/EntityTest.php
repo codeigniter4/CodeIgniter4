@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity;
 
+use PHPUnit\Framework\Attributes\Group;
 use Closure;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\HTTP\URI;
@@ -29,9 +30,8 @@ use Tests\Support\SomeEntity;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class EntityTest extends CIUnitTestCase
 {
     use ReflectionHelper;

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Router;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -29,9 +31,8 @@ use Tests\Support\Filters\Customfilter;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class RouterTest extends CIUnitTestCase
 {
     private RouteCollection $collection;
@@ -913,9 +914,7 @@ final class RouterTest extends CIUnitTestCase
         $this->assertSame('', $router->directory());
     }
 
-    /**
-     * @dataProvider provideRedirectRoute
-     */
+    #[DataProvider('provideRedirectRoute')]
     public function testRedirectRoute(
         string $route,
         string $redirectFrom,

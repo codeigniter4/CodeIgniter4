@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Session;
 
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Session\Handlers\FileHandler;
@@ -24,14 +27,11 @@ use Config\Logger as LoggerConfig;
 use Config\Session as SessionConfig;
 
 /**
- * @runTestsInSeparateProcesses
- *
- * @preserveGlobalState disabled
- *
  * @internal
- *
- * @group SeparateProcess
  */
+#[RunTestsInSeparateProcesses]
+#[PreserveGlobalState(false)]
+#[Group('SeparateProcess')]
 final class SessionTest extends CIUnitTestCase
 {
     protected function setUp(): void

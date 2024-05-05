@@ -1,11 +1,5 @@
 <?php declare(strict_types = 1);
 
-$ignoreErrors = [];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, array\\<int, string\\>\\> of property Config\\\\Filters\\:\\:\\$methods is not the same as PHPDoc type array of overridden property CodeIgniter\\\\Config\\\\Filters\\:\\:\\$methods\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Filters.php',
-];
 $ignoreErrors[] = [
 	'message' => '#^PHPDoc type array\\<string, array\\<string, array\\<int, string\\>\\>\\> of property Config\\\\Filters\\:\\:\\$filters is not the same as PHPDoc type array of overridden property CodeIgniter\\\\Config\\\\Filters\\:\\:\\$filters\\.$#',
 	'count' => 1,
@@ -1148,11 +1142,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Config\\\\Filters\\:\\:\\$filters type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Filters.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Config\\\\Filters\\:\\:\\$methods type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/Filters.php',
 ];

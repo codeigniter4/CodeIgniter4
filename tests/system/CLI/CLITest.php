@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\PhpStreamWrapper;
 use CodeIgniter\Test\StreamFilterTrait;
@@ -21,9 +23,8 @@ use RuntimeException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class CLITest extends CIUnitTestCase
 {
     use StreamFilterTrait;
@@ -452,12 +453,11 @@ final class CLITest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideTable
-     *
      * @param array $tbody
      * @param array $thead
      * @param array $expected
      */
+    #[DataProvider('provideTable')]
     public function testTable($tbody, $thead, $expected): void
     {
         CLI::table($tbody, $thead);

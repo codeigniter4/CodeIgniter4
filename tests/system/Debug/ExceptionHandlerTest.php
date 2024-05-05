@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Debug;
 
+use PHPUnit\Framework\Attributes\Group;
 use App\Controllers\Home;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -24,9 +25,8 @@ use RuntimeException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ExceptionHandlerTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -24,9 +26,8 @@ use DateTimeZone;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ResponseTest extends CIUnitTestCase
 {
     private array $server;
@@ -270,9 +271,7 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame(302, $response->getStatusCode());
     }
 
-    /**
-     * @dataProvider provideRedirect
-     */
+    #[DataProvider('provideRedirect')]
     public function testRedirect(
         string $server,
         string $protocol,
@@ -316,9 +315,7 @@ final class ResponseTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideRedirectWithIIS
-     */
+    #[DataProvider('provideRedirectWithIIS')]
     public function testRedirectWithIIS(
         string $protocol,
         string $method,

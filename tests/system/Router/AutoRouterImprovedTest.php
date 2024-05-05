@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Router;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -28,9 +30,8 @@ use Config\Routing;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class AutoRouterImprovedTest extends CIUnitTestCase
 {
     private RouteCollection $collection;
@@ -458,9 +459,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame(['a-b'], $params);
     }
 
-    /**
-     * @dataProvider provideTranslateUriToCamelCase
-     */
+    #[DataProvider('provideTranslateUriToCamelCase')]
     public function testTranslateUriToCamelCase(
         string $uri,
         ?string $expDirectory,
@@ -532,9 +531,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideRejectTranslateUriToCamelCase
-     */
+    #[DataProvider('provideRejectTranslateUriToCamelCase')]
     public function testRejectTranslateUriToCamelCase(string $uri, string $expMsg): void
     {
         $this->expectException(PageNotFoundException::class);

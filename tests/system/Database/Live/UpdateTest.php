@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge;
 use CodeIgniter\Database\RawSql;
@@ -22,10 +24,9 @@ use Config\Database;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class UpdateTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
@@ -113,9 +114,7 @@ final class UpdateTest extends CIUnitTestCase
         }
     }
 
-    /**
-     * @dataProvider provideUpdateBatch
-     */
+    #[DataProvider('provideUpdateBatch')]
     public function testUpdateBatch(string $constraints, array $data, array $expected): void
     {
         $table = 'type_test';

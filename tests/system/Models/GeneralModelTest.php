@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
+use PHPUnit\Framework\Attributes\Group;
 use BadMethodCallException;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Model;
@@ -25,9 +26,8 @@ use Tests\Support\Models\UserModel;
  * features without requiring a database connection.
  *
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class GeneralModelTest extends CIUnitTestCase
 {
     /**

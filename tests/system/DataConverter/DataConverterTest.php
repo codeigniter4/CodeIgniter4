@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\DataConverter;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\I18n\Time;
@@ -23,9 +25,8 @@ use Tests\Support\Entity\User;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class DataConverterTest extends CIUnitTestCase
 {
     public function testInstantiate(): void
@@ -39,9 +40,7 @@ final class DataConverterTest extends CIUnitTestCase
         $this->assertInstanceOf(DataConverter::class, $converter);
     }
 
-    /**
-     * @dataProvider provideConvertDataFromDB
-     */
+    #[DataProvider('provideConvertDataFromDB')]
     public function testConvertDataFromDB(array $types, array $dbData, array $expected): void
     {
         $converter = $this->createDataConverter($types);
@@ -51,9 +50,7 @@ final class DataConverterTest extends CIUnitTestCase
         $this->assertSame($expected, $data);
     }
 
-    /**
-     * @dataProvider provideConvertDataToDB
-     */
+    #[DataProvider('provideConvertDataToDB')]
     public function testConvertDataToDB(array $types, array $phpData, array $expected): void
     {
         $converter = $this->createDataConverter($types);

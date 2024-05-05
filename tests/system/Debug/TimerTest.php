@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Debug;
 
+use PHPUnit\Framework\Attributes\Group;
 use ArgumentCountError;
 use CodeIgniter\Test\CIUnitTestCase;
 use RuntimeException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class TimerTest extends CIUnitTestCase
 {
     /**

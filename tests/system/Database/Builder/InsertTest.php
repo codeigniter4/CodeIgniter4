@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Builder;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Database\RawSql;
@@ -22,9 +23,8 @@ use InvalidArgumentException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class InsertTest extends CIUnitTestCase
 {
     /**

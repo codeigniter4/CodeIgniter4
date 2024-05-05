@@ -40,7 +40,8 @@ $overrides = [
         'leading_backslash_in_global_namespace' => true,
     ],
     // for updating to coding-standard
-    'modernize_strpos' => true,
+    'modernize_strpos'    => true,
+    'php_unit_attributes' => true,
 ];
 
 $options = [

@@ -13,13 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class InflectorHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -261,9 +262,7 @@ final class InflectorHelperTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideOrdinal
-     */
+    #[DataProvider('provideOrdinal')]
     public function testOrdinal(string $suffix, int $number): void
     {
         $this->assertSame($suffix, ordinal($number));

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity\Entity;
@@ -31,10 +33,9 @@ use Tests\Support\Models\ValidModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class UpdateModelTest extends LiveModelTestCase
 {
     public function testSetWorksWithUpdate(): void
@@ -552,10 +553,9 @@ final class UpdateModelTest extends LiveModelTestCase
     }
 
     /**
-     * @dataProvider provideUpdateThrowDatabaseExceptionWithoutWhereClause
-     *
      * @param false|null $id
      */
+    #[DataProvider('provideUpdateThrowDatabaseExceptionWithoutWhereClause')]
     public function testUpdateThrowDatabaseExceptionWithoutWhereClause($id, string $exception, string $exceptionMessage): void
     {
         $this->expectException($exception);

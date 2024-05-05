@@ -13,14 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Session\Handlers\Database;
 
+use PHPUnit\Framework\Attributes\Group;
 use Config\Database as DatabaseConfig;
 use Config\Session as SessionConfig;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class MySQLiHandlerTest extends AbstractHandlerTestCase
 {
     protected function setUp(): void

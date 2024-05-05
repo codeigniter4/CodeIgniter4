@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers\URLHelper;
 
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\CLIRequest;
@@ -24,12 +27,10 @@ use Config\App;
  * site_url() these functions are tested
  * simultaneously.
  *
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class SiteUrlCliTest extends CIUnitTestCase
 {
     private App $config;
@@ -71,9 +72,8 @@ final class SiteUrlCliTest extends CIUnitTestCase
      * @param string      $path
      * @param string      $expectedSiteUrl
      * @param string      $expectedBaseUrl
-     *
-     * @dataProvider provideUrls
      */
+    #[DataProvider('provideUrls')]
     public function testUrls(
         $baseURL,
         $indexPage,
