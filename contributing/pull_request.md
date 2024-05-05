@@ -203,7 +203,7 @@ working on your contribution.
 All bug fixes should be sent to the __"develop"__ branch, this is where the next
 bug fix version will be developed.
 
-PRs with any enhancement should be sent to next minor version branch, e.g. __"4.5"__
+PRs with any enhancement should be sent to next minor version branch, e.g. __"4.6"__
 
 The __"master"__ branch will always contain the latest stable version and is kept
 clean so a "hotfix" (e.g. an emergency security patch) can be applied to the
@@ -304,7 +304,7 @@ GitHub means "making a copy of that repo to your account" and "cloning" means
    - If your PR is for bug fixes:
       - `> git switch develop`
       - `> git switch -c <new-branch-name>`
-   - If your PR has any enhancement, create new branch from next minor version branch, e.g. __"4.5"__:
+   - If your PR has any enhancement, create new branch from next minor version branch, e.g. __"4.6"__:
       - `> git switch <next-minor-version-branch>`
       - `> git switch -c <new-branch-name>`
 7. Fix existing bugs on the [Issue tracker](https://github.com/codeigniter4/CodeIgniter4/issues) after confirming that no one
