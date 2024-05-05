@@ -151,7 +151,7 @@ class Email
      *
      * @var string
      */
-    public $charset = 'utf-8';
+    public $charset = 'UTF-8';
 
     /**
      * Alternative message (for HTML messages only)
@@ -182,7 +182,7 @@ class Email
      *
      * @var string "\r\n" or "\n"
      */
-    public $newline = "\n";
+    public $newline = "\r\n";
 
     /**
      * CRLF character sequence
@@ -197,7 +197,7 @@ class Email
      *
      * @var string
      */
-    public $CRLF = "\n";
+    public $CRLF = "\r\n";
 
     /**
      * Whether to use Delivery Status Notification.
