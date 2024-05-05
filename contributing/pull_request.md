@@ -2,7 +2,8 @@
 
 ## Contributions
 
-We expect the following in all pull requests.
+We expect the following in all Pull Requests (PRs).
+- PRs must be sent to the [appropriate branch](#branching)
 - All git commits are [GPG-signed](#signing)
 - Must follow our [style guide](#php-style)
 - Be [commented](#comments) in the PHP source file
