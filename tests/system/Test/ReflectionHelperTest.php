@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Test\TestForReflectionHelper;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ReflectionHelperTest extends CIUnitTestCase
 {
     public function testGetPrivatePropertyWithObject(): void

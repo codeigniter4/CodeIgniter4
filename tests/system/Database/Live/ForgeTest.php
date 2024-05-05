@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -24,10 +25,9 @@ use stdClass;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class ForgeTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

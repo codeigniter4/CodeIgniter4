@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use Tests\Support\Controllers\Popcorn;
 use Tests\Support\Controllers\Remap;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ControllerMethodReaderTest extends CIUnitTestCase
 {
     public function testRead(): void

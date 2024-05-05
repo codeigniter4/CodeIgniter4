@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 use InvalidArgumentException;
@@ -20,9 +21,8 @@ use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FileRulesTest extends CIUnitTestCase
 {
     private Validation $validation;

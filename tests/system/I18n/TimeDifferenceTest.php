@@ -13,14 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\I18n;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use Locale;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class TimeDifferenceTest extends CIUnitTestCase
 {
     private string $currentLocale;

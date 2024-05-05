@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Model;
 use Config\Validation;
@@ -23,10 +24,9 @@ use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class ValidationModelTest extends LiveModelTestCase
 {
     protected function setUp(): void

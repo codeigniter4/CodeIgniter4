@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\DotEnv;
 use CodeIgniter\Events\Events;
@@ -23,9 +24,8 @@ use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ConsoleTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

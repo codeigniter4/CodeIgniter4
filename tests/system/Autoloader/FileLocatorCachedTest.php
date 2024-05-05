@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Autoloader;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
 use Config\Autoload;
 use Config\Modules;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FileLocatorCachedTest extends FileLocatorTest
 {
     private FileVarExportHandler $handler;

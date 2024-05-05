@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
@@ -20,9 +21,8 @@ use Config\Services;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class RoutesTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

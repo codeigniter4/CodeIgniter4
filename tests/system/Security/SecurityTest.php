@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Security;
 
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
@@ -26,12 +28,10 @@ use Config\Security as SecurityConfig;
 use Config\Services;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class SecurityTest extends CIUnitTestCase
 {
     protected function setUp(): void

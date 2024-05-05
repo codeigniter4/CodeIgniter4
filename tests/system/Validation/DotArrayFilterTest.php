@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class DotArrayFilterTest extends CIUnitTestCase
 {
     public function testRunReturnEmptyArray(): void

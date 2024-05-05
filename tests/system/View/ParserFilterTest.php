@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -20,9 +21,8 @@ use Config\View;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ParserFilterTest extends CIUnitTestCase
 {
     private FileLocator $loader;

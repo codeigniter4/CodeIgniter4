@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -32,12 +34,10 @@ use Psr\Log\LoggerInterface;
  * Not a lot of business logic, so concentrate on making sure
  * we can exercise everything without blowing up :-/
  *
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class ControllerTest extends CIUnitTestCase
 {
     private App $config;

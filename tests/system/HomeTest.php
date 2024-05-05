@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\TestResponse;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class HomeTest extends CIUnitTestCase
 {
     use FeatureTestTrait;

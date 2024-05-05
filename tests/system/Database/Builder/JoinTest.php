@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Builder;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
 use CodeIgniter\Database\RawSql;
@@ -22,9 +23,8 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class JoinTest extends CIUnitTestCase
 {
     protected $db;

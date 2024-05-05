@@ -13,14 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Validation\StrictRules\DatabaseRelatedRulesTest as StrictDatabaseRelatedRulesTest;
 use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
- *
- * @group DatabaseLive
  */
+#[Group('DatabaseLive')]
 final class DatabaseRelatedRulesTest extends StrictDatabaseRelatedRulesTest
 {
     protected array $config = [

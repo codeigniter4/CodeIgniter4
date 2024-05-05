@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\I18n\Time;
 use Tests\Support\Entity\User;
 use Tests\Support\Models\UserTimestampModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class TimestampModelTest extends LiveModelTestCase
 {
     protected $migrate     = true;

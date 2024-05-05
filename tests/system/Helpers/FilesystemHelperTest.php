@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FilesystemHelperTest extends CIUnitTestCase
 {
     /**

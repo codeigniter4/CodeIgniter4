@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -23,9 +25,8 @@ use stdClass;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ParserTest extends CIUnitTestCase
 {
     private FileLocator $loader;
@@ -477,11 +478,10 @@ final class ParserTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideEscHandling
-     *
      * @param mixed      $value
      * @param mixed|null $expected
      */
+    #[DataProvider('provideEscHandling')]
     public function testEscHandling($value, $expected = null): void
     {
         if ($expected === null) {

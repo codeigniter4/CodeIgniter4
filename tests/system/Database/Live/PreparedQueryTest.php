@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
+use PHPUnit\Framework\Attributes\Group;
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
@@ -23,10 +24,9 @@ use CodeIgniter\Test\DatabaseTestTrait;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class PreparedQueryTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

@@ -13,16 +13,16 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live\MySQLi;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class NumberNativeTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

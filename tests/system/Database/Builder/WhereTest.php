@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Builder;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -24,9 +26,8 @@ use stdClass;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class WhereTest extends CIUnitTestCase
 {
     /**
@@ -403,10 +404,9 @@ final class WhereTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideWhereInvalidKeyThrowInvalidArgumentException
-     *
      * @param mixed $key
      */
+    #[DataProvider('provideWhereInvalidKeyThrowInvalidArgumentException')]
     public function testWhereInvalidKeyThrowInvalidArgumentException($key): void
     {
         $this->expectException('InvalidArgumentException');
@@ -425,10 +425,9 @@ final class WhereTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideWhereInEmptyValuesThrowInvalidArgumentException
-     *
      * @param mixed $values
      */
+    #[DataProvider('provideWhereInEmptyValuesThrowInvalidArgumentException')]
     public function testWhereInEmptyValuesThrowInvalidArgumentException($values): void
     {
         $this->expectException('InvalidArgumentException');

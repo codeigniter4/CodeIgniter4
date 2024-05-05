@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class NumberHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void

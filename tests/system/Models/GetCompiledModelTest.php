@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -21,9 +22,8 @@ use Tests\Support\Models\UserObjModel;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class GetCompiledModelTest extends CIUnitTestCase
 {
     private ?object $model = null;

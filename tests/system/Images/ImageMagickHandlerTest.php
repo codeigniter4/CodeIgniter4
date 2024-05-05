@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Images;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Handlers\BaseHandler;
@@ -31,11 +34,9 @@ use Imagick;
  * Was unable to test fontPath & related logic.
  *
  * @internal
- *
- * @group Others
- *
- * @requires extension imagick
  */
+#[Group('Others')]
+#[RequiresPhpExtension('imagick')]
 final class ImageMagickHandlerTest extends CIUnitTestCase
 {
     private string $root;
@@ -80,9 +81,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         $this->handler = Services::image('imagick', $config, false);
     }
 
-    /**
-     * @dataProvider provideNonexistentLibraryPathTerminatesProcessing
-     */
+    #[DataProvider('provideNonexistentLibraryPathTerminatesProcessing')]
     public function testNonexistentLibraryPathTerminatesProcessing(string $path, string $invalidPath): void
     {
         $this->expectException(ImageException::class);

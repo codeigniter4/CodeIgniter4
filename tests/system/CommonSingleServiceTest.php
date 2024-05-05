@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -23,14 +25,11 @@ use ReflectionMethod;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class CommonSingleServiceTest extends CIUnitTestCase
 {
-    /**
-     * @dataProvider provideServiceNames
-     */
+    #[DataProvider('provideServiceNames')]
     public function testSingleServiceWithNoParamsSupplied(string $service): void
     {
         Services::injectMock('security', new MockSecurity(new SecurityConfig()));
@@ -44,9 +43,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         $this->assertNotSame($service1, $service2);
     }
 
-    /**
-     * @dataProvider provideServiceNames
-     */
+    #[DataProvider('provideServiceNames')]
     public function testSingleServiceWithAtLeastOneParamSupplied(string $service): void
     {
         if ($service === 'commands') {

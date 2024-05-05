@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\RESTful;
 
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Format\JSONFormatter;
@@ -37,14 +40,11 @@ use Tests\Support\RESTful\Worker;
  * so we need to make sure that the methods routed to
  * return correct responses.
  *
- * @runTestsInSeparateProcesses
- *
- * @preserveGlobalState         disabled
- *
  * @internal
- *
- * @group SeparateProcess
  */
+#[RunTestsInSeparateProcesses]
+#[PreserveGlobalState(false)]
+#[Group('SeparateProcess')]
 final class ResourceControllerTest extends CIUnitTestCase
 {
     private CodeIgniter $codeigniter;

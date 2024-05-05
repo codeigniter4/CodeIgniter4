@@ -13,16 +13,16 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live\OCI8;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\Live\AbstractGetFieldDataTestCase;
 use Config\Database;
 use LogicException;
 use stdClass;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
 {
     protected function createForge(): void

@@ -13,14 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Files;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FileCollectionTest extends CIUnitTestCase
 {
     /**

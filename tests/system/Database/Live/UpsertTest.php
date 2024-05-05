@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge;
 use CodeIgniter\Database\RawSql;
@@ -23,10 +24,9 @@ use stdclass;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class UpsertTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

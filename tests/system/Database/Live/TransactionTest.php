@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
@@ -20,10 +21,9 @@ use Config\Database;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class TransactionTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

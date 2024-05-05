@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Autoloader;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use App\Controllers\Home;
 use Closure;
 use CodeIgniter\Exceptions\ConfigException;
@@ -27,9 +30,8 @@ use UnnamespacedClass;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class AutoloaderTest extends CIUnitTestCase
 {
     use ReflectionHelper;
@@ -390,10 +392,8 @@ final class AutoloaderTest extends CIUnitTestCase
         $loader->unregister();
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testLoadHelpers(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.

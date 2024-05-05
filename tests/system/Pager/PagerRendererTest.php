@@ -13,14 +13,14 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Pager;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class PagerRendererTest extends CIUnitTestCase
 {
     private string $expect;

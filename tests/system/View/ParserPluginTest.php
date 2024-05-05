@@ -13,15 +13,17 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Validation;
 use Config\Services;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ParserPluginTest extends CIUnitTestCase
 {
     private Parser $parser;
@@ -44,12 +46,9 @@ final class ParserPluginTest extends CIUnitTestCase
         $this->assertSame(current_url(), $this->parser->renderString($template));
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     *
-     * @group SeparateProcess
-     */
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
+    #[Group('SeparateProcess')]
     public function testPreviousURL(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.

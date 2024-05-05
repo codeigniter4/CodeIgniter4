@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class DummyHandlerTest extends CIUnitTestCase
 {
     private DummyHandler $handler;

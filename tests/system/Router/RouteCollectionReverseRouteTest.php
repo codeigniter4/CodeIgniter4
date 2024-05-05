@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Router;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\Router\Exceptions\RouterException;
@@ -22,9 +24,8 @@ use Config\Routing;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class RouteCollectionReverseRouteTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -143,9 +144,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideReverseRoutingDefaultNamespaceAppController
-     */
+    #[DataProvider('provideReverseRoutingDefaultNamespaceAppController')]
     public function testReverseRoutingDefaultNamespaceAppController(string $controller): void
     {
         $routes = $this->getCollector();

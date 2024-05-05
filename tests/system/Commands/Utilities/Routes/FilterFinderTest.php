@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
@@ -32,9 +33,8 @@ use Config\Routing;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FilterFinderTest extends CIUnitTestCase
 {
     use ConfigFromArrayTrait;

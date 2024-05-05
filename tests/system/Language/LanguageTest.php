@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Language;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLanguage;
 use Config\Services;
@@ -21,9 +23,8 @@ use Tests\Support\Language\SecondMockLanguage;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class LanguageTest extends CIUnitTestCase
 {
     private Language $lang;
@@ -266,10 +267,9 @@ final class LanguageTest extends CIUnitTestCase
      * There's not a whole lot that can be done with message bundles,
      * but we can at least try loading them ... more accurate code coverage?
      *
-     * @dataProvider provideBundleUniqueKeys
-     *
      * @param mixed $bundle
      */
+    #[DataProvider('provideBundleUniqueKeys')]
     public function testBundleUniqueKeys($bundle): void
     {
         $messages = require SYSTEMPATH . 'Language/en/' . $bundle . '.php';

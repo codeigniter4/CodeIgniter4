@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live\MySQLi;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
@@ -20,10 +21,9 @@ use stdclass;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class RawSqlTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Pager;
 
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SiteURI;
@@ -25,12 +27,10 @@ use Config\Pager as PagerConfig;
 use Config\Services;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class PagerTest extends CIUnitTestCase
 {
     private ?Pager $pager        = null;

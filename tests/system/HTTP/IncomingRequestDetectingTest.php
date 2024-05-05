@@ -13,16 +13,16 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class IncomingRequestDetectingTest extends CIUnitTestCase
 {
     private IncomingRequest $request;

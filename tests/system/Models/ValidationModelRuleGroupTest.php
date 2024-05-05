@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Model;
 use Config\Services;
@@ -24,10 +25,9 @@ use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModelRuleGroup;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class ValidationModelRuleGroupTest extends LiveModelTestCase
 {
     protected function setUp(): void

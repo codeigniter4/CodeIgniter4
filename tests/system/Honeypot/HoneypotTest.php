@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Honeypot;
 
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Filters;
@@ -25,12 +27,10 @@ use Config\App;
 use Config\Honeypot as HoneypotConfig;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class HoneypotTest extends CIUnitTestCase
 {
     private HoneypotConfig $config;

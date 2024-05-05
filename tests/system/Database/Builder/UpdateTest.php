@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Builder;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -21,9 +22,8 @@ use CodeIgniter\Test\Mock\MockQuery;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class UpdateTest extends CIUnitTestCase
 {
     /**

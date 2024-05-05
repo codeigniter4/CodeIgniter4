@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\Group;
 use App\Controllers\Home;
 use App\Controllers\NeverHeardOfIt;
 use CodeIgniter\Controller;
@@ -27,14 +30,11 @@ use Tests\Support\Controllers\Popcorn;
 /**
  * Exercise our Controller class.
  *
- * @runTestsInSeparateProcesses
- *
- * @preserveGlobalState         disabled
- *
  * @internal
- *
- * @group SeparateProcess
  */
+#[RunTestsInSeparateProcesses]
+#[PreserveGlobalState(false)]
+#[Group('SeparateProcess')]
 final class ControllerTestTraitTest extends CIUnitTestCase
 {
     use ControllerTestTrait;

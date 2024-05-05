@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache;
 
+use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -21,9 +22,8 @@ use Config\App;
 /**
  * @internal
  * @no-final
- *
- * @group Others
  */
+#[Group('Others')]
 class FactoriesCacheFileVarExportHandlerTest extends CIUnitTestCase
 {
     protected FactoriesCache $cache;
