@@ -36,8 +36,7 @@ $handler
 ========
 
 The is the name of the handler that should be used as the primary handler when starting up the engine.
-Available names are: dummy, file, memcached, redis, predis, wincache. This is commonly the **File** handler
-since the file system is always available, but may not fit more complex, multi-server setups.
+Available names are: dummy, file, memcached, redis, predis, wincache.
 
 $backupHandler
 ==============
