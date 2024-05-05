@@ -275,10 +275,10 @@ Drivers
 File-based Caching
 ==================
 
-File-based caching allows for pieces of view files to be cached. Use this with care, and
-make sure to benchmark your application, as a point can come where disk
-I/O will negate positive gains by caching. This requires a cache
-directory to be really writable by the application.
+This requires a cache directory to be really writable by the application.
+
+Use this with care, and make sure to benchmark your application, as a point can
+come where disk I/O will negate positive gains by caching.
 
 Memcached Caching
 =================
