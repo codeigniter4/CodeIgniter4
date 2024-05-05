@@ -297,6 +297,23 @@ class Builder extends BaseBuilder
         }
 
         if ($this->db->escapeChar === '"') {
+            if (str_contains($table, '.') && ! str_starts_with($table, '.') && ! str_ends_with($table, '.')) {
+                $dbInfo   = explode('.', $table);
+                $database = $this->db->getDatabase();
+                $table    = $dbInfo[0];
+
+                if (count($dbInfo) === 3) {
+                    $database  = str_replace('"', '', $dbInfo[0]);
+                    $schema    = str_replace('"', '', $dbInfo[1]);
+                    $tableName = str_replace('"', '', $dbInfo[2]);
+                } else {
+                    $schema    = str_replace('"', '', $dbInfo[0]);
+                    $tableName = str_replace('"', '', $dbInfo[1]);
+                }
+
+                return '"' . $database . '"."' . $schema . '"."' . str_replace('"', '', $tableName) . '"' . $alias;
+            }
+
             return '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '"."' . str_replace('"', '', $table) . '"' . $alias;
         }
 

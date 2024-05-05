@@ -41,7 +41,7 @@ Returns true/false based on success or failure:
 .. literalinclude:: forge/003.php
 
 An optional second parameter set to true will add ``IF EXISTS`` statement
-or will check if a database exists before create it (depending on DBMS).
+or will check if a database exists before creating it (depending on DBMS).
 
 .. literalinclude:: forge/004.php
 
