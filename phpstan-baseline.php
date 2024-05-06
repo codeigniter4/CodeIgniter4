@@ -1,5 +1,6 @@
 <?php declare(strict_types = 1);
 
+$ignoreErrors = [];
 $ignoreErrors[] = [
 	'message' => '#^PHPDoc type array\\<string, array\\<string, array\\<int, string\\>\\>\\> of property Config\\\\Filters\\:\\:\\$filters is not the same as PHPDoc type array of overridden property CodeIgniter\\\\Config\\\\Filters\\:\\:\\$filters\\.$#',
 	'count' => 1,
@@ -10216,12 +10217,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/AutoReview/FrameworkCodeTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\AutoReview\\\\FrameworkCodeTest\\:\\:provideEachTestClassHasCorrectGroupAnnotation\\(\\) return type has no value type specified in iterable type iterable\\.$#',
+	'message' => '#^Method CodeIgniter\\\\AutoReview\\\\FrameworkCodeTest\\:\\:provideEachTestClassHasCorrectGroupAttributeName\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/AutoReview/FrameworkCodeTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\AutoReview\\\\FrameworkCodeTest\\:\\:\\$recognizedGroupAnnotations type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property CodeIgniter\\\\AutoReview\\\\FrameworkCodeTest\\:\\:\\$recognizedGroupAttributeNames type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/AutoReview/FrameworkCodeTest.php',
 ];
@@ -10966,7 +10967,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Config/FactoriesTest\\.php\\:88\\:\\:\\$widgets has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Config/FactoriesTest\\.php\\:89\\:\\:\\$widgets has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Config/FactoriesTest.php',
 ];
@@ -14071,122 +14072,122 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:197\\:\\:\\$_options has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:198\\:\\:\\$_options has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:197\\:\\:\\$country has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:198\\:\\:\\$country has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:197\\:\\:\\$created_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:198\\:\\:\\$created_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:197\\:\\:\\$deleted has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:198\\:\\:\\$deleted has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:197\\:\\:\\$email has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:198\\:\\:\\$email has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:197\\:\\:\\$id has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:198\\:\\:\\$id has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:197\\:\\:\\$name has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:198\\:\\:\\$name has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:197\\:\\:\\$updated_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:198\\:\\:\\$updated_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:216\\:\\:\\$_options has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:217\\:\\:\\$_options has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:216\\:\\:\\$country has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:217\\:\\:\\$country has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:216\\:\\:\\$created_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:217\\:\\:\\$created_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:216\\:\\:\\$deleted has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:217\\:\\:\\$deleted has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:216\\:\\:\\$email has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:217\\:\\:\\$email has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:216\\:\\:\\$id has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:217\\:\\:\\$id has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:216\\:\\:\\$name has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:217\\:\\:\\$name has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:216\\:\\:\\$updated_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:217\\:\\:\\$updated_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:349\\:\\:\\$_options has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:350\\:\\:\\$_options has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:349\\:\\:\\$country has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:350\\:\\:\\$country has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:349\\:\\:\\$created_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:350\\:\\:\\$created_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:349\\:\\:\\$deleted has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:350\\:\\:\\$deleted has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:349\\:\\:\\$email has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:350\\:\\:\\$email has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:349\\:\\:\\$id has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:350\\:\\:\\$id has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:349\\:\\:\\$name has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:350\\:\\:\\$name has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:349\\:\\:\\$updated_at has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/Models/UpdateModelTest\\.php\\:350\\:\\:\\$updated_at has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
@@ -15901,7 +15902,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method class@anonymous/tests/system/View/ParserTest\\.php\\:339\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Method class@anonymous/tests/system/View/ParserTest\\.php\\:340\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
 ];
@@ -15916,17 +15917,17 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:339\\:\\:\\$bar has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:340\\:\\:\\$bar has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:339\\:\\:\\$foo has no type specified\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:340\\:\\:\\$foo has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:369\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:370\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
 ];
