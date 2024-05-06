@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\Mock\MockCURLRequest;
 use Config\App;
 use Config\CURLRequest as ConfigCURLRequest;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * This test case is for the case where shareOptions is true.

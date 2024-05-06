@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\I18n\Time;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Entity\User;
 use Tests\Support\Models\UserTimestampModel;
 

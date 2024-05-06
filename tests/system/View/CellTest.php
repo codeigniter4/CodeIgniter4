@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCache;
 use CodeIgniter\View\Exceptions\ViewException;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

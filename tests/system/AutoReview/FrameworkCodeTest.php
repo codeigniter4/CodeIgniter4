@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\AutoReview;
 
-use PHPUnit\Framework\Attributes\DataProvider;
 use FilesystemIterator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use RecursiveDirectoryIterator;

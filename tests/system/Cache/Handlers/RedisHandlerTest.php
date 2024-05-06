@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

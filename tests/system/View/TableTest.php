@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Depends;
-use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Database\MySQLi\Result;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockTable;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 
 /**

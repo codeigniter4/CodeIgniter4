@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live\Postgre;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\Live\AbstractGetFieldDataTestCase;
 use Config\Database;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

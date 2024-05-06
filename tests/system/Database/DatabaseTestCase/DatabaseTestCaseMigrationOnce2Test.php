@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\DatabaseTestCase;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * DatabaseTestCaseMigrationOnce1Test and DatabaseTestCaseMigrationOnce2Test

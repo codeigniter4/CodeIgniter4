@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Autoload;
 use Config\Modules;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

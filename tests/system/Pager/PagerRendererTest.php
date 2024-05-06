@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Pager;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
-use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresOperatingSystem;
 
 /**
  * @internal

@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Router;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -27,6 +25,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Modules;
 use Config\Routing;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Filters\Customfilter;
 
 /**

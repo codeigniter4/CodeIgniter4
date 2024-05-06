@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Session;
 
-use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
-use PHPUnit\Framework\Attributes\PreserveGlobalState;
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Session\Handlers\FileHandler;
@@ -25,6 +22,9 @@ use CodeIgniter\Test\TestLogger;
 use Config\Cookie as CookieConfig;
 use Config\Logger as LoggerConfig;
 use Config\Session as SessionConfig;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * @internal

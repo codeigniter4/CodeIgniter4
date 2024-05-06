@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Cache\Handlers\BaseHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCache;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

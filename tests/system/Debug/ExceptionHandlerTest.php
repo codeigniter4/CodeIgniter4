@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Debug;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Controllers\Home;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -21,6 +20,7 @@ use CodeIgniter\Test\IniTestTrait;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 use RuntimeException;
 
 /**

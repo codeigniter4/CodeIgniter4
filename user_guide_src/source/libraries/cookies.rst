@@ -26,7 +26,7 @@ cookie interaction.
 Creating Cookies
 ****************
 
-There are currently four (4) ways to create a new ``Cookie`` value object.
+There are currently four ways to create a new ``Cookie`` value object.
 
 .. literalinclude:: cookies/001.php
 
@@ -110,7 +110,7 @@ using the ``__Host-`` prefix, cookies must exhibit the following:
 Validating the SameSite Attribute
 =================================
 
-The SameSite attribute only accepts three (3) values:
+The SameSite attribute accepts three values:
 
 - **Lax**: Cookies are not sent on normal cross-site subrequests (for example to load images or frames into a third party site), but are sent when a user is navigating to the origin site (*i.e.* when following a link).
 - **Strict**: Cookies will only be sent in a first-party context and not be sent along with requests initiated by third party websites.
@@ -167,7 +167,7 @@ instance can be accessed from the current ``Response`` object.
 Creating CookieStore
 ====================
 
-CodeIgniter provides three (3) other ways to create a new instance of the ``CookieStore``.
+CodeIgniter provides three other ways to create a new instance of the ``CookieStore``.
 
 .. literalinclude:: cookies/008.php
 
@@ -248,16 +248,16 @@ objects. However, you may wish to define your own settings by changing the follo
 ``Config\Cookie`` class in **app/Config/Cookie.php** file.
 
 ==================== ===================================== ========= =====================================================
-Setting              Options/ Types                        Default   Description
+Setting              Options/Types                         Default   Description
 ==================== ===================================== ========= =====================================================
 **$prefix**          ``string``                            ``''``    Prefix to prepend to the cookie name.
 **$expires**         ``DateTimeInterface|string|int``      ``0``     The expires timestamp.
 **$path**            ``string``                            ``/``     The path property of the cookie.
 **$domain**          ``string``                            ``''``    The domain property of the cookie.with trailing slash.
-**$secure**          ``true/false``                        ``false`` If to be sent over secure HTTPS.
-**$httponly**        ``true/false``                        ``true``  If not accessible to JavaScript.
-**$samesite**        ``Lax|None|Strict|lax|none|strict''`` ``Lax``   The SameSite attribute.
-**$raw**             ``true/false``                        ``false`` If to be dispatched using ``setrawcookie()``.
+**$secure**          ``true``/``false``                    ``false`` If to be sent over secure HTTPS.
+**$httponly**        ``true``/``false``                    ``true``  If not accessible to JavaScript.
+**$samesite**        ``Lax``/``None``/``Strict``           ``Lax``   The SameSite attribute.
+**$raw**             ``true``/``false``                    ``false`` If to be dispatched using ``setrawcookie()``.
 ==================== ===================================== ========= =====================================================
 
 In runtime, you can manually supply a new default using the ``Cookie::setDefaults()`` method.

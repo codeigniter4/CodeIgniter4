@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Exceptions\ModelException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\StringifyPkeyModel;
 use Tests\Support\Models\UserModel;

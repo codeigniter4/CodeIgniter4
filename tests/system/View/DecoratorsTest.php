@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\View\BadDecorator;
 use Tests\Support\View\WorldDecorator;
 

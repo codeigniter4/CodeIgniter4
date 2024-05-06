@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Log;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Log\Exceptions\LogException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Exception;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Log\Handlers\TestHandler;
 use TypeError;
 

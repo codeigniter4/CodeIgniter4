@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\Fabricator;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 

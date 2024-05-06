@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache;
 
-use PHPUnit\Framework\Attributes\BackupGlobals;
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
@@ -26,6 +24,8 @@ use Config\App as AppConfig;
 use Config\Cache as CacheConfig;
 use ErrorException;
 use Exception;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

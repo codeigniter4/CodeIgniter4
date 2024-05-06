@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation\StrictRules;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Validation\RulesTest as TraditionalRulesTest;
 use CodeIgniter\Validation\Validation;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
 
 /**

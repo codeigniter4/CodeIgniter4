@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\DocTypes;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

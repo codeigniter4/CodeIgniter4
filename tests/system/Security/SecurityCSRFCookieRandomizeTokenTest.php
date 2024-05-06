@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Security;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -23,6 +22,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
 use Config\Security as SecurityConfig;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

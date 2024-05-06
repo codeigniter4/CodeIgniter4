@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
@@ -30,6 +29,7 @@ use Config\Feature;
 use Config\Filters as FiltersConfig;
 use Config\Modules;
 use Config\Routing;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

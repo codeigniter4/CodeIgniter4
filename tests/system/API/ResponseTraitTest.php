@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\API;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Format\FormatterInterface;
 use CodeIgniter\Format\JSONFormatter;
@@ -25,6 +24,7 @@ use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use Config\Cookie;
+use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 
 /**

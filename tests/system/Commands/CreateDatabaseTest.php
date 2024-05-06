@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Database as DatabaseFactory;
 use CodeIgniter\Database\OCI8\Connection as OCI8Connection;
@@ -21,6 +20,7 @@ use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Database;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

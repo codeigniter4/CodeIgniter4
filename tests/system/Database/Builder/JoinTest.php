@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Builder;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Live;
 
 use PHPUnit\Framework\Attributes\Group;
+
 /**
  * @internal
  */

@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

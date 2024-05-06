@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\I18n;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use Locale;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

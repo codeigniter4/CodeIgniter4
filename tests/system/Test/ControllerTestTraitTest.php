@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
-use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
-use PHPUnit\Framework\Attributes\PreserveGlobalState;
-use PHPUnit\Framework\Attributes\Group;
 use App\Controllers\Home;
 use App\Controllers\NeverHeardOfIt;
 use CodeIgniter\Controller;
@@ -24,6 +21,9 @@ use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\App;
 use Config\Services;
 use Exception;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Tests\Support\Controllers\Newautorouting;
 use Tests\Support\Controllers\Popcorn;
 

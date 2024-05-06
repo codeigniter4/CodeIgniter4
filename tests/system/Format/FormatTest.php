@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Format;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Format\Exceptions\FormatException;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

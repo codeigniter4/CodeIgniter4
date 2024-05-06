@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation\StrictRules;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Validation\ValidationTest as TraditionalValidationTest;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
 
 /**

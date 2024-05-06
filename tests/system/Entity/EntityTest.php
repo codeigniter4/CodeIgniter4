@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity;
 
-use PHPUnit\Framework\Attributes\Group;
 use Closure;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\HTTP\URI;
@@ -22,6 +21,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use DateTime;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\Group;
 use ReflectionException;
 use Tests\Support\Entity\Cast\CastBase64;
 use Tests\Support\Entity\Cast\CastPassParameters;

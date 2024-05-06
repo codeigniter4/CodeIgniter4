@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Model;
 use Config\Validation;
+use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SimpleEntity;

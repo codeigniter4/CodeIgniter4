@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Debug;
 
-use PHPUnit\Framework\Attributes\Group;
 use ArgumentCountError;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 use RuntimeException;
 
 /**
