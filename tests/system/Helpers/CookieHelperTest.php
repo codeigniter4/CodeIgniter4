@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -26,6 +25,7 @@ use Config\App;
 use Config\Cookie;
 use Config\Cookie as CookieConfig;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

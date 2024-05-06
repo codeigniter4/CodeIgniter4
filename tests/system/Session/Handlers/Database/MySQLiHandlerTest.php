@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Session\Handlers\Database;
 
-use PHPUnit\Framework\Attributes\Group;
 use Config\Database as DatabaseConfig;
 use Config\Session as SessionConfig;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

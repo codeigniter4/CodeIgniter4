@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -24,6 +23,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * This test case is based on:

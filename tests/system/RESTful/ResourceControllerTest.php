@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\RESTful;
 
-use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
-use PHPUnit\Framework\Attributes\PreserveGlobalState;
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Format\JSONFormatter;
@@ -30,6 +27,9 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockResourceController;
 use Config\App;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Psr\Log\NullLogger;
 use Tests\Support\Models\UserModel;
 use Tests\Support\RESTful\Worker;

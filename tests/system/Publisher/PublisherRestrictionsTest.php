@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Publisher;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Publisher\Exceptions\PublisherException;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Publisher Restrictions Test

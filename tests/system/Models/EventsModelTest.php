@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\Exceptions\DataException;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\EventModel;
 
 /**

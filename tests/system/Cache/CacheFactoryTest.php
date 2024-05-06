@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\Cache\Handlers\DummyHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

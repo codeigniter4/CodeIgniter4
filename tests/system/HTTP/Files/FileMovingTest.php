@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP\Files;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Router;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Controllers\Product;
 use CodeIgniter\Config\Services;
 use CodeIgniter\controller;
@@ -23,6 +21,8 @@ use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
 use Config\Routing;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Controllers\Hello;
 
 /**

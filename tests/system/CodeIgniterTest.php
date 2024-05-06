@@ -13,10 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
-use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
-use PHPUnit\Framework\Attributes\BackupGlobals;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Controllers\Home;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Debug\Timer;
@@ -34,6 +30,10 @@ use Config\Cache;
 use Config\Filters as FiltersConfig;
 use Config\Modules;
 use Config\Routing;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Tests\Support\Filters\Customfilter;
 use Tests\Support\Filters\RedirectFilter;
 

@@ -13,11 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
-use PHPUnit\Framework\Attributes\BackupGlobals;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\RunInSeparateProcess;
-use PHPUnit\Framework\Attributes\PreserveGlobalState;
-use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\BaseService;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\CLIRequest;
@@ -46,6 +41,11 @@ use Config\Services;
 use Config\Session as SessionConfig;
 use Exception;
 use Kint;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use RuntimeException;
 use stdClass;
 use Tests\Support\Models\JobModel;

@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Autoloader;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\RunInSeparateProcess;
-use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use App\Controllers\Home;
 use Closure;
 use CodeIgniter\Exceptions\ConfigException;
@@ -25,6 +22,9 @@ use Config\Autoload;
 use Config\Modules;
 use Config\Services;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use RuntimeException;
 use UnnamespacedClass;
 

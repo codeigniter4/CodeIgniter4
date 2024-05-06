@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\DotEnv;
 use CodeIgniter\Events\Events;
@@ -21,6 +20,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\StreamFilterTrait;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

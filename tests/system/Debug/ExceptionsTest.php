@@ -11,8 +11,6 @@
 
 namespace CodeIgniter\Debug;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\RequiresPhp;
 use App\Controllers\Home;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Entity\Exceptions\CastException;
@@ -22,6 +20,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Exceptions as ExceptionsConfig;
 use ErrorException;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresPhp;
 use RuntimeException;
 
 /**

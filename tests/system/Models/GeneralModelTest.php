@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
-use PHPUnit\Framework\Attributes\Group;
 use BadMethodCallException;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\UserModel;
 

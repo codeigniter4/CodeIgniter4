@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
 use LogicException;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\View\Cells\AdditionCell;
 use Tests\Support\View\Cells\AwesomeCell;
 use Tests\Support\View\Cells\BadCell;

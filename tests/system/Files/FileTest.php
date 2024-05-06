@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Files;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 use ZipArchive;
 
 /**

@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\I18n\Time;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SimpleEntity;

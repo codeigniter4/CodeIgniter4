@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache;
 
-use PHPUnit\Framework\Attributes\Group;
 use Config\Cache as CacheConfig;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

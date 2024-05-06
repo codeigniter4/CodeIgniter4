@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
+use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\JobModel;

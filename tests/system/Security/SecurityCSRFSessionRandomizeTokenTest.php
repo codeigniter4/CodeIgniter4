@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Security;
 
-use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
-use PHPUnit\Framework\Attributes\PreserveGlobalState;
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -35,6 +32,9 @@ use Config\Cookie;
 use Config\Logger as LoggerConfig;
 use Config\Security as SecurityConfig;
 use Config\Session as SessionConfig;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 
 /**

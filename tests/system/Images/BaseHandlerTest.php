@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Images;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Images\Exceptions\ImageException;
@@ -21,6 +20,7 @@ use CodeIgniter\Images\Handlers\BaseHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test the common image processing functionality.

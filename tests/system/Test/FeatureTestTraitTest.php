@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -24,6 +22,8 @@ use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
 use Config\Routing;
 use Config\Services;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

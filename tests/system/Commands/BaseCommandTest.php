@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Commands\AppInfo;
 
 /**

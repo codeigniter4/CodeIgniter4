@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live\MySQLi;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use PHPUnit\Framework\Attributes\Group;
 use stdclass;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
