@@ -17,7 +17,6 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
-use Exception;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
