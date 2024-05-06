@@ -15,11 +15,12 @@ namespace CodeIgniter\Database;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\Group('Others')]
+#[Group('Others')]
 final class TableNameTest extends CIUnitTestCase
 {
     protected function setUp(): void
