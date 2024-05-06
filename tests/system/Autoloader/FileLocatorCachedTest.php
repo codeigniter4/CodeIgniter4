@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Autoloader;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
 use Config\Autoload;
 use Config\Modules;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

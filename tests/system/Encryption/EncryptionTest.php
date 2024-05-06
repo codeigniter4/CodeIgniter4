@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Encryption;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

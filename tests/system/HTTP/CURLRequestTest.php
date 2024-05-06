@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\BackupGlobals;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
@@ -23,6 +21,8 @@ use CodeIgniter\Test\Mock\MockCURLRequest;
 use Config\App;
 use Config\CURLRequest as ConfigCURLRequest;
 use CURLFile;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

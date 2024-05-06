@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cookie;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Test\CIUnitTestCase;
 use DateTimeImmutable;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

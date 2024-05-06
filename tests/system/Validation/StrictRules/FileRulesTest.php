@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation\StrictRules;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Validation;
 use Config\Services;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
 
 /**

@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP\Files;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Mimes;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

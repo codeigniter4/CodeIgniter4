@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\AnotherSeeder;
 use Tests\Support\Database\Seeds\CITestSeeder;
 

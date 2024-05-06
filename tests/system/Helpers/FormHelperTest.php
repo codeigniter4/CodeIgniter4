@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\RunInSeparateProcess;
-use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\DocTypes;
 use Config\Filters;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 
 /**
  * @internal

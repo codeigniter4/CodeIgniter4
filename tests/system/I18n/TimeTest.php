@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\I18n;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\I18n\Exceptions\I18nException;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -23,6 +21,8 @@ use DateTime;
 use DateTimeZone;
 use IntlDateFormatter;
 use Locale;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

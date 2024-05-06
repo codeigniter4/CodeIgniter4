@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\AutoReview;
 
-use PHPUnit\Framework\Attributes\CoversNothing;
-use PHPUnit\Framework\Attributes\Group;
 use InvalidArgumentException;
 use JsonException;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 /**

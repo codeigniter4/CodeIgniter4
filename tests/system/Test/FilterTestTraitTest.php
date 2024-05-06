@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\HTTP\RequestInterface;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Filters\Customfilter;
 
 /**

@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers\Array;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

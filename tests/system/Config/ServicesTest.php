@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Config;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\RunInSeparateProcess;
-use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use CodeIgniter\Autoloader\Autoloader;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Database\MigrationRunner;
@@ -49,6 +46,9 @@ use CodeIgniter\View\Parser;
 use Config\App;
 use Config\Exceptions;
 use Config\Security as SecurityConfig;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use RuntimeException;
 use Tests\Support\Config\Services;
 

@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal

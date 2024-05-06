@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Log\Handlers;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 
 /**

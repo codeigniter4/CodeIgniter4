@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Forge;
 
-use PHPUnit\Framework\Attributes\Group;
 use CodeIgniter\Database\Forge;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
