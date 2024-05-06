@@ -10,6 +10,7 @@ on:
     paths:
       - 'app/**.php'
       - 'system/**.php'
+      - 'tests/**.php'
       - 'utils/**.php'
       - composer.json
       - phpstan.neon.dist
@@ -23,6 +24,7 @@ on:
     paths:
       - 'app/**.php'
       - 'system/**.php'
+      - 'tests/**.php'
       - 'utils/**.php'
       - composer.json
       - phpstan.neon.dist
