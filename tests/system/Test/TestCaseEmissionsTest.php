@@ -43,8 +43,8 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
      * The tests includes a basic sanity check, to make sure that
      * the body we thought would be sent actually was.
      */
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testHeadersEmitted(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -73,8 +73,8 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
         $this->assertHeaderEmitted('set-cookie: FOO=bar', true);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testHeadersNotEmitted(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.

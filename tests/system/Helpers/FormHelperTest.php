@@ -955,8 +955,8 @@ final class FormHelperTest extends CIUnitTestCase
         );
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testSetRadioFromSessionOldInput(): void
     {
         $_SESSION = [
@@ -973,8 +973,8 @@ final class FormHelperTest extends CIUnitTestCase
         unset($_SESSION['_ci_old_input']);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testSetRadioFromPost(): void
     {
         $_POST['bar'] = 'baz';
@@ -984,8 +984,8 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame('', set_radio('bar', 'boop', true));
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testSetRadioFromPostWithValueZero(): void
     {
         $_POST['bar'] = '0';

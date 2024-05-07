@@ -112,8 +112,8 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($this->request);
     }
 
-    #[DoesNotPerformAssertions]
     #[DataProvider('provideCheckControlStringWithLineBreakAndTabReturnsTheString')]
+    #[DoesNotPerformAssertions]
     public function testCheckControlStringWithLineBreakAndTabReturnsTheString(string $input): void
     {
         $_GET['val'] = $input;

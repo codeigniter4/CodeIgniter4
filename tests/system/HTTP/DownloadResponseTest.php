@@ -319,8 +319,8 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame(file_get_contents(__FILE__), $actual);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testRealOutput(): void
     {
         $response = new DownloadResponse('unit-test.php', false);

@@ -89,8 +89,8 @@ final class DotEnvTest extends CIUnitTestCase
         ];
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testLoadsHex2Bin(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
@@ -101,8 +101,8 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertSame('OpenSSL', getenv('encryption.driver'));
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testLoadsBase64(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');

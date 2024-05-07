@@ -392,8 +392,8 @@ final class AutoloaderTest extends CIUnitTestCase
         $loader->unregister();
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testLoadHelpers(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
