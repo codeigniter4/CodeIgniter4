@@ -343,9 +343,9 @@ class CLI
             // find max from input
             $maxInput = max($inputToArray);
 
-            // return the prompt again if $input contain(s) non-numeric charachter, except a comma.
-            // And if max from $options less than max from input
-            // it is mean user tried to access null value in $options
+            // return the prompt again if $input contain(s) non-numeric character, except a comma.
+            // And if max from $options less than max from input,
+            // it means user tried to access null value in $options
             if (! $pattern || $maxOptions < $maxInput) {
                 static::error('Please select correctly.');
                 CLI::newLine();
