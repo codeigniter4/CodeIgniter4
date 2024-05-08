@@ -175,6 +175,7 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
             SUPPORTPATH . 'Files/baker/banana.php',
+            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
         ];
 
         $files->add(SUPPORTPATH . 'Files');
@@ -227,6 +228,7 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
             SUPPORTPATH . 'Files/baker/banana.php',
+            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
             SUPPORTPATH . 'Log/Handlers/TestHandler.php',
         ];
 
@@ -392,6 +394,7 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
             SUPPORTPATH . 'Files/baker/banana.php',
+            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
         ];
 
         $collection->addDirectory(SUPPORTPATH . 'Files', true);
@@ -407,6 +410,7 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
             SUPPORTPATH . 'Files/baker/banana.php',
+            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
         ];
 
         $collection->addDirectories([
@@ -425,6 +429,7 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
             SUPPORTPATH . 'Files/baker/banana.php',
+            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
             SUPPORTPATH . 'Log/Handlers/TestHandler.php',
         ];
 
@@ -471,6 +476,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $expected = [
             $this->directory . 'apple.php',
             SUPPORTPATH . 'Files/baker/banana.php',
+            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
         ];
 
         $collection->removePattern('*_*.php');
@@ -485,6 +491,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $expected = [
             SUPPORTPATH . 'Files/baker/banana.php',
+            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
         ];
 
         $collection->removePattern('*.php', $this->directory);
@@ -512,6 +519,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $expected = [
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
+            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
         ];
 
         $collection->retainPattern('#[a-z]+_.*#');
@@ -541,6 +549,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $expected = [
             $this->directory . 'fig_3.php',
             SUPPORTPATH . 'Files/baker/banana.php',
+            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
         ];
 
         $collection->retainPattern('*_?.php', $this->directory);
@@ -553,7 +562,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $collection = new FileCollection();
         $collection->addDirectory(SUPPORTPATH . 'Files', true);
 
-        $this->assertCount(4, $collection);
+        $this->assertCount(5, $collection);
     }
 
     public function testIterable(): void
@@ -568,6 +577,6 @@ final class FileCollectionTest extends CIUnitTestCase
             $count++;
         }
 
-        $this->assertSame($count, 4);
+        $this->assertSame($count, 5);
     }
 }
