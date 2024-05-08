@@ -105,11 +105,14 @@ retainPattern(string $pattern, string $scope = null)
 ====================================================
 
 Filters the current file list through the pattern (and optional scope), removing
-or retaining matched files. ``$pattern`` may be a complete regex (like ``'#[A-Za-z]+\.php#'``)
-or a pseudo-regex similar to ``glob()`` (like ``*.css``). If a ``$scope`` is
-provided then only files in or under that directory will be considered (i.e. files
-outside of ``$scope`` are always retained). When no scope is provided then all
-files are subject.
+or retaining matched files.
+
+``$pattern`` may be a complete regex (like ``'#[A-Za-z]+\.php#'``) or a pseudo-regex
+similar to ``glob()`` (like ``*.css``).
+
+If a ``$scope`` is provided then only files in or under that directory will be
+considered (i.e. files outside of ``$scope`` are always retained). When no scope
+is provided then all files are subject.
 
 Examples:
 
