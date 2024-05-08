@@ -105,7 +105,7 @@ class FileCollection implements Countable, IteratorAggregate
                 ['\#', '\.', '.*', '.'],
                 $pattern
             );
-            $pattern = "#{$pattern}#";
+            $pattern = "#\\A{$pattern}\\z#";
         }
 
         return array_filter($files, static fn ($value) => (bool) preg_match($pattern, basename($value)));
