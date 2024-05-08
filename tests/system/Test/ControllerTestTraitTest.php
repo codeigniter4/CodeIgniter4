@@ -32,9 +32,9 @@ use Tests\Support\Controllers\Popcorn;
  *
  * @internal
  */
-#[RunTestsInSeparateProcesses]
-#[PreserveGlobalState(false)]
 #[Group('SeparateProcess')]
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class ControllerTestTraitTest extends CIUnitTestCase
 {
     use ControllerTestTrait;

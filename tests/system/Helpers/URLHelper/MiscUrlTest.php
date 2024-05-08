@@ -58,9 +58,9 @@ final class MiscUrlTest extends CIUnitTestCase
         $_SERVER = [];
     }
 
-    #[RunInSeparateProcess]
-    #[PreserveGlobalState(false)]
     #[Group('SeparateProcess')]
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testPreviousURLUsesSessionFirst(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -93,9 +93,9 @@ final class MiscUrlTest extends CIUnitTestCase
         Factories::injectMock('config', 'App', $this->config);
     }
 
-    #[RunInSeparateProcess]
-    #[PreserveGlobalState(false)]
     #[Group('SeparateProcess')]
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testPreviousURLUsesRefererIfNeeded(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.

@@ -49,8 +49,8 @@ final class EventsTest extends CIUnitTestCase
         Events::simulate(false);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testInitialize(): void
     {
         /**

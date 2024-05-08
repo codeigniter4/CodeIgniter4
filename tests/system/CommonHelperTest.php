@@ -25,8 +25,8 @@ use Tests\Support\Autoloader\FatalLocator;
 /**
  * @internal
  */
-#[Group('Others')]
 #[CoversFunction('helper')]
+#[Group('Others')]
 final class CommonHelperTest extends CIUnitTestCase
 {
     private array $dummyHelpers = [

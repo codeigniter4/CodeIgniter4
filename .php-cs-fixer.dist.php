@@ -44,6 +44,7 @@ $finder = Finder::create()
 $overrides = [
     // for updating to coding-standard
     'modernize_strpos'    => true,
+    'ordered_attributes'  => ['order' => [], 'sort_algorithm' => 'alpha'],
     'php_unit_attributes' => true,
 ];
 

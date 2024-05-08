@@ -72,8 +72,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         return $buffer;
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testExistence(): void
     {
         $this->prepare();
@@ -82,8 +82,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertHeaderEmitted('Content-Security-Policy:');
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testReportOnly(): void
     {
         $this->prepare();
@@ -93,8 +93,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertHeaderEmitted('Content-Security-Policy:');
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testDefaults(): void
     {
         $this->prepare();
@@ -110,8 +110,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("style-src 'self';", $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testChildSrc(): void
     {
         $this->prepare();
@@ -125,8 +125,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("child-src 'self' good.com;", $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testConnectSrc(): void
     {
         $this->prepare();
@@ -139,8 +139,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("connect-src 'self' iffy.com maybe.com;", $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testFontSrc(): void
     {
         $this->prepare();
@@ -155,8 +155,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString('font-src fontsrus.com;', $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testFormAction(): void
     {
         $this->prepare();
@@ -171,8 +171,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringNotContainsString("form-action 'self';", $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testFrameAncestor(): void
     {
         $this->prepare();
@@ -186,8 +186,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("frame-ancestors 'self';", $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testFrameSrc(): void
     {
         $this->prepare();
@@ -201,8 +201,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("frame-src 'self';", $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testImageSrc(): void
     {
         $this->prepare();
@@ -216,8 +216,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("img-src 'self' cdn.cloudy.com;", $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testMediaSrc(): void
     {
         $this->prepare();
@@ -231,8 +231,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("media-src 'self';", $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testManifestSrc(): void
     {
         $this->prepare();
@@ -246,8 +246,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString('manifest-src cdn.cloudy.com;', $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testPluginType(): void
     {
         $this->prepare();
@@ -261,8 +261,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("plugin-types 'self';", $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testPluginArray(): void
     {
         $this->prepare();
@@ -274,8 +274,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString('plugin-types application/x-shockwave-flash application/wacky-hacky;', $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testObjectSrc(): void
     {
         $this->prepare();
@@ -289,8 +289,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("object-src 'self' cdn.cloudy.com;", $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testScriptSrc(): void
     {
         $this->prepare();
@@ -304,8 +304,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("script-src 'self' cdn.cloudy.com;", $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testStyleSrc(): void
     {
         $this->prepare();
@@ -319,8 +319,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("style-src 'self' cdn.cloudy.com;", $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testBaseURIDefault(): void
     {
         $this->prepare();
@@ -330,8 +330,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("base-uri 'self';", $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testBaseURI(): void
     {
         $this->prepare();
@@ -342,8 +342,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString('base-uri example.com;', $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testBaseURIRich(): void
     {
         $this->prepare();
@@ -354,8 +354,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("base-uri 'self' example.com;", $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testDefaultSrc(): void
     {
         $this->prepare();
@@ -368,8 +368,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString('default-src iffy.com;', $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testReportURI(): void
     {
         $this->prepare();
@@ -381,8 +381,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString('report-uri http://example.com/csptracker;', $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testSandboxFlags(): void
     {
         $this->prepare();
@@ -395,8 +395,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString('sandbox allow-popups allow-top-navigation;', $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testUpgradeInsecureRequests(): void
     {
         $this->prepare();
@@ -407,8 +407,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString('upgrade-insecure-requests;', $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testBodyEmpty(): void
     {
         $this->prepare();
@@ -418,8 +418,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertSame($body, $this->response->getBody());
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testBodyScriptNonce(): void
     {
         $this->prepare();
@@ -493,8 +493,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result->assertHeader('Content-Security-Policy');
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testBodyStyleNonce(): void
     {
         $this->prepare();
@@ -530,8 +530,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString('nonce=', $response->getBody());
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testHeaderWrongCaseNotFound(): void
     {
         $this->prepare();
@@ -541,8 +541,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertNull($result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testHeaderIgnoreCase(): void
     {
         $this->prepare();
@@ -552,8 +552,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("base-uri 'self';", $result);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testCSPDisabled(): void
     {
         $this->prepare(false);
@@ -581,8 +581,8 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertMatchesRegularExpression('/\A[0-9a-z]{24}\z/', $nonce);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testHeaderScriptNonceEmittedOnceGetScriptNonceCalled(): void
     {
         $this->prepare();

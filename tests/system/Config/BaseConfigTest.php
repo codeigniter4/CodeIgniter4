@@ -101,8 +101,8 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('123456', $config->password);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testServerValues(): void
     {
         $_SERVER = [
@@ -195,8 +195,8 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->second);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testSetsDefaultValuesEncryptionUsingHex2Bin(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
@@ -208,8 +208,8 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('OpenSSL', $config->driver);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testSetDefaultValuesEncryptionUsingBase64(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');

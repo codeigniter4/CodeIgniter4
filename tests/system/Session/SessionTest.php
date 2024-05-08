@@ -29,9 +29,9 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 /**
  * @internal
  */
-#[RunTestsInSeparateProcesses]
-#[PreserveGlobalState(false)]
 #[Group('SeparateProcess')]
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class SessionTest extends CIUnitTestCase
 {
     protected function setUp(): void

@@ -243,24 +243,24 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertInstanceOf(Cell::class, $actual);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testNewSession(): void
     {
         $actual = Services::session();
         $this->assertInstanceOf(Session::class, $actual);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testNewSessionWithNullConfig(): void
     {
         $actual = Services::session(null, false);
         $this->assertInstanceOf(Session::class, $actual);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testCallStatic(): void
     {
         // __callStatic should kick in for this but fail
@@ -271,8 +271,8 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertInstanceOf(Session::class, $actual);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testCallStaticDirectly(): void
     {
         //      $actual = \CodeIgniter\Config\Services::SeSsIoN(null, false); // original
@@ -280,8 +280,8 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertInstanceOf(Session::class, $actual);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testMockInjection(): void
     {
         Services::injectMock('response', new MockResponse(new App()));
@@ -300,8 +300,8 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertSame($response, $response3);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testReset(): void
     {
         Services::injectMock('response', new MockResponse(new App()));
@@ -317,8 +317,8 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertNotSame($response2, $response);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testResetSingle(): void
     {
         Services::injectMock('response', new MockResponse(new App()));

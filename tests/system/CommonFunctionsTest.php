@@ -272,8 +272,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame($data, esc($data, 'raw'));
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testSessionInstance(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -285,8 +285,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertInstanceOf(Session::class, session());
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testSessionVariable(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -300,8 +300,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame('Hi there', session('notbogus'));
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testSessionVariableNotThere(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -426,8 +426,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertInstanceOf(JobModel::class, model(JobModel::class));
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testOldInput(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -463,8 +463,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame('fritz', old('zibble'));
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testOldInputSerializeData(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -501,8 +501,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
      */
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testOldInputArray(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -620,8 +620,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertTrue($answer1->hasCookie('login_time'));
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testTrace(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -645,8 +645,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertStringContainsString('<h1>is_not</h1>', view('\Tests\Support\View\Views\simples'));
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testForceHttpsNullRequestAndResponse(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -761,8 +761,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         Kint::$cli_detection = $cliDetection;
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testTraceWithCSP(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.

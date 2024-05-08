@@ -45,8 +45,8 @@ final class ResponseSendTest extends CIUnitTestCase
      * The tests includes a basic sanity check, to make sure that
      * the body we thought would be sent actually was.
      */
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testHeadersMissingDate(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -81,8 +81,8 @@ final class ResponseSendTest extends CIUnitTestCase
      * This test does not test that CSP is handled properly -
      * it makes sure that sending gives CSP a chance to do its thing.
      */
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testHeadersWithCSP(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -120,8 +120,8 @@ final class ResponseSendTest extends CIUnitTestCase
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1393
      */
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testRedirectResponseCookies(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.

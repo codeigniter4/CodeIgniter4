@@ -46,9 +46,9 @@ final class ParserPluginTest extends CIUnitTestCase
         $this->assertSame(current_url(), $this->parser->renderString($template));
     }
 
-    #[RunInSeparateProcess]
-    #[PreserveGlobalState(false)]
     #[Group('SeparateProcess')]
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testPreviousURL(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.

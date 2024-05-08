@@ -94,8 +94,8 @@ final class HoneypotTest extends CIUnitTestCase
         $this->assertSame($expected, $request);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testAfter(): void
     {
         $this->config->globals = [
@@ -114,8 +114,8 @@ final class HoneypotTest extends CIUnitTestCase
         $this->assertStringContainsString($this->honey->name, $this->response->getBody());
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testAfterNotApplicable(): void
     {
         $this->config->globals = [
