@@ -76,9 +76,9 @@ final class CLITest extends CIUnitTestCase
         $time = time();
         CLI::wait(0);
 
-        $this->assertCloseEnough(0, time() - $time);
-
         PhpStreamWrapper::restore();
+
+        $this->assertCloseEnough(0, time() - $time);
     }
 
     public function testPrompt(): void
@@ -90,9 +90,9 @@ final class CLITest extends CIUnitTestCase
 
         $output = CLI::prompt('What is your favorite color?');
 
-        $this->assertSame($expected, $output);
-
         PhpStreamWrapper::restore();
+
+        $this->assertSame($expected, $output);
     }
 
     public function testPromptByMultipleKeys(): void
@@ -105,14 +105,13 @@ final class CLITest extends CIUnitTestCase
         $options = ['Playing game', 'Sleep', 'Badminton'];
         $output  = CLI::promptByMultipleKeys('Select your hobbies:', $options);
 
+        PhpStreamWrapper::restore();
+
         $expected = [
             0 => 'Playing game',
             1 => 'Sleep',
         ];
-
         $this->assertSame($expected, $output);
-
-        PhpStreamWrapper::restore();
     }
 
     public function testNewLine(): void
