@@ -50,8 +50,9 @@ Example:
 
 .. literalinclude:: files/014.php
 
-Now you may use the ``ConfigCollection`` anywhere in your project to access all App Config files without
-having to re-call the collection methods every time.
+Now you may use the ``ConfigCollection`` anywhere in your project to access all
+PHP files in **app/Config/** without having to re-call the collection methods
+every time.
 
 set(array $files)
 =================
