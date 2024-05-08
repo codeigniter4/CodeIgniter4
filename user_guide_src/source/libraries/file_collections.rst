@@ -44,7 +44,9 @@ define()
 ========
 
 Allows child classes to define their own initial files. This method is called by the constructor and allows
-predefined collections without having to use their methods. Example:
+predefined collections without having to use their methods.
+
+Example:
 
 .. literalinclude:: files/014.php
 
