@@ -131,8 +131,8 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->assertSame('http://example.com/index.php/foo', $response->getHeaderLine('Location'));
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testWithInput(): void
     {
         $_SESSION = [];
@@ -149,8 +149,8 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->assertSame('baz', $_SESSION['_ci_old_input']['post']['bar']);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testWithValidationErrors(): void
     {
         $_SESSION = [];
@@ -167,8 +167,8 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->assertArrayHasKey('_ci_validation_errors', $_SESSION);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testWith(): void
     {
         $_SESSION = [];
@@ -181,8 +181,8 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->assertArrayHasKey('foo', $_SESSION);
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testRedirectBack(): void
     {
         $_SERVER['HTTP_REFERER'] = 'http://somewhere.com';
@@ -196,8 +196,8 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->assertSame('http://somewhere.com', $returned->header('location')->getValue());
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testRedirectBackMissing(): void
     {
         $_SESSION = [];
@@ -212,8 +212,8 @@ final class RedirectResponseTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/2119
      */
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testRedirectRouteBaseUrl(): void
     {
         $config          = new App();
@@ -249,8 +249,8 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->assertTrue($response->hasCookie('foo', 'bar'));
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testWithCookiesWithEmptyCookies(): void
     {
         $_SESSION = [];

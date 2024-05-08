@@ -40,9 +40,9 @@ use Tests\Support\Filters\RedirectFilter;
 /**
  * @internal
  */
-#[RunTestsInSeparateProcesses]
 #[BackupGlobals(true)]
 #[Group('Others')]
+#[RunTestsInSeparateProcesses]
 final class CodeIgniterTest extends CIUnitTestCase
 {
     private CodeIgniter $codeigniter;

@@ -36,9 +36,9 @@ use Tests\Support\RESTful\Worker2;
  *
  * @internal
  */
-#[RunTestsInSeparateProcesses]
-#[PreserveGlobalState(false)]
 #[Group('SeparateProcess')]
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class ResourcePresenterTest extends CIUnitTestCase
 {
     private CodeIgniter $codeigniter;

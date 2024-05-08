@@ -22,8 +22,8 @@ use PHPUnit\Framework\Attributes\Group;
 /**
  * @internal
  */
-#[Group('Others')]
 #[CoversClass(DebugTraceableTrait::class)]
+#[Group('Others')]
 final class DebugTraceableTraitTest extends CIUnitTestCase
 {
     public function testFactoryInstanceReturnsWhereItIsRaised(): void

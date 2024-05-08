@@ -88,8 +88,8 @@ final class GenerateKeyTest extends CIUnitTestCase
         $this->assertStringContainsString('hex2bin:', $this->getBuffer());
     }
 
-    #[RunInSeparateProcess]
     #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testGenerateKeyCreatesNewKey(): void
     {
         command('key:generate');
