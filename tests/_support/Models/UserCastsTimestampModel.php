@@ -28,8 +28,8 @@ class UserCastsTimestampModel extends Model
         'id'         => 'int',
         'name'       => 'base64',
         'email'      => 'json-array',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'created_at' => '?datetime',
+        'updated_at' => '?datetime',
     ];
     protected array $castHandlers = [
         'base64' => CastBase64::class,
