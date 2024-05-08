@@ -330,7 +330,9 @@ class CLI
         CLI::write($text);
         CLI::printKeysAndValues($options);
         CLI::newLine();
-        $input = static::prompt($extraOutput) ?: 0; // 0 is default
+
+        $input = static::prompt($extraOutput);
+        $input = ($input === '') ? '0' : $input; // 0 is default
 
         // validation
         while (true) {
@@ -349,7 +351,9 @@ class CLI
             if (! $pattern || $maxOptions < $maxInput) {
                 static::error('Please select correctly.');
                 CLI::newLine();
-                $input = static::prompt($extraOutput) ?: 0;
+
+                $input = static::prompt($extraOutput);
+                $input = ($input === '') ? '0' : $input;
             } else {
                 break;
             }
