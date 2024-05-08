@@ -429,15 +429,24 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testGetDirFileInfo(): void
     {
-        $file = SUPPORTPATH . 'Files/baker/banana.php';
-        $info = get_file_info($file);
+        $file1 = SUPPORTPATH . 'Files/baker/banana.php';
+        $info1 = get_file_info($file1);
+        $file2 = SUPPORTPATH . 'Files/baker/fig_3.php.txt';
+        $info2 = get_file_info($file2);
 
         $expected = [
             'banana.php' => [
                 'name'          => 'banana.php',
-                'server_path'   => $file,
-                'size'          => $info['size'],
-                'date'          => $info['date'],
+                'server_path'   => $file1,
+                'size'          => $info1['size'],
+                'date'          => $info1['date'],
+                'relative_path' => realpath(__DIR__ . '/../../_support/Files/baker'),
+            ],
+            'fig_3.php.txt' => [
+                'name'          => 'fig_3.php.txt',
+                'server_path'   => $file2,
+                'size'          => $info2['size'],
+                'date'          => $info2['date'],
                 'relative_path' => realpath(__DIR__ . '/../../_support/Files/baker'),
             ],
         ];
