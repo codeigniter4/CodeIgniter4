@@ -451,7 +451,10 @@ final class FilesystemHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame($expected, get_dir_file_info(SUPPORTPATH . 'Files/baker'));
+        $result = get_dir_file_info(SUPPORTPATH . 'Files/baker');
+        ksort($result);
+
+        $this->assertSame($expected, $result);
     }
 
     public function testGetDirFileInfoNested(): void
