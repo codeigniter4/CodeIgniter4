@@ -123,7 +123,8 @@ it accordingly.
 
 .. literalinclude:: errors/013.php
 
-After that, subsequent deprecations will be logged instead of thrown.
+After that, subsequent deprecations will be logged as configured without throwing
+as exceptions.
 
 This feature also works with user deprecations:
 
