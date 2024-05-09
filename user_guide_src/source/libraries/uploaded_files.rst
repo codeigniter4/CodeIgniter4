@@ -14,9 +14,11 @@ class.
     :local:
     :depth: 2
 
-***********
-The Process
-***********
+.. _file-upload-form-tutorial:
+
+*************************
+File Upload Form Tutorial
+*************************
 
 Uploading a file involves the following general process:
 
