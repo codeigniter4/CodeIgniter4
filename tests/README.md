@@ -62,8 +62,8 @@ exclude `@DatabaseLive` group. This will make the tests run quite a bit faster.
 ## Groups
 
 Each test class that we are running should belong to at least one
-[Group](https://docs.phpunit.de/en/10.5/attributes.html#group) attribute that is
-written at class-level doc block.
+[Group](https://docs.phpunit.de/en/10.5/attributes.html#group) attribute to the
+test class.
 
 The available groups to use are:
 
