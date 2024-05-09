@@ -43,7 +43,9 @@ this code and save it to your **app/Views** directory:
 
 You'll notice we are using a form helper to create the opening form tag.
 File uploads require a multipart form, so the helper creates the proper
-syntax for you. You'll also notice we have an ``$errors`` variable. This is
+syntax for you.
+
+You'll also notice we have an ``$errors`` variable. This is
 so we can show error messages in the event the user does something
 wrong.
 
