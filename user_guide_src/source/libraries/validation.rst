@@ -885,6 +885,8 @@ Available Rules
 .. literalinclude:: validation/038.php
    :lines: 2-
 
+.. _rules-for-general-use:
+
 Rules for General Use
 =====================
 
@@ -1056,6 +1058,8 @@ parameter of all file upload related rules::
     $this->validateData([], [
         'avatar' => 'uploaded[avatar]|max_size[avatar,1024]',
     ]);
+
+See also :ref:`file-upload-form-tutorial`.
 
 ======================= ========== ============================================= ===================================================
 Rule                    Parameter  Description                                   Example
