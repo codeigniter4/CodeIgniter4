@@ -559,7 +559,7 @@ consistently outperform almost all relational database setups.
 
 In addition, if performance is your only concern, you may want to look
 into using `tmpfs <https://eddmann.com/posts/storing-php-sessions-file-caches-in-memory-using-tmpfs/>`_,
- which can make your sessions blazing fast.
+which can make your sessions blazing fast.
 
 .. _sessions-databasehandler-driver:
 
