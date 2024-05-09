@@ -180,7 +180,7 @@ class RedisHandler extends BaseHandler
 
         do {
             // Scan for some keys
-            $keys = $this->redis->scan($iterator, $pattern);
+            $keys = $this->redis->scan($iterator, $this->prefix.$pattern);
 
             // Redis may return empty results, so protect against that
             if ($keys !== false) {
