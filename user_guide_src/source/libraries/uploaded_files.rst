@@ -2,8 +2,10 @@
 Working with Uploaded Files
 ###########################
 
-CodeIgniter makes working with files uploaded through a form much simpler and more secure than using PHP's ``$_FILES``
-array directly. This extends the :doc:`File class </libraries/files>` and thus gains all of the features of that class.
+CodeIgniter makes working with files uploaded through a form much simpler and
+more secure than using PHP's ``$_FILES`` array directly. This extends the
+:doc:`File class </libraries/files>` and thus gains all of the features of that
+class.
 
 .. note:: This is not the same as the File Uploading class in CodeIgniter 3.
     This provides a raw interface to the uploaded files with a few small features.
