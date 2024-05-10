@@ -13,7 +13,7 @@ locating and working with groups of files across the filesystem.
 Basic Usage
 ***********
 
-At its most basic, ``FileCollection`` is an index
+At its most basic, ``FileCollection`` is an array
 of files you set or build:
 
 .. literalinclude:: files/011.php
