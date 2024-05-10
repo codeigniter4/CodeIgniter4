@@ -43,7 +43,7 @@ How Do Sessions Work?
 =====================
 
 When a page is loaded, the session class will check to see if a valid
-session cookie is sent by the user's browser. If a sessions cookie does
+session cookie is sent by the user's browser. If a session cookie does
 **not** exist (or if it doesn't match one stored on the server or has
 expired) a new session will be created and saved.
 
@@ -480,7 +480,7 @@ Preference           Default         Description
 **sameSite**   Lax             The SameSite setting for the session cookie
 ============== =============== ===========================================================================
 
-.. note:: The ``httponly`` setting doesn't have an effect on sessions.
+.. note:: The ``httponly`` setting (in **app/Config/Cookie.php**) doesn't have an effect on sessions.
     Instead the HttpOnly parameter is always enabled, for security
     reasons. Additionally, the ``Config\Cookie::$prefix`` setting is completely
     ignored.
@@ -488,7 +488,7 @@ Preference           Default         Description
 Session Drivers
 ***************
 
-As already mentioned, the Session library comes with 4 handlers, or storage
+As already mentioned, the Session library comes with five handlers, or storage
 engines, that you can use:
 
   - CodeIgniter\\Session\\Handlers\\FileHandler
@@ -497,12 +497,12 @@ engines, that you can use:
   - CodeIgniter\\Session\\Handlers\\RedisHandler
   - CodeIgniter\\Session\\Handlers\\ArrayHandler
 
-By default, the ``FileHandler`` Driver will be used when a session is initialized,
+By default, the ``FileHandler`` will be used when a session is initialized,
 because it is the safest choice and is expected to work everywhere
 (virtually every environment has a file system).
 
-However, any other driver may be selected via the ``public $driver``
-line in your **app/Config/Session.php** file, if you chose to do so.
+However, any other driver may be selected via the ``$driver``
+setting in your **app/Config/Session.php** file, if you chose to do so.
 Have it in mind though, every driver has different caveats, so be sure to
 get yourself familiar with them (below) before you make that choice.
 
@@ -515,22 +515,20 @@ FileHandler Driver (the default)
 The 'FileHandler' driver uses your file system for storing session data.
 
 It can safely be said that it works exactly like PHP's own default session
-implementation, but in case this is an important detail for you, have it
-mind that it is in fact not the same code and it has some limitations
-(and advantages).
+implementation, but in case this is an important detail for you, in fact it is not the same code
+and it has some limitations (and advantages).
 
 To be more specific, it doesn't support PHP's `directory level and mode
 formats used in session.save_path
 <https://www.php.net/manual/en/session.configuration.php#ini.session.save-path>`_,
 and it has most of the options hard-coded for safety. Instead, only
-absolute paths are supported for ``public string $savePath``.
+absolute paths are supported with ``$savePath`` setting.
 
 Another important thing that you should know, is to make sure that you
 don't use a publicly-readable or shared directory for storing your session
-files. Make sure that *only you* have access to see the contents of your
-chosen *savePath* directory. Otherwise, anybody who can do that, can
-also steal any of the current sessions (also known as "session fixation"
-attack).
+files. *Only you* should have access to the contents of your
+chosen *savePath* directory. Otherwise, anybody can see and
+steal session data (also known as "session fixation" attack).
 
 On UNIX-like operating systems, this is usually achieved by setting the
 0700 mode permissions on that directory via the `chmod` command, which
@@ -554,14 +552,14 @@ Some of you will probably opt to choose another session driver because
 file storage is usually slower. This is only half true.
 
 A very basic test will probably trick you into believing that an SQL
-database is faster, but in 99% of the cases, this is only true while you
-only have a few current sessions. As the sessions count and server loads
+database is faster, but in 99% of the cases, this is true only if you
+have a few current sessions. As the sessions count and server loads
 increase - which is the time when it matters - the file system will
 consistently outperform almost all relational database setups.
 
 In addition, if performance is your only concern, you may want to look
 into using `tmpfs <https://eddmann.com/posts/storing-php-sessions-file-caches-in-memory-using-tmpfs/>`_,
-(warning: external resource), which can make your sessions blazing fast.
+which can make your sessions blazing fast.
 
 .. _sessions-databasehandler-driver:
 
@@ -571,19 +569,15 @@ DatabaseHandler Driver
 .. important:: Only MySQL and PostgreSQL databases are officially
     supported, due to lack of advisory locking mechanisms on other
     platforms. Using sessions without locks can cause all sorts of
-    problems, especially with heavy usage of AJAX, and we will not
-    support such cases. Use the :ref:`session-close` method after you've
-    done processing session data if you're having performance
-    issues.
+    problems, especially with heavy usage of AJAX. Use the :ref:`session-close` method
+    after you've done processing session data if you're having performance issues.
 
 The 'DatabaseHandler' driver uses a relational database such as MySQL or
 PostgreSQL to store sessions. This is a popular choice among many users,
 because it allows the developer easy access to the session data within
 an application - it is just another table in your database.
 
-However, there are some conditions that must be met:
-
-  - You can NOT use a persistent connection.
+However, there is a restriction: You can NOT use a persistent connection.
 
 Configure DatabaseHandler
 -------------------------
@@ -602,7 +596,7 @@ you would do this:
 Creating Database Table
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-And then of course, create the database table ...
+And then of course, create the database table.
 
 For MySQL::
 
@@ -691,7 +685,7 @@ The downside is that it is not as ubiquitous as relational databases and
 requires the `phpredis <https://github.com/phpredis/phpredis>`_ PHP
 extension to be installed on your system, and that one doesn't come
 bundled with PHP.
-Chances are, you're only be using the RedisHandler driver only if you're already
+Chances are, you're using the RedisHandler driver only if you're already
 both familiar with Redis and using it for other purposes.
 
 Configure RedisHandler
@@ -700,9 +694,9 @@ Configure RedisHandler
 Just as with the 'FileHandler' and 'DatabaseHandler' drivers, you must also configure
 the storage location for your sessions via the
 ``$savePath`` setting.
-The format here is a bit different and complicated at the same time. It is
+The format here is a bit different and complicated. It is
 best explained by the *phpredis* extension's README file, so we'll simply
-link you to it:
+give a link to it:
 
     https://github.com/phpredis/phpredis
 
