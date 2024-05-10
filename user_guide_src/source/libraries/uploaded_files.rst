@@ -2,8 +2,10 @@
 Working with Uploaded Files
 ###########################
 
-CodeIgniter makes working with files uploaded through a form much simpler and more secure than using PHP's ``$_FILES``
-array directly. This extends the :doc:`File class </libraries/files>` and thus gains all of the features of that class.
+CodeIgniter makes working with files uploaded through a form much simpler and
+more secure than using PHP's ``$_FILES`` array directly. This extends the
+:doc:`File class </libraries/files>` and thus gains all of the features of that
+class.
 
 .. note:: This is not the same as the File Uploading class in CodeIgniter 3.
     This provides a raw interface to the uploaded files with a few small features.
@@ -12,9 +14,11 @@ array directly. This extends the :doc:`File class </libraries/files>` and thus g
     :local:
     :depth: 2
 
-***********
-The Process
-***********
+.. _file-upload-form-tutorial:
+
+*************************
+File Upload Form Tutorial
+*************************
 
 Uploading a file involves the following general process:
 
@@ -33,13 +37,15 @@ Creating the Upload Form
 ========================
 
 Using a text editor, create a form called **upload_form.php**. In it, place
-this code and save it to your **app/Views/** directory:
+this code and save it to your **app/Views** directory:
 
 .. literalinclude:: uploaded_files/001.php
 
 You'll notice we are using a form helper to create the opening form tag.
 File uploads require a multipart form, so the helper creates the proper
-syntax for you. You'll also notice we have an ``$errors`` variable. This is
+syntax for you.
+
+You'll also notice we have an ``$errors`` variable. This is
 so we can show error messages in the event the user does something
 wrong.
 
@@ -47,7 +53,7 @@ The Success Page
 ================
 
 Using a text editor, create a form called **upload_success.php**. In it,
-place this code and save it to your **app/Views/** directory::
+place this code and save it to your **app/Views** directory::
 
     <!DOCTYPE html>
     <html lang="en">
@@ -73,13 +79,23 @@ The Controller
 ==============
 
 Using a text editor, create a controller called **Upload.php**. In it, place
-this code and save it to your **app/Controllers/** directory:
+this code and save it to your **app/Controllers** directory:
 
 .. literalinclude:: uploaded_files/002.php
 
-.. note:: Since the value of a file upload HTML field doesn't exist, and is stored in the ``$_FILES`` global,
-    only :ref:`rules-for-file-uploads` can be used to validate upload file with :doc:`validation`.
-    The rule ``required`` also can't be used, so use ``uploaded`` instead.
+Since the value of a file upload HTML field doesn't exist, and is stored in the
+``$_FILES`` global, only :ref:`rules-for-file-uploads` can be used to validate
+upload file with :doc:`validation`.
+
+The rule ``required`` cannot be used either, so if the file is required, use
+the rule ``uploaded`` instead.
+
+Note that an empty array (``[]``) is passed as the first argument to
+``$this->validateData()``. It is because the file validation rules get the data
+for the uploaded file directly from the Request object.
+
+If the form has fields other than file upload, pass the field data as the first
+argument.
 
 The Routes
 ==========

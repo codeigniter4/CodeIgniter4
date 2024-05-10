@@ -885,6 +885,8 @@ Available Rules
 .. literalinclude:: validation/038.php
    :lines: 2-
 
+.. _rules-for-general-use:
+
 Rules for General Use
 =====================
 
@@ -1044,9 +1046,10 @@ file validation.
     files. Therefore, adding any general rules, like ``permit_empty``, to file
     validation rules array or string, the file validation will not work correctly.
 
-Since the value of a file upload HTML field doesn't exist, and is stored in the ``$_FILES`` global, the name of the input field will
-need to be used twice. Once to specify the field name as you would for any other rule, but again as the first parameter of all
-file upload related rules::
+Since the value of a file upload HTML field doesn't exist, and is stored in the
+``$_FILES`` global, the name of the input field will need to be used twice. Once
+to specify the field name as you would for any other rule, but again as the first
+parameter of all file upload related rules::
 
     // In the HTML
     <input type="file" name="avatar">
@@ -1055,6 +1058,8 @@ file upload related rules::
     $this->validateData([], [
         'avatar' => 'uploaded[avatar]|max_size[avatar,1024]',
     ]);
+
+See also :ref:`file-upload-form-tutorial`.
 
 ======================= ========== ============================================= ===================================================
 Rule                    Parameter  Description                                   Example
