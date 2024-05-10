@@ -270,6 +270,10 @@ Config Caching
 
 .. versionadded:: 4.4.0
 
+.. important:: Do not use this feature unless you have carefully read this section
+    and understand how this feature works. Otherwise, your application will not
+    function properly.
+
 To improve performance, Config Caching has been implemented.
 
 Prerequisite
@@ -286,6 +290,9 @@ Prerequisite
 
 How It Works
 ============
+
+.. important:: Once cached, configuration values are never changed until the cache
+    is deleted, even if the configuration file or **.env** is changed.
 
 - Save the all Config instances in Factories into a cache file before shutdown,
   if the state of the Config instances in Factories changes.

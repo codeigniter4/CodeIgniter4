@@ -56,6 +56,9 @@ See :ref:`modules-specify-composer-packages`.
 Config Caching
 ==============
 
+.. important:: Once cached, configuration values are never changed until the cache
+    is deleted, even if the configuration file or **.env** is changed.
+
 Caching the Config objects can improve performance. However, the cache must be
 manually deleted when changing Config values.
 
