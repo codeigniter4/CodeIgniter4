@@ -289,8 +289,9 @@
              
   <section id="file-collections">
 <h1>File Collections<a class="headerlink" href="#file-collections" title="Permalink to this heading"></a></h1>
-<p>Working with groups of files can be cumbersome, so the framework supplies the <code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> class to facilitate
-locating and working with groups of files across the filesystem.</p>
+<p>Working with groups of files can be cumbersome, so the framework supplies the
+<code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> class to facilitate locating and working with groups of files
+across the filesystem.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#basic-usage" id="id1">Basic Usage</a></p></li>
@@ -338,18 +339,20 @@ of files you set or build:</p>
 <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">addDirectory</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Filters&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>After you have input the files you would like to work with you may remove files or use the filtering commands to remove
-or retain files matching a certain regex or glob-style pattern:</p>
+<p>After you have input the files you would like to work with you may remove files
+or use the filtering commands to remove or retain files matching a certain regex
+or glob-style pattern:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removeFile</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Filters/DevelopToolbar&#39;</span><span class="p">);</span>
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removeFile</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Filters/DevelopToolbar.php&#39;</span><span class="p">);</span>
 
 <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removePattern</span><span class="p">(</span><span class="s1">&#39;#\.gitkeep#&#39;</span><span class="p">);</span>
 <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">&#39;*.php&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>When your collection is complete, you can use <code class="docutils literal notranslate"><span class="pre">get()</span></code> to retrieve the final list of file paths, or take advantage of
-<code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> being countable and iterable to work directly with each <code class="docutils literal notranslate"><span class="pre">File</span></code>:</p>
+<p>When your collection is complete, you can use <code class="docutils literal notranslate"><span class="pre">get()</span></code> to retrieve the final
+list of file paths, or take advantage of <code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> being countable and
+iterable to work directly with each <code class="docutils literal notranslate"><span class="pre">File</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="s1">&#39;My files: &#39;</span> <span class="o">.</span> <span class="nb">implode</span><span class="p">(</span><span class="nx">PHP_EOL</span><span class="p">,</span> <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">());</span>
@@ -367,14 +370,19 @@ or retain files matching a certain regex or glob-style pattern:</p>
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Starting a Collection</a><a class="headerlink" href="#starting-a-collection" title="Permalink to this heading"></a></h2>
 <section id="construct-string-files">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">__construct(string[] $files = [])</a><a class="headerlink" href="#construct-string-files" title="Permalink to this heading"></a></h3>
-<p>The constructor accepts an optional array of file paths to use as the initial collection. These are passed to
-<code class="docutils literal notranslate"><span class="pre">add()</span></code> so any files supplied by child classes in the <code class="docutils literal notranslate"><span class="pre">$files</span></code> will remain.</p>
+<p>The constructor accepts an optional array of file paths to use as the initial
+collection. These are passed to <code class="docutils literal notranslate"><span class="pre">add()</span></code> so any files supplied by child classes
+in the <code class="docutils literal notranslate"><span class="pre">$files</span></code> will remain.</p>
 </section>
 <section id="define">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">define()</a><a class="headerlink" href="#define" title="Permalink to this heading"></a></h3>
-<p>Allows child classes to define their own initial files. This method is called by the constructor and allows
-predefined collections without having to use their methods. Example:</p>
+<p>Allows child classes to define their own initial files. This method is called by
+the constructor and allows predefined collections without having to use their
+methods.</p>
+<p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Files\FileCollection</span><span class="p">;</span>
 
@@ -387,25 +395,28 @@ predefined collections without having to use their methods. Example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Now you may use the <code class="docutils literal notranslate"><span class="pre">ConfigCollection</span></code> anywhere in your project to access all App Config files without
-having to re-call the collection methods every time.</p>
+<p>Now you may use the <code class="docutils literal notranslate"><span class="pre">ConfigCollection</span></code> anywhere in your project to access all
+PHP files in <strong>app/Config/</strong> without having to re-call the collection methods
+every time.</p>
 </section>
 <section id="set-array-files">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">set(array $files)</a><a class="headerlink" href="#set-array-files" title="Permalink to this heading"></a></h3>
-<p>Sets the list of input files to the provided string array of file paths. This will remove any existing
-files from the collection, so <code class="docutils literal notranslate"><span class="pre">$collection-&gt;set([])</span></code> is essentially a hard reset.</p>
+<p>Sets the list of input files to the provided string array of file paths. This
+will remove any existing files from the collection, so <code class="docutils literal notranslate"><span class="pre">$collection-&gt;set([])</span></code>
+is essentially a hard reset.</p>
 </section>
 </section>
 <section id="inputting-files">
 <h2><a class="toc-backref" href="#id6" role="doc-backlink">Inputting Files</a><a class="headerlink" href="#inputting-files" title="Permalink to this heading"></a></h2>
 <section id="add-string-string-paths-bool-recursive-true">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">add(string[]|string $paths, bool $recursive = true)</a><a class="headerlink" href="#add-string-string-paths-bool-recursive-true" title="Permalink to this heading"></a></h3>
-<p>Adds all files indicated by the path or array of paths. If the path resolves to a directory then <code class="docutils literal notranslate"><span class="pre">$recursive</span></code>
-will include sub-directories.</p>
+<p>Adds all files indicated by the path or array of paths. If the path resolves to
+a directory then <code class="docutils literal notranslate"><span class="pre">$recursive</span></code> will include sub-directories.</p>
 </section>
 <section id="addfile-string-file-addfiles-array-files">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">addFile(string $file) / addFiles(array $files)</a><a class="headerlink" href="#addfile-string-file-addfiles-array-files" title="Permalink to this heading"></a></h3>
-<p>Adds the file or files to the current list of input files. Files are absolute paths to actual files.</p>
+<p>Adds the file or files to the current list of input files. Files are absolute
+paths to actual files.</p>
 </section>
 <section id="removefile-string-file-removefiles-array-files">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">removeFile(string $file) / removeFiles(array $files)</a><a class="headerlink" href="#removefile-string-file-removefiles-array-files" title="Permalink to this heading"></a></h3>
@@ -416,8 +427,8 @@ will include sub-directories.</p>
 </section>
 <section id="adddirectories-array-directories-bool-recursive-false">
 <h3><a class="toc-backref" href="#id11" role="doc-backlink">addDirectories(array $directories, bool $recursive = false)</a><a class="headerlink" href="#adddirectories-array-directories-bool-recursive-false" title="Permalink to this heading"></a></h3>
-<p>Adds all files from the directory or directories, optionally recursing into sub-directories. Directories are
-absolute paths to actual directories.</p>
+<p>Adds all files from the directory or directories, optionally recursing into
+sub-directories. Directories are absolute paths to actual directories.</p>
 </section>
 </section>
 <section id="filtering-files">
@@ -427,11 +438,13 @@ absolute paths to actual directories.</p>
 </section>
 <section id="retainpattern-string-pattern-string-scope-null">
 <h3><a class="toc-backref" href="#id14" role="doc-backlink">retainPattern(string $pattern, string $scope = null)</a><a class="headerlink" href="#retainpattern-string-pattern-string-scope-null" title="Permalink to this heading"></a></h3>
-<p>Filters the current file list through the pattern (and optional scope), removing or retaining matched
-files. <code class="docutils literal notranslate"><span class="pre">$pattern</span></code> may be a complete regex (like <code class="docutils literal notranslate"><span class="pre">'#[A-Za-z]+\.php#'</span></code>) or a pseudo-regex similar
-to <code class="docutils literal notranslate"><span class="pre">glob()</span></code> (like <code class="docutils literal notranslate"><span class="pre">*.css</span></code>).
-If a <code class="docutils literal notranslate"><span class="pre">$scope</span></code> is provided then only files in or under that directory will be considered (i.e. files
-outside of <code class="docutils literal notranslate"><span class="pre">$scope</span></code> are always retained). When no scope is provided then all files are subject.</p>
+<p>Filters the current file list through the pattern (and optional scope), removing
+or retaining matched files.</p>
+<p><code class="docutils literal notranslate"><span class="pre">$pattern</span></code> may be a complete regex (like <code class="docutils literal notranslate"><span class="pre">'#\A[A-Za-z]+\.php\z#'</span></code>) or a
+pseudo-regex similar to <code class="docutils literal notranslate"><span class="pre">glob()</span></code> (like <code class="docutils literal notranslate"><span class="pre">'*.css'</span></code>).</p>
+<p>If a <code class="docutils literal notranslate"><span class="pre">$scope</span></code> is provided then only files in or under that directory will be
+considered (i.e. files outside of <code class="docutils literal notranslate"><span class="pre">$scope</span></code> are always retained). When no scope
+is provided then all files are subject.</p>
 <p>Examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -456,7 +469,8 @@ outside of <code class="docutils literal notranslate"><span class="pre">$scope</
 <p>Returns an array of all the loaded input files.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> is an <code class="docutils literal notranslate"><span class="pre">IteratorAggregate</span></code> so you can work with it directly (e.g. <code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">($collection</span> <span class="pre">as</span> <span class="pre">$file)</span></code>).</p>
+<p><code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> is an <code class="docutils literal notranslate"><span class="pre">IteratorAggregate</span></code> so you can work with it
+directly (e.g. <code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">($collection</span> <span class="pre">as</span> <span class="pre">$file)</span></code>).</p>
 </div>
 </section>
 </section>
