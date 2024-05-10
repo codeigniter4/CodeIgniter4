@@ -358,6 +358,11 @@ so specifying the packages to be scanned prevents unnecessary scanning.</p>
 </section>
 <section id="config-caching">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">Config Caching</a><a class="headerlink" href="#config-caching" title="Permalink to this heading"></a></h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Once cached, configuration values are never changed until the cache
+is deleted, even if the configuration file or <strong>.env</strong> is changed.</p>
+</div>
 <p>Caching the Config objects can improve performance. However, the cache must be
 manually deleted when changing Config values.</p>
 <p>See <a class="reference internal" href="../concepts/factories.html#factories-config-caching"><span class="std std-ref">Config Caching</span></a>.</p>
@@ -526,7 +531,7 @@ and create the <strong>.htaccess</strong> file:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 06, 2024.
+      <span class="lastupdated">Last updated on May 10, 2024.
       </span></p>
   </div>
 
