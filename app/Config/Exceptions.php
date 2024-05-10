@@ -60,12 +60,10 @@ class Exceptions extends BaseConfig
 
     /**
      * --------------------------------------------------------------------------
-     * LOG DEPRECATIONS INSTEAD OF THROWING?
+     * WHETHER TO THROW AN EXCEPTION ON DEPRECATED ERRORS
      * --------------------------------------------------------------------------
-     * By default, CodeIgniter converts deprecations into exceptions. Also,
-     * starting in PHP 8.1 will cause a lot of deprecated usage warnings.
-     * Use this option to temporarily cease the warnings and instead log those.
-     * This option also works for user deprecations.
+     * If set to `true`, DEPRECATED errors are only logged and no exceptions are
+     * thrown. This option also works for user deprecations.
      */
     public bool $logDeprecations = true;
 
