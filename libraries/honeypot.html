@@ -290,7 +290,7 @@
   <section id="honeypot-class">
 <h1>Honeypot Class<a class="headerlink" href="#honeypot-class" title="Permalink to this heading"></a></h1>
 <p>The Honeypot Class makes it possible to determine when a Bot makes a request to a CodeIgniter4 application,
-if it’s enabled in <strong>appConfigFilters.php</strong> file. This is done by attaching form fields to any form,
+if it’s enabled in <strong>app/Config/Filters.php</strong> file. This is done by attaching form fields to any form,
 and this form field is hidden from a human but accessible to a Bot. When data is entered into the field, it’s
 assumed the request is coming from a Bot, and you can throw a <code class="docutils literal notranslate"><span class="pre">HoneypotException</span></code>.</p>
 <nav class="contents local" id="contents">
@@ -332,7 +332,7 @@ from the <code class="docutils literal notranslate"><span class="pre">$globals</
 </div>
 <p>A sample Honeypot filter is bundled, as <strong>system/Filters/Honeypot.php</strong>.
 If it is not suitable, make your own at <strong>app/Filters/Honeypot.php</strong>,
-and modify the <code class="docutils literal notranslate"><span class="pre">$aliases</span></code> in the configuration appropriately.</p>
+and modify the <code class="docutils literal notranslate"><span class="pre">$aliases</span></code> in <strong>app/Config/Filters.php</strong> appropriately.</p>
 </section>
 <section id="customizing-honeypot">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Customizing Honeypot</a><a class="headerlink" href="#customizing-honeypot" title="Permalink to this heading"></a></h2>
@@ -345,7 +345,7 @@ and modify the <code class="docutils literal notranslate"><span class="pre">$ali
 <li><p><code class="docutils literal notranslate"><span class="pre">$template</span></code> - form field template used for the honeypot; default is <code class="docutils literal notranslate"><span class="pre">'&lt;label&gt;{label}&lt;/label&gt;&lt;input</span> <span class="pre">type=&quot;text&quot;</span> <span class="pre">name=&quot;{name}&quot;</span> <span class="pre">value=&quot;&quot;&gt;'</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$container</span></code> - container tag for the template; default is <code class="docutils literal notranslate"><span class="pre">'&lt;div</span> <span class="pre">style=&quot;display:none&quot;&gt;{template}&lt;/div&gt;'</span></code>.
 If you enables CSP, you can remove <code class="docutils literal notranslate"><span class="pre">style=&quot;display:none&quot;</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">$containerId</span></code> - [Since v4.3.0] this setting is used only when you enables CSP. You can change the id attribute for the container tag; default is <code class="docutils literal notranslate"><span class="pre">'hpc'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$containerId</span></code> - [Since v4.3.0] this setting is used only when you enable CSP. You can change the id attribute for the container tag; default is <code class="docutils literal notranslate"><span class="pre">'hpc'</span></code></p></li>
 </ul>
 </section>
 </section>
