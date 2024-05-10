@@ -159,7 +159,7 @@ final class DataCaster
             $params = array_map('trim', explode(',', $matches[2]));
         }
 
-        if ($isNullable) {
+        if ($isNullable && ! $this->strict) {
             $params[] = 'nullable';
         }
 
