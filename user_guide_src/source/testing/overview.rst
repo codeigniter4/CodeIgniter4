@@ -164,8 +164,12 @@ Ensure that a header or cookie was actually emitted:
 
 .. literalinclude:: overview/009.php
 
-.. note:: the test case with this should be `run as a separate process
-    in PHPunit <https://docs.phpunit.de/en/9.6/annotations.html#runinseparateprocess>`_.
+.. note:: The test case with this should be run as a separate process
+    (with `@runInSeparateProcess annotation`_ or `RunInSeparateProcess attribute`_)
+    in PHPUnit.
+
+.. _@runInSeparateProcess annotation: https://docs.phpunit.de/en/10.5/annotations.html#runinseparateprocess
+.. _RunInSeparateProcess attribute: https://docs.phpunit.de/en/10.5/attributes.html#runinseparateprocess
 
 assertHeaderNotEmitted($header, $ignoreCase = false)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -174,8 +178,9 @@ Ensure that a header or cookie was not emitted:
 
 .. literalinclude:: overview/010.php
 
-.. note:: the test case with this should be `run as a separate process
-    in PHPunit <https://docs.phpunit.de/en/9.6/annotations.html#runinseparateprocess>`_.
+.. note:: The test case with this should be run as a separate process
+    (with `@runInSeparateProcess annotation`_ or `RunInSeparateProcess attribute`_)
+    in PHPUnit.
 
 assertCloseEnough($expected, $actual, $message = '', $tolerance = 1)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

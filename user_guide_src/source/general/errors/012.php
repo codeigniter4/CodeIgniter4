@@ -7,8 +7,9 @@ use Psr\Log\LogLevel;
 
 class Exceptions extends BaseConfig
 {
-    // ... other properties
-
-    public bool $logDeprecations       = true;
-    public string $deprecationLogLevel = LogLevel::WARNING; // this should be one of the log levels supported by PSR-3
+    // ...
+    public bool $logDeprecations = true; // If set to false, an exception will be thrown.
+    // ...
+    public string $deprecationLogLevel = LogLevel::WARNING; // This should be one of the log levels supported by PSR-3.
+    // ...
 }

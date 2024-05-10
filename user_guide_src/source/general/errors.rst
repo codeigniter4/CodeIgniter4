@@ -94,12 +94,26 @@ Logging Deprecation Warnings
 
 .. versionadded:: 4.3.0
 
-By default, all errors reported by ``error_reporting()`` will be thrown as an ``ErrorException`` object. These
-include both ``E_DEPRECATED`` and ``E_USER_DEPRECATED`` errors. With the surge in use of PHP 8.1+, many users
-may see exceptions thrown for `passing null to non-nullable arguments of internal functions <https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg>`_.
-To ease the migration to PHP 8.1, you can instruct CodeIgniter to log the deprecations instead of throwing them.
+Prior to v4.3.0, all errors reported by ``error_reporting()`` will be thrown as
+an ``ErrorException`` object.
 
-First, make sure your copy of ``Config\Exceptions`` is updated with the two new properties and set as follows:
+But with the surge in use of PHP 8.1+, many users may see exceptions thrown for
+`passing null to non-nullable arguments of internal functions <https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg>`_.
+
+To ease the migration to PHP 8.1, starting with v4.3.0, CodeIgniter has the feature
+that only logs the deprecation errors (``E_DEPRECATED`` and ``E_USER_DEPRECATED``)
+without throwing them as exceptions.
+
+By default, CodeIgniter will only log deprecations without throwing exceptions in
+development environment. In production environment, no logging is done and no
+exceptions are thrown.
+
+Configuration
+^^^^^^^^^^^^^
+
+The settings for this feature are as follows.
+First, make sure your copy of ``Config\Exceptions`` is updated with the two new
+properties and set as follows:
 
 .. literalinclude:: errors/012.php
 
@@ -109,7 +123,8 @@ it accordingly.
 
 .. literalinclude:: errors/013.php
 
-After that, subsequent deprecations will be logged instead of thrown.
+After that, subsequent deprecations will be logged as configured without throwing
+as exceptions.
 
 This feature also works with user deprecations:
 

@@ -1,5 +1,7 @@
 <?php
 
+namespace App;
+
 use CodeIgniter\Files\FileCollection;
 
 class ConfigCollection extends FileCollection
