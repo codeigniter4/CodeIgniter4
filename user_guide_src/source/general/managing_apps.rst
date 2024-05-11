@@ -30,10 +30,12 @@ they can find the **Paths** configuration file:
 - **spark** runs command line apps.
 
   .. literalinclude:: managing_apps/002.php
+      :lines: 2-
 
 - **public/index.php** is the front controller for your webapp.
 
   .. literalinclude:: managing_apps/003.php
+      :lines: 2-
 
 .. _running-multiple-app:
 
