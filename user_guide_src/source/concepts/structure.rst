@@ -41,8 +41,6 @@ of this directory to suit your application's needs. For example, you might decid
 pattern and Entity Models to work with your data. In this case, you could rename the ``Models`` directory to
 ``Repositories``, and add a new ``Entities`` directory.
 
-.. note:: If you rename the ``Controllers`` directory, though, you will not be able to use the automatic method of
-        routing to controllers, and will need to define all of your routes in the routes file.
 
 All files in this directory live under the ``App`` namespace, though you are free to change that in
 **app/Config/Constants.php**.
