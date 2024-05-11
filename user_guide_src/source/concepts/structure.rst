@@ -12,15 +12,23 @@ can change to meet the needs of your application.
 Default Directories
 *******************
 
-A fresh install has five directories: ``app/``, ``public/``,
-``writable/``, ``tests/`` and ``vendor/`` or ``system/``.
+A fresh install has five directories:
+
+- **app**
+- **public**
+- **writable**
+- **tests**
+- **vendor** or **system**
+
 Each of these directories has a very specific part to play.
 
 app
 ===
 
-The ``app`` directory is where all of your application code lives. This comes with a default directory
-structure that works well for many applications. The following folders make up the basic contents:
+The **app** directory is where all of your application code lives. This comes with a default directory
+structure that works well for many applications.
+
+The following folders make up the basic contents:
 
 .. code-block:: none
 
@@ -36,11 +44,12 @@ structure that works well for many applications. The following folders make up t
         ThirdParty/     ThirdParty libraries that can be used in application
         Views/          Views make up the HTML that is displayed to the client
 
-Because the ``app`` directory is already namespaced, you should feel free to modify the structure
-of this directory to suit your application's needs. For example, you might decide to start using the Repository
-pattern and Entity Models to work with your data. In this case, you could rename the ``Models`` directory to
-``Repositories``, and add a new ``Entities`` directory.
+Because the **app** directory is already namespaced, you should feel free to modify the structure
+of this directory to suit your application's needs.
 
+For example, you might decide to start using the Repository
+pattern and Entities to work with your data. In this case, you could rename the **Models** directory to
+**Repositories**, and add a new **Entities** directory.
 
 All files in this directory live under the ``App`` namespace, though you are free to change that in
 **app/Config/Constants.php**.
@@ -48,7 +57,8 @@ All files in this directory live under the ``App`` namespace, though you are fre
 system
 ======
 
-.. note:: If you install CodeIgniter with Composer, the ``system`` is located in ``vendor/codeigniter4/framework/system``.
+.. note:: If you install CodeIgniter with Composer, the **system** is located in
+    **vendor/codeigniter4/framework/system**.
 
 This directory stores the files that make up the framework, itself. While you have a lot of flexibility in how you
 use the application directory, the files in the system directory should never be modified. Instead, you should
@@ -74,14 +84,16 @@ writable
 ========
 
 This directory holds any directories that might need to be written to in the course of an application's life.
-This includes directories for storing cache files, logs, and any uploads a user might send. You should add any other
+This includes directories for storing cache files, logs, and any uploads a user might send.
+
+You should add any other
 directories that your application will need to write to here. This allows you to keep your other primary directories
 non-writable as an added security measure.
 
 tests
 =====
 
-This directory is set up to hold your test files. The ``_support`` directory holds various mock classes and other
+This directory is set up to hold your test files. The **_support** directory holds various mock classes and other
 utilities that you can use while writing your tests. This directory does not need to be transferred to your
 production servers.
 
