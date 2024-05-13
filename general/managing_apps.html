@@ -294,22 +294,6 @@ manage one application, which you will build in your <strong>app</strong>
 directory. It is possible, however, to have multiple sets of
 applications that share a single CodeIgniter installation, or even to
 rename or relocate your application directory.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>When you installed CodeIgniter v4.1.9 or before, and if there are <code class="docutils literal notranslate"><span class="pre">App\\</span></code> and <code class="docutils literal notranslate"><span class="pre">Config\\</span></code> namespaces in your <code class="docutils literal notranslate"><span class="pre">/composer.json</span></code>’s <code class="docutils literal notranslate"><span class="pre">autoload.psr-4</span></code> like the following, you need to remove these lines, and run <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">dump-autoload</span></code>.</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>{
-    ...
-    &quot;autoload&quot;: {
-        &quot;psr-4&quot;: {
-            &quot;App\\&quot;: &quot;app&quot;,             &lt;-- Remove this line
-            &quot;Config\\&quot;: &quot;app/Config&quot;    &lt;-- Remove this line
-        }
-    },
-    ...
-}
-</pre></div>
-</div>
-</div>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#renaming-or-relocating-the-application-directory" id="id1">Renaming or Relocating the Application Directory</a></p></li>
@@ -339,18 +323,14 @@ your main <strong>app/Config/Paths.php</strong> and set a <em>full server path</
 <p>You will need to modify two additional files in your project root, so that
 they can find the <strong>Paths</strong> configuration file:</p>
 <ul>
-<li><p><strong>/spark</strong> runs command line apps.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">require</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;../app/Config/Paths.php&#39;</span><span class="p">;</span>
+<li><p><strong>spark</strong> runs command line apps.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">require</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;../app/Config/Paths.php&#39;</span><span class="p">;</span>
 <span class="c1">// ^^^ Change this line if you move your application folder</span>
 </pre></div>
 </div>
 </li>
-<li><p><strong>/public/index.php</strong> is the front controller for your webapp.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">require</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;../app/Config/Paths.php&#39;</span><span class="p">;</span>
+<li><p><strong>public/index.php</strong> is the front controller for your webapp.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">require</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;../app/Config/Paths.php&#39;</span><span class="p">;</span>
 <span class="c1">// ^^^ Change this line if you move your application folder</span>
 </pre></div>
 </div>
