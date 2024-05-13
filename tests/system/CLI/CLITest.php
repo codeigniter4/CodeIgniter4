@@ -76,9 +76,9 @@ final class CLITest extends CIUnitTestCase
         $time = time();
         CLI::wait(0);
 
-        $this->assertCloseEnough(0, time() - $time);
-
         PhpStreamWrapper::restore();
+
+        $this->assertCloseEnough(0, time() - $time);
     }
 
     public function testPrompt(): void
@@ -90,9 +90,83 @@ final class CLITest extends CIUnitTestCase
 
         $output = CLI::prompt('What is your favorite color?');
 
+        PhpStreamWrapper::restore();
+
         $this->assertSame($expected, $output);
+    }
+
+    public function testPromptInputNothing(): void
+    {
+        PhpStreamWrapper::register();
+
+        $input = '';
+        PhpStreamWrapper::setContent($input);
+
+        $output = CLI::prompt('What is your favorite color?', 'red');
 
         PhpStreamWrapper::restore();
+
+        $this->assertSame('red', $output);
+    }
+
+    public function testPromptInputZero(): void
+    {
+        PhpStreamWrapper::register();
+
+        $input = '0';
+        PhpStreamWrapper::setContent($input);
+
+        $output = CLI::prompt('What is your favorite number?', '7');
+
+        PhpStreamWrapper::restore();
+
+        $this->assertSame('0', $output);
+    }
+
+    public function testPromptByKey(): void
+    {
+        PhpStreamWrapper::register();
+
+        $input = '1';
+        PhpStreamWrapper::setContent($input);
+
+        $options = ['Playing game', 'Sleep', 'Badminton'];
+        $output  = CLI::promptByKey('Select your hobbies:', $options);
+
+        PhpStreamWrapper::restore();
+
+        $this->assertSame($input, $output);
+    }
+
+    public function testPromptByKeyInputNothing(): void
+    {
+        PhpStreamWrapper::register();
+
+        $input = ''; // This is when you press the Enter key.
+        PhpStreamWrapper::setContent($input);
+
+        $options = ['Playing game', 'Sleep', 'Badminton'];
+        $output  = CLI::promptByKey('Select your hobbies:', $options);
+
+        PhpStreamWrapper::restore();
+
+        $expected = '0';
+        $this->assertSame($expected, $output);
+    }
+
+    public function testPromptByKeyInputZero(): void
+    {
+        PhpStreamWrapper::register();
+
+        $input = '0';
+        PhpStreamWrapper::setContent($input);
+
+        $options = ['Playing game', 'Sleep', 'Badminton'];
+        $output  = CLI::promptByKey('Select your hobbies:', $options);
+
+        PhpStreamWrapper::restore();
+
+        $this->assertSame($input, $output);
     }
 
     public function testPromptByMultipleKeys(): void
@@ -105,14 +179,49 @@ final class CLITest extends CIUnitTestCase
         $options = ['Playing game', 'Sleep', 'Badminton'];
         $output  = CLI::promptByMultipleKeys('Select your hobbies:', $options);
 
+        PhpStreamWrapper::restore();
+
         $expected = [
             0 => 'Playing game',
             1 => 'Sleep',
         ];
-
         $this->assertSame($expected, $output);
+    }
+
+    public function testPromptByMultipleKeysInputNothing(): void
+    {
+        PhpStreamWrapper::register();
+
+        $input = ''; // This is when you press the Enter key.
+        PhpStreamWrapper::setContent($input);
+
+        $options = ['Playing game', 'Sleep', 'Badminton'];
+        $output  = CLI::promptByMultipleKeys('Select your hobbies:', $options);
 
         PhpStreamWrapper::restore();
+
+        $expected = [
+            0 => 'Playing game',
+        ];
+        $this->assertSame($expected, $output);
+    }
+
+    public function testPromptByMultipleKeysInputZero(): void
+    {
+        PhpStreamWrapper::register();
+
+        $input = '0';
+        PhpStreamWrapper::setContent($input);
+
+        $options = ['Playing game', 'Sleep', 'Badminton'];
+        $output  = CLI::promptByMultipleKeys('Select your hobbies:', $options);
+
+        PhpStreamWrapper::restore();
+
+        $expected = [
+            0 => 'Playing game',
+        ];
+        $this->assertSame($expected, $output);
     }
 
     public function testNewLine(): void
