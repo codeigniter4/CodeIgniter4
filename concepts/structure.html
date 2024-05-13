@@ -289,8 +289,9 @@
              
   <section id="application-structure">
 <h1>Application Structure<a class="headerlink" href="#application-structure" title="Permalink to this heading"></a></h1>
-<p>To get the most out of CodeIgniter, you need to understand how the application is structured, by default, and what you
-can change to meet the needs of your application.</p>
+<p>To get the most out of CodeIgniter, you need to understand how the application
+is structured, by default, and what you can change to meet the needs of your
+application.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#default-directories" id="id1">Default Directories</a></p>
@@ -307,13 +308,20 @@ can change to meet the needs of your application.</p>
 </nav>
 <section id="default-directories">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Default Directories</a><a class="headerlink" href="#default-directories" title="Permalink to this heading"></a></h2>
-<p>A fresh install has five directories: <code class="docutils literal notranslate"><span class="pre">app/</span></code>, <code class="docutils literal notranslate"><span class="pre">public/</span></code>,
-<code class="docutils literal notranslate"><span class="pre">writable/</span></code>, <code class="docutils literal notranslate"><span class="pre">tests/</span></code> and <code class="docutils literal notranslate"><span class="pre">vendor/</span></code> or <code class="docutils literal notranslate"><span class="pre">system/</span></code>.
-Each of these directories has a very specific part to play.</p>
+<p>A fresh install has five directories:</p>
+<ul class="simple">
+<li><p><strong>app</strong></p></li>
+<li><p><strong>public</strong></p></li>
+<li><p><strong>writable</strong></p></li>
+<li><p><strong>tests</strong></p></li>
+<li><p><strong>vendor</strong> or <strong>system</strong></p></li>
+</ul>
+<p>Each of these directories has a very specific part to play.</p>
 <section id="app">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">app</a><a class="headerlink" href="#app" title="Permalink to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">app</span></code> directory is where all of your application code lives. This comes with a default directory
-structure that works well for many applications. The following folders make up the basic contents:</p>
+<p>The <strong>app</strong> directory is where all of your application code lives. This comes
+with a default directory structure that works well for many applications.</p>
+<p>The following folders make up the basic contents:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>app/
     Config/         Stores the configuration files
     Controllers/    Controllers determine the program flow
@@ -327,51 +335,51 @@ structure that works well for many applications. The following folders make up t
     Views/          Views make up the HTML that is displayed to the client
 </pre></div>
 </div>
-<p>Because the <code class="docutils literal notranslate"><span class="pre">app</span></code> directory is already namespaced, you should feel free to modify the structure
-of this directory to suit your application’s needs. For example, you might decide to start using the Repository
-pattern and Entity Models to work with your data. In this case, you could rename the <code class="docutils literal notranslate"><span class="pre">Models</span></code> directory to
-<code class="docutils literal notranslate"><span class="pre">Repositories</span></code>, and add a new <code class="docutils literal notranslate"><span class="pre">Entities</span></code> directory.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you rename the <code class="docutils literal notranslate"><span class="pre">Controllers</span></code> directory, though, you will not be able to use the automatic method of
-routing to controllers, and will need to define all of your routes in the routes file.</p>
-</div>
-<p>All files in this directory live under the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace, though you are free to change that in
-<strong>app/Config/Constants.php</strong>.</p>
+<p>Because the <strong>app</strong> directory is already namespaced, you should feel free to
+modify the structure of this directory to suit your application’s needs.</p>
+<p>For example, you might decide to start using the Repository
+pattern and Entities to work with your data. In this case, you could rename the
+<strong>Models</strong> directory to <strong>Repositories</strong>, and add a new <strong>Entities</strong> directory.</p>
+<p>All files in this directory live under the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace, though you are free
+to change that in <strong>app/Config/Constants.php</strong>.</p>
 </section>
 <section id="system">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">system</a><a class="headerlink" href="#system" title="Permalink to this heading"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you install CodeIgniter with Composer, the <code class="docutils literal notranslate"><span class="pre">system</span></code> is located in <code class="docutils literal notranslate"><span class="pre">vendor/codeigniter4/framework/system</span></code>.</p>
+<p>If you install CodeIgniter with Composer, the <strong>system</strong> is located in
+<strong>vendor/codeigniter4/framework/system</strong>.</p>
 </div>
-<p>This directory stores the files that make up the framework, itself. While you have a lot of flexibility in how you
-use the application directory, the files in the system directory should never be modified. Instead, you should
-extend the classes, or create new classes, to provide the desired functionality.</p>
+<p>This directory stores the files that make up the framework, itself. While you
+have a lot of flexibility in how you use the application directory, the files in
+the system directory should never be modified. Instead, you should extend the
+classes, or create new classes, to provide the desired functionality.</p>
 <p>All files in this directory live under the <code class="docutils literal notranslate"><span class="pre">CodeIgniter</span></code> namespace.</p>
 </section>
 <section id="public">
 <span id="application-structure-public"></span><h3><a class="toc-backref" href="#id4" role="doc-backlink">public</a><a class="headerlink" href="#public" title="Permalink to this heading"></a></h3>
 <p>The <strong>public</strong> folder holds the browser-accessible portion of your web application,
-preventing direct access to your source code.
-It contains the main <strong>.htaccess</strong> file, <strong>index.php</strong>, and any application
-assets that you add, like CSS, javascript, or
-images.</p>
+preventing direct access to your source code.</p>
+<p>It contains the main <strong>.htaccess</strong> file, <strong>index.php</strong>, and any application
+assets that you add, like CSS, javascript, or images.</p>
 <p>This folder is meant to be the “web root” of your site, and your web server
 would be configured to point to it.</p>
 </section>
 <section id="writable">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">writable</a><a class="headerlink" href="#writable" title="Permalink to this heading"></a></h3>
-<p>This directory holds any directories that might need to be written to in the course of an application’s life.
-This includes directories for storing cache files, logs, and any uploads a user might send. You should add any other
-directories that your application will need to write to here. This allows you to keep your other primary directories
-non-writable as an added security measure.</p>
+<p>This directory holds any directories that might need to be written to in the
+course of an application’s life. This includes directories for storing cache
+files, logs, and any uploads a user might send.</p>
+<p>You should add any other directories that your application will need to write to
+here. This allows you to keep your other primary directories non-writable as an
+added security measure.</p>
 </section>
 <section id="tests">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">tests</a><a class="headerlink" href="#tests" title="Permalink to this heading"></a></h3>
-<p>This directory is set up to hold your test files. The <code class="docutils literal notranslate"><span class="pre">_support</span></code> directory holds various mock classes and other
-utilities that you can use while writing your tests. This directory does not need to be transferred to your
-production servers.</p>
+<p>This directory is set up to hold your test files. The <strong>_support</strong> directory
+holds various mock classes and other utilities that you can use while writing
+your tests.</p>
+<p>This directory does not need to be transferred to your production servers.</p>
 </section>
 </section>
 <section id="modifying-directory-locations">
@@ -394,7 +402,7 @@ settings inside <strong>app/Config/Paths.php</strong>.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 10, 2024.
+      <span class="lastupdated">Last updated on May 13, 2024.
       </span></p>
   </div>
 
