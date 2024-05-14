@@ -2,7 +2,8 @@
 
 # Deploys the User Guide to the production
 # website. Triggered by updates to the GitHub
-# repo's master branch.
+# codeigniter4/userguide repo's master branch.
+# See https://github.com/codeigniter4/userguide/blob/master/.github/workflows/deploy.yml
 
 REPO=/opt/userguide
 SITE=/home/public_html/userguides/userguide4
@@ -11,5 +12,7 @@ cd "$REPO"
 git switch master
 git pull
 
-rm -rf "$SITE"
-cp -R "$REPO/docs" "$SITE"
+cp -R "$REPO/docs" "$SITE.new"
+mv "$SITE" "$SITE.old"
+mv "$SITE.new" "$SITE"
+rm -rf "$SITE.old"
