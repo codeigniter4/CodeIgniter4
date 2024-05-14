@@ -31,7 +31,9 @@ parameters:
 		- tests/system/View/Views/*
 	scanDirectories:
 		- system/Helpers
-	checkGenericClassInNonGenericObjectType: false
+	ignoreErrors:
+		-
+			identifier: missingType.generics
 	checkMissingCallableSignature: true
 	treatPhpDocTypesAsCertain: false
 	strictRules:
