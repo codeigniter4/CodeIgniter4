@@ -173,3 +173,6 @@ would simply use the framework's ``Config\Services`` class to grab your service:
 .. literalinclude:: services/012.php
 
 .. note:: If multiple Services files have the same method name, the first one found will be the instance returned.
+
+There may be times when you need to have Service Discovery refresh it's cache after the inital autoload proccess. This can be done by running :php:meth:`Config\\Services::updateServicesCache()`.
+This will force the service discovery to re-scan the directories for any new services files.

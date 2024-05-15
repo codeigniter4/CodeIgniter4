@@ -419,4 +419,35 @@ class BaseService
             static::$discovered = true;
         }
     }
+
+    /**
+     * Update the services cache.
+     */
+    public static function updateServicesCache(): void
+    {
+        if ((new Modules())->shouldDiscover('services')) {
+            $locator = static::locator();
+            $files   = $locator->search('Config/Services');
+
+            $systemPath = static::autoloader()->getNamespace('CodeIgniter')[0];
+
+            // Get instances of all service classes and cache them locally.
+            foreach ($files as $file) {
+                // Does not search `CodeIgniter` namespace to prevent from loading twice.
+                if (str_starts_with($file, $systemPath)) {
+                    continue;
+                }
+
+                $classname = $locator->findQualifiedNameFromPath($file);
+
+                if ($classname === false) {
+                    continue;
+                }
+
+                if ($classname !== Services::class && ! in_array($classname, self::$serviceNames, true)) {
+                    self::$serviceNames[] = $classname;
+                }
+            }
+        }
+    }
 }
