@@ -378,7 +378,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 5,
+	'count' => 2,
 	'path' => __DIR__ . '/system/CLI/CLI.php',
 ];
 $ignoreErrors[] = [

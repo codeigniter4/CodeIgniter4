@@ -258,7 +258,8 @@ class CLI
         static::fwrite(STDOUT, $field . (trim($field) !== '' ? ' ' : '') . $extraOutput . ': ');
 
         // Read the input from keyboard.
-        $input = trim(static::$io->input()) ?: (string) $default;
+        $input = trim(static::$io->input());
+        $input = ($input === '') ? (string) $default : $input;
 
         if ($validation !== []) {
             while (! static::validate('"' . trim($field) . '"', $input, $validation)) {
@@ -330,7 +331,9 @@ class CLI
         CLI::write($text);
         CLI::printKeysAndValues($options);
         CLI::newLine();
-        $input = static::prompt($extraOutput) ?: 0; // 0 is default
+
+        $input = static::prompt($extraOutput);
+        $input = ($input === '') ? '0' : $input; // 0 is default
 
         // validation
         while (true) {
@@ -343,13 +346,15 @@ class CLI
             // find max from input
             $maxInput = max($inputToArray);
 
-            // return the prompt again if $input contain(s) non-numeric charachter, except a comma.
-            // And if max from $options less than max from input
-            // it is mean user tried to access null value in $options
+            // return the prompt again if $input contain(s) non-numeric character, except a comma.
+            // And if max from $options less than max from input,
+            // it means user tried to access null value in $options
             if (! $pattern || $maxOptions < $maxInput) {
                 static::error('Please select correctly.');
                 CLI::newLine();
-                $input = static::prompt($extraOutput) ?: 0;
+
+                $input = static::prompt($extraOutput);
+                $input = ($input === '') ? '0' : $input;
             } else {
                 break;
             }

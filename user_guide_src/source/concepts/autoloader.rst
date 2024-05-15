@@ -62,7 +62,7 @@ The key of each row is the namespace itself. This does not need a trailing back 
 The value is the location to the directory the classes can be found in.
 
 By default, the namespace ``App`` is located in the **app** directory, and the
-namespace ``Config`` is located in the ``app/Config`` directory.
+namespace ``Config`` is located in the **app/Config** directory.
 
 If you create class files in the locations and according to `PSR-4`_, the autoloader
 will autoload them.
