@@ -200,10 +200,10 @@ working on your contribution.
 
 ### Branching
 
-All bug fixes should be sent to the __"develop"__ branch, this is where the next
-bug fix version will be developed.
+- All bug fix PRs should be sent to the __"develop"__ branch, this is where the
+  next bug fix version will be developed.
+- PRs with any enhancement should be sent to next minor version branch, e.g. __"4.6"__
 
-PRs with any enhancement should be sent to next minor version branch, e.g. __"4.6"__
 
 The __"master"__ branch will always contain the latest stable version and is kept
 clean so a "hotfix" (e.g. an emergency security patch) can be applied to the
