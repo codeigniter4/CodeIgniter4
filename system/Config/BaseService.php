@@ -413,8 +413,11 @@ class BaseService
             static::$discovered = true;
         }
     }
-	
-	public static function updateServicesCache(): void
+
+    /**
+     * Update the services cache.
+     */
+    public static function updateServicesCache(): void
     {
         if ((new Modules())->shouldDiscover('services')) {
             $locator = static::locator();
@@ -435,7 +438,7 @@ class BaseService
                     continue;
                 }
 
-                if ($classname !== Services::class && !in_array($classname, self::$serviceNames, true)) {
+                if ($classname !== Services::class && ! in_array($classname, self::$serviceNames, true)) {
                     self::$serviceNames[] = $classname;
                 }
             }
