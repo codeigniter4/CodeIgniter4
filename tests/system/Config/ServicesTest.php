@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Config;
 
+use AfterAutoloadModule\Test;
 use CodeIgniter\Autoloader\Autoloader;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Database\MigrationRunner;
@@ -367,7 +368,7 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertSame(200, $someService->getStatusCode());
 
         $someService = service('test');
-        $this->assertInstanceOf(\AfterAutoloadModule\Test::class, $someService);
+        $this->assertInstanceOf(Test::class, $someService);
     }
 
     public function testFilters(): void
