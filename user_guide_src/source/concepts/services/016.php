@@ -1,3 +1,0 @@
-<?php
-
-\Config\Services::updateServicesCache();
