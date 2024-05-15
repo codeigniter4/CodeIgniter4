@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Config;
 
+use AfterAutoloadModule\Test;
 use CodeIgniter\Autoloader\Autoloader;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Database\MigrationRunner;
@@ -348,6 +349,26 @@ final class ServicesTest extends CIUnitTestCase
         Services::resetSingle('Response');
         $someService = service('response');
         $this->assertNotInstanceOf(MockResponse::class, $someService);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testUpdateServiceCache(): void
+    {
+        Services::injectMock('response', new MockResponse(new App()));
+        $someService = service('response');
+        $this->assertInstanceOf(MockResponse::class, $someService);
+        service('response')->setStatusCode(200);
+
+        Services::autoloader()->addNamespace('AfterAutoloadModule', TESTPATH . '_support/Test/AfterAutoloadModule/');
+        Services::updateServicesCache();
+
+        $someService = service('response');
+        $this->assertInstanceOf(MockResponse::class, $someService);
+        $this->assertSame(200, $someService->getStatusCode());
+
+        $someService = service('test');
+        $this->assertInstanceOf(Test::class, $someService);
     }
 
     public function testFilters(): void
