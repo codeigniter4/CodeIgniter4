@@ -113,6 +113,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
             'injectMock',
             'encrypter', // Encrypter needs a starter key
             'session', // Headers already sent
+            'updateServicesCache',
         ];
 
         if ($services === []) {
