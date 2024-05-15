@@ -350,6 +350,26 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertNotInstanceOf(MockResponse::class, $someService);
     }
 
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testUpdateServiceCache(): void
+    {
+        Services::injectMock('response', new MockResponse(new App()));
+        $someService = service('response');
+        $this->assertInstanceOf(MockResponse::class, $someService);
+        service('response')->setStatusCode(200);
+
+        Services::autoloader()->addNamespace('AfterAutoloadModule', TESTPATH . '_support/Test/AfterAutoloadModule/');
+        Services::updateServicesCache();
+
+        $someService = service('response');
+        $this->assertInstanceOf(MockResponse::class, $someService);
+        $this->assertSame(200, $someService->getStatusCode());
+
+        $someService = service('test');
+        $this->assertInstanceOf(\AfterAutoloadModule\Test::class, $someService);
+    }
+
     public function testFilters(): void
     {
         $result = Services::filters();
