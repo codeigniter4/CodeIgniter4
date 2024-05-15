@@ -13,6 +13,11 @@ declare(strict_types=1);
 
 namespace AfterAutoloadModule;
 
+/**
+ * A simple class for testing BaseService::updateServicesCache()
+ *
+ * This class should not be discovered by the autoloader until the test adds this namespace to the autoloader.
+ */
 class Test
 {
 }

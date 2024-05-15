@@ -16,8 +16,16 @@ namespace AfterAutoloadModule\Config;
 use AfterAutoloadModule\Test;
 use CodeIgniter\Config\BaseService;
 
+/**
+ * Services for testing BaseService::updateServicesCache()
+ *
+ * This class should not be discovered by the autoloader until the test adds this namespace to the autoloader.
+ */
 class Services extends BaseService
 {
+    /**
+     * Return a shared instance of the Test class for testing
+     */
     public static function test(bool $getShared = true): Test
     {
         if ($getShared) {
