@@ -238,6 +238,10 @@ This is *not* just a "signed-off-by" commit, but instead, a digitally signed one
 
 See [Contribution signing](./signing.md) for details.
 
+> [!NOTE]
+> If you forgot GPG-signing your commits, see
+> [Contribution Workflow](./workflow.md#gpg-signing-old-commits).
+
 ### Static Analysis on PHP code
 
 We cannot, at all times, guarantee that all PHP code submitted on pull requests
