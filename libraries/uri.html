@@ -340,8 +340,8 @@ for your site URIs.</p>
 </div>
 <section id="the-current-uri">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">The Current URI</a><a class="headerlink" href="#the-current-uri" title="Permalink to this heading"></a></h3>
-<p>Many times, all you really want is an object representing the current URL of this request.
-You can use the <a class="reference internal" href="../helpers/url_helper.html#current_url" title="current_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">current_url()</span></code></a> function available in the <a class="reference internal" href="../helpers/url_helper.html"><span class="doc">URL Helper</span></a>:</p>
+<p>When you need an object representing the current URL of the request,
+you can use the <a class="reference internal" href="../helpers/url_helper.html#current_url" title="current_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">current_url()</span></code></a> function available in the <a class="reference internal" href="../helpers/url_helper.html"><span class="doc">URL Helper</span></a>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">current_url</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -480,7 +480,7 @@ this as part of the Authority, you can also retrieve it yourself:</p>
 </section>
 <section id="path">
 <h3><a class="toc-backref" href="#id10" role="doc-backlink">Path</a><a class="headerlink" href="#path" title="Permalink to this heading"></a></h3>
-<p>The path are all of the segments within the site itself. As expected, the <code class="docutils literal notranslate"><span class="pre">getPath()</span></code> and <code class="docutils literal notranslate"><span class="pre">setPath()</span></code> methods
+<p>The path is all of the segments within the site itself. As expected, the <code class="docutils literal notranslate"><span class="pre">getPath()</span></code> and <code class="docutils literal notranslate"><span class="pre">setPath()</span></code> methods
 can be used to manipulate it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -492,7 +492,7 @@ can be used to manipulate it:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When setting the path this way, or any other way the class allows, it is sanitized to encode any dangerous
+<p>When setting the path it is sanitized to encode any dangerous
 characters, and remove dot segments for safety.</p>
 </div>
 <div class="admonition note">
@@ -517,7 +517,7 @@ be set as a string currently.</p>
 <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setQuery</span><span class="p">(</span><span class="s1">&#39;foo=bar&amp;bar=baz&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">setQuery()</span></code> method overwrite any existing query variables.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">setQuery()</span></code> method overwrites existing query variables.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Query values cannot contain fragments. An InvalidArgumentException will be thrown if it does.</p>
@@ -531,7 +531,7 @@ be set as a string currently.</p>
 <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setQueryArray</span><span class="p">([</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;baz&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">setQueryArray()</span></code> method overwrite any existing query variables.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">setQueryArray()</span></code> method overwrites existing query variables.</p>
 </section>
 <section id="adding-query-value">
 <h4>Adding Query Value<a class="headerlink" href="#adding-query-value" title="Permalink to this heading"></a></h4>
@@ -559,11 +559,12 @@ parameter is the name of the variable, and the second parameter is the value:</p
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">([</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;bar&#39;</span><span class="p">]]);</span>
 </pre></div>
 </div>
-<p>This only changes the values returned during this one call. If you need to modify the URI’s query values more permanently,</p>
+<p>This only changes the values returned during this one call.</p>
 </section>
 <section id="changing-query-values">
 <h4>Changing Query Values<a class="headerlink" href="#changing-query-values" title="Permalink to this heading"></a></h4>
-<p>you can use the <code class="docutils literal notranslate"><span class="pre">stripQuery()</span></code> and <code class="docutils literal notranslate"><span class="pre">keepQuery()</span></code> methods to change the actual object’s query variable collection:</p>
+<p>If you need to modify the URI’s query values more permanently,
+you can use the <code class="docutils literal notranslate"><span class="pre">stripQuery()</span></code> and <code class="docutils literal notranslate"><span class="pre">keepQuery()</span></code> methods to change the actual object’s query variable collection:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&amp;bar=baz&amp;baz=foz&#39;</span><span class="p">);</span>
@@ -691,7 +692,7 @@ that will prevent throwing exceptions.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 13, 2024.
+      <span class="lastupdated">Last updated on May 16, 2024.
       </span></p>
   </div>
 
