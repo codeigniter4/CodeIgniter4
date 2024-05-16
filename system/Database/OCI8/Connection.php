@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\OCI8;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\Database\SavepointsForNestedTransactions;
 use ErrorException;
 use stdClass;
 
