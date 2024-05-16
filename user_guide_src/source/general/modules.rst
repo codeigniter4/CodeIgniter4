@@ -281,6 +281,6 @@ Model files are automatically discovered whenever using the :php:func:`model()` 
 Views
 =====
 
-Views can be loaded using the class namespace as described in the :doc:`views </outgoing/views>` documentation:
+Views can be loaded using the class namespace as described in the :ref:`views <namespaced-views>` documentation:
 
 .. literalinclude:: modules/012.php
