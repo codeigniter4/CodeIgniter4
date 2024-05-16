@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\SQLSRV;
 
-use BadMethodCallException;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\SavepointsForNestedTransactions;
@@ -569,7 +568,8 @@ class Connection extends BaseConnection
         return parent::isWriteType($sql);
     }
 
-    protected function _savepointQuery($create, $commit): string {
+    protected function _savepointQuery($create, $commit): string
+    {
         return $create ? 'SAVE' : ($commit ? 'COMMIT' : 'ROLLBACK') . ' TRANSACTION';
     }
 }
