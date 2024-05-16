@@ -251,7 +251,8 @@ You can specify namespaces. See :ref:`helpers-loading-from-specified-namespace` 
 Language Files
 ==============
 
-Language files are located automatically from defined namespaces when using the ``lang()`` method, as long as the
+Language files are located automatically from defined namespaces when using the
+:php:func:`lang()` function, as long as the
 file follows the same directory structures as the main application directory.
 
 Libraries
