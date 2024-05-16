@@ -370,7 +370,7 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
      */
     public function testNestedTransactionsWhenEnabled()
     {
-        $this->db->transNested(true);
+        $this->db->transSavepoints(true);
         if (! $this->db->enableNestedTransactions) {
             $this->markTestSkipped('Nested transactions are not supported for this driver.');
         }
@@ -384,7 +384,7 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
      */
     public function testNestedTransactionsWhenEnabledRollbackOuter(): void
     {
-        $this->db->transNested(true);
+        $this->db->transSavepoints(true);
         if (! $this->db->enableNestedTransactions) {
             $this->markTestSkipped('Nested transactions are not supported for this driver.');
         }
@@ -397,7 +397,7 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
      */
     public function testNestedTransactionsRollbackInner(): void
     {
-        $this->db->transNested(true);
+        $this->db->transSavepoints(true);
         $this->db->transStrict(false); // TODO: this only works when strict is disabled
         if (! $this->db->enableNestedTransactions) {
             $this->markTestSkipped('Nested transactions are not supported for this driver.');
@@ -434,7 +434,7 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
      */
     public function testHeavilyNestedTransactionsWhenEnabled()
     {
-        $this->db->transNested(true);
+        $this->db->transSavepoints(true);
         $this->db->transStrict(false); // TODO: this only works when strict is disabled
         if (! $this->db->enableNestedTransactions) {
             $this->markTestSkipped('Nested transactions are not supported for this driver.');

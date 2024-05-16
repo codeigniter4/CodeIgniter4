@@ -790,7 +790,7 @@ abstract class BaseConnection implements ConnectionInterface
      * If set to false (default), only the outermost transaction
      * actually gets started and ended or rolled back.
      */
-    public function transNested(bool $enable): self
+    public function transSavepoints(bool $enable): self
     {
         $this->enableNestedTransactions = $enable;
 
