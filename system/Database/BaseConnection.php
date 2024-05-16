@@ -33,7 +33,7 @@ use Throwable;
  * @property-read string     $DBDriver
  * @property-read string     $DBPrefix
  * @property-read string     $DSN
- * @property-read bool       $enableNestedTransactions
+ * @property-read bool       $enableSavepoints
  * @property-read array|bool $encrypt
  * @property-read array      $failover
  * @property-read string     $hostname
@@ -370,7 +370,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var bool
      */
-    protected $enableNestedTransactions = false;
+    protected $enableSavepoints = false;
 
     /**
      * Saves our connection settings.
@@ -792,7 +792,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function transSavepoints(bool $enable): self
     {
-        $this->enableNestedTransactions = $enable;
+        $this->enableSavepoints = $enable;
 
         return $this;
     }
@@ -835,7 +835,7 @@ abstract class BaseConnection implements ConnectionInterface
 
         // When transactions are nested and nested transactions are not enabled
         // we only begin/commit/rollback the outermost ones
-        if (! $this->enableNestedTransactions && $this->transDepth > 0) {
+        if (! $this->enableSavepoints && $this->transDepth > 0) {
             $this->transDepth++;
 
             return true;
@@ -888,7 +888,7 @@ abstract class BaseConnection implements ConnectionInterface
             return $ended = match (true) {
                 ! $this->transEnabled                                    => false,
                 $this->transDepth === 1                                  => $this->{$transEndMethod}(),
-                $this->enableNestedTransactions && $this->transDepth > 1 => $this->{$transEndNestedMethod}(),
+                $this->enableSavepoints && $this->transDepth > 1 => $this->{$transEndNestedMethod}(),
                 $this->transDepth > 1                                    => true,
                 default                                                  => false,
             };

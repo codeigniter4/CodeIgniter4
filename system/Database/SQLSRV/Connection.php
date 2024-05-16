@@ -99,7 +99,7 @@ class Connection extends BaseConnection
             $this->scrollable = defined('SQLSRV_CURSOR_CLIENT_BUFFERED') ? SQLSRV_CURSOR_CLIENT_BUFFERED : false;
         }
 
-        $this->enableNestedTransactions = false; // not implemented so disable it
+        $this->enableSavepoints = false; // not implemented so disable it
     }
 
     /**

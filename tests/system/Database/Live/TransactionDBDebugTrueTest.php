@@ -37,7 +37,7 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
     {
         // Reset connection instance.
         $this->db = Database::connect($this->DBGroup, false);
-        $this->assertFalse($this->db->enableNestedTransactions);
+        $this->assertFalse($this->db->enableSavepoints);
 
         parent::setUp();
     }
@@ -371,7 +371,7 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
     public function testNestedTransactionsWhenEnabled()
     {
         $this->db->transSavepoints(true);
-        if (! $this->db->enableNestedTransactions) {
+        if (! $this->db->enableSavepoints) {
             $this->markTestSkipped('Nested transactions are not supported for this driver.');
         }
 
@@ -385,7 +385,7 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
     public function testNestedTransactionsWhenEnabledRollbackOuter(): void
     {
         $this->db->transSavepoints(true);
-        if (! $this->db->enableNestedTransactions) {
+        if (! $this->db->enableSavepoints) {
             $this->markTestSkipped('Nested transactions are not supported for this driver.');
         }
 
@@ -399,7 +399,7 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
     {
         $this->db->transSavepoints(true);
         $this->db->transStrict(false); // TODO: this only works when strict is disabled
-        if (! $this->db->enableNestedTransactions) {
+        if (! $this->db->enableSavepoints) {
             $this->markTestSkipped('Nested transactions are not supported for this driver.');
         }
 
@@ -436,7 +436,7 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
     {
         $this->db->transSavepoints(true);
         $this->db->transStrict(false); // TODO: this only works when strict is disabled
-        if (! $this->db->enableNestedTransactions) {
+        if (! $this->db->enableSavepoints) {
             $this->markTestSkipped('Nested transactions are not supported for this driver.');
         }
 
