@@ -31,7 +31,7 @@ use Stringable;
 class Connection extends BaseConnection
 {
     use SavepointsForNestedTransactions {
-        _savepointQueryDefault as _savePointQuery;
+        _savepointQueryDefault as _savepointQuery;
     }
 
     /**

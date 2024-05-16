@@ -26,8 +26,8 @@ use stdClass;
  */
 class Connection extends BaseConnection
 {
-    use SavepointsForNestedTransactions{
-    };
+    use SavepointsForNestedTransactions;
+
     /**
      * Database driver
      *
