@@ -886,11 +886,11 @@ abstract class BaseConnection implements ConnectionInterface
         try {
             // if nested transactions are disabled and transactions are nested we only begin/commit/rollback the outermost ones
             return $ended = match (true) {
-                ! $this->transEnabled                                    => false,
-                $this->transDepth === 1                                  => $this->{$transEndMethod}(),
+                ! $this->transEnabled                            => false,
+                $this->transDepth === 1                          => $this->{$transEndMethod}(),
                 $this->enableSavepoints && $this->transDepth > 1 => $this->{$transEndNestedMethod}(),
-                $this->transDepth > 1                                    => true,
-                default                                                  => false,
+                $this->transDepth > 1                            => true,
+                default                                          => false,
             };
         } finally {
             if ($ended) {
