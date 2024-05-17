@@ -86,6 +86,8 @@ When doing so you will need to include the directory name loading the view. Exam
 .. literalinclude:: views/004.php
    :lines: 2-
 
+.. _namespaced-views:
+
 Namespaced Views
 ================
 

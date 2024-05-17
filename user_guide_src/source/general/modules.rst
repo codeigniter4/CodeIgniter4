@@ -251,7 +251,8 @@ You can specify namespaces. See :ref:`helpers-loading-from-specified-namespace` 
 Language Files
 ==============
 
-Language files are located automatically from defined namespaces when using the ``lang()`` method, as long as the
+Language files are located automatically from defined namespaces when using the
+:php:func:`lang()` function, as long as the
 file follows the same directory structures as the main application directory.
 
 Libraries
@@ -272,13 +273,15 @@ Model files are automatically discovered whenever using the :php:func:`model()` 
 
 .. note:: We don't recommend you use the same short classname in modules.
 
-.. note:: ``model()`` finds the file in **app/Models/** when there is a class with the same shortname,
-    even if you specify a fully qualified class name like ``model(\Acme\Blog\Model\PostModel::class)``.
-    This is because ``model()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`factories-loading-class` for more information.
+.. note:: Prior to v4.4.0, ``model()`` finds the file in **app/Models/** when
+    there is a class with the same shortname, even if you specify a fully qualified
+    class name like ``model(\Acme\Blog\Model\PostModel::class)``.
+    See the Note in :ref:`factories-passing-fully-qualified-classname` for more
+    information.
 
 Views
 =====
 
-Views can be loaded using the class namespace as described in the :doc:`views </outgoing/views>` documentation:
+Views can be loaded using the class namespace as described in the :ref:`views <namespaced-views>` documentation:
 
 .. literalinclude:: modules/012.php
