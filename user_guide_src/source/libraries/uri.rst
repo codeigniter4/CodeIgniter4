@@ -39,8 +39,8 @@ Since v4.4.0, if you don't pass a URL, it returns the current URI:
 The Current URI
 ---------------
 
-Many times, all you really want is an object representing the current URL of this request.
-You can use the :php:func:`current_url()` function available in the :doc:`../helpers/url_helper`:
+When you need an object representing the current URL of the request,
+you can use the :php:func:`current_url()` function available in the :doc:`../helpers/url_helper`:
 
 .. literalinclude:: uri/004.php
     :lines: 2-
@@ -141,12 +141,12 @@ When using the ``setPort()`` method, the port will be checked that it is within 
 Path
 ----
 
-The path are all of the segments within the site itself. As expected, the ``getPath()`` and ``setPath()`` methods
+The path is all of the segments within the site itself. As expected, the ``getPath()`` and ``setPath()`` methods
 can be used to manipulate it:
 
 .. literalinclude:: uri/016.php
 
-.. note:: When setting the path this way, or any other way the class allows, it is sanitized to encode any dangerous
+.. note:: When setting the path it is sanitized to encode any dangerous
     characters, and remove dot segments for safety.
 
 .. note:: Since v4.4.0, the ``SiteURI::getRoutePath()`` method,
@@ -166,7 +166,7 @@ be set as a string currently.
 
 .. literalinclude:: uri/017.php
 
-The ``setQuery()`` method overwrite any existing query variables.
+The ``setQuery()`` method overwrites existing query variables.
 
 .. note:: Query values cannot contain fragments. An InvalidArgumentException will be thrown if it does.
 
@@ -177,7 +177,7 @@ You can set query values using an array:
 
 .. literalinclude:: uri/018.php
 
-The ``setQueryArray()`` method overwrite any existing query variables.
+The ``setQueryArray()`` method overwrites existing query variables.
 
 Adding Query Value
 ^^^^^^^^^^^^^^^^^^
@@ -196,11 +196,12 @@ You can filter the query values returned by passing an options array to the ``ge
 
 .. literalinclude:: uri/020.php
 
-This only changes the values returned during this one call. If you need to modify the URI's query values more permanently,
+This only changes the values returned during this one call.
 
 Changing Query Values
 ^^^^^^^^^^^^^^^^^^^^^
 
+If you need to modify the URI's query values more permanently,
 you can use the ``stripQuery()`` and ``keepQuery()`` methods to change the actual object's query variable collection:
 
 .. literalinclude:: uri/021.php

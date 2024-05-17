@@ -200,10 +200,13 @@ working on your contribution.
 
 ### Branching
 
-All bug fixes should be sent to the __"develop"__ branch, this is where the next
-bug fix version will be developed.
+- All bug fix PRs should be sent to the __"develop"__ branch, this is where the
+  next bug fix version will be developed.
+- PRs with any enhancement should be sent to next minor version branch, e.g. __"4.6"__
 
-PRs with any enhancement should be sent to next minor version branch, e.g. __"4.6"__
+> [!NOTE]
+> If you sent your PR to the wrong branch, see
+> [Contribution Workflow](./workflow.md#if-you-sent-to-the-wrong-branch).
 
 The __"master"__ branch will always contain the latest stable version and is kept
 clean so a "hotfix" (e.g. an emergency security patch) can be applied to the
@@ -234,6 +237,10 @@ otherwise have the right to pass it on to an open-source project. See
 This is *not* just a "signed-off-by" commit, but instead, a digitally signed one.
 
 See [Contribution signing](./signing.md) for details.
+
+> [!NOTE]
+> If you forgot GPG-signing your commits, see
+> [Contribution Workflow](./workflow.md#gpg-signing-old-commits).
 
 ### Static Analysis on PHP code
 

@@ -86,6 +86,8 @@ The following code loads **app/Libraries/Sub/SubLib.php** if it exists:
 .. literalinclude:: factories/013.php
    :lines: 2-
 
+.. _factories-passing-fully-qualified-classname:
+
 Passing Fully Qualified Classname
 ---------------------------------
 
