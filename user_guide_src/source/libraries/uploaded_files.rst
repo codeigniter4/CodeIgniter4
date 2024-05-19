@@ -83,7 +83,7 @@ this code and save it to your **app/Controllers** directory:
 
 .. literalinclude:: uploaded_files/002.php
 
-Since HTML file element has no value attribute, and the upload file is stored in the
+Since the value of a file upload HTML field doesn't exist, and is stored in the
 ``$_FILES`` global, only :ref:`rules-for-file-uploads` can be used to validate
 the upload file with :doc:`validation`.
 
@@ -398,4 +398,8 @@ passing it as the second parameter:
 
 .. literalinclude:: uploaded_files/020.php
 
-Storing an uploaded file can fail, with an ``HTTPException``, under same circumstances like moving file.
+Moving an uploaded file can fail, with an ``HTTPException``, under several circumstances:
+
+- the file has already been moved
+- the file did not upload successfully
+- the file move operation fails (e.g., improper permissions)
