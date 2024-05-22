@@ -86,7 +86,7 @@ class View implements RendererInterface
      * Cache stats about our performance here,
      * when CI_DEBUG = true
      *
-     * @var list<float|string>
+     * @var list<array{start: float, end: float, view: string}>
      */
     protected $performanceData = [];
 
@@ -491,7 +491,7 @@ class View implements RendererInterface
      * Returns the performance data that might have been collected
      * during the execution. Used primarily in the Debug Toolbar.
      *
-     * @return list<float|string>
+     * @return list<array{start: float, end: float, view: string}>
      */
     public function getPerformanceData(): array
     {
