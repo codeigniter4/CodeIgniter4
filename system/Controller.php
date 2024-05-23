@@ -130,9 +130,9 @@ class Controller
      * @param array|string $rules
      * @param array        $messages An array of custom error messages
      */
-    protected function validate($rules, array $messages = []): bool
+    protected function validate($rules, array $messages = [], ?Validation $config = null): bool
     {
-        $this->setValidator($rules, $messages);
+        $this->setValidator($rules, $messages, $config);
 
         return $this->validator->withRequest($this->request)->run();
     }
@@ -145,9 +145,9 @@ class Controller
      * @param array        $messages An array of custom error messages
      * @param string|null  $dbGroup  The database group to use
      */
-    protected function validateData(array $data, $rules, array $messages = [], ?string $dbGroup = null): bool
+    protected function validateData(array $data, $rules, array $messages = [], ?string $dbGroup = null, ?Validation $config = null): bool
     {
-        $this->setValidator($rules, $messages);
+        $this->setValidator($rules, $messages, $config);
 
         return $this->validator->run($data, null, $dbGroup);
     }
@@ -155,13 +155,13 @@ class Controller
     /**
      * @param array|string $rules
      */
-    private function setValidator($rules, array $messages): void
+    private function setValidator($rules, array $messages, ?Validation $config = null): void
     {
         $this->validator = service('validation');
 
         // If you replace the $rules array with the name of the group
         if (is_string($rules)) {
-            $validation = config(Validation::class);
+            $validation = $config ?? config(Validation::class);
 
             // If the rule wasn't found in the \Config\Validation, we
             // should throw an exception so the developer can find it.
