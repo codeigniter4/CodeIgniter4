@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Database;
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionClass;

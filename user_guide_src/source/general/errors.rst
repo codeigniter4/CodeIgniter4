@@ -136,7 +136,35 @@ setting the environment variable ``CODEIGNITER_SCREAM_DEPRECATIONS`` to a truthy
 Framework Exceptions
 ====================
 
-The following framework exceptions are available:
+.. _exception-design:
+
+Exception Design
+----------------
+
+Staring with v4.6.0, all Exception classes that the framework throws:
+
+- implement ``CodeIgniter\Exceptions\ExceptionInterface``
+- extend ``CodeIgniter\Exceptions\LogicException`` or ``CodeIgniter\Exceptions\RuntimeException``
+
+.. note:: The framework only throws the above kind of exception classes, but PHP
+    or other libraries that are used may throw other exceptions.
+
+There are two base Exception classes that the framework throws:
+
+LogicException
+--------------
+
+``CodeIgniter\Exceptions\LogicException`` extends ``\LogicException``.
+This exception represents error in the program logic. This kind of exception
+should lead directly to a fix in your code.
+
+RuntimeException
+----------------
+
+``CodeIgniter\Exceptions\RuntimeException`` extends ``\RuntimeException``.
+This exception is thrown if an error which can only be found on runtime occurs.
+
+The following framework exceptions are also available:
 
 PageNotFoundException
 ---------------------

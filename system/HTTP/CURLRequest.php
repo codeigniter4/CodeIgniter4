@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 use Config\CURLRequest as ConfigCURLRequest;
-use InvalidArgumentException;
 
 /**
  * A lightweight HTTP client for sending synchronous HTTP requests via cURL.

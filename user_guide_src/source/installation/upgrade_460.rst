@@ -20,6 +20,15 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+Exception Changes
+=================
+
+Some classes have changed the exception classes that are thrown. Some exception
+classes have changed parent classes.
+See :ref:`ChangeLog <v460-behavior-changes-exceptions>` for details.
+
+If you have code that catches these exceptions, change the exception classes.
+
 Removed Deprecated Items
 ========================
 

@@ -26,7 +26,7 @@ use CodeIgniter\DataCaster\Cast\TimestampCast;
 use CodeIgniter\DataCaster\Cast\URICast;
 use CodeIgniter\Entity\Cast\CastInterface as EntityCastInterface;
 use CodeIgniter\Entity\Exceptions\CastException;
-use InvalidArgumentException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 
 final class DataCaster
 {

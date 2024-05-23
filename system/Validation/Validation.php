@@ -15,6 +15,8 @@ namespace CodeIgniter\Validation;
 
 use Closure;
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Exceptions\InvalidArgumentException;
+use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Method;
@@ -23,9 +25,6 @@ use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
 use Config\Services;
 use Config\Validation as ValidationConfig;
-use InvalidArgumentException;
-use LogicException;
-use TypeError;
 
 /**
  * Validator
@@ -540,12 +539,12 @@ class Validation implements ValidationInterface
      *
      * @return $this
      *
-     * @throws TypeError
+     * @throws InvalidArgumentException
      */
     public function setRule(string $field, ?string $label, $rules, array $errors = [])
     {
         if (! is_array($rules) && ! is_string($rules)) {
-            throw new TypeError('$rules must be of type string|array');
+            throw new InvalidArgumentException('$rules must be of type string|array');
         }
 
         $ruleSet = [

@@ -16,9 +16,9 @@ namespace CodeIgniter\Database;
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Traits\ConditionalTrait;
 use Config\Feature;
-use InvalidArgumentException;
 
 /**
  * Class BaseBuilder

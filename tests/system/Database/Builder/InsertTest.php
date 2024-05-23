@@ -16,9 +16,9 @@ namespace CodeIgniter\Database\Builder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Database\RawSql;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Group;
 
 /**

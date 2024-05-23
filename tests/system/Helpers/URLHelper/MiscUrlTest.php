@@ -15,6 +15,7 @@ namespace CodeIgniter\Helpers\URLHelper;
 
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SiteURIFactory;
 use CodeIgniter\HTTP\UserAgent;
@@ -22,7 +23,6 @@ use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;

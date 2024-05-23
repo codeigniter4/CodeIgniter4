@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace CodeIgniter\Cookie;
 
 use CodeIgniter\Cookie\Exceptions\CookieException;
+use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cookie as CookieConfig;
 use DateTimeImmutable;
 use DateTimeZone;
-use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 

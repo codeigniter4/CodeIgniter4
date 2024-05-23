@@ -15,11 +15,11 @@ namespace CodeIgniter\View;
 
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config;
 use PHPUnit\Framework\Attributes\Group;
-use RuntimeException;
 
 /**
  * @internal

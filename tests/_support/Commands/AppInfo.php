@@ -16,7 +16,7 @@ namespace Tests\Support\Commands;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CodeIgniter;
-use RuntimeException;
+use CodeIgniter\Exceptions\RuntimeException;
 
 class AppInfo extends BaseCommand
 {
