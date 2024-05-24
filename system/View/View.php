@@ -34,14 +34,14 @@ class View implements RendererInterface
     /**
      * Saved Data.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $data = [];
 
     /**
      * Data for the variables that are available in the Views.
      *
-     * @var array|null
+     * @var array<string, mixed>|null
      */
     protected $tempData;
 
@@ -55,7 +55,7 @@ class View implements RendererInterface
     /**
      * Data for rendering including Caching and Debug Toolbar data.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $renderVars = [];
 
@@ -86,7 +86,7 @@ class View implements RendererInterface
      * Cache stats about our performance here,
      * when CI_DEBUG = true
      *
-     * @var array
+     * @var list<array{start: float, end: float, view: string}>
      */
     protected $performanceData = [];
 
@@ -120,7 +120,7 @@ class View implements RendererInterface
     /**
      * Holds the sections and their data.
      *
-     * @var array
+     * @var array<string, list<string>>
      */
     protected $sections = [];
 
@@ -165,13 +165,13 @@ class View implements RendererInterface
      *  - cache      Number of seconds to cache for
      *  - cache_name Name to use for cache
      *
-     * @param string     $view     File name of the view source
-     * @param array|null $options  Reserved for 3rd-party uses since
-     *                             it might be needed to pass additional info
-     *                             to other template engines.
-     * @param bool|null  $saveData If true, saves data for subsequent calls,
-     *                             if false, cleans the data after displaying,
-     *                             if null, uses the config setting.
+     * @param string                    $view     File name of the view source
+     * @param array<string, mixed>|null $options  Reserved for 3rd-party uses since
+     *                                            it might be needed to pass additional info
+     *                                            to other template engines.
+     * @param bool|null                 $saveData If true, saves data for subsequent calls,
+     *                                            if false, cleans the data after displaying,
+     *                                            if null, uses the config setting.
      */
     public function render(string $view, ?array $options = null, ?bool $saveData = null): string
     {
@@ -306,13 +306,13 @@ class View implements RendererInterface
      * data that has already been set.
      * Cache does not apply, because there is no "key".
      *
-     * @param string     $view     The view contents
-     * @param array|null $options  Reserved for 3rd-party uses since
-     *                             it might be needed to pass additional info
-     *                             to other template engines.
-     * @param bool|null  $saveData If true, saves data for subsequent calls,
-     *                             if false, cleans the data after displaying,
-     *                             if null, uses the config setting.
+     * @param string                    $view     The view contents
+     * @param array<string, mixed>|null $options  Reserved for 3rd-party uses since
+     *                                            it might be needed to pass additional info
+     *                                            to other template engines.
+     * @param bool|null                 $saveData If true, saves data for subsequent calls,
+     *                                            if false, cleans the data after displaying,
+     *                                            if null, uses the config setting.
      */
     public function renderString(string $view, ?array $options = null, ?bool $saveData = null): string
     {
@@ -393,6 +393,8 @@ class View implements RendererInterface
 
     /**
      * Returns the current data that will be displayed in the view.
+     *
+     * @return array<string, mixed>
      */
     public function getData(): array
     {
@@ -477,7 +479,8 @@ class View implements RendererInterface
     /**
      * Used within layout views to include additional views.
      *
-     * @param bool $saveData
+     * @param array<string, mixed>|null $options
+     * @param bool                      $saveData
      */
     public function include(string $view, ?array $options = null, $saveData = true): string
     {
@@ -487,6 +490,8 @@ class View implements RendererInterface
     /**
      * Returns the performance data that might have been collected
      * during the execution. Used primarily in the Debug Toolbar.
+     *
+     * @return list<array{start: float, end: float, view: string}>
      */
     public function getPerformanceData(): array
     {
