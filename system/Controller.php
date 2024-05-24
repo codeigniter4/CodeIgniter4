@@ -127,8 +127,9 @@ class Controller
     /**
      * A shortcut to performing validation on Request data.
      *
-     * @param array|string $rules
-     * @param array        $messages An array of custom error messages
+     * @param array|string    $rules
+     * @param array           $messages An array of custom error messages
+     * @param Validation|null $config   The class Validation
      */
     protected function validate($rules, array $messages = [], ?Validation $config = null): bool
     {
@@ -140,10 +141,11 @@ class Controller
     /**
      * A shortcut to performing validation on any input data.
      *
-     * @param array        $data     The data to validate
-     * @param array|string $rules
-     * @param array        $messages An array of custom error messages
-     * @param string|null  $dbGroup  The database group to use
+     * @param array           $data     The data to validate
+     * @param array|string    $rules
+     * @param array           $messages An array of custom error messages
+     * @param string|null     $dbGroup  The database group to use
+     * @param Validation|null $config   The class Validation 
      */
     protected function validateData(array $data, $rules, array $messages = [], ?string $dbGroup = null, ?Validation $config = null): bool
     {
@@ -153,7 +155,9 @@ class Controller
     }
 
     /**
-     * @param array|string $rules
+     * @param array|string    $rules
+     * @param array           $messages An array of custom error messages
+     * @param Validation|null $config   The class Validation
      */
     private function setValidator($rules, array $messages, ?Validation $config = null): void
     {
