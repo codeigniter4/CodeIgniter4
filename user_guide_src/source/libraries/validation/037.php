@@ -17,7 +17,7 @@ class MyRules
 
         // Still here? Then we fail this test if
         // any of the fields are present in $data
-        // as $fields is the lis
+        // as $fields in the list
         $requiredFields = [];
 
         foreach ($params as $field) {
