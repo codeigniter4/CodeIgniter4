@@ -213,7 +213,8 @@ now < $time < 1 hour             in 35 minutes / 35 minutes ago
 $time == now                     Now
 =============================== =================================
 
-The result strings are coming from the language file, **app/Language/{locale}/Time.php**.
+The result strings are coming from the language file, **system/Language/en/Time.php**.
+If you want to overwrite them, create **app/Language/{locale}/Time.php**.
 
 ******************************
 Working with Individual Values
