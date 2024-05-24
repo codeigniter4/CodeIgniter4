@@ -145,7 +145,7 @@ class Controller
      * @param array|string    $rules
      * @param array           $messages An array of custom error messages
      * @param string|null     $dbGroup  The database group to use
-     * @param Validation|null $config   The class Validation 
+     * @param Validation|null $config   The class Validation
      */
     protected function validateData(array $data, $rules, array $messages = [], ?string $dbGroup = null, ?Validation $config = null): bool
     {
