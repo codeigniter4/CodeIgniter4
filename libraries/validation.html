@@ -1378,7 +1378,7 @@ error message. This is used with the <code class="docutils literal notranslate">
 <section id="configuration">
 <h3><a class="toc-backref" href="#id39" role="doc-backlink">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this heading"></a></h3>
 <p>Once you have your views created, you need to let the Validation library know about them. Open <strong>app/Config/Validation.php</strong>.
-Inside, you’ll find the <code class="docutils literal notranslate"><span class="pre">$templates</span></code> property where you can list as many custom views as you want, and provide an
+Inside, you’ll find the <code class="docutils literal notranslate"><span class="pre">$templates</span></code> property where you can list as many custom views as you want, and provide a
 short alias they can be referenced by. If we were to add our example file from above, it would look something like:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1418,7 +1418,7 @@ right after the name of the field the error should belong to:</p>
 <h2><a class="toc-backref" href="#id41" role="doc-backlink">Creating Custom Rules</a><a class="headerlink" href="#creating-custom-rules" title="Permalink to this heading"></a></h2>
 <section id="using-rule-classes">
 <span id="validation-using-rule-classes"></span><h3><a class="toc-backref" href="#id42" role="doc-backlink">Using Rule Classes</a><a class="headerlink" href="#using-rule-classes" title="Permalink to this heading"></a></h3>
-<p>Rules are stored within simple, namespaced classes. They can be stored any location you would like, as long as the
+<p>Rules are stored within simple, namespaced classes. They can be stored in any location you would like, as long as the
 autoloader can find it. These files are called RuleSets.</p>
 <section id="adding-a-ruleset">
 <h4>Adding a RuleSet<a class="headerlink" href="#adding-a-ruleset" title="Permalink to this heading"></a></h4>
@@ -1450,7 +1450,7 @@ add the new file to the <code class="docutils literal notranslate"><span class="
 </pre></div>
 </div>
 <p>You can add it as either a simple string with the fully qualified class name, or using the <code class="docutils literal notranslate"><span class="pre">::class</span></code> suffix as
-shown above. The primary benefit here is that it provides some extra navigation capabilities in more advanced IDEs.</p>
+shown above. The primary benefit of using the <code class="docutils literal notranslate"><span class="pre">::class</span></code> suffix is that it provides some extra navigation capabilities in more advanced IDEs.</p>
 </section>
 <section id="creating-a-rule-class">
 <h4>Creating a Rule Class<a class="headerlink" href="#creating-a-rule-class" title="Permalink to this heading"></a></h4>
@@ -1537,7 +1537,7 @@ for rules like <code class="docutils literal notranslate"><span class="pre">requ
 
         <span class="c1">// Still here? Then we fail this test if</span>
         <span class="c1">// any of the fields are present in $data</span>
-        <span class="c1">// as $fields is the lis</span>
+        <span class="c1">// as $fields in the list</span>
         <span class="nv">$requiredFields</span> <span class="o">=</span> <span class="p">[];</span>
 
         <span class="k">foreach</span> <span class="p">(</span><span class="nv">$params</span> <span class="k">as</span> <span class="nv">$field</span><span class="p">)</span> <span class="p">{</span>
@@ -1776,8 +1776,9 @@ in the parameter.</p></td>
 </tr>
 <tr class="row-even"><td><p>exact_length</p></td>
 <td><p>Yes</p></td>
-<td><p>Fails if field is not exactly the parameter
-value. One or more comma-separated values.</p></td>
+<td><p>Fails if field length is not exactly
+the parameter value. One or more
+comma-separated values are possible.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">exact_length[5]</span></code> or <code class="docutils literal notranslate"><span class="pre">exact_length[5,8,12]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>field_exists</p></td>
@@ -1838,7 +1839,7 @@ a natural number, except zero: 1, 2, 3, etc.</p></td>
 <tr class="row-even"><td><p>is_not_unique</p></td>
 <td><p>Yes</p></td>
 <td><p>Checks the database to see if the given value
-exist. Can ignore records by field/value to
+exists. Can ignore records by field/value to
 filter (currently accept only one filter).</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">is_not_unique[table.field,where_field,where_value]</span></code></p></td>
 </tr>
@@ -1930,8 +1931,8 @@ that confirms the element is a string</p></td>
 </tr>
 <tr class="row-odd"><td><p>timezone</p></td>
 <td><p>No</p></td>
-<td><p>Fails if field does match a timezone per
-<a class="reference external" href="https://www.php.net/manual/en/function.timezone-identifiers-list.php">timezone_identifiers_list()</a></p></td>
+<td><p>Fails if field does not match a timezone
+per <a class="reference external" href="https://www.php.net/manual/en/function.timezone-identifiers-list.php">timezone_identifiers_list()</a></p></td>
 <td></td>
 </tr>
 <tr class="row-even"><td><p>valid_base64</p></td>
@@ -1988,7 +1989,7 @@ are valid. This rule uses PHP’s
 <td><p>Fails if field does not contain a valid date.
 Any string that <a class="reference external" href="https://www.php.net/manual/en/function.strtotime.php">strtotime()</a> accepts is
 valid if you don’t specify an optional
-parameter to matches a date format.
+parameter that matches a date format.
 <strong>So it is usually necessary to specify
 the parameter.</strong></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">valid_date[d/m/Y]</span></code></p></td>
@@ -2069,9 +2070,9 @@ If you want the file upload to be optional
 </tr>
 <tr class="row-odd"><td><p>max_size</p></td>
 <td><p>Yes</p></td>
-<td><p>Fails if the uploaded file named in the
-parameter is larger than the second
-parameter in kilobytes (kb). Or if the file
+<td><p>Fails if the uploaded file is larger
+than the second parameter
+in kilobytes (kb). Or if the file
 is larger than allowed maximum size declared
 in php.ini config file -
 <code class="docutils literal notranslate"><span class="pre">upload_max_filesize</span></code> directive.</p></td>
