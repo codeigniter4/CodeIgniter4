@@ -80,7 +80,9 @@ class Connection extends BaseConnection
         if ($this->connID !== false) {
             if ($persistent === true && pg_connection_status($this->connID) === PGSQL_CONNECTION_BAD && pg_ping($this->connID) === false
             ) {
-                return false;
+                $error = pg_last_error($this->connID);
+
+                throw new DatabaseException($error);
             }
 
             if (! empty($this->schema)) {
@@ -88,7 +90,9 @@ class Connection extends BaseConnection
             }
 
             if ($this->setClientEncoding($this->charset) === false) {
-                return false;
+                $error = pg_last_error($this->connID);
+
+                throw new DatabaseException($error);
             }
         }
 

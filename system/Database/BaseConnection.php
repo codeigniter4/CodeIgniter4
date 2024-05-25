@@ -420,6 +420,7 @@ abstract class BaseConnection implements ConnectionInterface
             // Connect to the database and set the connection ID
             $this->connID = $this->connect($this->pConnect);
         } catch (Throwable $e) {
+            $this->connID       = false;
             $connectionErrors[] = sprintf('Main connection [%s]: %s', $this->DBDriver, $e->getMessage());
             log_message('error', 'Error connecting to the database: ' . $e);
         }
