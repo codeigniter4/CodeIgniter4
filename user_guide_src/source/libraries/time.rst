@@ -421,4 +421,5 @@ today < $time < 7 days           in 4 days / 4 days ago
 $time < 1 minute                 Now
 =============================== =================================
 
-The result strings are coming from the language file, **app/Language/{locale}/Time.php**.
+The result strings are coming from the language file, **system/Language/en/Time.php**.
+If you want to overwrite them, create **app/Language/{locale}/Time.php**.
