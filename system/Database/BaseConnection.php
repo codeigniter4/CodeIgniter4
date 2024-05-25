@@ -421,7 +421,11 @@ abstract class BaseConnection implements ConnectionInterface
             $this->connID = $this->connect($this->pConnect);
         } catch (Throwable $e) {
             $this->connID       = false;
-            $connectionErrors[] = sprintf('Main connection [%s]: %s', $this->DBDriver, $e->getMessage());
+            $connectionErrors[] = sprintf(
+                'Main connection [%s]: %s',
+                $this->DBDriver,
+                $e->getMessage()
+            );
             log_message('error', 'Error connecting to the database: ' . $e);
         }
 
@@ -442,7 +446,12 @@ abstract class BaseConnection implements ConnectionInterface
                         // Try to connect
                         $this->connID = $this->connect($this->pConnect);
                     } catch (Throwable $e) {
-                        $connectionErrors[] = sprintf('Failover #%d [%s]: %s', ++$index, $this->DBDriver, $e->getMessage());
+                        $connectionErrors[] = sprintf(
+                            'Failover #%d [%s]: %s',
+                            ++$index,
+                            $this->DBDriver,
+                            $e->getMessage()
+                        );
                         log_message('error', 'Error connecting to the database: ' . $e);
                     }
 

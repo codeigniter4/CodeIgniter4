@@ -78,7 +78,10 @@ class Connection extends BaseConnection
         $this->connID = $persistent === true ? pg_pconnect($this->DSN) : pg_connect($this->DSN);
 
         if ($this->connID !== false) {
-            if ($persistent === true && pg_connection_status($this->connID) === PGSQL_CONNECTION_BAD && pg_ping($this->connID) === false
+            if (
+                $persistent === true
+                && pg_connection_status($this->connID) === PGSQL_CONNECTION_BAD
+                && pg_ping($this->connID) === false
             ) {
                 $error = pg_last_error($this->connID);
 
