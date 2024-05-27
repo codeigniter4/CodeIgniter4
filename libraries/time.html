@@ -289,7 +289,7 @@
              
   <section id="times-and-dates">
 <h1>Times and Dates<a class="headerlink" href="#times-and-dates" title="Permalink to this heading"></a></h1>
-<p>CodeIgniter provides a fully-localized, immutable, date/time class that is built on PHP’s DateTimeImmutable object, but uses the Intl
+<p>CodeIgniter provides a fully-localized, immutable, date/time class that is built on PHP’s DateTimeImmutable class, but uses the Intl
 extension’s features to convert times across timezones and display the output correctly for different locales. This class
 is the <code class="docutils literal notranslate"><span class="pre">Time</span></code> class and lives in the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\I18n</span></code> namespace.</p>
 <div class="admonition note">
@@ -358,9 +358,9 @@ This can be any string that PHP’s <a class="reference external" href="https://
 <span class="nv">$myTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Time</span><span class="p">(</span><span class="s1">&#39;+3 week&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You can pass in strings representing the timezone and the locale in the second and parameters, respectively. Timezones
-can be any supported by PHP’s <a class="reference external" href="https://www.php.net/manual/en/timezones.php">DateTimeZone</a> class. The locale can be
-any supported by PHP’s <a class="reference external" href="https://www.php.net/manual/en/class.locale.php">Locale</a> class. If no locale or timezone is
+<p>You can pass in strings representing the timezone and the locale in the second and the third parameters, respectively. The timezone
+can be any one supported by PHP’s <a class="reference external" href="https://www.php.net/manual/en/timezones.php">DateTimeZone</a> class. The locale can be
+any one supported by PHP’s <a class="reference external" href="https://www.php.net/manual/en/class.locale.php">Locale</a> class. If no locale or timezone is
 provided, the application defaults will be used.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -372,8 +372,8 @@ provided, the application defaults will be used.</p>
 <section id="now">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">now()</a><a class="headerlink" href="#now" title="Permalink to this heading"></a></h3>
 <p>The Time class has several helper methods to instantiate the class. The first of these is the <code class="docutils literal notranslate"><span class="pre">now()</span></code> method
-that returns a new instance set to the current time. You can pass in strings representing the timezone and the locale
-in the second and parameters, respectively. If no locale or timezone is provided, the application defaults will be used.</p>
+that returns a new instance set to the current time. You can pass in strings representing the timezone and locale
+in the second and third parameters, respectively. If no locale or timezone is provided, the application defaults will be used.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
@@ -433,7 +433,7 @@ for the timezone and locale in the first and second parameters:</p>
 <section id="createfromdate">
 <h3><a class="toc-backref" href="#id8" role="doc-backlink">createFromDate()</a><a class="headerlink" href="#createfromdate" title="Permalink to this heading"></a></h3>
 <p>Given separate inputs for <strong>year</strong>, <strong>month</strong>, and <strong>day</strong>, will return a new instance. If any of these parameters
-are not provided, it will use the current value to fill it in. Accepts strings for the timezone and locale in the
+are not provided, it will use the current year, month and day. Accepts strings for the timezone and locale in the
 fourth and fifth parameters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -447,7 +447,7 @@ fourth and fifth parameters:</p>
 </section>
 <section id="createfromtime">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">createFromTime()</a><a class="headerlink" href="#createfromtime" title="Permalink to this heading"></a></h3>
-<p>Like <code class="docutils literal notranslate"><span class="pre">createFromDate()</span></code> except it is only concerned with the <strong>hours</strong>, <strong>minutes</strong>, and <strong>seconds</strong>. Uses the
+<p>Like <code class="docutils literal notranslate"><span class="pre">createFromDate()</span></code>, except it is only concerned with the <strong>hours</strong>, <strong>minutes</strong>, and <strong>seconds</strong>. Uses the
 current day for the date portion of the Time instance. Accepts strings for the timezone and locale in the
 fourth and fifth parameters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -463,7 +463,7 @@ fourth and fifth parameters:</p>
 <section id="create">
 <h3><a class="toc-backref" href="#id10" role="doc-backlink">create()</a><a class="headerlink" href="#create" title="Permalink to this heading"></a></h3>
 <p>A combination of the previous two methods, takes <strong>year</strong>, <strong>month</strong>, <strong>day</strong>, <strong>hour</strong>, <strong>minutes</strong>, and <strong>seconds</strong>
-as separate parameters. Any value not provided will use the current date and time to determine. Accepts strings for the
+as separate parameters. Any value not provided will use the current date and time. Accepts strings for the
 timezone and locale in the fourth and fifth parameters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -573,7 +573,7 @@ This will return a localized version of string formatted as (<code class="docuti
 </section>
 <section id="todatestring">
 <h3><a class="toc-backref" href="#id18" role="doc-backlink">toDateString()</a><a class="headerlink" href="#todatestring" title="Permalink to this heading"></a></h3>
-<p>Displays just the localized version of date portion of the Time:</p>
+<p>Displays just the localized date portion of the Time:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
@@ -590,7 +590,7 @@ This will return a localized version of string formatted as (<code class="docuti
 </section>
 <section id="totimestring">
 <h3><a class="toc-backref" href="#id19" role="doc-backlink">toTimeString()</a><a class="headerlink" href="#totimestring" title="Permalink to this heading"></a></h3>
-<p>Displays just the localized version of time portion of the value:</p>
+<p>Displays just the localized time portion of the value:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
@@ -607,7 +607,7 @@ This will return a localized version of string formatted as (<code class="docuti
 </section>
 <section id="humanize">
 <h3><a class="toc-backref" href="#id20" role="doc-backlink">humanize()</a><a class="headerlink" href="#humanize" title="Permalink to this heading"></a></h3>
-<p>This methods returns a string that displays the difference between the current date/time and the instance in a
+<p>This method returns a string that displays the difference between the current date/time and the instance in a
 human readable format that is geared towards being easily understood. It can create strings like ‘3 hours ago’,
 ‘in 1 month’, etc:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -628,25 +628,25 @@ human readable format that is geared towards being easily understood. It can cre
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>$time &gt; 1 year &amp;&amp; &lt; 2 years</p></td>
+<tr class="row-even"><td><p>1 year &lt; $time &lt; 2 years</p></td>
 <td><p>in 1 year / 1 year ago</p></td>
 </tr>
-<tr class="row-odd"><td><p>$time &gt; 1 month &amp;&amp; &lt; 1 year</p></td>
+<tr class="row-odd"><td><p>1 month &lt; $time &lt; 1 year</p></td>
 <td><p>in 6 months / 6 months ago</p></td>
 </tr>
-<tr class="row-even"><td><p>$time &gt; 7 days &amp;&amp; &lt; 1 month</p></td>
+<tr class="row-even"><td><p>7 days &lt; $time &lt; 1 month</p></td>
 <td><p>in 3 weeks / 3 weeks ago</p></td>
 </tr>
-<tr class="row-odd"><td><p>$time &gt; today &amp;&amp; &lt; 7 days</p></td>
+<tr class="row-odd"><td><p>today &lt; $time &lt; 7 days</p></td>
 <td><p>in 4 days / 4 days ago</p></td>
 </tr>
-<tr class="row-even"><td><p>$time == tomorrow / yesterday</p></td>
-<td><p>Tomorrow / Yesterday</p></td>
+<tr class="row-even"><td><p>$time == yesterday / tomorrow</p></td>
+<td><p>Yesterday / Tomorrow</p></td>
 </tr>
-<tr class="row-odd"><td><p>$time &gt; 59 minutes &amp;&amp; &lt; 1 day</p></td>
+<tr class="row-odd"><td><p>59 minutes &lt; $time &lt; 1 day</p></td>
 <td><p>in 2 hours / 2 hours ago</p></td>
 </tr>
-<tr class="row-even"><td><p>$time &gt; now &amp;&amp; &lt; 1 hour</p></td>
+<tr class="row-even"><td><p>now &lt; $time &lt; 1 hour</p></td>
 <td><p>in 35 minutes / 35 minutes ago</p></td>
 </tr>
 <tr class="row-odd"><td><p>$time == now</p></td>
@@ -654,7 +654,8 @@ human readable format that is geared towards being easily understood. It can cre
 </tr>
 </tbody>
 </table>
-<p>The exact language used is controlled through the language file, <strong>Time.php</strong>.</p>
+<p>The result strings are coming from the language file, <strong>system/Language/en/Time.php</strong>.
+If you want to overwrite them, create <strong>app/Language/{locale}/Time.php</strong>.</p>
 </section>
 </section>
 <section id="working-with-individual-values">
@@ -714,7 +715,7 @@ like <code class="docutils literal notranslate"><span class="pre">getYear()</spa
 </div>
 <section id="getage">
 <h4>getAge()<a class="headerlink" href="#getage" title="Permalink to this heading"></a></h4>
-<p>Returns the age, in years, of between the Time’s instance and the current time. Perfect for checking
+<p>Returns the age, in years, between the Time instance and the current time. Perfect for checking
 the age of someone based on their birthday:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1035,7 +1036,7 @@ time zone, the comparison is performed as is, without conversion to UTC.</p>
 <h4>humanize()<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h4>
 <p>Much like Time’s <code class="docutils literal notranslate"><span class="pre">humanize()</span></code> method, this returns a string that displays the difference between the times in a
 human readable format that is geared towards being easily understood. It can create strings like ‘3 hours ago’,
-‘in 1 month’, etc. The biggest differences are in how very recent dates are handled:</p>
+‘in 1 month’, etc. The biggest difference is in how very recent dates are handled:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
@@ -1056,22 +1057,22 @@ human readable format that is geared towards being easily understood. It can cre
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>$time &gt; 1 year &amp;&amp; &lt; 2 years</p></td>
+<tr class="row-even"><td><p>1 year &lt; $time &lt; 2 years</p></td>
 <td><p>in 1 year / 1 year ago</p></td>
 </tr>
-<tr class="row-odd"><td><p>$time &gt; 1 month &amp;&amp; &lt; 1 year</p></td>
+<tr class="row-odd"><td><p>1 month &lt; $time &lt; 1 year</p></td>
 <td><p>in 6 months / 6 months ago</p></td>
 </tr>
-<tr class="row-even"><td><p>$time &gt; 7 days &amp;&amp; &lt; 1 month</p></td>
+<tr class="row-even"><td><p>7 days &lt; $time &lt; 1 month</p></td>
 <td><p>in 3 weeks / 3 weeks ago</p></td>
 </tr>
-<tr class="row-odd"><td><p>$time &gt; today &amp;&amp; &lt; 7 days</p></td>
+<tr class="row-odd"><td><p>today &lt; $time &lt; 7 days</p></td>
 <td><p>in 4 days / 4 days ago</p></td>
 </tr>
-<tr class="row-even"><td><p>$time &gt; 1 hour &amp;&amp; &lt; 1 day</p></td>
+<tr class="row-even"><td><p>1 hour &lt; $time &lt; 1 day</p></td>
 <td><p>in 8 hours / 8 hours ago</p></td>
 </tr>
-<tr class="row-odd"><td><p>$time &gt; 1 minute &amp;&amp; &lt; 1 hour</p></td>
+<tr class="row-odd"><td><p>1 minute &lt; $time &lt; 1 hour</p></td>
 <td><p>in 35 minutes / 35 minutes ago</p></td>
 </tr>
 <tr class="row-even"><td><p>$time &lt; 1 minute</p></td>
@@ -1079,7 +1080,8 @@ human readable format that is geared towards being easily understood. It can cre
 </tr>
 </tbody>
 </table>
-<p>The exact language used is controlled through the language file, <strong>Time.php</strong>.</p>
+<p>The result strings are coming from the language file, <strong>system/Language/en/Time.php</strong>.
+If you want to overwrite them, create <strong>app/Language/{locale}/Time.php</strong>.</p>
 </section>
 </section>
 </section>
