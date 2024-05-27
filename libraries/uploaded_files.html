@@ -456,11 +456,9 @@ this code and save it to your <strong>app/Controllers</strong> directory:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Since the value of a file upload HTML field doesn’t exist, and is stored in the
-<code class="docutils literal notranslate"><span class="pre">$_FILES</span></code> global, only <a class="reference internal" href="validation.html#rules-for-file-uploads"><span class="std std-ref">Rules for File Uploads</span></a> can be used to validate
-the upload file with <a class="reference internal" href="validation.html"><span class="doc">Validation</span></a>.</p>
-<p>The rule <code class="docutils literal notranslate"><span class="pre">required</span></code> cannot be used either, so if the file is required, use
-the rule <code class="docutils literal notranslate"><span class="pre">uploaded</span></code> instead.</p>
+<p>Only the <a class="reference internal" href="validation.html#rules-for-file-uploads"><span class="std std-ref">Rules for File Uploads</span></a> can be used to validate uploaded files.</p>
+<p>Therefore, the rule <code class="docutils literal notranslate"><span class="pre">required</span></code> cannot be used either, so if the file is required,
+use the rule <code class="docutils literal notranslate"><span class="pre">uploaded</span></code> instead.</p>
 <p>Note that an empty array (<code class="docutils literal notranslate"><span class="pre">[]</span></code>) is passed as the first argument to
 <code class="docutils literal notranslate"><span class="pre">$this-&gt;validateData()</span></code>. It is because the file validation rules get the data
 for the uploaded file directly from the Request object.</p>
@@ -852,7 +850,7 @@ passing it as the second parameter:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 24, 2024.
+      <span class="lastupdated">Last updated on May 27, 2024.
       </span></p>
   </div>
 
