@@ -30,7 +30,7 @@ Uploading a file involves the following general process:
    uploaded based on the preferences you set.
 -  Once uploaded, the user will be shown a success message.
 
-To demonstrate this process here is brief tutorial. Afterward you'll
+To demonstrate this process here is a brief tutorial. Afterward you'll
 find reference information.
 
 Creating the Upload Form
@@ -83,12 +83,10 @@ this code and save it to your **app/Controllers** directory:
 
 .. literalinclude:: uploaded_files/002.php
 
-Since the value of a file upload HTML field doesn't exist, and is stored in the
-``$_FILES`` global, only :ref:`rules-for-file-uploads` can be used to validate
-upload file with :doc:`validation`.
+Only the :ref:`rules-for-file-uploads` can be used to validate uploaded files.
 
-The rule ``required`` cannot be used either, so if the file is required, use
-the rule ``uploaded`` instead.
+Therefore, the rule ``required`` cannot be used either, so if the file is required,
+use the rule ``uploaded`` instead.
 
 Note that an empty array (``[]``) is passed as the first argument to
 ``$this->validateData()``. It is because the file validation rules get the data
@@ -250,7 +248,7 @@ In controller:
 Working with the File
 *********************
 
-Once you've retrieved the UploadedFile instance, you can retrieve information about the file in safe ways, as well as
+Once you've retrieved the UploadedFile instance, you can get information about the file in safe ways, as well as
 move the file to a new location.
 
 .. _verify-a-file:
@@ -315,7 +313,7 @@ Returns the original file extension, based on the file name that was uploaded:
 getClientMimeType()
 -------------------
 
-Returns the mime type (mime type) of the file as provided by the client. This is NOT a trusted value. For a trusted
+Returns the mime type of the file as provided by the client. This is NOT a trusted value. For a trusted
 version, use ``getMimeType()`` instead:
 
 .. literalinclude:: uploaded_files/015.php
@@ -365,7 +363,7 @@ as the third parameter:
 Check if the File Moved
 -----------------------
 
-Once the file has been removed the temporary file is deleted. You can check if a file has been moved already with
+Once the file has been moved the temporary file is deleted. You can check if a file has been moved already with
 the ``hasMoved()`` method, which returns a boolean:
 
 .. literalinclude:: uploaded_files/018.php
@@ -373,7 +371,7 @@ the ``hasMoved()`` method, which returns a boolean:
 When Moving Fails
 -----------------
 
-Moving an uploaded file can fail, with an HTTPException, under several circumstances:
+Moving an uploaded file can fail, with an ``HTTPException``, under several circumstances:
 
 - the file has already been moved
 - the file did not upload successfully
