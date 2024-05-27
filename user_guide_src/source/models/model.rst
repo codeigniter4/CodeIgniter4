@@ -38,7 +38,7 @@ CodeIgniter does provide a model class that has a few nice features, including:
 
 - automatic database connection
 - basic CRUD methods
-- in-model validation
+- :ref:`in-model validation <in-model-validation>`
 - :ref:`automatic pagination <paginating-with-models>`
 - and more
 
