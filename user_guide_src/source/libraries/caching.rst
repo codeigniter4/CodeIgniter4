@@ -42,7 +42,8 @@ $backupHandler
 ==============
 
 In the case that the first choice ``$handler`` is not available, this is the next cache handler to load.
-The default backup handler is **dummy**.
+This is commonly the ``File`` handler since the file system is always available, but may not fit
+more complex, multi-server setups.
 
 $prefix
 =======
