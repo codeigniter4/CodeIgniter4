@@ -44,11 +44,9 @@ use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
 use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
-use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php80\Rector\FunctionLike\MixedTypeRector;
-use Rector\Php81\Rector\ClassConst\FinalizePublicClassConstantRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\AnnotationWithValueToAttributeRector;
 use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\CoversAnnotationWithValueToAttributeRector;
@@ -107,7 +105,6 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/tests/_support/Commands/Foobar.php',
         __DIR__ . '/tests/_support/View',
 
-        JsonThrowOnErrorRector::class,
         YieldDataProviderRector::class,
 
         RemoveUnusedPromotedPropertyRector::class => [
@@ -174,16 +171,6 @@ return static function (RectorConfig $rectorConfig): void {
         ],
         MixedTypeRector::class,
 
-        // PHP 8.1 features but cause breaking changes
-        FinalizePublicClassConstantRector::class => [
-            __DIR__ . '/system/Cache/Handlers/BaseHandler.php',
-            __DIR__ . '/system/Cache/Handlers/FileHandler.php',
-            __DIR__ . '/system/CodeIgniter.php',
-            __DIR__ . '/system/Events/Events.php',
-            __DIR__ . '/system/Log/Handlers/ChromeLoggerHandler.php',
-            __DIR__ . '/system/Log/Handlers/ErrorlogHandler.php',
-            __DIR__ . '/system/Security/Security.php',
-        ],
         ReturnNeverTypeRector::class => [
             __DIR__ . '/system/Cache/Handlers/BaseHandler.php',
             __DIR__ . '/system/Cache/Handlers/MemcachedHandler.php',
