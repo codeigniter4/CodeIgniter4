@@ -441,7 +441,7 @@ See <a class="reference internal" href="../concepts/factories.html#factories-loa
 <ul class="simple">
 <li><p>automatic database connection</p></li>
 <li><p>basic CRUD methods</p></li>
-<li><p>in-model validation</p></li>
+<li><p><a class="reference internal" href="#in-model-validation"><span class="std std-ref">in-model validation</span></a></p></li>
 <li><p><a class="reference internal" href="../libraries/pagination.html#paginating-with-models"><span class="std std-ref">automatic pagination</span></a></p></li>
 <li><p>and more</p></li>
 </ul>
@@ -1422,9 +1422,12 @@ prior to saving to the database with the <code class="docutils literal notransla
 <p class="admonition-title">Important</p>
 <p>When you update data, by default, the validation in the model class only
 validates provided fields. This is to avoid validation errors when updating only some fields.</p>
-<p>But this means <code class="docutils literal notranslate"><span class="pre">required*</span></code> rules do not work as expected when updating.
-If you want to check required fields, you can change the behavior by configuration.
-See <a class="reference internal" href="#clean-validation-rules"><span class="std std-ref">$cleanValidationRules</span></a> for details.</p>
+<p>However, this means that not all validation rules you set will be checked
+during updates. Thus, incomplete data may pass the validation.</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">required*</span></code> rules or <code class="docutils literal notranslate"><span class="pre">is_unique</span></code> rule that require the
+values of other fields may not work as expected.</p>
+<p>To avoid such glitches, this behavior can be changed by configuration. See
+<a class="reference internal" href="#clean-validation-rules"><span class="std std-ref">$cleanValidationRules</span></a> for details.</p>
 </div>
 </section>
 <section id="setting-validation-rules">
@@ -2105,7 +2108,7 @@ Model gives you out of the box, and create a fully custom experience.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 27, 2024.
+      <span class="lastupdated">Last updated on May 30, 2024.
       </span></p>
   </div>
 
