@@ -46,7 +46,7 @@ final class PhpStreamWrapper
         stream_wrapper_restore('php');
     }
 
-    public function stream_open(string $path): bool
+    public function stream_open(): bool
     {
         return true;
     }
