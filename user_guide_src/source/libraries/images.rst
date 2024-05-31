@@ -22,7 +22,7 @@ Initializing the Class
 **********************
 
 Like most other classes in CodeIgniter, the image class is initialized
-in your controller by calling the global function service:
+in your controller by calling the global function ``service()``:
 
 .. literalinclude:: images/001.php
 
