@@ -37,7 +37,7 @@ come in handy.
 Instead of creating the instance ourself, we let a central class create an instance of the
 class for us. This class is kept very simple. It only contains a method for each class that we want
 to use as a service. The method typically returns a **shared instance** of that class, passing any dependencies
-it might have into it. Then, we would replace our timer creation code with code that calls this global function or Service class:
+it might have into it. Then, we would replace our timer creation code with code that calls this global function or Services class:
 
 .. literalinclude:: services/002.php
 
