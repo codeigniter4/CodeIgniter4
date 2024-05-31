@@ -1,3 +1,3 @@
 <?php
 
-$image = \Config\Services::image();
+$image = service('image');

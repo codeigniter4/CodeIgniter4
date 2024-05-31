@@ -1,6 +1,6 @@
 <?php
 
-$response = \Config\Services::response()
+$response = service('response')
     ->redirect('https://example.com/path')
     ->setHeader('Some', 'header')
     ->setCookie('and', 'cookie');

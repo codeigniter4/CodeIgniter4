@@ -372,7 +372,7 @@ Miscellaneous Functions
     :returns:    The shared Request object.
     :rtype:    IncomingRequest|CLIRequest
 
-    This function is a wrapper for ``Services::request()``.
+    This function is a wrapper for ``Services::request()`` and ``service('request')``.
 
 .. php:function:: response()
 
@@ -381,7 +381,7 @@ Miscellaneous Functions
     :returns:    The shared Response object.
     :rtype:    Response
 
-    This function is a wrapper for ``Services::response()``.
+    This function is a wrapper for ``Services::response()`` and ``service('response')``.
 
 .. php:function:: route_to($method[, ...$params])
 

@@ -13,7 +13,7 @@ $store->get('login_token');
 
 // getting cookie in the current Response's cookie collection
 cookies()->get('login_token');
-Services::response()->getCookie('remember_token');
+service('response')->getCookie('remember_token');
 
 // using the cookie helper to get cookie from the Response's cookie collection
 helper('cookie');

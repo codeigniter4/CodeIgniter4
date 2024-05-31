@@ -1,3 +1,3 @@
 <?php
 
-$postManager = \Config\Services::postManager();
+$postManager = service('postManager');

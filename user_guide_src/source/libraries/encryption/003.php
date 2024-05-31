@@ -1,7 +1,9 @@
 <?php
 
-$config         = new \Config\Encryption();
+use Config\Encryption;
+
+$config         = config(Encryption::class);
 $config->key    = 'aBigsecret_ofAtleast32Characters';
 $config->driver = 'OpenSSL';
 
-$encrypter = \Config\Services::encrypter($config);
+$encrypter = service('encrypter', $config);

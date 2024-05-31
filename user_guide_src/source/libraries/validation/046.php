@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-use Config\Services;
-
 class Form extends BaseController
 {
     // Define a custom validation rule.
@@ -16,7 +14,9 @@ class Form extends BaseController
     {
         // ...
 
-        $validation = Services::validation();
+        $data = [];
+
+        $validation = service('validation');
         $validation->setRules(
             [
                 'foo' => [
