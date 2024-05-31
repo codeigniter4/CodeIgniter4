@@ -2,7 +2,7 @@
 
 use Config\Encryption;
 
-$config         = config(Encryption::class);
+$config         = new Encryption();
 $config->driver = 'OpenSSL';
 
 // Your CI3's 'encryption_key'
