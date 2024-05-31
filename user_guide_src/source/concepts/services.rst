@@ -85,7 +85,7 @@ always return the same instance:
 
 .. literalinclude:: services/003.php
 
-.. note:: Since `v4.5.0`, the global function ``service()`` is recommended due to performance improvements on without parameter
+.. note:: Since v4.5.0, when you don't pass parameters to the service, the global function ``service()`` is recommended due to performance improvements.
 
 If the creation method requires additional parameters, they can be passed after the service name:
 
