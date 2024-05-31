@@ -377,8 +377,8 @@ it will over-ride this.</p>
 <p>There are no rules for how test files must be placed. However, we recommend that
 you establish placement rules in advance so that you can quickly understand where
 the test files are located.</p>
-<p>In this document, we will place the test files corresponding to the classes in
-the <strong>app</strong> directory in the <strong>tests/app</strong> directory. To test a new library,
+<p>In this document, the test files corresponding to the classes in the <strong>app</strong> directory
+will be placed in the <strong>tests/app</strong> directory. To test a new library,
 <strong>app/Libraries/Foo.php</strong>, you would create a new file at
 <strong>tests/app/Libraries/FooTest.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -396,7 +396,7 @@ the <strong>app</strong> directory in the <strong>tests/app</strong> directory. 
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>To test one of your models, <strong>app/Models/UserMode.php</strong>, you might end up with
+<p>To test one of your models, <strong>app/Models/UserModel.php</strong>, you might end up with
 something like this in <strong>tests/app/Models/UserModelTest.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -458,7 +458,7 @@ parent as well so extended test cases do not interfere with staging:</p>
 </section>
 <section id="traits">
 <span id="testing-overview-traits"></span><h4><a class="toc-backref" href="#id9" role="doc-backlink">Traits</a><a class="headerlink" href="#traits" title="Permalink to this heading"></a></h4>
-<p>A common way to enhance your tests is by using traits to consolidate staging across different
+<p>A common way to enhance your tests is using traits to consolidate staging across different
 test cases. <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> will detect any class traits and look for staging methods
 to run named for the trait itself (i.e. <cite>setUp{NameOfTrait}()</cite> and <cite>tearDown{NameOfTrait}()</cite>).</p>
 <p>For example, if you needed to add authentication to some
