@@ -38,7 +38,7 @@ CodeIgniter does provide a model class that has a few nice features, including:
 
 - automatic database connection
 - basic CRUD methods
-- in-model validation
+- :ref:`in-model validation <in-model-validation>`
 - :ref:`automatic pagination <paginating-with-models>`
 - and more
 
@@ -659,9 +659,14 @@ prior to saving to the database with the ``insert()``, ``update()``, or ``save()
 .. important:: When you update data, by default, the validation in the model class only
     validates provided fields. This is to avoid validation errors when updating only some fields.
 
-    But this means ``required*`` rules do not work as expected when updating.
-    If you want to check required fields, you can change the behavior by configuration.
-    See :ref:`clean-validation-rules` for details.
+    However, this means that not all validation rules you set will be checked
+    during updates. Thus, incomplete data may pass the validation.
+
+    For example, ``required*`` rules or ``is_unique`` rule that require the
+    values of other fields may not work as expected.
+
+    To avoid such glitches, this behavior can be changed by configuration. See
+    :ref:`clean-validation-rules` for details.
 
 Setting Validation Rules
 ------------------------

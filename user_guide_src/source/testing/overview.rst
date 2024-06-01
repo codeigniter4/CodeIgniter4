@@ -76,14 +76,14 @@ There are no rules for how test files must be placed. However, we recommend that
 you establish placement rules in advance so that you can quickly understand where
 the test files are located.
 
-In this document, we will place the test files corresponding to the classes in
-the **app** directory in the **tests/app** directory. To test a new library,
+In this document, the test files corresponding to the classes in the **app** directory
+will be placed in the **tests/app** directory. To test a new library,
 **app/Libraries/Foo.php**, you would create a new file at
 **tests/app/Libraries/FooTest.php**:
 
 .. literalinclude:: overview/001.php
 
-To test one of your models, **app/Models/UserMode.php**, you might end up with
+To test one of your models, **app/Models/UserModel.php**, you might end up with
 something like this in **tests/app/Models/UserModelTest.php**:
 
 .. literalinclude:: overview/002.php
@@ -121,7 +121,7 @@ parent as well so extended test cases do not interfere with staging:
 Traits
 ------
 
-A common way to enhance your tests is by using traits to consolidate staging across different
+A common way to enhance your tests is using traits to consolidate staging across different
 test cases. ``CIUnitTestCase`` will detect any class traits and look for staging methods
 to run named for the trait itself (i.e. `setUp{NameOfTrait}()` and `tearDown{NameOfTrait}()`).
 

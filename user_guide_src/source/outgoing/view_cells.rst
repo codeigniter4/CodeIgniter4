@@ -101,6 +101,10 @@ Implementing the AlertMessage from above as a Controlled Cell would look like th
 
 .. literalinclude:: view_cells/010.php
 
+.. note:: If you use typed properties, you must set the initial values:
+
+    .. literalinclude:: view_cells/023.php
+
 .. _generating-cell-via-command:
 
 Generating Cell via Command
