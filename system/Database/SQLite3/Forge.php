@@ -126,11 +126,12 @@ class Forge extends BaseForge
 
                 $sqlTable = new Table($this->db, $this);
 
-                $sqlTable->fromTable($table)
+                $sqlExecuteResult = $sqlTable->fromTable($table)
                     ->dropColumn($columnNamesToDrop)
                     ->run();
 
-                return ''; // Why empty string?
+                // Return the execute result with string type.
+                return '' . $sqlExecuteResult;
 
             case 'CHANGE':
                 $fieldsToModify = [];
