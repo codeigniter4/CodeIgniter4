@@ -14,8 +14,6 @@ class Form extends BaseController
     {
         // ...
 
-        $data = [];
-
         $validation = service('validation');
         $validation->setRules(
             [
