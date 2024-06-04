@@ -73,6 +73,13 @@ class Controller
     protected $validator;
 
     /**
+     * Config Validation file
+     *
+     * @var Validation
+     */
+    protected $configValidation;
+
+    /**
      * Constructor.
      *
      * @return void
@@ -81,9 +88,10 @@ class Controller
      */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
-        $this->request  = $request;
-        $this->response = $response;
-        $this->logger   = $logger;
+        $this->request          = $request;
+        $this->response         = $response;
+        $this->logger           = $logger;
+        $this->configValidation = config(Validation::class);
 
         if ($this->forceHTTPS > 0) {
             $this->forceHTTPS($this->forceHTTPS);
@@ -127,13 +135,12 @@ class Controller
     /**
      * A shortcut to performing validation on Request data.
      *
-     * @param array|string    $rules
-     * @param array           $messages An array of custom error messages
-     * @param Validation|null $config   The class Validation
+     * @param array|string $rules
+     * @param array        $messages An array of custom error messages
      */
-    protected function validate($rules, array $messages = [], ?Validation $config = null): bool
+    protected function validate($rules, array $messages = []): bool
     {
-        $this->setValidator($rules, $messages, $config);
+        $this->setValidator($rules, $messages);
 
         return $this->validator->withRequest($this->request)->run();
     }
@@ -141,31 +148,37 @@ class Controller
     /**
      * A shortcut to performing validation on any input data.
      *
-     * @param array           $data     The data to validate
-     * @param array|string    $rules
-     * @param array           $messages An array of custom error messages
-     * @param string|null     $dbGroup  The database group to use
-     * @param Validation|null $config   The class Validation
+     * @param array        $data     The data to validate
+     * @param array|string $rules
+     * @param array        $messages An array of custom error messages
+     * @param string|null  $dbGroup  The database group to use
      */
-    protected function validateData(array $data, $rules, array $messages = [], ?string $dbGroup = null, ?Validation $config = null): bool
+    protected function validateData(array $data, $rules, array $messages = [], ?string $dbGroup = null): bool
     {
-        $this->setValidator($rules, $messages, $config);
+        $this->setValidator($rules, $messages);
 
         return $this->validator->run($data, null, $dbGroup);
     }
 
     /**
-     * @param array|string    $rules
-     * @param array           $messages An array of custom error messages
-     * @param Validation|null $config   The class Validation
+     * @param Validation $config
      */
-    private function setValidator($rules, array $messages, ?Validation $config = null): void
+    protected function setConfigValidator(Validation $config): void
+    {
+        $this->configValidation = $config;
+    }
+
+    /**
+     * @param array|string $rules
+     * @param array        $messages An array of custom error messages
+     */
+    private function setValidator($rules, array $messages): void
     {
         $this->validator = service('validation');
 
         // If you replace the $rules array with the name of the group
         if (is_string($rules)) {
-            $validation = $config ?? config(Validation::class);
+            $validation = $this->configValidation;
 
             // If the rule wasn't found in the \Config\Validation, we
             // should throw an exception so the developer can find it.
