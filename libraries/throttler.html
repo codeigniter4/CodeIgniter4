@@ -316,7 +316,7 @@ The first parameter is the bucket name, the second parameter the number of token
 the third being the amount of time it takes the bucket to refill:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$throttler</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">throttler</span><span class="p">();</span>
+<span class="nv">$throttler</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;throttler&#39;</span><span class="p">);</span>
 <span class="nv">$throttler</span><span class="o">-&gt;</span><span class="na">check</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="nx">MINUTE</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -348,7 +348,6 @@ along the lines of:</p>
 <span class="k">use</span> <span class="nx">CodeIgniter\Filters\FilterInterface</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\HTTP\RequestInterface</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\HTTP\ResponseInterface</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">Throttle</span> <span class="k">implements</span> <span class="nx">FilterInterface</span>
 <span class="p">{</span>
@@ -362,12 +361,12 @@ along the lines of:</p>
 <span class="sd">     */</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nv">$arguments</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="nv">$throttler</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">throttler</span><span class="p">();</span>
+        <span class="nv">$throttler</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;throttler&#39;</span><span class="p">);</span>
 
         <span class="c1">// Restrict an IP address to no more than 1 request</span>
         <span class="c1">// per second across the entire site.</span>
         <span class="k">if</span> <span class="p">(</span><span class="nv">$throttler</span><span class="o">-&gt;</span><span class="na">check</span><span class="p">(</span><span class="nb">md5</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getIPAddress</span><span class="p">()),</span> <span class="mi">60</span><span class="p">,</span> <span class="nx">MINUTE</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">429</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;response&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">429</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span>
 
@@ -517,7 +516,7 @@ Won’t fail if the bucket doesn’t exist.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 31, 2024.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
       </span></p>
   </div>
 

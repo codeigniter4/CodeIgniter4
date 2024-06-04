@@ -324,17 +324,17 @@ actions:</p>
 <section id="initializing-the-class">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Initializing the Class</a><a class="headerlink" href="#initializing-the-class" title="Permalink to this heading"></a></h2>
 <p>Like most other classes in CodeIgniter, the image class is initialized
-in your controller by calling the Services class:</p>
+in your controller by calling the global function <code class="docutils literal notranslate"><span class="pre">service()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">();</span>
+<span class="nv">$image</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You can pass the alias for the image library you wish to use into the
-Service function:</p>
+<p>You can pass the alias for the image library you wish to use into the global
+function <code class="docutils literal notranslate"><span class="pre">service()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">);</span>
+<span class="nv">$image</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The available Handlers are as follows:</p>
@@ -448,7 +448,7 @@ the error message. A good practice is to catch the exceptions, showing an
 error upon failure, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">();</span>
+<span class="nv">$image</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">);</span>
 
 <span class="k">try</span> <span class="p">{</span>
     <span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
@@ -478,7 +478,7 @@ thumbnail images that should match a certain size/aspect ratio. This is handled 
 offset values:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$info</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<span class="nv">$info</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">getFile</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">getProperties</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
@@ -486,7 +486,7 @@ offset values:</p>
 <span class="nv">$xOffset</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$info</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">25</span><span class="p">;</span>
 <span class="nv">$yOffset</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$info</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">25</span><span class="p">;</span>
 
-<span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">crop</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="nv">$xOffset</span><span class="p">,</span> <span class="nv">$yOffset</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -503,7 +503,7 @@ offset values:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">$imageType</span></code> is one of PHP’s image type constants (see for example <a class="reference external" href="https://www.php.net/manual/en/function.image-type-to-mime-type.php">https://www.php.net/manual/en/function.image-type-to-mime-type.php</a>):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">convert</span><span class="p">(</span><span class="nx">IMAGETYPE_PNG</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.png&#39;</span><span class="p">);</span>
@@ -536,7 +536,7 @@ indicated by their extension, ignoring <code class="docutils literal notranslate
 <p>This provides a much simpler way to crop that will always maintain the aspect ratio:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -559,12 +559,12 @@ indicated by their extension, ignoring <code class="docutils literal notranslate
 </ul>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.png&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">flatten</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
 
-<span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.png&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">flatten</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">112</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -582,7 +582,7 @@ indicated by their extension, ignoring <code class="docutils literal notranslate
 </ul>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">flip</span><span class="p">(</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -606,7 +606,7 @@ image to fit the desired dimensions. If <code class="docutils literal notranslat
 while the other dimension will be altered to match the original image’s aspect ratio.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">resize</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -640,7 +640,7 @@ products.</p>
 that allow you to specify how the text should be displayed:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">text</span><span class="p">(</span><span class="s1">&#39;Copyright 2017 My Photo Co&#39;</span><span class="p">,</span> <span class="p">[</span>
         <span class="s1">&#39;color&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;#fff&#39;</span><span class="p">,</span>
@@ -688,7 +688,7 @@ name of one of the installed system fonts that you wish to use, i.e., Calibri.</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 31, 2024.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
       </span></p>
   </div>
 

@@ -342,7 +342,7 @@ classes, in addition to the methods listed below.</p>
 get a copy of it through the <a class="reference internal" href="../concepts/services.html"><span class="doc">Services class</span></a>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">request</span><span class="p">();</span>
+<span class="nv">$request</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>It’s preferable, though, to pass the request in as a dependency if the class is anything other than
@@ -363,7 +363,7 @@ the controller, where you can save it as a class property:</p>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="nv">$someClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SomeClass</span><span class="p">(</span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">request</span><span class="p">());</span>
+<span class="nv">$someClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SomeClass</span><span class="p">(</span><span class="nx">service</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">));</span>
 </pre></div>
 </div>
 </section>
@@ -1225,7 +1225,7 @@ underlying <code class="docutils literal notranslate"><span class="pre">URI</spa
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 31, 2024.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
       </span></p>
   </div>
 

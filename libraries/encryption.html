@@ -353,7 +353,7 @@ been deprecated as of PHP 7.2.</p>
 <p>Like all services in CodeIgniter, it can be loaded via <code class="docutils literal notranslate"><span class="pre">Config\Services</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">encrypter</span><span class="p">();</span>
+<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;encrypter&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Assuming you have set your starting key (see <a class="reference internal" href="#configuration"><span class="std std-ref">Configuring the Library</span></a>),
@@ -412,11 +412,13 @@ object of your own to the <code class="docutils literal notranslate"><span class
 an instance of the <code class="docutils literal notranslate"><span class="pre">Config\Encryption</span></code> class.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$config</span>         <span class="o">=</span> <span class="k">new</span> <span class="nx">\Config\Encryption</span><span class="p">();</span>
+<span class="k">use</span> <span class="nx">Config\Encryption</span><span class="p">;</span>
+
+<span class="nv">$config</span>         <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="nx">Encryption</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">key</span>    <span class="o">=</span> <span class="s1">&#39;aBigsecret_ofAtleast32Characters&#39;</span><span class="p">;</span>
 <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">driver</span> <span class="o">=</span> <span class="s1">&#39;OpenSSL&#39;</span><span class="p">;</span>
 
-<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">encrypter</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
+<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;encrypter&#39;</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
 </pre></div>
 </div>
 <section id="configuration-to-maintain-compatibility-with-ci3">
@@ -429,7 +431,6 @@ If you need to decrypt such data, use the following settings to maintain compati
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">Config\Encryption</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
 
 <span class="nv">$config</span>         <span class="o">=</span> <span class="k">new</span> <span class="nx">Encryption</span><span class="p">();</span>
 <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">driver</span> <span class="o">=</span> <span class="s1">&#39;OpenSSL&#39;</span><span class="p">;</span>
@@ -443,7 +444,7 @@ If you need to decrypt such data, use the following settings to maintain compati
 <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">encryptKeyInfo</span> <span class="o">=</span> <span class="s1">&#39;encryption&#39;</span><span class="p">;</span>
 <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">authKeyInfo</span>    <span class="o">=</span> <span class="s1">&#39;authentication&#39;</span><span class="p">;</span>
 
-<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">encrypter</span><span class="p">(</span><span class="nv">$config</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;encrypter&#39;</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -808,7 +809,7 @@ on runtime, pass the <code class="docutils literal notranslate"><span class="pre
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 31, 2024.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
       </span></p>
   </div>
 

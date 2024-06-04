@@ -342,10 +342,10 @@ requirements are not met.</p>
 <span class="k">echo</span> <span class="nv">$foo</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>You can grab an instance of the cache engine directly through the Services class:</p>
+<p>You can grab an instance of the cache engine directly through the global function <code class="docutils literal notranslate"><span class="pre">service()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$cache</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">cache</span><span class="p">();</span>
+<span class="nv">$cache</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;cache&#39;</span><span class="p">);</span>
 
 <span class="nv">$foo</span> <span class="o">=</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
 </pre></div>
@@ -836,7 +836,7 @@ support your chosen cache.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 31, 2024.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
       </span></p>
   </div>
 

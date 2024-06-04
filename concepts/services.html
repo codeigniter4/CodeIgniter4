@@ -340,9 +340,12 @@ come in handy.</p>
 <p>Instead of creating the instance ourself, we let a central class create an instance of the
 class for us. This class is kept very simple. It only contains a method for each class that we want
 to use as a service. The method typically returns a <strong>shared instance</strong> of that class, passing any dependencies
-it might have into it. Then, we would replace our timer creation code with code that calls this new class:</p>
+it might have into it. Then, we would replace our timer creation code with code that calls this global function or Services class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="nv">$timer</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;timer&#39;</span><span class="p">);</span>
+
+<span class="c1">// The code above is the same as the code below.</span>
 <span class="nv">$timer</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">timer</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -361,10 +364,10 @@ error-resistant.</p>
 <p>As many CodeIgniter classes are provided as services, you can get them like the following:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$typography</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">typography</span><span class="p">();</span>
+<span class="nv">$timer</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;timer&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">$typography</span></code> is an instance of the Typography class, and if you call <code class="docutils literal notranslate"><span class="pre">\Config\Services::typography()</span></code> again, you will get the exactly same instance.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$timer</span></code> is an instance of the Timer class, and if you call <code class="docutils literal notranslate"><span class="pre">service('timer')</span></code> again, you will get the exactly same instance.</p>
 <p>The Services typically return a <strong>shared instance</strong> of the class. The following code creates a <code class="docutils literal notranslate"><span class="pre">CURLRequest</span></code> instance at the first call. And the second call returns the exactly same instance.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -372,13 +375,13 @@ error-resistant.</p>
     <span class="s1">&#39;baseURI&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://example.com/api/v1/&#39;</span><span class="p">,</span>
     <span class="s1">&#39;timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
 <span class="p">];</span>
-<span class="nv">$client1</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">curlrequest</span><span class="p">(</span><span class="nv">$options1</span><span class="p">);</span>
+<span class="nv">$client1</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;curlrequest&#39;</span><span class="p">,</span> <span class="nv">$options1</span><span class="p">);</span>
 
 <span class="nv">$options2</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;baseURI&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://another.example.com/api/v2/&#39;</span><span class="p">,</span>
     <span class="s1">&#39;timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
 <span class="p">];</span>
-<span class="nv">$client2</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">curlrequest</span><span class="p">(</span><span class="nv">$options2</span><span class="p">);</span>
+<span class="nv">$client2</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;curlrequest&#39;</span><span class="p">,</span> <span class="nv">$options2</span><span class="p">);</span>
 <span class="c1">// $options2 does not work.</span>
 <span class="c1">// $client2 is the exactly same instance as $client1.</span>
 </pre></div>
@@ -386,10 +389,10 @@ error-resistant.</p>
 <p>Therefore, the parameter <code class="docutils literal notranslate"><span class="pre">$options2</span></code> for the <code class="docutils literal notranslate"><span class="pre">$client2</span></code> does not work. It is just ignored.</p>
 <section id="getting-a-new-instance">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Getting a New Instance</a><a class="headerlink" href="#getting-a-new-instance" title="Permalink to this heading"></a></h3>
-<p>If you want to get a new instance of the Typography class, you need to pass <code class="docutils literal notranslate"><span class="pre">false</span></code> to the argument <code class="docutils literal notranslate"><span class="pre">$getShared</span></code>:</p>
+<p>If you want to get a new instance of the Timer class, you need to pass <code class="docutils literal notranslate"><span class="pre">false</span></code> to the argument <code class="docutils literal notranslate"><span class="pre">$getShared</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$typography</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">typography</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+<span class="nv">$timer</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">timer</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -409,6 +412,10 @@ always return the same instance:</p>
 <span class="c1">// The code above is the same as the code below.</span>
 <span class="nv">$logger</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">logger</span><span class="p">();</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.5.0, when you don’t pass parameters to the service, the global function <code class="docutils literal notranslate"><span class="pre">service()</span></code> is recommended due to performance improvements.</p>
 </div>
 <p>If the creation method requires additional parameters, they can be passed after the service name:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -572,7 +579,7 @@ models, etc, and you’d like to make some of the classes available as a service
 would simply use the framework’s <code class="docutils literal notranslate"><span class="pre">Config\Services</span></code> class to grab your service:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$postManager</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">postManager</span><span class="p">();</span>
+<span class="nv">$postManager</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;postManager&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -594,7 +601,7 @@ would simply use the framework’s <code class="docutils literal notranslate"><s
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 31, 2024.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
       </span></p>
   </div>
 

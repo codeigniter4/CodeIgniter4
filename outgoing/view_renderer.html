@@ -309,7 +309,7 @@
 <code class="docutils literal notranslate"><span class="pre">renderer</span></code> service, sets the data, and renders the view. While this is often
 exactly what you want, you may find times where you want to work with it more directly.
 In that case you can access the View service directly:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$view</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">renderer</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$view</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;renderer&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Alternately, if you are not using the <code class="docutils literal notranslate"><span class="pre">View</span></code> class as your default renderer, you
@@ -556,7 +556,7 @@ for this object, the new value will replace the existing one.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 31, 2024.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
       </span></p>
   </div>
 

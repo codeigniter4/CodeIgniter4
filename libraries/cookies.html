@@ -392,7 +392,7 @@ instance or an array of defaults to the static <code class="docutils literal not
 <span class="k">use</span> <span class="nx">Config\Cookie</span> <span class="k">as</span> <span class="nx">CookieConfig</span><span class="p">;</span>
 
 <span class="c1">// pass in a Config\Cookie instance before constructing a Cookie class</span>
-<span class="nx">Cookie</span><span class="o">::</span><span class="na">setDefaults</span><span class="p">(</span><span class="k">new</span> <span class="nx">CookieConfig</span><span class="p">());</span>
+<span class="nx">Cookie</span><span class="o">::</span><span class="na">setDefaults</span><span class="p">(</span><span class="nx">config</span><span class="p">(</span><span class="nx">CookieConfig</span><span class="o">::</span><span class="na">class</span><span class="p">));</span>
 <span class="nv">$cookie</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cookie</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">);</span>
 
 <span class="c1">// pass in an array of defaults</span>
@@ -416,7 +416,7 @@ behavior but only want to change defaults for a limited time, you can take advan
 <span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">Config\Cookie</span> <span class="k">as</span> <span class="nx">CookieConfig</span><span class="p">;</span>
 
-<span class="nv">$oldDefaults</span> <span class="o">=</span> <span class="nx">Cookie</span><span class="o">::</span><span class="na">setDefaults</span><span class="p">(</span><span class="k">new</span> <span class="nx">CookieConfig</span><span class="p">());</span>
+<span class="nv">$oldDefaults</span> <span class="o">=</span> <span class="nx">Cookie</span><span class="o">::</span><span class="na">setDefaults</span><span class="p">(</span><span class="nx">config</span><span class="p">(</span><span class="nx">CookieConfig</span><span class="o">::</span><span class="na">class</span><span class="p">));</span>
 <span class="nv">$cookie</span>      <span class="o">=</span> <span class="k">new</span> <span class="nx">Cookie</span><span class="p">(</span><span class="s1">&#39;my_token&#39;</span><span class="p">,</span> <span class="s1">&#39;muffins&#39;</span><span class="p">);</span>
 
 <span class="c1">// return the old defaults</span>
@@ -560,9 +560,8 @@ the framework will automatically send the cookies.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
 
-<span class="nv">$response</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">();</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;response&#39;</span><span class="p">);</span>
 
 <span class="nv">$cookie</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cookie</span><span class="p">(</span>
     <span class="s1">&#39;remember_token&#39;</span><span class="p">,</span>
@@ -607,9 +606,7 @@ the framework will automatically send the cookies.</p>
 instance can be accessed from the current <code class="docutils literal notranslate"><span class="pre">Response</span></code> object.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
-
-<span class="nv">$cookieStore</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getCookieStore</span><span class="p">();</span>
+<span class="nv">$cookieStore</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;response&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCookieStore</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -653,7 +650,6 @@ if the second argument, <code class="docutils literal notranslate"><span class="
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Cookie\CookieStore</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
 
 <span class="c1">// check if cookie is in the current cookie collection</span>
 <span class="nv">$store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CookieStore</span><span class="p">([</span>
@@ -664,7 +660,7 @@ if the second argument, <code class="docutils literal notranslate"><span class="
 
 <span class="c1">// check if cookie is in the current Response&#39;s cookie collection</span>
 <span class="nx">cookies</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">has</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">);</span>
-<span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">hasCookie</span><span class="p">(</span><span class="s1">&#39;remember_token&#39;</span><span class="p">);</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;response&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">hasCookie</span><span class="p">(</span><span class="s1">&#39;remember_token&#39;</span><span class="p">);</span>
 
 <span class="c1">// using the cookie helper to check the current Response</span>
 <span class="c1">// not available to v4.1.1 and lower</span>
@@ -691,7 +687,7 @@ if the second argument, <code class="docutils literal notranslate"><span class="
 
 <span class="c1">// getting cookie in the current Response&#39;s cookie collection</span>
 <span class="nx">cookies</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">);</span>
-<span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getCookie</span><span class="p">(</span><span class="s1">&#39;remember_token&#39;</span><span class="p">);</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;response&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCookie</span><span class="p">(</span><span class="s1">&#39;remember_token&#39;</span><span class="p">);</span>
 
 <span class="c1">// using the cookie helper to get cookie from the Response&#39;s cookie collection</span>
 <span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;cookie&#39;</span><span class="p">);</span>
@@ -717,15 +713,13 @@ an invalid name will just return <code class="docutils literal notranslate"><spa
 in store will be displayed.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
-
 <span class="nx">cookies</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span> <span class="c1">// array of Cookie objects</span>
 
 <span class="c1">// alternatively, you can use the display method</span>
 <span class="nx">cookies</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">display</span><span class="p">();</span>
 
 <span class="c1">// or even from the Response</span>
-<span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getCookies</span><span class="p">();</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;response&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCookies</span><span class="p">();</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -743,7 +737,6 @@ in order to work on it. The original instance is left unchanged.</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Cookie\CookieStore</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
 
 <span class="nv">$store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CookieStore</span><span class="p">([</span>
     <span class="k">new</span> <span class="nx">Cookie</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">),</span>
@@ -768,10 +761,8 @@ cookies without worrying the immutable nature of the cookie collection. The <cod
 the instance with the modified instance.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
-
-<span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="s1">&#39;admin_token&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">);</span>
-<span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">deleteCookie</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">);</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;response&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="s1">&#39;admin_token&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">);</span>
+<span class="nx">service</span><span class="p">(</span><span class="s1">&#39;response&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">deleteCookie</span><span class="p">(</span><span class="s1">&#39;login_token&#39;</span><span class="p">);</span>
 
 <span class="c1">// using the cookie helper</span>
 <span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;cookie&#39;</span><span class="p">);</span>
@@ -1464,7 +1455,7 @@ The original collection is left unchanged.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 31, 2024.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
       </span></p>
   </div>
 

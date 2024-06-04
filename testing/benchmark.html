@@ -326,7 +326,7 @@ the <code class="docutils literal notranslate"><span class="pre">start()</span><
 of the timer. It is only used for you to reference later to know which measurement is which:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$benchmark</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">timer</span><span class="p">();</span>
+<span class="nv">$benchmark</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;timer&#39;</span><span class="p">);</span>
 <span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -507,7 +507,7 @@ If you don’t want the results, you can pass in <code class="docutils literal n
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 31, 2024.
+      <span class="lastupdated">Last updated on Jun 04, 2024.
       </span></p>
   </div>
 
