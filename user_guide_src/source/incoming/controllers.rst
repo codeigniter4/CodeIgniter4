@@ -118,6 +118,10 @@ $this->setConfigValidator()
 If you need to validate rules that are in a personal validation file and this extension class of the ``Config\Validation`` class is extended, you can configure it as follows.
 Can be useful when working with standalone modules.
 
+It is required that you extend from the ``Config\Validation`` class.
+
+By default, the ``Config\Validation`` class is used.
+
 .. literalinclude:: controllers/026.php
 
 .. _controller-validate:
