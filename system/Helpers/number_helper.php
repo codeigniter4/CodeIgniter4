@@ -82,8 +82,9 @@ if (! function_exists('number_to_amount')) {
         // Strip any formatting & ensure numeric input
         try {
             // @phpstan-ignore-next-line
-            $num = 0 + str_replace(',', '', $num);
+            $num = 0 + str_replace(',', '', (string) $num);
         } catch (ErrorException) {
+            // Catch "Warning:  A non-numeric value encountered"
             return false;
         }
 

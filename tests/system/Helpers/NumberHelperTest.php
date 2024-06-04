@@ -38,6 +38,11 @@ final class NumberHelperTest extends CIUnitTestCase
         $this->assertSame('X', number_to_roman(10));
     }
 
+    public function testRomanNumberString(): void
+    {
+        $this->assertSame('XCVI', number_to_roman('96'));
+    }
+
     public function testRomanNumberRange(): void
     {
         $this->assertNull(number_to_roman(-1));
@@ -68,6 +73,11 @@ final class NumberHelperTest extends CIUnitTestCase
     public function testNumberToSize(): void
     {
         $this->assertSame('456 Bytes', number_to_size(456, 1, 'en_US'));
+    }
+
+    public function testNumberToSizeString(): void
+    {
+        $this->assertSame('456 Bytes', number_to_size('456', 1, 'en_US'));
     }
 
     public function testKbFormat(): void
@@ -107,6 +117,11 @@ final class NumberHelperTest extends CIUnitTestCase
         $this->assertSame('999 thousand', number_to_amount('999499', 0, 'en_US'));
         $this->assertSame('1,000 thousand', number_to_amount('999500', 0, 'en_US'));
         $this->assertSame('1,000 thousand', number_to_amount('999999', 0, 'en_US'));
+    }
+
+    public function testThousandsInt(): void
+    {
+        $this->assertSame('123 thousand', number_to_amount(123000, 0, 'en_US'));
     }
 
     public function testMillions(): void
