@@ -160,9 +160,6 @@ class Controller
         return $this->validator->run($data, null, $dbGroup);
     }
 
-    /**
-     * @param Validation $config
-     */
     protected function setConfigValidator(Validation $config): void
     {
         $this->configValidation = $config;
