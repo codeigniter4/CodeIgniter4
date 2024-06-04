@@ -110,6 +110,15 @@ rule and message array formats, as well as available rules:
 
 .. _controller-validate:
 
+$this->setConfigValidator()
+=================
+
+If you need to validate rules that are in a personal validation file that extends from the base file, you can set it up as follows
+
+.. literalinclude:: controllers/026.php
+
+.. _controller-validate:
+
 $this->validate()
 =================
 
