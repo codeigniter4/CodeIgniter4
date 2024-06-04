@@ -9,9 +9,7 @@ class ModuleValidation extends Validation
     public array $rule = [];
 
     // ...
-
 }
-
 
 namespace App\Controllers;
 
