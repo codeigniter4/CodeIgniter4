@@ -169,7 +169,6 @@ class Controller
      * @param array|string $rules
      * @param array        $messages An array of custom error messages
      */
-
     private function setValidator($rules, array $messages): void
     {
         $this->validator = service('validation');
