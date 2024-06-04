@@ -19,7 +19,7 @@ The following example shows a common usage pattern within your controllers.
 
 .. literalinclude:: caching/001.php
 
-You can grab an instance of the cache engine directly through the Services class:
+You can grab an instance of the cache engine directly through the global function ``service()``:
 
 .. literalinclude:: caching/002.php
 

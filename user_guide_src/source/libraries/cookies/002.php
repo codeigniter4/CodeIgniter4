@@ -4,7 +4,7 @@ use CodeIgniter\Cookie\Cookie;
 use Config\Cookie as CookieConfig;
 
 // pass in a Config\Cookie instance before constructing a Cookie class
-Cookie::setDefaults(new CookieConfig());
+Cookie::setDefaults(config(CookieConfig::class));
 $cookie = new Cookie('login_token');
 
 // pass in an array of defaults

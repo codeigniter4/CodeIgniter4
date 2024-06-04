@@ -1,9 +1,8 @@
 <?php
 
 use CodeIgniter\Cookie\Cookie;
-use Config\Services;
 
-$response = Services::response();
+$response = service('response');
 
 $cookie = new Cookie(
     'remember_token',

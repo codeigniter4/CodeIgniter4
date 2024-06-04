@@ -1,3 +1,3 @@
 <?php
 
-$session = \Config\Services::session($config);
+$session = service('session', $config);

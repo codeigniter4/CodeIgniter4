@@ -50,7 +50,7 @@ Loading the Library
 
 The library can be loaded either manually or through the :doc:`Services class </concepts/services>`.
 
-To load with the Services class call the ``curlrequest()`` method:
+To load with the Services class call the ``curlrequest()`` method or global function ``service()``:
 
 .. literalinclude:: curlrequest/002.php
 

@@ -1,6 +1,6 @@
 <?php
 
-$client = \Config\Services::curlrequest([
+$client = service('curlrequest', [
     'baseURI' => 'https://example.com/api/v1/',
 ]);
 

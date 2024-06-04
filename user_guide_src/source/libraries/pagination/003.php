@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\UserModel;
+
 // In your Controller.
-$model = new \App\Models\UserModel();
+$model = model(UserModel::class);
 
 $data = [
     'users' => $model->where('ban', 1)->paginate(10),

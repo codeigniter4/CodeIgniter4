@@ -1,3 +1,3 @@
 <?php
 
-$negotiate = \Config\Services::negotiator();
+$negotiate = service('negotiator');
