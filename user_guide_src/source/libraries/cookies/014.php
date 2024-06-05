@@ -2,7 +2,6 @@
 
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
-use Config\Services;
 
 $store = new CookieStore([
     new Cookie('login_token'),

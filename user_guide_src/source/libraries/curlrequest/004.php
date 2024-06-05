@@ -1,8 +1,10 @@
 <?php
 
+use Config\App;
+
 $client = new \CodeIgniter\HTTP\CURLRequest(
-    new \Config\App(),
+    config(App::class),
     new \CodeIgniter\HTTP\URI(),
-    new \CodeIgniter\HTTP\Response(new \Config\App()),
+    new \CodeIgniter\HTTP\Response(config(App::class)),
     $options
 );

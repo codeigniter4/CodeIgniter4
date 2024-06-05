@@ -2,12 +2,15 @@
 
 namespace App\Controllers;
 
+use App\Models\PageModel;
+use App\Models\UserModel;
+
 class UserController extends BaseController
 {
     public function index()
     {
-        $userModel = new \App\Models\UserModel();
-        $pageModel = new \App\Models\PageModel();
+        $userModel = model(UserModel::class);
+        $pageModel = model(PageModel::class);
 
         $data = [
             'users' => $userModel->paginate(10, 'group1'),

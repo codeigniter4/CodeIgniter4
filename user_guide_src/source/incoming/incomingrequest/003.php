@@ -14,4 +14,4 @@ class SomeClass
     }
 }
 
-$someClass = new SomeClass(\Config\Services::request());
+$someClass = new SomeClass(service('request'));

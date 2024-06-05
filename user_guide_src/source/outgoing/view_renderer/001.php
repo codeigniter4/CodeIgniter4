@@ -1,3 +1,3 @@
 <?php
 
-$view = \Config\Services::renderer();
+$view = service('renderer');

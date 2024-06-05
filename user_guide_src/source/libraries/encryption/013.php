@@ -1,7 +1,6 @@
 <?php
 
 use Config\Encryption;
-use Config\Services;
 
 $config         = new Encryption();
 $config->driver = 'OpenSSL';
@@ -15,4 +14,4 @@ $config->rawData        = false;
 $config->encryptKeyInfo = 'encryption';
 $config->authKeyInfo    = 'authentication';
 
-$encrypter = Services::encrypter($config, false);
+$encrypter = service('encrypter', $config);

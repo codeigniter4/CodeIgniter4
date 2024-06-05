@@ -22,12 +22,12 @@ Initializing the Class
 **********************
 
 Like most other classes in CodeIgniter, the image class is initialized
-in your controller by calling the Services class:
+in your controller by calling the global function ``service()``:
 
 .. literalinclude:: images/001.php
 
-You can pass the alias for the image library you wish to use into the
-Service function:
+You can pass the alias for the image library you wish to use into the global
+function ``service()``:
 
 .. literalinclude:: images/002.php
 

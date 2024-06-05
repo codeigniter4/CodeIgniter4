@@ -1,3 +1,3 @@
 <?php
 
-$validation = \Config\Services::validation();
+$validation = service('validation');

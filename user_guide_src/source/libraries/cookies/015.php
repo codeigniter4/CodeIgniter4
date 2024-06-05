@@ -1,9 +1,7 @@
 <?php
 
-use Config\Services;
-
-Services::response()->setCookie('admin_token', 'yes');
-Services::response()->deleteCookie('login_token');
+service('response')->setCookie('admin_token', 'yes');
+service('response')->deleteCookie('login_token');
 
 // using the cookie helper
 helper('cookie');

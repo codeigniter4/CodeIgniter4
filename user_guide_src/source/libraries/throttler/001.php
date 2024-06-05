@@ -1,4 +1,4 @@
 <?php
 
-$throttler = \Config\Services::throttler();
+$throttler = service('throttler');
 $throttler->check($name, 60, MINUTE);

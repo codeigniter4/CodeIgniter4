@@ -2,11 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Models\UserModel;
+
 class UserController extends BaseController
 {
     public function index()
     {
-        $model = new \App\Models\UserModel();
+        $model = model(UserModel::class);
 
         $data = [
             'users' => $model->paginate(10),

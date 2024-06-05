@@ -1,3 +1,3 @@
 <?php
 
-$pager = \Config\Services::pager();
+$pager = service('pager');
