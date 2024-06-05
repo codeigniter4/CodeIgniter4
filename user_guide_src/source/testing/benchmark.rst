@@ -25,7 +25,7 @@ the ``start()`` and ``stop()`` methods.
 Timer::start()
 ==============
 
-The ``start()`` methods takes a single parameter: the name of this timer. You can use any string as the name
+The ``start()`` method takes a single parameter: the name of this timer. You can use any string as the name
 of the timer. It is only used for you to reference later to know which measurement is which:
 
 .. literalinclude:: benchmark/001.php
