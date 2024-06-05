@@ -315,7 +315,7 @@ forms.</p>
 <section id="escaping-field-values">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Escaping Field Values</a><a class="headerlink" href="#escaping-field-values" title="Permalink to this heading"></a></h2>
 <p>You may need to use HTML and characters such as quotes within your form
-elements. In order to do that safely, you’ll need to use
+elements. In order to do that safely, you’ll need to use the
 <a class="reference internal" href="../general/common_functions.html"><span class="doc">common function</span></a>
 <a class="reference internal" href="../general/common_functions.html#esc" title="esc"><code class="xref php php-func docutils literal notranslate"><span class="pre">esc()</span></code></a>.</p>
 <p>Consider the following example:</p>
@@ -366,8 +366,8 @@ form elements, which you would pass as strings.</p>
 </dl>
 <p>Creates an opening form tag with a site URL <strong>built from your</strong> <code class="docutils literal notranslate"><span class="pre">Config\App::$baseURL</span></code>.
 It will optionally let you add form attributes and hidden input fields, and
-will always add the <cite>accept-charset</cite> attribute based on the charset value in your
-config file.</p>
+will always add the <cite>accept-charset</cite> attribute based on the <code class="docutils literal notranslate"><span class="pre">$charset</span></code> property in your
+<strong>app/Config/App.php</strong> config file.</p>
 <p>The main benefit of using this tag rather than hard coding your own HTML is that
 it permits your site to be more portable in the event your URLs ever change.</p>
 <p>Here’s a simple example:</p>
@@ -412,7 +412,7 @@ parameter, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;http://example.com/index.php/email/send&quot;</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;email&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;myform&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>If <a class="reference internal" href="../libraries/security.html#cross-site-request-forgery"><span class="std std-ref">CSRF</span></a> filter is turned on <code class="docutils literal notranslate"><span class="pre">form_open()</span></code> will generate CSRF field at the beginning of the form. You can specify ID of this field by passing csrf_id as one of the <code class="docutils literal notranslate"><span class="pre">$attribute</span></code> array:</p>
+<p>If <a class="reference internal" href="../libraries/security.html#cross-site-request-forgery"><span class="std std-ref">CSRF</span></a> filter is turned on <code class="docutils literal notranslate"><span class="pre">form_open()</span></code> will generate CSRF field at the beginning of the form. You can specify ID of this field by passing <strong>csrf_id</strong> as an element of the <code class="docutils literal notranslate"><span class="pre">$attributes</span></code> array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;/u/sign-up&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;csrf_id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;my-id&#39;</span><span class="p">]);</span>
@@ -420,12 +420,16 @@ parameter, like this:</p>
 </div>
 <p>will return:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;http://example.com/index.php/u/sign-up&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;my-id&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;csrf_field&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;964ede6e0ae8a680f7b8eab69136717d&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;my-id&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;csrf_test_name&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;964ede6e0ae8a680f7b8eab69136717d&quot;</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>To use auto-generation of CSRF field, you need to turn CSRF filter on to the form page. In most cases it is requested using the <code class="docutils literal notranslate"><span class="pre">GET</span></code> method.</p>
+<p>To use auto-generation of CSRF field, you need to turn on the <a class="reference internal" href="../libraries/security.html#enable-csrf-protection"><span class="std std-ref">CSRF filter</span></a> in <strong>app/Config/Filters.php</strong> file.
+In most cases the form page is requested using the GET method. Normally, CSRF protection is required
+for POST/PUT/DELETE/PATCH requests, but even for GET requests, CSRF filters must be enabled for pages that display Forms.</p>
+<p>If you enable CSRF filter with <a class="reference internal" href="../incoming/filters.html#filters-globals"><span class="std std-ref">$globals</span></a>, it will be active for all request types.
+But if you enable CSRF filter with <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">array</span> <span class="pre">$methods</span> <span class="pre">=</span> <span class="pre">['POST'</span> <span class="pre">=&gt;</span> <span class="pre">['csrf']];</span></code>, the hidden CSRF field will not be added in GET requests.</p>
 </div>
 </div></blockquote>
 <p><strong>Adding Hidden Input Fields</strong></p>
@@ -482,7 +486,7 @@ would like to use the form to upload files with.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An HTML hidden input field tag</p>
+<dd class="field-even"><p>An HTML hidden input element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -565,7 +569,7 @@ name/value string to create one field:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An HTML text input field tag</p>
+<dd class="field-even"><p>An HTML text input element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -664,7 +668,7 @@ JavaScript, you can pass it as a string in the third parameter:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An HTML password input field tag</p>
+<dd class="field-even"><p>An HTML password input element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -686,7 +690,7 @@ function above except that it uses the “password” input type.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An HTML file upload input field tag</p>
+<dd class="field-even"><p>An HTML file upload input element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -709,7 +713,7 @@ be used to upload files.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An HTML textarea tag</p>
+<dd class="field-even"><p>An HTML textarea element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -737,7 +741,7 @@ you will instead specify <em>rows</em> and <em>cols</em>.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An HTML dropdown select field tag</p>
+<dd class="field-even"><p>An HTML select (dropdown) element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -820,7 +824,7 @@ label.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An HTML dropdown multiselect field tag</p>
+<dd class="field-even"><p>An HTML select element with multiple attribute</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -934,7 +938,7 @@ the tag. For example</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An HTML checkbox input tag</p>
+<dd class="field-even"><p>An HTML checkbox input element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -996,7 +1000,7 @@ fourth parameter:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An HTML radio input tag</p>
+<dd class="field-even"><p>An HTML radio input element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -1018,7 +1022,7 @@ function above except that it uses the “radio” input type.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An HTML field label tag</p>
+<dd class="field-even"><p>An HTML label element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -1059,7 +1063,7 @@ third parameter if you prefer to set additional attributes.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An HTML input submit tag</p>
+<dd class="field-even"><p>An HTML input submit element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -1089,7 +1093,7 @@ parameter lets you add extra data to your form, like JavaScript.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An HTML input reset button tag</p>
+<dd class="field-even"><p>An HTML input reset element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -1111,7 +1115,7 @@ parameter lets you add extra data to your form, like JavaScript.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An HTML button tag</p>
+<dd class="field-even"><p>An HTML button element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -1197,10 +1201,10 @@ the tag. For example:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Permits you to set the value of an input form or textarea. You must
+<p>Permits you to set the value of an input or textarea element. You must
 supply the field name via the first parameter of the function. The
 second (optional) parameter allows you to set a default value for the
-form. The third (optional) parameter allows you to turn off HTML escaping
+field value. The third (optional) parameter allows you to turn off HTML escaping
 of the value, in case you need to use this function in combination with
 i.e., <a class="reference internal" href="#form_input" title="form_input"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_input()</span></code></a> and avoid double-escaping.</p>
 <p>Example:</p>
