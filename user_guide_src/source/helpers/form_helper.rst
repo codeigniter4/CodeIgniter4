@@ -116,7 +116,7 @@ The following functions are available:
             In most cases the form page is requested using the GET method. Normally, CSRF protection is required
             for POST/PUT/DELETE/PATCH requests, but even for GET requests, CSRF filters must be enabled for pages that display Forms.
             
-            If you enable CSRF filter with `$globals <https://codeigniter4.github.io/CodeIgniter4/incoming/filters.html#globals>`, it will be active for all request types.
+            If you enable CSRF filter with :ref:`filters-globals`, it will be active for all request types.
             But if you enable CSRF filter with ``public array $methods = ['POST' => ['csrf']];``, the hidden CSRF field will not be added in GET requests.
 
     **Adding Hidden Input Fields**
