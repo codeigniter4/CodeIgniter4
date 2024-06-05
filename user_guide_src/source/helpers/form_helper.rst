@@ -145,7 +145,7 @@ The following functions are available:
 
     :param    string    $name: Field name
     :param    string    $value: Field value
-    :returns:    An HTML hidden input field tag
+    :returns:    An HTML hidden input element
     :rtype:    string
 
     Lets you generate hidden input fields. You can either submit a
@@ -171,7 +171,7 @@ The following functions are available:
     :param    string    $value: Field value
     :param    mixed    $extra: Extra attributes to be added to the tag either as an array or a literal string
     :param  string  $type: The type of input field. i.e., 'text', 'email', 'number', etc.
-    :returns:    An HTML text input field tag
+    :returns:    An HTML text input element
     :rtype:    string
 
     Lets you generate a standard text input field. You can minimally pass
@@ -206,7 +206,7 @@ The following functions are available:
     :param    array    $data: Field attributes data
     :param    string    $value: Field value
     :param    mixed    $extra: Extra attributes to be added to the tag either as an array or a literal string
-    :returns:    An HTML password input field tag
+    :returns:    An HTML password input element
     :rtype:    string
 
     This function is identical in all respects to the :php:func:`form_input()`
@@ -217,7 +217,7 @@ The following functions are available:
     :param    array    $data: Field attributes data
     :param    string    $value: Field value
     :param    mixed    $extra: Extra attributes to be added to the tag either as an array or a literal string
-    :returns:    An HTML file upload input field tag
+    :returns:    An HTML file upload input element
     :rtype:    string
 
     This function is identical in all respects to the :php:func:`form_input()`
@@ -229,7 +229,7 @@ The following functions are available:
     :param    array    $data: Field attributes data
     :param    string    $value: Field value
     :param    mixed    $extra: Extra attributes to be added to the tag either as an array or a literal string
-    :returns:    An HTML textarea tag
+    :returns:    An HTML textarea element
     :rtype:    string
 
     This function is identical in all respects to the :php:func:`form_input()`
@@ -244,7 +244,7 @@ The following functions are available:
     :param    array    $options: An associative array of options to be listed
     :param    array    $selected: List of fields to mark with the *selected* attribute
     :param    mixed    $extra: Extra attributes to be added to the tag either as an array or a literal string
-    :returns:    An HTML dropdown select field tag
+    :returns:    An HTML select (dropdown) element
     :rtype:    string
 
     Lets you create a standard drop-down field. The first parameter will
@@ -278,7 +278,7 @@ The following functions are available:
     :param    array    $options: An associative array of options to be listed
     :param    array    $selected: List of fields to mark with the *selected* attribute
     :param    mixed    $extra: Extra attributes to be added to the tag either as an array or a literal string
-    :returns:    An HTML dropdown multiselect field tag
+    :returns:    An HTML multiselect (dropdown) element
     :rtype:    string
 
     Lets you create a standard multiselect field. The first parameter will
@@ -326,7 +326,7 @@ The following functions are available:
     :param    string    $value: Field value
     :param    bool    $checked: Whether to mark the checkbox as being *checked*
     :param    mixed    $extra: Extra attributes to be added to the tag either as an array or a literal string
-    :returns:    An HTML checkbox input tag
+    :returns:    An HTML checkbox input element
     :rtype:    string
 
     Lets you generate a checkbox field. Simple example:
@@ -357,7 +357,7 @@ The following functions are available:
     :param    string    $value: Field value
     :param    bool    $checked: Whether to mark the radio button as being *checked*
     :param    mixed    $extra: Extra attributes to be added to the tag either as an array or a literal string
-    :returns:    An HTML radio input tag
+    :returns:    An HTML radio input element
     :rtype:    string
 
     This function is identical in all respects to the :php:func:`form_checkbox()`
@@ -368,7 +368,7 @@ The following functions are available:
     :param    string    $label_text: Text to put in the <label> tag
     :param    string    $id: ID of the form element that we're making a label for
     :param    string    $attributes: HTML attributes
-    :returns:    An HTML field label tag
+    :returns:    An HTML label element
     :rtype:    string
 
     Lets you generate a <label>. Simple example:
@@ -387,7 +387,7 @@ The following functions are available:
     :param    string    $data: Button name
     :param    string    $value: Button value
     :param    mixed    $extra: Extra attributes to be added to the tag either as an array or a literal string
-    :returns:    An HTML input submit tag
+    :returns:    An HTML input submit element
     :rtype:    string
 
     Lets you generate a standard submit button. Simple example:
@@ -403,7 +403,7 @@ The following functions are available:
     :param    string    $data: Button name
     :param    string    $value: Button value
     :param    mixed    $extra: Extra attributes to be added to the tag either as an array or a literal string
-    :returns:    An HTML input reset button tag
+    :returns:    An HTML input reset button element
     :rtype:    string
 
     Lets you generate a standard reset button. Use is identical to
@@ -414,7 +414,7 @@ The following functions are available:
     :param    string    $data: Button name
     :param    string    $content: Button label
     :param    mixed    $extra: Extra attributes to be added to the tag either as an array or a literal string
-    :returns:    An HTML button tag
+    :returns:    An HTML button element
     :rtype:    string
 
     Lets you generate a standard button element. You can minimally pass the
