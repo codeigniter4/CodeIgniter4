@@ -152,6 +152,8 @@ This provides a nicer experience than simply crashing.
 
 Even when the redirect value is ``true``, AJAX calls will not redirect, but will throw a SecurityException.
 
+.. _enable-csrf-protection:
+
 Enable CSRF Protection
 ======================
 
