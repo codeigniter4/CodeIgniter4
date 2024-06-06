@@ -74,8 +74,6 @@ class Controller
 
     /**
      * Config Validation file
-     *
-     * @var Validation|null
      */
     protected ?Validation $configValidation = null;
 
