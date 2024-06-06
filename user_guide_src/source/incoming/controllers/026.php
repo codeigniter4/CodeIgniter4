@@ -1,6 +1,6 @@
 <?php
 
-namespace CustomModule\Config;
+namespace Acme\Config;
 
 use Config\Validation;
 
@@ -13,12 +13,12 @@ class ModuleValidation extends Validation
 
 namespace App\Controllers;
 
-use CustomModule\Config\ModuleValidation;
+use Acme\Config\ModuleValidation;
 
 class Helloworld extends BaseController
 {
     public function index()
     {
-        $this->setConfigValidator(config(ModuleValidation::class));
+        $this->configValidation = config(ModuleValidation::class);
     }
 }
