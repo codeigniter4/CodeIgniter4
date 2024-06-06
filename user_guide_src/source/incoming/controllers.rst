@@ -108,23 +108,11 @@ rule and message array formats, as well as available rules:
 
 .. literalinclude:: controllers/006.php
 
-.. _controller-setconfigvalidator:
+.. _controller-validate:
 
-$this->setConfigValidator()
-=================
-
-.. versionadded:: 4.x.x
-
-If you need to validate rules that are in a personal validation file and this extension class of the ``Config\Validation`` class is extended, you can configure it as follows.
-Can be useful when working with standalone modules.
-
-It is required that you extend from the ``Config\Validation`` class.
-
-By default, the ``Config\Validation`` class is used.
+.. note:: You can edit the Validation class if you have extended the Validation class.
 
 .. literalinclude:: controllers/026.php
-
-.. _controller-validate:
 
 $this->validate()
 =================
