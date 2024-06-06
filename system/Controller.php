@@ -75,9 +75,9 @@ class Controller
     /**
      * Config Validation file
      *
-     * @var Validation
+     * @var Validation|null
      */
-    protected $configValidation;
+    protected ?Validation $configValidation = null;
 
     /**
      * Constructor.
@@ -158,11 +158,6 @@ class Controller
         $this->setValidator($rules, $messages);
 
         return $this->validator->run($data, null, $dbGroup);
-    }
-
-    protected function setConfigValidator(Validation $config): void
-    {
-        $this->configValidation = $config;
     }
 
     /**
