@@ -121,7 +121,7 @@ Examples:
 retainMultiplePatterns(array $pattern, string $scope = null)
 ====================================================
 
-Provides the same functionality as ```retainPattern`` but accepts an array of patterns to retain files from all patterns.
+Provides the same functionality as ``retainPattern()`` but accepts an array of patterns to retain files from all patterns.
 
 Example:
 
