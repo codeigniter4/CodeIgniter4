@@ -344,18 +344,18 @@ class FileCollection implements Countable, IteratorAggregate
      * Keeps only the files from the list that match multiple patterns
      * (within the optional scope).
      *
-     * @param array      $patterns Array of regex or pseudo-regex strings
-     * @param string|null $scope   A directory to limit the scope
+     * @param array       $patterns Array of regex or pseudo-regex strings
+     * @param string|null $scope    A directory to limit the scope
      *
      * @return $this
      */
     public function retainMultiplePatterns(array $patterns, ?string $scope = null)
     {
-        if (count($patterns) == 0) {
+        if (count($patterns) === 0) {
             return $this;
         }
 
-        if (count($patterns) == 1 && $patterns[0] === '') {
+        if (count($patterns) === 1 && $patterns[0] === '') {
             return $this;
         }
 
@@ -364,14 +364,14 @@ class FileCollection implements Countable, IteratorAggregate
 
         // Add files to retain to array
         $filesToRetain = [];
-        foreach ($patterns as $pattern){
+
+        foreach ($patterns as $pattern) {
             if ($pattern === '') {
                 continue;
             }
 
             // Matches the pattern within the scoped files
             $filesToRetain = array_merge($filesToRetain, self::matchFIles($files, $pattern));
-            
         }
 
         // Remove the inverse of files to retain
