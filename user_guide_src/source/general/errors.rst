@@ -19,8 +19,8 @@ Using Exceptions
 
 This section is a quick overview for newer programmers, or for developers who are not experienced with using exceptions.
 
-What is Exceptions
-------------------
+What are Exceptions
+-------------------
 
 Exceptions are simply events that happen when the exception is "thrown". This halts the current flow of the script, and
 execution is then sent to the error handler which displays the appropriate error page:
