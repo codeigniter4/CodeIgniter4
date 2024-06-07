@@ -355,6 +355,10 @@ class FileCollection implements Countable, IteratorAggregate
             return $this;
         }
 
+        if (count($patterns) == 1 && $patterns[0] === '') {
+            return $this;
+        }
+
         // Start with all files or those in scope
         $files = $scope === null ? $this->files : self::filterFiles($this->files, $scope);
 
