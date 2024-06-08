@@ -100,6 +100,28 @@ final class DataConverterModelTest extends LiveModelTestCase
         $this->assertInstanceOf(Time::class, $user->created_at);
     }
 
+    public function testFindArrayAsEntity(): void
+    {
+        $id = $this->prepareOneRecord();
+
+        $users = $this->model->asObject(User::class)->find([$id, 999]);
+
+        $this->assertCount(1, $users);
+        $this->assertIsInt($users[0]->id);
+        $this->assertInstanceOf(Time::class, $users[0]->created_at);
+    }
+
+    public function testFindNullAsEntity(): void
+    {
+        $this->prepareOneRecord();
+
+        $users = $this->model->asObject(User::class)->find();
+
+        $this->assertCount(1, $users);
+        $this->assertIsInt($users[0]->id);
+        $this->assertInstanceOf(Time::class, $users[0]->created_at);
+    }
+
     public function testFindAllAsArray(): void
     {
         $this->prepareTwoRecords();
