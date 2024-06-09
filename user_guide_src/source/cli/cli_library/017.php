@@ -8,7 +8,7 @@ $titles = [
 ];
 $descriptions = [
     'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    "Lorem Ipsum has been the industry's standard dummy text ever since the",
+    'Lorem Ipsum has been the industry standard dummy text ever since the',
 ];
 
 // Determine the maximum length of all titles
