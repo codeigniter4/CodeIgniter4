@@ -36,7 +36,6 @@ use Rector\CodingStyle\Rector\FuncCall\VersionCompareFuncCallToConstantRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
-use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
@@ -107,11 +106,6 @@ return static function (RectorConfig $rectorConfig): void {
 
         YieldDataProviderRector::class,
 
-        RemoveUnusedPromotedPropertyRector::class => [
-            // Bug in rector 1.0.0. See https://github.com/rectorphp/rector-src/pull/5573
-            __DIR__ . '/tests/_support/Entity/CustomUser.php',
-        ],
-
         RemoveUnusedPrivateMethodRector::class => [
             // private method called via getPrivateMethodInvoker
             __DIR__ . '/tests/system/Test/ReflectionHelperTest.php',
@@ -154,8 +148,6 @@ return static function (RectorConfig $rectorConfig): void {
 
         // use mt_rand instead of random_int on purpose on non-cryptographically random
         RandomFunctionRector::class,
-
-        SimplifyRegexPatternRector::class,
 
         // PHP 8.0 features but cause breaking changes
         ClassPropertyAssignToConstructorPromotionRector::class => [
