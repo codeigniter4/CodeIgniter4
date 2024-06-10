@@ -176,6 +176,7 @@ class RedisHandler extends BaseHandler
     public function deleteMatching(string $pattern)
     {
         $matchedKeys = [];
+        $pattern     = static::validateKey($pattern, $this->prefix);
         $iterator    = null;
 
         do {
