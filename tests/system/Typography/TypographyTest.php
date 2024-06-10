@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace CodeIgniter\Typography;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class TypographyTest extends CIUnitTestCase
 {
     private Typography $typography;

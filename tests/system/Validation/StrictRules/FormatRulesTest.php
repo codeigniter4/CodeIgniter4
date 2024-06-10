@@ -14,13 +14,13 @@ declare(strict_types=1);
 namespace CodeIgniter\Validation\StrictRules;
 
 use CodeIgniter\Validation\FormatRulesTest as TraditionalFormatRulesTest;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FormatRulesTest extends TraditionalFormatRulesTest
 {
     protected array $config = [

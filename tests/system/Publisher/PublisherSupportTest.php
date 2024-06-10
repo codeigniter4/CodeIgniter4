@@ -15,13 +15,13 @@ namespace CodeIgniter\Publisher;
 
 use CodeIgniter\Publisher\Exceptions\PublisherException;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Publishers\TestPublisher;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class PublisherSupportTest extends CIUnitTestCase
 {
     /**

@@ -14,13 +14,13 @@ declare(strict_types=1);
 namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\EventModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class EventsModelTest extends LiveModelTestCase
 {
     /**

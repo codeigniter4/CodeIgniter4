@@ -18,14 +18,14 @@ use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\View\BadDecorator;
 use Tests\Support\View\WorldDecorator;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class DecoratorsTest extends CIUnitTestCase
 {
     private FileLocator $loader;

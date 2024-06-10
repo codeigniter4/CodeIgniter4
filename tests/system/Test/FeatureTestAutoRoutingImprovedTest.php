@@ -16,12 +16,12 @@ namespace CodeIgniter\Test;
 use CodeIgniter\Events\Events;
 use Config\Feature;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @group Others
- *
  * @internal
  */
+#[Group('Others')]
 final class FeatureTestAutoRoutingImprovedTest extends CIUnitTestCase
 {
     use FeatureTestTrait;

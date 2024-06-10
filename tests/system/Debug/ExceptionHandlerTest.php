@@ -20,13 +20,13 @@ use CodeIgniter\Test\IniTestTrait;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 use RuntimeException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ExceptionHandlerTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

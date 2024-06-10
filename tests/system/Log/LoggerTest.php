@@ -19,14 +19,14 @@ use CodeIgniter\Log\Exceptions\LogException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Exception;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Log\Handlers\TestHandler;
 use TypeError;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class LoggerTest extends CIUnitTestCase
 {
     protected function tearDown(): void

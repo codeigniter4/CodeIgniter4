@@ -17,15 +17,15 @@ use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\Mock\MockCURLRequest;
 use Config\App;
 use Config\CURLRequest as ConfigCURLRequest;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * This test case is for the case where shareOptions is true.
  * The shareOptions should be set to false.
  *
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class CURLRequestShareOptionsTest extends CURLRequestTest
 {
     protected function getRequest(array $options = []): MockCURLRequest

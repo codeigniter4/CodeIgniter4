@@ -16,12 +16,12 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class PretendTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

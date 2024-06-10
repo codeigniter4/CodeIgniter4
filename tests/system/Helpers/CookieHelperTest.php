@@ -25,12 +25,12 @@ use Config\App;
 use Config\Cookie;
 use Config\Cookie as CookieConfig;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class CookieHelperTest extends CIUnitTestCase
 {
     private IncomingRequest $request;

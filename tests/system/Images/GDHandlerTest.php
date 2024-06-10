@@ -19,6 +19,7 @@ use CodeIgniter\Images\Handlers\BaseHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit testing for the GD image handler.
@@ -30,9 +31,8 @@ use org\bovigo\vfs\vfsStreamDirectory;
  * Was unable to test fontPath & related logic.
  *
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class GDHandlerTest extends CIUnitTestCase
 {
     private vfsStreamDirectory $root;

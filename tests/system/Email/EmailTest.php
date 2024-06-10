@@ -17,12 +17,13 @@ use CodeIgniter\Events\Events;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockEmail;
 use ErrorException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class EmailTest extends CIUnitTestCase
 {
     public function testEmailValidation(): void
@@ -43,10 +44,9 @@ final class EmailTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideEmailSendWithClearance
-     *
      * @param mixed $autoClear
      */
+    #[DataProvider('provideEmailSendWithClearance')]
     public function testEmailSendWithClearance($autoClear): void
     {
         $email = $this->createMockEmail();

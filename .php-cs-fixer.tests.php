@@ -35,23 +35,23 @@ $finder = Finder::create()
 
 $overrides = [
     'void_return' => true,
+    // for updating to coding-standard
+    'modernize_strpos'    => true,
+    'ordered_attributes'  => ['order' => [], 'sort_algorithm' => 'alpha'],
+    'php_unit_attributes' => true,
 ];
 
 $options = [
-    'cacheFile' => 'build/.php-cs-fixer.tests.cache',
-    'finder'    => $finder,
+    'cacheFile'    => 'build/.php-cs-fixer.tests.cache',
+    'finder'       => $finder,
+    'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
+    'customRules'  => [
+        NoCodeSeparatorCommentFixer::name() => true,
+    ],
 ];
 
-$config = Factory::create(new CodeIgniter4(), $overrides, $options)->forLibrary(
+return Factory::create(new CodeIgniter4(), $overrides, $options)->forLibrary(
     'CodeIgniter 4 framework',
     'CodeIgniter Foundation',
     'admin@codeigniter.com'
 );
-
-$config
-    ->registerCustomFixers(FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'))
-    ->setRules(array_merge($config->getRules(), [
-        NoCodeSeparatorCommentFixer::name() => true,
-    ]));
-
-return $config;

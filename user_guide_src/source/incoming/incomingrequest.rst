@@ -47,7 +47,7 @@ is()
 
 .. versionadded:: 4.3.0
 
-Since v4.3.0, you can use the ``is()`` method. It accepts a HTTP method, ``'ajax'``,
+Since v4.3.0, you can use the ``is()`` method. It accepts an HTTP method, ``'ajax'``,
 or ``'json'``, and returns boolean.
 
 .. note:: HTTP method should be case-sensitive, but the parameter is case-insensitive.
@@ -64,10 +64,10 @@ You can check the HTTP method that this request represents with the ``getMethod(
 The HTTP method is case-sensitive, and by convention, standardized methods are
 defined in all-uppercase US-ASCII letters.
 
-.. note:: Prior to v4.5.0, by default, the method was returned as a lower-case
+.. note:: Prior to v4.5.0, by default, the method was returned as a lowercase
     string (i.e., ``'get'``, ``'post'``, etc). But it was a bug.
 
-You can get an lowercase version by wrapping the call in ``strtolower()``::
+You can get a lowercase version by wrapping the call in ``strtolower()``::
 
     // Returns 'get'
     $method = strtolower($request->getMethod());

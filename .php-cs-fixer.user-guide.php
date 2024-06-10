@@ -39,19 +39,19 @@ $overrides = [
         'import_symbols'                        => false,
         'leading_backslash_in_global_namespace' => true,
     ],
+    // for updating to coding-standard
+    'modernize_strpos'    => true,
+    'ordered_attributes'  => ['order' => [], 'sort_algorithm' => 'alpha'],
+    'php_unit_attributes' => true,
 ];
 
 $options = [
-    'cacheFile' => 'build/.php-cs-fixer.user-guide.cache',
-    'finder'    => $finder,
+    'cacheFile'    => 'build/.php-cs-fixer.user-guide.cache',
+    'finder'       => $finder,
+    'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
+    'customRules'  => [
+        NoCodeSeparatorCommentFixer::name() => true,
+    ],
 ];
 
-$config = Factory::create(new CodeIgniter4(), $overrides, $options)->forProjects();
-
-$config
-    ->registerCustomFixers(FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'))
-    ->setRules(array_merge($config->getRules(), [
-        NoCodeSeparatorCommentFixer::name() => true,
-    ]));
-
-return $config;
+return Factory::create(new CodeIgniter4(), $overrides, $options)->forProjects();

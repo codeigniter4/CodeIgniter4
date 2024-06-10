@@ -16,12 +16,12 @@ namespace CodeIgniter\Commands\Utilities\Routes;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FilterCollectorTest extends CIUnitTestCase
 {
     public function testGet(): void

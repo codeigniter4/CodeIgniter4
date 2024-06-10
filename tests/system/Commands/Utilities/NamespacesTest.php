@@ -15,12 +15,12 @@ namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class NamespacesTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

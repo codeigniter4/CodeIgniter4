@@ -15,12 +15,12 @@ namespace CodeIgniter\HTTP\Files;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Mimes;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FileCollectionTest extends CIUnitTestCase
 {
     protected function setUp(): void

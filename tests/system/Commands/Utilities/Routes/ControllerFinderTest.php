@@ -14,13 +14,13 @@ declare(strict_types=1);
 namespace CodeIgniter\Commands\Utilities\Routes;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Controllers\Hello;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ControllerFinderTest extends CIUnitTestCase
 {
     public function testFind(): void

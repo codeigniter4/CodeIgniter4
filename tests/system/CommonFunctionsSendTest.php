@@ -14,12 +14,14 @@ declare(strict_types=1);
 namespace CodeIgniter;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 
 /**
  * @internal
- *
- * @group SeparateProcess
  */
+#[Group('SeparateProcess')]
 final class CommonFunctionsSendTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -36,10 +38,9 @@ final class CommonFunctionsSendTest extends CIUnitTestCase
     /**
      * Make sure cookies are set by RedirectResponse this way
      * See https://github.com/codeigniter4/CodeIgniter4/issues/1393
-     *
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
      */
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testRedirectResponseCookiesSent(): void
     {
         $loginTime = time();

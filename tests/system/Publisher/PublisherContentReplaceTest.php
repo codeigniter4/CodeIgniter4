@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace CodeIgniter\Publisher;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class PublisherContentReplaceTest extends CIUnitTestCase
 {
     private string $file;

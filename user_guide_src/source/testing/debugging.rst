@@ -142,7 +142,7 @@ Creating Custom Collectors
 Creating custom collectors is a straightforward task. You create a new class, fully-namespaced so that the autoloader
 can locate it, that extends ``CodeIgniter\Debug\Toolbar\Collectors\BaseCollector``. This provides a number of methods
 that you can override, and has four required class properties that you must correctly set depending on how you want
-the Collector to work
+the Collector to work:
 
 .. literalinclude:: debugging/004.php
 

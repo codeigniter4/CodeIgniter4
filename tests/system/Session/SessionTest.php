@@ -22,16 +22,16 @@ use CodeIgniter\Test\TestLogger;
 use Config\Cookie as CookieConfig;
 use Config\Logger as LoggerConfig;
 use Config\Session as SessionConfig;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
- * @runTestsInSeparateProcesses
- *
- * @preserveGlobalState disabled
- *
  * @internal
- *
- * @group SeparateProcess
  */
+#[Group('SeparateProcess')]
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
 final class SessionTest extends CIUnitTestCase
 {
     protected function setUp(): void

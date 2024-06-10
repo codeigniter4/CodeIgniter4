@@ -16,12 +16,12 @@ namespace CodeIgniter\Publisher;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class PublisherOutputTest extends CIUnitTestCase
 {
     /**
@@ -161,6 +161,7 @@ final class PublisherOutputTest extends CIUnitTestCase
             $this->root->url() . '/able/fig_3.php',
             $this->root->url() . '/able/prune_ripe.php',
             $this->root->url() . '/baker/banana.php',
+            $this->root->url() . '/baker/fig_3.php.txt',
         ];
 
         $this->assertFileDoesNotExist($this->root->url() . '/able/fig_3.php');
@@ -183,6 +184,7 @@ final class PublisherOutputTest extends CIUnitTestCase
             $this->root->url() . '/able/fig_3.php',
             $this->root->url() . '/able/prune_ripe.php',
             $this->root->url() . '/baker/banana.php',
+            $this->root->url() . '/baker/fig_3.php.txt',
         ];
 
         $result = $publisher->addPath('/')->merge(true);
@@ -200,6 +202,7 @@ final class PublisherOutputTest extends CIUnitTestCase
             $this->root->url() . '/able/apple.php',
             $this->root->url() . '/able/prune_ripe.php',
             $this->root->url() . '/baker/banana.php',
+            $this->root->url() . '/baker/fig_3.php.txt',
         ];
 
         mkdir($this->root->url() . '/able/fig_3.php');

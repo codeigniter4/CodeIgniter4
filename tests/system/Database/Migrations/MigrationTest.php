@@ -16,12 +16,12 @@ namespace CodeIgniter\Database\Migrations;
 use CodeIgniter\Database\Migration;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class MigrationTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

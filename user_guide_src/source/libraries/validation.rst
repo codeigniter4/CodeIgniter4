@@ -743,7 +743,7 @@ Configuration
 =============
 
 Once you have your views created, you need to let the Validation library know about them. Open **app/Config/Validation.php**.
-Inside, you'll find the ``$templates`` property where you can list as many custom views as you want, and provide an
+Inside, you'll find the ``$templates`` property where you can list as many custom views as you want, and provide a
 short alias they can be referenced by. If we were to add our example file from above, it would look something like:
 
 .. literalinclude:: validation/032.php
@@ -769,7 +769,7 @@ Creating Custom Rules
 Using Rule Classes
 ==================
 
-Rules are stored within simple, namespaced classes. They can be stored any location you would like, as long as the
+Rules are stored within simple, namespaced classes. They can be stored in any location you would like, as long as the
 autoloader can find it. These files are called RuleSets.
 
 Adding a RuleSet
@@ -781,7 +781,7 @@ add the new file to the ``$ruleSets`` array:
 .. literalinclude:: validation/033.php
 
 You can add it as either a simple string with the fully qualified class name, or using the ``::class`` suffix as
-shown above. The primary benefit here is that it provides some extra navigation capabilities in more advanced IDEs.
+shown above. The primary benefit of using the ``::class`` suffix is that it provides some extra navigation capabilities in more advanced IDEs.
 
 Creating a Rule Class
 ---------------------
@@ -885,6 +885,8 @@ Available Rules
 .. literalinclude:: validation/038.php
    :lines: 2-
 
+.. _rules-for-general-use:
+
 Rules for General Use
 =====================
 
@@ -919,8 +921,9 @@ decimal                 No         Fails if field contains anything other than
                                    ``-`` sign for the number.
 differs                 Yes        Fails if field does not differ from the one   ``differs[field_name]``
                                    in the parameter.
-exact_length            Yes        Fails if field is not exactly the parameter   ``exact_length[5]`` or ``exact_length[5,8,12]``
-                                   value. One or more comma-separated values.
+exact_length            Yes        Fails if field length is not exactly          ``exact_length[5]`` or ``exact_length[5,8,12]``
+                                   the parameter value. One or more
+                                   comma-separated values are possible.
 field_exists            Yes        Fails if field does not exist. (This rule was
                                    added in v4.5.0.)
 greater_than            Yes        Fails if field is less than or equal to       ``greater_than[8]``
@@ -941,7 +944,7 @@ is_natural              No         Fails if field contains anything other than
 is_natural_no_zero      No         Fails if field contains anything other than
                                    a natural number, except zero: 1, 2, 3, etc.
 is_not_unique           Yes        Checks the database to see if the given value ``is_not_unique[table.field,where_field,where_value]``
-                                   exist. Can ignore records by field/value to
+                                   exists. Can ignore records by field/value to
                                    filter (currently accept only one filter).
 is_unique               Yes        Checks if this field value exists in the      ``is_unique[table.field,ignore_field,ignore_value]``
                                    database. Optionally set a column and value
@@ -973,8 +976,8 @@ required_without        Yes        The field is required when any of the other  
                                    fields is `empty()`_ in the data.
 string                  No         A generic alternative to the alpha* rules
                                    that confirms the element is a string
-timezone                No         Fails if field does match a timezone per
-                                   `timezone_identifiers_list()`_
+timezone                No         Fails if field does not match a timezone
+                                   per `timezone_identifiers_list()`_
 valid_base64            No         Fails if field contains anything other than
                                    valid Base64 characters.
 valid_json              No         Fails if field does not contain a valid JSON
@@ -999,7 +1002,7 @@ valid_url_strict        Yes        Fails if field does not contain a valid URL. 
 valid_date              Yes        Fails if field does not contain a valid date. ``valid_date[d/m/Y]``
                                    Any string that `strtotime()`_ accepts is
                                    valid if you don't specify an optional
-                                   parameter to matches a date format.
+                                   parameter that matches a date format.
                                    **So it is usually necessary to specify
                                    the parameter.**
 valid_cc_number         Yes        Verifies that the credit card number matches  ``valid_cc_number[amex]``
@@ -1044,9 +1047,10 @@ file validation.
     files. Therefore, adding any general rules, like ``permit_empty``, to file
     validation rules array or string, the file validation will not work correctly.
 
-Since the value of a file upload HTML field doesn't exist, and is stored in the ``$_FILES`` global, the name of the input field will
-need to be used twice. Once to specify the field name as you would for any other rule, but again as the first parameter of all
-file upload related rules::
+Since the value of a file upload HTML field doesn't exist, and is stored in the
+``$_FILES`` global, the name of the input field will need to be used twice. Once
+to specify the field name as you would for any other rule, but again as the first
+parameter of all file upload related rules::
 
     // In the HTML
     <input type="file" name="avatar">
@@ -1056,6 +1060,8 @@ file upload related rules::
         'avatar' => 'uploaded[avatar]|max_size[avatar,1024]',
     ]);
 
+See also :ref:`file-upload-form-tutorial`.
+
 ======================= ========== ============================================= ===================================================
 Rule                    Parameter  Description                                   Example
 ======================= ========== ============================================= ===================================================
@@ -1064,9 +1070,9 @@ uploaded                Yes         Fails if the name of the parameter does not 
                                     If you want the file upload to be optional
                                     (not required), do not define this rule.
 
-max_size                Yes         Fails if the uploaded file named in the      ``max_size[field_name,2048]``
-                                    parameter is larger than the second
-                                    parameter in kilobytes (kb). Or if the file
+max_size                Yes         Fails if the uploaded file is larger         ``max_size[field_name,2048]``
+                                    than the second parameter
+                                    in kilobytes (kb). Or if the file
                                     is larger than allowed maximum size declared
                                     in php.ini config file -
                                     ``upload_max_filesize`` directive.

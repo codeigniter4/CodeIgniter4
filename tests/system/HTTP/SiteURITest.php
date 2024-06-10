@@ -18,19 +18,18 @@ use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class SiteURITest extends CIUnitTestCase
 {
-    /**
-     * @dataProvider provideConstructor
-     */
+    #[DataProvider('provideConstructor')]
     public function testConstructor(
         string $baseURL,
         string $indexPage,
@@ -327,9 +326,7 @@ final class SiteURITest extends CIUnitTestCase
         new SiteURI($config);
     }
 
-    /**
-     * @dataProvider provideSetPath
-     */
+    #[DataProvider('provideSetPath')]
     public function testSetPath(
         string $baseURL,
         string $indexPage,

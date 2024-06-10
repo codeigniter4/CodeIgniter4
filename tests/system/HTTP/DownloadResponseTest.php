@@ -18,12 +18,14 @@ use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 
 /**
  * @internal
- *
- * @group SeparateProcess
  */
+#[Group('SeparateProcess')]
 final class DownloadResponseTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -317,10 +319,8 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame(file_get_contents(__FILE__), $actual);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testRealOutput(): void
     {
         $response = new DownloadResponse('unit-test.php', false);

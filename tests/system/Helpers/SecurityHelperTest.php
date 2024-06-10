@@ -16,13 +16,13 @@ namespace CodeIgniter\Helpers;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockSecurity;
 use Config\Security as SecurityConfig;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Config\Services;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class SecurityHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void

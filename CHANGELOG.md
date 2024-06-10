@@ -1,5 +1,30 @@
 # Changelog
 
+## [v4.5.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.2) (2024-06-10)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.1...v4.5.2)
+
+### Fixed Bugs
+
+* chore: fix phpunit.xml.dist for appstarter by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8785
+* fix: update `preload.php` for 4.5 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8805
+* fix: [ErrorException] Undefined array key in `spark phpini:check` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8804
+* fix: incorrect Security exception message by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8818
+* fix: [QueryBuilder] TypeError in join() with BETWEEN by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8792
+* fix: [SQLSRV] Query Builder always sets `"<database>"."<schema>".` to the table name. by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/8786
+* fix: remove unused undefined param $raw in MockCache::save() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8847
+* fix: FileCollection pseudo-regex by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8868
+* fix: [Model] casting may throw InvalidArgumentException: Invalid parameter: nullable by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8870
+* fix: [Model] casting causes TypeError when finding no record by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8871
+* fix: correct property default values in Email by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8855
+* fix: CLI::promptByMultipleKeys() and prompt() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8873
+* fix: [Postgres] show missing error message by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8913
+* fix: TypeError in  number_to_amount()  by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8932
+* fix: Model::find() returns incorrect data with casting by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8933
+
+### Refactoring
+
+* refactor: remove unused path parameter on PhpStreamWrapper::stream_open() by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/8926
+
 ## [v4.5.1](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.1) (2024-04-14)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.0...v4.5.1)
 

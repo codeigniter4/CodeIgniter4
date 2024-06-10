@@ -23,6 +23,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * This test case is based on:
@@ -30,9 +31,8 @@ use Config\Services;
  *   https://github.com/asm89/stack-cors/blob/b6920bd8996449400ac976e083b55fb45f035467/tests/CorsTest.php
  *
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class CorsTest extends CIUnitTestCase
 {
     private Cors $cors;

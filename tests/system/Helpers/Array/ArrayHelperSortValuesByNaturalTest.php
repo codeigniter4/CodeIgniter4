@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace CodeIgniter\Helpers\Array;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @group Others
- *
  * @internal
  */
+#[Group('Others')]
 final class ArrayHelperSortValuesByNaturalTest extends CIUnitTestCase
 {
     private array $arrayWithStringValues = [

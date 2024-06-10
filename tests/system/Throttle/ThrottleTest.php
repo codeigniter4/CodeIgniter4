@@ -16,12 +16,13 @@ namespace CodeIgniter\Throttle;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCache;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ThrottleTest extends CIUnitTestCase
 {
     private CacheInterface $cache;
@@ -190,9 +191,7 @@ final class ThrottleTest extends CIUnitTestCase
         $this->assertEqualsWithDelta(10.0, round($this->cache->get('throttler_127.0.0.1')), PHP_FLOAT_EPSILON);
     }
 
-    /**
-     * @dataProvider provideTokenTimeCalculationUCs
-     */
+    #[DataProvider('provideTokenTimeCalculationUCs')]
     public function testTokenTimeCalculationUCs(int $capacity, int $seconds, array $checkInputs): void
     {
         $key       = 'testkey';

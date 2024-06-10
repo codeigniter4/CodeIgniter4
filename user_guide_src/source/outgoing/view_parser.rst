@@ -81,7 +81,7 @@ need to be unique, or a later parameter setting will over-ride an earlier one.
 This also impacts escaping parameter values for different contexts inside your
 script. You will have to give each escaped value a unique parameter name.
 
-Parser templates
+Parser Templates
 ================
 
 You can use the ``render()`` method to parse (or render) simple templates,
@@ -90,10 +90,12 @@ like this:
 .. literalinclude:: view_parser/003.php
 
 View parameters are passed to ``setData()`` as an associative
-array of data to be replaced in the template. In the above example, the
-template would contain two variables: ``{blog_title}`` and ``{blog_heading}``
-The first parameter to ``render()`` contains the name of the :doc:`view
-file </outgoing/views>`, Where *blog_template* is the name of your view file.
+array of data to be replaced in the template.
+
+In the above example, the template would contain two variables: ``{blog_title}`` and ``{blog_heading}``
+
+The first parameter to ``render()`` contains the name of the template, where
+``blog_template`` is the name of your view template file.
 
 .. important:: If the file extension is omitted, then the views are expected to end with the .php extension.
 
@@ -102,7 +104,7 @@ Parser Configuration Options
 
 Several options can be passed to the ``render()`` or ``renderString()`` methods.
 
--   ``cache`` - the time in seconds, to save a view's results; ignored for renderString()
+-   ``cache`` - the time in seconds, to save a view's results; ignored for ``renderString()``
 -   ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath;
     ignored for renderString()
 -   ``saveData`` - true if the view data parameters should be retained for subsequent calls;
@@ -493,7 +495,7 @@ You can also use closures, but these can only be defined in the config file's co
 
 .. literalinclude:: view_parser/015.php
 
-If the callable is on its own, it is treated as a single tag, not a open/close one. It will be replaced by
+If the callable is on its own, it is treated as a single tag, not an open/close one. It will be replaced by
 the return value from the plugin:
 
 .. literalinclude:: view_parser/016.php

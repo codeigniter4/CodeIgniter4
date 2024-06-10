@@ -2,24 +2,23 @@
 
 ## Contributions
 
-We expect all contributions to
-- conform to our [style guide](./styleguide.md),
-- be commented (inside the PHP source files),
-- be documented (in the [user guide](https://codeigniter4.github.io/userguide/)),
-- and unit tested (in the [test folder](https://github.com/codeigniter4/CodeIgniter4/tree/develop/tests)).
+We expect the following in all Pull Requests (PRs).
+- PRs must be sent to the [appropriate branch](#branching)
+- All git commits must be [GPG-signed](#signing)
+- Must follow our [style guide](#php-style)
+- Be [commented](#comments) in the PHP source file
+- Be documented in the [user guide](#user-guide)
+- Be [unit tested](#unit-testing)
+- Pass all checks in GitHub Actions
 
 > [!IMPORTANT]
 > We expect all code changes or bug-fixes to be accompanied by one or more tests
 > added to our test suite to prove the code works.
 
-If pull requests are not accompanied by relevant tests, they will likely be closed.
+If pull requests do not comply with the above, they will likely be closed.
 Since we are a team of volunteers, we don't have any more time to work on the
 framework than you do. Please make it as painless for your contributions to be
 included as possible.
-
-If you need help with getting tests running on your local machines, ask for help
-on the [forum](https://forum.codeigniter.com/forumdisplay.php?fid=27). We would
-be happy to help out.
 
 The [Open Source Guide](https://opensource.guide/) is a good first read for those
 new to contributing to open source!
@@ -67,12 +66,17 @@ composer cs
 
 If you are not familiar with Unit Testing, see
 [the forum thread](https://forum.codeigniter.com/showthread.php?tid=81830).
+If you need help with getting tests running on your local machines, ask for help
+on the [forum](https://forum.codeigniter.com/forumdisplay.php?fid=27). We would
+be happy to help out.
 
 Unit testing is expected for all CodeIgniter components. We use PHPUnit,
 and run unit tests using GitHub Actions for each PR submitted or changed.
 
-In the CodeIgniter project, there is a `tests` folder, with a structure
+In the CodeIgniter project, there is a [tests][tests-folder] folder, with a structure
 that parallels that of `system`.
+
+[tests-folder]: https://github.com/codeigniter4/CodeIgniter4/tree/develop/tests
 
 The normal practice would be to have a unit test class for each of the
 classes in `system`, named appropriately. For instance, the `BananaTest`
@@ -196,10 +200,13 @@ working on your contribution.
 
 ### Branching
 
-All bug fixes should be sent to the __"develop"__ branch, this is where the next
-bug fix version will be developed.
+- All bug fix PRs should be sent to the __"develop"__ branch, this is where the
+  next bug fix version will be developed.
+- PRs with any enhancement should be sent to next minor version branch, e.g. __"4.6"__
 
-PRs with any enhancement should be sent to next minor version branch, e.g. __"4.5"__
+> [!NOTE]
+> If you sent your PR to the wrong branch, see
+> [Contribution Workflow](./workflow.md#if-you-sent-to-the-wrong-branch).
 
 The __"master"__ branch will always contain the latest stable version and is kept
 clean so a "hotfix" (e.g. an emergency security patch) can be applied to the
@@ -230,6 +237,10 @@ otherwise have the right to pass it on to an open-source project. See
 This is *not* just a "signed-off-by" commit, but instead, a digitally signed one.
 
 See [Contribution signing](./signing.md) for details.
+
+> [!NOTE]
+> If you forgot GPG-signing your commits, see
+> [Contribution Workflow](./workflow.md#gpg-signing-old-commits).
 
 ### Static Analysis on PHP code
 
@@ -300,7 +311,7 @@ GitHub means "making a copy of that repo to your account" and "cloning" means
    - If your PR is for bug fixes:
       - `> git switch develop`
       - `> git switch -c <new-branch-name>`
-   - If your PR has any enhancement, create new branch from next minor version branch, e.g. __"4.5"__:
+   - If your PR has any enhancement, create new branch from next minor version branch, e.g. __"4.6"__:
       - `> git switch <next-minor-version-branch>`
       - `> git switch -c <new-branch-name>`
 7. Fix existing bugs on the [Issue tracker](https://github.com/codeigniter4/CodeIgniter4/issues) after confirming that no one

@@ -16,12 +16,12 @@ namespace CodeIgniter\Debug\Toolbar\Collectors;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use DateTime;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class HistoryTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

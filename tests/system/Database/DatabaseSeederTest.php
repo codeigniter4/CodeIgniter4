@@ -16,12 +16,12 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database;
 use Faker\Generator;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class DatabaseSeederTest extends CIUnitTestCase
 {
     public function testInstantiateNoSeedPath(): void

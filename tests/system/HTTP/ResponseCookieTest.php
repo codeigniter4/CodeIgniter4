@@ -20,12 +20,12 @@ use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Cookie as CookieConfig;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ResponseCookieTest extends CIUnitTestCase
 {
     private array $defaults;

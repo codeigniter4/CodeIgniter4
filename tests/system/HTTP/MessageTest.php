@@ -16,12 +16,13 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class MessageTest extends CIUnitTestCase
 {
     private ?Message $message;
@@ -208,10 +209,9 @@ final class MessageTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideArrayHeaderValue
-     *
      * @param array $arrayHeaderValue
      */
+    #[DataProvider('provideArrayHeaderValue')]
     public function testSetHeaderWithExistingArrayValuesAppendStringValue($arrayHeaderValue): void
     {
         $this->message->setHeader('Accept', $arrayHeaderValue);
@@ -221,10 +221,9 @@ final class MessageTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideArrayHeaderValue
-     *
      * @param array $arrayHeaderValue
      */
+    #[DataProvider('provideArrayHeaderValue')]
     public function testSetHeaderWithExistingArrayValuesAppendArrayValue($arrayHeaderValue): void
     {
         $this->message->setHeader('Accept', $arrayHeaderValue);

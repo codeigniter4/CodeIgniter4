@@ -15,16 +15,17 @@ namespace CodeIgniter\Validation;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
  *
- * @group Others
- *
  * @no-final
  */
+#[Group('Others')]
 class RulesTest extends CIUnitTestCase
 {
     protected Validation $validation;
@@ -54,9 +55,7 @@ class RulesTest extends CIUnitTestCase
         $this->validation->reset();
     }
 
-    /**
-     * @dataProvider provideRequired
-     */
+    #[DataProvider('provideRequired')]
     public function testRequired(array $data, bool $expected): void
     {
         $this->validation->setRules(['foo' => 'required']);
@@ -76,9 +75,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideIfExist
-     */
+    #[DataProvider('provideIfExist')]
     public function testIfExist(array $rules, array $data, bool $expected): void
     {
         $this->validation->setRules($rules);
@@ -129,9 +126,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider providePermitEmpty
-     */
+    #[DataProvider('providePermitEmpty')]
     public function testPermitEmpty(array $rules, array $data, bool $expected): void
     {
         $this->validation->setRules($rules);
@@ -298,9 +293,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideMatches
-     */
+    #[DataProvider('provideMatches')]
     public function testMatches(array $data, bool $expected): void
     {
         $this->validation->setRules(['foo' => 'matches[bar]']);
@@ -322,9 +315,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideMatchesNestedCases
-     */
+    #[DataProvider('provideMatchesNestedCases')]
     public function testMatchesNested(array $data, bool $expected): void
     {
         $this->validation->setRules(['nested.foo' => 'matches[nested.bar]']);
@@ -339,9 +330,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideDiffers
-     */
+    #[DataProvider('provideDiffers')]
     public function testDiffers(array $data, bool $expected): void
     {
         $this->validation->setRules(['foo' => 'differs[bar]']);
@@ -363,18 +352,14 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideMatchesNestedCases
-     */
+    #[DataProvider('provideMatchesNestedCases')]
     public function testDiffersNested(array $data, bool $expected): void
     {
         $this->validation->setRules(['nested.foo' => 'differs[nested.bar]']);
         $this->assertSame(! $expected, $this->validation->run($data));
     }
 
-    /**
-     * @dataProvider provideEquals
-     */
+    #[DataProvider('provideEquals')]
     public function testEquals(array $data, string $param, bool $expected): void
     {
         $this->validation->setRules(['foo' => "equals[{$param}]"]);
@@ -392,9 +377,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideMinLengthCases
-     */
+    #[DataProvider('provideMinLengthCases')]
     public function testMinLength(?string $data, string $length, bool $expected): void
     {
         $this->validation->setRules(['foo' => "min_length[{$length}]"]);
@@ -411,9 +394,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideMinLengthCases
-     */
+    #[DataProvider('provideMinLengthCases')]
     public function testMaxLength(?string $data, string $length, bool $expected): void
     {
         $this->validation->setRules(['foo' => "max_length[{$length}]"]);
@@ -427,10 +408,9 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideExactLength
-     *
      * @param int|string|null $data
      */
+    #[DataProvider('provideExactLength')]
     public function testExactLength($data, bool $expected): void
     {
         $this->validation->setRules(['foo' => 'exact_length[3]']);
@@ -457,9 +437,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    /**
-     * @dataProvider provideGreaterThan
-     */
+    #[DataProvider('provideGreaterThan')]
     public function testGreaterThan(?string $first, ?string $second, bool $expected): void
     {
         $data = ['foo' => $first];
@@ -482,9 +460,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideGreaterThanEqual
-     */
+    #[DataProvider('provideGreaterThanEqual')]
     public function testGreaterThanEqual(?string $first, ?string $second, bool $expected): void
     {
         $data = ['foo' => $first];
@@ -508,9 +484,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideLessThan
-     */
+    #[DataProvider('provideLessThan')]
     public function testLessThan(?string $first, ?string $second, bool $expected): void
     {
         $data = ['foo' => $first];
@@ -534,9 +508,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideLessThanEqual
-     */
+    #[DataProvider('provideLessThanEqual')]
     public function testLessThanEqual(?string $first, ?string $second, bool $expected): void
     {
         $data = ['foo' => $first];
@@ -560,9 +532,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideInList
-     */
+    #[DataProvider('provideInList')]
     public function testInList(?string $first, ?string $second, bool $expected): void
     {
         $data = ['foo' => $first];
@@ -570,9 +540,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    /**
-     * @dataProvider provideInList
-     */
+    #[DataProvider('provideInList')]
     public function testNotInList(?string $first, ?string $second, bool $expected): void
     {
         $data = ['foo' => $first];
@@ -595,9 +563,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideRequiredWith
-     */
+    #[DataProvider('provideRequiredWith')]
     public function testRequiredWith(?string $field, ?string $check, bool $expected): void
     {
         $data = [
@@ -650,9 +616,8 @@ class RulesTest extends CIUnitTestCase
 
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/7557
-     *
-     * @dataProvider provideRequiredWithAndOtherRules
      */
+    #[DataProvider('provideRequiredWithAndOtherRules')]
     public function testRequiredWithAndOtherRules(bool $expected, array $data): void
     {
         $this->validation->setRules([
@@ -686,9 +651,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideRequiredWithAndOtherRuleWithValueZero
-     */
+    #[DataProvider('provideRequiredWithAndOtherRuleWithValueZero')]
     public function testRequiredWithAndOtherRuleWithValueZero(bool $expected, array $data): void
     {
         $this->validation->setRules([
@@ -710,9 +673,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideRequiredWithout
-     */
+    #[DataProvider('provideRequiredWithout')]
     public function testRequiredWithout(?string $field, ?string $check, bool $expected): void
     {
         $data = [
@@ -762,9 +723,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideRequiredWithoutMultiple
-     */
+    #[DataProvider('provideRequiredWithoutMultiple')]
     public function testRequiredWithoutMultiple(string $foo, string $bar, string $baz, bool $result): void
     {
         $this->validation->setRules(['foo' => 'required_without[bar,baz]']);
@@ -813,9 +772,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideRequiredWithoutMultipleWithoutFields
-     */
+    #[DataProvider('provideRequiredWithoutMultipleWithoutFields')]
     public function testRequiredWithoutMultipleWithoutFields(array $data, bool $result): void
     {
         $this->validation->setRules(['foo' => 'required_without[bar,baz]']);
@@ -855,9 +812,7 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideFieldExists
-     */
+    #[DataProvider('provideFieldExists')]
     public function testFieldExists(array $rules, array $data, bool $expected): void
     {
         $this->validation->setRules($rules);

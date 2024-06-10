@@ -25,6 +25,8 @@ use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Config\Services;
 use Config\Validation as ValidationConfig;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -32,12 +34,10 @@ use Psr\Log\LoggerInterface;
  * Not a lot of business logic, so concentrate on making sure
  * we can exercise everything without blowing up :-/
  *
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class ControllerTest extends CIUnitTestCase
 {
     private App $config;

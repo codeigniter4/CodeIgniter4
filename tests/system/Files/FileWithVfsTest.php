@@ -16,12 +16,12 @@ namespace CodeIgniter\Files;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FileWithVfsTest extends CIUnitTestCase
 {
     // For VFS stuff

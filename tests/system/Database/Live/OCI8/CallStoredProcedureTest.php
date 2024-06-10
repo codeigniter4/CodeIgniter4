@@ -15,12 +15,12 @@ namespace CodeIgniter\Database\Live\OCI8;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class CallStoredProcedureTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

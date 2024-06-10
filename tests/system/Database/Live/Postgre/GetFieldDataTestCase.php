@@ -15,12 +15,12 @@ namespace CodeIgniter\Database\Live\Postgre;
 
 use CodeIgniter\Database\Live\AbstractGetFieldDataTestCase;
 use Config\Database;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
 {
     protected function createForge(): void

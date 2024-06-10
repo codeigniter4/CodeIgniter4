@@ -16,12 +16,12 @@ namespace CodeIgniter\Autoloader;
 use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
 use Config\Autoload;
 use Config\Modules;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FileLocatorCachedTest extends FileLocatorTest
 {
     private FileVarExportHandler $handler;

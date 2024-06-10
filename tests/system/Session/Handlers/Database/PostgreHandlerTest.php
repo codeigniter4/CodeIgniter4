@@ -15,12 +15,12 @@ namespace CodeIgniter\Session\Handlers\Database;
 
 use Config\Database as DatabaseConfig;
 use Config\Session as SessionConfig;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class PostgreHandlerTest extends AbstractHandlerTestCase
 {
     protected function setUp(): void

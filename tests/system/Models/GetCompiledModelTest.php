@@ -17,13 +17,13 @@ use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\UserObjModel;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class GetCompiledModelTest extends CIUnitTestCase
 {
     private ?object $model = null;

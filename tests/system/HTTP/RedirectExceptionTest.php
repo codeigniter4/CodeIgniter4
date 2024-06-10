@@ -19,14 +19,14 @@ use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\Services;
 use LogicException;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\Log\Handlers\TestHandler;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class RedirectExceptionTest extends TestCase
 {
     protected function setUp(): void

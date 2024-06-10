@@ -16,17 +16,17 @@ namespace CodeIgniter;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
+use PHPUnit\Framework\Attributes\CoversFunction;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
 use Tests\Support\Autoloader\FatalLocator;
 
 /**
  * @internal
- *
- * @group Others
- *
- * @covers ::helper
  */
+#[CoversFunction('helper')]
+#[Group('Others')]
 final class CommonHelperTest extends CIUnitTestCase
 {
     private array $dummyHelpers = [

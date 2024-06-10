@@ -20,6 +20,7 @@ use CodeIgniter\Images\Handlers\BaseHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test the common image processing functionality.
@@ -30,9 +31,8 @@ use org\bovigo\vfs\vfsStreamDirectory;
  * testing saving only.
  *
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class BaseHandlerTest extends CIUnitTestCase
 {
     private vfsStreamDirectory $root;

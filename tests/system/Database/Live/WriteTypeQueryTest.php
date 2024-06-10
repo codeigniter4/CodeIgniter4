@@ -16,13 +16,13 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class WriteTypeQueryTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

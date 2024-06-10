@@ -17,13 +17,14 @@ use CodeIgniter\HTTP\Header;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
  *
- * @group Others
  * @no-final
  */
+#[Group('Others')]
 class FileLocatorTest extends CIUnitTestCase
 {
     protected FileLocatorInterface $locator;

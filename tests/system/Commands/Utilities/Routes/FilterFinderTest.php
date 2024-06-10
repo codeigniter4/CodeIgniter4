@@ -29,12 +29,12 @@ use Config\Feature;
 use Config\Filters as FiltersConfig;
 use Config\Modules;
 use Config\Routing;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FilterFinderTest extends CIUnitTestCase
 {
     use ConfigFromArrayTrait;

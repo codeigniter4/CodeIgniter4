@@ -23,14 +23,14 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Pager as PagerConfig;
 use Config\Services;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class PagerTest extends CIUnitTestCase
 {
     private ?Pager $pager        = null;

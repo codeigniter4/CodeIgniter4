@@ -19,12 +19,14 @@ use Config\App;
 use Config\DocTypes;
 use Config\Filters;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 
 /**
  * @internal
- *
- * @group SeparateProcess
  */
+#[Group('SeparateProcess')]
 final class FormHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -953,10 +955,8 @@ final class FormHelperTest extends CIUnitTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testSetRadioFromSessionOldInput(): void
     {
         $_SESSION = [
@@ -973,10 +973,8 @@ final class FormHelperTest extends CIUnitTestCase
         unset($_SESSION['_ci_old_input']);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testSetRadioFromPost(): void
     {
         $_POST['bar'] = 'baz';
@@ -986,10 +984,8 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame('', set_radio('bar', 'boop', true));
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testSetRadioFromPostWithValueZero(): void
     {
         $_POST['bar'] = '0';

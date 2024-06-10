@@ -21,12 +21,13 @@ use DateTime;
 use DateTimeZone;
 use IntlDateFormatter;
 use Locale;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class TimeLegacyTest extends CIUnitTestCase
 {
     private string $currentLocale;
@@ -1152,9 +1153,7 @@ final class TimeLegacyTest extends CIUnitTestCase
         $this->assertSame('2017-03-10T12:00:00+09:00', $now);
     }
 
-    /**
-     * @dataProvider provideToStringDoesNotDependOnLocale
-     */
+    #[DataProvider('provideToStringDoesNotDependOnLocale')]
     public function testToStringDoesNotDependOnLocale(string $locale): void
     {
         Locale::setDefault($locale);

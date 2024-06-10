@@ -18,7 +18,6 @@ use Rector\CodeQuality\Rector\Empty_\SimplifyEmptyCheckOnEmptyArrayRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
 use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
-use Rector\CodeQuality\Rector\FuncCall\SimplifyRegexPatternRector;
 use Rector\CodeQuality\Rector\FuncCall\SimplifyStrposLowerRector;
 use Rector\CodeQuality\Rector\FuncCall\SingleInArrayToCompareRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
@@ -36,7 +35,6 @@ use Rector\CodingStyle\Rector\FuncCall\VersionCompareFuncCallToConstantRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
-use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
@@ -44,11 +42,9 @@ use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
 use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
-use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php80\Rector\FunctionLike\MixedTypeRector;
-use Rector\Php81\Rector\ClassConst\FinalizePublicClassConstantRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\AnnotationWithValueToAttributeRector;
 use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\CoversAnnotationWithValueToAttributeRector;
@@ -107,13 +103,7 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/tests/_support/Commands/Foobar.php',
         __DIR__ . '/tests/_support/View',
 
-        JsonThrowOnErrorRector::class,
         YieldDataProviderRector::class,
-
-        RemoveUnusedPromotedPropertyRector::class => [
-            // Bug in rector 1.0.0. See https://github.com/rectorphp/rector-src/pull/5573
-            __DIR__ . '/tests/_support/Entity/CustomUser.php',
-        ],
 
         RemoveUnusedPrivateMethodRector::class => [
             // private method called via getPrivateMethodInvoker
@@ -158,8 +148,6 @@ return static function (RectorConfig $rectorConfig): void {
         // use mt_rand instead of random_int on purpose on non-cryptographically random
         RandomFunctionRector::class,
 
-        SimplifyRegexPatternRector::class,
-
         // PHP 8.0 features but cause breaking changes
         ClassPropertyAssignToConstructorPromotionRector::class => [
             __DIR__ . '/system/Database/BaseResult.php',
@@ -174,16 +162,6 @@ return static function (RectorConfig $rectorConfig): void {
         ],
         MixedTypeRector::class,
 
-        // PHP 8.1 features but cause breaking changes
-        FinalizePublicClassConstantRector::class => [
-            __DIR__ . '/system/Cache/Handlers/BaseHandler.php',
-            __DIR__ . '/system/Cache/Handlers/FileHandler.php',
-            __DIR__ . '/system/CodeIgniter.php',
-            __DIR__ . '/system/Events/Events.php',
-            __DIR__ . '/system/Log/Handlers/ChromeLoggerHandler.php',
-            __DIR__ . '/system/Log/Handlers/ErrorlogHandler.php',
-            __DIR__ . '/system/Security/Security.php',
-        ],
         ReturnNeverTypeRector::class => [
             __DIR__ . '/system/Cache/Handlers/BaseHandler.php',
             __DIR__ . '/system/Cache/Handlers/MemcachedHandler.php',
@@ -234,7 +212,6 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(ChangeArrayPushToArrayAssignRector::class);
     $rectorConfig->rule(UnnecessaryTernaryExpressionRector::class);
     $rectorConfig->rule(RemoveErrorSuppressInTryCatchStmtsRector::class);
-    $rectorConfig->rule(SimplifyRegexPatternRector::class);
     $rectorConfig->rule(FuncGetArgsToVariadicParamRector::class);
     $rectorConfig->rule(MakeInheritedMethodVisibilitySameAsParentRector::class);
     $rectorConfig->rule(SimplifyEmptyArrayCheckRector::class);

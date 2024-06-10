@@ -19,14 +19,14 @@ use CodeIgniter\Database\SQLite3\Table;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
 /**
- * @group DatabaseLive
- *
- * @requires extension sqlite3
- *
  * @internal
  */
+#[Group('DatabaseLive')]
+#[RequiresPhpExtension('sqlite3')]
 final class AlterTableTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

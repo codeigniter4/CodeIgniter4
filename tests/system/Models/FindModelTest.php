@@ -15,21 +15,42 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Exceptions\ModelException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Entity\UserWithCasts;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
+use Tests\Support\Models\UserEntityWithCastsModel;
 use Tests\Support\Models\UserModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class FindModelTest extends LiveModelTestCase
 {
     public function testFindReturnsRow(): void
     {
         $this->createModel(JobModel::class);
         $this->assertSame('Musician', $this->model->find(4)->name);
+    }
+
+    public function testFindReturnsEntityWithCasts(): void
+    {
+        $this->createModel(UserEntityWithCastsModel::class);
+        $this->model->builder()->truncate();
+        $user = new UserWithCasts([
+            'name'    => 'John Smith',
+            'email'   => ['foo@example.jp', 'bar@example.com'],
+            'country' => 'US',
+        ]);
+        $id = $this->model->insert($user, true);
+
+        /** @var UserWithCasts $user */
+        $user = $this->model->find($id);
+
+        $this->assertSame('John Smith', $user->name);
+        $this->assertSame(['foo@example.jp', 'bar@example.com'], $user->email);
     }
 
     public function testFindReturnsMultipleRows(): void
@@ -159,11 +180,10 @@ final class FindModelTest extends LiveModelTestCase
     }
 
     /**
-     * @dataProvider provideFirstAggregate
-     *
      * @param mixed $groupBy
      * @param mixed $total
      */
+    #[DataProvider('provideFirstAggregate')]
     public function testFirstAggregate($groupBy, $total): void
     {
         $this->createModel(UserModel::class);
@@ -195,11 +215,10 @@ final class FindModelTest extends LiveModelTestCase
     }
 
     /**
-     * @dataProvider provideAggregateAndGroupBy
-     *
      * @param mixed $aggregate
      * @param mixed $groupBy
      */
+    #[DataProvider('provideAggregateAndGroupBy')]
     public function testFirstRespectsSoftDeletes($aggregate, $groupBy): void
     {
         $this->db->table('user')
@@ -241,11 +260,10 @@ final class FindModelTest extends LiveModelTestCase
     }
 
     /**
-     * @dataProvider provideAggregateAndGroupBy
-     *
      * @param mixed $aggregate
      * @param mixed $groupBy
      */
+    #[DataProvider('provideAggregateAndGroupBy')]
     public function testFirstRecoverTempUseSoftDeletes($aggregate, $groupBy): void
     {
         $this->createModel(UserModel::class);

@@ -15,13 +15,14 @@ namespace CodeIgniter\Validation;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class CreditCardRulesTest extends CIUnitTestCase
 {
     private Validation $validation;
@@ -50,9 +51,7 @@ final class CreditCardRulesTest extends CIUnitTestCase
         $this->validation->reset();
     }
 
-    /**
-     * @dataProvider provideValidCCNumber
-     */
+    #[DataProvider('provideValidCCNumber')]
     public function testValidCCNumber(string $type, ?string $number, bool $expected): void
     {
         $data = ['cc' => $number];

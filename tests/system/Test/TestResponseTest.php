@@ -18,12 +18,13 @@ use CodeIgniter\HTTP\Response;
 use Config\App;
 use Config\Services;
 use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class TestResponseTest extends CIUnitTestCase
 {
     private ?TestResponse $testResponse = null;
@@ -34,9 +35,7 @@ final class TestResponseTest extends CIUnitTestCase
         parent::setUp();
     }
 
-    /**
-     * @dataProvider provideHttpStatusCodes
-     */
+    #[DataProvider('provideHttpStatusCodes')]
     public function testIsOK(int $code, bool $isOk): void
     {
         $this->getTestResponse('Hello World');
@@ -224,9 +223,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->testResponse->assertStatus(201);
     }
 
-    /**
-     * @dataProvider provideHttpStatusCodes
-     */
+    #[DataProvider('provideHttpStatusCodes')]
     public function testAssertIsOK(int $code, bool $isOk): void
     {
         $this->getTestResponse('<h1>Hello World</h1>', ['statusCode' => $code]);

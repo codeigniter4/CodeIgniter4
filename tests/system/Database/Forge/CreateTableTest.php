@@ -17,12 +17,12 @@ use CodeIgniter\Database\Forge;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class CreateTableTest extends CIUnitTestCase
 {
     public function testCreateTableWithDefaultRawSql(): void

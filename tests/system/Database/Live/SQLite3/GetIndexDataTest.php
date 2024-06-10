@@ -17,13 +17,13 @@ use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Database\SQLite3\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database;
+use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class GetIndexDataTest extends CIUnitTestCase
 {
     /**

@@ -15,12 +15,12 @@ namespace CodeIgniter\HotReloader;
 
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class DirectoryHasherTest extends CIUnitTestCase
 {
     private DirectoryHasher $hasher;

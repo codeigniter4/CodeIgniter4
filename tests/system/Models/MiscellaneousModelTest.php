@@ -15,6 +15,7 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\I18n\Time;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SimpleEntity;
@@ -22,10 +23,9 @@ use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class MiscellaneousModelTest extends LiveModelTestCase
 {
     public function testChunk(): void

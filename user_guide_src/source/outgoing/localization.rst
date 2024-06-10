@@ -130,6 +130,8 @@ Alternatively, you can use the :doc:`Services class </concepts/services>` to ret
 
 .. literalinclude:: localization/006.php
 
+.. _language-localization:
+
 *********************
 Language Localization
 *********************
@@ -157,8 +159,10 @@ Basic Usage
 ===========
 
 You can use the :php:func:`lang()` helper function to retrieve text from any of the language files, by passing the
-filename and the language key as the first parameter, separated by a period (.). For example, to load the
-``errorEmailMissing`` string from the **Errors.php** language file, you would do the following:
+filename and the language key as the first parameter, separated by a period (``.``).
+
+For example, to load the ``errorEmailMissing`` string from the **Errors.php**
+language file, you would do the following:
 
 .. literalinclude:: localization/010.php
 
@@ -167,7 +171,7 @@ For nested definition, you would do the following:
 .. literalinclude:: localization/011.php
 
 If the requested language key doesn't exist in the file for the current locale, the string will be passed
-back, unchanged. In this example, it would return 'Errors.errorEmailMissing' or 'Errors.nested.error.message' if it didn't exist.
+back, unchanged. In this example, it would return ``Errors.errorEmailMissing`` or ``Errors.nested.error.message`` if it didn't exist.
 
 Replacing Parameters
 --------------------

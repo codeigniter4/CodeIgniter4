@@ -15,17 +15,16 @@ namespace CodeIgniter\Commands\Utilities\Routes;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class SampleURIGeneratorTest extends CIUnitTestCase
 {
-    /**
-     * @dataProvider provideGet
-     */
+    #[DataProvider('provideGet')]
     public function testGet(string $routeKey, string $expected): void
     {
         $generator = new SampleURIGenerator();

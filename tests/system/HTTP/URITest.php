@@ -18,14 +18,15 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class URITest extends CIUnitTestCase
 {
     public function testConstructorSetsAllParts(): void
@@ -127,9 +128,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
-    /**
-     * @dataProvider provideSimpleUri
-     */
+    #[DataProvider('provideSimpleUri')]
     public function testSimpleUri(string $url, string $expectedURL, string $expectedPath): void
     {
         $uri = new URI($url);
@@ -401,9 +400,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
-    /**
-     * @dataProvider provideSetPath
-     */
+    #[DataProvider('provideSetPath')]
     public function testSetPath(string $path, string $expectedURL, string $expectedPath): void
     {
         $url = 'http://example.com/';
@@ -514,11 +511,10 @@ final class URITest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider providePathGetsFiltered
-     *
      * @param string $path
      * @param string $expected
      */
+    #[DataProvider('providePathGetsFiltered')]
     public function testPathGetsFiltered($path, $expected): void
     {
         $uri = new URI();
@@ -630,11 +626,10 @@ final class URITest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideAuthorityReturnsExceptedValues
-     *
      * @param string $url
      * @param string $expected
      */
+    #[DataProvider('provideAuthorityReturnsExceptedValues')]
     public function testAuthorityReturnsExceptedValues($url, $expected): void
     {
         $uri = new URI($url);
@@ -657,11 +652,10 @@ final class URITest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideAuthorityRemovesDefaultPorts
-     *
      * @param string $scheme
      * @param int    $port
      */
+    #[DataProvider('provideAuthorityRemovesDefaultPorts')]
     public function testAuthorityRemovesDefaultPorts($scheme, $port): void
     {
         $url = "{$scheme}://example.com:{$port}/path";
@@ -780,11 +774,10 @@ final class URITest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideRemoveDotSegments
-     *
      * @param string $path
      * @param string $expected
      */
+    #[DataProvider('provideRemoveDotSegments')]
     public function testRemoveDotSegments($path, $expected): void
     {
         $this->assertSame($expected, URI::removeDotSegments($path));
@@ -821,11 +814,10 @@ final class URITest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider defaultResolutions
-     *
      * @param string $rel
      * @param string $expected
      */
+    #[DataProvider('defaultResolutions')]
     public function testResolveRelativeURI($rel, $expected): void
     {
         $base = 'http://a/b/c/d';
@@ -837,11 +829,10 @@ final class URITest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider defaultResolutions
-     *
      * @param string $rel
      * @param string $expected
      */
+    #[DataProvider('defaultResolutions')]
     public function testResolveRelativeURIHTTPS($rel, $expected): void
     {
         $base     = 'https://a/b/c/d';

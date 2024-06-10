@@ -19,13 +19,14 @@ use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class UpdateTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
@@ -113,9 +114,7 @@ final class UpdateTest extends CIUnitTestCase
         }
     }
 
-    /**
-     * @dataProvider provideUpdateBatch
-     */
+    #[DataProvider('provideUpdateBatch')]
     public function testUpdateBatch(string $constraints, array $data, array $expected): void
     {
         $table = 'type_test';

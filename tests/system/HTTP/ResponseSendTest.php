@@ -17,6 +17,9 @@ use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 
 /**
  * This test suite has been created separately from
@@ -25,9 +28,8 @@ use Config\Services;
  * test cases need to be run as separate processes.
  *
  * @internal
- *
- * @group SeparateProcess
  */
+#[Group('SeparateProcess')]
 final class ResponseSendTest extends CIUnitTestCase
 {
     /**
@@ -43,11 +45,8 @@ final class ResponseSendTest extends CIUnitTestCase
      * The tests includes a basic sanity check, to make sure that
      * the body we thought would be sent actually was.
      */
-
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testHeadersMissingDate(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -81,10 +80,9 @@ final class ResponseSendTest extends CIUnitTestCase
     /**
      * This test does not test that CSP is handled properly -
      * it makes sure that sending gives CSP a chance to do its thing.
-     *
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
      */
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testHeadersWithCSP(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -121,10 +119,9 @@ final class ResponseSendTest extends CIUnitTestCase
      * Make sure cookies are set by RedirectResponse this way
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1393
-     *
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
      */
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testRedirectResponseCookies(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.
@@ -162,14 +159,11 @@ final class ResponseSendTest extends CIUnitTestCase
 
     /**
      * Make sure secure cookies are not sent with HTTP request
-     *
-     * @ runInSeparateProcess
-     * @ preserveGlobalState  disabled
      */
     public function testDoNotSendUnSecureCookie(): void
     {
         $this->expectException(SecurityException::class);
-        $this->expectExceptionMessage('The action you requested is not allowed');
+        $this->expectExceptionMessage('Attempted to send a secure cookie over a non-secure connection.');
 
         $request = $this->createMock(IncomingRequest::class);
         $request->method('isSecure')->willReturn(false);

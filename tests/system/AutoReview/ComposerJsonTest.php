@@ -15,15 +15,15 @@ namespace CodeIgniter\AutoReview;
 
 use InvalidArgumentException;
 use JsonException;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- *
- * @coversNothing
- *
- * @group AutoReview
  */
+#[CoversNothing]
+#[Group('AutoReview')]
 final class ComposerJsonTest extends TestCase
 {
     private array $devComposer;

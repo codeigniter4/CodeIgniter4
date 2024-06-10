@@ -16,14 +16,15 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -280,11 +281,10 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideExtensionPHP
-     *
      * @param string $path
      * @param string $detectPath
      */
+    #[DataProvider('provideExtensionPHP')]
     public function testExtensionPHP($path, $detectPath): void
     {
         $config          = new App();

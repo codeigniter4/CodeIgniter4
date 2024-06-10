@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace CodeIgniter\Commands\Utilities\Routes;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class AutoRouteCollectorTest extends CIUnitTestCase
 {
     public function testGet(): void

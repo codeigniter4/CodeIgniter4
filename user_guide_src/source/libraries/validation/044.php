@@ -1,6 +1,6 @@
 <?php
 
-$validation = \Config\Services::validation();
+$validation = service('validation');
 $validation->setRules([
     'username' => 'required',
     'password' => 'required|min_length[10]',

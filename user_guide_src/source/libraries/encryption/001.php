@@ -1,3 +1,3 @@
 <?php
 
-$encrypter = \Config\Services::encrypter();
+$encrypter = service('encrypter');

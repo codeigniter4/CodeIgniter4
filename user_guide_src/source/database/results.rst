@@ -12,6 +12,8 @@ There are several ways to generate query results:
 Result Arrays
 *************
 
+.. _getresult:
+
 getResult()
 ===========
 
@@ -93,7 +95,7 @@ digit in the first parameter:
 
 .. literalinclude:: results/009.php
 
-In addition, you can walk forward/backwards/first/last through your
+In addition, you can walk forward/backward/first/last through your
 results using these variations:
 
     | ``$row = $query->getFirstRow()``

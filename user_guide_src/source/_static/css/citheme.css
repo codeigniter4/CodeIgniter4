@@ -245,6 +245,11 @@ html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(
     background-color: #fffff0;
 }
 
+span.std,
+span.pre {
+    text-wrap: nowrap;
+}
+
 /* Messages ----------------------------------------------------------------- */
 
 .rst-content .success {

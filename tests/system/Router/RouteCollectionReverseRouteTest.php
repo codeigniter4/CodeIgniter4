@@ -19,12 +19,13 @@ use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
 use Config\Routing;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class RouteCollectionReverseRouteTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -143,9 +144,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideReverseRoutingDefaultNamespaceAppController
-     */
+    #[DataProvider('provideReverseRoutingDefaultNamespaceAppController')]
     public function testReverseRoutingDefaultNamespaceAppController(string $controller): void
     {
         $routes = $this->getCollector();

@@ -17,13 +17,13 @@ use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
  * @no-final
- *
- * @group Others
  */
+#[Group('Others')]
 class FactoriesCacheFileVarExportHandlerTest extends CIUnitTestCase
 {
     protected FactoriesCache $cache;

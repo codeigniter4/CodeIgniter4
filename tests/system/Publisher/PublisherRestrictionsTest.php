@@ -15,6 +15,8 @@ namespace CodeIgniter\Publisher;
 
 use CodeIgniter\Publisher\Exceptions\PublisherException;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Publisher Restrictions Test
@@ -23,9 +25,8 @@ use CodeIgniter\Test\CIUnitTestCase;
  * file properly prevent disallowed actions.
  *
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class PublisherRestrictionsTest extends CIUnitTestCase
 {
     /**
@@ -48,9 +49,7 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
         $this->assertArrayNotHasKey(SUPPORTPATH, $restrictions);
     }
 
-    /**
-     * @dataProvider provideDefaultPublicRestrictions
-     */
+    #[DataProvider('provideDefaultPublicRestrictions')]
     public function testDefaultPublicRestrictions(string $path): void
     {
         $publisher = new Publisher(ROOTPATH, FCPATH);
@@ -80,9 +79,7 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideDestinations
-     */
+    #[DataProvider('provideDestinations')]
     public function testDestinations(string $destination, bool $allowed): void
     {
         config('Publisher')->restrictions = [

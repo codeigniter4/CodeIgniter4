@@ -123,6 +123,19 @@ class Boot
     }
 
     /**
+     * Used by `preload.php`
+     */
+    public static function preload(Paths $paths): void
+    {
+        static::definePathConstants($paths);
+        static::loadConstants();
+        static::defineEnvironment();
+        static::loadEnvironmentBootstrap($paths, false);
+
+        static::loadAutoloader();
+    }
+
+    /**
      * Load environment settings from .env files into $_SERVER and $_ENV
      */
     protected static function loadDotEnv(Paths $paths): void

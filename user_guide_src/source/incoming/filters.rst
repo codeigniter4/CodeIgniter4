@@ -139,6 +139,8 @@ Filters can be specified by adding their alias to either the ``before`` or ``aft
 
 .. literalinclude:: filters/013.php
 
+.. _filters-globals:
+
 $globals
 --------
 

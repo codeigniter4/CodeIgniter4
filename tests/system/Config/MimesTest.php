@@ -15,12 +15,13 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Mimes;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class MimesTest extends CIUnitTestCase
 {
     public static function provideGuessExtensionFromType(): iterable
@@ -49,9 +50,7 @@ final class MimesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideGuessExtensionFromType
-     */
+    #[DataProvider('provideGuessExtensionFromType')]
     public function testGuessExtensionFromType(?string $expected, string $mime): void
     {
         $this->assertSame($expected, Mimes::guessExtensionFromType($mime));
@@ -83,9 +82,7 @@ final class MimesTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideGuessTypeFromExtension
-     */
+    #[DataProvider('provideGuessTypeFromExtension')]
     public function testGuessTypeFromExtension(?string $expected, string $ext): void
     {
         $this->assertSame($expected, Mimes::guessTypeFromExtension($ext));

@@ -18,12 +18,12 @@ use CodeIgniter\Test\StreamFilterTrait;
 use Config\Autoload;
 use Config\Modules;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ScaffoldGeneratorTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

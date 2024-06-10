@@ -145,6 +145,13 @@ class Builder extends BaseBuilder
             foreach ($conditions as $i => $condition) {
                 $operator = $this->getOperator($condition);
 
+                // Workaround for BETWEEN
+                if ($operator === false) {
+                    $cond .= $joints[$i] . $condition;
+
+                    continue;
+                }
+
                 $cond .= $joints[$i];
                 $cond .= preg_match('/(\(*)?([\[\]\w\.\'-]+)' . preg_quote($operator, '/') . '(.*)/i', $condition, $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $condition;
             }
@@ -290,6 +297,23 @@ class Builder extends BaseBuilder
         }
 
         if ($this->db->escapeChar === '"') {
+            if (str_contains($table, '.') && ! str_starts_with($table, '.') && ! str_ends_with($table, '.')) {
+                $dbInfo   = explode('.', $table);
+                $database = $this->db->getDatabase();
+                $table    = $dbInfo[0];
+
+                if (count($dbInfo) === 3) {
+                    $database  = str_replace('"', '', $dbInfo[0]);
+                    $schema    = str_replace('"', '', $dbInfo[1]);
+                    $tableName = str_replace('"', '', $dbInfo[2]);
+                } else {
+                    $schema    = str_replace('"', '', $dbInfo[0]);
+                    $tableName = str_replace('"', '', $dbInfo[1]);
+                }
+
+                return '"' . $database . '"."' . $schema . '"."' . str_replace('"', '', $tableName) . '"' . $alias;
+            }
+
             return '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '"."' . str_replace('"', '', $table) . '"' . $alias;
         }
 

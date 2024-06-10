@@ -15,13 +15,13 @@ namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class DatabaseTest extends CIUnitTestCase
 {
     public function testDisplay(): void

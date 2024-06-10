@@ -24,14 +24,14 @@ use Config\App as AppConfig;
 use Config\Cache as CacheConfig;
 use ErrorException;
 use Exception;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class ResponseCacheTest extends CIUnitTestCase
 {
     private AppConfig $appConfig;

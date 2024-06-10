@@ -36,27 +36,29 @@ $finder = Finder::create()
         __DIR__ . '/.php-cs-fixer.no-header.php',
         __DIR__ . '/.php-cs-fixer.tests.php',
         __DIR__ . '/.php-cs-fixer.user-guide.php',
+        __DIR__ . '/preload.php',
         __DIR__ . '/rector.php',
         __DIR__ . '/spark',
     ]);
 
-$overrides = [];
-
-$options = [
-    'cacheFile' => 'build/.php-cs-fixer.cache',
-    'finder'    => $finder,
+$overrides = [
+    // for updating to coding-standard
+    'modernize_strpos'    => true,
+    'ordered_attributes'  => ['order' => [], 'sort_algorithm' => 'alpha'],
+    'php_unit_attributes' => true,
 ];
 
-$config = Factory::create(new CodeIgniter4(), $overrides, $options)->forLibrary(
+$options = [
+    'cacheFile'    => 'build/.php-cs-fixer.cache',
+    'finder'       => $finder,
+    'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
+    'customRules'  => [
+        NoCodeSeparatorCommentFixer::name() => true,
+    ],
+];
+
+return Factory::create(new CodeIgniter4(), $overrides, $options)->forLibrary(
     'CodeIgniter 4 framework',
     'CodeIgniter Foundation',
     'admin@codeigniter.com'
 );
-
-$config
-    ->registerCustomFixers(FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'))
-    ->setRules(array_merge($config->getRules(), [
-        NoCodeSeparatorCommentFixer::name() => true,
-    ]));
-
-return $config;

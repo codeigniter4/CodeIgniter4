@@ -1,5 +1,5 @@
 <?php
 
-if (strpos($response->header('content-type'), 'application/json') !== false) {
+if (str_contains($response->header('content-type'), 'application/json')) {
     $body = json_decode($body);
 }

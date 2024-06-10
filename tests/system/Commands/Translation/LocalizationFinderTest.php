@@ -18,12 +18,12 @@ use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
 use Config\Services;
 use Locale;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @group Others
- *
  * @internal
  */
+#[Group('Others')]
 final class LocalizationFinderTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

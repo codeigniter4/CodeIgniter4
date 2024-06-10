@@ -20,13 +20,14 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Exceptions as ExceptionsConfig;
 use ErrorException;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresPhp;
 use RuntimeException;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ExceptionsTest extends CIUnitTestCase
 {
     use ReflectionHelper;
@@ -54,9 +55,7 @@ final class ExceptionsTest extends CIUnitTestCase
         $this->exception = new Exceptions(new ExceptionsConfig());
     }
 
-    /**
-     * @requires PHP >= 8.1
-     */
+    #[RequiresPhp('>= 8.1')]
     public function testDeprecationsOnPhp81DoNotThrow(): void
     {
         $config = new ExceptionsConfig();

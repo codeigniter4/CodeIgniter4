@@ -16,14 +16,15 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class SiteURIFactoryTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -87,9 +88,7 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         $this->assertSame('woot', $uri->getRoutePath());
     }
 
-    /**
-     * @dataProvider provideCreateFromStringWithIndexPage
-     */
+    #[DataProvider('provideCreateFromStringWithIndexPage')]
     public function testCreateFromStringWithIndexPage(
         string $uriString,
         string $expectUriString,
@@ -130,9 +129,7 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideCreateFromStringWithoutIndexPage
-     */
+    #[DataProvider('provideCreateFromStringWithoutIndexPage')]
     public function testCreateFromStringWithoutIndexPage(
         string $uriString,
         string $expectUriString,

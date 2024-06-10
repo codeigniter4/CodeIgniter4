@@ -18,6 +18,7 @@ use CodeIgniter\Entity\Entity;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use Config\Database;
+use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 use Tests\Support\Entity\User;
 use Tests\Support\Models\JobModel;
@@ -26,10 +27,9 @@ use Tests\Support\Models\UserObjModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class InsertModelTest extends LiveModelTestCase
 {
     public function testSetWorksWithInsert(): void

@@ -220,6 +220,8 @@ class MockConnection extends BaseConnection
 
     /**
      * Close the connection.
+     *
+     * @return void
      */
     protected function _close()
     {

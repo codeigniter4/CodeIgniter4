@@ -24,14 +24,14 @@ use Config\Migrations;
 use Config\Services;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration;
 use Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class MigrationRunnerTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

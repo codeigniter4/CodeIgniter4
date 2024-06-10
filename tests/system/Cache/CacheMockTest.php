@@ -16,12 +16,12 @@ namespace CodeIgniter\Cache;
 use CodeIgniter\Cache\Handlers\BaseHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCache;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class CacheMockTest extends CIUnitTestCase
 {
     public function testMockReturnsMockCacheClass(): void

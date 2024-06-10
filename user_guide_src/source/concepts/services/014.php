@@ -1,3 +1,3 @@
 <?php
 
-$typography = \Config\Services::typography(false);
+$timer = \Config\Services::timer(false);

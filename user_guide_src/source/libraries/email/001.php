@@ -1,6 +1,6 @@
 <?php
 
-$email = \Config\Services::email();
+$email = service('email');
 
 $email->setFrom('your@example.com', 'Your Name');
 $email->setTo('someone@example.com');

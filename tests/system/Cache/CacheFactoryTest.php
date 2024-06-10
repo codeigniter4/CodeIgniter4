@@ -17,12 +17,12 @@ use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\Cache\Handlers\DummyHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class CacheFactoryTest extends CIUnitTestCase
 {
     private static string $directory = 'CacheFactory';

@@ -17,12 +17,12 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 use Exception;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @group CacheLive
- *
  * @internal
  */
+#[Group('CacheLive')]
 final class MemcachedHandlerTest extends AbstractHandlerTestCase
 {
     private Cache $config;

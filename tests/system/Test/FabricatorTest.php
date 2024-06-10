@@ -15,6 +15,7 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Model;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\FabricatorModel;
@@ -23,9 +24,8 @@ use Tests\Support\Models\UserModel;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FabricatorTest extends CIUnitTestCase
 {
     /**

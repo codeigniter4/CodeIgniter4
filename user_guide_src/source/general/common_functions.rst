@@ -106,13 +106,15 @@ Service Accessors
 
 .. php:function:: lang($line[, $args[, $locale]])
 
-    :param string $line: The line of text to retrieve
+    :param string $line: The language filename and the key of the text to retrieve.
     :param array  $args: An array of data to substitute for placeholders.
-    :param string $locale: Specify a different locale to be used instead of default one.
+    :param string $locale: Specify a different locale to be used instead of the current locale.
+    :returns: The text in the language file
+    :rtype: list<string>|string
 
-    Retrieves a locale-specific file based on an alias string.
+    Retrieves text from the language files.
 
-    For more information, see the :doc:`Localization </outgoing/localization>` page.
+    For more information, see the :ref:`language-localization`.
 
 .. php:function:: model($name[, $getShared = true[, &$conn = null]])
 
@@ -180,6 +182,7 @@ Service Accessors
     :rtype: string
 
     Grabs the current RendererInterface-compatible class
+    (:doc:`View <../outgoing/view_renderer>` class by default)
     and tells it to render the specified view. Simply provides
     a convenience method that can be used in Controllers,
     libraries, and routed closures.
@@ -369,7 +372,7 @@ Miscellaneous Functions
     :returns:    The shared Request object.
     :rtype:    IncomingRequest|CLIRequest
 
-    This function is a wrapper for ``Services::request()``.
+    This function is a wrapper for ``Services::request()`` and ``service('request')``.
 
 .. php:function:: response()
 
@@ -378,7 +381,7 @@ Miscellaneous Functions
     :returns:    The shared Response object.
     :rtype:    Response
 
-    This function is a wrapper for ``Services::response()``.
+    This function is a wrapper for ``Services::response()`` and ``service('response')``.
 
 .. php:function:: route_to($method[, ...$params])
 

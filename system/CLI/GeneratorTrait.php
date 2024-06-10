@@ -96,12 +96,14 @@ trait GeneratorTrait
      *
      * @internal
      *
-     * @var array
+     * @var array<int|string, string|null>
      */
     private $params = [];
 
     /**
      * Execute the command.
+     *
+     * @param array<int|string, string|null> $params
      *
      * @deprecated use generateClass() instead
      */
@@ -112,6 +114,8 @@ trait GeneratorTrait
 
     /**
      * Generates a class file from an existing template.
+     *
+     * @param array<int|string, string|null> $params
      */
     protected function generateClass(array $params): void
     {
@@ -134,7 +138,8 @@ trait GeneratorTrait
     /**
      * Generate a view file from an existing template.
      *
-     * @param string $view namespaced view name that is generated
+     * @param string                         $view   namespaced view name that is generated
+     * @param array<int|string, string|null> $params
      */
     protected function generateView(string $view, array $params): void
     {
@@ -331,6 +336,8 @@ trait GeneratorTrait
     /**
      * Gets the generator view as defined in the `Config\Generators::$views`,
      * with fallback to `$template` when the defined view does not exist.
+     *
+     * @param array<string, mixed> $data
      */
     protected function renderTemplate(array $data = []): string
     {
@@ -352,7 +359,10 @@ trait GeneratorTrait
     /**
      * Performs pseudo-variables contained within view file.
      *
-     * @param string $class namespaced classname or namespaced view.
+     * @param string                          $class   namespaced classname or namespaced view.
+     * @param list<string>                    $search
+     * @param list<string>                    $replace
+     * @param array<string, bool|string|null> $data
      *
      * @return string generated file content
      */

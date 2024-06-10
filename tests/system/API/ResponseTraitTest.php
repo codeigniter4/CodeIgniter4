@@ -24,13 +24,13 @@ use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use Config\Cookie;
+use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ResponseTraitTest extends CIUnitTestCase
 {
     private ?MockIncomingRequest $request  = null;

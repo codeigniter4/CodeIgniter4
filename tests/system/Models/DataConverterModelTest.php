@@ -14,15 +14,15 @@ declare(strict_types=1);
 namespace CodeIgniter\Models;
 
 use CodeIgniter\I18n\Time;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Entity\CustomUser;
 use Tests\Support\Entity\User;
 use Tests\Support\Models\UserCastsTimestampModel;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class DataConverterModelTest extends LiveModelTestCase
 {
     protected $migrate     = true;
@@ -41,6 +41,16 @@ final class DataConverterModelTest extends LiveModelTestCase
         $this->assertSame('John Smith', $user['name']);
         // `name` is cast by custom CastBase64 handler.
         $this->seeInDatabase('user', ['name' => 'Sm9obiBTbWl0aA==']);
+    }
+
+    public function testFindAsArrayReturnsNull(): void
+    {
+        $this->createModel(UserCastsTimestampModel::class);
+        $this->db->table('user')->truncate();
+
+        $user = $this->model->find(1);
+
+        $this->assertNull($user);
     }
 
     /**
@@ -90,6 +100,28 @@ final class DataConverterModelTest extends LiveModelTestCase
         $this->assertInstanceOf(Time::class, $user->created_at);
     }
 
+    public function testFindArrayAsEntity(): void
+    {
+        $id = $this->prepareOneRecord();
+
+        $users = $this->model->asObject(User::class)->find([$id, 999]);
+
+        $this->assertCount(1, $users);
+        $this->assertIsInt($users[0]->id);
+        $this->assertInstanceOf(Time::class, $users[0]->created_at);
+    }
+
+    public function testFindNullAsEntity(): void
+    {
+        $this->prepareOneRecord();
+
+        $users = $this->model->asObject(User::class)->find();
+
+        $this->assertCount(1, $users);
+        $this->assertIsInt($users[0]->id);
+        $this->assertInstanceOf(Time::class, $users[0]->created_at);
+    }
+
     public function testFindAllAsArray(): void
     {
         $this->prepareTwoRecords();
@@ -100,6 +132,16 @@ final class DataConverterModelTest extends LiveModelTestCase
         $this->assertInstanceOf(Time::class, $users[0]['created_at']);
         $this->assertIsInt($users[1]['id']);
         $this->assertInstanceOf(Time::class, $users[1]['created_at']);
+    }
+
+    public function testFindAllAsArrayReturnsNull(): void
+    {
+        $this->createModel(UserCastsTimestampModel::class);
+        $this->db->table('user')->truncate();
+
+        $users = $this->model->findAll();
+
+        $this->assertSame([], $users);
     }
 
     private function prepareTwoRecords(): void
@@ -168,6 +210,16 @@ final class DataConverterModelTest extends LiveModelTestCase
 
         $this->assertIsInt($user['id']);
         $this->assertInstanceOf(Time::class, $user['created_at']);
+    }
+
+    public function testFirstAsArrayReturnsNull(): void
+    {
+        $this->createModel(UserCastsTimestampModel::class);
+        $this->db->table('user')->truncate();
+
+        $user = $this->model->first();
+
+        $this->assertNull($user);
     }
 
     public function testFirstAsObject(): void

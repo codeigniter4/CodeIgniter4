@@ -19,7 +19,7 @@ The following example shows a common usage pattern within your controllers.
 
 .. literalinclude:: caching/001.php
 
-You can grab an instance of the cache engine directly through the Services class:
+You can grab an instance of the cache engine directly through the global function ``service()``:
 
 .. literalinclude:: caching/002.php
 
@@ -62,17 +62,17 @@ to projects and modules. This will replace the hard-coded value in a future rele
 $file
 =====
 
-This is an array of settings specific to the  ``File`` handler to determine how it should save the cache files.
+This is an array of settings specific to the  **File** handler to determine how it should save the cache files.
 
 $memcached
 ==========
 
-This is an array of servers that will be used when using the ``Memcache(d)`` handler.
+This is an array of servers that will be used when using the **Memcached** handler.
 
 $redis
 ======
 
-The settings for the Redis server that you wish to use when using the ``Redis`` and ``Predis`` handler.
+The settings for the Redis server that you wish to use when using the **Redis** and **Predis** handler.
 
 ******************
 Command-Line Tools
@@ -139,12 +139,11 @@ Class Reference
         Gets an item from the cache. If ``null`` was returned, this will invoke the callback
         and save the result. Either way, this will return the value.
 
-    .. php:method:: save(string $key, $data[, int $ttl = 60[, $raw = false]])
+    .. php:method:: save(string $key, $data[, int $ttl = 60])
 
         :param string $key: Cache item name
         :param mixed $data: the data to save
         :param int $ttl: Time To Live, in seconds (default 60)
-        :param bool $raw: Whether to store the raw value
         :returns: ``true`` on success, ``false`` on failure
         :rtype: bool
 
@@ -154,9 +153,6 @@ Class Reference
         Example:
 
         .. literalinclude:: caching/004.php
-
-        .. note:: The ``$raw`` parameter is only utilized by Memcache,
-            in order to allow usage of ``increment()`` and ``decrement()``.
 
     .. php:method:: delete($key): bool
 
@@ -280,11 +276,10 @@ Drivers
 File-based Caching
 ==================
 
-Unlike caching from the Output Class, the driver file-based caching
-allows for pieces of view files to be cached. Use this with care, and
-make sure to benchmark your application, as a point can come where disk
-I/O will negate positive gains by caching. This requires a cache
-directory to be really writable by the application.
+This requires a cache directory to be really writable by the application.
+
+Use this with care, and make sure to benchmark your application, as a point can
+come where disk I/O will negate positive gains by caching.
 
 Memcached Caching
 =================

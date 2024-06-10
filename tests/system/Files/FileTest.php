@@ -15,13 +15,13 @@ namespace CodeIgniter\Files;
 
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 use ZipArchive;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FileTest extends CIUnitTestCase
 {
     public function testNewGoodChecked(): void

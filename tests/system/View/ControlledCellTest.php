@@ -16,6 +16,7 @@ namespace CodeIgniter\View;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
 use LogicException;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\View\Cells\AdditionCell;
 use Tests\Support\View\Cells\AwesomeCell;
 use Tests\Support\View\Cells\BadCell;
@@ -29,9 +30,8 @@ use Tests\Support\View\Cells\SimpleNotice;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ControlledCellTest extends CIUnitTestCase
 {
     public function testCellRendersDefaultValues(): void

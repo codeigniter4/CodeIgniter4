@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class OutgoingRequestTest extends CIUnitTestCase
 {
     public function testCreateWithHeader(): void

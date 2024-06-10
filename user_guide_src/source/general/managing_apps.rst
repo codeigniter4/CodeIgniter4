@@ -8,21 +8,6 @@ directory. It is possible, however, to have multiple sets of
 applications that share a single CodeIgniter installation, or even to
 rename or relocate your application directory.
 
-.. important:: When you installed CodeIgniter v4.1.9 or before, and if there are ``App\\`` and ``Config\\`` namespaces in your ``/composer.json``'s ``autoload.psr-4`` like the following, you need to remove these lines, and run ``composer dump-autoload``.
-
-    .. code-block:: text
-
-        {
-            ...
-            "autoload": {
-                "psr-4": {
-                    "App\\": "app",             <-- Remove this line
-                    "Config\\": "app/Config"    <-- Remove this line
-                }
-            },
-            ...
-        }
-
 .. contents::
     :local:
     :depth: 2
@@ -42,13 +27,15 @@ your main **app/Config/Paths.php** and set a *full server path* in the
 You will need to modify two additional files in your project root, so that
 they can find the **Paths** configuration file:
 
-- **/spark** runs command line apps.
+- **spark** runs command line apps.
 
   .. literalinclude:: managing_apps/002.php
+      :lines: 2-
 
-- **/public/index.php** is the front controller for your webapp.
+- **public/index.php** is the front controller for your webapp.
 
   .. literalinclude:: managing_apps/003.php
+      :lines: 2-
 
 .. _running-multiple-app:
 

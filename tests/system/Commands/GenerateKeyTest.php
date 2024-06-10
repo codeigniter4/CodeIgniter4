@@ -16,12 +16,14 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\StreamFilterTrait;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 
 /**
  * @internal
- *
- * @group SeparateProcess
  */
+#[Group('SeparateProcess')]
 final class GenerateKeyTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
@@ -86,10 +88,8 @@ final class GenerateKeyTest extends CIUnitTestCase
         $this->assertStringContainsString('hex2bin:', $this->getBuffer());
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testGenerateKeyCreatesNewKey(): void
     {
         command('key:generate');

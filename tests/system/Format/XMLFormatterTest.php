@@ -15,12 +15,13 @@ namespace CodeIgniter\Format;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use DOMDocument;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class XMLFormatterTest extends CIUnitTestCase
 {
     private XMLFormatter $xmlFormatter;
@@ -103,9 +104,7 @@ final class XMLFormatterTest extends CIUnitTestCase
         $this->assertSame($expected, $this->xmlFormatter->format($data));
     }
 
-    /**
-     * @dataProvider provideValidatingInvalidTags
-     */
+    #[DataProvider('provideValidatingInvalidTags')]
     public function testValidatingInvalidTags(string $expected, array $input): void
     {
         $expectedXML = <<<EOH

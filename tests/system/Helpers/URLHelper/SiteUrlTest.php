@@ -21,18 +21,19 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Since base_url() only slightly modifies
  * site_url() these functions are tested
  * simultaneously.
  *
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class SiteUrlTest extends CIUnitTestCase
 {
     private App $config;
@@ -81,9 +82,8 @@ final class SiteUrlTest extends CIUnitTestCase
      * @param string      $path
      * @param string      $expectedSiteUrl
      * @param string      $expectedBaseUrl
-     *
-     * @dataProvider provideUrls
      */
+    #[DataProvider('provideUrls')]
     public function testUrls(
         $baseURL,
         $indexPage,

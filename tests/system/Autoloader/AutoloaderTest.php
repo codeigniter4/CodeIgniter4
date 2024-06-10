@@ -22,14 +22,16 @@ use Config\Autoload;
 use Config\Modules;
 use Config\Services;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use RuntimeException;
 use UnnamespacedClass;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class AutoloaderTest extends CIUnitTestCase
 {
     use ReflectionHelper;
@@ -390,10 +392,8 @@ final class AutoloaderTest extends CIUnitTestCase
         $loader->unregister();
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testLoadHelpers(): void
     {
         // Workaround for errors on PHPUnit 10 and PHP 8.3.

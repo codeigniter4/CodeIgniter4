@@ -17,13 +17,13 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Validation;
 use Config\Services;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FileRulesTest extends CIUnitTestCase
 {
     private Validation $validation;

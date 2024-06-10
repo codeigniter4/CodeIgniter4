@@ -21,6 +21,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use DateTime;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\Group;
 use ReflectionException;
 use Tests\Support\Entity\Cast\CastBase64;
 use Tests\Support\Entity\Cast\CastPassParameters;
@@ -29,9 +30,8 @@ use Tests\Support\SomeEntity;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class EntityTest extends CIUnitTestCase
 {
     use ReflectionHelper;

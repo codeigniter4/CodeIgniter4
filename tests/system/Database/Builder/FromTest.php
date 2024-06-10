@@ -17,12 +17,12 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FromTest extends CIUnitTestCase
 {
     protected $db;
@@ -150,6 +150,34 @@ final class FromTest extends CIUnitTestCase
         $builder->fromSubquery($subquery, 'users_1');
 
         $expectedSQL = 'SELECT * FROM "test"."dbo"."jobs", (SELECT * FROM "test"."dbo"."users") "users_1"';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/8697
+     */
+    public function testConstructorWithMultipleSegmentTableWithSQLSRV(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('database.dbo.table', $this->db);
+
+        $expectedSQL = 'SELECT * FROM "database"."dbo"."table"';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/8697
+     */
+    public function testConstructorWithMultipleSegmentTableWithoutDatabaseWithSQLSRV(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $builder = new SQLSRVBuilder('dbo.table', $this->db);
+
+        $expectedSQL = 'SELECT * FROM "test"."dbo"."table"';
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }

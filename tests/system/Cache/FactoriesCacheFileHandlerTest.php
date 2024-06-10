@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace CodeIgniter\Cache;
 
 use Config\Cache as CacheConfig;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class FactoriesCacheFileHandlerTest extends FactoriesCacheFileVarExportHandlerTest
 {
     /**

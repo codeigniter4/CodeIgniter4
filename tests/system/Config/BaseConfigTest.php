@@ -17,6 +17,9 @@ use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
 use Encryption;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\MockObject\MockObject;
 use RegistrarConfig;
 use RuntimeException;
@@ -26,9 +29,8 @@ use Tests\Support\Config\TestRegistrar;
 
 /**
  * @internal
- *
- * @group SeparateProcess
  */
+#[Group('SeparateProcess')]
 final class BaseConfigTest extends CIUnitTestCase
 {
     private string $fixturesFolder;
@@ -99,10 +101,8 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('123456', $config->password);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testServerValues(): void
     {
         $_SERVER = [
@@ -195,10 +195,8 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->second);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testSetsDefaultValuesEncryptionUsingHex2Bin(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
@@ -210,10 +208,8 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('OpenSSL', $config->driver);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testSetDefaultValuesEncryptionUsingBase64(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');

@@ -31,6 +31,9 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ConfigFromArrayTrait;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use Config\Filters as FiltersConfig;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 require_once __DIR__ . '/fixtures/GoogleMe.php';
 require_once __DIR__ . '/fixtures/GoogleYou.php';
@@ -42,12 +45,10 @@ require_once __DIR__ . '/fixtures/Multiple2.php';
 require_once __DIR__ . '/fixtures/Role.php';
 
 /**
- * @backupGlobals enabled
- *
  * @internal
- *
- * @group Others
  */
+#[BackupGlobals(true)]
+#[Group('Others')]
 final class FiltersTest extends CIUnitTestCase
 {
     use ConfigFromArrayTrait;
@@ -230,10 +231,9 @@ final class FiltersTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideProcessMethodProcessGlobalsWithExcept
-     *
      * @param array|string $except
      */
+    #[DataProvider('provideProcessMethodProcessGlobalsWithExcept')]
     public function testProcessMethodProcessGlobalsWithExcept($except): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
@@ -584,10 +584,9 @@ final class FiltersTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideBeforeExcept
-     *
      * @param array|string $except
      */
+    #[DataProvider('provideBeforeExcept')]
     public function testBeforeExcept(string $uri, $except, array $expected): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';

@@ -16,6 +16,7 @@ namespace CodeIgniter\Models;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Model;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 use Tests\Support\Config\Validation;
 use Tests\Support\Models\JobModel;
@@ -24,10 +25,9 @@ use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModelRuleGroup;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  */
+#[Group('DatabaseLive')]
 final class ValidationModelRuleGroupTest extends LiveModelTestCase
 {
     protected function setUp(): void

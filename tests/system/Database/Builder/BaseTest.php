@@ -16,12 +16,12 @@ namespace CodeIgniter\Database\Builder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class BaseTest extends CIUnitTestCase
 {
     protected $db;

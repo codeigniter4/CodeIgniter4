@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace CodeIgniter;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class SparkTest extends CIUnitTestCase
 {
     public function testCanUseOption(): void

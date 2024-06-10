@@ -19,12 +19,13 @@ use Config\Cookie as CookieConfig;
 use DateTimeImmutable;
 use DateTimeZone;
 use LogicException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class CookieTest extends CIUnitTestCase
 {
     private array $defaults;
@@ -80,9 +81,7 @@ final class CookieTest extends CIUnitTestCase
         Cookie::setDefaults($old);
     }
 
-    /**
-     * @dataProvider provideConfigPrefix
-     */
+    #[DataProvider('provideConfigPrefix')]
     public function testConfigPrefix(string $configPrefix, string $optionPrefix, string $expected): void
     {
         $config         = new CookieConfig();
@@ -167,10 +166,9 @@ final class CookieTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideInvalidExpires
-     *
      * @param bool|float|string $expires
      */
+    #[DataProvider('provideInvalidExpires')]
     public function testInvalidExpires($expires): void
     {
         $this->expectException(CookieException::class);
@@ -190,9 +188,7 @@ final class CookieTest extends CIUnitTestCase
         }
     }
 
-    /**
-     * @dataProvider provideSetCookieHeaderCreation
-     */
+    #[DataProvider('provideSetCookieHeaderCreation')]
     public function testSetCookieHeaderCreation(string $header, array $changed): void
     {
         $cookie = Cookie::fromHeaderString($header);

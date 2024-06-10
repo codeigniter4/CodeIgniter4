@@ -20,12 +20,14 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class InvalidCharsTest extends CIUnitTestCase
 {
     private InvalidChars $invalidChars;
@@ -66,9 +68,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         return $request;
     }
 
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[DoesNotPerformAssertions]
     public function testBeforeDoNothingWhenCLIRequest(): void
     {
         $cliRequest = new CLIRequest(new MockAppConfig());
@@ -76,9 +76,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($cliRequest);
     }
 
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[DoesNotPerformAssertions]
     public function testBeforeValidString(): void
     {
         $_POST['val'] = [
@@ -114,11 +112,8 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($this->request);
     }
 
-    /**
-     * @doesNotPerformAssertions
-     *
-     * @dataProvider provideCheckControlStringWithLineBreakAndTabReturnsTheString
-     */
+    #[DataProvider('provideCheckControlStringWithLineBreakAndTabReturnsTheString')]
+    #[DoesNotPerformAssertions]
     public function testCheckControlStringWithLineBreakAndTabReturnsTheString(string $input): void
     {
         $_GET['val'] = $input;
@@ -137,9 +132,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideCheckControlStringWithControlCharsCausesException
-     */
+    #[DataProvider('provideCheckControlStringWithControlCharsCausesException')]
     public function testCheckControlStringWithControlCharsCausesException(string $input): void
     {
         $this->expectException(SecurityException::class);

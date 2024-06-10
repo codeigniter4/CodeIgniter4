@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace CodeIgniter\Publisher;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class PublisherInputTest extends CIUnitTestCase
 {
     /**
@@ -86,6 +86,7 @@ final class PublisherInputTest extends CIUnitTestCase
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
             SUPPORTPATH . 'Files/baker/banana.php',
+            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
         ];
 
         $publisher->addPath('Files');
@@ -121,6 +122,7 @@ final class PublisherInputTest extends CIUnitTestCase
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
             SUPPORTPATH . 'Files/baker/banana.php',
+            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
             SUPPORTPATH . 'Log/Handlers/TestHandler.php',
         ];
 

@@ -18,13 +18,13 @@ use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ChromeLoggerHandlerTest extends CIUnitTestCase
 {
     public function testCanHandleLogLevel(): void

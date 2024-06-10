@@ -17,15 +17,15 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
- *
  * @internal
  *
  * @no-final
  */
+#[Group('DatabaseLive')]
 class TransactionDBDebugTrueTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

@@ -17,12 +17,12 @@ use CodeIgniter\Encryption\Encryption;
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class OpenSSLHandlerTest extends CIUnitTestCase
 {
     private Encryption $encryption;

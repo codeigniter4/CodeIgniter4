@@ -15,13 +15,13 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Publishers\TestPublisher;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class PublishCommandTest extends CIUnitTestCase
 {
     use StreamFilterTrait;

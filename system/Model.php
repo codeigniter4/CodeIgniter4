@@ -174,7 +174,7 @@ class Model extends BaseModel
     }
 
     /**
-     * Fetches the row of database from $this->table with a primary key
+     * Fetches the row(s) of database from $this->table with a primary key
      * matching $id.
      * This method works only with dbCalls.
      *
@@ -198,8 +198,11 @@ class Model extends BaseModel
             $builder->where($this->table . '.' . $this->deletedField, null);
         }
 
+        $row  = null;
+        $rows = [];
+
         if (is_array($id)) {
-            $row = $builder->whereIn($this->table . '.' . $this->primaryKey, $id)
+            $rows = $builder->whereIn($this->table . '.' . $this->primaryKey, $id)
                 ->get()
                 ->getResult($this->tempReturnType);
         } elseif ($singleton) {
@@ -207,16 +210,32 @@ class Model extends BaseModel
                 ->get()
                 ->getFirstRow($this->tempReturnType);
         } else {
-            $row = $builder->get()->getResult($this->tempReturnType);
+            $rows = $builder->get()->getResult($this->tempReturnType);
         }
 
         if ($useCast) {
-            $row = $this->convertToReturnType($row, $returnType);
-
             $this->tempReturnType = $returnType;
+
+            if ($singleton) {
+                if ($row === null) {
+                    return null;
+                }
+
+                return $this->convertToReturnType($row, $returnType);
+            }
+
+            foreach ($rows as $i => $row) {
+                $rows[$i] = $this->convertToReturnType($row, $returnType);
+            }
+
+            return $rows;
         }
 
-        return $row;
+        if ($singleton) {
+            return $row;
+        }
+
+        return $rows;
     }
 
     /**
@@ -230,15 +249,7 @@ class Model extends BaseModel
      */
     protected function doFindColumn(string $columnName)
     {
-        $results = $this->select($columnName)->asArray()->find();
-
-        if ($this->useCasts()) {
-            foreach ($results as $i => $row) {
-                $results[$i] = $this->converter->fromDataSource($row);
-            }
-        }
-
-        return $results;
+        return $this->select($columnName)->asArray()->find();
     }
 
     /**
@@ -318,7 +329,7 @@ class Model extends BaseModel
 
         $row = $builder->limit(1, 0)->get()->getFirstRow($this->tempReturnType);
 
-        if ($useCast) {
+        if ($useCast && $row !== null) {
             $row = $this->convertToReturnType($row, $returnType);
 
             $this->tempReturnType = $returnType;

@@ -20,15 +20,15 @@ use Config\Database;
 use Config\Services;
 use InvalidArgumentException;
 use LogicException;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
  *
  * @no-final
- *
- * @group DatabaseLive
  */
+#[Group('DatabaseLive')]
 class DatabaseRelatedRulesTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;

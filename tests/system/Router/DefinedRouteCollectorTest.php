@@ -18,12 +18,12 @@ use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
 use Config\Routing;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class DefinedRouteCollectorTest extends CIUnitTestCase
 {
     private function createRouteCollection(array $config = [], $moduleConfig = null): RouteCollection

@@ -17,12 +17,12 @@ use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Filters;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class AutoRouteCollectorTest extends CIUnitTestCase
 {
     protected function setUp(): void

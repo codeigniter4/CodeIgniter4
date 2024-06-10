@@ -17,12 +17,12 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCache;
 use CodeIgniter\View\Exceptions\ViewException;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class CellTest extends CIUnitTestCase
 {
     private MockCache $cache;

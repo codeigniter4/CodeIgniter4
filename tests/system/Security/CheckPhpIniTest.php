@@ -16,12 +16,12 @@ namespace CodeIgniter\Security;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockInputOutput;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class CheckPhpIniTest extends CIUnitTestCase
 {
     public function testCheckIni(): void

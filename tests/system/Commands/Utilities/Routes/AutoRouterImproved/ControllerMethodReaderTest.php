@@ -19,14 +19,14 @@ use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\SubDir\
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Routing;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Controllers\Newautorouting;
 use Tests\Support\Controllers\Remap;
 
 /**
  * @internal
- *
- * @group Others
  */
+#[Group('Others')]
 final class ControllerMethodReaderTest extends CIUnitTestCase
 {
     private function createControllerMethodReader(

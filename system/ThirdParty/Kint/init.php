@@ -51,7 +51,7 @@ if (\version_compare(PHP_VERSION, '7.1') < 0) {
 if (false !== \ini_get('xdebug.file_link_format')) {
     Kint::$file_link_format = \ini_get('xdebug.file_link_format');
 }
-if (isset($_SERVER['DOCUMENT_ROOT'])) {
+if (isset($_SERVER['DOCUMENT_ROOT']) && false === \strpos($_SERVER['DOCUMENT_ROOT'], "\0")) {
     Kint::$app_root_dirs = [
         $_SERVER['DOCUMENT_ROOT'] => '<ROOT>',
     ];
