@@ -151,7 +151,9 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
         $this->assertIsArray($cacheInfo);
         $this->assertArrayHasKey('db0', $cacheInfo);
         $this->assertIsString($cacheInfo['db0']);
-        $this->assertSame(1, preg_match('/^keys=(?P<count>\d+)/', $cacheInfo['db0'], $matches));
+        $this->assertMatchesRegularExpression('/^keys=(?P<count>\d+)/', $cacheInfo['db0']);
+
+        preg_match('/^keys=(?P<count>\d+)/', $cacheInfo['db0'], $matches);
         $this->assertSame(101, (int) $matches['count']);
 
         $this->assertSame($expectedDeleteCount, $handler->deleteMatching($pattern));
@@ -160,7 +162,9 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
         $this->assertIsArray($cacheInfo);
         $this->assertArrayHasKey('db0', $cacheInfo);
         $this->assertIsString($cacheInfo['db0']);
-        $this->assertSame(1, preg_match('/^keys=(?P<count>\d+)/', $cacheInfo['db0'], $matches));
+        $this->assertMatchesRegularExpression('/^keys=(?P<count>\d+)/', $cacheInfo['db0']);
+
+        preg_match('/^keys=(?P<count>\d+)/', $cacheInfo['db0'], $matches);
         $this->assertSame(101 - $expectedDeleteCount, (int) $matches['count']);
 
         $handler->deleteMatching('key_*');
