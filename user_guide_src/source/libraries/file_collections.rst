@@ -118,6 +118,15 @@ Examples:
 
 .. literalinclude:: files/015.php
 
+retainMultiplePatterns(array $pattern, string $scope = null)
+============================================================
+
+Provides the same functionality as ``retainPattern()`` but accepts an array of patterns to retain files from all patterns.
+
+Example:
+
+.. literalinclude:: files/016.php
+
 ****************
 Retrieving Files
 ****************
