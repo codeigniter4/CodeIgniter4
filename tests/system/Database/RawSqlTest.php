@@ -49,6 +49,6 @@ final class RawSqlTest extends CIUnitTestCase
 
         $key = $rawSql->getBindingKey();
 
-        $this->assertMatchesRegularExpression('/\ARawSql\d+\z/', $key);
+        $this->assertMatchesRegularExpression('/\ARawSql[0-9]+\z/', $key);
     }
 }
