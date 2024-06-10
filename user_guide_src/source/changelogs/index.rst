@@ -13,6 +13,7 @@ See all the changes.
     :titlesonly:
 
     v4.6.0
+    v4.5.3
     v4.5.2
     v4.5.1
     v4.5.0
