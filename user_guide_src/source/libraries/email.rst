@@ -115,8 +115,6 @@ Preference          Default Value       Options                      Description
 =================== =================== ============================ =======================================================================
 **$fromEmail**                                                       The email address to be set in the "from" header.
 **$fromName**                                                        The name to be set in the "from" header. 
-**$recipients**                                                      The email addresses of the recipients, as a comma separated string or
-                                                                     an array
 **$userAgent**      CodeIgniter                                      The "user agent".
 **$protocol**       mail                ``mail``, ``sendmail``,      The mail sending protocol.
                                         or ``smtp``
