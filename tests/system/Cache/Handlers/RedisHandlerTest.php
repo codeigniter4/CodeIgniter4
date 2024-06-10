@@ -174,6 +174,8 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
         yield 'prefix' => ['key_1*', 13];
 
         yield 'suffix' => ['*1', 11];
+
+        yield 'cache-prefix' => ['key_1*', 13, 'foo_'];
     }
 
     public function testIncrementAndDecrement(): void
