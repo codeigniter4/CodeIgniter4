@@ -371,7 +371,7 @@ class FileCollection implements Countable, IteratorAggregate
             }
 
             // Matches the pattern within the scoped files
-            $filesToRetain = array_merge($filesToRetain, self::matchFIles($files, $pattern));
+            $filesToRetain = array_merge($filesToRetain, self::matchFiles($files, $pattern));
         }
 
         // Remove the inverse of files to retain
