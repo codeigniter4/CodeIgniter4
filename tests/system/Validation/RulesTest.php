@@ -100,6 +100,12 @@ class RulesTest extends CIUnitTestCase
                 ['foo' => ''],
                 false,
             ],
+            // Invalid array input
+            [
+                ['foo' => 'if_exist|alpha'],
+                ['foo' => ['bar' => '12345']],
+                false,
+            ],
             // Input data does not exist then the other rules will be ignored
             [
                 ['foo' => 'if_exist|required'],
