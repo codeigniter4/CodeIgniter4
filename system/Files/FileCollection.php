@@ -344,14 +344,14 @@ class FileCollection implements Countable, IteratorAggregate
      * Keeps only the files from the list that match multiple patterns
      * (within the optional scope).
      *
-     * @param array       $patterns Array of regex or pseudo-regex strings
+     * @param array<string>       $patterns Array of regex or pseudo-regex strings
      * @param string|null $scope    A directory to limit the scope
      *
      * @return $this
      */
     public function retainMultiplePatterns(array $patterns, ?string $scope = null)
     {
-        if (count($patterns) === 0) {
+        if ($patterns === []) {
             return $this;
         }
 
