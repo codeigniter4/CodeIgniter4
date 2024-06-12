@@ -53,6 +53,24 @@ final class DatabaseCommandsTest extends CIUnitTestCase
         $this->assertStringContainsString('Migrations complete.', $this->getBuffer());
     }
 
+    public function testMigrateRollbackValidBatchNumber(): void
+    {
+        command('migrate --all');
+        $this->clearBuffer();
+
+        command('migrate:rollback -b 1');
+        $this->assertStringContainsString('Done rolling back migrations.', $this->getBuffer());
+    }
+
+    public function testMigrateRollbackInvalidBatchNumber(): void
+    {
+        command('migrate --all');
+        $this->clearBuffer();
+
+        command('migrate:rollback -b x');
+        $this->assertStringContainsString('Invalid batch number: x', $this->getBuffer());
+    }
+
     public function testMigrateRollback(): void
     {
         command('migrate --all -g tests');
