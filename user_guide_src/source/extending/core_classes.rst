@@ -86,7 +86,7 @@ Then you would add the ``routes`` service in **app/Config/Services.php** to load
 Extending Core Classes
 ======================
 
-If all you need to is add some functionality to an existing library - perhaps add a method or two - then it's overkill
+If all you need is to add some functionality to an existing library - perhaps add a method or two - then it's overkill
 to recreate the entire library. In this case, it's better to simply extend the class. Extending the class is nearly
 identical to `Replacing Core Classes`_ with one exception:
 
