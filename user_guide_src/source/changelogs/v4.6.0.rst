@@ -108,7 +108,7 @@ Model
 Libraries
 =========
 
-- Added `retainMultiplePatterns()` to `FileCollection` class.
+- Added `retainMultiplePatterns()` to `FileCollection` class. See :ref:`FileCollection::retainMultiplePatterns() <file-collections-retain-multiple-patterns>` 
 
 Helpers and Functions
 =====================
