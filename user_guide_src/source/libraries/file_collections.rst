@@ -119,7 +119,7 @@ Examples:
 .. literalinclude:: files/015.php
 
 
-.. _file-collections-retain-multiple-patterns
+.. _file-collections-retain-multiple-patterns:
 
 retainMultiplePatterns(array $pattern, string $scope = null)
 ============================================================
