@@ -27,7 +27,7 @@ use IteratorAggregate;
  * filtering, and ordering them.
  *
  * @template-implements IteratorAggregate<int, File>
- * @see \CodeIgniter\Files\FileCollectionTest
+ * @see FileCollectionTest
  */
 class FileCollection implements Countable, IteratorAggregate
 {
@@ -344,8 +344,8 @@ class FileCollection implements Countable, IteratorAggregate
      * Keeps only the files from the list that match multiple patterns
      * (within the optional scope).
      *
-     * @param array<string>       $patterns Array of regex or pseudo-regex strings
-     * @param string|null $scope    A directory to limit the scope
+     * @param list<string> $patterns Array of regex or pseudo-regex strings
+     * @param string|null  $scope    A directory to limit the scope
      *
      * @return $this
      */
