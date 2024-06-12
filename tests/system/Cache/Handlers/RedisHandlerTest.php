@@ -179,7 +179,7 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
         // key_1, key_10, key_11, key_12, key_13, key_14, key_15, key_16, key_17, key_18, key_19, key_100, key_101
         yield 'prefix' => ['key_1*', 13];
 
-        // Given the key "*1", deleteMatching() should delete 11 keys: 
+        // Given the key "*1", deleteMatching() should delete 11 keys:
         // key_1, key_11, key_21, key_31, key_41, key_51, key_61, key_71, key_81, key_91, key_101
         yield 'suffix' => ['*1', 11];
 
