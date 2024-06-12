@@ -29,10 +29,6 @@ class FormatRules
      */
     public function alpha($str = null): bool
     {
-        if (is_array($str)) {
-            return false;
-        }
-
         if (! is_string($str)) {
             $str = (string) $str;
         }

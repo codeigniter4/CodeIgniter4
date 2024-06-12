@@ -244,4 +244,14 @@ final class RulesTest extends TraditionalRulesTest
             'foo bar bool match'       => [['foo' => true, 'bar' => true], false],
         ];
     }
+
+    public function testIfExistArray(): void
+    {
+        $rules = ['foo' => 'if_exist|alpha'];
+        // Invalid array input
+        $data = ['foo' => ['bar' => '12345']];
+
+        $this->validation->setRules($rules);
+        $this->assertFalse($this->validation->run($data));
+    }
 }
