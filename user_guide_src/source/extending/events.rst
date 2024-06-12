@@ -2,12 +2,12 @@ Events
 #####################################
 
 CodeIgniter's Events feature provides a means to tap into and modify the inner workings of the framework without hacking
-core files. When CodeIgniter runs it follows a specific execution process. There may be instances, however, when you'd
+core files. When CodeIgniter runs, it follows a specific execution process. There may be instances, however, when you'd
 like to cause some action to take place at a particular stage in the execution process. For example, you might want to run
 a script right before your controllers get loaded, or right after, or you might want to trigger one of your own scripts
 in some other location.
 
-Events work on a *publish/subscribe* pattern, where an event, is triggered at some point during the script execution.
+Events work on a *publish/subscribe* pattern, where an event is triggered at some point during the script execution.
 Other scripts can "subscribe" to that event by registering with the Events class to let it know they want to perform an
 action when that event is triggered.
 
@@ -24,7 +24,7 @@ Defining an Event
 =================
 
 Most events are defined within the **app/Config/Events.php** file. You can subscribe an action to an event with
-the ``Events`` class' ``on()`` method. The first parameter is the name of the event to subscribe to. The second parameter is
+the ``Events`` class's ``on()`` method. The first parameter is the name of the event to subscribe to. The second parameter is
 a callable that will be run when that event is triggered:
 
 .. literalinclude:: events/001.php
