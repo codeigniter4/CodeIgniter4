@@ -66,9 +66,6 @@ Removed Deprecated Items
 Enhancements
 ************
 
-- Added `retainMultiplePatterns()` to `FileCollection` class.
-
-
 Exceptions
 ==========
 
@@ -110,6 +107,8 @@ Model
 
 Libraries
 =========
+
+- Added `retainMultiplePatterns()` to `FileCollection` class.
 
 Helpers and Functions
 =====================
