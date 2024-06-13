@@ -43,6 +43,8 @@ The following breaking changes have been made accordingly:
 - ``TestException`` now extends ``CodeIgniter\Exceptions\LogicException``
   instead of ``CodeIgniter\Exceptions\CriticalError``.
 
+.. _v460-interface-changes:
+
 Interface Changes
 =================
 
@@ -57,6 +59,8 @@ Interface Changes
     - ``setHTTPVerb()``
     - ``isFiltered()``
     - ``getFiltersForRoute()``
+
+.. _v460-method-signature-changes:
 
 Method Signature Changes
 ========================
