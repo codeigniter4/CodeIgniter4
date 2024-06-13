@@ -161,6 +161,8 @@ class Router implements RouterInterface
         if ($this->collection->shouldAutoRoute()) {
             $autoRoutesImproved = config(Feature::class)->autoRoutesImproved ?? false;
             if ($autoRoutesImproved) {
+                assert($this->collection instanceof RouteCollection);
+
                 $this->autoRouter = new AutoRouterImproved(
                     $this->collection->getRegisteredControllers('*'),
                     $this->collection->getDefaultNamespace(),
