@@ -796,11 +796,6 @@ class Forge
             return false;
         }
 
-        // If _alterTable() return execute result instead of sql string, return.
-        if ((bool) $sql === true) {
-            return true;
-        }
-
         return $this->db->query($sql);
     }
 
