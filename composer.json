@@ -64,7 +64,9 @@
             "CodeIgniter\\": "system/"
         },
         "exclude-from-classmap": [
-            "**/Database/Migrations/**"
+            "**/Database/Migrations/**",
+            "system/ThirdParty/**",
+            "tests/system/Config/fixtures/**"
         ]
     },
     "autoload-dev": {
