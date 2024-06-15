@@ -43,11 +43,30 @@ The following breaking changes have been made accordingly:
 - ``TestException`` now extends ``CodeIgniter\Exceptions\LogicException``
   instead of ``CodeIgniter\Exceptions\CriticalError``.
 
+.. _v460-interface-changes:
+
 Interface Changes
 =================
 
+.. note:: As long as you have not extended the relevant CodeIgniter core classes
+    or implemented these interfaces, all these changes are backward compatible
+    and require no intervention.
+
+- **Router:** The following methods have been added in ``RouteCollectionInterface``:
+
+    - ``getDefaultNamespace()``
+    - ``getRoutesOptions()``
+    - ``setHTTPVerb()``
+    - ``isFiltered()``
+    - ``getFiltersForRoute()``
+
+.. _v460-method-signature-changes:
+
 Method Signature Changes
 ========================
+
+- **Router:** The constructor of the ``DefinedRouteCollector`` has been
+  changed. The ``RouteCollection`` typehint has been changed to ``RouteCollectionInterface``.
 
 .. _v460-removed-deprecated-items:
 

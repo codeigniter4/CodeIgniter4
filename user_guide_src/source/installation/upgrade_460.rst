@@ -29,6 +29,20 @@ See :ref:`ChangeLog <v460-behavior-changes-exceptions>` for details.
 
 If you have code that catches these exceptions, change the exception classes.
 
+Interface Changes
+=================
+
+Some interface changes have been made. Classes that implement them should update
+their APIs to reflect the changes. See :ref:`ChangeLog <v460-interface-changes>`
+for details.
+
+Method Signature Changes
+========================
+
+Some method signature changes have been made. Classes that extend them should
+update their APIs to reflect the changes. See :ref:`ChangeLog <v460-method-signature-changes>`
+for details.
+
 Removed Deprecated Items
 ========================
 

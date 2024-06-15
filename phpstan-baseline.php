@@ -7197,36 +7197,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Router/Router.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getDefaultNamespace\\(\\)\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Router/Router.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getFiltersForRoute\\(\\)\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/Router.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getRegisteredControllers\\(\\)\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/Router.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getRoutesOptions\\(\\)\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/Router.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:isFiltered\\(\\)\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/Router.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:setHTTPVerb\\(\\)\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/Router.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Router/Router.php',
