@@ -67,6 +67,8 @@ Method Signature Changes
 
 - **Router:** The constructor of the ``DefinedRouteCollector`` has been
   changed. The ``RouteCollection`` typehint has been changed to ``RouteCollectionInterface``.
+- **View:** The return type of the ``renderSection()`` method has been
+  changed to ``string``, and now the method does not call ``echo``.
 
 .. _v460-removed-deprecated-items:
 
