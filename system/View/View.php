@@ -457,23 +457,23 @@ class View implements RendererInterface
      *
      * @param bool $saveData If true, saves data for subsequent calls,
      *                       if false, cleans the data after displaying.
-     *
-     * @return void
      */
-    public function renderSection(string $sectionName, bool $saveData = false)
+    public function renderSection(string $sectionName, bool $saveData = false): string
     {
         if (! isset($this->sections[$sectionName])) {
-            echo '';
-
-            return;
+            return '';
         }
 
+        $output = '';
+
         foreach ($this->sections[$sectionName] as $key => $contents) {
-            echo $contents;
+            $output .= $contents;
             if ($saveData === false) {
                 unset($this->sections[$sectionName][$key]);
             }
         }
+
+        return $output;
     }
 
     /**
