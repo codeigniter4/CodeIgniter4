@@ -50,8 +50,10 @@ final class DefinedRouteCollectorTest extends CIUnitTestCase
     {
         $routes = $this->createRouteCollection();
         $routes->get('journals', 'Blogs');
+        $routes->get('100', 'Home::index');
         $routes->get('product/(:num)', 'Catalog::productLookupByID/$1');
         $routes->get('feed', static fn () => 'A Closure route.');
+        $routes->get('200', static fn () => 'A Closure route.');
         $routes->view('about', 'pages/about');
 
         $collector = new DefinedRouteCollector($routes);
@@ -71,6 +73,12 @@ final class DefinedRouteCollectorTest extends CIUnitTestCase
             ],
             [
                 'method'  => 'GET',
+                'route'   => '100',
+                'name'    => '100',
+                'handler' => '\App\Controllers\Home::index',
+            ],
+            [
+                'method'  => 'GET',
                 'route'   => 'product/([0-9]+)',
                 'name'    => 'product/([0-9]+)',
                 'handler' => '\App\Controllers\Catalog::productLookupByID/$1',
@@ -79,6 +87,12 @@ final class DefinedRouteCollectorTest extends CIUnitTestCase
                 'method'  => 'GET',
                 'route'   => 'feed',
                 'name'    => 'feed',
+                'handler' => '(Closure)',
+            ],
+            [
+                'method'  => 'GET',
+                'route'   => '200',
+                'name'    => '200',
                 'handler' => '(Closure)',
             ],
             [
