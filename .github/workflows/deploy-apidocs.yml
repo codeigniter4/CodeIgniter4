@@ -61,7 +61,7 @@ jobs:
       - name: Build API in source repo
         working-directory: source
         run: |
-          php tools/phpDocumentor run --ansi --verbose
+          php tools/phpDocumentor --ansi --verbose
           cp -R ${GITHUB_WORKSPACE}/source/api/build/* ${GITHUB_WORKSPACE}/api/docs
 
       - name: Deploy to API repo
