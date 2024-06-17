@@ -238,7 +238,7 @@ class ShowTableInfo extends BaseCommand
     /**
      * @used-by showAllTables
      *
-     * @param array<int, string> $tables
+     * @param list<string> $tables
      *
      * @return list<list<int|string>>
      */
