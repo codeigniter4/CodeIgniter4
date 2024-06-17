@@ -219,7 +219,7 @@ class ShowTableInfo extends BaseCommand
      *
      * @used-by run
      *
-     * @param array<int, string> $tables
+     * @param list<string> $tables
      *
      * @return void
      */
