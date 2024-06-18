@@ -1448,10 +1448,11 @@ class BaseBuilder
      */
     public function orderBy(string $orderBy, string $direction = '', ?bool $escape = null)
     {
-        $qbOrderBy = [];
         if ($orderBy === '') {
             return $this;
         }
+
+        $qbOrderBy = [];
 
         $direction = strtoupper(trim($direction));
 
@@ -1474,8 +1475,6 @@ class BaseBuilder
                 'escape'    => false,
             ];
         } else {
-            $qbOrderBy = [];
-
             foreach (explode(',', $orderBy) as $field) {
                 $qbOrderBy[] = ($direction === '' && preg_match('/\s+(ASC|DESC)$/i', rtrim($field), $match, PREG_OFFSET_CAPTURE))
                     ? [
