@@ -1464,7 +1464,7 @@ class BaseBuilder
             $direction = in_array($direction, ['ASC', 'DESC'], true) ? ' ' . $direction : '';
         }
 
-        if (! is_bool($escape)) {
+        if ($escape === null) {
             $escape = $this->db->protectIdentifiers;
         }
 
