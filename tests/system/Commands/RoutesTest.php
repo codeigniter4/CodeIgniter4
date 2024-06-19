@@ -240,4 +240,18 @@ final class RoutesTest extends CIUnitTestCase
             EOL;
         $this->assertStringContainsString($expected, $this->getBuffer());
     }
+
+    public function testRoutesCommandRouteWithRegexp(): void
+    {
+        $routes = Services::routes();
+        $routes->resetRoutes();
+        $routes->options('picker/(.+)', 'Options::index');
+
+        command('routes');
+
+        $expected = <<<'EOL'
+            | OPTIONS | picker/(.+) | »             | \App\Controllers\Options::index        | <unknown>      | <unknown>     |
+            EOL;
+        $this->assertStringContainsString($expected, $this->getBuffer());
+    }
 }
