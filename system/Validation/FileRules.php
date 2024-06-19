@@ -272,7 +272,8 @@ class FileRules
         $params = explode(',', $params);
         $name   = array_shift($params);
 
-        if (! ($files = $this->request->getFileMultiple($name))) {
+        $files = $this->request->getFileMultiple($name);
+        if ($files === null) {
             $files = [$this->request->getFile($name)];
         }
 
