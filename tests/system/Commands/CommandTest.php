@@ -43,7 +43,7 @@ final class CommandTest extends CIUnitTestCase
         $this->commands = Services::commands();
     }
 
-    protected function getBuffer()
+    protected function getBuffer(): string
     {
         return $this->getStreamFilterBuffer();
     }
@@ -130,6 +130,9 @@ final class CommandTest extends CIUnitTestCase
         $this->assertStringContainsString(':clear', $this->getBuffer());
     }
 
+    /**
+     * @param list<string> $expected
+     */
     #[DataProvider('provideCommandParsesArgsCorrectly')]
     public function testCommandParsesArgsCorrectly(string $input, array $expected): void
     {

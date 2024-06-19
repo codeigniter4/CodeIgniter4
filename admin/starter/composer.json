@@ -20,7 +20,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Config\\": "app/Config"
         },
         "exclude-from-classmap": [
             "**/Database/Migrations/**"

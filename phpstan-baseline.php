@@ -10357,17 +10357,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Commands/CommandGeneratorTest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\CommandTest\\:\\:getBuffer\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Commands/CommandTest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\CommandTest\\:\\:provideCommandParsesArgsCorrectly\\(\\) return type has no value type specified in iterable type iterable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Commands/CommandTest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\CommandTest\\:\\:testCommandParsesArgsCorrectly\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Commands/CommandTest.php',
 ];
