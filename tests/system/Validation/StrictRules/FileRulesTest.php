@@ -231,6 +231,24 @@ final class FileRulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run([]));
     }
 
+    public function testMinDims(): void
+    {
+        $this->validation->setRules(['avatar' => 'min_dims[avatar,320,240]']);
+        $this->assertTrue($this->validation->run([]));
+    }
+
+    public function testMinDimsFail(): void
+    {
+        $this->validation->setRules(['avatar' => 'min_dims[avatar,800,600]']);
+        $this->assertFalse($this->validation->run([]));
+    }
+
+    public function testMinDimsBad(): void
+    {
+        $this->validation->setRules(['avatar' => 'min_dims[unknown,640,480]']);
+        $this->assertFalse($this->validation->run([]));
+    }
+
     public function testIsImage(): void
     {
         $this->validation->setRules(['avatar' => 'is_image[avatar]']);
