@@ -392,6 +392,11 @@ libraries, or models in the application directory, and they will be found under 
 <p>Config files are namespaced in the <code class="docutils literal notranslate"><span class="pre">Config</span></code> namespace, not in <code class="docutils literal notranslate"><span class="pre">App\Config</span></code> as you might
 expect. This allows the core system files to always be able to locate them, even when the application
 namespace has changed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.5.3 appstarter, the <code class="docutils literal notranslate"><span class="pre">Config\\</span></code> namespace has been added to
+<strong>composer.json</strong>’s <code class="docutils literal notranslate"><span class="pre">autoload.psr-4</span></code>.</p>
+</div>
 </section>
 <section id="changing-app-namespace">
 <h4>Changing App Namespace<a class="headerlink" href="#changing-app-namespace" title="Permalink to this heading"></a></h4>
@@ -526,7 +531,7 @@ package via Composer, you also need to delete the cache file.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 12, 2024.
+      <span class="lastupdated">Last updated on Jun 19, 2024.
       </span></p>
   </div>
 
