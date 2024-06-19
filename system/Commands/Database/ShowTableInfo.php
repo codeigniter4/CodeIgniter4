@@ -191,8 +191,6 @@ class ShowTableInfo extends BaseCommand
     /**
      * Show Data of Table
      *
-     * @used-by run
-     *
      * @return void
      */
     private function showDataOfTable(string $tableName, int $limitRows, int $limitFieldValue)
@@ -217,8 +215,6 @@ class ShowTableInfo extends BaseCommand
     /**
      * Show All Tables
      *
-     * @used-by run
-     *
      * @param list<string> $tables
      *
      * @return void
@@ -236,7 +232,7 @@ class ShowTableInfo extends BaseCommand
     }
 
     /**
-     * @used-by showAllTables
+     * Make body for table
      *
      * @param list<string> $tables
      *
@@ -268,7 +264,7 @@ class ShowTableInfo extends BaseCommand
     }
 
     /**
-     * @used-by showDataOfTable
+     * Make table rows
      *
      * @return list<list<int|string>>
      */
