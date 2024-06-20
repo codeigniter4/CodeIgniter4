@@ -562,11 +562,7 @@ class Filters
     {
         // Normalize the arguments.
         [$alias, $arguments] = $this->getCleanName($name);
-        if ($arguments === []) {
-            $filter = $alias;
-        } else {
-            $filter = $alias . ':' . implode(',', $arguments);
-        }
+        $filter              = ($arguments === []) ? $alias : $alias . ':' . implode(',', $arguments);
 
         if (class_exists($alias)) {
             $this->config->aliases[$alias] = $alias;
