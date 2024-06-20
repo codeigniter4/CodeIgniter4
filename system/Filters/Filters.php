@@ -220,11 +220,13 @@ class Filters
     }
 
     /**
+     * @param list<array{0: class-string, 1: list<string>}> $filterClassList [[classname, arguments], ...]
+     *
      * @return RequestInterface|ResponseInterface|string
      */
-    private function runBefore(array $filterClasses)
+    private function runBefore(array $filterClassList)
     {
-        foreach ($filterClasses as $filterClassInfo) {
+        foreach ($filterClassList as $filterClassInfo) {
             $className = $filterClassInfo[0];
             $arguments = ($filterClassInfo[1] === []) ? null : $filterClassInfo[1];
 
@@ -260,9 +262,12 @@ class Filters
         return $this->request;
     }
 
-    private function runAfter(array $filterClasses): ResponseInterface
+    /**
+     * @param list<array{0: class-string, 1: list<string>}> $filterClassList [[classname, arguments], ...]
+     */
+    private function runAfter(array $filterClassList): ResponseInterface
     {
-        foreach ($filterClasses as $filterClassInfo) {
+        foreach ($filterClassList as $filterClassInfo) {
             $className = $filterClassInfo[0];
             $arguments = ($filterClassInfo[1] === []) ? null : $filterClassInfo[1];
 
