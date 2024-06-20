@@ -22,12 +22,14 @@ use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
+ *
+ * @no-final
  */
 #[Group('Others')]
-final class CreditCardRulesTest extends CIUnitTestCase
+class CreditCardRulesTest extends CIUnitTestCase
 {
-    private Validation $validation;
-    private array $config = [
+    protected Validation $validation;
+    protected array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
@@ -1204,7 +1206,7 @@ final class CreditCardRulesTest extends CIUnitTestCase
     /**
      * Generate a fake credit card number that still passes the Luhn algorithm.
      */
-    private static function generateCardNumber(int $prefix, int $length): string
+    protected static function generateCardNumber(int $prefix, int $length): string
     {
         $prefix = (string) $prefix;
         $cursor = strlen($prefix);
@@ -1221,7 +1223,7 @@ final class CreditCardRulesTest extends CIUnitTestCase
         return implode('', $digits);
     }
 
-    private static function calculateLuhnChecksum(array $digits, int $length): int
+    protected static function calculateLuhnChecksum(array $digits, int $length): int
     {
         $parity = $length % 2;
 
