@@ -14014,7 +14014,7 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccessAssign
 	'message' => '#^Assigning \'GET\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 36,
+	'count' => 38,
 	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
 ];
 $ignoreErrors[] = [

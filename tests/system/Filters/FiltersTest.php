@@ -1352,4 +1352,42 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame(['foo'], $filters->initialize($uri)->getFilters()['before']);
         $this->assertSame([], $filters->reset()->getFilters()['before']);
     }
+
+    public function testRunRequiredDoesBefore(): void
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $config = [
+            'aliases'  => ['google' => GoogleMe::class],
+            'required' => [
+                'before' => ['google'],
+                'after'  => [],
+            ],
+        ];
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
+
+        $request = $filters->runRequired('before');
+
+        $this->assertSame('http://google.com', $request->getBody());
+    }
+
+    public function testRunRequiredDoesAfter(): void
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $config = [
+            'aliases'  => ['google' => GoogleMe::class],
+            'required' => [
+                'before' => [],
+                'after'  => ['google'],
+            ],
+        ];
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
+
+        $response = $filters->runRequired('after');
+
+        $this->assertSame('http://google.com', $response->getBody());
+    }
 }
