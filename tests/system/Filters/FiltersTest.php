@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
-use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\Filters\fixtures\GoogleCurious;
 use CodeIgniter\Filters\fixtures\GoogleEmpty;
@@ -75,7 +74,7 @@ final class FiltersTest extends CIUnitTestCase
 
     private function createFilters(FiltersConfig $config, $request = null): Filters
     {
-        $request ??= Services::request();
+        $request ??= Services::incomingrequest();
 
         return new Filters($config, $request, $this->response);
     }
@@ -862,9 +861,7 @@ final class FiltersTest extends CIUnitTestCase
         $filters = $filters->initialize('admin/foo/bar');
         $found   = $filters->getFilters();
 
-        $this->assertContains('role', $found['before']);
-        $this->assertSame(['admin', 'super'], $filters->getArguments('role'));
-        $this->assertSame(['role' => ['admin', 'super']], $filters->getArguments());
+        $this->assertContains('role:admin,super', $found['before']);
 
         $response = $filters->run('admin/foo/bar', 'before');
 
@@ -875,11 +872,8 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame('admin;super', $response->getBody());
     }
 
-    public function testFilterWithArgumentsIsDefined(): void
+    public function testFilterWithDiffernetArguments(): void
     {
-        $this->expectException(ConfigException::class);
-        $this->expectExceptionMessage('"role" already has arguments: admin,super');
-
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $config = [
@@ -898,6 +892,10 @@ final class FiltersTest extends CIUnitTestCase
         $filters       = $this->createFilters($filtersConfig);
 
         $filters->initialize('admin/user/bar');
+        $found = $filters->getFilters();
+
+        $this->assertContains('role:admin,super', $found['before']);
+        $this->assertContains('role:super', $found['before']);
     }
 
     public function testFilterWithoutArgumentsIsDefined(): void
@@ -923,8 +921,6 @@ final class FiltersTest extends CIUnitTestCase
         $found   = $filters->getFilters();
 
         $this->assertContains('role', $found['before']);
-        $this->assertSame(['super'], $filters->getArguments('role'));
-        $this->assertSame(['role' => ['super']], $filters->getArguments());
     }
 
     public function testEnableFilterWithArguments(): void
@@ -941,14 +937,11 @@ final class FiltersTest extends CIUnitTestCase
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
         $filters       = $this->createFilters($filtersConfig);
 
-        $filters = $filters->initialize('admin/foo/bar');
         $filters->enableFilters(['role:admin , super'], 'before');
         $filters->enableFilters(['role:admin , super'], 'after');
         $found = $filters->getFilters();
 
-        $this->assertContains('role', $found['before']);
-        $this->assertSame(['admin', 'super'], $filters->getArguments('role'));
-        $this->assertSame(['role' => ['admin', 'super']], $filters->getArguments());
+        $this->assertContains('role:admin,super', $found['before']);
 
         $response = $filters->run('admin/foo/bar', 'before');
 
@@ -973,7 +966,6 @@ final class FiltersTest extends CIUnitTestCase
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
         $filters       = $this->createFilters($filtersConfig);
 
-        $filters = $filters->initialize('admin/foo/bar');
         $filters->enableFilters(['role'], 'before');
         $filters->enableFilters(['role'], 'after');
         $found = $filters->getFilters();
@@ -1323,8 +1315,8 @@ final class FiltersTest extends CIUnitTestCase
         $expected = [
             'before' => [],
             'after'  => [
-                Multiple1::class,
-                Multiple2::class,
+                [Multiple1::class, []],
+                [Multiple2::class, []],
             ],
         ];
         $this->assertSame($expected, $filters->getFiltersClass());
