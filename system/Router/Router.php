@@ -189,6 +189,7 @@ class Router implements RouterInterface
      *
      * @return (Closure(mixed...): (ResponseInterface|string|void))|string Controller classname or Closure
      *
+     * @throws BadRequestException
      * @throws PageNotFoundException
      * @throws RedirectException
      */
