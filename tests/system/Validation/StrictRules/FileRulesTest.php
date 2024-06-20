@@ -22,12 +22,14 @@ use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
+ *
+ * @no-final
  */
 #[Group('Others')]
-final class FileRulesTest extends CIUnitTestCase
+class FileRulesTest extends CIUnitTestCase
 {
-    private Validation $validation;
-    private array $config = [
+    protected Validation $validation;
+    protected array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
