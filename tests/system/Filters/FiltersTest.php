@@ -833,8 +833,8 @@ final class FiltersTest extends CIUnitTestCase
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
         $filters       = $this->createFilters($filtersConfig);
 
-        $filters = $filters->initialize('admin/foo/bar');
         $filters->enableFilters(['google'], 'before');
+        $filters = $filters->initialize('admin/foo/bar');
         $filters = $filters->getFilters();
 
         $this->assertContains('google', $filters['before']);
@@ -997,8 +997,8 @@ final class FiltersTest extends CIUnitTestCase
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
         $filters       = $this->createFilters($filtersConfig);
 
-        $filters = $filters->initialize('admin/foo/bar');
         $filters->enableFilters(['goggle'], 'before');
+        $filters = $filters->initialize('admin/foo/bar');
     }
 
     /**
