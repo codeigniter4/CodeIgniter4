@@ -237,23 +237,9 @@ class Filters
             $className = $filterClassInfo[0];
             $arguments = ($filterClassInfo[1] === []) ? null : $filterClassInfo[1];
 
-            if (isset($this->filterClassInstances[$className])) {
-                $class = $this->filterClassInstances[$className];
-            } else {
-                $class = new $className();
+            $instance = $this->createFilter($className);
 
-                if (! $class instanceof FilterInterface) {
-                    throw FilterException::forIncorrectInterface($class::class);
-                }
-
-                $this->filterClassInstances[$className] = $class;
-            }
-
-            if (! $class instanceof FilterInterface) {
-                throw FilterException::forIncorrectInterface($class::class);
-            }
-
-            $result = $class->before($this->request, $arguments);
+            $result = $instance->before($this->request, $arguments);
 
             if ($result instanceof RequestInterface) {
                 $this->request = $result;
@@ -288,19 +274,9 @@ class Filters
             $className = $filterClassInfo[0];
             $arguments = ($filterClassInfo[1] === []) ? null : $filterClassInfo[1];
 
-            if (isset($this->filterClassInstances[$className])) {
-                $class = $this->filterClassInstances[$className];
-            } else {
-                $class = new $className();
+            $instance = $this->createFilter($className);
 
-                if (! $class instanceof FilterInterface) {
-                    throw FilterException::forIncorrectInterface($class::class);
-                }
-
-                $this->filterClassInstances[$className] = $class;
-            }
-
-            $result = $class->after($this->request, $this->response, $arguments);
+            $result = $instance->after($this->request, $this->response, $arguments);
 
             if ($result instanceof ResponseInterface) {
                 $this->response = $result;
@@ -310,6 +286,26 @@ class Filters
         }
 
         return $this->response;
+    }
+
+    /**
+     * @param class-string $className
+     */
+    private function createFilter(string $className): FilterInterface
+    {
+        if (isset($this->filterClassInstances[$className])) {
+            return $this->filterClassInstances[$className];
+        }
+
+        $instance = new $className();
+
+        if (! $instance instanceof FilterInterface) {
+            throw FilterException::forIncorrectInterface($instance::class);
+        }
+
+        $this->filterClassInstances[$className] = $instance;
+
+        return $instance;
     }
 
     /**
