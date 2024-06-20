@@ -119,6 +119,13 @@ class Filters
     ];
 
     /**
+     * List of filter class instances.
+     *
+     * @var array<class-string, FilterInterface> [classname => instance]
+     */
+    protected array $filterClassInstances = [];
+
+    /**
      * Any arguments to be passed to filters.
      *
      * @var array<string, list<string>|null> [name => params]
@@ -230,7 +237,17 @@ class Filters
             $className = $filterClassInfo[0];
             $arguments = ($filterClassInfo[1] === []) ? null : $filterClassInfo[1];
 
-            $class = new $className();
+            if (isset($this->filterClassInstances[$className])) {
+                $class = $this->filterClassInstances[$className];
+            } else {
+                $class = new $className();
+
+                if (! $class instanceof FilterInterface) {
+                    throw FilterException::forIncorrectInterface($class::class);
+                }
+
+                $this->filterClassInstances[$className] = $class;
+            }
 
             if (! $class instanceof FilterInterface) {
                 throw FilterException::forIncorrectInterface($class::class);
@@ -271,10 +288,16 @@ class Filters
             $className = $filterClassInfo[0];
             $arguments = ($filterClassInfo[1] === []) ? null : $filterClassInfo[1];
 
-            $class = new $className();
+            if (isset($this->filterClassInstances[$className])) {
+                $class = $this->filterClassInstances[$className];
+            } else {
+                $class = new $className();
 
-            if (! $class instanceof FilterInterface) {
-                throw FilterException::forIncorrectInterface($class::class);
+                if (! $class instanceof FilterInterface) {
+                    throw FilterException::forIncorrectInterface($class::class);
+                }
+
+                $this->filterClassInstances[$className] = $class;
             }
 
             $result = $class->after($this->request, $this->response, $arguments);
