@@ -998,7 +998,7 @@ final class FiltersTest extends CIUnitTestCase
         $filters       = $this->createFilters($filtersConfig);
 
         $filters->enableFilters(['goggle'], 'before');
-        $filters = $filters->initialize('admin/foo/bar');
+        $filters->initialize('admin/foo/bar');
     }
 
     /**
