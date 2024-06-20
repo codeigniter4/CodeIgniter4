@@ -35,6 +35,7 @@ use Throwable;
  * @property-read string     $DSN
  * @property-read array|bool $encrypt
  * @property-read array      $failover
+ * @property-read bool       $foundRows
  * @property-read string     $hostname
  * @property-read Query      $lastQuery
  * @property-read string     $password

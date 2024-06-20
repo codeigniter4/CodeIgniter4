@@ -82,6 +82,16 @@ class Connection extends BaseConnection
     public $numberNative = false;
 
     /**
+     * Use MYSQLI_CLIENT_FOUND_ROWS
+     *
+     * Whether affected_rows should return number of rows found,
+     * or number of rows changed, after an UPDATE query.
+     *
+     * @var bool
+     */
+    public $foundRows = false;
+
+    /**
      * Connect to the database.
      *
      * @return false|mysqli
@@ -180,6 +190,10 @@ class Connection extends BaseConnection
             }
 
             $clientFlags += MYSQLI_CLIENT_SSL;
+        }
+
+        if ($this->foundRows) {
+            $clientFlags += MYSQLI_CLIENT_FOUND_ROWS;
         }
 
         try {
