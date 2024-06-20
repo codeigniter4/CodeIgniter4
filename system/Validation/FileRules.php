@@ -260,4 +260,52 @@ class FileRules
 
         return true;
     }
+
+    /**
+     * Checks an uploaded file to verify that the dimensions are greater than
+     * a specified dimension.
+     */
+    public function min_dims(?string $blank, string $params): bool
+    {
+        // Grab the file name off the top of the $params
+        // after we split it.
+        $params = explode(',', $params);
+        $name   = array_shift($params);
+
+        $files = $this->request->getFileMultiple($name);
+        if ($files === null) {
+            $files = [$this->request->getFile($name)];
+        }
+
+        foreach ($files as $file) {
+            if ($file === null) {
+                return false;
+            }
+
+            if ($file->getError() === UPLOAD_ERR_NO_FILE) {
+                return true;
+            }
+
+            // Get Parameter sizes
+            $minimumWidth  = $params[0] ?? 0;
+            $minimumHeight = $params[1] ?? 0;
+
+            // Get uploaded image size
+            $info = getimagesize($file->getTempName());
+
+            if ($info === false) {
+                // Cannot get the image size.
+                return false;
+            }
+
+            $fileWidth  = $info[0];
+            $fileHeight = $info[1];
+
+            if ($fileWidth < $minimumWidth || $fileHeight < $minimumHeight) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
