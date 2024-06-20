@@ -379,6 +379,9 @@ class Filters
      * @TODO We don't need to accept null as $uri.
      *
      * @return Filters
+     *
+     * @testTag Only for test code. The run() calls this, so you don't need to
+     *          call this in your app.
      */
     public function initialize(?string $uri = null)
     {
