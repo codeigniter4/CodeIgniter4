@@ -52,7 +52,8 @@ class FileRules
      */
     public function uploaded(?string $blank, string $name): bool
     {
-        if (! ($files = $this->request->getFileMultiple($name))) {
+        $files = $this->request->getFileMultiple($name);
+        if ($files === null) {
             $files = [$this->request->getFile($name)];
         }
 
@@ -91,7 +92,8 @@ class FileRules
         }
         $name = array_shift($paramArray);
 
-        if (! ($files = $this->request->getFileMultiple($name))) {
+        $files = $this->request->getFileMultiple($name);
+        if ($files === null) {
             $files = [$this->request->getFile($name)];
         }
 
@@ -127,7 +129,8 @@ class FileRules
         $params = explode(',', $params);
         $name   = array_shift($params);
 
-        if (! ($files = $this->request->getFileMultiple($name))) {
+        $files = $this->request->getFileMultiple($name);
+        if ($files === null) {
             $files = [$this->request->getFile($name)];
         }
 
@@ -162,7 +165,8 @@ class FileRules
         $params = explode(',', $params);
         $name   = array_shift($params);
 
-        if (! ($files = $this->request->getFileMultiple($name))) {
+        $files = $this->request->getFileMultiple($name);
+        if ($files === null) {
             $files = [$this->request->getFile($name)];
         }
 
@@ -193,7 +197,8 @@ class FileRules
         $params = explode(',', $params);
         $name   = array_shift($params);
 
-        if (! ($files = $this->request->getFileMultiple($name))) {
+        $files = $this->request->getFileMultiple($name);
+        if ($files === null) {
             $files = [$this->request->getFile($name)];
         }
 
@@ -225,7 +230,8 @@ class FileRules
         $params = explode(',', $params);
         $name   = array_shift($params);
 
-        if (! ($files = $this->request->getFileMultiple($name))) {
+        $files = $this->request->getFileMultiple($name);
+        if ($files === null) {
             $files = [$this->request->getFile($name)];
         }
 
