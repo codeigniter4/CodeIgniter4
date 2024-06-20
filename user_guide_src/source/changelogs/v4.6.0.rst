@@ -127,8 +127,10 @@ Model
 Libraries
 =========
 
-- **FileCollection:** Added ``retainMultiplePatterns()`` to ``FileCollection`` class. See :ref:`FileCollection::retainMultiplePatterns() <file-collections-retain-multiple-patterns>`.
-- **Validation:** Added ``min_dims`` validation rule to ``FileRules`` class. See :ref:`Validation <rules-for-file-uploads>`.
+- **FileCollection:** Added ``retainMultiplePatterns()`` to ``FileCollection`` class.
+  See :ref:`FileCollection::retainMultiplePatterns() <file-collections-retain-multiple-patterns>`.
+- **Validation:** Added ``min_dims`` validation rule to ``FileRules`` class. See
+  :ref:`Validation <rules-for-file-uploads>`.
 
 Helpers and Functions
 =====================
