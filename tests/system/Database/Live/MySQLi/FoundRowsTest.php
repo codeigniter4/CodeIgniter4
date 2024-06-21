@@ -42,6 +42,10 @@ final class FoundRowsTest extends CIUnitTestCase
         $config = config('Database');
 
         $this->tests = $config->tests;
+
+        if ($this->tests['DBDriver'] !== 'MySQLi') {
+            $this->markTestSkipped('Only MySQLi can complete this test.');
+        }
     }
 
     public function testEnableFoundRows(): void
@@ -49,10 +53,6 @@ final class FoundRowsTest extends CIUnitTestCase
         $this->tests['foundRows'] = true;
 
         $db1 = Database::connect($this->tests);
-
-        if ($db1->DBDriver !== 'MySQLi') {
-            $this->markTestSkipped('Only MySQLi can complete this test.');
-        }
 
         $this->assertTrue($db1->foundRows);
     }
@@ -63,10 +63,6 @@ final class FoundRowsTest extends CIUnitTestCase
 
         $db1 = Database::connect($this->tests);
 
-        if ($db1->DBDriver !== 'MySQLi') {
-            $this->markTestSkipped('Only MySQLi can complete this test.');
-        }
-
         $this->assertFalse($db1->foundRows);
     }
 
@@ -75,10 +71,6 @@ final class FoundRowsTest extends CIUnitTestCase
         $this->tests['foundRows'] = true;
 
         $db1 = Database::connect($this->tests);
-
-        if ($db1->DBDriver !== 'MySQLi') {
-            $this->markTestSkipped('Only MySQLi can complete this test.');
-        }
 
         $db1->table('db_user')
             ->set('country', 'US')
@@ -96,10 +88,6 @@ final class FoundRowsTest extends CIUnitTestCase
 
         $db1 = Database::connect($this->tests);
 
-        if ($db1->DBDriver !== 'MySQLi') {
-            $this->markTestSkipped('Only MySQLi can complete this test.');
-        }
-
         $db1->table('db_user')
             ->set('country', 'US')
             ->where('country', 'US')
@@ -115,10 +103,6 @@ final class FoundRowsTest extends CIUnitTestCase
         $this->tests['foundRows'] = true;
 
         $db1 = Database::connect($this->tests);
-
-        if ($db1->DBDriver !== 'MySQLi') {
-            $this->markTestSkipped('Only MySQLi can complete this test.');
-        }
 
         $db1->table('db_user')
             ->set('country', 'NZ')
@@ -136,10 +120,6 @@ final class FoundRowsTest extends CIUnitTestCase
 
         $db1 = Database::connect($this->tests);
 
-        if ($db1->DBDriver !== 'MySQLi') {
-            $this->markTestSkipped('Only MySQLi can complete this test.');
-        }
-
         $db1->table('db_user')
             ->set('country', 'NZ')
             ->where('country', 'US')
@@ -156,10 +136,6 @@ final class FoundRowsTest extends CIUnitTestCase
 
         $db1 = Database::connect($this->tests);
 
-        if ($db1->DBDriver !== 'MySQLi') {
-            $this->markTestSkipped('Only MySQLi can complete this test.');
-        }
-
         $db1->table('db_user')
             ->set('name', 'Derek Jones')
             ->where('country', 'US')
@@ -175,10 +151,6 @@ final class FoundRowsTest extends CIUnitTestCase
         $this->tests['foundRows'] = false;
 
         $db1 = Database::connect($this->tests);
-
-        if ($db1->DBDriver !== 'MySQLi') {
-            $this->markTestSkipped('Only MySQLi can complete this test.');
-        }
 
         $db1->table('db_user')
             ->set('name', 'Derek Jones')
