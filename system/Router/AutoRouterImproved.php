@@ -519,7 +519,15 @@ final class AutoRouterImproved implements AutoRouterInterface
             return;
         }
 
-        if (! in_array($method, get_class_methods($this->controller), true)) {
+        // If `getSomeMethod()` exists, only `controller/some-method` should be
+        // accessible. But if a visitor navigates to `controller/somemethod`,
+        // `getSomemethod()` will be checked, and method_exists() will return true.
+        if (
+            method_exists($this->controller, $method)
+            // We do not permit `controller/somemethod`, so check the exact method
+            // name.
+            && ! in_array($method, get_class_methods($this->controller), true)
+        ) {
             throw new PageNotFoundException(
                 '"' . $this->controller . '::' . $method . '()" is not found.'
             );
