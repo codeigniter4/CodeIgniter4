@@ -84,7 +84,7 @@ class Connection extends BaseConnection
     /**
      * Use MYSQLI_CLIENT_FOUND_ROWS
      *
-     * Whether affected_rows should return number of rows found,
+     * Whether affectedRows() should return number of rows found,
      * or number of rows changed, after an UPDATE query.
      *
      * @var bool

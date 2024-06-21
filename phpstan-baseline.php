@@ -13460,6 +13460,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
 ];
 $ignoreErrors[] = [
+	// identifier: property.notFound
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$foundRows\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/FoundRowsTest.php',
+];
+$ignoreErrors[] = [
 	// identifier: missingType.property
 	'message' => '#^Property CodeIgniter\\\\Database\\\\Live\\\\MySQLi\\\\NumberNativeTest\\:\\:\\$tests has no type specified\\.$#',
 	'count' => 1,
