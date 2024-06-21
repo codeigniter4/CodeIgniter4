@@ -162,7 +162,7 @@ final class AutoRouterImproved implements AutoRouterInterface
             $segment = array_shift($segments);
             $controllerPos++;
 
-            $class = $this->translateURIDashes($segment);
+            $class = $this->translateURI($segment);
 
             // as soon as we encounter any segment that is not PSR-4 compliant, stop searching
             if (! $this->isValidSegment($class)) {
@@ -209,7 +209,7 @@ final class AutoRouterImproved implements AutoRouterInterface
             }
 
             $namespaces = array_map(
-                fn ($segment) => $this->translateURIDashes($segment),
+                fn ($segment) => $this->translateURI($segment),
                 $segments
             );
 
@@ -307,7 +307,7 @@ final class AutoRouterImproved implements AutoRouterInterface
 
         $method = '';
         if ($methodParam !== null) {
-            $method = $httpVerb . $this->translateURIDashes($methodParam);
+            $method = $httpVerb . $this->translateURI($methodParam);
 
             $this->checkUriForMethod($method);
         }
@@ -544,7 +544,10 @@ final class AutoRouterImproved implements AutoRouterInterface
         return (bool) preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $segment);
     }
 
-    private function translateURIDashes(string $segment): string
+    /**
+     * Translates URI segment to CamelCase or replaces `-` with `_`.
+     */
+    private function translateURI(string $segment): string
     {
         if ($this->translateUriToCamelCase) {
             if (strtolower($segment) !== $segment) {
