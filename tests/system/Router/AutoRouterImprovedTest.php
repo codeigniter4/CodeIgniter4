@@ -277,6 +277,28 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         ], $router->getPos());
     }
 
+    public function testAutoRouteFallbackToDefaultMethodWithTranslateUriToCamelCase(): void
+    {
+        $config                          = config(Routing::class);
+        $config->translateUriToCamelCase = true;
+        Factories::injectMock('config', Routing::class, $config);
+
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('index/15', Method::GET);
+
+        $this->assertNull($directory);
+        $this->assertSame('\\' . Index::class, $controller);
+        $this->assertSame('getIndex', $method);
+        $this->assertSame(['15'], $params);
+        $this->assertSame([
+            'controller' => 0,
+            'method'     => null,
+            'params'     => 1,
+        ], $router->getPos());
+    }
+
     public function testAutoRouteFallbackToDefaultControllerOneParam(): void
     {
         $router = $this->createNewAutoRouter();
