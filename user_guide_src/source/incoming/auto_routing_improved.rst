@@ -10,18 +10,23 @@ Auto Routing (Improved)
 
 .. _auto-routing-improved:
 
-Since v4.2.0, the new more secure Auto Routing has been introduced.
+*********************************
+What is Auto Routing (Improved) ?
+*********************************
 
-.. note:: If you are familiar with Auto Routing, which was enabled by default
-    from CodeIgniter 3.x through 4.1.x, you can see the differences in
-    :ref:`ChangeLog v4.2.0 <v420-new-improved-auto-routing>`.
+By default, all routes must be :ref:`defined <defined-route-routing>` in the
+configuration file.
 
-When no defined route is found that matches the URI, the system will attempt to match that URI against the controllers and methods when Auto Routing is enabled.
+However, with **Auto Routing (Improved)**, you can define the controller name and
+its method name according to the convention and it will be automatically routed.
+In other words, there is no need to define routes manually.
 
-.. important:: For security reasons, if a controller is used in the defined routes, Auto Routing (Improved) does not route to the controller.
+If you enable Auto Routing (Improved), when no defined route is found that matches
+the URI, the system will attempt to match that URI against the controllers and
+methods.
 
-Auto Routing can automatically route HTTP requests based on conventions
-and execute the corresponding controller methods.
+.. important:: For security reasons, if a controller is used in the defined routes,
+    Auto Routing (Improved) does not route to the controller.
 
 .. note:: Auto Routing (Improved) is disabled by default. To use it, see below.
 
