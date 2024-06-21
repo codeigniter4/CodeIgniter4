@@ -30,6 +30,31 @@ methods.
 
 .. note:: Auto Routing (Improved) is disabled by default. To use it, see below.
 
+**************************************
+Differences from Auto Routing (Legacy)
+**************************************
+
+:ref:`auto-routing-legacy` is a routing system from CodeIgniter 3. If you are not
+familiar with it, go to the next section.
+
+If you know it well, these are some changes in **Auto Routing (Improved)**:
+
+- A controller method needs HTTP verb prefix like ``getIndex()``, ``postCreate()``.
+    - Developers always know the HTTP method, so requests by an unexpected HTTP
+      method does not pass.
+- The Default Controller (``Home`` by default) and the Default Method (``index`` by default) must be omitted in the URI.
+    - It restricts one-to-one correspondence between controller methods and URIs.
+    - E.g. by default, you can access ``/``, but ``/home`` and ``/home/index``
+      will be 404.
+- It checks method parameter count.
+    - If there are more parameters in the URI than the method parameters, it results
+      in 404.
+- It does not support ``_remap()`` method.
+    - It restricts one-to-one correspondence between controller methods and URIs.
+- Can't access controllers in Defined Routes.
+    - It completely separates controllers accessible via **Auto Routing** from
+      those accessible via **Defined Routes**.
+
 .. _enabled-auto-routing-improved:
 
 *******************
