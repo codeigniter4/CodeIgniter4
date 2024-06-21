@@ -1168,21 +1168,25 @@ given route config options:</p>
 <p>It is possible to nest groups within groups for finer organization if you need it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;myfilter:config&#39;</span><span class="p">],</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;myfilter1:config&#39;</span><span class="p">],</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Admin\Admin::index&#39;</span><span class="p">);</span>
 
-    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;myfilter:region&#39;</span><span class="p">],</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;myfilter2:region&#39;</span><span class="p">],</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
         <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;list&#39;</span><span class="p">,</span> <span class="s1">&#39;Admin\Users::list&#39;</span><span class="p">);</span>
     <span class="p">});</span>
 <span class="p">});</span>
 </pre></div>
 </div>
 <p>This would handle the URL at <strong>admin/users/list</strong>.</p>
-<p><strong>Filter</strong> option passed to the outer <code class="docutils literal notranslate"><span class="pre">group()</span></code> are merged with the inner
+<p>The <code class="docutils literal notranslate"><span class="pre">filter</span></code> option passed to the outer <code class="docutils literal notranslate"><span class="pre">group()</span></code> are merged with the inner
 <code class="docutils literal notranslate"><span class="pre">group()</span></code> filter option.
-The above code runs <code class="docutils literal notranslate"><span class="pre">myfilter:config</span></code> for the route <code class="docutils literal notranslate"><span class="pre">admin</span></code>, and <code class="docutils literal notranslate"><span class="pre">myfilter:config</span></code>
-and <code class="docutils literal notranslate"><span class="pre">myfilter:region</span></code> for the route <code class="docutils literal notranslate"><span class="pre">admin/users/list</span></code>.</p>
-<p>Any other overlapping options passed to the inner <cite>group()</cite> will overwrite their values.</p>
+The above code runs <code class="docutils literal notranslate"><span class="pre">myfilter1:config</span></code> for the route <code class="docutils literal notranslate"><span class="pre">admin</span></code>, and <code class="docutils literal notranslate"><span class="pre">myfilter1:config</span></code>
+and <code class="docutils literal notranslate"><span class="pre">myfilter2:region</span></code> for the route <code class="docutils literal notranslate"><span class="pre">admin/users/list</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The same filter cannot be run multiple times with different arguments.</p>
+</div>
+<p>Any other overlapping options passed to the inner <code class="docutils literal notranslate"><span class="pre">group()</span></code> will overwrite their values.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Prior to v4.5.0, due to a bug, options passed to the outer <code class="docutils literal notranslate"><span class="pre">group()</span></code>
@@ -1813,7 +1817,7 @@ due to a bug.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 19, 2024.
+      <span class="lastupdated">Last updated on Jun 21, 2024.
       </span></p>
   </div>
 
