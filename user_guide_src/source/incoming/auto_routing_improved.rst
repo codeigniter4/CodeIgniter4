@@ -27,8 +27,9 @@ and execute the corresponding controller methods.
 
 .. _enabled-auto-routing-improved:
 
+*******************
 Enable Auto Routing
-===================
+*******************
 
 To use it, you need to change the setting ``$autoRoute`` option to ``true`` in **app/Config/Routing.php**::
 
@@ -38,8 +39,9 @@ And you need to change the property ``$autoRoutesImproved`` to ``true`` in **app
 
     public bool $autoRoutesImproved = true;
 
+************
 URI Segments
-============
+************
 
 The segments in the URL, in following with the Model-View-Controller approach, usually represent::
 
@@ -71,8 +73,9 @@ In the above example, CodeIgniter would attempt to find a controller named ``App
 
 .. note:: When a controller's short name matches the first segment of a URI, it will be loaded.
 
+**************************
 Let's try it: Hello World!
-==========================
+**************************
 
 Let's create a simple controller so you can see it in action. Using your text editor, create a file called **Helloworld.php**,
 and put the following code in it. You will notice that the ``Helloworld`` Controller is extending the ``BaseController``. you can
@@ -131,11 +134,12 @@ class so that it can inherit all its methods.
 
     .. literalinclude:: controllers/012.php
 
+*******
 Methods
-=======
+*******
 
 Method Visibility
------------------
+=================
 
 When you define a method that is executable via HTTP request, the method must be
 declared as ``public``.
@@ -143,13 +147,13 @@ declared as ``public``.
 .. warning:: For security reasons be sure to declare any new utility methods as ``protected`` or ``private``.
 
 Default Method
---------------
+==============
 
 In the above example, the method name is ``getIndex()``.
 The method (HTTP verb + ``Index()``) is called the **default method**, and is loaded if the **second segment** of the URI is empty.
 
 Normal Methods
---------------
+==============
 
 The second segment of the URI determines which method in the
 controller gets called.
@@ -164,8 +168,9 @@ Now load the following URL to see the ``getComment()`` method::
 
 You should see your new message.
 
+************************************
 Passing URI Segments to Your Methods
-====================================
+************************************
 
 If your URI contains more than two segments they will be passed to your
 method as parameters.
@@ -178,15 +183,16 @@ Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
 
 .. literalinclude:: controllers/022.php
 
+******************
 Default Controller
-==================
+******************
 
 The Default Controller is a special controller that is used when a URI ends with
 a directory name or when a URI is not present, as will be the case when only your
 site root URL is requested.
 
 Defining a Default Controller
------------------------------
+=============================
 
 Let's try it with the ``Helloworld`` controller.
 
@@ -215,8 +221,9 @@ For more information, please refer to the
 
 .. _controller-default-method-fallback:
 
+***********************
 Default Method Fallback
-=======================
+***********************
 
 .. versionadded:: 4.4.0
 
@@ -237,7 +244,7 @@ The method will be passed URI segments 2 and 3 (``'15'`` and ``'edit'``):
     Not Found.
 
 Fallback to Default Controller
-------------------------------
+==============================
 
 If the controller corresponding to the URI segment of the controller name
 does not exist, and if the default controller (``Home`` by default) exists in
@@ -264,8 +271,9 @@ So the default method will be passed URI segments 2 (``'101'``):
     Auto Routing (Improved) does not execute the method, and it results in 404
     Not Found.
 
+************************************************
 Organizing Your Controllers into Sub-directories
-================================================
+************************************************
 
 If you are building a large application you might want to hierarchically
 organize or structure your controllers into sub-directories. CodeIgniter
@@ -303,8 +311,9 @@ CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Rout
 
 .. _controller-translate-uri-to-camelcase:
 
+**************************
 Translate URI To CamelCase
-==========================
+**************************
 
 .. versionadded:: 4.5.0
 
@@ -321,7 +330,7 @@ For example, the URI ``sub-dir/hello-controller/some-method`` will execute the
     ignored.
 
 Enable Translate URI To CamelCase
----------------------------------
+=================================
 
 To enable it, you need to change the setting ``$translateUriToCamelCase`` option
 to ``true`` in **app/Config/Routing.php**::
@@ -330,16 +339,17 @@ to ``true`` in **app/Config/Routing.php**::
 
 .. _routing-auto-routing-improved-configuration-options:
 
+*********************
 Configuration Options
-=====================
+*********************
 
 These options are available in the **app/Config/Routing.php** file.
 
 Default Controller
-------------------
+==================
 
 For Site Root URI
-^^^^^^^^^^^^^^^^^
+-----------------
 
 When a user visits the root of your site (i.e., **example.com**) the controller
 to use is determined by the value set to the ``$defaultController`` property,
@@ -351,7 +361,7 @@ The default value for this is ``Home`` which matches the controller at
     public string $defaultController = 'Home';
 
 For Directory URI
-^^^^^^^^^^^^^^^^^
+-----------------
 
 The default controller is also used when no matching route has been found, and the URI would point to a directory
 in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
@@ -365,7 +375,7 @@ See :ref:`Auto Routing in Controllers <controller-auto-routing-improved>` for mo
 .. _routing-auto-routing-improved-default-method:
 
 Default Method
---------------
+==============
 
 This works similar to the default controller setting, but is used to determine the default method that is used
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
@@ -381,9 +391,9 @@ controller existed, the ``Products::getListAll()`` method would be executed::
 
 .. _auto-routing-improved-module-routing:
 
-
+**************
 Module Routing
-==============
+**************
 
 .. versionadded:: 4.4.0
 
