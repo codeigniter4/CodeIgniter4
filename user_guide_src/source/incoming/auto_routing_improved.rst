@@ -1,3 +1,5 @@
+.. _auto-routing-improved:
+
 #######################
 Auto Routing (Improved)
 #######################
@@ -7,8 +9,6 @@ Auto Routing (Improved)
 .. contents::
     :local:
     :depth: 3
-
-.. _auto-routing-improved:
 
 *********************************
 What is Auto Routing (Improved) ?
@@ -28,7 +28,8 @@ methods.
 .. important:: For security reasons, if a controller is used in the defined routes,
     Auto Routing (Improved) does not route to the controller.
 
-.. note:: Auto Routing (Improved) is disabled by default. To use it, see below.
+.. note:: Auto Routing (Improved) is disabled by default. To use it, see
+    :ref:`enabled-auto-routing-improved`.
 
 **************************************
 Differences from Auto Routing (Legacy)
@@ -51,6 +52,7 @@ If you know it well, these are some changes in **Auto Routing (Improved)**:
       in 404.
 - It does not support ``_remap()`` method.
     - It restricts one-to-one correspondence between controller methods and URIs.
+      But it has :ref:`controller-default-method-fallback`.
 - Can't access controllers in Defined Routes.
     - It completely separates controllers accessible via **Auto Routing** from
       those accessible via **Defined Routes**.
@@ -61,11 +63,13 @@ If you know it well, these are some changes in **Auto Routing (Improved)**:
 Enable Auto Routing (Improved)
 ******************************
 
-To use it, you need to change the setting ``$autoRoute`` option to ``true`` in **app/Config/Routing.php**::
+To use it, you need to change the setting ``$autoRoute`` option to ``true`` in
+**app/Config/Routing.php**::
 
     public bool $autoRoute = true;
 
-And you need to change the property ``$autoRoutesImproved`` to ``true`` in **app/Config/Feature.php**::
+And you need to change the property ``$autoRoutesImproved`` to ``true`` in
+**app/Config/Feature.php**::
 
     public bool $autoRoutesImproved = true;
 
@@ -73,9 +77,10 @@ And you need to change the property ``$autoRoutesImproved`` to ``true`` in **app
 URI Segments
 ************
 
-The segments in the URL, in following with the Model-View-Controller approach, usually represent::
+The segments in the URL, in following with the Model-View-Controller approach,
+usually represent::
 
-    example.com/class/method/ID
+    http://example.com/class/method/ID
 
 1. The first segment represents the controller **class** that should be invoked.
 2. The second segment represents the class **method** that should be called.
@@ -83,52 +88,55 @@ The segments in the URL, in following with the Model-View-Controller approach, u
 
 Consider this URI::
 
-    example.com/index.php/helloworld/hello/1
+    http://example.com/index.php/hello-world/hello/1
 
 In the above example, when you send an HTTP request with **GET** method,
-Auto Routing would attempt to find a controller named ``App\Controllers\Helloworld``
-and executes ``getHello()`` method with passing ``'1'`` as the first argument.
+Auto Routing (Improved) would attempt to find a controller named
+``App\Controllers\HelloWorld`` and executes ``getHello()`` method with passing
+``'1'`` as the first argument.
 
-.. note:: A controller method that will be executed by Auto Routing (Improved) needs HTTP verb (``get``, ``post``, ``put``, etc.) prefix like ``getIndex()``, ``postCreate()``.
+.. note:: A controller method that will be executed by Auto Routing (Improved)
+    needs HTTP verb (``get``, ``post``, ``put``, etc.) prefix like ``getIndex()``,
+    ``postCreate()``.
 
-This section describes the functionality of the new auto-routing.
-It automatically routes an HTTP request, and executes the corresponding controller method
-without route definitions.
-
-Consider this URI::
-
-    example.com/index.php/helloworld/
-
-In the above example, CodeIgniter would attempt to find a controller named ``App\Controllers\Helloworld`` and load it, when auto-routing is enabled.
-
-.. note:: When a controller's short name matches the first segment of a URI, it will be loaded.
+.. note:: When a controller's short name matches the first segment of a URI, it
+    will be loaded.
 
 **************************
 Let's try it: Hello World!
 **************************
 
-Let's create a simple controller so you can see it in action. Using your text editor, create a file called **Helloworld.php**,
-and put the following code in it. You will notice that the ``Helloworld`` Controller is extending the ``BaseController``. you can
-also extend the ``CodeIgniter\Controller`` if you do not need the functionality of the BaseController.
+Let's create a simple controller so you can see it in action.
 
-The BaseController provides a convenient place for loading components and performing functions that are needed by all your
-controllers. You can extend this class in any new controller.
+Using your text editor, create a file called **HelloWorld.php** in your
+**app/Controllers** directory, and put the following code in it.
 
-.. literalinclude:: controllers/020.php
+.. literalinclude:: auto_routing_improved/020.php
 
-Then save the file to your **app/Controllers** directory.
+You will notice that the ``HelloWorld`` Controller is extending the ``BaseController``.
+you can also extend the ``CodeIgniter\Controller`` if you do not need the functionality
+of the BaseController.
 
-.. important:: The file must be called **Helloworld.php**, with a capital ``H``. When you use Auto Routing, Controller class names MUST start with an uppercase letter and ONLY the first character can be uppercase.
+The BaseController provides a convenient place for loading components and performing
+functions that are needed by all your controllers. You can extend this class in
+any new controller.
 
-    Since v4.5.0, if you enable the ``$translateUriToCamelCase`` option, you can
-    use CamelCase classnames. See :ref:`controller-translate-uri-to-camelcase`
-    for details.
+.. important:: The file must be called **HelloWorld.php**. When you use Auto
+    Routing (Improved), controller class names MUST be CamelCase.
 
-.. important:: A controller method that will be executed by Auto Routing (Improved) needs HTTP verb (``get``, ``post``, ``put``, etc.) prefix like ``getIndex()``, ``postCreate()``.
+.. important:: A controller method that will be executed by Auto Routing (Improved)
+    needs HTTP verb (``get``, ``post``, ``put``, etc.) prefix like ``getIndex()``,
+    ``postCreate()``.
 
 Now visit your site using a URL similar to this::
 
-    example.com/index.php/helloworld
+    http://example.com/index.php/hello-world
+
+The system automatically translates URI with dashes (``-``) to CamelCase in the
+controller and method URI segments.
+
+For example, the URI ``sub-dir/hello-controller/some-method`` will execute the
+``SubDir\HelloController::getSomeMethod()`` method.
 
 If you did it right you should see::
 
@@ -136,33 +144,18 @@ If you did it right you should see::
 
 This is valid:
 
-.. literalinclude:: controllers/009.php
+.. literalinclude:: auto_routing_improved/009.php
 
 This is **not** valid:
 
-.. literalinclude:: controllers/010.php
+.. literalinclude:: auto_routing_improved/010.php
 
 This is **not** valid:
 
-.. literalinclude:: controllers/011.php
-
-.. note:: Since v4.5.0, if you enable the ``$translateUriToCamelCase`` option,
-    you can use CamelCase classnames like above. See
-    :ref:`controller-translate-uri-to-camelcase` for details.
+.. literalinclude:: auto_routing_improved/011.php
 
 Also, always make sure your controller extends the parent controller
 class so that it can inherit all its methods.
-
-.. note::
-    The system will attempt to match the URI against Controllers by matching each segment against
-    directories/files in **app/Controllers**, when a match wasn't found against defined routes.
-    That's why your directories/files MUST start with a capital letter and the rest MUST be lowercase.
-
-    If you want another naming convention you need to manually define it using the
-    :ref:`Defined Route Routing <defined-route-routing>`.
-    Here is an example based on PSR-4 Autoloader:
-
-    .. literalinclude:: controllers/012.php
 
 *******
 Methods
@@ -174,27 +167,28 @@ Method Visibility
 When you define a method that is executable via HTTP request, the method must be
 declared as ``public``.
 
-.. warning:: For security reasons be sure to declare any new utility methods as ``protected`` or ``private``.
+.. warning:: For security reasons be sure to declare any new utility methods as
+    ``protected`` or ``private``.
 
 Default Method
 ==============
 
-In the above example, the method name is ``getIndex()``.
-The method (HTTP verb + ``Index()``) is called the **default method**, and is loaded if the **second segment** of the URI is empty.
+In the above example, the method name is ``getIndex()``. The method
+(HTTP verb + ``Index()``) is called the **Default Method**, and is loaded if the
+**second segment** of the URI is empty.
 
 Normal Methods
 ==============
 
-The second segment of the URI determines which method in the
-controller gets called.
+The second segment of the URI determines which method in the controller gets called.
 
 Let's try it. Add a new method to your controller:
 
-.. literalinclude:: controllers/021.php
+.. literalinclude:: auto_routing_improved/021.php
 
 Now load the following URL to see the ``getComment()`` method::
 
-    example.com/index.php/helloworld/comment/
+    http://example.com/index.php/hello-world/comment/
 
 You should see your new message.
 
@@ -207,47 +201,24 @@ method as parameters.
 
 For example, let's say you have a URI like this::
 
-    example.com/index.php/products/shoes/sandals/123
+    http://example.com/index.php/products/shoes/sandals/123
 
 Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
 
-.. literalinclude:: controllers/022.php
+.. literalinclude:: auto_routing_improved/022.php
 
 ******************
 Default Controller
 ******************
 
-The Default Controller is a special controller that is used when a URI ends with
-a directory name or when a URI is not present, as will be the case when only your
-site root URL is requested.
+The **Default Controller** is a special controller that is used when a URI ends
+with a directory name or when a URI is not present, as will be the case when only
+your site root URL is requested.
 
-Defining a Default Controller
-=============================
-
-Let's try it with the ``Helloworld`` controller.
-
-To specify a default controller open your **app/Config/Routing.php**
-file and set this property::
-
-    public string $defaultController = 'Helloworld';
-
-Where ``Helloworld`` is the name of the controller class you want to be used.
-
-And comment out the line in **app/Config/Routes.php**:
-
-.. literalinclude:: controllers/016.php
-    :lines: 2-
-
-If you now browse to your site without specifying any URI segments you'll
-see the "Hello World" message.
-
-.. important:: When you use Auto Routing (Improved), you must remove the line
-    ``$routes->get('/', 'Home::index');``. Because defined routes take
-    precedence over Auto Routing, and controllers defined in the defined routes
-    are denied access by Auto Routing (Improved) for security reasons.
+By default, the Default Controller is ``Home``.
 
 For more information, please refer to the
-:ref:`routing-auto-routing-improved-configuration-options` documentation.
+:ref:`routing-auto-routing-improved-configuration-options`.
 
 .. _controller-default-method-fallback:
 
@@ -265,7 +236,7 @@ are passed to the default method for execution.
 
 Load the following URL::
 
-    example.com/index.php/product/15/edit
+    http://example.com/index.php/product/15/edit
 
 The method will be passed URI segments 2 and 3 (``'15'`` and ``'edit'``):
 
@@ -288,10 +259,10 @@ For example, when you have the following default controller ``Home`` in the
 
 Load the following URL::
 
-    example.com/index.php/news/101
+    http://example.com/index.php/news/101
 
 The ``News\Home`` controller and the default ``getIndex()`` method will be found.
-So the default method will be passed URI segments 2 (``'101'``):
+So the default method will get the second URI segment (``'101'``):
 
 .. note:: If there is ``App\Controllers\News`` controller, it takes precedence.
     The URI segments are searched sequentially and the first controller found
@@ -312,11 +283,7 @@ permits you to do this.
 Simply create sub-directories under the main **app/Controllers**,
 and place your controller classes within them.
 
-.. important:: Directory names MUST start with an uppercase letter and ONLY the first character can be uppercase.
-
-    Since v4.5.0, if you enable the ``$translateUriToCamelCase`` option, you can
-    use CamelCase directory names. See :ref:`controller-translate-uri-to-camelcase`
-    for details.
+.. important:: Directory names MUST start with an uppercase letter and be CamelCase.
 
 When using this feature the first segment of your URI must
 specify the directory. For example, let's say you have a controller located here::
@@ -325,7 +292,7 @@ specify the directory. For example, let's say you have a controller located here
 
 To call the above controller your URI will look something like this::
 
-    example.com/index.php/products/shoes/show/123
+    http://example.com/index.php/products/shoes/show/123
 
 .. note:: You cannot have directories with the same name in **app/Controllers**
     and **public**.
@@ -336,36 +303,6 @@ Each of your sub-directories may contain a default controller which will be
 called if the URL contains *only* the sub-directory. Simply put a controller
 in there that matches the name of your default controller as specified in
 your **app/Config/Routing.php** file.
-
-CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Routing <defined-route-routing>`..
-
-.. _controller-translate-uri-to-camelcase:
-
-**************************
-Translate URI To CamelCase
-**************************
-
-.. versionadded:: 4.5.0
-
-Since v4.5.0, the ``$translateUriToCamelCase`` option has been implemented,
-which works well with the current CodeIgniter's coding standards.
-
-This option enables you to automatically translate URI with dashes (``-``) to
-CamelCase in the controller and method URI segments.
-
-For example, the URI ``sub-dir/hello-controller/some-method`` will execute the
-``SubDir\HelloController::getSomeMethod()`` method.
-
-.. note:: When this option is enabled, the ``$translateURIDashes`` option is
-    ignored.
-
-Enable Translate URI To CamelCase
-=================================
-
-To enable it, you need to change the setting ``$translateUriToCamelCase`` option
-to ``true`` in **app/Config/Routing.php**::
-
-    public bool $translateUriToCamelCase = true;
 
 .. _routing-auto-routing-improved-configuration-options:
 
@@ -390,34 +327,71 @@ The default value for this is ``Home`` which matches the controller at
 
     public string $defaultController = 'Home';
 
+.. important:: If you change the default controller name, you must remove the
+    line ``$routes->get('/', 'Home::index');`` in **app/Config/Routes.php**.
+    Because defined routes take precedence over Auto Routing, and controllers
+    defined in the defined routes are denied access by Auto Routing (Improved)
+    for security reasons.
+
 For Directory URI
 -----------------
 
-The default controller is also used when no matching route has been found, and the URI would point to a directory
-in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
+The default controller is also used when no matching route has been found, and
+the URI would point to a directory in the controllers directory. For example, if
+the user visits **example.com/admin**, if a controller was found at
 **app/Controllers/Admin/Home.php**, it would be used.
 
-.. important:: You cannot access the default controller with the URI of the controller name.
-    When the default controller is ``Home``, you can access **example.com/**, but if you access **example.com/home**, it will be not found.
-
-See :ref:`Auto Routing in Controllers <controller-auto-routing-improved>` for more info.
+.. important:: You cannot access the default controller with the URI of the
+    controller name. When the default controller is ``Home``, you can access
+    **example.com/**, but if you access **example.com/home**, it will be not found.
 
 .. _routing-auto-routing-improved-default-method:
 
 Default Method
 ==============
 
-This works similar to the default controller setting, but is used to determine the default method that is used
-when a controller is found that matches the URI, but no segment exists for the method. The default value is
-``index``.
+This works similar to the default controller setting, but is used to determine
+the default method that is used when a controller is found that matches the URI,
+but no segment exists for the method. The default value is ``index``.
 
 In this example, if the user were to visit **example.com/products**, and a ``Products``
 controller existed, the ``Products::getListAll()`` method would be executed::
 
     public string $defaultMethod = 'listAll';
 
-.. important:: You cannot access the controller with the URI of the default method name.
-    In the example above, you can access **example.com/products**, but if you access **example.com/products/listall**, it will be not found.
+.. important:: You cannot access the controller with the URI of the default method
+    name. In the example above, you can access **example.com/products**, but if
+    you access **example.com/products/listall**, it will be not found.
+
+.. _controller-translate-uri-to-camelcase:
+
+Translate URI To CamelCase
+==========================
+
+.. versionadded:: 4.5.0
+
+.. note:: Since v4.6.0, the ``$translateUriToCamelCase`` option is enabled by
+    default.
+
+Since v4.5.0, the ``$translateUriToCamelCase`` option has been implemented,
+which works well with the current CodeIgniter's coding standards.
+
+This option enables you to automatically translate URI with dashes (``-``) to
+CamelCase in the controller and method URI segments.
+
+For example, the URI ``sub-dir/hello-controller/some-method`` will execute the
+``SubDir\HelloController::getSomeMethod()`` method.
+
+.. note:: When this option is enabled, the ``$translateURIDashes`` option is
+    ignored.
+
+Disable Translate URI To CamelCase
+----------------------------------
+
+To disable it, you need to change the setting ``$translateUriToCamelCase`` option
+to ``false`` in **app/Config/Routing.php**::
+
+    public bool $translateUriToCamelCase = false;
 
 .. _auto-routing-improved-module-routing:
 

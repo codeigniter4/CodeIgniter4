@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class Helloworld extends BaseController
+class HelloWorld extends BaseController
 {
     public function getIndex()
     {

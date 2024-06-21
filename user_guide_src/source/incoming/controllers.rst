@@ -182,7 +182,9 @@ Auto Routing (Improved)
 
 .. versionadded:: 4.2.0
 
-See :doc:`auto_routing_improved`.
+Auto Routing (Improved) is a new, more secure automatic routing system.
+
+See :doc:`auto_routing_improved` for details.
 
 .. _controller-auto-routing-legacy:
 

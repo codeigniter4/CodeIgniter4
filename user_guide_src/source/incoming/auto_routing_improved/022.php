@@ -4,8 +4,8 @@ namespace App\Controllers;
 
 class Products extends BaseController
 {
-    public function getShoes($sandals, $id)
+    public function getShoes($type, $id)
     {
-        return $sandals . $id;
+        return $type . $id;
     }
 }
