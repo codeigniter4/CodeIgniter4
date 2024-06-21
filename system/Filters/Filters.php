@@ -94,8 +94,8 @@ class Filters
     ];
 
     /**
-     * The collection of filters' class names to execute for the current request
-     * (URI path).
+     * The collection of filter class names and its arguments to execute for the
+     * current request (URI path).
      *
      * This does not include "Required Filters".
      *
