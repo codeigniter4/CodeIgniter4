@@ -204,8 +204,16 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame([], $params);
     }
 
+    private function disableTranslateUriToCamelCase(): void
+    {
+        $routingConfig                          = config(Routing::class);
+        $routingConfig->translateUriToCamelCase = false;
+    }
+
     public function testAutoRouteFindsDashedSubfolder(): void
     {
+        $this->disableTranslateUriToCamelCase();
+
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
@@ -222,6 +230,8 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
     public function testAutoRouteFindsDashedController(): void
     {
+        $this->disableTranslateUriToCamelCase();
+
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
@@ -235,6 +245,8 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
     public function testAutoRouteFindsDashedMethod(): void
     {
+        $this->disableTranslateUriToCamelCase();
+
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
@@ -248,6 +260,8 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
     public function testAutoRouteFindsDefaultDashFolder(): void
     {
+        $this->disableTranslateUriToCamelCase();
+
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
@@ -438,6 +452,8 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             'AutoRouterImproved prohibits access to the URI containing underscores ("dash_controller")'
         );
 
+        $this->disableTranslateUriToCamelCase();
+
         $router = $this->createNewAutoRouter();
 
         $router->getRoute('dash-folder/dash_controller/dash-method', Method::GET);
@@ -449,6 +465,8 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->expectExceptionMessage(
             'AutoRouterImproved prohibits access to the URI containing underscores ("dash_method")'
         );
+
+        $this->disableTranslateUriToCamelCase();
 
         $router = $this->createNewAutoRouter();
 

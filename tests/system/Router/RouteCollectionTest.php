@@ -19,6 +19,7 @@ use CodeIgniter\controller;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\Feature;
 use Config\Modules;
 use Config\Routing;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -1771,6 +1772,9 @@ final class RouteCollectionTest extends CIUnitTestCase
     #[DataProvider('provideRouteDefaultNamespace')]
     public function testAutoRoutesControllerNameReturnsFQCN(string $namespace): void
     {
+        $featureConfig                     = config(Feature::class);
+        $featureConfig->autoRoutesImproved = false;
+
         $routes = $this->getCollector();
         $routes->setAutoRoute(true);
         $routes->setDefaultNamespace($namespace);

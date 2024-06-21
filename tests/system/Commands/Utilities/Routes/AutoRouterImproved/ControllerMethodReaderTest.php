@@ -74,8 +74,9 @@ final class ControllerMethodReaderTest extends CIUnitTestCase
 
     public function testReadTranslateURIDashes(): void
     {
-        $config                     = config(Routing::class);
-        $config->translateURIDashes = true;
+        $config                          = config(Routing::class);
+        $config->translateURIDashes      = true;
+        $config->translateUriToCamelCase = false;
         Factories::injectMock('config', Routing::class, $config);
 
         $reader = $this->createControllerMethodReader(
