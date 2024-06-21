@@ -1768,11 +1768,8 @@ final class RouteCollectionTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @param mixed $namespace
-     */
     #[DataProvider('provideRouteDefaultNamespace')]
-    public function testAutoRoutesControllerNameReturnsFQCN($namespace): void
+    public function testAutoRoutesControllerNameReturnsFQCN(string $namespace): void
     {
         $routes = $this->getCollector();
         $routes->setAutoRoute(true);
@@ -1788,11 +1785,8 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame('\\' . Product::class, $router->controllerName());
     }
 
-    /**
-     * @param mixed $namespace
-     */
     #[DataProvider('provideRouteDefaultNamespace')]
-    public function testRoutesControllerNameReturnsFQCN($namespace): void
+    public function testRoutesControllerNameReturnsFQCN(string $namespace): void
     {
         Services::request()->setMethod(Method::GET);
         $routes = $this->getCollector();
