@@ -57,9 +57,9 @@ If you know it well, these are some changes in **Auto Routing (Improved)**:
 
 .. _enabled-auto-routing-improved:
 
-*******************
-Enable Auto Routing
-*******************
+******************************
+Enable Auto Routing (Improved)
+******************************
 
 To use it, you need to change the setting ``$autoRoute`` option to ``true`` in **app/Config/Routing.php**::
 
