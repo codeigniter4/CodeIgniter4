@@ -54,6 +54,24 @@ See :ref:`ChangeLog <v460-removed-deprecated-items>` for details.
 Breaking Enhancements
 *********************
 
+.. _upgrade-460-filters-changes:
+
+Filters Changes
+===============
+
+The ``Filters`` class has been changed to allow multiple runs of the same filter
+with different arguments in before or after.
+
+If you are extending ``Filters``, you will need to modify it to conform to the
+following changes:
+
+- The structure of the array properties ``$filters`` and ``$filtersClasses`` have
+  been changed.
+- The properties ``$arguments`` and ``$argumentsClass`` are no longer used.
+- ``Filters`` has been changed so that the same filter class is not instantiated
+  multiple times. If a filter class is used both before and after, the same instance
+  is used.
+
 *************
 Project Files
 *************
