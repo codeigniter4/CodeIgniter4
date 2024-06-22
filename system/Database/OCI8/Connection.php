@@ -104,6 +104,10 @@ class Connection extends BaseConnection
      */
     private function isValidDSN(): bool
     {
+        if ($this->DSN === null || $this->DSN === '') {
+            return false;
+        }
+
         foreach ($this->validDSNs as $regexp) {
             if (preg_match($regexp, $this->DSN)) {
                 return true;
@@ -120,7 +124,7 @@ class Connection extends BaseConnection
      */
     public function connect(bool $persistent = false)
     {
-        if ($this->DSN === null || $this->DSN === '' || ! $this->isValidDSN()) {
+        if (! $this->isValidDSN()) {
             $this->buildDSN();
         }
 
