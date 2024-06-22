@@ -126,7 +126,7 @@ class Connection extends BaseConnection
 
         $func = $persistent ? 'oci_pconnect' : 'oci_connect';
 
-        return empty($this->charset)
+        return ($this->charset === '')
             ? $func($this->username, $this->password, $this->DSN)
             : $func($this->username, $this->password, $this->DSN, $this->charset);
     }

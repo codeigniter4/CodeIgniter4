@@ -3106,7 +3106,7 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: empty.notAllowed
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 5,
+	'count' => 3,
 	'path' => __DIR__ . '/system/Database/OCI8/Connection.php',
 ];
 $ignoreErrors[] = [
