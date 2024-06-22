@@ -73,13 +73,7 @@ class FilterCheck extends BaseCommand
      */
     public function run(array $params)
     {
-        $tbody = [];
-        if (! isset($params[0], $params[1])) {
-            CLI::error('You must specify a HTTP verb and a route.');
-            CLI::write('  Usage: ' . $this->usage);
-            CLI::write('Example: filter:check GET /');
-            CLI::write('         filter:check PUT products/1');
-
+        if (! $this->checkParams($params)) {
             return EXIT_ERROR;
         }
 
@@ -107,6 +101,40 @@ class FilterCheck extends BaseCommand
             return EXIT_ERROR;
         }
 
+        $this->showTable($filterCollector, $filters, $method, $route);
+        $this->showFilterClasses($filterCollector, $method, $route);
+
+        return EXIT_SUCCESS;
+    }
+
+    /**
+     * @param array<int|string, string|null> $params
+     */
+    private function checkParams(array $params): bool
+    {
+        if (! isset($params[0], $params[1])) {
+            CLI::error('You must specify a HTTP verb and a route.');
+            CLI::write('  Usage: ' . $this->usage);
+            CLI::write('Example: filter:check GET /');
+            CLI::write('         filter:check PUT products/1');
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param array{before: list<string>, after: list<string>} $filters
+     */
+    private function showTable(
+        FilterCollector $filterCollector,
+        array $filters,
+        string $method,
+        string $route
+    ): void {
+        $tbody = [];
+
         $filters = $this->addRequiredFilters($filterCollector, $filters);
 
         $tbody[] = [
@@ -124,8 +152,13 @@ class FilterCheck extends BaseCommand
         ];
 
         CLI::table($tbody, $thead);
+    }
 
-        // Show filter classes
+    private function showFilterClasses(
+        FilterCollector $filterCollector,
+        string $method,
+        string $route
+    ): void {
         $requiredFilterClasses = $filterCollector->getRequiredFilterClasses();
         $filterClasses         = $filterCollector->getClasses($method, $route);
 
@@ -146,8 +179,6 @@ class FilterCheck extends BaseCommand
             CLI::write(ucfirst($position) . ' Filter Classes:', 'cyan');
             CLI::write(implode(' → ', $classes));
         }
-
-        return EXIT_SUCCESS;
     }
 
     private function addRequiredFilters(FilterCollector $filterCollector, array $filters): array
