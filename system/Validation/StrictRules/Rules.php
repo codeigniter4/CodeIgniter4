@@ -32,6 +32,25 @@ class Rules
     }
 
     /**
+     * The value is a date after another field in $data
+     *
+     * Example usage:
+     *      date_after[date_arrival,Y-m-d]
+     *
+     * @param string $str
+     * @param string $format
+     * @param array  $data Other field/value pairs
+     */
+    public function date_after($str, string $params, array $data): bool
+    {
+        if (! is_string($str)) {
+            return false;
+        }
+
+        return $this->nonStrictRules->date_after($str, $params, $data);
+    }
+
+    /**
      * The value does not match another field in $data.
      *
      * @param array|bool|float|int|object|string|null $str
