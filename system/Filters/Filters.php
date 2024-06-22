@@ -29,7 +29,7 @@ use Config\Modules;
 class Filters
 {
     /**
-     * The original config file
+     * The Config\Filters instance
      *
      * @var FiltersConfig
      */
@@ -50,15 +50,14 @@ class Filters
     protected $response;
 
     /**
-     * Handle to the modules config.
+     * The Config\Modules instance
      *
      * @var Modules
      */
     protected $modules;
 
     /**
-     * Whether we've done initial processing
-     * on the filter lists.
+     * Whether we've done initial processing on the filter lists.
      *
      * @var bool
      */
@@ -94,8 +93,8 @@ class Filters
     ];
 
     /**
-     * The collection of filter class names and its arguments to execute for the
-     * current request (URI path).
+     * The collection of filter classnames and their arguments to execute for
+     * the current request (URI path).
      *
      * This does not include "Required Filters".
      *
@@ -163,10 +162,10 @@ class Filters
 
     /**
      * If discoverFilters is enabled in Config then system will try to
-     * auto-discover custom filters files in Namespaces and allow access to
-     * the config object via the variable $filters as with the routes file
+     * auto-discover custom filters files in namespaces and allow access to
+     * the config object via the variable $filters as with the routes file.
      *
-     * Sample :
+     * Sample:
      * $filters->aliases['custom-auth'] = \Acme\Blob\Filters\BlobAuth::class;
      *
      * @deprecated 4.4.2 Use Registrar instead.
@@ -204,8 +203,8 @@ class Filters
     }
 
     /**
-     * Runs through all of the filters for the specified
-     * uri and position.
+     * Runs through all the filters (except "Required Filters") for the specified
+     * URI and position.
      *
      * @param         string           $uri      URI path relative to baseURL
      * @phpstan-param 'before'|'after' $position
