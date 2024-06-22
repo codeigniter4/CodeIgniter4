@@ -104,6 +104,8 @@ class Connection extends BaseConnection
 
     /**
      * Converts the DSN with semicolon syntax.
+     *
+     * @return void
      */
     private function convertDSN()
     {
@@ -143,6 +145,8 @@ class Connection extends BaseConnection
     /**
      * Keep or establish the connection if no queries have been sent for
      * a length of time exceeding the server's idle timeout.
+     *
+     * @return void
      */
     public function reconnect()
     {
