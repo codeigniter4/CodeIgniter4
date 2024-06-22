@@ -27,6 +27,7 @@ return [
     'alpha_numeric_punct'   => 'The {field} field may contain only alphanumeric characters, spaces, and  ~ ! # $ % & * - _ + = | : . characters.',
     'alpha_numeric_space'   => 'The {field} field may only contain alphanumeric and space characters.',
     'alpha_space'           => 'The {field} field may only contain alphabetical characters and spaces.',
+    'date_after'            => 'The {field} field must be after a date in another field',
     'decimal'               => 'The {field} field must contain a decimal number.',
     'differs'               => 'The {field} field must differ from the {param} field.',
     'equals'                => 'The {field} field must be exactly: {param}.',

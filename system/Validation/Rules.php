@@ -16,6 +16,7 @@ namespace CodeIgniter\Validation;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Helpers\Array\ArrayHelper;
 use Config\Database;
+use DateTime;
 
 /**
  * Validation Rules.
@@ -24,6 +25,58 @@ use Config\Database;
  */
 class Rules
 {
+    /**
+     * The value is a date after another field in $data
+     *
+     * Example usage:
+     *      date_after[date_arrival,Y-m-d]
+     *
+     * @param string $str
+     * @param array  $data Other field/value pairs
+     */
+    public function date_after($str, string $params, array $data): bool
+    {
+        // Split params, return false if field is not set
+        $params = explode(',', $params);
+        $field  = (string) $params[0] ?? null;
+        $format = (string) $params[1] ?? null;
+
+        // Return false if value is not a non-empty string
+        if (! is_string($str)) {
+            $str = (string) $str;
+        }
+
+        if ($str === '') {
+            return false;
+        }
+
+        // Return false if field name is empty or does not exits in $data
+        if ($field === '') {
+            return false;
+        }
+        $fieldData = (string) dot_array_search($field, $data);
+
+        if ($fieldData === '') {
+            return false;
+        }
+
+        // Create DateTime objects
+        if ($format === null || $format === '') {
+            $valueDate = new DateTime($str);
+            $fieldDate = new DateTime($fieldData);
+        } else {
+            $valueDate = DateTime::createFromFormat($format, $str);
+            $fieldDate = DateTime::createFromFormat($format, $fieldData);
+        }
+
+        // Return false if either DateTime object is false
+        if ($valueDate === false || $fieldDate === false) {
+            return false;
+        }
+
+        return $valueDate->getTimestamp() > $fieldDate->getTimestamp();
+    }
+
     /**
      * The value does not match another field in $data.
      *
