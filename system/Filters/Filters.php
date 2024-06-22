@@ -322,19 +322,19 @@ class Filters
             return [];
         }
 
-        $filterClasses = [];
+        $filterClassList = [];
 
         foreach ($filters as $alias) {
             if (is_array($aliases[$alias])) {
                 foreach ($this->config->aliases[$alias] as $class) {
-                    $filterClasses[] = [$class, []];
+                    $filterClassList[] = [$class, []];
                 }
             } else {
-                $filterClasses[] = [$aliases[$alias], []];
+                $filterClassList[] = [$aliases[$alias], []];
             }
         }
 
-        return $filterClasses;
+        return $filterClassList;
     }
 
     /**
@@ -350,18 +350,18 @@ class Filters
      */
     public function runRequired(string $position = 'before')
     {
-        $filterClasses = $this->getRequiredClasses($position);
+        $filterClassList = $this->getRequiredClasses($position);
 
-        if ($filterClasses === []) {
+        if ($filterClassList === []) {
             return $position === 'before' ? $this->request : $this->response;
         }
 
         if ($position === 'before') {
-            return $this->runBefore($filterClasses);
+            return $this->runBefore($filterClassList);
         }
 
         // After
-        return $this->runAfter($filterClasses);
+        return $this->runAfter($filterClassList);
     }
 
     /**
@@ -826,7 +826,7 @@ class Filters
      */
     protected function processAliasesToClass(string $position)
     {
-        $filterClasses = [];
+        $filterClassList = [];
 
         foreach ($this->filters[$position] as $filter) {
             // Get arguments and clean alias
@@ -838,17 +838,17 @@ class Filters
 
             if (is_array($this->config->aliases[$alias])) {
                 foreach ($this->config->aliases[$alias] as $class) {
-                    $filterClasses[] = [$class, $arguments];
+                    $filterClassList[] = [$class, $arguments];
                 }
             } else {
-                $filterClasses[] = [$this->config->aliases[$alias], $arguments];
+                $filterClassList[] = [$this->config->aliases[$alias], $arguments];
             }
         }
 
         if ($position === 'before') {
-            $this->filtersClass[$position] = array_merge($filterClasses, $this->filtersClass[$position]);
+            $this->filtersClass[$position] = array_merge($filterClassList, $this->filtersClass[$position]);
         } else {
-            $this->filtersClass[$position] = array_merge($this->filtersClass[$position], $filterClasses);
+            $this->filtersClass[$position] = array_merge($this->filtersClass[$position], $filterClassList);
         }
     }
 
