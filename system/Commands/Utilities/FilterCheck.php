@@ -133,17 +133,6 @@ class FilterCheck extends BaseCommand
         string $method,
         string $route
     ): void {
-        $tbody = [];
-
-        $filters = $this->addRequiredFilters($filterCollector, $filters);
-
-        $tbody[] = [
-            strtoupper($method),
-            $route,
-            implode(' ', $filters['before']),
-            implode(' ', $filters['after']),
-        ];
-
         $thead = [
             'Method',
             'Route',
@@ -151,7 +140,40 @@ class FilterCheck extends BaseCommand
             'After Filters',
         ];
 
+        $required = $filterCollector->getRequiredFilters();
+
+        $coloredRequired = $this->colorItems($required);
+
+        $before = array_merge($coloredRequired['before'], $filters['before']);
+        $after  = array_merge($filters['after'], $coloredRequired['after']);
+
+        $tbody   = [];
+        $tbody[] = [
+            strtoupper($method),
+            $route,
+            implode(' ', $before),
+            implode(' ', $after),
+        ];
+
         CLI::table($tbody, $thead);
+    }
+
+    /**
+     * Color all elements of the array.
+     *
+     * @param array<array-key, mixed> $array
+     *
+     * @return array<array-key, mixed>
+     */
+    private function colorItems(array $array): array
+    {
+        return array_map(function ($item) {
+            if (is_array($item)) {
+                return $this->colorItems($item);
+            }
+
+            return CLI::color($item, 'yellow');
+        }, $array);
     }
 
     private function showFilterClasses(
@@ -162,13 +184,7 @@ class FilterCheck extends BaseCommand
         $requiredFilterClasses = $filterCollector->getRequiredFilterClasses();
         $filterClasses         = $filterCollector->getClasses($method, $route);
 
-        foreach ($requiredFilterClasses as $position => $classes) {
-            foreach ($classes as $class) {
-                $class = CLI::color($class, 'yellow');
-
-                $coloredRequiredFilterClasses[$position][] = $class;
-            }
-        }
+        $coloredRequiredFilterClasses = $this->colorItems($requiredFilterClasses);
 
         $classList = [
             'before' => array_merge($coloredRequiredFilterClasses['before'], $filterClasses['before']),
@@ -179,30 +195,5 @@ class FilterCheck extends BaseCommand
             CLI::write(ucfirst($position) . ' Filter Classes:', 'cyan');
             CLI::write(implode(' → ', $classes));
         }
-    }
-
-    private function addRequiredFilters(FilterCollector $filterCollector, array $filters): array
-    {
-        $output = [];
-
-        $required = $filterCollector->getRequiredFilters();
-
-        $colored = [];
-
-        foreach ($required['before'] as $filter) {
-            $filter    = CLI::color($filter, 'yellow');
-            $colored[] = $filter;
-        }
-        $output['before'] = array_merge($colored, $filters['before']);
-
-        $colored = [];
-
-        foreach ($required['after'] as $filter) {
-            $filter    = CLI::color($filter, 'yellow');
-            $colored[] = $filter;
-        }
-        $output['after'] = array_merge($filters['after'], $colored);
-
-        return $output;
     }
 }

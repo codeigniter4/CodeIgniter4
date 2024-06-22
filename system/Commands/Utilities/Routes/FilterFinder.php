@@ -160,6 +160,9 @@ final class FilterFinder
         $before = $this->filters->getRequiredClasses('before');
         $after  = $this->filters->getRequiredClasses('after');
 
+        $requiredBefore = [];
+        $requiredAfter  = [];
+
         foreach ($before as $classInfo) {
             $requiredBefore[] = $classInfo[0];
         }
