@@ -413,7 +413,7 @@ final class FabricatorTest extends CIUnitTestCase
         $this->assertIsInt($result->created_at);
         $this->assertIsInt($result->updated_at);
 
-        $this->assertTrue(property_exists($result, 'deleted_at'));
+        $this->assertObjectHasProperty('deleted_at', $result);
         $this->assertNull($result->deleted_at);
     }
 
