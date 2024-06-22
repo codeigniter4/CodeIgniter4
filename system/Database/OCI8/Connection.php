@@ -120,7 +120,7 @@ class Connection extends BaseConnection
      */
     public function connect(bool $persistent = false)
     {
-        if (empty($this->DSN) && ! $this->isValidDSN()) {
+        if ($this->DSN === null || $this->DSN === '' || ! $this->isValidDSN()) {
             $this->buildDSN();
         }
 
