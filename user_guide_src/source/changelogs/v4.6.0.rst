@@ -141,6 +141,7 @@ Others
 ***************
 Message Changes
 ***************
+- Added `Validation.min_dims` message
 
 *******
 Changes
