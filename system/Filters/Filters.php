@@ -545,9 +545,11 @@ class Filters
      * MUST be called prior to initialize();
      * Intended for use within routes files.
      *
+     * @phpstan-param 'before'|'after' $position
+     *
      * @return $this
      */
-    public function addFilter(string $class, ?string $alias = null, string $when = 'before', string $section = 'globals')
+    public function addFilter(string $class, ?string $alias = null, string $position = 'before', string $section = 'globals')
     {
         $alias ??= md5($class);
 
@@ -555,13 +557,13 @@ class Filters
             $this->config->{$section} = [];
         }
 
-        if (! isset($this->config->{$section}[$when])) {
-            $this->config->{$section}[$when] = [];
+        if (! isset($this->config->{$section}[$position])) {
+            $this->config->{$section}[$position] = [];
         }
 
         $this->config->aliases[$alias] = $class;
 
-        $this->config->{$section}[$when][] = $alias;
+        $this->config->{$section}[$position][] = $alias;
 
         return $this;
     }
@@ -573,10 +575,11 @@ class Filters
      * after the filter name, followed by a comma-separated list of arguments that
      * are passed to the filter when executed.
      *
-     * @param string $name filter_name or filter_name:arguments like 'role:admin,manager'
-     *                     or filter classname.
+     * @param         string           $name     filter_name or filter_name:arguments like 'role:admin,manager'
+     *                                           or filter classname.
+     * @phpstan-param 'before'|'after' $position
      */
-    private function enableFilter(string $name, string $when = 'before'): void
+    private function enableFilter(string $name, string $position = 'before'): void
     {
         // Normalize the arguments.
         [$alias, $arguments] = $this->getCleanName($name);
@@ -588,13 +591,13 @@ class Filters
             throw FilterException::forNoAlias($alias);
         }
 
-        if (! isset($this->filters[$when][$filter])) {
-            $this->filters[$when][] = $filter;
+        if (! isset($this->filters[$position][$filter])) {
+            $this->filters[$position][] = $filter;
         }
 
         // Since some filters like rate limiters rely on being executed once a request,
         // we filter em here.
-        $this->filters[$when] = array_unique($this->filters[$when]);
+        $this->filters[$position] = array_unique($this->filters[$position]);
     }
 
     /**
@@ -815,6 +818,8 @@ class Filters
 
     /**
      * Maps filter aliases to the equivalent filter classes
+     *
+     * @phpstan-param 'before'|'after' $position
      *
      * @return void
      *
