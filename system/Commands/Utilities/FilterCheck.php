@@ -125,6 +125,28 @@ class FilterCheck extends BaseCommand
 
         CLI::table($tbody, $thead);
 
+        // Show filter classes
+        $requiredFilterClasses = $filterCollector->getRequiredFilterClasses();
+        $filterClasses         = $filterCollector->getClasses($method, $route);
+
+        foreach ($requiredFilterClasses as $position => $classes) {
+            foreach ($classes as $class) {
+                $class = CLI::color($class, 'yellow');
+
+                $coloredRequiredFilterClasses[$position][] = $class;
+            }
+        }
+
+        $classList = [
+            'before' => array_merge($coloredRequiredFilterClasses['before'], $filterClasses['before']),
+            'after'  => array_merge($filterClasses['after'], $coloredRequiredFilterClasses['after']),
+        ];
+
+        foreach ($classList as $position => $classes) {
+            CLI::write(ucfirst($position) . ' Filter Classes:', 'cyan');
+            CLI::write(implode(' → ', $classes));
+        }
+
         return EXIT_SUCCESS;
     }
 

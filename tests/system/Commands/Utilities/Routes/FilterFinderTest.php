@@ -154,6 +154,42 @@ final class FilterFinderTest extends CIUnitTestCase
         $this->assertSame($expected, $filters);
     }
 
+    public function testFindGlobalsAndRouteFiltersWithArguments(): void
+    {
+        $collection = $this->createRouteCollection();
+        $collection->get('admin', ' AdminController::index', ['filter' => 'honeypot:arg1,arg2']);
+        $router  = $this->createRouter($collection);
+        $filters = $this->createFilters();
+
+        $finder = new FilterFinder($router, $filters);
+
+        $filters = $finder->find('admin');
+
+        $expected = [
+            'before' => ['csrf', 'honeypot:arg1,arg2'],
+            'after'  => ['honeypot:arg1,arg2', 'toolbar'],
+        ];
+        $this->assertSame($expected, $filters);
+    }
+
+    public function testFindClassesGlobalsAndRouteFiltersWithArguments(): void
+    {
+        $collection = $this->createRouteCollection();
+        $collection->get('admin', ' AdminController::index', ['filter' => 'honeypot:arg1,arg2']);
+        $router  = $this->createRouter($collection);
+        $filters = $this->createFilters();
+
+        $finder = new FilterFinder($router, $filters);
+
+        $filters = $finder->findClasses('admin');
+
+        $expected = [
+            'before' => [CSRF::class, Honeypot::class . ':arg1,arg2'],
+            'after'  => [Honeypot::class . ':arg1,arg2', DebugToolbar::class],
+        ];
+        $this->assertSame($expected, $filters);
+    }
+
     public function testFindGlobalsAndRouteClassnameFilters(): void
     {
         $collection = $this->createRouteCollection();
