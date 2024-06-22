@@ -309,22 +309,18 @@ class Filters
     }
 
     /**
-     * Runs "Required Filters" for the specified position.
-     *
-     * @return RequestInterface|ResponseInterface|string|null
+     * Returns the "Required Filters" class list.
      *
      * @phpstan-param 'before'|'after' $position
      *
-     * @throws FilterException
-     *
-     * @internal
+     * @return list<array{0: class-string, 1: list<string>}> [[classname, arguments], ...]
      */
-    public function runRequired(string $position = 'before')
+    public function getRequiredClasses(string $position): array
     {
         [$filters, $aliases] = $this->getRequiredFilters($position);
 
         if ($filters === []) {
-            return $position === 'before' ? $this->request : $this->response;
+            return [];
         }
 
         $filterClasses = [];
@@ -332,19 +328,41 @@ class Filters
         foreach ($filters as $alias) {
             if (is_array($aliases[$alias])) {
                 foreach ($this->config->aliases[$alias] as $class) {
-                    $filterClasses[$position][] = [$class, []];
+                    $filterClasses[] = [$class, []];
                 }
             } else {
-                $filterClasses[$position][] = [$aliases[$alias], []];
+                $filterClasses[] = [$aliases[$alias], []];
             }
         }
 
+        return $filterClasses;
+    }
+
+    /**
+     * Runs "Required Filters" for the specified position.
+     *
+     * @phpstan-param 'before'|'after' $position
+     *
+     * @return RequestInterface|ResponseInterface|string|null
+     *
+     * @throws FilterException
+     *
+     * @internal
+     */
+    public function runRequired(string $position = 'before')
+    {
+        $filterClasses = $this->getRequiredClasses($position);
+
+        if ($filterClasses === []) {
+            return $position === 'before' ? $this->request : $this->response;
+        }
+
         if ($position === 'before') {
-            return $this->runBefore($filterClasses[$position]);
+            return $this->runBefore($filterClasses);
         }
 
         // After
-        return $this->runAfter($filterClasses[$position]);
+        return $this->runAfter($filterClasses);
     }
 
     /**
