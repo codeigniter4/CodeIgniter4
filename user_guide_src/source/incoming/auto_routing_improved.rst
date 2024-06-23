@@ -52,7 +52,7 @@ If you know it well, these are some changes in **Auto Routing (Improved)**:
       in 404.
 - It does not support ``_remap()`` method.
     - It restricts one-to-one correspondence between controller methods and URIs.
-      But it has :ref:`controller-default-method-fallback`.
+      But it has :ref:`auto-routing-improved-default-method-fallback`.
 - Can't access controllers in Defined Routes.
     - It completely separates controllers accessible via **Auto Routing** from
       those accessible via **Defined Routes**.
@@ -220,7 +220,7 @@ By default, the Default Controller is ``Home``.
 For more information, please refer to the
 :ref:`routing-auto-routing-improved-configuration-options`.
 
-.. _controller-default-method-fallback:
+.. _auto-routing-improved-default-method-fallback:
 
 ***********************
 Default Method Fallback
@@ -389,7 +389,7 @@ controller existed, the ``Products::getListAll()`` method would be executed::
     name. In the example above, you can access **example.com/products**, but if
     you access **example.com/products/listall**, it will be not found.
 
-.. _controller-translate-uri-to-camelcase:
+.. _translate-uri-to-camelcase:
 
 Translate URI To CamelCase
 ==========================
