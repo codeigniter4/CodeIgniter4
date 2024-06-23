@@ -38,8 +38,8 @@ class Rules
     {
         // Split params, return false if field is not set
         $params = explode(',', $params);
-        $field  = (string) $params[0] ?? '';
-        $format = (string) $params[1] ?? '';
+        $field  = (string) $params[0];
+        $format = (string) $params[1];
 
         // Return false if value is not a non-empty string
         if (! is_string($str)) {
