@@ -38,8 +38,8 @@ class Rules
     {
         // Split params, return false if field is not set
         $params = explode(',', $params);
-        $field  = (string) $params[0] ?? null;
-        $format = (string) $params[1] ?? null;
+        $field  = (string) $params[0] ?? '';
+        $format = (string) $params[1] ?? '';
 
         // Return false if value is not a non-empty string
         if (! is_string($str)) {
@@ -61,7 +61,7 @@ class Rules
         }
 
         // Create DateTime objects
-        if ($format === null || $format === '') {
+        if ($format === '') {
             $valueDate = new DateTime($str);
             $fieldDate = new DateTime($fieldData);
         } else {
@@ -70,7 +70,7 @@ class Rules
         }
 
         // Return false if either DateTime object is false
-        if ($valueDate === false || $fieldDate === false) {
+        if ($fieldDate === false) {
             return false;
         }
 
