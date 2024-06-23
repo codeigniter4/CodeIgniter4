@@ -207,6 +207,10 @@ Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
 
 .. literalinclude:: auto_routing_improved/022.php
 
+.. note:: If there are more parameters in the URI than the method parameters,
+    Auto Routing (Improved) does not execute the method, and it results in 404
+    Not Found.
+
 ******************
 Default Controller
 ******************
@@ -216,6 +220,10 @@ with a directory name or when a URI is not present, as will be the case when onl
 your site root URL is requested.
 
 By default, the Default Controller is ``Home``.
+
+.. note:: Define only the default method (``getIndex()`` for GET requests)
+    in the default controller. If you define any other public method, that method
+    will not be executed.
 
 For more information, please refer to the
 :ref:`routing-auto-routing-improved-configuration-options`.
