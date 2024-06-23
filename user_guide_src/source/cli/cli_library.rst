@@ -199,12 +199,14 @@ Would create something like this:
 
 .. code-block:: none
 
-    task1a     Lorem Ipsum is simply dummy
-               text of the printing and
-               typesetting industry.
-    task1abc   Lorem Ipsum has been the
-               industry standard dummy
-               text ever since the
+    task1a     Lorem ipsum dolor sit amet,
+               consectetur adipiscing elit.
+               Mauris congue est sit amet
+               turpis laoreet porta.
+    task1abc   Mauris iaculis eleifend
+               ultricies. Sed mollis urna in
+               ultricies hendrerit. Mauris
+               dictum, est a euismod
 
 newLine()
 =========
