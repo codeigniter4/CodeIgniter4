@@ -388,6 +388,9 @@ For example, the URI ``sub-dir/hello-controller/some-method`` will execute the
 Disable Translate URI To CamelCase
 ----------------------------------
 
+.. note:: The option to disable "Translate URI To CamelCase" exists only for
+    backward compatibility. We don't recommend to disable it.
+
 To disable it, you need to change the setting ``$translateUriToCamelCase`` option
 to ``false`` in **app/Config/Routing.php**::
 
