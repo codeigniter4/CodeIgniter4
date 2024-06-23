@@ -304,6 +304,32 @@ called if the URL contains *only* the sub-directory. Simply put a controller
 in there that matches the name of your default controller as specified in
 your **app/Config/Routing.php** file.
 
+***************************************
+Examples of Controller/Methods and URIs
+***************************************
+
+In the case of a **GET** request with the default configuration, the mapping
+between controller/methods and URIs is as follows:
+
+============================ ============================ =============================================
+Controller/Method            URI                          Description
+============================ ============================ =============================================
+``Home::getIndex()``         /                            The default controller and the default method.
+``Blog::getIndex()``         /blog                        The default method.
+``UserProfile::getIndex()``  /user-profile                The default method.
+``Blog::getTags()``          /blog/tags
+``Blog::getNews($id)``       /blog/news/123
+``Blog\Home::getIndex()``    /blog                        Sub-directory ``Blog`` and the default
+                                                          controller and the default method. If there
+                                                          is ``Blog`` controller, it takes precedence.
+``Blog\Tags::getIndex()``    /blog/tags                   Sub-directory ``Blog`` and the default
+                                                          method. If there is ``Blog`` controller, it
+                                                          takes precedence.
+``Blog\News::getIndex($id)`` /blog/news/123               Sub-directory ``Blog`` and the default method
+                                                          fallback. If there is ``Blog`` controller, it
+                                                          takes precedence.
+============================ ============================ =============================================
+
 .. _routing-auto-routing-improved-configuration-options:
 
 *********************
