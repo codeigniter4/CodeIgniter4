@@ -37,9 +37,9 @@ class Rules
      * Example usage:
      *      date_after[date_arrival,Y-m-d]
      *
-     * @param string $str
-     * @param string $format
-     * @param array  $data Other field/value pairs
+     * @param array|bool|float|int|object|string|null $str
+     * @param string                                  $params
+     * @param array                                   $data Other field/value pairs
      */
     public function date_after($str, string $params, array $data): bool
     {
