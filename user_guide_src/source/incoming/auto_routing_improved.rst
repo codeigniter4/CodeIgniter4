@@ -73,6 +73,12 @@ And you need to change the property ``$autoRoutesImproved`` to ``true`` in
 
     public bool $autoRoutesImproved = true;
 
+.. important:: When you use Auto Routing (Improved), you must remove the line
+    ``$routes->get('/', 'Home::index');``  in **app/Config/Routes.php**. Because
+    defined routes take precedence over Auto Routing, and controllers defined in
+    the defined routes are denied access by Auto Routing (Improved) for security
+    reasons.
+
 ************
 URI Segments
 ************
@@ -360,12 +366,6 @@ The default value for this is ``Home`` which matches the controller at
 **app/Controllers/Home.php**::
 
     public string $defaultController = 'Home';
-
-.. important:: If you change the default controller name, you must remove the
-    line ``$routes->get('/', 'Home::index');`` in **app/Config/Routes.php**.
-    Because defined routes take precedence over Auto Routing, and controllers
-    defined in the defined routes are denied access by Auto Routing (Improved)
-    for security reasons.
 
 For Directory URI
 -----------------
