@@ -95,7 +95,7 @@ usually represent::
 
 Consider this URI::
 
-    http://example.com/index.php/hello-world/hello/1
+    http://example.com/hello-world/hello/1
 
 In the above example, when you send an HTTP request with **GET** method,
 Auto Routing (Improved) would attempt to find a controller named
@@ -137,7 +137,7 @@ any new controller.
 
 Now visit your site using a URL similar to this::
 
-    http://example.com/index.php/hello-world
+    http://example.com/hello-world
 
 The system automatically translates URI with dashes (``-``) to CamelCase in the
 controller and method URI segments.
@@ -195,7 +195,7 @@ Let's try it. Add a new method to your controller:
 
 Now load the following URL to see the ``getComment()`` method::
 
-    http://example.com/index.php/hello-world/comment/
+    http://example.com/hello-world/comment/
 
 You should see your new message.
 
@@ -208,7 +208,7 @@ method as parameters.
 
 For example, let's say you have a URI like this::
 
-    http://example.com/index.php/products/shoes/sandals/123
+    http://example.com/products/shoes/sandals/123
 
 Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
 
@@ -251,7 +251,7 @@ are passed to the default method for execution.
 
 Load the following URL::
 
-    http://example.com/index.php/product/15/edit
+    http://example.com/product/15/edit
 
 The method will be passed URI segments 2 and 3 (``'15'`` and ``'edit'``):
 
@@ -274,7 +274,7 @@ For example, when you have the following default controller ``Home`` in the
 
 Load the following URL::
 
-    http://example.com/index.php/news/101
+    http://example.com/news/101
 
 The ``News\Home`` controller and the default ``getIndex()`` method will be found.
 So the default method will get the second URI segment (``'101'``):
@@ -307,7 +307,7 @@ specify the directory. For example, let's say you have a controller located here
 
 To call the above controller your URI will look something like this::
 
-    http://example.com/index.php/products/shoes/show/123
+    http://example.com/products/shoes/show/123
 
 .. note:: You cannot have directories with the same name in **app/Controllers**
     and **public**.
