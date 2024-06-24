@@ -16,7 +16,6 @@ namespace CodeIgniter;
 use App\Controllers\Home;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Debug\Timer;
-use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Response;
@@ -313,9 +312,6 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRegisterSameFilterTwiceWithDifferentArgument(): void
     {
-        $this->expectException(ConfigException::class);
-        $this->expectExceptionMessage('"test-customfilter" already has arguments: null');
-
         $_SERVER['argv'] = ['index.php', 'pages/about'];
         $_SERVER['argc'] = 2;
 
@@ -343,7 +339,11 @@ final class CodeIgniterTest extends CIUnitTestCase
         ];
         Services::filters($filterConfig);
 
+        ob_start();
         $this->codeigniter->run();
+        $output = ob_get_clean();
+
+        $this->assertStringContainsString('http://hellowworld.comhttp://hellowworld.com', $output);
 
         $this->resetServices();
     }

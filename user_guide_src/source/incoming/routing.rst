@@ -589,7 +589,8 @@ The ``filter`` option passed to the outer ``group()`` are merged with the inner
 The above code runs ``myfilter1:config`` for the route ``admin``, and ``myfilter1:config``
 and ``myfilter2:region`` for the route ``admin/users/list``.
 
-.. note:: The same filter cannot be run multiple times with different arguments.
+.. note:: Prior to v4.6.0, the same filter cannot be run multiple times with
+    different arguments.
 
 Any other overlapping options passed to the inner ``group()`` will overwrite their values.
 

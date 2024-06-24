@@ -226,6 +226,9 @@ will be passed in ``$arguments`` to the ``group`` filter's ``before()`` methods.
 When the URI matches ``admin/users/*'``, the array ``['users.manage']``
 will be passed in ``$arguments`` to the ``permission`` filter's ``before()`` methods.
 
+.. note:: Prior to v4.6.0, the same filter cannot be run multiple times with
+    different arguments.
+
 .. _filter-execution-order:
 
 Filter Execution Order

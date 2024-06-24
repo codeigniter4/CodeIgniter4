@@ -5277,18 +5277,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:getFilters\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:getFiltersClass\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:getRequiredFilters\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/Filters.php',
@@ -5301,24 +5289,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:registerArguments\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:runAfter\\(\\) has parameter \\$filterClasses with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:runBefore\\(\\) has parameter \\$filterClasses with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:setToolbarToLast\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/Filters.php',
@@ -5326,18 +5296,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: booleanNot.exprNotBoolean
 	'message' => '#^Only booleans are allowed in a negated boolean, array\\<string, array\\<string, array\\<int, string\\>\\>\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\Filters\\\\Filters\\:\\:\\$filters type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\Filters\\\\Filters\\:\\:\\$filtersClass type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/Filters.php',
 ];
@@ -13936,7 +13894,7 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccessAssign
 	'message' => '#^Assigning \'GET\' directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 36,
+	'count' => 38,
 	'path' => __DIR__ . '/tests/system/Filters/FiltersTest.php',
 ];
 $ignoreErrors[] = [

@@ -43,6 +43,13 @@ The following breaking changes have been made accordingly:
 - ``TestException`` now extends ``CodeIgniter\Exceptions\LogicException``
   instead of ``CodeIgniter\Exceptions\CriticalError``.
 
+Filters Changes
+---------------
+
+The ``Filters`` class has been changed to allow multiple runs of the same filter
+with different arguments in before or after. See
+:ref:`Upgrading Guide <upgrade-460-filters-changes>` for details.
+
 .. _v460-interface-changes:
 
 Interface Changes
@@ -108,6 +115,9 @@ The following new Exception interfaces have been added:
 Commands
 ========
 
+- The ``spark routes`` and ``spark filter:check`` commands now display filter
+  arguments.
+
 Testing
 =======
 
@@ -139,6 +149,9 @@ Helpers and Functions
 
 Others
 ======
+
+- **Filters:** Now you can execute a filter more than once with the different
+  arguments in before or after.
 
 ***************
 Message Changes
@@ -177,6 +190,11 @@ The following changes have been made accordingly:
 ************
 Deprecations
 ************
+
+- **Filters:**
+    - The properties ``$arguments`` and ``$argumentsClass`` of ``Filters`` have
+      been deprecated. No longer used.
+    - The ``Filters::getArguments()`` method has been deprecated. No longer used.
 
 **********
 Bugs Fixed
