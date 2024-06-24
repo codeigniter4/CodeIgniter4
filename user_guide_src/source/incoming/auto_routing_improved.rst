@@ -87,11 +87,11 @@ URI Segments
 The segments in the URL, in following with the Model-View-Controller approach,
 usually represent::
 
-    http://example.com/class/method/ID
+    http://example.com/{class}/{method}/{param1}
 
 1. The first segment represents the controller **class** that should be invoked.
 2. The second segment represents the class **method** that should be called.
-3. The third, and any additional segments, represent the ID and any variables that will be passed to the controller.
+3. The third, and any additional segments, represent any **parameters** that will be passed to the controller.
 
 Consider this URI::
 
@@ -100,7 +100,7 @@ Consider this URI::
 In the above example, when you send an HTTP request with **GET** method,
 Auto Routing (Improved) would attempt to find a controller named
 ``App\Controllers\HelloWorld`` and executes ``getHello()`` method with passing
-``'1'`` as the first argument.
+``'1'`` as the first parameter.
 
 .. note:: A controller method that will be executed by Auto Routing (Improved)
     needs HTTP verb (``get``, ``post``, ``put``, etc.) prefix like ``getIndex()``,
