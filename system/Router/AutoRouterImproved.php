@@ -519,13 +519,15 @@ final class AutoRouterImproved implements AutoRouterInterface
             return;
         }
 
-        // If `getSomeMethod()` exists, only `controller/some-method` should be
-        // accessible. But if a visitor navigates to `controller/somemethod`,
-        // `getSomemethod()` will be checked, and method_exists() will return true.
         if (
+            // For example, if `getSomeMethod()` exists in the controller, only
+            // the URI `controller/some-method` should be accessible. But if a
+            // visitor navigates to the URI `controller/somemethod`, `getSomemethod()`
+            // will be checked, and `method_exists()` will return true because
+            // method names in PHP are case-insensitive.
             method_exists($this->controller, $method)
-            // We do not permit `controller/somemethod`, so check the exact method
-            // name.
+            // But we do not permit `controller/somemethod`, so check the exact
+            // method name.
             && ! in_array($method, get_class_methods($this->controller), true)
         ) {
             throw new PageNotFoundException(
