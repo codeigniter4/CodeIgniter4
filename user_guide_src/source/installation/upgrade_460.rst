@@ -91,7 +91,10 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- @TODO
+- app/Config/Feature.php
+    - ``Config\Feature::$autoRoutesImproved`` has been changed to ``true``.
+- app/Config/Routing.php
+    - ``Config\Routing::$translateUriToCamelCase`` has been changed to ``true``.
 
 All Changes
 ===========
