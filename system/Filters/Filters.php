@@ -610,18 +610,18 @@ class Filters
     {
         $arguments = [];
 
-        if (str_contains($filter, ':')) {
-            [$alias, $arguments] = explode(':', $filter);
-
-            $arguments = explode(',', $arguments);
-            array_walk($arguments, static function (&$item) {
-                $item = trim($item);
-            });
-
-            return [$alias, $arguments];
+        if (! str_contains($filter, ':')) {
+            return [$filter, $arguments];
         }
 
-        return [$filter, $arguments];
+        [$alias, $arguments] = explode(':', $filter);
+
+        $arguments = explode(',', $arguments);
+        array_walk($arguments, static function (&$item) {
+            $item = trim($item);
+        });
+
+        return [$alias, $arguments];
     }
 
     /**
