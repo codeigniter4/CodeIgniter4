@@ -390,6 +390,13 @@ final class ViewTest extends CIUnitTestCase
         $this->assertStringContainsString('<p>Third</p>', $content);
     }
 
+    public function testRenderSectionReturnsEmptyStringToNonExistentSection(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
+
+        $this->assertSame('', $view->renderSection('does_not_exist'));
+    }
+
     public function testRenderSectionSavingData(): void
     {
         $view     = new View($this->config, $this->viewsDir, $this->loader);
