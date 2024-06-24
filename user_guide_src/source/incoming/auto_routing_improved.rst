@@ -176,8 +176,9 @@ If you did it right, you should see::
 
     Hello World!
 
-Controller Name Examples
-========================
+****************************
+Examples of Controller Names
+****************************
 
 This is an valid controller name. Because ``App\Controllers\HelloWorld`` is CamelCase.
 
@@ -191,9 +192,9 @@ This is also **not** valid. Because the first letter (``h``) is not capital.
 
 .. literalinclude:: auto_routing_improved/011.php
 
-*******
-Methods
-*******
+******************
+Controller Methods
+******************
 
 Method Visibility
 =================
