@@ -41,18 +41,19 @@ familiar with it, go to the next section.
 If you know it well, these are some changes in **Auto Routing (Improved)**:
 
 - A controller method needs HTTP verb prefix like ``getIndex()``, ``postCreate()``.
-    - Developers always know the HTTP method, so requests by an unexpected HTTP
-      method does not pass.
+    - Since developers always know the HTTP method, a request with an unexpected
+      HTTP method will never execute the controller.
 - The Default Controller (``Home`` by default) and the Default Method (``index`` by default) must be omitted in the URI.
     - It restricts one-to-one correspondence between controller methods and URIs.
     - E.g. by default, you can access ``/``, but ``/home`` and ``/home/index``
-      will be 404.
+      will be 404 Not Found.
 - It checks method parameter count.
     - If there are more parameters in the URI than the method parameters, it results
-      in 404.
+      in 404 Not Found.
 - It does not support ``_remap()`` method.
     - It restricts one-to-one correspondence between controller methods and URIs.
-      But it has :ref:`auto-routing-improved-default-method-fallback`.
+    - But it has the :ref:`auto-routing-improved-default-method-fallback` feature
+      instead.
 - Can't access controllers in Defined Routes.
     - It completely separates controllers accessible via **Auto Routing** from
       those accessible via **Defined Routes**.
