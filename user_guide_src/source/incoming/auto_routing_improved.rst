@@ -115,25 +115,31 @@ Let's try it: Hello World!
 
 Let's create a simple controller so you can see it in action.
 
+Create a Controller
+===================
+
 Using your text editor, create a file called **HelloWorld.php** in your
 **app/Controllers** directory, and put the following code in it.
 
 .. literalinclude:: auto_routing_improved/020.php
 
+.. important:: The file must be called **HelloWorld.php**. When you use Auto
+    Routing (Improved), controller class names MUST be CamelCase.
+
 You will notice that the ``HelloWorld`` Controller is extending the ``BaseController``.
-you can also extend the ``CodeIgniter\Controller`` if you do not need the functionality
+You can also extend the ``CodeIgniter\Controller`` if you do not need the functionality
 of the BaseController.
 
 The BaseController provides a convenient place for loading components and performing
 functions that are needed by all your controllers. You can extend this class in
 any new controller.
 
-.. important:: The file must be called **HelloWorld.php**. When you use Auto
-    Routing (Improved), controller class names MUST be CamelCase.
-
 .. important:: A controller method that will be executed by Auto Routing (Improved)
     needs HTTP verb (``get``, ``post``, ``put``, etc.) prefix like ``getIndex()``,
     ``postCreate()``.
+
+Visit Your Site
+===============
 
 Now visit your site using a URL similar to this::
 
@@ -149,20 +155,20 @@ If you did it right you should see::
 
     Hello World!
 
-This is valid:
+Controller Name Examples
+========================
+
+This is an valid controller name. Because ``App/Controllers/HelloWorld`` is CamelCase.
 
 .. literalinclude:: auto_routing_improved/009.php
 
-This is **not** valid:
+This is **not** valid. Because the first letter (``h``) is not capital.
 
 .. literalinclude:: auto_routing_improved/010.php
 
-This is **not** valid:
+This is also **not** valid. Because the first letter (``h``) is not capital.
 
 .. literalinclude:: auto_routing_improved/011.php
-
-Also, always make sure your controller extends the parent controller
-class so that it can inherit all its methods.
 
 *******
 Methods
