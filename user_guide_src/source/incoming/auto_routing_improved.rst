@@ -179,7 +179,7 @@ If you did it right, you should see::
 Controller Name Examples
 ========================
 
-This is an valid controller name. Because ``App/Controllers/HelloWorld`` is CamelCase.
+This is an valid controller name. Because ``App\Controllers\HelloWorld`` is CamelCase.
 
 .. literalinclude:: auto_routing_improved/009.php
 
