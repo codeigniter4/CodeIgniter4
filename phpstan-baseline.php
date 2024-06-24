@@ -9902,12 +9902,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Validation/DotArrayFilter.php',
 ];
 $ignoreErrors[] = [
-	// identifier: booleanNot.exprNotBoolean
-	'message' => '#^Only booleans are allowed in a negated boolean, array\\|null given\\.$#',
-	'count' => 6,
-	'path' => __DIR__ . '/system/Validation/FileRules.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Validation\\\\Rules\\:\\:differs\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -17883,24 +17877,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\CreditCardRulesTest\\:\\:calculateLuhnChecksum\\(\\) has parameter \\$digits with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Validation/CreditCardRulesTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\CreditCardRulesTest\\:\\:provideValidCCNumber\\(\\) return type has no value type specified in iterable type iterable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Validation/CreditCardRulesTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: argument.type
-	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Validation\\\\Validation constructor expects Config\\\\Validation, stdClass given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Validation/CreditCardRulesTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
 	'message' => '#^Property CodeIgniter\\\\Validation\\\\CreditCardRulesTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Validation/CreditCardRulesTest.php',
@@ -17916,12 +17892,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Validation\\\\DatabaseRelatedRulesTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Validation/DatabaseRelatedRulesTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: argument.type
-	'message' => '#^Parameter \\#1 \\$config of class CodeIgniter\\\\Validation\\\\Validation constructor expects Config\\\\Validation, stdClass given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Validation/FileRulesTest.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
