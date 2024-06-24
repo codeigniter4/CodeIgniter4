@@ -778,6 +778,10 @@ class Filters
         $filters = [];
 
         foreach ($this->config->filters as $alias => $settings) {
+            // Normalize the arguments.
+            [$alias, $arguments] = $this->getCleanName($alias);
+            $alias               = ($arguments === []) ? $alias : $alias . ':' . implode(',', $arguments);
+
             // Look for inclusion rules
             if (isset($settings['before'])) {
                 $path = $settings['before'];
