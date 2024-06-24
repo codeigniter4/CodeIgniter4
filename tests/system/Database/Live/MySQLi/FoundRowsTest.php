@@ -28,7 +28,9 @@ final class FoundRowsTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     /**
-     * @var array<string,mixed>
+     * Database config for tests
+     *
+     * @var array<string, mixed>
      */
     private $tests;
 
@@ -37,8 +39,6 @@ final class FoundRowsTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        parent::setUp();
-
         $config = config('Database');
 
         $this->tests = $config->tests;
@@ -46,6 +46,8 @@ final class FoundRowsTest extends CIUnitTestCase
         if ($this->tests['DBDriver'] !== 'MySQLi') {
             $this->markTestSkipped('Only MySQLi can complete this test.');
         }
+
+        parent::setUp();
     }
 
     public function testEnableFoundRows(): void
