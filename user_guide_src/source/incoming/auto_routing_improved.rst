@@ -138,6 +138,27 @@ any new controller.
     needs HTTP verb (``get``, ``post``, ``put``, etc.) prefix like ``getIndex()``,
     ``postCreate()``.
 
+Check the Routes
+================
+
+You can check your routes with the ``spark routes`` command.
+
+.. code-block:: console
+
+    php spark routes
+
+If you did it right, you should see:
+
+.. code-block:: none
+
+    +-----------+-------------+------+---------------------------------------+----------------+---------------+
+    | Method    | Route       | Name | Handler                               | Before Filters | After Filters |
+    +-----------+-------------+------+---------------------------------------+----------------+---------------+
+    | GET(auto) | hello-world |      | \App\Controllers\HelloWorld::getIndex |                |               |
+    +-----------+-------------+------+---------------------------------------+----------------+---------------+
+
+See :ref:`routing-spark-routes` for the output details.
+
 Visit Your Site
 ===============
 
@@ -151,7 +172,7 @@ controller and method URI segments.
 For example, the URI ``sub-dir/hello-controller/some-method`` will execute the
 ``SubDir\HelloController::getSomeMethod()`` method.
 
-If you did it right you should see::
+If you did it right, you should see::
 
     Hello World!
 
