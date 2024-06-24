@@ -125,7 +125,7 @@ class Commands
                 /** @var BaseCommand $class */
                 $class = new $className($this->logger, $this);
 
-                if (isset($class->group)) {
+                if (isset($class->group) && ! isset($this->commands[$class->name])) {
                     $this->commands[$class->name] = [
                         'class'       => $className,
                         'file'        => $file,
