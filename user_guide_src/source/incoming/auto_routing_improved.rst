@@ -386,7 +386,7 @@ Default Controller
 For Site Root URI
 -----------------
 
-When a user visits the root of your site (i.e., **example.com**) the controller
+When a user visits the root of your site (i.e., **http://example.com**) the controller
 to use is determined by the value set to the ``$defaultController`` property,
 unless a route exists for it explicitly.
 
@@ -400,12 +400,13 @@ For Directory URI
 
 The default controller is also used when no matching route has been found, and
 the URI would point to a directory in the controllers directory. For example, if
-the user visits **example.com/admin**, if a controller was found at
+the user visits **http://example.com/admin**, if a controller was found at
 **app/Controllers/Admin/Home.php**, it would be used.
 
 .. important:: You cannot access the default controller with the URI of the
     controller name. When the default controller is ``Home``, you can access
-    **example.com/**, but if you access **example.com/home**, it will be not found.
+    **http://example.com/**, but if you access **http://example.com/home**, it
+    will be not found.
 
 .. _routing-auto-routing-improved-default-method:
 
