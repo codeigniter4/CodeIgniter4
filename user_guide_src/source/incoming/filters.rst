@@ -201,6 +201,8 @@ It's value would be an array of filters to run:
 In addition to the standard HTTP methods, this also supports one special case: ``CLI``. The ``CLI`` method would apply to
 all requests that were run from the command line.
 
+.. note:: Prior to v4.5.0, due to a bug, you needed to specify the HTTP method names in **lowercase**.
+
 $filters
 --------
 
