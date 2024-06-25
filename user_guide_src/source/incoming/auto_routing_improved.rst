@@ -180,15 +180,16 @@ If you did it right, you should see::
 Examples of Controller Names
 ****************************
 
-This is an valid controller name. Because ``App\Controllers\HelloWorld`` is CamelCase.
+The following is an valid controller name. Because ``App\Controllers\HelloWorld``
+is CamelCase.
 
 .. literalinclude:: auto_routing_improved/009.php
 
-This is **not** valid. Because the first letter (``h``) is not capital.
+The following is **not** valid. Because the first letter (``h``) is not capital.
 
 .. literalinclude:: auto_routing_improved/010.php
 
-This is also **not** valid. Because the first letter (``h``) is not capital.
+The following is also **not** valid. Because the first letter (``h``) is not capital.
 
 .. literalinclude:: auto_routing_improved/011.php
 
