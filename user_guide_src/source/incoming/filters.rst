@@ -82,7 +82,7 @@ Configuring Filters
 There are two ways to configure filters when they get run. One is done in
 **app/Config/Filters.php**, the other is done in **app/Config/Routes.php**.
 
-If you want to specify filter to a specific route, use **app/Config/Routes.php**
+If you want to specify filters to defined routes, use **app/Config/Routes.php**
 and see :ref:`URI Routing <applying-filters>`.
 
 .. Note:: The safest way to apply filters is to :ref:`disable auto-routing <use-defined-routes-only>`, and :ref:`set filters to routes <applying-filters>`.
@@ -95,8 +95,10 @@ configure exactly when the filters run.
 
 .. Warning:: It is recommended that you should always add ``*`` at the end of a URI in the filter settings.
     Because a controller method might be accessible by different URLs than you think.
-    For example, when :ref:`auto-routing-legacy` is enabled, if you have ``Blog::index``,
+    For example, when :ref:`auto-routing-legacy` is enabled, if you have ``Blog::index()``,
     it can be accessible with ``blog``, ``blog/index``, and ``blog/index/1``, etc.
+
+.. _filters-aliases:
 
 $aliases
 --------
@@ -172,7 +174,7 @@ an array with the ``except`` key and a URI path (relative to BaseURL) to match a
     and the URI paths specified in the filter could be different.
     See :ref:`upgrade-447-filter-paths` for details.
 
-Any place you can use a URI path (relative to BaseURL) in the filter settings, you can use a regular expression or, like in this example, use
+Any place you can use a URI path (relative to BaseURL) in the filter settings, you can use a regular expression or, like in this example above, use
 an asterisk (``*``) for a wildcard that will match all characters after that. In this example, any URI path starting with ``api/``
 would be exempted from CSRF protection, but the site's forms would all be protected.
 

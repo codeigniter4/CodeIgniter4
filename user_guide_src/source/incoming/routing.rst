@@ -394,7 +394,7 @@ The value for the filter can be a string or an array of strings:
 * matching the aliases defined in **app/Config/Filters.php**.
 * filter classnames
 
-See :doc:`Controller Filters <filters>` for more information on setting up filters.
+See :ref:`Controller Filters <filters-aliases>` for more information on defining aliases.
 
 .. Warning:: If you set filters to routes in **app/Config/Routes.php**
     (not in **app/Config/Filters.php**), it is recommended to disable Auto Routing (Legacy).
@@ -406,7 +406,7 @@ See :doc:`Controller Filters <filters>` for more information on setting up filte
 Alias Filter
 ------------
 
-You specify an alias defined in **app/Config/Filters.php** for the filter value:
+You specify an alias :ref:`defined in app/Config/Filters.php <filters-aliases>` for the filter value:
 
 .. literalinclude:: routing/034.php
 
@@ -419,7 +419,7 @@ Classname Filter
 
 .. versionadded:: 4.1.5
 
-You specify a filter classname for the filter value:
+You can specify a filter classname for the filter value:
 
 .. literalinclude:: routing/036.php
 
@@ -436,7 +436,7 @@ Multiple Filters
     :ref:`Upgrading from 4.1.4 to 4.1.5 <upgrade-415-multiple-filters-for-a-route>`
     for the details.
 
-You specify an array for the filter value:
+You can specify an array for the filter value:
 
 .. literalinclude:: routing/037.php
 
