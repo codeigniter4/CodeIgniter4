@@ -19,6 +19,7 @@ use CodeIgniter\controller;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\Feature;
 use Config\Modules;
 use Config\Routing;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -1768,12 +1769,12 @@ final class RouteCollectionTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @param mixed $namespace
-     */
     #[DataProvider('provideRouteDefaultNamespace')]
-    public function testAutoRoutesControllerNameReturnsFQCN($namespace): void
+    public function testAutoRoutesControllerNameReturnsFQCN(string $namespace): void
     {
+        $featureConfig                     = config(Feature::class);
+        $featureConfig->autoRoutesImproved = false;
+
         $routes = $this->getCollector();
         $routes->setAutoRoute(true);
         $routes->setDefaultNamespace($namespace);
@@ -1788,11 +1789,8 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame('\\' . Product::class, $router->controllerName());
     }
 
-    /**
-     * @param mixed $namespace
-     */
     #[DataProvider('provideRouteDefaultNamespace')]
-    public function testRoutesControllerNameReturnsFQCN($namespace): void
+    public function testRoutesControllerNameReturnsFQCN(string $namespace): void
     {
         Services::request()->setMethod(Method::GET);
         $routes = $this->getCollector();

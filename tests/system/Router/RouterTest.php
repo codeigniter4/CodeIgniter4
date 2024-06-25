@@ -23,6 +23,7 @@ use CodeIgniter\HTTP\Method;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Config\Feature;
 use Config\Modules;
 use Config\Routing;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -42,10 +43,17 @@ final class RouterTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        $this->disableAutoRoutesImproved();
         $this->createRouteCollection();
 
         $this->request = Services::request();
         $this->request->setMethod(Method::GET);
+    }
+
+    private function disableAutoRoutesImproved(): void
+    {
+        $featureConfig                     = config(Feature::class);
+        $featureConfig->autoRoutesImproved = false;
     }
 
     private function createRouteCollection(?Routing $routingConfig = null): void
