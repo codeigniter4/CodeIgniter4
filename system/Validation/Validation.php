@@ -399,8 +399,10 @@ class Validation implements ValidationInterface
                         break;
                     }
                 }
-            } else {
+            } elseif (str_contains($field, '.')) {
                 $dataIsExisting = array_key_exists($ifExistField, $flattenedData);
+            } else {
+                $dataIsExisting = array_key_exists($ifExistField, $data);
             }
 
             if (! $dataIsExisting) {

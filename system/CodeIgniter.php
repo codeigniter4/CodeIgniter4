@@ -56,7 +56,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.5.2';
+    public const CI_VERSION = '4.5.3';
 
     /**
      * App startup time.
@@ -353,7 +353,7 @@ class CodeIgniter
         } else {
             try {
                 $this->response = $this->handleRequest($routes, config(Cache::class), $returnResponse);
-            } catch (ResponsableInterface|DeprecatedRedirectException $e) {
+            } catch (DeprecatedRedirectException|ResponsableInterface $e) {
                 $this->outputBufferingEnd();
                 if ($e instanceof DeprecatedRedirectException) {
                     $e = new RedirectException($e->getMessage(), $e->getCode(), $e);

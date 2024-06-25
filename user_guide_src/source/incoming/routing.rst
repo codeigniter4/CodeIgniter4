@@ -584,12 +584,14 @@ It is possible to nest groups within groups for finer organization if you need i
 
 This would handle the URL at **admin/users/list**.
 
-**Filter** option passed to the outer ``group()`` are merged with the inner
+The ``filter`` option passed to the outer ``group()`` are merged with the inner
 ``group()`` filter option.
-The above code runs ``myfilter:config`` for the route ``admin``, and ``myfilter:config``
-and ``myfilter:region`` for the route ``admin/users/list``.
+The above code runs ``myfilter1:config`` for the route ``admin``, and ``myfilter1:config``
+and ``myfilter2:region`` for the route ``admin/users/list``.
 
-Any other overlapping options passed to the inner `group()` will overwrite their values.
+.. note:: The same filter cannot be run multiple times with different arguments.
+
+Any other overlapping options passed to the inner ``group()`` will overwrite their values.
 
 .. note:: Prior to v4.5.0, due to a bug, options passed to the outer ``group()``
     are not merged with the inner ``group()`` options.

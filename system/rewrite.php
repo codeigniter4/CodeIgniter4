@@ -21,11 +21,6 @@ declare(strict_types=1);
  */
 
 // @codeCoverageIgnoreStart
-// Avoid this file run when listing commands
-if (PHP_SAPI === 'cli') {
-    return;
-}
-
 $uri = urldecode(
     parse_url('https://codeigniter.com' . $_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? ''
 );

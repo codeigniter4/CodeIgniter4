@@ -15,6 +15,7 @@ namespace CodeIgniter\Validation;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
+use ErrorException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
@@ -124,6 +125,19 @@ class RulesTest extends CIUnitTestCase
                 true,
             ],
         ];
+    }
+
+    public function testIfExistArray(): void
+    {
+        $this->expectException(ErrorException::class);
+        $this->expectExceptionMessage('Array to string conversion');
+
+        $rules = ['foo' => 'if_exist|alpha'];
+        // Invalid array input
+        $data = ['foo' => ['bar' => '12345']];
+
+        $this->validation->setRules($rules);
+        $this->validation->run($data);
     }
 
     #[DataProvider('providePermitEmpty')]

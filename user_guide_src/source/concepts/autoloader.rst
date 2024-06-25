@@ -93,6 +93,9 @@ Config files are namespaced in the ``Config`` namespace, not in ``App\Config`` a
 expect. This allows the core system files to always be able to locate them, even when the application
 namespace has changed.
 
+.. note:: Since v4.5.3 appstarter, the ``Config\\`` namespace has been added to
+    **composer.json**'s ``autoload.psr-4``.
+
 Changing App Namespace
 ----------------------
 

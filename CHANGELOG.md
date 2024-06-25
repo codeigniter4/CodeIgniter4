@@ -1,5 +1,28 @@
 # Changelog
 
+## [v4.5.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.3) (2024-06-25)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.2...v4.5.3)
+
+### Fixed Bugs
+
+* fix: `RedisHandler::deleteMatching()` not deleting matching keys if cache prefix is used by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/8952
+* fix: TypeError in DefinedRouteCollector::collect() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8957
+* fix: `migrate:rollback -b` does not work due to TypeError by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8958
+* fix: [Validation] `if_exist` does not work with array data by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8959
+* chore: add `Config` namespace to appstarter autoload.psr4 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8963
+* fix: `spark routes` may show BadRequestException when a route has a regexp by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8974
+* docs: fix incorrect description for route group filter by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8978
+* fix: return and param types of BaseConnection by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/8983
+* fix: precedence of command classes with the same `$name` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8898
+* fix: [OCI8] if conditions to build DSN by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8986
+* fix: [Auto Routing Improved] Default Method Fallback does not work with `$translateUriToCamelCase` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8980
+* fix: `command()` may execute `rewrite.php` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8995
+
+### Refactoring
+
+* refactor: BaseBuilder::orderBy() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8970
+* refactor: using phpunit 10 assertObjectHasNotProperty() and assertObjectHasProperty() by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/8991
+
 ## [v4.5.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.2) (2024-06-10)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.1...v4.5.2)
 

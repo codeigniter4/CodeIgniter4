@@ -516,7 +516,7 @@ trait GeneratorTrait
      * Gets a single command-line option. Returns TRUE if the option exists,
      * but doesn't have a value, and is simply acting as a flag.
      */
-    protected function getOption(string $name): string|bool|null
+    protected function getOption(string $name): bool|string|null
     {
         if (! array_key_exists($name, $this->params)) {
             return CLI::getOption($name);

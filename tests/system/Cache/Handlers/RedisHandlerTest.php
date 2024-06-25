@@ -13,9 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -129,44 +131,59 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
         $this->assertFalse($this->handler->delete(self::$dummy));
     }
 
-    public function testDeleteMatchingPrefix(): void
+    #[DataProvider('provideDeleteMatching')]
+    public function testDeleteMatching(string $pattern, int $expectedDeleteCount, string $prefix = ''): void
     {
-        // Save 101 items to match on
-        for ($i = 1; $i <= 101; $i++) {
-            $this->handler->save('key_' . $i, 'value' . $i);
+        $cache = new Cache();
+
+        if ($prefix !== '') {
+            $cache->prefix = $prefix;
         }
 
-        // check that there are 101 items is cache store
-        $dbInfo = explode(',', $this->handler->getCacheInfo()['db0']);
-        $this->assertSame('keys=101', $dbInfo[0]);
+        /** @var RedisHandler $handler */
+        $handler = CacheFactory::getHandler($cache, 'redis');
 
-        // Checking that given the prefix "key_1", deleteMatching deletes 13 keys:
-        // (key_1, key_10, key_11, key_12, key_13, key_14, key_15, key_16, key_17, key_18, key_19, key_100, key_101)
-        $this->assertSame(13, $this->handler->deleteMatching('key_1*'));
+        for ($i = 1; $i <= 101; $i++) {
+            $handler->save('key_' . $i, 'value_' . $i);
+        }
 
-        // check that there remains (101 - 13) = 88 items is cache store
-        $dbInfo = explode(',', $this->handler->getCacheInfo()['db0']);
-        $this->assertSame('keys=88', $dbInfo[0]);
+        $cacheInfo = $handler->getCacheInfo();
+        $this->assertIsArray($cacheInfo);
+        $this->assertArrayHasKey('db0', $cacheInfo);
+        $this->assertIsString($cacheInfo['db0']);
+        $this->assertMatchesRegularExpression('/^keys=(?P<count>\d+)/', $cacheInfo['db0']);
+
+        preg_match('/^keys=(?P<count>\d+)/', $cacheInfo['db0'], $matches);
+        $this->assertSame(101, (int) $matches['count']);
+
+        $this->assertSame($expectedDeleteCount, $handler->deleteMatching($pattern));
+
+        $cacheInfo = $handler->getCacheInfo();
+        $this->assertIsArray($cacheInfo);
+        $this->assertArrayHasKey('db0', $cacheInfo);
+        $this->assertIsString($cacheInfo['db0']);
+        $this->assertMatchesRegularExpression('/^keys=(?P<count>\d+)/', $cacheInfo['db0']);
+
+        preg_match('/^keys=(?P<count>\d+)/', $cacheInfo['db0'], $matches);
+        $this->assertSame(101 - $expectedDeleteCount, (int) $matches['count']);
+
+        $handler->deleteMatching('key_*');
     }
 
-    public function testDeleteMatchingSuffix(): void
+    /**
+     * @return iterable<string, array{0: string, 1: int, 2?: string}>
+     */
+    public static function provideDeleteMatching(): iterable
     {
-        // Save 101 items to match on
-        for ($i = 1; $i <= 101; $i++) {
-            $this->handler->save('key_' . $i, 'value' . $i);
-        }
+        // Given the key "key_1*", deleteMatching() should delete 13 keys:
+        // key_1, key_10, key_11, key_12, key_13, key_14, key_15, key_16, key_17, key_18, key_19, key_100, key_101
+        yield 'prefix' => ['key_1*', 13];
 
-        // check that there are 101 items is cache store
-        $dbInfo = explode(',', $this->handler->getCacheInfo()['db0']);
-        $this->assertSame('keys=101', $dbInfo[0]);
+        // Given the key "*1", deleteMatching() should delete 11 keys:
+        // key_1, key_11, key_21, key_31, key_41, key_51, key_61, key_71, key_81, key_91, key_101
+        yield 'suffix' => ['*1', 11];
 
-        // Checking that given the suffix "1", deleteMatching deletes 11 keys:
-        // (key_1, key_11, key_21, key_31, key_41, key_51, key_61, key_71, key_81, key_91, key_101)
-        $this->assertSame(11, $this->handler->deleteMatching('*1'));
-
-        // check that there remains (101 - 13) = 88 items is cache store
-        $dbInfo = explode(',', $this->handler->getCacheInfo()['db0']);
-        $this->assertSame('keys=90', $dbInfo[0]);
+        yield 'cache-prefix' => ['key_1*', 13, 'foo_'];
     }
 
     public function testIncrementAndDecrement(): void
