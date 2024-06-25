@@ -133,6 +133,8 @@ Forge
 Others
 ------
 
+- Added a new configuration ``foundRows`` for MySQLi to use ``MYSQLI_CLIENT_FOUND_ROWS``.
+
 Model
 =====
 
