@@ -374,6 +374,17 @@ Controller/Method            URI                          Description
                                                           takes precedence.
 ============================ ============================ =============================================
 
+****************
+Applying Filters
+****************
+
+Applying controller filters allows you to add processing before and after the
+controller method execution. This is especially handy during authentication or
+api logging.
+
+If you use Auto Routing, set the filters to be applied in **app/Config/Filters.php**.
+See :doc:`Controller Filters <filters>` for more information on setting up filters.
+
 .. _routing-auto-routing-improved-configuration-options:
 
 *********************
