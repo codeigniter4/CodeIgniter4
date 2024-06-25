@@ -106,7 +106,9 @@ filters to run:
 
 .. literalinclude:: filters/003.php
 
-Aliases are mandatory and if you try to use a full class name later, the system will throw an error. Defining them
+Aliases are mandatory and if you try to use a full class name later, the system will throw an error.
+
+Defining them
 in this way makes it simple to switch out the class used. Great for when you decided you need to change to a
 different authentication system since you only change the filter's class and you're done.
 

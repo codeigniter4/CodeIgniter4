@@ -388,6 +388,7 @@ Applying Filters
 ================
 
 You can alter the behavior of specific routes by supplying filters to run before or after the controller. This is especially handy during authentication or api logging.
+
 The value for the filter can be a string or an array of strings:
 
 * matching the aliases defined in **app/Config/Filters.php**.
