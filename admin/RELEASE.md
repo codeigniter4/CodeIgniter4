@@ -6,16 +6,22 @@
 >
 > -MGatner, kenjis
 
-## Merge `develop` branch into next minor version branch `4.x`
+## Notation
+
+- `4.x.x`: The new release version. (e.g., `4.5.3`)
+- `4.y`: The next minor version. (e.g., `4.6`)
+- `4.z`: The next next minor version. (e.g., `4.7`)
+
+## Merge `develop` branch into next minor version branch `4.y`
 
 Before starting release process, if there are commits in `develop` branch that
-are not merged into `4.x` branch, merge them. This is because if conflicts occur,
+are not merged into `4.y` branch, merge them. This is because if conflicts occur,
 merging will take time.
 
 ```console
 git fetch upstream
-git switch 4.x
-git merge upstream/4.x
+git switch 4.y
+git merge upstream/4.y
 git merge upstream/develop
 git push upstream HEAD
 ```
@@ -24,11 +30,10 @@ git push upstream HEAD
 
 If you release a new minor version.
 
-* [ ] Create PR to merge `4.x` into `develop` and merge it
+* [ ] Create PR to merge `4.y` into `develop` and merge it
 * [ ] Rename the current minor version (e.g., `4.5`) in Setting > Branches >
   "Branch protection rules" to the next minor version. E.g. `4.5` → `4.6`
-* [ ] Delete the merged `4.x` branch (This closes all PRs to the branch)
-* Do the regular release process. Go to the next "Changelog" section
+* [ ] Delete the merged `4.y` branch (This closes all PRs to the branch)
 
 ## Changelog
 
@@ -90,8 +95,8 @@ Work off direct clones of the repos so the release branches persist for a time.
 * [ ] Replace **CHANGELOG.md** with the new version generated above
 * [ ] Update **user_guide_src/source/changelogs/v4.x.x.rst**
   * Remove the section titles that have no items
-* [ ] Update **user_guide_src/source/installation/upgrade_{ver}.rst**
-  * [ ] fill in the "All Changes" section, and add it to **upgrading.rst**
+* [ ] Update **user_guide_src/source/installation/upgrade_4xx.rst**
+  * [ ] fill in the "All Changes" section, and add it to **upgrade_4xx.rst**
     * git diff --name-status origin/master -- . ':!system' ':!tests' ':!user_guide_src'
     * Note: `tests/` is not used for distribution repos. See `admin/starter/tests/`
   * [ ] Remove the section titles that have no items
@@ -137,7 +142,7 @@ Work off direct clones of the repos so the release branches persist for a time.
     ## New Contributors
     *
 
-    **Full Changelog**: https://github.com/codeigniter4/CodeIgniter4/compare/v4.x.x...v4.x.x
+    **Full Changelog**: https://github.com/codeigniter4/CodeIgniter4/compare/v4.x.w...v4.x.x
     ```
     Click the "Generate release notes" button, and get the "New Contributors".
 * [ ] Watch for the "Deploy Distributable Repos" action to make sure **framework**,
@@ -164,19 +169,19 @@ Work off direct clones of the repos so the release branches persist for a time.
     git merge origin/master
     git push origin HEAD
     ```
-* [ ] Update the next minor version branch `4.x`:
+* [ ] Update the next minor version branch `4.y`:
     ```console
     git fetch origin
-    git checkout 4.x
-    git merge origin/4.x
+    git checkout 4.y
+    git merge origin/4.y
     git merge origin/develop
     git push origin HEAD
     ```
-* [ ] [Minor version only] Create the new next minor version branch `4.x`:
+* [ ] [Minor version only] Create the new next minor version branch `4.z`:
     ```console
     git fetch origin
     git switch develop
-    git switch -c 4.x
+    git switch -c 4.z
     git push origin HEAD
     ```
 * [ ] Request CVEs and Publish any Security Advisories that were resolved from private forks

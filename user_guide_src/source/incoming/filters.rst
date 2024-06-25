@@ -82,7 +82,7 @@ Configuring Filters
 There are two ways to configure filters when they get run. One is done in
 **app/Config/Filters.php**, the other is done in **app/Config/Routes.php**.
 
-If you want to specify filter to a specific route, use **app/Config/Routes.php**
+If you want to specify filters to defined routes, use **app/Config/Routes.php**
 and see :ref:`URI Routing <applying-filters>`.
 
 .. Note:: The safest way to apply filters is to :ref:`disable auto-routing <use-defined-routes-only>`, and :ref:`set filters to routes <applying-filters>`.
@@ -95,8 +95,10 @@ configure exactly when the filters run.
 
 .. Warning:: It is recommended that you should always add ``*`` at the end of a URI in the filter settings.
     Because a controller method might be accessible by different URLs than you think.
-    For example, when :ref:`auto-routing-legacy` is enabled, if you have ``Blog::index``,
+    For example, when :ref:`auto-routing-legacy` is enabled, if you have ``Blog::index()``,
     it can be accessible with ``blog``, ``blog/index``, and ``blog/index/1``, etc.
+
+.. _filters-aliases:
 
 $aliases
 --------
@@ -106,7 +108,9 @@ filters to run:
 
 .. literalinclude:: filters/003.php
 
-Aliases are mandatory and if you try to use a full class name later, the system will throw an error. Defining them
+Aliases are mandatory and if you try to use a full class name later, the system will throw an error.
+
+Defining them
 in this way makes it simple to switch out the class used. Great for when you decided you need to change to a
 different authentication system since you only change the filter's class and you're done.
 
@@ -170,7 +174,7 @@ an array with the ``except`` key and a URI path (relative to BaseURL) to match a
     and the URI paths specified in the filter could be different.
     See :ref:`upgrade-447-filter-paths` for details.
 
-Any place you can use a URI path (relative to BaseURL) in the filter settings, you can use a regular expression or, like in this example, use
+Any place you can use a URI path (relative to BaseURL) in the filter settings, you can use a regular expression or, like in this example above, use
 an asterisk (``*``) for a wildcard that will match all characters after that. In this example, any URI path starting with ``api/``
 would be exempted from CSRF protection, but the site's forms would all be protected.
 
@@ -186,16 +190,18 @@ $methods
     because :ref:`auto-routing-legacy` permits any HTTP method to access a controller.
     Accessing the controller with a method you don't expect could bypass the filter.
 
-You can apply filters to all requests of a certain HTTP method, like POST, GET, PUT, etc. In this array, you would
-specify the method name in **lowercase**. It's value would be an array of filters to run:
+You can apply filters to all requests of a certain HTTP method, like ``POST``, ``GET``, ``PUT``, etc.
+It's value would be an array of filters to run:
 
 .. literalinclude:: filters/008.php
 
 .. note:: Unlike the ``$globals`` or the
     ``$filters`` properties, these will only run as before filters.
 
-In addition to the standard HTTP methods, this also supports one special case: ``cli``. The ``cli`` method would apply to
+In addition to the standard HTTP methods, this also supports one special case: ``CLI``. The ``CLI`` method would apply to
 all requests that were run from the command line.
+
+.. note:: Prior to v4.5.0, due to a bug, you needed to specify the HTTP method names in **lowercase**.
 
 $filters
 --------
