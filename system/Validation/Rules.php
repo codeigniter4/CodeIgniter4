@@ -159,7 +159,7 @@ class Rules
             $value = (string) $value;
         }
 
-        $list = array_map('trim', explode(',', $list));
+        $list = array_map(trim(...), explode(',', $list));
 
         return in_array($value, $list, true);
     }

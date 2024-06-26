@@ -119,8 +119,8 @@ class Routes extends BaseCommand
                 $route['route'],
                 $routeName,
                 $route['handler'],
-                implode(' ', array_map('class_basename', $filters['before'])),
-                implode(' ', array_map('class_basename', $filters['after'])),
+                implode(' ', array_map(class_basename(...), $filters['before'])),
+                implode(' ', array_map(class_basename(...), $filters['after'])),
             ];
         }
 
@@ -166,8 +166,8 @@ class Routes extends BaseCommand
                     // There is no `AUTO` method, but it is intentional not to get route filters.
                     $filters = $filterCollector->get('AUTO', $uriGenerator->get($routes[1]));
 
-                    $routes[] = implode(' ', array_map('class_basename', $filters['before']));
-                    $routes[] = implode(' ', array_map('class_basename', $filters['after']));
+                    $routes[] = implode(' ', array_map(class_basename(...), $filters['before']));
+                    $routes[] = implode(' ', array_map(class_basename(...), $filters['after']));
                 }
             }
 
