@@ -879,18 +879,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\FilterCheck\\:\\:addRequiredFilters\\(\\) has parameter \\$filters with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/FilterCheck.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\FilterCheck\\:\\:addRequiredFilters\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/FilterCheck.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Namespaces\\:\\:outputAllNamespaces\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Utilities/Namespaces.php',

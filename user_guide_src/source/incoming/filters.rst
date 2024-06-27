@@ -280,11 +280,19 @@ The output is like the following:
 
 .. code-block:: none
 
-    +--------+-------+----------------+---------------+
-    | Method | Route | Before Filters | After Filters |
-    +--------+-------+----------------+---------------+
-    | GET    | /     |                | toolbar       |
-    +--------+-------+----------------+---------------+
+    +--------+-------+----------------------+-------------------------------+
+    | Method | Route | Before Filters       | After Filters                 |
+    +--------+-------+----------------------+-------------------------------+
+    | GET    | /     | forcehttps pagecache | pagecache performance toolbar |
+    +--------+-------+----------------------+-------------------------------+
+
+    Before Filter Classes:
+    CodeIgniter\Filters\ForceHTTPS → CodeIgniter\Filters\PageCache
+    After Filter Classes:
+    CodeIgniter\Filters\PageCache → CodeIgniter\Filters\PerformanceMetrics → CodeIgniter\Filters\DebugToolbar
+
+.. note:: Since v4.6.0, filter arguments have been displayed in the output table.
+    Also, the actual filter classnames have been displayed in the end.
 
 You can also see the routes and filters by the ``spark routes`` command,
 but it might not show accurate filters when you use regular expressions for routes.
