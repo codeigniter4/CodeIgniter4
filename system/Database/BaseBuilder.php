@@ -390,7 +390,7 @@ class BaseBuilder
     /**
      * Generates the SELECT portion of the query
      *
-     * @param array|RawSql|string $select
+     * @param list<RawSql|string>|RawSql|string $select
      *
      * @return $this
      */
@@ -402,16 +402,21 @@ class BaseBuilder
         }
 
         if ($select instanceof RawSql) {
-            $this->QBSelect[] = $select;
-
-            return $this;
+            $select = [$select];
         }
 
         if (is_string($select)) {
-            $select = $escape === false ? [$select] : explode(',', $select);
+            $select = ($escape === false) ? [$select] : explode(',', $select);
         }
 
         foreach ($select as $val) {
+            if ($val instanceof RawSql) {
+                $this->QBSelect[]   = $val;
+                $this->QBNoEscape[] = false;
+
+                continue;
+            }
+
             $val = trim($val);
 
             if ($val !== '') {
