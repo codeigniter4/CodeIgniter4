@@ -67,6 +67,21 @@ final class SelectTest extends CIUnitTestCase
         $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
+    public function testSelectAcceptsArrayWithRawSql(): void
+    {
+        $builder = new BaseBuilder('employees', $this->db);
+
+        $builder->select([
+            'employee_id',
+            new RawSql("IF(salary > 5000, 'High', 'Low') AS salary_level"),
+        ]);
+
+        $expected = <<<'SQL'
+            SELECT "employee_id", IF(salary > 5000, 'High', 'Low') AS salary_level FROM "employees"
+            SQL;
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
     public function testSelectAcceptsMultipleColumns(): void
     {
         $builder = new BaseBuilder('users', $this->db);
