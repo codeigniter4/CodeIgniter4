@@ -294,7 +294,7 @@ class Toolbar
         array_multisort(...$sortArray);
 
         // Add end time to each element
-        array_walk($data, static function (&$row) {
+        array_walk($data, static function (&$row): void {
             $row['end'] = $row['start'] + $row['duration'];
         });
 

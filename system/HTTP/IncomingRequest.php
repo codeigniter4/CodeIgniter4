@@ -586,7 +586,7 @@ class IncomingRequest extends Request
         ) {
             if (is_array($data)) {
                 // Iterate over array and append filter and flags
-                array_walk_recursive($data, static function (&$val) use ($filter, $flags) {
+                array_walk_recursive($data, static function (&$val) use ($filter, $flags): void {
                     $valType = gettype($val);
                     $val     = filter_var($val, $filter, $flags);
 
@@ -672,7 +672,7 @@ class IncomingRequest extends Request
             )
         ) {
             // Iterate over array and append filter and flags
-            array_walk_recursive($output, static function (&$val) use ($filter, $flags) {
+            array_walk_recursive($output, static function (&$val) use ($filter, $flags): void {
                 $val = filter_var($val, $filter, $flags);
             });
 
