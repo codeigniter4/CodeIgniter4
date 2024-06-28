@@ -425,7 +425,9 @@ class BaseBuilder
                  * @see https://github.com/codeigniter4/CodeIgniter4/issues/1169
                  */
                 if (mb_stripos(trim($val), 'NULL') === 0) {
-                    $escape = false;
+                    $this->QBNoEscape[] = false;
+
+                    continue;
                 }
 
                 $this->QBNoEscape[] = $escape;
