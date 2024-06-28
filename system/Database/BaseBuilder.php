@@ -124,9 +124,9 @@ class BaseBuilder
     protected array $QBUnion = [];
 
     /**
-     * QB NO ESCAPE data
+     * Whether to protect identifiers in SELECT
      *
-     * @var array
+     * @var list<bool|null> true=protect, false=not protect
      */
     public $QBNoEscape = [];
 
@@ -391,6 +391,7 @@ class BaseBuilder
      * Generates the SELECT portion of the query
      *
      * @param list<RawSql|string>|RawSql|string $select
+     * @param bool|null                         $escape Whether to protect identifiers
      *
      * @return $this
      */
@@ -3066,8 +3067,8 @@ class BaseBuilder
                 // The reason we protect identifiers here rather than in the select() function
                 // is because until the user calls the from() function we don't know if there are aliases
                 foreach ($this->QBSelect as $key => $val) {
-                    $noEscape             = $this->QBNoEscape[$key] ?? null;
-                    $this->QBSelect[$key] = $this->db->protectIdentifiers($val, false, $noEscape);
+                    $protect              = $this->QBNoEscape[$key] ?? null;
+                    $this->QBSelect[$key] = $this->db->protectIdentifiers($val, false, $protect);
                 }
 
                 $sql .= implode(', ', $this->QBSelect);
