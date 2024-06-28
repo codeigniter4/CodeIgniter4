@@ -3066,7 +3066,7 @@ class BaseBuilder
                 // is because until the user calls the from() function we don't know if there are aliases
                 foreach ($this->QBSelect as $key => $val) {
                     if ($val instanceof RawSql) {
-                        $this->QBSelect[$key] = (string) $this->QBSelect[0];
+                        $this->QBSelect[$key] = (string) $val;
                     } else {
                         $protect              = $this->QBNoEscape[$key] ?? null;
                         $this->QBSelect[$key] = $this->db->protectIdentifiers($val, false, $protect);
