@@ -3060,15 +3060,17 @@ class BaseBuilder
 
             if (empty($this->QBSelect)) {
                 $sql .= '*';
-            } elseif ($this->QBSelect[0] instanceof RawSql) {
-                $sql .= (string) $this->QBSelect[0];
             } else {
                 // Cycle through the "select" portion of the query and prep each column name.
                 // The reason we protect identifiers here rather than in the select() function
                 // is because until the user calls the from() function we don't know if there are aliases
                 foreach ($this->QBSelect as $key => $val) {
-                    $protect              = $this->QBNoEscape[$key] ?? null;
-                    $this->QBSelect[$key] = $this->db->protectIdentifiers($val, false, $protect);
+                    if ($val instanceof RawSql) {
+                        $this->QBSelect[$key] = (string) $this->QBSelect[0];
+                    } else {
+                        $protect              = $this->QBNoEscape[$key] ?? null;
+                        $this->QBSelect[$key] = $this->db->protectIdentifiers($val, false, $protect);
+                    }
                 }
 
                 $sql .= implode(', ', $this->QBSelect);

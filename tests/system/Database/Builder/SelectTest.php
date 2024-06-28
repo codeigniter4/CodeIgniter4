@@ -72,12 +72,12 @@ final class SelectTest extends CIUnitTestCase
         $builder = new BaseBuilder('employees', $this->db);
 
         $builder->select([
-            'employee_id',
             new RawSql("IF(salary > 5000, 'High', 'Low') AS salary_level"),
+            'employee_id',
         ]);
 
         $expected = <<<'SQL'
-            SELECT "employee_id", IF(salary > 5000, 'High', 'Low') AS salary_level FROM "employees"
+            SELECT IF(salary > 5000, 'High', 'Low') AS salary_level, "employee_id" FROM "employees"
             SQL;
         $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
