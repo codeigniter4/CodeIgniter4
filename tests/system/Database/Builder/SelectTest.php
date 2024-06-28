@@ -68,6 +68,9 @@ final class SelectTest extends CIUnitTestCase
         $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
+    /**
+     * @param list<RawSql|string> $select
+     */
     #[DataProvider('provideSelectAcceptsArrayWithRawSql')]
     public function testSelectAcceptsArrayWithRawSql(array $select, string $expected): void
     {
