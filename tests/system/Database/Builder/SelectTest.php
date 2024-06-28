@@ -100,6 +100,28 @@ final class SelectTest extends CIUnitTestCase
         $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
+    public function testSelectNullAsInString(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->select('NULL as field_alias, name');
+
+        $expected = 'SELECT NULL as field_alias, "name" FROM "users"';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testSelectNullAsInArray(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->select(['NULL as field_alias', 'name']);
+
+        $expected = 'SELECT NULL as field_alias, "name" FROM "users"';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4355
      */
