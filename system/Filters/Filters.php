@@ -574,14 +574,14 @@ class Filters
      * after the filter name, followed by a comma-separated list of arguments that
      * are passed to the filter when executed.
      *
-     * @param         string           $name     filter_name or filter_name:arguments like 'role:admin,manager'
+     * @param         string           $filter   filter_name or filter_name:arguments like 'role:admin,manager'
      *                                           or filter classname.
      * @phpstan-param 'before'|'after' $position
      */
-    private function enableFilter(string $name, string $position = 'before'): void
+    private function enableFilter(string $filter, string $position = 'before'): void
     {
         // Normalize the arguments.
-        [$alias, $arguments] = $this->getCleanName($name);
+        [$alias, $arguments] = $this->getCleanName($filter);
         $filter              = ($arguments === []) ? $alias : $alias . ':' . implode(',', $arguments);
 
         if (class_exists($alias)) {
@@ -602,24 +602,26 @@ class Filters
     /**
      * Get clean name and arguments
      *
-     * @param string $name filter_name or filter_name:arguments like 'role:admin,manager'
+     * @param string $filter filter_name or filter_name:arguments like 'role:admin,manager'
      *
      * @return array{0: string, 1: list<string>} [name, arguments]
      */
-    private function getCleanName(string $name): array
+    private function getCleanName(string $filter): array
     {
         $arguments = [];
 
-        if (str_contains($name, ':')) {
-            [$name, $arguments] = explode(':', $name);
-
-            $arguments = explode(',', $arguments);
-            array_walk($arguments, static function (&$item) {
-                $item = trim($item);
-            });
+        if (! str_contains($filter, ':')) {
+            return [$filter, $arguments];
         }
 
-        return [$name, $arguments];
+        [$alias, $arguments] = explode(':', $filter);
+
+        $arguments = explode(',', $arguments);
+        array_walk($arguments, static function (&$item) {
+            $item = trim($item);
+        });
+
+        return [$alias, $arguments];
     }
 
     /**
@@ -629,13 +631,13 @@ class Filters
      * after the filter name, followed by a comma-separated list of arguments that
      * are passed to the filter when executed.
      *
-     * @params array<string> $names filter_name or filter_name:arguments like 'role:admin,manager'
+     * @param list<string> $filters filter_name or filter_name:arguments like 'role:admin,manager'
      *
      * @return Filters
      */
-    public function enableFilters(array $names, string $when = 'before')
+    public function enableFilters(array $filters, string $when = 'before')
     {
-        foreach ($names as $filter) {
+        foreach ($filters as $filter) {
             $this->enableFilter($filter, $when);
         }
 
@@ -777,13 +779,17 @@ class Filters
         // Add any filters that apply to this URI
         $filters = [];
 
-        foreach ($this->config->filters as $alias => $settings) {
+        foreach ($this->config->filters as $filter => $settings) {
+            // Normalize the arguments.
+            [$alias, $arguments] = $this->getCleanName($filter);
+            $filter              = ($arguments === []) ? $alias : $alias . ':' . implode(',', $arguments);
+
             // Look for inclusion rules
             if (isset($settings['before'])) {
                 $path = $settings['before'];
 
                 if ($this->pathApplies($uri, $path)) {
-                    $filters['before'][] = $alias;
+                    $filters['before'][] = $filter;
                 }
             }
 
@@ -791,7 +797,7 @@ class Filters
                 $path = $settings['after'];
 
                 if ($this->pathApplies($uri, $path)) {
-                    $filters['after'][] = $alias;
+                    $filters['after'][] = $filter;
                 }
             }
         }

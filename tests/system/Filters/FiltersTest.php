@@ -282,6 +282,10 @@ final class FiltersTest extends CIUnitTestCase
                     'before' => ['admin/*'],
                     'after'  => ['/users/*'],
                 ],
+                'bar: arg1, arg2' => [
+                    'before' => ['admin/*'],
+                    'after'  => ['/users/*'],
+                ],
             ],
         ];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
@@ -289,7 +293,7 @@ final class FiltersTest extends CIUnitTestCase
 
         $uri      = 'admin/foo/bar';
         $expected = [
-            'before' => ['foo'],
+            'before' => ['foo', 'bar:arg1,arg2'],
             'after'  => [],
         ];
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
@@ -311,6 +315,10 @@ final class FiltersTest extends CIUnitTestCase
                     'before' => ['admin/*'],
                     'after'  => ['/users/*'],
                 ],
+                'bar: arg1, arg2' => [
+                    'before' => ['admin/*'],
+                    'after'  => ['/users/*'],
+                ],
             ],
         ];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
@@ -319,9 +327,7 @@ final class FiltersTest extends CIUnitTestCase
         $uri      = 'users/foo/bar';
         $expected = [
             'before' => [],
-            'after'  => [
-                'foo',
-            ],
+            'after'  => ['bar:arg1,arg2', 'foo'],
         ];
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
