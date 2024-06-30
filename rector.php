@@ -58,6 +58,7 @@ use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
 use Rector\TypeDeclaration\Rector\Closure\AddClosureVoidReturnTypeWhereNoReturnRector;
 use Rector\TypeDeclaration\Rector\Empty_\EmptyOnNullableObjectToInstanceOfRector;
+use Rector\TypeDeclaration\Rector\Function_\AddFunctionVoidReturnTypeWhereNoReturnRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
@@ -219,6 +220,7 @@ return RectorConfig::configure()
         VersionCompareFuncCallToConstantRector::class,
         ExplicitBoolCompareRector::class,
         AddClosureVoidReturnTypeWhereNoReturnRector::class,
+        AddFunctionVoidReturnTypeWhereNoReturnRector::class,
     ])
     ->withConfiguredRule(StringClassNameToClassConstantRector::class, [
         // keep '\\' prefix string on string '\Foo\Bar'
