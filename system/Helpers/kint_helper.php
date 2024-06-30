@@ -24,7 +24,7 @@ if (! function_exists('dd')) {
          *
          * @codeCoverageIgnore Can't be tested ... exits
          */
-        function dd(...$vars)
+        function dd(...$vars): void
         {
             // @codeCoverageIgnoreStart
             Kint::$aliases[] = 'dd';
@@ -71,10 +71,8 @@ if (! function_exists('trace')) {
          */
         /**
          * trace function
-         *
-         * @return void
          */
-        function trace()
+        function trace(): void
         {
             Kint::$aliases[] = 'trace';
             Kint::trace();
