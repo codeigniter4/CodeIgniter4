@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
-use PHPUnit\Framework\Attributes\AfterClass;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\Constraints\SeeInDatabase;
 use Config\Database;
 use Config\Migrations;
 use Config\Services;
+use PHPUnit\Framework\Attributes\AfterClass;
 
 /**
  * DatabaseTestTrait
@@ -231,7 +231,6 @@ trait DatabaseTestTrait
     // --------------------------------------------------------------------
     /**
      * Reset $doneMigration and $doneSeed
-     *
      *
      * @return void
      */
