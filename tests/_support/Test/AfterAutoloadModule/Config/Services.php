@@ -17,9 +17,10 @@ use AfterAutoloadModule\Test;
 use CodeIgniter\Config\BaseService;
 
 /**
- * Services for testing BaseService::updateServicesCache()
+ * Services for testing BaseService::resetServicesCache().
  *
- * This class should not be discovered by the autoloader until the test adds this namespace to the autoloader.
+ * This class should not be discovered by the autoloader until the test adds
+ * this namespace to the autoloader.
  */
 class Services extends BaseService
 {
