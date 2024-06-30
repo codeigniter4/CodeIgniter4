@@ -507,7 +507,7 @@ class Autoloader
     {
         // If we have KINT_DIR it means it's already loaded via composer
         if (! defined('KINT_DIR')) {
-            spl_autoload_register(function ($class) {
+            spl_autoload_register(function ($class): void {
                 $class = explode('\\', $class);
 
                 if (array_shift($class) !== 'Kint') {

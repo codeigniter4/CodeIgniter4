@@ -159,7 +159,7 @@ class Builder extends BaseBuilder
         $table = $this->QBFrom[0];
         $set   = $this->binds;
 
-        array_walk($set, static function (array &$item) {
+        array_walk($set, static function (array &$item): void {
             $item = $item[0];
         });
 

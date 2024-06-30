@@ -53,49 +53,44 @@ use Rector\PHPUnit\AnnotationsToAttributes\Rector\ClassMethod\DependsAnnotationW
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
-use Rector\Set\ValueObject\LevelSetList;
-use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
+use Rector\TypeDeclaration\Rector\Closure\AddClosureVoidReturnTypeWhereNoReturnRector;
 use Rector\TypeDeclaration\Rector\Empty_\EmptyOnNullableObjectToInstanceOfRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
-return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->sets([
-        SetList::DEAD_CODE,
-        LevelSetList::UP_TO_PHP_81,
+return RectorConfig::configure()
+    ->withPhpSets(php81: true)
+    ->withPreparedSets(deadCode: true)
+    ->withSets([
         PHPUnitSetList::PHPUNIT_CODE_QUALITY,
         PHPUnitSetList::PHPUNIT_100,
-    ]);
-
-    $rectorConfig->parallel(120, 8, 10);
-
-    // Github action cache
-    $rectorConfig->cacheClass(FileCacheStorage::class);
-    if (is_dir('/tmp')) {
-        $rectorConfig->cacheDirectory('/tmp/rector');
-    }
-
+    ])
+    ->withParallel(120, 8, 10)
+    ->withCache(
+        // Github action cache or local
+        is_dir('/tmp') ? '/tmp/rector' : null,
+        FileCacheStorage::class
+    )
     // paths to refactor; solid alternative to CLI arguments
-    $rectorConfig->paths([__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils']);
-
+    ->withPaths(
+        [__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils']
+    )
     // do you need to include constants, class aliases or custom autoloader? files listed will be executed
-    $rectorConfig->bootstrapFiles([
+    ->withBootstrapFiles([
         __DIR__ . '/system/Test/bootstrap.php',
-    ]);
-
-    $rectorConfig->phpstanConfigs([
+    ])
+    ->withPHPStanConfigs([
         __DIR__ . '/phpstan.neon.dist',
         __DIR__ . '/vendor/codeigniter/phpstan-codeigniter/extension.neon',
         __DIR__ . '/vendor/phpstan/phpstan-strict-rules/rules.neon',
-    ]);
-
+    ])
     // is there a file you need to skip?
-    $rectorConfig->skip([
+    ->withSkip([
         __DIR__ . '/system/Debug/Toolbar/Views/toolbar.tpl.php',
         __DIR__ . '/system/ThirdParty',
         __DIR__ . '/tests/system/Config/fixtures',
@@ -187,48 +182,45 @@ return static function (RectorConfig $rectorConfig): void {
         AnnotationWithValueToAttributeRector::class,
         AnnotationToAttributeRector::class,
         CoversAnnotationWithValueToAttributeRector::class,
-    ]);
-
+    ])
     // auto import fully qualified class names
-    $rectorConfig->importNames();
-    $rectorConfig->removeUnusedImports();
-
-    $rectorConfig->rule(DeclareStrictTypesRector::class);
-    $rectorConfig->rule(UnderscoreToCamelCaseVariableNameRector::class);
-    $rectorConfig->rule(SimplifyUselessVariableRector::class);
-    $rectorConfig->rule(RemoveAlwaysElseRector::class);
-    $rectorConfig->rule(PassStrictParameterToFunctionParameterRector::class);
-    $rectorConfig->rule(CountArrayToEmptyArrayComparisonRector::class);
-    $rectorConfig->rule(ChangeNestedForeachIfsToEarlyContinueRector::class);
-    $rectorConfig->rule(ChangeIfElseValueAssignToEarlyReturnRector::class);
-    $rectorConfig->rule(SimplifyStrposLowerRector::class);
-    $rectorConfig->rule(CombineIfRector::class);
-    $rectorConfig->rule(SimplifyIfReturnBoolRector::class);
-    $rectorConfig->rule(InlineIfToExplicitIfRector::class);
-    $rectorConfig->rule(PreparedValueToEarlyReturnRector::class);
-    $rectorConfig->rule(ShortenElseIfRector::class);
-    $rectorConfig->rule(SimplifyIfElseToTernaryRector::class);
-    $rectorConfig->rule(UnusedForeachValueToArrayKeysRector::class);
-    $rectorConfig->rule(ChangeArrayPushToArrayAssignRector::class);
-    $rectorConfig->rule(UnnecessaryTernaryExpressionRector::class);
-    $rectorConfig->rule(RemoveErrorSuppressInTryCatchStmtsRector::class);
-    $rectorConfig->rule(FuncGetArgsToVariadicParamRector::class);
-    $rectorConfig->rule(MakeInheritedMethodVisibilitySameAsParentRector::class);
-    $rectorConfig->rule(SimplifyEmptyArrayCheckRector::class);
-    $rectorConfig->rule(SimplifyEmptyCheckOnEmptyArrayRector::class);
-    $rectorConfig->rule(TernaryEmptyArrayArrayDimFetchToCoalesceRector::class);
-    $rectorConfig->rule(EmptyOnNullableObjectToInstanceOfRector::class);
-    $rectorConfig->rule(DisallowedEmptyRuleFixerRector::class);
-    $rectorConfig->rule(PrivatizeFinalClassPropertyRector::class);
-    $rectorConfig->rule(CompleteDynamicPropertiesRector::class);
-    $rectorConfig->rule(BooleanInIfConditionRuleFixerRector::class);
-    $rectorConfig->rule(SingleInArrayToCompareRector::class);
-    $rectorConfig->rule(VersionCompareFuncCallToConstantRector::class);
-    $rectorConfig->rule(ExplicitBoolCompareRector::class);
-
-    $rectorConfig
-        ->ruleWithConfiguration(StringClassNameToClassConstantRector::class, [
-            // keep '\\' prefix string on string '\Foo\Bar'
-            StringClassNameToClassConstantRector::SHOULD_KEEP_PRE_SLASH => true,
-        ]);
-};
+    ->withImportNames(removeUnusedImports: true)
+    ->withRules([
+        DeclareStrictTypesRector::class,
+        UnderscoreToCamelCaseVariableNameRector::class,
+        SimplifyUselessVariableRector::class,
+        RemoveAlwaysElseRector::class,
+        PassStrictParameterToFunctionParameterRector::class,
+        CountArrayToEmptyArrayComparisonRector::class,
+        ChangeNestedForeachIfsToEarlyContinueRector::class,
+        ChangeIfElseValueAssignToEarlyReturnRector::class,
+        SimplifyStrposLowerRector::class,
+        CombineIfRector::class,
+        SimplifyIfReturnBoolRector::class,
+        InlineIfToExplicitIfRector::class,
+        PreparedValueToEarlyReturnRector::class,
+        ShortenElseIfRector::class,
+        SimplifyIfElseToTernaryRector::class,
+        UnusedForeachValueToArrayKeysRector::class,
+        ChangeArrayPushToArrayAssignRector::class,
+        UnnecessaryTernaryExpressionRector::class,
+        RemoveErrorSuppressInTryCatchStmtsRector::class,
+        FuncGetArgsToVariadicParamRector::class,
+        MakeInheritedMethodVisibilitySameAsParentRector::class,
+        SimplifyEmptyArrayCheckRector::class,
+        SimplifyEmptyCheckOnEmptyArrayRector::class,
+        TernaryEmptyArrayArrayDimFetchToCoalesceRector::class,
+        EmptyOnNullableObjectToInstanceOfRector::class,
+        DisallowedEmptyRuleFixerRector::class,
+        PrivatizeFinalClassPropertyRector::class,
+        CompleteDynamicPropertiesRector::class,
+        BooleanInIfConditionRuleFixerRector::class,
+        SingleInArrayToCompareRector::class,
+        VersionCompareFuncCallToConstantRector::class,
+        ExplicitBoolCompareRector::class,
+        AddClosureVoidReturnTypeWhereNoReturnRector::class,
+    ])
+    ->withConfiguredRule(StringClassNameToClassConstantRector::class, [
+        // keep '\\' prefix string on string '\Foo\Bar'
+        StringClassNameToClassConstantRector::SHOULD_KEEP_PRE_SLASH => true,
+    ]);

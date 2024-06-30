@@ -101,7 +101,7 @@ class Forge extends BaseForge
         }
 
         if (! empty($this->db->dataCache['db_names'])) {
-            $key = array_search(strtolower($dbName), array_map('strtolower', $this->db->dataCache['db_names']), true);
+            $key = array_search(strtolower($dbName), array_map(strtolower(...), $this->db->dataCache['db_names']), true);
             if ($key !== false) {
                 unset($this->db->dataCache['db_names'][$key]);
             }

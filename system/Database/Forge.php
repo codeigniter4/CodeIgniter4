@@ -306,7 +306,7 @@ class Forge
         if (! empty($this->db->dataCache['db_names'])) {
             $key = array_search(
                 strtolower($dbName),
-                array_map('strtolower', $this->db->dataCache['db_names']),
+                array_map(strtolower(...), $this->db->dataCache['db_names']),
                 true
             );
             if ($key !== false) {
@@ -667,7 +667,7 @@ class Forge
         if ($query && ! empty($this->db->dataCache['table_names'])) {
             $key = array_search(
                 strtolower($this->db->DBPrefix . $tableName),
-                array_map('strtolower', $this->db->dataCache['table_names']),
+                array_map(strtolower(...), $this->db->dataCache['table_names']),
                 true
             );
 
@@ -729,7 +729,7 @@ class Forge
         if ($result && ! empty($this->db->dataCache['table_names'])) {
             $key = array_search(
                 strtolower($this->db->DBPrefix . $tableName),
-                array_map('strtolower', $this->db->dataCache['table_names']),
+                array_map(strtolower(...), $this->db->dataCache['table_names']),
                 true
             );
 

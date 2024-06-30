@@ -325,7 +325,7 @@ trait GeneratorTrait
             implode(
                 '\\',
                 array_map(
-                    'pascalize',
+                    pascalize(...),
                     explode('\\', str_replace('/', '\\', trim($class)))
                 )
             ),

@@ -156,7 +156,7 @@ final class DataCaster
         // type[param, param2,param3]
         if (preg_match('/\A(.+)\[(.+)\]\z/', $type, $matches)) {
             $type   = $matches[1];
-            $params = array_map('trim', explode(',', $matches[2]));
+            $params = array_map(trim(...), explode(',', $matches[2]));
         }
 
         if ($isNullable && ! $this->strict) {

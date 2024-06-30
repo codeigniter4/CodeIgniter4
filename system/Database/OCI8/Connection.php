@@ -53,10 +53,24 @@ class Connection extends BaseConnection
     ];
 
     protected $validDSNs = [
-        'tns' => '/^\(DESCRIPTION=(\(.+\)){2,}\)$/', // TNS
-        // Easy Connect string (Oracle 10g+)
-        'ec' => '/^(\/\/)?[a-z0-9.:_-]+(:[1-9][0-9]{0,4})?(\/[a-z0-9$_]+)?(:[^\/])?(\/[a-z0-9$_]+)?$/i',
-        'in' => '/^[a-z0-9$_]+$/i', // Instance name (defined in tnsnames.ora)
+        // TNS
+        'tns' => '/^\(DESCRIPTION=(\(.+\)){2,}\)$/',
+        // Easy Connect string (Oracle 10g+).
+        // https://docs.oracle.com/en/database/oracle/oracle-database/23/netag/configuring-naming-methods.html#GUID-36F3A17D-843C-490A-8A23-FB0FE005F8E8
+        // [//]host[:port][/[service_name][:server_type][/instance_name]]
+        'ec' => '/^
+            (\/\/)?
+            (\[)?[a-z0-9.:_-]+(\])? # Host or IP address
+            (:[1-9][0-9]{0,4})?     # Port
+            (
+                (\/)
+                ([a-z0-9.$_]+)?     # Service name
+                (:[a-z]+)?          # Server type
+                (\/[a-z0-9$_]+)?    # Instance name
+            )?
+        $/ix',
+        // Instance name (defined in tnsnames.ora)
+        'in' => '/^[a-z0-9$_]+$/i',
     ];
 
     /**

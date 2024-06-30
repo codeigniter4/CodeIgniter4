@@ -125,8 +125,8 @@ final class AutoRouteCollector
             $filters['before'] = array_intersect($filtersLongest['before'], $filtersShortest['before']);
             $filters['after']  = array_intersect($filtersLongest['after'], $filtersShortest['after']);
 
-            $route['before'] = implode(' ', array_map('class_basename', $filters['before']));
-            $route['after']  = implode(' ', array_map('class_basename', $filters['after']));
+            $route['before'] = implode(' ', array_map(class_basename(...), $filters['before']));
+            $route['after']  = implode(' ', array_map(class_basename(...), $filters['after']));
         }
 
         return $routes;

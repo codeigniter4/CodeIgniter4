@@ -393,7 +393,7 @@ class CLI
     private static function printKeysAndValues(array $options): void
     {
         // +2 for the square brackets around the key
-        $keyMaxLength = max(array_map('mb_strwidth', array_keys($options))) + 2;
+        $keyMaxLength = max(array_map(mb_strwidth(...), array_keys($options))) + 2;
 
         foreach ($options as $key => $description) {
             $name = str_pad('  [' . $key . ']  ', $keyMaxLength + 4, ' ');
@@ -857,7 +857,7 @@ class CLI
 
             $first = true;
 
-            array_walk($lines, static function (&$line) use ($padLeft, &$first) {
+            array_walk($lines, static function (&$line) use ($padLeft, &$first): void {
                 if (! $first) {
                     $line = str_repeat(' ', $padLeft) . $line;
                 } else {
