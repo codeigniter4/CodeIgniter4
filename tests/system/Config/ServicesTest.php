@@ -356,19 +356,22 @@ final class ServicesTest extends CIUnitTestCase
     public function testResetServiceCache(): void
     {
         Services::injectMock('response', new MockResponse(new App()));
-        $someService = service('response');
-        $this->assertInstanceOf(MockResponse::class, $someService);
+        $response = service('response');
+        $this->assertInstanceOf(MockResponse::class, $response);
         service('response')->setStatusCode(200);
 
-        Services::autoloader()->addNamespace('AfterAutoloadModule', TESTPATH . '_support/Test/AfterAutoloadModule/');
+        Services::autoloader()->addNamespace(
+            'AfterAutoloadModule',
+            TESTPATH . '_support/Test/AfterAutoloadModule/'
+        );
         Services::resetServicesCache();
 
-        $someService = service('response');
-        $this->assertInstanceOf(MockResponse::class, $someService);
-        $this->assertSame(200, $someService->getStatusCode());
+        $response = service('response');
+        $this->assertInstanceOf(MockResponse::class, $response);
+        $this->assertSame(200, $response->getStatusCode());
 
-        $someService = service('test');
-        $this->assertInstanceOf(Test::class, $someService);
+        $test = service('test');
+        $this->assertInstanceOf(Test::class, $test);
     }
 
     public function testFilters(): void
