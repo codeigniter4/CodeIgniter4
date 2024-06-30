@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
+use PHPUnit\Framework\Attributes\AfterClass;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\Constraints\SeeInDatabase;
@@ -228,14 +229,13 @@ trait DatabaseTestTrait
     // --------------------------------------------------------------------
     // Utility
     // --------------------------------------------------------------------
-
     /**
      * Reset $doneMigration and $doneSeed
      *
-     * @afterClass
      *
      * @return void
      */
+    #[AfterClass]
     public static function resetMigrationSeedCount()
     {
         self::$doneMigration = false;
