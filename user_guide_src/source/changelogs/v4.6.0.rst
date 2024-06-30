@@ -135,6 +135,8 @@ Others
 ------
 
 - Added a new configuration ``foundRows`` for MySQLi to use ``MYSQLI_CLIENT_FOUND_ROWS``.
+- Added the ``BaseConnection::resetTransStatus()`` method to reset the transaction
+  status. See :ref:`transactions-resetting-transaction-status` for details.
 
 Model
 =====
