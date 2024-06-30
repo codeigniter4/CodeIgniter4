@@ -353,7 +353,7 @@ final class ServicesTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
-    public function testUpdateServiceCache(): void
+    public function testResetServiceCache(): void
     {
         Services::injectMock('response', new MockResponse(new App()));
         $someService = service('response');
@@ -361,7 +361,7 @@ final class ServicesTest extends CIUnitTestCase
         service('response')->setStatusCode(200);
 
         Services::autoloader()->addNamespace('AfterAutoloadModule', TESTPATH . '_support/Test/AfterAutoloadModule/');
-        Services::updateServicesCache();
+        Services::resetServicesCache();
 
         $someService = service('response');
         $this->assertInstanceOf(MockResponse::class, $someService);
