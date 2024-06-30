@@ -617,7 +617,7 @@ class Filters
         [$alias, $arguments] = explode(':', $filter);
 
         $arguments = explode(',', $arguments);
-        array_walk($arguments, static function (&$item) {
+        array_walk($arguments, static function (&$item): void {
             $item = trim($item);
         });
 
