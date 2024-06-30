@@ -940,9 +940,11 @@ in_list                 Yes        Fails if field is not within a predetermined 
 integer                 No         Fails if field contains anything other than
                                    an integer.
 is_natural              No         Fails if field contains anything other than
-                                   a natural number: 0, 1, 2, 3, etc.
+                                   a natural number: ``0``, ``1``, ``2``, ``3``
+                                   , etc.
 is_natural_no_zero      No         Fails if field contains anything other than
-                                   a natural number, except zero: 1, 2, 3, etc.
+                                   a natural number, except zero: ``1``, ``2``,
+                                   ``3``, etc.
 is_not_unique           Yes        Checks the database to see if the given value ``is_not_unique[table.field,where_field,where_value]``
                                    exists. Can ignore records by field/value to
                                    filter (currently accept only one filter).
@@ -974,7 +976,7 @@ required_with           Yes        The field is required when any of the other  
                                    fields is not `empty()`_ in the data.
 required_without        Yes        The field is required when any of the other   ``required_without[field1,field2]``
                                    fields is `empty()`_ in the data.
-string                  No         A generic alternative to the alpha* rules
+string                  No         A generic alternative to the **alpha*** rules
                                    that confirms the element is a string
 timezone                No         Fails if field does not match a timezone
                                    per `timezone_identifiers_list()`_
