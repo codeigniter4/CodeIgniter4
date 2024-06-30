@@ -181,8 +181,9 @@ Resetting Services Cache
 
 .. versionadded:: 4.6.0
 
-When Services is first called fairly early in the framework initialization process,
-the Services classes discovered by auto-discovery is cached in a property.
+When the Services class is first called fairly early in the framework initialization
+process, the Services classes discovered by auto-discovery are cached in a property,
+and it will not be updated.
 
 If modules are dynamically loaded later, and there are Services in the modules,
 the cache must be updated.
