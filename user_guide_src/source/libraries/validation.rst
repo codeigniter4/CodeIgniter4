@@ -897,15 +897,11 @@ Rule                    Parameter  Description                                  
 ======================= ========== ============================================= ===================================================
 alpha                   No         Fails if field has anything other than
                                    alphabetic characters in ASCII.
-alpha_space             No         Fails if field contains anything other than
-                                   alphabetic characters or spaces in ASCII.
 alpha_dash              No         Fails if field contains anything other than
                                    alphanumeric characters, underscores or
                                    dashes in ASCII.
 alpha_numeric           No         Fails if field contains anything other than
                                    alphanumeric characters in ASCII.
-alpha_numeric_space     No         Fails if field contains anything other than
-                                   alphanumeric or space characters in ASCII.
 alpha_numeric_punct     No         Fails if field contains anything other than
                                    alphanumeric, space, or this limited set of
                                    punctuation characters: ``~`` (tilde),
@@ -916,6 +912,10 @@ alpha_numeric_punct     No         Fails if field contains anything other than
                                    ``_`` (underscore), ``+`` (plus),
                                    ``=`` (equals), ``|`` (vertical bar),
                                    ``:`` (colon), ``.`` (period).
+alpha_numeric_space     No         Fails if field contains anything other than
+                                   alphanumeric or space characters in ASCII.
+alpha_space             No         Fails if field contains anything other than
+                                   alphabetic characters or spaces in ASCII.
 decimal                 No         Fails if field contains anything other than
                                    a decimal number. Also accepts a ``+`` or
                                    ``-`` sign for the number.
@@ -964,10 +964,10 @@ not_in_list             Yes        Fails if field is within a predetermined     
                                    list.
 numeric                 No         Fails if field contains anything other than
                                    numeric characters.
-regex_match             Yes        Fails if field does not match the regular     ``regex_match[/regex/]``
-                                   expression.
 permit_empty            No         Allows the field to receive an empty array,
                                    empty string, null or false.
+regex_match             Yes        Fails if field does not match the regular     ``regex_match[/regex/]``
+                                   expression.
 required                No         Fails if the field is an empty array, empty
                                    string, null or false.
 required_with           Yes        The field is required when any of the other   ``required_with[field1,field2]``
@@ -980,31 +980,6 @@ timezone                No         Fails if field does not match a timezone
                                    per `timezone_identifiers_list()`_
 valid_base64            No         Fails if field contains anything other than
                                    valid Base64 characters.
-valid_json              No         Fails if field does not contain a valid JSON
-                                   string.
-valid_email             No         Fails if field does not contain a valid
-                                   email address.
-valid_emails            No         Fails if any value provided in a comma
-                                   separated list is not a valid email.
-valid_ip                Yes        Fails if the supplied IP is not valid.        ``valid_ip[ipv6]``
-                                   Accepts an optional parameter of ``ipv4`` or
-                                   ``ipv6`` to specify an IP format.
-valid_url               No         Fails if field does not contain (loosely) a
-                                   URL. Includes simple strings that could be
-                                   hostnames, like "codeigniter".
-                                   **Normally,** ``valid_url_strict`` **should
-                                   be used.**
-valid_url_strict        Yes        Fails if field does not contain a valid URL.  ``valid_url_strict[https]``
-                                   You can optionally specify a list of valid
-                                   schemas. If not specified, ``http,https``
-                                   are valid. This rule uses PHP's
-                                   ``FILTER_VALIDATE_URL``.
-valid_date              Yes        Fails if field does not contain a valid date. ``valid_date[d/m/Y]``
-                                   Any string that `strtotime()`_ accepts is
-                                   valid if you don't specify an optional
-                                   parameter that matches a date format.
-                                   **So it is usually necessary to specify
-                                   the parameter.**
 valid_cc_number         Yes        Verifies that the credit card number matches  ``valid_cc_number[amex]``
                                    the format used by the specified provider.
                                    Current supported providers are:
@@ -1025,6 +1000,31 @@ valid_cc_number         Yes        Verifies that the credit card number matches 
                                    Scotiabank Scotia Card (``scotia``),
                                    BMO ABM Card (``bmoabm``),
                                    HSBC Canada Card (``hsbc``)
+valid_date              Yes        Fails if field does not contain a valid date. ``valid_date[d/m/Y]``
+                                   Any string that `strtotime()`_ accepts is
+                                   valid if you don't specify an optional
+                                   parameter that matches a date format.
+                                   **So it is usually necessary to specify
+                                   the parameter.**
+valid_email             No         Fails if field does not contain a valid
+                                   email address.
+valid_emails            No         Fails if any value provided in a comma
+                                   separated list is not a valid email.
+valid_ip                Yes        Fails if the supplied IP is not valid.        ``valid_ip[ipv6]``
+                                   Accepts an optional parameter of ``ipv4`` or
+                                   ``ipv6`` to specify an IP format.
+valid_json              No         Fails if field does not contain a valid JSON
+                                   string.
+valid_url               No         Fails if field does not contain (loosely) a
+                                   URL. Includes simple strings that could be
+                                   hostnames, like "codeigniter".
+                                   **Normally,** ``valid_url_strict`` **should
+                                   be used.**
+valid_url_strict        Yes        Fails if field does not contain a valid URL.  ``valid_url_strict[https]``
+                                   You can optionally specify a list of valid
+                                   schemas. If not specified, ``http,https``
+                                   are valid. This rule uses PHP's
+                                   ``FILTER_VALIDATE_URL``.
 ======================= ========== ============================================= ===================================================
 
 .. note:: You can also use any native PHP functions that return boolean and
