@@ -362,7 +362,7 @@ final class ServicesTest extends CIUnitTestCase
 
         Services::autoloader()->addNamespace(
             'AfterAutoloadModule',
-            TESTPATH . '_support/Test/AfterAutoloadModule/'
+            SUPPORTPATH . '_AfterAutoloadModule/'
         );
         Services::resetServicesCache();
 
