@@ -35,7 +35,6 @@ if (! function_exists('set_cookie')) {
      * @param bool|null           $httpOnly True makes the cookie accessible via http(s) only (no javascript)
      * @param string|null         $sameSite The cookie SameSite value
      *
-     *
      * @see \CodeIgniter\HTTP\Response::setCookie()
      */
     function set_cookie(
@@ -90,7 +89,6 @@ if (! function_exists('delete_cookie')) {
      * @param string $domain the cookie domain. Usually: .yourdomain.com
      * @param string $path   the cookie path
      * @param string $prefix the cookie prefix
-     *
      *
      * @see \CodeIgniter\HTTP\Response::deleteCookie()
      */
