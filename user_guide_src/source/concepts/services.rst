@@ -174,5 +174,18 @@ would simply use the framework's ``Config\Services`` class to grab your service:
 
 .. note:: If multiple Services files have the same method name, the first one found will be the instance returned.
 
-There may be times when you need to have Service Discovery refresh it's cache after the inital autoload proccess. This can be done by running :php:meth:`Config\\Services::updateServicesCache()`.
-This will force the service discovery to re-scan the directories for any new services files.
+.. _resetting-services-cache:
+
+Resetting Services Cache
+========================
+
+.. versionadded:: 4.6.0
+
+When Services is first called fairly early in the framework initialization process,
+the Services classes discovered by auto-discovery is cached in a property.
+
+If modules are dynamically loaded later, and there are Services in the modules,
+the cache must be updated.
+
+This can be done by running ``Config\Services::resetServicesCache()``. This will
+clear the cache, and force the service discovery again when needed.

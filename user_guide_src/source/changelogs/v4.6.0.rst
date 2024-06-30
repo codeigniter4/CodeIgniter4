@@ -154,12 +154,11 @@ Helpers and Functions
 
 Others
 ======
-- **Services:** Added ``BaseService::updateServicesCache`` method to allow
-  updating the services cache file post autoloading. This will only look for
-  new services and add them to the class name cache.
 
 - **Filters:** Now you can execute a filter more than once with the different
   arguments in before or after.
+- **Services:** Added ``BaseService::resetServicesCache()`` method to reset
+  the services cache. See :ref:`resetting-services-cache`.
 
 ***************
 Message Changes
