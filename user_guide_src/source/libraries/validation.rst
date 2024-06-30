@@ -1031,7 +1031,8 @@ valid_url_strict        Yes        Fails if field does not contain a valid URL. 
 
 .. note:: You can also use any native PHP functions that return boolean and
     permit at least one parameter, the field data to validate.
-    The Validation library **never alters the data** to validate.
+
+.. important:: The Validation library **never alters the data** to validate.
 
 .. _timezone_identifiers_list(): https://www.php.net/manual/en/function.timezone-identifiers-list.php
 .. _strtotime(): https://www.php.net/manual/en/function.strtotime.php
