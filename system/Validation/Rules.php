@@ -454,7 +454,7 @@ class Rules
             throw new InvalidArgumentException('You must supply the parameters: field,expected_value, data.');
         }
 
-        if (!str_contains($fieldWithValue, ',')) { // @phpstan-ignore-line Use empty()
+        if (! str_contains($fieldWithValue, ',')) { // @phpstan-ignore-line Use empty()
             throw new InvalidArgumentException("You must supply the expected value of field: E.g. {$fieldWithValue},expected_value?");
         }
 
@@ -480,8 +480,8 @@ class Rules
         $expectedValue = trim($params[1]);
 
         if (
-            (array_key_exists($field, $data) && $data[$field] == $expectedValue)
-            || (dot_array_search($field, $data) == $expectedValue) // @phpstan-ignore-line Use empty()
+            (array_key_exists($field, $data) && $data[$field] === $expectedValue)
+            || (dot_array_search($field, $data) === $expectedValue) // @phpstan-ignore-line Use empty()
         ) {
             $requiredFields[] = $field;
         }
