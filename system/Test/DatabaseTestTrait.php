@@ -19,6 +19,7 @@ use CodeIgniter\Test\Constraints\SeeInDatabase;
 use Config\Database;
 use Config\Migrations;
 use Config\Services;
+use PHPUnit\Framework\Attributes\AfterClass;
 
 /**
  * DatabaseTestTrait
@@ -228,14 +229,12 @@ trait DatabaseTestTrait
     // --------------------------------------------------------------------
     // Utility
     // --------------------------------------------------------------------
-
     /**
      * Reset $doneMigration and $doneSeed
      *
-     * @afterClass
-     *
      * @return void
      */
+    #[AfterClass]
     public static function resetMigrationSeedCount()
     {
         self::$doneMigration = false;
