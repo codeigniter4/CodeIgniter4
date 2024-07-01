@@ -437,6 +437,56 @@ class Rules
     }
 
     /**
+     * The field is required when any of the other required fields have expected value are present
+     * in the data.
+     *
+     * Example (identity_number field is required when the citizenship field has "1" value is present):
+     *
+     *     required_with_value[citizenship,1]
+     *
+     * @param string|null $str
+     * @param string|null $field with expected value that we should check if present
+     * @param array       $data   Complete list of field from the form
+     */
+    public function required_with_value($str = null, ?string $fieldWithValue = null, array $data = []): bool
+    {
+        if ($fieldWithValue === null || $data === [])
+            throw new InvalidArgumentException('You must supply the parameters: field,expected_value, data.');
+
+        if (!str_contains($fieldWithValue, ',')) // @phpstan-ignore-line Use empty()
+            throw new InvalidArgumentException("You must supply the expected value of field: E.g. {$fieldWithValue},expected_value?");
+
+        // If the field is present we can safely assume that
+        // the field is here, no matter whether the corresponding
+        // search field is present or not.
+        $present = $this->required($str ?? '');
+
+        if ($present)
+            return true;
+
+        // Still here? Then we fail this test if
+        // any of the fields are present in $data
+        // as $fields is the list
+        $requiredFields = [];
+
+        // Separate field and value
+        $params = explode(',', $fieldWithValue);
+
+        // Get field and value
+        $field = trim($params[0]);
+        $expectedValue = trim($params[1]);
+
+        if (
+            (array_key_exists($field, $data) && $data[$field] == $expectedValue)
+            || (dot_array_search($field, $data) == $expectedValue) // @phpstan-ignore-line Use empty()
+        ) {
+            $requiredFields[] = $field;
+        }
+
+        return $requiredFields === [];
+    }
+
+    /**
      * The field exists in $data.
      *
      * @param array|bool|float|int|object|string|null $value The field value.
