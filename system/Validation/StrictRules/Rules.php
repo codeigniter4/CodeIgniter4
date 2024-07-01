@@ -417,7 +417,7 @@ class Rules
      *
      * @param string|null $str
      * @param string|null $field with expected value that we should check if present
-     * @param array       $data   Complete list of field from the form
+     * @param array       $data  Complete list of field from the form
      */
     public function required_with_value($str = null, ?string $fieldWithValue = null, array $data = []): bool
     {
