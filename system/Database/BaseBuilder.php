@@ -430,8 +430,10 @@ class BaseBuilder
                  * This prevents NULL being escaped
                  * @see https://github.com/codeigniter4/CodeIgniter4/issues/1169
                  */
-                if (mb_stripos(trim($val), 'NULL') === 0) {
-                    $escape = false;
+                if (mb_stripos($val, 'NULL') === 0) {
+                    $this->QBNoEscape[] = false;
+
+                    continue;
                 }
 
                 $this->QBNoEscape[] = $escape;
