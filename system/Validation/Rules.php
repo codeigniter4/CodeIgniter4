@@ -444,9 +444,9 @@ class Rules
      *
      *     required_with_value[citizenship,1]
      *
-     * @param string|null $str
-     * @param string|null $fieldWithValue that we should check if present
-     * @param array       $data           Complete list of field from the form
+     * @param string|null          $str
+     * @param string|null          $fieldWithValue that we should check if present
+     * @param array<string, mixed> $data           Complete list of field from the form
      */
     public function required_with_value($str = null, ?string $fieldWithValue = null, array $data = []): bool
     {
