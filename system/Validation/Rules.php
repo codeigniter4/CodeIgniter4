@@ -473,11 +473,7 @@ class Rules
         $requiredFields = [];
 
         // Separate field and value
-        $params = explode(',', $fieldWithValue);
-
-        // Get field and value
-        $field         = trim($params[0]);
-        $expectedValue = trim($params[1]);
+        [$field, $expectedValue] = array_map('trim', explode(',', $fieldWithValue));
 
         if (
             (array_key_exists($field, $data) && $data[$field] === $expectedValue)
