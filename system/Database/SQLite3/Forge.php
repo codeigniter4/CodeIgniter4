@@ -115,22 +115,12 @@ class Forge extends BaseForge
      *                                      or column names to DROP
      *
      * @return         array|string|null
-     * @return         bool|list<string>|string|null                       SQL execute result or null
+     * @return         list<string>|string|null                            SQL string or null
      * @phpstan-return ($alterType is 'DROP' ? string : list<string>|null)
      */
     protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         switch ($alterType) {
-            case 'DROP':
-                $columnNamesToDrop = $processedFields;
-
-                $sqlTable = new Table($this->db, $this);
-
-                return $sqlTable->fromTable($table)
-                    ->dropColumn($columnNamesToDrop)
-                    ->run();
-
-                // Return the execute result with boolean type.
             case 'CHANGE':
                 $fieldsToModify = [];
 
@@ -151,10 +141,12 @@ class Forge extends BaseForge
                     $fieldsToModify[] = $field;
                 }
 
-                return (new Table($this->db, $this))
+                (new Table($this->db, $this))
                     ->fromTable($table)
                     ->modifyColumn($fieldsToModify)
                     ->run();
+
+                return null; // Why null?
 
             default:
                 return parent::_alterTable($alterType, $table, $processedFields);
@@ -170,21 +162,21 @@ class Forge extends BaseForge
      */
     public function dropColumn(string $table, $columnNames)
     {
-        $sqlExecuteResult = $this->_alterTable('DROP', $this->db->DBPrefix . $table, $columnNames);
+        $sqlTable = new Table($this->db, $this);
 
-        if (is_bool($sqlExecuteResult) === true) {
-            if ($sqlExecuteResult === false) {
-                if ($this->db->DBDebug) {
-                    throw new DatabaseException('This feature is not available for the database you are using.');
-                }
+        $sqlExecuteResult = $sqlTable->fromTable($this->db->DBPrefix . $table)
+            ->dropColumn($columnNames)
+            ->run();
 
-                return false;
+        if ($sqlExecuteResult === false) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('This feature is not available for the database you are using.');
             }
 
-            return $sqlExecuteResult;
+            return false;
         }
 
-        return $this->db->query($sqlExecuteResult);
+        return $sqlExecuteResult;
     }
 
     /**
