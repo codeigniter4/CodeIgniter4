@@ -459,7 +459,7 @@ class Rules
         $field          = array_shift($parts); // Get field
         $expectedValues = $parts; // The remainder is the expected value
 
-        if (empty($field) || empty($expectedValues))) {
+        if (empty($field) || empty($expectedValues)) {
             throw new InvalidArgumentException("You must supply the expected values of field: E.g. {$fieldWithValue},value1,value2,...");
         }
 
