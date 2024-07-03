@@ -440,9 +440,9 @@ class Rules
      * The field is required when any of the other required fields have expected value are present
      * in the data.
      *
-     * Example (identity_number field is required when the citizenship field has "1" value is present):
+     * Example (identity_number field is required when the citizenship,1,2 value is present):
      *
-     *     required_with_value[citizenship,1]
+     *     required_with_value[citizenship,1,2]
      *
      * @param string|null          $str
      * @param string|null          $fieldWithValue that we should check if present
@@ -451,38 +451,30 @@ class Rules
     public function required_with_value($str = null, ?string $fieldWithValue = null, array $data = []): bool
     {
         if ($fieldWithValue === null || $data === []) {
-            throw new InvalidArgumentException('You must supply the parameters: field,expected_value, data.');
+            throw new InvalidArgumentException('You must supply the parameters: field,expected_values, data.');
         }
 
-        if (! str_contains($fieldWithValue, ',')) {
-            throw new InvalidArgumentException("You must supply the expected value of field: E.g. {$fieldWithValue},expected_value?");
+        // Separate fields and expected values
+        $parts          = explode(',', $fieldWithValue);
+        $field          = array_shift($parts); // Get field
+        $expectedValues = $parts; // The remainder is the expected value
+
+        if (empty($field) || empty($expectedValues))) {
+            throw new InvalidArgumentException("You must supply the expected values of field: E.g. {$fieldWithValue},value1,value2,...");
         }
 
-        // If the field is present we can safely assume that
-        // the field is here, no matter whether the corresponding
-        // search field is present or not.
-        $present = $this->required($str ?? '');
-
-        if ($present) {
+        // If the field does not exist in the data, immediately return true
+        if (! array_key_exists($field, $data)) {
             return true;
         }
 
-        // Still here? Then we fail this test if
-        // any of the fields are present in $data
-        // as $fields is the list
-        $requiredFields = [];
-
-        // Separate field and value
-        [$field, $expectedValue] = array_map('trim', explode(',', $fieldWithValue));
-
-        if (
-            (array_key_exists($field, $data) && $data[$field] === $expectedValue)
-            || (dot_array_search($field, $data) === $expectedValue)
-        ) {
-            $requiredFields[] = $field;
+        // If the value of a field matches one of the expected values, then this field is required
+        if (in_array($data[$field], $expectedValues, true)) {
+            // The field to be checked must exist and cannot be empty
+            return ! empty($str);
         }
 
-        return $requiredFields === [];
+        return true;
     }
 
     /**
