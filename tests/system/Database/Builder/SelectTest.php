@@ -19,6 +19,7 @@ use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -67,6 +68,65 @@ final class SelectTest extends CIUnitTestCase
         $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
+    /**
+     * @param list<RawSql|string> $select
+     */
+    #[DataProvider('provideSelectAcceptsArrayWithRawSql')]
+    public function testSelectAcceptsArrayWithRawSql(array $select, string $expected): void
+    {
+        $builder = new BaseBuilder('employees', $this->db);
+
+        $builder->select($select);
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * @return list<list<RawSql|string>|string>
+     */
+    public static function provideSelectAcceptsArrayWithRawSql(): iterable
+    {
+        yield from [
+            [
+                [
+                    new RawSql("IF(salary > 5000, 'High', 'Low') AS salary_level"),
+                    'employee_id',
+                ],
+                <<<'SQL'
+                    SELECT IF(salary > 5000, 'High', 'Low') AS salary_level, "employee_id" FROM "employees"
+                    SQL,
+            ],
+            [
+                [
+                    'employee_id',
+                    new RawSql("IF(salary > 5000, 'High', 'Low') AS salary_level"),
+                ],
+                <<<'SQL'
+                    SELECT "employee_id", IF(salary > 5000, 'High', 'Low') AS salary_level FROM "employees"
+                    SQL,
+            ],
+            [
+                [
+                    new RawSql("CONCAT(first_name, ' ', last_name) AS full_name"),
+                    new RawSql("IF(salary > 5000, 'High', 'Low') AS salary_level"),
+                ],
+                <<<'SQL'
+                    SELECT CONCAT(first_name, ' ', last_name) AS full_name, IF(salary > 5000, 'High', 'Low') AS salary_level FROM "employees"
+                    SQL,
+            ],
+            [
+                [
+                    new RawSql("CONCAT(first_name, ' ', last_name) AS full_name"),
+                    'employee_id',
+                    new RawSql("IF(salary > 5000, 'High', 'Low') AS salary_level"),
+                ],
+                <<<'SQL'
+                    SELECT CONCAT(first_name, ' ', last_name) AS full_name, "employee_id", IF(salary > 5000, 'High', 'Low') AS salary_level FROM "employees"
+                    SQL,
+            ],
+        ];
+    }
+
     public function testSelectAcceptsMultipleColumns(): void
     {
         $builder = new BaseBuilder('users', $this->db);
@@ -96,6 +156,28 @@ final class SelectTest extends CIUnitTestCase
         $builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid');
 
         $expected = 'SELECT (SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid FROM "users"';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testSelectNullAsInString(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->select('NULL as field_alias, name');
+
+        $expected = 'SELECT NULL as field_alias, "name" FROM "users"';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testSelectNullAsInArray(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->select(['NULL as field_alias', 'name']);
+
+        $expected = 'SELECT NULL as field_alias, "name" FROM "users"';
 
         $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
