@@ -1721,29 +1721,17 @@ There can be no spaces before and after <code class="docutils literal notranslat
 alphabetic characters in ASCII.</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>alpha_space</p></td>
-<td><p>No</p></td>
-<td><p>Fails if field contains anything other than
-alphabetic characters or spaces in ASCII.</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>alpha_dash</p></td>
+<tr class="row-odd"><td><p>alpha_dash</p></td>
 <td><p>No</p></td>
 <td><p>Fails if field contains anything other than
 alphanumeric characters, underscores or
 dashes in ASCII.</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>alpha_numeric</p></td>
+<tr class="row-even"><td><p>alpha_numeric</p></td>
 <td><p>No</p></td>
 <td><p>Fails if field contains anything other than
 alphanumeric characters in ASCII.</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>alpha_numeric_space</p></td>
-<td><p>No</p></td>
-<td><p>Fails if field contains anything other than
-alphanumeric or space characters in ASCII.</p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>alpha_numeric_punct</p></td>
@@ -1758,6 +1746,18 @@ punctuation characters: <code class="docutils literal notranslate"><span class="
 <code class="docutils literal notranslate"><span class="pre">_</span></code> (underscore), <code class="docutils literal notranslate"><span class="pre">+</span></code> (plus),
 <code class="docutils literal notranslate"><span class="pre">=</span></code> (equals), <code class="docutils literal notranslate"><span class="pre">|</span></code> (vertical bar),
 <code class="docutils literal notranslate"><span class="pre">:</span></code> (colon), <code class="docutils literal notranslate"><span class="pre">.</span></code> (period).</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>alpha_numeric_space</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field contains anything other than
+alphanumeric or space characters in ASCII.</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>alpha_space</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field contains anything other than
+alphabetic characters or spaces in ASCII.</p></td>
 <td></td>
 </tr>
 <tr class="row-even"><td><p>decimal</p></td>
@@ -1826,13 +1826,15 @@ an integer.</p></td>
 <tr class="row-even"><td><p>is_natural</p></td>
 <td><p>No</p></td>
 <td><p>Fails if field contains anything other than
-a natural number: 0, 1, 2, 3, etc.</p></td>
+a natural number: <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">3</span></code>
+, etc.</p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>is_natural_no_zero</p></td>
 <td><p>No</p></td>
 <td><p>Fails if field contains anything other than
-a natural number, except zero: 1, 2, 3, etc.</p></td>
+a natural number, except zero: <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>,
+<code class="docutils literal notranslate"><span class="pre">3</span></code>, etc.</p></td>
 <td></td>
 </tr>
 <tr class="row-even"><td><p>is_not_unique</p></td>
@@ -1892,17 +1894,17 @@ list.</p></td>
 numeric characters.</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>regex_match</p></td>
-<td><p>Yes</p></td>
-<td><p>Fails if field does not match the regular
-expression.</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">regex_match[/regex/]</span></code></p></td>
-</tr>
-<tr class="row-even"><td><p>permit_empty</p></td>
+<tr class="row-odd"><td><p>permit_empty</p></td>
 <td><p>No</p></td>
 <td><p>Allows the field to receive an empty array,
 empty string, null or false.</p></td>
 <td></td>
+</tr>
+<tr class="row-even"><td><p>regex_match</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if field does not match the regular
+expression.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">regex_match[/regex/]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>required</p></td>
 <td><p>No</p></td>
@@ -1924,7 +1926,7 @@ fields is <a class="reference external" href="https://www.php.net/manual/en/func
 </tr>
 <tr class="row-even"><td><p>string</p></td>
 <td><p>No</p></td>
-<td><p>A generic alternative to the alpha* rules
+<td><p>A generic alternative to the <strong>alpha*</strong> rules
 that confirms the element is a string</p></td>
 <td></td>
 </tr>
@@ -1940,60 +1942,7 @@ per <a class="reference external" href="https://www.php.net/manual/en/function.t
 valid Base64 characters.</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>valid_json</p></td>
-<td><p>No</p></td>
-<td><p>Fails if field does not contain a valid JSON
-string.</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>valid_email</p></td>
-<td><p>No</p></td>
-<td><p>Fails if field does not contain a valid
-email address.</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>valid_emails</p></td>
-<td><p>No</p></td>
-<td><p>Fails if any value provided in a comma
-separated list is not a valid email.</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>valid_ip</p></td>
-<td><p>Yes</p></td>
-<td><p>Fails if the supplied IP is not valid.
-Accepts an optional parameter of <code class="docutils literal notranslate"><span class="pre">ipv4</span></code> or
-<code class="docutils literal notranslate"><span class="pre">ipv6</span></code> to specify an IP format.</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">valid_ip[ipv6]</span></code></p></td>
-</tr>
-<tr class="row-odd"><td><p>valid_url</p></td>
-<td><p>No</p></td>
-<td><p>Fails if field does not contain (loosely) a
-URL. Includes simple strings that could be
-hostnames, like “codeigniter”.
-<strong>Normally,</strong> <code class="docutils literal notranslate"><span class="pre">valid_url_strict</span></code> <strong>should
-be used.</strong></p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>valid_url_strict</p></td>
-<td><p>Yes</p></td>
-<td><p>Fails if field does not contain a valid URL.
-You can optionally specify a list of valid
-schemas. If not specified, <code class="docutils literal notranslate"><span class="pre">http,https</span></code>
-are valid. This rule uses PHP’s
-<code class="docutils literal notranslate"><span class="pre">FILTER_VALIDATE_URL</span></code>.</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">valid_url_strict[https]</span></code></p></td>
-</tr>
-<tr class="row-odd"><td><p>valid_date</p></td>
-<td><p>Yes</p></td>
-<td><p>Fails if field does not contain a valid date.
-Any string that <a class="reference external" href="https://www.php.net/manual/en/function.strtotime.php">strtotime()</a> accepts is
-valid if you don’t specify an optional
-parameter that matches a date format.
-<strong>So it is usually necessary to specify
-the parameter.</strong></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">valid_date[d/m/Y]</span></code></p></td>
-</tr>
-<tr class="row-even"><td><p>valid_cc_number</p></td>
+<tr class="row-odd"><td><p>valid_cc_number</p></td>
 <td><p>Yes</p></td>
 <td><p>Verifies that the credit card number matches
 the format used by the specified provider.
@@ -2017,13 +1966,69 @@ BMO ABM Card (<code class="docutils literal notranslate"><span class="pre">bmoab
 HSBC Canada Card (<code class="docutils literal notranslate"><span class="pre">hsbc</span></code>)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">valid_cc_number[amex]</span></code></p></td>
 </tr>
+<tr class="row-even"><td><p>valid_date</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if field does not contain a valid date.
+Any string that <a class="reference external" href="https://www.php.net/manual/en/function.strtotime.php">strtotime()</a> accepts is
+valid if you don’t specify an optional
+parameter that matches a date format.
+<strong>So it is usually necessary to specify
+the parameter.</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">valid_date[d/m/Y]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>valid_email</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field does not contain a valid
+email address.</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>valid_emails</p></td>
+<td><p>No</p></td>
+<td><p>Fails if any value provided in a comma
+separated list is not a valid email.</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>valid_ip</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if the supplied IP is not valid.
+Accepts an optional parameter of <code class="docutils literal notranslate"><span class="pre">ipv4</span></code> or
+<code class="docutils literal notranslate"><span class="pre">ipv6</span></code> to specify an IP format.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">valid_ip[ipv6]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>valid_json</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field does not contain a valid JSON
+string.</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>valid_url</p></td>
+<td><p>No</p></td>
+<td><p>Fails if field does not contain (loosely) a
+URL. Includes simple strings that could be
+hostnames, like “codeigniter”.
+<strong>Normally,</strong> <code class="docutils literal notranslate"><span class="pre">valid_url_strict</span></code> <strong>should
+be used.</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>valid_url_strict</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if field does not contain a valid URL.
+You can optionally specify a list of valid
+schemas. If not specified, <code class="docutils literal notranslate"><span class="pre">http,https</span></code>
+are valid. This rule uses PHP’s
+<code class="docutils literal notranslate"><span class="pre">FILTER_VALIDATE_URL</span></code>.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">valid_url_strict[https]</span></code></p></td>
+</tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You can also use any native PHP functions that return boolean and
-permit at least one parameter, the field data to validate.
-The Validation library <strong>never alters the data</strong> to validate.</p>
+permit at least one parameter, the field data to validate.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The Validation library <strong>never alters the data</strong> to validate.</p>
 </div>
 </section>
 <section id="rules-for-file-uploads">
@@ -2124,7 +2129,7 @@ an image based on the mime type.</p></td>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 25, 2024.
+      <span class="lastupdated">Last updated on Jul 04, 2024.
       </span></p>
   </div>
 
