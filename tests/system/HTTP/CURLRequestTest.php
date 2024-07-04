@@ -1256,6 +1256,5 @@ alt-svc: h3=":443"; ma=86400' . "\x0d\x0a\x0d\x0aResponse Body";
 
         $this->assertArrayHasKey(CURLOPT_HTTP_VERSION, $options);
         $this->assertSame(CURL_HTTP_VERSION_2_0, $options[CURLOPT_HTTP_VERSION]);
-
     }
 }
