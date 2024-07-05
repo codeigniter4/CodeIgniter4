@@ -442,13 +442,13 @@ class Rules
      *
      * Example (identity_number field is required when the citizenship,1,2 value is present):
      *
-     *     required_with_value[citizenship,1,2]
+     *     required_if[normal_option,1,2]
      *
      * @param string|null          $str
      * @param string|null          $fieldWithValue that we should check if present
      * @param array<string, mixed> $data           Complete list of field from the form
      */
-    public function required_with_value($str = null, ?string $fieldWithValue = null, array $data = []): bool
+    public function required_if($str = null, ?string $fieldWithValue = null, array $data = []): bool
     {
         if ($fieldWithValue === null || $data === []) {
             throw new InvalidArgumentException('You must supply the parameters: field,expected_values, data.');
@@ -459,7 +459,7 @@ class Rules
         $field          = array_shift($parts); // Get field
         $expectedValues = $parts; // The remainder is the expected value
 
-        if (empty($field) || empty($expectedValues)) {
+        if (empty($field) || $expectedValues === []) {
             throw new InvalidArgumentException("You must supply the expected values of field: E.g. {$fieldWithValue},value1,value2,...");
         }
 
@@ -471,7 +471,7 @@ class Rules
         // If the value of a field matches one of the expected values, then this field is required
         if (in_array($data[$field], $expectedValues, true)) {
             // The field to be checked must exist and cannot be empty
-            return ! empty($str);
+            return trim($str) !== '';
         }
 
         return true;
