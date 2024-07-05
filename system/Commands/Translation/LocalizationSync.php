@@ -150,7 +150,7 @@ class LocalizationSync extends BaseCommand
     private function mergeLanguageKeys(array $originalLanguageKeys, array $targetLanguageKeys, string $prefix = ''): array
     {
         foreach ($originalLanguageKeys as $key => $value) {
-            $placeholderValue = $prefix === '' ? $prefix . '.' . $key : $key;
+            $placeholderValue = $prefix !== '' ? $prefix . '.' . $key : $key;
 
             if (! is_array($value)) {
                 // Keep the old value
