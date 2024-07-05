@@ -437,7 +437,7 @@ class Validation implements ValidationInterface
                         $rule  = $match[1];
                         $param = $match[2];
 
-                        if (! in_array($rule, ['required_with', 'required_without', 'required_with_value'], true)) {
+                        if (! in_array($rule, ['required_with', 'required_without', 'required_if'], true)) {
                             continue;
                         }
 
