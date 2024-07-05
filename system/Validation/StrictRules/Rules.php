@@ -411,17 +411,17 @@ class Rules
      * The field is required when any of the other required fields have expected value are present
      * in the data.
      *
-     * Example (identity_number field is required when the citizenship field has "1" value is present):
+     * Example (identity_number field is required when the citizenship,1,2 value is present):
      *
-     *     required_with_value[citizenship,1]
+     *     required_if[normal_option,1,2]
      *
      * @param string|null          $str
      * @param string|null          $fieldWithValue that we should check if present
      * @param array<string, mixed> $data           Complete list of field from the form
      */
-    public function required_with_value($str = null, ?string $fieldWithValue = null, array $data = []): bool
+    public function required_if($str = null, ?string $fieldWithValue = null, array $data = []): bool
     {
-        return $this->nonStrictRules->required_with_value($str, $fieldWithValue, $data);
+        return $this->nonStrictRules->required_if($str, $fieldWithValue, $data);
     }
 
     /**
