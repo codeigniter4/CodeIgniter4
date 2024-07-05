@@ -651,7 +651,7 @@ class CURLRequest extends OutgoingRequest
 
         // version
         if (! empty($config['version'])) {
-            $version = sprintf('%.1f', $config['version']);
+            $version = sprintf('%.1F', $config['version']);
             if ($version === '1.0') {
                 $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
             } elseif ($version === '1.1') {
