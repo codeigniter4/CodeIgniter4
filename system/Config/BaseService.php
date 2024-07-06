@@ -388,6 +388,15 @@ class BaseService
         static::$mocks[strtolower($name)] = $mock;
     }
 
+    /**
+     * Resets the service cache.
+     */
+    public static function resetServicesCache(): void
+    {
+        self::$serviceNames = [];
+        static::$discovered = false;
+    }
+
     protected static function buildServicesCache(): void
     {
         if (! static::$discovered) {

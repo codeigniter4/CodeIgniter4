@@ -157,6 +157,8 @@ Others
 
 - **Filters:** Now you can execute a filter more than once with the different
   arguments in before or after.
+- **Services:** Added ``BaseService::resetServicesCache()`` method to reset
+  the services cache. See :ref:`resetting-services-cache`.
 
 ***************
 Message Changes
