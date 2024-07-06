@@ -459,8 +459,8 @@ class Rules
         $field          = array_shift($parts); // Get field
         $expectedValues = $parts; // The remainder is the expected value
 
-        if (empty($field) || $expectedValues === []) {
-            throw new InvalidArgumentException("You must supply the expected values of field: E.g. {$fieldWithValue},value1,value2,...");
+        if (trim($field) === '' || $expectedValues === []) {
+            throw new InvalidArgumentException("You must supply the expected values of field: E.g. field,value1,value2,...");
         }
 
         // If the field does not exist in the data, immediately return true
