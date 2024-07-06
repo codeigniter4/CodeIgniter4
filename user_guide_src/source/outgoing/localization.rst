@@ -370,7 +370,7 @@ Detailed information can be found by running the command:
 .. _sync-translations-command:
 
 Synchronization  Translation Files via Command
-========================================
+==============================================
 
 .. versionadded:: 4.6.0
 
