@@ -460,7 +460,7 @@ class Rules
         $expectedValues = $parts; // The remainder is the expected value
 
         if (trim($field) === '' || $expectedValues === []) {
-            throw new InvalidArgumentException("You must supply the expected values of field: E.g. field,value1,value2,...");
+            throw new InvalidArgumentException('You must supply the expected values of field: E.g. field,value1,value2,...');
         }
 
         // If the field does not exist in the data, immediately return true
