@@ -972,7 +972,7 @@ class RulesTest extends CIUnitTestCase
             // `special_option` with integer value 
             [true, ['normal_option' => '1', 'special_option' => '1']],
             [true, ['normal_option' => '2', 'special_option' => '1']],
-            // `special_option` is not empty, but it is not contain an integer
+            // `special_option` is not empty, but it is not an integer
             // value, which triggers the Validation.integer error message.
             [false, ['normal_option' => '1', 'special_option' => 'lorem ipsum']],
             [false, ['normal_option' => '2', 'special_option' => 'lorem sit amet']],
