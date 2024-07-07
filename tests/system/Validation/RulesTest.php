@@ -953,4 +953,29 @@ class RulesTest extends CIUnitTestCase
             [false, ['normal_option' => '2']],
         ];
     }
+
+    #[DataProvider('provideRequiredIfWorkWithOtherRule')]
+    public function testRequiredIfWorkWithOtherRule(bool $expected, array $data): void
+    {
+        $this->validation->setRules([
+            'special_option' => 'required_if[normal_option,1,2]|permit_empty|integer',
+        ]);
+
+        $result = $this->validation->run($data);
+
+        $this->assertSame($expected, $result);
+    }
+
+    public static function provideRequiredIfWorkWithOtherRule(): iterable
+    {
+        yield from [
+            // `special_option` with integer value 
+            [true, ['normal_option' => '1', 'special_option' => '1']],
+            [true, ['normal_option' => '2', 'special_option' => '1']],
+            // `special_option` is not empty, but it is not contain an integer
+            // value, which triggers the Validation.integer error message.
+            [false, ['normal_option' => '1', 'special_option' => 'lorem ipsum']],
+            [false, ['normal_option' => '2', 'special_option' => 'lorem sit amet']],
+        ];
+    }
 }
