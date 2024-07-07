@@ -30,6 +30,9 @@ Deprecations
 Bugs Fixed
 **********
 
+- **CURLRequest:** Fixed a bug preventing the use of strings for ``version`` in the config array
+  when making requests.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.

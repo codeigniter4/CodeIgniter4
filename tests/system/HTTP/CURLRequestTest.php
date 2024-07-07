@@ -1227,4 +1227,34 @@ alt-svc: h3=":443"; ma=86400' . "\x0d\x0a\x0d\x0aResponse Body";
 
         $this->assertSame('text/html; charset=UTF-8', $response->getHeaderLine('Content-Type'));
     }
+
+    public function testHTTPversionAsString(): void
+    {
+        $this->request->request('POST', '/post', [
+            'version' => '1.0',
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_HTTP_VERSION, $options);
+        $this->assertSame(CURL_HTTP_VERSION_1_0, $options[CURLOPT_HTTP_VERSION]);
+
+        $this->request->request('POST', '/post', [
+            'version' => '1.1',
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_HTTP_VERSION, $options);
+        $this->assertSame(CURL_HTTP_VERSION_1_1, $options[CURLOPT_HTTP_VERSION]);
+
+        $this->request->request('POST', '/post', [
+            'version' => '2.0',
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_HTTP_VERSION, $options);
+        $this->assertSame(CURL_HTTP_VERSION_2_0, $options[CURLOPT_HTTP_VERSION]);
+    }
 }
