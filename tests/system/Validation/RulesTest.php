@@ -969,7 +969,7 @@ class RulesTest extends CIUnitTestCase
     public static function provideRequiredIfWorkWithOtherRule(): iterable
     {
         yield from [
-            // `special_option` with integer value 
+            // `special_option` with integer value
             [true, ['normal_option' => '1', 'special_option' => '1']],
             [true, ['normal_option' => '2', 'special_option' => '1']],
             // `special_option` is not empty, but it is not an integer
