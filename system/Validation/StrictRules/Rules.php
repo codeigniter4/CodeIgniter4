@@ -408,7 +408,7 @@ class Rules
     }
 
     /**
-     * This field is required when any of the other required fields have their expected values present 
+     * This field is required when any of the other required fields have their expected values present
      * in the data.
      *
      * Example (The special_option field is required when the normal_option,1,2 field has the given value.):
