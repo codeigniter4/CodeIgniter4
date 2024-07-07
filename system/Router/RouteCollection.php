@@ -1565,7 +1565,20 @@ class RouteCollection implements RouteCollectionInterface
             return false;
         }
 
-        return strtolower($this->httpHost) === strtolower($hostname);
+        // Hostname has multiple hostname
+        if(is_array($hostname)) 
+        {
+            $hasMatch = false;
+            foreach ($hostname as $host) {
+                if (strtolower($this->httpHost) === strtolower($host)) {
+                    $hasMatch = true;
+                }
+            }
+            return $hasMatch;
+        }
+        else {
+            return strtolower($this->httpHost) === strtolower($hostname);
+        }
     }
 
     private function processArrayCallableSyntax(string $from, array $to): string
