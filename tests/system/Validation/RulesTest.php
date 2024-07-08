@@ -924,6 +924,9 @@ class RulesTest extends CIUnitTestCase
         );
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     #[DataProvider('provideRequiredIf')]
     public function testRequiredIf(bool $expected, array $data): void
     {
@@ -954,6 +957,9 @@ class RulesTest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     #[DataProvider('provideRequiredIfWorkWithOtherRule')]
     public function testRequiredIfWorkWithOtherRule(bool $expected, array $data): void
     {
@@ -974,8 +980,8 @@ class RulesTest extends CIUnitTestCase
             [true, ['normal_option' => '2', 'special_option' => '1']],
             // `special_option` is not empty, but it is not an integer
             // value, which triggers the Validation.integer error message.
-            [false, ['normal_option' => '1', 'special_option' => 'lorem ipsum']],
-            [false, ['normal_option' => '2', 'special_option' => 'lorem sit amet']],
+            [false, ['normal_option' => '1', 'special_option' => 'a']],
+            [false, ['normal_option' => '2', 'special_option' => 'b']],
         ];
     }
 }
