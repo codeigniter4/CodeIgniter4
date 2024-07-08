@@ -153,13 +153,19 @@ configured to any name of your choice by using `$deletedField`_ property.
 
 .. _model-allowed-fields:
 
+$protectFields
+--------------
+
+If false, then the field names inside ``$allowedFields = []`` array doesn't matter anymore.
+It allows you to mass assigning records in the table.
+
 $allowedFields
 --------------
 
 This array should be updated with the field names that can be set during ``save()``, ``insert()``, or
 ``update()`` methods. Any field names other than these will be discarded. This helps to protect
 against just taking input from a form and throwing it all at the model, resulting in
-potential mass assignment vulnerabilities.
+potential mass assignment vulnerabilities. This only work when ``$protectFields = true``.
 
 .. note:: The `$primaryKey`_ field should never be an allowed field.
 
