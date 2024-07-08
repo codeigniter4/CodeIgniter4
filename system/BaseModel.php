@@ -122,9 +122,8 @@ abstract class BaseModel
     protected ?DataConverter $converter = null;
 
     /**
-     * If this model should use "softDeletes" and
-     * simply set a date when rows are deleted, or
-     * do hard deletes.
+     * If false, then user can perform
+     * mass assignment.
      *
      * @var bool
      */
