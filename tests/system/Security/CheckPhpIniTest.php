@@ -42,7 +42,7 @@ final class CheckPhpIniTest extends CIUnitTestCase
         $output = CheckPhpIni::checkIni();
 
         $expected = [
-            'global'      => '',
+            'global'      => '1',
             'current'     => '1',
             'recommended' => '1',
             'remark'      => '',
