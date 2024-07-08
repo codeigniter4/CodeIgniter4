@@ -471,7 +471,7 @@ class Rules
         // If the value of a field matches one of the expected values, then this field is required
         if (in_array($data[$field], $expectedValues, true)) {
             // The field to be checked must exist and cannot be empty
-            return trim($str) !== '';
+            return trim($str ?? '') !== '';
         }
 
         return true;
