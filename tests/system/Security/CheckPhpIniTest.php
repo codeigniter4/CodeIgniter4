@@ -37,6 +37,19 @@ final class CheckPhpIniTest extends CIUnitTestCase
         $this->assertSame($expected, $output['display_errors']);
     }
 
+    public function testCheckIniOpcache(): void
+    {
+        $output = CheckPhpIni::checkIni();
+
+        $expected = [
+            'global'      => '',
+            'current'     => '1',
+            'recommended' => '1',
+            'remark'      => '',
+        ];
+        $this->assertSame($expected, $output['opcache.save_comments']);
+    }
+
     public function testRunCli(): void
     {
         // Set MockInputOutput to CLI.
