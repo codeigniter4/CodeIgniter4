@@ -139,6 +139,7 @@ class CheckPhpIni
             'opcache.jit_buffer_size'         => [],
             'zend.assertions'         => ['recommended' => '-1'],
             'opcache.memory_consumption'      => ['recommended' => '728', 'remark' => 'Increasing the configured memory size (MB) will improve performance by caching those files'],
+            'opcache.memory_consumption'      => ['recommended' => '728', 'remark' => 'Increasing the configured memory size (MB) will improve performance by caching those files (consideration based on free space of memory)'],
             'opcache.interned_strings_buffer' => ['recommended' => '64'],
             'opcache.max_accelerated_files'   => ['recommended' => '56000', 'remark' => 'Increasing the configured accelerated will many cache files into OPCache hash table'],
             'opcache.max_wasted_percentage'   => ['recommended' => '15'],
