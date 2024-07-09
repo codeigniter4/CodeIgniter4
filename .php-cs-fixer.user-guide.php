@@ -39,10 +39,6 @@ $overrides = [
         'import_symbols'                        => false,
         'leading_backslash_in_global_namespace' => true,
     ],
-    // for updating to coding-standard
-    'modernize_strpos'    => true,
-    'ordered_attributes'  => ['order' => [], 'sort_algorithm' => 'alpha'],
-    'php_unit_attributes' => true,
 ];
 
 $options = [
