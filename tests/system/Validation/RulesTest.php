@@ -940,12 +940,12 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
-    public static function provideRequiredIf(): \Generator
+    public static function provideRequiredIf(): Generator
     {
         yield from [
             // `is_internal` and `identity_number` do not exist
             [true, []],
-            // `identity_number` is not required because field `is_internal` 
+            // `identity_number` is not required because field `is_internal`
             // value does not match with any value in the rule params
             [true, ['is_internal' => '', 'identity_number' => '']],
             [true, ['is_internal' => '0', 'identity_number' => '']],
@@ -975,7 +975,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
-    public static function provideRequiredIfWorkWithOtherRule(): \Generator
+    public static function provideRequiredIfWorkWithOtherRule(): Generator
     {
         yield from [
             // `identity_number` with integer value
