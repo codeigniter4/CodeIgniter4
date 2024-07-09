@@ -931,7 +931,8 @@ class RulesTest extends CIUnitTestCase
     public function testRequiredIf(bool $expected, array $data): void
     {
         $this->validation->setRules([
-            'special_option' => 'required_if[normal_option,1,2]',
+            'is_internal'     => 'in_list[0,1,2,3]|permit_empty',
+            'identity_number' => 'required_if[is_internal,1,2]',
         ]);
 
         $result = $this->validation->run($data);
@@ -939,21 +940,22 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
-    public static function provideRequiredIf(): iterable
+    public static function provideRequiredIf(): \Generator
     {
         yield from [
-            // `normal_option` and `special_option` do not exist
+            // `is_internal` and `identity_number` do not exist
             [true, []],
-            // `special_option` is not required because `normal_option` field does not have expected value
-            [true, ['normal_option' => '', 'special_option' => '']],
-            [true, ['normal_option' => '0', 'special_option' => '']],
-            [true, ['normal_option' => null, 'special_option' => '']],
-            // `special_option` is required and exist
-            [false, ['normal_option' => '1', 'special_option' => '']],
-            [false, ['normal_option' => '2', 'special_option' => '']],
-            // `special_option` is required but do not exist
-            [false, ['normal_option' => '1']],
-            [false, ['normal_option' => '2']],
+            // `identity_number` is not required because field `is_internal` 
+            // value does not match with any value in the rule params
+            [true, ['is_internal' => '', 'identity_number' => '']],
+            [true, ['is_internal' => '0', 'identity_number' => '']],
+            [true, ['is_internal' => '3', 'identity_number' => '']],
+            // `identity_number` is required and exist
+            [false, ['is_internal' => '1', 'identity_number' => '']],
+            [false, ['is_internal' => '2', 'identity_number' => '']],
+            // `identity_number` is required but do not exist
+            [false, ['is_internal' => '1']],
+            [false, ['is_internal' => '2']],
         ];
     }
 
@@ -964,7 +966,8 @@ class RulesTest extends CIUnitTestCase
     public function testRequiredIfWorkWithOtherRule(bool $expected, array $data): void
     {
         $this->validation->setRules([
-            'special_option' => 'required_if[normal_option,1,2]|permit_empty|integer',
+            'is_internal'     => 'in_list[0,1,2,3]|permit_empty',
+            'identity_number' => 'required_if[is_internal,1,2]|permit_empty|integer',
         ]);
 
         $result = $this->validation->run($data);
@@ -972,16 +975,16 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
-    public static function provideRequiredIfWorkWithOtherRule(): iterable
+    public static function provideRequiredIfWorkWithOtherRule(): \Generator
     {
         yield from [
-            // `special_option` with integer value
-            [true, ['normal_option' => '1', 'special_option' => '1']],
-            [true, ['normal_option' => '2', 'special_option' => '1']],
-            // `special_option` is not empty, but it is not an integer
+            // `identity_number` with integer value
+            [true, ['is_internal' => '1', 'identity_number' => '3207783']],
+            [true, ['is_internal' => '2', 'identity_number' => '3207783']],
+            // `identity_number` is not empty, but it is not an integer
             // value, which triggers the Validation.integer error message.
-            [false, ['normal_option' => '1', 'special_option' => 'a']],
-            [false, ['normal_option' => '2', 'special_option' => 'b']],
+            [false, ['is_internal' => '1', 'identity_number' => 'a']],
+            [false, ['is_internal' => '2', 'identity_number' => 'b']],
         ];
     }
 }
