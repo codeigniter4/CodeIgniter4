@@ -16,11 +16,11 @@ namespace CodeIgniter\Validation;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 use ErrorException;
+use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 use Tests\Support\Validation\TestRules;
-use Generator;
 
 /**
  * @internal
