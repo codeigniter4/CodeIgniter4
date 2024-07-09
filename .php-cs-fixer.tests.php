@@ -11,43 +11,29 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-use CodeIgniter\CodingStandard\CodeIgniter4;
-use Nexus\CsConfig\Factory;
-use Nexus\CsConfig\Fixer\Comment\NoCodeSeparatorCommentFixer;
-use Nexus\CsConfig\FixerGenerator;
+use PhpCsFixer\ConfigInterface;
 use PhpCsFixer\Finder;
+
+/** @var ConfigInterface $config */
+$config = require __DIR__ . '/.php-cs-fixer.dist.php';
 
 $finder = Finder::create()
     ->files()
     ->in([
         __DIR__ . '/tests',
     ])
-    ->exclude([
-    ])
     ->notPath([
         '_support/View/Cells/multiplier.php',
         '_support/View/Cells/colors.php',
         '_support/View/Cells/addition.php',
     ])
-    ->notName('#Foobar.php$#')
-    ->append([
-    ]);
+    ->notName('#Foobar.php$#');
 
 $overrides = [
     'void_return' => true,
 ];
 
-$options = [
-    'cacheFile'    => 'build/.php-cs-fixer.tests.cache',
-    'finder'       => $finder,
-    'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
-    'customRules'  => [
-        NoCodeSeparatorCommentFixer::name() => true,
-    ],
-];
-
-return Factory::create(new CodeIgniter4(), $overrides, $options)->forLibrary(
-    'CodeIgniter 4 framework',
-    'CodeIgniter Foundation',
-    'admin@codeigniter.com'
-);
+return $config
+    ->setFinder($finder)
+    ->setCacheFile('build/.php-cs-fixer.tests.cache')
+    ->setRules(array_merge($config->getRules(), $overrides));

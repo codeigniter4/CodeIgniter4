@@ -11,11 +11,11 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-use CodeIgniter\CodingStandard\CodeIgniter4;
-use Nexus\CsConfig\Factory;
-use Nexus\CsConfig\Fixer\Comment\NoCodeSeparatorCommentFixer;
-use Nexus\CsConfig\FixerGenerator;
+use PhpCsFixer\ConfigInterface;
 use PhpCsFixer\Finder;
+
+/** @var ConfigInterface $config */
+$config = require __DIR__ . '/.php-cs-fixer.dist.php';
 
 $finder = Finder::create()
     ->files()
@@ -29,15 +29,11 @@ $finder = Finder::create()
         __DIR__ . '/admin/starter/builds',
     ]);
 
-$overrides = [];
-
-$options = [
-    'cacheFile'    => 'build/.php-cs-fixer.no-header.cache',
-    'finder'       => $finder,
-    'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
-    'customRules'  => [
-        NoCodeSeparatorCommentFixer::name() => true,
-    ],
+$overrides = [
+    'header_comment' => false,
 ];
 
-return Factory::create(new CodeIgniter4(), $overrides, $options)->forProjects();
+return $config
+    ->setFinder($finder)
+    ->setCacheFile('build/.php-cs-fixer.no-header.cache')
+    ->setRules(array_merge($config->getRules(), $overrides));
