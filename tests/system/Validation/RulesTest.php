@@ -954,9 +954,21 @@ class RulesTest extends CIUnitTestCase
             // `identity_number` is required and exist
             [false, ['is_internal' => '1', 'identity_number' => '']],
             [false, ['is_internal' => '2', 'identity_number' => '']],
+            [true, ['is_internal' => '1', 'identity_number' => '123']],
+            [true, ['is_internal' => '2', 'identity_number' => '123']],
             // `identity_number` is required but do not exist
             [false, ['is_internal' => '1']],
             [false, ['is_internal' => '2']],
+            // `identity_number` with integer value
+            [true, ['is_internal' => '1', 'identity_number' => '3207783']],
+            [true, ['is_internal' => '2', 'identity_number' => '3207783']],
+            [true, ['identity_number' => '3207783']],
+            [true, ['identity_number' => '3207783']],
+            // `identity_number` with string value
+            [true, ['is_internal' => '1', 'identity_number' => 'a']],
+            [true, ['is_internal' => '2', 'identity_number' => 'b']],
+            [true, ['identity_number' => 'a']],
+            [true, ['identity_number' => 'b']],
         ];
     }
 
