@@ -44,7 +44,7 @@ $overrides = [];
 $options = [
     'cacheFile'    => 'build/.php-cs-fixer.cache',
     'finder'       => $finder,
-    'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
+    'customFixers' => FixerGenerator::create('utils/vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
     'customRules'  => [
         NoCodeSeparatorCommentFixer::name() => true,
     ],
