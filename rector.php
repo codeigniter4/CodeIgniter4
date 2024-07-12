@@ -73,17 +73,20 @@ return RectorConfig::configure()
         FileCacheStorage::class
     )
     // paths to refactor; solid alternative to CLI arguments
-    ->withPaths(
-        [__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils']
-    )
+    ->withPaths([
+        __DIR__ . '/app',
+        __DIR__ . '/system',
+        __DIR__ . '/tests',
+        __DIR__ . '/utils/src',
+    ])
     // do you need to include constants, class aliases or custom autoloader? files listed will be executed
     ->withBootstrapFiles([
         __DIR__ . '/system/Test/bootstrap.php',
     ])
     ->withPHPStanConfigs([
         __DIR__ . '/phpstan.neon.dist',
-        __DIR__ . '/vendor/codeigniter/phpstan-codeigniter/extension.neon',
-        __DIR__ . '/vendor/phpstan/phpstan-strict-rules/rules.neon',
+        __DIR__ . '/utils/vendor/codeigniter/phpstan-codeigniter/extension.neon',
+        __DIR__ . '/utils/vendor/phpstan/phpstan-strict-rules/rules.neon',
     ])
     // is there a file you need to skip?
     ->withSkip([
