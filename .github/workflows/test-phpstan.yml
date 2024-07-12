@@ -47,6 +47,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -85,4 +87,4 @@ jobs:
         run: composer update --ansi --no-interaction
 
       - name: Run static analysis
-        run: vendor/bin/phpstan analyse
+        run: utils/vendor/bin/phpstan analyse

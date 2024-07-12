@@ -29,6 +29,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -68,4 +70,4 @@ jobs:
           fi
 
       - name: Run Psalm analysis
-        run: vendor/bin/psalm
+        run: utils/vendor/bin/psalm
