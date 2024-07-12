@@ -17,7 +17,6 @@ CONTRIBUTING.md    export-ignore
 
 # contributor/development files
 tests/                       export-ignore
-tools/                       export-ignore
 utils/                       export-ignore
 .php-cs-fixer.dist.php       export-ignore
 .php-cs-fixer.no-header.php  export-ignore
