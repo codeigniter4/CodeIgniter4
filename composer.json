@@ -32,7 +32,7 @@
         "phpunit/phpcov": "^9.0.2",
         "phpunit/phpunit": "^10.5.16",
         "predis/predis": "^1.1 || ^2.0",
-        "rector/rector": "1.2.0",
+        "rector/rector": "1.2.1",
         "vimeo/psalm": "^5.0"
     },
     "replace": {
