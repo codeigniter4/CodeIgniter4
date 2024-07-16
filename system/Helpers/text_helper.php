@@ -310,7 +310,7 @@ if (! function_exists('convert_accented_characters')) {
         if (! is_array($arrayFrom)) {
             $config = new ForeignCharacters();
 
-            if (empty($config->characterList) || ! is_array($config->characterList)) {
+            if ($config->characterList === [] || ! is_array($config->characterList)) {
                 $arrayFrom = [];
                 $arrayTo   = [];
 
