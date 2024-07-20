@@ -52,15 +52,31 @@ final class Optimize extends BaseCommand
      *
      * @var string
      */
-    protected $usage = 'optimize';
+    protected $usage = 'optimize [-c] [-l] [-r]';
+
+    /**
+     * The Command's options
+     *
+     * @var array
+     */
+    protected $options = [
+        'c' => 'Enable config cache',
+        'l' => 'Enable locator cache',
+        'r' => 'Restore default cache settings',
+    ];
 
     /**
      * {@inheritDoc}
      */
     public function run(array $params)
     {
+        // Parse options
+        $enableConfigCache = CLI::getOption('c');
+        $enableLocatorCache = CLI::getOption('l');
+        $restoreDefaults = CLI::getOption('r');
+
         try {
-            $this->enableCaching();
+            $this->enableCaching($enableConfigCache, $enableLocatorCache, $restoreDefaults);
             $this->clearCache();
             $this->removeDevPackages();
         } catch (RuntimeException) {
@@ -99,37 +115,76 @@ final class Optimize extends BaseCommand
         }
     }
 
-    private function enableCaching(): void
+    private function enableCaching(?bool $enableConfigCache, ?bool $enableLocatorCache, ?bool $restoreDefaults): void
     {
         $publisher = new Publisher(APPPATH, APPPATH);
 
         $config = APPPATH . 'Config/Optimize.php';
 
-        $result = $publisher->replace(
-            $config,
-            [
-                'public bool $configCacheEnabled = false;'  => 'public bool $configCacheEnabled = true;',
-                'public bool $locatorCacheEnabled = false;' => 'public bool $locatorCacheEnabled = true;',
-            ]
-        );
+        // Prepare search and replace mappings
+        $searchReplace = [];
 
-        if ($result) {
-            CLI::write(
-                'Config Caching and FileLocator Caching are enabled in "app/Config/Optimize.php".',
-                'green'
-            );
+        if ($restoreDefaults === true) {
+            $searchReplace = [
+                'public bool $configCacheEnabled = true;'  => 'public bool $configCacheEnabled = false;',
+                'public bool $locatorCacheEnabled = true;' => 'public bool $locatorCacheEnabled = false;',
+            ];
+        } else {
+            if ($enableConfigCache === true) {
+                $searchReplace['public bool $configCacheEnabled = false;'] = 'public bool $configCacheEnabled = true;';
+            }
 
-            return;
+            if ($enableLocatorCache === true) {
+                $searchReplace['public bool $locatorCacheEnabled = false;'] = 'public bool $locatorCacheEnabled = true;';
+            }
+
+            // If no options provided, update both
+            if ($enableConfigCache === null && $enableLocatorCache === null) {
+                $searchReplace = [
+                    'public bool $configCacheEnabled = false;'  => 'public bool $configCacheEnabled = true;',
+                    'public bool $locatorCacheEnabled = false;' => 'public bool $locatorCacheEnabled = true;',
+                ];
+            }
         }
 
-        CLI::error('Error in updating file: ' . clean_path($config));
+        // Apply replacements if necessary
+        if ($searchReplace !== []) {
+            $result = $publisher->replace($config, $searchReplace);
 
-        throw new RuntimeException(__METHOD__);
+            if ($result === true) {
+                $messages = [];
+
+                if (in_array('public bool $configCacheEnabled = true;', $searchReplace)) {
+                    $messages[] = 'Config Caching is enabled in "app/Config/Optimize.php".';
+                }
+
+                if (in_array('public bool $locatorCacheEnabled = true;', $searchReplace)) {
+                    $messages[] = 'FileLocator Caching is enabled in "app/Config/Optimize.php".';
+                }
+
+                if (in_array('public bool $configCacheEnabled = false;', $searchReplace)) {
+                    $messages[] = 'Config Caching is disabled in "app/Config/Optimize.php".';
+                }
+
+                if (in_array('public bool $locatorCacheEnabled = false;', $searchReplace)) {
+                    $messages[] = 'FileLocator Caching is disabled in "app/Config/Optimize.php".';
+                }
+
+                CLI::write(implode("\n\n", $messages), 'green');
+                CLI::write();
+                return;
+            }
+
+            CLI::error('Error in updating file: ' . clean_path($config));
+            throw new RuntimeException(__METHOD__);
+        }
+
+        CLI::write('No changes to caching settings.', 'yellow');
     }
 
     private function removeDevPackages(): void
     {
-        if (! defined('VENDORPATH')) {
+        if (!defined('VENDORPATH')) {
             return;
         }
 
