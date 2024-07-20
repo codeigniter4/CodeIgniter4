@@ -31,6 +31,8 @@ use Psr\Log\NullLogger;
  *
  * This file defines the namespaces and class maps so the Autoloader
  * can find the files as needed.
+ *
+ * @phpstan-consistent-constructor
  */
 class AutoloadConfig
 {
@@ -150,7 +152,7 @@ class AutoloadConfig
         $this->classmap = array_merge($this->coreClassmap, $this->classmap);
         $this->files    = [...$this->coreFiles, ...$this->files];
     }
-    
+
     /**
      * Restores the state of the object
      *
