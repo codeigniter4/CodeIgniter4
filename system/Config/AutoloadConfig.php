@@ -157,6 +157,7 @@ class AutoloadConfig
      * Restores the state of the object
      *
      * @param array<string, mixed> $array An array containingthe properties and their values.
+     *
      * @return static Returns an instance of the called class.
      */
     public static function __set_state(array $array): static
