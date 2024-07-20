@@ -132,6 +132,19 @@ class AutoloadConfig
      */
     protected $coreFiles = [];
 
+    public static function __set_state(array $array)
+    {
+        $obj              = new static();
+
+        $properties = array_keys(get_object_vars($obj));
+
+        foreach ($properties as $property) {
+            $obj->{$property} = $array[$property];
+        }
+
+        return $obj;
+    }
+
     /**
      * Constructor.
      *
