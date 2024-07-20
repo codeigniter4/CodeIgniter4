@@ -132,19 +132,6 @@ class AutoloadConfig
      */
     protected $coreFiles = [];
 
-    public static function __set_state(array $array)
-    {
-        $obj              = new static();
-
-        $properties = array_keys(get_object_vars($obj));
-
-        foreach ($properties as $property) {
-            $obj->{$property} = $array[$property];
-        }
-
-        return $obj;
-    }
-
     /**
      * Constructor.
      *
@@ -162,5 +149,24 @@ class AutoloadConfig
         $this->psr4     = array_merge($this->corePsr4, $this->psr4);
         $this->classmap = array_merge($this->coreClassmap, $this->classmap);
         $this->files    = [...$this->coreFiles, ...$this->files];
+    }
+    
+    /**
+     * Restores the state of the object
+     *
+     * @param array<string, mixed> $array An array containingthe properties and their values.
+     * @return static Returns an instance of the called class.
+     */
+    public static function __set_state(array $array): static
+    {
+        $obj = new static();
+
+        $properties = array_keys(get_object_vars($obj));
+
+        foreach ($properties as $property) {
+            $obj->{$property} = $array[$property];
+        }
+
+        return $obj;
     }
 }
