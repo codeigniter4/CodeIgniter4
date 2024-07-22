@@ -230,6 +230,9 @@ class BaseConfig
         }
 
         if (! static::$didDiscovery) {
+            // It's done once, don't do it again recursively
+            static::$didDiscovery = true;
+            
             $locator         = service('locator');
             $registrarsFiles = $locator->search('Config/Registrar.php');
 
@@ -239,11 +242,10 @@ class BaseConfig
                 if ($className === false) {
                     continue;
                 }
-
+                
+                // this will make a recursive call
                 static::$registrars[] = new $className();
             }
-
-            static::$didDiscovery = true;
         }
 
         $shortName = (new ReflectionClass($this))->getShortName();
