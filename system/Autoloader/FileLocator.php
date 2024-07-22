@@ -185,7 +185,7 @@ class FileLocator implements FileLocatorInterface
      *
      * @return list<string>
      */
-    public function search(string $path, string $ext = 'php', bool $prioritizeApp = true): array
+    public function search(string $path, bool $prioritizeApp = true, string $ext = 'php'): array
     {
         $path = $this->ensureExt($path, $ext);
 
