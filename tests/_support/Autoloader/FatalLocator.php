@@ -54,7 +54,7 @@ class FatalLocator extends FileLocator
      *      'app/Modules/bar/Config/Routes.php',
      *  ]
      */
-    public function search(string $path, string $ext = 'php', bool $prioritizeApp = true): array
+    public function search(string $path, bool $prioritizeApp = true, string $ext = 'php'): array
     {
         $prioritizeApp = $prioritizeApp ? 'true' : 'false';
 
