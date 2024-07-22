@@ -11,11 +11,11 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-use CodeIgniter\CodingStandard\CodeIgniter4;
-use Nexus\CsConfig\Factory;
-use Nexus\CsConfig\Fixer\Comment\NoCodeSeparatorCommentFixer;
-use Nexus\CsConfig\FixerGenerator;
+use PhpCsFixer\ConfigInterface;
 use PhpCsFixer\Finder;
+
+/** @var ConfigInterface $config */
+$config = require __DIR__ . '/.php-cs-fixer.dist.php';
 
 $finder = Finder::create()
     ->files()
@@ -30,19 +30,10 @@ $finder = Finder::create()
     ]);
 
 $overrides = [
-    // for updating to coding-standard
-    'modernize_strpos'    => true,
-    'ordered_attributes'  => ['order' => [], 'sort_algorithm' => 'alpha'],
-    'php_unit_attributes' => true,
+    'header_comment' => false,
 ];
 
-$options = [
-    'cacheFile'    => 'build/.php-cs-fixer.no-header.cache',
-    'finder'       => $finder,
-    'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
-    'customRules'  => [
-        NoCodeSeparatorCommentFixer::name() => true,
-    ],
-];
-
-return Factory::create(new CodeIgniter4(), $overrides, $options)->forProjects();
+return $config
+    ->setFinder($finder)
+    ->setCacheFile('build/.php-cs-fixer.no-header.cache')
+    ->setRules(array_merge($config->getRules(), $overrides));

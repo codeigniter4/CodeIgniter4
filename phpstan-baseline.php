@@ -7394,12 +7394,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Helpers/test_helper.php',
 ];
 $ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/text_helper.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Function strip_slashes\\(\\) has parameter \\$str with no value type specified in iterable type array\\.$#',
 	'count' => 1,

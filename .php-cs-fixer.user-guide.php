@@ -11,11 +11,11 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-use CodeIgniter\CodingStandard\CodeIgniter4;
-use Nexus\CsConfig\Factory;
-use Nexus\CsConfig\Fixer\Comment\NoCodeSeparatorCommentFixer;
-use Nexus\CsConfig\FixerGenerator;
+use PhpCsFixer\ConfigInterface;
 use PhpCsFixer\Finder;
+
+/** @var ConfigInterface $config */
+$config = require __DIR__ . '/.php-cs-fixer.dist.php';
 
 $finder = Finder::create()
     ->files()
@@ -32,6 +32,7 @@ $finder = Finder::create()
 
 $overrides = [
     'echo_tag_syntax'              => false,
+    'header_comment'               => false,
     'php_unit_internal_class'      => false,
     'no_unused_imports'            => false,
     'class_attributes_separation'  => false,
@@ -39,19 +40,9 @@ $overrides = [
         'import_symbols'                        => false,
         'leading_backslash_in_global_namespace' => true,
     ],
-    // for updating to coding-standard
-    'modernize_strpos'    => true,
-    'ordered_attributes'  => ['order' => [], 'sort_algorithm' => 'alpha'],
-    'php_unit_attributes' => true,
 ];
 
-$options = [
-    'cacheFile'    => 'build/.php-cs-fixer.user-guide.cache',
-    'finder'       => $finder,
-    'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
-    'customRules'  => [
-        NoCodeSeparatorCommentFixer::name() => true,
-    ],
-];
-
-return Factory::create(new CodeIgniter4(), $overrides, $options)->forProjects();
+return $config
+    ->setFinder($finder)
+    ->setCacheFile('build/.php-cs-fixer.user-guide.cache')
+    ->setRules(array_merge($config->getRules(), $overrides));

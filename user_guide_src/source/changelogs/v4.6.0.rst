@@ -160,13 +160,16 @@ Others
   arguments in before or after.
 - **Services:** Added ``BaseService::resetServicesCache()`` method to reset
   the services cache. See :ref:`resetting-services-cache`.
+- **Errors:** Added a default error page for "400 Bad Request".
 
 ***************
 Message Changes
 ***************
 
 - Added ``Validation.min_dims`` message
+- Added ``Errors.badRequest`` and ``Errors.sorryBadRequest``
 - Added ``Validation.required_if`` message
+
 
 *******
 Changes

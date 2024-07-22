@@ -95,6 +95,7 @@
     }
 
     h2 {
+        font-weight: bold;
         font-size: $base-size;
         margin: 0;
         padding: 5px 0 10px 0;
@@ -292,6 +293,8 @@
 
     // The tabs container
     .tab {
+        height: fit-content;
+        text-align: left;
         bottom: 35px;
         display: none;
         left: 0;
@@ -306,6 +309,8 @@
 
     // The "Timeline" tab
     .timeline {
+        position: static;
+        display: table;
         margin-left: 0;
         width: 100%;
 
