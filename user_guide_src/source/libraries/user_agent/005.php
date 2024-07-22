@@ -1,5 +1,5 @@
 <?php
 
 if ($agent->isReferral()) {
-    echo $agent->referrer();
+    echo $agent->getReferrer();
 }
