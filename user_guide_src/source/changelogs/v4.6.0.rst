@@ -170,7 +170,6 @@ Message Changes
 - Added ``Errors.badRequest`` and ``Errors.sorryBadRequest``
 - Added ``Validation.required_if`` message
 
-
 *******
 Changes
 *******
