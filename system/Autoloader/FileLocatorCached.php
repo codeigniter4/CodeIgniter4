@@ -114,7 +114,7 @@ final class FileLocatorCached implements FileLocatorInterface
         return $classname;
     }
 
-    public function search(string $path, string $ext = 'php', bool $prioritizeApp = true): array
+    public function search(string $path, bool $prioritizeApp = true, string $ext = 'php'): array
     {
         if (isset($this->cache['search'][$path][$ext][$prioritizeApp])) {
             return $this->cache['search'][$path][$ext][$prioritizeApp];
