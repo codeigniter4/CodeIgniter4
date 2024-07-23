@@ -17,13 +17,18 @@
         "psr/log": "^3.0"
     },
     "require-dev": {
+        "codeigniter/phpstan-codeigniter": "^1.4",
         "fakerphp/faker": "^1.9",
         "kint-php/kint": "^5.0.4",
         "mikey179/vfsstream": "^1.6",
         "nexusphp/tachycardia": "^2.0",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^1.11",
+        "phpstan/phpstan-strict-rules": "^1.6",
         "phpunit/phpcov": "^9.0.2",
         "phpunit/phpunit": "^10.5.16",
-        "predis/predis": "^1.1 || ^2.0"
+        "predis/predis": "^1.1 || ^2.0",
+        "rector/rector": "1.2.1"
     },
     "replace": {
         "codeigniter4/framework": "self.version"
@@ -61,10 +66,14 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "CodeIgniter\\": "tests/system/"
+            "CodeIgniter\\": "tests/system/",
+            "Utils\\": "utils/src/"
         }
     },
     "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        },
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true
@@ -75,16 +84,16 @@
         }
     },
     "scripts": {
-        "post-autoload-dump": [
-            "@composer update --working-dir=utils"
-        ],
         "post-update-cmd": [
             "CodeIgniter\\ComposerScripts::postUpdate"
         ],
+        "post-autoload-dump": [
+            "@composer update --working-dir=utils"
+        ],
         "analyze": [
             "Composer\\Config::disableProcessTimeout",
-            "bash -c \"XDEBUG_MODE=off utils/vendor/bin/phpstan analyse\"",
-            "utils/vendor/bin/rector process --dry-run"
+            "bash -c \"XDEBUG_MODE=off vendor/bin/phpstan analyse\"",
+            "vendor/bin/rector process --dry-run"
         ],
         "cs": [
             "Composer\\Config::disableProcessTimeout",

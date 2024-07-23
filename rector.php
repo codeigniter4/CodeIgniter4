@@ -85,8 +85,8 @@ return RectorConfig::configure()
     ])
     ->withPHPStanConfigs([
         __DIR__ . '/phpstan.neon.dist',
-        __DIR__ . '/utils/vendor/codeigniter/phpstan-codeigniter/extension.neon',
-        __DIR__ . '/utils/vendor/phpstan/phpstan-strict-rules/rules.neon',
+        __DIR__ . '/vendor/codeigniter/phpstan-codeigniter/extension.neon',
+        __DIR__ . '/vendor/phpstan/phpstan-strict-rules/rules.neon',
     ])
     // is there a file you need to skip?
     ->withSkip([

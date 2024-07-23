@@ -49,8 +49,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -87,4 +85,4 @@ jobs:
       - run: mkdir -p /tmp/rector
 
       - name: Run static analysis
-        run: utils/vendor/bin/rector process --dry-run --no-progress-bar
+        run: vendor/bin/rector process --dry-run --no-progress-bar
