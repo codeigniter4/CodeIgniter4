@@ -440,6 +440,22 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutesOptions());
     }
 
+    public function testGroupFilterAndRouteFilter(): void
+    {
+        $routes = $this->getCollector();
+
+        $routes->group('admin', ['filter' => ['csrf']], static function ($routes): void {
+            $routes->get('profile', 'Admin\Profile::index', ['filter' => ['honeypot']]);
+        });
+
+        $expected = [
+            'admin/profile' => [
+                'filter' => ['csrf', 'honeypot'],
+            ],
+        ];
+        $this->assertSame($expected, $routes->getRoutesOptions());
+    }
+
     public function testGroupingWorksWithEmptyStringPrefix(): void
     {
         $routes = $this->getCollector();
