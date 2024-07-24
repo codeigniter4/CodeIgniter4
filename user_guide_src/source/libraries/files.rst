@@ -45,7 +45,7 @@ method. This is especially useful to rename files when moving it so that the fil
 getSize()
 =========
 
-Returns the size of the uploaded file in bytes:
+Returns the size of the file in bytes:
 
 .. literalinclude:: files/004.php
     :lines: 2-
@@ -53,7 +53,7 @@ Returns the size of the uploaded file in bytes:
 getSizeByUnit()
 ===============
 
-Returns the size of the uploaded file default in bytes. You can pass in either 'kb' or 'mb' as the first parameter to get
+Returns the size of the file default in bytes. You can pass in either ``'kb'`` or ``'mb'`` as the first parameter to get
 the results in kilobytes or megabytes, respectively:
 
 .. literalinclude:: files/005.php
