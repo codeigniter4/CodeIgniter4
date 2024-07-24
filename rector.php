@@ -73,9 +73,12 @@ return RectorConfig::configure()
         FileCacheStorage::class
     )
     // paths to refactor; solid alternative to CLI arguments
-    ->withPaths(
-        [__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils']
-    )
+    ->withPaths([
+        __DIR__ . '/app',
+        __DIR__ . '/system',
+        __DIR__ . '/tests',
+        __DIR__ . '/utils/src',
+    ])
     // do you need to include constants, class aliases or custom autoloader? files listed will be executed
     ->withBootstrapFiles([
         __DIR__ . '/system/Test/bootstrap.php',

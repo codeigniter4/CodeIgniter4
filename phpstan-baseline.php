@@ -18673,11 +18673,5 @@ $ignoreErrors[] = [
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/ViewTest.php',
 ];
-$ignoreErrors[] = [
-	// identifier: method.childParameterType
-	'message' => '#^Parameter \\#1 \\$node \\(PhpParser\\\\Node\\\\Stmt\\) of method Utils\\\\PHPStan\\\\CheckUseStatementsAfterLicenseRule\\:\\:processNode\\(\\) should be contravariant with parameter \\$node \\(PhpParser\\\\Node\\) of method PHPStan\\\\Rules\\\\Rule\\<PhpParser\\\\Node\\>\\:\\:processNode\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/utils/PHPStan/CheckUseStatementsAfterLicenseRule.php',
-];
 
 return ['parameters' => ['ignoreErrors' => $ignoreErrors]];
