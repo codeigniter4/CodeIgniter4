@@ -102,8 +102,11 @@ class Throttler implements ThrottlerInterface
         // Number of seconds to get one token
         $refresh = 1 / $rate;
 
+        /** @var float|int|null $tokens */
+        $tokens = $this->cache->get($tokenName);
+
         // Check to see if the bucket has even been created yet.
-        if (($tokens = $this->cache->get($tokenName)) === null) {
+        if ($tokens === null) {
             // If it hasn't been created, then we'll set it to the maximum
             // capacity - 1, and save it to the cache.
             $tokens = $capacity - $cost;
@@ -124,7 +127,7 @@ class Throttler implements ThrottlerInterface
         // should be refilled, then checked against capacity
         // to be sure the bucket didn't overflow.
         $tokens += $rate * $elapsed;
-        $tokens = $tokens > $capacity ? $capacity : $tokens;
+        $tokens = min($tokens, $capacity);
 
         // If $tokens >= 1, then we are safe to perform the action, but
         // we need to decrement the number of available tokens.
