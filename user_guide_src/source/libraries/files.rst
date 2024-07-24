@@ -14,11 +14,12 @@ Getting a File instance
 ***********************
 
 You create a new File instance by passing in the path to the file in the constructor.
-By default, the file does not need to exist. However, you can pass an additional argument of "true"
-to check that the file exists and throw ``FileNotFoundException()`` if it does not.
 
 .. literalinclude:: files/001.php
     :lines: 2-
+
+By default, the file does not need to exist. However, you can pass an additional argument of ``true``
+to check that the file exists and throw ``FileNotFoundException()`` if it does not.
 
 Taking Advantage of Spl
 ***********************
