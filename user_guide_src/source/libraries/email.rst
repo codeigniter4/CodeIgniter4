@@ -113,37 +113,37 @@ sending email.
 =================== =================== ============================ =======================================================================
 Preference          Default Value       Options                      Description
 =================== =================== ============================ =======================================================================
-**$fromEmail**                                                       The email address to be set in the "from" header.
-**$fromName**                                                        The name to be set in the "from" header. 
-**$userAgent**      CodeIgniter                                      The "user agent".
-**$protocol**       mail                ``mail``, ``sendmail``,      The mail sending protocol.
+**fromEmail**                                                        The email address to be set in the "from" header.
+**fromName**                                                         The name to be set in the "from" header. 
+**userAgent**       CodeIgniter                                      The "user agent".
+**protocol**        mail                ``mail``, ``sendmail``,      The mail sending protocol.
                                         or ``smtp``
-**$mailPath**       /usr/sbin/sendmail                               The server path to Sendmail.
-**$SMTPHost**                                                        SMTP Server Hostname.
-**$SMTPUser**                                                        SMTP Username.
-**$SMTPPass**                                                        SMTP Password.
-**$SMTPPort**       25                                               SMTP Port. (If set to ``465``, TLS will be used for the connection
+**mailPath**        /usr/sbin/sendmail                               The server path to Sendmail.
+**SMTPHost**                                                         SMTP Server Hostname.
+**SMTPUser**                                                         SMTP Username.
+**SMTPPass**                                                         SMTP Password.
+**SMTPPort**        25                                               SMTP Port. (If set to ``465``, TLS will be used for the connection
                                                                      regardless of ``SMTPCrypto`` setting.)
-**$SMTPTimeout**    5                                                SMTP Timeout (in seconds).
-**$SMTPKeepAlive**  false               ``true``/``false``           Enable persistent SMTP connections.
-**$SMTPCrypto**     tls                 ``tls``, ``ssl``, or         SMTP Encryption. Setting this to ``ssl`` will create a secure
+**SMTPTimeout**     5                                                SMTP Timeout (in seconds).
+**SMTPKeepAlive**   false               ``true``/``false``           Enable persistent SMTP connections.
+**SMTPCrypto**      tls                 ``tls``, ``ssl``, or         SMTP Encryption. Setting this to ``ssl`` will create a secure
                                         empty string (``''``)        channel to the server using SSL, and ``tls`` will issue a
                                                                      ``STARTTLS`` command to the server. Connection on port ``465`` should
                                                                      set this to an empty string (``''``). See also
                                                                      :ref:`email-ssl-tls-for-smtp`.
-**$wordWrap**       true                ``true``/``false``           Enable word-wrap.
-**$wrapChars**      76                                               Character count to wrap at.
-**$mailType**       text                ``text`` or ``html``         Type of mail. If you send HTML email you must send it as a complete web
+**wordWrap**        true                ``true``/``false``           Enable word-wrap.
+**wrapChars**       76                                               Character count to wrap at.
+**mailType**        text                ``text`` or ``html``         Type of mail. If you send HTML email you must send it as a complete web
                                                                      page. Make sure you don't have any relative links or relative image
                                                                      paths otherwise they will not work.
-**$charset**        UTF-8                                            Character set (``utf-8``, ``iso-8859-1``, etc.).
-**$validate**       true                ``true``/``false``           Whether to validate the email address.
-**$priority**       3                   1, 2, 3, 4, 5                Email Priority. ``1`` = highest. ``5`` = lowest. ``3`` = normal.
-**$CRLF**           \\r\\n              ``\r\n``, ``\n`` or ``\r``   Newline character. (Use ``\r\n`` to comply with RFC 822).
-**$newline**        \\r\\n              ``\r\n``, ``\n`` or ``\r``   Newline character. (Use ``\r\n`` to comply with RFC 822).
-**$BCCBatchMode**   false               ``true``/``false``           Enable BCC Batch Mode.
-**$BCCBatchSize**   200                                              Number of emails in each BCC batch.
-**$DSN**            false               ``true``/``false``           Enable notify message from server.
+**charset**         UTF-8                                            Character set (``utf-8``, ``iso-8859-1``, etc.).
+**validate**        true                ``true``/``false``           Whether to validate the email address.
+**priority**        3                   1, 2, 3, 4, 5                Email Priority. ``1`` = highest. ``5`` = lowest. ``3`` = normal.
+**CRLF**            \\r\\n              ``\r\n``, ``\n`` or ``\r``   Newline character. (Use ``\r\n`` to comply with RFC 822).
+**newline**         \\r\\n              ``\r\n``, ``\n`` or ``\r``   Newline character. (Use ``\r\n`` to comply with RFC 822).
+**BCCBatchMode**    false               ``true``/``false``           Enable BCC Batch Mode.
+**BCCBatchSize**    200                                              Number of emails in each BCC batch.
+**DSN**             false               ``true``/``false``           Enable notify message from server.
 =================== =================== ============================ =======================================================================
 
 Overriding Word Wrapping
