@@ -95,7 +95,7 @@ jobs:
       mssql:
         image: mcr.microsoft.com/mssql/server:2022-latest
         env:
-          SA_PASSWORD: 1Secure*Password1
+          MSSQL_SA_PASSWORD: 1Secure*Password1
           ACCEPT_EULA: Y
           MSSQL_PID: Developer
         ports:
