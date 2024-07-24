@@ -68,4 +68,4 @@ jobs:
           fi
 
       - name: Run Psalm analysis
-        run: vendor/bin/psalm
+        run: utils/vendor/bin/psalm
