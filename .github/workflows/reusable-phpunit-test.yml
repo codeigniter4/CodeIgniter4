@@ -95,13 +95,13 @@ jobs:
       mssql:
         image: mcr.microsoft.com/mssql/server:2022-latest
         env:
-          SA_PASSWORD: 1Secure*Password1
+          MSSQL_SA_PASSWORD: 1Secure*Password1
           ACCEPT_EULA: Y
           MSSQL_PID: Developer
         ports:
           - 1433:1433
         options: >-
-          --health-cmd="/opt/mssql-tools/bin/sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q 'SELECT @@VERSION'"
+          --health-cmd="/opt/mssql-tools18/bin/sqlcmd -C -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q 'SELECT @@VERSION'"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
