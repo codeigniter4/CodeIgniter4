@@ -92,7 +92,7 @@
         ],
         "analyze": [
             "Composer\\Config::disableProcessTimeout",
-            "bash -c \"XDEBUG_MODE=off vendor/bin/phpstan analyse\"",
+            "@phpstan:check",
             "vendor/bin/rector process --dry-run"
         ],
         "cs": [
@@ -110,6 +110,8 @@
             "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --diff"
         ],
         "metrics": "utils/vendor/bin/phpmetrics --config=phpmetrics.json",
+        "phpstan:baseline": "vendor/bin/phpstan analyse --ansi --generate-baseline=phpstan-baseline.php",
+        "phpstan:check": "vendor/bin/phpstan analyse --verbose --ansi",
         "sa": "@analyze",
         "style": "@cs-fix",
         "test": "phpunit"
@@ -119,6 +121,8 @@
         "cs": "Check the coding style",
         "cs-fix": "Fix the coding style",
         "metrics": "Run PhpMetrics",
+        "phpstan:baseline": "Run PHPStan then dump all errors to baseline",
+        "phpstan:check": "Run PHPStan with support for identifiers",
         "test": "Run unit tests"
     }
 }
