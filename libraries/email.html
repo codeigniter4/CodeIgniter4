@@ -425,9 +425,19 @@ sending email.</p>
 </tr>
 </thead>
 <tbody>
+<tr class="row-even"><td><p><strong>fromEmail</strong></p></td>
+<td></td>
+<td></td>
+<td><p>The email address to be set in the “from” header.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>fromName</strong></p></td>
+<td></td>
+<td></td>
+<td><p>The name to be set in the “from” header.</p></td>
+</tr>
 <tr class="row-even"><td><p><strong>userAgent</strong></p></td>
 <td><p>CodeIgniter</p></td>
-<td><p>None</p></td>
+<td></td>
 <td><p>The “user agent”.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>protocol</strong></p></td>
@@ -438,38 +448,38 @@ or <code class="docutils literal notranslate"><span class="pre">smtp</span></cod
 </tr>
 <tr class="row-even"><td><p><strong>mailPath</strong></p></td>
 <td><p>/usr/sbin/sendmail</p></td>
-<td><p>None</p></td>
+<td></td>
 <td><p>The server path to Sendmail.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>SMTPHost</strong></p></td>
-<td><p>No Default</p></td>
-<td><p>None</p></td>
+<td></td>
+<td></td>
 <td><p>SMTP Server Hostname.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>SMTPUser</strong></p></td>
-<td><p>No Default</p></td>
-<td><p>None</p></td>
+<td></td>
+<td></td>
 <td><p>SMTP Username.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>SMTPPass</strong></p></td>
-<td><p>No Default</p></td>
-<td><p>None</p></td>
+<td></td>
+<td></td>
 <td><p>SMTP Password.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>SMTPPort</strong></p></td>
 <td><p>25</p></td>
-<td><p>None</p></td>
+<td></td>
 <td><p>SMTP Port. (If set to <code class="docutils literal notranslate"><span class="pre">465</span></code>, TLS will be used for the connection
 regardless of <code class="docutils literal notranslate"><span class="pre">SMTPCrypto</span></code> setting.)</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>SMTPTimeout</strong></p></td>
 <td><p>5</p></td>
-<td><p>None</p></td>
+<td></td>
 <td><p>SMTP Timeout (in seconds).</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>SMTPKeepAlive</strong></p></td>
 <td><p>false</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code> (boolean)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
 <td><p>Enable persistent SMTP connections.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>SMTPCrypto</strong></p></td>
@@ -484,7 +494,7 @@ set this to an empty string (<code class="docutils literal notranslate"><span cl
 </tr>
 <tr class="row-even"><td><p><strong>wordWrap</strong></p></td>
 <td><p>true</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code> (boolean)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
 <td><p>Enable word-wrap.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>wrapChars</strong></p></td>
@@ -500,13 +510,13 @@ page. Make sure you don’t have any relative links or relative image
 paths otherwise they will not work.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>charset</strong></p></td>
-<td><p>utf-8</p></td>
+<td><p>UTF-8</p></td>
 <td></td>
 <td><p>Character set (<code class="docutils literal notranslate"><span class="pre">utf-8</span></code>, <code class="docutils literal notranslate"><span class="pre">iso-8859-1</span></code>, etc.).</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>validate</strong></p></td>
 <td><p>true</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code> (boolean)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
 <td><p>Whether to validate the email address.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>priority</strong></p></td>
@@ -515,28 +525,28 @@ paths otherwise they will not work.</p></td>
 <td><p>Email Priority. <code class="docutils literal notranslate"><span class="pre">1</span></code> = highest. <code class="docutils literal notranslate"><span class="pre">5</span></code> = lowest. <code class="docutils literal notranslate"><span class="pre">3</span></code> = normal.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>CRLF</strong></p></td>
-<td><p>\n</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">\r\n</span></code> or <code class="docutils literal notranslate"><span class="pre">\n</span></code> or <code class="docutils literal notranslate"><span class="pre">\r</span></code></p></td>
+<td><p>\r\n</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\r\n</span></code>, <code class="docutils literal notranslate"><span class="pre">\n</span></code> or <code class="docutils literal notranslate"><span class="pre">\r</span></code></p></td>
 <td><p>Newline character. (Use <code class="docutils literal notranslate"><span class="pre">\r\n</span></code> to comply with RFC 822).</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>newline</strong></p></td>
-<td><p>\n</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">\r\n</span></code> or <code class="docutils literal notranslate"><span class="pre">\n</span></code> or <code class="docutils literal notranslate"><span class="pre">\r</span></code></p></td>
+<td><p>\r\n</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\r\n</span></code>, <code class="docutils literal notranslate"><span class="pre">\n</span></code> or <code class="docutils literal notranslate"><span class="pre">\r</span></code></p></td>
 <td><p>Newline character. (Use <code class="docutils literal notranslate"><span class="pre">\r\n</span></code> to comply with RFC 822).</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>BCCBatchMode</strong></p></td>
 <td><p>false</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code> (boolean)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
 <td><p>Enable BCC Batch Mode.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>BCCBatchSize</strong></p></td>
 <td><p>200</p></td>
-<td><p>None</p></td>
+<td></td>
 <td><p>Number of emails in each BCC batch.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>DSN</strong></p></td>
 <td><p>false</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code> (boolean)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
 <td><p>Enable notify message from server.</p></td>
 </tr>
 </tbody>
@@ -572,9 +582,9 @@ message like this:</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$from</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – “From” e-mail address</p></li>
+<li><p><strong>$from</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – “From” email address</p></li>
 <li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – “From” display name</p></li>
-<li><p><strong>$returnPath</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Optional email address to redirect undelivered e-mail to</p></li>
+<li><p><strong>$returnPath</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Optional email address to redirect undelivered email to</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -609,8 +619,8 @@ your protocol.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$replyto</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – E-mail address for replies</p></li>
-<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Display name for the reply-to e-mail address</p></li>
+<li><p><strong>$replyto</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Email address for replies</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Display name for the reply-to email address</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -635,7 +645,7 @@ information in the <a class="reference external" href="#setFrom">setFrom</a> met
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$to</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Comma-delimited string or an array of e-mail addresses</p></li>
+<li><p><strong>$to</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Comma separated string or an array of email addresses</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -645,8 +655,8 @@ information in the <a class="reference external" href="#setFrom">setFrom</a> met
 <dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\Email\Email" title="CodeIgniter\Email\Email"><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></a></span></p>
 </dd>
 </dl>
-<p>Sets the email address(s) of the recipient(s). Can be a single e-mail,
-a comma-delimited list or an array:</p>
+<p>Sets the email address(es) of the recipient(s). Can be a single email,
+a comma separated list or an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="s1">&#39;someone@example.com&#39;</span><span class="p">);</span>
@@ -670,7 +680,7 @@ a comma-delimited list or an array:</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$cc</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Comma-delimited string or an array of e-mail addresses</p></li>
+<li><p><strong>$cc</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Comma separated string or an array of email addresses</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -680,8 +690,8 @@ a comma-delimited list or an array:</p>
 <dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\Email\Email" title="CodeIgniter\Email\Email"><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></a></span></p>
 </dd>
 </dl>
-<p>Sets the CC email address(s). Just like the “to”, can be a single e-mail,
-a comma-delimited list or an array.</p>
+<p>Sets the CC email address(es). Just like the “to”, can be a single email,
+a comma separated list or an array.</p>
 </dd></dl>
 
 <dl class="php method">
@@ -690,8 +700,8 @@ a comma-delimited list or an array.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$bcc</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Comma-delimited string or an array of e-mail addresses</p></li>
-<li><p><strong>$limit</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Maximum number of e-mails to send per batch</p></li>
+<li><p><strong>$bcc</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Comma separated string or an array of email addresses</p></li>
+<li><p><strong>$limit</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Maximum number of emails to send per batch</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -701,8 +711,8 @@ a comma-delimited list or an array.</p>
 <dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\Email\Email" title="CodeIgniter\Email\Email"><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></a></span></p>
 </dd>
 </dl>
-<p>Sets the BCC email address(s). Just like the <code class="docutils literal notranslate"><span class="pre">setTo()</span></code> method, can be a single
-e-mail, a comma-delimited list or an array.</p>
+<p>Sets the BCC email address(es). Just like the <code class="docutils literal notranslate"><span class="pre">setTo()</span></code> method, can be a single
+email, a comma separated list or an array.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">$limit</span></code> is set, “batch mode” will be enabled, which will send
 the emails to batches, with each batch not exceeding the specified
 <code class="docutils literal notranslate"><span class="pre">$limit</span></code>.</p>
@@ -714,7 +724,7 @@ the emails to batches, with each batch not exceeding the specified
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$subject</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – E-mail subject line</p></li>
+<li><p><strong>$subject</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Email subject line</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -738,7 +748,7 @@ the emails to batches, with each batch not exceeding the specified
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$body</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – E-mail message body</p></li>
+<li><p><strong>$body</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Email message body</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -748,7 +758,7 @@ the emails to batches, with each batch not exceeding the specified
 <dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\Email\Email" title="CodeIgniter\Email\Email"><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></a></span></p>
 </dd>
 </dl>
-<p>Sets the e-mail message body:</p>
+<p>Sets the email message body:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setMessage</span><span class="p">(</span><span class="s1">&#39;This is my message&#39;</span><span class="p">);</span>
@@ -762,7 +772,7 @@ the emails to batches, with each batch not exceeding the specified
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Alternative e-mail message body</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Alternative email message body</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -772,7 +782,7 @@ the emails to batches, with each batch not exceeding the specified
 <dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\Email\Email" title="CodeIgniter\Email\Email"><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></a></span></p>
 </dd>
 </dl>
-<p>Sets the alternative e-mail message body:</p>
+<p>Sets the alternative email message body:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setAltMessage</span><span class="p">(</span><span class="s1">&#39;This is the alternative message&#39;</span><span class="p">);</span>
@@ -803,7 +813,7 @@ and strip the tags.</p>
 <dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\Email\Email" title="CodeIgniter\Email\Email"><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></a></span></p>
 </dd>
 </dl>
-<p>Appends additional headers to the e-mail:</p>
+<p>Appends additional headers to the email:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Header1&#39;</span><span class="p">,</span> <span class="s1">&#39;Value1&#39;</span><span class="p">);</span>
@@ -869,7 +879,7 @@ well:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
-<p>The e-mail sending method. Returns boolean true or false based on
+<p>The email sending method. Returns boolean true or false based on
 success or failure, enabling it to be used conditionally:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -910,7 +920,7 @@ boolean <code class="docutils literal notranslate"><span class="pre">true</span>
 <li><p><strong>$disposition</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – ‘disposition’ of the attachment. Most
 email clients make their own decision regardless of the MIME
 specification used here. <a class="reference external" href="https://www.iana.org/assignments/cont-disp/cont-disp.xhtml">https://www.iana.org/assignments/cont-disp/cont-disp.xhtml</a></p></li>
-<li><p><strong>$newname</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Custom file name to use in the e-mail</p></li>
+<li><p><strong>$newname</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Custom file name to use in the email</p></li>
 <li><p><strong>$mime</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – MIME type to use (useful for buffered data)</p></li>
 </ul>
 </dd>
@@ -993,7 +1003,7 @@ parameter as mime-type:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Content-ID for each e-mail must be re-created for it to be unique.</p>
+<p>Content-ID for each email must be re-created for it to be unique.</p>
 </div>
 </dd></dl>
 
