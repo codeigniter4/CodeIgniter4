@@ -46,7 +46,7 @@ Returns the size of the uploaded file in bytes:
 
 .. literalinclude:: files/004.php
 
-A RuntimeException will be thrown if the file does not exist or an error occurs.
+A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
 
 getSizeByUnit()
 ===============
@@ -56,7 +56,7 @@ the results in kilobytes or megabytes, respectively:
 
 .. literalinclude:: files/005.php
 
-A RuntimeException will be thrown if the file does not exist or an error occurs.
+A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
 
 getMimeType()
 =============
