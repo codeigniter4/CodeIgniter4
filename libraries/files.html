@@ -359,6 +359,7 @@ method. This is especially useful to rename files when moving it so that the fil
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$size</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSize</span><span class="p">();</span> <span class="c1">// 256901</span>
 </pre></div>
 </div>
+<p>A <code class="docutils literal notranslate"><span class="pre">RuntimeException</span></code> will be thrown if the file does not exist or an error occurs.</p>
 </section>
 <section id="getsizebyunit">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">getSizeByUnit()</a><a class="headerlink" href="#getsizebyunit" title="Permalink to this heading"></a></h3>
@@ -369,6 +370,7 @@ the results in kilobytes or megabytes, respectively:</p>
 <span class="nv">$megabytes</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">(</span><span class="s1">&#39;mb&#39;</span><span class="p">);</span> <span class="c1">// 0.245</span>
 </pre></div>
 </div>
+<p>A <code class="docutils literal notranslate"><span class="pre">RuntimeException</span></code> will be thrown if the file does not exist or an error occurs.</p>
 </section>
 <section id="getmimetype">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">getMimeType()</a><a class="headerlink" href="#getmimetype" title="Permalink to this heading"></a></h3>
