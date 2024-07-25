@@ -97,10 +97,10 @@
         ],
         "cs": [
             "Composer\\Config::disableProcessTimeout",
-            "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.user-guide.php",
-            "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.no-header.php",
-            "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.tests.php",
-            "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --dry-run --diff"
+            "utils/vendor/bin/php-cs-fixer check --ansi --verbose --diff --config=.php-cs-fixer.user-guide.php",
+            "utils/vendor/bin/php-cs-fixer check --ansi --verbose --diff --config=.php-cs-fixer.no-header.php",
+            "utils/vendor/bin/php-cs-fixer check --ansi --verbose --diff --config=.php-cs-fixer.tests.php",
+            "utils/vendor/bin/php-cs-fixer check --ansi --verbose --diff"
         ],
         "cs-fix": [
             "Composer\\Config::disableProcessTimeout",
