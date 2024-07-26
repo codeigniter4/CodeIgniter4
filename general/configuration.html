@@ -626,6 +626,12 @@ held the following then the result would be the same as above.</p>
 Registrars provide a means of altering a configuration at runtime across namespaces and files.</p>
 <p>Registrars work if <a class="reference internal" href="modules.html#auto-discovery"><span class="std std-ref">Auto-Discovery</span></a> is enabled in <a class="reference internal" href="modules.html"><span class="doc">Modules</span></a>.
 It alters configuration properties when the Config object is instantiated.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This feature is implemented in the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\BaseConfig</span></code>
+class. So it will not work with a few files in the <strong>app/Config</strong> folder
+that do not extends the class.</p>
+</div>
 <p>There are two ways to implement a Registrar: <strong>implicit</strong> and <strong>explicit</strong>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
