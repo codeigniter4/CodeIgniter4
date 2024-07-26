@@ -126,6 +126,9 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('You want to see "about" page.', $output);
     }
 
+    /**
+     * @psalm-suppress UndefinedClass
+     */
     public function testRun404Override(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
