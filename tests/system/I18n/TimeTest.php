@@ -234,6 +234,13 @@ final class TimeTest extends CIUnitTestCase
         $this->assertCloseEnoughString(date('2017-01-15 H:i:s', $now->getTimestamp()), $time->toDateTimeString());
     }
 
+    public function testCreateFromFormatWithMicroseconds(): void
+    {
+        $time = Time::createFromFormat('Y-m-d H:i:s.u', '2024-07-09 09:13:34.654321');
+
+        $this->assertSame('2024-07-09 09:13:34.654321', $time->format('Y-m-d H:i:s.u'));
+    }
+
     public function testCreateFromFormatWithTimezoneString(): void
     {
         $time = Time::createFromFormat('F j, Y', 'January 15, 2017', 'Europe/London');
