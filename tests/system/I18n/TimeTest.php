@@ -61,7 +61,7 @@ final class TimeTest extends CIUnitTestCase
             'en_US',
             IntlDateFormatter::SHORT,
             IntlDateFormatter::SHORT,
-            'America/Chicago', // Default for CodeIgniter
+            'America/Chicago',
             IntlDateFormatter::GREGORIAN,
             'yyyy-MM-dd HH:mm:ss'
         );
@@ -76,7 +76,7 @@ final class TimeTest extends CIUnitTestCase
             'en_US',
             IntlDateFormatter::SHORT,
             IntlDateFormatter::SHORT,
-            'Europe/London', // Default for CodeIgniter
+            'Europe/London',
             IntlDateFormatter::GREGORIAN,
             'yyyy-MM-dd HH:mm:ss'
         );
@@ -92,7 +92,7 @@ final class TimeTest extends CIUnitTestCase
             'fr_FR',
             IntlDateFormatter::SHORT,
             IntlDateFormatter::SHORT,
-            'Europe/London', // Default for CodeIgniter
+            'Europe/London',
             IntlDateFormatter::GREGORIAN,
             'yyyy-MM-dd HH:mm:ss'
         );
