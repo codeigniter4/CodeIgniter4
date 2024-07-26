@@ -314,6 +314,10 @@ Registrars provide a means of altering a configuration at runtime across namespa
 Registrars work if :ref:`auto-discovery` is enabled in :doc:`Modules </general/modules>`.
 It alters configuration properties when the Config object is instantiated.
 
+.. note:: This feature is implemented in the ``CodeIgniter\Config\BaseConfig``
+    class. So it will not work with a few files in the **app/Config** folder
+    that do not extends the class.
+
 There are two ways to implement a Registrar: **implicit** and **explicit**.
 
 .. note:: Values from **.env** always take priority over Registrars.
