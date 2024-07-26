@@ -59,6 +59,12 @@ executed twice, an exception will be thrown. See
 
 .. _v460-interface-changes:
 
+Time with Microseconds
+----------------------
+
+Fixed bugs that some methods in ``Time`` to lose microseconds have been fixed.
+See :ref:`Upgrading Guide <upgrade-460-time-keeps-microseconds>` for details.
+
 Interface Changes
 =================
 
