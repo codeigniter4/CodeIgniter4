@@ -24,39 +24,10 @@ if [ "$FILES" != "" ]; then
     echo "Running PHP CS Fixer..."
 
     # Run on whole codebase to skip on unnecessary filtering
-    # Run first on app, admin, public
-    if [ -d /proc/cygdrive ]; then
-        ./utils/vendor/bin/php-cs-fixer fix --verbose --dry-run --diff --config=.php-cs-fixer.no-header.php
-    else
-        php ./utils/vendor/bin/php-cs-fixer fix --verbose --dry-run --diff --config=.php-cs-fixer.no-header.php
-    fi
+    composer cs
 
     if [ $? != 0 ]; then
-        echo "Files in app, admin, or public are not following the coding standards. Please fix them before commit."
-        exit 1
-    fi
-
-    # Next, run on system, tests, utils, and root PHP files
-    if [ -d /proc/cygdrive ]; then
-        ./utils/vendor/bin/php-cs-fixer fix --verbose --dry-run --diff
-    else
-        php ./utils/vendor/bin/php-cs-fixer fix --verbose --dry-run --diff
-    fi
-
-    if [ $? != 0 ]; then
-        echo "Files in system, tests, utils, or root are not following the coding standards. Please fix them before commit."
-        exit 1
-    fi
-
-    # Next, run on user_guide_src/source PHP files
-    if [ -d /proc/cygdrive ]; then
-        ./utils/vendor/bin/php-cs-fixer fix --verbose --dry-run --diff --config=.php-cs-fixer.user-guide.php
-    else
-        php ./utils/vendor/bin/php-cs-fixer fix --verbose --dry-run --diff --config=.php-cs-fixer.user-guide.php
-    fi
-
-    if [ $? != 0 ]; then
-        echo "Files in user_guide_src/source are not following the coding standards. Please fix them before commit."
+        echo "There are PHP files which are not following the coding standards. Please fix them before commit."
         exit 1
     fi
 fi

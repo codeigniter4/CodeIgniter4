@@ -247,6 +247,8 @@ Use the ``$db->newQuery()`` method to make a subquery the main table:
 Join
 ====
 
+.. _query-builder-join:
+
 $builder->join()
 ----------------
 
@@ -270,7 +272,7 @@ RawSql
 
 .. versionadded:: 4.2.0
 
-Since v4.2.0, ``$builder->join()`` accepts a ``CodeIgniter\Database\RawSql`` instance, which expresses raw SQL strings.
+Since v4.2.0, ``$builder->join()`` accepts a ``CodeIgniter\Database\RawSql`` instance as the JOIN ON condition, which expresses raw SQL strings.
 
 .. literalinclude:: query_builder/102.php
 
@@ -1498,13 +1500,14 @@ Class Reference
     .. php:method:: join($table, $cond[, $type = ''[, $escape = null]])
 
         :param string $table: Table name to join
-        :param string $cond: The JOIN ON condition
+        :param string|RawSql $cond: The JOIN ON condition
         :param string $type: The JOIN type
         :param bool    $escape: Whether to escape values and identifiers
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
-        Adds a ``JOIN`` clause to a query.
+        Adds a ``JOIN`` clause to a query. Since v4.2.0, ``RawSql`` can be used
+        as the JOIN ON condition. See also :ref:`query-builder-join`.
 
     .. php:method:: where($key[, $value = null[, $escape = null]])
 

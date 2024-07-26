@@ -28,7 +28,7 @@
         "phpunit/phpcov": "^9.0.2",
         "phpunit/phpunit": "^10.5.16",
         "predis/predis": "^1.1 || ^2.0",
-        "rector/rector": "1.2.1"
+        "rector/rector": "1.2.2"
     },
     "replace": {
         "codeigniter4/framework": "self.version"
@@ -92,15 +92,15 @@
         ],
         "analyze": [
             "Composer\\Config::disableProcessTimeout",
-            "bash -c \"XDEBUG_MODE=off vendor/bin/phpstan analyse\"",
+            "@phpstan:check",
             "vendor/bin/rector process --dry-run"
         ],
         "cs": [
             "Composer\\Config::disableProcessTimeout",
-            "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.user-guide.php",
-            "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.no-header.php",
-            "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.tests.php",
-            "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --dry-run --diff"
+            "utils/vendor/bin/php-cs-fixer check --ansi --verbose --diff --config=.php-cs-fixer.user-guide.php",
+            "utils/vendor/bin/php-cs-fixer check --ansi --verbose --diff --config=.php-cs-fixer.no-header.php",
+            "utils/vendor/bin/php-cs-fixer check --ansi --verbose --diff --config=.php-cs-fixer.tests.php",
+            "utils/vendor/bin/php-cs-fixer check --ansi --verbose --diff"
         ],
         "cs-fix": [
             "Composer\\Config::disableProcessTimeout",
@@ -110,6 +110,8 @@
             "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --diff"
         ],
         "metrics": "utils/vendor/bin/phpmetrics --config=phpmetrics.json",
+        "phpstan:baseline": "vendor/bin/phpstan analyse --ansi --generate-baseline=phpstan-baseline.php",
+        "phpstan:check": "vendor/bin/phpstan analyse --verbose --ansi",
         "sa": "@analyze",
         "style": "@cs-fix",
         "test": "phpunit"
@@ -119,6 +121,8 @@
         "cs": "Check the coding style",
         "cs-fix": "Fix the coding style",
         "metrics": "Run PhpMetrics",
+        "phpstan:baseline": "Run PHPStan then dump all errors to baseline",
+        "phpstan:check": "Run PHPStan with support for identifiers",
         "test": "Run unit tests"
     }
 }
