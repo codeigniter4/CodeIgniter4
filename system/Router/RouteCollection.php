@@ -1456,6 +1456,12 @@ class RouteCollection implements RouteCollectionInterface
             $to = $this->processArrayCallableSyntax($from, $to);
         }
 
+        // Merge group filters.
+        if (isset($options['filter'])) {
+            $currentFilter     = (array) ($this->currentOptions['filter'] ?? []);
+            $options['filter'] = array_merge($currentFilter, (array) $options['filter']);
+        }
+
         $options = array_merge($this->currentOptions ?? [], $options ?? []);
 
         // Route priority detect

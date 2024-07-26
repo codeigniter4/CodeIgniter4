@@ -564,6 +564,9 @@ run the filter before or after the controller. This is especially handy during a
 
 The value for the filter must match one of the aliases defined within **app/Config/Filters.php**.
 
+.. note:: Prior to v4.5.4, due to a bug, filters passed to the ``group()`` were
+    not merged into the filters passed to the inner routes.
+
 Setting Other Options
 =====================
 
