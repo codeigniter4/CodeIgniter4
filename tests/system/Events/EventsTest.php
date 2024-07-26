@@ -19,6 +19,7 @@ use Config\Modules;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 
 /**
  * @internal
@@ -31,6 +32,7 @@ final class EventsTest extends CIUnitTestCase
      */
     private Events $manager;
 
+    #[WithoutErrorHandler]
     protected function setUp(): void
     {
         parent::setUp();
@@ -38,10 +40,6 @@ final class EventsTest extends CIUnitTestCase
         $this->manager = new MockEvents();
 
         Events::removeAllListeners();
-
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
     }
 
     protected function tearDown(): void

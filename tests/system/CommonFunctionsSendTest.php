@@ -17,6 +17,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 
 /**
  * @internal
@@ -24,15 +25,12 @@ use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 #[Group('SeparateProcess')]
 final class CommonFunctionsSendTest extends CIUnitTestCase
 {
+    #[WithoutErrorHandler]
     protected function setUp(): void
     {
         parent::setUp();
 
         unset($_ENV['foo'], $_SERVER['foo']);
-
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
     }
 
     /**

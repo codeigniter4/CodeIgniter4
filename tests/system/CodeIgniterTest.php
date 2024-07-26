@@ -34,6 +34,7 @@ use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use Tests\Support\Filters\Customfilter;
 use Tests\Support\Filters\RedirectFilter;
 
@@ -48,14 +49,11 @@ final class CodeIgniterTest extends CIUnitTestCase
     private CodeIgniter $codeigniter;
     protected $routes;
 
+    #[WithoutErrorHandler]
     protected function setUp(): void
     {
         parent::setUp();
         $this->resetServices();
-
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
 
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 

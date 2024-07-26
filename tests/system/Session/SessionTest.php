@@ -25,6 +25,7 @@ use Config\Session as SessionConfig;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 
 /**
  * @internal
@@ -34,16 +35,13 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 #[RunTestsInSeparateProcesses]
 final class SessionTest extends CIUnitTestCase
 {
+    #[WithoutErrorHandler]
     protected function setUp(): void
     {
         parent::setUp();
 
         $_COOKIE  = [];
         $_SESSION = [];
-
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
     }
 
     protected function getInstance($options = [])
