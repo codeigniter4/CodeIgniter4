@@ -29,6 +29,28 @@ See :ref:`ChangeLog <v460-behavior-changes-exceptions>` for details.
 
 If you have code that catches these exceptions, change the exception classes.
 
+.. _upgrade-460-registrars-with-dirty-hack:
+
+Registrars with Dirty Hack
+==========================
+
+To prevent Auto-Discovery of :ref:`registrars` from running twice, when a registrar
+class is loaded or instantiated, if it instantiates a Config class (which extends
+``CodeIgniter\Config\BaseConfig``), ``ConfigException`` will be raised.
+
+This is because if Auto-Discovery of Registrars is performed twice, duplicate
+values may be added to properties of Config classes.
+
+All registrar classes (**Config/Registrar.php** in all namespaces) must be modified
+so that they do not instantiate any Config class when loaded or instantiated.
+
+If the packages/modules you are using provide such registrar classes, the registrar
+classes in the packages/modules need to be fixed.
+
+The following is an example of code that will no longer work:
+
+.. literalinclude:: upgrade_460/001.php
+
 Interface Changes
 =================
 
