@@ -875,7 +875,7 @@ final class TimeTest extends CIUnitTestCase
         $this->assertTrue($time1->equals('January 11, 2017 03:50:00', 'Europe/London'));
     }
 
-    public function testEqualWithStringAndNotimezone(): void
+    public function testEqualWithStringAndNoTimezone(): void
     {
         $time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
 
