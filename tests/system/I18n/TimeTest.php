@@ -889,6 +889,14 @@ final class TimeTest extends CIUnitTestCase
         $this->assertTrue($time1->equals('January 10, 2017 21:50:00'));
     }
 
+    public function testEqualWithDifferentMicroseconds(): void
+    {
+        $time1 = new Time('2024-01-01 12:00:00.654321');
+        $time2 = new Time('2024-01-01 12:00:00');
+
+        $this->assertFalse($time1->equals($time2));
+    }
+
     public function testSameSuccess(): void
     {
         $time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
