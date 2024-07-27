@@ -936,6 +936,15 @@ final class TimeTest extends CIUnitTestCase
         $this->assertFalse($time2->isBefore($time1));
     }
 
+    public function testBeforeWithMicroseconds(): void
+    {
+        $time1 = new Time('2024-01-01 12:00:00.000000');
+        $time2 = new Time('2024-01-01 12:00:00.654321');
+
+        $this->assertTrue($time1->isBefore($time2));
+        $this->assertFalse($time2->isBefore($time1));
+    }
+
     public function testAfter(): void
     {
         $time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
@@ -943,6 +952,15 @@ final class TimeTest extends CIUnitTestCase
 
         $this->assertFalse($time1->isAfter($time2));
         $this->assertTrue($time2->isAfter($time1));
+    }
+
+    public function testAfterWithMicroseconds(): void
+    {
+        $time1 = new Time('2024-01-01 12:00:00.654321');
+        $time2 = new Time('2024-01-01 12:00:00.000000');
+
+        $this->assertTrue($time1->isAfter($time2));
+        $this->assertFalse($time2->isAfter($time1));
     }
 
     public function testHumanizeYearsSingle(): void
