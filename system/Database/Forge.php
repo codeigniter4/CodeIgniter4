@@ -1226,7 +1226,9 @@ class Forge
 
             $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
             $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
-            $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
+            $referenceTable = explode('.',$fkey['referenceTable']);
+            $referenceTable[array_key_last($referenceTable)] = $this->db->DBPrefix . $referenceTable[array_key_last($referenceTable)];
+            $referenceTableFilled = $this->db->escapeIdentifiers(implode('.',$referenceTable));
             $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
 
             if ($asQuery === true) {
