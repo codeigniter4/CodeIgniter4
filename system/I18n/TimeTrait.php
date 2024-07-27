@@ -314,10 +314,11 @@ trait TimeTrait
      */
     public function toDateTime()
     {
-        $dateTime = new DateTime('', $this->getTimezone());
-        $dateTime->setTimestamp(parent::getTimestamp());
-
-        return $dateTime;
+        return DateTime::createFromFormat(
+            'Y-m-d H:i:s.u',
+            $this->format('Y-m-d H:i:s.u'),
+            $this->getTimezone()
+        );
     }
 
     // --------------------------------------------------------------------
