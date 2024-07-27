@@ -30,6 +30,8 @@ Deprecations
 Bugs Fixed
 **********
 
+- **Routing:** Fixed a bug that filters passed to ``$routes->group()`` were not
+  merged into filters passed to the inner routes.
 - **CURLRequest:** Fixed a bug preventing the use of strings for ``version`` in the config array
   when making requests.
 
