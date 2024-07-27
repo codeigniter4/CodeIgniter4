@@ -14,10 +14,12 @@ Getting a File instance
 ***********************
 
 You create a new File instance by passing in the path to the file in the constructor.
-By default, the file does not need to exist. However, you can pass an additional argument of "true"
-to check that the file exists and throw ``FileNotFoundException()`` if it does not.
 
 .. literalinclude:: files/001.php
+    :lines: 2-
+
+By default, the file does not need to exist. However, you can pass an additional argument of ``true``
+to check that the file exists and throw ``FileNotFoundException()`` if it does not.
 
 Taking Advantage of Spl
 ***********************
@@ -25,6 +27,7 @@ Taking Advantage of Spl
 Once you have an instance, you have the full power of the SplFileInfo class at the ready, including:
 
 .. literalinclude:: files/002.php
+    :lines: 2-
 
 New Features
 ************
@@ -38,21 +41,28 @@ You can generate a cryptographically secure random filename, with the current ti
 method. This is especially useful to rename files when moving it so that the filename is unguessable:
 
 .. literalinclude:: files/003.php
+    :lines: 2-
 
 getSize()
 =========
 
-Returns the size of the uploaded file in bytes:
+Returns the size of the file in bytes:
 
 .. literalinclude:: files/004.php
+    :lines: 2-
+
+A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
 
 getSizeByUnit()
 ===============
 
-Returns the size of the uploaded file default in bytes. You can pass in either 'kb' or 'mb' as the first parameter to get
+Returns the size of the file default in bytes. You can pass in either ``'kb'`` or ``'mb'`` as the first parameter to get
 the results in kilobytes or megabytes, respectively:
 
 .. literalinclude:: files/005.php
+    :lines: 2-
+
+A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
 
 getMimeType()
 =============
@@ -61,6 +71,7 @@ Retrieve the media type (mime type) of the file. Uses methods that are considere
 the type of file:
 
 .. literalinclude:: files/006.php
+    :lines: 2-
 
 guessExtension()
 ================
@@ -70,6 +81,7 @@ will return null. This is often a more trusted source than simply using the exte
 the values in **app/Config/Mimes.php** to determine extension:
 
 .. literalinclude:: files/007.php
+    :lines: 2-
 
 Moving Files
 ============
@@ -78,12 +90,15 @@ Each file can be moved to its new location with the aptly named ``move()`` metho
 the file to as the first parameter:
 
 .. literalinclude:: files/008.php
+    :lines: 2-
 
 By default, the original filename was used. You can specify a new filename by passing it as the second parameter:
 
 .. literalinclude:: files/009.php
+    :lines: 2-
 
-The move() method returns a new File instance that for the relocated file, so you must capture the result if the
+The ``move()`` method returns a new File instance that for the relocated file, so you must capture the result if the
 resulting location is needed:
 
 .. literalinclude:: files/010.php
+    :lines: 2-

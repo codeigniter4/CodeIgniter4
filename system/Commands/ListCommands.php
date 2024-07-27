@@ -101,7 +101,7 @@ class ListCommands extends BaseCommand
             $groups[$command['group']][$title] = $command;
         }
 
-        $length = max(array_map('strlen', array_keys($commands)));
+        $length = max(array_map(strlen(...), array_keys($commands)));
 
         ksort($groups);
 

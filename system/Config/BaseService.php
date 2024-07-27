@@ -75,6 +75,7 @@ use Config\Modules;
 use Config\Optimize;
 use Config\Pager as ConfigPager;
 use Config\Services as AppServices;
+use Config\Session as ConfigSession;
 use Config\Toolbar as ConfigToolbar;
 use Config\Validation as ConfigValidation;
 use Config\View as ConfigView;
@@ -130,7 +131,7 @@ use InvalidArgumentException;
  * @method static Router                     router(RouteCollectionInterface $routes = null, Request $request = null, $getShared = true)
  * @method static RouteCollection            routes($getShared = true)
  * @method static Security                   security(App $config = null, $getShared = true)
- * @method static Session                    session(App $config = null, $getShared = true)
+ * @method static Session                    session(ConfigSession $config = null, $getShared = true)
  * @method static SiteURIFactory             siteurifactory(App $config = null, Superglobals $superglobals = null, $getShared = true)
  * @method static Superglobals               superglobals(array $server = null, array $get = null, bool $getShared = true)
  * @method static Throttler                  throttler($getShared = true)

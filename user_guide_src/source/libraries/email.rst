@@ -113,35 +113,37 @@ sending email.
 =================== =================== ============================ =======================================================================
 Preference          Default Value       Options                      Description
 =================== =================== ============================ =======================================================================
-**userAgent**       CodeIgniter         None                         The "user agent".
+**fromEmail**                                                        The email address to be set in the "from" header.
+**fromName**                                                         The name to be set in the "from" header. 
+**userAgent**       CodeIgniter                                      The "user agent".
 **protocol**        mail                ``mail``, ``sendmail``,      The mail sending protocol.
                                         or ``smtp``
-**mailPath**        /usr/sbin/sendmail  None                         The server path to Sendmail.
-**SMTPHost**        No Default          None                         SMTP Server Hostname.
-**SMTPUser**        No Default          None                         SMTP Username.
-**SMTPPass**        No Default          None                         SMTP Password.
-**SMTPPort**        25                  None                         SMTP Port. (If set to ``465``, TLS will be used for the connection
+**mailPath**        /usr/sbin/sendmail                               The server path to Sendmail.
+**SMTPHost**                                                         SMTP Server Hostname.
+**SMTPUser**                                                         SMTP Username.
+**SMTPPass**                                                         SMTP Password.
+**SMTPPort**        25                                               SMTP Port. (If set to ``465``, TLS will be used for the connection
                                                                      regardless of ``SMTPCrypto`` setting.)
-**SMTPTimeout**     5                   None                         SMTP Timeout (in seconds).
-**SMTPKeepAlive**   false               ``true``/``false`` (boolean) Enable persistent SMTP connections.
+**SMTPTimeout**     5                                                SMTP Timeout (in seconds).
+**SMTPKeepAlive**   false               ``true``/``false``           Enable persistent SMTP connections.
 **SMTPCrypto**      tls                 ``tls``, ``ssl``, or         SMTP Encryption. Setting this to ``ssl`` will create a secure
                                         empty string (``''``)        channel to the server using SSL, and ``tls`` will issue a
                                                                      ``STARTTLS`` command to the server. Connection on port ``465`` should
                                                                      set this to an empty string (``''``). See also
                                                                      :ref:`email-ssl-tls-for-smtp`.
-**wordWrap**        true                ``true``/``false`` (boolean) Enable word-wrap.
+**wordWrap**        true                ``true``/``false``           Enable word-wrap.
 **wrapChars**       76                                               Character count to wrap at.
 **mailType**        text                ``text`` or ``html``         Type of mail. If you send HTML email you must send it as a complete web
                                                                      page. Make sure you don't have any relative links or relative image
                                                                      paths otherwise they will not work.
-**charset**         utf-8                                            Character set (``utf-8``, ``iso-8859-1``, etc.).
-**validate**        true                ``true``/``false`` (boolean) Whether to validate the email address.
+**charset**         UTF-8                                            Character set (``utf-8``, ``iso-8859-1``, etc.).
+**validate**        true                ``true``/``false``           Whether to validate the email address.
 **priority**        3                   1, 2, 3, 4, 5                Email Priority. ``1`` = highest. ``5`` = lowest. ``3`` = normal.
-**CRLF**            \\n                 ``\r\n`` or ``\n`` or ``\r`` Newline character. (Use ``\r\n`` to comply with RFC 822).
-**newline**         \\n                 ``\r\n`` or ``\n`` or ``\r`` Newline character. (Use ``\r\n`` to comply with RFC 822).
-**BCCBatchMode**    false               ``true``/``false`` (boolean) Enable BCC Batch Mode.
-**BCCBatchSize**    200                 None                         Number of emails in each BCC batch.
-**DSN**             false               ``true``/``false`` (boolean) Enable notify message from server.
+**CRLF**            \\r\\n              ``\r\n``, ``\n`` or ``\r``   Newline character. (Use ``\r\n`` to comply with RFC 822).
+**newline**         \\r\\n              ``\r\n``, ``\n`` or ``\r``   Newline character. (Use ``\r\n`` to comply with RFC 822).
+**BCCBatchMode**    false               ``true``/``false``           Enable BCC Batch Mode.
+**BCCBatchSize**    200                                              Number of emails in each BCC batch.
+**DSN**             false               ``true``/``false``           Enable notify message from server.
 =================== =================== ============================ =======================================================================
 
 Overriding Word Wrapping
@@ -173,9 +175,9 @@ Class Reference
 
     .. php:method:: setFrom($from[, $name = ''[, $returnPath = null]])
 
-        :param    string    $from: "From" e-mail address
+        :param    string    $from: "From" email address
         :param    string    $name: "From" display name
-        :param    string    $returnPath: Optional email address to redirect undelivered e-mail to
+        :param    string    $returnPath: Optional email address to redirect undelivered email to
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
@@ -192,8 +194,8 @@ Class Reference
 
     .. php:method:: setReplyTo($replyto[, $name = ''])
 
-        :param    string    $replyto: E-mail address for replies
-        :param    string    $name: Display name for the reply-to e-mail address
+        :param    string    $replyto: Email address for replies
+        :param    string    $name: Display name for the reply-to email address
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
@@ -204,12 +206,12 @@ Class Reference
 
     .. php:method:: setTo($to)
 
-        :param    mixed    $to: Comma-delimited string or an array of e-mail addresses
+        :param    mixed    $to: Comma separated string or an array of email addresses
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
-        Sets the email address(s) of the recipient(s). Can be a single e-mail,
-        a comma-delimited list or an array:
+        Sets the email address(es) of the recipient(s). Can be a single email,
+        a comma separated list or an array:
 
         .. literalinclude:: email/006.php
 
@@ -219,22 +221,22 @@ Class Reference
 
     .. php:method:: setCC($cc)
 
-        :param    mixed    $cc: Comma-delimited string or an array of e-mail addresses
+        :param    mixed    $cc: Comma separated string or an array of email addresses
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
-        Sets the CC email address(s). Just like the "to", can be a single e-mail,
-        a comma-delimited list or an array.
+        Sets the CC email address(es). Just like the "to", can be a single email,
+        a comma separated list or an array.
 
     .. php:method:: setBCC($bcc[, $limit = ''])
 
-        :param    mixed    $bcc: Comma-delimited string or an array of e-mail addresses
-        :param    int    $limit: Maximum number of e-mails to send per batch
+        :param    mixed    $bcc: Comma separated string or an array of email addresses
+        :param    int    $limit: Maximum number of emails to send per batch
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
-        Sets the BCC email address(s). Just like the ``setTo()`` method, can be a single
-        e-mail, a comma-delimited list or an array.
+        Sets the BCC email address(es). Just like the ``setTo()`` method, can be a single
+        email, a comma separated list or an array.
 
         If ``$limit`` is set, "batch mode" will be enabled, which will send
         the emails to batches, with each batch not exceeding the specified
@@ -242,7 +244,7 @@ Class Reference
 
     .. php:method:: setSubject($subject)
 
-        :param    string    $subject: E-mail subject line
+        :param    string    $subject: Email subject line
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
@@ -252,21 +254,21 @@ Class Reference
 
     .. php:method:: setMessage($body)
 
-        :param    string    $body: E-mail message body
+        :param    string    $body: Email message body
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
-        Sets the e-mail message body:
+        Sets the email message body:
 
         .. literalinclude:: email/010.php
 
     .. php:method:: setAltMessage($str)
 
-        :param    string    $str: Alternative e-mail message body
+        :param    string    $str: Alternative email message body
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
-        Sets the alternative e-mail message body:
+        Sets the alternative email message body:
 
         .. literalinclude:: email/011.php
 
@@ -284,7 +286,7 @@ Class Reference
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype: CodeIgniter\\Email\\Email
 
-        Appends additional headers to the e-mail:
+        Appends additional headers to the email:
 
         .. literalinclude:: email/012.php
 
@@ -311,7 +313,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        The e-mail sending method. Returns boolean true or false based on
+        The email sending method. Returns boolean true or false based on
         success or failure, enabling it to be used conditionally:
 
         .. literalinclude:: email/015.php
@@ -334,7 +336,7 @@ Class Reference
         :param    string    $disposition: 'disposition' of the attachment. Most
             email clients make their own decision regardless of the MIME
             specification used here. https://www.iana.org/assignments/cont-disp/cont-disp.xhtml
-        :param    string    $newname: Custom file name to use in the e-mail
+        :param    string    $newname: Custom file name to use in the email
         :param    string    $mime: MIME type to use (useful for buffered data)
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
@@ -375,7 +377,7 @@ Class Reference
 
         .. literalinclude:: email/022.php
 
-        .. note:: Content-ID for each e-mail must be re-created for it to be unique.
+        .. note:: Content-ID for each email must be re-created for it to be unique.
 
     .. php:method:: printDebugger($include = ['headers', 'subject', 'body'])
 

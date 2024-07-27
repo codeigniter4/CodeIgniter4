@@ -28,8 +28,6 @@ $finder = Finder::create()
         'ThirdParty',
         'Validation/Views',
     ])
-    ->notPath([
-    ])
     ->notName('#Foobar.php$#')
     ->append([
         __FILE__,
@@ -41,17 +39,12 @@ $finder = Finder::create()
         __DIR__ . '/spark',
     ]);
 
-$overrides = [
-    // for updating to coding-standard
-    'modernize_strpos'    => true,
-    'ordered_attributes'  => ['order' => [], 'sort_algorithm' => 'alpha'],
-    'php_unit_attributes' => true,
-];
+$overrides = [];
 
 $options = [
     'cacheFile'    => 'build/.php-cs-fixer.cache',
     'finder'       => $finder,
-    'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
+    'customFixers' => FixerGenerator::create('utils/vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
     'customRules'  => [
         NoCodeSeparatorCommentFixer::name() => true,
     ],

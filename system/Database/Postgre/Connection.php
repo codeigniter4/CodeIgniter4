@@ -58,8 +58,7 @@ class Connection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @return         false|resource
-     * @phpstan-return false|PgSqlConnection
+     * @return false|PgSqlConnection
      */
     public function connect(bool $persistent = false)
     {
@@ -197,8 +196,7 @@ class Connection extends BaseConnection
     /**
      * Executes the query against the database.
      *
-     * @return         false|resource
-     * @phpstan-return false|PgSqlResult
+     * @return false|PgSqlResult
      */
     protected function execute(string $sql)
     {

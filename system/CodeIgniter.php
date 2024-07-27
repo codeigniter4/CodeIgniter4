@@ -56,7 +56,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.5.3';
+    public const CI_VERSION = '4.5.4';
 
     /**
      * App startup time.
@@ -253,7 +253,7 @@ class CodeIgniter
     {
         // If we have KINT_DIR it means it's already loaded via composer
         if (! defined('KINT_DIR')) {
-            spl_autoload_register(function ($class) {
+            spl_autoload_register(function ($class): void {
                 $class = explode('\\', $class);
 
                 if (array_shift($class) !== 'Kint') {

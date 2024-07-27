@@ -57,14 +57,5 @@ jobs:
       - name: Install dependencies
         run: composer update --ansi --no-interaction
 
-      - name: Run lint on `app/`, `admin/`, `public/`
-        run: vendor/bin/php-cs-fixer fix --verbose --ansi --dry-run --config=.php-cs-fixer.no-header.php --using-cache=no --diff
-
-      - name: Run lint on `system/`, `utils/`, and root PHP files
-        run: vendor/bin/php-cs-fixer fix --verbose --ansi --dry-run --using-cache=no --diff
-
-      - name: Run lint on `tests`
-        run: vendor/bin/php-cs-fixer fix --verbose --ansi --dry-run --config=.php-cs-fixer.tests.php --using-cache=no --diff
-
-      - name: Run lint on `user_guide_src/source/`
-        run: vendor/bin/php-cs-fixer fix --verbose --ansi --dry-run --config=.php-cs-fixer.user-guide.php --using-cache=no --diff
+      - name: Run lint
+        run: composer cs

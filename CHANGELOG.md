@@ -1,5 +1,28 @@
 # Changelog
 
+## [v4.5.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.3) (2024-07-27)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.3...v4.5.4)
+
+### Fixed Bugs
+
+* fix: [OCI8] Easy Connect string validation by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/9006
+* fix: [QueryBuilder] select() with RawSql may cause TypeError by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/9009
+* fix: [QueryBuilder] `select()` does not escape after `NULL` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/9010
+* fix: allow string as parameter to CURLRequest version by @tangix in https://github.com/codeigniter4/CodeIgniter4/pull/9021
+* fix: `spark phpini:check` may cause TypeError by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/9026
+* fix: Prevent invalid session handlers by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9036
+* fix: DebugBar CSS for daisyUI by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/9046
+* docs: `referrer` is undefined by @totoprayogo1916 in https://github.com/codeigniter4/CodeIgniter4/pull/9059
+* fix: filters passed to the ``$routes->group()`` are not merged into the filters passed to the inner routes by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/9064
+
+### Refactoring
+
+* refactor: use first class callable on function call by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9004
+* refactor: enable AddClosureVoidReturnTypeWhereNoReturnRector to add void return on closure by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9008
+* refactor: enable AddFunctionVoidReturnTypeWhereNoReturnRector to add void to functions by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9014
+* refactor: Enable phpunit 10 attribute Rector rules by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9015
+* refactor: fix `Throttler::check()` $tokens by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9067
+
 ## [v4.5.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.3) (2024-06-25)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.2...v4.5.3)
 

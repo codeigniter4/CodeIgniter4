@@ -1821,12 +1821,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:select\\(\\) has parameter \\$select with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:set\\(\\) has parameter \\$key with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
@@ -1990,12 +1984,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Property CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:\\$QBJoin type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:\\$QBNoEscape type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
 ];
@@ -7464,12 +7452,6 @@ $ignoreErrors[] = [
 	'message' => '#^Function fake\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/test_helper.php',
-];
-$ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/text_helper.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
@@ -18810,12 +18792,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\View\\\\ViewTest\\:\\:\\$loader \\(CodeIgniter\\\\Autoloader\\\\FileLocator\\) does not accept CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/ViewTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: method.childParameterType
-	'message' => '#^Parameter \\#1 \\$node \\(PhpParser\\\\Node\\\\Stmt\\) of method Utils\\\\PHPStan\\\\CheckUseStatementsAfterLicenseRule\\:\\:processNode\\(\\) should be contravariant with parameter \\$node \\(PhpParser\\\\Node\\) of method PHPStan\\\\Rules\\\\Rule\\<PhpParser\\\\Node\\>\\:\\:processNode\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/utils/PHPStan/CheckUseStatementsAfterLicenseRule.php',
 ];
 
 return ['parameters' => ['ignoreErrors' => $ignoreErrors]];

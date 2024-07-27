@@ -18,8 +18,13 @@ use PhpParser\Node;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Use_;
 use PHPStan\Analyser\Scope;
+use PHPStan\Rules\IdentifierRuleError;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 
+/**
+ * @implements Rule<Node\Stmt>
+ */
 final class CheckUseStatementsAfterLicenseRule implements Rule
 {
     private const ERROR_MESSAGE   = 'Use statement must be located after license docblock';
@@ -32,6 +37,8 @@ final class CheckUseStatementsAfterLicenseRule implements Rule
 
     /**
      * @param Stmt $node
+     *
+     * @return list<IdentifierRuleError>
      */
     public function processNode(Node $node, Scope $scope): array
     {
@@ -54,7 +61,11 @@ final class CheckUseStatementsAfterLicenseRule implements Rule
 
             while ($previous) {
                 if ($previous instanceof Use_) {
-                    return [self::ERROR_MESSAGE];
+                    return [
+                        RuleErrorBuilder::message(self::ERROR_MESSAGE)
+                            ->identifier('codeigniter.useStmtAfterLicense')
+                            ->build(),
+                    ];
                 }
 
                 $previous = $previous->getAttribute('previous');

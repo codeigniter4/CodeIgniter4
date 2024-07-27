@@ -46,6 +46,9 @@ use CodeIgniter\View\Parser;
 use Config\App;
 use Config\Exceptions;
 use Config\Security as SecurityConfig;
+use Config\Session as ConfigSession;
+use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -257,6 +260,32 @@ final class ServicesTest extends CIUnitTestCase
     {
         $actual = Services::session(null, false);
         $this->assertInstanceOf(Session::class, $actual);
+    }
+
+    #[DataProvider('provideNewSessionInvalid')]
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testNewSessionWithInvalidHandler(string $driver): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf('Invalid session handler "%s" provided.', $driver));
+
+        $config = new ConfigSession();
+
+        $config->driver = $driver;
+        Services::session($config, false);
+    }
+
+    /**
+     * @return iterable<string, array{0: string}>
+     */
+    public static function provideNewSessionInvalid(): iterable
+    {
+        yield 'just a string' => ['file'];
+
+        yield 'inexistent class' => ['Foo'];
+
+        yield 'other class' => [self::class];
     }
 
     #[PreserveGlobalState(false)]

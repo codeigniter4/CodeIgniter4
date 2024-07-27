@@ -853,7 +853,7 @@ class RouteCollection implements RouteCollectionInterface
         // In order to allow customization of the route the
         // resources are sent to, we need to have a new name
         // to store the values in.
-        $newName = implode('\\', array_map('ucfirst', explode('/', $name)));
+        $newName = implode('\\', array_map(ucfirst(...), explode('/', $name)));
 
         // If a new controller is specified, then we replace the
         // $name value with the name of the new controller.
@@ -947,7 +947,7 @@ class RouteCollection implements RouteCollectionInterface
         // In order to allow customization of the route the
         // resources are sent to, we need to have a new name
         // to store the values in.
-        $newName = implode('\\', array_map('ucfirst', explode('/', $name)));
+        $newName = implode('\\', array_map(ucfirst(...), explode('/', $name)));
 
         // If a new controller is specified, then we replace the
         // $name value with the name of the new controller.
@@ -1454,6 +1454,12 @@ class RouteCollection implements RouteCollectionInterface
         // When redirecting to named route, $to is an array like `['zombies' => '\Zombies::index']`.
         if (is_array($to) && isset($to[0])) {
             $to = $this->processArrayCallableSyntax($from, $to);
+        }
+
+        // Merge group filters.
+        if (isset($options['filter'])) {
+            $currentFilter     = (array) ($this->currentOptions['filter'] ?? []);
+            $options['filter'] = array_merge($currentFilter, (array) $options['filter']);
         }
 
         $options = array_merge($this->currentOptions ?? [], $options ?? []);

@@ -118,7 +118,7 @@ class Query implements QueryInterface, Stringable
             }
 
             if ($setEscape) {
-                array_walk($binds, static function (&$item) {
+                array_walk($binds, static function (&$item): void {
                     $item = [
                         $item,
                         true,
@@ -141,7 +141,7 @@ class Query implements QueryInterface, Stringable
     public function setBinds(array $binds, bool $setEscape = true)
     {
         if ($setEscape) {
-            array_walk($binds, static function (&$item) {
+            array_walk($binds, static function (&$item): void {
                 $item = [$item, true];
             });
         }
