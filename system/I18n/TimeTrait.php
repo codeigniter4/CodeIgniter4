@@ -980,10 +980,16 @@ trait TimeTrait
      */
     public function isBefore($testTime, ?string $timezone = null): bool
     {
-        $testTime = $this->getUTCObject($testTime, $timezone)->getTimestamp();
-        $ourTime  = $this->getTimestamp();
+        $testTime = $this->getUTCObject($testTime, $timezone);
 
-        return $ourTime < $testTime;
+        $testTimestamp = $testTime->getTimestamp();
+        $ourTimestamp  = $this->getTimestamp();
+
+        if ($ourTimestamp === $testTimestamp) {
+            return $this->format('u') < $testTime->format('u');
+        }
+
+        return $ourTimestamp < $testTimestamp;
     }
 
     /**
@@ -996,10 +1002,16 @@ trait TimeTrait
      */
     public function isAfter($testTime, ?string $timezone = null): bool
     {
-        $testTime = $this->getUTCObject($testTime, $timezone)->getTimestamp();
-        $ourTime  = $this->getTimestamp();
+        $testTime = $this->getUTCObject($testTime, $timezone);
 
-        return $ourTime > $testTime;
+        $testTimestamp = $testTime->getTimestamp();
+        $ourTimestamp  = $this->getTimestamp();
+
+        if ($ourTimestamp === $testTimestamp) {
+            return $this->format('u') > $testTime->format('u');
+        }
+
+        return $ourTimestamp > $testTimestamp;
     }
 
     // --------------------------------------------------------------------
