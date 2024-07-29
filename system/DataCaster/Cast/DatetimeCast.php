@@ -62,6 +62,19 @@ class DatetimeCast extends BaseCast
             self::invalidTypeValueError($value);
         }
 
-        return (string) $value;
+        if (! $helper instanceof BaseConnection) {
+            $message = 'The parameter $helper must be BaseConnection.';
+
+            throw new InvalidArgumentException($message);
+        }
+
+        $format = match ($params[0] ?? '') {
+            ''      => $helper->dateFormat['datetime'],
+            'ms'    => $helper->dateFormat['datetime-ms'],
+            'us'    => $helper->dateFormat['datetime-us'],
+            default => throw new InvalidArgumentException('Invalid parameter: ' . $params[0]),
+        };
+
+        return $value->format($format);
     }
 }
