@@ -25,6 +25,7 @@ use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use Tests\Support\Controllers\Newautorouting;
 use Tests\Support\Controllers\Popcorn;
 
@@ -40,13 +41,10 @@ final class ControllerTestTraitTest extends CIUnitTestCase
 {
     use ControllerTestTrait;
 
+    #[WithoutErrorHandler]
     protected function setUp(): void
     {
         parent::setUp();
-
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
     }
 
     public function testBadController(): void

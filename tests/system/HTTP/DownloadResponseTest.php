@@ -21,6 +21,7 @@ use DateTimeZone;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 
 /**
  * @internal
@@ -28,13 +29,10 @@ use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 #[Group('SeparateProcess')]
 final class DownloadResponseTest extends CIUnitTestCase
 {
+    #[WithoutErrorHandler]
     protected function setUp(): void
     {
         parent::setUp();
-
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
     }
 
     protected function tearDown(): void

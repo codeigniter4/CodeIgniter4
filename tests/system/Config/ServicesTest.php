@@ -54,6 +54,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use Tests\Support\Config\Services;
 
 /**
@@ -64,15 +65,12 @@ final class ServicesTest extends CIUnitTestCase
 {
     private array $original;
 
+    #[WithoutErrorHandler]
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->original = $_SERVER;
-
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
     }
 
     protected function tearDown(): void

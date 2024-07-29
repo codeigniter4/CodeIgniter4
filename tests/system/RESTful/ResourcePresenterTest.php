@@ -24,6 +24,7 @@ use Config\App;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\UserModel;
 use Tests\Support\RESTful\Worker2;
@@ -48,16 +49,13 @@ final class ResourcePresenterTest extends CIUnitTestCase
      */
     protected $routes;
 
+    #[WithoutErrorHandler]
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->resetServices(true);
         $this->resetFactories();
-
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
     }
 
     private function createCodeigniter(): void
