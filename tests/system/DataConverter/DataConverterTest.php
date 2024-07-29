@@ -368,7 +368,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'   => 'int',
             'date' => 'datetime',
         ];
-        $converter = $this->createDataConverter($types);
+        $converter = $this->createDataConverter($types, [], db_connect());
 
         $phpData = [
             'id'   => '1',
@@ -620,7 +620,7 @@ final class DataConverterTest extends CIUnitTestCase
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
-        $converter = $this->createDataConverter($types);
+        $converter = $this->createDataConverter($types, [], db_connect());
 
         $phpData = [
             'id'         => 1,
@@ -652,7 +652,7 @@ final class DataConverterTest extends CIUnitTestCase
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
-        $converter = $this->createDataConverter($types, [], null, 'toRawArray');
+        $converter = $this->createDataConverter($types, [], db_connect(), 'toRawArray');
 
         $phpData = [
             'id'         => 1,
