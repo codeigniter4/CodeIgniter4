@@ -17,8 +17,8 @@ use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Autoloader\FileLocatorCached;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\Publisher\Publisher;
 use CodeIgniter\Exceptions\RuntimeException;
+use CodeIgniter\Publisher\Publisher;
 
 /**
  * Optimize for production.
@@ -60,10 +60,18 @@ final class Optimize extends BaseCommand
      * @var array<string, string>
      */
     protected $options = [
-        'c' => 'Enable config caching.',
-        'l' => 'Enable locator caching.',
+        'c' => 'Enable only config caching.',
+        'l' => 'Enable only locator caching.',
         'd' => 'Disable config and locator caching.',
     ];
+
+    private const CONFIG_CACHE = '$configCacheEnabled';
+
+    private const LOCATOR_CACHE = '$locatorCacheEnabled';
+    
+    private const CONFIG_PATH = APPPATH . 'Config/Optimize.php';
+
+    private const CACHE_PATH = WRITEPATH . 'cache/FactoriesCache_config';
 
     /**
      * {@inheritDoc}
@@ -76,7 +84,7 @@ final class Optimize extends BaseCommand
         $disable            = CLI::getOption('d');
 
         try {
-            $this->enableCaching($enableConfigCache, $enableLocatorCache, $disable);
+            $this->runCaching($enableConfigCache, $enableLocatorCache, $disable);
             $this->clearCache();
             $this->removeDevPackages();
         } catch (RuntimeException) {
@@ -94,8 +102,7 @@ final class Optimize extends BaseCommand
         $locator->deleteCache();
         CLI::write('Removed FileLocatorCache.', 'green');
 
-        $cache = WRITEPATH . 'cache/FactoriesCache_config';
-        $this->removeFile($cache);
+        $this->removeFile(self::CACHE_PATH);
     }
 
     private function removeFile(string $cache): void
@@ -115,73 +122,101 @@ final class Optimize extends BaseCommand
         }
     }
 
-    private function enableCaching(?bool $enableConfigCache, ?bool $enableLocatorCache, ?bool $disable): void
+    private function runCaching(?bool $enableConfigCache, ?bool $enableLocatorCache, ?bool $disable): void
     {
-        $publisher = new Publisher(APPPATH, APPPATH);
-
-        $config = APPPATH . 'Config/Optimize.php';
-
         // Prepare search and replace mappings
         $searchReplace = [];
 
         if ($disable === true) {
-            $searchReplace = [
-                'public bool $configCacheEnabled = true;'  => 'public bool $configCacheEnabled = false;',
-                'public bool $locatorCacheEnabled = true;' => 'public bool $locatorCacheEnabled = false;',
-            ];
+            $searchReplace = $this->disableCaching();            
         } else {
-            if ($enableConfigCache === true) {
-                $searchReplace['public bool $configCacheEnabled = false;'] = 'public bool $configCacheEnabled = true;';
-            }
-
-            if ($enableLocatorCache === true) {
-                $searchReplace['public bool $locatorCacheEnabled = false;'] = 'public bool $locatorCacheEnabled = true;';
-            }
-
-            // If no options provided, update both
-            if ($enableConfigCache === null && $enableLocatorCache === null) {
-                $searchReplace = [
-                    'public bool $configCacheEnabled = false;'  => 'public bool $configCacheEnabled = true;',
-                    'public bool $locatorCacheEnabled = false;' => 'public bool $locatorCacheEnabled = true;',
-                ];
-            }
+            $searchReplace = $this->enableCaching(['config' => $enableConfigCache, 'locator' => $enableLocatorCache]);
         }
 
         // Apply replacements if necessary
         if ($searchReplace !== []) {
-            $result = $publisher->replace($config, $searchReplace);
+            $publisher = new Publisher(APPPATH, APPPATH);
+
+            $result = $publisher->replace(self::CONFIG_PATH, $searchReplace);
 
             if ($result === true) {
                 $messages = [];
 
-                if (in_array('public bool $configCacheEnabled = true;', $searchReplace, true)) {
+                if (in_array('public bool ' . self::CONFIG_CACHE . ' = true;', $searchReplace, true)) {
                     $messages[] = 'Config Caching is enabled in "app/Config/Optimize.php".';
                 }
 
-                if (in_array('public bool $locatorCacheEnabled = true;', $searchReplace, true)) {
+                if (in_array('public bool ' . self::LOCATOR_CACHE .' = true;', $searchReplace, true)) {
                     $messages[] = 'FileLocator Caching is enabled in "app/Config/Optimize.php".';
                 }
 
-                if (in_array('public bool $configCacheEnabled = false;', $searchReplace, true)) {
+                if (in_array('public bool ' . self::CONFIG_CACHE . ' = false;', $searchReplace, true)) {
                     $messages[] = 'Config Caching is disabled in "app/Config/Optimize.php".';
                 }
 
-                if (in_array('public bool $locatorCacheEnabled = false;', $searchReplace, true)) {
+                if (in_array('public bool ' . self::LOCATOR_CACHE .' = false;', $searchReplace, true)) {
                     $messages[] = 'FileLocator Caching is disabled in "app/Config/Optimize.php".';
                 }
+                
+                foreach ($messages as $message) {
+                    CLI::write($message, 'green');
+                    CLI::newLine();
+                }
 
-                CLI::write(implode("\n\n", $messages), 'green');
-                CLI::write();
+                CLI::newLine();
 
                 return;
             }
 
-            CLI::error('Error in updating file: ' . clean_path($config));
+            CLI::error('Error in updating file: ' . clean_path(self::CONFIG_PATH));
 
             throw new RuntimeException(__METHOD__);
         }
 
         CLI::write('No changes to caching settings.', 'yellow');
+    }
+
+    /**
+     * Disable Caching
+     *
+     * @return array
+     */
+    private function disableCaching(): array 
+    {
+        return [
+            'public bool ' . self::CONFIG_CACHE . ' = true;'  => 'public bool ' . self::CONFIG_CACHE . ' = false;',
+            'public bool ' . self::LOCATOR_CACHE .' = true;' => 'public bool ' . self::LOCATOR_CACHE .' = false;',
+        ];
+    }
+
+    /**
+     * Enable Caching
+     *
+     * @param array<string, bool|null> $options
+     * 
+     * @return array
+     */
+    private function enableCaching(array $options): array 
+    {
+        $searchReplace = [];
+
+        if ($options['config'] === true) {
+            $searchReplace['public bool ' . self::CONFIG_CACHE . ' = false;'] = 'public bool ' . self::CONFIG_CACHE . ' = true;';
+        }
+
+        if ($options['locator'] === true) {
+            $searchReplace['public bool ' . self::LOCATOR_CACHE .' = false;'] = 'public bool ' . self::LOCATOR_CACHE .' = true;';
+        }
+
+        // If no options provided, update both
+        if ($options['config'] === null && $options['locator'] === null) {
+            $searchReplace = [
+                'public bool ' . self::CONFIG_CACHE . ' = false;'  => 'public bool ' . self::CONFIG_CACHE . ' = true;',
+                'public bool ' . self::LOCATOR_CACHE .' = false;' => 'public bool ' . self::LOCATOR_CACHE .' = true;',
+            ];
+        }
+
+        return $searchReplace;
     }
 
     private function removeDevPackages(): void
