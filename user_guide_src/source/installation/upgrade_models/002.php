@@ -9,6 +9,9 @@ class NewsModel extends Model
     // Sets the table name.
     protected $table = 'news';
 
+    // Sets the field names to allow to insert/update.
+    protected $allowedFields = ['title', 'slug', 'body'];
+
     public function setNews($title, $slug, $text)
     {
         $data = [
@@ -17,7 +20,7 @@ class NewsModel extends Model
             'text'  => $text,
         ];
 
-        // Gets the Query Builder for the table, and calls `insert()`.
-        return $this->builder()->insert($data);
+        // Uses Model's`insert()` method.
+        return $this->insert($data);
     }
 }

@@ -1,13 +1,15 @@
 <?php
 
-class User_contact extends CI_Model
+class News_model extends CI_Model
 {
-    public function insert($name, $address, $email)
+    public function set_news($title, $slug, $text)
     {
-        $this->db->insert('user_contacts', array(
-            'name'    => $name,
-            'address' => $address,
-            'email'   => $email,
-        ));
+        $data = array(
+            'title' => $title,
+            'slug'  => $slug,
+            'text'  => $text,
+        );
+
+        return $this->db->insert('news', $data);
     }
 }
