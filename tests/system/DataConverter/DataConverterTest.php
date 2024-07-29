@@ -379,6 +379,23 @@ final class DataConverterTest extends CIUnitTestCase
         $this->assertSame('2023-11-18 14:18:18', $data['date']);
     }
 
+    public function testDateTimeConvertDataToDBWithFormat(): void
+    {
+        $types = [
+            'id'   => 'int',
+            'date' => 'datetime[us]',
+        ];
+        $converter = $this->createDataConverter($types, [], db_connect());
+
+        $phpData = [
+            'id'   => '1',
+            'date' => Time::parse('2009-02-15 00:00:01.123456'),
+        ];
+        $data = $converter->toDataSource($phpData);
+
+        $this->assertSame('2009-02-15 00:00:01.123456', $data['date']);
+    }
+
     public function testTimestampConvertDataFromDB(): void
     {
         $types = [
