@@ -50,6 +50,13 @@ The ``Filters`` class has been changed to allow multiple runs of the same filter
 with different arguments in before or after. See
 :ref:`Upgrading Guide <upgrade-460-filters-changes>` for details.
 
+Registrars
+----------
+
+Added check to prevent Auto-Discovery of Registrars from running twice. If it is
+executed twice, an exception will be thrown. See
+:ref:`upgrade-460-registrars-with-dirty-hack`.
+
 .. _v460-interface-changes:
 
 Interface Changes
