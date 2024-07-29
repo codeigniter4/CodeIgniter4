@@ -13,13 +13,13 @@ projects outside of CodeIgniter. Basically, this means that any
 dependencies should be kept to a minimum. Any dependencies must be able
 to be passed into the constructor. If you do need to use one of the
 other core packages, you can create that in the constructor using the
-`Services` class, as long as you provide a way for dependencies to
+`service()` function, as long as you provide a way for dependencies to
 override that:
 
 ```php
     public function __construct(?Foo $foo = null)
     {
-        $this->foo = $foo ?? \Config\Services::foo();
+        $this->foo = $foo ?? service('foo');
     }
 ```
 
@@ -112,10 +112,9 @@ should generally match the package name.
 
 ## Autoloader
 
-All files within the package should be added to
-**system/Config/AutoloadConfig.php**, in the "classmap" property. This
-is only used for core framework files, and helps to minimize file system
-scans and keep performance high.
+All source files within the **system/ThirdParty** should be added to
+**system/Config/AutoloadConfig.php**, in the `$coreClassmap` property. This
+is only used for loading the third party packages without Composer.
 
 ## Command-Line Support
 
