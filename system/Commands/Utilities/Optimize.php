@@ -83,7 +83,11 @@ final class Optimize extends BaseCommand
         try {
             $this->runCaching($enableConfigCache, $enableLocatorCache, $disable);
             $this->clearCache();
-            $this->removeDevPackages();
+            if($disable === true) {
+                $this->reinstallDevPackages();
+            } else {
+                $this->removeDevPackages();
+            }
         } catch (RuntimeException) {
             CLI::error('The "spark optimize" failed.');
 
@@ -227,6 +231,26 @@ final class Optimize extends BaseCommand
         }
 
         CLI::error('Error in removing Composer dev packages.');
+
+        throw new RuntimeException(__METHOD__);
+    }
+
+    private function reinstallDevPackages(): void
+    {
+        if (! defined('VENDORPATH')) {
+            return;
+        }
+
+        chdir(ROOTPATH);
+        passthru('composer install', $status);
+
+        if ($status === 0) {
+            CLI::write('Installed Composer dev packages.', 'green');
+
+            return;
+        }
+
+        CLI::error('Error in installing Composer dev packages.');
 
         throw new RuntimeException(__METHOD__);
     }
