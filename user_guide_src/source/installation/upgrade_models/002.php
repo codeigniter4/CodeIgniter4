@@ -10,7 +10,7 @@ class NewsModel extends Model
     protected $table = 'news';
 
     // Sets the field names to allow to insert/update.
-    protected $allowedFields = ['title', 'slug', 'body'];
+    protected $allowedFields = ['title', 'slug', 'text'];
 
     public function setNews($title, $slug, $text)
     {
