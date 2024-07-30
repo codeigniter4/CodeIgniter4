@@ -390,7 +390,7 @@ class CLI
     /**
      * Print each key and value one by one
      */
-    private static function printKeysAndValues(array $options): void
+    public static function printKeysAndValues(array $options): void
     {
         // +2 for the square brackets around the key
         $keyMaxLength = max(array_map(mb_strwidth(...), array_keys($options))) + 2;
