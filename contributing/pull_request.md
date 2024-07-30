@@ -260,7 +260,7 @@ PHPStan is expected to scan the entire framework by running this command in your
 terminal:
 
 ```console
-vendor/bin/phpstan analyse
+composer phpstan:check
 ```
 
 See also:
@@ -272,7 +272,7 @@ false positive and should be ignored, the baseline can be updated with the follo
 command:
 
 ```console
-vendor/bin/phpstan analyze --generate-baseline phpstan-baseline.php
+composer phpstan:baseline
 ```
 
 #### Rector
