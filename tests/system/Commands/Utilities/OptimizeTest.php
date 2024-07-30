@@ -41,10 +41,10 @@ final class OptimizeTest extends CIUnitTestCase
     {
         $command = new Optimize(service('logger'), service('commands'));
 
-        $enableCaching = $this->getPrivateMethodInvoker($command, 'enableCaching');
+        $runCaching = $this->getPrivateMethodInvoker($command, 'runCaching');
 
-        // private function enableCaching(?bool $enableConfigCache, ?bool $enableLocatorCache, ?bool $disable): void
-        $enableCaching(true, null, null);
+        // private function runCaching(?bool $enableConfigCache, ?bool $enableLocatorCache, ?bool $disable): void
+        $runCaching(true, null, null);
 
         // Check if config caching is enabled
         $this->assertFileContains('public bool $configCacheEnabled = true;', APPPATH . 'Config/Optimize.php');
@@ -54,10 +54,10 @@ final class OptimizeTest extends CIUnitTestCase
     {
         $command = new Optimize(service('logger'), service('commands'));
 
-        $enableCaching = $this->getPrivateMethodInvoker($command, 'enableCaching');
+        $runCaching = $this->getPrivateMethodInvoker($command, 'runCaching');
 
-        // private function enableCaching(?bool $enableConfigCache, ?bool $enableLocatorCache, ?bool $disable): void
-        $enableCaching(null, true, null);
+        // private function runCaching(?bool $enableConfigCache, ?bool $enableLocatorCache, ?bool $disable): void
+        $runCaching(null, true, null);
 
         // Check if locator caching is enabled
         $this->assertFileContains('public bool $locatorCacheEnabled = true;', APPPATH . 'Config/Optimize.php');
@@ -67,10 +67,10 @@ final class OptimizeTest extends CIUnitTestCase
     {
         $command = new Optimize(service('logger'), service('commands'));
 
-        $enableCaching = $this->getPrivateMethodInvoker($command, 'enableCaching');
+        $runCaching = $this->getPrivateMethodInvoker($command, 'runCaching');
 
-        // private function enableCaching(?bool $enableConfigCache, ?bool $enableLocatorCache, ?bool $disable): void
-        $enableCaching(null, null, true);
+        // private function runCaching(?bool $enableConfigCache, ?bool $enableLocatorCache, ?bool $disable): void
+        $runCaching(null, null, true);
 
         // Check if both caches are disabled
         $this->assertFileContains('public bool $configCacheEnabled = false;', APPPATH . 'Config/Optimize.php');
@@ -81,10 +81,10 @@ final class OptimizeTest extends CIUnitTestCase
     {
         $command = new Optimize(service('logger'), service('commands'));
 
-        $enableCaching = $this->getPrivateMethodInvoker($command, 'enableCaching');
+        $runCaching = $this->getPrivateMethodInvoker($command, 'runCaching');
 
-        // private function enableCaching(?bool $enableConfigCache, ?bool $enableLocatorCache, ?bool $disable): void
-        $enableCaching(null, null, null);
+        // private function runCaching(?bool $enableConfigCache, ?bool $enableLocatorCache, ?bool $disable): void
+        $runCaching(null, null, null);
 
         // Check if both caches are disabled
         $this->assertFileContains('public bool $configCacheEnabled = true;', APPPATH . 'Config/Optimize.php');

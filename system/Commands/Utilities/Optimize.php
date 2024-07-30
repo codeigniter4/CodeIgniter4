@@ -178,6 +178,8 @@ final class Optimize extends BaseCommand
 
     /**
      * Disable Caching
+     *
+     * @return array<string, string>
      */
     private function disableCaching(): array
     {
@@ -191,6 +193,8 @@ final class Optimize extends BaseCommand
      * Enable Caching
      *
      * @param array<string, bool|null> $options
+     *
+     * @return array<string, string>
      */
     private function enableCaching(array $options): array
     {
