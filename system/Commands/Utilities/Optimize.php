@@ -83,7 +83,7 @@ final class Optimize extends BaseCommand
         try {
             $this->runCaching($enableConfigCache, $enableLocatorCache, $disable);
             $this->clearCache();
-            if($disable === true) {
+            if ($disable === true) {
                 $this->reinstallDevPackages();
             } else {
                 $this->removeDevPackages();
