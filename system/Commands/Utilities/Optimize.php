@@ -65,13 +65,10 @@ final class Optimize extends BaseCommand
         'd' => 'Disable config and locator caching.',
     ];
 
-    private const CONFIG_CACHE = '$configCacheEnabled';
-
+    private const CONFIG_CACHE  = '$configCacheEnabled';
     private const LOCATOR_CACHE = '$locatorCacheEnabled';
-    
-    private const CONFIG_PATH = APPPATH . 'Config/Optimize.php';
-
-    private const CACHE_PATH = WRITEPATH . 'cache/FactoriesCache_config';
+    private const CONFIG_PATH   = APPPATH . 'Config/Optimize.php';
+    private const CACHE_PATH    = WRITEPATH . 'cache/FactoriesCache_config';
 
     /**
      * {@inheritDoc}
@@ -128,7 +125,7 @@ final class Optimize extends BaseCommand
         $searchReplace = [];
 
         if ($disable === true) {
-            $searchReplace = $this->disableCaching();            
+            $searchReplace = $this->disableCaching();
         } else {
             $searchReplace = $this->enableCaching(['config' => $enableConfigCache, 'locator' => $enableLocatorCache]);
         }
@@ -146,7 +143,7 @@ final class Optimize extends BaseCommand
                     $messages[] = 'Config Caching is enabled in "app/Config/Optimize.php".';
                 }
 
-                if (in_array('public bool ' . self::LOCATOR_CACHE .' = true;', $searchReplace, true)) {
+                if (in_array('public bool ' . self::LOCATOR_CACHE . ' = true;', $searchReplace, true)) {
                     $messages[] = 'FileLocator Caching is enabled in "app/Config/Optimize.php".';
                 }
 
@@ -154,7 +151,7 @@ final class Optimize extends BaseCommand
                     $messages[] = 'Config Caching is disabled in "app/Config/Optimize.php".';
                 }
 
-                if (in_array('public bool ' . self::LOCATOR_CACHE .' = false;', $searchReplace, true)) {
+                if (in_array('public bool ' . self::LOCATOR_CACHE . ' = false;', $searchReplace, true)) {
                     $messages[] = 'FileLocator Caching is disabled in "app/Config/Optimize.php".';
                 }
                 
@@ -178,14 +175,12 @@ final class Optimize extends BaseCommand
 
     /**
      * Disable Caching
-     *
-     * @return array
      */
-    private function disableCaching(): array 
+    private function disableCaching(): array
     {
         return [
             'public bool ' . self::CONFIG_CACHE . ' = true;'  => 'public bool ' . self::CONFIG_CACHE . ' = false;',
-            'public bool ' . self::LOCATOR_CACHE .' = true;' => 'public bool ' . self::LOCATOR_CACHE .' = false;',
+            'public bool ' . self::LOCATOR_CACHE . ' = true;' => 'public bool ' . self::LOCATOR_CACHE . ' = false;',
         ];
     }
 
@@ -193,10 +188,8 @@ final class Optimize extends BaseCommand
      * Enable Caching
      *
      * @param array<string, bool|null> $options
-     * 
-     * @return array
      */
-    private function enableCaching(array $options): array 
+    private function enableCaching(array $options): array
     {
         $searchReplace = [];
 
@@ -205,14 +198,14 @@ final class Optimize extends BaseCommand
         }
 
         if ($options['locator'] === true) {
-            $searchReplace['public bool ' . self::LOCATOR_CACHE .' = false;'] = 'public bool ' . self::LOCATOR_CACHE .' = true;';
+            $searchReplace['public bool ' . self::LOCATOR_CACHE . ' = false;'] = 'public bool ' . self::LOCATOR_CACHE . ' = true;';
         }
 
         // If no options provided, update both
         if ($options['config'] === null && $options['locator'] === null) {
             $searchReplace = [
                 'public bool ' . self::CONFIG_CACHE . ' = false;'  => 'public bool ' . self::CONFIG_CACHE . ' = true;',
-                'public bool ' . self::LOCATOR_CACHE .' = false;' => 'public bool ' . self::LOCATOR_CACHE .' = true;',
+                'public bool ' . self::LOCATOR_CACHE . ' = false;' => 'public bool ' . self::LOCATOR_CACHE . ' = true;',
             ];
         }
 
@@ -238,4 +231,5 @@ final class Optimize extends BaseCommand
 
         throw new RuntimeException(__METHOD__);
     }
+
 }
