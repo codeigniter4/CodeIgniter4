@@ -33,7 +33,7 @@ it will do a restore to default settings, as follow:
 
 .. versionadded:: 4.6.0
 
-- `Reinstall Dev Packages`_
+- Reinstall Dev Packages
 - Disabling `Config Caching`_
 - Disabling `FileLocator Caching`_
 
