@@ -25,6 +25,11 @@ use CodeIgniter\Publisher\Publisher;
  */
 final class Optimize extends BaseCommand
 {
+    private const CONFIG_CACHE  = '$configCacheEnabled';
+    private const LOCATOR_CACHE = '$locatorCacheEnabled';
+    private const CONFIG_PATH   = APPPATH . 'Config/Optimize.php';
+    private const CACHE_PATH    = WRITEPATH . 'cache/FactoriesCache_config';
+
     /**
      * The group the command is lumped under
      * when listing commands.
@@ -64,11 +69,6 @@ final class Optimize extends BaseCommand
         'l' => 'Enable only locator caching.',
         'd' => 'Disable config and locator caching.',
     ];
-
-    private const CONFIG_CACHE  = '$configCacheEnabled';
-    private const LOCATOR_CACHE = '$locatorCacheEnabled';
-    private const CONFIG_PATH   = APPPATH . 'Config/Optimize.php';
-    private const CACHE_PATH    = WRITEPATH . 'cache/FactoriesCache_config';
 
     /**
      * {@inheritDoc}
@@ -154,7 +154,7 @@ final class Optimize extends BaseCommand
                 if (in_array('public bool ' . self::LOCATOR_CACHE . ' = false;', $searchReplace, true)) {
                     $messages[] = 'FileLocator Caching is disabled in "app/Config/Optimize.php".';
                 }
-                
+
                 foreach ($messages as $message) {
                     CLI::write($message, 'green');
                     CLI::newLine();
@@ -169,7 +169,6 @@ final class Optimize extends BaseCommand
 
             throw new RuntimeException(__METHOD__);
         }
-
         CLI::write('No changes to caching settings.', 'yellow');
     }
 
@@ -231,5 +230,4 @@ final class Optimize extends BaseCommand
 
         throw new RuntimeException(__METHOD__);
     }
-
 }
