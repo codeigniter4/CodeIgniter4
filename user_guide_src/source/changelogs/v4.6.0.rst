@@ -119,6 +119,11 @@ The following new Exception interfaces have been added:
 - ``CodeIgniter\HTTP\Exceptions\ExceptionInterface``
 - ``CodeIgniter\Router\Exceptions\ExceptionInterface``
 
+CLI
+===
+
+- The ``printKeysAndValues()`` method has been changed from ``private`` to ``public``
+
 Commands
 ========
 
