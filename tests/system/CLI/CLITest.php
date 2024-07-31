@@ -665,4 +665,21 @@ final class CLITest extends CIUnitTestCase
         $this->assertSame(7, CLI::strlen(CLI::color('success', 'green')));
         $this->assertSame(0, CLI::strlen(null));
     }
+
+    public function testPrintKeysAndValues(): void
+    {
+        $options = [
+            'c' => 'Enable only config caching.',
+            'l' => 'Enable only locator caching.',
+            'd' => 'Disable config and locator caching.',
+        ];
+
+        $output = CLI::printKeysAndValues($options);
+
+        $expected = "  [-c]  Enable only config caching." . PHP_EOL;
+        $expected .= "  [-l]  Enable only locator caching." . PHP_EOL;
+        $expected .= "  [-d]  Disable config and locator caching." . PHP_EOL;
+
+        $this->assertSame($expected, $output);
+    }
 }
