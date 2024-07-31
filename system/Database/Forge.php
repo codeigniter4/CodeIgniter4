@@ -1220,16 +1220,14 @@ class Forge
                 $sqls[$index] = '';
             }
 
-            $nameIndex = $fkey['fkName'] !== '' ?
-            $fkey['fkName'] :
-            $table . '_' . implode('_', $fkey['field']) . ($this->db->DBDriver === 'OCI8' ? '_fk' : '_foreign');
-
-            $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
-            $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
-            $referenceTable = explode('.', (string)$fkey['referenceTable']);
-            $referenceTable[array_key_last($referenceTable)] = $this->db->DBPrefix . $referenceTable[array_key_last($referenceTable)];
-            $referenceTableFilled = $this->db->escapeIdentifiers(implode('.', $referenceTable));
-            $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
+            $nameIndex                  = $fkey['fkName'] !== '' ? $fkey['fkName'] : $table . '_' . implode('_', $fkey['field']) . ($this->db->DBDriver === 'OCI8' ? '_fk' : '_foreign');
+            $nameIndexFilled            = $this->db->escapeIdentifiers($nameIndex);
+            $foreignKeyFilled           = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
+            $referenceTable             = explode('.', (string)$fkey['referenceTable']);
+            $lastKey                    = array_key_last($referenceTable);
+            $referenceTable[$lastKey]   = $this->db->DBPrefix . $referenceTable[$lastKey];
+            $referenceTableFilled       = $this->db->escapeIdentifiers(implode('.', $referenceTable));
+            $referenceFieldFilled       = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
 
             if ($asQuery === true) {
                 $sqls[$index] .= 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $table) . ' ADD ';
