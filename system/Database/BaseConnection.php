@@ -1190,7 +1190,7 @@ abstract class BaseConnection implements ConnectionInterface
                 $parts[$i] = preg_replace('/^' . $this->swapPre . '(\S+?)/', $this->DBPrefix . '\\1', $parts[$i]);
             }
             // We only add the table prefix if it does not already exist
-            elseif (! str_starts_with($parts[$i], $this->DBPrefix)) {
+            elseif (! str_starts_with($parts[$i], $this->DBPrefix) && !stripos($parts[$i], $this->DBPrefix)) {
                 $parts[$i] = $this->DBPrefix . $parts[$i];
             }
 
