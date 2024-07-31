@@ -16,6 +16,8 @@ namespace CodeIgniter\Database;
 /**
  * Represents a table name in SQL.
  *
+ * @interal
+ *
  * @see \CodeIgniter\Database\TableNameTest
  */
 class TableName
