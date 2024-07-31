@@ -20,6 +20,7 @@ use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 
 /**
  * This test suite has been created separately from
@@ -47,12 +48,9 @@ final class ResponseSendTest extends CIUnitTestCase
      */
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
     public function testHeadersMissingDate(): void
     {
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
-
         $response = new Response(new App());
         $response->pretend(false);
 
@@ -83,12 +81,9 @@ final class ResponseSendTest extends CIUnitTestCase
      */
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
     public function testHeadersWithCSP(): void
     {
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
-
         $this->resetFactories();
         $this->resetServices();
 
@@ -122,12 +117,9 @@ final class ResponseSendTest extends CIUnitTestCase
      */
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
     public function testRedirectResponseCookies(): void
     {
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
-
         $loginTime = time();
 
         $response = new Response(new App());

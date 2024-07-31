@@ -28,6 +28,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 
 /**
  * @internal
@@ -61,12 +62,9 @@ final class MiscUrlTest extends CIUnitTestCase
     #[Group('SeparateProcess')]
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
     public function testPreviousURLUsesSessionFirst(): void
     {
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
-
         $uri1 = 'http://example.com/one?two';
         $uri2 = 'http://example.com/two?foo';
 
@@ -98,10 +96,6 @@ final class MiscUrlTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testPreviousURLUsesRefererIfNeeded(): void
     {
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
-
         $uri1 = 'http://example.com/one?two';
 
         $_SERVER['HTTP_REFERER'] = $uri1;
