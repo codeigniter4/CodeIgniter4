@@ -12,7 +12,6 @@ on:
       - 'public/**.php'
       - 'system/**.php'
       - '.github/workflows/test-phpcpd.yml'
-
   push:
     branches:
       - 'develop'
@@ -23,40 +22,21 @@ on:
       - 'system/**.php'
       - '.github/workflows/test-phpcpd.yml'
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
-
-permissions:
-  contents: read
-
 jobs:
-  build:
-    name: Duplicate Code Detection
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
-          tools: phpcpd
-          extensions: dom, mbstring
-
-      - name: Detect code duplication
-        run: phpcpd
-            --exclude system/Test
-            --exclude system/ThirdParty
-            --exclude system/Database/SQLSRV/Builder.php
-            --exclude system/Database/SQLSRV/Forge.php
-            --exclude system/Database/MySQLi/Builder.php
-            --exclude system/Database/OCI8/Builder.php
-            --exclude system/Database/Postgre/Builder.php
-            --exclude system/Debug/Exceptions.php
-            --exclude system/HTTP/SiteURI.php
-            --exclude system/Validation/Rules.php
-            --exclude system/Autoloader/Autoloader.php
-            --exclude system/Config/Filters.php
-            -- app/ public/ system/
+  phpcpd:
+    uses: codeigniter4/.github/.github/workflows/phpcpd.yml@main
+    with:
+      dirs: "app/ public/ system/"
+      options: >-
+        --exclude system/Test
+        --exclude system/ThirdParty
+        --exclude system/Database/SQLSRV/Builder.php
+        --exclude system/Database/SQLSRV/Forge.php
+        --exclude system/Database/MySQLi/Builder.php
+        --exclude system/Database/OCI8/Builder.php
+        --exclude system/Database/Postgre/Builder.php
+        --exclude system/Debug/Exceptions.php
+        --exclude system/HTTP/SiteURI.php
+        --exclude system/Validation/Rules.php
+        --exclude system/Autoloader/Autoloader.php
+        --exclude system/Config/Filters.php
