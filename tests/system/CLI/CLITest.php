@@ -676,9 +676,9 @@ final class CLITest extends CIUnitTestCase
 
         $output = CLI::printKeysAndValues($options);
 
-        $expected = "  [-c]  Enable only config caching." . PHP_EOL;
-        $expected .= "  [-l]  Enable only locator caching." . PHP_EOL;
-        $expected .= "  [-d]  Disable config and locator caching." . PHP_EOL;
+        $expected = '  [-c]  Enable only config caching.' . PHP_EOL;
+        $expected .= '  [-l]  Enable only locator caching.' . PHP_EOL;
+        $expected .= '  [-d]  Disable config and locator caching.' . PHP_EOL;
 
         $this->assertSame($expected, $output);
     }
