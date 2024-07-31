@@ -260,7 +260,7 @@ if it's not already set:
 
 .. literalinclude:: curlrequest/024.php
 
-.. note:: ``form_params`` cannot be used with the ``multipart`` option. You will need to use one or the other.
+.. note:: ``form_params`` cannot be used with the `multipart`_ option. You will need to use one or the other.
         Use ``form_params`` for ``application/x-www-form-urlencoded`` request, and ``multipart`` for ``multipart/form-data``
         requests.
 
@@ -312,7 +312,7 @@ has been disabled. Any files that you want to send must be passed as instances o
 
 .. literalinclude:: curlrequest/028.php
 
-.. note:: ``multipart`` cannot be used with the ``form_params`` option. You can only use one or the other. Use
+.. note:: ``multipart`` cannot be used with the `form_params`_ option. You can only use one or the other. Use
         ``form_params`` for ``application/x-www-form-urlencoded`` requests, and ``multipart`` for ``multipart/form-data``
         requests.
 
