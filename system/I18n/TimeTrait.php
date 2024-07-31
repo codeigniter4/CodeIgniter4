@@ -81,10 +81,10 @@ trait TimeTrait
         if ($time === '' && static::$testNow instanceof self) {
             if ($timezone !== null) {
                 $testNow = static::$testNow->setTimezone($timezone);
-                $time    = $testNow->format('Y-m-d H:i:s');
+                $time    = $testNow->format('Y-m-d H:i:s.u');
             } else {
                 $timezone = static::$testNow->getTimezone();
-                $time     = static::$testNow->format('Y-m-d H:i:s');
+                $time     = static::$testNow->format('Y-m-d H:i:s.u');
             }
         }
 
@@ -97,7 +97,7 @@ trait TimeTrait
         if ($time !== '' && static::hasRelativeKeywords($time)) {
             $instance = new DateTime('now', $this->timezone);
             $instance->modify($time);
-            $time = $instance->format('Y-m-d H:i:s');
+            $time = $instance->format('Y-m-d H:i:s.u');
         }
 
         parent::__construct($time, $this->timezone);
@@ -253,7 +253,7 @@ trait TimeTrait
             throw I18nException::forInvalidFormat($format);
         }
 
-        return new self($date->format('Y-m-d H:i:s'), $timezone);
+        return new self($date->format('Y-m-d H:i:s.u'), $timezone);
     }
 
     /**
@@ -283,7 +283,7 @@ trait TimeTrait
      */
     public static function createFromInstance(DateTimeInterface $dateTime, ?string $locale = null)
     {
-        $date     = $dateTime->format('Y-m-d H:i:s');
+        $date     = $dateTime->format('Y-m-d H:i:s.u');
         $timezone = $dateTime->getTimezone();
 
         return new self($date, $timezone, $locale);
@@ -314,10 +314,11 @@ trait TimeTrait
      */
     public function toDateTime()
     {
-        $dateTime = new DateTime('', $this->getTimezone());
-        $dateTime->setTimestamp(parent::getTimestamp());
-
-        return $dateTime;
+        return DateTime::createFromFormat(
+            'Y-m-d H:i:s.u',
+            $this->format('Y-m-d H:i:s.u'),
+            $this->getTimezone()
+        );
     }
 
     // --------------------------------------------------------------------
@@ -348,7 +349,7 @@ trait TimeTrait
         if (is_string($datetime)) {
             $datetime = new self($datetime, $timezone, $locale);
         } elseif ($datetime instanceof DateTimeInterface && ! $datetime instanceof self) {
-            $datetime = new self($datetime->format('Y-m-d H:i:s'), $timezone);
+            $datetime = new self($datetime->format('Y-m-d H:i:s.u'), $timezone);
         }
 
         static::$testNow = $datetime;
@@ -941,9 +942,9 @@ trait TimeTrait
 
         $ourTime = $this->toDateTime()
             ->setTimezone(new DateTimeZone('UTC'))
-            ->format('Y-m-d H:i:s');
+            ->format('Y-m-d H:i:s.u');
 
-        return $testTime->format('Y-m-d H:i:s') === $ourTime;
+        return $testTime->format('Y-m-d H:i:s.u') === $ourTime;
     }
 
     /**
@@ -956,15 +957,15 @@ trait TimeTrait
     public function sameAs($testTime, ?string $timezone = null): bool
     {
         if ($testTime instanceof DateTimeInterface) {
-            $testTime = $testTime->format('Y-m-d H:i:s');
+            $testTime = $testTime->format('Y-m-d H:i:s.u O');
         } elseif (is_string($testTime)) {
             $timezone = $timezone ?: $this->timezone;
             $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
             $testTime = new DateTime($testTime, $timezone);
-            $testTime = $testTime->format('Y-m-d H:i:s');
+            $testTime = $testTime->format('Y-m-d H:i:s.u O');
         }
 
-        $ourTime = $this->toDateTimeString();
+        $ourTime = $this->format('Y-m-d H:i:s.u O');
 
         return $testTime === $ourTime;
     }
@@ -979,10 +980,16 @@ trait TimeTrait
      */
     public function isBefore($testTime, ?string $timezone = null): bool
     {
-        $testTime = $this->getUTCObject($testTime, $timezone)->getTimestamp();
-        $ourTime  = $this->getTimestamp();
+        $testTime = $this->getUTCObject($testTime, $timezone);
 
-        return $ourTime < $testTime;
+        $testTimestamp = $testTime->getTimestamp();
+        $ourTimestamp  = $this->getTimestamp();
+
+        if ($ourTimestamp === $testTimestamp) {
+            return $this->format('u') < $testTime->format('u');
+        }
+
+        return $ourTimestamp < $testTimestamp;
     }
 
     /**
@@ -995,10 +1002,16 @@ trait TimeTrait
      */
     public function isAfter($testTime, ?string $timezone = null): bool
     {
-        $testTime = $this->getUTCObject($testTime, $timezone)->getTimestamp();
-        $ourTime  = $this->getTimestamp();
+        $testTime = $this->getUTCObject($testTime, $timezone);
 
-        return $ourTime > $testTime;
+        $testTimestamp = $testTime->getTimestamp();
+        $ourTimestamp  = $this->getTimestamp();
+
+        if ($ourTimestamp === $testTimestamp) {
+            return $this->format('u') > $testTime->format('u');
+        }
+
+        return $ourTimestamp > $testTimestamp;
     }
 
     // --------------------------------------------------------------------

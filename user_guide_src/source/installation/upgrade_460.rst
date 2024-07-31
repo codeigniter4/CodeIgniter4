@@ -29,6 +29,42 @@ See :ref:`ChangeLog <v460-behavior-changes-exceptions>` for details.
 
 If you have code that catches these exceptions, change the exception classes.
 
+.. _upgrade-460-time-keeps-microseconds:
+
+Time keeps Microseconds
+=======================
+
+In previous versions, :doc:`Time <../libraries/time>` lost microseconds in some
+cases. But the bugs have been fixed.
+
+The results of the ``Time`` comparison may differ due to these fixes:
+
+.. literalinclude:: upgrade_460/006.php
+   :lines: 2-
+
+In a such case, you need to remove the microseconds:
+
+.. literalinclude:: upgrade_460/007.php
+   :lines: 2-
+
+The following cases now keeps microseconds:
+
+.. literalinclude:: upgrade_460/002.php
+   :lines: 2-
+
+.. literalinclude:: upgrade_460/003.php
+   :lines: 2-
+
+Note that ``Time`` with the current time has been holding microseconds since before.
+
+.. literalinclude:: upgrade_460/004.php
+   :lines: 2-
+
+Also, methods that returns an ``int`` still lose the microseconds.
+
+.. literalinclude:: upgrade_460/005.php
+   :lines: 2-
+
 .. _upgrade-460-registrars-with-dirty-hack:
 
 Registrars with Dirty Hack
