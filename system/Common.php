@@ -670,7 +670,7 @@ if (! function_exists('is_really_writable')) {
      *
      * @see https://bugs.php.net/bug.php?id=54709
      *
-     * @throws \Random\RandomException
+     * @throws Random\RandomException
      *
      * @codeCoverageIgnore Not practical to test, as travis runs on linux
      */
@@ -1248,7 +1248,7 @@ if (! function_exists('trait_uses_recursive')) {
      */
     function trait_uses_recursive($trait)
     {
-        $traits = (($classUses = class_uses($trait)) !== false) ? $classUses: [];
+        $traits = (($classUses = class_uses($trait)) !== false) ? $classUses : [];
 
         foreach ($traits as $trait) {
             $traits += trait_uses_recursive($trait);

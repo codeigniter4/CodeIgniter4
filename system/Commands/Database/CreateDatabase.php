@@ -102,7 +102,7 @@ class CreateDatabase extends BaseCommand
                 }
 
                 if ($name !== ':memory:') {
-                    $name = str_replace(['.db', '.sqlite'], '', $name) . ".$ext";
+                    $name = str_replace(['.db', '.sqlite'], '', $name) . ".{$ext}";
                 }
 
                 $config->{$group}['DBDriver'] = 'SQLite3';
@@ -112,7 +112,7 @@ class CreateDatabase extends BaseCommand
                     $dbName = ! str_contains($name, DIRECTORY_SEPARATOR) ? WRITEPATH . $name : $name;
 
                     if (is_file($dbName)) {
-                        CLI::error("Database \"$dbName\" already exists.", 'light_gray', 'red');
+                        CLI::error("Database \"{$dbName}\" already exists.", 'light_gray', 'red');
                         CLI::newLine();
 
                         return;
@@ -142,7 +142,7 @@ class CreateDatabase extends BaseCommand
                 // @codeCoverageIgnoreEnd
             }
 
-            CLI::write("Database \"$name\" successfully created.", 'green');
+            CLI::write("Database \"{$name}\" successfully created.", 'green');
             CLI::newLine();
         } catch (Throwable $e) {
             $this->showError($e);

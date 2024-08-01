@@ -1615,7 +1615,7 @@ class BaseBuilder
         $query = new Query($this->db);
         $query->setQuery($sql, $this->binds, false);
 
-        if ((bool) $this->db->swapPre !== false && (booL) $this->db->DBPrefix !== false) {
+        if ((bool) $this->db->swapPre !== false && (bool) $this->db->DBPrefix !== false) {
             $query->swapPrefix($this->db->DBPrefix, $this->db->swapPre);
         }
 
@@ -3214,7 +3214,7 @@ class BaseBuilder
      */
     protected function compileGroupBy(): string
     {
-        if ($this->QBGroupBy != []) {
+        if ($this->QBGroupBy !== []) {
             foreach ($this->QBGroupBy as &$groupBy) {
                 // Is it already compiled?
                 if (is_string($groupBy)) {

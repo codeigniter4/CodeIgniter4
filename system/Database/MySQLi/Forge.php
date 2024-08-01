@@ -153,8 +153,7 @@ class Forge extends BaseForge
                 if ($alterType === 'ADD') {
                     $processedFields[$i]['_literal'] = "\n\tADD ";
                 } else {
-                    $processedFields[$i]['_literal'] =
-                        (isset($field['new_name']) && (bool) $field['new_name'] !== false)
+                    $processedFields[$i]['_literal'] = (isset($field['new_name']) && (bool) $field['new_name'] !== false)
                             ? "\n\tMODIFY "
                             : "\n\tCHANGE ";
                 }

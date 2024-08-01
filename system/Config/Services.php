@@ -345,7 +345,7 @@ class Services extends BaseService
         $config ??= config(Images::class);
         assert($config instanceof Images);
 
-        $handler = ((bool) $handler !== false) ? $handler: $config->defaultHandler;
+        $handler = ((bool) $handler !== false) ? $handler : $config->defaultHandler;
         $class   = $config->handlers[$handler];
 
         return new $class($config);

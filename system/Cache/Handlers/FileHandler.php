@@ -343,9 +343,9 @@ class FileHandler extends BaseHandler
             if ($_recursion === false) {
                 $_filedata = [];
                 $sourceDir = rtrim(
-                        ($realPath = realpath($sourceDir)) !== false ? $realPath : $sourceDir,
+                    ($realPath = realpath($sourceDir)) !== false ? $realPath : $sourceDir,
                     DIRECTORY_SEPARATOR
-                    ) . DIRECTORY_SEPARATOR;
+                ) . DIRECTORY_SEPARATOR;
             }
 
             // Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast

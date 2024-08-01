@@ -265,7 +265,7 @@ class BaseService
         if ($getShared) {
             if (
                 ! isset(static::$instances['autoloader'])
-                || (static::$instances['autoloader'] instanceof AutoLoader) === false
+                || (static::$instances['autoloader'] instanceof Autoloader) === false
             ) {
                 static::$instances['autoloader'] = new Autoloader();
             }
