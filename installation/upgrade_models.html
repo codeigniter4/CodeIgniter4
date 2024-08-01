@@ -326,6 +326,8 @@
 <li><p>Add this line just after the opening php tag: <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models;</span></code>.</p></li>
 <li><p>Below the <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models;</span></code> line add this line: <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">CodeIgniter\Model;</span></code>.</p></li>
 <li><p>Replace <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">CI_Model</span></code> with <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">Model</span></code>.</p></li>
+<li><p>Add the <code class="docutils literal notranslate"><span class="pre">protected</span> <span class="pre">$table</span></code> property and set the table name.</p></li>
+<li><p>Add the <code class="docutils literal notranslate"><span class="pre">protected</span> <span class="pre">$allowedFields</span></code> property and set the array of field names to allow to insert/update.</p></li>
 <li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;model('x');</span></code>, you would now use <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your component. Alternatively, you can use the <a class="reference internal" href="../general/common_functions.html#model" title="model"><code class="xref php php-func docutils literal notranslate"><span class="pre">model()</span></code></a> function: <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">model('X');</span></code>.</p></li>
 </ol>
 <p>If you use sub-directories in your model structure you have to change the namespace according to that.
@@ -341,15 +343,17 @@ Inserting data is also easier than before. In CI4 there is an <code class="docut
 <p>Path: <strong>application/models</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">class</span> <span class="nc">User_contact</span> <span class="k">extends</span> <span class="nx">CI_Model</span>
+<span class="k">class</span> <span class="nc">News_model</span> <span class="k">extends</span> <span class="nx">CI_Model</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">insert</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$address</span><span class="p">,</span> <span class="nv">$email</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">set_news</span><span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="nv">$slug</span><span class="p">,</span> <span class="nv">$text</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">&#39;user_contacts&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
-            <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
-            <span class="s1">&#39;address&#39;</span> <span class="o">=&gt;</span> <span class="nv">$address</span><span class="p">,</span>
-            <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="nv">$email</span><span class="p">,</span>
-        <span class="p">));</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
+            <span class="s1">&#39;slug&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$slug</span><span class="p">,</span>
+            <span class="s1">&#39;text&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$text</span><span class="p">,</span>
+        <span class="p">);</span>
+
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -364,13 +368,57 @@ Inserting data is also easier than before. In CI4 there is an <code class="docut
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">UserContact</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="k">class</span> <span class="nc">NewsModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
-    <span class="c1">// insert() method already implemented in parent</span>
+    <span class="c1">// Sets the table name.</span>
+    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">&#39;news&#39;</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setNews</span><span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="nv">$slug</span><span class="p">,</span> <span class="nv">$text</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
+            <span class="s1">&#39;slug&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$slug</span><span class="p">,</span>
+            <span class="s1">&#39;text&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$text</span><span class="p">,</span>
+        <span class="p">];</span>
+
+        <span class="c1">// Gets the Query Builder for the table, and calls `insert()`.</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>To insert data you can just directly call the <code class="docutils literal notranslate"><span class="pre">$model-&gt;insert()</span></code> method because this method is built-in since CI4.</p>
+<p>The above code is direct translation from CI3 to CI4. It uses Query Builder
+directly in the model. Note that when you use Query Builder directly, you cannot
+use features in CodeIgniter’s Model.</p>
+<p>If you want to use CodeIgniter’s Model features, the code will be:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">NewsModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="c1">// Sets the table name.</span>
+    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">&#39;news&#39;</span><span class="p">;</span>
+
+    <span class="c1">// Sets the field names to allow to insert/update.</span>
+    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;slug&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">];</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setNews</span><span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="nv">$slug</span><span class="p">,</span> <span class="nv">$text</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
+            <span class="s1">&#39;slug&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$slug</span><span class="p">,</span>
+            <span class="s1">&#39;text&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$text</span><span class="p">,</span>
+        <span class="p">];</span>
+
+        <span class="c1">// Uses Model&#39;s`insert()` method.</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </section>
 </section>
 </section>
@@ -387,7 +435,7 @@ Inserting data is also easier than before. In CI4 there is an <code class="docut
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 28, 2024.
+      <span class="lastupdated">Last updated on Aug 01, 2024.
       </span></p>
   </div>
 
