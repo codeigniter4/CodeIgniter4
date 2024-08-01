@@ -86,19 +86,12 @@ final class AutoRouter implements AutoRouterInterface
         // If it doesn't, no biggie - the default method name
         // has already been set.
         if ($segments !== []) {
-            $this->method = array_shift($segments) ?: $this->method;
+            $this->method = (($method = array_shift($segments)) !== null) ? (string) $method : $this->method;
         }
 
         // Prevent access to initController method
         if (strtolower($this->method) === 'initcontroller') {
             throw PageNotFoundException::forPageNotFound();
-        }
-
-        /** @var array $params An array of params to the controller method. */
-        $params = [];
-
-        if ($segments !== []) {
-            $params = $segments;
         }
 
         // Ensure routes registered via $routes->cli() are not accessible via web.
@@ -159,7 +152,7 @@ final class AutoRouter implements AutoRouterInterface
             );
         }
 
-        return [$this->directory, $this->controllerName(), $this->methodName(), $params];
+        return [$this->directory, $this->controllerName(), $this->methodName(), $segments];
     }
 
     /**

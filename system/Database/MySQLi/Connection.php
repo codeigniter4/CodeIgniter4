@@ -97,7 +97,7 @@ class Connection extends BaseConnection
             $socket   = $this->hostname;
         } else {
             $hostname = ($persistent === true) ? 'p:' . $this->hostname : $this->hostname;
-            $port     = empty($this->port) ? null : $this->port;
+            $port     = ((bool) $this->port === false) ? null : $this->port;
             $socket   = '';
         }
 
@@ -136,19 +136,19 @@ class Connection extends BaseConnection
         if (is_array($this->encrypt)) {
             $ssl = [];
 
-            if (! empty($this->encrypt['ssl_key'])) {
+            if (isset($this->encrypt['ssl_key']) && (bool) $this->encrypt['ssl_key'] !== false) {
                 $ssl['key'] = $this->encrypt['ssl_key'];
             }
-            if (! empty($this->encrypt['ssl_cert'])) {
+            if (isset($this->encrypt['ssl_cert']) && (bool) $this->encrypt['ssl_cert'] !== false) {
                 $ssl['cert'] = $this->encrypt['ssl_cert'];
             }
-            if (! empty($this->encrypt['ssl_ca'])) {
+            if (isset($this->encrypt['ssl_ca']) && (bool) $this->encrypt['ssl_ca'] !== false) {
                 $ssl['ca'] = $this->encrypt['ssl_ca'];
             }
-            if (! empty($this->encrypt['ssl_capath'])) {
+            if (isset($this->encrypt['ssl_capath']) && (bool) $this->encrypt['ssl_capath'] !== false) {
                 $ssl['capath'] = $this->encrypt['ssl_capath'];
             }
-            if (! empty($this->encrypt['ssl_cipher'])) {
+            if (isset($this->encrypt['ssl_cipher']) && (bool) $this->encrypt['ssl_cipher'] !== false) {
                 $ssl['cipher'] = $this->encrypt['ssl_cipher'];
             }
 
@@ -194,7 +194,7 @@ class Connection extends BaseConnection
             )) {
                 // Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
                 if (($clientFlags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, 'mysqlnd 5.7.3', '<=')
-                    && empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")->fetch_object()->Value)
+                    && $this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")->fetch_object()->Value === ''
                 ) {
                     $this->mysqli->close();
                     $message = 'MySQLi was configured for an SSL connection, but got an unencrypted connection instead!';
@@ -265,7 +265,7 @@ class Connection extends BaseConnection
             $databaseName = $this->database;
         }
 
-        if (empty($this->connID)) {
+        if (false === $this->connID) {
             $this->initialize();
         }
 
@@ -287,7 +287,7 @@ class Connection extends BaseConnection
             return $this->dataCache['version'];
         }
 
-        if (empty($this->mysqli)) {
+        if (false === $this->mysqli) {
             $this->initialize();
         }
 
@@ -469,7 +469,7 @@ class Connection extends BaseConnection
         $keys = [];
 
         foreach ($indexes as $index) {
-            if (empty($keys[$index['Key_name']])) {
+            if (! isset($keys[$index['Key_name']])) {
                 $keys[$index['Key_name']]       = new stdClass();
                 $keys[$index['Key_name']]->name = $index['Key_name'];
 
@@ -573,7 +573,7 @@ class Connection extends BaseConnection
      */
     public function error(): array
     {
-        if (! empty($this->mysqli->connect_errno)) {
+        if ($this->mysqli->connect_errno !== 0) {
             return [
                 'code'    => $this->mysqli->connect_errno,
                 'message' => $this->mysqli->connect_error,

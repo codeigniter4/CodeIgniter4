@@ -733,7 +733,7 @@ class CLI
             static::generateDimensions();
         }
 
-        return static::$width ?: $default;
+        return (static::$width > 0) ? static::$width: $default;
     }
 
     /**
@@ -745,7 +745,7 @@ class CLI
             static::generateDimensions();
         }
 
-        return static::$height ?: $default;
+        return (static::$height > 0) ? static::$height : $default;
     }
 
     /**

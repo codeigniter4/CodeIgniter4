@@ -69,9 +69,9 @@ class Seed extends BaseCommand
     public function run(array $params)
     {
         $seeder   = new Seeder(new Database());
-        $seedName = array_shift($params);
+        $seedName = (string) array_shift($params);
 
-        if (empty($seedName)) {
+        if ($seedName === '') {
             $seedName = CLI::prompt(lang('Migrations.migSeeder'), null, 'required'); // @codeCoverageIgnore
         }
 

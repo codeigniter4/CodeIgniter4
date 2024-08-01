@@ -50,7 +50,7 @@ class FileHandler extends BaseHandler
     /**
      * Note: Use `CacheFactory::getHandler()` to instantiate.
      *
-     * @throws CacheException
+     * @throws CacheException|\Random\RandomException
      */
     public function __construct(Cache $config)
     {
@@ -61,7 +61,9 @@ class FileHandler extends BaseHandler
             ];
         }
 
-        $this->path = ! empty($config->file['storePath']) ? $config->file['storePath'] : WRITEPATH . 'cache';
+        $this->path = (is_string($config->file['storePath']) && $config->file['storePath'] !== '')
+            ? $config->file['storePath']
+            : WRITEPATH . 'cache';
         $this->path = rtrim($this->path, '/') . '/';
 
         if (! is_really_writable($this->path)) {
@@ -340,7 +342,10 @@ class FileHandler extends BaseHandler
             // reset the array and make sure $source_dir has a trailing slash on the initial call
             if ($_recursion === false) {
                 $_filedata = [];
-                $sourceDir = rtrim(realpath($sourceDir) ?: $sourceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+                $sourceDir = rtrim(
+                        ($realPath = realpath($sourceDir)) !== false ? $realPath : $sourceDir,
+                    DIRECTORY_SEPARATOR
+                    ) . DIRECTORY_SEPARATOR;
             }
 
             // Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast

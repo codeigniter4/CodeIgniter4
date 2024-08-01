@@ -71,7 +71,7 @@ class Filters
      *
      * This does not include "Required Filters".
      *
-     * @var array<string, array>
+     * @var array<string, list<string>>
      */
     protected $filters = [
         'before' => [],
@@ -84,7 +84,7 @@ class Filters
      *
      * This does not include "Required Filters".
      *
-     * @var array<string, array>
+     * @var array<string, array<string, list<string>>>
      */
     protected $filtersClass = [
         'before' => [],

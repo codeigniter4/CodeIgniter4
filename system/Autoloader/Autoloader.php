@@ -124,9 +124,7 @@ class Autoloader
             $this->files = $config->files;
         }
 
-        if (isset($config->helpers)) {
-            $this->helpers = [...$this->helpers, ...$config->helpers];
-        }
+        $this->helpers = [...$this->helpers, ...$config->helpers];
 
         if (is_file(COMPOSER_PATH)) {
             $this->loadComposerAutoloader($modules);
@@ -367,6 +365,9 @@ class Autoloader
         return $cleanFilename;
     }
 
+    /**
+     * @param array{only?: list<string>, exclude?: list<string>} $composerPackages
+     */
     private function loadComposerNamespaces(ClassLoader $composer, array $composerPackages): void
     {
         $namespacePaths = $composer->getPrefixesPsr4();
@@ -380,13 +381,20 @@ class Autoloader
             }
         }
 
-        if (! method_exists(InstalledVersions::class, 'getAllRawData')) {
+        preg_match(
+            '/\s*"plugin-api-version": "(?\'version\'\d+\.\d+\.\d+)"/m',
+            file_get_contents(__DIR__ . '/../../composer.lock'),
+            $matches
+        );
+
+        if (version_compare($matches['version'], '2.0.14', '<')) {
             throw new RuntimeException(
-                'Your Composer version is too old.'
+                'Your Composer version (' . $matches['version'] . ') is too old.'
                 . ' Please update Composer (run `composer self-update`) to v2.0.14 or later'
                 . ' and remove your vendor/ directory, and run `composer update`.'
             );
         }
+
         // This method requires Composer 2.0.14 or later.
         $allData     = InstalledVersions::getAllRawData();
         $packageList = [];

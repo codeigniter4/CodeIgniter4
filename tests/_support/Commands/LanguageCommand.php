@@ -46,6 +46,6 @@ class LanguageCommand extends BaseCommand
 
     protected function prepare(string $class): string
     {
-        return file_get_contents(__DIR__ . '/Foobar.php') ?: '';
+        return (string) file_get_contents(__DIR__ . '/Foobar.php');
     }
 }

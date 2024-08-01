@@ -107,7 +107,7 @@ class MigrateStatus extends BaseCommand
 
             $migrations = $runner->findNamespaceMigrations($namespace);
 
-            if (empty($migrations)) {
+            if ($migrations === []) {
                 continue;
             }
 

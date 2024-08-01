@@ -282,7 +282,7 @@ class Session implements SessionInterface
     {
         ini_set('session.name', $this->config->cookieName);
 
-        $sameSite = $this->cookie->getSameSite() ?: ucfirst(Cookie::SAMESITE_LAX);
+        $sameSite = (($sameSite = $this->cookie->getSameSite()) !== '') ? $sameSite : ucfirst(Cookie::SAMESITE_LAX);
 
         $params = [
             'lifetime' => $this->config->expiration,
