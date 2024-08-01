@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\TableName;
 use CodeIgniter\Exceptions\LogicException;
 use mysqli;
 use mysqli_result;
@@ -422,10 +423,19 @@ class Connection extends BaseConnection
 
     /**
      * Generates a platform-specific query string so that the column names can be fetched.
+     *
+     * @param string|TableName $table
      */
-    protected function _listColumns(string $table = ''): string
+    protected function _listColumns($table = ''): string
     {
-        return 'SHOW COLUMNS FROM ' . $this->protectIdentifiers($table, true, null, false);
+        $tableName = $this->protectIdentifiers(
+            $table,
+            true,
+            null,
+            false
+        );
+
+        return 'SHOW COLUMNS FROM ' . $tableName;
     }
 
     /**

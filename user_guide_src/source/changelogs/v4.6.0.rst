@@ -90,6 +90,22 @@ Method Signature Changes
 - **View:** The return type of the ``renderSection()`` method has been
   changed to ``string``, and now the method does not call ``echo``.
 
+Removed Type Definitions
+------------------------
+
+- **Database:**
+    - The type ``string`` of the first parameter in
+      ``BaseConnection::escapeIdentifier()`` has been removed.
+    - The type ``string`` of the first parameter in
+      ``BaseConnection::getFieldNames()`` and ``SQLite3\Connection::getFieldNames()``
+      have been removed.
+    - The type ``string`` of the first parameter in
+      ``BaseConnection::_listColumns()`` and ``MySQLi\Connection::_listColumns()``
+      and ``OCI8\Connection::_listColumns()``
+      and ``Postgre\Connection::_listColumns()``
+      and ``SQLSRV\Connection::_listColumns()``
+      and ``SQLite3\Connection::_listColumns()`` have been removed.
+
 .. _v460-removed-deprecated-items:
 
 Removed Deprecated Items

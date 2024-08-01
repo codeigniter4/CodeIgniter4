@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Builder;
 
+use CodeIgniter\Database\TableName;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use PHPUnit\Framework\Attributes\Group;
@@ -35,6 +36,16 @@ final class AliasTest extends CIUnitTestCase
     public function testAlias(): void
     {
         $builder = $this->db->table('jobs j');
+
+        $expectedSQL = 'SELECT * FROM "jobs" "j"';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testTableName(): void
+    {
+        $tableName = TableName::create($this->db, 'jobs', 'j');
+        $builder   = $this->db->table($tableName);
 
         $expectedSQL = 'SELECT * FROM "jobs" "j"';
 
