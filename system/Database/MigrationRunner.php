@@ -334,7 +334,7 @@ class MigrationRunner
 
         $migration = $this->migrationFromFile($path, $namespace);
 
-        if ($migration !== false) {
+        if ($migration === false) {
             $message = lang('Migrations.notFound');
 
             if ($this->silent) {

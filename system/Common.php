@@ -670,7 +670,7 @@ if (! function_exists('is_really_writable')) {
      *
      * @see https://bugs.php.net/bug.php?id=54709
      *
-     * @throws Random\RandomException
+     * @throws Exception
      *
      * @codeCoverageIgnore Not practical to test, as travis runs on linux
      */

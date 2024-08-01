@@ -16,6 +16,7 @@ namespace CodeIgniter\Cache\Handlers;
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
+use Exception;
 use Throwable;
 
 /**
@@ -50,7 +51,7 @@ class FileHandler extends BaseHandler
     /**
      * Note: Use `CacheFactory::getHandler()` to instantiate.
      *
-     * @throws CacheException|\Random\RandomException
+     * @throws CacheException|Exception
      */
     public function __construct(Cache $config)
     {

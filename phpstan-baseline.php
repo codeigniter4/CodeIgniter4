@@ -1098,7 +1098,7 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccess
 	'message' => '#^Accessing offset string directly on \\$_SERVER is discouraged\\.$#',
-	'count' => 2,
+	'count' => 1,
 	'path' => __DIR__ . '/system/Config/DotEnv.php',
 ];
 $ignoreErrors[] = [
@@ -1860,12 +1860,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Property CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:\\$bindsKeyCount type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
-];
-$ignoreErrors[] = [
-	// identifier: empty.property
-	'message' => '#^Property CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:\\$db \\(CodeIgniter\\\\Database\\\\BaseConnection\\) in empty\\(\\) is not falsy\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
 ];

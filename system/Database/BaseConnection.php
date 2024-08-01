@@ -1234,7 +1234,8 @@ abstract class BaseConnection implements ConnectionInterface
     {
         if (
             $this->escapeChar === ''
-            || ($item !== [] && $item !== '')
+            || $item === []
+            || $item === ''
             || in_array($item, $this->reservedIdentifiers, true)
         ) {
             return $item;
@@ -1249,10 +1250,12 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         // Avoid breaking functions and literal values inside queries
-        if (ctype_digit($item)
+        if (
+            ctype_digit($item)
             || $item[0] === "'"
             || ($this->escapeChar !== '"' && $item[0] === '"')
-            || str_contains($item, '(')) {
+            || str_contains($item, '(')
+        ) {
             return $item;
         }
 
