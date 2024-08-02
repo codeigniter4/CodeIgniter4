@@ -595,6 +595,9 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-report-uri
      *
+     * @param string $uri URL to send reports. Set `''` if you want to remove
+     *                    this directive at runtime.
+     *
      * @return $this
      */
     public function setReportURI(string $uri)
