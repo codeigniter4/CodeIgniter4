@@ -5936,12 +5936,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/ContentSecurityPolicy.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\HTTP\\\\ContentSecurityPolicy\\:\\:\\$validSources type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/ContentSecurityPolicy.php',
-];
-$ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccess
 	'message' => '#^Accessing offset \'HTTP_USER_AGENT\' directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 2,

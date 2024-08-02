@@ -31,7 +31,7 @@ class ContentSecurityPolicy
     /**
      * CSP directives
      *
-     * @var array<string, string>
+     * @var array<string, string> [name => property]
      */
     protected array $directives = [
         'base-uri'        => 'baseURI',
@@ -166,7 +166,8 @@ class ContentSecurityPolicy
     protected $sandbox = [];
 
     /**
-     * Used for security enforcement
+     * A set of endpoints to which csp violation reports will be sent when
+     * particular behaviors are prevented.
      *
      * @var string|null
      */
@@ -189,7 +190,7 @@ class ContentSecurityPolicy
     /**
      * Used for security enforcement
      *
-     * @var array
+     * @var list<string>
      */
     protected $validSources = [
         'self',
@@ -242,7 +243,7 @@ class ContentSecurityPolicy
 
     /**
      * An array of header info since we have
-     * to build ourself before passing to Response.
+     * to build ourselves before passing to Response.
      *
      * @var array
      */
