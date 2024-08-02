@@ -93,8 +93,9 @@ final class TextHelperTest extends CIUnitTestCase
     {
         yield from [
             // string, expected
-            'double commas'         => ['Fred, Bill,, Joe, Jimmy', 'Fred, Bill, Joe, Jimmy'],
-            'double commas at last' => ['Ringo, John, Paul,,', 'Ringo, John, Paul,'],
+            'double commas'            => ['Fred, Bill,, Joe, Jimmy', 'Fred, Bill, Joe, Jimmy'],
+            'double commas at last'    => ['Ringo, John, Paul,,', 'Ringo, John, Paul,'],
+            'commas at first and last' => [',Fred, Bill,, Joe, Jimmy,', ',Fred, Bill, Joe, Jimmy,'],
         ];
     }
 
@@ -108,8 +109,9 @@ final class TextHelperTest extends CIUnitTestCase
     {
         yield from [
             // string, expected
-            'double commas'         => ['Fred, Bill,, Joe, Jimmy', 'Fred, Bill, Joe, Jimmy'],
-            'double commas at last' => ['Ringo, John, Paul,,', 'Ringo, John, Paul'],
+            'double commas'            => ['Fred, Bill,, Joe, Jimmy', 'Fred, Bill, Joe, Jimmy'],
+            'double commas at last'    => ['Ringo, John, Paul,,', 'Ringo, John, Paul'],
+            'commas at first and last' => [',Fred, Bill,, Joe, Jimmy,', 'Fred, Bill, Joe, Jimmy'],
         ];
     }
 
