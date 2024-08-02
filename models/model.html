@@ -708,12 +708,12 @@ Set to an empty string (<code class="docutils literal notranslate"><span class="
 <h5>$validationRules<a class="headerlink" href="#validationrules" title="Permalink to this heading"></a></h5>
 <p>Contains either an array of validation rules as described in <a class="reference internal" href="../libraries/validation.html#validation-array"><span class="std std-ref">How to Save Your Rules</span></a>
 or a string containing the name of a validation group, as described in the same section.
-Described in more detail below.</p>
+See also <a class="reference internal" href="#model-setting-validation-rules"><span class="std std-ref">Setting Validation Rules</span></a>.</p>
 </section>
 <section id="validationmessages">
 <h5>$validationMessages<a class="headerlink" href="#validationmessages" title="Permalink to this heading"></a></h5>
 <p>Contains an array of custom error messages that should be used during validation, as
-described in <a class="reference internal" href="../libraries/validation.html#validation-custom-errors"><span class="std std-ref">Setting Custom Error Messages</span></a>. Described in more detail below.</p>
+described in <a class="reference internal" href="../libraries/validation.html#validation-custom-errors"><span class="std std-ref">Setting Custom Error Messages</span></a>. See also <a class="reference internal" href="#model-setting-validation-rules"><span class="std std-ref">Setting Validation Rules</span></a>.</p>
 </section>
 <section id="skipvalidation">
 <h5>$skipValidation<a class="headerlink" href="#skipvalidation" title="Permalink to this heading"></a></h5>
@@ -1414,10 +1414,15 @@ previously:</p>
 </section>
 <section id="in-model-validation">
 <span id="id4"></span><h3><a class="toc-backref" href="#id51" role="doc-backlink">In-Model Validation</a><a class="headerlink" href="#in-model-validation" title="Permalink to this heading"></a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In-Model validation is performed just before data is stored in the
+database. Prior to that point, the data has not yet been validated. Processing
+user-input data prior to validation may introduce vulnerabilities.</p>
+</div>
 <section id="validating-data">
 <h4><a class="toc-backref" href="#id52" role="doc-backlink">Validating Data</a><a class="headerlink" href="#validating-data" title="Permalink to this heading"></a></h4>
-<p>For many people, validating data in the model is the preferred way to ensure the data is kept to a single
-standard, without duplicating code. The Model class provides a way to automatically have all data validated
+<p>The Model class provides a way to automatically have all data validated
 prior to saving to the database with the <code class="docutils literal notranslate"><span class="pre">insert()</span></code>, <code class="docutils literal notranslate"><span class="pre">update()</span></code>, or <code class="docutils literal notranslate"><span class="pre">save()</span></code> methods.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -1432,9 +1437,14 @@ values of other fields may not work as expected.</p>
 </div>
 </section>
 <section id="setting-validation-rules">
-<h4><a class="toc-backref" href="#id53" role="doc-backlink">Setting Validation Rules</a><a class="headerlink" href="#setting-validation-rules" title="Permalink to this heading"></a></h4>
-<p>The first step is to fill out the <a class="reference internal" href="#validationrules">$validationRules</a> class property with the fields and rules that should
-be applied. If you have custom error message that you want to use, place them in the <a class="reference internal" href="#validationmessages">$validationMessages</a> array:</p>
+<span id="model-setting-validation-rules"></span><h4><a class="toc-backref" href="#id53" role="doc-backlink">Setting Validation Rules</a><a class="headerlink" href="#setting-validation-rules" title="Permalink to this heading"></a></h4>
+<p>The first step is to fill out the <a class="reference internal" href="#validationrules">$validationRules</a> class property with the
+fields and rules that should be applied.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can see the list of built-in Validation rules in <a class="reference internal" href="../libraries/validation.html#validation-available-rules"><span class="std std-ref">Available Rules</span></a>.</p>
+</div>
+<p>If you have custom error message that you want to use, place them in the <a class="reference internal" href="#validationmessages">$validationMessages</a> array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
@@ -1459,8 +1469,10 @@ be applied. If you have custom error message that you want to use, place them in
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>If you’d rather organize your rules and error messages within the Validation configuration file, you can do that
-and simply set <a class="reference internal" href="#validationrules">$validationRules</a> to the name of the validation rule group you created:</p>
+<p>If you’d rather organize your rules and error messages within the
+<a class="reference internal" href="../libraries/validation.html#saving-validation-rules-to-config-file"><span class="std std-ref">Validation Config File</span></a>, you can
+do that and simply set <a class="reference internal" href="#validationrules">$validationRules</a> to the name of the validation rule
+group you created:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
