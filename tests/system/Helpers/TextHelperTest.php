@@ -89,6 +89,9 @@ final class TextHelperTest extends CIUnitTestCase
         $this->assertSame($expected, reduce_multiples($str));
     }
 
+    /**
+     * @return iterable<string, list<string>>
+     */
     public static function provideReduceMultiples(): iterable
     {
         yield from [
@@ -105,6 +108,9 @@ final class TextHelperTest extends CIUnitTestCase
         $this->assertSame($expected, reduce_multiples($str, ',', true));
     }
 
+    /**
+     * @return iterable<string, list<string>>
+     */
     public static function provideReduceMultiplesWithTrim(): iterable
     {
         yield from [
