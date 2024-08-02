@@ -529,7 +529,7 @@ if (! function_exists('reduce_multiples')) {
         $pattern = '#' . preg_quote($character, '#') . '{2,}#';
         $str     = preg_replace($pattern, $character, $str);
 
-        return ($trim) ? trim($str, $character) : $str;
+        return $trim ? trim($str, $character) : $str;
     }
 }
 
