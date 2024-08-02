@@ -649,11 +649,14 @@ Cleans out the database table by permanently removing all rows that have 'delete
 In-Model Validation
 ===================
 
+.. warning:: In-Model validation is performed just before data is stored in the
+    database. Prior to that point, the data has not yet been validated. Processing
+    user-input data prior to validation may introduce vulnerabilities.
+
 Validating Data
 ---------------
 
-For many people, validating data in the model is the preferred way to ensure the data is kept to a single
-standard, without duplicating code. The Model class provides a way to automatically have all data validated
+The Model class provides a way to automatically have all data validated
 prior to saving to the database with the ``insert()``, ``update()``, or ``save()`` methods.
 
 .. important:: When you update data, by default, the validation in the model class only
