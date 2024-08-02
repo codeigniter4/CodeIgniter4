@@ -513,7 +513,7 @@ alias for <code class="docutils literal notranslate"><span class="pre">stripslas
 
 <dl class="php function">
 <dt class="sig sig-object php" id="reduce_multiples">
-<span class="sig-name descname"><span class="pre">reduce_multiples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$character</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$trim</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#reduce_multiples" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">reduce_multiples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$character</span> <span class="pre">=</span> <span class="pre">'</span></em>, <em class="sig-param"><span class="pre">'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$trim</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#reduce_multiples" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -534,15 +534,15 @@ after each other. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$string</span> <span class="o">=</span> <span class="s1">&#39;Fred, Bill,, Joe, Jimmy&#39;</span><span class="p">;</span>
-<span class="nv">$string</span> <span class="o">=</span> <span class="nx">reduce_multiples</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">);</span> <span class="c1">// results in &quot;Fred, Bill, Joe, Jimmy&quot;</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">reduce_multiples</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span> <span class="c1">// results in &quot;Fred, Bill, Joe, Jimmy&quot;</span>
 </pre></div>
 </div>
-<p>If the third parameter is set to true it will remove occurrences of the
+<p>If the third parameter is set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, it will remove occurrences of the
 character at the beginning and the end of the string. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$string</span> <span class="o">=</span> <span class="s1">&#39;,Fred, Bill,, Joe, Jimmy,&#39;</span><span class="p">;</span>
-<span class="nv">$string</span> <span class="o">=</span> <span class="nx">reduce_multiples</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// results in &quot;Fred, Bill, Joe, Jimmy&quot;</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">reduce_multiples</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// results in &quot;Fred, Bill, Joe, Jimmy&quot;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1000,7 +1000,7 @@ at the end.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 01, 2024.
+      <span class="lastupdated">Last updated on Aug 02, 2024.
       </span></p>
   </div>
 
