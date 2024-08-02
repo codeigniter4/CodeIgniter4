@@ -679,8 +679,10 @@ be applied. If you have custom error message that you want to use, place them in
 
 .. literalinclude:: model/027.php
 
-If you'd rather organize your rules and error messages within the Validation configuration file, you can do that
-and simply set `$validationRules`_ to the name of the validation rule group you created:
+If you'd rather organize your rules and error messages within the
+:ref:`Validation Config File <saving-validation-rules-to-config-file>`, you can
+do that and simply set `$validationRules`_ to the name of the validation rule
+group you created:
 
 .. literalinclude:: model/034.php
 

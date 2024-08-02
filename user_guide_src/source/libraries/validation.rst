@@ -476,6 +476,8 @@ the validation rules.
 .. literalinclude:: validation/045.php
    :lines: 2-
 
+.. _saving-validation-rules-to-config-file:
+
 Saving Sets of Validation Rules to the Config File
 ==================================================
 
