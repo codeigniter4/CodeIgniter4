@@ -127,7 +127,7 @@ The following functions are available:
         and handle string inputs. This however makes it just an
         alias for ``stripslashes()``.
 
-.. php:function:: reduce_multiples($str[, $character = ''[, $trim = false]])
+.. php:function:: reduce_multiples($str[, $character = ','[, $trim = false]])
 
     :param    string    $str: Text to search in
     :param    string    $character: Character to reduce
