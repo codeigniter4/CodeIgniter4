@@ -140,7 +140,7 @@ The following functions are available:
 
     .. literalinclude:: text_helper/009.php
 
-    If the third parameter is set to true it will remove occurrences of the
+    If the third parameter is set to ``true``, it will remove occurrences of the
     character at the beginning and the end of the string. Example:
 
     .. literalinclude:: text_helper/010.php
