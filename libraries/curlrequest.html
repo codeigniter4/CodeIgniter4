@@ -727,7 +727,7 @@ if it’s not already set:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">form_params</span></code> cannot be used with the <code class="docutils literal notranslate"><span class="pre">multipart</span></code> option. You will need to use one or the other.
+<p><code class="docutils literal notranslate"><span class="pre">form_params</span></code> cannot be used with the <a class="reference internal" href="#multipart">multipart</a> option. You will need to use one or the other.
 Use <code class="docutils literal notranslate"><span class="pre">form_params</span></code> for <code class="docutils literal notranslate"><span class="pre">application/x-www-form-urlencoded</span></code> request, and <code class="docutils literal notranslate"><span class="pre">multipart</span></code> for <code class="docutils literal notranslate"><span class="pre">multipart/form-data</span></code>
 requests.</p>
 </div>
@@ -789,20 +789,23 @@ method of CURLRequest, and set the Content-Type header with the <code class="doc
 <section id="multipart">
 <h3><a class="toc-backref" href="#id20" role="doc-backlink">multipart</a><a class="headerlink" href="#multipart" title="Permalink to this heading"></a></h3>
 <p>When you need to send files and other data via a POST request, you can use the <code class="docutils literal notranslate"><span class="pre">multipart</span></code> option, along with
-the <a class="reference external" href="https://www.php.net/manual/en/class.curlfile.php">CURLFile Class</a>. The values should be an associative array
-of POST data to send. For safer usage, the legacy method of uploading files by prefixing their name with an <cite>&#64;</cite>
+the <a class="reference external" href="https://www.php.net/manual/en/class.curlfile.php">CURLFile Class</a>.</p>
+<p>The values should be an associative array
+of POST data to send. For safer usage, the legacy method of uploading files by prefixing their name with an <code class="docutils literal notranslate"><span class="pre">&#64;</span></code>
 has been disabled. Any files that you want to send must be passed as instances of CURLFile:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$post_data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;foo&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;userfile&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">\CURLFile</span><span class="p">(</span><span class="s1">&#39;/path/to/file.txt&#39;</span><span class="p">),</span>
-<span class="p">];</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;/post&#39;</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">&#39;multipart&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;foo&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;userfile&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">\CURLFile</span><span class="p">(</span><span class="s1">&#39;/path/to/file.txt&#39;</span><span class="p">),</span>
+    <span class="p">],</span>
+<span class="p">]);</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">multipart</span></code> cannot be used with the <code class="docutils literal notranslate"><span class="pre">form_params</span></code> option. You can only use one or the other. Use
+<p><code class="docutils literal notranslate"><span class="pre">multipart</span></code> cannot be used with the <a class="reference internal" href="#form-params">form_params</a> option. You can only use one or the other. Use
 <code class="docutils literal notranslate"><span class="pre">form_params</span></code> for <code class="docutils literal notranslate"><span class="pre">application/x-www-form-urlencoded</span></code> requests, and <code class="docutils literal notranslate"><span class="pre">multipart</span></code> for <code class="docutils literal notranslate"><span class="pre">multipart/form-data</span></code>
 requests.</p>
 </div>
