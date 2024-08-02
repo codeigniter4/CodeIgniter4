@@ -676,8 +676,12 @@ prior to saving to the database with the ``insert()``, ``update()``, or ``save()
 Setting Validation Rules
 ------------------------
 
-The first step is to fill out the `$validationRules`_ class property with the fields and rules that should
-be applied. If you have custom error message that you want to use, place them in the `$validationMessages`_ array:
+The first step is to fill out the `$validationRules`_ class property with the
+fields and rules that should be applied.
+
+.. note:: You can see the list of built-in Validation rules in :ref:`validation-available-rules`.
+
+If you have custom error message that you want to use, place them in the `$validationMessages`_ array:
 
 .. literalinclude:: model/027.php
 

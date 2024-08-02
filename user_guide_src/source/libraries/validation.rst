@@ -877,6 +877,8 @@ Or you can use the following parameters:
 .. literalinclude:: validation/047.php
    :lines: 2-
 
+.. _validation-available-rules:
+
 ***************
 Available Rules
 ***************
