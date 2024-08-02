@@ -126,10 +126,10 @@ final class ControllerTest extends CIUnitTestCase
     public function testValidateWithStringRulesFoundReadMessagesFromValidationConfig(): void
     {
         $validation = new class () extends ValidationConfig {
-            public $signup = [
+            public array $signup = [
                 'username' => 'required',
             ];
-            public $signup_errors = [
+            public array $signup_errors = [
                 'username' => [
                     'required' => 'You must choose a username.',
                 ],
@@ -149,7 +149,7 @@ final class ControllerTest extends CIUnitTestCase
     public function testValidateWithStringRulesFoundUseMessagesParameter(): void
     {
         $validation = new class () extends ValidationConfig {
-            public $signup = [
+            public array $signup = [
                 'username' => 'required',
             ];
         };
