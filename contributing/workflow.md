@@ -354,6 +354,13 @@ You might get conflicts when you rebase. It is your
 responsibility to resolve those locally, so that you can continue
 collaborating with the shared repository.
 
+Occasionally, the Composer packages for development may be updated. Run the
+following command to use the latest packages:
+
+```console
+composer update
+```
+
 And finally push your local branch to your GitHub repository:
 
 ```console

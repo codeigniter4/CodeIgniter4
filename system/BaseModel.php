@@ -541,7 +541,7 @@ abstract class BaseModel
      * Grabs the last error(s) that occurred from the Database connection.
      * This method works only with dbCalls.
      *
-     * @return array|null
+     * @return array<string, string>
      */
     abstract protected function doErrors();
 
@@ -1242,7 +1242,7 @@ abstract class BaseModel
      *
      * @param bool $forceDB Always grab the db error, not validation
      *
-     * @return array<string,string>
+     * @return array<string, string>
      */
     public function errors(bool $forceDB = false)
     {
