@@ -381,6 +381,19 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    public function testRemoveReportURI(): void
+    {
+        $this->prepare();
+        $this->csp->reportOnly(false);
+        $this->csp->setReportURI('');
+        $this->work();
+
+        $result = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertStringNotContainsString('report-uri ', $result);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testSandboxFlags(): void
     {
         $this->prepare();
