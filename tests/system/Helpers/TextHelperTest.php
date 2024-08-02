@@ -15,6 +15,7 @@ namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -82,24 +83,42 @@ final class TextHelperTest extends CIUnitTestCase
         }
     }
 
-    public function testReduceMultiples(): void
+    #[DataProvider('provideReduceMultiples')]
+    public function testReduceMultiples(string $str, string $expected): void
     {
-        $strs = [
-            'Fred, Bill,, Joe, Jimmy' => 'Fred, Bill, Joe, Jimmy',
-            'Ringo, John, Paul,,'     => 'Ringo, John, Paul,',
-        ];
+        $this->assertSame($expected, reduce_multiples($str));
+    }
 
-        foreach ($strs as $str => $expect) {
-            $this->assertSame($expect, reduce_multiples($str));
-        }
-        $strs = [
-            'Fred, Bill,, Joe, Jimmy' => 'Fred, Bill, Joe, Jimmy',
-            'Ringo, John, Paul,,'     => 'Ringo, John, Paul',
+    /**
+     * @return iterable<string, list<string>>
+     */
+    public static function provideReduceMultiples(): iterable
+    {
+        yield from [
+            // string, expected
+            'double commas'            => ['Fred, Bill,, Joe, Jimmy', 'Fred, Bill, Joe, Jimmy'],
+            'double commas at last'    => ['Ringo, John, Paul,,', 'Ringo, John, Paul,'],
+            'commas at first and last' => [',Fred, Bill,, Joe, Jimmy,', ',Fred, Bill, Joe, Jimmy,'],
         ];
+    }
 
-        foreach ($strs as $str => $expect) {
-            $this->assertSame($expect, reduce_multiples($str, ',', true));
-        }
+    #[DataProvider('provideReduceMultiplesWithTrim')]
+    public function testReduceMultiplesWithTrim(string $str, string $expected): void
+    {
+        $this->assertSame($expected, reduce_multiples($str, ',', true));
+    }
+
+    /**
+     * @return iterable<string, list<string>>
+     */
+    public static function provideReduceMultiplesWithTrim(): iterable
+    {
+        yield from [
+            // string, expected
+            'double commas'            => ['Fred, Bill,, Joe, Jimmy', 'Fred, Bill, Joe, Jimmy'],
+            'double commas at last'    => ['Ringo, John, Paul,,', 'Ringo, John, Paul'],
+            'commas at first and last' => [',Fred, Bill,, Joe, Jimmy,', 'Fred, Bill, Joe, Jimmy'],
+        ];
     }
 
     public function testRandomString(): void

@@ -127,7 +127,7 @@ The following functions are available:
         and handle string inputs. This however makes it just an
         alias for ``stripslashes()``.
 
-.. php:function:: reduce_multiples($str[, $character = ''[, $trim = false]])
+.. php:function:: reduce_multiples($str[, $character = ','[, $trim = false]])
 
     :param    string    $str: Text to search in
     :param    string    $character: Character to reduce
@@ -140,7 +140,7 @@ The following functions are available:
 
     .. literalinclude:: text_helper/009.php
 
-    If the third parameter is set to true it will remove occurrences of the
+    If the third parameter is set to ``true``, it will remove occurrences of the
     character at the beginning and the end of the string. Example:
 
     .. literalinclude:: text_helper/010.php
