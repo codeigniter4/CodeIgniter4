@@ -243,13 +243,13 @@ $validationRules
 
 Contains either an array of validation rules as described in :ref:`validation-array`
 or a string containing the name of a validation group, as described in the same section.
-Described in more detail below.
+See also :ref:`model-setting-validation-rules`.
 
 $validationMessages
 ^^^^^^^^^^^^^^^^^^^
 
 Contains an array of custom error messages that should be used during validation, as
-described in :ref:`validation-custom-errors`. Described in more detail below.
+described in :ref:`validation-custom-errors`. See also :ref:`model-setting-validation-rules`.
 
 $skipValidation
 ^^^^^^^^^^^^^^^
@@ -670,6 +670,8 @@ prior to saving to the database with the ``insert()``, ``update()``, or ``save()
 
     To avoid such glitches, this behavior can be changed by configuration. See
     :ref:`clean-validation-rules` for details.
+
+.. _model-setting-validation-rules:
 
 Setting Validation Rules
 ------------------------
