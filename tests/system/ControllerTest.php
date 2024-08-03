@@ -191,6 +191,77 @@ final class ControllerTest extends CIUnitTestCase
         );
     }
 
+    public function testValidateDataWithCustomErrorMessage(): void
+    {
+        // make sure we can instantiate one
+        $this->controller = new Controller();
+        $this->controller->initController($this->request, $this->response, $this->logger);
+
+        $method = $this->getPrivateMethodInvoker($this->controller, 'validateData');
+
+        $data = [
+            'username' => 'a',
+            'password' => '123',
+        ];
+        $rules = [
+            'username' => 'required|min_length[3]',
+            'password' => 'required|min_length[10]',
+        ];
+        $errors = [
+            'username' => [
+                'required'   => 'Please fill "{field}".',
+                'min_length' => '"{field}" must be {param} letters or longer.',
+            ],
+        ];
+        $this->assertFalse($method($data, $rules, $errors));
+        $this->assertSame(
+            '"username" must be 3 letters or longer.',
+            Services::validation()->getError('username')
+        );
+        $this->assertSame(
+            'The password field must be at least 10 characters in length.',
+            Services::validation()->getError('password')
+        );
+    }
+
+    public function testValidateDataWithCustomErrorMessageLabeledStyle(): void
+    {
+        // make sure we can instantiate one
+        $this->controller = new Controller();
+        $this->controller->initController($this->request, $this->response, $this->logger);
+
+        $method = $this->getPrivateMethodInvoker($this->controller, 'validateData');
+
+        $data = [
+            'username' => 'a',
+            'password' => '123',
+        ];
+        $rules = [
+            'username' => [
+                'label'  => 'Username',
+                'rules'  => 'required|min_length[3]',
+                'errors' => [
+                    'required'   => 'Please fill "{field}".',
+                    'min_length' => '"{field}" must be {param} letters or longer.',
+                ],
+            ],
+            'password' => [
+                'required|min_length[10]',
+                'label' => 'Password',
+                'rules' => 'required|min_length[10]',
+            ],
+        ];
+        $this->assertFalse($method($data, $rules));
+        $this->assertSame(
+            '"Username" must be 3 letters or longer.',
+            Services::validation()->getError('username')
+        );
+        $this->assertSame(
+            'The Password field must be at least 10 characters in length.',
+            Services::validation()->getError('password')
+        );
+    }
+
     public function testHelpers(): void
     {
         $this->controller = new class () extends Controller {
