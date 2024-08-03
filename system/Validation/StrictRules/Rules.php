@@ -48,11 +48,15 @@ class Rules
             return $str !== dot_array_search($otherField, $data);
         }
 
-        if (! array_key_exists($field, $data)) {
+        if (! array_key_exists($otherField, $data)) {
             return false;
         }
 
-        if (! array_key_exists($otherField, $data)) {
+        if (str_contains($field, '.')) {
+            if (! ArrayHelper::dotKeyExists($field, $data)) {
+                return false;
+            }
+        } elseif (! array_key_exists($field, $data)) {
             return false;
         }
 
@@ -281,11 +285,15 @@ class Rules
             return $str === dot_array_search($otherField, $data);
         }
 
-        if (! array_key_exists($field, $data)) {
+        if (! array_key_exists($otherField, $data)) {
             return false;
         }
 
-        if (! array_key_exists($otherField, $data)) {
+        if (str_contains($field, '.')) {
+            if (! ArrayHelper::dotKeyExists($field, $data)) {
+                return false;
+            }
+        } elseif (! array_key_exists($field, $data)) {
             return false;
         }
 
