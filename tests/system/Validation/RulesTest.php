@@ -336,6 +336,50 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
+    public function testMatchesWithDotArrayPass(): void
+    {
+        $rules = [
+            'name'         => 'permit_empty',
+            'emailAddress' => 'permit_empty|valid_email',
+            'alias.*'      => 'permit_empty|matches[name]',
+        ];
+        $this->validation->setRules($rules);
+
+        $data = [
+            'name'         => 'Princess Peach',
+            'emailAddress' => 'valid@example.com',
+            'alias'        => [
+                'Princess Peach',
+                'Princess Peach',
+            ],
+        ];
+        $this->assertTrue($this->validation->run($data));
+    }
+
+    public function testMatchesWithDotArrayFail(): void
+    {
+        $rules = [
+            'name'         => 'permit_empty',
+            'emailAddress' => 'permit_empty|valid_email',
+            'alias.*'      => 'permit_empty|matches[name]',
+        ];
+        $this->validation->setRules($rules);
+
+        $data = [
+            'name'         => 'Princess Peach',
+            'emailAddress' => 'valid@example.com',
+            'alias'        => [
+                'Princess ',
+                'Princess Peach',
+            ],
+        ];
+        $this->assertFalse($this->validation->run($data));
+        $this->assertSame(
+            ['alias.0' => 'The alias.* field does not match the name field.'],
+            $this->validation->getErrors()
+        );
+    }
+
     public static function provideMatchesNestedCases(): iterable
     {
         yield from [
@@ -371,6 +415,50 @@ class RulesTest extends CIUnitTestCase
     {
         $this->validation->setRules(['nested.foo' => 'differs[nested.bar]']);
         $this->assertSame(! $expected, $this->validation->run($data));
+    }
+
+    public function testDiffersWithDotArrayPass(): void
+    {
+        $rules = [
+            'name'         => 'permit_empty',
+            'emailAddress' => 'permit_empty|valid_email',
+            'alias.*'      => 'permit_empty|differs[name]',
+        ];
+        $this->validation->setRules($rules);
+
+        $data = [
+            'name'         => 'Princess Peach',
+            'emailAddress' => 'valid@example.com',
+            'alias'        => [
+                'Princess Toadstool',
+                'Peach',
+            ],
+        ];
+        $this->assertTrue($this->validation->run($data));
+    }
+
+    public function testDiffersWithDotArrayFail(): void
+    {
+        $rules = [
+            'name'         => 'permit_empty',
+            'emailAddress' => 'permit_empty|valid_email',
+            'alias.*'      => 'permit_empty|differs[name]',
+        ];
+        $this->validation->setRules($rules);
+
+        $data = [
+            'name'         => 'Princess Peach',
+            'emailAddress' => 'valid@example.com',
+            'alias'        => [
+                'Princess Toadstool',
+                'Princess Peach',
+            ],
+        ];
+        $this->assertFalse($this->validation->run($data));
+        $this->assertSame(
+            ['alias.1' => 'The alias.* field must differ from the name field.'],
+            $this->validation->getErrors()
+        );
     }
 
     #[DataProvider('provideEquals')]
