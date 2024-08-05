@@ -134,7 +134,7 @@ class LocalizationSync extends BaseCommand
             }
 
             $targetLanguageKeys = $this->mergeLanguageKeys($originalLanguageKeys, $targetLanguageKeys, $originalLanguageFile->getBasename('.php'));
-            ksort($targetLanguageKeys);
+            // ksort($targetLanguageKeys);
 
             $content = "<?php\n\nreturn " . var_export($targetLanguageKeys, true) . ";\n";
             file_put_contents($targetLanguageFile, $content);
