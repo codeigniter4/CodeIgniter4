@@ -76,8 +76,6 @@ final class ArrayHelperIntersectKeyRecursiveTest extends CIUnitTestCase
             ],
         ];
 
-        // var_dump(ArrayHelper::intersectKeyRecursive($original, $this->targetArray));
-
         $this->assertSame($original, ArrayHelper::intersectKeyRecursive($original, $this->targetArray));
     }
 
