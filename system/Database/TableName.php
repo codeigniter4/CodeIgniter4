@@ -44,10 +44,10 @@ class TableName
      * @param string $table Table name (w/o DB prefix)
      * @param string $alias Alias name
      */
-    public static function create(BaseConnection $db, string $table, string $alias = ''): self
+    public static function create(string $dbPrefix, string $table, string $alias = ''): self
     {
         return new self(
-            $db->DBPrefix . $table,
+            $dbPrefix . $table,
             $table,
             '',
             '',
@@ -61,9 +61,9 @@ class TableName
      * @param string $actualTable Actual table name with DB prefix
      * @param string $alias       Alias name
      */
-    public static function fromActualName(BaseConnection $db, string $actualTable, string $alias = ''): self
+    public static function fromActualName(string $dbPrefix, string $actualTable, string $alias = ''): self
     {
-        $prefix       = $db->DBPrefix;
+        $prefix       = $dbPrefix;
         $logicalTable = '';
 
         if (str_starts_with($actualTable, $prefix)) {
@@ -87,14 +87,14 @@ class TableName
      * @param string $alias    Alias name
      */
     public static function fromFullName(
-        BaseConnection $db,
+        string $dbPrefix,
         string $table,
         string $schema = '',
         string $database = '',
         string $alias = ''
     ): self {
         return new self(
-            $db->DBPrefix . $table,
+            $dbPrefix . $table,
             $table,
             $schema,
             $database,

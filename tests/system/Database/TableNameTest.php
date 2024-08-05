@@ -38,7 +38,7 @@ final class TableNameTest extends CIUnitTestCase
     {
         $table = 'table';
 
-        $tableName = TableName::create($this->db, $table);
+        $tableName = TableName::create($this->db->DBPrefix, $table);
 
         $this->assertInstanceOf(TableName::class, $tableName);
     }
@@ -47,7 +47,7 @@ final class TableNameTest extends CIUnitTestCase
     {
         $table = 'table';
 
-        $tableName = TableName::create($this->db, $table);
+        $tableName = TableName::create($this->db->DBPrefix, $table);
 
         $this->assertSame($table, $tableName->getTableName());
         $this->assertSame('db_table', $tableName->getActualTableName());
@@ -57,7 +57,7 @@ final class TableNameTest extends CIUnitTestCase
     {
         $actualTable = 'db_table';
 
-        $tableName = TableName::fromActualName($this->db, $actualTable);
+        $tableName = TableName::fromActualName($this->db->DBPrefix, $actualTable);
 
         $this->assertSame('table', $tableName->getTableName());
         $this->assertSame($actualTable, $tableName->getActualTableName());
@@ -67,7 +67,7 @@ final class TableNameTest extends CIUnitTestCase
     {
         $actualTable = 'table';
 
-        $tableName = TableName::fromActualName($this->db, $actualTable);
+        $tableName = TableName::fromActualName($this->db->DBPrefix, $actualTable);
 
         $this->assertSame('', $tableName->getTableName());
         $this->assertSame($actualTable, $tableName->getActualTableName());
@@ -78,7 +78,7 @@ final class TableNameTest extends CIUnitTestCase
         $table = 'table';
         $alias = 't';
 
-        $tableName = TableName::create($this->db, $table, $alias);
+        $tableName = TableName::create($this->db->DBPrefix, $table, $alias);
 
         $this->assertSame($alias, $tableName->getAlias());
     }
@@ -89,7 +89,7 @@ final class TableNameTest extends CIUnitTestCase
         $schema   = 'dbo';
         $database = 'test';
 
-        $tableName = TableName::fromFullName($this->db, $table, $schema, $database);
+        $tableName = TableName::fromFullName($this->db->DBPrefix, $table, $schema, $database);
 
         $this->assertSame($schema, $tableName->getSchema());
     }
@@ -100,7 +100,7 @@ final class TableNameTest extends CIUnitTestCase
         $schema   = 'dbo';
         $database = 'test';
 
-        $tableName = TableName::fromFullName($this->db, $table, $schema, $database);
+        $tableName = TableName::fromFullName($this->db->DBPrefix, $table, $schema, $database);
 
         $this->assertSame($database, $tableName->getDatabase());
     }
