@@ -369,8 +369,8 @@ Detailed information can be found by running the command:
 
 .. _sync-translations-command:
 
-Synchronization  Translation Files via Command
-==============================================
+Synchronization Translation Files via Command
+=============================================
 
 .. versionadded:: 4.6.0
 
@@ -388,7 +388,7 @@ All you need to do is execute:
     // or set the original locale
     php spark lang:sync --locale en --target ru
 
-As a result, you will receive files with the transfer keys.
+As a result, you will receive files with the translation keys.
 If there were duplicate keys in the target locale, they are saved.
 
 .. warning:: Non-matching keys in new translations are deleted!
