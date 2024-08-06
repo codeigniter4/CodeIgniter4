@@ -121,17 +121,6 @@ class Forge extends BaseForge
     protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         switch ($alterType) {
-            case 'DROP':
-                $columnNamesToDrop = $processedFields;
-
-                $sqlTable = new Table($this->db, $this);
-
-                $sqlTable->fromTable($table)
-                    ->dropColumn($columnNamesToDrop)
-                    ->run();
-
-                return ''; // Why empty string?
-
             case 'CHANGE':
                 $fieldsToModify = [];
 
@@ -162,6 +151,32 @@ class Forge extends BaseForge
             default:
                 return parent::_alterTable($alterType, $table, $processedFields);
         }
+    }
+
+    /**
+     * @param list<string>|string $columnNames column names to DROP
+     *
+     * @return bool
+     *
+     * @throws DatabaseException
+     */
+    public function dropColumn(string $table, $columnNames)
+    {
+        $sqlTable = new Table($this->db, $this);
+
+        $sqlExecuteResult = $sqlTable->fromTable($this->db->DBPrefix . $table)
+            ->dropColumn($columnNames)
+            ->run();
+
+        if ($sqlExecuteResult === false) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('This feature is not available for the database you are using.');
+            }
+
+            return false;
+        }
+
+        return $sqlExecuteResult;
     }
 
     /**
