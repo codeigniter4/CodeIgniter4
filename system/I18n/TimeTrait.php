@@ -697,9 +697,7 @@ trait TimeTrait
     #[ReturnTypeWillChange]
     public function setTimestamp($timestamp)
     {
-        $time = date('Y-m-d H:i:s', $timestamp);
-
-        return static::parse($time, $this->timezone, $this->locale);
+        return parent::setTimestamp($timestamp);
     }
 
     // --------------------------------------------------------------------
