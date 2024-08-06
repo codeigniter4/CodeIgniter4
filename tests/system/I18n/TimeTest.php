@@ -277,10 +277,11 @@ final class TimeTest extends CIUnitTestCase
 
         $timestamp = strtotime('2017-03-18 midnight');
 
+        // The timezone will be UTC if you don't specify.
         $time = Time::createFromTimestamp($timestamp);
 
-        $this->assertSame('Asia/Tokyo', $time->getTimezone()->getName());
-        $this->assertSame('2017-03-18 00:00:00', $time->format('Y-m-d H:i:s'));
+        $this->assertSame('UTC', $time->getTimezone()->getName());
+        $this->assertSame('2017-03-17 15:00:00', $time->format('Y-m-d H:i:s'));
 
         // Restore timezone.
         date_default_timezone_set($tz);

@@ -269,7 +269,7 @@ trait TimeTrait
     {
         $time = new self(gmdate('Y-m-d H:i:s', $timestamp), 'UTC', $locale);
 
-        $timezone ??= date_default_timezone_get();
+        $timezone ??= 'UTC';
 
         return $time->setTimezone($timezone);
     }
