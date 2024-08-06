@@ -122,7 +122,8 @@ and returns a ``Time`` instance, instead of DateTimeImmutable:
 createFromTimestamp()
 =====================
 
-This method takes a UNIX timestamp and, optionally, the timezone and locale, to create a new Time instance:
+This method takes a UNIX timestamp and, optionally, the timezone and locale, to
+create a new Time instance:
 
 .. literalinclude:: time/012.php
 
