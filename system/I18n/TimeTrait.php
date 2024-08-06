@@ -265,7 +265,7 @@ trait TimeTrait
      */
     public static function createFromTimestamp(float|int $timestamp, $timezone = null, ?string $locale = null): static
     {
-        $time = new self(gmdate('Y-m-d H:i:s', $timestamp), 'UTC', $locale);
+        $time = new self('@' . $timestamp, 'UTC', $locale);
 
         $timezone ??= 'UTC';
 
