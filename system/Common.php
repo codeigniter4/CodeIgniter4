@@ -122,35 +122,18 @@ if (! function_exists('command')) {
     function command(string $command)
     {
         $runner      = service('commands');
-        $regexString = '([^\s]+?)(?:\s|(?<!\\\\)"|(?<!\\\\)\'|$)';
-        $regexQuoted = '(?:"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\')';
+        $regexString = '([^\s]+?)(?:\s|$)';
+        $regexQuoted = '"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\'';
 
-        $args   = [];
-        $length = strlen($command);
-        $cursor = 0;
+        // Match all arguments at once
+        preg_match_all('/' . $regexQuoted . '|' . $regexString . '/', $command, $matches, PREG_SET_ORDER);
 
-        /**
-         * Adopted from Symfony's `StringInput::tokenize()` with few changes.
-         *
-         * @see https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Console/Input/StringInput.php
-         */
-        while ($cursor < $length) {
-            if (preg_match('/\s+/A', $command, $match, 0, $cursor)) {
-                // nothing to do
-            } elseif (preg_match('/' . $regexQuoted . '/A', $command, $match, 0, $cursor)) {
-                $args[] = stripcslashes(substr($match[0], 1, strlen($match[0]) - 2));
-            } elseif (preg_match('/' . $regexString . '/A', $command, $match, 0, $cursor)) {
-                $args[] = stripcslashes($match[1]);
-            } else {
-                // @codeCoverageIgnoreStart
-                throw new InvalidArgumentException(sprintf(
-                    'Unable to parse input near "... %s ...".',
-                    substr($command, $cursor, 10)
-                ));
-                // @codeCoverageIgnoreEnd
-            }
+        $args = [];
 
-            $cursor += strlen($match[0]);
+        foreach ($matches as $match) {
+            // Determine which part of the match is the actual argument
+            $arg    = $match[1] !== '' ? stripcslashes($match[1]) : (isset($match[3]) ? stripcslashes($match[3]) : stripcslashes($match[2]));
+            $args[] = $arg;
         }
 
         $command     = array_shift($args);
