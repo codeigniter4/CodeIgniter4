@@ -129,6 +129,9 @@ create a new Time instance:
 
 If you do not explicitly pass a timezone, it returns a Time instance with **UTC**.
 
+.. note:: We recommend to always call ``createFromTimestamp()`` with 2 parameters
+    (i.e. explicitly pass a timezone) unless using UTC as the default timezone.
+
 .. note:: In v4.4.6 to prior to v4.6.0, this method returned a Time instance
     with the default timezone when you do not specify a timezone.
 
