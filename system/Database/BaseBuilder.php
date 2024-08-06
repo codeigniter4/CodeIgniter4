@@ -3506,8 +3506,9 @@ class BaseBuilder
      *
      * @param mixed $value
      */
-    protected function setBind(string $key, $value = null, bool $escape = true): string
+    protected function setBind(string $origKey, $value = null, bool $escape = true): string
     {
+        $key = md5($origKey);
         if (! array_key_exists($key, $this->binds)) {
             $this->binds[$key] = [
                 $value,
