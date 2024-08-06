@@ -126,8 +126,10 @@ This method takes a UNIX timestamp and, optionally, the timezone and locale, to 
 
 .. literalinclude:: time/012.php
 
-.. note:: Due to a bug, prior to v4.4.6, this method returned a Time instance
-    in timezone UTC when you do not specify a timezone.
+If you do not explicitly pass a timezone, it returns a Time instance with **UTC**.
+
+.. note:: In v4.4.6 to prior to v4.6.0, this method returned a Time instance
+    with the default timezone when you do not specify a timezone.
 
 createFromInstance()
 ====================
