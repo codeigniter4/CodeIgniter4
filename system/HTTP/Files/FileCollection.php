@@ -31,7 +31,7 @@ class FileCollection
      * Populated the first time either files(), file(), or hasFile()
      * is called.
      *
-     * @var array|null
+     * @var array<string, list<UploadedFile>|UploadedFile>|null
      */
     protected $files;
 
@@ -40,7 +40,7 @@ class FileCollection
      * Each element in the array will be an instance of UploadedFile.
      * The key of each element will be the client filename.
      *
-     * @return array|null
+     * @return array<string, list<UploadedFile>|UploadedFile>|null
      */
     public function all()
     {
@@ -165,7 +165,7 @@ class FileCollection
      * Given a file array, will create UploadedFile instances. Will
      * loop over an array and create objects for each.
      *
-     * @return list<UploadedFile>|UploadedFile
+     * @param array<string, int|string> $array File Object
      */
     protected function createFileObject(array $array)
     {
@@ -199,6 +199,10 @@ class FileCollection
      *
      * Thanks to Jack Sleight on the PHP Manual page for the basis
      * of this method.
+     *
+     * @param array<string, array<string, int|string>> $data $_FILES Array
+     *
+     * @return array<string, array<string, int|string>>
      *
      * @see http://php.net/manual/en/reserved.variables.files.php#118294
      */
@@ -244,8 +248,8 @@ class FileCollection
     /**
      * Navigate through an array looking for a particular index
      *
-     * @param array $index The index sequence we are navigating down
-     * @param array $value The portion of the array to process
+     * @param list<string>         $index The index sequence we are navigating down
+     * @param array<string, mixed> $value The portion of the array to process
      *
      * @return list<UploadedFile>|UploadedFile|null
      */
@@ -253,7 +257,7 @@ class FileCollection
     {
         $currentIndex = array_shift($index);
 
-        if (isset($currentIndex) && is_array($index) && $index && is_array($value[$currentIndex]) && $value[$currentIndex]) {
+        if (isset($currentIndex) && $index !== [] && is_array($value[$currentIndex]) && $value[$currentIndex] !== []) {
             return $this->getValueDotNotationSyntax($index, $value[$currentIndex]);
         }
 
