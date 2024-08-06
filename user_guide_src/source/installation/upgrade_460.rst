@@ -29,6 +29,26 @@ See :ref:`ChangeLog <v460-behavior-changes-exceptions>` for details.
 
 If you have code that catches these exceptions, change the exception classes.
 
+.. _upgrade-460-time-create-from-timestamp:
+
+Time::createFromTimestamp() Timezone Change
+===========================================
+
+When you do not explicitly pass a timezone, now
+:ref:`Time::createFromTimestamp() <time-createfromtimestamp>` returns a Time
+instance with **UTC**. In v4.4.6 to prior to v4.6.0, a Time instance with the
+currently set default timezone was returned.
+
+This behavior change normalizes behavior with changes in PHP 8.4 which adds a
+new ``DateTimeInterface::createFromTimestamp()`` method.
+
+If you want to keep the default timezone, you need to pass the timezone as the
+second parameter::
+
+    use CodeIgniter\I18n\Time;
+
+    $time = Time::createFromTimestamp(1501821586, date_default_timezone_get());
+
 .. _upgrade-460-time-keeps-microseconds:
 
 Time keeps Microseconds
