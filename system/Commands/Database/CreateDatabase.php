@@ -95,6 +95,14 @@ class CreateDatabase extends BaseCommand
 
             // Special SQLite3 handling
             if ($db instanceof Connection) {
+
+                if (!extension_loaded('sqlite3')) {
+                    CLI::error("extension [sqlite3] not loaded. Uncomment it in the php.ini file", 'light_gray', 'red');
+                    CLI::newLine();
+
+                    return;
+                }
+                
                 $ext = $params['ext'] ?? CLI::getOption('ext') ?? 'db';
 
                 if (! in_array($ext, ['db', 'sqlite'], true)) {
