@@ -12956,24 +12956,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/ControllerTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.property
-	'message' => '#^Property class@anonymous/tests/system/ControllerTest\\.php\\:128\\:\\:\\$signup has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/ControllerTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.property
-	'message' => '#^Property class@anonymous/tests/system/ControllerTest\\.php\\:128\\:\\:\\$signup_errors has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/ControllerTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.property
-	'message' => '#^Property class@anonymous/tests/system/ControllerTest\\.php\\:151\\:\\:\\$signup has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/ControllerTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: argument.type
 	'message' => '#^Parameter \\#1 \\$cookies of class CodeIgniter\\\\Cookie\\\\CookieStore constructor expects array\\<CodeIgniter\\\\Cookie\\\\Cookie\\>, array\\<int, DateTimeImmutable\\> given\\.$#',
 	'count' => 1,
