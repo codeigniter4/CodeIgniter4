@@ -2,8 +2,7 @@
 HTML Helper
 ###########
 
-The HTML Helper file contains functions that assist in working with
-HTML.
+The HTML Helper file contains functions that assist in working with HTML.
 
 .. contents::
     :local:
@@ -28,37 +27,36 @@ The following functions are available:
 
 .. php:function:: img([$src = ''[, $indexPage = false[, $attributes = '']]])
 
-    :param  string|array  $src:  Image source URI, or array of attributes and values
-    :param  bool    $indexPage:  Whether to treat ``$src`` as a routed URI string
-    :param  mixed   $attributes: Additional HTML attributes
-    :returns:   HTML image tag
+    :param  string|array  $src:        Image source URI, or array of attributes and values
+    :param  bool          $indexPage:  Should indexPage be added to the source path
+    :param  mixed         $attributes: Additional HTML attributes
+    :returns:                          An HTML image element
     :rtype: string
 
-    Lets you create HTML ``<img />`` tags. The first parameter contains the
+    Lets you create HTML ``<img>`` elements. The first parameter contains the
     image source. Example:
 
     .. literalinclude:: html_helper/002.php
 
-    There is an optional second parameter that is a true/false value that
-    specifics if the *src* should have the page specified by
-    ``$config['indexPage']`` added to the address it creates.
-    Presumably, this would be if you were using a media controller:
+    There is an optional second parameter, a true/false value, that
+    specifies if the *src* should have ``$config['indexPage']`` added to the address it creates.
+    Presumably, this would be true if you were using a media controller???:
 
     .. literalinclude:: html_helper/003.php
 
     Additionally, an associative array can be passed as the first parameter,
     for complete control over all attributes and values. If an *alt* attribute
-    is not provided, CodeIgniter will generate an empty string.
+    is not provided, CodeIgniter will generate one with empty string.
 
     Example:
 
     .. literalinclude:: html_helper/004.php
 
-.. php:function:: img_data([$src = ''[, $indexPage = false[, $attributes = '']]])
+.. php:function:: img_data($path[, $mime = null])
 
-    :param string $path: Path to the image file
+    :param string      $path: Path to the image file
     :param string|null $mime: MIME type to use, or null to guess
-    :returns: base64 encoded binary image string
+    :returns:                 base64 encoded binary image string
     :rtype: string
 
     Generates a src-ready string from an image using the "data:" protocol.
@@ -82,14 +80,14 @@ The following functions are available:
     :param  string  $type:      Type of the related document
     :param  string  $title:     Link title
     :param  string  $media:     Media type
-    :param  bool    $indexPage: Whether to treat ``$src`` as a routed URI string
+    :param  bool    $indexPage: Should indexPage be added to the link path
     :param  string  $hreflang:  Hreflang type
-    :returns:   HTML link tag
+    :returns:                   An HTML link element
     :rtype: string
 
-    Lets you create HTML ``<link />`` tags. This is useful for stylesheet links,
+    Lets you create HTML ``<link>`` elements. This is useful for stylesheet links,
     as well as other links. The parameters are *href*, with optional *rel*,
-    *type*, *title*, *media* and *indexPage*.
+    *type*, *title*, *media*, *indexPage* and *hreflang*.
 
     *indexPage* is a boolean value that specifies if the *href* should have
     the page specified by ``$config['indexPage']`` added to the address it creates.
@@ -109,12 +107,12 @@ The following functions are available:
 
 .. php:function:: script_tag([$src = ''[, $indexPage = false]])
 
-    :param  array|string  $src: The source name or URL of a JavaScript file, or an associative array specifying the attributes
+    :param  array|string  $src:       The source name or URL of a JavaScript file, or an associative array specifying the attributes
     :param  bool          $indexPage: Whether to treat ``$src`` as a routed URI string
-    :returns:   HTML script tag
+    :returns:                         An HTML script element
     :rtype: string
 
-    Lets you create HTML ``<script></script>`` tags. The parameters is *src*, with optional *indexPage*.
+    Lets you create HTML ``<script></script>`` tags. The parameters are *src*, with optional *indexPage*.
 
     *indexPage* is a boolean value that specifies if the *src* should have
     the page specified by ``$config['indexPage']`` added to the address it creates.
@@ -130,13 +128,13 @@ The following functions are available:
 
 .. php:function:: ul($list[, $attributes = ''])
 
-    :param  array   $list: List entries
-    :param  array   $attributes: HTML attributes
-    :returns:   HTML-formatted unordered list
+    :param  array   $list:       List entries
+    :param  mixed   $attributes: HTML attributes
+    :returns:                    An HTML unordered list element
     :rtype: string
 
-    Permits you to generate unordered HTML lists from simple or
-    multi-dimensional arrays. Example:
+    Permits you to generate an unordered HTML list from a simple or
+    multi-dimensional array. Example:
 
     .. literalinclude:: html_helper/012.php
 
@@ -201,28 +199,28 @@ The following functions are available:
             </li>
         </ul>
 
-.. php:function:: ol($list, $attributes = '')
+.. php:function:: ol($list[, $attributes = ''])
 
-    :param  array   $list: List entries
-    :param  array   $attributes: HTML attributes
-    :returns:   HTML-formatted ordered list
+    :param  array   $list:       List entries
+    :param  mixed  $attributes: HTML attributes
+    :returns:                    An HTML ordered list element
     :rtype: string
 
-    Identical to :php:func:`ul()`, only it produces the ``<ol>`` tag for
+    Identical to :php:func:`ul()`, only it produces ``<ol>`` element for
     ordered lists instead of ``<ul>``.
 
 .. php:function:: video($src[, $unsupportedMessage = ''[, $attributes = ''[, $tracks = [][, $indexPage = false]]]])
 
     :param  mixed   $src:                Either a source string or an array of sources. See :php:func:`source()` function
-    :param  string  $unsupportedMessage: The message to display if the media tag is not supported by the browser
+    :param  string  $unsupportedMessage: The message to display if the video element is not supported by the browser
     :param  string  $attributes:         HTML attributes
     :param  array   $tracks:             Use the track function inside an array. See :php:func:`track()` function
-    :param  bool    $indexPage:
-    :returns:                            HTML-formatted video element
+    :param  bool    $indexPage:          Should indexPage be added to the video source path
+    :returns:                            An HTML video element
     :rtype: string
 
-    Permits you to generate HTML video element from simple or
-    source arrays. Example:
+    Permits you to generate an HTML video element from a source string or an array of sources.
+    Example:
 
     .. literalinclude:: html_helper/014.php
 
@@ -253,52 +251,67 @@ The following functions are available:
 .. php:function:: audio($src[, $unsupportedMessage = ''[, $attributes = ''[, $tracks = [][, $indexPage = false]]]])
 
     :param  mixed   $src:                Either a source string or an array of sources. See :php:func:`source()` function
-    :param  string  $unsupportedMessage: The message to display if the media tag is not supported by the browser
-    :param  string  $attributes:
+    :param  string  $unsupportedMessage: The message to display if the audie element is not supported by the browser
+    :param  string  $attributes:         HTML attributes
     :param  array   $tracks:             Use the track function inside an array. See :php:func:`track()` function
-    :param  bool    $indexPage:
-    :returns:                            HTML-formatted audio element
+    :param  bool    $indexPage:          Should indexPage be added to the audio source path
+    :returns:                            An HTML audio element
     :rtype: string
 
-    Identical to :php:func:`video()`, only it produces the ``<audio>`` tag instead of ``<video>``.
+    Identical to :php:func:`video()`, only it produces ``<audio>`` element instead of ``<video>``.
 
-.. php:function:: source($src = ''[, $type = false[, $attributes = '']])
+.. php:function:: source($src[, $type = false[, $attributes = '']])
 
     :param  string  $src:        The path of the media resource
     :param  bool    $type:       The MIME-type of the resource with optional codecs parameters
-    :param  array   $attributes: HTML attributes
-    :returns:   HTML source tag
+    :param  string  $attributes: HTML attributes
+    :returns:                    An HTML source element
     :rtype: string
 
-    Lets you create HTML ``<source />`` tags. The first parameter contains the
-    source source. Example:
+    Lets you create HTML ``<source>`` elements. The first parameter contains the path of the resource.
+    Example:
 
     .. literalinclude:: html_helper/015.php
 
-.. php:function:: embed($src = ''[, $type = false[, $attributes = ''[, $indexPage = false]]])
+.. php:function:: track($src, $kind, $srcLanguage, $label)
+
+    :param  string $src:         The path of the media resource
+    :param  string $kind:        The kind of timed track
+    :param  string $srcLanguage: The language of the timed track
+    :param  string $label:       A user-readable title for the timed track
+    :returns:                    An HTML track element
+    :rtype: string
+
+    Generates a track element to specify timed tracks. The tracks are
+    formatted in WebVTT format. Example:
+
+    .. literalinclude:: html_helper/019.php
+
+.. php:function:: embed($src[, $type = false[, $attributes = ''[, $indexPage = false]]])
 
     :param  string  $src:        The path of the resource to embed
     :param  bool    $type:       MIME-type
-    :param  array   $attributes: HTML attributes
-    :param  bool    $indexPage:
-    :returns:   HTML embed tag
+    :param  string  $attributes: HTML attributes
+    :param  bool    $indexPage:  Should indexPage be added to the source path
+    :returns:                    An HTML embed element
     :rtype: string
 
-    Lets you create HTML ``<embed />`` tags. The first parameter contains the
+    Lets you create HTML ``<embed>`` elements. The first parameter contains the
     embed source. Example:
 
     .. literalinclude:: html_helper/016.php
 
-.. php:function:: object($data = ''[, $type = false[, $attributes = '']])
+.. php:function:: object($data[, $type = 'unknown'[, $attributes = ''[, $params = [][, $indexPage = false]]]])
 
     :param  string  $data:       A resource URL
     :param  bool    $type:       Content-type of the resource
-    :param  array   $attributes: HTML attributes
+    :param  string  $attributes: HTML attributes
     :param  array   $params:     Use the param function inside an array. See :php:func:`param()` function
-    :returns:   HTML object tag
+    :param  bool    $indexPage:  Should indexPage be added to the resource URL
+    :returns:                    An HTML object element
     :rtype: string
 
-    Lets you create HTML ``<object />`` tags. The first parameter contains the
+    Lets you create HTML ``<object>`` elements. The first parameter contains the
     object data. Example:
 
     .. literalinclude:: html_helper/017.php
@@ -314,50 +327,40 @@ The following functions are available:
           <param name="hello" type="ref" value="world" class="test" />
         </object>
 
-.. php:function:: param($name = ''[, $type = false[, $attributes = '']])
+.. php:function:: param($name = ''[, $value = ''[, $type = 'ref'[, $attributes = '']]])
 
     :param  string  $name:       The name of the parameter
     :param  string  $value:      The value of the parameter
-    :param  array   $attributes: HTML attributes
-    :returns:   HTML param tag
+    :param  string  $type:       The type of the parameter
+    :param  string  $attributes: HTML attributes
+    :returns:                    An HTML param element
     :rtype: string
 
-    Lets you create HTML ``<param />`` tags. The first parameter contains the
+.. warning:: **Deprecated:** This feature is no longer recommended.
+
+    Lets you create HTML ``<param>`` elements for an ``<object>`` element. The first parameter contains the
     param source. Example:
 
     .. literalinclude:: html_helper/018.php
 
-.. php:function:: track($name = ''[, $type = false[, $attributes = '']])
-
-    :param  string  $name:       The name of the parameter
-    :param  string  $value:      The value of the parameter
-    :param  array   $attributes: HTML attributes
-    :returns:   HTML track tag
-    :rtype: string
-
-    Generates a track element to specify timed tracks. The tracks are
-    formatted in WebVTT format. Example:
-
-    .. literalinclude:: html_helper/019.php
-
 .. php:function:: doctype([$type = 'html5'])
 
     :param  string  $type: Doctype name
-    :returns:   HTML DocType tag
+    :returns:              An HTML DocType tag
     :rtype: string
 
-    Helps you generate document type declarations, or DTD's. HTML 5
+    Helps you generate document type declarations (DTD's). HTML 5
     is used by default, but many doctypes are available.
 
     Example:
 
     .. literalinclude:: html_helper/020.php
 
-    The following is a list of the pre-defined doctype choices. These are configurable,
-    pulled from **app/Config/DocTypes.php**, or they could be over-ridden in your **.env** configuration.
+    The following is a list of the pre-defined doctypes. These are
+    pulled from **app/Config/DocTypes.php**, or they could be overridden in your **.env** configuration.
 
     =============================== =================== ==================================================================================================================================================
-    Document type                   Option              Result
+    Document type                   $type parameter     Result
     =============================== =================== ==================================================================================================================================================
     XHTML 1.1                       xhtml11             <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
     XHTML 1.0 Strict                xhtml1-strict       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
