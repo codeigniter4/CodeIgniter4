@@ -76,7 +76,7 @@ if (! function_exists('current_url')) {
         /** @var CLIRequest|IncomingRequest $request */
         $uri = $request->getUri();
 
-        return $returnObject ? $uri : URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath());
+        return $returnObject ? $uri : URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery());
     }
 }
 
