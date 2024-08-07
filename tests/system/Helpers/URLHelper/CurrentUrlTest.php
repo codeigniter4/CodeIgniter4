@@ -74,6 +74,18 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('http://example.com/public/index.php/', current_url());
     }
 
+    public function testCurrentURLReturnsBasicURLWithQuery(): void
+    {
+        $_SERVER['REQUEST_URI'] = '/public/';
+        $_SERVER['SCRIPT_NAME'] = '/public/index.php?foo=bar';
+
+        $this->config->baseURL = 'http://example.com/public/';
+
+        $this->createRequest($this->config);
+
+        $this->assertSame('http://example.com/public/index.php?foo=bar', current_url());
+    }
+
     public function testCurrentURLReturnsAllowedHostname(): void
     {
         $_SERVER['HTTP_HOST']   = 'www.example.jp';
