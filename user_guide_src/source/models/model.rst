@@ -407,6 +407,12 @@ The datetime format is set in the ``dateFormat`` array of the
 .. note:: Prior to v4.6.0, you cannot use ``ms`` or ``us`` as a parameter.
     Because the second's fractional part of Time was lost due to bugs.
 
+timestamp
+---------
+
+The timezone of the ``Time`` instance created will be the default timezone
+(app's timezone), not UTC.
+
 Custom Casting
 ==============
 
