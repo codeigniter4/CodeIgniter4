@@ -1164,7 +1164,7 @@ final class EntityTest extends CIUnitTestCase
                 'foo'    => null,
                 'simple' => null,
             ];
-            protected $_original = [
+            protected $original = [
                 'foo'    => null,
                 'simple' => null,
             ];
@@ -1194,7 +1194,7 @@ final class EntityTest extends CIUnitTestCase
                 'foo' => 'foo',
                 'bar' => 'bar',
             ];
-            protected $_original = [
+            protected $original = [
                 'foo' => 'foo',
                 'bar' => 'bar',
             ];
@@ -1213,7 +1213,7 @@ final class EntityTest extends CIUnitTestCase
                 'foo' => 'foo',
                 'bar' => 'bar',
             ];
-            protected $_original = [
+            protected $original = [
                 'foo' => 'foo',
                 'bar' => 'bar',
             ];
@@ -1242,7 +1242,7 @@ final class EntityTest extends CIUnitTestCase
                 'twelfth'    => null,
                 'thirteenth' => null,
             ];
-            protected $_original = [
+            protected $original = [
                 'first'      => null,
                 'second'     => null,
                 'third'      => null,
@@ -1292,7 +1292,7 @@ final class EntityTest extends CIUnitTestCase
                 'integer_0'             => null,
                 'string_value_not_null' => 'value',
             ];
-            protected $_original = [
+            protected $original = [
                 'string_null'           => null,
                 'string_empty'          => null,
                 'integer_null'          => null,
@@ -1320,7 +1320,7 @@ final class EntityTest extends CIUnitTestCase
                 'third'  => null,
                 'fourth' => null,
             ];
-            protected $_original = [
+            protected $original = [
                 'first'  => null,
                 'second' => null,
                 'third'  => null,
