@@ -106,7 +106,7 @@ class Entity implements JsonSerializable
     /**
      * Holds the current values of all class vars.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $attributes = [];
 
@@ -115,7 +115,7 @@ class Entity implements JsonSerializable
      * what's actually been changed and not accidentally write
      * nulls where we shouldn't.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $original = [];
 
