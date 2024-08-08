@@ -39,6 +39,8 @@ use DateTime;
  * @property string $weekOfYear  read-only
  * @property string $year        read-only
  *
+ * @phpstan-consistent-constructor
+ *
  * @deprecated Use Time instead.
  * @see \CodeIgniter\I18n\TimeLegacyTest
  */

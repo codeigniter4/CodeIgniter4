@@ -460,6 +460,27 @@ final class EntityTest extends CIUnitTestCase
         $this->assertSame('2017-03-12', $entity->eighth->format('Y-m-d'));
     }
 
+    public function testCastDateTimeWithTimestampTimezone(): void
+    {
+        // Save the current timezone.
+        $tz = date_default_timezone_get();
+
+        // Change the timezone other than UTC.
+        date_default_timezone_set('Asia/Tokyo'); // +09:00
+
+        $entity = $this->getCastEntity();
+
+        $entity->eighth = 1722988800; // 2024-08-07 00:00:00 UTC
+
+        $this->assertInstanceOf(DateTimeInterface::class, $entity->eighth);
+        // The timezone is the default timezone, not UTC.
+        $this->assertSame('2024-08-07 09:00:00', $entity->eighth->format('Y-m-d H:i:s'));
+        $this->assertSame('Asia/Tokyo', $entity->eighth->getTimezoneName());
+
+        // Restore timezone.
+        date_default_timezone_set($tz);
+    }
+
     public function testCastTimestamp(): void
     {
         $entity = $this->getCastEntity();
