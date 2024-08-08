@@ -24,9 +24,6 @@ supported language (locale)::
             fr/
                 App.php
 
-.. important:: Locale detection only works for web-based requests that use the IncomingRequest class.
-    Command-line requests will not have these features.
-
 Configuring the Locale
 ======================
 
@@ -52,10 +49,13 @@ directory existed at the **app/Language/en-US** directory then that would be use
 Locale Detection
 ================
 
-There are two methods supported to detect the correct locale during the request. The first is a "set and forget"
-method that will automatically perform :doc:`content negotiation </incoming/content_negotiation>` for you to
-determine the correct locale to use. The second method allows you to specify a segment in your routes that
-will be used to set the locale.
+.. important:: Locale detection only works for web-based requests that use the IncomingRequest class.
+    Command-line requests will not have these features.
+
+There are two methods supported to detect the correct locale during the request.
+
+1. `Content Negotiation`_: The first is a "set and forget" method that will automatically perform :doc:`content negotiation </incoming/content_negotiation>` for you to determine the correct locale to use.
+2. `In Routes`_: The second method allows you to specify a segment in your routes that will be used to set the locale.
 
 Should you ever need to set the locale directly, see `Setting the Current Locale`_.
 
