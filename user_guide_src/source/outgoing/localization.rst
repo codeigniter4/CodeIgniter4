@@ -14,16 +14,6 @@ CodeIgniter provides several tools to help you localize your application for dif
 localization of an application is a complex subject, it's simple to swap out strings in your application
 with different supported languages.
 
-Language strings are stored in the **app/Language** directory, with a sub-directory for each
-supported language (locale)::
-
-    app/
-        Language/
-            en/
-                App.php
-            fr/
-                App.php
-
 Configuring the Locale
 ======================
 
@@ -138,6 +128,16 @@ Language Localization
 
 Creating Language Files
 =======================
+
+Language strings are stored in the **app/Language** directory, with a sub-directory for each
+supported language (locale)::
+
+    app/
+        Language/
+            en/
+                App.php
+            fr/
+                App.php
 
 .. note:: The Language Files do not have namespaces.
 
