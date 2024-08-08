@@ -231,8 +231,8 @@ Language Fallback
 =================
 
 If you have a set of messages for a given locale, for instance
-**Language/en/app.php**, you can add language variants for that locale,
-each in its own folder, for instance **Language/en-US/app.php**.
+**Language/en/App.php**, you can add language variants for that locale,
+each in its own folder, for instance **Language/en-US/App.php**.
 
 You only need to provide values for those messages that would be
 localized differently for that locale variant. Any missing message
