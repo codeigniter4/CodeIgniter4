@@ -1,6 +1,6 @@
 name: Greetings
 
-on: [pull_request_target]
+on: [pull_request]
 
 jobs:
   greeting:
@@ -8,6 +8,7 @@ jobs:
     permissions:
       issues: read
       pull-requests: write
+    if: github.repository == 'codeigniter4/CodeIgniter4'
     steps:
     - uses: actions/first-interaction@v1
       with:
