@@ -266,6 +266,16 @@ project:
 The translated messages will be automatically picked
 up because the translations folders get mapped appropriately.
 
+Overriding System Message Translations
+======================================
+
+The framework provide `System Message Translations`_, and packages that you
+installed may also provide the message translations.
+
+If you want to override some language messages, create language files in the
+**app/Language** directory. Then, return only the array you want to override
+in the file.
+
 .. _generating-translation-files-via-command:
 
 Generating Translation Files via Command
