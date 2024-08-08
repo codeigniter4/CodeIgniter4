@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Translation;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\Helpers\Array\ArrayHelper;
 use Config\App;
 use Locale;
 use RecursiveDirectoryIterator;
@@ -134,7 +133,6 @@ class LocalizationSync extends BaseCommand
             }
 
             $targetLanguageKeys = $this->mergeLanguageKeys($originalLanguageKeys, $targetLanguageKeys, $originalLanguageFile->getBasename('.php'));
-            // ksort($targetLanguageKeys);
 
             $content = "<?php\n\nreturn " . var_export($targetLanguageKeys, true) . ";\n";
             file_put_contents($targetLanguageFile, $content);
@@ -149,6 +147,8 @@ class LocalizationSync extends BaseCommand
      */
     private function mergeLanguageKeys(array $originalLanguageKeys, array $targetLanguageKeys, string $prefix = ''): array
     {
+        $mergedLanguageKeys = [];
+
         foreach ($originalLanguageKeys as $key => $value) {
             $placeholderValue = $prefix !== '' ? $prefix . '.' . $key : $key;
 
@@ -156,21 +156,25 @@ class LocalizationSync extends BaseCommand
                 // Keep the old value
                 // TODO: The value type may not match the original one
                 if (array_key_exists($key, $targetLanguageKeys)) {
+                    $mergedLanguageKeys[$key] = $targetLanguageKeys[$key];
+
                     continue;
                 }
 
                 // Set new key with placeholder
-                $targetLanguageKeys[$key] = $placeholderValue;
+                $mergedLanguageKeys[$key] = $placeholderValue;
             } else {
                 if (! array_key_exists($key, $targetLanguageKeys)) {
-                    $targetLanguageKeys[$key] = [];
+                    $mergedLanguageKeys[$key] = $this->mergeLanguageKeys($value, [], $placeholderValue);
+
+                    continue;
                 }
 
-                $targetLanguageKeys[$key] = $this->mergeLanguageKeys($value, $targetLanguageKeys[$key], $placeholderValue);
+                $mergedLanguageKeys[$key] = $this->mergeLanguageKeys($value, $targetLanguageKeys[$key], $placeholderValue);
             }
         }
 
-        return ArrayHelper::intersectKeyRecursive($targetLanguageKeys, $originalLanguageKeys);
+        return $mergedLanguageKeys;
     }
 
     private function isIgnoredFile(SplFileInfo $file): bool
