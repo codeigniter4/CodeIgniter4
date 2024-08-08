@@ -976,6 +976,9 @@ regex_match             Yes        Fails if field does not match the regular    
                                    expression.
 required                No         Fails if the field is an empty array, empty
                                    string, null or false.
+required_if             Yes        The field is required when the other field    ``required_if[field,value1,value2,...]``
+                                   has the given values. (This rule was 
+                                   added in v4.6.0.)
 required_with           Yes        The field is required when any of the other   ``required_with[field1,field2]``
                                    fields is not `empty()`_ in the data.
 required_without        Yes        The field is required when any of the other   ``required_without[field1,field2]``

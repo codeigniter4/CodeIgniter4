@@ -416,6 +416,23 @@ class Rules
     }
 
     /**
+     * This field is required when any of the other required fields have their expected values present
+     * in the data.
+     *
+     * Example (The special_option field is required when the normal_option,1,2 field has the given value.):
+     *
+     *     required_if[normal_option,1,2]
+     *
+     * @param string|null          $str
+     * @param string|null          $fieldWithValue that we should check if present
+     * @param array<string, mixed> $data           Complete list of field from the form
+     */
+    public function required_if($str = null, ?string $fieldWithValue = null, array $data = []): bool
+    {
+        return $this->nonStrictRules->required_if($str, $fieldWithValue, $data);
+    }
+
+    /**
      * The field exists in $data.
      *
      * @param array|bool|float|int|object|string|null $value The field value.
