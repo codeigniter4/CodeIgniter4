@@ -246,10 +246,10 @@ So, if you are using the locale ``fr-CA``, then a localized
 message will first be sought in the **Language/fr-CA** directory, then in
 the **Language/fr** directory, and finally in the **Language/en** directory.
 
-Message Translations
-====================
+System Message Translations
+===========================
 
-We have an "official" set of translations in their
+We have an "official" set of the system message translations in their
 `own repository <https://github.com/codeigniter4/translations>`_.
 
 You could download that repository, and copy its **Language** folder
