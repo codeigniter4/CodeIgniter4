@@ -44,7 +44,7 @@ final class AliasTest extends CIUnitTestCase
 
     public function testTableName(): void
     {
-        $tableName = TableName::create($this->db, 'jobs', 'j');
+        $tableName = TableName::create($this->db->DBPrefix, 'jobs', 'j');
         $builder   = $this->db->table($tableName);
 
         $expectedSQL = 'SELECT * FROM "jobs" "j"';
