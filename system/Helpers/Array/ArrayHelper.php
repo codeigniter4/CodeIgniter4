@@ -315,27 +315,4 @@ final class ArrayHelper
             return strnatcmp((string) $currentValue, (string) $nextValue);
         });
     }
-
-    /**
-     * Returns a new array from $target with the keys that are in $original
-     *
-     * @param array<string, array<string,mixed>|string|null> $target
-     * @param array<string, array<string,mixed>|string|null> $original
-     *
-     * @return array<string, array<string,mixed>|string|null>
-     */
-    public static function intersectKeyRecursive(array $target, array $original): array
-    {
-        $result = [];
-
-        foreach ($target as $key => $value) {
-            if (is_array($value) && isset($original[$key]) && is_array($original[$key])) {
-                $result[$key] = self::intersectKeyRecursive($value, $original[$key]);
-            } elseif (array_key_exists($key, $original)) {
-                $result[$key] = $value;
-            }
-        }
-
-        return $result;
-    }
 }
