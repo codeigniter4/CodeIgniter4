@@ -15,7 +15,7 @@ localization of an application is a complex subject, it's simple to swap out str
 with different supported languages.
 
 Language strings are stored in the **app/Language** directory, with a sub-directory for each
-supported language::
+supported language (locale)::
 
     app/
         Language/
