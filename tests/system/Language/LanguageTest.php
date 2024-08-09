@@ -31,7 +31,7 @@ final class LanguageTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        $this->lang = new MockLanguage('en');
+        $this->lang = new Language('en');
     }
 
     public function testReturnsStringWithNoFileInMessage(): void
@@ -54,6 +54,8 @@ final class LanguageTest extends CIUnitTestCase
 
     public function testGetLineReturnsLine(): void
     {
+        $this->lang = new MockLanguage('en');
+
         $this->lang->setData('books', [
             'bookSaved'  => 'We kept the book free from the boogeyman',
             'booksSaved' => 'We saved some more',
@@ -64,6 +66,8 @@ final class LanguageTest extends CIUnitTestCase
 
     public function testGetLineReturnsLineWithKeyWithDots(): void
     {
+        $this->lang = new MockLanguage('en');
+
         $this->lang->setData('books', [
             'bookSaved.foo'      => 'We kept the book free from the boogeyman',
             'booksSaved.bar.baz' => 'We saved some more',
@@ -81,6 +85,8 @@ final class LanguageTest extends CIUnitTestCase
 
     public function testGetLineCannotUseKeysWithLeadingDot(): void
     {
+        $this->lang = new MockLanguage('en');
+
         $this->lang->setData('books', [
             '.bookSaved.foo.'      => 'We kept the book free from the boogeyman',
             '.booksSaved.bar.baz.' => 'We saved some more',
@@ -98,6 +104,8 @@ final class LanguageTest extends CIUnitTestCase
 
     public function testGetLineCannotUseKeysWithTrailingDot(): void
     {
+        $this->lang = new MockLanguage('en');
+
         $this->lang->setData('books', [
             'bookSaved.foo.'      => 'We kept the book free from the boogeyman',
             'booksSaved.bar.baz.' => 'We saved some more',
@@ -115,6 +123,8 @@ final class LanguageTest extends CIUnitTestCase
 
     public function testGetLineReturnsFallbackLine(): void
     {
+        $this->lang = new MockLanguage('en');
+
         $this->lang
             ->setLocale('en-US')
             ->setData('equivalent', [
@@ -137,6 +147,8 @@ final class LanguageTest extends CIUnitTestCase
 
     public function testGetLineArrayReturnsLineArray(): void
     {
+        $this->lang = new MockLanguage('en');
+
         $this->lang->setData('books', [
             'booksList' => [
                 'The Boogeyman',
@@ -157,6 +169,8 @@ final class LanguageTest extends CIUnitTestCase
             $this->markTestSkipped('No intl support.');
         }
 
+        $this->lang = new MockLanguage('en');
+
         $this->lang->setData('books', [
             'bookCount' => '{0, number, integer} books have been saved.',
         ]);
@@ -170,6 +184,8 @@ final class LanguageTest extends CIUnitTestCase
         if (! class_exists(MessageFormatter::class)) {
             $this->markTestSkipped('No intl support.');
         }
+
+        $this->lang = new MockLanguage('en');
 
         $this->lang->setData('books', [
             'bookList' => [
@@ -189,6 +205,8 @@ final class LanguageTest extends CIUnitTestCase
         if (! class_exists(MessageFormatter::class)) {
             $this->markTestSkipped('No intl support.');
         }
+
+        $this->lang = new MockLanguage('en');
 
         $this->lang->setLocale('ar');
 
@@ -214,6 +232,8 @@ final class LanguageTest extends CIUnitTestCase
 
     public function testLangDoesntFormat(): void
     {
+        $this->lang = new MockLanguage('en');
+
         $this->lang->disableIntlSupport();
 
         $this->lang->setData('books', [
@@ -236,40 +256,42 @@ final class LanguageTest extends CIUnitTestCase
 
     public function testLanguageFileLoading(): void
     {
-        $this->lang = new SecondMockLanguage('en');
+        $lang = new SecondMockLanguage('en');
 
-        $this->lang->loadem('More', 'en');
-        $this->assertContains('More', $this->lang->loaded());
+        $lang->loadem('More', 'en');
+        $this->assertContains('More', $lang->loaded());
 
-        $this->lang->loadem('More', 'en');
-        $this->assertCount(1, $this->lang->loaded()); // should only be there once
+        $lang->loadem('More', 'en');
+        $this->assertCount(1, $lang->loaded()); // should only be there once
     }
 
     public function testLanguageFileLoadingReturns(): void
     {
-        $this->lang = new SecondMockLanguage('en');
+        $lang = new SecondMockLanguage('en');
 
-        $result = $this->lang->loadem('More', 'en', true);
-        $this->assertNotContains('More', $this->lang->loaded());
+        $result = $lang->loadem('More', 'en', true);
+        $this->assertNotContains('More', $lang->loaded());
         $this->assertCount(3, $result);
 
-        $this->lang->loadem('More', 'en');
-        $this->assertContains('More', $this->lang->loaded());
-        $this->assertCount(1, $this->lang->loaded());
+        $lang->loadem('More', 'en');
+        $this->assertContains('More', $lang->loaded());
+        $this->assertCount(1, $lang->loaded());
     }
 
     public function testLanguageSameKeyAndFileName(): void
     {
+        $lang = new MockLanguage('en');
+
         // first file data | example.message
-        $this->lang->setData('example', ['message' => 'This is an example message']);
+        $lang->setData('example', ['message' => 'This is an example message']);
 
         // force loading data into file Example
-        $this->assertSame('This is an example message', $this->lang->getLine('example.message'));
+        $this->assertSame('This is an example message', $lang->getLine('example.message'));
 
         // second file data | another.example
-        $this->lang->setData('another', ['example' => 'Another example']);
+        $lang->setData('another', ['example' => 'Another example']);
 
-        $this->assertSame('Another example', $this->lang->getLine('another.example'));
+        $this->assertSame('Another example', $lang->getLine('another.example'));
     }
 
     public function testGetLocale(): void
