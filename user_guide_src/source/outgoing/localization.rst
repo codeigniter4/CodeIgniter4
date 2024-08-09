@@ -149,6 +149,8 @@ Within the file, you would return an array, where each element in the array has 
 
 .. literalinclude:: localization/007.php
 
+.. note:: You cannot use dots (``.``) at the beginning and end of language keys.
+
 It also support nested definition:
 
 .. literalinclude:: localization/008.php
