@@ -62,6 +62,57 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('We saved some more', $this->lang->getLine('books.booksSaved'));
     }
 
+    public function testGetLineReturnsLineWithKeyWithDots(): void
+    {
+        $this->lang->setData('books', [
+            'bookSaved.foo'      => 'We kept the book free from the boogeyman',
+            'booksSaved.bar.baz' => 'We saved some more',
+        ]);
+
+        $this->assertSame(
+            'We kept the book free from the boogeyman',
+            $this->lang->getLine('books.bookSaved.foo')
+        );
+        $this->assertSame(
+            'We saved some more',
+            $this->lang->getLine('books.booksSaved.bar.baz')
+        );
+    }
+
+    public function testGetLineCannotUseKeysWithLeadingDot(): void
+    {
+        $this->lang->setData('books', [
+            '.bookSaved.foo.'      => 'We kept the book free from the boogeyman',
+            '.booksSaved.bar.baz.' => 'We saved some more',
+        ]);
+
+        $this->assertSame(
+            'books.bookSaved.foo', // Can't get the message.
+            $this->lang->getLine('books.bookSaved.foo')
+        );
+        $this->assertSame(
+            'books.booksSaved.bar.baz', // Can't get the message.
+            $this->lang->getLine('books.booksSaved.bar.baz')
+        );
+    }
+
+    public function testGetLineCannotUseKeysWithTrailingDot(): void
+    {
+        $this->lang->setData('books', [
+            'bookSaved.foo.'      => 'We kept the book free from the boogeyman',
+            'booksSaved.bar.baz.' => 'We saved some more',
+        ]);
+
+        $this->assertSame(
+            'books.bookSaved.foo', // Can't get the message.
+            $this->lang->getLine('books.bookSaved.foo')
+        );
+        $this->assertSame(
+            'books.booksSaved.bar.baz', // Can't get the message.
+            $this->lang->getLine('books.booksSaved.bar.baz')
+        );
+    }
+
     public function testGetLineReturnsFallbackLine(): void
     {
         $this->lang
