@@ -172,7 +172,7 @@ For nested definition, you would do the following:
 
 .. literalinclude:: localization/011.php
 
-If the requested language key doesn't exist in the file for the current locale, the string will be passed
+If the requested language key doesn't exist in the file for the current locale (after `Language Fallback`_), the string will be passed
 back, unchanged. In this example, it would return ``Errors.errorEmailMissing`` or ``Errors.nested.error.message`` if it didn't exist.
 
 Replacing Parameters
@@ -240,7 +240,7 @@ You only need to provide values for those messages that would be
 localized differently for that locale variant. Any missing message
 definitions will be automatically pulled from the main locale settings.
 
-It gets better - the localization can fall all the way back to English,
+It gets better - the localization can fall all the way back to English (**en**),
 in case new messages are added to the framework and you haven't had
 a chance to translate them yet for your locale.
 
