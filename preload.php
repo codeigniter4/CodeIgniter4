@@ -38,23 +38,25 @@ class preload
         [
             'include' => __DIR__ . '/vendor/codeigniter4/framework/system', // Change this path if using manual installation
             'exclude' => [
-                '/system/bootstrap.php',
                 // Not needed if you don't use them.
                 '/system/Database/OCI8/',
                 '/system/Database/Postgre/',
                 '/system/Database/SQLite3/',
                 '/system/Database/SQLSRV/',
-                // Not needed.
+                // Not needed for web apps.
                 '/system/Database/Seeder.php',
                 '/system/Test/',
-                '/system/Language/',
                 '/system/CLI/',
                 '/system/Commands/',
                 '/system/Publisher/',
                 '/system/ComposerScripts.php',
+                // Not Class/Function files.
+                '/system/Config/Routes.php',
+                '/system/Language/',
+                '/system/bootstrap.php',
+                '/system/rewrite.php',
                 '/Views/',
                 // Errors occur.
-                '/system/Config/Routes.php',
                 '/system/ThirdParty/',
             ],
         ],
