@@ -330,9 +330,10 @@ class CodeIgniter
         }
 
         $this->pageCache->setTtl(0);
-        $this->bufferLevel = ob_get_level();
 
         $this->startBenchmark();
+
+        $this->outputBufferingStart();
 
         $this->getRequestObject();
         $this->getResponseObject();
@@ -828,8 +829,6 @@ class CodeIgniter
 
         // $uri is URL-encoded.
         $uri = $this->request->getPath();
-
-        $this->outputBufferingStart();
 
         $this->controller = $this->router->handle($uri);
         $this->method     = $this->router->methodName();
