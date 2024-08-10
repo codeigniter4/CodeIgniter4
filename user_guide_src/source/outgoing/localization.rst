@@ -92,8 +92,14 @@ file:
 Setting the Current Locale
 ==========================
 
-If you want to set the locale directly, you may use
-``IncomingRequest::setLocale(string $locale)``.
+IncomingRequest Locale
+----------------------
+
+If you want to set the locale directly, you may use the ``setLocale()`` method in
+the :doc:`../incoming/incomingrequest`:
+
+.. literalinclude:: localization/020.php
+    :lines: 2-
 
 Before setting the locale, you must set valid locales. Because any attempt to
 set a locale that are not valid will result in
@@ -107,6 +113,18 @@ in **app/Config/App.php**:
 .. note:: Since v4.4.0, ``IncomingRequest::setValidLocales()`` has been added to
     set (and reset) valid locales. Use it if you want to change the valid locales
     dynamically.
+
+Language Locale
+---------------
+
+The ``Language`` class used in the :php:func:`lang()` function also has the current
+locale. This is set to the ``IncommingRequest`` locale during instantiating.
+
+If you want to change the locale after instantiating the language class, use the
+``Language::setLocale()`` method.
+
+.. literalinclude:: localization/021.php
+    :lines: 2-
 
 Retrieving the Current Locale
 =============================
@@ -218,9 +236,11 @@ Specifying Locale
 -----------------
 
 To specify a different locale to be used when replacing parameters, you can pass the locale in as the
-third parameter to the ``lang()`` function.
+third parameter to the :php:func:`lang()` function.
 
 .. literalinclude:: localization/016.php
+
+If you want to change the current locale, see `Language Locale`_.
 
 Nested Arrays
 -------------
