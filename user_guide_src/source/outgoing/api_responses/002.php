@@ -24,8 +24,8 @@ $this->failForbidden($description);
 // Resource Not Found
 $this->failNotFound($description);
 
-// Data did not validate
-$this->failValidationError($description);
+// Data was not validated
+$this->failValidationErrors($errors);
 
 // Resource already exists
 $this->failResourceExists($description);
