@@ -77,6 +77,7 @@ placeholder ``{locale}`` can be placed as a segment in your route. If present, t
 segment will be your locale:
 
 .. literalinclude:: localization/004.php
+    :lines: 2-
 
 In this example, if the user tried to visit **http://example.com/fr/books**, then the locale would be
 set to ``fr``, assuming it was configured as a valid locale.
@@ -86,6 +87,7 @@ locale will be used in it's place, unless you set to use only the supported loca
 file:
 
 .. literalinclude:: localization/018.php
+    :lines: 2-
 
 .. note:: The ``useSupportedLocalesOnly()`` method can be used since v4.3.0.
 
@@ -137,6 +139,7 @@ If your controller is extending ``CodeIgniter\Controller``, this will be availab
 Alternatively, you can use the :doc:`Services class </concepts/services>` to retrieve the current request:
 
 .. literalinclude:: localization/006.php
+    :lines: 2-
 
 .. _language-localization:
 
@@ -185,10 +188,12 @@ For example, to load the ``errorEmailMissing`` string from the **Errors.php**
 language file, you would do the following:
 
 .. literalinclude:: localization/010.php
+    :lines: 2-
 
 For nested definition, you would do the following:
 
 .. literalinclude:: localization/011.php
+    :lines: 2-
 
 If the requested language key doesn't exist in the file for the current locale (after `Language Fallback`_), the string will be passed
 back, unchanged. In this example, it would return ``Errors.errorEmailMissing`` or ``Errors.nested.error.message`` if it didn't exist.
@@ -208,10 +213,12 @@ You can pass an array of values to replace placeholders in the language string a
 The first item in the placeholder corresponds to the index of the item in the array, if it's numerical:
 
 .. literalinclude:: localization/013.php
+    :lines: 2-
 
 You can also use named keys to make it easier to keep things straight, if you'd like:
 
 .. literalinclude:: localization/014.php
+    :lines: 2-
 
 Obviously, you can do more than just number replacement. According to the
 `official ICU docs <https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classMessageFormat.html#details>`_ for the underlying
