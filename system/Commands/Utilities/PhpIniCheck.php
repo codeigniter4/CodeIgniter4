@@ -41,7 +41,7 @@ final class PhpIniCheck extends BaseCommand
      *
      * @var string
      */
-    protected $description = 'Check your php.ini values.';
+    protected $description = 'Check your php.ini values in production environment.';
 
     /**
      * The Command's usage
