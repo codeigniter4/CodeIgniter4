@@ -233,7 +233,7 @@ class Security implements SecurityInterface
     }
 
     /**
-     * CSRF Verify
+     * CSRF verification.
      *
      * @return $this
      *

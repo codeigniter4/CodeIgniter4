@@ -59,7 +59,7 @@ Deprecations
 - Consolidated and deprecated ``ControllerResponse`` and ``FeatureResponse`` in favor of ``TestResponse``.
 - Deprecated ``Time::instance()``, use ``Time::createFromInstance()`` instead (now accepts ``DateTimeInterface``).
 - Deprecated ``IncomingRequest::removeRelativeDirectory()``, use ``URI::removeDotSegments()`` instead
-- Deprecated ``\API\ResponseTrait::failValidationError`` to use ``\API\ResponseTrait::failValidationErrors`` instead
+- Deprecated ``\API\ResponseTrait::failValidationError()`` to use ``\API\ResponseTrait::failValidationErrors()`` instead
 
 Bugs Fixed
 ----------
