@@ -169,9 +169,12 @@ class Forge extends BaseForge
             ->run();
 
         if ($sqlExecuteResult === false) {
-            if ($this->db->DBDebug) {
-                throw new DatabaseException('This feature is not available for the database you are using.');
-            }
+            $columns = is_array($columnNames) ? implode(',', $columnNames) : $columnNames;
+
+            throw new DatabaseException(
+                'Failed to drop column. Table: "' . $table
+                . '", Column: "' . $columns . '"'
+            );
 
             return false;
         }
