@@ -1092,19 +1092,19 @@ final class EntityTest extends CIUnitTestCase
                 'createdAt' => 'created_at',
             ];
 
-            public function setBar($value)
+            public function setBar(int|string $value): self
             {
                 $this->attributes['bar'] = "bar:{$value}";
 
                 return $this;
             }
 
-            public function getBar()
+            public function getBar(): string
             {
                 return "{$this->attributes['bar']}:bar";
             }
 
-            public function getFakeBar()
+            public function getFakeBar(): string
             {
                 return "{$this->attributes['bar']}:bar";
             }
@@ -1131,26 +1131,26 @@ final class EntityTest extends CIUnitTestCase
             ];
             private string $bar;
 
-            public function setBar($value)
+            public function setBar(string $value): self
             {
                 $this->bar = $value;
 
                 return $this;
             }
 
-            public function getBar()
+            public function getBar(): string
             {
                 return $this->bar;
             }
 
-            public function _setBar($value)
+            public function _setBar(string $value): self
             {
                 $this->attributes['bar'] = "bar:{$value}";
 
                 return $this;
             }
 
-            public function _getBar()
+            public function _getBar(): string
             {
                 return "{$this->attributes['bar']}:bar";
             }
@@ -1164,7 +1164,7 @@ final class EntityTest extends CIUnitTestCase
                 'foo'    => null,
                 'simple' => null,
             ];
-            protected $_original = [
+            protected $original = [
                 'foo'    => null,
                 'simple' => null,
             ];
@@ -1180,7 +1180,7 @@ final class EntityTest extends CIUnitTestCase
                 $this->attributes['simple'] = 'oo:' . $val;
             }
 
-            protected function getSimple()
+            protected function getSimple(): string
             {
                 return $this->attributes['simple'] . ':oo';
             }
@@ -1194,7 +1194,7 @@ final class EntityTest extends CIUnitTestCase
                 'foo' => 'foo',
                 'bar' => 'bar',
             ];
-            protected $_original = [
+            protected $original = [
                 'foo' => 'foo',
                 'bar' => 'bar',
             ];
@@ -1213,7 +1213,7 @@ final class EntityTest extends CIUnitTestCase
                 'foo' => 'foo',
                 'bar' => 'bar',
             ];
-            protected $_original = [
+            protected $original = [
                 'foo' => 'foo',
                 'bar' => 'bar',
             ];
@@ -1242,7 +1242,7 @@ final class EntityTest extends CIUnitTestCase
                 'twelfth'    => null,
                 'thirteenth' => null,
             ];
-            protected $_original = [
+            protected $original = [
                 'first'      => null,
                 'second'     => null,
                 'third'      => null,
@@ -1275,7 +1275,7 @@ final class EntityTest extends CIUnitTestCase
                 'thirteenth' => 'uri',
             ];
 
-            public function setSeventh($seventh): void
+            public function setSeventh(string $seventh): void
             {
                 $this->attributes['seventh'] = $seventh;
             }
@@ -1292,7 +1292,7 @@ final class EntityTest extends CIUnitTestCase
                 'integer_0'             => null,
                 'string_value_not_null' => 'value',
             ];
-            protected $_original = [
+            protected $original = [
                 'string_null'           => null,
                 'string_empty'          => null,
                 'integer_null'          => null,
@@ -1320,7 +1320,7 @@ final class EntityTest extends CIUnitTestCase
                 'third'  => null,
                 'fourth' => null,
             ];
-            protected $_original = [
+            protected $original = [
                 'first'  => null,
                 'second' => null,
                 'third'  => null,
