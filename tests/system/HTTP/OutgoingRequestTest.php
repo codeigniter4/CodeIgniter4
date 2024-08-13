@@ -110,4 +110,14 @@ final class OutgoingRequestTest extends CIUnitTestCase
 
         $this->assertSame('example.com', $newRequest->header('Host')->getValue());
     }
+
+    public function testIsMethod(): void
+    {
+        $uri = new URI('https://example.com/');
+        $request = new OutgoingRequest('POST', $uri);
+
+        $this->assertTrue($request->isMethod('POST'));
+        $this->assertTrue($request->isMethod('post'));
+        $this->assertFalse($request->isMethod('GET'));
+    }
 }
