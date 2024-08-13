@@ -31,9 +31,8 @@ interface OutgoingRequestInterface extends MessageInterface
 
     /**
      * Check if the request method is of specified type.
-     * 
+     *
      * @param string $method
-     * @return bool
      */
     public function isMethod($method): bool;
 
