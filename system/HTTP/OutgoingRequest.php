@@ -78,6 +78,17 @@ class OutgoingRequest extends Message implements OutgoingRequestInterface
     }
 
     /**
+     * Check if the request method is of specified type.
+     * 
+     * @param string $method
+     * @return bool
+     */
+    public function isMethod($method): bool
+    {
+        return $this->getMethod(true) === strtoupper($method);
+    }
+
+    /**
      * Sets the request method. Used when spoofing the request.
      *
      * @return $this

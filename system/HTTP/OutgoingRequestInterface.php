@@ -30,6 +30,14 @@ interface OutgoingRequestInterface extends MessageInterface
     public function getMethod(): string;
 
     /**
+     * Check if the request method is of specified type.
+     * 
+     * @param string $method
+     * @return bool
+     */
+    public function isMethod($method): bool;
+
+    /**
      * Return an instance with the provided HTTP method.
      *
      * While HTTP method names are typically all uppercase characters, HTTP
