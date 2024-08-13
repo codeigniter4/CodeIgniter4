@@ -113,7 +113,7 @@ final class OutgoingRequestTest extends CIUnitTestCase
 
     public function testIsMethod(): void
     {
-        $uri = new URI('https://example.com/');
+        $uri     = new URI('https://example.com/');
         $request = new OutgoingRequest('POST', $uri);
 
         $this->assertTrue($request->isMethod('POST'));
