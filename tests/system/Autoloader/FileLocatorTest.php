@@ -246,7 +246,7 @@ class FileLocatorTest extends CIUnitTestCase
         $files = $this->locator->listFiles('Config/');
 
         $expected = APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'App.php';
-        $this->assertTrue(in_array($expected, $files, true));
+        $this->assertContains($expected, $files);
     }
 
     public function testListFilesDoesNotContainDirectories(): void
@@ -273,10 +273,10 @@ class FileLocatorTest extends CIUnitTestCase
         $files = $this->locator->listFiles('Filters/');
 
         $expected = SYSTEMPATH . 'Filters' . DIRECTORY_SEPARATOR . 'DebugToolbar.php';
-        $this->assertTrue(in_array($expected, $files, true));
+        $this->assertContains($expected, $files);
 
         $expected = SYSTEMPATH . 'Filters' . DIRECTORY_SEPARATOR . 'Filters.php';
-        $this->assertTrue(in_array($expected, $files, true));
+        $this->assertContains($expected, $files);
     }
 
     public function testListFilesWithPathNotExist(): void
