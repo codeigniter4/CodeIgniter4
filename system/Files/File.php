@@ -92,10 +92,10 @@ class File extends SplFileInfo
     {
         // naively get the path extension using pathinfo
         $pathinfo = pathinfo(
-                (($realPath = $this->getRealPath()) !== false)
-                ? $realPath
-                : $this->__toString()
-            ) + ['extension' => ''];
+            (($realPath = $this->getRealPath()) !== false)
+            ? $realPath
+            : $this->__toString()
+        ) + ['extension' => ''];
 
         $proposedExtension = $pathinfo['extension'];
 
@@ -117,9 +117,9 @@ class File extends SplFileInfo
 
         $finfo    = finfo_open(FILEINFO_MIME_TYPE);
         $mimeType = finfo_file(
-                $finfo,
-                (($realPath = $this->getRealPath()) !== false) ? $realPath : $this->__toString()
-            );
+            $finfo,
+            (($realPath = $this->getRealPath()) !== false) ? $realPath : $this->__toString()
+        );
         finfo_close($finfo);
 
         return $mimeType;
