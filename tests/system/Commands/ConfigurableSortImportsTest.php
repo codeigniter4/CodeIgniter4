@@ -29,10 +29,13 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
     {
         command('publish:language');
 
-        $file = APPPATH . 'Language/en/Foobar.php';
+        $file = APPPATH . 'Language' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'Foobar.php';
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
-        $this->assertNotSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
+        $this->assertNotSame(
+            sha1_file(SUPPORTPATH . 'Commands' . DIRECTORY_SEPARATOR . 'Foobar.php'),
+            sha1_file($file)
+        );
         if (is_file($file)) {
             unlink($file);
         }
@@ -42,10 +45,13 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
     {
         command('publish:language --lang es');
 
-        $file = APPPATH . 'Language/es/Foobar.php';
+        $file = APPPATH . 'Language' . DIRECTORY_SEPARATOR . 'es' . DIRECTORY_SEPARATOR . 'Foobar.php';
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
-        $this->assertNotSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
+        $this->assertNotSame(
+            sha1_file(SUPPORTPATH . 'Commands' . DIRECTORY_SEPARATOR . 'Foobar.php'),
+            sha1_file($file)
+        );
         if (is_file($file)) {
             unlink($file);
         }
@@ -59,10 +65,10 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
     {
         command('publish:language --lang ar --sort off');
 
-        $file = APPPATH . 'Language/ar/Foobar.php';
+        $file = APPPATH . 'Language' . DIRECTORY_SEPARATOR . 'ar' . DIRECTORY_SEPARATOR . 'Foobar.php';
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
-        $this->assertSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
+        $this->assertSame(sha1_file(SUPPORTPATH . 'Commands' . DIRECTORY_SEPARATOR . 'Foobar.php'), sha1_file($file));
         if (is_file($file)) {
             unlink($file);
         }

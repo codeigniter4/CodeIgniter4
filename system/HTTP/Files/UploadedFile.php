@@ -351,8 +351,12 @@ class UploadedFile extends File implements UploadedFileInterface
         $folderName = rtrim($folderName ?? date('Ymd'), '/') . '/';
         $fileName ??= $this->getRandomName();
 
+        if (! str_contains($folderName, 'vfs://')) {
+            $folderName = WRITEPATH . 'uploads/' . $folderName;
+        }
+
         // Move the uploaded file to a new location.
-        $this->move(WRITEPATH . 'uploads/' . $folderName, $fileName);
+        $this->move($folderName, $fileName);
 
         return $folderName . $this->name;
     }

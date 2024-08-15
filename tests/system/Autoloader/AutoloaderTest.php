@@ -101,13 +101,13 @@ final class AutoloaderTest extends CIUnitTestCase
 
         $ns = $loader->getNamespace();
         $this->assertCount(1, $ns['App']);
-        $this->assertSame('ROOTPATH/app', clean_path($ns['App'][0]));
+        $this->assertSame('ROOTPATH' . DIRECTORY_SEPARATOR . 'app', clean_path($ns['App'][0]));
 
         $loader->initialize(new Autoload(), new Modules());
 
         $ns = $loader->getNamespace();
         $this->assertCount(1, $ns['App']);
-        $this->assertSame('ROOTPATH/app', clean_path($ns['App'][0]));
+        $this->assertSame('ROOTPATH' . DIRECTORY_SEPARATOR . 'app', clean_path($ns['App'][0]));
     }
 
     public function testServiceAutoLoaderFromShareInstances(): void
@@ -288,7 +288,11 @@ final class AutoloaderTest extends CIUnitTestCase
     {
         $config       = new Autoload();
         $config->psr4 = [
-            'Psr\Log' => '/Config/Autoload/Psr/Log/',
+            'Psr\Log' => DIRECTORY_SEPARATOR . 'Config'
+                . DIRECTORY_SEPARATOR . 'Autoload'
+                . DIRECTORY_SEPARATOR . 'Psr'
+                . DIRECTORY_SEPARATOR . 'Log'
+                . DIRECTORY_SEPARATOR,
         ];
         $modules                     = new Modules();
         $modules->discoverInComposer = true;
@@ -297,7 +301,7 @@ final class AutoloaderTest extends CIUnitTestCase
         $loader->initialize($config, $modules);
 
         $namespaces = $loader->getNamespace();
-        $this->assertSame('/Config/Autoload/Psr/Log/', $namespaces['Psr\Log'][0]);
+        $this->assertSame($config->psr4['Psr\Log'], $namespaces['Psr\Log'][0]);
         $this->assertStringContainsString(VENDORPATH, $namespaces['Psr\Log'][1]);
     }
 

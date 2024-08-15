@@ -200,16 +200,19 @@ class Autoloader
 
                 if (is_array($namespacedPath)) {
                     foreach ($namespacedPath as $dir) {
-                        $this->prefixes[$prefix][] = rtrim($dir, '\\/') . DIRECTORY_SEPARATOR;
+                        $dir                       = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $dir);
+                        $this->prefixes[$prefix][] = rtrim($dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
                     }
 
                     continue;
                 }
 
-                $this->prefixes[$prefix][] = rtrim($namespacedPath, '\\/') . DIRECTORY_SEPARATOR;
+                $namespacedPath            = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $namespacedPath);
+                $this->prefixes[$prefix][] = rtrim($namespacedPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             }
         } else {
-            $this->prefixes[trim($namespace, '\\')][] = rtrim($path, '\\/') . DIRECTORY_SEPARATOR;
+            $path                                     = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $path);
+            $this->prefixes[trim($namespace, '\\')][] = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         }
 
         return $this;

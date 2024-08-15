@@ -474,6 +474,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame('foo', $tables[1]);
 
         if (is_file($config['database'])) {
+            $database->close();
             unlink($config['database']);
         }
     }

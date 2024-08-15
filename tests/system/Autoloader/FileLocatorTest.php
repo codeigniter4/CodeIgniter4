@@ -59,7 +59,7 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $file = 'Controllers/Home'; // not namespaced
 
-        $expected = APPPATH . 'Controllers/Home.php';
+        $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
 
         $this->assertSame($expected, $this->locator->locateFile($file));
     }
@@ -75,7 +75,7 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $file = 'welcome_message'; // not namespaced
 
-        $expected = APPPATH . 'Views/welcome_message.php';
+        $expected = APPPATH . 'Views' . DIRECTORY_SEPARATOR . 'welcome_message.php';
 
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
@@ -93,7 +93,7 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $file = 'Controllers/Home'; // not namespaced
 
-        $expected = APPPATH . 'Controllers/Home.php';
+        $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
 
         // This works because $file contains `Controllers`.
         $this->assertSame($expected, $this->locator->locateFile($file, 'Controllers'));
@@ -103,7 +103,10 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $file = '\App\Views/errors/html/error_404.php';
 
-        $expected = APPPATH . 'Views/errors/html/error_404.php';
+        $expected = APPPATH . 'Views'
+            . DIRECTORY_SEPARATOR . 'errors'
+            . DIRECTORY_SEPARATOR . 'html'
+            . DIRECTORY_SEPARATOR . 'error_404.php';
 
         // This works because $file contains `Views`.
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
@@ -113,7 +116,7 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $file = 'Views/welcome_message.php'; // not namespaced
 
-        $expected = APPPATH . 'Views/welcome_message.php';
+        $expected = APPPATH . 'Views' . DIRECTORY_SEPARATOR . 'welcome_message.php';
 
         // This works because $file contains `Views`.
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
@@ -123,7 +126,10 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $file = '\Errors\error_404';
 
-        $expected = APPPATH . 'Views/errors/html/error_404.php';
+        $expected = APPPATH . 'Views'
+            . DIRECTORY_SEPARATOR . 'errors'
+            . DIRECTORY_SEPARATOR . 'html'
+            . DIRECTORY_SEPARATOR . 'error_404.php';
 
         // The namespace `Errors` (APPPATH . 'Views/errors') + the folder (`html`) + `error_404`
         $this->assertSame($expected, $this->locator->locateFile($file, 'html'));
@@ -133,7 +139,10 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $file = '\Errors\html/error_404';
 
-        $expected = APPPATH . 'Views/errors/html/error_404.php';
+        $expected = APPPATH . 'Views'
+            . DIRECTORY_SEPARATOR . 'errors'
+            . DIRECTORY_SEPARATOR . 'html'
+            . DIRECTORY_SEPARATOR . 'error_404.php';
 
         $this->assertSame($expected, $this->locator->locateFile($file, 'html'));
     }
@@ -142,7 +151,11 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $file = '\CodeIgniter\Devkit\View\Views/simple';
 
-        $expected = ROOTPATH . 'tests/_support/View/Views/simple.php';
+        $expected = ROOTPATH . 'tests'
+            . DIRECTORY_SEPARATOR . '_support'
+            . DIRECTORY_SEPARATOR . 'View'
+            . DIRECTORY_SEPARATOR . 'Views'
+            . DIRECTORY_SEPARATOR . 'simple.php';
 
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
@@ -165,14 +178,18 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $file = 'Acme\SampleProject\View\Views\simple';
 
-        $expected = ROOTPATH . 'tests/_support/View/Views/simple.php';
+        $expected = ROOTPATH . 'tests'
+            . DIRECTORY_SEPARATOR . '_support'
+            . DIRECTORY_SEPARATOR . 'View'
+            . DIRECTORY_SEPARATOR . 'Views'
+            . DIRECTORY_SEPARATOR . 'simple.php';
 
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
 
     public function testSearchSimple(): void
     {
-        $expected = APPPATH . 'Config/App.php';
+        $expected = APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'App.php';
 
         $foundFiles = $this->locator->search('Config/App.php');
 
@@ -181,7 +198,7 @@ class FileLocatorTest extends CIUnitTestCase
 
     public function testSearchWithFileExtension(): void
     {
-        $expected = APPPATH . 'Config/App.php';
+        $expected = APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'App.php';
 
         $foundFiles = $this->locator->search('Config/App', 'php');
 
@@ -212,8 +229,8 @@ class FileLocatorTest extends CIUnitTestCase
 
         $this->assertSame(
             [
-                SYSTEMPATH . 'Language/en/Validation.php',
-                APPPATH . 'Language/en/Validation.php',
+                SYSTEMPATH . 'Language' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'Validation.php',
+                APPPATH . 'Language' . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'Validation.php',
             ],
             $foundFiles
         );
@@ -228,9 +245,8 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $files = $this->locator->listFiles('Config/');
 
-        $expectedWin = APPPATH . 'Config\App.php';
-        $expectedLin = APPPATH . 'Config/App.php';
-        $this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
+        $expected = APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'App.php';
+        $this->assertTrue(in_array($expected, $files, true));
     }
 
     public function testListFilesDoesNotContainDirectories(): void
@@ -256,13 +272,11 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $files = $this->locator->listFiles('Filters/');
 
-        $expectedWin = SYSTEMPATH . 'Filters\DebugToolbar.php';
-        $expectedLin = SYSTEMPATH . 'Filters/DebugToolbar.php';
-        $this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
+        $expected = SYSTEMPATH . 'Filters' . DIRECTORY_SEPARATOR . 'DebugToolbar.php';
+        $this->assertTrue(in_array($expected, $files, true));
 
-        $expectedWin = SYSTEMPATH . 'Filters\Filters.php';
-        $expectedLin = SYSTEMPATH . 'Filters/Filters.php';
-        $this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
+        $expected = SYSTEMPATH . 'Filters' . DIRECTORY_SEPARATOR . 'Filters.php';
+        $this->assertTrue(in_array($expected, $files, true));
     }
 
     public function testListFilesWithPathNotExist(): void

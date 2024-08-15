@@ -114,7 +114,10 @@
         "phpstan:check": "vendor/bin/phpstan analyse --verbose --ansi",
         "sa": "@analyze",
         "style": "@cs-fix",
-        "test": "phpunit"
+        "test": [
+            "Composer\\Config::disableProcessTimeout",
+            "phpunit"
+        ]
     },
     "scripts-descriptions": {
         "analyze": "Run static analysis",
