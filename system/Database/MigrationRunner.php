@@ -417,7 +417,7 @@ class MigrationRunner
         $migrations = [];
         $locator    = Services::locator(true);
 
-        if ($this->path !== '') {
+        if ($this->path !== '' && $this->path !== null) {
             helper('filesystem');
             $dir   = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
             $files = get_filenames($dir, true, false, false);
@@ -426,7 +426,9 @@ class MigrationRunner
         }
 
         foreach ($files as $file) {
-            $file = $this->path === '' ? $file : $this->path . str_replace($this->path, '', $file);
+            $file = ($this->path === '' || $this->path === null)
+                ? $file
+                : $this->path . str_replace($this->path, '', $file);
 
             if ($migration = $this->migrationFromFile($file, $namespace)) {
                 $migrations[] = $migration;

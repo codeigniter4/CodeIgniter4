@@ -46,7 +46,7 @@ class Database
             throw new InvalidArgumentException('You must supply the parameter: alias.');
         }
 
-        if (is_string($params['DSN']) && str_contains($params['DSN'], '://')) {
+        if (is_string($params['DSN'] ?? null) && str_contains($params['DSN'], '://')) {
             $params = $this->parseDSN($params);
         }
 

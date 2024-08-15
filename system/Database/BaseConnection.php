@@ -1506,7 +1506,11 @@ abstract class BaseConnection implements ConnectionInterface
     public function tableExists(string $tableName, bool $cached = true): bool
     {
         if ($cached === true) {
-            return in_array($this->protectIdentifiers($tableName, true, false, false), $this->listTables(), true);
+            return in_array(
+                $this->protectIdentifiers($tableName, true, false, false),
+                $this->listTables(),
+                true
+            );
         }
 
         if (false === ($sql = $this->_listTables(false, $tableName))) {
@@ -1520,7 +1524,7 @@ abstract class BaseConnection implements ConnectionInterface
         $tableExists = $this->query($sql)->getResultArray() !== [];
 
         // if cache has been built already
-        if ($this->dataCache['table_names'] !== []) {
+        if (array_key_exists('table_names', $this->dataCache) && $this->dataCache['table_names'] !== []) {
             $keyExists = in_array(
                 strtolower($tableName),
                 array_map(strtolower(...), $this->dataCache['table_names']),

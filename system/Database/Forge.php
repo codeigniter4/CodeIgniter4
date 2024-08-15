@@ -664,7 +664,7 @@ class Forge
 
         $this->db->enableForeignKeyChecks();
 
-        if ($query && $this->db->dataCache['table_names'] !== []) {
+        if ($query && ($this->db->dataCache['table_names'] ?? []) !== []) {
             $key = array_search(
                 strtolower($this->db->DBPrefix . $tableName),
                 array_map(strtolower(...), $this->db->dataCache['table_names']),
