@@ -303,7 +303,7 @@ class Forge
             return false;
         }
 
-        if ($this->db->dataCache['db_names'] !== []) {
+        if (array_key_exists('db_names', $this->db->dataCache) && $this->db->dataCache['db_names'] !== []) {
             $key = array_search(
                 strtolower($dbName),
                 array_map(strtolower(...), $this->db->dataCache['db_names']),

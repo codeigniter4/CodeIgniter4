@@ -1251,7 +1251,7 @@ abstract class BaseConnection implements ConnectionInterface
 
         // Avoid breaking functions and literal values inside queries
         if (
-            ctype_digit($item)
+            ctype_digit((string) $item)
             || $item[0] === "'"
             || ($this->escapeChar !== '"' && $item[0] === '"')
             || str_contains($item, '(')

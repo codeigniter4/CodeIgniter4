@@ -952,13 +952,19 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccess
 	'message' => '#^Accessing offset string directly on \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
+	'count' => 2,
 	'path' => __DIR__ . '/system/Config/DotEnv.php',
 ];
 $ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccessAssign
 	'message' => '#^Assigning string directly on offset string of \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
+	'path' => __DIR__ . '/system/Config/DotEnv.php',
+];
+$ignoreErrors[] = [
+	// identifier: empty.notAllowed
+	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
+	'count' => 2,
 	'path' => __DIR__ . '/system/Config/DotEnv.php',
 ];
 $ignoreErrors[] = [
