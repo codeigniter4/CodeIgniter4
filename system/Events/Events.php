@@ -86,7 +86,7 @@ class Events
 
         $files = array_filter(array_map(static function (string $file) {
             if (is_file($file)) {
-                return realpath($file) ?: $file;
+                return ($realPath = realpath($file)) !== false ? $realPath : $file;
             }
 
             return false; // @codeCoverageIgnore

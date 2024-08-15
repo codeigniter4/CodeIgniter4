@@ -333,7 +333,7 @@ class MigrationRunner
         }
 
         $migration = $this->migrationFromFile($path, $namespace);
-        if (empty($migration)) {
+        if ($migration === false) {
             $message = lang('Migrations.notFound');
 
             if ($this->silent) {
@@ -417,7 +417,7 @@ class MigrationRunner
         $migrations = [];
         $locator    = Services::locator(true);
 
-        if (! empty($this->path)) {
+        if ($this->path !== '') {
             helper('filesystem');
             $dir   = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
             $files = get_filenames($dir, true, false, false);
@@ -426,7 +426,7 @@ class MigrationRunner
         }
 
         foreach ($files as $file) {
-            $file = empty($this->path) ? $file : $this->path . str_replace($this->path, '', $file);
+            $file = $this->path === '' ? $file : $this->path . str_replace($this->path, '', $file);
 
             if ($migration = $this->migrationFromFile($file, $namespace)) {
                 $migrations[] = $migration;
@@ -441,7 +441,7 @@ class MigrationRunner
      *
      * @param string $path Full path to a valid migration file.
      *
-     * @return false|object Returns the migration object, or false on failure
+     * @return false|stdClass Returns the migration object, or false on failure
      */
     protected function migrationFromFile(string $path, string $namespace)
     {
@@ -652,7 +652,7 @@ class MigrationRunner
 
         $query = $builder->orderBy('id', 'ASC')->get();
 
-        return ! empty($query) ? $query->getResultObject() : [];
+        return $query instanceof ResultInterface ? $query->getResultObject() : [];
     }
 
     /**
@@ -669,7 +669,7 @@ class MigrationRunner
             ->orderBy('id', $order)
             ->get();
 
-        return ! empty($query) ? $query->getResultObject() : [];
+        return $query instanceof ResultInterface ? $query->getResultObject() : [];
     }
 
     /**

@@ -179,7 +179,7 @@ class Validation implements ValidationInterface
                 );
 
                 // if keys not found
-                $values = $values ?: [$field => null];
+                $values = $values !== [] ? $values : [$field => null];
             } else {
                 $values = dot_array_search($field, $data);
             }
@@ -968,7 +968,9 @@ class Validation implements ValidationInterface
             ) {
                 // the pipe is inside the brackets causing the closing bracket to
                 // not be included. so, we adjust the rule to include that portion.
-                $pos  = strpos($string, '|', $cursor + strlen($rule) + 1) ?: $length;
+                $pos = (($strpos = strpos($string, '|', $cursor + strlen($rule) + 1)) !== false)
+                    ? $strpos
+                    : $length;
                 $rule = substr($string, $cursor, $pos - $cursor);
             }
 

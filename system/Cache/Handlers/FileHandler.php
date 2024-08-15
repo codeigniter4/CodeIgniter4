@@ -16,6 +16,7 @@ namespace CodeIgniter\Cache\Handlers;
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
+use Exception;
 use Throwable;
 
 /**
@@ -51,6 +52,7 @@ class FileHandler extends BaseHandler
      * Note: Use `CacheFactory::getHandler()` to instantiate.
      *
      * @throws CacheException
+     * @throws Exception
      */
     public function __construct(Cache $config)
     {
@@ -61,8 +63,10 @@ class FileHandler extends BaseHandler
             ];
         }
 
-        $this->path = ! empty($config->file['storePath']) ? $config->file['storePath'] : WRITEPATH . 'cache';
-        $this->path = rtrim($this->path, '/') . '/';
+        $this->path = (is_string($config->file['storePath']) && $config->file['storePath'] !== '')
+            ? $config->file['storePath']
+            : WRITEPATH . 'cache';
+        $this->path = rtrim($this->path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         if (! is_really_writable($this->path)) {
             throw CacheException::forUnableToWrite($this->path);
@@ -281,7 +285,7 @@ class FileHandler extends BaseHandler
         flock($fp, LOCK_UN);
         fclose($fp);
 
-        return is_int($result);
+        return is_int($result ?? null);
     }
 
     /**
@@ -340,7 +344,10 @@ class FileHandler extends BaseHandler
             // reset the array and make sure $source_dir has a trailing slash on the initial call
             if ($_recursion === false) {
                 $_filedata = [];
-                $sourceDir = rtrim(realpath($sourceDir) ?: $sourceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+                $sourceDir = rtrim(
+                    ($realPath = realpath($sourceDir)) !== false ? $realPath : $sourceDir,
+                    DIRECTORY_SEPARATOR
+                ) . DIRECTORY_SEPARATOR;
             }
 
             // Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast

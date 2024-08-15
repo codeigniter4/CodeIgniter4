@@ -108,12 +108,12 @@ class CLI
     /**
      * List of array segments.
      *
-     * @var array
+     * @var list<string>
      */
     protected static $segments = [];
 
     /**
-     * @var array
+     * @var array<int|string, string|null>
      */
     protected static $options = [];
 
@@ -215,9 +215,9 @@ class CLI
      * // Do not provide options but requires a valid email
      * $email = CLI::prompt('What is your email?', null, 'required|valid_email');
      *
-     * @param string                  $field      Output "field" question
-     * @param list<int|string>|string $options    String to a default value, array to a list of options (the first option will be the default value)
-     * @param array|string|null       $validation Validation rules
+     * @param string                   $field      Output "field" question
+     * @param list<int|string>|string  $options    String to a default value, array to a list of options (the first option will be the default value)
+     * @param list<string>|string|null $validation Validation rules
      *
      * @return string The user input
      */
@@ -226,12 +226,16 @@ class CLI
         $extraOutput = '';
         $default     = '';
 
-        if ($validation && ! is_array($validation) && ! is_string($validation)) {
+        if ($validation !== null && ! is_array($validation) && ! is_string($validation)) {
             throw new InvalidArgumentException('$rules can only be of type string|array');
         }
 
-        if (! is_array($validation)) {
-            $validation = $validation ? explode('|', $validation) : [];
+        if ($validation === null) {
+            $validation = [];
+        }
+
+        if (is_string($validation)) {
+            $validation = $validation !== '' ? explode('|', $validation) : [];
         }
 
         if (is_string($options)) {
@@ -273,10 +277,10 @@ class CLI
     /**
      * prompt(), but based on the option's key
      *
-     * @param array|string      $text       Output "field" text or an one or two value array where the first value is the text before listing the options
-     *                                      and the second value the text before asking to select one option. Provide empty string to omit
-     * @param array             $options    A list of options (array(key => description)), the first option will be the default value
-     * @param array|string|null $validation Validation rules
+     * @param list<string>|string            $text       Output "field" text or an one or two value array where the first value is the text before listing the options
+     *                                                   and the second value the text before asking to select one option. Provide empty string to omit
+     * @param array<int|string, string|null> $options    A list of options (array(key => description)), the first option will be the default value
+     * @param list<string>|string|null       $validation Validation rules
      *
      * @return string The selected key of $options
      */
@@ -290,7 +294,7 @@ class CLI
 
         CLI::isZeroOptions($options);
 
-        if ($line = array_shift($text)) {
+        if (($line = array_shift($text)) !== null) {
             CLI::write($line);
         }
 
@@ -302,11 +306,11 @@ class CLI
     /**
      * This method is the same as promptByKey(), but this method supports multiple keys, separated by commas.
      *
-     * @param string $text    Output "field" text or an one or two value array where the first value is the text before listing the options
-     *                        and the second value the text before asking to select one option. Provide empty string to omit
-     * @param array  $options A list of options (array(key => description)), the first option will be the default value
+     * @param string                         $text    Output "field" text or an one or two value array where the first value is the text before listing the options
+     *                                                and the second value the text before asking to select one option. Provide empty string to omit
+     * @param array<int|string, string|null> $options A list of options (array(key => description)), the first option will be the default value
      *
-     * @return array The selected key(s) and value(s) of $options
+     * @return array<int|string, string|null> The selected key(s) and value(s) of $options
      */
     public static function promptByMultipleKeys(string $text, array $options): array
     {
@@ -379,6 +383,8 @@ class CLI
 
     /**
      * Validation for $options in promptByKey() and promptByMultipleKeys(). Return an error if $options is an empty array.
+     *
+     * @param array<int|string, mixed> $options
      */
     private static function isZeroOptions(array $options): void
     {
@@ -389,11 +395,13 @@ class CLI
 
     /**
      * Print each key and value one by one
+     *
+     * @param array<int|string, string|null> $options
      */
     private static function printKeysAndValues(array $options): void
     {
         // +2 for the square brackets around the key
-        $keyMaxLength = max(array_map(mb_strwidth(...), array_keys($options))) + 2;
+        $keyMaxLength = max(array_map('mb_strwidth', array_keys($options))) + 2;
 
         foreach ($options as $key => $description) {
             $name = str_pad('  [' . $key . ']  ', $keyMaxLength + 4, ' ');
@@ -408,9 +416,9 @@ class CLI
     /**
      * Validate one prompt "field" at a time
      *
-     * @param string       $field Prompt "field" output
-     * @param string       $value Input value
-     * @param array|string $rules Validation rules
+     * @param string              $field Prompt "field" output
+     * @param string              $value Input value
+     * @param list<string>|string $rules Validation rules
      */
     protected static function validate(string $field, string $value, $rules): bool
     {
@@ -442,7 +450,7 @@ class CLI
      */
     public static function print(string $text = '', ?string $foreground = null, ?string $background = null)
     {
-        if ($foreground || $background) {
+        if ($foreground !== null || $background !== null) {
             $text = static::color($text, $foreground, $background);
         }
 
@@ -458,7 +466,7 @@ class CLI
      */
     public static function write(string $text = '', ?string $foreground = null, ?string $background = null)
     {
-        if ($foreground || $background) {
+        if ($foreground !== null || $background !== null) {
             $text = static::color($text, $foreground, $background);
         }
 
@@ -481,7 +489,7 @@ class CLI
         $stdout            = static::$isColored;
         static::$isColored = static::hasColorSupport(STDERR);
 
-        if ($foreground || $background) {
+        if ($foreground !== '' || $background !== null) {
             $text = static::color($text, $foreground, $background);
         }
 
@@ -733,7 +741,7 @@ class CLI
             static::generateDimensions();
         }
 
-        return static::$width ?: $default;
+        return (static::$width > 0) ? static::$width : $default;
     }
 
     /**
@@ -745,7 +753,7 @@ class CLI
             static::generateDimensions();
         }
 
-        return static::$height ?: $default;
+        return (static::$height > 0) ? static::$height : $default;
     }
 
     /**
@@ -769,7 +777,15 @@ class CLI
 
                     // Look for the next lines ending in ": <number>"
                     // Searching for "Columns:" or "Lines:" will fail on non-English locales
-                    if ($return === 0 && $output && preg_match('/:\s*(\d+)\n[^:]+:\s*(\d+)\n/', implode("\n", $output), $matches)) {
+                    if (
+                        $return === 0
+                        && $output !== []
+                        && preg_match(
+                            '/:\s*(\d+)\n[^:]+:\s*(\d+)\n/',
+                            implode("\n", $output),
+                            $matches
+                        )
+                    ) {
                         static::$height = (int) $matches[1];
                         static::$width  = (int) $matches[2];
                     }
@@ -945,6 +961,8 @@ class CLI
 
     /**
      * Returns the raw array of segments found.
+     *
+     * @return list<string>
      */
     public static function getSegments(): array
     {
@@ -972,6 +990,8 @@ class CLI
 
     /**
      * Returns the raw array of options found.
+     *
+     * @return array<int|string, string|null>
      */
     public static function getOptions(): array
     {
@@ -994,7 +1014,7 @@ class CLI
         $out = '';
 
         foreach (static::$options as $name => $value) {
-            if ($useLongOpts && mb_strlen($name) > 1) {
+            if ($useLongOpts && mb_strlen((string) $name) > 1) {
                 $out .= "--{$name} ";
             } else {
                 $out .= "-{$name} ";
@@ -1017,8 +1037,8 @@ class CLI
     /**
      * Returns a well formatted table
      *
-     * @param array $tbody List of rows
-     * @param array $thead List of columns
+     * @param array<int|string, array<int|string, int|string>> $tbody List of rows
+     * @param list<string>                                     $thead List of columns
      *
      * @return void
      */

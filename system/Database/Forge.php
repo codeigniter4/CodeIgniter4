@@ -246,7 +246,7 @@ class Forge
                 // @codeCoverageIgnoreEnd
             }
 
-            if (! empty($this->db->dataCache['db_names'])) {
+            if ($this->db->dataCache['db_names'] !== []) {
                 $this->db->dataCache['db_names'][] = $dbName;
             }
 
@@ -303,7 +303,7 @@ class Forge
             return false;
         }
 
-        if (! empty($this->db->dataCache['db_names'])) {
+        if ($this->db->dataCache['db_names'] !== []) {
             $key = array_search(
                 strtolower($dbName),
                 array_map(strtolower(...), $this->db->dataCache['db_names']),
@@ -573,7 +573,7 @@ class Forge
             }
 
             // Most databases don't support creating indexes from within the CREATE TABLE statement
-            if (! empty($this->keys)) {
+            if ($this->keys !== []) {
                 for ($i = 0, $sqls = $this->_processIndexes($table), $c = count($sqls); $i < $c; $i++) {
                     $this->db->query($sqls[$i]);
                 }
@@ -664,7 +664,7 @@ class Forge
 
         $this->db->enableForeignKeyChecks();
 
-        if ($query && ! empty($this->db->dataCache['table_names'])) {
+        if ($query && $this->db->dataCache['table_names'] !== []) {
             $key = array_search(
                 strtolower($this->db->DBPrefix . $tableName),
                 array_map(strtolower(...), $this->db->dataCache['table_names']),
@@ -726,7 +726,7 @@ class Forge
             $this->db->escapeIdentifiers($this->db->DBPrefix . $newTableName)
         ));
 
-        if ($result && ! empty($this->db->dataCache['table_names'])) {
+        if ($result && $this->db->dataCache['table_names'] !== []) {
             $key = array_search(
                 strtolower($this->db->DBPrefix . $tableName),
                 array_map(strtolower(...), $this->db->dataCache['table_names']),
@@ -895,7 +895,10 @@ class Forge
 
             $attributes = array_change_key_case($attributes, CASE_UPPER);
 
-            if ($createTable === true && empty($attributes['TYPE'])) {
+            if (
+                $createTable === true
+                && (! isset($attributes['TYPE']) || $attributes['TYPE'] === '')
+            ) {
                 continue;
             }
 
@@ -934,7 +937,7 @@ class Forge
                 $nullString = ' ' . $this->null;
 
                 if ($attributes['NULL'] === true) {
-                    $field['null'] = empty($this->null) ? '' : $nullString;
+                    $field['null'] = $this->null === '' ? '' : $nullString;
                 } elseif ($attributes['NULL'] === $nullString) {
                     $field['null'] = $nullString;
                 } elseif ($attributes['NULL'] === '') {
@@ -953,7 +956,10 @@ class Forge
                 $field['comment'] = $this->db->escape($attributes['COMMENT']);
             }
 
-            if (isset($attributes['TYPE']) && ! empty($attributes['CONSTRAINT'])) {
+            if (
+                isset($attributes['TYPE'])
+                && (isset($attributes['CONSTRAINT']) && $attributes['CONSTRAINT'] !== '')
+            ) {
                 if (is_array($attributes['CONSTRAINT'])) {
                     $attributes['CONSTRAINT'] = $this->db->escape($attributes['CONSTRAINT']);
                     $attributes['CONSTRAINT'] = implode(',', $attributes['CONSTRAINT']);
@@ -1002,7 +1008,7 @@ class Forge
      */
     protected function _attributeUnsigned(array &$attributes, array &$field)
     {
-        if (empty($attributes['UNSIGNED']) || $attributes['UNSIGNED'] !== true) {
+        if (! isset($attributes['UNSIGNED']) || $attributes['UNSIGNED'] !== true) {
             return;
         }
 
@@ -1038,11 +1044,11 @@ class Forge
 
         if (array_key_exists('DEFAULT', $attributes)) {
             if ($attributes['DEFAULT'] === null) {
-                $field['default'] = empty($this->null) ? '' : $this->default . $this->null;
+                $field['default'] = $this->null === '' ? '' : ($this->default . $this->null);
 
                 // Override the NULL attribute if that's our default
                 $attributes['NULL'] = true;
-                $field['null']      = empty($this->null) ? '' : ' ' . $this->null;
+                $field['null']      = $this->null === '' ? '' : (' ' . $this->null);
             } elseif ($attributes['DEFAULT'] instanceof RawSql) {
                 $field['default'] = $this->default . $attributes['DEFAULT'];
             } else {
@@ -1053,14 +1059,16 @@ class Forge
 
     protected function _attributeUnique(array &$attributes, array &$field)
     {
-        if (! empty($attributes['UNIQUE']) && $attributes['UNIQUE'] === true) {
+        if (isset($attributes['UNIQUE']) && $attributes['UNIQUE'] === true) {
             $field['unique'] = ' UNIQUE';
         }
     }
 
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
-        if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true
+        if (
+            isset($attributes['AUTO_INCREMENT'])
+            && $attributes['AUTO_INCREMENT'] === true
             && stripos($field['type'], 'int') !== false
         ) {
             $field['auto_increment'] = ' AUTO_INCREMENT';

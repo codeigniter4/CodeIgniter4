@@ -98,11 +98,11 @@ class DotEnv
             putenv("{$name}={$value}");
         }
 
-        if (empty($_ENV[$name])) {
+        if (getenv($name) === false) {
             $_ENV[$name] = $value;
         }
 
-        if (empty($_SERVER[$name])) {
+        if (! array_key_exists($name, $_SERVER)) {
             $_SERVER[$name] = $value;
         }
     }

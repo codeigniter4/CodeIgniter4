@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -10,6 +9,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+use CodeIgniter\Autoloader\FileLocator;
 
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Config\BaseConfig;
@@ -93,7 +93,7 @@ if (! function_exists('clean_path')) {
     {
         // Resolve relative paths
         try {
-            $path = realpath($path) ?: $path;
+            $path = (($realPath = realpath($path)) !== false) ? $realPath : $path;
         } catch (ErrorException|ValueError) {
             $path = 'error file path: ' . urlencode($path);
         }
@@ -567,6 +567,7 @@ if (! function_exists('helper')) {
     {
         static $loaded = [];
 
+        /** @var FileLocator $loader */
         $loader = service('locator');
 
         if (! is_array($filenames)) {
@@ -597,7 +598,7 @@ if (! function_exists('helper')) {
             if (str_contains($filename, '\\')) {
                 $path = $loader->locateFile($filename, 'Helpers');
 
-                if (empty($path)) {
+                if ($path === false || $path === '') {
                     throw FileNotFoundException::forFileNotFound($filename);
                 }
 
@@ -619,7 +620,7 @@ if (! function_exists('helper')) {
                 }
 
                 // App-level helpers should override all others
-                if (! empty($appHelper)) {
+                if ($appHelper !== null) {
                     $includes[] = $appHelper;
                     $loaded[]   = $filename;
                 }
@@ -628,7 +629,7 @@ if (! function_exists('helper')) {
                 $includes = [...$includes, ...$localIncludes];
 
                 // And the system default one should be added in last.
-                if (! empty($systemHelper)) {
+                if ($systemHelper !== null) {
                     $includes[] = $systemHelper;
                     $loaded[]   = $filename;
                 }
@@ -1090,7 +1091,7 @@ if (! function_exists('stringify_attributes')) {
     {
         $atts = '';
 
-        if (empty($attributes)) {
+        if ($attributes === '' || (array) $attributes === []) {
             return $atts;
         }
 
@@ -1248,7 +1249,7 @@ if (! function_exists('trait_uses_recursive')) {
      */
     function trait_uses_recursive($trait)
     {
-        $traits = class_uses($trait) ?: [];
+        $traits = (($classUses = class_uses($trait)) !== false) ? $classUses : [];
 
         foreach ($traits as $trait) {
             $traits += trait_uses_recursive($trait);

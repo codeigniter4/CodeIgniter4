@@ -2,58 +2,10 @@
 
 $ignoreErrors = [];
 $ignoreErrors[] = [
-	// identifier: property.phpDocType
-	'message' => '#^PHPDoc type array\\<string, array\\<string, array\\<int, string\\>\\>\\> of property Config\\\\Filters\\:\\:\\$filters is not the same as PHPDoc type array of overridden property CodeIgniter\\\\Config\\\\Filters\\:\\:\\$filters\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Filters.php',
-];
-$ignoreErrors[] = [
-	// identifier: function.alreadyNarrowedType
-	'message' => '#^Call to function method_exists\\(\\) with \'Composer\\\\\\\\InstalledVersions\' and \'getAllRawData\' will always evaluate to true\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\Autoloader\\:\\:loadComposerNamespaces\\(\\) has parameter \\$composerPackages with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
-];
-$ignoreErrors[] = [
-	// identifier: isset.property
-	'message' => '#^Property Config\\\\Autoload\\:\\:\\$helpers \\(array\\<int, string\\>\\) in isset\\(\\) is not nullable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.condNotBoolean
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\|string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 6,
-	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\FileLocatorCached\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/FileLocatorCached.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Property CodeIgniter\\\\Autoloader\\\\FileLocatorCached\\:\\:\\$cache type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Autoloader/FileLocatorCached.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/FileLocatorInterface.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
@@ -321,138 +273,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLI\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLI\\:\\:getSegments\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLI\\:\\:isZeroOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLI\\:\\:printKeysAndValues\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLI\\:\\:prompt\\(\\) has parameter \\$validation with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLI\\:\\:promptByKey\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLI\\:\\:promptByKey\\(\\) has parameter \\$text with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLI\\:\\:promptByKey\\(\\) has parameter \\$validation with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLI\\:\\:promptByMultipleKeys\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLI\\:\\:promptByMultipleKeys\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLI\\:\\:table\\(\\) has parameter \\$tbody with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLI\\:\\:table\\(\\) has parameter \\$thead with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\CLI\\\\CLI\\:\\:validate\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: booleanAnd.rightNotBoolean
-	'message' => '#^Only booleans are allowed in &&, array\\<int, string\\> given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: booleanAnd.leftNotBoolean
-	'message' => '#^Only booleans are allowed in &&, array\\|string\\|null given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.condNotBoolean
-	'message' => '#^Only booleans are allowed in a ternary operator condition, string\\|null given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: booleanOr.leftNotBoolean
-	'message' => '#^Only booleans are allowed in \\|\\|, string given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: booleanOr.leftNotBoolean
-	'message' => '#^Only booleans are allowed in \\|\\|, string\\|null given on the left side\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: booleanOr.rightNotBoolean
-	'message' => '#^Only booleans are allowed in \\|\\|, string\\|null given on the right side\\.$#',
-	'count' => 3,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\CLI\\\\CLI\\:\\:\\$options type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\CLI\\\\CLI\\:\\:\\$segments type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\CLI\\\\Commands\\:\\:getCommandAlternatives\\(\\) has parameter \\$collection with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/CLI/Commands.php',
@@ -584,12 +404,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Cache/Handlers/FileHandler.php',
 ];
 $ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Cache/Handlers/FileHandler.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\FileHandler\\:\\:get\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -628,18 +442,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\FileHandler\\:\\:save\\(\\) has parameter \\$value with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Cache/Handlers/FileHandler.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Cache/Handlers/FileHandler.php',
-];
-$ignoreErrors[] = [
-	// identifier: variable.undefined
-	'message' => '#^Variable \\$result might not be defined\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Cache/Handlers/FileHandler.php',
 ];
@@ -764,34 +566,10 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Cache/Handlers/WincacheHandler.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:getPerformanceStats\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/CreateDatabase.php',
-];
-$ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/MigrateStatus.php',
-];
-$ignoreErrors[] = [
 	// identifier: method.childParameterType
 	'message' => '#^Parameter \\#1 \\$params \\(array\\<string, mixed\\>\\) of method CodeIgniter\\\\Commands\\\\Database\\\\MigrateStatus\\:\\:run\\(\\) should be contravariant with parameter \\$params \\(array\\<int\\|string, string\\|null\\>\\) of method CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:run\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Database/MigrateStatus.php',
-];
-$ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/Seed.php',
 ];
 $ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccess
@@ -908,12 +686,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Utilities/Namespaces.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/Namespaces.php',
-];
-$ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccess
 	'message' => '#^Accessing offset \'HTTP_HOST\' directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
@@ -980,20 +752,8 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/ControllerMethodReader.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/ControllerMethodReader.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\ControllerMethodReader\\:\\:getRouteWithoutController\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/Routes/ControllerMethodReader.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Utilities/Routes/ControllerMethodReader.php',
 ];
@@ -1019,12 +779,6 @@ $ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccess
 	'message' => '#^Accessing offset string directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Common.php',
-];
-$ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 4,
 	'path' => __DIR__ . '/system/Common.php',
 ];
 $ignoreErrors[] = [
@@ -1142,12 +896,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Common.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Common.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.return
 	'message' => '#^Method CodeIgniter\\\\ComposerScripts\\:\\:postUpdate\\(\\) has no return type specified\\.$#',
 	'count' => 1,
@@ -1184,12 +932,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Config/BaseConfig.php',
 ];
 $ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Config/BaseService.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Config\\\\BaseService\\:\\:__callStatic\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -1210,19 +952,13 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccess
 	'message' => '#^Accessing offset string directly on \\$_SERVER is discouraged\\.$#',
-	'count' => 2,
+	'count' => 1,
 	'path' => __DIR__ . '/system/Config/DotEnv.php',
 ];
 $ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccessAssign
 	'message' => '#^Assigning string directly on offset string of \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Config/DotEnv.php',
-];
-$ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/system/Config/DotEnv.php',
 ];
 $ignoreErrors[] = [
@@ -1299,12 +1035,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: booleanNot.exprNotBoolean
-	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Factories.php',
-];
-$ignoreErrors[] = [
-	// identifier: booleanNot.exprNotBoolean
 	'message' => '#^Only booleans are allowed in a negated boolean, string\\|null given\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Config/Factories.php',
@@ -1322,12 +1052,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Config/Factory.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\Config\\\\Filters\\:\\:\\$filters type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Filters.php',
-];
-$ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccess
 	'message' => '#^Accessing offset \'SERVER_PROTOCOL\' directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
@@ -1336,12 +1060,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: codeigniter.configArgumentInstanceof
 	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Services.php',
-];
-$ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/Services.php',
 ];
@@ -1367,12 +1085,6 @@ $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Config\\\\Services\\:\\:superglobals\\(\\) has parameter \\$server with no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Services.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 4,
 	'path' => __DIR__ . '/system/Config/Services.php',
 ];
 $ignoreErrors[] = [
@@ -1430,12 +1142,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Cookie/Cookie.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 5,
-	'path' => __DIR__ . '/system/Cookie/Cookie.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Cookie\\\\CookieStore\\:\\:setCookie\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -1482,12 +1188,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\DataConverter\\\\DataConverter\\:\\:toDataSource\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/DataConverter/DataConverter.php',
-];
-$ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 30,
-	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
@@ -2018,12 +1718,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
 ];
 $ignoreErrors[] = [
-	// identifier: empty.property
-	'message' => '#^Property CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:\\$db \\(CodeIgniter\\\\Database\\\\BaseConnection\\) in empty\\(\\) is not falsy\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Property CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:\\$joinTypes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -2045,12 +1739,6 @@ $ignoreErrors[] = [
 	// identifier: method.notFound
 	'message' => '#^Call to an undefined method CodeIgniter\\\\Database\\\\QueryInterface\\:\\:getOriginalQuery\\(\\)\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseConnection.php',
-];
-$ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 13,
 	'path' => __DIR__ . '/system/Database/BaseConnection.php',
 ];
 $ignoreErrors[] = [
@@ -2192,18 +1880,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/BaseConnection.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseConnection.php',
-];
-$ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
-	'path' => __DIR__ . '/system/Database/BasePreparedQuery.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Database\\\\BasePreparedQuery\\:\\:_execute\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -2226,12 +1902,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\BasePreparedQuery\\:\\:prepare\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BasePreparedQuery.php',
-];
-$ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Database/BaseResult.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
@@ -2348,12 +2018,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/BaseResult.php',
 ];
 $ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 4,
-	'path' => __DIR__ . '/system/Database/BaseUtils.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseUtils\\:\\:_backup\\(\\) has parameter \\$prefs with no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -2450,12 +2114,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/ConnectionInterface.php',
 ];
 $ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Database/Database.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Database\\\\Database\\:\\:initDriver\\(\\) has parameter \\$argument with no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -2508,12 +2166,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\Exceptions\\\\DataException\\:\\:forTableNotFound\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/Exceptions/DataException.php',
-];
-$ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 13,
-	'path' => __DIR__ . '/system/Database/Forge.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
@@ -2750,12 +2402,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/Migration.php',
 ];
 $ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 5,
-	'path' => __DIR__ . '/system/Database/MigrationRunner.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Database\\\\MigrationRunner\\:\\:__construct\\(\\) has parameter \\$db with no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -2864,12 +2510,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/MySQLi/Builder.php',
 ];
 $ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 11,
-	'path' => __DIR__ . '/system/Database/MySQLi/Connection.php',
-];
-$ignoreErrors[] = [
 	// identifier: booleanAnd.leftNotBoolean
 	'message' => '#^Only booleans are allowed in &&, int given on the left side\\.$#',
 	'count' => 1,
@@ -2892,12 +2532,6 @@ $ignoreErrors[] = [
 	'message' => '#^Return type \\(array\\<string, int\\|string\\>\\) of method CodeIgniter\\\\Database\\\\MySQLi\\\\Connection\\:\\:error\\(\\) should be covariant with return type \\(array\\{code\\: int\\|string\\|null, message\\: string\\|null\\}\\) of method CodeIgniter\\\\Database\\\\BaseConnection\\<mysqli,mysqli_result\\>\\:\\:error\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/MySQLi/Connection.php',
-];
-$ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 4,
-	'path' => __DIR__ . '/system/Database/MySQLi/Forge.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
@@ -3346,12 +2980,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: method.childReturnType
 	'message' => '#^Return type \\(array\\<string, int\\|string\\>\\) of method CodeIgniter\\\\Database\\\\Postgre\\\\Connection\\:\\:error\\(\\) should be covariant with return type \\(array\\{code\\: int\\|string\\|null, message\\: string\\|null\\}\\) of method CodeIgniter\\\\Database\\\\BaseConnection\\<PgSql\\\\Connection,PgSql\\\\Result\\>\\:\\:error\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/Postgre/Connection.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/Postgre/Connection.php',
 ];
@@ -4418,12 +4046,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Database.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Database.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Debug\\\\Toolbar\\\\Collectors\\\\Events\\:\\:display\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -5180,12 +4802,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Events/Events.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Events/Events.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Exceptions\\\\PageNotFoundException\\:\\:lang\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -5198,21 +4814,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Exceptions/PageNotFoundException.php',
 ];
 $ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Files/File.php',
-];
-$ignoreErrors[] = [
 	// identifier: nullCoalesce.property
 	'message' => '#^Property CodeIgniter\\\\Files\\\\File\\:\\:\\$size \\(int\\) on left side of \\?\\? is not nullable\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Files/File.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 3,
 	'path' => __DIR__ . '/system/Files/File.php',
 ];
 $ignoreErrors[] = [
@@ -5296,18 +4900,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: booleanNot.exprNotBoolean
 	'message' => '#^Only booleans are allowed in a negated boolean, array\\<string, array\\<string, array\\<int, string\\>\\>\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\Filters\\\\Filters\\:\\:\\$filters type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\Filters\\\\Filters\\:\\:\\$filtersClass type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/Filters.php',
 ];
@@ -5690,12 +5282,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
-];
-$ignoreErrors[] = [
 	// identifier: empty.notAllowed
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 6,
@@ -5966,12 +5552,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/Exceptions/RedirectException.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Exceptions/RedirectException.php',
-];
-$ignoreErrors[] = [
 	// identifier: function.alreadyNarrowedType
 	'message' => '#^Call to function is_array\\(\\) with array will always evaluate to true\\.$#',
 	'count' => 1,
@@ -6046,12 +5626,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: method.childReturnType
 	'message' => '#^Return type \\(bool\\) of method CodeIgniter\\\\HTTP\\\\Files\\\\UploadedFile\\:\\:move\\(\\) should be compatible with return type \\(CodeIgniter\\\\Files\\\\File\\) of method CodeIgniter\\\\Files\\\\File\\:\\:move\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Files/UploadedFile.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/Files/UploadedFile.php',
 ];
@@ -6638,12 +6212,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/Response.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 5,
-	'path' => __DIR__ . '/system/HTTP/Response.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\HTTP\\\\ResponseInterface\\:\\:setCache\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -7049,12 +6617,6 @@ $ignoreErrors[] = [
 	// identifier: booleanAnd.rightAlwaysTrue
 	'message' => '#^Right side of && is always true\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
 ];
 $ignoreErrors[] = [
@@ -7562,12 +7124,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/I18n/Time.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 4,
-	'path' => __DIR__ . '/system/I18n/Time.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\I18n\\\\TimeLegacy\\:\\:__get\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -7583,12 +7139,6 @@ $ignoreErrors[] = [
 	// identifier: method.childReturnType
 	'message' => '#^Return type \\(CodeIgniter\\\\I18n\\\\TimeLegacy\\) of method CodeIgniter\\\\I18n\\\\TimeLegacy\\:\\:setTimezone\\(\\) should be covariant with return type \\(static\\(DateTime\\)\\) of method DateTime\\:\\:setTimezone\\(\\)$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/I18n/TimeLegacy.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 4,
 	'path' => __DIR__ . '/system/I18n/TimeLegacy.php',
 ];
 $ignoreErrors[] = [
@@ -8048,12 +7598,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Pager/Pager.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Pager/Pager.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Pager\\\\PagerInterface\\:\\:getDetails\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -8152,18 +7696,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: ternary.condNotBoolean
 	'message' => '#^Only booleans are allowed in a ternary operator condition, string\\|null given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/AutoRouter.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^PHPDoc tag @var for variable \\$params has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/AutoRouter.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/AutoRouter.php',
 ];
@@ -9032,12 +8564,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Session/Session.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Session/Session.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.return
 	'message' => '#^Method CodeIgniter\\\\Session\\\\SessionInterface\\:\\:destroy\\(\\) has no return type specified\\.$#',
 	'count' => 1,
@@ -9326,12 +8852,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Constraints\\\\SeeInDatabase\\:\\:__construct\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -9509,12 +9029,6 @@ $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockCache\\:\\:getMetaData\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
 ];
 $ignoreErrors[] = [
@@ -10472,12 +9986,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Validation/Validation.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Validation/Validation.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationInterface\\:\\:check\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -10646,12 +10154,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/View/Table.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.return
 	'message' => '#^Method Tests\\\\Support\\\\Cells\\\\StarterCell\\:\\:hello\\(\\) has no return type specified\\.$#',
 	'count' => 1,
@@ -10662,12 +10164,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method Tests\\\\Support\\\\Cells\\\\StarterCell\\:\\:hello\\(\\) has parameter \\$params with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Cells/StarterCell.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Commands/LanguageCommand.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.property
@@ -11852,12 +11348,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Autoloader/AutoloaderTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/tests/system/Autoloader/AutoloaderTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: method.notFound
 	'message' => '#^Call to an undefined method CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\:\\:__destruct\\(\\)\\.$#',
 	'count' => 1,
@@ -11958,12 +11448,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\CLI\\\\ConsoleTest\\:\\:initCLI\\(\\) has parameter \\$command with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/CLI/ConsoleTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: phpDoc.parseError
-	'message' => '#^PHPDoc tag @var has invalid value \\(@var FileVarExportHandler\\|CacheInterface\\)\\: Unexpected token "@var", expected type at offset 16$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/FactoriesCacheFileHandlerTest.php',
 ];
 $ignoreErrors[] = [
 	// identifier: property.notFound
@@ -12284,28 +11768,10 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Commands/BaseCommandTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Commands/CellGeneratorTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Commands/CommandGeneratorTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\CommandTest\\:\\:provideCommandParsesArgsCorrectly\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Commands/CommandTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Commands/ControllerGeneratorTest.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.return
@@ -12350,12 +11816,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Commands/InfoCacheTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Commands/ModelGeneratorTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.return
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\RoutesTest\\:\\:getBuffer\\(\\) has no return type specified\\.$#',
 	'count' => 1,
@@ -12366,12 +11826,6 @@ $ignoreErrors[] = [
 	'message' => '#^Parameter \\#2 \\$mock of static method CodeIgniter\\\\Config\\\\BaseService\\:\\:injectMock\\(\\) expects object, null given\\.$#',
 	'count' => 4,
 	'path' => __DIR__ . '/tests/system/Commands/RoutesTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Commands/ScaffoldGeneratorTest.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
@@ -16500,12 +15954,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Publisher\\\\PublisherRestrictionsTest\\:\\:provideDestinations\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Publisher/PublisherRestrictionsTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Publisher/PublisherSupportTest.php',
 ];
 $ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccessAssign

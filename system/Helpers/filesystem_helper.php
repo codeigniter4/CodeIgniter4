@@ -153,7 +153,7 @@ if (! function_exists('delete_files')) {
      */
     function delete_files(string $path, bool $delDir = false, bool $htdocs = false, bool $hidden = false): bool
     {
-        $path = realpath($path) ?: $path;
+        $path = (($realPath = realpath($path)) !== false) ? $realPath : $path;
         $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         try {
@@ -206,7 +206,7 @@ if (! function_exists('get_filenames')) {
     ): array {
         $files = [];
 
-        $sourceDir = realpath($sourceDir) ?: $sourceDir;
+        $sourceDir = (($realPath = realpath($sourceDir)) !== false) ? $realPath : $sourceDir;
         $sourceDir = rtrim($sourceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         try {

@@ -462,7 +462,7 @@ class Connection extends BaseConnection
     {
         return [
             'code'    => '',
-            'message' => pg_last_error($this->connID) ?: '',
+            'message' => (($lastError = pg_last_error($this->connID)) !== '') ? $lastError : '',
         ];
     }
 

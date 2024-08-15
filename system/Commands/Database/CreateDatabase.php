@@ -75,11 +75,11 @@ class CreateDatabase extends BaseCommand
     /**
      * Creates a new database.
      */
-    public function run(array $params)
+    public function run(array $params): void
     {
-        $name = array_shift($params);
+        $name = (string) array_shift($params);
 
-        if (empty($name)) {
+        if ($name === '') {
             $name = CLI::prompt('Database name', null, 'required'); // @codeCoverageIgnore
         }
 

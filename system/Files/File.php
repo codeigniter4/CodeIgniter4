@@ -91,7 +91,11 @@ class File extends SplFileInfo
     public function guessExtension(): ?string
     {
         // naively get the path extension using pathinfo
-        $pathinfo = pathinfo($this->getRealPath() ?: $this->__toString()) + ['extension' => ''];
+        $pathinfo = pathinfo(
+                (($realPath = $this->getRealPath()) !== false)
+                ? $realPath
+                : $this->__toString()
+            ) + ['extension' => ''];
 
         $proposedExtension = $pathinfo['extension'];
 
@@ -112,7 +116,10 @@ class File extends SplFileInfo
         }
 
         $finfo    = finfo_open(FILEINFO_MIME_TYPE);
-        $mimeType = finfo_file($finfo, $this->getRealPath() ?: $this->__toString());
+        $mimeType = finfo_file(
+                $finfo,
+                (($realPath = $this->getRealPath()) !== false) ? $realPath : $this->__toString()
+            );
         finfo_close($finfo);
 
         return $mimeType;
@@ -125,7 +132,7 @@ class File extends SplFileInfo
     public function getRandomName(): string
     {
         $extension = $this->getExtension();
-        $extension = empty($extension) ? '' : '.' . $extension;
+        $extension = $extension === '' ? '' : ('.' . $extension);
 
         return Time::now()->getTimestamp() . '_' . bin2hex(random_bytes(10)) . $extension;
     }
@@ -141,7 +148,7 @@ class File extends SplFileInfo
         $name ??= $this->getBasename();
         $destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
-        $oldName = $this->getRealPath() ?: $this->__toString();
+        $oldName = (($realPath = $this->getRealPath()) !== false) ? $realPath : $this->__toString();
 
         if (! @rename($oldName, $destination)) {
             $error = error_get_last();

@@ -69,6 +69,11 @@ final class FileTest extends CIUnitTestCase
     {
         $tmp = SUPPORTPATH . 'foobar.zip';
 
+        // Ensure that file do not exists (eg. previous test run fails)
+        if (is_file($tmp)) {
+            unlink($tmp);
+        }
+
         $zip = new ZipArchive();
         $zip->open($tmp, ZipArchive::CREATE | ZipArchive::CHECKCONS | ZipArchive::EXCL);
         $zip->addFile(SYSTEMPATH . 'Common.php');
