@@ -1232,10 +1232,6 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function escapeIdentifiers($item)
     {
-        if ($item === null) {
-            $item = '';
-        }
-
         if (
             $this->escapeChar === ''
             || $item === ''
@@ -1251,6 +1247,10 @@ abstract class BaseConnection implements ConnectionInterface
             }
 
             return $item;
+        }
+
+        if (! is_string($item)) {
+            $item = (string) $item;
         }
 
         // Avoid breaking functions and literal values inside queries
