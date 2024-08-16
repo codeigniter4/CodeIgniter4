@@ -176,7 +176,7 @@ class Forge extends BaseForge
 
         return $this->db->escapeIdentifiers($processedField['name'])
                 . (
-                    (array_key_exists('new_name', $processedField) && $processedField['new_name'] !== '')
+                    (! array_key_exists('new_name', $processedField) || $processedField['new_name'] !== '')
                         ? ''
                         : ' ' . $this->db->escapeIdentifiers($processedField['new_name'])
                 )
@@ -187,7 +187,7 @@ class Forge extends BaseForge
                 . $processedField['auto_increment']
                 . $processedField['unique']
                 . (
-                    (array_key_exists('comment', $processedField) && $processedField['comment'] !== '')
+                    (! array_key_exists('comment', $processedField) || $processedField['comment'] !== '')
                         ? ''
                         : ' COMMENT ' . $processedField['comment']
                 )
