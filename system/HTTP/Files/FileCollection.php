@@ -156,8 +156,6 @@ class FileCollection
 
         $files = $this->fixFilesArray($_FILES);
 
-        d($files);
-
         foreach ($files as $name => $file) {
             $this->files[$name] = $this->createFileObject($file);
         }
