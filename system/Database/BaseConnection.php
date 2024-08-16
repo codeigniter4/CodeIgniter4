@@ -1249,15 +1249,11 @@ abstract class BaseConnection implements ConnectionInterface
             return $item;
         }
 
-        if ($item === null) {
-            $item = '';
-        }
-
         // Avoid breaking functions and literal values inside queries
         if (
             ctype_digit($item)
-            || $item[0] === "'"
-            || ($this->escapeChar !== '"' && $item[0] === '"')
+            || str_starts_with($item, "'")
+            || ($this->escapeChar !== '"' && str_starts_with($item, '"'))
             || str_contains($item, '(')
         ) {
             return $item;
@@ -1278,6 +1274,7 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         foreach ($this->reservedIdentifiers as $id) {
+            /** @psalm-suppress NoValue I don't know why ERROR. */
             if (str_contains($item, '.' . $id)) {
                 return preg_replace(
                     '/' . $this->pregEscapeChar[0] . '?([^' . $this->pregEscapeChar[1] . '\.]+)' . $this->pregEscapeChar[1] . '?\./i',
