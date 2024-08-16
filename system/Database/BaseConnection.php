@@ -1232,6 +1232,10 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function escapeIdentifiers($item)
     {
+        if ($item === null) {
+            $item = '';
+        }
+
         if (
             $this->escapeChar === ''
             || $item === ''
