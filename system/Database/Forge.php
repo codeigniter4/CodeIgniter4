@@ -937,7 +937,7 @@ class Forge
                 $nullString = ' ' . $this->null;
 
                 if ($attributes['NULL'] === true) {
-                    $field['null'] = $this->null === '' ? '' : $nullString;
+                    $field['null'] = ($this->null === '' || $this->null === null) ? '' : $nullString;
                 } elseif ($attributes['NULL'] === $nullString) {
                     $field['null'] = $nullString;
                 } elseif ($attributes['NULL'] === '') {
@@ -1044,11 +1044,11 @@ class Forge
 
         if (array_key_exists('DEFAULT', $attributes)) {
             if ($attributes['DEFAULT'] === null) {
-                $field['default'] = $this->null === '' ? '' : ($this->default . $this->null);
+                $field['default'] = ($this->null === '' || $this->null === null) ? '' : ($this->default . $this->null);
 
                 // Override the NULL attribute if that's our default
                 $attributes['NULL'] = true;
-                $field['null']      = $this->null === '' ? '' : (' ' . $this->null);
+                $field['null']      = ($this->null === '' || $this->null === null) ? '' : (' ' . $this->null);
             } elseif ($attributes['DEFAULT'] instanceof RawSql) {
                 $field['default'] = $this->default . $attributes['DEFAULT'];
             } else {
