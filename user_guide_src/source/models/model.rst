@@ -986,10 +986,10 @@ beforeInsert      **data** = the key/value pairs that are being inserted. If an 
 afterInsert       **id** = the primary key of the new row, or 0 on failure.
                   **data** = the key/value pairs being inserted.
                   **result** = the results of the ``insert()`` method used through the Query Builder.
-beforeUpdate      **id** = the array of primary keys of the rows being updated.
+beforeUpdate      **id** = the array of primary keys of the rows being passed to the ``update()`` method.
                   **data** = the key/value pairs that are being updated. If an object or Entity class is passed to the
                   ``update()`` method, it is first converted to an array.
-afterUpdate       **id** = the array of primary keys of the rows being updated.
+afterUpdate       **id** = the array of primary keys of the rows being passed to the ``update()`` method.
                   **data** = the key/value pairs being updated.
                   **result** = the results of the ``update()`` method used through the Query Builder.
 beforeFind        The name of the calling **method**, whether a **singleton** was requested, and these additional fields:
