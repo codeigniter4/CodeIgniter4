@@ -11,5 +11,5 @@ $controller = $router->controllerName();
 // Retrieve the method name being executed in the controller for the current request.
 $method = $router->methodName();
 
-echo "Current Controller: " . $controller . "<br>";
-echo "Current Method: " . $method;
+echo 'Current Controller: ' . $controller . '<br>';
+echo 'Current Method: ' . $method;
