@@ -151,6 +151,18 @@ a simple view:
 
 .. literalinclude:: routing/020.php
 
+Retrieving the Controller and Method Names
+------------------------------------------
+
+In some cases, you might need to determine which controller and method have been triggered by the current HTTP request.
+This can be useful for logging, debugging, or conditional logic based on the active controller method.
+
+CodeIgniter 4 provides a simple way to access the current route's controller and method names using the ``Services::router()`` class. Here is an example:
+
+.. literalinclude:: routing/071.php
+
+This functionality is particularly useful when you need to dynamically interact with your controller or log which method is handling a particular request.
+
 Specifying Route Paths
 ======================
 
