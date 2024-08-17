@@ -15,45 +15,9 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\Autoloader\\:\\:loadComposerNamespaces\\(\\) has parameter \\$composerPackages with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
-];
-$ignoreErrors[] = [
-	// identifier: isset.property
-	'message' => '#^Property Config\\\\Autoload\\:\\:\\$helpers \\(array\\<int, string\\>\\) in isset\\(\\) is not nullable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.condNotBoolean
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\|string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 6,
-	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\FileLocatorCached\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/FileLocatorCached.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
 	'message' => '#^Property CodeIgniter\\\\Autoloader\\\\FileLocatorCached\\:\\:\\$cache type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Autoloader/FileLocatorCached.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/FileLocatorInterface.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
@@ -1022,12 +986,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Common.php',
 ];
 $ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 4,
-	'path' => __DIR__ . '/system/Common.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Function cache\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -1139,12 +1097,6 @@ $ignoreErrors[] = [
 	// identifier: booleanAnd.leftNotBoolean
 	'message' => '#^Only booleans are allowed in &&, string\\|null given on the left side\\.$#',
 	'count' => 3,
-	'path' => __DIR__ . '/system/Common.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/system/Common.php',
 ];
 $ignoreErrors[] = [
@@ -1294,12 +1246,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Config\\\\Factories\\:\\:verifyPreferApp\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Factories.php',
-];
-$ignoreErrors[] = [
-	// identifier: booleanNot.exprNotBoolean
-	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/Factories.php',
 ];

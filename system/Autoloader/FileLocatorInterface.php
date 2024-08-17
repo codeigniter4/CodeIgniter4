@@ -34,7 +34,7 @@ interface FileLocatorInterface
      *
      * @return false|string The path to the file, or false if not found.
      */
-    public function locateFile(string $file, ?string $folder = null, string $ext = 'php');
+    public function locateFile(string $file, ?string $folder = null, string $ext = 'php'): false|string;
 
     /**
      * Examines a file and returns the fully qualified class name.
@@ -53,6 +53,8 @@ interface FileLocatorInterface
      *      'app/Modules/foo/Config/Routes.php',
      *      'app/Modules/bar/Config/Routes.php',
      *  ]
+     *
+     * @return list<string> List of file paths
      */
     public function search(string $path, string $ext = 'php', bool $prioritizeApp = true): array;
 
@@ -62,7 +64,7 @@ interface FileLocatorInterface
      *
      * @return false|string The qualified name or false if the path is not found
      */
-    public function findQualifiedNameFromPath(string $path);
+    public function findQualifiedNameFromPath(string $path): false|string;
 
     /**
      * Scans the defined namespaces, returning a list of all files
