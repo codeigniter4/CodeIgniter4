@@ -1,9 +1,10 @@
 <?php
-
-use Config\Services;
-
-// Get the router instance
-$router = Services::router();
+/**
+ * Get the router instance
+ *
+ * @var \CodeIgniter\Router\Router $router
+ */
+$router = service('router');
 
 // Retrieve the fully qualified class name of the controller handling the current request.
 $controller = $router->controllerName();
