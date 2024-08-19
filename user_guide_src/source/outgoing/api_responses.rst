@@ -68,8 +68,8 @@ Using ResponseTrait in Custom Classes
 *************************************
 
 While ResponseTrait is commonly used within controllers in CodeIgniter, there are scenarios where you may want to use this trait in custom classes that do not extend from the base Controller class.
-By default, ResponseTrait relies on certain properties, such as $response, which are automatically available in controllers.
-However, these properties are not available in custom classes, leading to errors like Undefined property: $response.
+By default, ResponseTrait relies on certain properties, such as ``$response``, which are automatically available in controllers.
+However, these properties are not available in custom classes, leading to errors like **Undefined property: $response**.
 
 To resolve this, you can manually instantiate and assign a Response object within your custom class.
 This allows you to leverage ResponseTrait and its methods outside of a controller.
