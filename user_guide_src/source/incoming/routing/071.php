@@ -1,9 +1,6 @@
 <?php
-/**
- * Get the router instance
- *
- * @var \CodeIgniter\Router\Router $router
- */
+// Get the router instance.
+/** @var \CodeIgniter\Router\Router $router */
 $router = service('router');
 
 // Retrieve the fully qualified class name of the controller handling the current request.
