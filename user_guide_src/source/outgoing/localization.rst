@@ -14,19 +14,6 @@ CodeIgniter provides several tools to help you localize your application for dif
 localization of an application is a complex subject, it's simple to swap out strings in your application
 with different supported languages.
 
-Language strings are stored in the **app/Language** directory, with a sub-directory for each
-supported language::
-
-    app/
-        Language/
-            en/
-                App.php
-            fr/
-                App.php
-
-.. important:: Locale detection only works for web-based requests that use the IncomingRequest class.
-    Command-line requests will not have these features.
-
 Configuring the Locale
 ======================
 
@@ -52,10 +39,13 @@ directory existed at the **app/Language/en-US** directory then that would be use
 Locale Detection
 ================
 
-There are two methods supported to detect the correct locale during the request. The first is a "set and forget"
-method that will automatically perform :doc:`content negotiation </incoming/content_negotiation>` for you to
-determine the correct locale to use. The second method allows you to specify a segment in your routes that
-will be used to set the locale.
+.. important:: Locale detection only works for web-based requests that use the IncomingRequest class.
+    Command-line requests will not have these features.
+
+There are two methods supported to detect the correct locale during the request.
+
+1. `Content Negotiation`_: The first is a "set and forget" method that will automatically perform :doc:`content negotiation </incoming/content_negotiation>` for you to determine the correct locale to use.
+2. `In Routes`_: The second method allows you to specify a segment in your routes that will be used to set the locale.
 
 Should you ever need to set the locale directly, see `Setting the Current Locale`_.
 
@@ -87,6 +77,7 @@ placeholder ``{locale}`` can be placed as a segment in your route. If present, t
 segment will be your locale:
 
 .. literalinclude:: localization/004.php
+    :lines: 2-
 
 In this example, if the user tried to visit **http://example.com/fr/books**, then the locale would be
 set to ``fr``, assuming it was configured as a valid locale.
@@ -96,14 +87,21 @@ locale will be used in it's place, unless you set to use only the supported loca
 file:
 
 .. literalinclude:: localization/018.php
+    :lines: 2-
 
 .. note:: The ``useSupportedLocalesOnly()`` method can be used since v4.3.0.
 
 Setting the Current Locale
 ==========================
 
-If you want to set the locale directly, you may use
-``IncomingRequest::setLocale(string $locale)``.
+IncomingRequest Locale
+----------------------
+
+If you want to set the locale directly, you may use the ``setLocale()`` method in
+the :doc:`../incoming/incomingrequest`:
+
+.. literalinclude:: localization/020.php
+    :lines: 2-
 
 Before setting the locale, you must set valid locales. Because any attempt to
 set a locale that are not valid will result in
@@ -118,6 +116,18 @@ in **app/Config/App.php**:
     set (and reset) valid locales. Use it if you want to change the valid locales
     dynamically.
 
+Language Locale
+---------------
+
+The ``Language`` class used in the :php:func:`lang()` function also has the current
+locale. This is set to the ``IncommingRequest`` locale during instantiating.
+
+If you want to change the locale after instantiating the language class, use the
+``Language::setLocale()`` method.
+
+.. literalinclude:: localization/021.php
+    :lines: 2-
+
 Retrieving the Current Locale
 =============================
 
@@ -129,6 +139,7 @@ If your controller is extending ``CodeIgniter\Controller``, this will be availab
 Alternatively, you can use the :doc:`Services class </concepts/services>` to retrieve the current request:
 
 .. literalinclude:: localization/006.php
+    :lines: 2-
 
 .. _language-localization:
 
@@ -139,6 +150,16 @@ Language Localization
 Creating Language Files
 =======================
 
+Language strings are stored in the **app/Language** directory, with a sub-directory for each
+supported language (locale)::
+
+    app/
+        Language/
+            en/
+                App.php
+            fr/
+                App.php
+
 .. note:: The Language Files do not have namespaces.
 
 Languages do not have any specific naming convention that are required. The file should be named logically to
@@ -148,6 +169,8 @@ You might name it simply: **Errors.php**.
 Within the file, you would return an array, where each element in the array has a language key and can have string to return:
 
 .. literalinclude:: localization/007.php
+
+.. note:: You cannot use dots (``.``) at the beginning and end of language keys.
 
 It also support nested definition:
 
@@ -165,12 +188,14 @@ For example, to load the ``errorEmailMissing`` string from the **Errors.php**
 language file, you would do the following:
 
 .. literalinclude:: localization/010.php
+    :lines: 2-
 
 For nested definition, you would do the following:
 
 .. literalinclude:: localization/011.php
+    :lines: 2-
 
-If the requested language key doesn't exist in the file for the current locale, the string will be passed
+If the requested language key doesn't exist in the file for the current locale (after `Language Fallback`_), the string will be passed
 back, unchanged. In this example, it would return ``Errors.errorEmailMissing`` or ``Errors.nested.error.message`` if it didn't exist.
 
 Replacing Parameters
@@ -188,10 +213,12 @@ You can pass an array of values to replace placeholders in the language string a
 The first item in the placeholder corresponds to the index of the item in the array, if it's numerical:
 
 .. literalinclude:: localization/013.php
+    :lines: 2-
 
 You can also use named keys to make it easier to keep things straight, if you'd like:
 
 .. literalinclude:: localization/014.php
+    :lines: 2-
 
 Obviously, you can do more than just number replacement. According to the
 `official ICU docs <https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classMessageFormat.html#details>`_ for the underlying
@@ -216,9 +243,11 @@ Specifying Locale
 -----------------
 
 To specify a different locale to be used when replacing parameters, you can pass the locale in as the
-third parameter to the ``lang()`` function.
+third parameter to the :php:func:`lang()` function.
 
 .. literalinclude:: localization/016.php
+
+If you want to change the current locale, see `Language Locale`_.
 
 Nested Arrays
 -------------
@@ -231,14 +260,14 @@ Language Fallback
 =================
 
 If you have a set of messages for a given locale, for instance
-**Language/en/app.php**, you can add language variants for that locale,
-each in its own folder, for instance **Language/en-US/app.php**.
+**Language/en/App.php**, you can add language variants for that locale,
+each in its own folder, for instance **Language/en-US/App.php**.
 
 You only need to provide values for those messages that would be
 localized differently for that locale variant. Any missing message
 definitions will be automatically pulled from the main locale settings.
 
-It gets better - the localization can fall all the way back to English,
+It gets better - the localization can fall all the way back to English (**en**),
 in case new messages are added to the framework and you haven't had
 a chance to translate them yet for your locale.
 
@@ -246,10 +275,10 @@ So, if you are using the locale ``fr-CA``, then a localized
 message will first be sought in the **Language/fr-CA** directory, then in
 the **Language/fr** directory, and finally in the **Language/en** directory.
 
-Message Translations
-====================
+System Message Translations
+===========================
 
-We have an "official" set of translations in their
+We have an "official" set of the system message translations in their
 `own repository <https://github.com/codeigniter4/translations>`_.
 
 You could download that repository, and copy its **Language** folder
@@ -265,6 +294,16 @@ project:
 
 The translated messages will be automatically picked
 up because the translations folders get mapped appropriately.
+
+Overriding System Message Translations
+======================================
+
+The framework provide `System Message Translations`_, and packages that you
+installed may also provide the message translations.
+
+If you want to override some language messages, create language files in the
+**app/Language** directory. Then, return only the array you want to override
+in the file.
 
 .. _generating-translation-files-via-command:
 

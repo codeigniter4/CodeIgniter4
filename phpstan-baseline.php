@@ -15626,30 +15626,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Images/ImageMagickHandlerTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: method.notFound
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Language\\\\Language\\:\\:disableIntlSupport\\(\\)\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Language/LanguageTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: method.notFound
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Language\\\\Language\\:\\:loaded\\(\\)\\.$#',
-	'count' => 3,
-	'path' => __DIR__ . '/tests/system/Language/LanguageTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: method.notFound
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Language\\\\Language\\:\\:loadem\\(\\)\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/tests/system/Language/LanguageTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: method.notFound
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Language\\\\Language\\:\\:setData\\(\\)\\.$#',
-	'count' => 9,
-	'path' => __DIR__ . '/tests/system/Language/LanguageTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Language\\\\LanguageTest\\:\\:provideBundleUniqueKeys\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
