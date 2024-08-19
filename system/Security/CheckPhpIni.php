@@ -124,9 +124,11 @@ class CheckPhpIni
             'log_errors'              => [],
             'error_log'               => [],
             'default_charset'         => ['recommended' => 'UTF-8'],
+            'max_execution_time'      => ['remark' => 'The default is 30.'],
             'memory_limit'            => ['remark' => '> post_max_size'],
             'post_max_size'           => ['remark' => '> upload_max_filesize'],
             'upload_max_filesize'     => ['remark' => '< post_max_size'],
+            'max_input_vars'          => ['remark' => 'The default is 1000.'],
             'request_order'           => ['recommended' => 'GP'],
             'variables_order'         => ['recommended' => 'GPCS'],
             'date.timezone'           => ['recommended' => 'UTC'],
@@ -135,6 +137,7 @@ class CheckPhpIni
             'opcache.enable_cli'      => [],
             'opcache.jit'             => [],
             'opcache.jit_buffer_size' => [],
+            'zend.assertions'         => ['recommended' => '-1'],
         ];
 
         $output = [];
