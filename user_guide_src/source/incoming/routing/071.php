@@ -1,4 +1,5 @@
 <?php
+
 // Get the router instance.
 /** @var \CodeIgniter\Router\Router $router */
 $router = service('router');
