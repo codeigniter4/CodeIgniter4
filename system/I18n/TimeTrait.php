@@ -265,7 +265,7 @@ trait TimeTrait
      */
     public static function createFromTimestamp(float|int $timestamp, $timezone = null, ?string $locale = null): static
     {
-        $time = new static('@' . $timestamp, 'UTC', $locale);
+        $time = new static(sprintf('@%.6f', $timestamp), 'UTC', $locale);
 
         $timezone ??= 'UTC';
 
