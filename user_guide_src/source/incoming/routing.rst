@@ -1135,7 +1135,7 @@ In CodeIgniter 4, understanding and managing routing information is crucial for 
 This involves retrieving details about the active controller and method, as well as the filters applied to a specific route.
 Below, we explore how to access this routing information to assist in tasks such as logging, debugging, or implementing conditional logic.
 
-Retrieving the Controller and Method Names
+Retrieving the Current Controller/Method Names
 ==========================================
 
 In some cases, you might need to determine which controller and method have been triggered by the current HTTP request.
@@ -1147,7 +1147,7 @@ CodeIgniter 4 provides a simple way to access the current route's controller and
 
 This functionality is particularly useful when you need to dynamically interact with your controller or log which method is handling a particular request.
 
-Accessing Active Filters for a Route
+Getting Active Filters for the Current Route
 ====================================
 
 :doc:`Filters <filters>` are a powerful feature that enables you to perform operations such as authentication, logging, and security checks before or after processing HTTP requests.
@@ -1158,5 +1158,5 @@ This method returns a list of filters that are currently active for the route be
 .. literalinclude:: routing/072.php
 
 .. note:: The ``getFilters()`` method returns only the filters defined for the specific route.
-     It does not include global filters or those specified in configuration files.
+     It does not include global filters or those specified in the **app/Config/Filters.php** file.
 
