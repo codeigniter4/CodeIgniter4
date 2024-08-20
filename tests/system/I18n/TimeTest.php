@@ -287,15 +287,14 @@ final class TimeTest extends CIUnitTestCase
         date_default_timezone_set($tz);
     }
 
-    public function testCreateFromTimestampWithMicrotime(): void
+    public function testCreateFromTimestampWithMicroseconds(): void
     {
         $timestamp = 1489762800.654321;
 
         // The timezone will be UTC if you don't specify.
         $time = Time::createFromTimestamp($timestamp);
 
-        // float cannot handle the number precisely.
-        $this->assertSame('2017-03-17 15:00:00.654300', $time->format('Y-m-d H:i:s.u'));
+        $this->assertSame('2017-03-17 15:00:00.654321', $time->format('Y-m-d H:i:s.u'));
     }
 
     public function testCreateFromTimestampWithTimezone(): void
