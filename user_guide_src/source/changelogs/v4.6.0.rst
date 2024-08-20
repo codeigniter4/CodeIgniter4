@@ -57,13 +57,21 @@ Added check to prevent Auto-Discovery of Registrars from running twice. If it is
 executed twice, an exception will be thrown. See
 :ref:`upgrade-460-registrars-with-dirty-hack`.
 
-.. _v460-interface-changes:
+Time::createFromTimestamp()
+---------------------------
+
+``Time::createFromTimestamp()`` handles timezones differently. If ``$timezone``
+is not explicitly passed then the instance has timezone set to UTC unlike earlier
+where the currently set default timezone was used.
+See :ref:`Upgrading Guide <upgrade-460-time-create-from-timestamp>` for details.
 
 Time with Microseconds
 ----------------------
 
 Fixed bugs that some methods in ``Time`` to lose microseconds have been fixed.
 See :ref:`Upgrading Guide <upgrade-460-time-keeps-microseconds>` for details.
+
+.. _v460-interface-changes:
 
 Interface Changes
 =================
@@ -89,6 +97,9 @@ Method Signature Changes
   changed. The ``RouteCollection`` typehint has been changed to ``RouteCollectionInterface``.
 - **View:** The return type of the ``renderSection()`` method has been
   changed to ``string``, and now the method does not call ``echo``.
+- **Time:** The first parameter type of the ``createFromTimestamp()`` has been
+  changed from ``int`` to ``int|float``, and the return type ``static``` has been
+  added.
 
 Removed Type Definitions
 ------------------------
