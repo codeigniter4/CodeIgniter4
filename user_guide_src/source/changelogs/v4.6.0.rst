@@ -71,6 +71,12 @@ Time with Microseconds
 Fixed bugs that some methods in ``Time`` to lose microseconds have been fixed.
 See :ref:`Upgrading Guide <upgrade-460-time-keeps-microseconds>` for details.
 
+Time::setTimestamp()
+--------------------
+
+``Time::setTimestamp()`` behavior has been fixed.
+See :ref:`Upgrading Guide <upgrade-460-time-set-timestamp>` for details.
+
 .. _v460-interface-changes:
 
 Interface Changes

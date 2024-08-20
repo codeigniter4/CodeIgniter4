@@ -85,6 +85,25 @@ Also, methods that returns an ``int`` still lose the microseconds.
 .. literalinclude:: upgrade_460/005.php
    :lines: 2-
 
+.. _upgrade-460-time-set-timestamp:
+
+Time::setTimestamp() Behavior Fix
+=================================
+
+In previous versions, if you call ``Time::setTimestamp()`` on a Time instance with
+a timezone other than the default timezone might return a Time instance with the
+wrong date/time.
+
+This bug has been fixed, and it now behaves in the same way as ``DateTimeImmutable``:
+
+.. literalinclude:: upgrade_460/008.php
+   :lines: 2-
+
+Note that if you use the default timezone, the behavior is not changed:
+
+.. literalinclude:: upgrade_460/009.php
+   :lines: 2-
+
 .. _upgrade-460-registrars-with-dirty-hack:
 
 Registrars with Dirty Hack

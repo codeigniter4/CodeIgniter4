@@ -314,6 +314,9 @@ Returns a new instance with the date set to the new timestamp:
 
 .. literalinclude:: time/030.php
 
+.. note:: Prior to v4.6.0, due to a bug, this method might return incorrect
+    date/time. See :ref:`Upgrading Guide <upgrade-460-time-set-timestamp>` for details.
+
 Modifying the Value
 ===================
 
