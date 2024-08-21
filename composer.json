@@ -88,7 +88,7 @@
             "CodeIgniter\\ComposerScripts::postUpdate"
         ],
         "post-autoload-dump": [
-            "@composer update --working-dir=utils"
+            "@composer update --working-dir=utils --ignore-platform-req=php"
         ],
         "analyze": [
             "Composer\\Config::disableProcessTimeout",
