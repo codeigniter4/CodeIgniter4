@@ -59,8 +59,9 @@ jobs:
           - '8.1'
           - '8.2'
           - '8.3'
+          - '8.4'
         include:
-          - php-version: '8.3'
+          - php-version: '8.4'
             composer-option: '--ignore-platform-req=php'
 
     uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
@@ -88,6 +89,7 @@ jobs:
           - '8.1'
           - '8.2'
           - '8.3'
+          - '8.4'
         db-platform:
           - MySQLi
           - OCI8
@@ -100,7 +102,7 @@ jobs:
           - php-version: '8.1'
             db-platform: MySQLi
             mysql-version: '5.7'
-          - php-version: '8.3'
+          - php-version: '8.4'
             composer-option: '--ignore-platform-req=php'
 
     uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
@@ -129,8 +131,9 @@ jobs:
           - '8.1'
           - '8.2'
           - '8.3'
+          - '8.4'
         include:
-          - php-version: '8.3'
+          - php-version: '8.4'
             composer-option: '--ignore-platform-req=php'
 
     uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
@@ -157,8 +160,9 @@ jobs:
           - '8.1'
           - '8.2'
           - '8.3'
+          - '8.4'
         include:
-          - php-version: '8.3'
+          - php-version: '8.4'
             composer-option: '--ignore-platform-req=php'
 
     uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
