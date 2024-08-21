@@ -20,6 +20,13 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+Method Signature Changes
+========================
+
+Some method signature changes have been made. Classes that extend them should
+update their APIs to reflect the changes. See :ref:`ChangeLog <v455-method-signature-changes>`
+for details.
+
 *********************
 Breaking Enhancements
 *********************

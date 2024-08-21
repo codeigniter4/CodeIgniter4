@@ -14,6 +14,18 @@ Release Date: Unreleased
 BREAKING
 ********
 
+.. _v455-method-signature-changes:
+
+Method Signature Changes
+========================
+
+- **Time:** For PHP 8.4 compatibility only, the first parameter type of the
+  ``createFromTimestamp()`` method has been changed from ``int`` to ``int|float``,
+  and the return type ``static`` has been added. But **note that the**
+  ``createFromTimestamp()`` **method still cannot handle a float value, and the
+  behavior is not yet changed**. That is, the behavior is not the exactly same as
+  PHP 8.4's ``DateTimeImmutable::createFromTimestamp()`` method.
+
 ***************
 Message Changes
 ***************
