@@ -18,6 +18,7 @@ use CodeIgniter\I18n\Exceptions\I18nException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use DateTime;
+use DateTimeImmutable;
 use DateTimeZone;
 use IntlDateFormatter;
 use Locale;
@@ -719,13 +720,28 @@ final class TimeTest extends CIUnitTestCase
 
     public function testSetTimestamp(): void
     {
-        $time  = Time::parse('May 10, 2017', 'America/Chicago');
-        $stamp = strtotime('April 1, 2017');
-        $time2 = $time->setTimestamp($stamp);
+        $time1 = Time::parse('May 10, 2017', 'America/Chicago');
+
+        $stamp = strtotime('2017-04-01'); // We use UTC as the default timezone.
+        $time2 = $time1->setTimestamp($stamp);
 
         $this->assertInstanceOf(Time::class, $time2);
-        $this->assertNotSame($time, $time2);
-        $this->assertSame('2017-04-01 00:00:00', $time2->toDateTimeString());
+        $this->assertSame('2017-05-10 00:00:00 -05:00', $time1->format('Y-m-d H:i:s P'));
+        $this->assertSame('2017-03-31 19:00:00 -05:00', $time2->format('Y-m-d H:i:s P'));
+    }
+
+    public function testSetTimestampDateTimeImmutable(): void
+    {
+        $time1 = new DateTimeImmutable(
+            'May 10, 2017',
+            new DateTimeZone('America/Chicago')
+        );
+
+        $stamp = strtotime('2017-04-01'); // We use UTC as the default timezone.
+        $time2 = $time1->setTimestamp($stamp);
+
+        $this->assertSame('2017-05-10 00:00:00 -05:00', $time1->format('Y-m-d H:i:s P'));
+        $this->assertSame('2017-03-31 19:00:00 -05:00', $time2->format('Y-m-d H:i:s P'));
     }
 
     public function testToDateString(): void

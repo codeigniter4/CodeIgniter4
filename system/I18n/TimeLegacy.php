@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\I18n;
 
 use DateTime;
+use Exception;
+use ReturnTypeWillChange;
 
 /**
  * Legacy Time class.
@@ -47,4 +49,21 @@ use DateTime;
 class TimeLegacy extends DateTime
 {
     use TimeTrait;
+
+    /**
+     * Returns a new instance with the date set to the new timestamp.
+     *
+     * @param int $timestamp
+     *
+     * @return static
+     *
+     * @throws Exception
+     */
+    #[ReturnTypeWillChange]
+    public function setTimestamp($timestamp)
+    {
+        $time = date('Y-m-d H:i:s', $timestamp);
+
+        return static::parse($time, $this->timezone, $this->locale);
+    }
 }

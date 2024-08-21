@@ -685,23 +685,6 @@ trait TimeTrait
         return static::createFromInstance($this->toDateTime()->setTimezone($timezone), $this->locale);
     }
 
-    /**
-     * Returns a new instance with the date set to the new timestamp.
-     *
-     * @param int $timestamp
-     *
-     * @return static
-     *
-     * @throws Exception
-     */
-    #[ReturnTypeWillChange]
-    public function setTimestamp($timestamp)
-    {
-        $time = date('Y-m-d H:i:s', $timestamp);
-
-        return static::parse($time, $this->timezone, $this->locale);
-    }
-
     // --------------------------------------------------------------------
     // Add/Subtract
     // --------------------------------------------------------------------
