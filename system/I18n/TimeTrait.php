@@ -275,7 +275,7 @@ trait TimeTrait
     /**
      * Takes an instance of DateTimeInterface and returns an instance of Time with it's same values.
      *
-     * @return self
+     * @return static
      *
      * @throws Exception
      */
@@ -284,7 +284,7 @@ trait TimeTrait
         $date     = $dateTime->format('Y-m-d H:i:s');
         $timezone = $dateTime->getTimezone();
 
-        return new self($date, $timezone, $locale);
+        return new static($date, $timezone, $locale);
     }
 
     /**
@@ -672,7 +672,7 @@ trait TimeTrait
      *
      * @param DateTimeZone|string $timezone
      *
-     * @return self
+     * @return static
      *
      * @throws Exception
      */
@@ -681,7 +681,7 @@ trait TimeTrait
     {
         $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
 
-        return self::createFromInstance($this->toDateTime()->setTimezone($timezone), $this->locale);
+        return static::createFromInstance($this->toDateTime()->setTimezone($timezone), $this->locale);
     }
 
     /**
