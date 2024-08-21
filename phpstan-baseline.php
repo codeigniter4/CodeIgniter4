@@ -7556,12 +7556,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/I18n/Time.php',
 ];
 $ignoreErrors[] = [
-	// identifier: method.childReturnType
-	'message' => '#^Return type \\(CodeIgniter\\\\I18n\\\\Time\\) of method CodeIgniter\\\\I18n\\\\Time\\:\\:setTimezone\\(\\) should be covariant with return type \\(static\\(DateTimeImmutable\\)\\) of method DateTimeImmutable\\:\\:setTimezone\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/I18n/Time.php',
-];
-$ignoreErrors[] = [
 	// identifier: ternary.shortNotAllowed
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 4,
@@ -7576,12 +7570,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: method.childReturnType
 	'message' => '#^Return type \\(CodeIgniter\\\\I18n\\\\TimeLegacy\\) of method CodeIgniter\\\\I18n\\\\TimeLegacy\\:\\:setTimestamp\\(\\) should be covariant with return type \\(static\\(DateTime\\)\\) of method DateTime\\:\\:setTimestamp\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/I18n/TimeLegacy.php',
-];
-$ignoreErrors[] = [
-	// identifier: method.childReturnType
-	'message' => '#^Return type \\(CodeIgniter\\\\I18n\\\\TimeLegacy\\) of method CodeIgniter\\\\I18n\\\\TimeLegacy\\:\\:setTimezone\\(\\) should be covariant with return type \\(static\\(DateTime\\)\\) of method DateTime\\:\\:setTimezone\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/I18n/TimeLegacy.php',
 ];
