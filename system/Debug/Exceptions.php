@@ -209,6 +209,10 @@ class Exceptions
     public function errorHandler(int $severity, string $message, ?string $file = null, ?int $line = null)
     {
         if ($this->isDeprecationError($severity)) {
+            if ($this->isSessionSidDeprecationError($message, $file, $line)) {
+                return true;
+            }
+
             if (! $this->config->logDeprecations || (bool) env('CODEIGNITER_SCREAM_DEPRECATIONS')) {
                 throw new ErrorException($message, 0, $severity, $file, $line);
             }
@@ -221,6 +225,32 @@ class Exceptions
         }
 
         return false; // return false to propagate the error to PHP standard error handler
+    }
+
+    /**
+     * Handles session.sid_length and session.sid_bits_per_character deprecations
+     * in PHP 8.4.
+     */
+    private function isSessionSidDeprecationError(string $message, ?string $file = null, ?int $line = null): bool
+    {
+        if (
+            PHP_VERSION_ID >= 80400
+            && str_contains($message, 'session.sid_')
+        ) {
+            log_message(
+                LogLevel::WARNING,
+                '[DEPRECATED] {message} in {errFile} on line {errLine}.',
+                [
+                    'message' => $message,
+                    'errFile' => clean_path($file ?? ''),
+                    'errLine' => $line ?? 0,
+                ]
+            );
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
