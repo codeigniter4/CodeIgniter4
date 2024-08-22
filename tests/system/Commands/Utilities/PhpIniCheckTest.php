@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
-use Config\App;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -38,7 +37,7 @@ final class PhpIniCheckTest extends CIUnitTestCase
         parent::tearDown();
     }
 
-    protected function getBuffer()
+    protected function getBuffer(): string
     {
         return $this->getStreamFilterBuffer();
     }
@@ -60,7 +59,7 @@ final class PhpIniCheckTest extends CIUnitTestCase
     {
         command('phpini:check opcache');
 
-        $this->assertStringContainsString("opcache.save_comments", $this->getBuffer());
+        $this->assertStringContainsString('opcache.save_comments', $this->getBuffer());
     }
 
     public function testCommandCheckNoExistsArg(): void

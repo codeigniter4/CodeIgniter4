@@ -80,7 +80,7 @@ final class PhpIniCheck extends BaseCommand
             return EXIT_ERROR;
         }
 
-        $argument = isset($params[0]) && $params[0] ? $params[0] : null;
+        $argument = $params[0] ?? null;
 
         CheckPhpIni::run(argument: $argument);
 
