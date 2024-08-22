@@ -397,6 +397,12 @@
 </li>
 </ul>
 </li>
+<li><p><a class="reference internal" href="#getting-routing-information" id="id80">Getting Routing Information</a></p>
+<ul>
+<li><p><a class="reference internal" href="#retrieving-the-current-controller-method-names" id="id81">Retrieving the Current Controller/Method Names</a></p></li>
+<li><p><a class="reference internal" href="#getting-active-filters-for-the-current-route" id="id82">Getting Active Filters for the Current Route</a></p></li>
+</ul>
+</li>
 </ul>
 </nav>
 <section id="what-is-uri-routing">
@@ -1806,6 +1812,56 @@ due to a bug.</p>
 </pre></div>
 </div>
 </section>
+</section>
+</section>
+<section id="getting-routing-information">
+<h2><a class="toc-backref" href="#id80" role="doc-backlink">Getting Routing Information</a><a class="headerlink" href="#getting-routing-information" title="Permalink to this heading"></a></h2>
+<p>In CodeIgniter 4, understanding and managing routing information is crucial for handling HTTP requests effectively.
+This involves retrieving details about the active controller and method, as well as the filters applied to a specific route.
+Below, we explore how to access this routing information to assist in tasks such as logging, debugging, or implementing conditional logic.</p>
+<section id="retrieving-the-current-controller-method-names">
+<h3><a class="toc-backref" href="#id81" role="doc-backlink">Retrieving the Current Controller/Method Names</a><a class="headerlink" href="#retrieving-the-current-controller-method-names" title="Permalink to this heading"></a></h3>
+<p>In some cases, you might need to determine which controller and method have been triggered by the current HTTP request.
+This can be useful for logging, debugging, or conditional logic based on the active controller method.</p>
+<p>CodeIgniter 4 provides a simple way to access the current route’s controller and method names using the <code class="docutils literal notranslate"><span class="pre">Router</span></code> class. Here is an example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Get the router instance.</span>
+<span class="sd">/** @var \CodeIgniter\Router\Router $router */</span>
+<span class="nv">$router</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;router&#39;</span><span class="p">);</span>
+
+<span class="c1">// Retrieve the fully qualified class name of the controller handling the current request.</span>
+<span class="nv">$controller</span> <span class="o">=</span> <span class="nv">$router</span><span class="o">-&gt;</span><span class="na">controllerName</span><span class="p">();</span>
+
+<span class="c1">// Retrieve the method name being executed in the controller for the current request.</span>
+<span class="nv">$method</span> <span class="o">=</span> <span class="nv">$router</span><span class="o">-&gt;</span><span class="na">methodName</span><span class="p">();</span>
+
+<span class="k">echo</span> <span class="s1">&#39;Current Controller: &#39;</span> <span class="o">.</span> <span class="nv">$controller</span> <span class="o">.</span> <span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">;</span>
+<span class="k">echo</span> <span class="s1">&#39;Current Method: &#39;</span> <span class="o">.</span> <span class="nv">$method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This functionality is particularly useful when you need to dynamically interact with your controller or log which method is handling a particular request.</p>
+</section>
+<section id="getting-active-filters-for-the-current-route">
+<h3><a class="toc-backref" href="#id82" role="doc-backlink">Getting Active Filters for the Current Route</a><a class="headerlink" href="#getting-active-filters-for-the-current-route" title="Permalink to this heading"></a></h3>
+<p><a class="reference internal" href="filters.html"><span class="doc">Filters</span></a> are a powerful feature that enables you to perform operations such as authentication, logging, and security checks before or after processing HTTP requests.
+To access the active filters for a specific route, you can use the <code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\Router\Router::getFilters()</span></code> method from the <code class="docutils literal notranslate"><span class="pre">Router</span></code> class.</p>
+<p>This method returns a list of filters that are currently active for the route being processed:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Get the router instance.</span>
+<span class="sd">/** @var \CodeIgniter\Router\Router $router */</span>
+<span class="nv">$router</span>  <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;router&#39;</span><span class="p">);</span>
+<span class="nv">$filters</span> <span class="o">=</span> <span class="nv">$router</span><span class="o">-&gt;</span><span class="na">getFilters</span><span class="p">();</span>
+
+<span class="k">echo</span> <span class="s1">&#39;Active Filters for the Route: &#39;</span> <span class="o">.</span> <span class="nb">implode</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">,</span> <span class="nv">$filters</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">getFilters()</span></code> method returns only the filters defined for the specific route.
+It does not include global filters or those specified in the <strong>app/Config/Filters.php</strong> file.</p>
+</div>
 </section>
 </section>
 </section>
