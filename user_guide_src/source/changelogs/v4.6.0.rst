@@ -104,7 +104,7 @@ Method Signature Changes
 - **View:** The return type of the ``renderSection()`` method has been
   changed to ``string``, and now the method does not call ``echo``.
 - **Time:** The first parameter type of the ``createFromTimestamp()`` has been
-  changed from ``int`` to ``int|float``, and the return type ``static``` has been
+  changed from ``int`` to ``int|float``, and the return type ``static`` has been
   added.
 
 Removed Type Definitions
