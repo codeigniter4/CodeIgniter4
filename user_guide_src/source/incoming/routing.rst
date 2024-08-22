@@ -1127,3 +1127,36 @@ You can specify the host in the request URL with the ``--host`` option:
 .. code-block:: console
 
     php spark routes --host accounts.example.com
+
+Getting Routing Information
+***************************
+
+In CodeIgniter 4, understanding and managing routing information is crucial for handling HTTP requests effectively.
+This involves retrieving details about the active controller and method, as well as the filters applied to a specific route.
+Below, we explore how to access this routing information to assist in tasks such as logging, debugging, or implementing conditional logic.
+
+Retrieving the Current Controller/Method Names
+==============================================
+
+In some cases, you might need to determine which controller and method have been triggered by the current HTTP request.
+This can be useful for logging, debugging, or conditional logic based on the active controller method.
+
+CodeIgniter 4 provides a simple way to access the current route's controller and method names using the ``Router`` class. Here is an example:
+
+.. literalinclude:: routing/071.php
+
+This functionality is particularly useful when you need to dynamically interact with your controller or log which method is handling a particular request.
+
+Getting Active Filters for the Current Route
+============================================
+
+:doc:`Filters <filters>` are a powerful feature that enables you to perform operations such as authentication, logging, and security checks before or after processing HTTP requests.
+To access the active filters for a specific route, you can use the :php:meth:`CodeIgniter\\Router\\Router::getFilters()` method from the ``Router`` class.
+
+This method returns a list of filters that are currently active for the route being processed:
+
+.. literalinclude:: routing/072.php
+
+.. note:: The ``getFilters()`` method returns only the filters defined for the specific route.
+     It does not include global filters or those specified in the **app/Config/Filters.php** file.
+
