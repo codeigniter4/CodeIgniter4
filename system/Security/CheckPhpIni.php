@@ -137,7 +137,7 @@ class CheckPhpIni
             'opcache.enable'          => ['recommended' => '1'],
             'opcache.enable_cli'      => ['recommended' => '1'],
             'opcache.jit'             => ['recommended' => 'tracing'],
-            'opcache.jit_buffer_size' => ['recommended' => '256', 'remark' => 'Adjust with your free space of memory)'],
+            'opcache.jit_buffer_size' => ['recommended' => '256', 'remark' => 'Adjust with your free space of memory'],
             'zend.assertions'         => ['recommended' => '-1'],
         ];
 
@@ -146,8 +146,8 @@ class CheckPhpIni
                 'opcache.enable'                  => ['recommended' => '1'],
                 'opcache.enable_cli'              => ['recommended' => '1'],
                 'opcache.jit'                     => ['recommended' => 'tracing'],
-                'opcache.jit_buffer_size'         => ['recommended' => '256', 'remark' => 'Adjust with your free space of memory)'],
-                'opcache.memory_consumption'      => ['recommended' => '512', 'remark' => 'Adjust with your free space of memory)'],
+                'opcache.jit_buffer_size'         => ['recommended' => '256', 'remark' => 'Adjust with your free space of memory'],
+                'opcache.memory_consumption'      => ['recommended' => '512', 'remark' => 'Adjust with your free space of memory'],
                 'opcache.interned_strings_buffer' => ['recommended' => '64'],
                 'opcache.max_accelerated_files'   => ['recommended' => '40000', 'remark' => 'Find many files in your project (example: find your_project/ -iname *.php|wc -l)'],
                 'opcache.max_wasted_percentage'   => ['recommended' => '15'],
