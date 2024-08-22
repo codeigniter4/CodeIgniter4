@@ -39,12 +39,12 @@ final class CheckPhpIniTest extends CIUnitTestCase
 
     public function testCheckIniOpcache(): void
     {
-        $output = CheckPhpIni::checkIni();
+        $output = CheckPhpIni::checkIni('opcache');
 
         $expected = [
             'global'      => '1',
             'current'     => '1',
-            'recommended' => '1',
+            'recommended' => '0',
             'remark'      => '',
         ];
         $this->assertSame($expected, $output['opcache.save_comments']);
