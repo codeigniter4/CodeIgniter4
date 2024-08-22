@@ -29,9 +29,9 @@ class CheckPhpIni
      *
      * @return string|void HTML string or void in CLI
      */
-    public static function run(bool $isCli = true)
+    public static function run(bool $isCli = true, ?string $argument = null)
     {
-        $output = static::checkIni();
+        $output = static::checkIni($argument);
 
         $thead = ['Directive', 'Global', 'Current', 'Recommended', 'Remark'];
         $tbody = [];
@@ -115,39 +115,47 @@ class CheckPhpIni
      * @internal Used for testing purposes only.
      * @testTag
      */
-    public static function checkIni(): array
+    public static function checkIni(?string $argument = null): array
     {
+        // Default items
         $items = [
-            'error_reporting'                 => ['recommended' => '5111'],
-            'display_errors'                  => ['recommended' => '0'],
-            'display_startup_errors'          => ['recommended' => '0'],
-            'log_errors'                      => [],
-            'error_log'                       => [],
-            'default_charset'                 => ['recommended' => 'UTF-8'],
+            'error_reporting'         => ['recommended' => '5111'],
+            'display_errors'          => ['recommended' => '0'],
+            'display_startup_errors'  => ['recommended' => '0'],
+            'log_errors'              => [],
+            'error_log'               => [],
+            'default_charset'         => ['recommended' => 'UTF-8'],
             'max_execution_time'      => ['remark' => 'The default is 30.'],
-            'memory_limit'                    => ['remark' => '> post_max_size'],
-            'post_max_size'                   => ['remark' => '> upload_max_filesize'],
-            'upload_max_filesize'             => ['remark' => '< post_max_size'],
+            'memory_limit'            => ['remark' => '> post_max_size'],
+            'post_max_size'           => ['remark' => '> upload_max_filesize'],
+            'upload_max_filesize'     => ['remark' => '< post_max_size'],
             'max_input_vars'          => ['remark' => 'The default is 1000.'],
-            'request_order'                   => ['recommended' => 'GP'],
-            'variables_order'                 => ['recommended' => 'GPCS'],
-            'date.timezone'                   => ['recommended' => 'UTC'],
-            'mbstring.language'               => ['recommended' => 'neutral'],
-            'opcache.enable'                  => ['recommended' => '1'],
-            'opcache.enable_cli'              => [],
-            'opcache.jit'                     => [],
-            'opcache.jit_buffer_size'         => [],
+            'request_order'           => ['recommended' => 'GP'],
+            'variables_order'         => ['recommended' => 'GPCS'],
+            'date.timezone'           => ['recommended' => 'UTC'],
+            'mbstring.language'       => ['recommended' => 'neutral'],
+            'opcache.enable'          => ['recommended' => '1'],
+            'opcache.enable_cli'      => ['recommended' => '1'],
+            'opcache.jit'             => ['recommended' => 'tracing'],
+            'opcache.jit_buffer_size' => ['recommended' => '256', 'remark' => 'Adjust with your free space of memory)'],
             'zend.assertions'         => ['recommended' => '-1'],
-            'opcache.memory_consumption'      => ['recommended' => '728', 'remark' => 'Increasing the configured memory size (MB) will improve performance by caching those files'],
-            'opcache.memory_consumption'      => ['recommended' => '728', 'remark' => 'Increasing the configured memory size (MB) will improve performance by caching those files (consideration based on free space of memory)'],
-            'opcache.memory_consumption'      => ['recommended' => '512', 'remark' => 'Adjust with your free space of memory)'],
-            'opcache.interned_strings_buffer' => ['recommended' => '64'],
-            'opcache.max_accelerated_files'   => ['recommended' => '40000', 'remark' => 'Find many files in your project (example: find your_project/ -iname *.php|wc -l)'],
-            'opcache.max_wasted_percentage'   => ['recommended' => '15'],
-            'opcache.validate_timestamps'     => ['recommended' => '0'],
-            'opcache.revalidate_freq'         => ['recommended' => '0'],
-            'opcache.save_comments'           => ['recommended' => '1'],
         ];
+
+        if ($argument === 'opcache') {
+            $items = [
+                'opcache.enable'                  => ['recommended' => '1'],
+                'opcache.enable_cli'              => ['recommended' => '1'],
+                'opcache.jit'                     => ['recommended' => 'tracing'],
+                'opcache.jit_buffer_size'         => ['recommended' => '256', 'remark' => 'Adjust with your free space of memory)'],
+                'opcache.memory_consumption'      => ['recommended' => '512', 'remark' => 'Adjust with your free space of memory)'],
+                'opcache.interned_strings_buffer' => ['recommended' => '64'],
+                'opcache.max_accelerated_files'   => ['recommended' => '40000', 'remark' => 'Find many files in your project (example: find your_project/ -iname *.php|wc -l)'],
+                'opcache.max_wasted_percentage'   => ['recommended' => '15'],
+                'opcache.validate_timestamps'     => ['recommended' => '0'],
+                'opcache.revalidate_freq'         => ['recommended' => '0'],
+                'opcache.save_comments'           => ['recommended' => '0'],
+            ];
+        }
 
         $output = [];
         $ini    = ini_get_all();
