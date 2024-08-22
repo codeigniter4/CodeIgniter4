@@ -213,6 +213,10 @@ class Exceptions
                 return true;
             }
 
+            if ($this->isImplicitNullableDeprecationError($message, $file, $line)) {
+                return true;
+            }
+
             if (! $this->config->logDeprecations || (bool) env('CODEIGNITER_SCREAM_DEPRECATIONS')) {
                 throw new ErrorException($message, 0, $severity, $file, $line);
             }
@@ -236,6 +240,34 @@ class Exceptions
         if (
             PHP_VERSION_ID >= 80400
             && str_contains($message, 'session.sid_')
+        ) {
+            log_message(
+                LogLevel::WARNING,
+                '[DEPRECATED] {message} in {errFile} on line {errLine}.',
+                [
+                    'message' => $message,
+                    'errFile' => clean_path($file ?? ''),
+                    'errLine' => $line ?? 0,
+                ]
+            );
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Workaround to implicit nullable deprecation errors in PHP 8.4.
+     *
+     * "Implicitly marking parameter $xxx as nullable is deprecated,
+     *  the explicit nullable type must be used instead"
+     */
+    private function isImplicitNullableDeprecationError(string $message, ?string $file = null, ?int $line = null): bool
+    {
+        if (
+            PHP_VERSION_ID >= 80400
+            && str_contains($message, 'the explicit nullable type must be used instead')
         ) {
             log_message(
                 LogLevel::WARNING,
