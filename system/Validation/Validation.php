@@ -51,7 +51,7 @@ class Validation implements ValidationInterface
     /**
      * Stores the actual rules that should be run against $data.
      *
-     * @var array
+     * @var array<array-key, array{label?: string, rules: list<string>}>
      *
      * [
      *     field1 => [
