@@ -139,6 +139,13 @@ abstract class BaseModel
     protected $allowedFields = [];
 
     /**
+     * An array of field names that should be cast to boolean.
+     *
+     * @var array<string>
+     */
+    protected $booleanFields  = [];
+    
+    /**
      * If true, will set created_at, and updated_at
      * values during insert and update routines.
      *
@@ -615,7 +622,7 @@ abstract class BaseModel
         if ($this->tempAllowCallbacks) {
             $eventData = $this->trigger('afterFind', $eventData);
         }
-
+        $eventData                = $this->convertBooleanFields($eventData);
         $this->tempReturnType     = $this->returnType;
         $this->tempUseSoftDeletes = $this->useSoftDeletes;
         $this->tempAllowCallbacks = $this->allowCallbacks;
@@ -623,6 +630,51 @@ abstract class BaseModel
         return $eventData['data'];
     }
 
+
+    /**
+     * Convert specific fields to boolean after fetching the data.
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function convertBooleanFields(array $data)
+    {
+        if (empty($this->booleanFields)) {
+            return $data;
+        }
+
+        if (isset($data['data'])) {
+            if (isset($data['data'][0])) {
+                // Multiple rows case
+                foreach ($data['data'] as &$row) {
+                    $row = $this->convertFieldsToBoolean($row, $this->booleanFields);
+                }
+            } else {
+                // Single row case
+                $data['data'] = $this->convertFieldsToBoolean($data['data'], $this->booleanFields);
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Helper function to convert specific fields to boolean.
+     *
+     * @param array $data
+     * @param array $fields
+     * @return array
+     */
+    private function convertFieldsToBoolean(array $data, array $fields)
+    {
+        foreach ($fields as $field) {
+            if (isset($data[$field])) {
+                $data[$field] = (bool) $data[$field];
+            }
+        }
+        return $data;
+    }
+    
     /**
      * Fetches the column of database.
      *
