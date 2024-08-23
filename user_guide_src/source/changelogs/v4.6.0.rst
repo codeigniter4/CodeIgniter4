@@ -77,6 +77,19 @@ Time::setTimestamp()
 ``Time::setTimestamp()`` behavior has been fixed.
 See :ref:`Upgrading Guide <upgrade-460-time-set-timestamp>` for details.
 
+Error Reporting to Non-HTML Requests
+------------------------------------
+
+In previous versions, when a request does not accept HTML, CodeIgniter showed
+error details only in the ``development`` and ``testing`` environments.
+
+But because it is not possible to display error details when using a custom
+environment, this behavior has been fixed so that error details are displayed if
+``display_errors`` in PHP ini setting is enabled.
+
+With this fix, the error details are now displayed under the same conditions for
+both HTML requests and non-HTML requests.
+
 .. _v460-interface-changes:
 
 Interface Changes
