@@ -137,7 +137,7 @@ class CheckPhpIni
             'opcache.enable'          => ['recommended' => '1'],
             'opcache.enable_cli'      => ['recommended' => '1'],
             'opcache.jit'             => ['recommended' => 'tracing'],
-            'opcache.jit_buffer_size' => ['recommended' => '256', 'remark' => 'Adjust with your free space of memory'],
+            'opcache.jit_buffer_size' => ['recommended' => '128', 'remark' => 'Adjust with your free space of memory'],
             'zend.assertions'         => ['recommended' => '-1'],
         ];
 
