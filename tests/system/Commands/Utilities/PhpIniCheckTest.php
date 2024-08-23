@@ -67,7 +67,7 @@ final class PhpIniCheckTest extends CIUnitTestCase
         command('phpini:check noexists');
 
         $this->assertStringContainsString(
-            'You must write correct arguments.',
+            'You must specify a correct argument.',
             $this->getBuffer()
         );
     }
