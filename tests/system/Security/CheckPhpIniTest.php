@@ -45,7 +45,7 @@ final class CheckPhpIniTest extends CIUnitTestCase
             'global'      => '1',
             'current'     => '1',
             'recommended' => '0',
-            'remark'      => '',
+            'remark'      => 'Enable when you using package require docblock annotation',
         ];
         $this->assertSame($expected, $output['opcache.save_comments']);
     }
