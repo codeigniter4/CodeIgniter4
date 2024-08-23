@@ -144,16 +144,19 @@ class CheckPhpIni
         if ($argument === 'opcache') {
             $items = [
                 'opcache.enable'                  => ['recommended' => '1'],
-                'opcache.enable_cli'              => ['recommended' => '1'],
-                'opcache.jit'                     => ['recommended' => 'tracing'],
-                'opcache.jit_buffer_size'         => ['recommended' => '256', 'remark' => 'Adjust with your free space of memory'],
-                'opcache.memory_consumption'      => ['recommended' => '512', 'remark' => 'Adjust with your free space of memory'],
-                'opcache.interned_strings_buffer' => ['recommended' => '64'],
+                'opcache.enable_cli'              => ['recommended' => '0', 'remark' => 'Enable when you using CLI'],
+                'opcache.jit'                     => ['recommended' => 'tracing', 'remark' => 'Disable when you used third-party extensions'],
+                'opcache.jit_buffer_size'         => ['recommended' => '128', 'remark' => 'Adjust with your free space of memory'],
+                'opcache.memory_consumption'      => ['recommended' => '128', 'remark' => 'Adjust with your free space of memory'],
+                'opcache.interned_strings_buffer' => ['recommended' => '16'],
                 'opcache.max_accelerated_files'   => ['remark' => 'Adjust based on the number of PHP files in your project (e.g.: find your_project/ -iname \'*.php\'|wc -l)'],
-                'opcache.max_wasted_percentage'   => ['recommended' => '15'],
-                'opcache.validate_timestamps'     => ['recommended' => '0'],
-                'opcache.revalidate_freq'         => ['recommended' => '0'],
-                'opcache.save_comments'           => ['recommended' => '0'],
+                'opcache.max_wasted_percentage'   => ['recommended' => '10'],
+                'opcache.validate_timestamps'     => ['recommended' => '0', 'remark' => 'When you disabled, opcache hold your code into shared memory. Restart webserver needed'],
+                'opcache.revalidate_freq'         => [],
+                'opcache.file_cache'              => ['remark' => 'Location file caching, It should improve performance when SHM memory is full'],
+                'opcache.file_cache_only'         => ['remark' => 'Opcode caching in shared memory, Disabled when you using Windows'],
+                'opcache.file_cache_fallback'     => ['remark' => 'Set enable when you using Windows'],
+                'opcache.save_comments'           => ['recommended' => '0', 'remark' => 'Enable when you using package require docblock annotation'],
             ];
         }
 
