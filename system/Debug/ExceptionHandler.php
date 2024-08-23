@@ -134,13 +134,7 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
         // Production environments should have a custom exception file.
         $view = 'production.php';
 
-        if (
-            in_array(
-                strtolower(ini_get('display_errors')),
-                ['1', 'true', 'on', 'yes'],
-                true
-            )
-        ) {
+        if ($this->isDisplayErrorsEnabled()) {
             $view = 'error_exception.php';
         }
 
@@ -157,5 +151,14 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
         }
 
         return $view;
+    }
+
+    private function isDisplayErrorsEnabled(): bool
+    {
+        return in_array(
+            strtolower(ini_get('display_errors')),
+            ['1', 'true', 'on', 'yes'],
+            true
+        );
     }
 }
