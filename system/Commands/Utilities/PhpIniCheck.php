@@ -73,9 +73,15 @@ final class PhpIniCheck extends BaseCommand
     public function run(array $params)
     {
         if (isset($params[0]) && ! in_array($params[0], array_keys($this->arguments), true)) {
-            CLI::error('You must write correct arguments.');
-            CLI::write('  Usage: ' . $this->usage);
-            CLI::write('Example: config:check opcache');
+            CLI::error('You must specify a correct argument.');
+            CLI::write('    Usage: ' . $this->usage);
+            CLI::write('  Example: config:check opcache');
+            CLI::write('Arguments:');
+
+            $length = max(array_map(strlen(...), array_keys($this->arguments)));
+            foreach ($this->arguments as $argument => $description) {
+                CLI::write(CLI::color($this->setPad($argument, $length, 2, 2), 'green') . $description);
+            }
 
             return EXIT_ERROR;
         }
