@@ -126,6 +126,27 @@ The following is an example of code that will no longer work:
 
 .. literalinclude:: upgrade_460/001.php
 
+.. _upgrade-460-sid-change:
+
+Session ID (SID) Change
+=======================
+
+Now :doc:`../libraries/sessions` forces to use the PHP default 32 character SIDs,
+with 4 bits of entropy per character. This change is to match the behavior of
+PHP 9.
+
+In other words, the following settings are always used:
+
+.. code-block:: ini
+
+    session.sid_bits_per_character = 4
+    session.sid_length = 32
+
+In previous versions, the PHP ini settings was respected. So this change may
+change your SID length.
+
+If you cannot accept this change, customize the Session library.
+
 Interface Changes
 =================
 

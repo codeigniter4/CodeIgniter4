@@ -90,6 +90,13 @@ environment, this behavior has been fixed so that error details are displayed if
 With this fix, the error details are now displayed under the same conditions for
 both HTML requests and non-HTML requests.
 
+Session ID (SID)
+----------------
+
+Now ``Session`` library forces to use the PHP default 32 character SIDs, with 4
+bits of entropy per character.
+See :ref:`Upgrading Guide <upgrade-460-sid-change>` for details.
+
 .. _v460-interface-changes:
 
 Interface Changes
