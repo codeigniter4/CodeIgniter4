@@ -46,6 +46,6 @@ jobs:
               gh pr edit $url --add-label "stale"
 
               # Add a comment
-              gh pr comment $url --body ":wave: Hi, @$author!<br><br>We detected conflicts in your PR against the base branch :speak_no_evil:<br>You may want to sync :arrows_counterclockwise: your branch with upstream!<br><br>Ref: [Syncing Your Branch](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/workflow.md#pushing-your-branch)"
+              gh pr comment $url --body ":wave: Hi, @$author!<br><br>We detected conflicts in your PR against the base branch :speak_no_evil:<br>You may want to sync :arrows_counterclockwise: your branch with upstream!<br><br>Ref: [Syncing Your Branch](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/workflow.md#updating-your-branch)"
             fi
           done
