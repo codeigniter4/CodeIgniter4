@@ -1562,7 +1562,7 @@ class RouteCollection implements RouteCollectionInterface
      * Compares the hostname passed in against the current hostname
      * on this page request.
      *
-     * @param string $hostname Hostname in route options
+     * @param list<string>|string $hostname Hostname in route options
      */
     private function checkHostname($hostname): bool
     {
