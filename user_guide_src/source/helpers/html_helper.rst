@@ -342,7 +342,7 @@ The following functions are available:
 .. php:function:: doctype([$type = 'html5'])
 
     :param  string  $type: Doctype name
-    :returns:   An HTML DocType decleration
+    :returns:   An HTML DocType declaration
     :rtype: string
 
     Helps you generate document type declarations (DTD's). HTML 5
