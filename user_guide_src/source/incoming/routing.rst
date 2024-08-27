@@ -476,6 +476,12 @@ by passing the "hostname" option along with the desired domain to allow it on as
 This example would only allow the specified hosts to work if the domain exactly matched **accounts.example.com**.
 It would not work under the main site at **example.com**.
 
+.. versionadded:: 4.6.0
+
+Also you can restrict with multiple hostname, e.g:
+
+.. literalinclude:: routing/073.php
+
 Limit to Subdomains
 ===================
 
