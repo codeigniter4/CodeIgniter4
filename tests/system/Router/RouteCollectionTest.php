@@ -1760,9 +1760,9 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->get('/', 'Home::index', ['as' => 'home']);
         $routes->get('/', '\App\Controllers\Site\CDoc::index', ['hostname' => ['one.domain.com', 'two.domain.com', 'three.domain.com']]);
 
-        $expects = '\App\Controllers\Site\CDoc';
+        $expect = '\App\Controllers\Site\CDoc';
 
-        $this->assertSame($expects, $router->handle('/'));
+        $this->assertSame($expect, $router->handle('/'));
     }
 
     public function testRouteMatchingHostMultipleFail(): void
@@ -1780,9 +1780,9 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->get('/', 'Home::index', ['as' => 'home']);
         $routes->get('/', '\App\Controllers\Site\CDoc::index', ['hostname' => ['one.domain.com', 'two.domain.com', 'three.domain.com']]);
 
-        $expects = '\\' . Home::class;
+        $expect = '\\' . Home::class;
 
-        $this->assertSame($expects, $router->handle('/'));
+        $this->assertSame($expect, $router->handle('/'));
     }
 
     /**
