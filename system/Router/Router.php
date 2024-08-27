@@ -181,7 +181,7 @@ class Router implements RouterInterface
     }
 
     /**
-     * Finds the controller method corresponding to the URI.
+     * Finds the controller corresponding to the URI.
      *
      * @param string|null $uri URI path relative to baseURL
      *
