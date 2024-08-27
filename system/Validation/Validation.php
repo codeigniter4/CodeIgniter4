@@ -50,7 +50,7 @@ class Validation implements ValidationInterface
     /**
      * Stores the actual rules that should be run against $data.
      *
-     * @var array
+     * @var array<array-key, array{label?: string, rules: list<string>}>
      *
      * [
      *     field1 => [
@@ -162,6 +162,9 @@ class Validation implements ValidationInterface
         // Run through each rule. If we have any field set for
         // this rule, then we need to run them through!
         foreach ($this->rules as $field => $setup) {
+            //  An array key might be int.
+            $field = (string) $field;
+
             $rules = $setup['rules'];
 
             if (is_string($rules)) {

@@ -270,6 +270,16 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame([], $this->validation->getValidated());
     }
 
+    public function testRunWithNumericFieldName(): void
+    {
+        // The array key will be int.
+        $data = ['123' => 'notanumber'];
+        $this->validation->setRules(['123' => 'is_numeric']);
+
+        $this->assertFalse($this->validation->run($data));
+        $this->assertSame([], $this->validation->getValidated());
+    }
+
     public function testClosureRule(): void
     {
         $this->validation->setRules(
