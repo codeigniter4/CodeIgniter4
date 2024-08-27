@@ -1757,7 +1757,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->setDefaultController('Home');
         $routes->setDefaultMethod('index');
 
-        $routes->get('/', 'Home::index', ['as' => 'ddd']);
+        $routes->get('/', 'Home::index', ['as' => 'home']);
         $routes->get('/', '\App\Controllers\Site\CDoc::index', ['hostname' => ['one.domain.com', 'two.domain.com', 'three.domain.com']]);
 
         $expects = '\App\Controllers\Site\CDoc';
