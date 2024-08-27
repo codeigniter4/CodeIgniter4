@@ -290,8 +290,7 @@
              
   <section id="html-helper">
 <h1>HTML Helper<a class="headerlink" href="#html-helper" title="Permalink to this heading"></a></h1>
-<p>The HTML Helper file contains functions that assist in working with
-HTML.</p>
+<p>The HTML Helper file contains functions that assist in working with HTML.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#configuration" id="id1">Configuration</a></p></li>
@@ -327,13 +326,13 @@ HTML.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>HTML image tag</p>
+<dd class="field-even"><p>HTML image element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;img</span> <span class="pre">/&gt;</span></code> tags. The first parameter contains the
+<p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;img&gt;</span></code> elements. The first parameter contains the
 image source. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -426,13 +425,13 @@ of serving images from your app that are not web-accessible (e.g., in <strong>pu
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>HTML link tag</p>
+<dd class="field-even"><p>An HTML link element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;link</span> <span class="pre">/&gt;</span></code> tags. This is useful for stylesheet links,
+<p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;link&gt;</span></code> elements. This is useful for stylesheet links,
 as well as other links. The parameters are <em>href</em>, with optional <em>rel</em>,
 <em>type</em>, <em>title</em>, <em>media</em> and <em>indexPage</em>.</p>
 <p><em>indexPage</em> is a boolean value that specifies if the <em>href</em> should have
@@ -482,13 +481,13 @@ for complete control over all attributes and values:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>HTML script tag</p>
+<dd class="field-even"><p>An HTML script element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;script&gt;&lt;/script&gt;</span></code> tags. The parameters is <em>src</em>, with optional <em>indexPage</em>.</p>
+<p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;script&gt;</span></code> elements. The parameters are <em>src</em> and optional <em>indexPage</em>.</p>
 <p><em>indexPage</em> is a boolean value that specifies if the <em>src</em> should have
 the page specified by <code class="docutils literal notranslate"><span class="pre">$config['indexPage']</span></code> added to the address it creates.</p>
 <p>Example:</p>
@@ -521,14 +520,14 @@ for complete control over all attributes and values:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>HTML-formatted unordered list</p>
+<dd class="field-even"><p>An HTML unordered list element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Permits you to generate unordered HTML lists from simple or
-multi-dimensional arrays. Example:</p>
+<p>Permits you to generate an unordered HTML list from a simple or
+multi-dimensional array. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$list</span> <span class="o">=</span> <span class="p">[</span>
@@ -653,13 +652,13 @@ multi-dimensional arrays. Example:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>HTML-formatted ordered list</p>
+<dd class="field-even"><p>An HTML ordered list element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Identical to <a class="reference internal" href="#ul" title="ul"><code class="xref php php-func docutils literal notranslate"><span class="pre">ul()</span></code></a>, only it produces the <code class="docutils literal notranslate"><span class="pre">&lt;ol&gt;</span></code> tag for
+<p>Identical to <a class="reference internal" href="#ul" title="ul"><code class="xref php php-func docutils literal notranslate"><span class="pre">ul()</span></code></a>, only it produces <code class="docutils literal notranslate"><span class="pre">&lt;ol&gt;</span></code> element for
 ordered lists instead of <code class="docutils literal notranslate"><span class="pre">&lt;ul&gt;</span></code>.</p>
 </dd></dl>
 
@@ -670,14 +669,14 @@ ordered lists instead of <code class="docutils literal notranslate"><span class=
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$src</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Either a source string or an array of sources. See <a class="reference internal" href="#source" title="source"><code class="xref php php-func docutils literal notranslate"><span class="pre">source()</span></code></a> function</p></li>
-<li><p><strong>$unsupportedMessage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The message to display if the media tag is not supported by the browser</p></li>
+<li><p><strong>$unsupportedMessage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The message to display if the video element is not supported by the browser</p></li>
 <li><p><strong>$attributes</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – HTML attributes</p></li>
 <li><p><strong>$tracks</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Use the track function inside an array. See <a class="reference internal" href="#track" title="track"><code class="xref php php-func docutils literal notranslate"><span class="pre">track()</span></code></a> function</p></li>
 <li><p><strong>$indexPage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>HTML-formatted video element</p>
+<dd class="field-even"><p>An HTML video element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -745,20 +744,20 @@ source arrays. Example:</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$src</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Either a source string or an array of sources. See <a class="reference internal" href="#source" title="source"><code class="xref php php-func docutils literal notranslate"><span class="pre">source()</span></code></a> function</p></li>
-<li><p><strong>$unsupportedMessage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The message to display if the media tag is not supported by the browser</p></li>
+<li><p><strong>$unsupportedMessage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The message to display if the audio element is not supported by the browser</p></li>
 <li><p><strong>$attributes</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – </p></li>
 <li><p><strong>$tracks</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Use the track function inside an array. See <a class="reference internal" href="#track" title="track"><code class="xref php php-func docutils literal notranslate"><span class="pre">track()</span></code></a> function</p></li>
 <li><p><strong>$indexPage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>HTML-formatted audio element</p>
+<dd class="field-even"><p>An HTML audio element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Identical to <a class="reference internal" href="#video" title="video"><code class="xref php php-func docutils literal notranslate"><span class="pre">video()</span></code></a>, only it produces the <code class="docutils literal notranslate"><span class="pre">&lt;audio&gt;</span></code> tag instead of <code class="docutils literal notranslate"><span class="pre">&lt;video&gt;</span></code>.</p>
+<p>Identical to <a class="reference internal" href="#video" title="video"><code class="xref php php-func docutils literal notranslate"><span class="pre">video()</span></code></a>, only it produces <code class="docutils literal notranslate"><span class="pre">&lt;audio&gt;</span></code> element instead of <code class="docutils literal notranslate"><span class="pre">&lt;video&gt;</span></code>.</p>
 </dd></dl>
 
 <dl class="php function">
@@ -773,13 +772,13 @@ source arrays. Example:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>HTML source tag</p>
+<dd class="field-even"><p>An HTML source element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;source</span> <span class="pre">/&gt;</span></code> tags. The first parameter contains the
+<p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;source&gt;</span></code> elements. The first parameter contains the
 source source. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -802,13 +801,13 @@ source source. Example:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>HTML embed tag</p>
+<dd class="field-even"><p>An HTML embed element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;embed</span> <span class="pre">/&gt;</span></code> tags. The first parameter contains the
+<p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;embed&gt;</span></code> elements. The first parameter contains the
 embed source. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -831,13 +830,13 @@ embed source. Example:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>HTML object tag</p>
+<dd class="field-even"><p>An HTML object element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;object</span> <span class="pre">/&gt;</span></code> tags. The first parameter contains the
+<p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code> elements. The first parameter contains the
 object data. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -877,13 +876,13 @@ object data. Example:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>HTML param tag</p>
+<dd class="field-even"><p>An HTML param element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;param</span> <span class="pre">/&gt;</span></code> tags. The first parameter contains the
+<p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;param&gt;</span></code> elements. The first parameter contains the
 param source. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -905,7 +904,7 @@ param source. Example:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>HTML track tag</p>
+<dd class="field-even"><p>An HTML track element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -931,13 +930,13 @@ formatted in WebVTT format. Example:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>HTML DocType tag</p>
+<dd class="field-even"><p>An HTML DocType declaration</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Helps you generate document type declarations, or DTD’s. HTML 5
+<p>Helps you generate document type declarations (DTD’s). HTML 5
 is used by default, but many doctypes are available.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1054,7 +1053,7 @@ pulled from <strong>app/Config/DocTypes.php</strong>, or they could be over-ridd
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 22, 2024.
+      <span class="lastupdated">Last updated on Aug 27, 2024.
       </span></p>
   </div>
 
