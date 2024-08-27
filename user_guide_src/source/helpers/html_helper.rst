@@ -2,8 +2,7 @@
 HTML Helper
 ###########
 
-The HTML Helper file contains functions that assist in working with
-HTML.
+The HTML Helper file contains functions that assist in working with HTML.
 
 .. contents::
     :local:
@@ -31,10 +30,10 @@ The following functions are available:
     :param  string|array  $src:  Image source URI, or array of attributes and values
     :param  bool    $indexPage:  Whether to treat ``$src`` as a routed URI string
     :param  mixed   $attributes: Additional HTML attributes
-    :returns:   HTML image tag
+    :returns:   HTML image element
     :rtype: string
 
-    Lets you create HTML ``<img />`` tags. The first parameter contains the
+    Lets you create HTML ``<img />`` elements. The first parameter contains the
     image source. Example:
 
     .. literalinclude:: html_helper/002.php
@@ -84,10 +83,10 @@ The following functions are available:
     :param  string  $media:     Media type
     :param  bool    $indexPage: Whether to treat ``$src`` as a routed URI string
     :param  string  $hreflang:  Hreflang type
-    :returns:   HTML link tag
+    :returns:   An HTML link element
     :rtype: string
 
-    Lets you create HTML ``<link />`` tags. This is useful for stylesheet links,
+    Lets you create HTML ``<link />`` elements. This is useful for stylesheet links,
     as well as other links. The parameters are *href*, with optional *rel*,
     *type*, *title*, *media* and *indexPage*.
 
@@ -111,10 +110,10 @@ The following functions are available:
 
     :param  array|string  $src: The source name or URL of a JavaScript file, or an associative array specifying the attributes
     :param  bool          $indexPage: Whether to treat ``$src`` as a routed URI string
-    :returns:   HTML script tag
+    :returns:   An HTML script element
     :rtype: string
 
-    Lets you create HTML ``<script></script>`` tags. The parameters is *src*, with optional *indexPage*.
+    Lets you create HTML ``<script></script>`` elements. The parameters are *src* and optional *indexPage*.
 
     *indexPage* is a boolean value that specifies if the *src* should have
     the page specified by ``$config['indexPage']`` added to the address it creates.
@@ -132,11 +131,11 @@ The following functions are available:
 
     :param  array   $list: List entries
     :param  array   $attributes: HTML attributes
-    :returns:   HTML-formatted unordered list
+    :returns:   An HTML unordered list element
     :rtype: string
 
-    Permits you to generate unordered HTML lists from simple or
-    multi-dimensional arrays. Example:
+    Permits you to generate an unordered HTML list from a simple or
+    multi-dimensional array. Example:
 
     .. literalinclude:: html_helper/012.php
 
@@ -205,20 +204,20 @@ The following functions are available:
 
     :param  array   $list: List entries
     :param  array   $attributes: HTML attributes
-    :returns:   HTML-formatted ordered list
+    :returns:   An HTML ordered list element
     :rtype: string
 
-    Identical to :php:func:`ul()`, only it produces the ``<ol>`` tag for
+    Identical to :php:func:`ul()`, only it produces ``<ol>`` element for
     ordered lists instead of ``<ul>``.
 
 .. php:function:: video($src[, $unsupportedMessage = ''[, $attributes = ''[, $tracks = [][, $indexPage = false]]]])
 
     :param  mixed   $src:                Either a source string or an array of sources. See :php:func:`source()` function
-    :param  string  $unsupportedMessage: The message to display if the media tag is not supported by the browser
+    :param  string  $unsupportedMessage: The message to display if the video element is not supported by the browser
     :param  string  $attributes:         HTML attributes
     :param  array   $tracks:             Use the track function inside an array. See :php:func:`track()` function
     :param  bool    $indexPage:
-    :returns:                            HTML-formatted video element
+    :returns:                            An HTML video element
     :rtype: string
 
     Permits you to generate HTML video element from simple or
@@ -253,24 +252,24 @@ The following functions are available:
 .. php:function:: audio($src[, $unsupportedMessage = ''[, $attributes = ''[, $tracks = [][, $indexPage = false]]]])
 
     :param  mixed   $src:                Either a source string or an array of sources. See :php:func:`source()` function
-    :param  string  $unsupportedMessage: The message to display if the media tag is not supported by the browser
+    :param  string  $unsupportedMessage: The message to display if the audio element is not supported by the browser
     :param  string  $attributes:
     :param  array   $tracks:             Use the track function inside an array. See :php:func:`track()` function
     :param  bool    $indexPage:
-    :returns:                            HTML-formatted audio element
+    :returns:                            An HTML audio element
     :rtype: string
 
-    Identical to :php:func:`video()`, only it produces the ``<audio>`` tag instead of ``<video>``.
+    Identical to :php:func:`video()`, only it produces ``<audio>`` element instead of ``<video>``.
 
 .. php:function:: source($src = ''[, $type = false[, $attributes = '']])
 
     :param  string  $src:        The path of the media resource
     :param  bool    $type:       The MIME-type of the resource with optional codecs parameters
     :param  array   $attributes: HTML attributes
-    :returns:   HTML source tag
+    :returns:   An HTML source element
     :rtype: string
 
-    Lets you create HTML ``<source />`` tags. The first parameter contains the
+    Lets you create HTML ``<source />`` elements. The first parameter contains the
     source source. Example:
 
     .. literalinclude:: html_helper/015.php
@@ -281,10 +280,10 @@ The following functions are available:
     :param  bool    $type:       MIME-type
     :param  array   $attributes: HTML attributes
     :param  bool    $indexPage:
-    :returns:   HTML embed tag
+    :returns:   An HTML embed element
     :rtype: string
 
-    Lets you create HTML ``<embed />`` tags. The first parameter contains the
+    Lets you create HTML ``<embed />`` elements. The first parameter contains the
     embed source. Example:
 
     .. literalinclude:: html_helper/016.php
@@ -295,10 +294,10 @@ The following functions are available:
     :param  bool    $type:       Content-type of the resource
     :param  array   $attributes: HTML attributes
     :param  array   $params:     Use the param function inside an array. See :php:func:`param()` function
-    :returns:   HTML object tag
+    :returns:   An HTML object element
     :rtype: string
 
-    Lets you create HTML ``<object />`` tags. The first parameter contains the
+    Lets you create HTML ``<object />`` elements. The first parameter contains the
     object data. Example:
 
     .. literalinclude:: html_helper/017.php
@@ -319,10 +318,10 @@ The following functions are available:
     :param  string  $name:       The name of the parameter
     :param  string  $value:      The value of the parameter
     :param  array   $attributes: HTML attributes
-    :returns:   HTML param tag
+    :returns:   An HTML param element
     :rtype: string
 
-    Lets you create HTML ``<param />`` tags. The first parameter contains the
+    Lets you create HTML ``<param />`` elements. The first parameter contains the
     param source. Example:
 
     .. literalinclude:: html_helper/018.php
@@ -332,7 +331,7 @@ The following functions are available:
     :param  string  $name:       The name of the parameter
     :param  string  $value:      The value of the parameter
     :param  array   $attributes: HTML attributes
-    :returns:   HTML track tag
+    :returns:   An HTML track element
     :rtype: string
 
     Generates a track element to specify timed tracks. The tracks are
@@ -343,10 +342,10 @@ The following functions are available:
 .. php:function:: doctype([$type = 'html5'])
 
     :param  string  $type: Doctype name
-    :returns:   HTML DocType tag
+    :returns:   An HTML DocType decleration
     :rtype: string
 
-    Helps you generate document type declarations, or DTD's. HTML 5
+    Helps you generate document type declarations (DTD's). HTML 5
     is used by default, but many doctypes are available.
 
     Example:
