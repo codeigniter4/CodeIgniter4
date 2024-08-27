@@ -168,7 +168,7 @@ Commands
 Routing
 =======
 
-- Restrict limit hostname can multiple.
+- Now you can specify multiple hostnames when restricting routes.
 
 Testing
 =======
