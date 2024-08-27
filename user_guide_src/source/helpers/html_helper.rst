@@ -33,7 +33,7 @@ The following functions are available:
     :returns:   HTML image element
     :rtype: string
 
-    Lets you create HTML ``<img />`` elements. The first parameter contains the
+    Lets you create HTML ``<img>`` elements. The first parameter contains the
     image source. Example:
 
     .. literalinclude:: html_helper/002.php
@@ -86,7 +86,7 @@ The following functions are available:
     :returns:   An HTML link element
     :rtype: string
 
-    Lets you create HTML ``<link />`` elements. This is useful for stylesheet links,
+    Lets you create HTML ``<link>`` elements. This is useful for stylesheet links,
     as well as other links. The parameters are *href*, with optional *rel*,
     *type*, *title*, *media* and *indexPage*.
 
@@ -113,7 +113,7 @@ The following functions are available:
     :returns:   An HTML script element
     :rtype: string
 
-    Lets you create HTML ``<script></script>`` elements. The parameters are *src* and optional *indexPage*.
+    Lets you create HTML ``<script>`` elements. The parameters are *src* and optional *indexPage*.
 
     *indexPage* is a boolean value that specifies if the *src* should have
     the page specified by ``$config['indexPage']`` added to the address it creates.
@@ -269,7 +269,7 @@ The following functions are available:
     :returns:   An HTML source element
     :rtype: string
 
-    Lets you create HTML ``<source />`` elements. The first parameter contains the
+    Lets you create HTML ``<source>`` elements. The first parameter contains the
     source source. Example:
 
     .. literalinclude:: html_helper/015.php
@@ -283,7 +283,7 @@ The following functions are available:
     :returns:   An HTML embed element
     :rtype: string
 
-    Lets you create HTML ``<embed />`` elements. The first parameter contains the
+    Lets you create HTML ``<embed>`` elements. The first parameter contains the
     embed source. Example:
 
     .. literalinclude:: html_helper/016.php
@@ -297,7 +297,7 @@ The following functions are available:
     :returns:   An HTML object element
     :rtype: string
 
-    Lets you create HTML ``<object />`` elements. The first parameter contains the
+    Lets you create HTML ``<object>`` elements. The first parameter contains the
     object data. Example:
 
     .. literalinclude:: html_helper/017.php
@@ -321,7 +321,7 @@ The following functions are available:
     :returns:   An HTML param element
     :rtype: string
 
-    Lets you create HTML ``<param />`` elements. The first parameter contains the
+    Lets you create HTML ``<param>`` elements. The first parameter contains the
     param source. Example:
 
     .. literalinclude:: html_helper/018.php
