@@ -3178,7 +3178,7 @@ class BaseBuilder
                     //  5 => ')'                /* optional */
                     // ];
 
-                    if (isset($matches[4]) && $matches[4] !== '' && $matches[4] !== '0') {
+                    if (isset($matches[4]) && $matches[4] !== '') {
                         $protectIdentifiers = false;
                         if (str_contains($matches[4], '.')) {
                             $protectIdentifiers = true;
