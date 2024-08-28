@@ -1486,7 +1486,7 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: empty.notAllowed
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 30,
+	'count' => 29,
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
 ];
 $ignoreErrors[] = [
@@ -1930,6 +1930,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:whereNotIn\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
+];
+$ignoreErrors[] = [
+	// identifier: isset.offset
+	'message' => '#^Offset 4 on array\\{string, string, string, string, string, string\\} in isset\\(\\) always exists and is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
 ];
@@ -11451,7 +11457,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccessAssign
-	'message' => '#^Assigning mixed directly on offset \'CONTENT_TYPE\' of \\$_SERVER is discouraged\\.$#',
+	'message' => '#^Assigning string directly on offset \'CONTENT_TYPE\' of \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
@@ -11482,18 +11488,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\API\\\\ResponseTraitTest\\:\\:makeController\\(\\) has parameter \\$userHeaders with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.parameter
-	'message' => '#^Method CodeIgniter\\\\API\\\\ResponseTraitTest\\:\\:tryValidContentType\\(\\) has parameter \\$contentType with no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.parameter
-	'message' => '#^Method CodeIgniter\\\\API\\\\ResponseTraitTest\\:\\:tryValidContentType\\(\\) has parameter \\$mimeType with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
@@ -16766,12 +16760,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.parameter
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:createNewAutoRouter\\(\\) has parameter \\$namespace with no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:provideRejectTranslateUriToCamelCase\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
@@ -17188,12 +17176,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: missingType.return
 	'message' => '#^Method CodeIgniter\\\\Test\\\\BootstrapFCPATHTest\\:\\:readOutput\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Test/BootstrapFCPATHTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.parameter
-	'message' => '#^Method CodeIgniter\\\\Test\\\\BootstrapFCPATHTest\\:\\:readOutput\\(\\) has parameter \\$file with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Test/BootstrapFCPATHTest.php',
 ];
