@@ -192,7 +192,7 @@ trait ResponseTrait
             $body = service('format')->getFormatter('application/json')->format($body);
         }
 
-        return $body ?: null;
+        return ($body !== false) ? $body : null;
     }
 
     /**
@@ -534,10 +534,12 @@ trait ResponseTrait
 
         if (is_numeric($expire)) {
             $expire = $expire > 0 ? Time::now()->getTimestamp() + $expire : 0;
+        } else {
+            $expire = 0;
         }
 
         $cookie = new Cookie($name, $value, [
-            'expires'  => $expire ?: 0,
+            'expires'  => $expire,
             'domain'   => $domain,
             'path'     => $path,
             'prefix'   => $prefix,
@@ -566,7 +568,7 @@ trait ResponseTrait
      */
     public function hasCookie(string $name, ?string $value = null, string $prefix = ''): bool
     {
-        $prefix = $prefix ?: Cookie::setDefaults()['prefix']; // to retain BC
+        $prefix = ($prefix !== '') ? $prefix : Cookie::setDefaults()['prefix']; // to retain BC
 
         return $this->cookieStore->has($name, $prefix, $value);
     }
@@ -586,7 +588,7 @@ trait ResponseTrait
         }
 
         try {
-            $prefix = $prefix ?: Cookie::setDefaults()['prefix']; // to retain BC
+            $prefix = ($prefix !== '') ? $prefix : Cookie::setDefaults()['prefix']; // to retain BC
 
             return $this->cookieStore->get($name, $prefix);
         } catch (CookieException $e) {
@@ -607,7 +609,7 @@ trait ResponseTrait
             return $this;
         }
 
-        $prefix = $prefix ?: Cookie::setDefaults()['prefix']; // to retain BC
+        $prefix = ($prefix !== '') ? $prefix : Cookie::setDefaults()['prefix']; // to retain BC
 
         $prefixed = $prefix . $name;
         $store    = $this->cookieStore;

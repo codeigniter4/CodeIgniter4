@@ -230,7 +230,7 @@ class Services extends BaseService
             return static::getSharedInstance('email', $config);
         }
 
-        if (empty($config) || ! (is_array($config) || $config instanceof EmailConfig)) {
+        if ($config === null || ! (is_array($config) || $config instanceof EmailConfig)) {
             $config = config(EmailConfig::class);
         }
 
@@ -345,7 +345,7 @@ class Services extends BaseService
         $config ??= config(Images::class);
         assert($config instanceof Images);
 
-        $handler = $handler ?: $config->defaultHandler;
+        $handler = ($handler !== null && $handler !== '') ? $handler : $config->defaultHandler;
         $class   = $config->handlers[$handler];
 
         return new $class($config);
@@ -384,8 +384,7 @@ class Services extends BaseService
             $requestLocale = Locale::getDefault();
         }
 
-        // Use '?:' for empty string check
-        $locale = $locale ?: $requestLocale;
+        $locale = ($locale !== null && $locale !== '') ? $locale : $requestLocale;
 
         return new Language($locale);
     }
@@ -484,7 +483,7 @@ class Services extends BaseService
             return static::getSharedInstance('parser', $viewPath, $config);
         }
 
-        $viewPath = $viewPath ?: (new Paths())->viewDirectory;
+        $viewPath = ($viewPath !== null && $viewPath !== '') ? $viewPath : (new Paths())->viewDirectory;
         $config ??= config(ViewConfig::class);
 
         return new Parser($config, $viewPath, AppServices::get('locator'), CI_DEBUG, AppServices::get('logger'));
@@ -503,7 +502,7 @@ class Services extends BaseService
             return static::getSharedInstance('renderer', $viewPath, $config);
         }
 
-        $viewPath = $viewPath ?: (new Paths())->viewDirectory;
+        $viewPath = ($viewPath !== null && $viewPath !== '') ? $viewPath : (new Paths())->viewDirectory;
         $config ??= config(ViewConfig::class);
 
         return new View($config, $viewPath, AppServices::get('locator'), CI_DEBUG, AppServices::get('logger'));

@@ -151,7 +151,7 @@ class Pager implements PagerInterface
         $perPage ??= $this->config->perPage;
         $pageCount = (int) ceil($total / $perPage);
 
-        $this->groups[$group]['currentPage'] = $page > $pageCount ? $pageCount : $page;
+        $this->groups[$group]['currentPage'] = min($page, $pageCount);
         $this->groups[$group]['perPage']     = $perPage;
         $this->groups[$group]['total']       = $total;
         $this->groups[$group]['pageCount']   = $pageCount;
@@ -216,7 +216,7 @@ class Pager implements PagerInterface
     {
         $this->ensureGroup($group);
 
-        return $this->groups[$group]['currentPage'] ?: 1;
+        return $this->groups[$group]['currentPage'];
     }
 
     /**
@@ -406,6 +406,7 @@ class Pager implements PagerInterface
             'total'        => null,
             'perPage'      => $perPage ?? $this->config->perPage,
             'pageCount'    => 1,
+            'currentPage'  => 1,
             'pageSelector' => $group === 'default' ? 'page' : 'page_' . $group,
         ];
 
@@ -435,7 +436,7 @@ class Pager implements PagerInterface
 
             $page = (int) ($_GET[$pageSelector] ?? 1);
 
-            $this->groups[$group]['currentPage'] = $page < 1 ? 1 : $page;
+            $this->groups[$group]['currentPage'] = max($page, 1);
         }
     }
 }

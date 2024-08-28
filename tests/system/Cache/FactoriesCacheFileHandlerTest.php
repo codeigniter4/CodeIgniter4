@@ -23,7 +23,7 @@ use PHPUnit\Framework\Attributes\Group;
 final class FactoriesCacheFileHandlerTest extends FactoriesCacheFileVarExportHandlerTest
 {
     /**
-     * @var @var FileVarExportHandler|CacheInterface
+     * @var CacheInterface|FactoriesCache\FileVarExportHandler
      */
     protected $handler;
 

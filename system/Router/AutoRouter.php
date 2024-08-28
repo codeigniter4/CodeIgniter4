@@ -86,7 +86,7 @@ final class AutoRouter implements AutoRouterInterface
         // If it doesn't, no biggie - the default method name
         // has already been set.
         if ($segments !== []) {
-            $this->method = array_shift($segments) ?: $this->method;
+            $this->method = (($method = array_shift($segments)) !== null) ? (string) $method : $this->method;
         }
 
         // Prevent access to initController method
@@ -94,7 +94,7 @@ final class AutoRouter implements AutoRouterInterface
             throw PageNotFoundException::forPageNotFound();
         }
 
-        /** @var array $params An array of params to the controller method. */
+        // An array of params to the controller method.
         $params = [];
 
         if ($segments !== []) {

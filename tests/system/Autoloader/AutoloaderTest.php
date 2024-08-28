@@ -117,7 +117,7 @@ final class AutoloaderTest extends CIUnitTestCase
         // look for Home controller, as that should be in base repo
         $actual   = $classLoader(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
-        $this->assertSame($expected, realpath($actual) ?: $actual);
+        $this->assertSame($expected, (($realPath = realpath($actual)) !== false) ? $realPath : $actual);
     }
 
     public function testServiceAutoLoader(): void
@@ -131,7 +131,7 @@ final class AutoloaderTest extends CIUnitTestCase
         // look for Home controller, as that should be in base repo
         $actual   = $classLoader(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
-        $this->assertSame($expected, realpath($actual) ?: $actual);
+        $this->assertSame($expected, (($realPath = realpath($actual)) !== false) ? $realPath : $actual);
 
         $autoloader->unregister();
     }

@@ -757,6 +757,8 @@ class CodeIgniter
 
     /**
      * Returns an array with our basic performance stats collected.
+     *
+     * @return array{startTime: float|null, totalTime: float|null}
      */
     public function getPerformanceStats(): array
     {

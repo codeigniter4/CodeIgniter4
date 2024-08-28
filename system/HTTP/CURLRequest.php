@@ -547,7 +547,7 @@ class CURLRequest extends OutgoingRequest
         // SSL Verification
         if (isset($config['verify'])) {
             if (is_string($config['verify'])) {
-                $file = realpath($config['verify']) ?: $config['verify'];
+                $file = (($realPath = realpath($config['verify'])) !== false) ? $realPath : $config['verify'];
 
                 if (! is_file($file)) {
                     throw HTTPException::forInvalidSSLKey($config['verify']);
@@ -571,7 +571,9 @@ class CURLRequest extends OutgoingRequest
         // Debug
         if ($config['debug']) {
             $curlOptions[CURLOPT_VERBOSE] = 1;
-            $curlOptions[CURLOPT_STDERR]  = is_string($config['debug']) ? fopen($config['debug'], 'a+b') : fopen('php://stderr', 'wb');
+            $curlOptions[CURLOPT_STDERR]  = is_string($config['debug'])
+                    ? fopen($config['debug'], 'a+b')
+                    : fopen('php://stderr', 'wb');
         }
 
         // Decode Content

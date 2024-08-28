@@ -38,7 +38,7 @@ class LanguageCommand extends BaseCommand
         $this->component = 'Language';
         $this->directory = 'Language\\' . $params['lang'];
 
-        $sort = (isset($params['sort']) && $params['sort'] === 'off') ? false : true;
+        $sort = ! (isset($params['sort']) && $params['sort'] === 'off');
         $this->setSortImports($sort);
 
         $this->generateClass($params);
@@ -46,6 +46,6 @@ class LanguageCommand extends BaseCommand
 
     protected function prepare(string $class): string
     {
-        return file_get_contents(__DIR__ . '/Foobar.php') ?: '';
+        return (string) file_get_contents(__DIR__ . '/Foobar.php');
     }
 }

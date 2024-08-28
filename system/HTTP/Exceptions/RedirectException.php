@@ -76,7 +76,11 @@ class RedirectException extends Exception implements ResponsableInterface, HTTPE
 
         service('logger')->info(
             'REDIRECTED ROUTE at '
-             . ($this->response->getHeaderLine('Location') ?: substr($this->response->getHeaderLine('Refresh'), 6))
+             . (
+                 (($location = $this->response->getHeaderLine('Location')) !== '')
+                ? $location
+                : substr($this->response->getHeaderLine('Refresh'), 6)
+             )
         );
 
         return $this->response;

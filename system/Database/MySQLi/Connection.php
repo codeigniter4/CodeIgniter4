@@ -22,6 +22,8 @@ use mysqli_sql_exception;
 use stdClass;
 use Throwable;
 
+use const MYSQLI_STORE_RESULT;
+
 /**
  * Connection for MySQLi
  *
@@ -72,7 +74,7 @@ class Connection extends BaseConnection
      *
      * @var int
      */
-    public $resultMode = MYSQLI_STORE_RESULT;
+    public $resultMode = \MYSQLI_STORE_RESULT;
 
     /**
      * Use MYSQLI_OPT_INT_AND_FLOAT_NATIVE
@@ -97,7 +99,7 @@ class Connection extends BaseConnection
             $socket   = $this->hostname;
         } else {
             $hostname = ($persistent === true) ? 'p:' . $this->hostname : $this->hostname;
-            $port     = empty($this->port) ? null : $this->port;
+            $port     = ($this->port === 0 || $this->port === '') ? null : $this->port;
             $socket   = '';
         }
 
@@ -136,19 +138,19 @@ class Connection extends BaseConnection
         if (is_array($this->encrypt)) {
             $ssl = [];
 
-            if (! empty($this->encrypt['ssl_key'])) {
+            if (isset($this->encrypt['ssl_key']) && $this->encrypt['ssl_key'] !== '') {
                 $ssl['key'] = $this->encrypt['ssl_key'];
             }
-            if (! empty($this->encrypt['ssl_cert'])) {
+            if (isset($this->encrypt['ssl_cert']) && $this->encrypt['ssl_cert'] !== '') {
                 $ssl['cert'] = $this->encrypt['ssl_cert'];
             }
-            if (! empty($this->encrypt['ssl_ca'])) {
+            if (isset($this->encrypt['ssl_ca']) && $this->encrypt['ssl_ca'] !== '') {
                 $ssl['ca'] = $this->encrypt['ssl_ca'];
             }
-            if (! empty($this->encrypt['ssl_capath'])) {
+            if (isset($this->encrypt['ssl_capath']) && $this->encrypt['ssl_capath'] !== '') {
                 $ssl['capath'] = $this->encrypt['ssl_capath'];
             }
-            if (! empty($this->encrypt['ssl_cipher'])) {
+            if (isset($this->encrypt['ssl_cipher']) && $this->encrypt['ssl_cipher'] !== '') {
                 $ssl['cipher'] = $this->encrypt['ssl_cipher'];
             }
 
@@ -165,7 +167,10 @@ class Connection extends BaseConnection
                     //
                     // https://secure.php.net/ChangeLog-5.php#5.6.16
                     // https://bugs.php.net/bug.php?id=68344
-                    elseif (defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT') && version_compare($this->mysqli->client_info, 'mysqlnd 5.6', '>=')) {
+                    elseif (
+                        defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT')
+                        && version_compare($this->mysqli->client_info, 'mysqlnd 5.6', '>=')
+                    ) {
                         $clientFlags += MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT;
                     }
                 }
@@ -193,8 +198,10 @@ class Connection extends BaseConnection
                 $clientFlags
             )) {
                 // Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
-                if (($clientFlags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, 'mysqlnd 5.7.3', '<=')
-                    && empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")->fetch_object()->Value)
+                if (
+                    ($clientFlags & MYSQLI_CLIENT_SSL)
+                    && version_compare($this->mysqli->client_info, 'mysqlnd 5.7.3', '<=')
+                    && (string) $this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")->fetch_object()->Value === ''
                 ) {
                     $this->mysqli->close();
                     $message = 'MySQLi was configured for an SSL connection, but got an unencrypted connection instead!';
@@ -265,7 +272,7 @@ class Connection extends BaseConnection
             $databaseName = $this->database;
         }
 
-        if (empty($this->connID)) {
+        if ($this->connID === false) {
             $this->initialize();
         }
 
@@ -287,7 +294,7 @@ class Connection extends BaseConnection
             return $this->dataCache['version'];
         }
 
-        if (empty($this->mysqli)) {
+        if ($this->mysqli === false) {
             $this->initialize();
         }
 
@@ -469,7 +476,7 @@ class Connection extends BaseConnection
         $keys = [];
 
         foreach ($indexes as $index) {
-            if (empty($keys[$index['Key_name']])) {
+            if (! isset($keys[$index['Key_name']])) {
                 $keys[$index['Key_name']]       = new stdClass();
                 $keys[$index['Key_name']]->name = $index['Key_name'];
 
@@ -573,7 +580,7 @@ class Connection extends BaseConnection
      */
     public function error(): array
     {
-        if (! empty($this->mysqli->connect_errno)) {
+        if ($this->mysqli->connect_errno !== 0) {
             return [
                 'code'    => $this->mysqli->connect_errno,
                 'message' => $this->mysqli->connect_error,

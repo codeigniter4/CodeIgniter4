@@ -80,7 +80,7 @@ class MigrateStatus extends BaseCommand
      *
      * @param array<string, mixed> $params
      */
-    public function run(array $params)
+    public function run(array $params): void
     {
         $runner     = service('migrations');
         $paramGroup = $params['g'] ?? CLI::getOption('g');
@@ -107,7 +107,7 @@ class MigrateStatus extends BaseCommand
 
             $migrations = $runner->findNamespaceMigrations($namespace);
 
-            if (empty($migrations)) {
+            if ($migrations === []) {
                 continue;
             }
 

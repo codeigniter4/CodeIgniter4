@@ -218,11 +218,11 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 
         // to preserve backward compatibility with array-based cookies in previous CI versions
         $prefix = ($options['prefix'] === '') ? self::$defaults['prefix'] : $options['prefix'];
-        $path   = $options['path'] ?: self::$defaults['path'];
-        $domain = $options['domain'] ?: self::$defaults['domain'];
+        $path   = ($options['path'] !== '') ? $options['path'] : self::$defaults['path'];
+        $domain = ($options['domain'] !== '') ? $options['domain'] : self::$defaults['domain'];
 
         // empty string SameSite should use the default for browsers
-        $samesite = $options['samesite'] ?: self::$defaults['samesite'];
+        $sameSite = ($options['samesite'] !== '') ? $options['samesite'] : self::$defaults['samesite'];
 
         $raw      = $options['raw'];
         $secure   = $options['secure'];
@@ -230,7 +230,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 
         $this->validateName($name, $raw);
         $this->validatePrefix($prefix, $secure, $path, $domain);
-        $this->validateSameSite($samesite, $secure);
+        $this->validateSameSite($sameSite, $secure);
 
         $this->prefix   = $prefix;
         $this->name     = $name;
@@ -240,7 +240,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
         $this->domain   = $domain;
         $this->secure   = $secure;
         $this->httponly = $httponly;
-        $this->samesite = ucfirst(strtolower($samesite));
+        $this->samesite = ucfirst(strtolower($sameSite));
         $this->raw      = $raw;
     }
 
@@ -393,7 +393,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
             'domain'   => $this->domain,
             'secure'   => $this->secure,
             'httponly' => $this->httponly,
-            'samesite' => $this->samesite ?: ucfirst(self::SAMESITE_LAX),
+            'samesite' => ($this->samesite !== '') ? $this->samesite : ucfirst(self::SAMESITE_LAX),
         ];
     }
 
@@ -482,7 +482,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      */
     public function withPath(?string $path)
     {
-        $path = $path ?: self::$defaults['path'];
+        $path = ($path !== null && $path !== '') ? $path : self::$defaults['path'];
         $this->validatePrefix($this->prefix, $this->secure, $path, $this->domain);
 
         $cookie = clone $this;

@@ -145,7 +145,7 @@ class Namespaces extends BaseCommand
                     $pathOutput = $this->truncate(clean_path($path), $maxLength);
                 }
 
-                $path = realpath($path) ?: $path;
+                $path = ($realPath = realpath($path)) !== false ? $realPath : $path;
 
                 $tbody[] = [
                     $ns,

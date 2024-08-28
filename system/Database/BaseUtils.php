@@ -152,7 +152,7 @@ abstract class BaseUtils
             $res = $res->getResultArray();
 
             // Postgre & SQLite3 returns empty array
-            if (empty($res)) {
+            if ($res === []) {
                 $key = $tableName;
             } else {
                 $res  = current($res);
@@ -250,7 +250,7 @@ abstract class BaseUtils
             $xml .= $tab . '<' . $element . '>' . $newline;
 
             foreach ($row as $key => $val) {
-                $val = (! empty($val)) ? xml_convert((string) $val) : '';
+                $val = ((string) $val !== '') ? xml_convert((string) $val) : '';
 
                 $xml .= $tab . $tab . '<' . $key . '>' . $val . '</' . $key . '>' . $newline;
             }
@@ -287,7 +287,7 @@ abstract class BaseUtils
             'foreign_key_checks' => true,
         ];
 
-        if (! empty($params)) {
+        if ($params !== []) {
             foreach (array_keys($prefs) as $key) {
                 if (isset($params[$key])) {
                     $prefs[$key] = $params[$key];
@@ -295,7 +295,7 @@ abstract class BaseUtils
             }
         }
 
-        if (empty($prefs['tables'])) {
+        if ($prefs['tables'] === []) {
             $prefs['tables'] = $this->db->listTables();
         }
 

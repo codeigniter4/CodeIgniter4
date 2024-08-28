@@ -145,7 +145,7 @@ final class PublisherSupportTest extends CIUnitTestCase
     {
         $directory = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . bin2hex(random_bytes(6));
         mkdir($directory, 0700);
-        $directory = realpath($directory) ?: $directory;
+        $directory = (($realPath = realpath($directory)) !== false) ? $realPath : $directory;
         $this->assertDirectoryExists($directory);
         config('Publisher')->restrictions[$directory] = ''; // Allow the directory
 

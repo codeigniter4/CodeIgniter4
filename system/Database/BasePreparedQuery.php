@@ -92,7 +92,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
         $query->setQuery($sql);
 
-        if (! empty($this->db->swapPre) && ! empty($this->db->DBPrefix)) {
+        if ($this->db->swapPre !== '' && $this->db->DBPrefix !== '') {
             $query->swapPrefix($this->db->DBPrefix, $this->db->swapPre);
         }
 
@@ -138,6 +138,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
             // This will trigger a rollback if transactions are being used
             if ($this->db->transDepth !== 0) {
+                // @todo this property should me read only...
                 $this->db->transStatus = false;
             }
 
@@ -241,7 +242,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      */
     public function hasError(): bool
     {
-        return ! empty($this->errorString);
+        return $this->errorString !== '';
     }
 
     /**
