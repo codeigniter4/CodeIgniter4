@@ -3164,8 +3164,14 @@ class BaseBuilder
                 );
 
                 foreach ($conditions as &$condition) {
-                    if (($op = $this->getOperator($condition)) === false
-                        || ! preg_match('/^(\(?)(.*)(' . preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/i', $condition, $matches)
+                    $op = $this->getOperator($condition);
+                    if (
+                        $op === false
+                        || ! preg_match(
+                            '/^(\(?)(.*)(' . preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/i',
+                            $condition,
+                            $matches
+                        )
                     ) {
                         continue;
                     }
