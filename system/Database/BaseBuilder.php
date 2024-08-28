@@ -3169,14 +3169,14 @@ class BaseBuilder
                     ) {
                         continue;
                     }
-                    // $matches = array(
-                    //	0 => '(test <= foo)',	/* the whole thing */
-                    //	1 => '(',		/* optional */
-                    //	2 => 'test',		/* the field name */
-                    //	3 => ' <= ',		/* $op */
-                    //	4 => 'foo',		/* optional, if $op is e.g. 'IS NULL' */
-                    //	5 => ')'		/* optional */
-                    // );
+                    // $matches = [
+                    //  0 => '(test <= foo)',   /* the whole thing */
+                    //  1 => '(',               /* optional */
+                    //  2 => 'test',            /* the field name */
+                    //  3 => ' <= ',            /* $op */
+                    //  4 => 'foo',	            /* optional, if $op is e.g. 'IS NULL' */
+                    //  5 => ')'                /* optional */
+                    // ];
 
                     if (isset($matches[4]) && $matches[4] !== '' && $matches[4] !== '0') {
                         $protectIdentifiers = false;
