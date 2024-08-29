@@ -411,10 +411,8 @@ class Builder extends BaseBuilder
      * Returns cast expression.
      *
      * @TODO move this to BaseBuilder in 4.5.0
-     *
-     * @param float|int|string $expression
      */
-    private function cast($expression, ?string $type): string
+    private function cast(string $expression, ?string $type): string
     {
         return ($type === null) ? $expression : 'CAST(' . $expression . ' AS ' . strtoupper($type) . ')';
     }

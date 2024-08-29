@@ -45,7 +45,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->collection      = new RouteCollection(Services::locator(), $moduleConfig, new Routing());
     }
 
-    private function createNewAutoRouter($namespace = 'CodeIgniter\Router\Controllers'): AutoRouterImproved
+    private function createNewAutoRouter(string $namespace = 'CodeIgniter\Router\Controllers'): AutoRouterImproved
     {
         return new AutoRouterImproved(
             [],

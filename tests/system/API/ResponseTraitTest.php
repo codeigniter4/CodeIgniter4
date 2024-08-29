@@ -556,7 +556,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         }
     }
 
-    private function tryValidContentType($mimeType, $contentType): void
+    private function tryValidContentType(string $mimeType, string $contentType): void
     {
         $original                = $_SERVER;
         $_SERVER['CONTENT_TYPE'] = $mimeType;
