@@ -146,10 +146,15 @@ class Database
     /**
      * Check the PHP database extension is loaded.
      *
-     * @param string $driver DB driver
+     * @param string $driver DB driver or FQCN for custom driver
      */
     private function checkDbExtension(string $driver): bool
     {
+        if (str_contains($driver, '\\')) {
+            // Cannot check a fully qualified classname for a custom driver.
+            return true;
+        }
+
         $extensionMap = [
             // DBDriver => PHP extension
             'MySQLi'  => 'mysqli',
