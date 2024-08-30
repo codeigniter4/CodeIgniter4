@@ -178,6 +178,11 @@ Commands
   arguments.
 - The ``spark filter:check`` command now displays filter classnames.
 
+Routing
+=======
+
+- Now you can specify multiple hostnames when restricting routes.
+
 Testing
 =======
 

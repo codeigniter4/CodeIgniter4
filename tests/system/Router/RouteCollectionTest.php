@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Router;
 
+use App\Controllers\Home;
 use App\Controllers\Product;
 use CodeIgniter\Config\Services;
 use CodeIgniter\controller;
@@ -1742,6 +1743,46 @@ final class RouteCollectionTest extends CIUnitTestCase
         $expects = '\App\Controllers\Site\CDoc';
 
         $this->assertSame($expects, $router->handle('/'));
+    }
+
+    public function testRouteMatchingHostMultipleCorrect(): void
+    {
+        service('superglobals')->setServer('HTTP_HOST', 'two.domain.com');
+        service('request')->setMethod(Method::GET);
+
+        $routes = $this->getCollector();
+        $router = new Router($routes, Services::request());
+
+        $routes->setDefaultNamespace('App\Controllers');
+        $routes->setDefaultController('Home');
+        $routes->setDefaultMethod('index');
+
+        $routes->get('/', 'Home::index', ['as' => 'home']);
+        $routes->get('/', '\App\Controllers\Site\CDoc::index', ['hostname' => ['one.domain.com', 'two.domain.com', 'three.domain.com']]);
+
+        $expect = '\App\Controllers\Site\CDoc';
+
+        $this->assertSame($expect, $router->handle('/'));
+    }
+
+    public function testRouteMatchingHostMultipleFail(): void
+    {
+        service('superglobals')->setServer('HTTP_HOST', 'doc.domain.com');
+        service('request')->setMethod(Method::GET);
+
+        $routes = $this->getCollector();
+        $router = new Router($routes, Services::request());
+
+        $routes->setDefaultNamespace('App\Controllers');
+        $routes->setDefaultController('Home');
+        $routes->setDefaultMethod('index');
+
+        $routes->get('/', 'Home::index', ['as' => 'home']);
+        $routes->get('/', '\App\Controllers\Site\CDoc::index', ['hostname' => ['one.domain.com', 'two.domain.com', 'three.domain.com']]);
+
+        $expect = '\\' . Home::class;
+
+        $this->assertSame($expect, $router->handle('/'));
     }
 
     /**
