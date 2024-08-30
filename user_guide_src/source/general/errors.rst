@@ -57,8 +57,12 @@ Configuration
 Error Reporting
 ---------------
 
-By default, CodeIgniter will display a detailed error report with all errors in the ``development`` and ``testing`` environments, and will not
-display any errors in the ``production`` environment.
+When ``display_errors`` in PHP ini setting is enabled, CodeIgniter will display
+a detailed error report with all errors
+
+So by default, CodeIgniter will display a detailed error report in the ``development``
+and ``testing`` environments, and will not display any errors in the ``production``
+environment.
 
 .. image:: ../images/error.png
 
@@ -251,7 +255,7 @@ the **error_404.php** in the **app/Views/errors/cli** folder.
 If there is no view file corresponding to the HTTP status code, **production.php**
 or **error_exception.php** will be displayed.
 
-.. note:: If ``display_errors`` is on in the PHP INI configuration,
+.. note:: If ``display_errors`` is on in the PHP ini setting,
     **error_exception.php** is selected and a detailed error report is displayed.
 
 You should customize all of the error views in the **app/Views/errors/html** folder
