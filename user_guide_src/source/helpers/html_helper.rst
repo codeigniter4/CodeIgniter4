@@ -28,9 +28,9 @@ The following functions are available:
 .. php:function:: img([$src = ''[, $indexPage = false[, $attributes = '']]])
 
     :param  string|array  $src:  Image source URI, or array of attributes and values
-    :param  bool    $indexPage:  Whether to treat ``$src`` as a routed URI string
+    :param  bool    $indexPage:  Should indexPage be added to the source path
     :param  mixed   $attributes: Additional HTML attributes
-    :returns:   HTML image element
+    :returns:   An HTML image element
     :rtype: string
 
     Lets you create HTML ``<img>`` elements. The first parameter contains the
@@ -81,14 +81,14 @@ The following functions are available:
     :param  string  $type:      Type of the related document
     :param  string  $title:     Link title
     :param  string  $media:     Media type
-    :param  bool    $indexPage: Whether to treat ``$src`` as a routed URI string
+    :param  bool    $indexPage: Should indexPage be added to the link path
     :param  string  $hreflang:  Hreflang type
     :returns:   An HTML link element
     :rtype: string
 
     Lets you create HTML ``<link>`` elements. This is useful for stylesheet links,
     as well as other links. The parameters are *href*, with optional *rel*,
-    *type*, *title*, *media* and *indexPage*.
+    *type*, *title*, *media*, *indexPage* and *hreflang*.
 
     *indexPage* is a boolean value that specifies if the *href* should have
     the page specified by ``$config['indexPage']`` added to the address it creates.
@@ -216,7 +216,7 @@ The following functions are available:
     :param  string  $unsupportedMessage: The message to display if the video element is not supported by the browser
     :param  string  $attributes:         HTML attributes
     :param  array   $tracks:             Use the track function inside an array. See :php:func:`track()` function
-    :param  bool    $indexPage:
+    :param  bool    $indexPage:          Should indexPage be added to the video source path
     :returns:                            An HTML video element
     :rtype: string
 
@@ -255,7 +255,7 @@ The following functions are available:
     :param  string  $unsupportedMessage: The message to display if the audio element is not supported by the browser
     :param  string  $attributes:
     :param  array   $tracks:             Use the track function inside an array. See :php:func:`track()` function
-    :param  bool    $indexPage:
+    :param  bool    $indexPage:          Should indexPage be added to the audio source path
     :returns:                            An HTML audio element
     :rtype: string
 
@@ -279,7 +279,7 @@ The following functions are available:
     :param  string  $src:        The path of the resource to embed
     :param  bool    $type:       MIME-type
     :param  array   $attributes: HTML attributes
-    :param  bool    $indexPage:
+    :param  bool    $indexPage:  Should indexPage be added to the source path
     :returns:   An HTML embed element
     :rtype: string
 
@@ -293,6 +293,7 @@ The following functions are available:
     :param  string  $data:       A resource URL
     :param  bool    $type:       Content-type of the resource
     :param  array   $attributes: HTML attributes
+    :param  bool    $indexPage:  Should indexPage be added to the resource URL
     :param  array   $params:     Use the param function inside an array. See :php:func:`param()` function
     :returns:   An HTML object element
     :rtype: string
