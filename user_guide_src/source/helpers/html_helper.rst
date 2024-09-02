@@ -326,11 +326,12 @@ The following functions are available:
 
     .. literalinclude:: html_helper/018.php
 
-.. php:function:: track($name = ''[, $type = false[, $attributes = '']])
+.. php:function:: track($src, $kind, $srcLanguage, $label)
 
-    :param  string  $name:       The name of the parameter
-    :param  string  $value:      The value of the parameter
-    :param  array   $attributes: HTML attributes
+    :param  string $src:         The path of the media resource
+    :param  string $kind:        The kind of timed track
+    :param  string $srcLanguage: The language of the timed track
+    :param  string $label:       A user-readable title for the timed track
     :returns:   An HTML track element
     :rtype: string
 
