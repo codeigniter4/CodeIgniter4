@@ -21,8 +21,8 @@ if (! function_exists('ul')) {
     /**
      * Unordered List
      *
-     * Generates an HTML unordered list from an single or
-     * multi-dimensional array.
+     * Generates an HTML unordered list from a single or
+     * multidimensional array.
      *
      * @param array               $list       List entries
      * @param array|object|string $attributes HTML attributes string, array, object
@@ -37,7 +37,7 @@ if (! function_exists('ol')) {
     /**
      * Ordered List
      *
-     * Generates an HTML ordered list from an single or multi-dimensional array.
+     * Generates an HTML ordered list from a single or multidimensional array.
      *
      * @param array               $list       List entries
      * @param array|object|string $attributes HTML attributes string, array, object
@@ -52,7 +52,7 @@ if (! function_exists('_list')) {
     /**
      * Generates the list
      *
-     * Generates an HTML ordered list from an single or multi-dimensional array.
+     * Generates an HTML ordered list from a single or multidimensional array.
      *
      * @param array               $list       List entries
      * @param array|object|string $attributes HTML attributes string, array, object
