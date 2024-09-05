@@ -262,12 +262,16 @@ class Exceptions
      *
      * "Implicitly marking parameter $xxx as nullable is deprecated,
      *  the explicit nullable type must be used instead"
+     *
+     * @TODO remove this before v4.6.0 release
      */
     private function isImplicitNullableDeprecationError(string $message, ?string $file = null, ?int $line = null): bool
     {
         if (
             PHP_VERSION_ID >= 80400
             && str_contains($message, 'the explicit nullable type must be used instead')
+            // Only Kint and Faker, which cause this error, are logged.
+            && (str_starts_with($message, 'Kint\\') || str_starts_with($message, 'Faker\\'))
         ) {
             log_message(
                 LogLevel::WARNING,
