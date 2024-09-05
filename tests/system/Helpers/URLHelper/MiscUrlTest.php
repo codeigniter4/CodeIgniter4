@@ -533,6 +533,10 @@ final class MiscUrlTest extends CIUnitTestCase
                 'Visit www.example.com or email foo@bar.com',
                 'Visit <a href="http://www.example.com">www.example.com</a> or email foo@bar.com',
             ],
+            'trailing slash' => [
+                'Trailing slash: https://codeigniter.com/ fubar',
+                'Trailing slash: <a href="https://codeigniter.com/">https://codeigniter.com/</a> fubar',
+            ],
         ];
     }
 
@@ -628,6 +632,10 @@ final class MiscUrlTest extends CIUnitTestCase
             'test08' => [
                 'Visit www.example.com or email foo@bar.com',
                 "Visit <a href=\"http://www.example.com\">www.example.com</a> or email <script>var l=new Array();l[0] = '>';l[1] = 'a';l[2] = '/';l[3] = '<';l[4] = '|109';l[5] = '|111';l[6] = '|99';l[7] = '|46';l[8] = '|114';l[9] = '|97';l[10] = '|98';l[11] = '|64';l[12] = '|111';l[13] = '|111';l[14] = '|102';l[15] = '>';l[16] = '\"';l[17] = '|109';l[18] = '|111';l[19] = '|99';l[20] = '|46';l[21] = '|114';l[22] = '|97';l[23] = '|98';l[24] = '|64';l[25] = '|111';l[26] = '|111';l[27] = '|102';l[28] = ':';l[29] = 'o';l[30] = 't';l[31] = 'l';l[32] = 'i';l[33] = 'a';l[34] = 'm';l[35] = '\"';l[36] = '=';l[37] = 'f';l[38] = 'e';l[39] = 'r';l[40] = 'h';l[41] = ' ';l[42] = 'a';l[43] = '<';for (var i = l.length-1; i >= 0; i=i-1) {if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");else document.write(unescape(l[i]));}</script>",
+            ],
+            'email starting with "www."' => [
+                'this is some text that includes www.email@domain.com which is causing an issue',
+                'this is some text that includes ' . safe_mailto('www.email@domain.com') . ' which is causing an issue',
             ],
         ];
     }
