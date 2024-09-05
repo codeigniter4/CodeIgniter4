@@ -39,7 +39,7 @@ The following functions are available:
     .. literalinclude:: html_helper/002.php
 
     There is an optional second parameter, a true/false value, that
-    specifies if the *src* should have ``$config['indexPage']`` added to the address it creates.
+    specifies if the *src* should have ``Config\App::$indexPage`` added to the address it creates.
     Presumably, this would be if you were using a media controller:
 
     .. literalinclude:: html_helper/003.php
