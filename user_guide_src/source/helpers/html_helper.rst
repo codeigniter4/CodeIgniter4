@@ -313,7 +313,7 @@ The following functions are available:
           <param name="hello" type="ref" value="world" class="test" />
         </object>
 
-.. php:function:: param($name = ''[, $value = ''[, $type = 'ref'[, $attributes = '']]])
+.. php:function:: param($name, $value[, $type = 'ref'[, $attributes = '']])
 
     :param  string  $name:       The name of the parameter
     :param  string  $value:      The value of the parameter
