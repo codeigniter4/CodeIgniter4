@@ -52,7 +52,7 @@ The following functions are available:
 
     .. literalinclude:: html_helper/004.php
 
-.. php:function:: img_data([$src = ''[, $indexPage = false[, $attributes = '']]])
+.. php:function:: img_data($path[, $mime = null])
 
     :param string $path: Path to the image file
     :param string|null $mime: MIME type to use, or null to guess
@@ -260,7 +260,7 @@ The following functions are available:
 
     Identical to :php:func:`video()`, only it produces ``<audio>`` element instead of ``<video>``.
 
-.. php:function:: source($src = ''[, $type = false[, $attributes = '']])
+.. php:function:: source($src, $type = 'unknown', $attributes = '', $indexPage = false)
 
     :param  string  $src:        The path of the media resource
     :param  bool    $type:       The MIME-type of the resource with optional codecs parameters
@@ -287,7 +287,7 @@ The following functions are available:
 
     .. literalinclude:: html_helper/016.php
 
-.. php:function:: object($data = ''[, $type = false[, $attributes = '']])
+.. php:function:: object($data[, $type = 'unknown'[, $attributes = ''[, $params = [][, $indexPage = false]]]])
 
     :param  string  $data:       A resource URL
     :param  bool    $type:       Content-type of the resource
@@ -312,7 +312,7 @@ The following functions are available:
           <param name="hello" type="ref" value="world" class="test" />
         </object>
 
-.. php:function:: param($name = ''[, $type = false[, $attributes = '']])
+.. php:function:: param($name, $value[, $type = 'ref'[, $attributes = '']])
 
     :param  string  $name:       The name of the parameter
     :param  string  $value:      The value of the parameter
