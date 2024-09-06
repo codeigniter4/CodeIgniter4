@@ -38,16 +38,15 @@ The following functions are available:
 
     .. literalinclude:: html_helper/002.php
 
-    There is an optional second parameter that is a true/false value that
-    specifics if the *src* should have the page specified by
-    ``$config['indexPage']`` added to the address it creates.
+    There is an optional second parameter, a true/false value, that
+    specifies if the *src* should have ``Config\App::$indexPage`` added to the address it creates.
     Presumably, this would be if you were using a media controller:
 
     .. literalinclude:: html_helper/003.php
 
     Additionally, an associative array can be passed as the first parameter,
     for complete control over all attributes and values. If an *alt* attribute
-    is not provided, CodeIgniter will generate an empty string.
+    is not provided, CodeIgniter will generate one with empty string.
 
     Example:
 
@@ -220,8 +219,8 @@ The following functions are available:
     :returns:                            An HTML video element
     :rtype: string
 
-    Permits you to generate HTML video element from simple or
-    source arrays. Example:
+    Permits you to generate an HTML video element from a source string or an array of sources.
+    Example:
 
     .. literalinclude:: html_helper/014.php
 
@@ -269,8 +268,8 @@ The following functions are available:
     :returns:   An HTML source element
     :rtype: string
 
-    Lets you create HTML ``<source>`` elements. The first parameter contains the
-    source source. Example:
+    Lets you create HTML ``<source>`` elements. The first parameter contains the path of the resource.
+    Example:
 
     .. literalinclude:: html_helper/015.php
 
@@ -352,11 +351,11 @@ The following functions are available:
 
     .. literalinclude:: html_helper/020.php
 
-    The following is a list of the pre-defined doctype choices. These are configurable,
-    pulled from **app/Config/DocTypes.php**, or they could be over-ridden in your **.env** configuration.
+    The following is a list of the pre-defined doctypes. These are
+    pulled from **app/Config/DocTypes.php**, or they could be overridden in your **.env** configuration.
 
     =============================== =================== ==================================================================================================================================================
-    Document type                   Option              Result
+    Document type                   $type parameter     Result
     =============================== =================== ==================================================================================================================================================
     XHTML 1.1                       xhtml11             <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
     XHTML 1.0 Strict                xhtml1-strict       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
