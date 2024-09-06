@@ -340,9 +340,8 @@ image source. Example:</p>
 <span class="c1">// &lt;img src=&quot;http://site.com/images/picture.jpg&quot;&gt;</span>
 </pre></div>
 </div>
-<p>There is an optional second parameter that is a true/false value that
-specifics if the <em>src</em> should have the page specified by
-<code class="docutils literal notranslate"><span class="pre">$config['indexPage']</span></code> added to the address it creates.
+<p>There is an optional second parameter, a true/false value, that
+specifies if the <em>src</em> should have <code class="docutils literal notranslate"><span class="pre">Config\App::$indexPage</span></code> added to the address it creates.
 Presumably, this would be if you were using a media controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -352,7 +351,7 @@ Presumably, this would be if you were using a media controller:</p>
 </div>
 <p>Additionally, an associative array can be passed as the first parameter,
 for complete control over all attributes and values. If an <em>alt</em> attribute
-is not provided, CodeIgniter will generate an empty string.</p>
+is not provided, CodeIgniter will generate one with empty string.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -682,8 +681,8 @@ ordered lists instead of <code class="docutils literal notranslate"><span class=
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Permits you to generate HTML video element from simple or
-source arrays. Example:</p>
+<p>Permits you to generate an HTML video element from a source string or an array of sources.
+Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$tracks</span> <span class="o">=</span> <span class="p">[</span>
@@ -778,8 +777,8 @@ source arrays. Example:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;source&gt;</span></code> elements. The first parameter contains the
-source source. Example:</p>
+<p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;source&gt;</span></code> elements. The first parameter contains the path of the resource.
+Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;video/mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">);</span>
@@ -948,12 +947,12 @@ is used by default, but many doctypes are available.</p>
 <span class="c1">// &lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01//EN&quot; &quot;http://www.w3.org/TR/html4/strict.dtd&quot;&gt;</span>
 </pre></div>
 </div>
-<p>The following is a list of the pre-defined doctype choices. These are configurable,
-pulled from <strong>app/Config/DocTypes.php</strong>, or they could be over-ridden in your <strong>.env</strong> configuration.</p>
+<p>The following is a list of the pre-defined doctypes. These are
+pulled from <strong>app/Config/DocTypes.php</strong>, or they could be overridden in your <strong>.env</strong> configuration.</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Document type</p></th>
-<th class="head"><p>Option</p></th>
+<th class="head"><p>$type parameter</p></th>
 <th class="head"><p>Result</p></th>
 </tr>
 </thead>
@@ -1053,7 +1052,7 @@ pulled from <strong>app/Config/DocTypes.php</strong>, or they could be over-ridd
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 27, 2024.
+      <span class="lastupdated">Last updated on Sep 06, 2024.
       </span></p>
   </div>
 
