@@ -124,7 +124,7 @@ The following functions are available:
 
     :param boolean $returnObject: True if you would like a URI instance returned instead of a string.
     :returns: The URL the user was previously on
-    :rtype: string|mixed|\\CodeIgniter\\HTTP\\URI
+    :rtype: string|\\CodeIgniter\\HTTP\\URI
 
     Returns the full URL (including segments) of the page the user was previously on.
 
@@ -182,10 +182,10 @@ The following functions are available:
 
 .. php:function:: anchor([$uri = ''[, $title = ''[, $attributes = ''[, $altConfig = null]]]])
 
-    :param  mixed         $uri: URI string or array of URI segments
-    :param  string        $title: Anchor title
-    :param  mixed         $attributes: HTML attributes
-    :param  \\Config\\App $altConfig: Alternate configuration to use
+    :param  array|string        $uri: URI string or array of URI segments
+    :param  string              $title: Anchor title
+    :param  array|object|string $attributes: HTML attributes
+    :param  \\Config\\App|null  $altConfig: Alternate configuration to use
     :returns: HTML hyperlink (anchor tag)
     :rtype:    string
 
@@ -222,7 +222,7 @@ The following functions are available:
 
     :param  string          $uri: URI string
     :param  string          $title: Anchor title
-    :param  mixed           $attributes: HTML attributes
+    :param  array|false|object|string $attributes: HTML attributes
     :param  \\Config\\App   $altConfig: Alternate configuration to use
     :returns: Pop-up hyperlink
     :rtype: string
@@ -262,7 +262,7 @@ The following functions are available:
 
     :param  string  $email: E-mail address
     :param  string  $title: Anchor title
-    :param  mixed   $attributes: HTML attributes
+    :param  array|object|string $attributes: HTML attributes
     :returns: A "mail to" hyperlink
     :rtype: string
 
@@ -281,7 +281,7 @@ The following functions are available:
 
     :param  string  $email: E-mail address
     :param  string  $title: Anchor title
-    :param  mixed   $attributes: HTML attributes
+    :param  array|object|string $attributes: HTML attributes
     :returns: A spam-safe "mail to" hyperlink
     :rtype: string
 
@@ -378,7 +378,7 @@ The following functions are available:
 .. php:function:: url_to($controller[, ...$args])
 
     :param  string  $controller: Route name or Controller::method
-    :param  mixed   ...$args:    One or more parameters to be passed to the route. The last parameter allows you to set the locale.
+    :param  int|string ...$args:    One or more parameters to be passed to the route. The last parameter allows you to set the locale.
     :returns: Absolute URL
     :rtype: string
 
