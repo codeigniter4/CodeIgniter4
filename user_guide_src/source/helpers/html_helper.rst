@@ -261,7 +261,7 @@ The following functions are available:
 
     Identical to :php:func:`video()`, only it produces ``<audio>`` element instead of ``<video>``.
 
-.. php:function:: source($src[, $type = false[, $attributes = '']])
+.. php:function:: source($src, $type = 'unknown', $attributes = '', $indexPage = false)
 
     :param  string  $src:        The path of the media resource
     :param  bool    $type:       The MIME-type of the resource with optional codecs parameters
