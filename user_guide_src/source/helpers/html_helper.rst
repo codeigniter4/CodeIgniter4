@@ -328,7 +328,7 @@ The following functions are available:
 
 .. php:function:: track($src, $kind, $srcLanguage, $label)
 
-    :param  string $src:         The path of the media resource
+    :param  string $src:         The path of the track (.vtt file)
     :param  string $kind:        The kind of timed track
     :param  string $srcLanguage: The language of the timed track
     :param  string $label:       A user-readable title for the timed track
