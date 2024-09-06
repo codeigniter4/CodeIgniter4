@@ -202,7 +202,7 @@ class FileCollection
      * Thanks to Jack Sleight on the PHP Manual page for the basis
      * of this method.
      *
-     * @param array<string, array<string, int|string>> $data
+     * @param array<string, array<string, int|list<string>|string>> $data
      *
      * @return array<string, mixed>
      *
