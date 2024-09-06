@@ -21,7 +21,7 @@ The following functions are available:
 .. php:function:: site_url([$uri = ''[, $protocol = null[, $altConfig = null]]])
 
     :param  array|string         $uri: URI string or array of URI segments.
-    :param  string        $protocol: Protocol, e.g., 'http' or 'https'. If empty string '' is set, a protocol-relative link is returned.
+    :param  string        $protocol: Protocol, e.g., ``'http'`` or ``'https'``. If empty string ``''`` is set, a protocol-relative link is returned.
     :param  \\Config\\App $altConfig: Alternate configuration to use.
     :returns: Site URL
     :rtype:    string
@@ -57,7 +57,7 @@ The following functions are available:
 .. php:function:: base_url([$uri = ''[, $protocol = null]])
 
     :param  array|string   $uri: URI string or array of URI segments.
-    :param  string  $protocol: Protocol, e.g., 'http' or 'https'. If empty string '' is set, a protocol-relative link is returned.
+    :param  string  $protocol: Protocol, e.g., ``'http'`` or ``'https'``. If empty string ``''`` is set, a protocol-relative link is returned.
     :returns: Base URL
     :rtype: string
 
@@ -292,7 +292,7 @@ The following functions are available:
 .. php:function:: auto_link($str[, $type = 'both'[, $popup = false]])
 
     :param  string  $str: Input string
-    :param  string  $type: Link type ('email', 'url' or 'both')
+    :param  string  $type: Link type (``'email'``, ``'url'`` or ``'both'``)
     :param  bool    $popup: Whether to create popup links
     :returns: Linkified string
     :rtype: string
