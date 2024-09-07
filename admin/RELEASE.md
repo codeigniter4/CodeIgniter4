@@ -38,6 +38,26 @@ If you release a new minor version.
   "Branch protection rules" to the next minor version. E.g. `4.5` → `4.6`
 * [ ] Delete the merged `4.y` branch (This closes all PRs to the branch)
 
+## Preparation
+
+Work off direct clones of the repos so the release branches persist for a time.
+
+* [ ] Clone both **codeigniter4/CodeIgniter4** and **codeigniter4/userguide** and
+  resolve any necessary PRs
+    ```console
+    rm -rf CodeIgniter4.bk userguide.bk
+    mv CodeIgniter4 CodeIgniter4.bk
+    mv userguide userguide.bk
+    git clone git@github.com:codeigniter4/CodeIgniter4.git
+    git clone git@github.com:codeigniter4/userguide.git
+    ```
+* [ ] Vet the **admin/** folders for any removed hidden files (Action deploy scripts
+  *do not remove these*)
+  ```console
+  cd CodeIgniter4
+  git diff --name-status origin/master admin/
+  ```
+
 ## Changelog
 
 When generating the changelog each Pull Request to be included must have one of
@@ -67,26 +87,6 @@ the changelog.
 
 Copy the resulting content into **CHANGELOG.md** and adjust the format to match
 the existing content.
-
-## Preparation
-
-Work off direct clones of the repos so the release branches persist for a time.
-
-* [ ] Clone both **codeigniter4/CodeIgniter4** and **codeigniter4/userguide** and
-  resolve any necessary PRs
-    ```console
-    rm -rf CodeIgniter4.bk userguide.bk
-    mv CodeIgniter4 CodeIgniter4.bk
-    mv userguide userguide.bk
-    git clone git@github.com:codeigniter4/CodeIgniter4.git
-    git clone git@github.com:codeigniter4/userguide.git
-    ```
-* [ ] Vet the **admin/** folders for any removed hidden files (Action deploy scripts
-  *do not remove these*)
-  ```console
-  cd CodeIgniter4
-  git diff --name-status origin/master admin/
-  ```
 
 ## Process
 
