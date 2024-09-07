@@ -87,7 +87,6 @@ Work off direct clones of the repos so the release branches persist for a time.
   cd CodeIgniter4
   git diff --name-status origin/master admin/
   ```
-* [ ] Merge any Security Advisory PRs in private forks
 
 ## Process
 
@@ -95,6 +94,7 @@ Work off direct clones of the repos so the release branches persist for a time.
 > been included with their PR, so this process assumes you will not be
 > generating much new content.
 
+* [ ] Merge any Security Advisory PRs in private forks
 * [ ] Replace **CHANGELOG.md** with the new version generated above
 * [ ] Update **user_guide_src/source/changelogs/v4.x.x.rst**
   * Remove the section titles that have no items
