@@ -90,7 +90,8 @@ the existing content.
 
 ## Process
 
-> **Note** Most changes that need noting in the User Guide and docs should have
+> [!NOTE]
+> Most changes that need noting in the User Guide and docs should have
 > been included with their PR, so this process assumes you will not be
 > generating much new content.
 
