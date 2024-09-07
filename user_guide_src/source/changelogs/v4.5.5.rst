@@ -2,29 +2,13 @@
 Version 4.5.5
 #############
 
-Release Date: Unreleased
+Release Date: September 7, 2024
 
 **4.5.5 release of CodeIgniter4**
 
 .. contents::
     :local:
     :depth: 3
-
-********
-BREAKING
-********
-
-***************
-Message Changes
-***************
-
-*******
-Changes
-*******
-
-************
-Deprecations
-************
 
 **********
 Bugs Fixed
