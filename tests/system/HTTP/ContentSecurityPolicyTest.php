@@ -20,6 +20,7 @@ use Config\ContentSecurityPolicy as CSPConfig;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 
 /**
  * Test the CSP policy directive creation.
@@ -35,13 +36,10 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     private ?Response $response         = null;
     private ?ContentSecurityPolicy $csp = null;
 
+    #[WithoutErrorHandler]
     protected function setUp(): void
     {
         parent::setUp();
-
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
     }
 
     // Having this method as setUp() doesn't work - can't find Config\App !?
@@ -379,6 +377,19 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $result = $this->getHeaderEmitted('Content-Security-Policy');
         $this->assertStringContainsString('report-uri http://example.com/csptracker;', $result);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testRemoveReportURI(): void
+    {
+        $this->prepare();
+        $this->csp->reportOnly(false);
+        $this->csp->setReportURI('');
+        $this->work();
+
+        $result = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertStringNotContainsString('report-uri ', $result);
     }
 
     #[PreserveGlobalState(false)]

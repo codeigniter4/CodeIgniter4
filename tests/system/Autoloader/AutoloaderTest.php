@@ -25,6 +25,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use RuntimeException;
 use UnnamespacedClass;
 
@@ -394,12 +395,9 @@ final class AutoloaderTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
     public function testLoadHelpers(): void
     {
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
-
         $config            = new Autoload();
         $config->helpers[] = 'form';
 

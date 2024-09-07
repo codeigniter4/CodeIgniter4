@@ -476,6 +476,8 @@ the validation rules.
 .. literalinclude:: validation/045.php
    :lines: 2-
 
+.. _saving-validation-rules-to-config-file:
+
 Saving Sets of Validation Rules to the Config File
 ==================================================
 
@@ -875,6 +877,8 @@ Or you can use the following parameters:
 .. literalinclude:: validation/047.php
    :lines: 2-
 
+.. _validation-available-rules:
+
 ***************
 Available Rules
 ***************
@@ -1046,7 +1050,7 @@ Rules for File Uploads
 When you validate uploaded files, you must use the rules specifically created for
 file validation.
 
-.. important:: Only rules that listed in the table below can be used to validate
+.. important:: Only rules that are listed in the table below can be used to validate
     files. Therefore, adding any general rules, like ``permit_empty``, to file
     validation rules array or string, the file validation will not work correctly.
 

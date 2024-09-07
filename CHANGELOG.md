@@ -1,6 +1,24 @@
 # Changelog
 
-## [v4.5.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.3) (2024-07-27)
+## [v4.5.5](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.5) (2024-09-07)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.4...v4.5.5)
+
+### Fixed Bugs
+
+* fix: Validation rule `differs`/`matches` with dot array by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/9103
+* fix: update preload.php by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/9111
+* fix: [Validation] TypeError when using numeric field names by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/9142
+* fix: `auto_link()` regexp by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/9169
+
+### Refactoring
+
+* refactor: reduce_multiples() and fix user guide by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/9099
+* refactor: enable AddMethodCallBasedStrictParamTypeRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9156
+* refactor: BaseBuilder by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/9157
+* refactor: improve error message for missing PHP DB extensions by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/9160
+* refactor: fix typo in BaseConnection.php by @ThomasMeschke in https://github.com/codeigniter4/CodeIgniter4/pull/9170
+
+## [v4.5.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.4) (2024-07-27)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.3...v4.5.4)
 
 ### Fixed Bugs

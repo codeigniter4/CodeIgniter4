@@ -105,12 +105,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:doErrors\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:doFind\\(\\) has parameter \\$id with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
@@ -1492,7 +1486,7 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: empty.notAllowed
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 30,
+	'count' => 29,
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
 ];
 $ignoreErrors[] = [
@@ -1936,6 +1930,12 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:whereNotIn\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
+];
+$ignoreErrors[] = [
+	// identifier: isset.offset
+	'message' => '#^Offset 4 on array\\{string, string, string, string, string, string\\} in isset\\(\\) always exists and is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
 ];
@@ -5150,18 +5150,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Entity/Entity.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\Entity\\\\Entity\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Entity/Entity.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\Entity\\\\Entity\\:\\:\\$original type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Entity/Entity.php',
-];
-$ignoreErrors[] = [
 	// identifier: codeigniter.configArgumentInstanceof
 	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
 	'count' => 1,
@@ -5932,12 +5920,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Property CodeIgniter\\\\HTTP\\\\ContentSecurityPolicy\\:\\:\\$tempHeaders type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/ContentSecurityPolicy.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\HTTP\\\\ContentSecurityPolicy\\:\\:\\$validSources type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/ContentSecurityPolicy.php',
 ];
@@ -10485,12 +10467,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\Validation\\\\Validation\\:\\:\\$rules type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/Validation.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
 	'message' => '#^Property CodeIgniter\\\\Validation\\\\Validation\\:\\:\\$validated type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Validation/Validation.php',
@@ -11000,12 +10976,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/_support/Entity/CustomUser.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property Tests\\\\Support\\\\Entity\\\\User\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/Entity/User.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.return
 	'message' => '#^Method Tests\\\\Support\\\\Language\\\\SecondMockLanguage\\:\\:loaded\\(\\) has no return type specified\\.$#',
 	'count' => 1,
@@ -11238,12 +11208,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property Tests\\\\Support\\\\Models\\\\UserModel\\:\\:\\$name has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/_support/Models/UserModel.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property Tests\\\\Support\\\\SomeEntity\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/_support/SomeEntity.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.return
@@ -11487,7 +11451,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccessAssign
-	'message' => '#^Assigning mixed directly on offset \'CONTENT_TYPE\' of \\$_SERVER is discouraged\\.$#',
+	'message' => '#^Assigning string directly on offset \'CONTENT_TYPE\' of \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
@@ -11518,18 +11482,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\API\\\\ResponseTraitTest\\:\\:makeController\\(\\) has parameter \\$userHeaders with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.parameter
-	'message' => '#^Method CodeIgniter\\\\API\\\\ResponseTraitTest\\:\\:tryValidContentType\\(\\) has parameter \\$contentType with no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.parameter
-	'message' => '#^Method CodeIgniter\\\\API\\\\ResponseTraitTest\\:\\:tryValidContentType\\(\\) has parameter \\$mimeType with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/API/ResponseTraitTest.php',
 ];
@@ -12968,24 +12920,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/ControllerTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.property
-	'message' => '#^Property class@anonymous/tests/system/ControllerTest\\.php\\:128\\:\\:\\$signup has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/ControllerTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.property
-	'message' => '#^Property class@anonymous/tests/system/ControllerTest\\.php\\:128\\:\\:\\$signup_errors has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/ControllerTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.property
-	'message' => '#^Property class@anonymous/tests/system/ControllerTest\\.php\\:151\\:\\:\\$signup has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/ControllerTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: argument.type
 	'message' => '#^Parameter \\#1 \\$cookies of class CodeIgniter\\\\Cookie\\\\CookieStore constructor expects array\\<CodeIgniter\\\\Cookie\\\\Cookie\\>, array\\<int, DateTimeImmutable\\> given\\.$#',
 	'count' => 1,
@@ -13744,180 +13678,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: missingType.return
 	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:setPrivateProperty\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.return
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1078\\:\\:getBar\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.return
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1078\\:\\:getFakeBar\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.return
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1078\\:\\:setBar\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.parameter
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1078\\:\\:setBar\\(\\) has parameter \\$value with no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.return
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1116\\:\\:_getBar\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.return
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1116\\:\\:_setBar\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.parameter
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1116\\:\\:_setBar\\(\\) has parameter \\$value with no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.return
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1116\\:\\:getBar\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.return
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1116\\:\\:setBar\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.parameter
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1116\\:\\:setBar\\(\\) has parameter \\$value with no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.return
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1162\\:\\:getSimple\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.parameter
-	'message' => '#^Method class@anonymous/tests/system/Entity/EntityTest\\.php\\:1229\\:\\:setSeventh\\(\\) has parameter \\$seventh with no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1078\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1078\\:\\:\\$original type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1116\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1116\\:\\:\\$original type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.property
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1162\\:\\:\\$_original has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1162\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.property
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1192\\:\\:\\$_original has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1192\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.property
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1211\\:\\:\\$_original has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1211\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.property
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1229\\:\\:\\$_original has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1229\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.property
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1287\\:\\:\\$_original has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1287\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.property
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1316\\:\\:\\$_original has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:1316\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property class@anonymous/tests/system/Entity/EntityTest\\.php\\:895\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
@@ -15956,30 +15716,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Images/ImageMagickHandlerTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: method.notFound
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Language\\\\Language\\:\\:disableIntlSupport\\(\\)\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Language/LanguageTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: method.notFound
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Language\\\\Language\\:\\:loaded\\(\\)\\.$#',
-	'count' => 3,
-	'path' => __DIR__ . '/tests/system/Language/LanguageTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: method.notFound
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Language\\\\Language\\:\\:loadem\\(\\)\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/tests/system/Language/LanguageTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: method.notFound
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Language\\\\Language\\:\\:setData\\(\\)\\.$#',
-	'count' => 9,
-	'path' => __DIR__ . '/tests/system/Language/LanguageTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Language\\\\LanguageTest\\:\\:provideBundleUniqueKeys\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
@@ -17018,12 +16754,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/RESTful/ResourcePresenterTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.parameter
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:createNewAutoRouter\\(\\) has parameter \\$namespace with no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Router/AutoRouterImprovedTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImprovedTest\\:\\:provideRejectTranslateUriToCamelCase\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
@@ -17440,12 +17170,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: missingType.return
 	'message' => '#^Method CodeIgniter\\\\Test\\\\BootstrapFCPATHTest\\:\\:readOutput\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Test/BootstrapFCPATHTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.parameter
-	'message' => '#^Method CodeIgniter\\\\Test\\\\BootstrapFCPATHTest\\:\\:readOutput\\(\\) has parameter \\$file with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Test/BootstrapFCPATHTest.php',
 ];
@@ -18688,12 +18412,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: missingType.property
 	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:340\\:\\:\\$foo has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:370\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
 ];

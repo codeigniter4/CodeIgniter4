@@ -23,7 +23,7 @@
         "kint-php/kint": "^5.0.4",
         "mikey179/vfsstream": "^1.6",
         "nexusphp/cs-config": "^3.6",
-        "phpunit/phpunit": "^10.5.16",
+        "phpunit/phpunit": "^10.5.16 || ^11.2",
         "predis/predis": "^1.1 || ^2.0"
     },
     "suggest": {

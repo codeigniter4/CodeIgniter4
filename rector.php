@@ -50,6 +50,7 @@ use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\AddMethodCallBasedStrictParamTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
 use Rector\TypeDeclaration\Rector\Closure\AddClosureVoidReturnTypeWhereNoReturnRector;
 use Rector\TypeDeclaration\Rector\Empty_\EmptyOnNullableObjectToInstanceOfRector;
@@ -213,6 +214,7 @@ return RectorConfig::configure()
         ExplicitBoolCompareRector::class,
         AddClosureVoidReturnTypeWhereNoReturnRector::class,
         AddFunctionVoidReturnTypeWhereNoReturnRector::class,
+        AddMethodCallBasedStrictParamTypeRector::class,
     ])
     ->withConfiguredRule(StringClassNameToClassConstantRector::class, [
         // keep '\\' prefix string on string '\Foo\Bar'

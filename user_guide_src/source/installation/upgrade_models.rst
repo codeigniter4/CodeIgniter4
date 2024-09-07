@@ -24,7 +24,9 @@ Upgrade Guide
 2. Add this line just after the opening php tag: ``namespace App\Models;``.
 3. Below the ``namespace App\Models;`` line add this line: ``use CodeIgniter\Model;``.
 4. Replace ``extends CI_Model`` with ``extends Model``.
-5. Instead of CI3's ``$this->load->model('x');``, you would now use ``$this->x = new X();``, following namespaced conventions for your component. Alternatively, you can use the :php:func:`model()` function: ``$this->x = model('X');``.
+5. Add the ``protected $table`` property and set the table name.
+6. Add the ``protected $allowedFields`` property and set the array of field names to allow to insert/update.
+7. Instead of CI3's ``$this->load->model('x');``, you would now use ``$this->x = new X();``, following namespaced conventions for your component. Alternatively, you can use the :php:func:`model()` function: ``$this->x = model('X');``.
 
 If you use sub-directories in your model structure you have to change the namespace according to that.
 Example: You have a version 3 model located in **application/models/users/user_contact.php** the namespace has to be ``namespace App\Models\Users;`` and the model path in the version 4 should look like this: **app/Models/Users/UserContact.php**
@@ -51,4 +53,10 @@ Path: **app/Models**:
 
 .. literalinclude:: upgrade_models/001.php
 
-To insert data you can just directly call the ``$model->insert()`` method because this method is built-in since CI4.
+The above code is direct translation from CI3 to CI4. It uses Query Builder
+directly in the model. Note that when you use Query Builder directly, you cannot
+use features in CodeIgniter's Model.
+
+If you want to use CodeIgniter's Model features, the code will be:
+
+.. literalinclude:: upgrade_models/002.php

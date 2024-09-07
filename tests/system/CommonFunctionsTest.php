@@ -46,6 +46,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use RuntimeException;
 use stdClass;
 use Tests\Support\Models\JobModel;
@@ -274,12 +275,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
     public function testSessionInstance(): void
     {
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
-
         $this->injectSessionMock();
 
         $this->assertInstanceOf(Session::class, session());
@@ -287,12 +285,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
     public function testSessionVariable(): void
     {
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
-
         $this->injectSessionMock();
 
         $_SESSION['notbogus'] = 'Hi there';
@@ -302,12 +297,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
     public function testSessionVariableNotThere(): void
     {
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
-
         $this->injectSessionMock();
 
         $_SESSION['bogus'] = 'Hi there';
@@ -428,12 +420,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
     public function testOldInput(): void
     {
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
-
         $this->injectSessionMock();
         // setup from RedirectResponseTest...
         $_SERVER['REQUEST_METHOD'] = 'GET';
@@ -465,12 +454,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
     public function testOldInputSerializeData(): void
     {
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
-
         $this->injectSessionMock();
         // setup from RedirectResponseTest...
         $_SERVER['REQUEST_METHOD'] = 'GET';
@@ -503,12 +489,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
      */
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
     public function testOldInputArray(): void
     {
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
-
         $this->injectSessionMock();
         // setup from RedirectResponseTest...
         $_SERVER['REQUEST_METHOD'] = 'GET';
@@ -622,12 +605,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
     public function testTrace(): void
     {
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
-
         ob_start();
         trace();
         $content = ob_get_clean();
@@ -647,12 +627,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
     public function testForceHttpsNullRequestAndResponse(): void
     {
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
-
         $this->assertNull(Services::response()->header('Location'));
 
         Services::response()->setCookie('force', 'cookie');
@@ -763,12 +740,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
     public function testTraceWithCSP(): void
     {
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        restore_error_handler();
-
         $this->resetServices();
 
         /** @var App $config */
@@ -779,11 +753,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
         Services::autoloader()->initializeKint(CI_DEBUG);
 
         Kint::$cli_detection = false;
-
-        // Workaround for errors on PHPUnit 10 and PHP 8.3.
-        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
-        // `$app->initialize()` sets error handler.
-        restore_error_handler();
 
         $this->expectOutputRegex('/<style class="kint-rich-style" nonce="[0-9a-z]{24}">/u');
         trace();
