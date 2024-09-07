@@ -12,6 +12,9 @@
 - `4.y`: The next minor version. (e.g., `4.6`)
 - `4.z`: The next next minor version. (e.g., `4.7`)
 
+> [!NOTE]
+> Copy this file, and replace the versions above with the actual versions.
+
 ## Merge `develop` branch into next minor version branch `4.y`
 
 Before starting release process, if there are commits in `develop` branch that
