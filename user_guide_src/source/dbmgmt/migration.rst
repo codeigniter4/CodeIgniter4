@@ -58,7 +58,7 @@ The database connection and the database Forge class are both available to you t
 ``$this->db`` and ``$this->forge``, respectively.
 
 Alternatively, you can use a command-line call to generate a skeleton migration file.
-See **make:migration** in :ref:`command-line-tools` for more details.
+See `make:migration`_ in :ref:`command-line-tools` for more details.
 
 .. note:: Since the migration class is a PHP class, the classname must be unique in every migration file.
 
