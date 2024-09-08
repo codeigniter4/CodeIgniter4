@@ -33,7 +33,7 @@ migration was created, in **YYYY-MM-DD-HHIISS** format.
 The descriptive name (**AddBlogTable**) for the migration is a classname in PHP.
 So you must name a valid classname.
 
-The year, month, date, and time in a prefix can be separated from each other by
+The year, month, day, and time in a prefix can be separated from each other by
 dashes (``-``), underscores (``_``), or not at all. For example:
 
 * 2012-10-31-100538_AlterBlogTrackViews.php
