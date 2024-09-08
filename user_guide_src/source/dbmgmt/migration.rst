@@ -22,18 +22,27 @@ include migrations from all namespaces.
 Migration File Names
 ********************
 
-Each Migration is run in numeric order forward or backwards depending on the
-method taken. Each migration is numbered using the timestamp when the migration
-was created, in **YYYY-MM-DD-HHIISS** format (e.g., **2012-10-31-100537**). This
-helps prevent numbering conflicts when working in a team environment.
+A migration file name is made up of a timestamp prefix, an underscore (``_``),
+and a descriptive name (classname).
 
-Prefix your migration files with the migration number followed by an underscore
-and a descriptive name for the migration. The year, month, and date can be separated
-from each other by dashes, underscores, or not at all. For example:
+* 2024-09-08-013653_AddBlogTable.php
+
+Each migration is numbered using the timestamp (**2024-09-08-013653**) when the
+migration was created, in **YYYY-MM-DD-HHIISS** format.
+
+The descriptive name (**AddBlogTable**) for the migration is a classname in PHP.
+So you must name a valid classname.
+
+The year, month, date, and time in a prefix can be separated from each other by
+dashes (``-``), underscores (``_``), or not at all. For example:
 
 * 2012-10-31-100538_AlterBlogTrackViews.php
 * 2012_10_31_100539_AlterBlogAddTranslations.php
 * 20121031100537_AddBlog.php
+
+Each Migration is run in numeric order forward or backwards depending on the
+method taken. This helps prevent numbering conflicts when working in a team
+environment.
 
 ******************
 Create a Migration
