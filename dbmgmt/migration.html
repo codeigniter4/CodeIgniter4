@@ -325,18 +325,25 @@ include migrations from all namespaces.</p>
 </nav>
 <section id="migration-file-names">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Migration File Names</a><a class="headerlink" href="#migration-file-names" title="Permalink to this heading"></a></h2>
-<p>Each Migration is run in numeric order forward or backwards depending on the
-method taken. Each migration is numbered using the timestamp when the migration
-was created, in <strong>YYYY-MM-DD-HHIISS</strong> format (e.g., <strong>2012-10-31-100537</strong>). This
-helps prevent numbering conflicts when working in a team environment.</p>
-<p>Prefix your migration files with the migration number followed by an underscore
-and a descriptive name for the migration. The year, month, and date can be separated
-from each other by dashes, underscores, or not at all. For example:</p>
+<p>A migration file name is made up of a timestamp prefix, an underscore (<code class="docutils literal notranslate"><span class="pre">_</span></code>),
+and a descriptive name (classname).</p>
+<ul class="simple">
+<li><p>2024-09-08-013653_AddBlogTable.php</p></li>
+</ul>
+<p>Each migration is numbered using the timestamp (<strong>2024-09-08-013653</strong>) when the
+migration was created, in <strong>YYYY-MM-DD-HHIISS</strong> format.</p>
+<p>The descriptive name (<strong>AddBlogTable</strong>) for the migration is a classname in PHP.
+So you must name a valid classname.</p>
+<p>The year, month, day, and time in a prefix can be separated from each other by
+dashes (<code class="docutils literal notranslate"><span class="pre">-</span></code>), underscores (<code class="docutils literal notranslate"><span class="pre">_</span></code>), or not at all. For example:</p>
 <ul class="simple">
 <li><p>2012-10-31-100538_AlterBlogTrackViews.php</p></li>
 <li><p>2012_10_31_100539_AlterBlogAddTranslations.php</p></li>
 <li><p>20121031100537_AddBlog.php</p></li>
 </ul>
+<p>Each Migration is run in numeric order forward or backwards depending on the
+method taken. This helps prevent numbering conflicts when working in a team
+environment.</p>
 </section>
 <section id="create-a-migration">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Create a Migration</a><a class="headerlink" href="#create-a-migration" title="Permalink to this heading"></a></h2>
@@ -383,7 +390,7 @@ as <strong>2022-01-31-013057_AddBlog.php</strong>.</p>
 <p>The database connection and the database Forge class are both available to you through
 <code class="docutils literal notranslate"><span class="pre">$this-&gt;db</span></code> and <code class="docutils literal notranslate"><span class="pre">$this-&gt;forge</span></code>, respectively.</p>
 <p>Alternatively, you can use a command-line call to generate a skeleton migration file.
-See <strong>make:migration</strong> in <a class="reference internal" href="#command-line-tools"><span class="std std-ref">Command-Line Tools</span></a> for more details.</p>
+See <a class="reference internal" href="#make-migration">make:migration</a> in <a class="reference internal" href="#command-line-tools"><span class="std std-ref">Command-Line Tools</span></a> for more details.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since the migration class is a PHP class, the classname must be unique in every migration file.</p>
@@ -762,7 +769,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 07, 2024.
+      <span class="lastupdated">Last updated on Sep 09, 2024.
       </span></p>
   </div>
 
