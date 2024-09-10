@@ -84,7 +84,7 @@ class Events
             $files = service('locator')->search('Config/Events.php');
         }
 
-        $files = array_filter(array_map(static function (string $file) {
+        $files = array_filter(array_map(static function (string $file): false|string {
             if (is_file($file)) {
                 return realpath($file) ?: $file;
             }

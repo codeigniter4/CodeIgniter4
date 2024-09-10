@@ -311,7 +311,7 @@ class ValidationTest extends CIUnitTestCase
         $this->validation->setRules([
             'foo' => [
                 'required',
-                static function ($value, $data, &$error, $field) {
+                static function ($value, $data, &$error, $field): bool {
                     if ($value !== 'abc') {
                         $error = 'The ' . $field . ' value is not "abc"';
 

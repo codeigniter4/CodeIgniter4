@@ -534,7 +534,7 @@ class Parser extends View
         $content = (string) $content;
 
         // Replace the content in the template
-        return preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
+        return preg_replace_callback($pattern, function ($matches) use ($content, $escape): string {
             // Check for {! !} syntax to not escape this one.
             if (
                 str_starts_with($matches[0], $this->leftDelimiter . '!')

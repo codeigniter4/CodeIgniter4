@@ -148,7 +148,7 @@ class Database extends BaseCollector
     public function display(): array
     {
         $data            = [];
-        $data['queries'] = array_map(static function (array $query) {
+        $data['queries'] = array_map(static function (array $query): array {
             $isDuplicate = $query['duplicate'] === true;
 
             $firstNonSystemLine = '';

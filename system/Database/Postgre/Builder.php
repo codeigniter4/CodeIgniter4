@@ -368,7 +368,7 @@ class Builder extends BaseBuilder
             $sql .= 'WHERE ' . implode(
                 ' AND ',
                 array_map(
-                    static function ($key, $value) use ($table, $alias, $that) {
+                    static function ($key, $value) use ($table, $alias, $that): string|RawSql {
                         if ($value instanceof RawSql && is_string($key)) {
                             return $table . '.' . $key . ' = ' . $value;
                         }
@@ -463,7 +463,7 @@ class Builder extends BaseBuilder
             $constraints = $this->QBOptions['constraints'] ?? [];
 
             if (empty($constraints)) {
-                $allIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames) {
+                $allIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames): bool {
                     $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
 
                     return ($index->type === 'UNIQUE' || $index->type === 'PRIMARY') && $hasAllFields;
@@ -575,7 +575,7 @@ class Builder extends BaseBuilder
             $sql .= 'WHERE ' . implode(
                 ' AND ',
                 array_map(
-                    static function ($key, $value) use ($table, $alias, $that) {
+                    static function ($key, $value) use ($table, $alias, $that): RawSql|string {
                         if ($value instanceof RawSql) {
                             return $value;
                         }
