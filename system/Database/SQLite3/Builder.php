@@ -145,7 +145,7 @@ class Builder extends BaseBuilder
             if (empty($constraints)) {
                 $fieldNames = array_map(static fn ($columnName) => trim($columnName, '`'), $keys);
 
-                $allIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames) {
+                $allIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames): bool {
                     $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
 
                     return ($index->type === 'PRIMARY' || $index->type === 'UNIQUE') && $hasAllFields;

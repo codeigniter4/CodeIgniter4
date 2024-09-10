@@ -42,7 +42,7 @@ final class NamespacesTest extends CIUnitTestCase
      */
     protected function getBuffer()
     {
-        return preg_replace_callback('/(\|\s*[^|]+\s*\|\s*)(.*?)(\s*\|\s*[^|]+\s*\|)/', static function (array $matches) {
+        return preg_replace_callback('/(\|\s*[^|]+\s*\|\s*)(.*?)(\s*\|\s*[^|]+\s*\|)/', static function (array $matches): string {
             $matches[2] = str_replace(DIRECTORY_SEPARATOR, '/', $matches[2]);
 
             return $matches[1] . $matches[2] . $matches[3];

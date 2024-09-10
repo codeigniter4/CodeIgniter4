@@ -144,7 +144,7 @@ final class TimerTest extends CIUnitTestCase
     public function testRecordFunctionWithReturn(): void
     {
         $timer       = new Timer();
-        $returnValue = $timer->record('longjohn', static function () {
+        $returnValue = $timer->record('longjohn', static function (): string {
             usleep(100000);
 
             return 'test';

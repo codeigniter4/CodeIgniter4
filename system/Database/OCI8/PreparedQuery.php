@@ -113,7 +113,7 @@ class PreparedQuery extends BasePreparedQuery
         // Track our current value
         $count = 0;
 
-        return preg_replace_callback('/\?/', static function ($matches) use (&$count) {
+        return preg_replace_callback('/\?/', static function ($matches) use (&$count): string {
             return ':' . ($count++);
         }, $sql);
     }

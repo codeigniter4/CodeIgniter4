@@ -121,7 +121,7 @@ final class EventsTest extends CIUnitTestCase
 
         // This should cancel the flow of events, and leave
         // $result = 1.
-        Events::on('foo', static function ($arg) use (&$result) {
+        Events::on('foo', static function ($arg) use (&$result): bool {
             $result = 1;
 
             return false;
@@ -138,14 +138,14 @@ final class EventsTest extends CIUnitTestCase
     {
         $result = 0;
 
-        Events::on('foo', static function () use (&$result) {
+        Events::on('foo', static function () use (&$result): bool {
             $result = 1;
 
             return false;
         }, EVENT_PRIORITY_NORMAL);
         // Since this has a higher priority, it will
         // run first.
-        Events::on('foo', static function () use (&$result) {
+        Events::on('foo', static function () use (&$result): bool {
             $result = 2;
 
             return false;

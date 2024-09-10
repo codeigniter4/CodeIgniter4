@@ -713,7 +713,7 @@ class ContentSecurityPolicy
         $pattern = '/(' . preg_quote($this->styleNonceTag, '/')
             . '|' . preg_quote($this->scriptNonceTag, '/') . ')/';
 
-        $body = preg_replace_callback($pattern, function ($match) {
+        $body = preg_replace_callback($pattern, function ($match): string {
             $nonce = $match[0] === $this->styleNonceTag ? $this->getStyleNonce() : $this->getScriptNonce();
 
             return "nonce=\"{$nonce}\"";
