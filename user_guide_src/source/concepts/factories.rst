@@ -341,7 +341,7 @@ Or you can enable this with the ``spark optimize`` command.
     :ref:`environment variables <configuration-classes-and-environment-variables>`.
 
 .. note::
-    Prior to v4.4.x, uncomment the following code in **public/index.php**::
+    In v4.4.x, uncomment the following code in **public/index.php**::
 
         --- a/public/index.php
         +++ b/public/index.php
