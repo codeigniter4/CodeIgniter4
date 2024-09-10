@@ -1164,6 +1164,10 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
 
         $options = $this->request->curl_options;
 
+        if (! defined('CURL_HTTP_VERSION_3')) {
+            define('CURL_HTTP_VERSION_3', 30);
+        }
+
         $this->assertArrayHasKey(CURLOPT_HTTP_VERSION, $options);
         $this->assertSame(CURL_HTTP_VERSION_3, $options[CURLOPT_HTTP_VERSION]);
     }
