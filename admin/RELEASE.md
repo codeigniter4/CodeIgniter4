@@ -12,6 +12,9 @@
 - `4.y`: The next minor version. (e.g., `4.6`)
 - `4.z`: The next next minor version. (e.g., `4.7`)
 
+> [!NOTE]
+> Copy this file, and replace the versions above with the actual versions.
+
 ## Merge `develop` branch into next minor version branch `4.y`
 
 Before starting release process, if there are commits in `develop` branch that
@@ -34,6 +37,26 @@ If you release a new minor version.
 * [ ] Rename the current minor version (e.g., `4.5`) in Setting > Branches >
   "Branch protection rules" to the next minor version. E.g. `4.5` → `4.6`
 * [ ] Delete the merged `4.y` branch (This closes all PRs to the branch)
+
+## Preparation
+
+Work off direct clones of the repos so the release branches persist for a time.
+
+* [ ] Clone both **codeigniter4/CodeIgniter4** and **codeigniter4/userguide** and
+  resolve any necessary PRs
+    ```console
+    rm -rf CodeIgniter4.bk userguide.bk
+    mv CodeIgniter4 CodeIgniter4.bk
+    mv userguide userguide.bk
+    git clone git@github.com:codeigniter4/CodeIgniter4.git
+    git clone git@github.com:codeigniter4/userguide.git
+    ```
+* [ ] Vet the **admin/** folders for any removed hidden files (Action deploy scripts
+  *do not remove these*)
+  ```console
+  cd CodeIgniter4
+  git diff --name-status origin/master admin/
+  ```
 
 ## Changelog
 
@@ -65,33 +88,14 @@ the changelog.
 Copy the resulting content into **CHANGELOG.md** and adjust the format to match
 the existing content.
 
-## Preparation
-
-Work off direct clones of the repos so the release branches persist for a time.
-
-* [ ] Clone both **codeigniter4/CodeIgniter4** and **codeigniter4/userguide** and
-  resolve any necessary PRs
-    ```console
-    rm -rf CodeIgniter4.bk userguide.bk
-    mv CodeIgniter4 CodeIgniter4.bk
-    mv userguide userguide.bk
-    git clone git@github.com:codeigniter4/CodeIgniter4.git
-    git clone git@github.com:codeigniter4/userguide.git
-    ```
-* [ ] Vet the **admin/** folders for any removed hidden files (Action deploy scripts
-  *do not remove these*)
-  ```console
-  cd CodeIgniter4
-  git diff --name-status origin/master admin/
-  ```
-* [ ] Merge any Security Advisory PRs in private forks
-
 ## Process
 
-> **Note** Most changes that need noting in the User Guide and docs should have
+> [!NOTE]
+> Most changes that need noting in the User Guide and docs should have
 > been included with their PR, so this process assumes you will not be
 > generating much new content.
 
+* [ ] Merge any Security Advisory PRs in private forks
 * [ ] Replace **CHANGELOG.md** with the new version generated above
 * [ ] Update **user_guide_src/source/changelogs/v4.x.x.rst**
   * Remove the section titles that have no items

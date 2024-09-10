@@ -55,6 +55,7 @@ use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
 use Rector\TypeDeclaration\Rector\Closure\AddClosureVoidReturnTypeWhereNoReturnRector;
 use Rector\TypeDeclaration\Rector\Empty_\EmptyOnNullableObjectToInstanceOfRector;
 use Rector\TypeDeclaration\Rector\Function_\AddFunctionVoidReturnTypeWhereNoReturnRector;
+use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
@@ -215,6 +216,7 @@ return RectorConfig::configure()
         AddClosureVoidReturnTypeWhereNoReturnRector::class,
         AddFunctionVoidReturnTypeWhereNoReturnRector::class,
         AddMethodCallBasedStrictParamTypeRector::class,
+        TypedPropertyFromAssignsRector::class,
     ])
     ->withConfiguredRule(StringClassNameToClassConstantRector::class, [
         // keep '\\' prefix string on string '\Foo\Bar'
