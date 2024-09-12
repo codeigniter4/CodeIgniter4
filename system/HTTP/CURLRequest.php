@@ -658,6 +658,12 @@ class CURLRequest extends OutgoingRequest
                 $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_1;
             } elseif ($version === '2.0') {
                 $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_2_0;
+            } elseif ($version === '3.0') {
+                if (! defined('CURL_HTTP_VERSION_3')) {
+                    define('CURL_HTTP_VERSION_3', 30);
+                }
+
+                $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_3;
             }
         }
 

@@ -1156,6 +1156,22 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
         $this->assertSame(CURL_HTTP_VERSION_2_0, $options[CURLOPT_HTTP_VERSION]);
     }
 
+    public function testHTTPv3(): void
+    {
+        $this->request->request('POST', '/post', [
+            'version' => 3.0,
+        ]);
+
+        $options = $this->request->curl_options;
+
+        if (! defined('CURL_HTTP_VERSION_3')) {
+            define('CURL_HTTP_VERSION_3', 30);
+        }
+
+        $this->assertArrayHasKey(CURLOPT_HTTP_VERSION, $options);
+        $this->assertSame(CURL_HTTP_VERSION_3, $options[CURLOPT_HTTP_VERSION]);
+    }
+
     public function testCookieOption(): void
     {
         $holder = SUPPORTPATH . 'HTTP/Files/CookiesHolder.txt';
