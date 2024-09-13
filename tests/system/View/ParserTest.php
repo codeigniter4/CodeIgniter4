@@ -806,7 +806,7 @@ final class ParserTest extends CIUnitTestCase
 
     public function testParserPluginParams(): void
     {
-        $this->parser->addPlugin('growth', static function ($str, array $params) {
+        $this->parser->addPlugin('growth', static function ($str, array $params): string {
             $step  = $params['step'] ?? 1;
             $count = $params['count'] ?? 2;
 
@@ -853,7 +853,7 @@ final class ParserTest extends CIUnitTestCase
 
     public function testParserSingleTagWithQuotedParams(): void
     {
-        $this->parser->addPlugin('count', static function (array $params = []) {
+        $this->parser->addPlugin('count', static function (array $params = []): string {
             $out = '';
 
             foreach ($params as $index => $param) {
@@ -870,7 +870,7 @@ final class ParserTest extends CIUnitTestCase
 
     public function testParserSingleTagWithNamedParams(): void
     {
-        $this->parser->addPlugin('read_params', static function (array $params = []) {
+        $this->parser->addPlugin('read_params', static function (array $params = []): string {
             $out = '';
 
             foreach ($params as $index => $param) {

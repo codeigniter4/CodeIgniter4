@@ -307,7 +307,7 @@ final class ArrayHelper
      */
     public static function sortValuesByNatural(array &$array, $sortByIndex = null): bool
     {
-        return usort($array, static function ($currentValue, $nextValue) use ($sortByIndex) {
+        return usort($array, static function ($currentValue, $nextValue) use ($sortByIndex): int {
             if ($sortByIndex !== null) {
                 return strnatcmp((string) $currentValue[$sortByIndex], (string) $nextValue[$sortByIndex]);
             }

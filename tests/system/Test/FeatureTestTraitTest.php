@@ -153,7 +153,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'POST',
                 'section/create',
-                static function () {
+                static function (): string {
                     $validation = Services::validation();
                     $validation->setRule('title', 'title', 'required|min_length[3]');
 
