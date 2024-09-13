@@ -523,7 +523,7 @@ final class MiscUrlTest extends CIUnitTestCase
             ],
             'test06' => [
                 'This one: ://codeigniter.com must not break this one: http://codeigniter.com',
-                'This one: <a href="://codeigniter.com">://codeigniter.com</a> must not break this one: <a href="http://codeigniter.com">http://codeigniter.com</a>',
+                'This one: ://codeigniter.com must not break this one: <a href="http://codeigniter.com">http://codeigniter.com</a>',
             ],
             'test07' => [
                 'Visit example.com or email foo@bar.com',
@@ -623,7 +623,7 @@ final class MiscUrlTest extends CIUnitTestCase
             ],
             'test06' => [
                 'This one: ://codeigniter.com must not break this one: http://codeigniter.com',
-                'This one: <a href="://codeigniter.com">://codeigniter.com</a> must not break this one: <a href="http://codeigniter.com">http://codeigniter.com</a>',
+                'This one: ://codeigniter.com must not break this one: <a href="http://codeigniter.com">http://codeigniter.com</a>',
             ],
             'test07' => [
                 'Visit example.com or email foo@bar.com',
@@ -675,7 +675,7 @@ final class MiscUrlTest extends CIUnitTestCase
             ],
             'test06' => [
                 'This one: ://codeigniter.com must not break this one: http://codeigniter.com',
-                'This one: <a href="://codeigniter.com" target="_blank">://codeigniter.com</a> must not break this one: <a href="http://codeigniter.com" target="_blank">http://codeigniter.com</a>',
+                'This one: ://codeigniter.com must not break this one: <a href="http://codeigniter.com" target="_blank">http://codeigniter.com</a>',
             ],
             'test07' => [
                 'Visit example.com or email foo@bar.com',
