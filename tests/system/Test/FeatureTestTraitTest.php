@@ -626,7 +626,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $request = $this->withBodyFormat('xml')->setRequestBody($request, $data);
 
         $expectedXml = '<?xml version="1.0"?>
-<response><true>1</true><false/><int>2</int><null/><float>1.23</float><string>foo</string></response>
+<response><true>1</true><false></false><int>2</int><null></null><float>1.23</float><string>foo</string></response>
 ';
 
         $this->assertSame($expectedXml, $request->getBody());
