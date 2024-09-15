@@ -167,7 +167,7 @@ class FilterCheck extends BaseCommand
      */
     private function colorItems(array $array): array
     {
-        return array_map(function ($item) {
+        return array_map(function ($item): array|string {
             if (is_array($item)) {
                 return $this->colorItems($item);
             }
