@@ -175,6 +175,8 @@ class Forge extends BaseForge
                 'Failed to drop column. Table: "' . $table
                 . '", Column: "' . $columns . '"'
             );
+
+            return false;
         }
 
         return $sqlExecuteResult;
