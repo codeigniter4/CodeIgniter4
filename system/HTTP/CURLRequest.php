@@ -649,6 +649,17 @@ class CURLRequest extends OutgoingRequest
             $this->setHeader('Content-Length', (string) strlen($json));
         }
 
+        // Resolve IP
+        if (! empty($config['force_ip_resolve'])) {
+            $protocolVersion = $config['force_ip_resolve'];
+
+            if ($protocolVersion === 'v4') {
+                $curlOptions[CURLOPT_IPRESOLVE] = CURL_IPRESOLVE_V4;
+            } elseif ($protocolVersion === 'v6') {
+                $curlOptions[CURLOPT_IPRESOLVE] = CURL_IPRESOLVE_V6;
+            }
+        }
+
         // version
         if (! empty($config['version'])) {
             $version = sprintf('%.1F', $config['version']);
