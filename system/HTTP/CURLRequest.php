@@ -356,7 +356,7 @@ class CURLRequest extends OutgoingRequest
         // Reset our curl options so we're on a fresh slate.
         $curlOptions = [];
 
-        if (array_key_exists('query', $this->config) && $this->config['query'] && is_array($this->config['query'])) {
+        if (array_key_exists('query', $this->config) && is_array($this->config['query']) && $this->config['query'] !== []) {
             // This is likely too naive a solution.
             // Should look into handling when $url already
             // has query vars on it.
@@ -518,10 +518,10 @@ class CURLRequest extends OutgoingRequest
     protected function setCURLOptions(array $curlOptions = [], array $config = [])
     {
         // Auth Headers
-        if (array_key_exists('auth', $config) && $config['auth']) {
+        if (array_key_exists('auth', $config) && is_array($config['auth']) && $config['auth'] !== []) {
             $curlOptions[CURLOPT_USERPWD] = $config['auth'][0] . ':' . $config['auth'][1];
 
-            if (array_key_exists(2, $config['auth']) && $config['auth'][2] && strtolower($config['auth'][2]) === 'digest') {
+            if (isset($this->config['auth'][2]) && $this->config['auth'][2] === 'digest') {
                 $curlOptions[CURLOPT_HTTPAUTH] = CURLAUTH_DIGEST;
             } else {
                 $curlOptions[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
@@ -621,7 +621,7 @@ class CURLRequest extends OutgoingRequest
         $curlOptions[CURLOPT_CONNECTTIMEOUT_MS] = (float) $config['connect_timeout'] * 1000;
 
         // Post Data - application/x-www-form-urlencoded
-        if (array_key_exists('form_params', $config) && $config['form_params'] && is_array($config['form_params'])) {
+        if (array_key_exists('form_params', $config) && is_array($config['form_params']) && $config['form_params'] !== []) {
             $postFields                      = http_build_query($config['form_params']);
             $curlOptions[CURLOPT_POSTFIELDS] = $postFields;
 
@@ -632,7 +632,7 @@ class CURLRequest extends OutgoingRequest
         }
 
         // Post Data - multipart/form-data
-        if (array_key_exists('multipart', $config) && $config['multipart'] && is_array($config['multipart'])) {
+        if (array_key_exists('multipart', $config) && is_array($config['multipart']) && $config['multipart'] !== []) {
             // setting the POSTFIELDS option automatically sets multipart
             $curlOptions[CURLOPT_POSTFIELDS] = $config['multipart'];
         }
