@@ -5474,12 +5474,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/CLIRequest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 10,
-	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequest\\:\\:applyBody\\(\\) has parameter \\$curlOptions with no value type specified in iterable type array\\.$#',
 	'count' => 1,

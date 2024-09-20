@@ -356,7 +356,7 @@ class CURLRequest extends OutgoingRequest
         // Reset our curl options so we're on a fresh slate.
         $curlOptions = [];
 
-        if (! empty($this->config['query']) && is_array($this->config['query'])) {
+        if (array_key_exists('query', $this->config) && $this->config['query'] && is_array($this->config['query'])) {
             // This is likely too naive a solution.
             // Should look into handling when $url already
             // has query vars on it.
@@ -422,7 +422,7 @@ class CURLRequest extends OutgoingRequest
      */
     protected function applyRequestHeaders(array $curlOptions = []): array
     {
-        if (empty($this->headers)) {
+        if ($this->headers === []) {
             return $curlOptions;
         }
 
@@ -469,7 +469,7 @@ class CURLRequest extends OutgoingRequest
      */
     protected function applyBody(array $curlOptions = []): array
     {
-        if (! empty($this->body)) {
+        if ($this->body !== '' && $this->body !== null) {
             $curlOptions[CURLOPT_POSTFIELDS] = (string) $this->getBody();
         }
 
@@ -518,10 +518,10 @@ class CURLRequest extends OutgoingRequest
     protected function setCURLOptions(array $curlOptions = [], array $config = [])
     {
         // Auth Headers
-        if (! empty($config['auth'])) {
+        if (array_key_exists('auth', $config) && $config['auth']) {
             $curlOptions[CURLOPT_USERPWD] = $config['auth'][0] . ':' . $config['auth'][1];
 
-            if (! empty($config['auth'][2]) && strtolower($config['auth'][2]) === 'digest') {
+            if (array_key_exists(2, $config['auth']) && $config['auth'][2] && strtolower($config['auth'][2]) === 'digest') {
                 $curlOptions[CURLOPT_HTTPAUTH] = CURLAUTH_DIGEST;
             } else {
                 $curlOptions[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
@@ -529,7 +529,7 @@ class CURLRequest extends OutgoingRequest
         }
 
         // Certificate
-        if (! empty($config['cert'])) {
+        if (array_key_exists('cert', $config) && $config['cert']) {
             $cert = $config['cert'];
 
             if (is_array($cert)) {
@@ -575,7 +575,7 @@ class CURLRequest extends OutgoingRequest
         }
 
         // Decode Content
-        if (! empty($config['decode_content'])) {
+        if (array_key_exists('decode_content', $config) && $config['decode_content']) {
             $accept = $this->getHeaderLine('Accept-Encoding');
 
             if ($accept !== '') {
@@ -621,7 +621,7 @@ class CURLRequest extends OutgoingRequest
         $curlOptions[CURLOPT_CONNECTTIMEOUT_MS] = (float) $config['connect_timeout'] * 1000;
 
         // Post Data - application/x-www-form-urlencoded
-        if (! empty($config['form_params']) && is_array($config['form_params'])) {
+        if (array_key_exists('form_params', $config) && $config['form_params'] && is_array($config['form_params'])) {
             $postFields                      = http_build_query($config['form_params']);
             $curlOptions[CURLOPT_POSTFIELDS] = $postFields;
 
@@ -632,7 +632,7 @@ class CURLRequest extends OutgoingRequest
         }
 
         // Post Data - multipart/form-data
-        if (! empty($config['multipart']) && is_array($config['multipart'])) {
+        if (array_key_exists('multipart', $config) && $config['multipart'] && is_array($config['multipart'])) {
             // setting the POSTFIELDS option automatically sets multipart
             $curlOptions[CURLOPT_POSTFIELDS] = $config['multipart'];
         }
@@ -650,7 +650,7 @@ class CURLRequest extends OutgoingRequest
         }
 
         // version
-        if (! empty($config['version'])) {
+        if (array_key_exists('version', $config) && $config['version']) {
             $version = sprintf('%.1F', $config['version']);
             if ($version === '1.0') {
                 $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
