@@ -5470,7 +5470,7 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: empty.notAllowed
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 11,
+	'count' => 10,
 	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
 ];
 $ignoreErrors[] = [
