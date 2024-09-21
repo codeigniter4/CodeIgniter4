@@ -1177,7 +1177,7 @@ class URI implements Stringable
         parse_str($params, $result);
 
         foreach ($result as $key => $value) {
-            $return[hex2bin($key)] = $value;
+            $return[hex2bin((string) $key)] = $value;
         }
 
         return $return;
