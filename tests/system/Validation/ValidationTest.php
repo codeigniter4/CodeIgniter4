@@ -1351,6 +1351,30 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame('The Foo Bar Translated field is very short.', $this->validation->getError('foo'));
     }
 
+    public function testTranslatedLabelWithCustomErrorMessageAndComplexLanguageString(): void
+    {
+        // Lithuanian language used as an example
+        $rules = [
+            'foo' => [
+                'label'  => 'Lauko pavadinimas',
+                'rules'  => 'min_length[5]',
+                'errors' => [
+                    'min_length' => '{param, plural,
+                        =0 {Lauke „{field}" negali būti mažiau nei nulis ženklų}
+                        =1 {Lauke „{field}" negali būti mažiau nei vienas ženklas}
+                        one {Lauke „{field}" negali būti mažiau nei # ženklas}
+                        few {Lauke „{field}" negali būti mažiau nei # ženklai}
+                        other {Lauke „{field}" negali būti mažiau nei # ženklų}
+                    }',
+                ],
+            ],
+        ];
+
+        $this->validation->setRules($rules, []);
+        $this->validation->run(['foo' => 'abc']);
+        $this->assertSame('Lauke „Lauko pavadinimas" negali būti mažiau nei 5 ženklų', $this->validation->getError('foo'));
+    }
+
     public function testTranslatedLabelTagReplacement(): void
     {
         $data = ['Username' => 'Pizza'];

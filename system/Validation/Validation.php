@@ -919,26 +919,23 @@ class Validation implements ValidationInterface
     ): string {
         $param ??= '';
 
+        $args = [
+            'field' => ($label === null || $label === '') ? $field : lang($label),
+            'param' => (! isset($this->rules[$param]['label'])) ? $param : lang($this->rules[$param]['label']),
+            'value' => $value ?? '',
+        ];
+
         // Check if custom message has been defined by user
         if (isset($this->customErrors[$field][$rule])) {
-            $message = lang($this->customErrors[$field][$rule]);
+            return lang($this->customErrors[$field][$rule], $args);
         } elseif (null !== $originalField && isset($this->customErrors[$originalField][$rule])) {
-            $message = lang($this->customErrors[$originalField][$rule]);
+            return lang($this->customErrors[$originalField][$rule], $args);
         } else {
             // Try to grab a localized version of the message...
             // lang() will return the rule name back if not found,
             // so there will always be a string being returned.
-            $message = lang('Validation.' . $rule);
+            return lang('Validation.' . $rule, $args);
         }
-
-        $message = str_replace('{field}', ($label === null || $label === '') ? $field : lang($label), $message);
-        $message = str_replace(
-            '{param}',
-            (! isset($this->rules[$param]['label'])) ? $param : lang($this->rules[$param]['label']),
-            $message
-        );
-
-        return str_replace('{value}', $value ?? '', $message);
     }
 
     /**
