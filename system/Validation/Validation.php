@@ -928,14 +928,15 @@ class Validation implements ValidationInterface
         // Check if custom message has been defined by user
         if (isset($this->customErrors[$field][$rule])) {
             return lang($this->customErrors[$field][$rule], $args);
-        } elseif (null !== $originalField && isset($this->customErrors[$originalField][$rule])) {
-            return lang($this->customErrors[$originalField][$rule], $args);
-        } else {
-            // Try to grab a localized version of the message...
-            // lang() will return the rule name back if not found,
-            // so there will always be a string being returned.
-            return lang('Validation.' . $rule, $args);
         }
+        if (null !== $originalField && isset($this->customErrors[$originalField][$rule])) {
+            return lang($this->customErrors[$originalField][$rule], $args);
+        }
+
+        // Try to grab a localized version of the message...
+        // lang() will return the rule name back if not found,
+        // so there will always be a string being returned.
+        return lang('Validation.' . $rule, $args);
     }
 
     /**
