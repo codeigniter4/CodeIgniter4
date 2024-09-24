@@ -1211,6 +1211,17 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
         $this->assertSame(CURL_IPRESOLVE_V6, $options[CURLOPT_IPRESOLVE]);
     }
 
+    public function testForceResolveIPUnknown(): void
+    {
+        $this->request->request('POST', '/post', [
+            'force_ip_resolve' => 'v?',
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayNotHasKey(CURLOPT_IPRESOLVE, $options);
+    }
+
     public function testCookieOption(): void
     {
         $holder = SUPPORTPATH . 'HTTP/Files/CookiesHolder.txt';
