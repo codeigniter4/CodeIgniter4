@@ -650,7 +650,7 @@ class CURLRequest extends OutgoingRequest
         }
 
         // Resolve IP
-        if (array_key_exists('force_ip_resolve', $config) && $config['force_ip_resolve']) {
+        if (array_key_exists('force_ip_resolve', $config) && is_string($config['force_ip_resolve']) && $config['force_ip_resolve'] !== '') {
             $protocolVersion = $config['force_ip_resolve'];
 
             if ($protocolVersion === 'v4') {
