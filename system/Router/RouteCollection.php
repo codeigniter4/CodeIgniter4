@@ -1604,7 +1604,7 @@ class RouteCollection implements RouteCollectionInterface
     private function getMethodParams(string $from): string
     {
         preg_match_all('/\(.+?\)/', $from, $matches);
-        $count = is_countable($matches[0]) ? count($matches[0]) : 0;
+        $count = count($matches[0]);
 
         $params = '';
 
