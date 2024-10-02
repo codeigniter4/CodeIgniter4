@@ -375,11 +375,11 @@ trait FeatureTestTrait
 
         $request->setGlobal('get', $get);
 
-        if ($name === 'get') {
+        if ($name === 'get' || ($name === 'post' && in_array($this->bodyFormat, ['json', 'xml'], true))) {
             $request->setGlobal('request', $request->fetchGlobal('get'));
         }
 
-        if ($name === 'post') {
+        if ($name === 'post' && ! in_array($this->bodyFormat, ['json', 'xml'], true)) {
             $request->setGlobal($name, $params);
             $request->setGlobal(
                 'request',

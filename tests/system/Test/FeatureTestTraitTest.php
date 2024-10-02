@@ -557,7 +557,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertStringContainsString('[]', $response->getBody());
     }
 
-    public function testCallWithJsonRequest(): void
+    public function testCallWithAssociativeJsonRequest(): void
     {
         $this->withRoutes([
             [
@@ -573,6 +573,26 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             'null'   => null,
             'float'  => 1.23,
             'string' => 'foo',
+        ];
+        $response = $this->withBodyFormat('json')
+            ->call(Method::POST, 'home', $data);
+
+        $response->assertOK();
+        $response->assertJSONExact($data);
+    }
+
+    public function testCallWithListJsonRequest(): void
+    {
+        $this->withRoutes([
+            [
+                'POST',
+                'home',
+                '\Tests\Support\Controllers\Popcorn::echoJson',
+            ],
+        ]);
+        $data = [
+            ['one' => 1, 'two' => 2],
+            ['one' => 2, 'two' => 2],
         ];
         $response = $this->withBodyFormat('json')
             ->call(Method::POST, 'home', $data);
