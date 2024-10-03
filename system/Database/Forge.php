@@ -778,7 +778,7 @@ class Forge
     }
 
     /**
-     * @param array|string $columnNames column names to DROP
+     * @param list<string>|string $columnNames column names to DROP
      *
      * @return bool
      *
