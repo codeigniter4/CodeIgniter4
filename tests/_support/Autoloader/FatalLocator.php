@@ -28,13 +28,13 @@ class FatalLocator extends FileLocator
     /**
      * Throws.
      *
-     * @param string $file   The namespaced file to locate
-     * @param string $folder The folder within the namespace that we should look for the file.
-     * @param string $ext    The file extension the file should have.
+     * @param string      $file   The namespaced file to locate
+     * @param string|null $folder The folder within the namespace that we should look for the file.
+     * @param string      $ext    The file extension the file should have.
      *
      * @return false|string The path to the file, or false if not found.
      */
-    public function locateFile(string $file, ?string $folder = null, string $ext = 'php')
+    public function locateFile(string $file, ?string $folder = null, string $ext = 'php'): false|string
     {
         $folder ??= 'null';
 
@@ -53,6 +53,8 @@ class FatalLocator extends FileLocator
      *      'app/Modules/foo/Config/Routes.php',
      *      'app/Modules/bar/Config/Routes.php',
      *  ]
+     *
+     * @return list<string>
      */
     public function search(string $path, string $ext = 'php', bool $prioritizeApp = true): array
     {
