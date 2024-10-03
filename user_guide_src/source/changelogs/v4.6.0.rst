@@ -184,6 +184,7 @@ Commands
 - The ``spark routes`` and ``spark filter:check`` commands now display filter
   arguments.
 - The ``spark filter:check`` command now displays filter classnames.
+- The ``spark lang:sync`` command to synchronize translation files. See :ref:`sync-translations-command`
 
 Routing
 =======
