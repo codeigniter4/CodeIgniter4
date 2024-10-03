@@ -25,12 +25,12 @@ final class PublisherInputTest extends CIUnitTestCase
     /**
      * A known, valid file
      */
-    private string $file = SUPPORTPATH . 'Files/baker/banana.php';
+    private string $file = SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php';
 
     /**
      * A known, valid directory
      */
-    private string $directory = SUPPORTPATH . 'Files/able/';
+    private string $directory = SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'able' . DIRECTORY_SEPARATOR;
 
     /**
      * Initialize the helper, since some
@@ -48,7 +48,7 @@ final class PublisherInputTest extends CIUnitTestCase
     {
         $publisher = new Publisher(SUPPORTPATH . 'Files');
 
-        $publisher->addPath('baker/banana.php');
+        $publisher->addPath('baker' . DIRECTORY_SEPARATOR . 'banana.php');
 
         $this->assertSame([$this->file], $publisher->get());
     }
@@ -57,7 +57,7 @@ final class PublisherInputTest extends CIUnitTestCase
     {
         $publisher = new Publisher(SUPPORTPATH . 'Files');
 
-        $publisher->addPath('baker/banana.php', true);
+        $publisher->addPath('baker' . DIRECTORY_SEPARATOR . 'banana.php', true);
 
         $this->assertSame([$this->file], $publisher->get());
     }
@@ -85,8 +85,8 @@ final class PublisherInputTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
-            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'fig_3.php.txt',
         ];
 
         $publisher->addPath('Files');
@@ -102,7 +102,7 @@ final class PublisherInputTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php',
         ];
 
         $publisher->addPaths([
@@ -121,9 +121,9 @@ final class PublisherInputTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
-            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
-            SUPPORTPATH . 'Log/Handlers/TestHandler.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'fig_3.php.txt',
+            SUPPORTPATH . 'Log' . DIRECTORY_SEPARATOR . 'Handlers' . DIRECTORY_SEPARATOR . 'TestHandler.php',
         ];
 
         $publisher->addPaths([

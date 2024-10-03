@@ -61,7 +61,7 @@ class FileLocator implements FileLocatorInterface
 
         // Clears the folder name if it is at the beginning of the filename
         if ($folder !== null && str_starts_with($file, $folder)) {
-            $file = substr($file, strlen($folder . '/'));
+            $file = substr($file, strlen($folder . DIRECTORY_SEPARATOR));
         }
 
         // Is not namespaced? Try the application folder.
@@ -93,7 +93,10 @@ class FileLocator implements FileLocatorInterface
                 // There may be sub-namespaces of the same vendor,
                 // so overwrite them with namespaces found later.
                 $paths    = $namespaces[$namespace];
-                $filename = ltrim(str_replace('\\', '/', $fileWithoutNamespace), '/');
+                $filename = ltrim(
+                    str_replace('\\', DIRECTORY_SEPARATOR, $fileWithoutNamespace),
+                    DIRECTORY_SEPARATOR
+                );
             }
         }
 
@@ -104,14 +107,14 @@ class FileLocator implements FileLocatorInterface
 
         // Check each path in the namespace
         foreach ($paths as $path) {
-            // Ensure trailing slash
-            $path = rtrim($path, '/') . '/';
+            // Ensure trailing directory separator
+            $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
             // If we have a folder name, then the calling function
             // expects this file to be within that folder, like 'Views',
             // or 'libraries'.
-            if ($folder !== null && ! str_contains($path . $filename, '/' . $folder . '/')) {
-                $path .= trim($folder, '/') . '/';
+            if ($folder !== null && ! str_contains($path . $filename, DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR)) {
+                $path .= trim($folder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             }
 
             $path .= $filename;

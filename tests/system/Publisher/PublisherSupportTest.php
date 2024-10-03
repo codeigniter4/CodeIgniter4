@@ -27,12 +27,12 @@ final class PublisherSupportTest extends CIUnitTestCase
     /**
      * A known, valid file
      */
-    private string $file = SUPPORTPATH . 'Files/baker/banana.php';
+    private string $file = SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php';
 
     /**
      * A known, valid directory
      */
-    private string $directory = SUPPORTPATH . 'Files/able/';
+    private string $directory = SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'able' . DIRECTORY_SEPARATOR;
 
     /**
      * Initialize the helper, since some
