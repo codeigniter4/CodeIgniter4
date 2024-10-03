@@ -217,8 +217,9 @@ Libraries
 
 - **FileCollection:** Added ``retainMultiplePatterns()`` to ``FileCollection`` class.
   See :ref:`FileCollection::retainMultiplePatterns() <file-collections-retain-multiple-patterns>`.
-- **Validation:** Added ``min_dims`` validation rule to ``FileRules`` class. See
-  :ref:`Validation <rules-for-file-uploads>`.
+- **Validation:** 
+    - Added ``min_dims`` validation rule to ``FileRules`` class. See :ref:`Validation <rules-for-file-uploads>`.
+    - Added ``required_if`` validation rule to ``Rules`` class. See :ref:`Validation <rules-for-general-use>`.
 
 Helpers and Functions
 =====================
@@ -238,6 +239,7 @@ Message Changes
 
 - Added ``Validation.min_dims`` message
 - Added ``Errors.badRequest`` and ``Errors.sorryBadRequest``
+- Added ``Validation.required_if`` message
 
 *******
 Changes
