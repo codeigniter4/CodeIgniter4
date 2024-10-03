@@ -41,7 +41,7 @@ class SiteURI extends URI
     /**
      * The Index File.
      */
-    private string $indexPage;
+    private readonly string $indexPage;
 
     /**
      * List of URI segments in baseURL and indexPage.

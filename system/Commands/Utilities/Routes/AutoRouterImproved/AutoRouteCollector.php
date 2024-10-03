@@ -36,7 +36,7 @@ final class AutoRouteCollector
         private readonly string $defaultMethod,
         private readonly array $httpMethods,
         private readonly array $protectedControllers,
-        private string $prefix = ''
+        private readonly string $prefix = ''
     ) {
     }
 
