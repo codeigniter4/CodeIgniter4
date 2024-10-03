@@ -30,6 +30,8 @@ Deprecations
 Bugs Fixed
 **********
 
+**FeatureTestTrait:** Allows `#call` and `#post` to process JSON lists. It failed because `RequestTrait#fetchGlobal` expected the second parameter ($index) to be an associative array.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.
