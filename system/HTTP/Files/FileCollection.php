@@ -31,7 +31,7 @@ class FileCollection
      * Populated the first time either files(), file(), or hasFile()
      * is called.
      *
-     * @var array|null
+     * @var array<string, array<int|string,UploadedFile>|UploadedFile>|null
      */
     protected $files;
 
@@ -40,7 +40,7 @@ class FileCollection
      * Each element in the array will be an instance of UploadedFile.
      * The key of each element will be the client filename.
      *
-     * @return array|null
+     * @return array<string, array<int|string,UploadedFile>|UploadedFile>|null
      */
     public function all()
     {
@@ -79,7 +79,7 @@ class FileCollection
     /**
      * Verify if a file exist in the collection of uploaded files and is have been uploaded with multiple option.
      *
-     * @return list<UploadedFile>|null
+     * @return array<int|string,UploadedFile>|null
      */
     public function getFileMultiple(string $name)
     {
@@ -165,7 +165,9 @@ class FileCollection
      * Given a file array, will create UploadedFile instances. Will
      * loop over an array and create objects for each.
      *
-     * @return list<UploadedFile>|UploadedFile
+     * @param array<string, mixed> $array
+     *
+     * @return array<int|string,UploadedFile>|UploadedFile
      */
     protected function createFileObject(array $array)
     {
@@ -199,6 +201,10 @@ class FileCollection
      *
      * Thanks to Jack Sleight on the PHP Manual page for the basis
      * of this method.
+     *
+     * @param array<string, array<string, int|list<string>|string>> $data
+     *
+     * @return array<string, mixed>
      *
      * @see http://php.net/manual/en/reserved.variables.files.php#118294
      */
@@ -244,16 +250,16 @@ class FileCollection
     /**
      * Navigate through an array looking for a particular index
      *
-     * @param array $index The index sequence we are navigating down
-     * @param array $value The portion of the array to process
+     * @param list<string>                                                     $index The index sequence we are navigating down
+     * @param array<string, array<int|string, UploadedFile>|UploadedFile>|null $value The portion of the array to process
      *
-     * @return list<UploadedFile>|UploadedFile|null
+     * @return array<int|string,UploadedFile>|UploadedFile|null
      */
     protected function getValueDotNotationSyntax(array $index, array $value)
     {
         $currentIndex = array_shift($index);
 
-        if (isset($currentIndex) && is_array($index) && $index && is_array($value[$currentIndex]) && $value[$currentIndex]) {
+        if (isset($currentIndex) && $index !== [] && is_array($value[$currentIndex]) && isset($value[$currentIndex])) {
             return $this->getValueDotNotationSyntax($index, $value[$currentIndex]);
         }
 

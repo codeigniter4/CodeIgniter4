@@ -5978,56 +5978,14 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/Exceptions/RedirectException.php',
 ];
 $ignoreErrors[] = [
-	// identifier: function.alreadyNarrowedType
-	'message' => '#^Call to function is_array\\(\\) with array will always evaluate to true\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Files/FileCollection.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Files\\\\FileCollection\\:\\:all\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Files/FileCollection.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Files\\\\FileCollection\\:\\:createFileObject\\(\\) has parameter \\$array with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Files/FileCollection.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Files\\\\FileCollection\\:\\:fixFilesArray\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Files/FileCollection.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Files\\\\FileCollection\\:\\:fixFilesArray\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Files/FileCollection.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Files\\\\FileCollection\\:\\:getValueDotNotationSyntax\\(\\) has parameter \\$index with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Files/FileCollection.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Files\\\\FileCollection\\:\\:getValueDotNotationSyntax\\(\\) has parameter \\$value with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/Files/FileCollection.php',
 ];
 $ignoreErrors[] = [
-	// identifier: booleanAnd.rightNotBoolean
-	'message' => '#^Only booleans are allowed in &&, array given on the right side\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/HTTP/Files/FileCollection.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\HTTP\\\\Files\\\\FileCollection\\:\\:\\$files type has no value type specified in iterable type array\\.$#',
+	// identifier: parameter.phpDocType
+	'message' => '#^PHPDoc tag @param for parameter \\$value with type array\\<string, array\\<int\\|string, CodeIgniter\\\\HTTP\\\\Files\\\\UploadedFile\\>\\|CodeIgniter\\\\HTTP\\\\Files\\\\UploadedFile\\>\\|null is not subtype of native type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/Files/FileCollection.php',
 ];
@@ -13956,12 +13914,6 @@ $ignoreErrors[] = [
 	'message' => '#^Assigning \'Mozilla/5\\.0 \\(Linux; U; Android 2\\.0\\.3; ja\\-jp; SC\\-02C Build/IML74K\\) AppleWebKit/534\\.30 \\(KHTML, like Gecko\\) Version/4\\.0 Mobile Safari/534\\.30\' directly on offset \'HTTP_USER_AGENT\' of \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/DownloadResponseTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: method.nameCase
-	'message' => '#^Call to method PHPUnit\\\\Framework\\\\Assert\\:\\:assertNull\\(\\) with incorrect case\\: AssertNull$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/Files/FileCollectionTest.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.return
