@@ -26,7 +26,7 @@ class SodiumHandler extends BaseHandler
     /**
      * Starter key
      *
-     * @var string
+     * @var string|null Null is used for buffer cleanup.
      */
     protected $key = '';
 
