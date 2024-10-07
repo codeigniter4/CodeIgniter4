@@ -17,6 +17,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\TableName;
 use Exception;
+use InvalidArgumentException;
 use SQLite3;
 use SQLite3Result;
 use stdClass;
@@ -81,6 +82,9 @@ class Connection extends BaseConnection
         }
 
         if (is_int($this->synchronous)) {
+            if (! in_array($this->synchronous, [0, 1, 2, 3], true)) {
+                throw new InvalidArgumentException('Invalid synchronous value.');
+            }
             $this->connID->exec('PRAGMA synchronous = ' . $this->synchronous);
         }
     }
