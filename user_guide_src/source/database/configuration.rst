@@ -178,6 +178,8 @@ Description of Values
                      See `SQLite documentation <https://www.sqlite.org/pragma.html#pragma_foreign_keys>`_.
                      To enforce Foreign Key constraint, set this config item to true.
 **busyTimeout**  (``SQLite3`` only) milliseconds (int) - Sleeps for a specified amount of time when a table is locked.
+**synchronous**  (``SQLite3`` only) flag (int) - How strict SQLite will be at flushing to disk during transactions.
+                 Use `null` to stay with the default setting. This can be used since v4.6.0.
 **numberNative** (``MySQLi`` only) true/false (boolean) - Whether to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE.
 **foundRows**    (``MySQLi`` only) true/false (boolean) - Whether to enable MYSQLI_CLIENT_FOUND_ROWS.
 **dateFormat**   The default date/time formats as PHP's `DateTime format`_.

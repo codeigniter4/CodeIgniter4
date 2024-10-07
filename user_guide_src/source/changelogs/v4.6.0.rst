@@ -208,6 +208,8 @@ Others
 - Added a new configuration ``foundRows`` for MySQLi to use ``MYSQLI_CLIENT_FOUND_ROWS``.
 - Added the ``BaseConnection::resetTransStatus()`` method to reset the transaction
   status. See :ref:`transactions-resetting-transaction-status` for details.
+- SQLite3 has a new Config item ``synchronous`` to adjust how strict SQLite is at flushing
+  to disk during transactions. Modifying this can be useful if we use journal mode set to ``WAL``.
 
 Model
 =====
