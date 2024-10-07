@@ -110,6 +110,7 @@ class Rules
      * accept only one filter).
      *
      * Example:
+     *    is_not_unique[dbGroup.table.field,where_field,where_value]
      *    is_not_unique[table.field,where_field,where_value]
      *    is_not_unique[menu.id,active,1]
      *
@@ -122,16 +123,21 @@ class Rules
         }
 
         // Grab any data for exclusion of a single row.
-        [$field, $whereField, $whereValue] = array_pad(
-            explode(',', $field),
-            3,
-            null
-        );
+        [$field, $whereField, $whereValue] = array_pad(explode(',', $field), 3, null);
 
-        // Break the table and field apart
-        sscanf($field, '%[^.].%[^.]', $table, $field);
+        // Break the dbGroup, table and field apart from the field string
+        $parts    = explode('.', $field, 3);
+        $numParts = count($parts);
 
-        $row = Database::connect($data['DBGroup'] ?? null)
+        if ($numParts === 3) {
+            [$dbGroup, $table, $field] = $parts;
+        } elseif ($numParts === 2) {
+            [$table, $field] = $parts;
+        } else {
+            throw new InvalidArgumentException('The field must be in the format "table.field" or "dbGroup.table.field".');
+        }
+
+        $row = Database::connect($dbGroup ?? $data['DBGroup'] ?? null)
             ->table($table)
             ->select('1')
             ->where($field, $str)
@@ -170,6 +176,7 @@ class Rules
      * record updates.
      *
      * Example:
+     *    is_unique[dbGroup.table.field,ignore_field,ignore_value]
      *    is_unique[table.field,ignore_field,ignore_value]
      *    is_unique[users.email,id,5]
      *
@@ -181,15 +188,22 @@ class Rules
             $str = (string) $str;
         }
 
-        [$field, $ignoreField, $ignoreValue] = array_pad(
-            explode(',', $field),
-            3,
-            null
-        );
+        // Grab any data for exclusion of a single row.
+        [$field, $ignoreField, $ignoreValue] = array_pad(explode(',', $field), 3, null);
 
-        sscanf($field, '%[^.].%[^.]', $table, $field);
+        // Break the dbGroup, table and field apart from the field string
+        $parts    = explode('.', $field, 3);
+        $numParts = count($parts);
 
-        $row = Database::connect($data['DBGroup'] ?? null)
+        if ($numParts === 3) {
+            [$dbGroup, $table, $field] = $parts;
+        } elseif ($numParts === 2) {
+            [$table, $field] = $parts;
+        } else {
+            throw new InvalidArgumentException('The field must be in the format "table.field" or "dbGroup.table.field".');
+        }
+
+        $row = Database::connect($dbGroup ?? $data['DBGroup'] ?? null)
             ->table($table)
             ->select('1')
             ->where($field, $str)

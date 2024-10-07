@@ -219,6 +219,8 @@ Libraries
   See :ref:`FileCollection::retainMultiplePatterns() <file-collections-retain-multiple-patterns>`.
 - **Validation:** Added ``min_dims`` validation rule to ``FileRules`` class. See
   :ref:`Validation <rules-for-file-uploads>`.
+- **Validation:** Rule ``is_unique`` and ``is_not_unique`` now accept an optional
+  ``dbGroup`` as parameter. See :ref:`Validation <rules-for-general-use>`.
 
 Helpers and Functions
 =====================
