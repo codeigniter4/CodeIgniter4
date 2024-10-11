@@ -1827,49 +1827,75 @@ class ValidationTest extends CIUnitTestCase
         );
     }
 
-    public function testRuleWithMultipleAsterisk(): void
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9219
+     */
+    #[DataProvider('provideMultipleAsterisk')]
+    public function testRuleWithMultipleAsterisk(array $data = [], array $rules = [], bool $expectedCheck = false, array $expectedData = []): void
     {
-        $data = [
-            'id'    => 1,
-            'dates' => [
-                23 => [
-                    45 => 'Its Mee!',
+        $this->validation->setRules($rules);
+
+        $this->assertSame($expectedCheck, $this->validation->run($data));
+        $this->assertSame($expectedData, $this->validation->getValidated());
+    }
+
+    public static function provideMultipleAsterisk(): iterable
+    {
+        yield 'success' => [
+            [
+                'dates' => [
+                    23 => [
+                        45 => 'Its Mee!',
+                    ],
+                ],
+                'foo' => [
+                    'bar' => [
+                        'data' => [
+                            'name'     => 'John Doe',
+                            'age'      => 29,
+                            'location' => 'Indonesia',
+                        ],
+                    ],
                 ],
             ],
-            'foo' => [
-                'bar' => [
-                    'data' => [
-                        'name'     => 'John Doe',
-                        'age'      => 29,
-                        'location' => 'Indonesia',
+            [
+                'dates.*.*' => 'required',
+                'foo.*.*.*' => 'required',
+            ],
+            true,
+            [
+                'dates' => [
+                    23 => [
+                        45 => 'Its Mee!',
+                    ],
+                ],
+                'foo' => [
+                    'bar' => [
+                        'data' => [
+                            'name'     => 'John Doe',
+                            'age'      => 29,
+                            'location' => 'Indonesia',
+                        ],
                     ],
                 ],
             ],
         ];
 
-        $this->validation->setRules([
-            'id'        => 'required|numeric',
-            'dates.*.*' => 'required',
-            'foo.*.*.*' => 'required',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
-        $this->assertSame([
-            'id'    => 1,
-            'dates' => [
-                23 => [
-                    45 => 'Its Mee!',
-                ],
-            ],
-            'foo' => [
-                'bar' => [
-                    'data' => [
-                        'name'     => 'John Doe',
-                        'age'      => 29,
-                        'location' => 'Indonesia',
+        yield 'failed' => [
+            [
+                'foo' => [
+                    'bar' => [
+                        'data' => [
+                            'name'     => '',
+                            'age'      => 29,
+                            'location' => 'Indonesia',
+                        ],
                     ],
                 ],
             ],
-        ], $this->validation->getValidated());
+            ['foo.*.*.*' => 'required'],
+            false,
+            [],
+        ];
     }
 }
