@@ -31,7 +31,7 @@ Bugs Fixed
 **********
 - **Session Library:** The session initialization debug message now uses the correct log type "debug" instead of "info".
 
-- **Validation:** Fixed `getValidated()` when validation multiple asterisk.
+- **Validation:** Fixed the `getValidated()` method that did not return valid data when validation rules used multiple asterisks.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
