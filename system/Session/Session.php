@@ -258,7 +258,7 @@ class Session implements SessionInterface
         }
 
         $this->initVars();
-        $this->logger->info("Session: Class initialized using '" . $this->config->driver . "' driver.");
+        $this->logger->debug("Session: Class initialized using '" . $this->config->driver . "' driver.");
 
         return $this;
     }
