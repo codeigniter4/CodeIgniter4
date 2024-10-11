@@ -1826,4 +1826,50 @@ class ValidationTest extends CIUnitTestCase
             $this->validation->getErrors()
         );
     }
+
+    public function testRuleWithMultipleAsterisk(): void
+    {
+        $data = [
+            'id'    => 1,
+            'dates' => [
+                23 => [
+                    45 => 'Its Mee!',
+                ],
+            ],
+            'foo' => [
+                'bar' => [
+                    'data' => [
+                        'name'     => 'John Doe',
+                        'age'      => 29,
+                        'location' => 'Indonesia',
+                    ],
+                ],
+            ],
+        ];
+
+        $this->validation->setRules([
+            'id'        => 'required|numeric',
+            'dates.*.*' => 'required',
+            'foo.*.*.*' => 'required',
+        ]);
+
+        $this->assertTrue($this->validation->run($data));
+        $this->assertSame([
+            'id'    => 1,
+            'dates' => [
+                23 => [
+                    45 => 'Its Mee!',
+                ],
+            ],
+            'foo' => [
+                'bar' => [
+                    'data' => [
+                        'name'     => 'John Doe',
+                        'age'      => 29,
+                        'location' => 'Indonesia',
+                    ],
+                ],
+            ],
+        ], $this->validation->getValidated());
+    }
 }
