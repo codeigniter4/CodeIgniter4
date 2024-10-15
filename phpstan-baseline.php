@@ -15146,18 +15146,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Helpers/FilesystemHelperTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: property.phpDocType
-	'message' => '#^PHPDoc tag @var for property CodeIgniter\\\\Helpers\\\\FilesystemHelperTest\\:\\:\\$structure with type mixed is not subtype of native type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Helpers/FilesystemHelperTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\Helpers\\\\FilesystemHelperTest\\:\\:\\$structure type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Helpers/FilesystemHelperTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: argument.type
 	'message' => '#^Parameter \\#2 \\$value of function form_hidden expects array\\|string, null given\\.$#',
 	'count' => 1,
