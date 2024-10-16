@@ -196,7 +196,7 @@ class DatabaseHandler extends BaseHandler
                 'data'       => $this->prepareData($data),
             ];
 
-            if (! $this->db->table($this->table)->set('timestamp', 'now()', false)->insert($insertData)) {
+            if (! $this->db->table($this->table)->set('timestamp', 'CURRENT_TIMESTAMP', false)->insert($insertData)) {
                 return $this->fail();
             }
 
@@ -218,7 +218,7 @@ class DatabaseHandler extends BaseHandler
             $updateData['data'] = $this->prepareData($data);
         }
 
-        if (! $builder->set('timestamp', 'now()', false)->update($updateData)) {
+        if (! $builder->set('timestamp', 'CURRENT_TIMESTAMP', false)->update($updateData)) {
             return $this->fail();
         }
 
@@ -282,12 +282,12 @@ class DatabaseHandler extends BaseHandler
     #[ReturnTypeWillChange]
     public function gc($max_lifetime)
     {
-        $separator = ' ';
-        $interval  = implode($separator, ['', "{$max_lifetime} second", '']);
-
         return $this->db->table($this->table)->where(
             'timestamp <',
-            "now() - INTERVAL {$interval}",
+            match (config(Database::class)->{$this->DBGroup}['DBDriver']) {
+                'SQLite3' => "datetime('now', '-{$max_lifetime} second')",
+                default   => "now() - INTERVAL {$max_lifetime} second",
+            },
             false
         )->delete() ? 1 : $this->fail();
     }
