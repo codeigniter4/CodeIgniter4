@@ -886,6 +886,13 @@ Available Rules
 .. note:: Rule is a string; there must be **no spaces** between the parameters, especially the ``is_unique`` rule.
     There can be no spaces before and after ``ignore_value``.
 
+.. note:: Since version v4.6.0, you can optionally include ``dbGroup`` in validation rules like ``is_unique`` and ``is_not_unique``.
+    This allows specifying which database connection to use during validation, giving you more flexibility when working with multiple databases.
+    To use ``dbGroup``, you place it before the table name in the validation rule, like this:
+    ``is_unique[dbGroup.table.field,ignore_field,ignore_value]`` or ``is_not_unique[dbGroup.table.field,where_field,where_value]``.
+    In these examples, ``dbGroup`` is used to select the appropriate database connection for the specified table and field.
+    If ``dbGroup`` is not provided, the default database group will be used.
+
 .. literalinclude:: validation/038.php
    :lines: 2-
 
@@ -949,13 +956,16 @@ is_natural              No         Fails if field contains anything other than
 is_natural_no_zero      No         Fails if field contains anything other than
                                    a natural number, except zero: ``1``, ``2``,
                                    ``3``, etc.
-is_not_unique           Yes        Checks the database to see if the given value ``is_not_unique[table.field,where_field,where_value]``
+is_not_unique           Yes        Checks the database to see if the given value ``is_not_unique[table.field,where_field,where_value]`` or ``is_not_unique[dbGroup.table.field,where_field,where_value]``
                                    exists. Can ignore records by field/value to
                                    filter (currently accept only one filter).
-is_unique               Yes        Checks if this field value exists in the      ``is_unique[table.field,ignore_field,ignore_value]``
+                                   (Since v4.6.0, you can optionally pass
+                                   the dbGroup as a parameter)
+is_unique               Yes        Checks if this field value exists in the      ``is_unique[table.field,ignore_field,ignore_value]`` or ``is_unique[dbGroup.table.field,ignore_field,ignore_value]``
                                    database. Optionally set a column and value
                                    to ignore, useful when updating records to
-                                   ignore itself.
+                                   ignore itself. (Since v4.6.0, you can
+                                   optionally pass the dbGroup as a parameter)
 less_than               Yes        Fails if field is greater than or equal to    ``less_than[8]``
                                    the parameter value or not numeric.
 less_than_equal_to      Yes        Fails if field is greater than the parameter  ``less_than_equal_to[8]``
@@ -1094,7 +1104,7 @@ min_dims                Yes         Fails if the minimum width and height of an 
                                     parameter is the field name. The second is
                                     the width, and the third is the height. Will
                                     also fail if the file cannot be determined
-                                    to be an image. (This rule was added in 
+                                    to be an image. (This rule was added in
                                     v4.6.0.)
 mime_in                 Yes         Fails if the file's mime type is not one     ``mime_in[field_name,image/png,image/jpeg]``
                                     listed in the parameters.
