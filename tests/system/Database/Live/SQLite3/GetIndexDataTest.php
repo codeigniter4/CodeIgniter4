@@ -51,6 +51,15 @@ final class GetIndexDataTest extends CIUnitTestCase
         $this->forge = Database::forge($config);
     }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        if ($this->db->DBDriver === 'SQLite3' && is_file($this->db->database)) {
+            unlink($this->db->database);
+        }
+    }
+
     public function testGetIndexData(): void
     {
         // INTEGER PRIMARY KEY AUTO_INCREMENT doesn't get an index by default
