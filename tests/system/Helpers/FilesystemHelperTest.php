@@ -25,7 +25,7 @@ use PHPUnit\Framework\Attributes\Group;
 final class FilesystemHelperTest extends CIUnitTestCase
 {
     /**
-     * @var array<string, array<string, list<mixed>>>|array<string, array<string, string>>|array<string, list<mixed>>|array<string, mixed>|array<string, string>|mixed
+     * @var array<string, array<string, list<mixed>>>|array<string, array<string, string>>|array<string, list<mixed>>|array<string, mixed>|array<string, string>
      */
     private array $structure;
 
