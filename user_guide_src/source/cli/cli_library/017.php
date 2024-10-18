@@ -7,8 +7,8 @@ $titles = [
     'task1abc',
 ];
 $descriptions = [
-    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    "Lorem Ipsum has been the industry's standard dummy text ever since the",
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris congue est sit amet turpis laoreet porta.',
+    'Mauris iaculis eleifend ultricies. Sed mollis urna in ultricies hendrerit. Mauris dictum, est a euismod',
 ];
 
 // Determine the maximum length of all titles
