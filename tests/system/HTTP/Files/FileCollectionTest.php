@@ -524,7 +524,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $collection = new FileCollection();
         $file       = $collection->getFile('fileuser');
-        $this->AssertNull($file);
+        $this->assertNull($file);
     }
 
     public function testFileReturnValidMultipleFiles(): void
