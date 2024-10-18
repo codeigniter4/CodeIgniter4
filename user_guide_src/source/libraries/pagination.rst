@@ -149,7 +149,7 @@ the previous section. Specify the segment number to use as the fifth parameter t
 
 Please note: ``$segment`` value cannot be greater than the number of URI segments plus 1.
 
-If you in need to show many pagers on one page then additional parameter which will define a group could be helpful:
+If you need to show many pagers on one page then the additional parameter which will define a group could be helpful:
 
 .. literalinclude:: pagination/007.php
 
@@ -224,7 +224,7 @@ usefulness. It is easiest to demonstrate creating a new view by showing you the 
 setSurroundCount()
 ------------------
 
-In the first line, the ``setSurroundCount()`` method specifies than we want to show two links to either side of
+In the first line, the ``setSurroundCount()`` method specifies that we want to show two links to either side of
 the current page link. The only parameter that it accepts is the number of links to show.
 
 .. note:: You must call this method first to generate correct pagination links.
@@ -274,7 +274,7 @@ In the code presented for the standard pagination structure, the methods `getPre
 
 If you want to use the pagination structure where prev and next will be links to the previous and next pages based on the current page, just replace the `getPrevious() & getNext()`_ methods with `getPreviousPage() & getNextPage()`_, and the methods `hasPrevious() & hasNext()`_ by `hasPreviousPage() & hasNextPage()`_ respectively.
 
-See following an example with these changes:
+See the following example with these changes:
 
 .. literalinclude:: pagination/014.php
 
@@ -291,7 +291,7 @@ page is page 3. If the surrounding count is 2, then the following links would sh
 ``hasPreviousPage()`` would return ``true`` since there is page 2. And,
 ``hasNextPage()`` would return ``true`` since there is page 4.
 
-.. note:: The difference to `hasPrevious() & hasNext()`_ is that they are based
+.. note:: The difference to `hasPreviousPage() & hasNextPage()`_ is that they are based
     on the current page while `hasPrevious() & hasNext()`_ are based on the set
     of links to be displayed before and after the current page based on the value
     passed in `setSurroundCount()`_.
