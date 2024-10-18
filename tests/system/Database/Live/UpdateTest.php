@@ -466,7 +466,7 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateBatchUpdateFieldsAndAlias(): void
     {
-        if ($this->db->DBDriver === 'SQLite3' && ! (version_compare($this->db->getVersion(), '3.33.0') >= 0)) {
+        if ($this->db->DBDriver === 'SQLite3' && version_compare($this->db->getVersion(), '3.33.0') < 0) {
             $this->markTestSkipped('Only SQLite 3.33 and newer can complete this test.');
         }
 
@@ -557,7 +557,7 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateBatchWithoutOnConstraint(): void
     {
-        if ($this->db->DBDriver === 'SQLite3' && ! (version_compare($this->db->getVersion(), '3.33.0') >= 0)) {
+        if ($this->db->DBDriver === 'SQLite3' && version_compare($this->db->getVersion(), '3.33.0') < 0) {
             $this->markTestSkipped('Only SQLite 3.33 and newer can complete this test.');
         }
 
@@ -599,7 +599,7 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testRawSqlConstraint(): void
     {
-        if ($this->db->DBDriver === 'SQLite3' && ! (version_compare($this->db->getVersion(), '3.33.0') >= 0)) {
+        if ($this->db->DBDriver === 'SQLite3' && version_compare($this->db->getVersion(), '3.33.0') < 0) {
             $this->markTestSkipped('Only SQLite 3.33 and newer can complete this test.');
         }
 
@@ -623,7 +623,7 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testRawSqlConstraintWithKey(): void
     {
-        if ($this->db->DBDriver === 'SQLite3' && ! (version_compare($this->db->getVersion(), '3.33.0') >= 0)) {
+        if ($this->db->DBDriver === 'SQLite3' && version_compare($this->db->getVersion(), '3.33.0') < 0) {
             $this->markTestSkipped('Only SQLite 3.33 and newer can complete this test.');
         }
 
@@ -710,7 +710,7 @@ final class UpdateTest extends CIUnitTestCase
         ];
         $this->db->table('user2')->insertBatch($data);
 
-        if ($this->db->DBDriver === 'SQLite3' && ! (version_compare($this->db->getVersion(), '3.33.0') >= 0)) {
+        if ($this->db->DBDriver === 'SQLite3' && version_compare($this->db->getVersion(), '3.33.0') < 0) {
             $this->markTestSkipped('Only SQLite 3.33 and newer can complete this test.');
         }
 

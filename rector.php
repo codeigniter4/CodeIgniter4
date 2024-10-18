@@ -12,13 +12,11 @@ declare(strict_types=1);
  */
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
-use Rector\CodeQuality\Rector\BooleanAnd\SimplifyEmptyArrayCheckRector;
 use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
 use Rector\CodeQuality\Rector\Empty_\SimplifyEmptyCheckOnEmptyArrayRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
 use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
-use Rector\CodeQuality\Rector\FuncCall\SimplifyStrposLowerRector;
 use Rector\CodeQuality\Rector\FuncCall\SingleInArrayToCompareRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
@@ -190,7 +188,6 @@ return RectorConfig::configure()
         CountArrayToEmptyArrayComparisonRector::class,
         ChangeNestedForeachIfsToEarlyContinueRector::class,
         ChangeIfElseValueAssignToEarlyReturnRector::class,
-        SimplifyStrposLowerRector::class,
         CombineIfRector::class,
         SimplifyIfReturnBoolRector::class,
         InlineIfToExplicitIfRector::class,
@@ -203,7 +200,6 @@ return RectorConfig::configure()
         RemoveErrorSuppressInTryCatchStmtsRector::class,
         FuncGetArgsToVariadicParamRector::class,
         MakeInheritedMethodVisibilitySameAsParentRector::class,
-        SimplifyEmptyArrayCheckRector::class,
         SimplifyEmptyCheckOnEmptyArrayRector::class,
         TernaryEmptyArrayArrayDimFetchToCoalesceRector::class,
         EmptyOnNullableObjectToInstanceOfRector::class,
@@ -223,4 +219,5 @@ return RectorConfig::configure()
     ->withConfiguredRule(StringClassNameToClassConstantRector::class, [
         // keep '\\' prefix string on string '\Foo\Bar'
         StringClassNameToClassConstantRector::SHOULD_KEEP_PRE_SLASH => true,
-    ]);
+    ])
+    ->withCodeQualityLevel(9);
