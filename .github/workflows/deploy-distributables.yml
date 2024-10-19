@@ -159,11 +159,15 @@ jobs:
           token: ${{ secrets.ACCESS_TOKEN }}
           path: userguide
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - name: Install Sphinx
         run: |
-          sudo apt install python3-sphinx
-          sudo pip3 install sphinxcontrib-phpdomain
-          sudo pip3 install sphinx_rtd_theme
+          python -m pip install --upgrade pip
+          pip install -r ./source/user_guide_src/requirements.txt
 
       - name: Chmod
         run: chmod +x ./source/.github/scripts/deploy-userguide
