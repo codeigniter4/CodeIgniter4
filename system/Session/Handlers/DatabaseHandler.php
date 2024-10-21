@@ -284,7 +284,7 @@ class DatabaseHandler extends BaseHandler
     {
         return $this->db->table($this->table)->where(
             'timestamp <',
-            "now() - INTERVAL  {$max_lifetime} second ",
+            "now() - INTERVAL {$max_lifetime} second",
             false
         )->delete() ? 1 : $this->fail();
     }
