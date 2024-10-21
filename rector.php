@@ -23,9 +23,7 @@ use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
-use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\CodeQuality\Rector\Ternary\TernaryEmptyArrayArrayDimFetchToCoalesceRector;
-use Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector;
 use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
@@ -189,14 +187,12 @@ return RectorConfig::configure()
         ChangeNestedForeachIfsToEarlyContinueRector::class,
         ChangeIfElseValueAssignToEarlyReturnRector::class,
         CombineIfRector::class,
-        SimplifyIfReturnBoolRector::class,
         InlineIfToExplicitIfRector::class,
         PreparedValueToEarlyReturnRector::class,
         ShortenElseIfRector::class,
         SimplifyIfElseToTernaryRector::class,
         UnusedForeachValueToArrayKeysRector::class,
         ChangeArrayPushToArrayAssignRector::class,
-        UnnecessaryTernaryExpressionRector::class,
         RemoveErrorSuppressInTryCatchStmtsRector::class,
         FuncGetArgsToVariadicParamRector::class,
         MakeInheritedMethodVisibilitySameAsParentRector::class,
@@ -220,4 +216,4 @@ return RectorConfig::configure()
         // keep '\\' prefix string on string '\Foo\Bar'
         StringClassNameToClassConstantRector::SHOULD_KEEP_PRE_SLASH => true,
     ])
-    ->withCodeQualityLevel(9);
+    ->withCodeQualityLevel(14);
