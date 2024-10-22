@@ -70,21 +70,21 @@ class Autoloader
      *
      * @var array<string, list<string>>
      */
-    protected $prefixes = [];
+    protected array $prefixes = [];
 
     /**
      * Stores class name as key, and path as values.
      *
      * @var array<class-string, string>
      */
-    protected $classmap = [];
+    protected array $classmap = [];
 
     /**
      * Stores files as a list.
      *
      * @var list<string>
      */
-    protected $files = [];
+    protected array $files = [];
 
     /**
      * Stores helper list.
@@ -92,15 +92,13 @@ class Autoloader
      *
      * @var list<string>
      */
-    protected $helpers = ['url'];
+    protected array $helpers = ['url'];
 
     /**
      * Reads in the configuration array (described above) and stores
      * the valid parts that we'll need.
-     *
-     * @return $this
      */
-    public function initialize(Autoload $config, Modules $modules)
+    public function initialize(Autoload $config, Modules $modules): static
     {
         $this->prefixes = [];
         $this->classmap = [];
@@ -124,7 +122,7 @@ class Autoloader
             $this->files = $config->files;
         }
 
-        if (isset($config->helpers)) {
+        if ($config->helpers !== []) {
             $this->helpers = [...$this->helpers, ...$config->helpers];
         }
 
@@ -157,16 +155,14 @@ class Autoloader
 
     /**
      * Register the loader with the SPL autoloader stack.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         // Register classmap loader for the files in our class map.
-        spl_autoload_register($this->loadClassmap(...), true);
+        spl_autoload_register($this->loadClassmap(...));
 
         // Register the PSR-4 autoloader.
-        spl_autoload_register($this->loadClass(...), true);
+        spl_autoload_register($this->loadClass(...));
 
         // Load our non-class files
         foreach ($this->files as $file) {
@@ -189,10 +185,8 @@ class Autoloader
      * Registers namespaces with the autoloader.
      *
      * @param array<string, list<string>|string>|string $namespace
-     *
-     * @return $this
      */
-    public function addNamespace($namespace, ?string $path = null)
+    public function addNamespace(array|string $namespace, ?string $path = null): static
     {
         if (is_array($namespace)) {
             foreach ($namespace as $prefix => $namespacedPath) {
@@ -223,7 +217,7 @@ class Autoloader
      * @return         array<string, list<string>>|list<string>
      * @phpstan-return ($prefix is null ? array<string, list<string>> : list<string>)
      */
-    public function getNamespace(?string $prefix = null)
+    public function getNamespace(?string $prefix = null): array
     {
         if ($prefix === null) {
             return $this->prefixes;
@@ -234,10 +228,8 @@ class Autoloader
 
     /**
      * Removes a single namespace from the psr4 settings.
-     *
-     * @return $this
      */
-    public function removeNamespace(string $namespace)
+    public function removeNamespace(string $namespace): static
     {
         if (isset($this->prefixes[trim($namespace, '\\')])) {
             unset($this->prefixes[trim($namespace, '\\')]);
@@ -279,7 +271,7 @@ class Autoloader
      *
      * @return false|string The mapped file name on success, or boolean false on fail
      */
-    protected function loadInNamespace(string $class)
+    protected function loadInNamespace(string $class): bool|string
     {
         if (! str_contains($class, '\\')) {
             return false;
@@ -311,7 +303,7 @@ class Autoloader
      *
      * @return false|string The filename on success, false if the file is not loaded
      */
-    protected function includeFile(string $file)
+    protected function includeFile(string $file): bool|string
     {
         if (is_file($file)) {
             include_once $file;
@@ -367,6 +359,9 @@ class Autoloader
         return $cleanFilename;
     }
 
+    /**
+     * @param array{only?: list<string>, exclude?: list<string>} $composerPackages
+     */
     private function loadComposerNamespaces(ClassLoader $composer, array $composerPackages): void
     {
         $namespacePaths = $composer->getPrefixesPsr4();
@@ -445,10 +440,8 @@ class Autoloader
      * Locates autoload information from Composer, if available.
      *
      * @deprecated No longer used.
-     *
-     * @return void
      */
-    protected function discoverComposerNamespaces()
+    protected function discoverComposerNamespaces(): void
     {
         if (! is_file(COMPOSER_PATH)) {
             return;
