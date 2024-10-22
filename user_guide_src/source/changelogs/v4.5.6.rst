@@ -33,6 +33,8 @@ Bugs Fixed
 
 - **Validation:** Fixed the `getValidated()` method that did not return valid data when validation rules used multiple asterisks.
 
+- **Routing:** Fixed a TypeError in `str_replace()` when `Routing::$translateURIDashes` is set to `true` and a route is defined using a closure.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.
