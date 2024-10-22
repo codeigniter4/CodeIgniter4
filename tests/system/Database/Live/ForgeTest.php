@@ -1317,7 +1317,8 @@ final class ForgeTest extends CIUnitTestCase
 
         $this->assertTrue($this->db->fieldExists('name', 'forge_test_two'));
 
-        $this->forge->dropColumn('forge_test_two', 'name');
+        $result = $this->forge->dropColumn('forge_test_two', 'name');
+        $this->assertTrue($result);
 
         $this->db->resetDataCache();
 
