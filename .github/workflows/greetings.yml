@@ -1,0 +1,33 @@
+name: Greetings
+
+on: [pull_request]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: read
+      pull-requests: write
+    if: github.repository == 'codeigniter4/CodeIgniter4'
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        pr-message: |
+          Thank you for sending this PR!
+
+          We expect the following in all Pull Requests (PRs).
+          - PRs must be sent to the [appropriate branch](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#branching)
+          - All git commits must be [GPG-signed](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#signing)
+          - Must follow our [style guide](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#php-style)
+          - Be [commented](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#comments) in the PHP source file
+          - Be documented in the [user guide](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#user-guide)
+          - Be [unit tested](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#unit-testing)
+          - Pass all checks in GitHub Actions
+
+          > [!IMPORTANT]
+          > We expect all code changes or bug-fixes to be accompanied by one or more tests added to our test suite to prove the code works.
+
+          If pull requests do not comply with the above, they will likely be closed. Since we are a team of volunteers, we don't have any more time to work on the framework than you do. Please make it as painless for your contributions to be included as possible.
+
+          See https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md
