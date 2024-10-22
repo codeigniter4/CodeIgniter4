@@ -26,12 +26,12 @@ final class FileCollectionTest extends CIUnitTestCase
     /**
      * A known, valid file
      */
-    private string $file = SUPPORTPATH . 'Files/baker/banana.php';
+    private string $file = SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php';
 
     /**
      * A known, valid directory
      */
-    private string $directory = SUPPORTPATH . 'Files/able/';
+    private string $directory = SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'able' . DIRECTORY_SEPARATOR;
 
     /**
      * Initialize the helper, since some
@@ -72,7 +72,12 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $this->assertSame($this->directory, $method($link));
 
-        unlink($link);
+        /** @see https://www.php.net/manual/en/function.unlink.php */
+        if (PHP_OS === 'WINNT') {
+            rmdir($link);
+        } else {
+            unlink($link);
+        }
     }
 
     public function testResolveFileFile(): void
@@ -114,7 +119,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $collection = new class ([$this->file]) extends FileCollection {
             protected $files = [
-                SUPPORTPATH . 'Files/able/apple.php',
+                SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'able' . DIRECTORY_SEPARATOR . 'apple.php',
             ];
         };
 
@@ -126,7 +131,9 @@ final class FileCollectionTest extends CIUnitTestCase
         $collection = new class () extends FileCollection {
             protected function define(): void
             {
-                $this->add(SUPPORTPATH . 'Files/baker/banana.php');
+                $this->add(
+                    SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php'
+                );
             }
         };
 
@@ -137,7 +144,7 @@ final class FileCollectionTest extends CIUnitTestCase
     {
         $files = new FileCollection();
 
-        $files->add(SUPPORTPATH . 'Files/baker/banana.php');
+        $files->add(SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php');
 
         $this->assertSame([$this->file], $files->get());
     }
@@ -146,7 +153,9 @@ final class FileCollectionTest extends CIUnitTestCase
     {
         $files = new FileCollection();
 
-        $files->add(SUPPORTPATH . 'Files/baker/banana.php', true);
+        $files->add(
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php'
+        );
 
         $this->assertSame([$this->file], $files->get());
     }
@@ -161,7 +170,7 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'prune_ripe.php',
         ];
 
-        $files->add(SUPPORTPATH . 'Files/able');
+        $files->add(SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'able');
 
         $this->assertSame($expected, $files->get());
     }
@@ -174,8 +183,8 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
-            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'fig_3.php.txt',
         ];
 
         $files->add(SUPPORTPATH . 'Files');
@@ -189,7 +198,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $expected = [
             $this->directory . 'apple.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php',
         ];
 
         $files->add([
@@ -208,12 +217,12 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php',
         ];
 
         $files->add([
-            SUPPORTPATH . 'Files/able', // directory
-            SUPPORTPATH . 'Files/baker/banana.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'able', // directory
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php',
         ]);
 
         $this->assertSame($expected, $files->get());
@@ -227,9 +236,9 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
-            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
-            SUPPORTPATH . 'Log/Handlers/TestHandler.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'fig_3.php.txt',
+            SUPPORTPATH . 'Log' . DIRECTORY_SEPARATOR . 'Handlers' . DIRECTORY_SEPARATOR . 'TestHandler.php',
         ];
 
         $files->add([
@@ -393,8 +402,8 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
-            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'fig_3.php.txt',
         ];
 
         $collection->addDirectory(SUPPORTPATH . 'Files', true);
@@ -409,8 +418,8 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
-            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'fig_3.php.txt',
         ];
 
         $collection->addDirectories([
@@ -428,9 +437,9 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
-            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
-            SUPPORTPATH . 'Log/Handlers/TestHandler.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'fig_3.php.txt',
+            SUPPORTPATH . 'Log' . DIRECTORY_SEPARATOR . 'Handlers' . DIRECTORY_SEPARATOR . 'TestHandler.php',
         ];
 
         $collection->addDirectories([
@@ -460,7 +469,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $expected = [
             $this->directory . 'apple.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php',
         ];
 
         $collection->removePattern('#[a-z]+_.*#');
@@ -475,8 +484,8 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $expected = [
             $this->directory . 'apple.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
-            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'fig_3.php.txt',
         ];
 
         $collection->removePattern('*_*.php');
@@ -490,8 +499,8 @@ final class FileCollectionTest extends CIUnitTestCase
         $collection->addDirectory(SUPPORTPATH . 'Files', true);
 
         $expected = [
-            SUPPORTPATH . 'Files/baker/banana.php',
-            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'fig_3.php.txt',
         ];
 
         $collection->removePattern('*.php', $this->directory);
@@ -519,7 +528,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $expected = [
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'fig_3.php.txt',
         ];
 
         $collection->retainPattern('#[a-z]+_.*#');
@@ -548,8 +557,8 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $expected = [
             $this->directory . 'fig_3.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
-            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php',
+            SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'fig_3.php.txt',
         ];
 
         $collection->retainPattern('*_?.php', $this->directory);

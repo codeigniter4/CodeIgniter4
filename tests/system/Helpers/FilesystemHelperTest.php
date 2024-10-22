@@ -321,11 +321,11 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $filenames = get_filenames($vfs->url(), true, false, false);
 
         $expected = [
-            'vfs://root/boo/far',
-            'vfs://root/boo/faz',
-            'vfs://root/foo/bar',
-            'vfs://root/foo/baz',
-            'vfs://root/simpleFile',
+            'vfs://root' . DIRECTORY_SEPARATOR . 'boo' . DIRECTORY_SEPARATOR . 'far',
+            'vfs://root' . DIRECTORY_SEPARATOR . 'boo' . DIRECTORY_SEPARATOR . 'faz',
+            'vfs://root' . DIRECTORY_SEPARATOR . 'foo' . DIRECTORY_SEPARATOR . 'bar',
+            'vfs://root' . DIRECTORY_SEPARATOR . 'foo' . DIRECTORY_SEPARATOR . 'baz',
+            'vfs://root' . DIRECTORY_SEPARATOR . 'simpleFile',
         ];
         $this->assertSame($expected, $filenames);
     }
@@ -360,11 +360,11 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $expected = [
             'AnEmptyFolder',
             'boo',
-            'boo/far',
-            'boo/faz',
+            'boo' . DIRECTORY_SEPARATOR . 'far',
+            'boo' . DIRECTORY_SEPARATOR . 'faz',
             'foo',
-            'foo/bar',
-            'foo/baz',
+            'foo' . DIRECTORY_SEPARATOR . 'bar',
+            'foo' . DIRECTORY_SEPARATOR . 'baz',
             'simpleFile',
         ];
 
@@ -382,11 +382,11 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $expected = [
             $vfs->url() . DIRECTORY_SEPARATOR . 'AnEmptyFolder',
             $vfs->url() . DIRECTORY_SEPARATOR . 'boo',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'boo/far',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'boo/faz',
+            $vfs->url() . DIRECTORY_SEPARATOR . 'boo' . DIRECTORY_SEPARATOR . 'far',
+            $vfs->url() . DIRECTORY_SEPARATOR . 'boo' . DIRECTORY_SEPARATOR . 'faz',
             $vfs->url() . DIRECTORY_SEPARATOR . 'foo',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'foo/bar',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'foo/baz',
+            $vfs->url() . DIRECTORY_SEPARATOR . 'foo' . DIRECTORY_SEPARATOR . 'bar',
+            $vfs->url() . DIRECTORY_SEPARATOR . 'foo' . DIRECTORY_SEPARATOR . 'baz',
             $vfs->url() . DIRECTORY_SEPARATOR . 'simpleFile',
         ];
 
@@ -401,14 +401,18 @@ final class FilesystemHelperTest extends CIUnitTestCase
     public function testGetFilenamesWithSymlinks(): void
     {
         $targetDir = APPPATH . 'Language';
-        $linkDir   = APPPATH . 'Controllers/Language';
+        $linkDir   = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Language';
         if (file_exists($linkDir)) {
-            unlink($linkDir);
+            if (PHP_OS !== 'WINNT') {
+                unlink($linkDir);
+            } else {
+                rmdir($linkDir);
+            }
         }
         symlink($targetDir, $linkDir);
 
         $targetFile = APPPATH . 'Common.php';
-        $linkFile   = APPPATH . 'Controllers/Common.php';
+        $linkFile   = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Common.php';
         if (file_exists($linkFile)) {
             unlink($linkFile);
         }
@@ -423,15 +427,21 @@ final class FilesystemHelperTest extends CIUnitTestCase
             5 => 'en',
         ], get_filenames(APPPATH . 'Controllers'));
 
-        unlink($linkDir);
+        if (file_exists($linkDir)) {
+            if (PHP_OS !== 'WINNT') {
+                unlink($linkDir);
+            } else {
+                rmdir($linkDir);
+            }
+        }
         unlink($linkFile);
     }
 
     public function testGetDirFileInfo(): void
     {
-        $file1 = SUPPORTPATH . 'Files/baker/banana.php';
+        $file1 = SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php';
         $info1 = get_file_info($file1);
-        $file2 = SUPPORTPATH . 'Files/baker/fig_3.php.txt';
+        $file2 = SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'fig_3.php.txt';
         $info2 = get_file_info($file2);
 
         $expected = [
@@ -451,7 +461,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $result = get_dir_file_info(SUPPORTPATH . 'Files/baker');
+        $result = get_dir_file_info(SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker');
         ksort($result);
 
         $this->assertSame($expected, $result);
@@ -505,7 +515,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testGetFileInfoPerms(): void
     {
-        $file     = SUPPORTPATH . 'Files/baker/banana.php';
+        $file     = SUPPORTPATH . 'Files' . DIRECTORY_SEPARATOR . 'baker' . DIRECTORY_SEPARATOR . 'banana.php';
         $expected = 0664;
         chmod($file, $expected);
 
@@ -602,6 +612,6 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testRealPathResolved(): void
     {
-        $this->assertSame(SUPPORTPATH . 'Models/', set_realpath(SUPPORTPATH . 'Files/../Models', true));
+        $this->assertSame(SUPPORTPATH . 'Models' . DIRECTORY_SEPARATOR, set_realpath(SUPPORTPATH . 'Files/../Models', true));
     }
 }
