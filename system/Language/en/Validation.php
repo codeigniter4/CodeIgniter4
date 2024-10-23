@@ -53,6 +53,7 @@ return [
     'required'              => 'The {field} field is required.',
     'required_with'         => 'The {field} field is required when {param} is present.',
     'required_without'      => 'The {field} field is required when {param} is not present.',
+    'required_if'           => 'The {field} field is required when the {param} field has the given value.',
     'string'                => 'The {field} field must be a valid string.',
     'timezone'              => 'The {field} field must be a valid timezone.',
     'valid_base64'          => 'The {field} field must be a valid base64 string.',

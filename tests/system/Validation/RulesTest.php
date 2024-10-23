@@ -16,6 +16,7 @@ namespace CodeIgniter\Validation;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 use ErrorException;
+use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
@@ -1010,5 +1011,81 @@ class RulesTest extends CIUnitTestCase
             ['fiz.*.baz' => 'The fiz.*.baz field must exist.'],
             $this->validation->getErrors()
         );
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    #[DataProvider('provideRequiredIf')]
+    public function testRequiredIf(bool $expected, array $data): void
+    {
+        $this->validation->setRules([
+            'is_internal'     => 'in_list[0,1,2,3]|permit_empty',
+            'identity_number' => 'required_if[is_internal,1,2]',
+        ]);
+
+        $result = $this->validation->run($data);
+
+        $this->assertSame($expected, $result);
+    }
+
+    public static function provideRequiredIf(): Generator
+    {
+        yield from [
+            // `is_internal` and `identity_number` do not exist
+            [true, []],
+            // `identity_number` is not required because field `is_internal`
+            // value does not match with any value in the rule params
+            [true, ['is_internal' => '', 'identity_number' => '']],
+            [true, ['is_internal' => '0', 'identity_number' => '']],
+            [true, ['is_internal' => '3', 'identity_number' => '']],
+            // `identity_number` is required and exist
+            [false, ['is_internal' => '1', 'identity_number' => '']],
+            [false, ['is_internal' => '2', 'identity_number' => '']],
+            [true, ['is_internal' => '1', 'identity_number' => '123']],
+            [true, ['is_internal' => '2', 'identity_number' => '123']],
+            // `identity_number` is required but do not exist
+            [false, ['is_internal' => '1']],
+            [false, ['is_internal' => '2']],
+            // `identity_number` with integer value
+            [true, ['is_internal' => '1', 'identity_number' => '3207783']],
+            [true, ['is_internal' => '2', 'identity_number' => '3207783']],
+            [true, ['identity_number' => '3207783']],
+            [true, ['identity_number' => '3207783']],
+            // `identity_number` with string value
+            [true, ['is_internal' => '1', 'identity_number' => 'a']],
+            [true, ['is_internal' => '2', 'identity_number' => 'b']],
+            [true, ['identity_number' => 'a']],
+            [true, ['identity_number' => 'b']],
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    #[DataProvider('provideRequiredIfWorkWithOtherRule')]
+    public function testRequiredIfWorkWithOtherRule(bool $expected, array $data): void
+    {
+        $this->validation->setRules([
+            'is_internal'     => 'in_list[0,1,2,3]|permit_empty',
+            'identity_number' => 'required_if[is_internal,1,2]|permit_empty|integer',
+        ]);
+
+        $result = $this->validation->run($data);
+
+        $this->assertSame($expected, $result);
+    }
+
+    public static function provideRequiredIfWorkWithOtherRule(): Generator
+    {
+        yield from [
+            // `identity_number` with integer value
+            [true, ['is_internal' => '1', 'identity_number' => '3207783']],
+            [true, ['is_internal' => '2', 'identity_number' => '3207783']],
+            // `identity_number` is not empty, but it is not an integer
+            // value, which triggers the Validation.integer error message.
+            [false, ['is_internal' => '1', 'identity_number' => 'a']],
+            [false, ['is_internal' => '2', 'identity_number' => 'b']],
+        ];
     }
 }
