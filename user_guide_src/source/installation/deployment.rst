@@ -28,6 +28,21 @@ The ``spark optimize`` command performs the following optimizations:
 - Enabling `Config Caching`_
 - Enabling `FileLocator Caching`_
 
+If you want disable or restore the actions above, run ``spark optimize -d``
+it will do a restore to default settings, as follow:
+
+.. versionadded:: 4.6.0
+
+- Reinstall Dev Packages
+- Disabling `Config Caching`_
+- Disabling `FileLocator Caching`_
+
+Available options:
+
+- `-c` Enable only config caching.
+- `-l` Enable only locator caching.
+- `-d` Disable config and locator caching.
+
 Composer Optimization
 =====================
 
