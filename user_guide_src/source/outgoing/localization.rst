@@ -366,3 +366,29 @@ Detailed information can be found by running the command:
 .. code-block:: console
 
     php spark lang:find --help
+
+.. _sync-translations-command:
+
+Synchronization Translation Files via Command
+=============================================
+
+.. versionadded:: 4.6.0
+
+After working on your translation for the current language for a long time, in some cases you will need to create files for another language.
+The ``spark lang:find`` command can be used, it is not prohibited. But it cannot fully detect absolutely all translations. Especially if the parameters are dynamically set as ``lang('App.status.' . $key, ['payload' => 'John'], 'en')``.
+In this case, the best solution is to copy the finished language files and translate them. This way you can save your unique keys that the command did not find.
+
+All you need to do is execute:
+
+.. code-block:: console
+
+    // Specify the locale for new/updated translations
+    php spark lang:sync --target ru
+
+    // or set the original locale
+    php spark lang:sync --locale en --target ru
+
+As a result, you will receive files with the translation keys.
+If there were duplicate keys in the target locale, they are saved.
+
+.. warning:: Non-matching keys in new translations are deleted!
