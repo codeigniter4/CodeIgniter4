@@ -230,7 +230,7 @@ class Services extends BaseService
             return static::getSharedInstance('email', $config);
         }
 
-        if (empty($config) || ! (is_array($config) || $config instanceof EmailConfig)) {
+        if (empty($config) || (! is_array($config) && ! $config instanceof EmailConfig)) {
             $config = config(EmailConfig::class);
         }
 

@@ -282,12 +282,9 @@ class DatabaseHandler extends BaseHandler
     #[ReturnTypeWillChange]
     public function gc($max_lifetime)
     {
-        $separator = ' ';
-        $interval  = implode($separator, ['', "{$max_lifetime} second", '']);
-
         return $this->db->table($this->table)->where(
             'timestamp <',
-            "now() - INTERVAL {$interval}",
+            "now() - INTERVAL {$max_lifetime} second",
             false
         )->delete() ? 1 : $this->fail();
     }

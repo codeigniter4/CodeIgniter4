@@ -22,6 +22,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Config\Services;
+use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\ExpectationFailedException;
@@ -1825,5 +1826,85 @@ class ValidationTest extends CIUnitTestCase
             ['contacts.*.name' => 'The contacts.*.name field is required.'],
             $this->validation->getErrors()
         );
+    }
+
+    /**
+     * @param array<string, mixed>  $data
+     * @param array<string, string> $rules
+     * @param array<string, mixed>  $expectedData
+     *
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9219
+     */
+    #[DataProvider('provideMultipleAsterisk')]
+    public function testRuleWithMultipleAsterisk(
+        array $data = [],
+        array $rules = [],
+        bool $expectedCheck = false,
+        array $expectedData = []
+    ): void {
+        $this->validation->setRules($rules);
+
+        $this->assertSame($expectedCheck, $this->validation->run($data));
+        $this->assertSame($expectedData, $this->validation->getValidated());
+    }
+
+    public static function provideMultipleAsterisk(): Generator
+    {
+        yield 'success' => [
+            [
+                'dates' => [
+                    23 => [
+                        45 => 'Its Mee!',
+                    ],
+                ],
+                'foo' => [
+                    'bar' => [
+                        'data' => [
+                            'name'     => 'John Doe',
+                            'age'      => 29,
+                            'location' => 'Indonesia',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'dates.*.*' => 'required',
+                'foo.*.*.*' => 'required',
+            ],
+            true,
+            [
+                'dates' => [
+                    23 => [
+                        45 => 'Its Mee!',
+                    ],
+                ],
+                'foo' => [
+                    'bar' => [
+                        'data' => [
+                            'name'     => 'John Doe',
+                            'age'      => 29,
+                            'location' => 'Indonesia',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        yield 'failed' => [
+            [
+                'foo' => [
+                    'bar' => [
+                        'data' => [
+                            'name'     => '',
+                            'age'      => 29,
+                            'location' => 'Indonesia',
+                        ],
+                    ],
+                ],
+            ],
+            ['foo.*.*.*' => 'required'],
+            false,
+            [],
+        ];
     }
 }
