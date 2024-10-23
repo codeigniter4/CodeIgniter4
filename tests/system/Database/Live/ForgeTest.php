@@ -81,8 +81,11 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertFalse($result);
 
         $db->close();
+
         if ($this->db->DBDriver !== 'SQLite3') {
             $this->forge->dropDatabase($dbName);
+        } elseif (is_file($db->database)) {
+            unlink($db->database);
         }
     }
 
