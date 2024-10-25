@@ -408,6 +408,7 @@ trait ResponseTrait
                 );
             } else {
                 $replace = true;
+
                 foreach ($value as $header) {
                     header(
                         $name . ': ' . $header->getValueLine(),
