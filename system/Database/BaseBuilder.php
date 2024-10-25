@@ -1151,7 +1151,7 @@ class BaseBuilder
 
         foreach ($keyValue as $k => $v) {
             if ($insensitiveSearch) {
-                $v = strtolower($v);
+                $v = mb_strtolower($v);
             }
 
             $prefix = empty($this->{$clause}) ? $this->groupGetType('') : $this->groupGetType($type);

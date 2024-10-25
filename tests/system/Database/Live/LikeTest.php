@@ -75,6 +75,14 @@ final class LikeTest extends CIUnitTestCase
         $this->assertSame('Developer', $job->name);
     }
 
+    public function testLikeCaseInsensitiveWithAccentedCharacter(): void
+    {
+        $wai = $this->db->table('without_auto_increment')->like('value', 'ŁĄ', 'both', null, true)->get();
+        $wai = $wai->getRow();
+
+        $this->assertSame('accented characters', $wai->key);
+    }
+
     public function testOrLike(): void
     {
         $jobs = $this->db->table('job')->like('name', 'ian')
