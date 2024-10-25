@@ -99,6 +99,16 @@ See :ref:`Upgrading Guide <upgrade-460-sid-change>` for details.
 
 .. _v460-interface-changes:
 
+Headers
+-------
+
+The headers set by the ``Response`` class replace those that can be set by the PHP
+``header()`` function.
+
+In previous versions, headers set by the ``Response`` class were added to existing
+ones - giving no options to change them. That could lead to unexpected behavior when
+the same headers were set with mutually exclusive directives.
+
 Interface Changes
 =================
 
@@ -297,6 +307,10 @@ Deprecations
 **********
 Bugs Fixed
 **********
+
+- **Response:**
+    - Headers set using the ``Response`` class are now prioritized and replace headers
+      that can be set manually using the PHP ``header()`` function.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

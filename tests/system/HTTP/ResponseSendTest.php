@@ -179,4 +179,54 @@ final class ResponseSendTest extends CIUnitTestCase
         // send it
         $response->send();
     }
+
+    /**
+     * Make sure that the headers set by the header() function
+     * are overridden by the headers defined in the Response class.
+     */
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
+    public function testHeaderOverride(): void
+    {
+        $response = new Response(new App());
+        $response->pretend(false);
+
+        $body = 'Hello';
+        $response->setBody($body);
+
+        // single header
+        $response->setHeader('Vary', 'Accept-Encoding');
+        $this->assertSame('Accept-Encoding', $response->header('Vary')->getValue());
+
+        // multiple headers
+        $response->setHeader('Access-Control-Expose-Headers', 'X-Custom-Header');
+        $response->addHeader('Access-Control-Expose-Headers', 'Content-Length');
+        $header = $response->header('Access-Control-Expose-Headers');
+        $this->assertIsArray($header);
+        $this->assertSame('X-Custom-Header', $header[0]->getValue());
+        $this->assertSame('Content-Length', $header[1]->getValue());
+
+        // send it
+        ob_start();
+        header('Vary: User-Agent');
+        header('Access-Control-Expose-Headers: Content-Encoding');
+        header('Allow: GET, POST');
+        $response->send();
+        if (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+
+        // single header
+        $this->assertHeaderEmitted('Vary: Accept-Encoding');
+        $this->assertHeaderNotEmitted('Vary: User-Agent');
+
+        // multiple headers
+        $this->assertHeaderEmitted('Access-Control-Expose-Headers: X-Custom-Header');
+        $this->assertHeaderEmitted('Access-Control-Expose-Headers: Content-Length');
+        $this->assertHeaderNotEmitted('Access-Control-Expose-Headers: Content-Encoding');
+
+        // not overridden by the response class
+        $this->assertHeaderEmitted('Allow: GET, POST');
+    }
 }
