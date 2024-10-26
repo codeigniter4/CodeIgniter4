@@ -87,8 +87,12 @@ class CITestSeeder extends Seeder
                     'value' => 'value',
                 ],
                 [
-                    'key'   => 'accented characters',
+                    'key'   => 'multibyte characters 1',
                     'value' => 'śćźżłąęó',
+                ],
+                [
+                    'key'   => 'multibyte characters 2',
+                    'value' => 'خٌوب',
                 ],
             ],
             'type_test' => [

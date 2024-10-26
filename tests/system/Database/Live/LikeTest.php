@@ -75,12 +75,17 @@ final class LikeTest extends CIUnitTestCase
         $this->assertSame('Developer', $job->name);
     }
 
-    public function testLikeCaseInsensitiveWithAccentedCharacter(): void
+    public function testLikeCaseInsensitiveWithMultibyteCharacter(): void
     {
         $wai = $this->db->table('without_auto_increment')->like('value', 'ŁĄ', 'both', null, true)->get();
         $wai = $wai->getRow();
 
-        $this->assertSame('accented characters', $wai->key);
+        $this->assertSame('multibyte characters 1', $wai->key);
+
+        $wai = $this->db->table('without_auto_increment')->like('value', 'خٌوب', 'both', null, true)->get();
+        $wai = $wai->getRow();
+
+        $this->assertSame('multibyte characters 2', $wai->key);
     }
 
     public function testOrLike(): void
