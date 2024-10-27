@@ -129,6 +129,8 @@ class Cache extends BaseConfig
         'port'     => 6379,
         'timeout'  => 0,
         'database' => 0,
+        'clustered' => false,
+        'ca_file' => null,
     ];
 
     /**

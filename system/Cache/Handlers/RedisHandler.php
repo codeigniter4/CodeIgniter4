@@ -17,6 +17,8 @@ use CodeIgniter\Exceptions\CriticalError;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 use Redis;
+use RedisCluster;
+use RedisClusterException;
 use RedisException;
 
 /**
@@ -32,11 +34,13 @@ class RedisHandler extends BaseHandler
      * @var array
      */
     protected $config = [
-        'host'     => '127.0.0.1',
+        'host' => '127.0.0.1',
         'password' => null,
-        'port'     => 6379,
-        'timeout'  => 0,
+        'port' => 6379,
+        'timeout' => 0,
         'database' => 0,
+        'clustered' => false,
+        'ca_file' => null,
     ];
 
     /**
@@ -73,53 +77,63 @@ class RedisHandler extends BaseHandler
     {
         $config = $this->config;
 
-        $this->redis = new Redis();
-
-        try {
-            // Note:: If Redis is your primary cache choice, and it is "offline", every page load will end up been delayed by the timeout duration.
-            // I feel like some sort of temporary flag should be set, to indicate that we think Redis is "offline", allowing us to bypass the timeout for a set period of time.
-
-            if (! $this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout'])) {
-                // Note:: I'm unsure if log_message() is necessary, however I'm not 100% comfortable removing it.
-                log_message('error', 'Cache: Redis connection failed. Check your configuration.');
-
-                throw new CriticalError('Cache: Redis connection failed. Check your configuration.');
+        if (isset($config['clustered']) && $config['clustered']) {
+            // If the config["clustered"] is set to true, use the RedisCluster class and check if TLS is also enabled
+            // with the provided certificate authority (CA) file.
+            $options = [];
+            if ($config['ca_file']) {
+                $options['tls'] = [
+                    'verify_peer' => true,
+                    'verify_peer_name' => true,
+                    'allow_self_signed' => false,
+                    'cafile' => $config['ca_file'],
+                ];
             }
 
-            if (isset($config['password']) && ! $this->redis->auth($config['password'])) {
-                log_message('error', 'Cache: Redis authentication failed.');
-
-                throw new CriticalError('Cache: Redis authentication failed.');
+            // Build the authentification array based on provided configuration
+            $auth = [];
+            if ($config['username']) {
+                $auth['username'] = $config['username'];
+            }
+            if ($config['password']) {
+                $auth['password'] = $config['password'];
             }
 
-            if (isset($config['database']) && ! $this->redis->select($config['database'])) {
-                log_message('error', 'Cache: Redis select database failed.');
-
-                throw new CriticalError('Cache: Redis select database failed.');
+            try {
+                $this->redis = new RedisCluster(null, ['tls://' . $config['host'] . ':' . $config['port']], $config['timeout'], $config['timeout'], false, $auth, $options);
+            } catch (RedisClusterException $e) {
+                throw new CriticalError('Cache: RedisException occurred with message (' . $e->getMessage() . ').');
             }
-        } catch (RedisException $e) {
-            throw new CriticalError('Cache: RedisException occurred with message (' . $e->getMessage() . ').');
+        } else {
+
+            $this->redis = new Redis();
+
+            try {
+                // Note:: If Redis is your primary cache choice, and it is "offline", every page load will end up been delayed by the timeout duration.
+                // I feel like some sort of temporary flag should be set, to indicate that we think Redis is "offline", allowing us to bypass the timeout for a set period of time.
+
+                if (!$this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout'])) {
+                    // Note:: I'm unsure if log_message() is necessary, however I'm not 100% comfortable removing it.
+                    log_message('error', 'Cache: Redis connection failed. Check your configuration.');
+
+                    throw new CriticalError('Cache: Redis connection failed. Check your configuration.');
+                }
+
+                if (isset($config['password']) && !$this->redis->auth($config['password'])) {
+                    log_message('error', 'Cache: Redis authentication failed.');
+
+                    throw new CriticalError('Cache: Redis authentication failed.');
+                }
+
+                if (isset($config['database']) && !$this->redis->select($config['database'])) {
+                    log_message('error', 'Cache: Redis select database failed.');
+
+                    throw new CriticalError('Cache: Redis select database failed.');
+                }
+            } catch (RedisException $e) {
+                throw new CriticalError('Cache: RedisException occurred with message (' . $e->getMessage() . ').');
+            }
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function get(string $key)
-    {
-        $key  = static::validateKey($key, $this->prefix);
-        $data = $this->redis->hMget($key, ['__ci_type', '__ci_value']);
-
-        if (! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false) {
-            return null;
-        }
-
-        return match ($data['__ci_type']) {
-            'array', 'object' => unserialize($data['__ci_value']),
-            // Yes, 'double' is returned and NOT 'float'
-            'boolean', 'integer', 'double', 'string', 'NULL' => settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : null,
-            default => null,
-        };
     }
 
     /**
@@ -147,7 +161,7 @@ class RedisHandler extends BaseHandler
                 return false;
         }
 
-        if (! $this->redis->hMset($key, ['__ci_type' => $dataType, '__ci_value' => $value])) {
+        if (!$this->redis->hMset($key, ['__ci_type' => $dataType, '__ci_value' => $value])) {
             return false;
         }
 
@@ -177,8 +191,8 @@ class RedisHandler extends BaseHandler
     {
         /** @var list<string> $matchedKeys */
         $matchedKeys = [];
-        $pattern     = static::validateKey($pattern, $this->prefix);
-        $iterator    = null;
+        $pattern = static::validateKey($pattern, $this->prefix);
+        $iterator = null;
 
         do {
             /** @var false|list<string>|Redis $keys */
@@ -195,19 +209,19 @@ class RedisHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
-    public function increment(string $key, int $offset = 1)
+    public function decrement(string $key, int $offset = 1)
     {
-        $key = static::validateKey($key, $this->prefix);
-
-        return $this->redis->hIncrBy($key, '__ci_value', $offset);
+        return $this->increment($key, -$offset);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function decrement(string $key, int $offset = 1)
+    public function increment(string $key, int $offset = 1)
     {
-        return $this->increment($key, -$offset);
+        $key = static::validateKey($key, $this->prefix);
+
+        return $this->redis->hIncrBy($key, '__ci_value', $offset);
     }
 
     /**
@@ -235,17 +249,37 @@ class RedisHandler extends BaseHandler
 
         if ($value !== null) {
             $time = Time::now()->getTimestamp();
-            $ttl  = $this->redis->ttl(static::validateKey($key, $this->prefix));
+            $ttl = $this->redis->ttl(static::validateKey($key, $this->prefix));
             assert(is_int($ttl));
 
             return [
                 'expire' => $ttl > 0 ? $time + $ttl : null,
-                'mtime'  => $time,
-                'data'   => $value,
+                'mtime' => $time,
+                'data' => $value,
             ];
         }
 
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function get(string $key)
+    {
+        $key = static::validateKey($key, $this->prefix);
+        $data = $this->redis->hMget($key, ['__ci_type', '__ci_value']);
+
+        if (!isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false) {
+            return null;
+        }
+
+        return match ($data['__ci_type']) {
+            'array', 'object' => unserialize($data['__ci_value']),
+            // Yes, 'double' is returned and NOT 'float'
+            'boolean', 'integer', 'double', 'string', 'NULL' => settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : null,
+            default => null,
+        };
     }
 
     /**
