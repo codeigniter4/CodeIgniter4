@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
@@ -75,17 +76,24 @@ final class LikeTest extends CIUnitTestCase
         $this->assertSame('Developer', $job->name);
     }
 
-    public function testLikeCaseInsensitiveWithMultibyteCharacter(): void
+    #[DataProvider('provideMultibyteCharacters')]
+    public function testLikeCaseInsensitiveWithMultibyteCharacter($match, $result): void
     {
-        $wai = $this->db->table('without_auto_increment')->like('value', 'ŁĄ', 'both', null, true)->get();
+        $wai = $this->db->table('without_auto_increment')->like('value', $match, 'both', null, true)->get();
         $wai = $wai->getRow();
 
-        $this->assertSame('multibyte characters 1', $wai->key);
+        $this->assertSame($result, $wai->key);
+    }
 
-        $wai = $this->db->table('without_auto_increment')->like('value', 'خٌوب', 'both', null, true)->get();
-        $wai = $wai->getRow();
-
-        $this->assertSame('multibyte characters 2', $wai->key);
+    public static function provideMultibyteCharacters(): iterable
+    {
+        yield from [
+            'polish'    => ['ŁĄ', 'multibyte characters pl'],
+            'farsi'     => ['خٌوب', 'multibyte characters fa'],
+            'bengali'   => ['টাইপ', 'multibyte characters bn'],
+            'korean'    => ['캐스팅', 'multibyte characters ko'],
+            'malayalam' => ['ടൈപ്പ്', 'multibyte characters ml'],
+        ];
     }
 
     public function testOrLike(): void

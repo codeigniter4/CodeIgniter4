@@ -87,12 +87,24 @@ class CITestSeeder extends Seeder
                     'value' => 'value',
                 ],
                 [
-                    'key'   => 'multibyte characters 1',
+                    'key'   => 'multibyte characters pl',
                     'value' => 'śćźżłąęó',
                 ],
                 [
-                    'key'   => 'multibyte characters 2',
+                    'key'   => 'multibyte characters fa',
                     'value' => 'خٌوب',
+                ],
+                [
+                    'key'   => 'multibyte characters bn',
+                    'value' => 'টাইপ',
+                ],
+                [
+                    'key'   => 'multibyte characters ko',
+                    'value' => '캐스팅',
+                ],
+                [
+                    'key'   => 'multibyte characters ml',
+                    'value' => 'ടൈപ്പ്',
                 ],
             ],
             'type_test' => [
