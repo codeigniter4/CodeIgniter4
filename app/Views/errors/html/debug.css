@@ -70,9 +70,9 @@ p.lead {
     color: var(--main-bg-color);
     text-align: center;
     padding: calc(4px + 0.2083vw);
-    margin-top: -2.14rem;
     width: 100%;
-    /* position: fixed; */
+    margin-top: -2.14rem;
+    position: fixed;
 }
 
 .source {
