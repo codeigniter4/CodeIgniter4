@@ -79,12 +79,6 @@ final class LikeTest extends CIUnitTestCase
     #[DataProvider('provideMultibyteCharacters')]
     public function testLikeCaseInsensitiveWithMultibyteCharacter(string $match, string $result): void
     {
-        if ($this->db->DBDriver === 'SQLSRV') {
-            $this->markTestSkipped(
-                'Currently Builder class does not fully support Unicode strings in SQLSRV.'
-            );
-        }
-
         $wai = $this->db->table('without_auto_increment')->like('value', $match, 'both', null, true)->get();
         $wai = $wai->getRow();
 
