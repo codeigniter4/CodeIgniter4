@@ -214,7 +214,7 @@ class Typography
         ];
 
         // Do we need to reduce empty lines?
-        if ($reduceLinebreaks === true) {
+        if ($reduceLinebreaks) {
             $table['#<p>\n*</p>#'] = '';
         } else {
             // If we have empty paragraph tags we add a non-breaking space

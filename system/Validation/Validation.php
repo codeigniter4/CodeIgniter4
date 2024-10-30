@@ -456,7 +456,7 @@ class Validation implements ValidationInterface
                     }
                 }
 
-                if ($passed === true) {
+                if ($passed) {
                     return true;
                 }
             }

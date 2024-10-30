@@ -202,7 +202,7 @@ class Services extends BaseService
      */
     public static function curlrequest(array $options = [], ?ResponseInterface $response = null, ?App $config = null, bool $getShared = true)
     {
-        if ($getShared === true) {
+        if ($getShared) {
             return static::getSharedInstance('curlrequest', $options, $response, $config);
         }
 

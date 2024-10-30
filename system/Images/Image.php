@@ -116,7 +116,7 @@ class Image extends File
 
         $mime = 'image/' . ($types[$vals[2]] ?? 'jpg');
 
-        if ($return === true) {
+        if ($return) {
             return [
                 'width'      => $vals[0],
                 'height'     => $vals[1],
