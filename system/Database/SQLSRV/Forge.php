@@ -263,7 +263,7 @@ class Forge extends BaseForge
                 $nullable = false;
             }
             $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field['name'])
-                . " {$field['type']}{$field['length']} " . ($nullable === true ? '' : 'NOT') . ' NULL';
+                . " {$field['type']}{$field['length']} " . ($nullable ? '' : 'NOT') . ' NULL';
 
             if (! empty($field['comment'])) {
                 $sqls[] = 'EXEC sys.sp_addextendedproperty '

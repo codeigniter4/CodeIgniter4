@@ -848,7 +848,7 @@ abstract class BaseConnection implements ConnectionInterface
         // Reset the transaction failure flag.
         // If the $test_mode flag is set to TRUE transactions will be rolled back
         // even if the queries produce a successful result.
-        $this->transFailure = ($testMode === true);
+        $this->transFailure = ($testMode);
 
         if ($this->_transBegin()) {
             $this->transDepth++;
@@ -1124,7 +1124,7 @@ abstract class BaseConnection implements ConnectionInterface
                 $item = preg_replace('/^' . $this->swapPre . '(\S+?)/', $this->DBPrefix . '\\1', $item);
             }
             // Do we prefix an item with no segments?
-            elseif ($prefixSingle === true && ! str_starts_with($item, $this->DBPrefix)) {
+            elseif ($prefixSingle && ! str_starts_with($item, $this->DBPrefix)) {
                 $item = $this->DBPrefix . $item;
             }
         }
@@ -1147,7 +1147,7 @@ abstract class BaseConnection implements ConnectionInterface
         // NOTE: The ! empty() condition prevents this method
         // from breaking when QB isn't enabled.
         if (! empty($this->aliasedTables) && in_array($parts[0], $this->aliasedTables, true)) {
-            if ($protectIdentifiers === true) {
+            if ($protectIdentifiers) {
                 foreach ($parts as $key => $val) {
                     if (! in_array($val, $this->reservedIdentifiers, true)) {
                         $parts[$key] = $this->escapeIdentifiers($val);
@@ -1198,7 +1198,7 @@ abstract class BaseConnection implements ConnectionInterface
             $item = implode('.', $parts);
         }
 
-        if ($protectIdentifiers === true) {
+        if ($protectIdentifiers) {
             $item = $this->escapeIdentifiers($item);
         }
 
@@ -1372,7 +1372,7 @@ abstract class BaseConnection implements ConnectionInterface
         $str = $this->_escapeString($str);
 
         // escape LIKE condition wildcards
-        if ($like === true) {
+        if ($like) {
             return str_replace(
                 [
                     $this->likeEscapeChar,
@@ -1501,7 +1501,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function tableExists(string $tableName, bool $cached = true): bool
     {
-        if ($cached === true) {
+        if ($cached) {
             return in_array($this->protectIdentifiers($tableName, true, false, false), $this->listTables(), true);
         }
 

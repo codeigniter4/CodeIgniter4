@@ -222,7 +222,7 @@ class Forge extends BaseForge
                 implode('_', $this->keys[$i]['fields']) :
                 $this->keys[$i]['keyName']);
 
-            if ($asQuery === true) {
+            if ($asQuery) {
                 $sqls[$index] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . " ADD {$unique}KEY "
                     . $keyName
                     . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i]['fields'])) . ')';

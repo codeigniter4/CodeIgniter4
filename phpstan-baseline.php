@@ -7850,12 +7850,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Log/Handlers/FileHandler.php',
 ];
 $ignoreErrors[] = [
-	// identifier: identical.alwaysTrue
-	'message' => '#^Strict comparison using \\=\\=\\= between true and true will always evaluate to true\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Log/Handlers/FileHandler.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Log\\\\Logger\\:\\:determineFile\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,

@@ -260,7 +260,7 @@ final class AutoRouter implements AutoRouterInterface
             }
         }
 
-        if ($append !== true || ($this->directory === null || $this->directory === '')) {
+        if (! $append || ($this->directory === null || $this->directory === '')) {
             $this->directory = trim($dir, '/') . '/';
         } else {
             $this->directory .= trim($dir, '/') . '/';
