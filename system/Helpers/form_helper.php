@@ -582,7 +582,7 @@ if (! function_exists('set_select')) {
         }
 
         if ($input === null) {
-            return ($default) ? ' selected="selected"' : '';
+            return $default ? ' selected="selected"' : '';
         }
 
         if (is_array($input)) {
@@ -636,7 +636,7 @@ if (! function_exists('set_checkbox')) {
             return ($input === $value) ? ' checked="checked"' : '';
         }
 
-        return ($default) ? ' checked="checked"' : '';
+        return $default ? ' checked="checked"' : '';
     }
 }
 
@@ -673,7 +673,7 @@ if (! function_exists('set_radio')) {
             return ((string) $input === $value) ? ' checked="checked"' : '';
         }
 
-        return ($default) ? ' checked="checked"' : '';
+        return $default ? ' checked="checked"' : '';
     }
 }
 

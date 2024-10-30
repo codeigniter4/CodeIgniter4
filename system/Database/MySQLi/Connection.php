@@ -96,7 +96,7 @@ class Connection extends BaseConnection
             $port     = null;
             $socket   = $this->hostname;
         } else {
-            $hostname = ($persistent) ? 'p:' . $this->hostname : $this->hostname;
+            $hostname = $persistent ? 'p:' . $this->hostname : $this->hostname;
             $port     = empty($this->port) ? null : $this->port;
             $socket   = '';
         }
