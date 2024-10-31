@@ -256,7 +256,7 @@ class Parser extends View
 
         // Parse stack for each parse type (Single and Pairs)
         $replaceSingleStack = [];
-        $replacePairsStack = [];
+        $replacePairsStack  = [];
 
         // loop over the data variables, saving regex and data
         // for later replacement.
@@ -264,10 +264,10 @@ class Parser extends View
             $escape = true;
 
             if (is_array($val)) {
-                $escape  = false;
-                array_push($replacePairsStack, ['replace' => $this->parsePair($key, $val, $template), 'escape' => $escape]);
+                $escape              = false;
+                $replacePairsStack[] = ['replace' => $this->parsePair($key, $val, $template), 'escape' => $escape];
             } else {
-                array_push($replaceSingleStack, ['replace' => $this->parseSingle($key, (string) $val), 'escape' => $escape]);
+                $replaceSingleStack[] = ['replace' => $this->parseSingle($key, (string) $val), 'escape' => $escape];
             }
         }
 
@@ -275,10 +275,9 @@ class Parser extends View
         // This allows for nested data with the same key to be replaced properly
         $replace = array_merge($replacePairsStack, $replaceSingleStack);
 
-        // Loop over each replace array item which 
+        // Loop over each replace array item which
         // holds all the data to be replaced
         foreach ($replace as $replaceItem) {
-
             // Loop over the actual data to be replaced
             foreach ($replaceItem['replace'] as $pattern => $content) {
                 $template = $this->replaceSingle($pattern, $content, $template, $replaceItem['escape']);
