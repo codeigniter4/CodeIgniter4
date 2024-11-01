@@ -265,9 +265,15 @@ class Parser extends View
 
             if (is_array($val)) {
                 $escape              = false;
-                $replacePairsStack[] = ['replace' => $this->parsePair($key, $val, $template), 'escape' => $escape];
+                $replacePairsStack[] = [
+                    'replace' => $this->parsePair($key, $val, $template),
+                    'escape'  => $escape,
+                ];
             } else {
-                $replaceSingleStack[] = ['replace' => $this->parseSingle($key, (string) $val), 'escape' => $escape];
+                $replaceSingleStack[] = [
+                    'replace' => $this->parseSingle($key, (string) $val),
+                    'escape'  => $escape,
+                ];
             }
         }
 
