@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
-use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -26,8 +25,8 @@ final class SecureHeadersTest extends CIUnitTestCase
     public function testAfter(): void
     {
         $filter   = new SecureHeaders();
-        $request  = Services::request(null, false);
-        $response = Services::response(null, false);
+        $request  = service('request', null, false);
+        $response = service('response', null, false);
 
         $filter->after($request, $response);
 

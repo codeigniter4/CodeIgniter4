@@ -21,7 +21,6 @@ use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
-use Config\Services;
 use Config\Validation as ValidationConfig;
 use InvalidArgumentException;
 use LogicException;
@@ -796,7 +795,7 @@ class Validation implements ValidationInterface
                     $placeholderFields = $this->retrievePlaceholders($row, $data);
 
                     foreach ($placeholderFields as $field) {
-                        $validator ??= Services::validation(null, false);
+                        $validator ??= service('validation', null, false);
                         assert($validator instanceof Validation);
 
                         $placeholderRules = $rules[$field]['rules'] ?? null;

@@ -16,7 +16,6 @@ namespace CodeIgniter\Commands\Translation;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
-use Config\Services;
 use Locale;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -68,7 +67,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
         self::$locale = 'test_locale_incorrect';
         $this->makeLocaleDirectory();
 
-        $status = Services::commands()->run('lang:find', [
+        $status = service('commands')->run('lang:find', [
             'dir'    => 'Translation',
             'locale' => self::$locale,
         ]);
@@ -89,7 +88,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
     {
         $this->makeLocaleDirectory();
 
-        $status = Services::commands()->run('lang:find', [
+        $status = service('commands')->run('lang:find', [
             'dir' => 'Translation/NotExistFolder',
         ]);
 

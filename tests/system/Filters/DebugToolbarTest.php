@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
-use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
@@ -40,8 +39,8 @@ final class DebugToolbarTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->request  = Services::request();
-        $this->response = Services::response();
+        $this->request  = service('request');
+        $this->response = service('response');
     }
 
     public function testDebugToolbarFilter(): void

@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\View;
 
 use CodeIgniter\Autoloader\FileLocator;
-use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\View;
 use PHPUnit\Framework\Attributes\Group;
@@ -33,7 +32,7 @@ final class ParserFilterTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->loader   = Services::locator();
+        $this->loader   = service('locator');
         $this->viewsDir = __DIR__ . '/Views';
         $this->config   = new View();
     }

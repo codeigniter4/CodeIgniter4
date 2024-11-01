@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Utilities\Routes;
 
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
-use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -26,7 +25,7 @@ final class FilterCollectorTest extends CIUnitTestCase
 {
     public function testGet(): void
     {
-        $routes = Services::routes();
+        $routes = service('routes');
         $routes->resetRoutes();
         $routes->setDefaultNamespace('App\Controllers');
         $routes->get('/', 'Home::index');

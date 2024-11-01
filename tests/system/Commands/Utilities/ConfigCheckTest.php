@@ -16,7 +16,6 @@ namespace CodeIgniter\Commands\Utilities;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
-use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -74,7 +73,7 @@ final class ConfigCheckTest extends CIUnitTestCase
 
     public function testGetKintD(): void
     {
-        $command  = new ConfigCheck(Services::logger(), Services::commands());
+        $command  = new ConfigCheck(service('logger'), service('commands'));
         $getKintD = $this->getPrivateMethodInvoker($command, 'getKintD');
 
         $output = $getKintD(new App());
@@ -114,7 +113,7 @@ final class ConfigCheckTest extends CIUnitTestCase
 
     public function testGetVarDump(): void
     {
-        $command    = new ConfigCheck(Services::logger(), Services::commands());
+        $command    = new ConfigCheck(service('logger'), service('commands'));
         $getVarDump = $this->getPrivateMethodInvoker($command, 'getVarDump');
 
         $output = $getVarDump(new App());

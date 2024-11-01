@@ -21,7 +21,6 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
 use Config\Routing;
-use Config\Services;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -153,10 +152,10 @@ final class FeatureTestTraitTest extends CIUnitTestCase
                 'POST',
                 'section/create',
                 static function (): string {
-                    $validation = Services::validation();
+                    $validation = service('validation');
                     $validation->setRule('title', 'title', 'required|min_length[3]');
 
-                    $post = Services::request()->getPost();
+                    $post = service('request')->getPost();
 
                     if ($validation->run($post)) {
                         return 'Okay';
@@ -370,7 +369,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->expectException(PageNotFoundException::class);
         $this->expectExceptionMessage('Cannot access CLI Route: ');
 
-        $collection = Services::routes();
+        $collection = service('routes');
         $collection->setAutoRoute(true);
         $collection->setDefaultNamespace('Tests\Support\Controllers');
 
@@ -407,7 +406,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'GET',
                 'home',
-                static fn () => json_encode(Services::request()->getGet()),
+                static fn () => json_encode(service('request')->getGet()),
             ],
         ]);
         $data = [
@@ -434,7 +433,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'GET',
                 'home',
-                static fn () => json_encode(Services::request()->fetchGlobal('request')),
+                static fn () => json_encode(service('request')->fetchGlobal('request')),
             ],
         ]);
         $data = [
@@ -461,7 +460,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'POST',
                 'home',
-                static fn () => json_encode(Services::request()->getPost()),
+                static fn () => json_encode(service('request')->getPost()),
             ],
         ]);
         $data = [
@@ -488,7 +487,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'POST',
                 'home',
-                static fn () => json_encode(Services::request()->fetchGlobal('request')),
+                static fn () => json_encode(service('request')->fetchGlobal('request')),
             ],
         ]);
         $data = [
@@ -539,7 +538,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'PUT',
                 'home',
-                static fn () => json_encode(Services::request()->fetchGlobal('request')),
+                static fn () => json_encode(service('request')->fetchGlobal('request')),
             ],
         ]);
         $data = [

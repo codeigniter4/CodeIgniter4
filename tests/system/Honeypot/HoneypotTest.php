@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Honeypot;
 
 use CodeIgniter\Config\Factories;
-use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\HTTP\CLIRequest;
@@ -54,8 +53,8 @@ final class HoneypotTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD']  = 'POST';
         $_POST[$this->config->name] = 'hey';
 
-        $this->request  = Services::request(null, false);
-        $this->response = Services::response();
+        $this->request  = service('request', null, false);
+        $this->response = service('response');
     }
 
     public function testAttachHoneypot(): void
@@ -99,7 +98,7 @@ final class HoneypotTest extends CIUnitTestCase
         $config             = new App();
         $config->CSPEnabled = true;
         Factories::injectMock('config', 'App', $config);
-        $this->response = Services::response($config, false);
+        $this->response = service('response', $config, false);
 
         $this->config   = new HoneypotConfig();
         $this->honeypot = new Honeypot($this->config);
@@ -118,7 +117,7 @@ final class HoneypotTest extends CIUnitTestCase
         $config             = new App();
         $config->CSPEnabled = true;
         Factories::injectMock('config', 'App', $config);
-        $this->response = Services::response($config, false);
+        $this->response = service('response', $config, false);
 
         $this->config   = new HoneypotConfig();
         $this->honeypot = new Honeypot($this->config);
@@ -132,7 +131,7 @@ final class HoneypotTest extends CIUnitTestCase
     public function testHasntContent(): void
     {
         unset($_POST[$this->config->name]);
-        $this->request = Services::request();
+        $this->request = service('request');
 
         $this->assertFalse($this->honeypot->hasContent($this->request));
     }

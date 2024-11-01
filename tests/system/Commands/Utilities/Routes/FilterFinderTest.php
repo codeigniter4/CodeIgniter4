@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
-use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Filters;
@@ -47,8 +46,8 @@ final class FilterFinderTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->request  = Services::request();
-        $this->response = Services::response();
+        $this->request  = service('request');
+        $this->response = service('response');
 
         $this->moduleConfig          = new Modules();
         $this->moduleConfig->enabled = false;
@@ -56,7 +55,7 @@ final class FilterFinderTest extends CIUnitTestCase
 
     private function createRouteCollection(array $routes = []): RouteCollection
     {
-        $collection = new RouteCollection(Services::locator(), $this->moduleConfig, new Routing());
+        $collection = new RouteCollection(service('locator'), $this->moduleConfig, new Routing());
 
         $routes = ($routes !== []) ? $routes : [
             'users'                   => 'Users::index',

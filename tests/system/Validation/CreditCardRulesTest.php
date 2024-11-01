@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Validation;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use Config\Services;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
@@ -47,7 +46,7 @@ final class CreditCardRulesTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->validation = new Validation((object) $this->config, Services::renderer());
+        $this->validation = new Validation((object) $this->config, service('renderer'));
         $this->validation->reset();
     }
 

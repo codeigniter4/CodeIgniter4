@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\View;
 
 use CodeIgniter\Autoloader\FileLocator;
-use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config;
@@ -35,7 +34,7 @@ final class ViewTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->loader   = Services::locator();
+        $this->loader   = service('locator');
         $this->viewsDir = __DIR__ . '/Views';
         $this->config   = new Config\View();
     }

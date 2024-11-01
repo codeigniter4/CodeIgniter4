@@ -20,7 +20,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Autoload;
 use Config\Modules;
-use Config\Services;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -112,7 +111,7 @@ final class AutoloaderTest extends CIUnitTestCase
 
     public function testServiceAutoLoaderFromShareInstances(): void
     {
-        $classLoader = $this->getPrivateMethodInvoker(Services::autoloader(), 'loadInNamespace');
+        $classLoader = $this->getPrivateMethodInvoker(service('autoloader'), 'loadInNamespace');
 
         // look for Home controller, as that should be in base repo
         $actual   = $classLoader(Home::class);
@@ -122,7 +121,7 @@ final class AutoloaderTest extends CIUnitTestCase
 
     public function testServiceAutoLoader(): void
     {
-        $autoloader = Services::autoloader(false);
+        $autoloader = service('autoloader', false);
         $autoloader->initialize(new Autoload(), new Modules());
         $autoloader->register();
 

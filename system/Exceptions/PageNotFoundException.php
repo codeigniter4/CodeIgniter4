@@ -78,7 +78,7 @@ class PageNotFoundException extends OutOfBoundsException implements ExceptionInt
      */
     private static function lang(string $line, array $args = []): string
     {
-        $lang = Services::language(null, false);
+        $lang = service('language', null, false);
 
         return $lang->getLine($line, $args);
     }

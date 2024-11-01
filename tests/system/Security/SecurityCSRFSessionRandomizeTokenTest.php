@@ -171,7 +171,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
     #[WithoutErrorHandler]
     public function testCSRFVerifyPostInvalidToken(): void
     {
-        Services::exceptions()->initialize();
+        service('exceptions')->initialize();
 
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('The action you requested is not allowed.');

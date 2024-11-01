@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
-use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Request;
@@ -68,7 +67,7 @@ final class FilterCollector
             ];
         }
 
-        $request = Services::incomingrequest(null, false);
+        $request = service('incomingrequest', null, false);
         $request->setMethod($method);
 
         $router  = $this->createRouter($request);
@@ -86,7 +85,7 @@ final class FilterCollector
      */
     public function getRequiredFilters(): array
     {
-        $request = Services::incomingrequest(null, false);
+        $request = service('incomingrequest', null, false);
         $request->setMethod(Method::GET);
 
         $router  = $this->createRouter($request);

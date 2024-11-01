@@ -17,7 +17,6 @@ use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
-use Config\Services;
 use Config\View as ViewConfig;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -38,7 +37,7 @@ final class ParserTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->loader   = Services::locator();
+        $this->loader   = service('locator');
         $this->viewsDir = __DIR__ . '/Views';
         $this->config   = new ViewConfig();
         $this->parser   = new Parser($this->config, $this->viewsDir, $this->loader);

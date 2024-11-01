@@ -19,7 +19,6 @@ use Composer\InstalledVersions;
 use Config\Autoload;
 use Config\Kint as KintConfig;
 use Config\Modules;
-use Config\Services;
 use InvalidArgumentException;
 use Kint;
 use Kint\Renderer\CliRenderer;
@@ -537,7 +536,7 @@ class Autoloader
             Kint::$plugins = $config->plugins;
         }
 
-        $csp = Services::csp();
+        $csp = service('csp');
         if ($csp->enabled()) {
             RichRenderer::$js_nonce  = $csp->getScriptNonce();
             RichRenderer::$css_nonce = $csp->getStyleNonce();

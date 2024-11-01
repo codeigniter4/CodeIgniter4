@@ -18,7 +18,6 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
-use Config\Services;
 use DateTime;
 use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -169,7 +168,7 @@ final class ResponseTest extends CIUnitTestCase
         $this->resetServices();
 
         $response = new Response($config);
-        $pager    = Services::pager();
+        $pager    = service('pager');
 
         $pager->store('default', 3, 10, 200);
         $response->setLink($pager);
@@ -390,7 +389,7 @@ final class ResponseTest extends CIUnitTestCase
                 3,
             ],
         ];
-        $expected = Services::format()->getFormatter('application/json')->format($body);
+        $expected = service('format')->getFormatter('application/json')->format($body);
 
         $response = new Response(new App());
         $response->setJSON($body);
@@ -409,7 +408,7 @@ final class ResponseTest extends CIUnitTestCase
                 3,
             ],
         ];
-        $expected = Services::format()->getFormatter('application/json')->format($body);
+        $expected = service('format')->getFormatter('application/json')->format($body);
 
         $response = new Response(new App());
         $response->setBody($body);
@@ -427,7 +426,7 @@ final class ResponseTest extends CIUnitTestCase
                 3,
             ],
         ];
-        $expected = Services::format()->getFormatter('application/xml')->format($body);
+        $expected = service('format')->getFormatter('application/xml')->format($body);
 
         $response = new Response(new App());
         $response->setXML($body);
@@ -446,7 +445,7 @@ final class ResponseTest extends CIUnitTestCase
                 3,
             ],
         ];
-        $expected = Services::format()->getFormatter('application/xml')->format($body);
+        $expected = service('format')->getFormatter('application/xml')->format($body);
 
         $response = new Response(new App());
         $response->setBody($body);

@@ -630,11 +630,11 @@ final class CommonFunctionsTest extends CIUnitTestCase
     #[WithoutErrorHandler]
     public function testForceHttpsNullRequestAndResponse(): void
     {
-        $this->assertNull(Services::response()->header('Location'));
+        $this->assertNull(service('response')->header('Location'));
 
-        Services::response()->setCookie('force', 'cookie');
-        Services::response()->setHeader('Force', 'header');
-        Services::response()->setBody('default body');
+        service('response')->setCookie('force', 'cookie');
+        service('response')->setHeader('Force', 'header');
+        service('response')->setBody('default body');
 
         try {
             force_https();
@@ -726,7 +726,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $config->CSPEnabled = true;
 
         // Initialize Kint
-        Services::autoloader()->initializeKint(CI_DEBUG);
+        service('autoloader')->initializeKint(CI_DEBUG);
 
         $cliDetection        = Kint::$cli_detection;
         Kint::$cli_detection = false;
@@ -750,7 +750,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $config->CSPEnabled = true;
 
         // Initialize Kint
-        Services::autoloader()->initializeKint(CI_DEBUG);
+        service('autoloader')->initializeKint(CI_DEBUG);
 
         Kint::$cli_detection = false;
 

@@ -19,7 +19,6 @@ use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\I18n\Time;
 use Config\Database;
 use Config\Migrations as MigrationsConfig;
-use Config\Services;
 use RuntimeException;
 use stdClass;
 
@@ -390,7 +389,7 @@ class MigrationRunner
      */
     public function findMigrations(): array
     {
-        $namespaces = $this->namespace ? [$this->namespace] : array_keys(Services::autoloader()->getNamespace());
+        $namespaces = $this->namespace ? [$this->namespace] : array_keys(service('autoloader')->getNamespace());
         $migrations = [];
 
         foreach ($namespaces as $namespace) {
@@ -415,7 +414,7 @@ class MigrationRunner
     public function findNamespaceMigrations(string $namespace): array
     {
         $migrations = [];
-        $locator    = Services::locator(true);
+        $locator    = service('locator', true);
 
         if (! empty($this->path)) {
             helper('filesystem');
@@ -455,7 +454,7 @@ class MigrationRunner
             return false;
         }
 
-        $locator = Services::locator(true);
+        $locator = service('locator', true);
 
         $migration = new stdClass();
 

@@ -17,7 +17,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Validation\Validation;
 use Config\Database;
-use Config\Services;
 use InvalidArgumentException;
 use LogicException;
 use PHPUnit\Framework\Attributes\Group;
@@ -55,7 +54,7 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->validation = new Validation((object) $this->config, Services::renderer());
+        $this->validation = new Validation((object) $this->config, service('renderer'));
         $this->validation->reset();
     }
 
