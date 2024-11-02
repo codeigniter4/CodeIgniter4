@@ -123,7 +123,7 @@ class Autoloader
             $this->files = $config->files;
         }
 
-        if (isset($config->helpers)) {
+        if ($config->helpers !== []) {
             $this->helpers = [...$this->helpers, ...$config->helpers];
         }
 
@@ -366,6 +366,9 @@ class Autoloader
         return $cleanFilename;
     }
 
+    /**
+     * @param array{only?: list<string>, exclude?: list<string>} $composerPackages
+     */
     private function loadComposerNamespaces(ClassLoader $composer, array $composerPackages): void
     {
         $namespacePaths = $composer->getPrefixesPsr4();
@@ -379,6 +382,7 @@ class Autoloader
             }
         }
 
+        // @phpstan-ignore-next-line
         if (! method_exists(InstalledVersions::class, 'getAllRawData')) {
             throw new RuntimeException(
                 'Your Composer version is too old.'

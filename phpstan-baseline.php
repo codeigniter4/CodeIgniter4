@@ -8,54 +8,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/app/Config/Filters.php',
 ];
 $ignoreErrors[] = [
-	// identifier: function.alreadyNarrowedType
-	'message' => '#^Call to function method_exists\\(\\) with \'Composer\\\\\\\\InstalledVersions\' and \'getAllRawData\' will always evaluate to true\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\Autoloader\\:\\:loadComposerNamespaces\\(\\) has parameter \\$composerPackages with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
-];
-$ignoreErrors[] = [
-	// identifier: isset.property
-	'message' => '#^Property Config\\\\Autoload\\:\\:\\$helpers \\(array\\<int, string\\>\\) in isset\\(\\) is not nullable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.condNotBoolean
-	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\|string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 6,
-	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\FileLocatorCached\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/FileLocatorCached.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\Autoloader\\\\FileLocatorCached\\:\\:\\$cache type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/FileLocatorCached.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/FileLocatorInterface.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:__call\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -1295,18 +1247,6 @@ $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Config\\\\Factories\\:\\:verifyPreferApp\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Factories.php',
-];
-$ignoreErrors[] = [
-	// identifier: booleanNot.exprNotBoolean
-	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Factories.php',
-];
-$ignoreErrors[] = [
-	// identifier: booleanNot.exprNotBoolean
-	'message' => '#^Only booleans are allowed in a negated boolean, string\\|null given\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/system/Config/Factories.php',
 ];
 $ignoreErrors[] = [
@@ -9242,12 +9182,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.callable
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:getPrivateMethodInvoker\\(\\) return type has no signature specified for Closure\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.return
 	'message' => '#^Method CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:mockCache\\(\\) has no return type specified\\.$#',
 	'count' => 1,
@@ -9274,12 +9208,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: missingType.return
 	'message' => '#^Method CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:resetServices\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.return
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:setPrivateProperty\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
 ];
@@ -11822,36 +11750,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/AutoReview/FrameworkCodeTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.callable
-	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\AutoloaderTest\\:\\:getPrivateMethodInvoker\\(\\) return type has no signature specified for Closure\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Autoloader/AutoloaderTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.return
-	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\AutoloaderTest\\:\\:setPrivateProperty\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Autoloader/AutoloaderTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: ternary.shortNotAllowed
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/tests/system/Autoloader/AutoloaderTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: method.notFound
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\:\\:__destruct\\(\\)\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Autoloader/FileLocatorCachedTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: method.notFound
-	'message' => '#^Call to an undefined method CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\:\\:deleteCache\\(\\)\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Autoloader/FileLocatorCachedTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccessAssign
 	'message' => '#^Assigning 3 directly on offset \'argc\' of \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
@@ -13142,20 +13040,8 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Database/Builder/WhereTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.callable
-	'message' => '#^Method CodeIgniter\\\\Database\\\\ConfigTest\\:\\:getPrivateMethodInvoker\\(\\) return type has no signature specified for Closure\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/ConfigTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Database\\\\ConfigTest\\:\\:provideConvertDSN\\(\\) return type has no value type specified in iterable type iterable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Database/ConfigTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.return
-	'message' => '#^Method CodeIgniter\\\\Database\\\\ConfigTest\\:\\:setPrivateProperty\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/ConfigTest.php',
 ];
@@ -13502,18 +13388,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.callable
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\ExceptionsTest\\:\\:getPrivateMethodInvoker\\(\\) return type has no signature specified for Closure\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.return
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\ExceptionsTest\\:\\:setPrivateProperty\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: argument.type
 	'message' => '#^Parameter \\#2 \\$callable of method CodeIgniter\\\\Debug\\\\Timer\\:\\:record\\(\\) expects callable\\(\\)\\: mixed, \'strlen\' given\\.$#',
 	'count' => 1,
@@ -13652,12 +13526,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.callable
-	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:getPrivateMethodInvoker\\(\\) return type has no signature specified for Closure\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.return
 	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:getSimpleSwappedEntity\\(\\) has no return type specified\\.$#',
 	'count' => 1,
@@ -13666,12 +13534,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: missingType.return
 	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:getSwappedEntity\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.return
-	'message' => '#^Method CodeIgniter\\\\Entity\\\\EntityTest\\:\\:setPrivateProperty\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Entity/EntityTest.php',
 ];
@@ -15980,18 +15842,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Models/InsertModelTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.callable
-	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:getPrivateMethodInvoker\\(\\) return type has no signature specified for Closure\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.return
-	'message' => '#^Method CodeIgniter\\\\Models\\\\LiveModelTestCase\\:\\:setPrivateProperty\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/LiveModelTestCase.php',
-];
-$ignoreErrors[] = [
 	// identifier: property.nonObject
 	'message' => '#^Cannot access property \\$created_at on array\\.$#',
 	'count' => 1,
@@ -17038,18 +16888,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: missingType.parameter
 	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:getInstance\\(\\) has parameter \\$options with no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.callable
-	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:getPrivateMethodInvoker\\(\\) return type has no signature specified for Closure\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.return
-	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\Database\\\\AbstractHandlerTestCase\\:\\:setPrivateProperty\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php',
 ];
@@ -18326,18 +18164,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Validation/ValidationTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: assign.propertyType
-	'message' => '#^Property CodeIgniter\\\\View\\\\DecoratorsTest\\:\\:\\$loader \\(CodeIgniter\\\\Autoloader\\\\FileLocator\\) does not accept CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/View/DecoratorsTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: assign.propertyType
-	'message' => '#^Property CodeIgniter\\\\View\\\\ParserFilterTest\\:\\:\\$loader \\(CodeIgniter\\\\Autoloader\\\\FileLocator\\) does not accept CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/View/ParserFilterTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.return
 	'message' => '#^Method CodeIgniter\\\\View\\\\ParserPluginTest\\:\\:setHints\\(\\) has no return type specified\\.$#',
 	'count' => 1,
@@ -18365,12 +18191,6 @@ $ignoreErrors[] = [
 	// identifier: argument.type
 	'message' => '#^Parameter \\#2 \\$context of method CodeIgniter\\\\View\\\\Parser\\:\\:setData\\(\\) expects \'attr\'\\|\'css\'\\|\'html\'\\|\'js\'\\|\'raw\'\\|\'url\'\\|null, \'unknown\' given\\.$#',
 	'count' => 3,
-	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: assign.propertyType
-	'message' => '#^Property CodeIgniter\\\\View\\\\ParserTest\\:\\:\\$loader \\(CodeIgniter\\\\Autoloader\\\\FileLocator\\) does not accept CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\.$#',
-	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
 ];
 $ignoreErrors[] = [
@@ -18462,12 +18282,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\View\\\\Table\\:\\:\\$function \\(\\(callable\\(\\)\\: mixed\\)\\|null\\) does not accept \'ticklemyfancy\'\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/TableTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: assign.propertyType
-	'message' => '#^Property CodeIgniter\\\\View\\\\ViewTest\\:\\:\\$loader \\(CodeIgniter\\\\Autoloader\\\\FileLocator\\) does not accept CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/View/ViewTest.php',
 ];
 
 return ['parameters' => ['ignoreErrors' => $ignoreErrors]];
