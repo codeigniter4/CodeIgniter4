@@ -33,6 +33,8 @@ Bugs Fixed
 
 - **Validation:** Fixed the `getValidated()` method that did not return valid data when validation rules used multiple asterisks.
 
+- **Parser:** Fixed bug that caused equal key names to be replaced by the key name defined first.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.
