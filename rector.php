@@ -19,6 +19,7 @@ use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
 use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
 use Rector\CodeQuality\Rector\FuncCall\SingleInArrayToCompareRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
+use Rector\CodeQuality\Rector\Identical\SimplifyBoolIdenticalTrueRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
@@ -211,9 +212,10 @@ return RectorConfig::configure()
         AddMethodCallBasedStrictParamTypeRector::class,
         TypedPropertyFromAssignsRector::class,
         ClosureReturnTypeRector::class,
+        SimplifyBoolIdenticalTrueRector::class,
     ])
     ->withConfiguredRule(StringClassNameToClassConstantRector::class, [
         // keep '\\' prefix string on string '\Foo\Bar'
         StringClassNameToClassConstantRector::SHOULD_KEEP_PRE_SLASH => true,
     ])
-    ->withCodeQualityLevel(14);
+    ->withCodeQualityLevel(15);

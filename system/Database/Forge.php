@@ -449,12 +449,12 @@ class Forge
      */
     public function dropKey(string $table, string $keyName, bool $prefixKeyName = true): bool
     {
-        $keyName = $this->db->escapeIdentifiers(($prefixKeyName === true ? $this->db->DBPrefix : '') . $keyName);
+        $keyName = $this->db->escapeIdentifiers(($prefixKeyName ? $this->db->DBPrefix : '') . $keyName);
         $table   = $this->db->escapeIdentifiers($this->db->DBPrefix . $table);
 
         $dropKeyAsConstraint = $this->dropKeyAsConstraint($table, $keyName);
 
-        if ($dropKeyAsConstraint === true) {
+        if ($dropKeyAsConstraint) {
             $sql = sprintf(
                 $this->dropConstraintStr,
                 $table,
@@ -559,7 +559,7 @@ class Forge
         }
 
         // If table exists lets stop here
-        if ($ifNotExists === true && $this->db->tableExists($table, false)) {
+        if ($ifNotExists && $this->db->tableExists($table, false)) {
             $this->reset();
 
             return true;
@@ -895,7 +895,7 @@ class Forge
 
             $attributes = array_change_key_case($attributes, CASE_UPPER);
 
-            if ($createTable === true && empty($attributes['TYPE'])) {
+            if ($createTable && empty($attributes['TYPE'])) {
                 continue;
             }
 
@@ -942,7 +942,7 @@ class Forge
                 } else {
                     $field['null'] = ' NOT ' . $this->null;
                 }
-            } elseif ($createTable === true) {
+            } elseif ($createTable) {
                 $field['null'] = ' NOT ' . $this->null;
             }
 
@@ -1085,7 +1085,7 @@ class Forge
         }
 
         if (isset($this->primaryKeys['fields']) && $this->primaryKeys['fields'] !== []) {
-            if ($asQuery === true) {
+            if ($asQuery) {
                 $sql .= 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $table) . ' ADD ';
             } else {
                 $sql .= ",\n\t";
@@ -1229,7 +1229,7 @@ class Forge
             $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
             $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
 
-            if ($asQuery === true) {
+            if ($asQuery) {
                 $sqls[$index] .= 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $table) . ' ADD ';
             } else {
                 $sqls[$index] .= ",\n\t";

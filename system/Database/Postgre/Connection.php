@@ -75,11 +75,11 @@ class Connection extends BaseConnection
             $this->convertDSN();
         }
 
-        $this->connID = $persistent === true ? pg_pconnect($this->DSN) : pg_connect($this->DSN);
+        $this->connID = $persistent ? pg_pconnect($this->DSN) : pg_connect($this->DSN);
 
         if ($this->connID !== false) {
             if (
-                $persistent === true
+                $persistent
                 && pg_connection_status($this->connID) === PGSQL_CONNECTION_BAD
                 && pg_ping($this->connID) === false
             ) {
@@ -290,7 +290,7 @@ class Connection extends BaseConnection
             return $sql . ' AND "table_name" LIKE ' . $this->escape($tableName);
         }
 
-        if ($prefixLimit !== false && $this->DBPrefix !== '') {
+        if ($prefixLimit && $this->DBPrefix !== '') {
             return $sql . ' AND "table_name" LIKE \''
                 . $this->escapeLikeString($this->DBPrefix) . "%' "
                 . sprintf($this->likeEscapeStr, $this->likeEscapeChar);

@@ -584,7 +584,7 @@ class BaseBuilder
      */
     public function from($from, bool $overwrite = false): self
     {
-        if ($overwrite === true) {
+        if ($overwrite) {
             $this->QBFrom = [];
             $this->db->setAliasedTables([]);
         }
@@ -774,7 +774,7 @@ class BaseBuilder
         foreach ($keyValue as $k => $v) {
             $prefix = empty($this->{$qbKey}) ? $this->groupGetType('') : $this->groupGetType($type);
 
-            if ($rawSqlOnly === true) {
+            if ($rawSqlOnly) {
                 $k  = '';
                 $op = '';
             } elseif ($v !== null) {
@@ -1155,8 +1155,8 @@ class BaseBuilder
         $keyValue = ! is_array($field) ? [$field => $match] : $field;
 
         foreach ($keyValue as $k => $v) {
-            if ($insensitiveSearch === true) {
-                $v = strtolower($v);
+            if ($insensitiveSearch) {
+                $v = mb_strtolower($v, 'UTF-8');
             }
 
             $prefix = empty($this->{$clause}) ? $this->groupGetType('') : $this->groupGetType($type);
@@ -1192,7 +1192,7 @@ class BaseBuilder
      */
     protected function _like_statement(?string $prefix, string $column, ?string $not, string $bind, bool $insensitiveSearch = false): string
     {
-        if ($insensitiveSearch === true) {
+        if ($insensitiveSearch) {
             return "{$prefix} LOWER(" . $this->db->escapeIdentifiers($column) . ") {$not} LIKE :{$bind}:";
         }
 
@@ -1604,7 +1604,7 @@ class BaseBuilder
     {
         $select = $this->compileSelect();
 
-        if ($reset === true) {
+        if ($reset) {
             $this->resetSelect();
         }
 
@@ -1648,7 +1648,7 @@ class BaseBuilder
             ? $this->getCompiledSelect($reset)
             : $this->db->query($this->compileSelect(), $this->binds, false);
 
-        if ($reset === true) {
+        if ($reset) {
             $this->resetSelect();
 
             // Clear our binds so we don't eat up memory
@@ -1683,7 +1683,7 @@ class BaseBuilder
 
         $query = $query->getRow();
 
-        if ($reset === true) {
+        if ($reset) {
             $this->resetSelect();
         }
 
@@ -1732,7 +1732,7 @@ class BaseBuilder
 
         $result = $this->db->query($sql, $this->binds, false);
 
-        if ($reset === true) {
+        if ($reset) {
             $this->resetSelect();
         } elseif (! isset($this->QBOrderBy)) {
             $this->QBOrderBy = $orderBy;
@@ -1786,7 +1786,7 @@ class BaseBuilder
             ? $this->getCompiledSelect($reset)
             : $this->db->query($this->compileSelect(), $this->binds, false);
 
-        if ($reset === true) {
+        if ($reset) {
             $this->resetSelect();
 
             // Clear our binds so we don't eat up memory
@@ -2302,7 +2302,7 @@ class BaseBuilder
             array_values($this->QBSet)
         );
 
-        if ($reset === true) {
+        if ($reset) {
             $this->resetWrite();
         }
 
@@ -2471,7 +2471,7 @@ class BaseBuilder
 
         $sql = $this->_update($this->QBFrom[0], $this->QBSet);
 
-        if ($reset === true) {
+        if ($reset) {
             $this->resetWrite();
         }
 

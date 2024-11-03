@@ -293,7 +293,7 @@ class Builder extends BaseBuilder
      */
     protected function _like_statement(?string $prefix, string $column, ?string $not, string $bind, bool $insensitiveSearch = false): string
     {
-        $op = $insensitiveSearch === true ? 'ILIKE' : 'LIKE';
+        $op = $insensitiveSearch ? 'ILIKE' : 'LIKE';
 
         return "{$prefix} {$column} {$not} {$op} :{$bind}:";
     }

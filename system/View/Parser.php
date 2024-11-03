@@ -254,20 +254,39 @@ class Parser extends View
         // it can potentially modify any template between its tags.
         $template = $this->parsePlugins($template);
 
-        // loop over the data variables, replacing
-        // the content as we go.
+        // Parse stack for each parse type (Single and Pairs)
+        $replaceSingleStack = [];
+        $replacePairsStack  = [];
+
+        // loop over the data variables, saving regex and data
+        // for later replacement.
         foreach ($data as $key => $val) {
             $escape = true;
 
             if (is_array($val)) {
-                $escape  = false;
-                $replace = $this->parsePair($key, $val, $template);
+                $escape              = false;
+                $replacePairsStack[] = [
+                    'replace' => $this->parsePair($key, $val, $template),
+                    'escape'  => $escape,
+                ];
             } else {
-                $replace = $this->parseSingle($key, (string) $val);
+                $replaceSingleStack[] = [
+                    'replace' => $this->parseSingle($key, (string) $val),
+                    'escape'  => $escape,
+                ];
             }
+        }
 
-            foreach ($replace as $pattern => $content) {
-                $template = $this->replaceSingle($pattern, $content, $template, $escape);
+        // Merge both stacks, pairs first + single stacks
+        // This allows for nested data with the same key to be replaced properly
+        $replace = array_merge($replacePairsStack, $replaceSingleStack);
+
+        // Loop over each replace array item which
+        // holds all the data to be replaced
+        foreach ($replace as $replaceItem) {
+            // Loop over the actual data to be replaced
+            foreach ($replaceItem['replace'] as $pattern => $content) {
+                $template = $this->replaceSingle($pattern, $content, $template, $replaceItem['escape']);
             }
         }
 

@@ -203,7 +203,7 @@ class Connection extends BaseConnection
 
         return 'SELECT "NAME" FROM "SQLITE_MASTER" WHERE "TYPE" = \'table\''
                . ' AND "NAME" NOT LIKE \'sqlite!_%\' ESCAPE \'!\''
-               . (($prefixLimit !== false && $this->DBPrefix !== '')
+               . (($prefixLimit && $this->DBPrefix !== '')
                     ? ' AND "NAME" LIKE \'' . $this->escapeLikeString($this->DBPrefix) . '%\' ' . sprintf($this->likeEscapeStr, $this->likeEscapeChar)
                     : '');
     }
@@ -372,7 +372,7 @@ class Connection extends BaseConnection
      */
     protected function _foreignKeyData(string $table): array
     {
-        if ($this->supportsForeignKeys() !== true) {
+        if (! $this->supportsForeignKeys()) {
             return [];
         }
 

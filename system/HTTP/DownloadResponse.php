@@ -142,7 +142,7 @@ class DownloadResponse extends Response
         $mime    = null;
         $charset = '';
 
-        if ($this->setMime === true && ($lastDotPosition = strrpos($this->filename, '.')) !== false) {
+        if ($this->setMime && ($lastDotPosition = strrpos($this->filename, '.')) !== false) {
             $mime    = Mimes::guessTypeFromExtension(substr($this->filename, $lastDotPosition + 1));
             $charset = $this->charset;
         }

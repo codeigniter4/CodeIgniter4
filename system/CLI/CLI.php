@@ -514,7 +514,7 @@ class CLI
      */
     public static function wait(int $seconds, bool $countdown = false)
     {
-        if ($countdown === true) {
+        if ($countdown) {
             $time = $seconds;
 
             while ($time > 0) {

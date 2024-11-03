@@ -216,7 +216,7 @@ class Connection extends BaseConnection
             return $sql .= ' AND [TABLE_NAME] LIKE ' . $this->escape($tableName);
         }
 
-        if ($prefixLimit === true && $this->DBPrefix !== '') {
+        if ($prefixLimit && $this->DBPrefix !== '') {
             $sql .= " AND [TABLE_NAME] LIKE '" . $this->escapeLikeString($this->DBPrefix) . "%' "
                 . sprintf($this->likeEscapeStr, $this->likeEscapeChar);
         }

@@ -118,7 +118,7 @@ class Forge extends BaseForge
                 $nullable = false;
             }
             $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field['name'])
-                . ($nullable === true ? ' DROP' : ' SET') . ' NOT NULL';
+                . ($nullable ? ' DROP' : ' SET') . ' NOT NULL';
 
             if (! empty($field['new_name'])) {
                 $sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($field['name'])
@@ -195,7 +195,7 @@ class Forge extends BaseForge
     {
         $sql = parent::_dropTable($table, $ifExists, $cascade);
 
-        if ($cascade === true) {
+        if ($cascade) {
             $sql .= ' CASCADE';
         }
 

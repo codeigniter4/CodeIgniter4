@@ -249,7 +249,7 @@ class Router implements RouterInterface
      */
     public function controllerName()
     {
-        return $this->translateURIDashes
+        return $this->translateURIDashes && ! $this->controller instanceof Closure
             ? str_replace('-', '_', $this->controller)
             : $this->controller;
     }

@@ -456,7 +456,7 @@ if (! function_exists('url_title')) {
             $str = preg_replace('#' . $key . '#iu', $val, $str);
         }
 
-        if ($lowercase === true) {
+        if ($lowercase) {
             $str = mb_strtolower($str);
         }
 
