@@ -382,8 +382,7 @@ class Autoloader
             }
         }
 
-        // @phpstan-ignore-next-line
-        if (! method_exists(InstalledVersions::class, 'getAllRawData')) {
+        if (! method_exists(InstalledVersions::class, 'getAllRawData')) { // @phpstan-ignore function.alreadyNarrowedType
             throw new RuntimeException(
                 'Your Composer version is too old.'
                 . ' Please update Composer (run `composer self-update`) to v2.0.14 or later'
