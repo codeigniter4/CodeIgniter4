@@ -196,6 +196,21 @@ final class RequestTest extends CIUnitTestCase
         $this->assertCount(2, $result['ANNOUNCEMENTS']);
     }
 
+    public function testFetchGlobalReturnsWithListValues(): void
+    {
+        $post = [
+            ['foo' => 0],
+            ['bar' => 1],
+            ['baz' => 2],
+        ];
+
+        $this->request->setGlobal('post', $post);
+        $result = $this->request->fetchGlobal('post');
+
+        $this->assertIsList($result);
+        $this->assertSame($post, $result);
+    }
+
     public function testFetchGlobalWithArrayTop(): void
     {
         $post = [
