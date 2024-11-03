@@ -1061,4 +1061,44 @@ final class ParserTest extends CIUnitTestCase
             EOL;
         $this->assertSame($expected, $this->parser->renderString($template));
     }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9245
+     */
+    public function testParseSameArrayKeyName(): void
+    {
+        $data = [
+            'type'   => 'Super Powers',
+            'powers' => [
+                [
+                    'type' => 'invisibility',
+                ],
+            ],
+        ];
+
+        $template = '{type} like {powers}{type}{/powers}';
+
+        $this->parser->setData($data);
+        $this->assertSame('Super Powers like invisibility', $this->parser->renderString($template));
+    }
+
+    public function testParseSameArrayKeyNameNested(): void
+    {
+        $data = [
+            'title'   => 'My title',
+            'similar' => [
+                ['items' => [
+                    [
+                        'title' => 'My similar title',
+                    ],
+                ],
+                ],
+            ],
+        ];
+
+        $template = '{title} with similar item {similar}{items}{title}{/items}{/similar}';
+
+        $this->parser->setData($data);
+        $this->assertSame('My title with similar item My similar title', $this->parser->renderString($template));
+    }
 }
