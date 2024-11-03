@@ -29,6 +29,10 @@ Deprecations
 **********
 Bugs Fixed
 **********
+- **FeatureTestTrait:** Allows `#call` and `#post` to process JSON lists. It failed because `RequestTrait#fetchGlobal` expected the second parameter ($index) to be an associative array.
+
+- **RequestTrait:** Allows to get a value by a numeric key if the data is stored as a list and not an associative array.
+
 - **Session Library:** The session initialization debug message now uses the correct log type "debug" instead of "info".
 
 - **Validation:** Fixed the `getValidated()` method that did not return valid data when validation rules used multiple asterisks.
