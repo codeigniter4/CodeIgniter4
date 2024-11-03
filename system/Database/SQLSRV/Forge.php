@@ -212,10 +212,10 @@ class Forge extends BaseForge
 
             $sql = <<<SQL
                 SELECT name
-                FROM SYS.DEFAULT_CONSTRAINTS
-                WHERE PARENT_OBJECT_ID = OBJECT_ID('{$fullTable}')
-                AND PARENT_COLUMN_ID IN (
-                SELECT column_id FROM sys.columns WHERE NAME IN ({$fields}) AND object_id = OBJECT_ID(N'{$fullTable}')
+                FROM sys.default_constraints
+                WHERE parent_object_id = OBJECT_ID('{$fullTable}')
+                AND parent_column_id IN (
+                SELECT column_id FROM sys.columns WHERE name IN ({$fields}) AND object_id = OBJECT_ID(N'{$fullTable}')
                 )
                 SQL;
 

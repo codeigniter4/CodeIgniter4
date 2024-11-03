@@ -138,7 +138,7 @@ jobs:
     steps:
       - name: Create database for MSSQL Server
         if: ${{ inputs.db-platform == 'SQLSRV' }}
-        run: sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q "CREATE DATABASE test"
+        run: sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q "CREATE DATABASE test COLLATE Latin1_General_100_CS_AS_SC_UTF8"
 
       - name: Install latest ImageMagick
         if: ${{ contains(inputs.extra-extensions, 'imagick') }}

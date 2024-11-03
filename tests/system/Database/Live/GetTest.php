@@ -178,7 +178,7 @@ final class GetTest extends CIUnitTestCase
             $this->assertSame('int', $typeTest[0]->type_name); // INTEGER AUTOINC
             $this->assertSame('varchar', $typeTest[1]->type_name);  // VARCHAR
             $this->assertSame('char', $typeTest[2]->type_name);  // CHAR
-            $this->assertSame('text', $typeTest[3]->type_name);  // TEXT
+            $this->assertSame('nvarchar', $typeTest[3]->type_name);  // TEXT
             $this->assertSame('smallint', $typeTest[4]->type_name);  // SMALLINT
             $this->assertSame('int', $typeTest[5]->type_name);  // INTEGER
             $this->assertSame('float', $typeTest[6]->type_name);  // FLOAT
