@@ -199,9 +199,9 @@ final class RequestTest extends CIUnitTestCase
     public function testFetchGlobalReturnsWithListValues(): void
     {
         $post = [
-            ['foo' => 0],
-            ['bar' => 1],
-            ['baz' => 2],
+            0 => ['foo' => 0],
+            1 => ['bar' => 1],
+            2 => ['baz' => 2],
         ];
 
         $this->request->setGlobal('post', $post);
