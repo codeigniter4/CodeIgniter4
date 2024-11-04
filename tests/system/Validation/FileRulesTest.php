@@ -16,6 +16,7 @@ namespace CodeIgniter\Validation;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
 
@@ -61,6 +62,20 @@ final class FileRulesTest extends CIUnitTestCase
                 'error'    => 0,
                 'width'    => 640,
                 'height'   => 400,
+            ],
+            'excel_xlsx' => [
+                'tmp_name' => TESTPATH . '_support/Validation/uploads/abc77tz',
+                'name'     => 'whata.xlsx',
+                'size'     => 12345,
+                'type'     => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'error'    => UPLOAD_ERR_OK,
+            ],
+            'excel_xls' => [
+                'tmp_name' => TESTPATH . '_support/Validation/uploads/abc77tz',
+                'name'     => 'whatb.xls',
+                'size'     => 12345,
+                'type'     => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'error'    => UPLOAD_ERR_OK,
             ],
             'bigfile' => [
                 'tmp_name' => TESTPATH . '_support/Validation/uploads/phpUxc0ty',
@@ -280,21 +295,41 @@ final class FileRulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run([]));
     }
 
-    public function testExtensionOk(): void
+    public static function provideExtensionMore(): iterable
     {
-        $this->validation->setRules(['avatar' => 'ext_in[avatar,jpg,jpeg,gif,png]']);
-        $this->assertTrue($this->validation->run([]));
+        yield from [
+            [
+                'avatar',
+                'jpg,jpeg,gif,png',
+                true,
+            ],
+            [
+                'avatar',
+                'xls,doc,ppt',
+                false,
+            ],
+            [
+                'excel_xlsx',
+                'xls,xlsx',
+                true,
+            ],
+            [
+                'excel_xls',
+                'xls,xlsx',
+                true,
+            ],
+            [
+                'excel_xls',
+                'pdf',
+                false,
+            ],
+        ];
     }
 
-    public function testExtensionNotOk(): void
+    #[DataProvider('provideExtensionMore')]
+    public function testExtensionMoreOk(string $field, string $rules, bool $expect): void
     {
-        $this->validation->setRules(['avatar' => 'ext_in[avatar,xls,doc,ppt]']);
-        $this->assertFalse($this->validation->run([]));
-    }
-
-    public function testExtensionImpossible(): void
-    {
-        $this->validation->setRules(['avatar' => 'ext_in[unknown,xls,doc,ppt]']);
-        $this->assertFalse($this->validation->run([]));
+        $this->validation->setRules([$field => "ext_in[{$field},{$rules}]"]);
+        $this->assertSame($expect, $this->validation->run([]));
     }
 }

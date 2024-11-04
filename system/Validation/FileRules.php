@@ -206,7 +206,7 @@ class FileRules
                 return true;
             }
 
-            if (! in_array($file->guessExtension(), $params, true)) {
+            if (! in_array($file->getClientExtension(), $params, true)) {
                 return false;
             }
         }
