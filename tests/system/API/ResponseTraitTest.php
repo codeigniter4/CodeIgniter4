@@ -87,7 +87,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $config = $this->createAppConfig();
         $this->createCookieConfig();
 
-        if ($this->request === null) {
+        if (! $this->request instanceof MockIncomingRequest) {
             $this->request = new MockIncomingRequest(
                 $config,
                 new SiteURI($config, $routePath),

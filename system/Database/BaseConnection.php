@@ -684,7 +684,7 @@ abstract class BaseConnection implements ConnectionInterface
                 // Let others do something with this query.
                 Events::trigger('DBQuery', $query);
 
-                if ($exception !== null) {
+                if ($exception instanceof DatabaseException) {
                     throw new DatabaseException(
                         $exception->getMessage(),
                         $exception->getCode(),

@@ -85,7 +85,7 @@ class DownloadResponse extends Response
      */
     public function setBinary(string $binary)
     {
-        if ($this->file !== null) {
+        if ($this->file instanceof File) {
             throw DownloadException::forCannotSetBinary();
         }
 
@@ -309,7 +309,7 @@ class DownloadResponse extends Response
             return $this->sendBodyByBinary();
         }
 
-        if ($this->file !== null) {
+        if ($this->file instanceof File) {
             return $this->sendBodyByFilePath();
         }
 

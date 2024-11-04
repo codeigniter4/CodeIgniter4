@@ -869,7 +869,7 @@ if (! function_exists('_solidus')) {
     {
         static $docTypes = null;
 
-        if ($docTypesConfig !== null) {
+        if ($docTypesConfig instanceof DocTypes) {
             $docTypes = $docTypesConfig;
         }
 

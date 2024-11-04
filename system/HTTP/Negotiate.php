@@ -39,7 +39,7 @@ class Negotiate
      */
     public function __construct(?RequestInterface $request = null)
     {
-        if ($request !== null) {
+        if ($request instanceof RequestInterface) {
             assert($request instanceof IncomingRequest);
 
             $this->request = $request;
