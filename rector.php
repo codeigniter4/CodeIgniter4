@@ -43,6 +43,7 @@ use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php80\Rector\FunctionLike\MixedTypeRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\NarrowUnusedSetUpDefinedPropertyRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
@@ -176,6 +177,9 @@ return RectorConfig::configure()
 
         // Unnecessary (string) is inserted
         NullToStrictStringFuncCallArgRector::class,
+
+        // buggy with default value
+        NarrowUnusedSetUpDefinedPropertyRector::class,
     ])
     // auto import fully qualified class names
     ->withImportNames(removeUnusedImports: true)
