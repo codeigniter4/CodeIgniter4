@@ -16431,12 +16431,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue
-	'message' => '#^Property CodeIgniter\\\\Publisher\\\\PublisherOutputTest\\:\\:\\$structure type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Publisher/PublisherOutputTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Publisher\\\\PublisherRestrictionsTest\\:\\:provideDefaultPublicRestrictions\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Publisher/PublisherRestrictionsTest.php',
