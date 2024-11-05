@@ -55,6 +55,9 @@ final class PublisherOutputTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        /**
+         * Files to seed to VFS
+         */
         $structure = [
             'able' => [
                 'apple.php' => 'Once upon a midnight dreary',
