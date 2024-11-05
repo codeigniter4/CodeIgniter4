@@ -59,6 +59,7 @@ use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\NarrowUnusedSetUpDefinedPropertyRector;
 
 return RectorConfig::configure()
     ->withPhpSets(php81: true)
@@ -176,6 +177,9 @@ return RectorConfig::configure()
 
         // Unnecessary (string) is inserted
         NullToStrictStringFuncCallArgRector::class,
+
+        // buggy with default value
+        NarrowUnusedSetUpDefinedPropertyRector::class,
     ])
     // auto import fully qualified class names
     ->withImportNames(removeUnusedImports: true)
