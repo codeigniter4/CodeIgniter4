@@ -69,7 +69,7 @@ class RedirectException extends Exception implements ResponsableInterface, HTTPE
 
     public function getResponse(): ResponseInterface
     {
-        if (null === $this->response) {
+        if (! $this->response instanceof ResponseInterface) {
             $this->response = service('response')
                 ->redirect(base_url($this->getMessage()), 'auto', $this->getCode());
         }

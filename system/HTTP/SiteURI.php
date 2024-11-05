@@ -421,7 +421,7 @@ class SiteURI extends URI
         $relativePath = $this->stringifyRelativePath($relativePath);
 
         // Check current host.
-        $host = $config === null ? $this->getHost() : null;
+        $host = ! $config instanceof App ? $this->getHost() : null;
 
         $config ??= config(App::class);
 
