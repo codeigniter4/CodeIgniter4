@@ -25,15 +25,14 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class CellTest extends CIUnitTestCase
 {
-    private MockCache $cache;
     private Cell $cell;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->cache = new MockCache();
-        $this->cell  = new Cell($this->cache);
+        $cache      = new MockCache();
+        $this->cell = new Cell($cache);
     }
 
     public function testPrepareParamsReturnsEmptyArrayWithInvalidParam(): void

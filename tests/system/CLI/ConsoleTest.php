@@ -30,14 +30,12 @@ final class ConsoleTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
-    private DotEnv $env;
-
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->env = new DotEnv(ROOTPATH);
-        $this->env->load();
+        $env = new DotEnv(ROOTPATH);
+        $env->load();
 
         // Set environment values that would otherwise stop the framework from functioning during tests.
         if (! isset($_SERVER['app.baseURL'])) {

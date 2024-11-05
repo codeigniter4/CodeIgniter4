@@ -25,11 +25,6 @@ use PHPUnit\Framework\Attributes\Group;
 final class PublisherOutputTest extends CIUnitTestCase
 {
     /**
-     * Files to seed to VFS
-     */
-    private array $structure;
-
-    /**
      * Virtual destination
      */
     private vfsStreamDirectory $root;
@@ -60,7 +55,7 @@ final class PublisherOutputTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->structure = [
+        $structure = [
             'able' => [
                 'apple.php' => 'Once upon a midnight dreary',
                 'bazam'     => 'While I pondered weak and weary',
@@ -74,7 +69,7 @@ final class PublisherOutputTest extends CIUnitTestCase
             '.hidden'       => 'There is no spoon',
         ];
 
-        $this->root = vfsStream::setup('root', null, $this->structure);
+        $this->root = vfsStream::setup('root', null, $structure);
 
         // Add root to the list of allowed destinations
         config('Publisher')->restrictions[$this->root->url()] = '*';

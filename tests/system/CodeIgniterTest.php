@@ -47,7 +47,6 @@ use Tests\Support\Filters\RedirectFilter;
 final class CodeIgniterTest extends CIUnitTestCase
 {
     private CodeIgniter $codeigniter;
-    protected $routes;
 
     #[WithoutErrorHandler]
     protected function setUp(): void

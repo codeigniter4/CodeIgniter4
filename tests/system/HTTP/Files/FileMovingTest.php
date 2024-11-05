@@ -26,8 +26,6 @@ use PHPUnit\Framework\Attributes\Group;
 final class FileMovingTest extends CIUnitTestCase
 {
     private ?vfsStreamDirectory $root;
-    private string $path;
-    private string $start;
     private string $destination;
 
     protected function setUp(): void
@@ -35,11 +33,11 @@ final class FileMovingTest extends CIUnitTestCase
         parent::setUp();
 
         $this->root = vfsStream::setup();
-        $this->path = '_support/Files/';
-        vfsStream::copyFromFileSystem(TESTPATH . $this->path, $this->root);
-        $this->start = $this->root->url() . '/';
+        $path       = '_support/Files/';
+        vfsStream::copyFromFileSystem(TESTPATH . $path, $this->root);
+        $start = $this->root->url() . '/';
 
-        $this->destination = $this->start . 'destination';
+        $this->destination = $start . 'destination';
         if (is_dir($this->destination)) {
             rmdir($this->destination);
         }

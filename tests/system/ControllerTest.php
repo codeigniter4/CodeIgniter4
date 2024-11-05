@@ -40,7 +40,6 @@ use Psr\Log\LoggerInterface;
 #[Group('Others')]
 final class ControllerTest extends CIUnitTestCase
 {
-    private App $config;
     private ?Controller $controller = null;
 
     /**
@@ -59,9 +58,9 @@ final class ControllerTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->config   = new App();
-        $this->request  = new IncomingRequest($this->config, new SiteURI($this->config), null, new UserAgent());
-        $this->response = new Response($this->config);
+        $config         = new App();
+        $this->request  = new IncomingRequest($config, new SiteURI($config), null, new UserAgent());
+        $this->response = new Response($config);
         $this->logger   = Services::logger();
     }
 
