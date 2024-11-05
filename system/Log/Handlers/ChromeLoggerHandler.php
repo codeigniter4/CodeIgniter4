@@ -155,7 +155,7 @@ class ChromeLoggerHandler extends BaseHandler
      */
     public function sendLogs(?ResponseInterface &$response = null)
     {
-        if ($response instanceof ResponseInterface) {
+        if (! $response instanceof ResponseInterface) {
             $response = service('response', null, true);
         }
 

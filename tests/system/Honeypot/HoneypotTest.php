@@ -18,6 +18,7 @@ use CodeIgniter\Filters\Filters;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
@@ -38,7 +39,7 @@ final class HoneypotTest extends CIUnitTestCase
     /**
      * @var CLIRequest|IncomingRequest
      */
-    private $request;
+    private RequestInterface $request;
 
     private Response $response;
 

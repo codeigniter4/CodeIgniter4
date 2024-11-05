@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Exceptions;
 
-use Config\Services;
 use OutOfBoundsException;
 
 class PageNotFoundException extends OutOfBoundsException implements ExceptionInterface, HTTPExceptionInterface

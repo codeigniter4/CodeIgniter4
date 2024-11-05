@@ -15,6 +15,7 @@ namespace CodeIgniter\Filters;
 
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Filters as FilterConfig;
@@ -31,7 +32,7 @@ final class DebugToolbarTest extends CIUnitTestCase
     /**
      * @var CLIRequest|IncomingRequest
      */
-    private $request;
+    private RequestInterface $request;
 
     private Response $response;
 

@@ -337,9 +337,12 @@ final class ParserTest extends CIUnitTestCase
     public function testParseLoopEntityProperties(): void
     {
         $power = new class () extends Entity {
-            public $foo    = 'bar';
-            protected $bar = 'baz';
+            public string $foo    = 'bar';
+            protected string $bar = 'baz';
 
+            /**
+             * @return array<string, mixed>
+             */
             public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
             {
                 return [

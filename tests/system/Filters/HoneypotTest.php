@@ -16,6 +16,7 @@ namespace CodeIgniter\Filters;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Honeypot;
@@ -36,9 +37,9 @@ final class HoneypotTest extends CIUnitTestCase
     private Honeypot $honey;
 
     /**
-     * @var CLIRequest|IncomingRequest|null
+     * @var CLIRequest|IncomingRequest
      */
-    private $request;
+    private RequestInterface $request;
 
     private ?Response $response = null;
 
