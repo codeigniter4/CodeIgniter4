@@ -33,7 +33,6 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class CookieHelperTest extends CIUnitTestCase
 {
-    private IncomingRequest $request;
     private string $name;
     private string $value;
     private int $expire;
@@ -51,8 +50,8 @@ final class CookieHelperTest extends CIUnitTestCase
 
         Services::injectMock('response', new MockResponse(new App()));
         $this->response = Services::response();
-        $this->request  = new IncomingRequest(new App(), new SiteURI(new App()), null, new UserAgent());
-        Services::injectMock('request', $this->request);
+        $request        = new IncomingRequest(new App(), new SiteURI(new App()), null, new UserAgent());
+        Services::injectMock('request', $request);
 
         helper('cookie');
     }
