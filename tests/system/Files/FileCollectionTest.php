@@ -577,6 +577,6 @@ final class FileCollectionTest extends CIUnitTestCase
             $count++;
         }
 
-        $this->assertSame($count, 5);
+        $this->assertSame(5, $count);
     }
 }

@@ -1296,7 +1296,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $match = $routes->getRoutes();
 
         $this->assertArrayHasKey('testing', $match);
-        $this->assertSame($match['testing'], '\TestController::index');
+        $this->assertSame('\TestController::index', $match['testing']);
     }
 
     public function testDiscoverLocalAllowsConfigToOverridePackages(): void
@@ -1315,7 +1315,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $match = $routes->getRoutes();
 
         $this->assertArrayHasKey('testing', $match);
-        $this->assertSame($match['testing'], '\MainRoutes::index');
+        $this->assertSame('\MainRoutes::index', $match['testing']);
     }
 
     public function testRoutesOptions(): void

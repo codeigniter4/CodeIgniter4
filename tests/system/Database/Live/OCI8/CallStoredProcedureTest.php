@@ -55,7 +55,7 @@ final class CallStoredProcedureTest extends CIUnitTestCase
             ],
         ]);
 
-        $this->assertSame($result, '7');
+        $this->assertSame('7', $result);
     }
 
     public function testCallStoredProcedure(): void
@@ -77,7 +77,7 @@ final class CallStoredProcedureTest extends CIUnitTestCase
             ],
         ]);
 
-        $this->assertSame($result, '7');
+        $this->assertSame('7', $result);
     }
 
     public function testCallStoredProcedureForCursor(): void
