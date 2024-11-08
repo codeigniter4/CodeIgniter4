@@ -49,7 +49,7 @@ final class LastInsertIDTest extends CIUnitTestCase
         $this->db->table('job')->insert($jobData);
         $actual = $this->db->insertID();
 
-        $this->assertSame($actual, 5);
+        $this->assertSame(5, $actual);
     }
 
     public function testGetInsertIDWithQuery(): void
@@ -57,7 +57,7 @@ final class LastInsertIDTest extends CIUnitTestCase
         $this->db->query('INSERT INTO "db_job" ("name", "description") VALUES (?, ?)', ['Grocery Sales', 'Discount!']);
         $actual = $this->db->insertID();
 
-        $this->assertSame($actual, 5);
+        $this->assertSame(5, $actual);
     }
 
     public function testGetInsertIDWithHasCommentQuery(): void
@@ -73,7 +73,7 @@ final class LastInsertIDTest extends CIUnitTestCase
         $this->db->query($sql, ['Discount!']);
         $actual = $this->db->insertID();
 
-        $this->assertSame($actual, 5);
+        $this->assertSame(5, $actual);
     }
 
     public function testGetInsertIDWithPreparedQuery(): void
@@ -87,6 +87,6 @@ final class LastInsertIDTest extends CIUnitTestCase
         $query->execute('foo', 'bar');
         $actual = $this->db->insertID();
 
-        $this->assertSame($actual, 5);
+        $this->assertSame(5, $actual);
     }
 }

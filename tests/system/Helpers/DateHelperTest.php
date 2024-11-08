@@ -34,7 +34,7 @@ final class DateHelperTest extends CIUnitTestCase
     {
         Time::setTestNow('June 20, 2022', 'America/Chicago');
 
-        $this->assertSame(now(), 1_655_701_200);
+        $this->assertSame(1_655_701_200, now());
 
         Time::setTestNow();
     }
