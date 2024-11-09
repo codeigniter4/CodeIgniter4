@@ -974,12 +974,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Common.php',
 ];
 $ignoreErrors[] = [
-	// identifier: empty.notAllowed
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 4,
-	'path' => __DIR__ . '/system/Common.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Function cache\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
