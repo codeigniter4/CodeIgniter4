@@ -49,7 +49,7 @@ final class CookieHelperTest extends CIUnitTestCase
         $this->expire = 9999;
 
         Services::injectMock('response', new MockResponse(new App()));
-        $this->response = Services::response();
+        $this->response = service('response');
         $request        = new IncomingRequest(new App(), new SiteURI(new App()), null, new UserAgent());
         Services::injectMock('request', $request);
 

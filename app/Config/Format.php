@@ -72,6 +72,6 @@ class Format extends BaseConfig
      */
     public function getFormatter(string $mime)
     {
-        return Services::format()->getFormatter($mime);
+        return service('format')->getFormatter($mime);
     }
 }

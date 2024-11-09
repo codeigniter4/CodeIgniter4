@@ -18362,12 +18362,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method class@anonymous/tests/system/View/ParserTest\\.php\\:340\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: argument.type
 	'message' => '#^Parameter \\#2 \\$context of method CodeIgniter\\\\View\\\\Parser\\:\\:setData\\(\\) expects \'attr\'\\|\'css\'\\|\'html\'\\|\'js\'\\|\'raw\'\\|\'url\'\\|null, \'unknown\' given\\.$#',
 	'count' => 3,
@@ -18376,18 +18370,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: assign.propertyType
 	'message' => '#^Property CodeIgniter\\\\View\\\\ParserTest\\:\\:\\$loader \\(CodeIgniter\\\\Autoloader\\\\FileLocator\\) does not accept CodeIgniter\\\\Autoloader\\\\FileLocatorInterface\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.property
-	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:340\\:\\:\\$bar has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.property
-	'message' => '#^Property class@anonymous/tests/system/View/ParserTest\\.php\\:340\\:\\:\\$foo has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/View/ParserTest.php',
 ];

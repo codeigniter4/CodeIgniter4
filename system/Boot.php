@@ -246,12 +246,12 @@ class Boot
 
     protected static function autoloadHelpers(): void
     {
-        Services::autoloader()->loadHelpers();
+        service('autoloader')->loadHelpers();
     }
 
     protected static function setExceptionHandler(): void
     {
-        Services::exceptions()->initialize();
+        service('exceptions')->initialize();
     }
 
     protected static function checkMissingExtensions(): void
@@ -290,7 +290,7 @@ class Boot
 
     protected static function initializeKint(): void
     {
-        Services::autoloader()->initializeKint(CI_DEBUG);
+        service('autoloader')->initializeKint(CI_DEBUG);
     }
 
     protected static function loadConfigCache(): FactoriesCache
@@ -308,7 +308,7 @@ class Boot
      */
     protected static function initializeCodeIgniter(): CodeIgniter
     {
-        $app = Config\Services::codeigniter();
+        $app = service('codeigniter');
         $app->initialize();
         $context = is_cli() ? 'php-cli' : 'web';
         $app->setContext($context);

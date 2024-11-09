@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
-use CodeIgniter\Config\Services;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Honeypot;
@@ -37,9 +37,9 @@ final class HoneypotTest extends CIUnitTestCase
     private Honeypot $honey;
 
     /**
-     * @var CLIRequest|IncomingRequest|null
+     * @var CLIRequest|IncomingRequest
      */
-    private $request;
+    private RequestInterface $request;
 
     private ?Response $response = null;
 
@@ -62,8 +62,8 @@ final class HoneypotTest extends CIUnitTestCase
             'after'  => [],
         ];
 
-        $this->request  = Services::request(null, false);
-        $this->response = Services::response();
+        $this->request  = service('request', null, false);
+        $this->response = service('response');
 
         $filters = new Filters($this->config, $this->request, $this->response);
         $uri     = 'admin/foo/bar';
@@ -80,8 +80,8 @@ final class HoneypotTest extends CIUnitTestCase
         ];
 
         unset($_POST[$this->honey->name]);
-        $this->request  = Services::request(null, false);
-        $this->response = Services::response();
+        $this->request  = service('request', null, false);
+        $this->response = service('response');
 
         $expected = $this->request;
 
@@ -101,8 +101,8 @@ final class HoneypotTest extends CIUnitTestCase
             'after'  => ['honeypot'],
         ];
 
-        $this->request  = Services::request(null, false);
-        $this->response = Services::response();
+        $this->request  = service('request', null, false);
+        $this->response = service('response');
 
         $filters = new Filters($this->config, $this->request, $this->response);
         $uri     = 'admin/foo/bar';
@@ -121,8 +121,8 @@ final class HoneypotTest extends CIUnitTestCase
             'after'  => ['honeypot'],
         ];
 
-        $this->request  = Services::request(null, false);
-        $this->response = Services::response();
+        $this->request  = service('request', null, false);
+        $this->response = service('response');
 
         $filters = new Filters($this->config, $this->request, $this->response);
         $uri     = 'admin/foo/bar';

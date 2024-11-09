@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
-use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -49,7 +48,7 @@ final class SampleURIGeneratorTest extends CIUnitTestCase
 
     public function testGetFromPlaceholderCustomPlaceholder(): void
     {
-        $routes = Services::routes();
+        $routes = service('routes');
         $routes->addPlaceholder(
             'uuid',
             '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'

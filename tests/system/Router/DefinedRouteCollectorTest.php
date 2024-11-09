@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Router;
 
-use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
@@ -34,9 +33,9 @@ final class DefinedRouteCollectorTest extends CIUnitTestCase
         ];
         $config = array_merge($config, $defaults);
 
-        Services::autoloader()->addNamespace($config);
+        service('autoloader')->addNamespace($config);
 
-        $loader = Services::locator();
+        $loader = service('locator');
 
         if ($moduleConfig === null) {
             $moduleConfig          = new Modules();

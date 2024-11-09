@@ -48,7 +48,7 @@ final class FormHelperTest extends CIUnitTestCase
         $uri = new SiteURI($config);
         Services::injectMock('uri', $uri);
 
-        $request = Services::request($config);
+        $request = service('request', $config);
         Services::injectMock('request', $request);
     }
 
@@ -1050,7 +1050,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testValidationErrorsFromValidation(): void
     {
-        $validation = Services::validation();
+        $validation = service('validation');
         $validation->setRule('id', 'ID', 'required')->run([]);
 
         $this->assertSame(['id' => 'The ID field is required.'], validation_errors());
@@ -1058,7 +1058,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testValidationListErrors(): void
     {
-        $validation = Services::validation();
+        $validation = service('validation');
         $validation->setRule('id', 'ID', 'required')->run([]);
 
         $html = validation_list_errors();
@@ -1068,7 +1068,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testValidationShowError(): void
     {
-        $validation = Services::validation();
+        $validation = service('validation');
         $validation->setRule('id', 'ID', 'required')->run([]);
 
         $html = validation_show_error('id');
@@ -1081,7 +1081,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testValidationShowErrorForWildcards(): void
     {
-        $validation = Services::validation();
+        $validation = service('validation');
         $validation->setRule('user.*.name', 'Name', 'required')
             ->run([
                 'user' => [

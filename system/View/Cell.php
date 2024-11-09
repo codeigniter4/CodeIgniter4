@@ -17,7 +17,6 @@ use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\View\Cells\Cell as BaseCell;
 use CodeIgniter\View\Exceptions\ViewException;
-use Config\Services;
 use ReflectionException;
 use ReflectionMethod;
 
@@ -93,7 +92,7 @@ class Cell
         }
 
         if (method_exists($instance, 'initController')) {
-            $instance->initController(Services::request(), service('response'), service('logger'));
+            $instance->initController(service('request'), service('response'), service('logger'));
         }
 
         if (! method_exists($instance, $method)) {

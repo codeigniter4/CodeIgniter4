@@ -23,7 +23,6 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
-use Config\Services;
 use Config\Validation as ValidationConfig;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
@@ -61,7 +60,7 @@ final class ControllerTest extends CIUnitTestCase
         $config         = new App();
         $this->request  = new IncomingRequest($config, new SiteURI($config), null, new UserAgent());
         $this->response = new Response($config);
-        $this->logger   = Services::logger();
+        $this->logger   = service('logger');
     }
 
     public function testConstructor(): void
@@ -149,7 +148,7 @@ final class ControllerTest extends CIUnitTestCase
 
         $method = $this->getPrivateMethodInvoker($this->controller, 'validate');
         $this->assertFalse($method('signup'));
-        $this->assertSame('You must choose a username.', Services::validation()->getError('username'));
+        $this->assertSame('You must choose a username.', service('validation')->getError('username'));
     }
 
     public function testValidateWithStringRulesFoundUseMessagesParameter(): void
@@ -174,7 +173,7 @@ final class ControllerTest extends CIUnitTestCase
                 'required' => 'You must choose a username.',
             ],
         ]));
-        $this->assertSame('You must choose a username.', Services::validation()->getError('username'));
+        $this->assertSame('You must choose a username.', service('validation')->getError('username'));
     }
 
     public function testValidateData(): void
@@ -196,7 +195,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->assertFalse($method($data, $rule));
         $this->assertSame(
             'The password field must be at least 10 characters in length.',
-            Services::validation()->getError('password')
+            service('validation')->getError('password')
         );
     }
 
@@ -225,11 +224,11 @@ final class ControllerTest extends CIUnitTestCase
         $this->assertFalse($method($data, $rules, $errors));
         $this->assertSame(
             '"username" must be 3 letters or longer.',
-            Services::validation()->getError('username')
+            service('validation')->getError('username')
         );
         $this->assertSame(
             'The password field must be at least 10 characters in length.',
-            Services::validation()->getError('password')
+            service('validation')->getError('password')
         );
     }
 
@@ -263,11 +262,11 @@ final class ControllerTest extends CIUnitTestCase
         $this->assertFalse($method($data, $rules));
         $this->assertSame(
             '"Username" must be 3 letters or longer.',
-            Services::validation()->getError('username')
+            service('validation')->getError('username')
         );
         $this->assertSame(
             'The Password field must be at least 10 characters in length.',
-            Services::validation()->getError('password')
+            service('validation')->getError('password')
         );
     }
 

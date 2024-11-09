@@ -17,7 +17,6 @@ use CodeIgniter\CLI\Commands;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
-use Config\Services;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Commands\ParamsReveal;
@@ -39,8 +38,8 @@ final class CommandTest extends CIUnitTestCase
 
         parent::setUp();
 
-        $this->logger   = Services::logger();
-        $this->commands = Services::commands();
+        $this->logger   = service('logger');
+        $this->commands = service('commands');
     }
 
     protected function getBuffer(): string

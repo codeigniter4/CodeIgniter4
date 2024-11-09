@@ -20,7 +20,6 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
-use Config\Services;
 use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -80,7 +79,7 @@ class ValidationTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->validation = new Validation((object) static::$config, Services::renderer());
+        $this->validation = new Validation((object) static::$config, service('renderer'));
         $this->validation->reset();
     }
 
@@ -225,7 +224,7 @@ class ValidationTest extends CIUnitTestCase
 
         yield 'fail-deep-object' => [
             false,
-            new Validation((object) static::$config, Services::renderer()),
+            new Validation((object) static::$config, service('renderer')),
         ];
 
         yield 'pass-multiple-string' => [
@@ -1010,7 +1009,7 @@ class ValidationTest extends CIUnitTestCase
             $rulesets = static::$config['ruleSets'];
 
             static::$config['ruleSets'] = null;
-            (new Validation((object) static::$config, Services::renderer()))
+            (new Validation((object) static::$config, service('renderer')))
                 ->reset()
                 ->run(['foo' => '']);
 

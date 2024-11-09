@@ -56,7 +56,7 @@ final class ChromeLoggerHandlerTest extends CIUnitTestCase
         $logger = new ChromeLoggerHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
         $logger->sendLogs();
 
-        $response = Services::response(null, true);
+        $response = service('response', null, true);
 
         $this->assertTrue($response->hasHeader('X-ChromeLogger-Data'));
     }

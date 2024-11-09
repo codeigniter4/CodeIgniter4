@@ -26,7 +26,6 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Feature;
-use Config\Services;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
@@ -1609,7 +1608,7 @@ abstract class BaseModel
     protected function ensureValidation(): void
     {
         if ($this->validation === null) {
-            $this->validation = Services::validation(null, false);
+            $this->validation = service('validation', null, false);
         }
     }
 

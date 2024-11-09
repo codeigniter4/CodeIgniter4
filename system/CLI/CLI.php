@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\CLI\Exceptions\CLIException;
-use Config\Services;
 use InvalidArgumentException;
 use Throwable;
 
@@ -416,7 +415,7 @@ class CLI
     {
         $label      = $field;
         $field      = 'temp';
-        $validation = Services::validation(null, false);
+        $validation = service('validation', null, false);
         $validation->setRules([
             $field => [
                 'label' => $label,

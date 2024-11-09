@@ -16,7 +16,6 @@ namespace CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Filters;
-use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -34,7 +33,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
 
     private function createAutoRouteCollector(array $filterConfigFilters): AutoRouteCollector
     {
-        $routes = Services::routes();
+        $routes = service('routes');
         $routes->resetRoutes();
         $routes->setAutoRoute(true);
         config('Feature')->autoRoutesImproved = true;
@@ -44,7 +43,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
         /** @var Filters $filterConfig */
         $filterConfig          = config('Filters');
         $filterConfig->filters = $filterConfigFilters;
-        Services::filters($filterConfig);
+        service('filters', $filterConfig);
 
         return new AutoRouteCollector(
             $namespace,

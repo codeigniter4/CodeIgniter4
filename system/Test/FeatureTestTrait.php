@@ -200,10 +200,10 @@ trait FeatureTestTrait
         Services::injectMock('request', $request);
 
         // Make sure filters are reset between tests
-        Services::injectMock('filters', Services::filters(null, false));
+        Services::injectMock('filters', service('filters', null, false));
 
         // Make sure validation is reset between tests
-        Services::injectMock('validation', Services::validation(null, false));
+        Services::injectMock('validation', service('validation', null, false));
 
         $response = $this->app
             ->setContext('web')
@@ -321,7 +321,7 @@ trait FeatureTestTrait
 
         Services::injectMock('uri', $uri);
 
-        $request = Services::incomingrequest($config, false);
+        $request = service('incomingrequest', $config, false);
 
         $request->setMethod($method);
         $request->setProtocolVersion('1.1');

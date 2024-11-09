@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -41,7 +40,7 @@ final class CorsTest extends CIUnitTestCase
 
     private function createRequest(): IncomingRequest
     {
-        return Services::incomingrequest(null, false);
+        return service('incomingrequest', null, false);
     }
 
     /**
@@ -103,7 +102,7 @@ final class CorsTest extends CIUnitTestCase
             ->setHeader('Access-Control-Request-Method', 'PUT')
             ->setHeader('Origin', 'http://localhost:8080');
 
-        $response = Services::response(null, false);
+        $response = service('response', null, false);
 
         $response = $cors->handlePreflightRequest($request, $response);
 
@@ -138,7 +137,7 @@ final class CorsTest extends CIUnitTestCase
             ->setHeader('Access-Control-Request-Method', 'PUT')
             ->setHeader('Origin', 'https://api.example.com');
 
-        $response = Services::response(null, false);
+        $response = service('response', null, false);
 
         $response = $cors->handlePreflightRequest($request, $response);
 
@@ -175,7 +174,7 @@ final class CorsTest extends CIUnitTestCase
             ->setHeader('Access-Control-Request-Method', 'PUT')
             ->setHeader('Origin', 'https://api.example.com');
 
-        $response = Services::response(null, false)
+        $response = service('response', null, false)
             ->setHeader('Vary', 'Accept-Language');
 
         $response = $cors->handlePreflightRequest($request, $response);
@@ -213,7 +212,7 @@ final class CorsTest extends CIUnitTestCase
             ->setHeader('Access-Control-Request-Method', 'PUT')
             ->setHeader('Origin', 'https://bad.site.com');
 
-        $response = Services::response(null, false);
+        $response = service('response', null, false);
 
         $response = $cors->handlePreflightRequest($request, $response);
 
@@ -239,7 +238,7 @@ final class CorsTest extends CIUnitTestCase
             ->setHeader('Access-Control-Request-Method', 'PUT')
             ->setHeader('Origin', 'https://api.example.com');
 
-        $response = Services::response(null, false);
+        $response = service('response', null, false);
 
         $response = $cors->handlePreflightRequest($request, $response);
 
@@ -276,7 +275,7 @@ final class CorsTest extends CIUnitTestCase
             ->setHeader('Access-Control-Request-Method', 'PUT')
             ->setHeader('Origin', 'https://bad.site.com');
 
-        $response = Services::response(null, false);
+        $response = service('response', null, false);
 
         $response = $cors->handlePreflightRequest($request, $response);
 
@@ -303,7 +302,7 @@ final class CorsTest extends CIUnitTestCase
             ->setHeader('Access-Control-Request-Method', 'PUT')
             ->setHeader('Origin', 'http://localhost:8080');
 
-        $response = Services::response(null, false);
+        $response = service('response', null, false);
 
         $response = $cors->handlePreflightRequest($request, $response);
 
@@ -340,7 +339,7 @@ final class CorsTest extends CIUnitTestCase
             ->withMethod('GET')
             ->setHeader('Origin', 'http://localhost:8080');
 
-        $response = Services::response(null, false);
+        $response = service('response', null, false);
 
         $response = $cors->addResponseHeaders($request, $response);
 
@@ -371,7 +370,7 @@ final class CorsTest extends CIUnitTestCase
             ->withMethod('POST')
             ->setHeader('Origin', 'http://localhost:8080');
 
-        $response = Services::response(null, false);
+        $response = service('response', null, false);
 
         $response = $cors->addResponseHeaders($request, $response);
 
@@ -395,7 +394,7 @@ final class CorsTest extends CIUnitTestCase
             ->setHeader('Cookie', 'pageAccess=2')
             ->setHeader('Origin', 'http://localhost:8080');
 
-        $response = Services::response(null, false);
+        $response = service('response', null, false);
 
         $response = $cors->addResponseHeaders($request, $response);
 
@@ -423,7 +422,7 @@ final class CorsTest extends CIUnitTestCase
             ->withMethod('GET')
             ->setHeader('Origin', 'http://localhost:8080');
 
-        $response = Services::response(null, false);
+        $response = service('response', null, false);
 
         $response = $cors->addResponseHeaders($request, $response);
 
@@ -449,7 +448,7 @@ final class CorsTest extends CIUnitTestCase
             ->withMethod('PUT')
             ->setHeader('Origin', 'https://api.example.com');
 
-        $response = Services::response(null, false);
+        $response = service('response', null, false);
 
         $response = $cors->addResponseHeaders($request, $response);
 
@@ -481,7 +480,7 @@ final class CorsTest extends CIUnitTestCase
             ->withMethod('PUT')
             ->setHeader('Origin', 'https://api.example.com');
 
-        $response = Services::response(null, false)
+        $response = service('response', null, false)
             ->setHeader('Vary', 'Accept-Language');
 
         $response = $cors->addResponseHeaders($request, $response);
@@ -508,7 +507,7 @@ final class CorsTest extends CIUnitTestCase
             ->withMethod('PUT')
             ->setHeader('Origin', 'https://bad.site.com');
 
-        $response = Services::response(null, false);
+        $response = service('response', null, false);
 
         $response = $cors->addResponseHeaders($request, $response);
 

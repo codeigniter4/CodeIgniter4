@@ -44,7 +44,7 @@ final class MiscUrlTest extends CIUnitTestCase
         parent::setUp();
 
         Services::reset(true);
-        Services::routes()->loadRoutes();
+        service('routes')->loadRoutes();
 
         // Set a common base configuration (overriden by individual tests)
         $this->config            = new App();
@@ -956,7 +956,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Missing argument for "(:alpha)" in route "(:alpha)/login".');
 
-        $routes = Services::routes();
+        $routes = service('routes');
         $routes->group('(:alpha)', static function ($routes): void {
             $routes->match(['GET'], 'login', 'Common\LoginController::loginView', ['as' => 'loginURL']);
         });

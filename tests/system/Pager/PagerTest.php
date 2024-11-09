@@ -64,7 +64,7 @@ final class PagerTest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         $this->config = new PagerConfig();
-        $this->pager  = new Pager($this->config, Services::renderer());
+        $this->pager  = new Pager($this->config, service('renderer'));
     }
 
     public function testSetPathRemembersPath(): void
@@ -493,7 +493,7 @@ final class PagerTest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         $this->config = new PagerConfig();
-        $this->pager  = new Pager($this->config, Services::renderer());
+        $this->pager  = new Pager($this->config, service('renderer'));
 
         $_GET['page_foo'] = 2;
 

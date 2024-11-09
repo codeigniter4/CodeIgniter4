@@ -22,7 +22,6 @@ use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
-use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -145,10 +144,10 @@ final class CorsTest extends CIUnitTestCase
             return $response;
         }
 
-        $response ??= Services::response();
+        $response ??= service('response');
 
         $response = $this->cors->after($request, $response);
-        $response ??= Services::response();
+        $response ??= service('response');
 
         $this->response = $response;
 

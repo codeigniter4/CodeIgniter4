@@ -15,7 +15,6 @@ namespace CodeIgniter\Router;
 
 use Closure;
 use CodeIgniter\Config\Factories;
-use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Exceptions\BadRequestException;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
@@ -45,7 +44,7 @@ final class RouterTest extends CIUnitTestCase
 
         $this->createRouteCollection();
 
-        $this->request = Services::request();
+        $this->request = service('request');
         $this->request->setMethod(Method::GET);
     }
 
@@ -57,7 +56,7 @@ final class RouterTest extends CIUnitTestCase
         $routingConfig ??= new Routing();
         $routingConfig->defaultNamespace = '\\';
 
-        $this->collection = new RouteCollection(Services::locator(), $moduleConfig, $routingConfig);
+        $this->collection = new RouteCollection(service('locator'), $moduleConfig, $routingConfig);
 
         $routes = [
             '/'                                               => 'Home::index',

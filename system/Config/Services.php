@@ -705,7 +705,7 @@ class Services extends BaseService
             // See https://www.php.net/manual/en/function.session-cache-limiter.php.
             // The headers are not managed by CI's Response class.
             // So, we remove CI's default Cache-Control header.
-            AppServices::response()->removeHeader('Cache-Control');
+            AppServices::get('response')->removeHeader('Cache-Control');
 
             $session->start();
         }

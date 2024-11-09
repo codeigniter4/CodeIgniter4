@@ -17,7 +17,6 @@ use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Config\Services;
 
 /**
  * Honeypot filter
@@ -40,7 +39,7 @@ class Honeypot implements FilterInterface
             return;
         }
 
-        if (Services::honeypot()->hasContent($request)) {
+        if (service('honeypot')->hasContent($request)) {
             throw HoneypotException::isBot();
         }
     }
