@@ -8,6 +8,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/app/Config/Filters.php',
 ];
 $ignoreErrors[] = [
+	// identifier: isset.property
+	'message' => '#^Property Config\\\\Autoload\\:\\:\\$helpers \\(array\\<int, string\\>\\) in isset\\(\\) is not nullable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
+];
+$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:__call\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
 	'count' => 1,
