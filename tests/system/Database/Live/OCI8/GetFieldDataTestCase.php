@@ -58,7 +58,7 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
         $fields = $this->db->getFieldData($this->table);
 
         $idDefault = $this->getFieldMetaData('id', $this->table)->default;
-        $this->assertMatchesRegularExpression('/"ORACLE"."ISEQ\$\$_[0-9]+".nextval/', $idDefault);
+        $this->assertMatchesRegularExpression('/"ORACLE"."ISEQ\$\$_\d+".nextval/', $idDefault);
 
         $expected = [
             (object) [
