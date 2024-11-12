@@ -20,7 +20,7 @@
         "codeigniter/phpstan-codeigniter": "^1.4",
         "fakerphp/faker": "^1.24",
         "kint-php/kint": "^6.0",
-        "mikey179/vfsstream": "^1.6",
+        "mikey179/vfsstream": "^1.6.12",
         "nexusphp/tachycardia": "^2.0",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^1.11",
