@@ -277,6 +277,9 @@ Deprecations
     - The properties ``$arguments`` and ``$argumentsClass`` of ``Filters`` have
       been deprecated. No longer used.
     - The ``Filters::getArguments()`` method has been deprecated. No longer used.
+- **File:**
+    - The function ``getSizeByUnit`` of ``File`` has been deprecated.
+      Use either ``getSizeByUnitBinary`` or ``getSizeByUnitMetric`` instead.
 
 **********
 Bugs Fixed

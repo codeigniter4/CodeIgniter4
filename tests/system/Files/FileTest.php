@@ -113,6 +113,42 @@ final class FileTest extends CIUnitTestCase
         $this->assertSame($size, $file->getSizeByUnit('b'));
     }
 
+    /**
+     * @dataProvider provideGetSizeData
+     */
+    public function testGetSizeBinary(FileSizeUnit $unit): void
+    {
+        $divider = pow(1024, $unit->value);
+        $file = new File(SYSTEMPATH . 'Common.php');
+        $size = number_format(filesize(SYSTEMPATH . 'Common.php') / $divider, 3);
+        $this->assertSame($size, $file->getSizeByUnitBinary($unit));
+    }
+
+    public function testGetSizeBinaryBytes(): void
+    {
+        $file = new File(SYSTEMPATH . 'Common.php');
+        $size = filesize(SYSTEMPATH . 'Common.php');
+        $this->assertSame($size, $file->getSizeByUnitBinary(FileSizeUnit::B));
+    }
+
+    /**
+     * @dataProvider provideGetSizeData
+     */
+    public function testGetSizeMetric(FileSizeUnit $unit): void
+    {
+        $divider = pow(1000, $unit->value);
+        $file = new File(SYSTEMPATH . 'Common.php');
+        $size = number_format(filesize(SYSTEMPATH . 'Common.php') / $divider, 3);
+        $this->assertSame($size, $file->getSizeByUnitMetric($unit));
+    }
+
+    public function testGetSizeMetricBytes(): void
+    {
+        $file = new File(SYSTEMPATH . 'Common.php');
+        $size = filesize(SYSTEMPATH . 'Common.php');
+        $this->assertSame($size, $file->getSizeByUnitMetric(FileSizeUnit::B));
+    }
+
     public function testThrowsExceptionIfNotAFile(): void
     {
         $this->expectException(FileNotFoundException::class);
@@ -134,5 +170,23 @@ final class FileTest extends CIUnitTestCase
 
         unlink(SYSTEMPATH . 'Common_Copy.php');
         unlink(SYSTEMPATH . 'Common_Copy_5.php');
+    }
+
+    public static function provideGetSizeData()
+    {
+        return [
+            'returns KB binary' => [
+                FileSizeUnit::KB
+            ],
+            'returns MB binary' => [
+                FileSizeUnit::KB
+            ],
+            'returns GB binary' => [
+                FileSizeUnit::KB
+            ],
+            'returns TB binary' => [
+                FileSizeUnit::KB
+            ],
+        ];
     }
 }

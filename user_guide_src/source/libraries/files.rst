@@ -56,10 +56,36 @@ A ``RuntimeException`` will be thrown if the file does not exist or an error occ
 getSizeByUnit()
 ===============
 
+.. deprecated:: 4.6.0
+
 Returns the size of the file default in bytes. You can pass in either ``'kb'`` or ``'mb'`` as the first parameter to get
-the results in kilobytes or megabytes, respectively:
+the results in kibibytes or mebibytes, respectively:
 
 .. literalinclude:: files/005.php
+    :lines: 2-
+
+A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
+
+getSizeByUnitBinary()
+===============
+
+Returns the size of the file default in bytes. You can pass in different FileSizeUnit values as the first parameter to get
+the results in kibibytes, mebibytes etc. respectively. You can pass in a precision value as the second parameter to define
+the amount of decimal places.
+
+.. literalinclude:: files/017.php
+    :lines: 2-
+
+A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
+
+getSizeByUnitMetric()
+===============
+
+Returns the size of the file default in bytes. You can pass in different FileSizeUnit values as the first parameter to get
+the results in kilobytes, megabytes etc. respectively. You can pass in a precision value as the second parameter to define
+the amount of decimal places.
+
+.. literalinclude:: files/018.php
     :lines: 2-
 
 A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
