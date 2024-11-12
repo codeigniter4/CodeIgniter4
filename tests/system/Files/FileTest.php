@@ -92,17 +92,31 @@ final class FileTest extends CIUnitTestCase
         $this->assertSame('file', $file->getType());
     }
 
-    public function testGetSizeReturnsKB(): void
+    public function testGetSizeReturnsKiB(): void
     {
         $file = new File(SYSTEMPATH . 'Common.php');
         $size = number_format(filesize(SYSTEMPATH . 'Common.php') / 1024, 3);
+        $this->assertSame($size, $file->getSizeByUnit('kib'));
+    }
+
+    public function testGetSizeReturnsKB(): void
+    {
+        $file = new File(SYSTEMPATH . 'Common.php');
+        $size = number_format(filesize(SYSTEMPATH . 'Common.php') / 1000, 3);
         $this->assertSame($size, $file->getSizeByUnit('kb'));
+    }
+
+    public function testGetSizeReturnsMiB(): void
+    {
+        $file = new File(SYSTEMPATH . 'Common.php');
+        $size = number_format(filesize(SYSTEMPATH . 'Common.php') / 1024 / 1024, 3);
+        $this->assertSame($size, $file->getSizeByUnit('mib'));
     }
 
     public function testGetSizeReturnsMB(): void
     {
         $file = new File(SYSTEMPATH . 'Common.php');
-        $size = number_format(filesize(SYSTEMPATH . 'Common.php') / 1024 / 1024, 3);
+        $size = number_format(filesize(SYSTEMPATH . 'Common.php') / 1000 / 1000, 3);
         $this->assertSame($size, $file->getSizeByUnit('mb'));
     }
 

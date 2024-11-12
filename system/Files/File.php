@@ -72,14 +72,18 @@ class File extends SplFileInfo
 
     /**
      * Retrieve the file size by unit.
+     * Supports the metric units "kb" and "mb"
+     * and the IEC units "kib" and "mib".
      *
      * @return false|int|string
      */
     public function getSizeByUnit(string $unit = 'b')
     {
         return match (strtolower($unit)) {
-            'kb'    => number_format($this->getSize() / 1024, 3),
-            'mb'    => number_format(($this->getSize() / 1024) / 1024, 3),
+            'kb'    => number_format($this->getSize() / 1000, 3),
+            'kib'   => number_format($this->getSize() / 1024, 3),
+            'mb'    => number_format(($this->getSize() / 1000) / 1000, 3),
+            'mib'   => number_format(($this->getSize() / 1024) / 1024, 3),
             default => $this->getSize(),
         };
     }
