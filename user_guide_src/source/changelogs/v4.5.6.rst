@@ -29,9 +29,12 @@ Deprecations
 **********
 Bugs Fixed
 **********
+- **RequestTrait:** Fixed a bug where the ``fetchGlobal()`` method did not allow handling data by numeric key when stored as a list.
+
 - **Session Library:** The session initialization debug message now uses the correct log type "debug" instead of "info".
 
 - **Validation:** Fixed the `getValidated()` method that did not return valid data when validation rules used multiple asterisks.
+
 - **Database:** Fixed the case insensitivity option in the ``like()`` method when dealing with accented characters.
 
 - **Parser:** Fixed bug that caused equal key names to be replaced by the key name defined first.
