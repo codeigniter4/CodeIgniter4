@@ -15777,13 +15777,13 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: argument.type
-	'message' => '#^Parameter \\#1 \\$row of method CodeIgniter\\\\BaseModel\\:\\:save\\(\\) expects array\\<int\\|string, float\\|int\\|object\\|string\\|null\\>\\|object, array\\<string, array\\<int, string\\>\\> given\\.$#',
+	'message' => '#^Parameter \\#1 \\$row of method CodeIgniter\\\\BaseModel\\:\\:save\\(\\) expects array<int\\|string, bool\\|float\\|int\\|object\\|string\\|null>\\|object, array<string, array<int, string>> given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/DataConverterModelTest.php',
 ];
 $ignoreErrors[] = [
 	// identifier: argument.type
-	'message' => '#^Parameter \\#2 \\$row of method CodeIgniter\\\\Model\\:\\:update\\(\\) expects array\\<int\\|string, float\\|int\\|object\\|string\\|null\\>\\|object\\|null, array\\<string, array\\<int, string\\>\\> given\\.$#',
+	'message' => '#^Parameter \\#2 \\$row of method CodeIgniter\\\\Model\\:\\:update\\(\\) expects array<int\\|string, bool\\|float\\|int\\|object\\|string\\|null>\\|object\\|null, array<string, array<int, string>> given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/DataConverterModelTest.php',
 ];
@@ -16185,7 +16185,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: argument.type
-	'message' => '#^Parameter \\#1 \\$row of method CodeIgniter\\\\BaseModel\\:\\:save\\(\\) expects array\\<int\\|string, float\\|int\\|object\\|string\\|null\\>\\|object, array\\<int, array\\>\\|null given\\.$#',
+	'message' => '#^Parameter \\#1 \\$row of method CodeIgniter\\\\BaseModel\\:\\:save\\(\\) expects array<int\\|string, bool\\|float\\|int\\|object\\|string\\|null>\\|object, array<int, array>\\|null given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
