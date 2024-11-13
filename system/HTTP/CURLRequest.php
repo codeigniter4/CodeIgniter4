@@ -40,13 +40,6 @@ class CURLRequest extends OutgoingRequest
     protected $responseOrig;
 
     /**
-     * The URI associated with this request
-     *
-     * @var URI
-     */
-    protected $baseURI;
-
-    /**
      * The setting values
      *
      * @var array
@@ -104,7 +97,6 @@ class CURLRequest extends OutgoingRequest
     /**
      * Takes an array of options to set the following possible class properties:
      *
-     *  - baseURI
      *  - timeout
      *  - any other request options to use as defaults.
      *
@@ -116,13 +108,13 @@ class CURLRequest extends OutgoingRequest
             throw HTTPException::forMissingCurl(); // @codeCoverageIgnore
         }
 
+        $uri->useRawQueryString();
         parent::__construct(Method::GET, $uri);
 
         $this->responseOrig = $response ?? new Response($config);
         // Remove the default Content-Type header.
         $this->responseOrig->removeHeader('Content-Type');
 
-        $this->baseURI        = $uri->useRawQueryString();
         $this->defaultOptions = $options;
 
         /** @var ConfigCURLRequest|null $configCURLRequest */
@@ -135,7 +127,7 @@ class CURLRequest extends OutgoingRequest
 
     /**
      * Sends an HTTP request to the specified $url. If this is a relative
-     * URL, it will be merged with $this->baseURI to form a complete URL.
+     * URL, it will be merged with $options['baseURI'] or $this->uri to form a complete URL.
      *
      * @param string $method HTTP method
      */
@@ -143,9 +135,16 @@ class CURLRequest extends OutgoingRequest
     {
         $this->response = clone $this->responseOrig;
 
+        if (array_key_exists('baseURI', $options)) {
+            $uri = new URI($options['baseURI']);
+            $uri->useRawQueryString();
+            unset($options['baseURI']);
+        }else{
+            $uri = $this->uri;
+        }
         $this->parseOptions($options);
 
-        $url = $this->prepareURL($url);
+        $url = $this->prepareURL($url, $uri);
 
         $method = esc(strip_tags($method));
 
@@ -293,11 +292,6 @@ class CURLRequest extends OutgoingRequest
      */
     protected function parseOptions(array $options)
     {
-        if (array_key_exists('baseURI', $options)) {
-            $this->baseURI = $this->baseURI->setURI($options['baseURI']);
-            unset($options['baseURI']);
-        }
-
         if (array_key_exists('headers', $options) && is_array($options['headers'])) {
             foreach ($options['headers'] as $name => $value) {
                 $this->setHeader($name, $value);
@@ -325,16 +319,16 @@ class CURLRequest extends OutgoingRequest
 
     /**
      * If the $url is a relative URL, will attempt to create
-     * a full URL by prepending $this->baseURI to it.
+     * a full URL by prepending $uri to it.
      */
-    protected function prepareURL(string $url): string
+    protected function prepareURL(string $url, URI $uri): string
     {
         // If it's a full URI, then we have nothing to do here...
         if (str_contains($url, '://')) {
             return $url;
         }
 
-        $uri = $this->baseURI->resolveRelativeURI($url);
+        $uri = $uri->resolveRelativeURI($url);
 
         // Create the string instead of casting to prevent baseURL muddling
         return URI::createURIString(

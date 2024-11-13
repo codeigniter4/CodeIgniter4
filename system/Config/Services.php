@@ -197,6 +197,7 @@ class Services extends BaseService
     /**
      * The CURL Request class acts as a simple HTTP client for interacting
      * with other servers, typically through APIs.
+     * The option 'base_uri' is deprecated and will be remove soon.
      *
      * @return CURLRequest
      */
@@ -208,10 +209,12 @@ class Services extends BaseService
 
         $config ??= config(App::class);
         $response ??= new Response($config);
+        $uri = new URI($options['baseURI'] ?? ($options['base_uri'] ?? null));
+        unset($options['baseURI']);
 
         return new CURLRequest(
             $config,
-            new URI($options['base_uri'] ?? null),
+            $uri,
             $response,
             $options
         );
