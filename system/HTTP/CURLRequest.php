@@ -139,7 +139,7 @@ class CURLRequest extends OutgoingRequest
             $uri = new URI($options['baseURI']);
             $uri->useRawQueryString();
             unset($options['baseURI']);
-        }else{
+        } else {
             $uri = $this->uri;
         }
         $this->parseOptions($options);

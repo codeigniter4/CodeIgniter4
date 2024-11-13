@@ -45,12 +45,6 @@ class MockCURLRequest extends CURLRequest
     }
 
     // for testing purposes only
-    public function getBaseURI()
-    {
-        return $this->baseURI;
-    }
-
-    // for testing purposes only
     public function getDelay()
     {
         return $this->delay;

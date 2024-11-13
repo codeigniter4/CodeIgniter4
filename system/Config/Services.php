@@ -209,7 +209,7 @@ class Services extends BaseService
 
         $config ??= config(App::class);
         $response ??= new Response($config);
-        $uri = new URI($options['baseURI'] ?? ($options['base_uri'] ?? null));
+        $uri = new URI($options['baseURI'] ?? $options['base_uri'] ?? null);
         unset($options['baseURI']);
 
         return new CURLRequest(
