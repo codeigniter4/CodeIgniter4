@@ -3297,7 +3297,7 @@ class BaseBuilder
         $array = [];
 
         foreach (get_object_vars($object) as $key => $val) {
-            if ((! is_object($val) || $val instanceof RawSql) && ! is_array($val)) {
+            if ((! is_object($val)) && ! is_array($val)) {
                 $array[$key] = $val;
             }
         }
