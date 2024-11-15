@@ -473,6 +473,11 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         $this->connectDuration = microtime(true) - $this->connectTime;
+
+        // Stop slave's replication while $this->replicable is false
+        if (!$this->replicable) {
+            $this->_stopReplicating();
+        }
     }
 
     /**
@@ -1778,6 +1783,83 @@ abstract class BaseConnection implements ConnectionInterface
     public function isWriteType($sql): bool
     {
         return (bool) preg_match('/^\s*(WITH\s.+(\s|[)]))?"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX|MERGE)\s(?!.*\sRETURNING\s)/is', $sql);
+    }
+
+    private array $tempTables = [];
+    public function createTemporaryTable(string $sql, ?string $name=NULL, ...$args) : string
+    {
+        if (empty($name)) {
+            $name = '_temporary_table_';
+            do{
+                $name .= chr(rand(65,90));
+            }while(in_array($name,$this->tempTables));
+        }
+        $this->query("CREATE TEMPORARY TABLE `{$name}` ".$sql,...$args);
+        return $this->tempTables[] = $name;
+    }
+    
+    /**
+     * Mark whether this connection has stopped slave's replication.
+     */
+    private bool $replicable = TRUE;
+
+    /**
+     * Stop slave's replication
+     */
+    public function stopReplicating() : bool
+    {
+        if (!$this->replicable) {
+            return FALSE;
+        }
+        $this->replicable = FALSE;
+        $this->_stopReplicating();
+        return TRUE;
+    }
+
+    /**
+     * Restart slave's replication
+     */
+    public function startReplicating() : bool
+    {
+        if ($this->replicable) {
+            return FALSE;
+        }
+        $this->replicable = TRUE;
+        $this->_startReplicating();
+        return TRUE;
+    }
+
+    /**
+     * The default DBMS is MySQL which start/stop slave's replication by
+     * start/stop to write SQL to logs.
+     */
+    protected function _stopReplicating()
+    {
+        $this->query('set @@sql_log_bin=0');
+    }
+    protected function _startReplicating()
+    {
+        $this->query('set @@sql_log_bin=1');
+    }
+
+    /**
+     * Drop temporary tables and reset depth,replicate setting.
+     * It's very important in resident process!
+     */
+    public function __destruct()
+    {
+        if (empty($this->connID)) {
+            return;
+        }
+        foreach($this->tempTables AS $tb) {
+            $this->query("DROP TEMPORARY TABLE IF EXISTS `{$tb}`");
+        }
+        while($this->transDepth){
+            if (!$this->transRollback()) {
+                break;
+            }
+        }
+        $this->startReplicating();
     }
 
     /**

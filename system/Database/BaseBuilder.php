@@ -3433,6 +3433,14 @@ class BaseBuilder
         ]);
     }
 
+    public function selectIntoTemporaryTable(?string $tb=NULL)
+    {
+        $tempTable = $this->db->createTemporaryTable($this->compileSelect(), $tb, $this->binds, false);
+        $this->resetSelect();
+        $this->binds = [];
+        return $tempTable;
+    }
+
     /**
      * Tests whether the string has an SQL operator
      */
