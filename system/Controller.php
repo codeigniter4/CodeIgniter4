@@ -72,12 +72,19 @@ class Controller
      */
     protected $validator;
 
+    public function __construct(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    {
+        $this->initController($request, $response, $logger);
+    }
+
     /**
      * Constructor.
      *
      * @return void
      *
      * @throws HTTPException
+     * 
+     * @deprecated  4.6.0 No longer used.
      */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {

@@ -900,8 +900,7 @@ class CodeIgniter
     {
         assert(is_string($this->controller));
 
-        $class = new $this->controller();
-        $class->initController($this->request, $this->response, Services::logger());
+        $class = new $this->controller($this->request, $this->response, Services::logger());
 
         $this->benchmark->stop('controller_constructor');
 
