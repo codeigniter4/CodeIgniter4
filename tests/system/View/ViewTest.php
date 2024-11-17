@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
-use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config;
@@ -26,7 +26,7 @@ use RuntimeException;
 #[Group('Others')]
 final class ViewTest extends CIUnitTestCase
 {
-    private FileLocator $loader;
+    private FileLocatorInterface $loader;
     private string $viewsDir;
     private Config\View $config;
 

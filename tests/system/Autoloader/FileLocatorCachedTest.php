@@ -25,7 +25,6 @@ use PHPUnit\Framework\Attributes\Group;
 final class FileLocatorCachedTest extends FileLocatorTest
 {
     private FileVarExportHandler $handler;
-    protected FileLocatorInterface $locator;
 
     public static function tearDownAfterClass(): void
     {

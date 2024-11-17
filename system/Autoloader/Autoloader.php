@@ -366,6 +366,9 @@ class Autoloader
         return $cleanFilename;
     }
 
+    /**
+     * @param array{only?: list<string>, exclude?: list<string>} $composerPackages
+     */
     private function loadComposerNamespaces(ClassLoader $composer, array $composerPackages): void
     {
         $namespacePaths = $composer->getPrefixesPsr4();
@@ -379,7 +382,7 @@ class Autoloader
             }
         }
 
-        if (! method_exists(InstalledVersions::class, 'getAllRawData')) {
+        if (! method_exists(InstalledVersions::class, 'getAllRawData')) { // @phpstan-ignore function.alreadyNarrowedType
             throw new RuntimeException(
                 'Your Composer version is too old.'
                 . ' Please update Composer (run `composer self-update`) to v2.0.14 or later'

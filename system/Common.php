@@ -580,8 +580,8 @@ if (! function_exists('helper')) {
         foreach ($filenames as $filename) {
             // Store our system and application helper
             // versions so that we can control the load ordering.
-            $systemHelper  = null;
-            $appHelper     = null;
+            $systemHelper  = '';
+            $appHelper     = '';
             $localIncludes = [];
 
             if (! str_contains($filename, '_helper')) {
@@ -598,7 +598,7 @@ if (! function_exists('helper')) {
             if (str_contains($filename, '\\')) {
                 $path = $loader->locateFile($filename, 'Helpers');
 
-                if (empty($path)) {
+                if ($path !== '') {
                     throw FileNotFoundException::forFileNotFound($filename);
                 }
 
@@ -620,7 +620,7 @@ if (! function_exists('helper')) {
                 }
 
                 // App-level helpers should override all others
-                if (! empty($appHelper)) {
+                if ($appHelper !== '') {
                     $includes[] = $appHelper;
                     $loaded[]   = $filename;
                 }
@@ -629,7 +629,7 @@ if (! function_exists('helper')) {
                 $includes = [...$includes, ...$localIncludes];
 
                 // And the system default one should be added in last.
-                if (! empty($systemHelper)) {
+                if ($systemHelper !== '') {
                     $includes[] = $systemHelper;
                     $loaded[]   = $filename;
                 }
@@ -1092,7 +1092,7 @@ if (! function_exists('stringify_attributes')) {
     {
         $atts = '';
 
-        if (empty($attributes)) {
+        if ($attributes === '' || $attributes === [] || $attributes === null) {
             return $atts;
         }
 
