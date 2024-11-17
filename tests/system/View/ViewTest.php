@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
-use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Autoloader\FileLocatorInterface;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config;
