@@ -41,6 +41,8 @@ Bugs Fixed
 
 - **Routing:** Fixed a TypeError in `str_replace()` when `Routing::$translateURIDashes` is set to `true` and a route is defined using a closure.
 
+- **Validation:** Fixed a bug where complex language strings were not properly handled.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.
