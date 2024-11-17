@@ -109,7 +109,7 @@ final class FilterCollector
             ];
         }
 
-        $request = Services::incomingrequest(null, false);
+        $request = service('incomingrequest', null, false);
         $request->setMethod($method);
 
         $router  = $this->createRouter($request);
@@ -145,7 +145,7 @@ final class FilterCollector
      */
     public function getRequiredFilterClasses(): array
     {
-        $request = Services::incomingrequest(null, false);
+        $request = service('incomingrequest', null, false);
         $request->setMethod(Method::GET);
 
         $router  = $this->createRouter($request);

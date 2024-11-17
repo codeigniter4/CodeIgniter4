@@ -1750,7 +1750,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
-        $router = new Router($routes, Services::request());
+        $router = new Router($routes, service('request'));
 
         $routes->setDefaultNamespace('App\Controllers');
         $routes->setDefaultController('Home');
@@ -1770,7 +1770,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
-        $router = new Router($routes, Services::request());
+        $router = new Router($routes, service('request'));
 
         $routes->setDefaultNamespace('App\Controllers');
         $routes->setDefaultController('Home');
