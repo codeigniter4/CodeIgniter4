@@ -36,6 +36,8 @@ final class FileLocatorCached implements FileLocatorInterface
      * [
      *     'search' => [$path => $foundPaths],
      * ]
+     *
+     * @var array<string, array<string, mixed>>
      */
     private array $cache = [];
 
@@ -114,6 +116,9 @@ final class FileLocatorCached implements FileLocatorInterface
         return $classname;
     }
 
+    /**
+     * @return list<string>
+     */
     public function search(string $path, string $ext = 'php', bool $prioritizeApp = true): array
     {
         if (isset($this->cache['search'][$path][$ext][$prioritizeApp])) {

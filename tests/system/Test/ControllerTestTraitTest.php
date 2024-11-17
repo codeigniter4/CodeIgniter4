@@ -21,7 +21,6 @@ use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\App;
-use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -142,8 +141,8 @@ final class ControllerTestTraitTest extends CIUnitTestCase
 
         $result = $this->withURI('http://example.com')
             ->withConfig($config)
-            ->withRequest(Services::request($config))
-            ->withResponse(Services::response($config))
+            ->withRequest(service('request', $config))
+            ->withResponse(service('response', $config))
             ->withLogger($logger)
             ->withBody($body)
             ->controller(Popcorn::class)

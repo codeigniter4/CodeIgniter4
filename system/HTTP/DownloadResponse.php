@@ -85,7 +85,7 @@ class DownloadResponse extends Response
      */
     public function setBinary(string $binary)
     {
-        if ($this->file !== null) {
+        if ($this->file instanceof File) {
             throw DownloadException::forCannotSetBinary();
         }
 
@@ -243,16 +243,6 @@ class DownloadResponse extends Response
     }
 
     /**
-     * Disables cache configuration.
-     *
-     * @throws DownloadException
-     */
-    public function setCache(array $options = [])
-    {
-        throw DownloadException::forCannotSetCache();
-    }
-
-    /**
      * {@inheritDoc}
      *
      * @return $this
@@ -290,10 +280,8 @@ class DownloadResponse extends Response
             $this->setHeader('Content-Disposition', $this->getContentDisposition());
         }
 
-        $this->setHeader('Expires-Disposition', '0');
         $this->setHeader('Content-Transfer-Encoding', 'binary');
         $this->setHeader('Content-Length', (string) $this->getContentLength());
-        $this->noCache();
     }
 
     /**
@@ -309,7 +297,7 @@ class DownloadResponse extends Response
             return $this->sendBodyByBinary();
         }
 
-        if ($this->file !== null) {
+        if ($this->file instanceof File) {
             return $this->sendBodyByFilePath();
         }
 

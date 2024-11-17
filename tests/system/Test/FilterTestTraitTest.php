@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\RequestInterface;
-use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Filters\Customfilter;
 
@@ -98,7 +97,7 @@ final class FilterTestTraitTest extends CIUnitTestCase
         $result = $caller();
 
         $this->assertSame('http://hellowworld.com', $result->getBody());
-        $this->assertNull(Services::response()->getBody());
+        $this->assertNull(service('response')->getBody());
 
         $this->resetServices();
     }

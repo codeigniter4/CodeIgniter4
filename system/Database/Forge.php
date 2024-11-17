@@ -573,7 +573,7 @@ class Forge
             }
 
             // Most databases don't support creating indexes from within the CREATE TABLE statement
-            if (! empty($this->keys)) {
+            if ($this->keys !== []) {
                 for ($i = 0, $sqls = $this->_processIndexes($table), $c = count($sqls); $i < $c; $i++) {
                     $this->db->query($sqls[$i]);
                 }

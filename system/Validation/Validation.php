@@ -23,7 +23,6 @@ use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
-use Config\Services;
 use Config\Validation as ValidationConfig;
 
 /**
@@ -795,7 +794,7 @@ class Validation implements ValidationInterface
                     $placeholderFields = $this->retrievePlaceholders($row, $data);
 
                     foreach ($placeholderFields as $field) {
-                        $validator ??= Services::validation(null, false);
+                        $validator ??= service('validation', null, false);
                         assert($validator instanceof Validation);
 
                         $placeholderRules = $rules[$field]['rules'] ?? null;
@@ -918,26 +917,24 @@ class Validation implements ValidationInterface
     ): string {
         $param ??= '';
 
+        $args = [
+            'field' => ($label === null || $label === '') ? $field : lang($label),
+            'param' => (! isset($this->rules[$param]['label'])) ? $param : lang($this->rules[$param]['label']),
+            'value' => $value ?? '',
+        ];
+
         // Check if custom message has been defined by user
         if (isset($this->customErrors[$field][$rule])) {
-            $message = lang($this->customErrors[$field][$rule]);
-        } elseif (null !== $originalField && isset($this->customErrors[$originalField][$rule])) {
-            $message = lang($this->customErrors[$originalField][$rule]);
-        } else {
-            // Try to grab a localized version of the message...
-            // lang() will return the rule name back if not found,
-            // so there will always be a string being returned.
-            $message = lang('Validation.' . $rule);
+            return lang($this->customErrors[$field][$rule], $args);
+        }
+        if (null !== $originalField && isset($this->customErrors[$originalField][$rule])) {
+            return lang($this->customErrors[$originalField][$rule], $args);
         }
 
-        $message = str_replace('{field}', ($label === null || $label === '') ? $field : lang($label), $message);
-        $message = str_replace(
-            '{param}',
-            (! isset($this->rules[$param]['label'])) ? $param : lang($this->rules[$param]['label']),
-            $message
-        );
-
-        return str_replace('{value}', $value ?? '', $message);
+        // Try to grab a localized version of the message...
+        // lang() will return the rule name back if not found,
+        // so there will always be a string being returned.
+        return lang('Validation.' . $rule, $args);
     }
 
     /**

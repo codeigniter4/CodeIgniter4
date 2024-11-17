@@ -47,7 +47,7 @@ final class RoutesTest extends CIUnitTestCase
 
     private function getCleanRoutes(): RouteCollection
     {
-        $routes = Services::routes();
+        $routes = service('routes');
         $routes->resetRoutes();
         $routes->loadRoutes();
 
@@ -246,7 +246,7 @@ final class RoutesTest extends CIUnitTestCase
 
     public function testRoutesCommandRouteWithRegexp(): void
     {
-        $routes = Services::routes();
+        $routes = service('routes');
         $routes->resetRoutes();
         $routes->options('picker/(.+)', 'Options::index');
 

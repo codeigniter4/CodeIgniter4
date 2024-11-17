@@ -48,7 +48,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
     {
         if ($service === 'commands') {
             $locator = $this->getMockBuilder(FileLocator::class)
-                ->setConstructorArgs([Services::autoloader()])
+                ->setConstructorArgs([service('autoloader')])
                 ->onlyMethods(['listFiles'])
                 ->getMock();
 

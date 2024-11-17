@@ -819,7 +819,7 @@ class CodeIgniter
     {
         $this->benchmark->start('routing');
 
-        if ($routes === null) {
+        if (! $routes instanceof RouteCollectionInterface) {
             $routes = service('routes')->loadRoutes();
         }
 

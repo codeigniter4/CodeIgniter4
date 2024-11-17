@@ -31,7 +31,8 @@ trait ReflectionHelper
      * @param object|string $obj    object or class name
      * @param string        $method method name
      *
-     * @return Closure
+     * @return         Closure
+     * @phpstan-return Closure(mixed ...$args): mixed
      *
      * @throws ReflectionException
      */
@@ -73,7 +74,7 @@ trait ReflectionHelper
      *
      * @throws ReflectionException
      */
-    public static function setPrivateProperty($obj, $property, $value)
+    public static function setPrivateProperty($obj, $property, $value): void
     {
         $refProperty = self::getAccessibleRefProperty($obj, $property);
 
@@ -90,7 +91,7 @@ trait ReflectionHelper
      * @param object|string $obj      object or class name
      * @param string        $property property name
      *
-     * @return mixed value
+     * @return mixed
      *
      * @throws ReflectionException
      */

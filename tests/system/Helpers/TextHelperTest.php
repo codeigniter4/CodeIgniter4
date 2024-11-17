@@ -345,17 +345,17 @@ final class TextHelperTest extends CIUnitTestCase
     {
         $string   = 'Here is a simple string of text that will help us demonstrate this function.';
         $expected = "Here is a simple string\nof text that will help us\ndemonstrate this\nfunction.";
-        $this->assertSame(substr_count(word_wrap($string, 25), "\n"), 3);
+        $this->assertSame(3, substr_count(word_wrap($string, 25), "\n"));
         $this->assertSame($expected, word_wrap($string, 25));
 
         $string2   = "Here is a\nbroken up sentence\rspanning lines\r\nwoohoo!";
         $expected2 = "Here is a\nbroken up sentence\nspanning lines\nwoohoo!";
-        $this->assertSame(substr_count(word_wrap($string2, 25), "\n"), 3);
+        $this->assertSame(3, substr_count(word_wrap($string2, 25), "\n"));
         $this->assertSame($expected2, word_wrap($string2, 25));
 
         $string3   = "Here is another slightly longer\nbroken up sentence\rspanning lines\r\nwoohoo!";
         $expected3 = "Here is another slightly\nlonger\nbroken up sentence\nspanning lines\nwoohoo!";
-        $this->assertSame(substr_count(word_wrap($string3, 25), "\n"), 4);
+        $this->assertSame(4, substr_count(word_wrap($string3, 25), "\n"));
         $this->assertSame($expected3, word_wrap($string3, 25));
     }
 
@@ -363,7 +363,7 @@ final class TextHelperTest extends CIUnitTestCase
     {
         $string   = 'Here is a {unwrap}simple string of text{/unwrap} that will help us demonstrate this function.';
         $expected = "Here is a simple string of text\nthat will help us\ndemonstrate this\nfunction.";
-        $this->assertSame(substr_count(word_wrap($string, 25), "\n"), 3);
+        $this->assertSame(3, substr_count(word_wrap($string, 25), "\n"));
         $this->assertSame($expected, word_wrap($string, 25));
     }
 
@@ -386,7 +386,7 @@ final class TextHelperTest extends CIUnitTestCase
     public function testDefaultWordWrapCharlim(): void
     {
         $string = 'Here is a longer string of text that will help us demonstrate the default charlim of this function.';
-        $this->assertSame(strpos(word_wrap($string), "\n"), 73);
+        $this->assertSame(73, strpos(word_wrap($string), "\n"));
     }
 
     public function testExcerpt(): void

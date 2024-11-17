@@ -217,7 +217,7 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testNewToolbar(): void
     {
-        $actual = Services::toolbar(null);
+        $actual = service('toolbar', null);
         $this->assertInstanceOf(Toolbar::class, $actual);
     }
 
@@ -409,7 +409,7 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testFormat(): void
     {
-        $this->assertInstanceOf(Format::class, Services::format());
+        $this->assertInstanceOf(Format::class, service('format'));
     }
 
     public function testUnsharedFormat(): void

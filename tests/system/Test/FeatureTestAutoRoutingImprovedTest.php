@@ -46,7 +46,7 @@ final class FeatureTestAutoRoutingImprovedTest extends CIUnitTestCase
 
     private static function initializeRouter(): void
     {
-        $routes = Services::routes();
+        $routes = service('routes');
         $routes->resetRoutes();
         $routes->loadRoutes();
 
@@ -56,7 +56,7 @@ final class FeatureTestAutoRoutingImprovedTest extends CIUnitTestCase
         $namespace = 'Tests\Support\Controllers';
         $routes->setDefaultNamespace($namespace);
 
-        $router = Services::router($routes);
+        $router = service('router', $routes);
 
         Services::injectMock('router', $router);
     }

@@ -25,7 +25,6 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\I18n\Time;
-use Config\Services;
 use Config\Toolbar as ToolbarConfig;
 use Kint\Kint;
 
@@ -386,7 +385,7 @@ class Toolbar
                 return;
             }
 
-            $toolbar = Services::toolbar(config(ToolbarConfig::class));
+            $toolbar = service('toolbar', config(ToolbarConfig::class));
             $stats   = $app->getPerformanceStats();
             $data    = $toolbar->run(
                 $stats['startTime'],
@@ -529,7 +528,7 @@ class Toolbar
             case 'html':
                 $data['styles'] = [];
                 extract($data);
-                $parser = Services::parser($this->config->viewsPath, null, false);
+                $parser = service('parser', $this->config->viewsPath, null, false);
                 ob_start();
                 include $this->config->viewsPath . 'toolbar.tpl.php';
                 $output = ob_get_clean();

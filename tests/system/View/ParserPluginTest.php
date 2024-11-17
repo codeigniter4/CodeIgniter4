@@ -36,8 +36,8 @@ final class ParserPluginTest extends CIUnitTestCase
 
         Services::reset(true);
 
-        $this->parser    = Services::parser();
-        $this->validator = Services::validation();
+        $this->parser    = service('parser');
+        $this->validator = service('validation');
     }
 
     public function testCurrentURL(): void

@@ -19,7 +19,6 @@ use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Handlers\BaseHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -35,7 +34,6 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class BaseHandlerTest extends CIUnitTestCase
 {
-    private vfsStreamDirectory $root;
     private string $origin;
     private string $start;
     private string $path;
@@ -47,10 +45,10 @@ final class BaseHandlerTest extends CIUnitTestCase
         }
 
         // create virtual file system
-        $this->root = vfsStream::setup();
+        $root = vfsStream::setup();
         // copy our support files
         $this->origin = SUPPORTPATH . 'Images/';
-        vfsStream::copyFromFileSystem($this->origin, $this->root);
+        vfsStream::copyFromFileSystem($this->origin, $root);
         // make subfolders
         $structure = [
             'work'     => [],
@@ -58,10 +56,10 @@ final class BaseHandlerTest extends CIUnitTestCase
         ];
         vfsStream::create($structure);
         // with one of them read only
-        $this->root->getChild('wontwork')->chmod(0400);
+        $root->getChild('wontwork')->chmod(0400);
 
         // for VFS tests
-        $this->start = $this->root->url() . '/';
+        $this->start = $root->url() . '/';
         $this->path  = $this->start . 'ci-logo.png';
     }
 

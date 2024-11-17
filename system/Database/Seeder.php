@@ -105,7 +105,7 @@ class Seeder
      */
     public static function faker(): ?Generator
     {
-        if (self::$faker === null && class_exists(Factory::class)) {
+        if (! self::$faker instanceof Generator && class_exists(Factory::class)) {
             self::$faker = Factory::create();
         }
 

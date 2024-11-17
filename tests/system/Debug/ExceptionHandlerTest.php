@@ -107,8 +107,8 @@ final class ExceptionHandlerTest extends CIUnitTestCase
     {
         $exception = PageNotFoundException::forControllerNotFound('Foo', 'bar');
 
-        $request  = Services::incomingrequest(null, false);
-        $response = Services::response(null, false);
+        $request  = service('incomingrequest', null, false);
+        $response = service('response', null, false);
         $response->pretend();
 
         ob_start();
@@ -126,9 +126,9 @@ final class ExceptionHandlerTest extends CIUnitTestCase
     {
         $exception = PageNotFoundException::forControllerNotFound('Foo', 'bar');
 
-        $request = Services::incomingrequest(null, false);
+        $request = service('incomingrequest', null, false);
         $request->setHeader('accept', 'text/html');
-        $response = Services::response(null, false);
+        $response = service('response', null, false);
         $response->pretend();
 
         ob_start();
@@ -144,7 +144,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
 
         $request = Services::clirequest(null, false);
         $request->setHeader('accept', 'text/html');
-        $response = Services::response(null, false);
+        $response = service('response', null, false);
         $response->pretend();
 
         $this->handler->handle($exception, $request, $response, 404, EXIT_ERROR);

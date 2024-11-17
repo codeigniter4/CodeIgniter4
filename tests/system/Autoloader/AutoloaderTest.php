@@ -22,7 +22,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Autoload;
 use Config\Modules;
-use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -112,17 +111,21 @@ final class AutoloaderTest extends CIUnitTestCase
 
     public function testServiceAutoLoaderFromShareInstances(): void
     {
-        $classLoader = $this->getPrivateMethodInvoker(Services::autoloader(), 'loadInNamespace');
+        $classLoader = $this->getPrivateMethodInvoker(service('autoloader'), 'loadInNamespace');
 
         // look for Home controller, as that should be in base repo
         $actual   = $classLoader(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
-        $this->assertSame($expected, realpath($actual) ?: $actual);
+
+        $resolvedPath = realpath($actual);
+        $actual       = $resolvedPath !== false ? $resolvedPath : $actual;
+
+        $this->assertSame($expected, $actual);
     }
 
     public function testServiceAutoLoader(): void
     {
-        $autoloader = Services::autoloader(false);
+        $autoloader = service('autoloader', false);
         $autoloader->initialize(new Autoload(), new Modules());
         $autoloader->register();
 
@@ -131,7 +134,11 @@ final class AutoloaderTest extends CIUnitTestCase
         // look for Home controller, as that should be in base repo
         $actual   = $classLoader(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
-        $this->assertSame($expected, realpath($actual) ?: $actual);
+
+        $resolvedPath = realpath($actual);
+        $actual       = $resolvedPath !== false ? $resolvedPath : $actual;
+
+        $this->assertSame($expected, $actual);
 
         $autoloader->unregister();
     }

@@ -25,8 +25,6 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('CacheLive')]
 final class MemcachedHandlerTest extends AbstractHandlerTestCase
 {
-    private Cache $config;
-
     private static function getKeyArray()
     {
         return [
@@ -44,9 +42,9 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
             $this->markTestSkipped('Memcached extension not loaded.');
         }
 
-        $this->config = new Cache();
+        $config = new Cache();
 
-        $this->handler = new MemcachedHandler($this->config);
+        $this->handler = new MemcachedHandler($config);
 
         $this->handler->initialize();
     }

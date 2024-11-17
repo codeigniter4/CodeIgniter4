@@ -15,7 +15,6 @@ namespace CodeIgniter\Language;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLanguage;
-use Config\Services;
 use MessageFormatter;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -296,7 +295,7 @@ final class LanguageTest extends CIUnitTestCase
 
     public function testGetLocale(): void
     {
-        $this->lang = Services::language('en', false);
+        $this->lang = service('language', 'en', false);
         $this->assertSame('en', $this->lang->getLocale());
     }
 
@@ -353,7 +352,7 @@ final class LanguageTest extends CIUnitTestCase
 
     public function testBaseFallbacks(): void
     {
-        $this->lang = Services::language('en-ZZ', false);
+        $this->lang = service('language', 'en-ZZ', false);
         // key is in both base and variant; should pick variant
         $this->assertSame("It's made of cheese", $this->lang->getLine('More.notaMoon'));
 
@@ -372,7 +371,7 @@ final class LanguageTest extends CIUnitTestCase
      */
     public function testLangKeepLocale(): void
     {
-        $this->lang = Services::language('en', true);
+        $this->lang = service('language', 'en', true);
 
         lang('Language.languageGetLineInvalidArgumentException');
         $this->assertSame('en', $this->lang->getLocale());
@@ -399,7 +398,7 @@ final class LanguageTest extends CIUnitTestCase
      */
     public function testAllTheWayFallbacks(): void
     {
-        $this->lang = Services::language('ab-CD', false);
+        $this->lang = service('language', 'ab-CD', false);
         $this->assertSame('Allin.none', $this->lang->getLine('Allin.none'));
         $this->assertSame('Pyramid of Giza', $this->lang->getLine('Allin.one'));
         $this->assertSame('gluttony', $this->lang->getLine('Allin.two'));

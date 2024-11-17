@@ -13,9 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
-use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Config\Factories;
-use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
 use PHPUnit\Framework\Attributes\Group;
@@ -28,7 +27,7 @@ use Tests\Support\View\WorldDecorator;
 #[Group('Others')]
 final class DecoratorsTest extends CIUnitTestCase
 {
-    private FileLocator $loader;
+    private FileLocatorInterface $loader;
     private string $viewsDir;
     private ?\Config\View $config = null;
 
@@ -36,7 +35,7 @@ final class DecoratorsTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->loader   = Services::locator();
+        $this->loader   = service('locator');
         $this->viewsDir = __DIR__ . '/Views';
         $this->config   = config('View');
     }

@@ -15,7 +15,6 @@ namespace CodeIgniter\Router;
 
 use App\Controllers\Home;
 use App\Controllers\Product;
-use CodeIgniter\Config\Services;
 use CodeIgniter\controller;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Method;
@@ -49,9 +48,9 @@ final class RouteCollectionTest extends CIUnitTestCase
         ];
         $config = array_merge($config, $defaults);
 
-        Services::autoloader()->addNamespace($config);
+        service('autoloader')->addNamespace($config);
 
-        $loader = Services::locator();
+        $loader = service('locator');
 
         if ($moduleConfig === null) {
             $moduleConfig          = new Modules();
@@ -150,7 +149,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testAddWorksWithCurrentHTTPMethods(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
 
@@ -182,7 +181,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testMatchIgnoresInvalidHTTPMethods(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
 
@@ -195,7 +194,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testAddWorksWithArrayOFHTTPMethods(): void
     {
-        Services::request()->setMethod(Method::POST);
+        service('request')->setMethod(Method::POST);
 
         $routes = $this->getCollector();
 
@@ -716,7 +715,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testResourcesWithCustomController(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
 
         $routes->resource('photos', ['controller' => '<script>gallery']);
@@ -733,7 +732,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testResourcesWithCustomPlaceholder(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
 
         $routes->resource('photos', ['placeholder' => ':num']);
@@ -750,7 +749,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testResourcesWithDefaultPlaceholder(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
 
         $routes->setDefaultConstraint('num');
@@ -768,7 +767,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testResourcesWithBogusDefaultPlaceholder(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
 
         $routes->setDefaultConstraint(':num');
@@ -786,7 +785,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testResourcesWithOnly(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
 
         $routes->resource('photos', ['only' => 'index']);
@@ -800,7 +799,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testResourcesWithExcept(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
 
         $routes->resource('photos', ['except' => 'edit,new']);
@@ -831,7 +830,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testMatchSupportsMultipleMethods(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
 
         $expected = ['here' => '\there'];
@@ -839,7 +838,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->match(['GET', 'POST'], 'here', 'there');
         $this->assertSame($expected, $routes->getRoutes());
 
-        Services::request()->setMethod(Method::POST);
+        service('request')->setMethod(Method::POST);
         $routes = $this->getCollector();
         $routes->match(['GET', 'POST'], 'here', 'there');
         $this->assertSame($expected, $routes->getRoutes());
@@ -847,7 +846,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testGet(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
 
         $expected = ['here' => '\there'];
@@ -969,7 +968,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     {
         // ENVIRONMENT should be 'testing'
 
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
 
         $expected = ['here' => '\there'];
@@ -1298,7 +1297,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $match = $routes->getRoutes();
 
         $this->assertArrayHasKey('testing', $match);
-        $this->assertSame($match['testing'], '\TestController::index');
+        $this->assertSame('\TestController::index', $match['testing']);
     }
 
     public function testDiscoverLocalAllowsConfigToOverridePackages(): void
@@ -1317,7 +1316,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $match = $routes->getRoutes();
 
         $this->assertArrayHasKey('testing', $match);
-        $this->assertSame($match['testing'], '\MainRoutes::index');
+        $this->assertSame('\MainRoutes::index', $match['testing']);
     }
 
     public function testRoutesOptions(): void
@@ -1452,7 +1451,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteGroupWithFilterSimple(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
 
         $routes->group(
@@ -1471,7 +1470,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteGroupWithFilterWithParams(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
 
         $routes->group(
@@ -1489,7 +1488,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function test404OverrideNot(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
 
         $this->assertNull($routes->get404Override());
@@ -1497,7 +1496,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function test404OverrideString(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
 
         $routes->set404Override('Explode');
@@ -1506,7 +1505,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function test404OverrideCallable(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
 
         $routes->set404Override(static function (): void {
@@ -1517,7 +1516,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testOffsetParameters(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
 
         $routes->get('users/(:num)', 'users/show/$1', ['offset' => 1]);
@@ -1533,7 +1532,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testRouteToWithSubdomainMatch(): void
     {
         $_SERVER['HTTP_HOST'] = 'doc.example.com';
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
 
@@ -1545,7 +1544,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testRouteToWithSubdomainMismatch(): void
     {
         $_SERVER['HTTP_HOST'] = 'dev.example.com';
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
 
@@ -1557,7 +1556,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testRouteToWithSubdomainNot(): void
     {
         $_SERVER['HTTP_HOST'] = 'example.com';
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
 
@@ -1569,7 +1568,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testRouteToWithGenericSubdomainMatch(): void
     {
         $_SERVER['HTTP_HOST'] = 'doc.example.com';
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
 
@@ -1581,7 +1580,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testRouteToWithGenericSubdomainMismatch(): void
     {
         $_SERVER['HTTP_HOST'] = 'dev.example.com';
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
 
@@ -1593,7 +1592,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testRouteToWithGenericSubdomainNot(): void
     {
         $_SERVER['HTTP_HOST'] = 'example.com';
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
 
@@ -1605,7 +1604,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testRouteToWithoutSubdomainMatch(): void
     {
         $_SERVER['HTTP_HOST'] = 'doc.example.com';
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
 
@@ -1617,7 +1616,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testRouteToWithoutSubdomainMismatch(): void
     {
         $_SERVER['HTTP_HOST'] = 'dev.example.com';
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
 
@@ -1629,7 +1628,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testRouteToWithoutSubdomainNot(): void
     {
         $_SERVER['HTTP_HOST'] = 'example.com';
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
 
@@ -1646,10 +1645,10 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testRouteOverwritingDifferentSubdomains(): void
     {
         $_SERVER['HTTP_HOST'] = 'doc.domain.com';
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
-        $router = new Router($routes, Services::request());
+        $router = new Router($routes, service('request'));
 
         $routes->setDefaultNamespace('App\Controllers');
         $routes->setDefaultController('Home');
@@ -1667,10 +1666,10 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testRouteOverwritingTwoRules(): void
     {
         $_SERVER['HTTP_HOST'] = 'doc.domain.com';
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
-        $router = new Router($routes, Services::request());
+        $router = new Router($routes, service('request'));
 
         $routes->setDefaultNamespace('App\Controllers');
         $routes->setDefaultController('Home');
@@ -1688,10 +1687,10 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testRouteOverwritingTwoRulesLastApplies(): void
     {
         $_SERVER['HTTP_HOST'] = 'doc.domain.com';
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
-        $router = new Router($routes, Services::request());
+        $router = new Router($routes, service('request'));
 
         $routes->setDefaultNamespace('App\Controllers');
         $routes->setDefaultController('Home');
@@ -1708,10 +1707,10 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testRouteOverwritingMatchingSubdomain(): void
     {
         $_SERVER['HTTP_HOST'] = 'doc.domain.com';
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
-        $router = new Router($routes, Services::request());
+        $router = new Router($routes, service('request'));
 
         $routes->setDefaultNamespace('App\Controllers');
         $routes->setDefaultController('Home');
@@ -1728,10 +1727,10 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testRouteOverwritingMatchingHost(): void
     {
         $_SERVER['HTTP_HOST'] = 'doc.domain.com';
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
 
         $routes = $this->getCollector();
-        $router = new Router($routes, Services::request());
+        $router = new Router($routes, service('request'));
 
         $routes->setDefaultNamespace('App\Controllers');
         $routes->setDefaultController('Home');
@@ -1792,9 +1791,9 @@ final class RouteCollectionTest extends CIUnitTestCase
      */
     public function testRouteDefaultNameSpace(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
-        $router = new Router($routes, Services::request());
+        $router = new Router($routes, service('request'));
 
         $routes->setDefaultNamespace('App\Controllers');
         $routes->get('/', 'Core\Home::index');
@@ -1806,9 +1805,9 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testZeroAsURIPath(): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
-        $router = new Router($routes, Services::request());
+        $router = new Router($routes, service('request'));
 
         $routes->setDefaultNamespace('App\Controllers');
         $routes->get('/0', 'Core\Home::index');
@@ -1838,7 +1837,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         copy(TESTPATH . '_support/_controller/Product.php', APPPATH . 'Controllers/Product.php');
 
-        $router = new Router($routes, Services::request());
+        $router = new Router($routes, service('request'));
         $router->handle('/product');
 
         unlink(APPPATH . 'Controllers/Product.php');
@@ -1849,7 +1848,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     #[DataProvider('provideRouteDefaultNamespace')]
     public function testRoutesControllerNameReturnsFQCN(string $namespace): void
     {
-        Services::request()->setMethod(Method::GET);
+        service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();
         $routes->setAutoRoute(false);
         $routes->setDefaultNamespace($namespace);
@@ -1857,7 +1856,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         copy(TESTPATH . '_support/_controller/Product.php', APPPATH . 'Controllers/Product.php');
 
-        $router = new Router($routes, Services::request());
+        $router = new Router($routes, service('request'));
         $router->handle('/product');
 
         unlink(APPPATH . 'Controllers/Product.php');
@@ -1996,7 +1995,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->useSupportedLocalesOnly(true);
         $routes->get('{locale}/products', 'Products::list');
 
-        $router = new Router($routes, Services::request());
+        $router = new Router($routes, service('request'));
 
         $this->expectException(PageNotFoundException::class);
         $router->handle('fr/products');

@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Exceptions;
 
-use Config\Services;
-
 class PageNotFoundException extends RuntimeException implements HTTPExceptionInterface
 {
     use DebugTraceableTrait;
@@ -77,7 +75,7 @@ class PageNotFoundException extends RuntimeException implements HTTPExceptionInt
      */
     private static function lang(string $line, array $args = []): string
     {
-        $lang = Services::language(null, false);
+        $lang = service('language', null, false);
 
         return $lang->getLine($line, $args);
     }

@@ -410,8 +410,8 @@ final class ValidationModelTest extends LiveModelTestCase
         $errors = $model->errors();
         $this->assertCount(1, $errors);
         $this->assertSame(
-            $errors['field1'],
-            'The field1 field is required when field2,field3,field4 is present.'
+            'The field1 field is required when field2,field3,field4 is present.',
+            $errors['field1']
         );
     }
 
@@ -450,8 +450,8 @@ final class ValidationModelTest extends LiveModelTestCase
         $errors = $model->errors();
         $this->assertCount(1, $errors);
         $this->assertSame(
-            $errors['field1'],
-            'The field1 field is required when field2,field3,field4 is present.'
+            'The field1 field is required when field2,field3,field4 is present.',
+            $errors['field1']
         );
     }
 
@@ -483,8 +483,8 @@ final class ValidationModelTest extends LiveModelTestCase
         $errors = $model->errors();
         $this->assertCount(1, $errors);
         $this->assertSame(
-            $errors['field2'],
-            'The field2 field is required.'
+            'The field2 field is required.',
+            $errors['field2']
         );
     }
 }

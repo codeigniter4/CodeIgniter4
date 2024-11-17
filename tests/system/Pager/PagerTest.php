@@ -64,7 +64,7 @@ final class PagerTest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         $this->config = new PagerConfig();
-        $this->pager  = new Pager($this->config, Services::renderer());
+        $this->pager  = new Pager($this->config, service('renderer'));
     }
 
     public function testSetPathRemembersPath(): void
@@ -123,9 +123,9 @@ final class PagerTest extends CIUnitTestCase
 
         $details = $this->pager->getDetails('foo');
 
-        $this->assertSame($details['total'], 100);
-        $this->assertSame($details['perPage'], 25);
-        $this->assertSame($details['currentPage'], 3);
+        $this->assertSame(100, $details['total']);
+        $this->assertSame(25, $details['perPage']);
+        $this->assertSame(3, $details['currentPage']);
     }
 
     public function testStoreDoesBasicCalcsOnPerPageReadFromPagerConfig(): void
@@ -134,9 +134,9 @@ final class PagerTest extends CIUnitTestCase
 
         $details = $this->pager->getDetails('foo');
 
-        $this->assertSame($details['total'], 100);
-        $this->assertSame($details['perPage'], 20);
-        $this->assertSame($details['currentPage'], 3);
+        $this->assertSame(100, $details['total']);
+        $this->assertSame(20, $details['perPage']);
+        $this->assertSame(3, $details['currentPage']);
     }
 
     public function testStoreAndHasMore(): void
@@ -493,7 +493,7 @@ final class PagerTest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         $this->config = new PagerConfig();
-        $this->pager  = new Pager($this->config, Services::renderer());
+        $this->pager  = new Pager($this->config, service('renderer'));
 
         $_GET['page_foo'] = 2;
 

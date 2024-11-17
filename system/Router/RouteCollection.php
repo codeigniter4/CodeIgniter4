@@ -22,7 +22,6 @@ use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
 use Config\Modules;
 use Config\Routing;
-use Config\Services;
 
 /**
  * @todo Implement nested resource routing (See CakePHP)
@@ -283,7 +282,7 @@ class RouteCollection implements RouteCollectionInterface
         $this->fileLocator  = $locator;
         $this->moduleConfig = $moduleConfig;
 
-        $this->httpHost = Services::request()->getServer('HTTP_HOST');
+        $this->httpHost = service('request')->getServer('HTTP_HOST');
 
         // Setup based on config file. Let routes file override.
         $this->defaultNamespace   = rtrim($routing->defaultNamespace, '\\') . '\\';

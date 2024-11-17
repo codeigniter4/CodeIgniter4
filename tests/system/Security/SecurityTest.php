@@ -23,7 +23,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
 use Config\Security as SecurityConfig;
-use Config\Services;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -80,7 +79,7 @@ final class SecurityTest extends CIUnitTestCase
 
         $security->verify(new Request(new MockAppConfig()));
 
-        $cookie = Services::response()->getCookie('csrf_cookie_name');
+        $cookie = service('response')->getCookie('csrf_cookie_name');
         $this->assertSame($security->getHash(), $cookie->getValue());
     }
 

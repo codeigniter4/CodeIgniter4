@@ -82,7 +82,7 @@ final class CommonHelperTest extends CIUnitTestCase
     private function getMockLocator()
     {
         return $this->getMockBuilder(FileLocator::class)
-            ->setConstructorArgs([Services::autoloader()])
+            ->setConstructorArgs([service('autoloader')])
             ->onlyMethods(['search'])
             ->getMock();
     }
@@ -90,7 +90,7 @@ final class CommonHelperTest extends CIUnitTestCase
     public function testHelperWithFatalLocatorThrowsException(): void
     {
         // Replace the locator with one that will fail if it is called
-        $locator = new FatalLocator(Services::autoloader());
+        $locator = new FatalLocator(service('autoloader'));
         Services::injectMock('locator', $locator);
 
         try {
@@ -109,7 +109,7 @@ final class CommonHelperTest extends CIUnitTestCase
         helper('baguette');
 
         // Replace the locator with one that will fail if it is called
-        $locator = new FatalLocator(Services::autoloader());
+        $locator = new FatalLocator(service('autoloader'));
         Services::injectMock('locator', $locator);
 
         try {

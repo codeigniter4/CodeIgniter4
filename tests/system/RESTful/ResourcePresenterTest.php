@@ -63,7 +63,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 
         // Inject mock router.
-        $this->routes = Services::routes();
+        $this->routes = service('routes');
         $this->routes->presenter('work', ['controller' => '\\' . Worker2::class]);
         Services::injectMock('routes', $this->routes);
 

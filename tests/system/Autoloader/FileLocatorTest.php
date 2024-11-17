@@ -27,6 +27,9 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 class FileLocatorTest extends CIUnitTestCase
 {
+    /**
+     * @var FileLocator|FileLocatorCached
+     */
     protected FileLocatorInterface $locator;
 
     protected function setUp(): void
