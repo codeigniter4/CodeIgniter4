@@ -81,7 +81,7 @@ final class FoundRowsTest extends CIUnitTestCase
 
         $affectedRows = $db1->affectedRows();
 
-        $this->assertSame($affectedRows, 2);
+        $this->assertSame(2, $affectedRows);
     }
 
     public function testAffectedRowsAfterDisableFoundRowsWithNoChange(): void
@@ -97,7 +97,7 @@ final class FoundRowsTest extends CIUnitTestCase
 
         $affectedRows = $db1->affectedRows();
 
-        $this->assertSame($affectedRows, 0);
+        $this->assertSame(0, $affectedRows);
     }
 
     public function testAffectedRowsAfterEnableFoundRowsWithChange(): void
@@ -113,7 +113,7 @@ final class FoundRowsTest extends CIUnitTestCase
 
         $affectedRows = $db1->affectedRows();
 
-        $this->assertSame($affectedRows, 2);
+        $this->assertSame(2, $affectedRows);
     }
 
     public function testAffectedRowsAfterDisableFoundRowsWithChange(): void
@@ -129,7 +129,7 @@ final class FoundRowsTest extends CIUnitTestCase
 
         $affectedRows = $db1->affectedRows();
 
-        $this->assertSame($affectedRows, 2);
+        $this->assertSame(2, $affectedRows);
     }
 
     public function testAffectedRowsAfterEnableFoundRowsWithPartialChange(): void
@@ -145,7 +145,7 @@ final class FoundRowsTest extends CIUnitTestCase
 
         $affectedRows = $db1->affectedRows();
 
-        $this->assertSame($affectedRows, 2);
+        $this->assertSame(2, $affectedRows);
     }
 
     public function testAffectedRowsAfterDisableFoundRowsWithPartialChange(): void
@@ -161,6 +161,6 @@ final class FoundRowsTest extends CIUnitTestCase
 
         $affectedRows = $db1->affectedRows();
 
-        $this->assertSame($affectedRows, 1);
+        $this->assertSame(1, $affectedRows);
     }
 }
