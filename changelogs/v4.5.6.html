@@ -319,9 +319,11 @@
 <ul class="simple">
 <li><p><strong>RequestTrait:</strong> Fixed a bug where the <code class="docutils literal notranslate"><span class="pre">fetchGlobal()</span></code> method did not allow handling data by numeric key when stored as a list.</p></li>
 <li><p><strong>Session Library:</strong> The session initialization debug message now uses the correct log type “debug” instead of “info”.</p></li>
-<li><p><strong>Validation:</strong> Fixed the <cite>getValidated()</cite> method that did not return valid data when validation rules used multiple asterisks.</p></li>
+<li><p><strong>Validation:</strong> Fixed the <code class="docutils literal notranslate"><span class="pre">getValidated()</span></code> method that did not return valid data when validation rules used multiple asterisks.</p></li>
 <li><p><strong>Database:</strong> Fixed the case insensitivity option in the <code class="docutils literal notranslate"><span class="pre">like()</span></code> method when dealing with accented characters.</p></li>
 <li><p><strong>Parser:</strong> Fixed bug that caused equal key names to be replaced by the key name defined first.</p></li>
+<li><p><strong>DownloadResponse:</strong> Fixed a bug that prevented setting custom cache headers. We can now also use the <code class="docutils literal notranslate"><span class="pre">setCache()</span></code> method.</p></li>
+<li><p><strong>DownloadResponse:</strong> Fixed a bug involving sending a custom “Expires-Disposition” header.</p></li>
 <li><p><strong>Routing:</strong> Fixed a TypeError in <cite>str_replace()</cite> when <cite>Routing::$translateURIDashes</cite> is set to <cite>true</cite> and a route is defined using a closure.</p></li>
 <li><p><strong>Validation:</strong> Fixed a bug where complex language strings were not properly handled.</p></li>
 </ul>
