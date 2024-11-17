@@ -323,6 +323,7 @@
 <li><p><strong>Database:</strong> Fixed the case insensitivity option in the <code class="docutils literal notranslate"><span class="pre">like()</span></code> method when dealing with accented characters.</p></li>
 <li><p><strong>Parser:</strong> Fixed bug that caused equal key names to be replaced by the key name defined first.</p></li>
 <li><p><strong>Routing:</strong> Fixed a TypeError in <cite>str_replace()</cite> when <cite>Routing::$translateURIDashes</cite> is set to <cite>true</cite> and a route is defined using a closure.</p></li>
+<li><p><strong>Validation:</strong> Fixed a bug where complex language strings were not properly handled.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
@@ -342,7 +343,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 13, 2024.
+      <span class="lastupdated">Last updated on Nov 17, 2024.
       </span></p>
   </div>
 
