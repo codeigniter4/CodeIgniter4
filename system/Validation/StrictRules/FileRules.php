@@ -38,7 +38,7 @@ class FileRules
      */
     public function __construct(?RequestInterface $request = null)
     {
-        if ($request === null) {
+        if (! $request instanceof RequestInterface) {
             $request = service('request');
         }
 
