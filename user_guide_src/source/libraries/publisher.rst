@@ -75,6 +75,8 @@ Most of the time you will not need to handle your own discovery, just use the pr
 By default on your class extension ``publish()`` will add all files from your ``$source`` and merge them
 out to your destination, overwriting on collision.
 
+.. _discovery-in-a-specific-namespace:
+
 Discovery in a specific namespace
 ---------------------------------
 
