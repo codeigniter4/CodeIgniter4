@@ -971,7 +971,7 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->createdAt = '2022-11-11 11:11:11';
 
-        $this->assertEquals('2022-11-11 11:11:11', $entity->toRawArray()['created_at']);
+        $this->assertSame('2022-11-11 11:11:11', $entity->toRawArray()['created_at']);
     }
 
     public function testFilledConstruction(): void
