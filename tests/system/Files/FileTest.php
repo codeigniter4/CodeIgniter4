@@ -113,9 +113,7 @@ final class FileTest extends CIUnitTestCase
         $this->assertSame($size, $file->getSizeByUnit('b'));
     }
 
-    /**
-     * @dataProvider provideGetSizeData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideGetSizeData')]
     public function testGetSizeBinary(FileSizeUnit $unit): void
     {
         $divider = 1024 ** $unit->value;
@@ -131,9 +129,7 @@ final class FileTest extends CIUnitTestCase
         $this->assertSame($size, $file->getSizeByUnitBinary(FileSizeUnit::B));
     }
 
-    /**
-     * @dataProvider provideGetSizeData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideGetSizeData')]
     public function testGetSizeMetric(FileSizeUnit $unit): void
     {
         $divider = 1000 ** $unit->value;
@@ -173,22 +169,22 @@ final class FileTest extends CIUnitTestCase
     }
 
     /**
-     * @return Array<string, Array<int>>
+     * @return @return array<string, list<int>>
      */
-    public static function provideGetSizeData()
+    public static function provideGetSizeData(): iterable
     {
         return [
             'returns KB binary' => [
-                FileSizeUnit::KB
+                FileSizeUnit::KB,
             ],
             'returns MB binary' => [
-                FileSizeUnit::KB
+                FileSizeUnit::MB,
             ],
             'returns GB binary' => [
-                FileSizeUnit::KB
+                FileSizeUnit::GB,
             ],
             'returns TB binary' => [
-                FileSizeUnit::KB
+                FileSizeUnit::TB,
             ],
         ];
     }
