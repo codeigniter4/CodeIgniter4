@@ -236,6 +236,12 @@ class Entity implements JsonSerializable
                 }, $this->attributes);
             }
 
+            foreach ($this->dates as $dateField) {
+                if (isset($this->attributes[$dateField]) && $this->attributes[$dateField] instanceof \CodeIgniter\I18n\Time) {
+                    $this->attributes[$dateField] = $this->attributes[$dateField]->toDateTimeString();
+                }
+            }
+
             return $this->attributes;
         }
 

@@ -965,6 +965,15 @@ final class EntityTest extends CIUnitTestCase
         ], $result);
     }
 
+    public function testToRawArrayWithChangedDates(): void
+    {
+        $entity = $this->getEntity();
+
+        $entity->createdAt = '2022-11-11 11:11:11';
+
+        $this->assertEquals('2022-11-11 11:11:11', $entity->toRawArray()['created_at']);
+    }
+
     public function testFilledConstruction(): void
     {
         $data = [
