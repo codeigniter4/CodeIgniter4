@@ -15,6 +15,7 @@ namespace CodeIgniter\Files;
 
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use ZipArchive;
 
@@ -113,12 +114,12 @@ final class FileTest extends CIUnitTestCase
         $this->assertSame($size, $file->getSizeByUnit('b'));
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideGetSizeData')]
+    #[DataProvider('provideGetSizeData')]
     public function testGetSizeBinary(FileSizeUnit $unit): void
     {
         $divider = 1024 ** $unit->value;
-        $file = new File(SYSTEMPATH . 'Common.php');
-        $size = number_format(filesize(SYSTEMPATH . 'Common.php') / $divider, 3);
+        $file    = new File(SYSTEMPATH . 'Common.php');
+        $size    = number_format(filesize(SYSTEMPATH . 'Common.php') / $divider, 3);
         $this->assertSame($size, $file->getSizeByUnitBinary($unit));
     }
 
@@ -129,12 +130,12 @@ final class FileTest extends CIUnitTestCase
         $this->assertSame($size, $file->getSizeByUnitBinary(FileSizeUnit::B));
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideGetSizeData')]
+    #[DataProvider('provideGetSizeData')]
     public function testGetSizeMetric(FileSizeUnit $unit): void
     {
         $divider = 1000 ** $unit->value;
-        $file = new File(SYSTEMPATH . 'Common.php');
-        $size = number_format(filesize(SYSTEMPATH . 'Common.php') / $divider, 3);
+        $file    = new File(SYSTEMPATH . 'Common.php');
+        $size    = number_format(filesize(SYSTEMPATH . 'Common.php') / $divider, 3);
         $this->assertSame($size, $file->getSizeByUnitMetric($unit));
     }
 
@@ -169,9 +170,9 @@ final class FileTest extends CIUnitTestCase
     }
 
     /**
-     * @return @return array<string, list<int>>
+     * @return array<string, list<int>>
      */
-    public static function provideGetSizeData(): iterable
+    public static function provideGetSizeData()
     {
         return [
             'returns KB binary' => [
