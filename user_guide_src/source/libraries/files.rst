@@ -74,7 +74,7 @@ the results in kibibytes, mebibytes etc. respectively. You can pass in a precisi
 the amount of decimal places.
 
 .. literalinclude:: files/017.php
-    :lines: 2-
+    :lines: 3-
 
 A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
 
@@ -86,7 +86,7 @@ the results in kilobytes, megabytes etc. respectively. You can pass in a precisi
 the amount of decimal places.
 
 .. literalinclude:: files/018.php
-    :lines: 2-
+    :lines: 3-
 
 A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
 

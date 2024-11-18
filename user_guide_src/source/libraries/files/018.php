@@ -1,4 +1,5 @@
 <?php
+use CodeIgniter\Files\FileSizeUnit;
 
 $bytes     = $file->getSizeByUnitMetric(); // 256901
 $kilobytes = $file->getSizeByUnitMetric(FileSizeUnit::KB); // 256.901
