@@ -118,7 +118,7 @@ final class FileTest extends CIUnitTestCase
      */
     public function testGetSizeBinary(FileSizeUnit $unit): void
     {
-        $divider = pow(1024, $unit->value);
+        $divider = 1024 ** $unit->value;
         $file = new File(SYSTEMPATH . 'Common.php');
         $size = number_format(filesize(SYSTEMPATH . 'Common.php') / $divider, 3);
         $this->assertSame($size, $file->getSizeByUnitBinary($unit));
@@ -136,7 +136,7 @@ final class FileTest extends CIUnitTestCase
      */
     public function testGetSizeMetric(FileSizeUnit $unit): void
     {
-        $divider = pow(1000, $unit->value);
+        $divider = 1000 ** $unit->value;
         $file = new File(SYSTEMPATH . 'Common.php');
         $size = number_format(filesize(SYSTEMPATH . 'Common.php') / $divider, 3);
         $this->assertSame($size, $file->getSizeByUnitMetric($unit));

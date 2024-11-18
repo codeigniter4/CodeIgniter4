@@ -222,7 +222,7 @@ class File extends SplFileInfo
     protected function getSizeByUnitInternal(int $fileSizeBase, FileSizeUnit $unit, int $precision)
     {
         $exponent = $unit->value;
-        $divider = pow($fileSizeBase, $exponent);
+        $divider = $fileSizeBase ** $exponent;
 
         $size = $this->getSize() / $divider;
 
