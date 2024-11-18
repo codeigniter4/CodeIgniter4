@@ -1,4 +1,5 @@
 <?php
+
 use CodeIgniter\Files\FileSizeUnit;
 
 $bytes     = $file->getSizeByUnitBinary(); // 256901
