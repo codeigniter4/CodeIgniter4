@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Files;
 
-enum FileSizeUnit : int
+enum FileSizeUnit: int
 {
     case B  = 0;
     case KB = 1;

@@ -170,7 +170,7 @@ final class FileTest extends CIUnitTestCase
     }
 
     /**
-     * @return array<string, list<int>>
+     * @return array<string, array<int, CodeIgniter\Files\FileSizeUnit>>
      */
     public static function provideGetSizeData()
     {

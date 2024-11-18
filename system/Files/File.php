@@ -73,7 +73,6 @@ class File extends SplFileInfo
     /**
      * Retrieve the file size by unit, calculated in IEC standards with 1024 as base value.
      *
-     * @param FileSizeUnit $unit
      * @phpstan-param positive-int $precision
      * @return false|int|string
      */
@@ -85,7 +84,6 @@ class File extends SplFileInfo
     /**
      * Retrieve the file size by unit, calculated in metric standards with 1000 as base value.
      *
-     * @param FileSizeUnit $unit
      * @phpstan-param positive-int $precision
      * @return false|int|string
      */
@@ -222,12 +220,10 @@ class File extends SplFileInfo
     protected function getSizeByUnitInternal(int $fileSizeBase, FileSizeUnit $unit, int $precision)
     {
         $exponent = $unit->value;
-        $divider = $fileSizeBase ** $exponent;
+        $divider  = $fileSizeBase ** $exponent;
+        $size     = $this->getSize() / $divider;
 
-        $size = $this->getSize() / $divider;
-
-        if($unit !== FileSizeUnit::B)
-        {
+        if($unit !== FileSizeUnit::B) {
             $size = number_format($size, $precision);
         }
 
