@@ -172,6 +172,9 @@ final class FileTest extends CIUnitTestCase
         unlink(SYSTEMPATH . 'Common_Copy_5.php');
     }
 
+    /**
+     * @return Array<string, Array<int>>
+     */
     public static function provideGetSizeData()
     {
         return [

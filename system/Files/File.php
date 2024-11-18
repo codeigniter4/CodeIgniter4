@@ -216,6 +216,9 @@ class File extends SplFileInfo
         return $destination;
     }
 
+    /**
+     * @return false|int|string
+     */
     protected function getSizeByUnitInternal(int $fileSizeBase, FileSizeUnit $unit, int $precision)
     {
         $exponent = $unit->value;
