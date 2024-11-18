@@ -28,7 +28,7 @@ The following functions are available:
 .. php:function:: img([$src = ''[, $indexPage = false[, $attributes = '']]])
 
     :param  string|array  $src:  Image source URI, or array of attributes and values
-    :param  bool    $indexPage:  Should indexPage be added to the source path
+    :param  bool    $indexPage:  Should ``Config\App::$indexPage`` be added to the source path
     :param  mixed   $attributes: Additional HTML attributes
     :returns:   An HTML image element
     :rtype: string
