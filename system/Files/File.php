@@ -97,7 +97,7 @@ class File extends SplFileInfo
     /**
      * Retrieve the file size by unit.
      *
-     * @deprecated Use getSizeByUnitBinary or getSizeByUnitMetric instead
+     * @deprecated 4.6.0 Use getSizeByUnitBinary() or getSizeByUnitMetric() instead
      *
      * @return false|int|string
      */
