@@ -279,7 +279,7 @@ Deprecations
     - The ``Filters::getArguments()`` method has been deprecated. No longer used.
 - **File:**
     - The function ``getSizeByUnit()`` of ``File`` has been deprecated.
-      Use either ``getSizeByUnitBinary()`` or ``getSizeByUnitMetric()`` instead.
+      Use either ``getSizeByBinaryUnit()`` or ``getSizeByMetricUnit()`` instead.
 
 **********
 Bugs Fixed

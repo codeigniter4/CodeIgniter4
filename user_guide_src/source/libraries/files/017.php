@@ -2,6 +2,6 @@
 
 use CodeIgniter\Files\FileSizeUnit;
 
-$bytes     = $file->getSizeByUnitBinary(); // 256901
-$kibibytes = $file->getSizeByUnitBinary(FileSizeUnit::KB); // 250.880
-$mebibytes = $file->getSizeByUnitBinary(FileSizeUnit::MB); // 0.245
+$bytes     = $file->getSizeByBinaryUnit(); // 256901
+$kibibytes = $file->getSizeByBinaryUnit(FileSizeUnit::KB); // 250.880
+$mebibytes = $file->getSizeByBinaryUnit(FileSizeUnit::MB); // 0.245

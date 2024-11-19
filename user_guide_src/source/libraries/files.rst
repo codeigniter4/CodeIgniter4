@@ -66,7 +66,7 @@ the results in kibibytes or mebibytes, respectively:
 
 A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
 
-getSizeByUnitBinary()
+getSizeByBinaryUnit()
 =====================
 
 Returns the size of the file default in bytes. You can pass in different FileSizeUnit values as the first parameter to get
@@ -78,7 +78,7 @@ the amount of decimal places.
 
 A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
 
-getSizeByUnitMetric()
+getSizeByMetricUnit()
 =====================
 
 Returns the size of the file default in bytes. You can pass in different FileSizeUnit values as the first parameter to get

@@ -120,14 +120,14 @@ final class FileTest extends CIUnitTestCase
         $divider = 1024 ** $unit->value;
         $file    = new File(SYSTEMPATH . 'Common.php');
         $size    = number_format(filesize(SYSTEMPATH . 'Common.php') / $divider, 3);
-        $this->assertSame($size, $file->getSizeByUnitBinary($unit));
+        $this->assertSame($size, $file->getSizeByBinaryUnit($unit));
     }
 
     public function testGetSizeBinaryBytes(): void
     {
         $file = new File(SYSTEMPATH . 'Common.php');
         $size = filesize(SYSTEMPATH . 'Common.php');
-        $this->assertSame($size, $file->getSizeByUnitBinary(FileSizeUnit::B));
+        $this->assertSame($size, $file->getSizeByBinaryUnit(FileSizeUnit::B));
     }
 
     #[DataProvider('provideGetSizeData')]
@@ -136,14 +136,14 @@ final class FileTest extends CIUnitTestCase
         $divider = 1000 ** $unit->value;
         $file    = new File(SYSTEMPATH . 'Common.php');
         $size    = number_format(filesize(SYSTEMPATH . 'Common.php') / $divider, 3);
-        $this->assertSame($size, $file->getSizeByUnitMetric($unit));
+        $this->assertSame($size, $file->getSizeByMetricUnit($unit));
     }
 
     public function testGetSizeMetricBytes(): void
     {
         $file = new File(SYSTEMPATH . 'Common.php');
         $size = filesize(SYSTEMPATH . 'Common.php');
-        $this->assertSame($size, $file->getSizeByUnitMetric(FileSizeUnit::B));
+        $this->assertSame($size, $file->getSizeByMetricUnit(FileSizeUnit::B));
     }
 
     public function testThrowsExceptionIfNotAFile(): void
