@@ -3,7 +3,6 @@
 namespace Config;
 
 use Kint\Parser\ConstructablePluginInterface;
-use Kint\Renderer\AbstractRenderer;
 use Kint\Renderer\Rich\TabPluginInterface;
 use Kint\Renderer\Rich\ValuePluginInterface;
 
