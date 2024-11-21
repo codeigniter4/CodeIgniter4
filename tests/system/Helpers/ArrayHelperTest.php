@@ -268,7 +268,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $success = array_sort_by_multiple_keys($data, $sortColumns);
 
         $this->assertTrue($success);
-        $this->assertSame($expected, array_column((array) $data, 'name'));
+        $this->assertSame($expected, array_column($data, 'name'));
     }
 
     #[DataProvider('provideSortByMultipleKeys')]
