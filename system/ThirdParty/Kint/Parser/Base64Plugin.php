@@ -27,24 +27,22 @@ declare(strict_types=1);
 
 namespace Kint\Parser;
 
-use Kint\Zval\Representation\Representation;
-use Kint\Zval\Value;
+use Kint\Value\AbstractValue;
+use Kint\Value\Context\BaseContext;
+use Kint\Value\Representation\ValueRepresentation;
+use Kint\Value\StringValue;
 
-class Base64Plugin extends AbstractPlugin
+class Base64Plugin extends AbstractPlugin implements PluginCompleteInterface
 {
     /**
      * The minimum length before a string will be considered for base64 decoding.
-     *
-     * @var int
      */
-    public static $min_length_hard = 16;
+    public static int $min_length_hard = 16;
 
     /**
      * The minimum length before the base64 decoding will take precedence.
-     *
-     * @var int
      */
-    public static $min_length_soft = 50;
+    public static int $min_length_soft = 50;
 
     public function getTypes(): array
     {
@@ -56,41 +54,50 @@ class Base64Plugin extends AbstractPlugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parseComplete(&$var, AbstractValue $v, int $trigger): AbstractValue
     {
         if (\strlen($var) < self::$min_length_hard || \strlen($var) % 4) {
-            return;
+            return $v;
         }
 
         if (\preg_match('/^[A-Fa-f0-9]+$/', $var)) {
-            return;
+            return $v;
         }
 
         if (!\preg_match('/^[A-Za-z0-9+\\/=]+$/', $var)) {
-            return;
+            return $v;
         }
 
         $data = \base64_decode($var, true);
 
         if (false === $data) {
-            return;
+            return $v;
         }
 
-        $base_obj = new Value();
-        $base_obj->depth = $o->depth + 1;
-        $base_obj->name = 'base64_decode('.$o->name.')';
+        $c = $v->getContext();
 
-        if ($o->access_path) {
-            $base_obj->access_path = 'base64_decode('.$o->access_path.')';
+        $base = new BaseContext('base64_decode('.$c->getName().')');
+        $base->depth = $c->getDepth() + 1;
+
+        if (null !== ($ap = $c->getAccessPath())) {
+            $base->access_path = 'base64_decode('.$ap.')';
         }
 
-        $r = new Representation('Base64');
-        $r->contents = $this->parser->parse($data, $base_obj);
+        $data = $this->getParser()->parse($data, $base);
+        $data->flags |= AbstractValue::FLAG_GENERATED;
+
+        if (!$data instanceof StringValue || false === $data->getEncoding()) {
+            return $v;
+        }
+
+        $r = new ValueRepresentation('Base64', $data);
 
         if (\strlen($var) > self::$min_length_soft) {
-            $o->addRepresentation($r, 0);
+            $v->addRepresentation($r, 0);
         } else {
-            $o->addRepresentation($r);
+            $v->addRepresentation($r);
         }
+
+        return $v;
     }
 }

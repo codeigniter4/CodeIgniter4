@@ -29,5 +29,5 @@ namespace Kint\Parser;
 
 interface ConstructablePluginInterface extends PluginInterface
 {
-    public function __construct();
+    public function __construct(Parser $p);
 }
