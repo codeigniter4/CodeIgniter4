@@ -66,8 +66,13 @@ the results in kibibytes or mebibytes, respectively:
 
 A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
 
+
+.. _file-get-size-by-binary-unit:
+
 getSizeByBinaryUnit()
 =====================
+
+.. versionadded:: 4.6.0
 
 Returns the size of the file default in bytes. You can pass in different FileSizeUnit values as the first parameter to get
 the results in kibibytes, mebibytes etc. respectively. You can pass in a precision value as the second parameter to define
@@ -78,8 +83,13 @@ the amount of decimal places.
 
 A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
 
+
+.. _file-get-size-by-metric-unit:
+
 getSizeByMetricUnit()
 =====================
+
+.. versionadded:: 4.6.0
 
 Returns the size of the file default in bytes. You can pass in different FileSizeUnit values as the first parameter to get
 the results in kilobytes, megabytes etc. respectively. You can pass in a precision value as the second parameter to define

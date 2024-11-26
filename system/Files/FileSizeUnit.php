@@ -13,10 +13,16 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Files;
 
-use InvalidArgumentException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 
 enum FileSizeUnit: int
 {
+    case B  = 0;
+    case KB = 1;
+    case MB = 2;
+    case GB = 3;
+    case TB = 4;
+
     /**
      * Allows the creation of a FileSizeUnit from Strings like "kb" or "mb"
      *
@@ -33,10 +39,4 @@ enum FileSizeUnit: int
             default => throw new InvalidArgumentException("Invalid unit: {$unit}"),
         };
     }
-
-    case B  = 0;
-    case KB = 1;
-    case MB = 2;
-    case GB = 3;
-    case TB = 4;
 }
