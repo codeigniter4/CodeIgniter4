@@ -41,7 +41,7 @@ Bugs Fixed
 
 - **Validation:** Fixed a bug where complex language strings were not properly handled.
 - **CURLRequest:** Added support for handling proxy responses using HTTP versions other than 1.1.
-- **PostgreSQL Connection:** Fixed bug that PostgreSQL cannot reconnect the database with ``reconnect()`` method.
+- **Database:** Fixed a bug that caused ``Postgre\Connection::reconnect()`` method to throw an error when the connection had not yet been established.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
