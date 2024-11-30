@@ -581,7 +581,7 @@ the previous section. Specify the segment number to use as the fifth parameter t
 </pre></div>
 </div>
 <p>Please note: <code class="docutils literal notranslate"><span class="pre">$segment</span></code> value cannot be greater than the number of URI segments plus 1.</p>
-<p>If you in need to show many pagers on one page then additional parameter which will define a group could be helpful:</p>
+<p>If you need to show many pagers on one page then the additional parameter which will define a group could be helpful:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$pager</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;pager&#39;</span><span class="p">);</span>
@@ -725,7 +725,7 @@ usefulness. It is easiest to demonstrate creating a new view by showing you the 
 </div>
 <section id="setsurroundcount">
 <h4>setSurroundCount()<a class="headerlink" href="#setsurroundcount" title="Permalink to this heading"></a></h4>
-<p>In the first line, the <code class="docutils literal notranslate"><span class="pre">setSurroundCount()</span></code> method specifies than we want to show two links to either side of
+<p>In the first line, the <code class="docutils literal notranslate"><span class="pre">setSurroundCount()</span></code> method specifies that we want to show two links to either side of
 the current page link. The only parameter that it accepts is the number of links to show.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -774,7 +774,7 @@ title, which is just the number, and a boolean that tells whether the link is th
 </div>
 <p>In the code presented for the standard pagination structure, the methods <a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a> are used to obtain the links to the previous and next pagination groups respectively.</p>
 <p>If you want to use the pagination structure where prev and next will be links to the previous and next pages based on the current page, just replace the <a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a> methods with <a class="reference internal" href="#getpreviouspage-getnextpage">getPreviousPage() &amp; getNextPage()</a>, and the methods <a class="reference internal" href="#hasprevious-hasnext">hasPrevious() &amp; hasNext()</a> by <a class="reference internal" href="#haspreviouspage-hasnextpage">hasPreviousPage() &amp; hasNextPage()</a> respectively.</p>
-<p>See following an example with these changes:</p>
+<p>See the following example with these changes:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">nav</span> <span class="nx">aria</span><span class="o">-</span><span class="nx">label</span><span class="o">=</span><span class="s2">&quot;&lt;?= lang(&#39;Pager.pageNavigation&#39;) ?&gt;&quot;</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="nx">ul</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;pagination&quot;</span><span class="o">&gt;</span>
         <span class="o">&lt;?</span><span class="nx">php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">hasPreviousPage</span><span class="p">())</span> <span class="o">:</span> <span class="cp">?&gt;</span>
@@ -891,7 +891,7 @@ retrieve the last page number.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 29, 2024.
+      <span class="lastupdated">Last updated on Nov 30, 2024.
       </span></p>
   </div>
 
