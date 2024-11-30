@@ -163,17 +163,6 @@ class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('http://www.foo.com/api/v1/', $request->getBaseURI()->__toString());
     }
 
-    public function testOptionsBaseURIOverride(): void
-    {
-        $options = [
-            'baseURI' => 'http://www.foo.com/api/v1/',
-            'baseURI' => 'http://bogus/com',
-        ];
-        $request = $this->getRequest($options);
-
-        $this->assertSame('http://bogus/com', $request->getBaseURI()->__toString());
-    }
-
     public function testOptionsHeaders(): void
     {
         $options = [
