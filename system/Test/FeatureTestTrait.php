@@ -179,8 +179,8 @@ trait FeatureTestTrait
         $method = strtoupper($method);
 
         // Simulate having a blank session
-        $_SESSION                  = [];
-        $_SERVER['REQUEST_METHOD'] = $method;
+        $_SESSION = [];
+        service('superglobals')->setServer('REQUEST_METHOD', $method);
 
         $request = $this->setupRequest($method, $path);
         $request = $this->setupHeaders($request);

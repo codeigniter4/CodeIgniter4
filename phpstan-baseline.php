@@ -15170,12 +15170,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/HomeTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: codeigniter.superglobalAccessAssign
-	'message' => '#^Assigning string directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HomeTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: empty.notAllowed
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
@@ -15507,13 +15501,13 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: argument.type
-	'message' => '#^Parameter \\#1 \\$row of method CodeIgniter\\\\BaseModel\\:\\:save\\(\\) expects array<int\\|string, bool\\|float\\|int\\|object\\|string\\|null>\\|object, array<string, array<int, string>> given\\.$#',
+	'message' => '#^Parameter \\#1 \\$row of method CodeIgniter\\\\BaseModel\\:\\:save\\(\\) expects array\\<int\\|string, bool\\|float\\|int\\|object\\|string\\|null\\>\\|object, array\\<string, array\\<int, string\\>\\> given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/DataConverterModelTest.php',
 ];
 $ignoreErrors[] = [
 	// identifier: argument.type
-	'message' => '#^Parameter \\#2 \\$row of method CodeIgniter\\\\Model\\:\\:update\\(\\) expects array<int\\|string, bool\\|float\\|int\\|object\\|string\\|null>\\|object\\|null, array<string, array<int, string>> given\\.$#',
+	'message' => '#^Parameter \\#2 \\$row of method CodeIgniter\\\\Model\\:\\:update\\(\\) expects array\\<int\\|string, bool\\|float\\|int\\|object\\|string\\|null\\>\\|object\\|null, array\\<string, array\\<int, string\\>\\> given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/DataConverterModelTest.php',
 ];
@@ -15903,7 +15897,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: argument.type
-	'message' => '#^Parameter \\#1 \\$row of method CodeIgniter\\\\BaseModel\\:\\:save\\(\\) expects array<int\\|string, bool\\|float\\|int\\|object\\|string\\|null>\\|object, array<int, array>\\|null given\\.$#',
+	'message' => '#^Parameter \\#1 \\$row of method CodeIgniter\\\\BaseModel\\:\\:save\\(\\) expects array\\<int\\|string, bool\\|float\\|int\\|object\\|string\\|null\\>\\|object, array\\<int, array\\>\\|null given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Models/UpdateModelTest.php',
 ];
@@ -16964,12 +16958,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: codeigniter.superglobalAccessAssign
-	'message' => '#^Assigning string directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Test/FeatureTestAutoRoutingImprovedTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: empty.notAllowed
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
@@ -17074,12 +17062,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	// identifier: codeigniter.superglobalAccessAssign
 	'message' => '#^Assigning \'test\' directly on offset \'HTTPS\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: codeigniter.superglobalAccessAssign
-	'message' => '#^Assigning string directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Test/FeatureTestTraitTest.php',
 ];
