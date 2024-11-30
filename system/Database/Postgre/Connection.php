@@ -149,8 +149,9 @@ class Connection extends BaseConnection
      */
     public function reconnect()
     {
-        if (pg_ping($this->connID) === false) {
-            $this->connID = false;
+        if ($this->connID === false || pg_ping($this->connID) === false) {
+            $this->close();
+            $this->initialize();
         }
     }
 
