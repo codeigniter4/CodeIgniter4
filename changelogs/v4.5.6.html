@@ -327,6 +327,7 @@
 <li><p><strong>Routing:</strong> Fixed a TypeError in <cite>str_replace()</cite> when <cite>Routing::$translateURIDashes</cite> is set to <cite>true</cite> and a route is defined using a closure.</p></li>
 <li><p><strong>Validation:</strong> Fixed a bug where complex language strings were not properly handled.</p></li>
 <li><p><strong>CURLRequest:</strong> Added support for handling proxy responses using HTTP versions other than 1.1.</p></li>
+<li><p><strong>Database:</strong> Fixed a bug that caused <code class="docutils literal notranslate"><span class="pre">Postgre\Connection::reconnect()</span></code> method to throw an error when the connection had not yet been established.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
