@@ -96,6 +96,29 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
         $this->assertTrue($result);
     }
 
+    public function testIsUniqueWithDBConnectionAsParameter(): void
+    {
+        $this->validation->setRules(['email' => 'is_unique[tests.user.email]']);
+
+        $data = ['email' => 'derek@world.co.uk'];
+
+        $result = $this->validation->run($data);
+
+        $this->assertTrue($result);
+    }
+
+    public function testIsUniqueWrongParametersThrowInvalidArgumentException(): void
+    {
+        $this->validation->setRules(['email' => 'is_unique[invalid_parameters]']);
+
+        $data = ['email' => 'derek@world.co.uk'];
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The field must be in the format "table.field" or "dbGroup.table.field".');
+
+        $this->validation->run($data);
+    }
+
     public function testIsUniqueWithInvalidDBGroup(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -294,5 +317,32 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
             ]);
 
         $this->assertTrue($this->createRules()->is_not_unique('deva@example.com', 'user.email,id,{id}', []));
+    }
+
+    public function testIsNotUniqueWithDBConnectionAsParameter(): void
+    {
+        Database::connect()
+            ->table('user')
+            ->insert([
+                'name'    => 'Derek Travis',
+                'email'   => 'derek@world.com',
+                'country' => 'Elbonia',
+            ]);
+
+        $data = ['email' => 'derek@world.com'];
+        $this->validation->setRules(['email' => 'is_not_unique[tests.user.email]']);
+        $this->assertTrue($this->validation->run($data));
+    }
+
+    public function testIsNotUniqueWrongParametersThrowInvalidArgumentException(): void
+    {
+        $this->validation->setRules(['email' => 'is_not_unique[invalid_parameters]']);
+
+        $data = ['email' => 'derek@world.co.uk'];
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The field must be in the format "table.field" or "dbGroup.table.field".');
+
+        $this->validation->run($data);
     }
 }
