@@ -1219,7 +1219,8 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
 
         $options = $this->request->curl_options;
 
-        $this->assertArrayNotHasKey(CURLOPT_IPRESOLVE, $options);
+        $this->assertArrayHasKey(CURLOPT_IPRESOLVE, $options);
+        $this->assertSame(\CURL_IPRESOLVE_WHATEVER, $options[CURLOPT_IPRESOLVE]);
     }
 
     public function testCookieOption(): void
