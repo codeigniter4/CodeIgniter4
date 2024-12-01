@@ -30,7 +30,7 @@ final class CURLRequestShareOptionsTest extends CURLRequestTest
 {
     protected function getRequest(array $options = []): MockCURLRequest
     {
-        $uri = isset($options['base_uri']) ? new URI($options['base_uri']) : new URI();
+        $uri = isset($options['baseURI']) ? new URI($options['baseURI']) : new URI();
         $app = new App();
 
         $config               = new ConfigCURLRequest();
@@ -43,7 +43,7 @@ final class CURLRequestShareOptionsTest extends CURLRequestTest
     public function testHeaderContentLengthNotSharedBetweenRequests(): void
     {
         $options = [
-            'base_uri' => 'http://www.foo.com/api/v1/',
+            'baseURI' => 'http://www.foo.com/api/v1/',
         ];
         $request = $this->getRequest($options);
 
@@ -61,8 +61,8 @@ final class CURLRequestShareOptionsTest extends CURLRequestTest
     public function testBodyIsResetOnSecondRequest(): void
     {
         $request = $this->getRequest([
-            'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 100,
+            'baseURI' => 'http://www.foo.com/api/v1/',
+            'delay'   => 100,
         ]);
         $request->setBody('name=George');
         $request->setOutput('Hi there');
