@@ -64,7 +64,7 @@ class Connection extends BaseConnection
      *
      * @see https://www.sqlite.org/pragma.html#pragma_synchronous
      */
-    protected $synchronous;
+    protected ?int $synchronous;
 
     /**
      * @return void
