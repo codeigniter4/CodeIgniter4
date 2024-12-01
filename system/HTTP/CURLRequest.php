@@ -650,14 +650,12 @@ class CURLRequest extends OutgoingRequest
         }
 
         // Resolve IP
-        if (array_key_exists('force_ip_resolve', $config) && is_string($config['force_ip_resolve']) && $config['force_ip_resolve'] !== '') {
-            $protocolVersion = $config['force_ip_resolve'];
-
-            if ($protocolVersion === 'v4') {
-                $curlOptions[CURLOPT_IPRESOLVE] = CURL_IPRESOLVE_V4;
-            } elseif ($protocolVersion === 'v6') {
-                $curlOptions[CURLOPT_IPRESOLVE] = CURL_IPRESOLVE_V6;
-            }
+        if (array_key_exists('force_ip_resolve', $config)) {
+            $curlOptions[CURLOPT_IPRESOLVE] = match ($config['force_ip_resolve']) {
+                'v4'    => CURL_IPRESOLVE_V4,
+                'v6'    => CURL_IPRESOLVE_V6,
+                default => CURL_IPRESOLVE_WHATEVER
+            };
         }
 
         // version
