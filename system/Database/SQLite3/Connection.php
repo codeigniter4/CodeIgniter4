@@ -60,7 +60,7 @@ class Connection extends BaseConnection
     /**
      * The setting of the "synchronous" flag
      *
-     * @var int|null flag
+     * @var int<0, 3>|null flag
      *
      * @see https://www.sqlite.org/pragma.html#pragma_synchronous
      */
