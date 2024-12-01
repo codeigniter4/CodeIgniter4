@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live\SQLite3;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database;
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
