@@ -12267,12 +12267,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.return
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\ConfigCheckTest\\:\\:getBuffer\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Commands/Utilities/ConfigCheckTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: missingType.return
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\NamespacesTest\\:\\:getBuffer\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Commands/Utilities/NamespacesTest.php',
