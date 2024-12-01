@@ -160,6 +160,11 @@ Removed Deprecated Items
 Enhancements
 ************
 
+Publisher
+=========
+
+- ``Publisher::discover()`` now accepts a second parameter (``namespace``) specifying the namespace in which publishers should be searched. See :ref:`discovery-in-a-specific-namespace` for the details.
+
 Exceptions
 ==========
 

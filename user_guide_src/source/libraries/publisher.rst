@@ -75,6 +75,31 @@ Most of the time you will not need to handle your own discovery, just use the pr
 By default on your class extension ``publish()`` will add all files from your ``$source`` and merge them
 out to your destination, overwriting on collision.
 
+.. _discovery-in-a-specific-namespace:
+
+Discovery in a specific namespace
+---------------------------------
+
+.. versionadded:: 4.6.0
+
+Since v4.6.0, you can also scan a specific namespace. This not only reduces the number of files to be scanned,
+but also avoids the need to rerun a Publisher. All you need to do is specify the desired root namespace in the
+second parameter of the ``discover()`` method.
+
+.. literalinclude:: publisher/016.php
+
+The specified namespace must be known to CodeIgniter. You can check the list of all namespaces using the "spark namespaces" command:
+
+.. code-block:: console
+
+    php spark namespaces
+
+The "publish" command also offers the ``--namespace`` option to define the namespace when searching for Publishers that might come from a library.
+
+.. code-block:: console
+
+    php spark publish --namespace Namespace\Vendor\Package
+
 Security
 ========
 
