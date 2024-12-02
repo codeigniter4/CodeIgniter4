@@ -364,6 +364,15 @@ is true:
 
 .. _curlrequest-version:
 
+force_ip_resolve
+================
+
+.. versionadded:: 4.6.0
+
+To set the HTTP handlers to use ``v4`` only ipv4 protocol or ``v6`` for ipv6 protocol:
+
+.. literalinclude:: curlrequest/036.php
+
 version
 =======
 
