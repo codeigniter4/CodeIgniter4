@@ -321,12 +321,12 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$src</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|array</span></code></span>) – Image source URI, or array of attributes and values</p></li>
-<li><p><strong>$indexPage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to treat <code class="docutils literal notranslate"><span class="pre">$src</span></code> as a routed URI string</p></li>
+<li><p><strong>$indexPage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Should <code class="docutils literal notranslate"><span class="pre">Config\App::$indexPage</span></code> be added to the source path</p></li>
 <li><p><strong>$attributes</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Additional HTML attributes</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>HTML image element</p>
+<dd class="field-even"><p>An HTML image element</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -419,7 +419,7 @@ of serving images from your app that are not web-accessible (e.g., in <strong>pu
 <li><p><strong>$type</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Type of the related document</p></li>
 <li><p><strong>$title</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Link title</p></li>
 <li><p><strong>$media</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Media type</p></li>
-<li><p><strong>$indexPage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to treat <code class="docutils literal notranslate"><span class="pre">$src</span></code> as a routed URI string</p></li>
+<li><p><strong>$indexPage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Should indexPage be added to the link path</p></li>
 <li><p><strong>$hreflang</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Hreflang type</p></li>
 </ul>
 </dd>
@@ -432,7 +432,7 @@ of serving images from your app that are not web-accessible (e.g., in <strong>pu
 </dl>
 <p>Lets you create HTML <code class="docutils literal notranslate"><span class="pre">&lt;link&gt;</span></code> elements. This is useful for stylesheet links,
 as well as other links. The parameters are <em>href</em>, with optional <em>rel</em>,
-<em>type</em>, <em>title</em>, <em>media</em> and <em>indexPage</em>.</p>
+<em>type</em>, <em>title</em>, <em>media</em>, <em>indexPage</em> and <em>hreflang</em>.</p>
 <p><em>indexPage</em> is a boolean value that specifies if the <em>href</em> should have
 the page specified by <code class="docutils literal notranslate"><span class="pre">$config['indexPage']</span></code> added to the address it creates.</p>
 <p>Example:</p>
@@ -671,7 +671,7 @@ ordered lists instead of <code class="docutils literal notranslate"><span class=
 <li><p><strong>$unsupportedMessage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The message to display if the video element is not supported by the browser</p></li>
 <li><p><strong>$attributes</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – HTML attributes</p></li>
 <li><p><strong>$tracks</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Use the track function inside an array. See <a class="reference internal" href="#track" title="track"><code class="xref php php-func docutils literal notranslate"><span class="pre">track()</span></code></a> function</p></li>
-<li><p><strong>$indexPage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – </p></li>
+<li><p><strong>$indexPage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Should indexPage be added to the video source path</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -746,7 +746,7 @@ Example:</p>
 <li><p><strong>$unsupportedMessage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The message to display if the audio element is not supported by the browser</p></li>
 <li><p><strong>$attributes</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – </p></li>
 <li><p><strong>$tracks</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Use the track function inside an array. See <a class="reference internal" href="#track" title="track"><code class="xref php php-func docutils literal notranslate"><span class="pre">track()</span></code></a> function</p></li>
-<li><p><strong>$indexPage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – </p></li>
+<li><p><strong>$indexPage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Should indexPage be added to the audio source path</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -796,7 +796,7 @@ Example:</p>
 <li><p><strong>$src</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The path of the resource to embed</p></li>
 <li><p><strong>$type</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – MIME-type</p></li>
 <li><p><strong>$attributes</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – HTML attributes</p></li>
-<li><p><strong>$indexPage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – </p></li>
+<li><p><strong>$indexPage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Should indexPage be added to the source path</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -825,6 +825,7 @@ embed source. Example:</p>
 <li><p><strong>$data</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A resource URL</p></li>
 <li><p><strong>$type</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Content-type of the resource</p></li>
 <li><p><strong>$attributes</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – HTML attributes</p></li>
+<li><p><strong>$indexPage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Should indexPage be added to the resource URL</p></li>
 <li><p><strong>$params</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Use the param function inside an array. See <a class="reference internal" href="#param" title="param"><code class="xref php php-func docutils literal notranslate"><span class="pre">param()</span></code></a> function</p></li>
 </ul>
 </dd>
