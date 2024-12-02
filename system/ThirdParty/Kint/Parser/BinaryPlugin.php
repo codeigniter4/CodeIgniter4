@@ -27,10 +27,11 @@ declare(strict_types=1);
 
 namespace Kint\Parser;
 
-use Kint\Zval\BlobValue;
-use Kint\Zval\Value;
+use Kint\Value\AbstractValue;
+use Kint\Value\Representation\BinaryRepresentation;
+use Kint\Value\StringValue;
 
-class BinaryPlugin extends AbstractPlugin
+class BinaryPlugin extends AbstractPlugin implements PluginCompleteInterface
 {
     public function getTypes(): array
     {
@@ -42,10 +43,12 @@ class BinaryPlugin extends AbstractPlugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parseComplete(&$var, AbstractValue $v, int $trigger): AbstractValue
     {
-        if (!$o instanceof BlobValue || !\in_array($o->encoding, ['ASCII', 'UTF-8'], true)) {
-            $o->value->hints[] = 'binary';
+        if ($v instanceof StringValue && false === $v->getEncoding()) {
+            $v->addRepresentation(new BinaryRepresentation($v->getValue(), true), 0);
         }
+
+        return $v;
     }
 }

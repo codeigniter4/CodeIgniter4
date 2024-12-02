@@ -27,25 +27,29 @@ declare(strict_types=1);
 
 namespace Kint\Parser;
 
-use InvalidArgumentException;
-use Kint\Zval\Value;
+use Kint\Value\AbstractValue;
+use Kint\Value\Context\ContextInterface;
 
-class ProxyPlugin implements PluginInterface
+/**
+ * @psalm-import-type ParserTrigger from Parser
+ *
+ * @psalm-api
+ */
+class ProxyPlugin implements PluginBeginInterface, PluginCompleteInterface
 {
-    protected $parser;
-    protected $types;
-    protected $triggers;
+    protected array $types;
+    /** @psalm-var ParserTrigger */
+    protected int $triggers;
+    /** @psalm-var callable */
     protected $callback;
+    private ?Parser $parser = null;
 
     /**
-     * @param callable $callback
+     * @psalm-param ParserTrigger $triggers
+     * @psalm-param callable $callback
      */
     public function __construct(array $types, int $triggers, $callback)
     {
-        if (!\is_callable($callback)) {
-            throw new InvalidArgumentException('ProxyPlugin callback must be callable');
-        }
-
         $this->types = $types;
         $this->triggers = $triggers;
         $this->callback = $callback;
@@ -66,8 +70,23 @@ class ProxyPlugin implements PluginInterface
         return $this->triggers;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parseBegin(&$var, ContextInterface $c): ?AbstractValue
     {
-        \call_user_func_array($this->callback, [&$var, &$o, $trigger, $this->parser]);
+        return \call_user_func_array($this->callback, [
+            &$var,
+            $c,
+            Parser::TRIGGER_BEGIN,
+            $this->parser,
+        ]);
+    }
+
+    public function parseComplete(&$var, AbstractValue $v, int $trigger): AbstractValue
+    {
+        return \call_user_func_array($this->callback, [
+            &$var,
+            $v,
+            $trigger,
+            $this->parser,
+        ]);
     }
 }

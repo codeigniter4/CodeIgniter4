@@ -27,10 +27,13 @@ declare(strict_types=1);
 
 namespace Kint\Parser;
 
-use Kint\Zval\Representation\ColorRepresentation;
-use Kint\Zval\Value;
+use InvalidArgumentException;
+use Kint\Value\AbstractValue;
+use Kint\Value\ColorValue;
+use Kint\Value\Representation\ColorRepresentation;
+use Kint\Value\StringValue;
 
-class ColorPlugin extends AbstractPlugin
+class ColorPlugin extends AbstractPlugin implements PluginCompleteInterface
 {
     public function getTypes(): array
     {
@@ -42,24 +45,34 @@ class ColorPlugin extends AbstractPlugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parseComplete(&$var, AbstractValue $v, int $trigger): AbstractValue
     {
         if (\strlen($var) > 32) {
-            return;
+            return $v;
+        }
+
+        if (!$v instanceof StringValue) {
+            return $v;
         }
 
         $trimmed = \strtolower(\trim($var));
 
         if (!isset(ColorRepresentation::$color_map[$trimmed]) && !\preg_match('/^(?:(?:rgb|hsl)[^\\)]{6,}\\)|#[0-9a-fA-F]{3,8})$/', $trimmed)) {
-            return;
+            return $v;
         }
 
-        $rep = new ColorRepresentation($var);
-
-        if ($rep->variant) {
-            $o->removeRepresentation($o->value);
-            $o->addRepresentation($rep, 0);
-            $o->hints[] = 'color';
+        try {
+            $rep = new ColorRepresentation($var);
+        } catch (InvalidArgumentException $e) {
+            return $v;
         }
+
+        $out = new ColorValue($v->getContext(), $v->getValue(), $v->getEncoding());
+        $out->flags = $v->flags;
+        $out->appendRepresentations($v->getRepresentations());
+        $out->removeRepresentation('contents');
+        $out->addRepresentation($rep, 0);
+
+        return $out;
     }
 }

@@ -27,8 +27,9 @@ declare(strict_types=1);
 
 namespace Kint\Parser;
 
-use Kint\Zval\Representation\Representation;
-use Kint\Zval\Value;
+use Kint\Value\AbstractValue;
+use Kint\Value\ArrayValue;
+use Kint\Value\Representation\TableRepresentation;
 
 // Note: Interaction with ArrayLimitPlugin:
 // Any array limited children will be shown in tables identically to
@@ -36,8 +37,11 @@ use Kint\Zval\Value;
 // and it's size anyway. Because ArrayLimitPlugin halts the parse on finding
 // a limit all other plugins including this one are stopped, so you cannot get
 // a tabular representation of an array that is longer than the limit.
-class TablePlugin extends AbstractPlugin
+class TablePlugin extends AbstractPlugin implements PluginCompleteInterface
 {
+    public static int $max_width = 300;
+    public static int $min_width = 2;
+
     public function getTypes(): array
     {
         return ['array'];
@@ -48,48 +52,52 @@ class TablePlugin extends AbstractPlugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parseComplete(&$var, AbstractValue $v, int $trigger): AbstractValue
     {
-        if (empty($o->value->contents)) {
-            return;
+        if (!$v instanceof ArrayValue) {
+            return $v;
         }
 
-        $array = $this->parser->getCleanArray($var);
-
-        if (\count($array) < 2) {
-            return;
+        if (\count($var) < 2) {
+            return $v;
         }
 
         // Ensure this is an array of arrays and that all child arrays have the
         // same keys. We don't care about their children - if there's another
         // "table" inside we'll just make another one down the value tab
         $keys = null;
-        foreach ($array as $elem) {
-            if (!\is_array($elem) || \count($elem) < 2) {
-                return;
+        foreach ($var as $elem) {
+            if (!\is_array($elem)) {
+                return $v;
             }
 
             if (null === $keys) {
+                if (\count($elem) < self::$min_width || \count($elem) > self::$max_width) {
+                    return $v;
+                }
+
                 $keys = \array_keys($elem);
             } elseif (\array_keys($elem) !== $keys) {
-                return;
+                return $v;
             }
+        }
+
+        $children = $v->getContents();
+
+        if (!$children) {
+            return $v;
         }
 
         // Ensure none of the child arrays are recursion or depth limit. We
         // don't care if their children are since they are the table cells
-        foreach ($o->value->contents as $childarray) {
-            if (empty($childarray->value->contents)) {
-                return;
+        foreach ($children as $childarray) {
+            if (!$childarray instanceof ArrayValue || empty($childarray->getContents())) {
+                return $v;
             }
         }
 
-        // Objects by reference for the win! We can do a copy-paste of the value
-        // representation contents and just slap a new hint on there and hey
-        // presto we have our table representation with no extra memory used!
-        $table = new Representation('Table');
-        $table->contents = $o->value->contents;
-        $table->hints[] = 'table';
-        $o->addRepresentation($table, 0);
+        $v->addRepresentation(new TableRepresentation($children), 0);
+
+        return $v;
     }
 }

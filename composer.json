@@ -19,7 +19,7 @@
     "require-dev": {
         "codeigniter/phpstan-codeigniter": "^1.4",
         "fakerphp/faker": "^1.9",
-        "kint-php/kint": "^5.0.4",
+        "kint-php/kint": "^6.0",
         "mikey179/vfsstream": "^1.6",
         "nexusphp/tachycardia": "^2.0",
         "phpstan/extension-installer": "^1.4",
