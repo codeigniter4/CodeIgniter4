@@ -507,7 +507,7 @@ framework. They are applied before and after other kinds of filters that are
 explained below.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The Required Filters are always executed even if a route does not exist.</p>
+<p>The Required Filters are always executed. However, if the route does not exist, only the Before Filters are executed.</p>
 </div>
 <p>You should take care with how many you use here, since it could have performance
 implications to have too many run on every request. But the filters set by default
@@ -880,7 +880,7 @@ pseudo-variable:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 02, 2024.
+      <span class="lastupdated">Last updated on Dec 04, 2024.
       </span></p>
   </div>
 
