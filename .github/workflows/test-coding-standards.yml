@@ -59,3 +59,5 @@ jobs:
 
       - name: Run lint
         run: composer cs
+        env:
+            PHP_CS_FIXER_IGNORE_ENV: ${{ matrix.php-version == '8.4' }}
