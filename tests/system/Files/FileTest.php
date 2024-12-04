@@ -15,6 +15,7 @@ namespace CodeIgniter\Files;
 
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use ZipArchive;
 
@@ -113,6 +114,38 @@ final class FileTest extends CIUnitTestCase
         $this->assertSame($size, $file->getSizeByUnit('b'));
     }
 
+    #[DataProvider('provideGetSizeData')]
+    public function testGetSizeBinary(FileSizeUnit $unit): void
+    {
+        $divider = 1024 ** $unit->value;
+        $file    = new File(SYSTEMPATH . 'Common.php');
+        $size    = number_format(filesize(SYSTEMPATH . 'Common.php') / $divider, 3);
+        $this->assertSame($size, $file->getSizeByBinaryUnit($unit));
+    }
+
+    public function testGetSizeBinaryBytes(): void
+    {
+        $file = new File(SYSTEMPATH . 'Common.php');
+        $size = filesize(SYSTEMPATH . 'Common.php');
+        $this->assertSame($size, $file->getSizeByBinaryUnit(FileSizeUnit::B));
+    }
+
+    #[DataProvider('provideGetSizeData')]
+    public function testGetSizeMetric(FileSizeUnit $unit): void
+    {
+        $divider = 1000 ** $unit->value;
+        $file    = new File(SYSTEMPATH . 'Common.php');
+        $size    = number_format(filesize(SYSTEMPATH . 'Common.php') / $divider, 3);
+        $this->assertSame($size, $file->getSizeByMetricUnit($unit));
+    }
+
+    public function testGetSizeMetricBytes(): void
+    {
+        $file = new File(SYSTEMPATH . 'Common.php');
+        $size = filesize(SYSTEMPATH . 'Common.php');
+        $this->assertSame($size, $file->getSizeByMetricUnit(FileSizeUnit::B));
+    }
+
     public function testThrowsExceptionIfNotAFile(): void
     {
         $this->expectException(FileNotFoundException::class);
@@ -134,5 +167,26 @@ final class FileTest extends CIUnitTestCase
 
         unlink(SYSTEMPATH . 'Common_Copy.php');
         unlink(SYSTEMPATH . 'Common_Copy_5.php');
+    }
+
+    /**
+     * @return array<string, array<int, FileSizeUnit>>
+     */
+    public static function provideGetSizeData()
+    {
+        return [
+            'returns KB binary' => [
+                FileSizeUnit::KB,
+            ],
+            'returns MB binary' => [
+                FileSizeUnit::MB,
+            ],
+            'returns GB binary' => [
+                FileSizeUnit::GB,
+            ],
+            'returns TB binary' => [
+                FileSizeUnit::TB,
+            ],
+        ];
     }
 }

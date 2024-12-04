@@ -222,6 +222,8 @@ Model
 Libraries
 =========
 
+- **File:** Added ``getSizeByBinaryUnit()`` and ``getSizeByMetricUnit()`` to ``File`` class.
+  See :ref:`File::getSizeByBinaryUnit() <file-get-size-by-binary-unit>` and :ref:`File::getSizeByMetricUnit() <file-get-size-by-metric-unit>`.
 - **FileCollection:** Added ``retainMultiplePatterns()`` to ``FileCollection`` class.
   See :ref:`FileCollection::retainMultiplePatterns() <file-collections-retain-multiple-patterns>`.
 - **Validation:** Added ``min_dims`` validation rule to ``FileRules`` class. See
@@ -286,6 +288,9 @@ Deprecations
     - The properties ``$arguments`` and ``$argumentsClass`` of ``Filters`` have
       been deprecated. No longer used.
     - The ``Filters::getArguments()`` method has been deprecated. No longer used.
+- **File:**
+    - The function ``getSizeByUnit()`` of ``File`` has been deprecated.
+      Use either ``getSizeByBinaryUnit()`` or ``getSizeByMetricUnit()`` instead.
 
 **********
 Bugs Fixed
