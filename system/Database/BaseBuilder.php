@@ -836,7 +836,7 @@ class BaseBuilder
      * Generates a WHERE field IN('item', 'item') SQL query,
      * joined with 'AND' if appropriate.
      *
-     * @param array|BaseBuilder|Closure|string $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure(BaseBuilder):BaseBuilder|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -849,7 +849,7 @@ class BaseBuilder
      * Generates a WHERE field IN('item', 'item') SQL query,
      * joined with 'OR' if appropriate.
      *
-     * @param array|BaseBuilder|Closure|string $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure(BaseBuilder):BaseBuilder|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -862,7 +862,7 @@ class BaseBuilder
      * Generates a WHERE field NOT IN('item', 'item') SQL query,
      * joined with 'AND' if appropriate.
      *
-     * @param array|BaseBuilder|Closure|string $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure(BaseBuilder):BaseBuilder|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -875,7 +875,7 @@ class BaseBuilder
      * Generates a WHERE field NOT IN('item', 'item') SQL query,
      * joined with 'OR' if appropriate.
      *
-     * @param array|BaseBuilder|Closure|string $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure(BaseBuilder):BaseBuilder|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -888,7 +888,7 @@ class BaseBuilder
      * Generates a HAVING field IN('item', 'item') SQL query,
      * joined with 'AND' if appropriate.
      *
-     * @param array|BaseBuilder|Closure|string $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure(BaseBuilder):BaseBuilder|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -901,7 +901,7 @@ class BaseBuilder
      * Generates a HAVING field IN('item', 'item') SQL query,
      * joined with 'OR' if appropriate.
      *
-     * @param array|BaseBuilder|Closure|string $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure(BaseBuilder):BaseBuilder|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -914,7 +914,7 @@ class BaseBuilder
      * Generates a HAVING field NOT IN('item', 'item') SQL query,
      * joined with 'AND' if appropriate.
      *
-     * @param array|BaseBuilder|Closure|string $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure(BaseBuilder):BaseBuilder|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -927,7 +927,7 @@ class BaseBuilder
      * Generates a HAVING field NOT IN('item', 'item') SQL query,
      * joined with 'OR' if appropriate.
      *
-     * @param array|BaseBuilder|Closure|string $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure(BaseBuilder):BaseBuilder|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -942,8 +942,8 @@ class BaseBuilder
      * @used-by whereNotIn()
      * @used-by orWhereNotIn()
      *
-     * @param non-empty-string|null          $key
-     * @param array|BaseBuilder|Closure|null $values The values searched on, or anonymous function with subquery
+     * @param non-empty-string|null                                   $key
+     * @param array|BaseBuilder|Closure(BaseBuilder):BaseBuilder|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      *
@@ -1197,7 +1197,7 @@ class BaseBuilder
     /**
      * Add UNION statement
      *
-     * @param BaseBuilder|Closure $union
+     * @param BaseBuilder|Closure(BaseBuilder):BaseBuilder $union
      *
      * @return $this
      */
@@ -1209,7 +1209,7 @@ class BaseBuilder
     /**
      * Add UNION ALL statement
      *
-     * @param BaseBuilder|Closure $union
+     * @param BaseBuilder|Closure(BaseBuilder):BaseBuilder $union
      *
      * @return $this
      */
@@ -1222,7 +1222,7 @@ class BaseBuilder
      * @used-by union()
      * @used-by unionAll()
      *
-     * @param BaseBuilder|Closure $union
+     * @param BaseBuilder|Closure(BaseBuilder):BaseBuilder $union
      *
      * @return $this
      */
@@ -3558,9 +3558,9 @@ class BaseBuilder
     }
 
     /**
-     * @param BaseBuilder|Closure $builder
-     * @param bool                $wrapped Wrap the subquery in brackets
-     * @param string              $alias   Subquery alias
+     * @param BaseBuilder|Closure(BaseBuilder):BaseBuilder $builder
+     * @param bool                                         $wrapped Wrap the subquery in brackets
+     * @param string                                       $alias   Subquery alias
      */
     protected function buildSubquery($builder, bool $wrapped = false, string $alias = ''): string
     {

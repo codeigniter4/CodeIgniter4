@@ -570,8 +570,8 @@ abstract class BaseModel
      * Loops over records in batches, allowing you to operate on them.
      * This method works only with dbCalls.
      *
-     * @param int     $size     Size
-     * @param Closure $userFunc Callback Function
+     * @param int                                          $size     Size
+     * @param Closure(array<string, string>|object): mixed $userFunc Callback Function
      *
      * @return void
      *

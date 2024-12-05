@@ -1158,6 +1158,8 @@ class RouteCollection implements RouteCollectionInterface
 
     /**
      * Limits the routes to a specified ENVIRONMENT or they won't run.
+     *
+     * @param Closure(RouteCollection):void $callback
      */
     public function environment(string $env, Closure $callback): RouteCollectionInterface
     {
