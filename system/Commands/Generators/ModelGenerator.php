@@ -130,6 +130,6 @@ class ModelGenerator extends BaseCommand
             $return = "'{$return}'";
         }
 
-        return $this->parseTemplate($class, ['{dbGroup}', '{table}', '{return}'], [$dbGroup, $table, $return], compact('dbGroup'));
+        return $this->parseTemplate($class, ['{dbGroup}', '{table}', '{return}'], [$dbGroup, $table, $return], ['dbGroup' => $dbGroup]);
     }
 }

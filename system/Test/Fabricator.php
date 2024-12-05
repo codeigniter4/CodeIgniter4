@@ -272,7 +272,7 @@ class Fabricator
      */
     public function setUnique(string $field, bool $reset = false, int $maxRetries = 10000): static
     {
-        $this->modifiedFields['unique'][$field] = compact('reset', 'maxRetries');
+        $this->modifiedFields['unique'][$field] = ['reset' => $reset, 'maxRetries' => $maxRetries];
 
         return $this;
     }
@@ -284,7 +284,7 @@ class Fabricator
      */
     public function setOptional(string $field, float $weight = 0.5, mixed $default = null): static
     {
-        $this->modifiedFields['optional'][$field] = compact('weight', 'default');
+        $this->modifiedFields['optional'][$field] = ['weight' => $weight, 'default' => $default];
 
         return $this;
     }
@@ -298,7 +298,7 @@ class Fabricator
      */
     public function setValid(string $field, ?Closure $validator = null, int $maxRetries = 10000): static
     {
-        $this->modifiedFields['valid'][$field] = compact('validator', 'maxRetries');
+        $this->modifiedFields['valid'][$field] = ['validator' => $validator, 'maxRetries' => $maxRetries];
 
         return $this;
     }
