@@ -389,7 +389,7 @@ class MigrationRunner
      */
     public function findMigrations(): array
     {
-        $namespaces = $this->namespace ? [$this->namespace] : array_keys(service('autoloader')->getNamespace());
+        $namespaces = $this->namespace !== null ? [$this->namespace] : array_keys(service('autoloader')->getNamespace());
         $migrations = [];
 
         foreach ($namespaces as $namespace) {
@@ -524,7 +524,7 @@ class MigrationRunner
     {
         preg_match($this->regex, $migration, $matches);
 
-        return count($matches) ? $matches[1] : '0';
+        return $matches !== [] ? $matches[1] : '0';
     }
 
     /**
@@ -539,7 +539,7 @@ class MigrationRunner
     {
         preg_match($this->regex, $migration, $matches);
 
-        return count($matches) ? $matches[2] : '';
+        return $matches !== [] ? $matches[2] : '';
     }
 
     /**
@@ -645,7 +645,7 @@ class MigrationRunner
         }
 
         // If a namespace was specified then use it
-        if ($this->namespace) {
+        if ($this->namespace !== null) {
             $builder->where('namespace', $this->namespace);
         }
 
@@ -700,7 +700,7 @@ class MigrationRunner
             ->get()
             ->getResultObject();
 
-        $batch = is_array($batch) && count($batch)
+        $batch = is_array($batch) && $batch !== []
             ? end($batch)->batch
             : 0;
 
@@ -725,7 +725,7 @@ class MigrationRunner
             ->get()
             ->getResultObject();
 
-        return count($migration) ? $migration[0]->version : '0';
+        return $migration !== [] ? $migration[0]->version : '0';
     }
 
     /**

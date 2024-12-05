@@ -44,7 +44,7 @@ final class EmailTest extends CIUnitTestCase
     }
 
     /**
-     * @param mixed $autoClear
+     * @param bool $autoClear
      */
     #[DataProvider('provideEmailSendWithClearance')]
     public function testEmailSendWithClearance($autoClear): void
@@ -55,7 +55,7 @@ final class EmailTest extends CIUnitTestCase
 
         $this->assertTrue($email->send($autoClear));
 
-        if (! $autoClear) {
+        if ($autoClear) {
             $this->assertSame('foo@foo.com', $email->archive['recipients'][0]);
         }
     }

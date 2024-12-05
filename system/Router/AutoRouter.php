@@ -105,7 +105,7 @@ final class AutoRouter implements AutoRouterInterface
         if ($httpVerb !== 'CLI') {
             $controller = '\\' . $this->defaultNamespace;
 
-            $controller .= $this->directory ? str_replace('/', '\\', $this->directory) : '';
+            $controller .= $this->directory !== null ? str_replace('/', '\\', $this->directory) : '';
             $controller .= $controllerName;
 
             $controller = strtolower($controller);

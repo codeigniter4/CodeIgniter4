@@ -121,7 +121,7 @@ class PredisHandler extends BaseHandler
                 return false;
         }
 
-        if (! $this->redis->hmset($key, ['__ci_type' => $dataType, '__ci_value' => $value])) {
+        if ($this->redis->hmset($key, ['__ci_type' => $dataType, '__ci_value' => $value]) !== 'OK') {
             return false;
         }
 

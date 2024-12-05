@@ -193,7 +193,7 @@ class Connection extends BaseConnection
                 $clientFlags
             )) {
                 // Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
-                if (($clientFlags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, 'mysqlnd 5.7.3', '<=')
+                if (($clientFlags & MYSQLI_CLIENT_SSL) !== 0 && version_compare($this->mysqli->client_info, 'mysqlnd 5.7.3', '<=')
                     && empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")->fetch_object()->Value)
                 ) {
                     $this->mysqli->close();
@@ -462,7 +462,9 @@ class Connection extends BaseConnection
             throw new DatabaseException(lang('Database.failGetIndexData'));
         }
 
-        if (! $indexes = $query->getResultArray()) {
+        $indexes = $query->getResultArray();
+
+        if ($indexes === []) {
             return [];
         }
 

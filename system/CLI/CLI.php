@@ -225,12 +225,12 @@ class CLI
         $extraOutput = '';
         $default     = '';
 
-        if ($validation && ! is_array($validation) && ! is_string($validation)) {
+        if (isset($validation) && ! is_array($validation) && ! is_string($validation)) {
             throw new InvalidArgumentException('$rules can only be of type string|array');
         }
 
         if (! is_array($validation)) {
-            $validation = $validation ? explode('|', $validation) : [];
+            $validation = ($validation !== null && $validation !== '') ? explode('|', $validation) : [];
         }
 
         if (is_string($options)) {
@@ -441,7 +441,7 @@ class CLI
      */
     public static function print(string $text = '', ?string $foreground = null, ?string $background = null)
     {
-        if ($foreground || $background) {
+        if ($foreground !== null || $background !== null) {
             $text = static::color($text, $foreground, $background);
         }
 
@@ -457,7 +457,7 @@ class CLI
      */
     public static function write(string $text = '', ?string $foreground = null, ?string $background = null)
     {
-        if ($foreground || $background) {
+        if ($foreground !== null || $background !== null) {
             $text = static::color($text, $foreground, $background);
         }
 
@@ -480,7 +480,7 @@ class CLI
         $stdout            = static::$isColored;
         static::$isColored = static::hasColorSupport(STDERR);
 
-        if ($foreground || $background) {
+        if ($foreground !== '' || $background !== null) {
             $text = static::color($text, $foreground, $background);
         }
 
@@ -768,7 +768,7 @@ class CLI
 
                     // Look for the next lines ending in ": <number>"
                     // Searching for "Columns:" or "Lines:" will fail on non-English locales
-                    if ($return === 0 && $output && preg_match('/:\s*(\d+)\n[^:]+:\s*(\d+)\n/', implode("\n", $output), $matches)) {
+                    if ($return === 0 && $output !== [] && preg_match('/:\s*(\d+)\n[^:]+:\s*(\d+)\n/', implode("\n", $output), $matches)) {
                         static::$height = (int) $matches[1];
                         static::$width  = (int) $matches[2];
                     }

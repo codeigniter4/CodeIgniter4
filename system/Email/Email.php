@@ -485,7 +485,7 @@ class Email
         if ($this->validate) {
             $this->validateEmail($this->stringToArray($from));
 
-            if ($returnPath) {
+            if ($returnPath !== null) {
                 $this->validateEmail($this->stringToArray($returnPath));
             }
         }
@@ -1233,7 +1233,9 @@ class Email
                     $this->headerStr .= $hdr;
                 }
 
-                static::strlen($body) && $body .= $this->newline . $this->newline;
+                if (static::strlen($body) > 0) {
+                    $body .= $this->newline . $this->newline;
+                }
 
                 $body .= $this->getMimeMessage() . $this->newline . $this->newline
                     . '--' . $lastBoundary . $this->newline
