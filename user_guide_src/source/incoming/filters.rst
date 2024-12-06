@@ -132,7 +132,7 @@ They are special filters that are applied to every request made by the
 framework. They are applied before and after other kinds of filters that are
 explained below.
 
-.. note:: The Required Filters are always executed even if a route does not exist.
+.. note:: The Required Filters are always executed. However, if the route does not exist, only the Before Filters are executed.
 
 You should take care with how many you use here, since it could have performance
 implications to have too many run on every request. But the filters set by default
