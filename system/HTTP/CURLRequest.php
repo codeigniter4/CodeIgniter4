@@ -469,8 +469,10 @@ class CURLRequest extends OutgoingRequest
      */
     protected function applyBody(array $curlOptions = []): array
     {
-        if ($this->body !== '' && $this->body !== null) {
-            $curlOptions[CURLOPT_POSTFIELDS] = (string) $this->getBody();
+        $requestBody = (string) $this->getBody();
+
+        if ($requestBody !== '') {
+            $curlOptions[CURLOPT_POSTFIELDS] = $requestBody;
         }
 
         return $curlOptions;
@@ -529,7 +531,7 @@ class CURLRequest extends OutgoingRequest
         }
 
         // Certificate
-        if (array_key_exists('cert', $config) && $config['cert']) {
+        if (array_key_exists('cert', $config) && $config['cert'] !== '' || $config['cert'] !== []) {
             $cert = $config['cert'];
 
             if (is_array($cert)) {
@@ -650,7 +652,7 @@ class CURLRequest extends OutgoingRequest
         }
 
         // version
-        if (array_key_exists('version', $config) && $config['version']) {
+        if (array_key_exists('version', $config) && ((is_string($config['version']) && $config['version'] !== '') || (is_numeric($config['version']) && $config['version'] !== 0))) {
             $version = sprintf('%.1F', $config['version']);
             if ($version === '1.0') {
                 $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
