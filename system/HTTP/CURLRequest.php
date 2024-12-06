@@ -531,7 +531,7 @@ class CURLRequest extends OutgoingRequest
         }
 
         // Certificate
-        if (array_key_exists('cert', $config) && $config['cert'] !== '' || $config['cert'] !== []) {
+        if (array_key_exists('cert', $config) && $config['cert']) {
             $cert = $config['cert'];
 
             if (is_array($cert)) {
