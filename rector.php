@@ -12,7 +12,6 @@ declare(strict_types=1);
  */
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
-use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
 use Rector\CodeQuality\Rector\Empty_\SimplifyEmptyCheckOnEmptyArrayRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
@@ -199,7 +198,6 @@ return RectorConfig::configure()
         EmptyOnNullableObjectToInstanceOfRector::class,
         DisallowedEmptyRuleFixerRector::class,
         PrivatizeFinalClassPropertyRector::class,
-        CompleteDynamicPropertiesRector::class,
         BooleanInIfConditionRuleFixerRector::class,
         VersionCompareFuncCallToConstantRector::class,
         AddClosureVoidReturnTypeWhereNoReturnRector::class,
@@ -213,4 +211,4 @@ return RectorConfig::configure()
         // keep '\\' prefix string on string '\Foo\Bar'
         StringClassNameToClassConstantRector::SHOULD_KEEP_PRE_SLASH => true,
     ])
-    ->withCodeQualityLevel(27);
+    ->withCodeQualityLevel(31);
