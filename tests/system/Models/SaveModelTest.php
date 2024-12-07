@@ -301,7 +301,7 @@ final class SaveModelTest extends LiveModelTestCase
 
         $this->setPrivateProperty($testModel, 'useTimestamps', true);
         $this->assertTrue($testModel->save($entity));
-        $testModel->truncate();
+        $testModel->db->table('empty')->truncate();
     }
 
     public function testInvalidAllowedFieldException(): void
@@ -372,7 +372,7 @@ final class SaveModelTest extends LiveModelTestCase
     public function testSaveNewEntityWithMappedPrimaryKey(): void
     {
         $entity = new class () extends Entity {
-            protected $name;
+            protected string $name;
             protected $attributes = [
                 'id'   => null,
                 'name' => null,
@@ -403,6 +403,6 @@ final class SaveModelTest extends LiveModelTestCase
         $this->assertTrue($testModel->save($entity));
 
         $this->seeInDatabase('empty', ['id' => 1, 'name' => 'Updated']);
-        $testModel->truncate();
+        $testModel->db->table('empty')->truncate();
     }
 }

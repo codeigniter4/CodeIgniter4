@@ -15836,12 +15836,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Models/PaginateModelTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: method.notFound
-	'message' => '#^Call to an undefined method class@anonymous/tests/system/Models/SaveModelTest\\.php\\:288\\:\\:truncate\\(\\)\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Models/SaveModelTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: property.nonObject
 	'message' => '#^Cannot access property \\$description on array\\.$#',
 	'count' => 3,
