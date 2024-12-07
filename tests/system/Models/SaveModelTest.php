@@ -365,4 +365,44 @@ final class SaveModelTest extends LiveModelTestCase
         $this->assertSame($insert['key'], $this->model->getInsertID());
         $this->seeInDatabase('without_auto_increment', $update);
     }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9306
+     */
+    public function testSaveNewEntityWithMappedPrimaryKey(): void
+    {
+        $entity = new class () extends Entity {
+            protected $name;
+            protected $attributes = [
+                'id'   => null,
+                'name' => null,
+            ];
+            protected $original = [
+                'id'   => null,
+                'name' => null,
+            ];
+            protected $datamap = [
+                'new_kid_in_the_block' => 'id',
+            ];
+        };
+
+        $testModel = new class () extends Model {
+            protected $table         = 'empty';
+            protected $allowedFields = [
+                'name',
+            ];
+            protected $returnType = 'object';
+        };
+
+        $entity->name = 'New';
+        $this->assertTrue($testModel->save($entity));
+        $this->seeInDatabase('empty', ['id' => 1, 'name' => 'New']);
+
+        $entity->new_kid_in_the_block = 1;
+        $entity->name                 = 'Updated';
+        $this->assertTrue($testModel->save($entity));
+
+        $this->seeInDatabase('empty', ['id' => 1, 'name' => 'Updated']);
+        $testModel->truncate();
+    }
 }
