@@ -467,7 +467,7 @@ class Validation implements ValidationInterface
     }
 
     /**
-     * @param Closure(bool|float|int|list<mixed>|object|string|null, bool|float|int|list<mixed>|object|string|null, string|null, string|null):bool|string $rule
+     * @param Closure(bool|float|int|list<mixed>|object|string|null, bool|float|int|list<mixed>|object|string|null, string|null, string|null): (bool|string) $rule
      */
     private function isClosure($rule): bool
     {

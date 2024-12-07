@@ -959,7 +959,7 @@ abstract class BaseConnection implements ConnectionInterface
      *                     ->get();
      *           })
      *
-     * @param Closure(BaseConnection):mixed $func
+     * @param Closure(BaseConnection): mixed $func
      *
      * @return BasePreparedQuery|null
      */
