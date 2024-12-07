@@ -195,7 +195,7 @@ class LocalizationFinder extends BaseCommand
         preg_match_all('/lang\(\'([._a-z0-9\-]+)\'\)/ui', $fileContent, $matches);
 
         if ($matches[1] === []) {
-            return ['foundLanguageKeys' => $foundLanguageKeys, 'badLanguageKeys' => $badLanguageKeys];
+            return compact('foundLanguageKeys', 'badLanguageKeys');
         }
 
         foreach ($matches[1] as $phraseKey) {
@@ -228,7 +228,7 @@ class LocalizationFinder extends BaseCommand
             }
         }
 
-        return ['foundLanguageKeys' => $foundLanguageKeys, 'badLanguageKeys' => $badLanguageKeys];
+        return compact('foundLanguageKeys', 'badLanguageKeys');
     }
 
     private function isIgnoredFile(SplFileInfo $file): bool
@@ -384,6 +384,6 @@ class LocalizationFinder extends BaseCommand
             $badLanguageKeys   = array_merge($findInFile['badLanguageKeys'], $badLanguageKeys);
         }
 
-        return ['foundLanguageKeys' => $foundLanguageKeys, 'badLanguageKeys' => $badLanguageKeys, 'countFiles' => $countFiles];
+        return compact('foundLanguageKeys', 'badLanguageKeys', 'countFiles');
     }
 }

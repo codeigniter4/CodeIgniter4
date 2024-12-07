@@ -17,6 +17,7 @@ use Rector\CodeQuality\Rector\Empty_\SimplifyEmptyCheckOnEmptyArrayRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
 use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
+use Rector\CodeQuality\Rector\FuncCall\CompactToVariablesRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
 use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
@@ -171,6 +172,8 @@ return RectorConfig::configure()
 
         // Unnecessary (string) is inserted
         NullToStrictStringFuncCallArgRector::class,
+
+        CompactToVariablesRector::class,
     ])
     // auto import fully qualified class names
     ->withImportNames(removeUnusedImports: true)
