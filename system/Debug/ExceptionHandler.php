@@ -76,7 +76,11 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
             }
 
             if (! str_contains($request->getHeaderLine('accept'), 'text/html')) {
-                $data = (ENVIRONMENT === 'development' || ENVIRONMENT === 'testing')
+                $data = in_array(
+                    strtolower(ini_get('display_errors')),
+                    ['1', 'true', 'on', 'yes'],
+                    true
+                )
                     ? $this->collectVars($exception, $statusCode)
                     : '';
 
