@@ -152,16 +152,4 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
 
         return $view;
     }
-
-    /**
-     * Whether the PHP display_errors setting is enabled.
-     */
-    private function isDisplayErrorsEnabled(): bool
-    {
-        return in_array(
-            strtolower(ini_get('display_errors')),
-            ['1', 'true', 'on', 'yes'],
-            true
-        );
-    }
 }

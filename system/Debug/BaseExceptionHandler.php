@@ -268,4 +268,16 @@ abstract class BaseExceptionHandler
             return ob_get_clean();
         })();
     }
+
+    /**
+     * Whether the PHP display_errors setting is enabled.
+     */
+    protected function isDisplayErrorsEnabled(): bool
+    {
+        return in_array(
+            strtolower(ini_get('display_errors')),
+            ['1', 'true', 'on', 'yes'],
+            true
+        );
+    }
 }
