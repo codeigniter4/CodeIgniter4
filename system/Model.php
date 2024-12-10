@@ -623,10 +623,6 @@ class Model extends BaseModel
      * Works with $this->builder to get the Compiled select to
      * determine the rows to operate on.
      * This method works only with dbCalls.
-     *
-     * @return void
-     *
-     * @throws DataException
      */
     public function chunk(int $size, Closure $userFunc)
     {

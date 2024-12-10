@@ -959,6 +959,8 @@ abstract class BaseConnection implements ConnectionInterface
      *                     ->get();
      *           })
      *
+     * @param Closure(BaseConnection): mixed $func
+     *
      * @return BasePreparedQuery|null
      */
     public function prepare(Closure $func, array $options = [])
