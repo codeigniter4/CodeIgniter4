@@ -48,7 +48,7 @@ class Cors implements FilterInterface
     /**
      * @param list<string>|null $arguments
      *
-     * @return ResponseInterface|string|null
+     * @return ResponseInterface|null
      */
     public function before(RequestInterface $request, $arguments = null)
     {
