@@ -72,6 +72,7 @@ class PageCache implements FilterInterface
             // so that we can have live speed updates along the way.
             // Must be run after filters to preserve the Response headers.
             $this->pageCache->make($request, $response);
+
             return $response;
         }
 
