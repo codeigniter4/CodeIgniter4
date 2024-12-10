@@ -52,7 +52,7 @@ final class MigrationIntegrationTest extends CIUnitTestCase
         parent::tearDown();
 
         if (is_file($this->migrationFileTo)) {
-            @unlink($this->migrationFileTo);
+            unlink($this->migrationFileTo);
         }
     }
 

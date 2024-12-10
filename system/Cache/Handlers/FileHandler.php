@@ -306,10 +306,10 @@ class FileHandler extends BaseHandler
 
         while (false !== ($filename = @readdir($currentDir))) {
             if ($filename !== '.' && $filename !== '..') {
-                if (is_dir($path . DIRECTORY_SEPARATOR . $filename) && $filename[0] !== '.') {
-                    $this->deleteFiles($path . DIRECTORY_SEPARATOR . $filename, $delDir, $htdocs, $_level + 1);
+                if (is_dir($path . '/' . $filename) && $filename[0] !== '.') {
+                    $this->deleteFiles($path . '/' . $filename, $delDir, $htdocs, $_level + 1);
                 } elseif (! $htdocs || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename)) {
-                    @unlink($path . DIRECTORY_SEPARATOR . $filename);
+                    @unlink($path . '/' . $filename);
                 }
             }
         }
@@ -340,13 +340,13 @@ class FileHandler extends BaseHandler
             // reset the array and make sure $source_dir has a trailing slash on the initial call
             if ($_recursion === false) {
                 $_filedata = [];
-                $sourceDir = rtrim(realpath($sourceDir) ?: $sourceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+                $sourceDir = rtrim(_realpath($sourceDir) ?: $sourceDir, '/') . '/';
             }
 
             // Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
             while (false !== ($file = readdir($fp))) {
                 if (is_dir($sourceDir . $file) && $file[0] !== '.' && $topLevelOnly === false) {
-                    $this->getDirFileInfo($sourceDir . $file . DIRECTORY_SEPARATOR, $topLevelOnly, true);
+                    $this->getDirFileInfo($sourceDir . $file . '/', $topLevelOnly, true);
                 } elseif (! is_dir($sourceDir . $file) && $file[0] !== '.') {
                     $_filedata[$file]                  = $this->getFileInfo($sourceDir . $file);
                     $_filedata[$file]['relative_path'] = $relativePath;

@@ -65,14 +65,14 @@ final class FileCollectionTest extends CIUnitTestCase
     public function testResolveDirectorySymlink(): void
     {
         // Create a symlink to test
-        $link = sys_get_temp_dir() . DIRECTORY_SEPARATOR . bin2hex(random_bytes(4));
+        $link = WRITEPATH . bin2hex(random_bytes(4));
         symlink($this->directory, $link);
 
         $method = $this->getPrivateMethodInvoker(FileCollection::class, 'resolveDirectory');
 
         $this->assertSame($this->directory, $method($link));
 
-        unlink($link);
+        rmdir($link);
     }
 
     public function testResolveFileFile(): void
@@ -85,7 +85,7 @@ final class FileCollectionTest extends CIUnitTestCase
     public function testResolveFileSymlink(): void
     {
         // Create a symlink to test
-        $link = sys_get_temp_dir() . DIRECTORY_SEPARATOR . bin2hex(random_bytes(4));
+        $link = WRITEPATH . bin2hex(random_bytes(4));
         symlink($this->file, $link);
 
         $method = $this->getPrivateMethodInvoker(FileCollection::class, 'resolveFile');

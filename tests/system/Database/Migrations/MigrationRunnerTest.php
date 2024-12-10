@@ -259,7 +259,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $mig1 = (object) [
             'version'   => '2018-01-24-102301',
             'name'      => 'Some_migration',
-            'path'      => realpath(TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php'),
+            'path'      => _realpath(TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php'),
             'class'     => Migration_some_migration::class,
             'namespace' => 'Tests\Support\MigrationTestMigrations',
         ];
@@ -268,7 +268,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $mig2 = (object) [
             'version'   => '2018-01-24-102302',
             'name'      => 'Another_migration',
-            'path'      => realpath(TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php'),
+            'path'      => _realpath(TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php'),
             'class'     => Migration_another_migration::class,
             'namespace' => 'Tests\Support\MigrationTestMigrations',
             'uid'       => '20180124102302Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
@@ -473,6 +473,8 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame('foo', $tables[1]);
 
         if (is_file($config['database'])) {
+            // In Windows fail https://bugs.php.net/bug.php?id=78930
+            $database->close();
             unlink($config['database']);
         }
     }

@@ -28,7 +28,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
-        $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
+        $file   = str_replace('APPPATH/', APPPATH, trim(substr($result, 14)));
         $dir    = dirname($file);
 
         if (is_file($file)) {

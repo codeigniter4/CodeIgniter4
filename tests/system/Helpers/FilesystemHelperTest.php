@@ -55,15 +55,15 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertTrue(function_exists('directory_map'));
 
         $expected = [
-            'foo' . DIRECTORY_SEPARATOR => [
+            'foo/' => [
                 'bar',
                 'baz',
             ],
-            'boo' . DIRECTORY_SEPARATOR => [
+            'boo/' => [
                 'far',
                 'faz',
             ],
-            'AnEmptyFolder' . DIRECTORY_SEPARATOR => [],
+            'AnEmptyFolder/' => [],
             'simpleFile',
         ];
 
@@ -78,15 +78,15 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertTrue(function_exists('directory_map'));
 
         $expected = [
-            'foo' . DIRECTORY_SEPARATOR => [
+            'foo/' => [
                 'bar',
                 'baz',
             ],
-            'boo' . DIRECTORY_SEPARATOR => [
+            'boo/' => [
                 'far',
                 'faz',
             ],
-            'AnEmptyFolder' . DIRECTORY_SEPARATOR => [],
+            'AnEmptyFolder/' => [],
             'simpleFile',
             '.hidden',
         ];
@@ -102,9 +102,9 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertTrue(function_exists('directory_map'));
 
         $expected = [
-            'foo' . DIRECTORY_SEPARATOR,
-            'boo' . DIRECTORY_SEPARATOR,
-            'AnEmptyFolder' . DIRECTORY_SEPARATOR,
+            'foo/',
+            'boo/',
+            'AnEmptyFolder/',
             'simpleFile',
             '.hidden',
         ];
@@ -128,7 +128,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->structure['foo']['bam'] = ['zab' => 'A deep file'];
 
         vfsStream::setup('root', null, $this->structure);
-        $root = rtrim(vfsStream::url('root') . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $root = rtrim(vfsStream::url('root') . '/') . '/';
 
         directory_mirror($root . 'foo', $root . 'boo');
 
@@ -145,7 +145,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->structure['foo']['faz'] = 'are belong to us';
 
         vfsStream::setup('root', null, $this->structure);
-        $root = rtrim(vfsStream::url('root') . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $root = rtrim(vfsStream::url('root') . '/') . '/';
 
         directory_mirror($root . 'foo', $root . 'boo', true);
         $result = file_get_contents($root . 'boo/faz');
@@ -162,7 +162,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->structure['foo']['faz'] = 'are belong to us';
 
         vfsStream::setup('root', null, $this->structure);
-        $root = rtrim(vfsStream::url('root') . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $root = rtrim(vfsStream::url('root') . '/') . '/';
 
         directory_mirror($root . 'foo', $root . 'boo', false);
         $result = file_get_contents($root . 'boo/faz');
@@ -183,7 +183,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
             ],
         ];
         vfsStream::setup('root', null, $this->structure);
-        $root = rtrim(vfsStream::url('root') . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $root = rtrim(vfsStream::url('root') . '/') . '/';
 
         // skips the existing folder
         directory_mirror($root . 'src', $root . 'dest');
@@ -380,14 +380,14 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $vfs = vfsStream::setup('root', null, $this->structure);
 
         $expected = [
-            $vfs->url() . DIRECTORY_SEPARATOR . 'AnEmptyFolder',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'boo',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'boo/far',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'boo/faz',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'foo',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'foo/bar',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'foo/baz',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'simpleFile',
+            $vfs->url() . '/AnEmptyFolder',
+            $vfs->url() . '/boo',
+            $vfs->url() . '/boo/far',
+            $vfs->url() . '/boo/faz',
+            $vfs->url() . '/foo',
+            $vfs->url() . '/foo/bar',
+            $vfs->url() . '/foo/baz',
+            $vfs->url() . '/simpleFile',
         ];
 
         $this->assertSame($expected, get_filenames($vfs->url(), true));
@@ -440,14 +440,14 @@ final class FilesystemHelperTest extends CIUnitTestCase
                 'server_path'   => $file1,
                 'size'          => $info1['size'],
                 'date'          => $info1['date'],
-                'relative_path' => realpath(__DIR__ . '/../../_support/Files/baker'),
+                'relative_path' => _realpath(__DIR__ . '/../../_support/Files/baker'),
             ],
             'fig_3.php.txt' => [
                 'name'          => 'fig_3.php.txt',
                 'server_path'   => $file2,
                 'size'          => $info2['size'],
                 'date'          => $info2['date'],
-                'relative_path' => realpath(__DIR__ . '/../../_support/Files/baker'),
+                'relative_path' => _realpath(__DIR__ . '/../../_support/Files/baker'),
             ],
         ];
 
@@ -505,6 +505,10 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testGetFileInfoPerms(): void
     {
+        if (is_windows()) {
+            $this->markTestSkipped('Windows works differently with access rights');
+        }
+
         $file     = SUPPORTPATH . 'Files/baker/banana.php';
         $expected = 0664;
         chmod($file, $expected);

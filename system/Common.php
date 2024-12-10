@@ -96,17 +96,17 @@ if (! function_exists('clean_path')) {
     {
         // Resolve relative paths
         try {
-            $path = realpath($path) ?: $path;
+            $path = _realpath($path) ?: $path;
         } catch (ErrorException|ValueError) {
             $path = 'error file path: ' . urlencode($path);
         }
 
         return match (true) {
-            str_starts_with($path, APPPATH)                             => 'APPPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(APPPATH)),
-            str_starts_with($path, SYSTEMPATH)                          => 'SYSTEMPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(SYSTEMPATH)),
-            str_starts_with($path, FCPATH)                              => 'FCPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(FCPATH)),
-            defined('VENDORPATH') && str_starts_with($path, VENDORPATH) => 'VENDORPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(VENDORPATH)),
-            str_starts_with($path, ROOTPATH)                            => 'ROOTPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(ROOTPATH)),
+            str_starts_with($path, APPPATH)                             => 'APPPATH/' . substr($path, strlen(APPPATH)),
+            str_starts_with($path, SYSTEMPATH)                          => 'SYSTEMPATH/' . substr($path, strlen(SYSTEMPATH)),
+            str_starts_with($path, FCPATH)                              => 'FCPATH/' . substr($path, strlen(FCPATH)),
+            defined('VENDORPATH') && str_starts_with($path, VENDORPATH) => 'VENDORPATH/' . substr($path, strlen(VENDORPATH)),
+            str_starts_with($path, ROOTPATH)                            => 'ROOTPATH/' . substr($path, strlen(ROOTPATH)),
             default                                                     => $path,
         };
     }
@@ -611,9 +611,9 @@ if (! function_exists('helper')) {
                 $paths = $loader->search('Helpers/' . $filename);
 
                 foreach ($paths as $path) {
-                    if (str_starts_with($path, APPPATH . 'Helpers' . DIRECTORY_SEPARATOR)) {
+                    if (str_starts_with($path, APPPATH . 'Helpers/')) {
                         $appHelper = $path;
-                    } elseif (str_starts_with($path, SYSTEMPATH . 'Helpers' . DIRECTORY_SEPARATOR)) {
+                    } elseif (str_starts_with($path, SYSTEMPATH . 'Helpers/')) {
                         $systemHelper = $path;
                     } else {
                         $localIncludes[] = $path;
@@ -1259,5 +1259,15 @@ if (! function_exists('trait_uses_recursive')) {
         }
 
         return $traits;
+    }
+}
+
+if (! function_exists('normalize_path')) {
+    /**
+     * Converts backslash to paths for compatibility in Unix/Windows
+     */
+    function normalize_path(string $path): string
+    {
+        return str_replace('\\', '/', $path);
     }
 }

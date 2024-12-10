@@ -181,27 +181,27 @@ class Boot
     {
         // The path to the application directory.
         if (! defined('APPPATH')) {
-            define('APPPATH', realpath(rtrim($paths->appDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
+            define('APPPATH', _realpath(rtrim($paths->appDirectory, '\\/ ')) . '/');
         }
 
         // The path to the project root directory. Just above APPPATH.
         if (! defined('ROOTPATH')) {
-            define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
+            define('ROOTPATH', _realpath(APPPATH . '../') . '/');
         }
 
         // The path to the system directory.
         if (! defined('SYSTEMPATH')) {
-            define('SYSTEMPATH', realpath(rtrim($paths->systemDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
+            define('SYSTEMPATH', _realpath(rtrim($paths->systemDirectory, '\\/ ')) . '/');
         }
 
         // The path to the writable directory.
         if (! defined('WRITEPATH')) {
-            define('WRITEPATH', realpath(rtrim($paths->writableDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
+            define('WRITEPATH', _realpath(rtrim($paths->writableDirectory, '\\/ ')) . '/');
         }
 
         // The path to the tests directory
         if (! defined('TESTPATH')) {
-            define('TESTPATH', realpath(rtrim($paths->testsDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
+            define('TESTPATH', _realpath(rtrim($paths->testsDirectory, '\\/ ')) . '/');
         }
     }
 

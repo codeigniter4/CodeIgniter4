@@ -114,13 +114,11 @@ final class AutoloaderTest extends CIUnitTestCase
         $classLoader = $this->getPrivateMethodInvoker(service('autoloader'), 'loadInNamespace');
 
         // look for Home controller, as that should be in base repo
-        $actual   = $classLoader(Home::class);
-        $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
-
-        $resolvedPath = realpath($actual);
+        $actual       = $classLoader(Home::class);
+        $resolvedPath = _realpath($actual);
         $actual       = $resolvedPath !== false ? $resolvedPath : $actual;
 
-        $this->assertSame($expected, $actual);
+        $this->assertSame(APPPATH . 'Controllers/Home.php', $actual);
     }
 
     public function testServiceAutoLoader(): void
@@ -132,33 +130,28 @@ final class AutoloaderTest extends CIUnitTestCase
         $classLoader = $this->getPrivateMethodInvoker($autoloader, 'loadInNamespace');
 
         // look for Home controller, as that should be in base repo
-        $actual   = $classLoader(Home::class);
-        $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
-
-        $resolvedPath = realpath($actual);
+        $actual       = $classLoader(Home::class);
+        $resolvedPath = _realpath($actual);
         $actual       = $resolvedPath !== false ? $resolvedPath : $actual;
 
-        $this->assertSame($expected, $actual);
+        $this->assertSame(APPPATH . 'Controllers/Home.php', $actual);
 
         $autoloader->unregister();
     }
 
     public function testExistingFile(): void
     {
-        $actual   = ($this->classLoader)(Home::class);
-        $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
-        $this->assertSame($expected, $actual);
+        $actual = ($this->classLoader)(Home::class);
+        $this->assertSame(APPPATH . 'Controllers/Home.php', $actual);
 
-        $actual   = ($this->classLoader)('CodeIgniter\Helpers\array_helper');
-        $expected = SYSTEMPATH . 'Helpers' . DIRECTORY_SEPARATOR . 'array_helper.php';
-        $this->assertSame($expected, $actual);
+        $actual = ($this->classLoader)('CodeIgniter\Helpers\array_helper');
+        $this->assertSame(SYSTEMPATH . 'Helpers/array_helper.php', $actual);
     }
 
     public function testMatchesWithPrecedingSlash(): void
     {
-        $actual   = ($this->classLoader)(Home::class);
-        $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
-        $this->assertSame($expected, $actual);
+        $actual = ($this->classLoader)(Home::class);
+        $this->assertSame(APPPATH . 'Controllers/Home.php', $actual);
     }
 
     public function testMissingFile(): void
@@ -172,10 +165,9 @@ final class AutoloaderTest extends CIUnitTestCase
 
         $this->loader->addNamespace('My\App', __DIR__);
 
-        $actual   = ($this->classLoader)('My\App\AutoloaderTest');
-        $expected = __FILE__;
+        $actual = ($this->classLoader)('My\App\AutoloaderTest');
 
-        $this->assertSame($expected, $actual);
+        $this->assertSame(normalize_path(__FILE__), $actual);
     }
 
     public function testAddNamespaceMultiplePathsWorks(): void
@@ -187,13 +179,15 @@ final class AutoloaderTest extends CIUnitTestCase
             ],
         ]);
 
-        $actual   = ($this->classLoader)('My\App\App');
-        $expected = APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'App.php';
-        $this->assertSame($expected, $actual);
+        $this->assertSame(
+            APPPATH . 'Config/App.php',
+            ($this->classLoader)('My\App\App')
+        );
 
-        $actual   = ($this->classLoader)('My\App\AutoloaderTest');
-        $expected = __FILE__;
-        $this->assertSame($expected, $actual);
+        $this->assertSame(
+            normalize_path(__FILE__),
+            ($this->classLoader)('My\App\AutoloaderTest')
+        );
     }
 
     public function testAddNamespaceStringToArray(): void
@@ -201,7 +195,7 @@ final class AutoloaderTest extends CIUnitTestCase
         $this->loader->addNamespace('App\Controllers', __DIR__);
 
         $this->assertSame(
-            __FILE__,
+            normalize_path(__FILE__),
             ($this->classLoader)('App\Controllers\AutoloaderTest')
         );
     }
@@ -220,7 +214,7 @@ final class AutoloaderTest extends CIUnitTestCase
     public function testRemoveNamespace(): void
     {
         $this->loader->addNamespace('My\App', __DIR__);
-        $this->assertSame(__FILE__, ($this->classLoader)('My\App\AutoloaderTest'));
+        $this->assertSame(normalize_path(__FILE__), ($this->classLoader)('My\App\AutoloaderTest'));
 
         $this->loader->removeNamespace('My\App');
         $this->assertFalse(($this->classLoader)('My\App\AutoloaderTest'));
@@ -287,8 +281,7 @@ final class AutoloaderTest extends CIUnitTestCase
         $loader = new Autoloader();
         $loader->initialize($config, $modules);
 
-        $namespaces = $loader->getNamespace();
-        $this->assertArrayHasKey('Laminas\\Escaper', $namespaces);
+        $this->assertArrayHasKey('Laminas\\Escaper', $loader->getNamespace());
     }
 
     public function testComposerNamespaceDoesNotOverwriteConfigAutoloadPsr4(): void
@@ -379,8 +372,7 @@ final class AutoloaderTest extends CIUnitTestCase
         $loader->initialize($config, $modules);
         rename(COMPOSER_PATH . '.backup', $composerPath);
 
-        $namespaces = $loader->getNamespace();
-        $this->assertArrayNotHasKey('Laminas\\Escaper', $namespaces);
+        $this->assertArrayNotHasKey('Laminas\\Escaper', $loader->getNamespace());
     }
 
     public function testAutoloaderLoadsNonClassFiles(): void

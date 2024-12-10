@@ -324,7 +324,7 @@ class CLI
                 $optsKey[] = $key;
             }
             $extraOutput = '[' . $extraOutputDefault . ', ' . implode(', ', $optsKey) . ']';
-            $extraOutput = 'You can specify multiple values separated by commas.' . PHP_EOL . $extraOutput;
+            $extraOutput = 'You can specify multiple values separated by commas.' . "/n" . $extraOutput;
         }
 
         CLI::write($text);
@@ -462,11 +462,11 @@ class CLI
         }
 
         if (static::$lastWrite !== 'write') {
-            $text              = PHP_EOL . $text;
+            $text              = "\n" . $text;
             static::$lastWrite = 'write';
         }
 
-        static::fwrite(STDOUT, $text . PHP_EOL);
+        static::fwrite(STDOUT, $text . "\n");
     }
 
     /**
@@ -484,7 +484,7 @@ class CLI
             $text = static::color($text, $foreground, $background);
         }
 
-        static::fwrite(STDERR, $text . PHP_EOL);
+        static::fwrite(STDERR, $text . "\n");
 
         // return STDOUT color support
         static::$isColored = $stdout;
@@ -818,7 +818,7 @@ class CLI
             // Write the progress bar
             static::fwrite(STDOUT, "[\033[32m" . str_repeat('#', $step) . str_repeat('.', 10 - $step) . "\033[0m]");
             // Textual representation...
-            static::fwrite(STDOUT, sprintf(' %3d%% Complete', $percent) . PHP_EOL);
+            static::fwrite(STDOUT, sprintf(' %3d%% Complete', $percent) . "\n");
         } else {
             static::fwrite(STDOUT, "\007");
         }
@@ -849,10 +849,10 @@ class CLI
 
         $max -= $padLeft;
 
-        $lines = wordwrap($string, $max, PHP_EOL);
+        $lines = wordwrap($string, $max, "\n");
 
         if ($padLeft > 0) {
-            $lines = explode(PHP_EOL, $lines);
+            $lines = explode("\n", $lines);
 
             $first = true;
 
@@ -864,7 +864,7 @@ class CLI
                 }
             });
 
-            $lines = implode(PHP_EOL, $lines);
+            $lines = implode("\n", $lines);
         }
 
         return $lines;
@@ -1094,15 +1094,15 @@ class CLI
                 foreach ($tableRows[$row] as $col) {
                     $cols .= str_repeat('-', static::strlen((string) $col) + 2) . '+';
                 }
-                $table .= $cols . PHP_EOL;
+                $table .= $cols . "\n";
             }
 
             // Set the columns borders
-            $table .= '| ' . implode(' | ', $tableRows[$row]) . ' |' . PHP_EOL;
+            $table .= '| ' . implode(' | ', $tableRows[$row]) . ' |' . "\n";
 
             // Set the thead and table borders-bottom
             if (($row === 0 && $thead !== []) || ($row + 1 === $totalRows)) {
-                $table .= $cols . PHP_EOL;
+                $table .= $cols . "\n";
             }
         }
 

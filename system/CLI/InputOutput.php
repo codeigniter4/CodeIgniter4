@@ -69,6 +69,8 @@ class InputOutput
      */
     public function fwrite($handle, string $string): void
     {
+        $string = str_replace("\r\n", "\n", $string);
+
         if (! is_cli()) {
             echo $string;
 

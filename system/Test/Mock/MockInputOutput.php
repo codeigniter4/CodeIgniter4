@@ -115,7 +115,7 @@ final class MockInputOutput extends InputOutput
         PhpStreamWrapper::setContent($input);
 
         $userInput       = parent::input($prefix);
-        $this->outputs[] = CITestStreamFilter::$buffer . $input . PHP_EOL;
+        $this->outputs[] = CITestStreamFilter::$buffer . $input . "\n";
 
         PhpStreamWrapper::restore();
 

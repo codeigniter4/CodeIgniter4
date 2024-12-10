@@ -29,7 +29,7 @@ $uri = urldecode(
 $_SERVER['SCRIPT_NAME'] = '/index.php';
 
 // Full path
-$path = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . ltrim($uri, '/');
+$path = $_SERVER['DOCUMENT_ROOT'] . '/' . ltrim($uri, '/');
 
 // If $path is an existing file or folder within the public folder
 // then let the request handle it like normal.
@@ -41,5 +41,5 @@ unset($uri, $path);
 
 // Otherwise, we'll load the index file and let
 // the framework handle the request from here.
-require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'index.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/index.php';
 // @codeCoverageIgnoreEnd

@@ -17,6 +17,7 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Helpers\Array\ArrayHelper;
 use Config\App;
+use FilesystemIterator;
 use Locale;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -62,7 +63,7 @@ class LocalizationFinder extends BaseCommand
         $this->languagePath = $currentDir . 'Language';
 
         if (ENVIRONMENT === 'testing') {
-            $currentDir         = SUPPORTPATH . 'Services' . DIRECTORY_SEPARATOR;
+            $currentDir         = SUPPORTPATH . 'Services/';
             $this->languagePath = SUPPORTPATH . 'Language';
         }
 
@@ -80,7 +81,7 @@ class LocalizationFinder extends BaseCommand
         }
 
         if (is_string($optionDir)) {
-            $tempCurrentDir = realpath($currentDir . $optionDir);
+            $tempCurrentDir = _realpath($currentDir . $optionDir);
 
             if ($tempCurrentDir === false) {
                 CLI::error('Error: Directory must be located in "' . $currentDir . '"');
@@ -109,7 +110,7 @@ class LocalizationFinder extends BaseCommand
         $tableRows    = [];
         $countNewKeys = 0;
 
-        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($currentDir));
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($currentDir, FilesystemIterator::UNIX_PATHS));
         $files    = iterator_to_array($iterator, true);
         ksort($files);
 
@@ -126,7 +127,7 @@ class LocalizationFinder extends BaseCommand
 
         foreach ($languageFoundGroups as $langFileName) {
             $languageStoredKeys = [];
-            $languageFilePath   = $this->languagePath . DIRECTORY_SEPARATOR . $currentLocale . DIRECTORY_SEPARATOR . $langFileName . '.php';
+            $languageFilePath   = $this->languagePath . '/' . $currentLocale . '/' . $langFileName . '.php';
 
             if (is_file($languageFilePath)) {
                 // Load old localization
@@ -200,10 +201,11 @@ class LocalizationFinder extends BaseCommand
 
         foreach ($matches[1] as $phraseKey) {
             $phraseKeys = explode('.', $phraseKey);
+            $realPathFile = normalize_path($file->getRealPath());
 
             // Language key not have Filename or Lang key
             if (count($phraseKeys) < 2) {
-                $badLanguageKeys[] = [mb_substr($file->getRealPath(), mb_strlen(ROOTPATH)), $phraseKey];
+                $badLanguageKeys[] = [mb_substr($realPathFile, mb_strlen(ROOTPATH)), $phraseKey];
 
                 continue;
             }
@@ -214,7 +216,7 @@ class LocalizationFinder extends BaseCommand
                 || ($languageFileName === '' && $phraseKeys[0] === '');
 
             if ($isEmptyNestedArray) {
-                $badLanguageKeys[] = [mb_substr($file->getRealPath(), mb_strlen(ROOTPATH)), $phraseKey];
+                $badLanguageKeys[] = [mb_substr($realPathFile, mb_strlen(ROOTPATH)), $phraseKey];
 
                 continue;
             }
@@ -233,7 +235,7 @@ class LocalizationFinder extends BaseCommand
 
     private function isIgnoredFile(SplFileInfo $file): bool
     {
-        if ($file->isDir() || $this->isSubDirectory($file->getRealPath(), $this->languagePath)) {
+        if ($file->isDir() || $this->isSubDirectory(normalize_path($file->getRealPath()), $this->languagePath)) {
             return true;
         }
 
@@ -375,7 +377,7 @@ class LocalizationFinder extends BaseCommand
                 continue;
             }
 
-            $this->writeIsVerbose('File found: ' . mb_substr($file->getRealPath(), mb_strlen(APPPATH)));
+            $this->writeIsVerbose('File found: ' . mb_substr(normalize_path($file->getRealPath()), mb_strlen(APPPATH)));
             $countFiles++;
 
             $findInFile = $this->findTranslationsInFile($file);

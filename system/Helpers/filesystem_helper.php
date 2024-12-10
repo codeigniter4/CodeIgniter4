@@ -31,11 +31,12 @@ if (! function_exists('directory_map')) {
     function directory_map(string $sourceDir, int $directoryDepth = 0, bool $hidden = false): array
     {
         try {
-            $fp = opendir($sourceDir);
+            $sourceDir = normalize_path($sourceDir);
+            $fp        = opendir($sourceDir);
 
             $fileData  = [];
             $newDepth  = $directoryDepth - 1;
-            $sourceDir = rtrim($sourceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+            $sourceDir = rtrim($sourceDir, '/') . '/';
 
             while (false !== ($file = readdir($fp))) {
                 // Remove '.', '..', and hidden files [optional]
@@ -44,7 +45,7 @@ if (! function_exists('directory_map')) {
                 }
 
                 if (is_dir($sourceDir . $file)) {
-                    $file .= DIRECTORY_SEPARATOR;
+                    $file .= '/';
                 }
 
                 if (($directoryDepth < 1 || $newDepth > 0) && is_dir($sourceDir . $file)) {
@@ -88,7 +89,7 @@ if (! function_exists('directory_mirror')) {
          * @var SplFileInfo $file
          */
         foreach (new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($originDir, FilesystemIterator::SKIP_DOTS),
+            new RecursiveDirectoryIterator($originDir, FilesystemIterator::SKIP_DOTS | FilesystemIterator::UNIX_PATHS),
             RecursiveIteratorIterator::SELF_FIRST
         ) as $file) {
             $origin = $file->getPathname();
@@ -155,12 +156,12 @@ if (! function_exists('delete_files')) {
      */
     function delete_files(string $path, bool $delDir = false, bool $htdocs = false, bool $hidden = false): bool
     {
-        $path = realpath($path) ?: $path;
-        $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $path = _realpath($path) ?: $path;
+        $path = rtrim($path, '/') . '/';
 
         try {
             foreach (new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
+                new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS | RecursiveDirectoryIterator::UNIX_PATHS),
                 RecursiveIteratorIterator::CHILD_FIRST
             ) as $object) {
                 $filename = $object->getFilename();
@@ -208,12 +209,12 @@ if (! function_exists('get_filenames')) {
     ): array {
         $files = [];
 
-        $sourceDir = realpath($sourceDir) ?: $sourceDir;
-        $sourceDir = rtrim($sourceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $sourceDir = _realpath($sourceDir) ?: $sourceDir;
+        $sourceDir = rtrim($sourceDir, '/') . '/';
 
         try {
             foreach (new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($sourceDir, RecursiveDirectoryIterator::SKIP_DOTS | FilesystemIterator::FOLLOW_SYMLINKS),
+                new RecursiveDirectoryIterator($sourceDir, RecursiveDirectoryIterator::SKIP_DOTS | FilesystemIterator::FOLLOW_SYMLINKS | FilesystemIterator::UNIX_PATHS),
                 RecursiveIteratorIterator::SELF_FIRST
             ) as $name => $object) {
                 $basename = pathinfo($name, PATHINFO_BASENAME);
@@ -265,13 +266,13 @@ if (! function_exists('get_dir_file_info')) {
             // reset the array and make sure $source_dir has a trailing slash on the initial call
             if ($recursion === false) {
                 $fileData  = [];
-                $sourceDir = rtrim(realpath($sourceDir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+                $sourceDir = rtrim(_realpath($sourceDir), '/') . '/';
             }
 
             // Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
             while (false !== ($file = readdir($fp))) {
                 if (is_dir($sourceDir . $file) && $file[0] !== '.' && $topLevelOnly === false) {
-                    get_dir_file_info($sourceDir . $file . DIRECTORY_SEPARATOR, $topLevelOnly, true);
+                    get_dir_file_info($sourceDir . $file . '/', $topLevelOnly, true);
                 } elseif ($file[0] !== '.') {
                     $fileData[$file]                  = get_file_info($sourceDir . $file);
                     $fileData[$file]['relative_path'] = $relativePath;
@@ -303,7 +304,9 @@ if (! function_exists('get_file_info')) {
      */
     function get_file_info(string $file, $returnedValues = ['name', 'server_path', 'size', 'date'])
     {
-        if (! is_file($file)) {
+        $file = _realpath($file);
+
+        if ($file !== false && ! is_file($file)) {
             return null;
         }
 
@@ -442,13 +445,14 @@ if (! function_exists('set_realpath')) {
         }
 
         // Resolve the path
-        if (realpath($path) !== false) {
-            $path = realpath($path);
+        $resolvedPath = _realpath($path);
+        if ($resolvedPath !== false) {
+            $path = $resolvedPath;
         } elseif ($checkExistence && ! is_dir($path) && ! is_file($path)) {
             throw new InvalidArgumentException('Not a valid path: ' . $path);
         }
 
         // Add a trailing slash, if this is a directory
-        return is_dir($path) ? rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR : $path;
+        return is_dir($path) ? rtrim($path, '/') . '/' : $path;
     }
 }

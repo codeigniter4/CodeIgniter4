@@ -231,21 +231,14 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $files = $this->locator->listFiles('Config/');
 
-        $expectedWin = APPPATH . 'Config\App.php';
-        $expectedLin = APPPATH . 'Config/App.php';
-        $this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
+        $this->assertTrue(in_array(APPPATH . 'Config/App.php', $files, true));
     }
 
     public function testListFilesDoesNotContainDirectories(): void
     {
         $files = $this->locator->listFiles('Config/');
 
-        $directory = str_replace(
-            '/',
-            DIRECTORY_SEPARATOR,
-            APPPATH . 'Config/Boot'
-        );
-        $this->assertNotContains($directory, $files);
+        $this->assertNotContains(APPPATH . 'Config/Boot', $files);
     }
 
     public function testListFilesWithFileAsInput(): void

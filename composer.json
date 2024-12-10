@@ -111,10 +111,10 @@
         ],
         "metrics": "utils/vendor/bin/phpmetrics --config=phpmetrics.json",
         "phpstan:baseline": "vendor/bin/phpstan analyse --ansi --generate-baseline=phpstan-baseline.php",
-        "phpstan:check": "vendor/bin/phpstan analyse --verbose --ansi",
+        "phpstan:check": "vendor/bin/phpstan analyse --verbose --ansi --memory-limit 2G",
         "sa": "@analyze",
         "style": "@cs-fix",
-        "test": "phpunit"
+        "test": "phpunit --no-coverage"
     },
     "scripts-descriptions": {
         "analyze": "Run static analysis",

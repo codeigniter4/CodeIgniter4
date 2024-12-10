@@ -105,7 +105,7 @@ class FileLocator implements FileLocatorInterface
         // Check each path in the namespace
         foreach ($paths as $path) {
             // Ensure trailing slash
-            $path = rtrim($path, '/') . '/';
+            $path = rtrim(normalize_path($path), '/') . '/';
 
             // If we have a folder name, then the calling function
             // expects this file to be within that folder, like 'Views',
@@ -196,7 +196,7 @@ class FileLocator implements FileLocatorInterface
         foreach ($this->getNamespaces() as $namespace) {
             if (isset($namespace['path']) && is_file($namespace['path'] . $path)) {
                 $fullPath     = $namespace['path'] . $path;
-                $resolvedPath = realpath($fullPath);
+                $resolvedPath = _realpath($fullPath);
                 $fullPath     = $resolvedPath !== false ? $resolvedPath : $fullPath;
 
                 if ($prioritizeApp) {
@@ -250,7 +250,7 @@ class FileLocator implements FileLocatorInterface
                 if ($prefix === 'CodeIgniter') {
                     $system[] = [
                         'prefix' => $prefix,
-                        'path'   => rtrim($path, '\\/') . DIRECTORY_SEPARATOR,
+                        'path'   => rtrim($path, '\\/') . '/',
                     ];
 
                     continue;
@@ -258,7 +258,7 @@ class FileLocator implements FileLocatorInterface
 
                 $namespaces[] = [
                     'prefix' => $prefix,
-                    'path'   => rtrim($path, '\\/') . DIRECTORY_SEPARATOR,
+                    'path'   => rtrim($path, '\\/') . '/',
                 ];
             }
         }
@@ -336,7 +336,7 @@ class FileLocator implements FileLocatorInterface
 
         foreach ($this->getNamespaces() as $namespace) {
             $fullPath     = $namespace['path'] . $path;
-            $resolvedPath = realpath($fullPath);
+            $resolvedPath = _realpath($fullPath);
             $fullPath     = $resolvedPath !== false ? $resolvedPath : $fullPath;
 
             if (! is_dir($fullPath)) {
@@ -399,7 +399,7 @@ class FileLocator implements FileLocatorInterface
     protected function legacyLocate(string $file, ?string $folder = null)
     {
         $path         = APPPATH . ($folder === null ? $file : $folder . '/' . $file);
-        $resolvedPath = realpath($path);
+        $resolvedPath = _realpath($path);
         $path         = $resolvedPath !== false ? $resolvedPath : $path;
 
         if (is_file($path)) {

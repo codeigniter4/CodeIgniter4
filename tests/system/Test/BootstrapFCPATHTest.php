@@ -52,14 +52,12 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
 
     public function testSetFCPATH(): void
     {
-        $result1     = $this->readOutput($this->file1);
-        $correctPath = $this->correctFCPATH();
-        $this->assertSame($correctPath, $result1);
+        $this->assertSame($this->correctFCPATH(), $this->readOutput($this->file1));
     }
 
     private function correctFCPATH()
     {
-        return realpath(__DIR__ . '/../../../public') . DIRECTORY_SEPARATOR;
+        return _realpath(__DIR__ . '/../../../public') . '/';
     }
 
     private function buildDirectories(): void
@@ -91,15 +89,15 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
     private function fileContents()
     {
         $fileContents = '';
-        $fileContents .= '<?php' . PHP_EOL;
-        $fileContents .= "define('HOMEPATH', '" . $this->currentDir . "' . '/../../../');" . PHP_EOL;
-        $fileContents .= "define('CONFIGPATH', '" . $this->currentDir . "' . '/../../../app/Config/');" . PHP_EOL;
-        $fileContents .= "define('PUBLICPATH', '" . $this->currentDir . "' . '/../../../public/');" . PHP_EOL;
-        $fileContents .= "include_once '" . $this->currentDir . "' . '/../../../vendor/autoload.php';" . PHP_EOL;
-        $fileContents .= "include_once '" . $this->currentDir . "' . '/../../../system/Test/bootstrap.php';" . PHP_EOL;
-        $fileContents .= '// return value of FCPATH' . PHP_EOL;
+        $fileContents .= '<?php' . "\n";
+        $fileContents .= "define('HOMEPATH', '" . $this->currentDir . "' . '/../../../');" . "\n";
+        $fileContents .= "define('CONFIGPATH', '" . $this->currentDir . "' . '/../../../app/Config/');" . "\n";
+        $fileContents .= "define('PUBLICPATH', '" . $this->currentDir . "' . '/../../../public/');" . "\n";
+        $fileContents .= "include_once '" . $this->currentDir . "' . '/../../../vendor/autoload.php';" . "\n";
+        $fileContents .= "include_once '" . $this->currentDir . "' . '/../../../system/Test/bootstrap.php';" . "\n";
+        $fileContents .= '// return value of FCPATH' . "\n";
 
-        return $fileContents . ('echo FCPATH;' . PHP_EOL);
+        return $fileContents . ('echo FCPATH;' . "\n");
     }
 
     private function readOutput(string $file)

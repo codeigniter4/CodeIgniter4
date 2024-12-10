@@ -139,7 +139,7 @@ class Autoloader
         // The path to the vendor directory.
         // We do not want to enforce this, so set the constant if Composer was used.
         if (! defined('VENDORPATH')) {
-            define('VENDORPATH', dirname(COMPOSER_PATH) . DIRECTORY_SEPARATOR);
+            define('VENDORPATH', dirname(COMPOSER_PATH) . '/');
         }
 
         /** @var ClassLoader $composer */
@@ -199,16 +199,16 @@ class Autoloader
 
                 if (is_array($namespacedPath)) {
                     foreach ($namespacedPath as $dir) {
-                        $this->prefixes[$prefix][] = rtrim($dir, '\\/') . DIRECTORY_SEPARATOR;
+                        $this->prefixes[$prefix][] = rtrim(normalize_path($dir), '\\/') . '/';
                     }
 
                     continue;
                 }
 
-                $this->prefixes[$prefix][] = rtrim($namespacedPath, '\\/') . DIRECTORY_SEPARATOR;
+                $this->prefixes[$prefix][] = rtrim(normalize_path($namespacedPath), '\\/') . '/';
             }
         } else {
-            $this->prefixes[trim($namespace, '\\')][] = rtrim($path, '\\/') . DIRECTORY_SEPARATOR;
+            $this->prefixes[trim($namespace, '\\')][] = rtrim(normalize_path($path), '\\/') . '/';
         }
 
         return $this;
@@ -286,7 +286,7 @@ class Autoloader
 
         foreach ($this->prefixes as $namespace => $directories) {
             if (str_starts_with($class, $namespace)) {
-                $relativeClassPath = str_replace('\\', DIRECTORY_SEPARATOR, substr($class, strlen($namespace)));
+                $relativeClassPath = str_replace('\\', '/', substr($class, strlen($namespace)));
 
                 foreach ($directories as $directory) {
                     $directory = rtrim($directory, '\\/');
@@ -409,18 +409,24 @@ class Autoloader
         if ($only !== []) {
             foreach ($packageList as $packageName => $data) {
                 if (in_array($packageName, $only, true) && isset($data['install_path'])) {
-                    $installPaths[] = $data['install_path'];
+                    $installPaths[] = normalize_path($data['install_path']);
                 }
             }
         } else {
             foreach ($packageList as $packageName => $data) {
                 if (! in_array($packageName, $exclude, true) && isset($data['install_path'])) {
-                    $installPaths[] = $data['install_path'];
+                    $installPaths[] = normalize_path($data['install_path']);
                 }
             }
         }
 
         $newPaths = [];
+
+        $namespacePaths = array_map(static function (array $paths) {
+            return array_map(function(string $path) {
+                return normalize_path($path);
+            }, $paths);
+        }, $namespacePaths);
 
         foreach ($namespacePaths as $namespace => $srcPaths) {
             $add = false;

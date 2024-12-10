@@ -150,24 +150,24 @@ class TestGenerator extends BaseCommand
             return '';
         }
 
-        $realpath = realpath($base);
+        $realpath = _realpath($base);
         $base     = ($realpath !== false) ? $realpath : $base;
 
-        $file = $base . DIRECTORY_SEPARATOR
+        $file = $base . '/'
             . str_replace(
                 '\\',
-                DIRECTORY_SEPARATOR,
+                '/',
                 trim(str_replace($namespace . '\\', '', $class), '\\')
             ) . '.php';
 
         return implode(
-            DIRECTORY_SEPARATOR,
+            '/',
             array_slice(
-                explode(DIRECTORY_SEPARATOR, $file),
+                explode('/', $file),
                 0,
                 -1
             )
-        ) . DIRECTORY_SEPARATOR . $this->basename($file);
+        ) . '/' . $this->basename($file);
     }
 
     /**

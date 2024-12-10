@@ -18,6 +18,7 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\BaseConfig;
 use Config\Optimize;
+use Ergebnis\Json\Json;
 use Kint\Kint;
 
 /**
@@ -131,7 +132,7 @@ final class ConfigCheck extends BaseCommand
 
         $output = trim($output);
 
-        $lines = explode("\n", $output);
+        $lines = explode(PHP_EOL, $output);
         array_splice($lines, 0, 3);
         array_splice($lines, -3);
 
