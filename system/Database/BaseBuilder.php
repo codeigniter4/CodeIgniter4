@@ -3048,6 +3048,7 @@ class BaseBuilder
             // Store the alias, if it doesn't already exist
             $this->db->addTableAlias($alias);
         }
+
         return null;
     }
 

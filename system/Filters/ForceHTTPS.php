@@ -49,6 +49,7 @@ class ForceHTTPS implements FilterInterface
         } catch (RedirectException $e) {
             return $e->getResponse();
         }
+
         return null;
     }
 

@@ -57,6 +57,7 @@ class CSRF implements FilterInterface
 
             throw $e;
         }
+
         return null;
     }
 

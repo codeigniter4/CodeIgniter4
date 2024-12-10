@@ -379,6 +379,7 @@ class CodeIgniter
         }
 
         $this->sendResponse();
+
         return null;
     }
 
@@ -890,6 +891,7 @@ class CodeIgniter
         ) {
             throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
         }
+
         return null;
     }
 

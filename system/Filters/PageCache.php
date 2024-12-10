@@ -51,6 +51,7 @@ class PageCache implements FilterInterface
         if ($cachedResponse instanceof ResponseInterface) {
             return $cachedResponse;
         }
+
         return null;
     }
 

@@ -482,6 +482,7 @@ abstract class CIUnitTestCase extends TestCase
         } catch (Exception) {
             return false;
         }
+
         return null;
     }
 

@@ -115,6 +115,7 @@ class MigrateRollback extends BaseCommand
             $this->showError($e);
             // @codeCoverageIgnoreEnd
         }
+
         return null;
     }
 }
