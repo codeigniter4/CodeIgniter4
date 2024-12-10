@@ -1,0 +1,268 @@
+# total 53 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Accessing offset ''ANSICON'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../system/CLI/CLI.php
+
+        -
+            message: '#^Accessing offset ''NO_COLOR'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../system/CLI/CLI.php
+
+        -
+            message: '#^Accessing offset ''argv'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../system/CLI/CLI.php
+
+        -
+            message: '#^Accessing offset ''encryption\.key'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../system/Commands/Encryption/GenerateKey.php
+
+        -
+            message: '#^Accessing offset ''CI_ENVIRONMENT'' directly on \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../system/Commands/Utilities/Environment.php
+
+        -
+            message: '#^Accessing offset ''HTTP_HOST'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../system/Commands/Utilities/Routes.php
+
+        -
+            message: '#^Accessing offset ''REMOTE_ADDR'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../system/Common.php
+
+        -
+            message: '#^Accessing offset ''REQUEST_METHOD'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../system/Common.php
+
+        -
+            message: '#^Accessing offset string directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../system/Common.php
+
+        -
+            message: '#^Accessing offset ''CI_ENVIRONMENT'' directly on \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../system/Config/AutoloadConfig.php
+
+        -
+            message: '#^Accessing offset non\-falsy\-string directly on \$_SERVER is discouraged\.$#'
+            count: 4
+            path: ../../system/Config/BaseConfig.php
+
+        -
+            message: '#^Accessing offset string directly on \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../system/Config/DotEnv.php
+
+        -
+            message: '#^Accessing offset ''SERVER_PROTOCOL'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../system/Config/Services.php
+
+        -
+            message: '#^Accessing offset ''SERVER_ADDR'' directly on \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../system/Email/Email.php
+
+        -
+            message: '#^Accessing offset ''SERVER_NAME'' directly on \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../system/Email/Email.php
+
+        -
+            message: '#^Accessing offset ''HTTP_USER_AGENT'' directly on \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../system/HTTP/DownloadResponse.php
+
+        -
+            message: '#^Accessing offset ''HTTPS'' directly on \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../system/HTTP/IncomingRequest.php
+
+        -
+            message: '#^Accessing offset ''QUERY_STRING'' directly on \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../system/HTTP/IncomingRequest.php
+
+        -
+            message: '#^Accessing offset ''REQUEST_URI'' directly on \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../system/HTTP/IncomingRequest.php
+
+        -
+            message: '#^Accessing offset ''SCRIPT_NAME'' directly on \$_SERVER is discouraged\.$#'
+            count: 4
+            path: ../../system/HTTP/IncomingRequest.php
+
+        -
+            message: '#^Accessing offset array\|string directly on \$_GET is discouraged\.$#'
+            count: 2
+            path: ../../system/HTTP/IncomingRequest.php
+
+        -
+            message: '#^Accessing offset ''CONTENT_TYPE'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../system/HTTP/Message.php
+
+        -
+            message: '#^Accessing offset \(int\|string\) directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../system/HTTP/Message.php
+
+        -
+            message: '#^Accessing offset ''REQUEST_METHOD'' directly on \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../system/HTTP/Response.php
+
+        -
+            message: '#^Accessing offset ''SERVER_PROTOCOL'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../system/HTTP/Response.php
+
+        -
+            message: '#^Accessing offset ''SERVER_SOFTWARE'' directly on \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../system/HTTP/Response.php
+
+        -
+            message: '#^Accessing offset ''HTTP_REFERER'' directly on \$_SERVER is discouraged\.$#'
+            count: 4
+            path: ../../system/HTTP/UserAgent.php
+
+        -
+            message: '#^Accessing offset ''HTTP_USER_AGENT'' directly on \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../system/HTTP/UserAgent.php
+
+        -
+            message: '#^Accessing offset mixed directly on \$_GET is discouraged\.$#'
+            count: 1
+            path: ../../system/Pager/Pager.php
+
+        -
+            message: '#^Accessing offset ''REQUEST_METHOD'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../system/Router/Router.php
+
+        -
+            message: '#^Accessing offset ''HTTP_X_REQUESTED_WITH'' directly on \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Accessing offset ''app\.baseURL'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CLI/ConsoleTest.php
+
+        -
+            message: '#^Accessing offset ''argv'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CLI/ConsoleTest.php
+
+        -
+            message: '#^Accessing offset ''encryption\.key'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Commands/GenerateKeyTest.php
+
+        -
+            message: '#^Accessing offset ''foo'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CommonFunctionsSendTest.php
+
+        -
+            message: '#^Accessing offset ''foo'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CommonFunctionsTest.php
+
+        -
+            message: '#^Accessing offset ''BAR'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Config/DotEnvTest.php
+
+        -
+            message: '#^Accessing offset ''FOO'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Config/DotEnvTest.php
+
+        -
+            message: '#^Accessing offset ''NULL'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Config/DotEnvTest.php
+
+        -
+            message: '#^Accessing offset ''SPACED'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Config/DotEnvTest.php
+
+        -
+            message: '#^Accessing offset ''SimpleConfig_simple_name'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Config/DotEnvTest.php
+
+        -
+            message: '#^Accessing offset ''CODEIGNITER_SCREAM_DEPRECATIONS'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Debug/ExceptionsTest.php
+
+        -
+            message: '#^Accessing offset ''encryption\.key'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Encryption/EncryptionTest.php
+
+        -
+            message: '#^Accessing offset ''HTTP_USER_AGENT'' directly on \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/DownloadResponseTest.php
+
+        -
+            message: '#^Accessing offset ''SERVER_SOFTWARE'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/ResponseTest.php
+
+        -
+            message: '#^Accessing offset ''QUERY_STRING'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Accessing offset ''HTTP_REFERER'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/UserAgentTest.php
+
+        -
+            message: '#^Accessing offset ''HTTP_USER_AGENT'' directly on \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/UserAgentTest.php
+
+        -
+            message: '#^Accessing offset ''HTTP_HOST'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/URLHelper/SiteUrlTest.php
+
+        -
+            message: '#^Accessing offset ''REQUEST_URI'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/URLHelper/SiteUrlTest.php
+
+        -
+            message: '#^Accessing offset ''page'' directly on \$_GET is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Pager/PagerTest.php
+
+        -
+            message: '#^Accessing offset ''page_foo'' directly on \$_GET is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Pager/PagerTest.php
+
+        -
+            message: '#^Accessing offset ''CONTENT_TYPE'' directly on \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Validation/ValidationTest.php

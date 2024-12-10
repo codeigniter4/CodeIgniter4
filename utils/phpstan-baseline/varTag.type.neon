@@ -1,0 +1,43 @@
+# total 8 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^PHPDoc tag @var with type list\<string\>\|Redis\|false is not subtype of type array\<int, string\>\|false\.$#'
+            count: 1
+            path: ../../system/Cache/Handlers/RedisHandler.php
+
+        -
+            message: '#^PHPDoc tag @var with type Config\\Session\|null is not subtype of type Config\\Session\.$#'
+            count: 1
+            path: ../../system/Commands/Generators/MigrationGenerator.php
+
+        -
+            message: '#^PHPDoc tag @var with type Config\\CURLRequest\|null is not subtype of type Config\\CURLRequest\.$#'
+            count: 1
+            path: ../../system/HTTP/CURLRequest.php
+
+        -
+            message: '#^PHPDoc tag @var with type string is not subtype of type DateTimeZone\.$#'
+            count: 1
+            path: ../../system/I18n/Time.php
+
+        -
+            message: '#^PHPDoc tag @var with type string is not subtype of type DateTimeZone\.$#'
+            count: 1
+            path: ../../system/I18n/TimeLegacy.php
+
+        -
+            message: '#^PHPDoc tag @var with type Closure\(object\)\: string is not subtype of type Closure\(mixed \.\.\.\)\: mixed\.$#'
+            count: 2
+            path: ../../tests/system/Commands/Utilities/ConfigCheckTest.php
+
+        -
+            message: '#^PHPDoc tag @var with type Tests\\Support\\Entity\\UserWithCasts is not subtype of type list\<array\{\}\>\|null\.$#'
+            count: 1
+            path: ../../tests/system/Models/FindModelTest.php
+
+        -
+            message: '#^PHPDoc tag @var with type stdClass is not subtype of type array\{\}\|null\.$#'
+            count: 1
+            path: ../../tests/system/Models/UpdateModelTest.php

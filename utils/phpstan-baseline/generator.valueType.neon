@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Generator expects value type list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{array\{''employee_id'', CodeIgniter\\Database\\RawSql\}, ''SELECT "employee_id…''\}\|array\{array\{0\: CodeIgniter\\Database\\RawSql, 1\: ''employee_id'', 2\?\: CodeIgniter\\Database\\RawSql\}, ''SELECT CONCAT\(first…''\|''SELECT IF\(salary \>…''\}\|array\{array\{CodeIgniter\\Database\\RawSql, CodeIgniter\\Database\\RawSql\}, ''SELECT CONCAT\(first…''\} given\.$#'
+            count: 1
+            path: ../../tests/system/Database/Builder/SelectTest.php

@@ -1,0 +1,33 @@
+# total 6 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Property CodeIgniter\\Config\\View\:\:\$coreFilters \(array\<string, callable\(mixed\)\: mixed&string\>\) does not accept default value of type array\{abs\: ''\\\\abs'', capitalize\: ''\\\\CodeIgniter\\\\View…'', date\: ''\\\\CodeIgniter\\\\View…'', date_modify\: ''\\\\CodeIgniter\\\\View…'', default\: ''\\\\CodeIgniter\\\\View…'', esc\: ''\\\\CodeIgniter\\\\View…'', excerpt\: ''\\\\CodeIgniter\\\\View…'', highlight\: ''\\\\CodeIgniter\\\\View…'', \.\.\.\}\.$#'
+            count: 1
+            path: ../../system/Config/View.php
+
+        -
+            message: '#^Property CodeIgniter\\Test\\CIUnitTestCase\:\:\$seed \(class\-string\<CodeIgniter\\Database\\Seeder\>\|list\<class\-string\<CodeIgniter\\Database\\Seeder\>\>\) does not accept default value of type ''''\.$#'
+            count: 1
+            path: ../../system/Test/CIUnitTestCase.php
+
+        -
+            message: '#^Property Tests\\Support\\Models\\ValidErrorsModel\:\:\$validationRules \(array\<string, array\<string, array\<string, string\>\|string\>\|string\>\|string\) does not accept default value of type array\<string, array\<int\|string, array\<string, string\>\|string\>\|string\>\.$#'
+            count: 1
+            path: ../../tests/_support/Models/ValidErrorsModel.php
+
+        -
+            message: '#^Property Tests\\Support\\Models\\ValidModel\:\:\$validationRules \(array\<string, array\<string, array\<string, string\>\|string\>\|string\>\|string\) does not accept default value of type array\<string, list\<string\>\|string\>\.$#'
+            count: 1
+            path: ../../tests/_support/Models/ValidModel.php
+
+        -
+            message: '#^Property CodeIgniter\\Models\\DataConverterModelTest\:\:\$seed \(class\-string\<CodeIgniter\\Database\\Seeder\>\|list\<class\-string\<CodeIgniter\\Database\\Seeder\>\>\) does not accept default value of type ''''\.$#'
+            count: 1
+            path: ../../tests/system/Models/DataConverterModelTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Models\\TimestampModelTest\:\:\$seed \(class\-string\<CodeIgniter\\Database\\Seeder\>\|list\<class\-string\<CodeIgniter\\Database\\Seeder\>\>\) does not accept default value of type ''''\.$#'
+            count: 1
+            path: ../../tests/system/Models/TimestampModelTest.php

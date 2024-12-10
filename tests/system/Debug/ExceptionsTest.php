@@ -73,7 +73,7 @@ final class ExceptionsTest extends CIUnitTestCase
             // We test DEPRECATED error, so cannot set `declare(strict_types=1)` in this file.
             strlen($maybeNull);
             $this->assertLogContains('error', '[DEPRECATED] strlen(): ');
-        } catch (ErrorException) {
+        } catch (ErrorException $e) {
             $this->fail('The catch block should not be reached.');
         } finally {
             restore_error_handler();

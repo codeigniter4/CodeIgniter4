@@ -1,0 +1,13 @@
+# total 2 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Variable \$_GET on left side of \?\? always exists and is not nullable\.$#'
+            count: 1
+            path: ../../system/HTTP/RedirectResponse.php
+
+        -
+            message: '#^Variable \$_POST on left side of \?\? always exists and is not nullable\.$#'
+            count: 1
+            path: ../../system/HTTP/RedirectResponse.php

@@ -1,0 +1,88 @@
+# total 17 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Parameter \#1 \$params \(array\<string, mixed\>\) of method CodeIgniter\\Commands\\Database\\MigrateStatus\:\:run\(\) should be contravariant with parameter \$params \(array\<int\|string, string\|null\>\) of method CodeIgniter\\CLI\\BaseCommand\:\:run\(\)$#'
+            count: 1
+            path: ../../system/Commands/Database/MigrateStatus.php
+
+        -
+            message: '#^Parameter \#1 \$offset \(string\) of method CodeIgniter\\Cookie\\Cookie\:\:offsetSet\(\) should be contravariant with parameter \$offset \(string\|null\) of method ArrayAccess\<string,bool\|int\|string\>\:\:offsetSet\(\)$#'
+            count: 1
+            path: ../../system/Cookie/Cookie.php
+
+        -
+            message: '#^Parameter \#1 \$className \(class\-string\) of method CodeIgniter\\Database\\BaseResult\:\:getCustomResultObject\(\) should be contravariant with parameter \$className \(string\) of method CodeIgniter\\Database\\ResultInterface\<TConnection,TResult\>\:\:getCustomResultObject\(\)$#'
+            count: 1
+            path: ../../system/Database/BaseResult.php
+
+        -
+            message: '#^Parameter \#1 \$selectOverride \(bool\) of method CodeIgniter\\Database\\SQLSRV\\Builder\:\:compileSelect\(\) should be contravariant with parameter \$selectOverride \(mixed\) of method CodeIgniter\\Database\\BaseBuilder\:\:compileSelect\(\)$#'
+            count: 1
+            path: ../../system/Database/SQLSRV/Builder.php
+
+        -
+            message: '#^Parameter \#1 \$value \(bool\|int\|string\) of method CodeIgniter\\Entity\\Cast\\IntBoolCast\:\:set\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\BaseCast\:\:set\(\)$#'
+            count: 1
+            path: ../../system/Entity/Cast/IntBoolCast.php
+
+        -
+            message: '#^Parameter \#1 \$value \(bool\|int\|string\) of method CodeIgniter\\Entity\\Cast\\IntBoolCast\:\:set\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\CastInterface\:\:set\(\)$#'
+            count: 1
+            path: ../../system/Entity/Cast/IntBoolCast.php
+
+        -
+            message: '#^Parameter \#1 \$value \(int\) of method CodeIgniter\\Entity\\Cast\\IntBoolCast\:\:get\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\BaseCast\:\:get\(\)$#'
+            count: 1
+            path: ../../system/Entity/Cast/IntBoolCast.php
+
+        -
+            message: '#^Parameter \#1 \$value \(int\) of method CodeIgniter\\Entity\\Cast\\IntBoolCast\:\:get\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\CastInterface\:\:get\(\)$#'
+            count: 1
+            path: ../../system/Entity/Cast/IntBoolCast.php
+
+        -
+            message: '#^Parameter \#1 \$level \(string\) of method CodeIgniter\\Log\\Logger\:\:log\(\) should be contravariant with parameter \$level \(mixed\) of method Psr\\Log\\LoggerInterface\:\:log\(\)$#'
+            count: 1
+            path: ../../system/Log/Logger.php
+
+        -
+            message: '#^Parameter \#1 \$value \(string\) of method Tests\\Support\\Entity\\Cast\\CastBase64\:\:get\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\BaseCast\:\:get\(\)$#'
+            count: 1
+            path: ../../tests/_support/Entity/Cast/CastBase64.php
+
+        -
+            message: '#^Parameter \#1 \$value \(string\) of method Tests\\Support\\Entity\\Cast\\CastBase64\:\:get\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\CastInterface\:\:get\(\)$#'
+            count: 1
+            path: ../../tests/_support/Entity/Cast/CastBase64.php
+
+        -
+            message: '#^Parameter \#1 \$value \(string\) of method Tests\\Support\\Entity\\Cast\\CastBase64\:\:set\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\BaseCast\:\:set\(\)$#'
+            count: 1
+            path: ../../tests/_support/Entity/Cast/CastBase64.php
+
+        -
+            message: '#^Parameter \#1 \$value \(string\) of method Tests\\Support\\Entity\\Cast\\CastBase64\:\:set\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\CastInterface\:\:set\(\)$#'
+            count: 1
+            path: ../../tests/_support/Entity/Cast/CastBase64.php
+
+        -
+            message: '#^Parameter \#1 \$binary \(string\) of method Tests\\Support\\Entity\\Cast\\CastBinaryUUID\:\:get\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\BaseCast\:\:get\(\)$#'
+            count: 1
+            path: ../../tests/_support/Entity/Cast/CastBinaryUUID.php
+
+        -
+            message: '#^Parameter \#1 \$binary \(string\) of method Tests\\Support\\Entity\\Cast\\CastBinaryUUID\:\:get\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\CastInterface\:\:get\(\)$#'
+            count: 1
+            path: ../../tests/_support/Entity/Cast/CastBinaryUUID.php
+
+        -
+            message: '#^Parameter \#1 \$string \(string\) of method Tests\\Support\\Entity\\Cast\\CastBinaryUUID\:\:set\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\BaseCast\:\:set\(\)$#'
+            count: 1
+            path: ../../tests/_support/Entity/Cast/CastBinaryUUID.php
+
+        -
+            message: '#^Parameter \#1 \$string \(string\) of method Tests\\Support\\Entity\\Cast\\CastBinaryUUID\:\:set\(\) should be contravariant with parameter \$value \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\CastInterface\:\:set\(\)$#'
+            count: 1
+            path: ../../tests/_support/Entity/Cast/CastBinaryUUID.php

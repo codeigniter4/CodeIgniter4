@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Call to function strlen\(\) on a separate line has no effect\.$#'
+            count: 1
+            path: ../../tests/system/Debug/ExceptionsTest.php

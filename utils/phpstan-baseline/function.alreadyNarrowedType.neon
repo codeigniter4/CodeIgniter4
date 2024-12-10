@@ -1,0 +1,18 @@
+# total 3 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Call to function property_exists\(\) with Config\\Cache and ''file'' will always evaluate to true\.$#'
+            count: 1
+            path: ../../system/Cache/Handlers/FileHandler.php
+
+        -
+            message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+            count: 1
+            path: ../../system/HTTP/Files/FileCollection.php
+
+        -
+            message: '#^Call to function is_array\(\) with non\-empty\-array will always evaluate to true\.$#'
+            count: 1
+            path: ../../system/Test/DOMParser.php

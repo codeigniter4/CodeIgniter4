@@ -83,6 +83,7 @@ return RectorConfig::configure()
         __DIR__ . '/phpstan.neon.dist',
         __DIR__ . '/vendor/codeigniter/phpstan-codeigniter/extension.neon',
         __DIR__ . '/vendor/phpstan/phpstan-strict-rules/rules.neon',
+        __DIR__ . '/vendor/shipmonk/phpstan-baseline-per-identifier/extension.neon',
     ])
     // is there a file you need to skip?
     ->withSkip([

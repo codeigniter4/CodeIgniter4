@@ -1,0 +1,68 @@
+# total 13 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/Cache/ResponseCacheTest.php
+
+        -
+            message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/CommonFunctionsTest.php
+
+        -
+            message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Filters/InvalidCharsTest.php
+
+        -
+            message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/CLIRequestTest.php
+
+        -
+            message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/RedirectResponseTest.php
+
+        -
+            message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/RequestTest.php
+
+        -
+            message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryTest.php
+
+        -
+            message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Log/LoggerTest.php
+
+        -
+            message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Models/PaginateModelTest.php
+
+        -
+            message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
+            count: 5
+            path: ../../tests/system/Pager/PagerTest.php

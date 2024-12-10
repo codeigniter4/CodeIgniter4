@@ -1,0 +1,13 @@
+# total 2 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Method CodeIgniter\\Images\\Handlers\\BaseHandler\:\:__call\(\) should return mixed but return statement is missing\.$#'
+            count: 1
+            path: ../../system/Images/Handlers/BaseHandler.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockResult\:\:fetchAssoc\(\) should return mixed but return statement is missing\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockResult.php

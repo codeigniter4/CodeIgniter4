@@ -71,9 +71,7 @@ class Filters
      */
     public static function default($value, string $default): string
     {
-        return empty($value) // @phpstan-ignore-line
-            ? $default
-            : $value;
+        return empty($value) ? $default : $value;
     }
 
     /**

@@ -1,0 +1,378 @@
+# total 75 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Parameter \#2 \$params of method CodeIgniter\\CLI\\BaseCommand\:\:call\(\) expects array\<int\|string, string\|null\>, array\<int\|string, int\|string\|null\> given\.$#'
+            count: 2
+            path: ../../system/Commands/Database/MigrateRefresh.php
+
+        -
+            message: '#^Parameter \#3 \.\.\.\$arrays of function array_map expects array, int\|string given\.$#'
+            count: 1
+            path: ../../system/Database/BaseBuilder.php
+
+        -
+            message: '#^Parameter \#3 \.\.\.\$arrays of function array_map expects array, int\|string given\.$#'
+            count: 1
+            path: ../../system/Database/OCI8/Builder.php
+
+        -
+            message: '#^Parameter \#3 \.\.\.\$arrays of function array_map expects array, int\|string given\.$#'
+            count: 1
+            path: ../../system/Database/Postgre/Builder.php
+
+        -
+            message: '#^Parameter \#3 \.\.\.\$arrays of function array_map expects array, int\|string given\.$#'
+            count: 1
+            path: ../../system/Database/SQLite3/Builder.php
+
+        -
+            message: '#^Parameter \#2 \$message_type of function error_log expects 0\|1\|3\|4, int given\.$#'
+            count: 1
+            path: ../../system/Log/Handlers/ErrorlogHandler.php
+
+        -
+            message: '#^Parameter \#1 \$fields of method CodeIgniter\\Database\\Forge\:\:addField\(\) expects array\<string, array\|string\>\|string, array\<int\|string, array\<string, bool\|int\|string\>\|string\> given\.$#'
+            count: 2
+            path: ../../tests/_support/Database/Migrations/20160428212500_Create_test_tables.php
+
+        -
+            message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: \(CodeIgniter\\HTTP\\DownloadResponse\|null\) given\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: CodeIgniter\\HTTP\\ResponseInterface given\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: non\-falsy\-string given\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: void given\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Parameter \#2 \$mock of static method CodeIgniter\\Config\\BaseService\:\:injectMock\(\) expects object, null given\.$#'
+            count: 4
+            path: ../../tests/system/Commands/RoutesTest.php
+
+        -
+            message: '#^Parameter \#2 \$context of function esc expects ''attr''\|''css''\|''html''\|''js''\|''raw''\|''url'', ''0'' given\.$#'
+            count: 1
+            path: ../../tests/system/CommonFunctionsTest.php
+
+        -
+            message: '#^Parameter \#2 \$context of function esc expects ''attr''\|''css''\|''html''\|''js''\|''raw''\|''url'', ''bogus'' given\.$#'
+            count: 1
+            path: ../../tests/system/CommonFunctionsTest.php
+
+        -
+            message: '#^Parameter \#2 \$file of class CodeIgniter\\Config\\DotEnv constructor expects string, int given\.$#'
+            count: 1
+            path: ../../tests/system/Config/DotEnvTest.php
+
+        -
+            message: '#^Parameter \#1 \$expected of method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) expects class\-string\<Config\\TestRegistrar\>, string given\.$#'
+            count: 1
+            path: ../../tests/system/Config/FactoriesTest.php
+
+        -
+            message: '#^Parameter \#3 \$classname of static method CodeIgniter\\Config\\Factories\:\:define\(\) expects class\-string, string given\.$#'
+            count: 2
+            path: ../../tests/system/Config/FactoriesTest.php
+
+        -
+            message: '#^Parameter \#1 \$cookies of class CodeIgniter\\Cookie\\CookieStore constructor expects array\<CodeIgniter\\Cookie\\Cookie\>, array\<int, DateTimeImmutable\> given\.$#'
+            count: 1
+            path: ../../tests/system/Cookie/CookieStoreTest.php
+
+        -
+            message: '#^Parameter \#3 \$options of class CodeIgniter\\Cookie\\Cookie constructor expects array\<string, bool\|int\|string\>, array\<string, DateTimeImmutable\> given\.$#'
+            count: 1
+            path: ../../tests/system/Cookie/CookieTest.php
+
+        -
+            message: '#^Parameter \#1 \$from of method CodeIgniter\\Database\\BaseBuilder\:\:from\(\) expects array\|string, null given\.$#'
+            count: 1
+            path: ../../tests/system/Database/Builder/FromTest.php
+
+        -
+            message: '#^Parameter \#3 \$subject of function str_replace expects array\<string\>\|string, CodeIgniter\\Database\\ResultInterface given\.$#'
+            count: 10
+            path: ../../tests/system/Database/Builder/GetTest.php
+
+        -
+            message: '#^Parameter \#3 \$subject of function str_replace expects array\<string\>\|string, CodeIgniter\\Database\\ResultInterface\|false given\.$#'
+            count: 6
+            path: ../../tests/system/Database/Builder/GetTest.php
+
+        -
+            message: '#^Parameter \#1 \$fields of method CodeIgniter\\Database\\Forge\:\:addField\(\) expects array\<string, array\|string\>\|string, array\<int, string\> given\.$#'
+            count: 2
+            path: ../../tests/system/Database/Live/ForgeTest.php
+
+        -
+            message: '#^Parameter \#1 \$db of class CodeIgniter\\Database\\SQLite3\\Table constructor expects CodeIgniter\\Database\\SQLite3\\Connection, CodeIgniter\\Database\\BaseConnection given\.$#'
+            count: 1
+            path: ../../tests/system/Database/Live/SQLite3/AlterTableTest.php
+
+        -
+            message: '#^Parameter \#2 \$forge of class CodeIgniter\\Database\\SQLite3\\Table constructor expects CodeIgniter\\Database\\SQLite3\\Forge, CodeIgniter\\Database\\Forge given\.$#'
+            count: 1
+            path: ../../tests/system/Database/Live/SQLite3/AlterTableTest.php
+
+        -
+            message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{0\: ''country'', updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
+            count: 2
+            path: ../../tests/system/Database/Live/UpdateTest.php
+
+        -
+            message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{0\: ''name'', updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
+            count: 1
+            path: ../../tests/system/Database/Live/UpdateTest.php
+
+        -
+            message: '#^Parameter \#1 \$set of method CodeIgniter\\Database\\BaseBuilder\:\:updateFields\(\) expects list\<CodeIgniter\\Database\\RawSql\|string\>\|string, array\{updated_at\: CodeIgniter\\Database\\RawSql\} given\.$#'
+            count: 2
+            path: ../../tests/system/Database/Live/UpsertTest.php
+
+        -
+            message: '#^Parameter \#2 \$callable of method CodeIgniter\\Debug\\Timer\:\:record\(\) expects callable\(\)\: mixed, ''strlen'' given\.$#'
+            count: 1
+            path: ../../tests/system/Debug/TimerTest.php
+
+        -
+            message: '#^Parameter \#1 \$value of method CodeIgniter\\HTTP\\Header\:\:setValue\(\) expects array\<int\|string, array\<string, string\>\|string\>\|string\|null, array\<int, int\|string\> given\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/HeaderTest.php
+
+        -
+            message: '#^Parameter \#2 \$value of class CodeIgniter\\HTTP\\Header constructor expects array\<int\|string, array\<string, string\>\|string\>\|string\|null, int given\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/HeaderTest.php
+
+        -
+            message: '#^Parameter \#2 \$value of class CodeIgniter\\HTTP\\Header constructor expects array\<int\|string, array\<string, string\>\|string\>\|string\|null, stdClass given\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/HeaderTest.php
+
+        -
+            message: '#^Parameter \#1 \$config of class CodeIgniter\\Log\\Logger constructor expects Config\\Logger, CodeIgniter\\Test\\Mock\\MockLogger given\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/RedirectExceptionTest.php
+
+        -
+            message: '#^Parameter \#3 \$expire of method CodeIgniter\\HTTP\\Response\:\:setCookie\(\) expects int, string given\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/ResponseSendTest.php
+
+        -
+            message: '#^Parameter \#1 \$data of method CodeIgniter\\HTTP\\Message\:\:setBody\(\) expects string, array\<string, list\<int\>\|string\> given\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/ResponseTest.php
+
+        -
+            message: '#^Parameter \#3 \$expire of method CodeIgniter\\HTTP\\Response\:\:setCookie\(\) expects int, string given\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/ResponseTest.php
+
+        -
+            message: '#^Parameter \#4 \$scheme of class CodeIgniter\\HTTP\\SiteURI constructor expects ''http''\|''https''\|null, '''' given\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURITest.php
+
+        -
+            message: '#^Parameter \#2 \$value of function form_hidden expects array\|string, null given\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/FormHelperTest.php
+
+        -
+            message: '#^Parameter \#1 \$num of function number_to_size expects int\|string, float given\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/NumberHelperTest.php
+
+        -
+            message: '#^Parameter \#1 \$request of method CodeIgniter\\CodeIgniter\:\:setRequest\(\) expects CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest, CodeIgniter\\HTTP\\Request given\.$#'
+            count: 1
+            path: ../../tests/system/HomeTest.php
+
+        -
+            message: '#^Parameter \#1 \$config of class CodeIgniter\\Filters\\Filters constructor expects Config\\Filters, object\{aliases\: array\<string, string\>, globals\: array\<string, list\<string\>\>\}&stdClass given\.$#'
+            count: 2
+            path: ../../tests/system/Honeypot/HoneypotTest.php
+
+        -
+            message: '#^Parameter \#1 \$data of method CodeIgniter\\HTTP\\Message\:\:setBody\(\) expects string, null given\.$#'
+            count: 1
+            path: ../../tests/system/Honeypot/HoneypotTest.php
+
+        -
+            message: '#^Parameter \#1 \$image of function imagecolorat expects GdImage, resource given\.$#'
+            count: 2
+            path: ../../tests/system/Images/GDHandlerTest.php
+
+        -
+            message: '#^Parameter \#1 \$image of function imagecolorsforindex expects GdImage, resource given\.$#'
+            count: 2
+            path: ../../tests/system/Images/GDHandlerTest.php
+
+        -
+            message: '#^Parameter \#1 \$filename of function file_get_contents expects string, resource given\.$#'
+            count: 2
+            path: ../../tests/system/Images/ImageMagickHandlerTest.php
+
+        -
+            message: '#^Parameter \#2 \$message of method CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:handle\(\) expects string, stdClass given\.$#'
+            count: 1
+            path: ../../tests/system/Log/Handlers/ChromeLoggerHandlerTest.php
+
+        -
+            message: '#^Parameter \#1 \$config of class CodeIgniter\\Log\\Logger constructor expects Config\\Logger, CodeIgniter\\Test\\Mock\\MockLogger given\.$#'
+            count: 24
+            path: ../../tests/system/Log/LoggerTest.php
+
+        -
+            message: '#^Parameter \#1 \$level of method CodeIgniter\\Log\\Logger\:\:log\(\) expects string, int given\.$#'
+            count: 2
+            path: ../../tests/system/Log/LoggerTest.php
+
+        -
+            message: '#^Parameter \#2 \$message of method CodeIgniter\\Log\\Logger\:\:log\(\) expects string\|Stringable, CodeIgniter\\Test\\Mock\\MockLogger given\.$#'
+            count: 1
+            path: ../../tests/system/Log/LoggerTest.php
+
+        -
+            message: '#^Parameter \#1 \$row of method CodeIgniter\\BaseModel\:\:save\(\) expects array\<int\|string, bool\|float\|int\|object\|string\|null\>\|object, array\<string, array\<int, string\>\> given\.$#'
+            count: 1
+            path: ../../tests/system/Models/DataConverterModelTest.php
+
+        -
+            message: '#^Parameter \#1 \$row of method CodeIgniter\\Model\:\:insert\(\) expects array\<int\|string, bool\|float\|int\|object\|string\|null\>\|object\|null, array\<string, list\<string\>\|string\> given\.$#'
+            count: 3
+            path: ../../tests/system/Models/DataConverterModelTest.php
+
+        -
+            message: '#^Parameter \#2 \$row of method CodeIgniter\\Model\:\:update\(\) expects array\<int\|string, bool\|float\|int\|object\|string\|null\>\|object\|null, array\<string, array\<int, string\>\> given\.$#'
+            count: 1
+            path: ../../tests/system/Models/DataConverterModelTest.php
+
+        -
+            message: '#^Parameter \#1 \$id of method CodeIgniter\\Model\:\:update\(\) expects array\|int\|string\|null, false\|null given\.$#'
+            count: 1
+            path: ../../tests/system/Models/UpdateModelTest.php
+
+        -
+            message: '#^Parameter \#1 \$row of method CodeIgniter\\BaseModel\:\:save\(\) expects array\<int\|string, bool\|float\|int\|object\|string\|null\>\|object, list\<array\>\|null given\.$#'
+            count: 1
+            path: ../../tests/system/Models/UpdateModelTest.php
+
+        -
+            message: '#^Parameter \#1 \$format of method CodeIgniter\\RESTful\\ResourceController\:\:setFormat\(\) expects ''json''\|''xml'', ''Nonsense'' given\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Parameter \#1 \$config of class CodeIgniter\\Test\\Mock\\MockSecurity constructor expects Config\\Security, CodeIgniter\\Config\\BaseConfig\|null given\.$#'
+            count: 1
+            path: ../../tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php
+
+        -
+            message: '#^Parameter \#1 \$config of class CodeIgniter\\Log\\Logger constructor expects Config\\Logger, CodeIgniter\\Test\\Mock\\MockLogger given\.$#'
+            count: 15
+            path: ../../tests/system/Test/ControllerTestTraitTest.php
+
+        -
+            message: '#^Parameter \#1 \$request of method CodeIgniter\\CodeIgniter\:\:setRequest\(\) expects CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest, CodeIgniter\\HTTP\\Request given\.$#'
+            count: 1
+            path: ../../tests/system/Test/FeatureTestAutoRoutingImprovedTest.php
+
+        -
+            message: '#^Parameter \#1 \$request of method CodeIgniter\\CodeIgniter\:\:setRequest\(\) expects CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest, CodeIgniter\\HTTP\\Request given\.$#'
+            count: 1
+            path: ../../tests/system/Test/FeatureTestTraitTest.php
+
+        -
+            message: '#^Parameter \#1 \$body of method CodeIgniter\\HTTP\\Response\:\:setJSON\(\) expects array\|object\|string, false given\.$#'
+            count: 1
+            path: ../../tests/system/Test/TestResponseTest.php
+
+        -
+            message: '#^Parameter \#1 \$body of method CodeIgniter\\HTTP\\Response\:\:setJSON\(\) expects array\|object\|string, true given\.$#'
+            count: 1
+            path: ../../tests/system/Test/TestResponseTest.php
+
+        -
+            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
+            count: 1
+            path: ../../tests/system/Validation/CreditCardRulesTest.php
+
+        -
+            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
+            count: 1
+            path: ../../tests/system/Validation/FileRulesTest.php
+
+        -
+            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
+            count: 1
+            path: ../../tests/system/Validation/FormatRulesTest.php
+
+        -
+            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
+            count: 1
+            path: ../../tests/system/Validation/RulesTest.php
+
+        -
+            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
+            count: 1
+            path: ../../tests/system/Validation/StrictRules/CreditCardRulesTest.php
+
+        -
+            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
+            count: 1
+            path: ../../tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php
+
+        -
+            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
+            count: 1
+            path: ../../tests/system/Validation/StrictRules/FileRulesTest.php
+
+        -
+            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
+            count: 3
+            path: ../../tests/system/Validation/ValidationTest.php
+
+        -
+            message: '#^Parameter \#3 \$errors of method CodeIgniter\\Validation\\Validation\:\:check\(\) expects list\<string\>, array\{is_numeric\: ''Nope\. Not a number\.''\} given\.$#'
+            count: 1
+            path: ../../tests/system/Validation/ValidationTest.php
+
+        -
+            message: '#^Parameter \#2 \$context of method CodeIgniter\\View\\Parser\:\:setData\(\) expects ''attr''\|''css''\|''html''\|''js''\|''raw''\|''url''\|null, ''unknown'' given\.$#'
+            count: 3
+            path: ../../tests/system/View/ParserTest.php
+
+        -
+            message: '#^Parameter \#1 \$array of method CodeIgniter\\View\\Table\:\:makeColumns\(\) expects list\<string\>, ''invalid_junk'' given\.$#'
+            count: 1
+            path: ../../tests/system/View/TableTest.php
+
+        -
+            message: '#^Parameter \#1 \$connID of class CodeIgniter\\View\\DBResultDummy constructor expects mysqli, null given\.$#'
+            count: 2
+            path: ../../tests/system/View/TableTest.php
+
+        -
+            message: '#^Parameter \#2 \$columnLimit of method CodeIgniter\\View\\Table\:\:makeColumns\(\) expects int, string given\.$#'
+            count: 1
+            path: ../../tests/system/View/TableTest.php
+
+        -
+            message: '#^Parameter \#2 \$resultID of class CodeIgniter\\View\\DBResultDummy constructor expects mysqli_result, null given\.$#'
+            count: 2
+            path: ../../tests/system/View/TableTest.php
