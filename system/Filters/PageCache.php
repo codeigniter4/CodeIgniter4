@@ -38,7 +38,7 @@ class PageCache implements FilterInterface
      *
      * @param array|null $arguments
      *
-     * @return ResponseInterface|void
+     * @return ResponseInterface|null
      */
     public function before(RequestInterface $request, $arguments = null)
     {
@@ -51,6 +51,7 @@ class PageCache implements FilterInterface
         if ($cachedResponse instanceof ResponseInterface) {
             return $cachedResponse;
         }
+        return null;
     }
 
     /**

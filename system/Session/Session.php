@@ -205,7 +205,7 @@ class Session implements SessionInterface
     /**
      * Initialize the session container and starts up the session.
      *
-     * @return $this|void
+     * @return $this|null
      */
     public function start()
     {
@@ -213,20 +213,20 @@ class Session implements SessionInterface
             // @codeCoverageIgnoreStart
             $this->logger->debug('Session: Initialization under CLI aborted.');
 
-            return;
+            return null;
             // @codeCoverageIgnoreEnd
         }
 
         if ((bool) ini_get('session.auto_start')) {
             $this->logger->error('Session: session.auto_start is enabled in php.ini. Aborting.');
 
-            return;
+            return null;
         }
 
         if (session_status() === PHP_SESSION_ACTIVE) {
             $this->logger->warning('Session: Sessions is enabled, and one exists. Please don\'t $session->start();');
 
-            return;
+            return null;
         }
 
         $this->configure();

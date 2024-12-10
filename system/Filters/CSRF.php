@@ -35,14 +35,14 @@ class CSRF implements FilterInterface
      *
      * @param list<string>|null $arguments
      *
-     * @return RedirectResponse|void
+     * @return RedirectResponse|null
      *
      * @throws SecurityException
      */
     public function before(RequestInterface $request, $arguments = null)
     {
         if (! $request instanceof IncomingRequest) {
-            return;
+            return null;
         }
 
         /** @var Security $security */
@@ -57,6 +57,7 @@ class CSRF implements FilterInterface
 
             throw $e;
         }
+        return null;
     }
 
     /**
