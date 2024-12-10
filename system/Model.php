@@ -593,7 +593,7 @@ class Model extends BaseModel
     public function getIdValue($row)
     {
         if (is_object($row)) {
-            // Get the raw primary key value of the Entity.
+            // Get the raw or mapped primary key value of the Entity.
             if ($row instanceof Entity && $row->{$this->primaryKey} !== null) {
                 $cast = $row->cast();
 
