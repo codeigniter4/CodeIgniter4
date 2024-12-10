@@ -57,10 +57,9 @@ class ForceHTTPS implements FilterInterface
      * We don't have anything to do here.
      *
      * @param array|null $arguments
-     *
-     * @return void
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
+        return null;
     }
 }

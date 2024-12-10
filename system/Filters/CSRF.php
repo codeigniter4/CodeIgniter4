@@ -65,10 +65,9 @@ class CSRF implements FilterInterface
      * We don't have anything to do here.
      *
      * @param list<string>|null $arguments
-     *
-     * @return void
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
+        return null;
     }
 }
