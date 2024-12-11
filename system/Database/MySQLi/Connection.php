@@ -297,7 +297,7 @@ class Connection extends BaseConnection
     /**
      * Executes the query against the database.
      *
-     * @return false|mysqli_result;
+     * @return false|mysqli_result
      */
     protected function execute(string $sql)
     {

@@ -11726,12 +11726,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/CLI/ConsoleTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: phpDoc.parseError
-	'message' => '#^PHPDoc tag @var has invalid value \\(@var FileVarExportHandler\\|CacheInterface\\)\\: Unexpected token "@var", expected type at offset 16$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Cache/FactoriesCacheFileHandlerTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: property.notFound
 	'message' => '#^Access to an undefined property CodeIgniter\\\\Config\\\\BaseConfig\\:\\:\\$baseURL\\.$#',
 	'count' => 1,
