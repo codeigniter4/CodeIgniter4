@@ -199,6 +199,7 @@ class Boot
             if (($writePath = realpath(rtrim($paths->writableDirectory, '\\/ '))) === false) {
                 header('HTTP/1.1 503 Service Unavailable.', true, 503);
                 echo 'The WRITEPATH is not set correctly.';
+
                 // EXIT_ERROR is not yet defined
                 exit(1);
             }
