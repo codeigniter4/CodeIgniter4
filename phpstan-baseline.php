@@ -16550,12 +16550,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: class.nameCase
-	'message' => '#^Class CodeIgniter\\\\Controller referenced with incorrect case\\: CodeIgniter\\\\controller\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.return
 	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionTest\\:\\:getCollector\\(\\) has no return type specified\\.$#',
 	'count' => 1,
