@@ -890,12 +890,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Utilities/Routes.php',
 ];
 $ignoreErrors[] = [
-	// identifier: variable.implicitArray
-	'message' => '#^Implicit array creation is not allowed \\- variable \\$filters might not exist\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\AutoRouteCollector\\:\\:addFilters\\(\\) has parameter \\$routes with no value type specified in iterable type array\\.$#',
 	'count' => 1,
@@ -7352,18 +7346,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Helpers/url_helper.php',
 ];
 $ignoreErrors[] = [
-	// identifier: variable.implicitArray
-	'message' => '#^Implicit array creation is not allowed \\- variable \\$atts might not exist\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/url_helper.php',
-];
-$ignoreErrors[] = [
-	// identifier: variable.undefined
-	'message' => '#^Variable \\$atts might not be defined\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/url_helper.php',
-];
-$ignoreErrors[] = [
 	// identifier: empty.notAllowed
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
@@ -12738,12 +12720,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Cookie\\\\CookieTest\\:\\:\\$defaults type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Cookie/CookieTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: variable.implicitArray
-	'message' => '#^Implicit array creation is not allowed \\- variable \\$array does not exist\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/DataConverter/DataConverterTest.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.callable
