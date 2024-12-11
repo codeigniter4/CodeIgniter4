@@ -183,6 +183,8 @@ The following new Exception interfaces have been added:
 - ``CodeIgniter\HTTP\Exceptions\ExceptionInterface``
 - ``CodeIgniter\Router\Exceptions\ExceptionInterface``
 
+Displaying exceptions for non-HTML responses now rely on the PHP ``display_errors`` setting instead of hardcoded environments.
+
 Commands
 ========
 
