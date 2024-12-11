@@ -43,6 +43,6 @@ class DebugToolbar implements FilterInterface
     {
         service('toolbar')->prepare($request, $response);
 
-        return $response;
+        return null;
     }
 }

@@ -55,6 +55,6 @@ class Honeypot implements FilterInterface
     {
         service('honeypot')->attachHoneypot($response);
 
-        return $response;
+        return null;
     }
 }
