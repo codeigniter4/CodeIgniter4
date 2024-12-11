@@ -13070,12 +13070,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Database/Live/GetTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: method.nameCase
-	'message' => '#^Call to method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:getWhere\\(\\) with incorrect case\\: getwhere$#',
-	'count' => 4,
-	'path' => __DIR__ . '/tests/system/Database/Live/InsertTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: property.phpDocType
 	'message' => '#^PHPDoc type string of property CodeIgniter\\\\Database\\\\Live\\\\MetadataTest\\:\\:\\$seed is not the same as PHPDoc type array\\<int, class\\-string\\<CodeIgniter\\\\Database\\\\Seeder\\>\\>\\|class\\-string\\<CodeIgniter\\\\Database\\\\Seeder\\> of overridden property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$seed\\.$#',
 	'count' => 1,
@@ -13176,12 +13170,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\Live\\\\UpdateTest\\:\\:testUpdateBatch\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Database/Live/UpdateTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: method.nameCase
-	'message' => '#^Call to method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:getWhere\\(\\) with incorrect case\\: getwhere$#',
-	'count' => 9,
-	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
 ];
 $ignoreErrors[] = [
 	// identifier: argument.type
@@ -13544,12 +13532,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Filters/fixtures/InvalidClass.php',
 ];
 $ignoreErrors[] = [
-	// identifier: method.nameCase
-	'message' => '#^Call to method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with incorrect case\\: assertInstanceof$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/Format/FormatTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: missingType.iterableValue
 	'message' => '#^Method CodeIgniter\\\\Format\\\\XMLFormatterTest\\:\\:provideValidatingInvalidTags\\(\\) return type has no value type specified in iterable type iterable\\.$#',
 	'count' => 1,
@@ -13674,12 +13656,6 @@ $ignoreErrors[] = [
 	'message' => '#^Assigning \'Mozilla/5\\.0 \\(Linux; U; Android 2\\.0\\.3; ja\\-jp; SC\\-02C Build/IML74K\\) AppleWebKit/534\\.30 \\(KHTML, like Gecko\\) Version/4\\.0 Mobile Safari/534\\.30\' directly on offset \'HTTP_USER_AGENT\' of \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/HTTP/DownloadResponseTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: method.nameCase
-	'message' => '#^Call to method PHPUnit\\\\Framework\\\\Assert\\:\\:assertNull\\(\\) with incorrect case\\: AssertNull$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/HTTP/Files/FileCollectionTest.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.return
@@ -16844,12 +16820,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: method.nameCase
-	'message' => '#^Call to method CodeIgniter\\\\Test\\\\ControllerTestTraitTest\\:\\:withUri\\(\\) with incorrect case\\: withURI$#',
-	'count' => 17,
-	'path' => __DIR__ . '/tests/system/Test/ControllerTestTraitTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: class.notFound
 	'message' => '#^Class App\\\\Controllers\\\\NeverHeardOfIt not found\\.$#',
 	'count' => 1,
@@ -17316,12 +17286,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Validation\\\\FileRulesTest\\:\\:\\$config type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/tests/system/Validation/FileRulesTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: method.nameCase
-	'message' => '#^Call to method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with incorrect case\\: assertsame$#',
-	'count' => 2,
-	'path' => __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.iterableValue

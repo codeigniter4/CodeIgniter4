@@ -42,7 +42,7 @@ final class FormatTest extends CIUnitTestCase
 
     public function testGetFormatter(): void
     {
-        $this->assertInstanceof(FormatterInterface::class, $this->format->getFormatter('application/json'));
+        $this->assertInstanceOf(FormatterInterface::class, $this->format->getFormatter('application/json'));
     }
 
     public function testGetFormatterExpectsExceptionOnUndefinedMime(): void

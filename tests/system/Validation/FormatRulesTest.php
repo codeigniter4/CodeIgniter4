@@ -789,7 +789,7 @@ class FormatRulesTest extends CIUnitTestCase
         $data = [
             'foo' => $value,
         ];
-        $this->assertsame($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     /**
@@ -807,7 +807,7 @@ class FormatRulesTest extends CIUnitTestCase
         $data = [
             'foo' => $value,
         ];
-        $this->assertsame($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public static function provideInvalidIntegerType(): iterable
