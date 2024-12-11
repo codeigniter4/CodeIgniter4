@@ -13106,12 +13106,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: class.nameCase
-	'message' => '#^Class stdClass referenced with incorrect case\\: stdclass\\.$#',
-	'count' => 9,
-	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/RawSqlTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: method.notFound
 	'message' => '#^Call to an undefined method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:getCursor\\(\\)\\.$#',
 	'count' => 1,
@@ -13193,12 +13187,6 @@ $ignoreErrors[] = [
 	// identifier: method.nameCase
 	'message' => '#^Call to method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:getWhere\\(\\) with incorrect case\\: getwhere$#',
 	'count' => 9,
-	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: class.nameCase
-	'message' => '#^Class stdClass referenced with incorrect case\\: stdclass\\.$#',
-	'count' => 5,
 	'path' => __DIR__ . '/tests/system/Database/Live/UpsertTest.php',
 ];
 $ignoreErrors[] = [
