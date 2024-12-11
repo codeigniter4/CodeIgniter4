@@ -395,7 +395,7 @@ class Connection extends BaseConnection
     {
         $sql = 'SHOW TABLES FROM ' . $this->escapeIdentifier($this->database);
 
-        if ($tableName !== null) {
+        if ((string) $tableName !== '') {
             return $sql . ' LIKE ' . $this->escape($tableName);
         }
 

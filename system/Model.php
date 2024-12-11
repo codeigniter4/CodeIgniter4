@@ -690,7 +690,7 @@ class Model extends BaseModel
         // Check for an existing Builder
         if ($this->builder instanceof BaseBuilder) {
             // Make sure the requested table matches the builder
-            if ($table !== null && $this->builder->getTable() !== $table) {
+            if ((string) $table !== '' && $this->builder->getTable() !== $table) {
                 return $this->db->table($table);
             }
 
@@ -704,7 +704,7 @@ class Model extends BaseModel
             throw ModelException::forNoPrimaryKey(static::class);
         }
 
-        $table = ($table === null || $table === '') ? $this->table : $table;
+        $table = ((string) $table === '') ? $this->table : $table;
 
         // Ensure we have a good db connection
         if (! $this->db instanceof BaseConnection) {

@@ -194,7 +194,7 @@ class Connection extends BaseConnection
      */
     protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
-        if ($tableName !== null) {
+        if ((string) $tableName !== '') {
             return 'SELECT "NAME" FROM "SQLITE_MASTER" WHERE "TYPE" = \'table\''
                    . ' AND "NAME" NOT LIKE \'sqlite!_%\' ESCAPE \'!\''
                    . ' AND "NAME" LIKE ' . $this->escape($tableName);

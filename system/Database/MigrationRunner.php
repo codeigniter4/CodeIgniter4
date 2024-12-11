@@ -161,7 +161,7 @@ class MigrationRunner
 
         $this->ensureTable();
 
-        if ($group !== null) {
+        if ((string) $group !== '') {
             $this->groupFilter = $group;
             $this->setGroup($group);
         }
@@ -326,7 +326,7 @@ class MigrationRunner
 
         $this->ensureTable();
 
-        if ($group !== null) {
+        if ((string) $group !== '') {
             $this->groupFilter = $group;
             $this->setGroup($group);
         }

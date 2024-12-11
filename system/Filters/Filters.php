@@ -557,7 +557,7 @@ class Filters
      */
     public function getArguments(?string $key = null)
     {
-        return $key === null ? $this->arguments : $this->arguments[$key];
+        return ((string) $key === '') ? $this->arguments : $this->arguments[$key];
     }
 
     // --------------------------------------------------------------------

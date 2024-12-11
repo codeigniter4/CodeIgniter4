@@ -560,7 +560,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function getRoutes(?string $verb = null, bool $includeWildcard = true): array
     {
-        if ($verb === null || $verb === '') {
+        if ((string) $verb === '') {
             $verb = $this->getHTTPVerb();
         }
 
@@ -609,7 +609,7 @@ class RouteCollection implements RouteCollectionInterface
     {
         $options = $this->loadRoutesOptions($verb);
 
-        return $from !== null ? $options[$from] ?? [] : $options;
+        return ((string) $from !== '') ? $options[$from] ?? [] : $options;
     }
 
     /**
@@ -1416,14 +1416,14 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         // Check invalid locale
-        if ($locale !== null) {
+        if ((string) $locale !== '') {
             $config = config(App::class);
             if (! in_array($locale, $config->supportedLocales, true)) {
                 $locale = null;
             }
         }
 
-        if ($locale === null) {
+        if ((string) $locale === '') {
             $locale = service('request')->getLocale();
         }
 

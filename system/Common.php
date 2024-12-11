@@ -75,7 +75,7 @@ if (! function_exists('cache')) {
         $cache = service('cache');
 
         // No params - return cache object
-        if ($key === null) {
+        if ((string) $key === '') {
             return $cache;
         }
 
@@ -289,7 +289,7 @@ if (! function_exists('csrf_field')) {
      */
     function csrf_field(?string $id = null): string
     {
-        return '<input type="hidden"' . ($id !== null ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '"' . _solidus() . '>';
+        return '<input type="hidden"' . ((string) $id !== '' ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '"' . _solidus() . '>';
     }
 }
 
@@ -301,7 +301,7 @@ if (! function_exists('csrf_meta')) {
      */
     function csrf_meta(?string $id = null): string
     {
-        return '<meta' . ($id !== null ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_header() . '" content="' . csrf_hash() . '"' . _solidus() . '>';
+        return '<meta' . ((string) $id !== '' ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_header() . '" content="' . csrf_hash() . '"' . _solidus() . '>';
     }
 }
 
@@ -441,7 +441,7 @@ if (! function_exists('esc')) {
                 $escaper = new Escaper($encoding);
             }
 
-            if ($encoding !== null && $escaper->getEncoding() !== $encoding) {
+            if ((string) $encoding !== '' && $escaper->getEncoding() !== $encoding) {
                 $escaper = new Escaper($encoding);
             }
 
@@ -739,13 +739,13 @@ if (! function_exists('lang')) {
         // Get active locale
         $activeLocale = $language->getLocale();
 
-        if ($locale !== null && $locale !== $activeLocale) {
+        if ((string) $locale !== '' && $locale !== $activeLocale) {
             $language->setLocale($locale);
         }
 
         $lines = $language->getLine($line, $args);
 
-        if ($locale !== null && $locale !== $activeLocale) {
+        if ((string) $locale !== '' && $locale !== $activeLocale) {
             // Reset to active locale
             $language->setLocale($activeLocale);
         }
@@ -849,7 +849,7 @@ if (! function_exists('redirect')) {
     {
         $response = service('redirectresponse');
 
-        if ($route !== null) {
+        if ((string) $route !== '') {
             return $response->route($route);
         }
 
@@ -1128,7 +1128,7 @@ if (! function_exists('timer')) {
     {
         $timer = service('timer');
 
-        if ($name === null) {
+        if ((string) $name === '') {
             return $timer;
         }
 
