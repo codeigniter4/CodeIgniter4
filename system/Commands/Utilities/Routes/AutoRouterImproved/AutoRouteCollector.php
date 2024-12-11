@@ -122,6 +122,7 @@ final class AutoRouteCollector
             $filtersShortest = $filterCollector->get($route['method'], $routePath . $sampleUri);
 
             // Get common array elements
+            $filters           = [];
             $filters['before'] = array_intersect($filtersLongest['before'], $filtersShortest['before']);
             $filters['after']  = array_intersect($filtersLongest['after'], $filtersShortest['after']);
 
