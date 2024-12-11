@@ -20,7 +20,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 use PHPUnit\Framework\Attributes\Group;
-use stdclass;
+use stdClass;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
@@ -107,21 +107,21 @@ final class UpsertTest extends CIUnitTestCase
         $data = [];
 
         // new row insert
-        $row          = new stdclass();
+        $row          = new stdClass();
         $row->name    = 'Pedro';
         $row->email   = 'pedro@acme.com';
         $row->country = 'El Salvador';
         $data[]       = $row;
 
         // no change
-        $row          = new stdclass();
+        $row          = new stdClass();
         $row->name    = 'Ahmadinejad';
         $row->email   = 'ahmadinejad@world.com';
         $row->country = 'Iran';
         $data[]       = $row;
 
         // changed country for update
-        $row          = new stdclass();
+        $row          = new stdClass();
         $row->name    = 'Derek Jones';
         $row->email   = 'derek@world.com';
         $row->country = 'Canada';
@@ -644,7 +644,7 @@ final class UpsertTest extends CIUnitTestCase
             $builder->setData($moreData);
         }
 
-        $evenMoreData          = new stdclass();
+        $evenMoreData          = new stdClass();
         $evenMoreData->name    = 'New User2 users';
         $evenMoreData->email   = 'newuser2@example.com';
         $evenMoreData->country = 'Netherlands';

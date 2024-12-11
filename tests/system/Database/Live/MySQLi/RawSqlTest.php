@@ -17,7 +17,7 @@ use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use PHPUnit\Framework\Attributes\Group;
-use stdclass;
+use stdClass;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
@@ -61,12 +61,12 @@ final class RawSqlTest extends CIUnitTestCase
     {
         $data = [];
 
-        $row             = new stdclass();
+        $row             = new stdClass();
         $row->email      = 'derek@world.com';
         $row->created_at = new RawSql("setDateTime('2022-01-01')");
         $data[]          = $row;
 
-        $row             = new stdclass();
+        $row             = new stdClass();
         $row->email      = 'ahmadinejad@world.com';
         $row->created_at = new RawSql("setDateTime('2022-01-01')");
         $data[]          = $row;
@@ -85,12 +85,12 @@ final class RawSqlTest extends CIUnitTestCase
     {
         $data = [];
 
-        $row             = new stdclass();
+        $row             = new stdClass();
         $row->email      = 'derek@world.com';
         $row->created_at = new RawSql("setDateTime('2022-02-01')");
         $data[]          = $row;
 
-        $row             = new stdclass();
+        $row             = new stdClass();
         $row->email      = 'ahmadinejad@world.com';
         $row->created_at = new RawSql("setDateTime('2022-02-01')");
         $data[]          = $row;
@@ -147,12 +147,12 @@ final class RawSqlTest extends CIUnitTestCase
     {
         $data = [];
 
-        $row             = new stdclass();
+        $row             = new stdClass();
         $row->email      = 'tony@world.com';
         $row->created_at = new RawSql("setDateTime('2022-05-01')");
         $data[]          = $row;
 
-        $row             = new stdclass();
+        $row             = new stdClass();
         $row->email      = 'sara@world.com';
         $row->created_at = new RawSql("setDateTime('2022-05-01')");
         $data[]          = $row;
@@ -173,12 +173,12 @@ final class RawSqlTest extends CIUnitTestCase
     {
         $data = [];
 
-        $row             = new stdclass();
+        $row             = new stdClass();
         $row->email      = 'laura@world.com';
         $row->created_at = new RawSql("setDateTime('2022-06-01')");
         $data[]          = $row;
 
-        $row             = new stdclass();
+        $row             = new stdClass();
         $row->email      = 'travis@world.com';
         $row->created_at = new RawSql("setDateTime('2022-06-01')");
         $data[]          = $row;
