@@ -169,7 +169,7 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
         }
 
         $docComment = $functionLike->getDocComment();
-        if ($docComment === null) {
+        if (! $docComment instanceof Doc) {
             return;
         }
 

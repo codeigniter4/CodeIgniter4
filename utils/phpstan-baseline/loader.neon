@@ -26,7 +26,6 @@ includes:
     - function.alreadyNarrowedType.neon
     - function.inner.neon
     - function.notFound.neon
-    - function.resultUnused.neon
     - generator.returnType.neon
     - generator.valueType.neon
     - greaterOrEqual.invalid.neon
