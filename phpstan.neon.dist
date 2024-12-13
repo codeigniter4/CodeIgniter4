@@ -12,7 +12,6 @@ parameters:
 		- app
 		- system
 		- tests
-		- utils/src/PHPStan
 	excludePaths:
 		- app/Views/errors/cli/*
 		- app/Views/errors/html/*
