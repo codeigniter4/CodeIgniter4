@@ -1,9 +1,3 @@
-services:
-	-
-		class: Utils\PHPStan\CheckUseStatementsAfterLicenseRule
-		tags:
-			- phpstan.rules.rule
-
 includes:
 	- phpstan-baseline.php
 
