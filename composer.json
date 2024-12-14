@@ -17,7 +17,7 @@
         "psr/log": "^3.0"
     },
     "require-dev": {
-        "codeigniter/phpstan-codeigniter": "^1.5",
+        "codeigniter/phpstan-codeigniter": "^1.5.1",
         "fakerphp/faker": "^1.9",
         "kint-php/kint": "^5.0.4",
         "mikey179/vfsstream": "^1.6",
