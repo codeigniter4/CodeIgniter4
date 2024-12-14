@@ -306,7 +306,7 @@ if (! function_exists('get_file_info')) {
     {
         $file = _realpath($file);
 
-        if ($file !== false && ! is_file($file)) {
+        if ($file === false || ! is_file($file)) {
             return null;
         }
 

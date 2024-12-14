@@ -200,7 +200,7 @@ class LocalizationFinder extends BaseCommand
         }
 
         foreach ($matches[1] as $phraseKey) {
-            $phraseKeys = explode('.', $phraseKey);
+            $phraseKeys   = explode('.', $phraseKey);
             $realPathFile = normalize_path($file->getRealPath());
 
             // Language key not have Filename or Lang key

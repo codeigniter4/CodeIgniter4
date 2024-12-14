@@ -18,7 +18,6 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\BaseConfig;
 use Config\Optimize;
-use Ergebnis\Json\Json;
 use Kint\Kint;
 
 /**

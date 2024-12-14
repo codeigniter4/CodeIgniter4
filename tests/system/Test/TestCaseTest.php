@@ -70,7 +70,7 @@ final class TestCaseTest extends CIUnitTestCase
     public function testStreamFilter(): void
     {
         CLI::write('first.');
-        $expected = "\n" . 'first.' . "\n";
+        $expected = "\nfirst.\n";
         $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 

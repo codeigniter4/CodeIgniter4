@@ -89,15 +89,15 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
     private function fileContents()
     {
         $fileContents = '';
-        $fileContents .= '<?php' . "\n";
-        $fileContents .= "define('HOMEPATH', '" . $this->currentDir . "' . '/../../../');" . "\n";
-        $fileContents .= "define('CONFIGPATH', '" . $this->currentDir . "' . '/../../../app/Config/');" . "\n";
-        $fileContents .= "define('PUBLICPATH', '" . $this->currentDir . "' . '/../../../public/');" . "\n";
-        $fileContents .= "include_once '" . $this->currentDir . "' . '/../../../vendor/autoload.php';" . "\n";
-        $fileContents .= "include_once '" . $this->currentDir . "' . '/../../../system/Test/bootstrap.php';" . "\n";
-        $fileContents .= '// return value of FCPATH' . "\n";
+        $fileContents .= "<?php\n";
+        $fileContents .= "define('HOMEPATH', '" . $this->currentDir . "' . '/../../../');\n";
+        $fileContents .= "define('CONFIGPATH', '" . $this->currentDir . "' . '/../../../app/Config/');\n";
+        $fileContents .= "define('PUBLICPATH', '" . $this->currentDir . "' . '/../../../public/');\n";
+        $fileContents .= "include_once '" . $this->currentDir . "' . '/../../../vendor/autoload.php';\n";
+        $fileContents .= "include_once '" . $this->currentDir . "' . '/../../../system/Test/bootstrap.php';\n";
+        $fileContents .= "// return value of FCPATH\n";
 
-        return $fileContents . ('echo FCPATH;' . "\n");
+        return $fileContents . ("echo FCPATH;\n");
     }
 
     private function readOutput(string $file)

@@ -422,11 +422,7 @@ class Autoloader
 
         $newPaths = [];
 
-        $namespacePaths = array_map(static function (array $paths) {
-            return array_map(function(string $path) {
-                return normalize_path($path);
-            }, $paths);
-        }, $namespacePaths);
+        $namespacePaths = array_map(static fn (array $paths) => array_map(static fn (string $path) => normalize_path($path), $paths), $namespacePaths);
 
         foreach ($namespacePaths as $namespace => $srcPaths) {
             $add = false;

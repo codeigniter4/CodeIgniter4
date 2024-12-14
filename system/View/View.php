@@ -281,9 +281,9 @@ class View implements RendererInterface
                 $this->renderVars['file'] = clean_path($this->renderVars['file']);
                 $this->renderVars['file'] = ++$this->viewsCount . ' ' . $this->renderVars['file'];
 
-                $output = '<!-- DEBUG-VIEW START ' . $this->renderVars['file'] . ' -->' . "\n"
+                $output = '<!-- DEBUG-VIEW START ' . $this->renderVars['file'] . " -->\n"
                     . $output . "\n"
-                    . '<!-- DEBUG-VIEW ENDED ' . $this->renderVars['file'] . ' -->' . "\n";
+                    . '<!-- DEBUG-VIEW ENDED ' . $this->renderVars['file'] . " -->\n";
             }
         }
 

@@ -72,7 +72,11 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $this->assertSame($this->directory, $method($link));
 
-        rmdir($link);
+        if (is_windows() && is_dir($link)) {
+            rmdir($link);
+        } else {
+            unlink($link);
+        }
     }
 
     public function testResolveFileFile(): void

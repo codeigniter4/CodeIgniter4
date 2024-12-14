@@ -382,4 +382,3 @@ function rrmdir($src): void
     closedir($dir);
     rmdir($src);
 }
-

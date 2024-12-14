@@ -231,7 +231,7 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $files = $this->locator->listFiles('Config/');
 
-        $this->assertTrue(in_array(APPPATH . 'Config/App.php', $files, true));
+        $this->assertContains(APPPATH . 'Config/App.php', $files);
     }
 
     public function testListFilesDoesNotContainDirectories(): void

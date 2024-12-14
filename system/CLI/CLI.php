@@ -324,7 +324,7 @@ class CLI
                 $optsKey[] = $key;
             }
             $extraOutput = '[' . $extraOutputDefault . ', ' . implode(', ', $optsKey) . ']';
-            $extraOutput = 'You can specify multiple values separated by commas.' . "/n" . $extraOutput;
+            $extraOutput = 'You can specify multiple values separated by commas./n' . $extraOutput;
         }
 
         CLI::write($text);
@@ -1098,7 +1098,7 @@ class CLI
             }
 
             // Set the columns borders
-            $table .= '| ' . implode(' | ', $tableRows[$row]) . ' |' . "\n";
+            $table .= '| ' . implode(' | ', $tableRows[$row]) . " |\n";
 
             // Set the thead and table borders-bottom
             if (($row === 0 && $thead !== []) || ($row + 1 === $totalRows)) {
