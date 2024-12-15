@@ -406,7 +406,7 @@ abstract class BaseConnection implements ConnectionInterface
         /* If an established connection is available, then there's
          * no need to connect and select the database.
          *
-         * Depending on the database driver, conn_id can be either
+         * Depending on the database driver, connID can be either
          * boolean TRUE, a resource or an object.
          */
         if ($this->connID) {
@@ -846,7 +846,7 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         // Reset the transaction failure flag.
-        // If the $test_mode flag is set to TRUE transactions will be rolled back
+        // If the $testMode flag is set to TRUE transactions will be rolled back
         // even if the queries produce a successful result.
         $this->transFailure = $testMode;
 
