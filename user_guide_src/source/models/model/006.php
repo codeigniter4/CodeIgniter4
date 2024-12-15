@@ -1,3 +1,3 @@
 <?php
 
-$user = $userModel->find($user_id);
+$user = $userModel->find($userId);
