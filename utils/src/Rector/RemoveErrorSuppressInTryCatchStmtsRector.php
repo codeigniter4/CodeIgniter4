@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Utils\Rector;
 
 use PhpParser\Node;
+use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\ErrorSuppress;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Function_;
@@ -60,7 +61,7 @@ final class RemoveErrorSuppressInTryCatchStmtsRector extends AbstractRector
 
         $this->traverseNodesWithCallable(
             $node->stmts,
-            static function (Node $subNode) use (&$hasChanged) {
+            static function (Node $subNode) use (&$hasChanged): int|Expr|null {
                 if ($subNode instanceof Class_ || $subNode instanceof Function_) {
                     return NodeTraverser::DONT_TRAVERSE_CURRENT_AND_CHILDREN;
                 }

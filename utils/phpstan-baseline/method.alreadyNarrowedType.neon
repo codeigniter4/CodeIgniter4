@@ -1,0 +1,88 @@
+# total 17 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsBool\(\) with bool will always evaluate to true\.$#'
+            count: 1
+            path: ../../tests/system/CLI/CLITest.php
+
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsInt\(\) with int will always evaluate to true\.$#'
+            count: 2
+            path: ../../tests/system/CLI/CLITest.php
+
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+            count: 1
+            path: ../../tests/system/Cache/CacheFactoryTest.php
+
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsBool\(\) with bool will always evaluate to true\.$#'
+            count: 1
+            path: ../../tests/system/CommonFunctionsTest.php
+
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array will always evaluate to true\.$#'
+            count: 2
+            path: ../../tests/system/Config/FactoriesTest.php
+
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+            count: 2
+            path: ../../tests/system/Database/Live/UpdateTest.php
+
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array\{1\: array\{DETAIL\: ''asdf''\}, 2\: array\{DETAIL\: ''sdfg''\}\} will always evaluate to true\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/CLIRequestTest.php
+
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array\{1\: array\{DETAIL\: ''asdf''\}, 2\: array\{DETAIL\: ''sdfg''\}\} will always evaluate to true\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/RequestTest.php
+
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/URITest.php
+
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsString\(\) with string will always evaluate to true\.$#'
+            count: 2
+            path: ../../tests/system/Helpers/TextHelperTest.php
+
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array will always evaluate to true\.$#'
+            count: 1
+            path: ../../tests/system/HotReloader/DirectoryHasherTest.php
+
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsString\(\) with string will always evaluate to true\.$#'
+            count: 1
+            path: ../../tests/system/Publisher/PublisherSupportTest.php
+
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsBool\(\) with bool will always evaluate to true\.$#'
+            count: 1
+            path: ../../tests/system/Security/SecurityTest.php
+
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsString\(\) with string will always evaluate to true\.$#'
+            count: 3
+            path: ../../tests/system/Security/SecurityTest.php
+
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsNumeric\(\) with int will always evaluate to true\.$#'
+            count: 1
+            path: ../../tests/system/Test/FabricatorTest.php
+
+        -
+            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsCallable\(\) with Closure will always evaluate to true\.$#'
+            count: 1
+            path: ../../tests/system/Test/FilterTestTraitTest.php

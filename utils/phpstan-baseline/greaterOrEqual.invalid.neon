@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Comparison operation "\>\=" between \(array\|float\|int\) and 0 results in an error\.$#'
+            count: 2
+            path: ../../system/Images/Handlers/ImageMagickHandler.php

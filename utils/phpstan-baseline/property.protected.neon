@@ -1,0 +1,48 @@
+# total 9 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Access to protected property CodeIgniter\\Encryption\\Encryption\:\:\$digest\.$#'
+            count: 2
+            path: ../../tests/system/Encryption/EncryptionTest.php
+
+        -
+            message: '#^Access to protected property CodeIgniter\\Encryption\\Encryption\:\:\$key\.$#'
+            count: 3
+            path: ../../tests/system/Encryption/EncryptionTest.php
+
+        -
+            message: '#^Access to protected property CodeIgniter\\I18n\\TimeDifference\:\:\$days\.$#'
+            count: 4
+            path: ../../tests/system/I18n/TimeDifferenceTest.php
+
+        -
+            message: '#^Access to protected property CodeIgniter\\I18n\\TimeDifference\:\:\$hours\.$#'
+            count: 1
+            path: ../../tests/system/I18n/TimeDifferenceTest.php
+
+        -
+            message: '#^Access to protected property CodeIgniter\\I18n\\TimeDifference\:\:\$minutes\.$#'
+            count: 1
+            path: ../../tests/system/I18n/TimeDifferenceTest.php
+
+        -
+            message: '#^Access to protected property CodeIgniter\\I18n\\TimeDifference\:\:\$months\.$#'
+            count: 1
+            path: ../../tests/system/I18n/TimeDifferenceTest.php
+
+        -
+            message: '#^Access to protected property CodeIgniter\\I18n\\TimeDifference\:\:\$seconds\.$#'
+            count: 1
+            path: ../../tests/system/I18n/TimeDifferenceTest.php
+
+        -
+            message: '#^Access to protected property CodeIgniter\\I18n\\TimeDifference\:\:\$weeks\.$#'
+            count: 1
+            path: ../../tests/system/I18n/TimeDifferenceTest.php
+
+        -
+            message: '#^Access to protected property CodeIgniter\\I18n\\TimeDifference\:\:\$years\.$#'
+            count: 1
+            path: ../../tests/system/I18n/TimeDifferenceTest.php

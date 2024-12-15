@@ -148,6 +148,12 @@ jobs:
           sudo apt-get install -y gsfonts libmagickwand-dev imagemagick
           sudo apt-get install --fix-broken
 
+      - name: Checkout base branch for PR
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.base_ref }}
+
       - name: Checkout
         uses: actions/checkout@v4
 

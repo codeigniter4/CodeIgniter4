@@ -1,0 +1,33 @@
+# total 6 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Call to unknown service method ''bar''\.$#'
+            count: 1
+            path: ../../tests/system/CommonSingleServiceTest.php
+
+        -
+            message: '#^Call to unknown service method ''baz''\.$#'
+            count: 1
+            path: ../../tests/system/CommonSingleServiceTest.php
+
+        -
+            message: '#^Call to unknown service method ''caches''\.$#'
+            count: 1
+            path: ../../tests/system/CommonSingleServiceTest.php
+
+        -
+            message: '#^Call to unknown service method ''foo''\.$#'
+            count: 1
+            path: ../../tests/system/CommonSingleServiceTest.php
+
+        -
+            message: '#^Call to unknown service method ''timers''\.$#'
+            count: 1
+            path: ../../tests/system/CommonSingleServiceTest.php
+
+        -
+            message: '#^Call to unknown service method string\.$#'
+            count: 4
+            path: ../../tests/system/CommonSingleServiceTest.php
