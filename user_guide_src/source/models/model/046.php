@@ -1,3 +1,3 @@
 <?php
 
-$user_name = $userModel->escape($name);
+$userName = $userModel->escape($name);
