@@ -422,7 +422,7 @@ class Security implements SecurityInterface
      *
      * If it is acceptable for the user input to include relative paths,
      * e.g. file/in/some/approved/folder.txt, you can set the second optional
-     * parameter, $relative_path to TRUE.
+     * parameter, $relativePath to TRUE.
      *
      * @param string $str          Input file name
      * @param bool   $relativePath Whether to preserve paths

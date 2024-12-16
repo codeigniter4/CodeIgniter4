@@ -57,7 +57,7 @@ class Connection extends BaseConnection
     /**
      * MySQLi object
      *
-     * Has to be preserved without being assigned to $conn_id.
+     * Has to be preserved without being assigned to $connId.
      *
      * @var false|mysqli
      */
