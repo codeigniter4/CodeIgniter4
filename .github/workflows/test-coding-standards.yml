@@ -29,7 +29,7 @@ jobs:
       matrix:
         php-version:
           - '8.1'
-          - '8.3'
+          - '8.4'
 
     steps:
       - name: Checkout
@@ -59,3 +59,5 @@ jobs:
 
       - name: Run lint
         run: composer cs
+        env:
+            PHP_CS_FIXER_IGNORE_ENV: ${{ matrix.php-version == '8.4' }}

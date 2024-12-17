@@ -18,16 +18,16 @@
     },
     "require-dev": {
         "codeigniter/phpstan-codeigniter": "^1.4",
-        "fakerphp/faker": "^1.9",
+        "fakerphp/faker": "^1.24",
         "kint-php/kint": "^6.0",
-        "mikey179/vfsstream": "^1.6",
+        "mikey179/vfsstream": "^1.6.12",
         "nexusphp/tachycardia": "^2.0",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^1.11",
         "phpstan/phpstan-strict-rules": "^1.6",
         "phpunit/phpcov": "^9.0.2 || ^10.0",
         "phpunit/phpunit": "^10.5.16 || ^11.2",
-        "predis/predis": "^1.1 || ^2.0",
+        "predis/predis": "^1.1 || ^2.3",
         "rector/rector": "1.2.10"
     },
     "replace": {
