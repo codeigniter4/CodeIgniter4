@@ -200,12 +200,12 @@ class File extends SplFileInfo
                     $i = end($parts);
                     array_pop($parts);
                     $parts[]     = ++$i;
-                    $destination = $info['dirname'] . DIRECTORY_SEPARATOR . implode($delimiter, $parts) . $extension;
+                    $destination = $info['dirname'] . '/' . implode($delimiter, $parts) . $extension;
                 } else {
-                    $destination = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . $delimiter . ++$i . $extension;
+                    $destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++$i . $extension;
                 }
             } else {
-                $destination = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . $delimiter . ++$i . $extension;
+                $destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++$i . $extension;
             }
         }
 
@@ -223,5 +223,10 @@ class File extends SplFileInfo
         }
 
         return $size;
+    }
+
+    public function getRealPath(): false|string
+    {
+        return parent::getRealPath() !== false ? normalize_path(parent::getRealPath()) : false;
     }
 }

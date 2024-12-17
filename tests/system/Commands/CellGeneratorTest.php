@@ -27,7 +27,7 @@ final class CellGeneratorTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
-        $dirName = APPPATH . DIRECTORY_SEPARATOR . 'Cells';
+        $dirName = APPPATH . '/Cells';
         // remove dir
         if (is_dir($dirName)) {
             $files = array_diff(scandir($dirName), ['.', '..']);

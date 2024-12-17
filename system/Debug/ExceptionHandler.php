@@ -95,10 +95,10 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
         }
 
         // Determine possible directories of error views
-        $addPath = ($request instanceof IncomingRequest ? 'html' : 'cli') . DIRECTORY_SEPARATOR;
+        $addPath = ($request instanceof IncomingRequest ? 'html' : 'cli') . '/';
         $path    = $this->viewPath . $addPath;
         $altPath = rtrim((new Paths())->viewDirectory, '\\/ ')
-            . DIRECTORY_SEPARATOR . 'errors' . DIRECTORY_SEPARATOR . $addPath;
+            . '/errors/' . $addPath;
 
         // Determine the views
         $view    = $this->determineView($exception, $path, $statusCode);
@@ -146,7 +146,7 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
             return 'error_404.php';
         }
 
-        $templatePath = rtrim($templatePath, '\\/ ') . DIRECTORY_SEPARATOR;
+        $templatePath = rtrim($templatePath, '\\/ ') . '/';
 
         // Allow for custom views based upon the status code
         if (is_file($templatePath . 'error_' . $statusCode . '.php')) {

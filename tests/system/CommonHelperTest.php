@@ -30,8 +30,8 @@ use Tests\Support\Autoloader\FatalLocator;
 final class CommonHelperTest extends CIUnitTestCase
 {
     private array $dummyHelpers = [
-        APPPATH . 'Helpers' . DIRECTORY_SEPARATOR . 'foobarbaz_helper.php',
-        SYSTEMPATH . 'Helpers' . DIRECTORY_SEPARATOR . 'foobarbaz_helper.php',
+        APPPATH . 'Helpers/foobarbaz_helper.php',
+        SYSTEMPATH . 'Helpers/foobarbaz_helper.php',
     ];
 
     protected function setUp(): void
@@ -56,7 +56,7 @@ final class CommonHelperTest extends CIUnitTestCase
             if (! function_exists('foo_bar_baz')) {
             	function foo_bar_baz(): string
             	{
-            		return __FILE__;
+            		return normalize_path(__FILE__);
             	}
             }
 
@@ -142,7 +142,7 @@ final class CommonHelperTest extends CIUnitTestCase
         if (! function_exists('foo_bar_baz')) {
             function foo_bar_baz(): string
             {
-                return __FILE__;
+                return normalize_path(__FILE__);
             }
         }
 

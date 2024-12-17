@@ -466,8 +466,8 @@ abstract class BaseConnection implements ConnectionInterface
             if (! $this->connID) {
                 throw new DatabaseException(sprintf(
                     'Unable to connect to the database.%s%s',
-                    PHP_EOL,
-                    implode(PHP_EOL, $connectionErrors)
+                    "\n",
+                    implode("\n", $connectionErrors)
                 ));
             }
         }

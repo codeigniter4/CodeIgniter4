@@ -43,7 +43,6 @@ use Config\Session as SessionConfig;
 use Exception;
 use Kint;
 use PHPUnit\Framework\Attributes\BackupGlobals;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -671,44 +670,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
                 $e->getResponse()->header('Location')->getValue()
             );
         }
-    }
-
-    /**
-     * @param mixed $input
-     * @param mixed $expected
-     */
-    #[DataProvider('provideCleanPathActuallyCleaningThePaths')]
-    public function testCleanPathActuallyCleaningThePaths($input, $expected): void
-    {
-        $this->assertSame($expected, clean_path($input));
-    }
-
-    public static function provideCleanPathActuallyCleaningThePaths(): iterable
-    {
-        $ds = DIRECTORY_SEPARATOR;
-
-        return [
-            [
-                ROOTPATH . 'spark',
-                'ROOTPATH' . $ds . 'spark',
-            ],
-            [
-                APPPATH . 'Config' . $ds . 'App.php',
-                'APPPATH' . $ds . 'Config' . $ds . 'App.php',
-            ],
-            [
-                SYSTEMPATH . 'CodeIgniter.php',
-                'SYSTEMPATH' . $ds . 'CodeIgniter.php',
-            ],
-            [
-                VENDORPATH . 'autoload.php',
-                'VENDORPATH' . $ds . 'autoload.php',
-            ],
-            [
-                FCPATH . 'index.php',
-                'FCPATH' . $ds . 'index.php',
-            ],
-        ];
     }
 
     public function testIsCli(): void

@@ -131,7 +131,7 @@ final class ConfigCheck extends BaseCommand
 
         $output = trim($output);
 
-        $lines = explode("\n", $output);
+        $lines = explode(PHP_EOL, $output);
         array_splice($lines, 0, 3);
         array_splice($lines, -3);
 

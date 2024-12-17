@@ -57,7 +57,7 @@ ini_set('display_errors', '1');
  */
 
 // Path to the front controller
-define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR);
+define('FCPATH', __DIR__ . '/public/');
 
 // Ensure the current directory is pointing to the front controller's directory
 chdir(FCPATH);
@@ -70,6 +70,20 @@ chdir(FCPATH);
  * our autoloader, along with Composer's, loads our constants
  * and fires up an environment-specific bootstrapping.
  */
+
+/**
+ * A real path with identical slashes in Unix/Windows
+ */
+function _realpath(string $path): bool|string
+{
+    $realPath = realpath($path);
+
+    if (! $realPath) {
+        return false;
+    }
+
+    return str_replace('\\', '/', $realPath);
+}
 
 // LOAD OUR PATHS CONFIG FILE
 // This is the line that might need to be changed, depending on your folder structure.

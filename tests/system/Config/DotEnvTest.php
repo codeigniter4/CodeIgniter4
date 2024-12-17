@@ -45,7 +45,7 @@ final class DotEnvTest extends CIUnitTestCase
         vfsStream::copyFromFileSystem($path, $this->root);
 
         $file = 'unreadable.env';
-        $path = rtrim($this->fixturesFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
+        $path = rtrim($this->fixturesFolder, '\\/') . '/' . $file;
         chmod($path, 0644);
     }
 
@@ -132,7 +132,7 @@ final class DotEnvTest extends CIUnitTestCase
     public function testLoadsUnreadableFile(): void
     {
         $file = 'unreadable.env';
-        $path = rtrim($this->fixturesFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
+        $path = rtrim($this->fixturesFolder, '\\/') . '/' . $file;
         chmod($path, 0000);
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage("The .env file is not readable: {$path}");

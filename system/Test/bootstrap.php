@@ -40,13 +40,27 @@ defined('CI_DEBUG') || define('CI_DEBUG', true);
  * so they are available in the config files that are loaded.
  */
 
+/**
+ * A real path with identical slashes in Unix/Windows
+ */
+function _realpath(string $path): bool|string
+{
+    $realPath = realpath($path);
+
+    if (! $realPath) {
+        return false;
+    }
+
+    return str_replace('\\', '/', $realPath);
+}
+
 // Often these constants are pre-defined, but query the current directory structure as a fallback
-defined('HOMEPATH') || define('HOMEPATH', realpath(rtrim(getcwd(), '\\/ ')) . DIRECTORY_SEPARATOR);
+defined('HOMEPATH') || define('HOMEPATH', _realpath(rtrim(getcwd(), '\\/ ')) . '/');
 $source = is_dir(HOMEPATH . 'app')
     ? HOMEPATH
     : (is_dir('vendor/codeigniter4/framework/') ? 'vendor/codeigniter4/framework/' : 'vendor/codeigniter4/codeigniter4/');
-defined('CONFIGPATH') || define('CONFIGPATH', realpath($source . 'app/Config') . DIRECTORY_SEPARATOR);
-defined('PUBLICPATH') || define('PUBLICPATH', realpath($source . 'public') . DIRECTORY_SEPARATOR);
+defined('CONFIGPATH') || define('CONFIGPATH', _realpath($source . 'app/Config') . '/');
+defined('PUBLICPATH') || define('PUBLICPATH', _realpath($source . 'public') . '/');
 unset($source);
 
 // LOAD OUR PATHS CONFIG FILE
@@ -55,18 +69,18 @@ require CONFIGPATH . 'Paths.php';
 $paths = new Paths();
 
 // Define necessary framework path constants
-defined('APPPATH')    || define('APPPATH', realpath(rtrim($paths->appDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
-defined('ROOTPATH')   || define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
-defined('SYSTEMPATH') || define('SYSTEMPATH', realpath(rtrim($paths->systemDirectory, '\\/')) . DIRECTORY_SEPARATOR);
-defined('WRITEPATH')  || define('WRITEPATH', realpath(rtrim($paths->writableDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
-defined('TESTPATH')   || define('TESTPATH', realpath(HOMEPATH . 'tests/') . DIRECTORY_SEPARATOR);
+defined('APPPATH')    || define('APPPATH', _realpath(rtrim($paths->appDirectory, '\\/ ')) . '/');
+defined('ROOTPATH')   || define('ROOTPATH', _realpath(APPPATH . '../') . '/');
+defined('SYSTEMPATH') || define('SYSTEMPATH', _realpath(rtrim($paths->systemDirectory, '\\/')) . '/');
+defined('WRITEPATH')  || define('WRITEPATH', _realpath(rtrim($paths->writableDirectory, '\\/ ')) . '/');
+defined('TESTPATH')   || define('TESTPATH', _realpath(HOMEPATH . 'tests/') . '/');
 
-defined('CIPATH') || define('CIPATH', realpath(SYSTEMPATH . '../') . DIRECTORY_SEPARATOR);
-defined('FCPATH') || define('FCPATH', realpath(PUBLICPATH) . DIRECTORY_SEPARATOR);
+defined('CIPATH') || define('CIPATH', _realpath(SYSTEMPATH . '../') . '/');
+defined('FCPATH') || define('FCPATH', _realpath(PUBLICPATH) . '/');
 
-defined('SUPPORTPATH')   || define('SUPPORTPATH', realpath(TESTPATH . '_support/') . DIRECTORY_SEPARATOR);
-defined('COMPOSER_PATH') || define('COMPOSER_PATH', (string) realpath(HOMEPATH . 'vendor/autoload.php'));
-defined('VENDORPATH')    || define('VENDORPATH', realpath(HOMEPATH . 'vendor') . DIRECTORY_SEPARATOR);
+defined('SUPPORTPATH')   || define('SUPPORTPATH', _realpath(TESTPATH . '_support/') . '/');
+defined('COMPOSER_PATH') || define('COMPOSER_PATH', (string) _realpath(HOMEPATH . 'vendor/autoload.php'));
+defined('VENDORPATH')    || define('VENDORPATH', _realpath(HOMEPATH . 'vendor') . '/');
 
 /*
  *---------------------------------------------------------------

@@ -47,7 +47,7 @@ abstract class BaseExceptionHandler
         $this->obLevel = ob_get_level();
 
         if ($this->viewPath === null) {
-            $this->viewPath = rtrim($this->config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
+            $this->viewPath = rtrim($this->config->errorViewPath, '\\/ ') . '/';
         }
     }
 

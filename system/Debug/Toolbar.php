@@ -424,14 +424,14 @@ class Toolbar
             $kintScript         = substr($kintScript, 0, strpos($kintScript, '</style>') + 8);
             $kintScript         = ($kintScript === '0') ? '' : $kintScript;
 
-            $script = PHP_EOL
+            $script = "\n"
                 . '<script ' . csp_script_nonce() . ' id="debugbar_loader" '
                 . 'data-time="' . $time . '" '
                 . 'src="' . site_url() . '?debugbar"></script>'
                 . '<script ' . csp_script_nonce() . ' id="debugbar_dynamic_script"></script>'
                 . '<style ' . csp_style_nonce() . ' id="debugbar_dynamic_style"></style>'
                 . $kintScript
-                . PHP_EOL;
+                . "\n";
 
             if (str_contains((string) $response->getBody(), '<head>')) {
                 $response->setBody(

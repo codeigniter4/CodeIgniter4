@@ -12236,12 +12236,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
 ];
 $ignoreErrors[] = [
-	// identifier: missingType.iterableValue
-	'message' => '#^Method CodeIgniter\\\\CommonFunctionsTest\\:\\:provideCleanPathActuallyCleaningThePaths\\(\\) return type has no value type specified in iterable type iterable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/tests/system/CommonFunctionsTest.php',
-];
-$ignoreErrors[] = [
 	// identifier: codeigniter.modelArgumentType
 	'message' => '#^Parameter \\#1 \\$name of function model expects a valid class string, \'JobModel\' given\\.$#',
 	'count' => 1,
@@ -13071,15 +13065,15 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	// identifier: property.notFound
-	'message' => '#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$numberNative\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
-];
-$ignoreErrors[] = [
-	// identifier: property.notFound
 	'message' => '#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$foundRows\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/FoundRowsTest.php',
+];
+$ignoreErrors[] = [
+	// identifier: property.notFound
+	'message' => '#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$numberNative\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/tests/system/Database/Live/MySQLi/NumberNativeTest.php',
 ];
 $ignoreErrors[] = [
 	// identifier: missingType.property
