@@ -1799,8 +1799,6 @@ abstract class BaseModel
             // Loop over each property,
             // saving the name/value in a new array we can return.
             foreach ($props as $prop) {
-                // Must make protected values accessible.
-                $prop->setAccessible(true);
                 $properties[$prop->getName()] = $prop->getValue($object);
             }
         }

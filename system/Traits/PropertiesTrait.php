@@ -71,7 +71,6 @@ trait PropertiesTrait
                 continue;
             }
 
-            $property->setAccessible(true);
             $properties[] = $property;
         }
 
