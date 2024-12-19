@@ -1,4 +1,4 @@
-# total 13 errors
+# total 12 errors
 
 parameters:
     ignoreErrors:
@@ -36,11 +36,6 @@ parameters:
             message: '#^Only booleans are allowed in a negated boolean, CodeIgniter\\CodeIgniter given\.$#'
             count: 1
             path: ../../system/Test/CIUnitTestCase.php
-
-        -
-            message: '#^Only booleans are allowed in a negated boolean, array\|null given\.$#'
-            count: 6
-            path: ../../system/Validation/FileRules.php
 
         -
             message: '#^Only booleans are allowed in a negated boolean, mixed given\.$#'

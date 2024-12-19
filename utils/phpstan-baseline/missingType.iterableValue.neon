@@ -1,4 +1,4 @@
-# total 1686 errors
+# total 1673 errors
 
 parameters:
     ignoreErrors:
@@ -531,16 +531,6 @@ parameters:
             message: '#^Method CodeIgniter\\Commands\\Translation\\LocalizationFinder\:\:templateFile\(\) has parameter \$language with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Commands/Translation/LocalizationFinder.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Utilities\\FilterCheck\:\:addRequiredFilters\(\) has parameter \$filters with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Utilities/FilterCheck.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Utilities\\FilterCheck\:\:addRequiredFilters\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Utilities/FilterCheck.php
 
         -
             message: '#^Method CodeIgniter\\Commands\\Utilities\\Namespaces\:\:outputAllNamespaces\(\) has parameter \$params with no value type specified in iterable type array\.$#'
@@ -1349,11 +1339,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Database\\BaseConnection\:\:table\(\) has parameter \$tableName with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseConnection.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\BaseConnection\:\:\$aliasedTables type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/BaseConnection.php
 
@@ -3108,21 +3093,6 @@ parameters:
             path: ../../system/Filters/Filters.php
 
         -
-            message: '#^Method CodeIgniter\\Filters\\Filters\:\:enableFilters\(\) has parameter \$names with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/Filters.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\Filters\:\:getFilters\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/Filters.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\Filters\:\:getFiltersClass\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/Filters.php
-
-        -
             message: '#^Method CodeIgniter\\Filters\\Filters\:\:getRequiredFilters\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Filters/Filters.php
@@ -3133,32 +3103,7 @@ parameters:
             path: ../../system/Filters/Filters.php
 
         -
-            message: '#^Method CodeIgniter\\Filters\\Filters\:\:registerArguments\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/Filters.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\Filters\:\:runAfter\(\) has parameter \$filterClasses with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/Filters.php
-
-        -
-            message: '#^Method CodeIgniter\\Filters\\Filters\:\:runBefore\(\) has parameter \$filterClasses with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/Filters.php
-
-        -
             message: '#^Method CodeIgniter\\Filters\\Filters\:\:setToolbarToLast\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/Filters.php
-
-        -
-            message: '#^Property CodeIgniter\\Filters\\Filters\:\:\$filters type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Filters/Filters.php
-
-        -
-            message: '#^Property CodeIgniter\\Filters\\Filters\:\:\$filtersClass type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Filters/Filters.php
 
@@ -6653,32 +6598,32 @@ parameters:
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:639\:\:fail\(\) has parameter \$messages with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:fail\(\) has parameter \$messages with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:639\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:639\:\:respond\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:respond\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:639\:\:respondCreated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:respondCreated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:639\:\:respondDeleted\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:respondDeleted\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:639\:\:respondUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:respondUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
@@ -7866,16 +7811,6 @@ parameters:
             message: '#^Method CodeIgniter\\Throttle\\ThrottleTest\:\:testTokenTimeCalculationUCs\(\) has parameter \$checkInputs with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Throttle/ThrottleTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\CreditCardRulesTest\:\:calculateLuhnChecksum\(\) has parameter \$digits with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Validation/CreditCardRulesTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\CreditCardRulesTest\:\:provideValidCCNumber\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Validation/CreditCardRulesTest.php
 
         -
             message: '#^Property CodeIgniter\\Validation\\CreditCardRulesTest\:\:\$config type has no value type specified in iterable type array\.$#'

@@ -1,4 +1,4 @@
-# total 75 errors
+# total 73 errors
 
 parameters:
     ignoreErrors:
@@ -306,16 +306,6 @@ parameters:
             message: '#^Parameter \#1 \$body of method CodeIgniter\\HTTP\\Response\:\:setJSON\(\) expects array\|object\|string, true given\.$#'
             count: 1
             path: ../../tests/system/Test/TestResponseTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
-            count: 1
-            path: ../../tests/system/Validation/CreditCardRulesTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
-            count: 1
-            path: ../../tests/system/Validation/FileRulesTest.php
 
         -
             message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
