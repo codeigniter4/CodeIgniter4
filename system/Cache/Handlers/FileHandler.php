@@ -337,13 +337,13 @@ class FileHandler extends BaseHandler
         $relativePath     = $sourceDir;
 
         if ($fp = @opendir($sourceDir)) {
-            // reset the array and make sure $source_dir has a trailing slash on the initial call
+            // reset the array and make sure $sourceDir has a trailing slash on the initial call
             if ($_recursion === false) {
                 $_filedata = [];
                 $sourceDir = rtrim(realpath($sourceDir) ?: $sourceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             }
 
-            // Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
+            // Used to be foreach (scandir($sourceDir, 1) as $file), but scandir() is simply not as fast
             while (false !== ($file = readdir($fp))) {
                 if (is_dir($sourceDir . $file) && $file[0] !== '.' && $topLevelOnly === false) {
                     $this->getDirFileInfo($sourceDir . $file . DIRECTORY_SEPARATOR, $topLevelOnly, true);

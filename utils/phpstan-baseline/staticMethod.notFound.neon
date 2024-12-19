@@ -1,0 +1,38 @@
+# total 7 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Call to an undefined static method CodeIgniter\\Config\\Factories\:\:cells\(\)\.$#'
+            count: 1
+            path: ../../system/View/Cell.php
+
+        -
+            message: '#^Call to an undefined static method CodeIgniter\\Config\\Factories\:\:cells\(\)\.$#'
+            count: 2
+            path: ../../tests/system/Config/FactoriesTest.php
+
+        -
+            message: '#^Call to an undefined static method CodeIgniter\\Config\\Factories\:\:tedwigs\(\)\.$#'
+            count: 1
+            path: ../../tests/system/Config/FactoriesTest.php
+
+        -
+            message: '#^Call to an undefined static method CodeIgniter\\Config\\Factories\:\:widgets\(\)\.$#'
+            count: 13
+            path: ../../tests/system/Config/FactoriesTest.php
+
+        -
+            message: '#^Call to an undefined static method Tests\\Support\\Config\\Services\:\:SeSsIoN\(\)\.$#'
+            count: 1
+            path: ../../tests/system/Config/ServicesTest.php
+
+        -
+            message: '#^Call to an undefined static method Tests\\Support\\Config\\Services\:\:SeSsIoNs\(\)\.$#'
+            count: 1
+            path: ../../tests/system/Config/ServicesTest.php
+
+        -
+            message: '#^Call to an undefined static method Tests\\Support\\Config\\Services\:\:redirectResponse\(\)\.$#'
+            count: 1
+            path: ../../tests/system/Config/ServicesTest.php

@@ -1,0 +1,18 @@
+# total 3 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Parameter \#1 \$name of function model expects a valid class string, string given\.$#'
+            count: 1
+            path: ../../system/Test/Fabricator.php
+
+        -
+            message: '#^Parameter \#1 \$name of function model expects a valid class string, ''JobModel'' given\.$#'
+            count: 1
+            path: ../../tests/system/CommonFunctionsTest.php
+
+        -
+            message: '#^Parameter \#1 \$name of function model expects a valid class string, ''CodeIgniter\\\\Shield\\\\Models\\\\UserModel'' given\.$#'
+            count: 1
+            path: ../../tests/system/Config/FactoriesTest.php

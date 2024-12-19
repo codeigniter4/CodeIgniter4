@@ -1,0 +1,33 @@
+# total 6 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Property CodeIgniter\\Database\\BaseBuilder\:\:\$db \(CodeIgniter\\Database\\BaseConnection\) in empty\(\) is not falsy\.$#'
+            count: 1
+            path: ../../system/Database/BaseBuilder.php
+
+        -
+            message: '#^Property CodeIgniter\\Images\\Handlers\\BaseHandler\:\:\$image \(CodeIgniter\\Images\\Image\) in empty\(\) is not falsy\.$#'
+            count: 1
+            path: ../../system/Images/Handlers/BaseHandler.php
+
+        -
+            message: '#^Property CodeIgniter\\Test\\ControllerTestTraitTest\:\:\$appConfig \(Config\\App\) in empty\(\) is not falsy\.$#'
+            count: 1
+            path: ../../tests/system/Test/ControllerTestTraitTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Test\\ControllerTestTraitTest\:\:\$logger \(Psr\\Log\\LoggerInterface\) in empty\(\) is not falsy\.$#'
+            count: 1
+            path: ../../tests/system/Test/ControllerTestTraitTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Test\\ControllerTestTraitTest\:\:\$request \(CodeIgniter\\HTTP\\IncomingRequest\) in empty\(\) is not falsy\.$#'
+            count: 1
+            path: ../../tests/system/Test/ControllerTestTraitTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Test\\ControllerTestTraitTest\:\:\$response \(CodeIgniter\\HTTP\\ResponseInterface\) in empty\(\) is not falsy\.$#'
+            count: 1
+            path: ../../tests/system/Test/ControllerTestTraitTest.php

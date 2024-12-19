@@ -66,13 +66,9 @@ final class ExceptionsTest extends CIUnitTestCase
         $this->exception = new Exceptions($config);
         $this->exception->initialize();
 
-        // this is only needed for IDEs not to complain that strlen does not accept explicit null
-        $maybeNull = PHP_VERSION_ID >= 80100 ? null : 'random string';
-
         try {
-            // We test DEPRECATED error, so cannot set `declare(strict_types=1)` in this file.
-            strlen($maybeNull);
-            $this->assertLogContains('error', '[DEPRECATED] strlen(): ');
+            $result = str_contains('foobar', null); // @phpstan-ignore argument.type (Needed for testing)
+            $this->assertLogContains('error', '[DEPRECATED] str_contains(): ');
         } catch (ErrorException) {
             $this->fail('The catch block should not be reached.');
         } finally {

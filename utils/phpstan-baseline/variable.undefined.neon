@@ -1,0 +1,78 @@
+# total 15 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Variable \$result might not be defined\.$#'
+            count: 1
+            path: ../../system/Cache/Handlers/FileHandler.php
+
+        -
+            message: '#^Variable \$result might not be defined\.$#'
+            count: 1
+            path: ../../system/Helpers/filesystem_helper.php
+
+        -
+            message: '#^Variable \$written might not be defined\.$#'
+            count: 1
+            path: ../../system/Session/Handlers/FileHandler.php
+
+        -
+            message: '#^Variable \$filters might not be defined\.$#'
+            count: 2
+            path: ../../tests/_support/Config/Filters.php
+
+        -
+            message: '#^Variable \$routes might not be defined\.$#'
+            count: 5
+            path: ../../tests/_support/Config/Routes.php
+
+        -
+            message: '#^Variable \$value might not be defined\.$#'
+            count: 1
+            path: ../../tests/_support/View/Cells/addition.php
+
+        -
+            message: '#^Variable \$message might not be defined\.$#'
+            count: 1
+            path: ../../tests/_support/View/Cells/awesome_cell.php
+
+        -
+            message: '#^Variable \$this might not be defined\.$#'
+            count: 1
+            path: ../../tests/_support/View/Cells/colors.php
+
+        -
+            message: '#^Variable \$greeting might not be defined\.$#'
+            count: 1
+            path: ../../tests/_support/View/Cells/greeting.php
+
+        -
+            message: '#^Variable \$name might not be defined\.$#'
+            count: 1
+            path: ../../tests/_support/View/Cells/greeting.php
+
+        -
+            message: '#^Variable \$items might not be defined\.$#'
+            count: 1
+            path: ../../tests/_support/View/Cells/lister.php
+
+        -
+            message: '#^Variable \$value might not be defined\.$#'
+            count: 1
+            path: ../../tests/_support/View/Cells/multiplier.php
+
+        -
+            message: '#^Variable \$message might not be defined\.$#'
+            count: 1
+            path: ../../tests/_support/View/Cells/notice.php
+
+        -
+            message: '#^Variable \$testString might not be defined\.$#'
+            count: 1
+            path: ../../tests/_support/View/Views/simple.php
+
+        -
+            message: '#^Variable \$result might not be defined\.$#'
+            count: 2
+            path: ../../tests/system/Test/FilterTestTraitTest.php

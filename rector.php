@@ -12,11 +12,11 @@ declare(strict_types=1);
  */
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
-use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
 use Rector\CodeQuality\Rector\Empty_\SimplifyEmptyCheckOnEmptyArrayRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
 use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
+use Rector\CodeQuality\Rector\FuncCall\CompactToVariablesRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
 use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
@@ -36,7 +36,6 @@ use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
 use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
-use Rector\Php80\Rector\FunctionLike\MixedTypeRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
@@ -83,6 +82,7 @@ return RectorConfig::configure()
         __DIR__ . '/phpstan.neon.dist',
         __DIR__ . '/vendor/codeigniter/phpstan-codeigniter/extension.neon',
         __DIR__ . '/vendor/phpstan/phpstan-strict-rules/rules.neon',
+        __DIR__ . '/vendor/shipmonk/phpstan-baseline-per-identifier/extension.neon',
     ])
     // is there a file you need to skip?
     ->withSkip([
@@ -151,7 +151,6 @@ return RectorConfig::configure()
             __DIR__ . '/system/Security/Security.php',
             __DIR__ . '/system/Session/Session.php',
         ],
-        MixedTypeRector::class,
 
         ReturnNeverTypeRector::class => [
             __DIR__ . '/system/Cache/Handlers/BaseHandler.php',
@@ -171,6 +170,8 @@ return RectorConfig::configure()
 
         // Unnecessary (string) is inserted
         NullToStrictStringFuncCallArgRector::class,
+
+        CompactToVariablesRector::class,
     ])
     // auto import fully qualified class names
     ->withImportNames(removeUnusedImports: true)
@@ -196,7 +197,6 @@ return RectorConfig::configure()
         EmptyOnNullableObjectToInstanceOfRector::class,
         DisallowedEmptyRuleFixerRector::class,
         PrivatizeFinalClassPropertyRector::class,
-        CompleteDynamicPropertiesRector::class,
         BooleanInIfConditionRuleFixerRector::class,
         VersionCompareFuncCallToConstantRector::class,
         AddClosureVoidReturnTypeWhereNoReturnRector::class,
@@ -210,4 +210,4 @@ return RectorConfig::configure()
         // keep '\\' prefix string on string '\Foo\Bar'
         StringClassNameToClassConstantRector::SHOULD_KEEP_PRE_SLASH => true,
     ])
-    ->withCodeQualityLevel(24);
+    ->withCodeQualityLevel(31);

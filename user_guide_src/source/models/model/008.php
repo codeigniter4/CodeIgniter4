@@ -1,3 +1,3 @@
 <?php
 
-$user = $userModel->findColumn($column_name);
+$user = $userModel->findColumn($columnName);

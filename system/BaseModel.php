@@ -570,8 +570,8 @@ abstract class BaseModel
      * Loops over records in batches, allowing you to operate on them.
      * This method works only with dbCalls.
      *
-     * @param int     $size     Size
-     * @param Closure $userFunc Callback Function
+     * @param int                                          $size     Size
+     * @param Closure(array<string, string>|object): mixed $userFunc Callback Function
      *
      * @return void
      *
@@ -1799,8 +1799,6 @@ abstract class BaseModel
             // Loop over each property,
             // saving the name/value in a new array we can return.
             foreach ($props as $prop) {
-                // Must make protected values accessible.
-                $prop->setAccessible(true);
                 $properties[$prop->getName()] = $prop->getValue($object);
             }
         }

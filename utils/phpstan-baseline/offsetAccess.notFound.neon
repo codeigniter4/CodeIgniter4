@@ -1,0 +1,33 @@
+# total 6 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Offset ''email'' does not exist on array\{\}\.$#'
+            count: 4
+            path: ../../tests/system/Models/DataConverterModelTest.php
+
+        -
+            message: '#^Offset ''email'' does not exist on list\<array\{\}\>\.$#'
+            count: 2
+            path: ../../tests/system/Models/DataConverterModelTest.php
+
+        -
+            message: '#^Offset ''id'' does not exist on array\{email\: array\{''private@example\.org''\}\}\.$#'
+            count: 1
+            path: ../../tests/system/Models/DataConverterModelTest.php
+
+        -
+            message: '#^Offset ''id'' does not exist on array\{\}\.$#'
+            count: 4
+            path: ../../tests/system/Models/DataConverterModelTest.php
+
+        -
+            message: '#^Offset ''created_at'' does not exist on array\{\}\.$#'
+            count: 6
+            path: ../../tests/system/Models/TimestampModelTest.php
+
+        -
+            message: '#^Offset ''id'' does not exist on array\{country\: ''CA''\}\.$#'
+            count: 2
+            path: ../../tests/system/Models/TimestampModelTest.php

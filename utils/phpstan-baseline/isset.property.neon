@@ -1,0 +1,18 @@
+# total 3 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Property Config\\Autoload\:\:\$helpers \(list\<string\>\) in isset\(\) is not nullable\.$#'
+            count: 1
+            path: ../../system/Autoloader/Autoloader.php
+
+        -
+            message: '#^Static property CodeIgniter\\Email\\Email\:\:\$func_overload \(bool\) in isset\(\) is not nullable\.$#'
+            count: 1
+            path: ../../system/Email/Email.php
+
+        -
+            message: '#^Property CodeIgniter\\I18n\\TimeDifference\:\:\$days \(int\) in isset\(\) is not nullable\.$#'
+            count: 1
+            path: ../../tests/system/I18n/TimeDifferenceTest.php

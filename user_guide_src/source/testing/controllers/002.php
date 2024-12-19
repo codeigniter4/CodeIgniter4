@@ -13,7 +13,7 @@ class ForumControllerTest extends CIUnitTestCase
 
     public function testShowCategories()
     {
-        $result = $this->withURI('http://example.com/categories')
+        $result = $this->withUri('http://example.com/categories')
             ->controller(ForumController::class)
             ->execute('showCategories');
 

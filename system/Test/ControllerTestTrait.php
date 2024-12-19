@@ -31,7 +31,7 @@ use Throwable;
  *
  *  $this->withRequest($request)
  *       ->withResponse($response)
- *       ->withURI($uri)
+ *       ->withUri($uri)
  *       ->withBody($body)
  *       ->controller('App\Controllers\Home')
  *       ->execute('methodName');

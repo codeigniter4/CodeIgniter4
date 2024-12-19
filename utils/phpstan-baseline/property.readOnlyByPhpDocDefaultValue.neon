@@ -1,0 +1,38 @@
+# total 7 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^@readonly property cannot have a default value\.$#'
+            count: 4
+            path: ../../app/Config/Autoload.php
+
+        -
+            message: '#^@readonly property cannot have a default value\.$#'
+            count: 2
+            path: ../../app/Config/DocTypes.php
+
+        -
+            message: '#^@readonly property cannot have a default value\.$#'
+            count: 1
+            path: ../../app/Config/Mimes.php
+
+        -
+            message: '#^@readonly property cannot have a default value\.$#'
+            count: 4
+            path: ../../app/Config/Modules.php
+
+        -
+            message: '#^@readonly property cannot have a default value\.$#'
+            count: 2
+            path: ../../app/Config/Optimize.php
+
+        -
+            message: '#^@readonly property cannot have a default value\.$#'
+            count: 5
+            path: ../../app/Config/Paths.php
+
+        -
+            message: '#^@readonly property cannot have a default value\.$#'
+            count: 2
+            path: ../../system/Test/Mock/MockAutoload.php

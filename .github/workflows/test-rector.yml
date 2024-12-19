@@ -47,6 +47,12 @@ jobs:
       matrix:
         php-versions: ['8.1', '8.4']
     steps:
+      - name: Checkout base branch for PR
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.base_ref }}
+
       - name: Checkout
         uses: actions/checkout@v4
 

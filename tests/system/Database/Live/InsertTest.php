@@ -97,7 +97,7 @@ final class InsertTest extends CIUnitTestCase
         $this->db->table('job')->replace($data);
 
         $row = $this->db->table('job')
-            ->getwhere(['id' => 5])
+            ->getWhere(['id' => 5])
             ->getRow();
 
         $this->assertSame('Cab Driver', $row->name);
@@ -114,7 +114,7 @@ final class InsertTest extends CIUnitTestCase
         $this->db->table('job')->replace($data);
 
         $row = $this->db->table('job')
-            ->getwhere(['id' => 1])
+            ->getWhere(['id' => 1])
             ->getRow();
 
         $this->assertSame('Cab Driver', $row->name);
@@ -135,7 +135,7 @@ final class InsertTest extends CIUnitTestCase
         $builder->replace($data);
 
         $row = $this->db->table('job')
-            ->getwhere(['id' => 1])
+            ->getWhere(['id' => 1])
             ->getRow();
         $this->assertSame('John Smith', $row->name);
 
@@ -147,7 +147,7 @@ final class InsertTest extends CIUnitTestCase
         $builder->replace($data);
 
         $row = $this->db->table('job')
-            ->getwhere(['id' => 2])
+            ->getWhere(['id' => 2])
             ->getRow();
         $this->assertSame('Hans Schmidt', $row->name);
     }

@@ -51,7 +51,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->expectException(InvalidArgumentException::class);
 
         $logger = new Logger(new LoggerConfig());
-        $this->withURI('http://example.com')
+        $this->withUri('http://example.com')
             ->withLogger($logger)
             ->controller(NeverHeardOfIt::class)
             ->execute('index');
@@ -62,7 +62,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->expectException(InvalidArgumentException::class);
 
         $logger = new Logger(new LoggerConfig());
-        $this->withURI('http://example.com')
+        $this->withUri('http://example.com')
             ->withLogger($logger)
             ->controller(Home::class)
             ->execute('nothere');
@@ -71,7 +71,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
     public function testController(): void
     {
         $logger = new Logger(new LoggerConfig());
-        $result = $this->withURI('http://example.com')
+        $result = $this->withUri('http://example.com')
             ->withLogger($logger)
             ->controller(Home::class)
             ->execute('index');
@@ -81,7 +81,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
 
     public function testControllerWithoutLogger(): void
     {
-        $result = $this->withURI('http://example.com')
+        $result = $this->withUri('http://example.com')
             ->controller(Home::class)
             ->execute('index');
 
@@ -91,7 +91,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
     public function testPopcornIndex(): void
     {
         $logger = new Logger(new LoggerConfig());
-        $result = $this->withURI('http://example.com')
+        $result = $this->withUri('http://example.com')
             ->withLogger($logger)
             ->controller(Popcorn::class)
             ->execute('index');
@@ -102,7 +102,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
     public function testPopcornIndex2(): void
     {
         $logger = new Logger(new LoggerConfig());
-        $result = $this->withURI('http://example.com')
+        $result = $this->withUri('http://example.com')
             ->withLogger($logger)
             ->controller(Popcorn::class)
             ->execute('index');
@@ -114,7 +114,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
     public function testPopcornFailure(): void
     {
         $logger = new Logger(new LoggerConfig());
-        $result = $this->withURI('http://example.com')
+        $result = $this->withUri('http://example.com')
             ->withLogger($logger)
             ->controller(Popcorn::class)
             ->execute('pop');
@@ -125,7 +125,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
     public function testPopcornException(): void
     {
         $logger = new Logger(new LoggerConfig());
-        $result = $this->withURI('http://example.com')
+        $result = $this->withUri('http://example.com')
             ->withLogger($logger)
             ->controller(Popcorn::class)
             ->execute('popper');
@@ -139,7 +139,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $config = new App();
         $body   = '';
 
-        $result = $this->withURI('http://example.com')
+        $result = $this->withUri('http://example.com')
             ->withConfig($config)
             ->withRequest(service('request', $config))
             ->withResponse(service('response', $config))
@@ -155,7 +155,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
     public function testRequestPassthrough(): void
     {
         $logger = new Logger(new LoggerConfig());
-        $result = $this->withURI('http://example.com')
+        $result = $this->withUri('http://example.com')
             ->withLogger($logger)
             ->controller(Popcorn::class)
             ->execute('popper');
@@ -167,7 +167,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
     public function testFailureResponse(): void
     {
         $logger = new Logger(new LoggerConfig());
-        $result = $this->withURI('http://example.com')
+        $result = $this->withUri('http://example.com')
             ->withLogger($logger)
             ->controller(Popcorn::class)
             ->execute('oops');
@@ -179,7 +179,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
     public function testEmptyResponse(): void
     {
         $logger = new Logger(new LoggerConfig());
-        $result = $this->withURI('http://example.com')
+        $result = $this->withUri('http://example.com')
             ->withLogger($logger)
             ->controller(Popcorn::class)
             ->execute('weasel');
@@ -192,7 +192,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
     public function testRedirect(): void
     {
         $logger = new Logger(new LoggerConfig());
-        $result = $this->withURI('http://example.com')
+        $result = $this->withUri('http://example.com')
             ->withLogger($logger)
             ->controller(Popcorn::class)
             ->execute('goaway');
@@ -203,7 +203,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
     public function testDOMParserForward(): void
     {
         $logger = new Logger(new LoggerConfig());
-        $result = $this->withURI('http://example.com')
+        $result = $this->withUri('http://example.com')
             ->withLogger($logger)
             ->controller(Popcorn::class)
             ->execute('index');
@@ -214,7 +214,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
     public function testFailsForward(): void
     {
         $logger = new Logger(new LoggerConfig());
-        $result = $this->withURI('http://example.com')
+        $result = $this->withUri('http://example.com')
             ->withLogger($logger)
             ->controller(Popcorn::class)
             ->execute('index');
@@ -228,7 +228,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
      */
     public function testResponseOverriding(): void
     {
-        $result = $this->withURI('http://example.com/rest/')
+        $result = $this->withUri('http://example.com/rest/')
             ->controller(Popcorn::class)
             ->execute('index3');
 
@@ -274,7 +274,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
 
     public function testWithUriUpdatesUriStringAndCurrentUrlValues(): void
     {
-        $result = $this->withURI('http://example.com/foo/bar/1/2/3')
+        $result = $this->withUri('http://example.com/foo/bar/1/2/3')
             ->controller(Newautorouting::class)
             ->execute('postSave', '1', '2', '3');
 

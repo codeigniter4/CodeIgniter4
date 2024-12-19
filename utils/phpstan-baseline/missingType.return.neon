@@ -1,0 +1,1008 @@
+# total 201 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Method CodeIgniter\\ComposerScripts\:\:postUpdate\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/ComposerScripts.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\BaseBuilder\:\:resetRun\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/BaseBuilder.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\BaseBuilder\:\:resetSelect\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/BaseBuilder.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\BaseBuilder\:\:resetWrite\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/BaseBuilder.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Config\:\:ensureFactory\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Config.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Exceptions\\DataException\:\:forEmptyInputGiven\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Exceptions/DataException.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Exceptions\\DataException\:\:forFindColumnHaveMultipleColumns\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Exceptions/DataException.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Exceptions\\DataException\:\:forInvalidAllowedFields\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Exceptions/DataException.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Exceptions\\DataException\:\:forTableNotFound\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Exceptions/DataException.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Forge\:\:_attributeAutoIncrement\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Forge.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Forge\:\:_attributeDefault\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Forge.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Forge\:\:_attributeType\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Forge.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Forge\:\:_attributeUnique\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Forge.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Forge\:\:_attributeUnsigned\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Forge.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Forge\:\:reset\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Forge.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Migration\:\:down\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Migration.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Migration\:\:up\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Migration.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\MigrationRunner\:\:addHistory\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/MigrationRunner.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\MigrationRunner\:\:clearHistory\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/MigrationRunner.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\MigrationRunner\:\:ensureTable\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/MigrationRunner.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\MigrationRunner\:\:force\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/MigrationRunner.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\MigrationRunner\:\:removeHistory\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/MigrationRunner.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\OCI8\\Builder\:\:resetSelect\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/OCI8/Builder.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Postgre\\Connection\:\:buildDSN\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Postgre/Connection.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Postgre\\Forge\:\:_attributeAutoIncrement\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Postgre/Forge.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Postgre\\Forge\:\:_attributeType\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Postgre/Forge.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Query\:\:compileBinds\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Query.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\QueryInterface\:\:setError\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/QueryInterface.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\ResultInterface\:\:freeResult\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/ResultInterface.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\SQLSRV\\Forge\:\:_attributeAutoIncrement\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/SQLSRV/Forge.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\SQLSRV\\Forge\:\:_attributeType\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/SQLSRV/Forge.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\SQLite3\\Forge\:\:_attributeAutoIncrement\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/SQLite3/Forge.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\SQLite3\\Forge\:\:_attributeType\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/SQLite3/Forge.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\SQLite3\\Table\:\:copyData\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/SQLite3/Table.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\SQLite3\\Table\:\:dropIndexes\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/SQLite3/Table.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Seeder\:\:call\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Database/Seeder.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\Router\:\:get404Override\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Router/Router.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Exceptions\\SessionException\:\:forEmptySavepath\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Exceptions/SessionException.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Exceptions\\SessionException\:\:forInvalidSameSiteSetting\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Exceptions/SessionException.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Exceptions\\SessionException\:\:forInvalidSavePath\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Exceptions/SessionException.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Exceptions\\SessionException\:\:forInvalidSavePathFormat\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Exceptions/SessionException.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Exceptions\\SessionException\:\:forMissingDatabaseTable\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Exceptions/SessionException.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Exceptions\\SessionException\:\:forWriteProtectedSavePath\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Exceptions/SessionException.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Handlers\\Database\\PostgreHandler\:\:setSelect\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Handlers/Database/PostgreHandler.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Handlers\\DatabaseHandler\:\:setSelect\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Handlers/DatabaseHandler.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Handlers\\FileHandler\:\:configureSessionIDRegex\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Handlers/FileHandler.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:configure\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:configureSidLength\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:destroy\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:initVars\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:keepFlashdata\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:push\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:regenerate\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:remove\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:removeTempdata\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:set\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:setCookie\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:setFlashdata\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:setSaveHandler\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:setTempdata\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:startSession\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:stop\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:unmarkFlashdata\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Session\:\:unmarkTempdata\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\SessionInterface\:\:destroy\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/SessionInterface.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\SessionInterface\:\:keepFlashdata\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/SessionInterface.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\SessionInterface\:\:regenerate\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/SessionInterface.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\SessionInterface\:\:remove\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/SessionInterface.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\SessionInterface\:\:removeTempdata\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/SessionInterface.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\SessionInterface\:\:set\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/SessionInterface.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\SessionInterface\:\:setFlashdata\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/SessionInterface.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\SessionInterface\:\:setTempdata\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/SessionInterface.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\SessionInterface\:\:unmarkFlashdata\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/SessionInterface.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\SessionInterface\:\:unmarkTempdata\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Session/SessionInterface.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\CIUnitTestCase\:\:assertCloseEnough\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/CIUnitTestCase.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\CIUnitTestCase\:\:mockCache\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/CIUnitTestCase.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\CIUnitTestCase\:\:mockEmail\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/CIUnitTestCase.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\CIUnitTestCase\:\:mockSession\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/CIUnitTestCase.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\CIUnitTestCase\:\:resetFactories\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/CIUnitTestCase.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\CIUnitTestCase\:\:resetServices\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/CIUnitTestCase.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Fabricator\:\:resetCounts\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Fabricator.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockCURLRequest\:\:getBaseURI\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockCURLRequest.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockCURLRequest\:\:getDelay\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockCURLRequest.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockCURLRequest\:\:setOutput\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockCURLRequest.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockEvents\:\:getEventsFile\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockEvents.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockEvents\:\:getListeners\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockEvents.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockEvents\:\:getSimulate\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockEvents.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockEvents\:\:unInitialize\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockEvents.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockLanguage\:\:disableIntlSupport\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockLanguage.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockResourceController\:\:getFormat\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockResourceController.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockResourceController\:\:getModel\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockResourceController.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockResourceController\:\:getModelName\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockResourceController.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockResourcePresenter\:\:getFormat\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockResourcePresenter.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockResourcePresenter\:\:getModel\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockResourcePresenter.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockResourcePresenter\:\:getModelName\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockResourcePresenter.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockResponse\:\:getPretend\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockResponse.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockResponse\:\:misbehave\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockResponse.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockSession\:\:regenerate\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockSession.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockSession\:\:setCookie\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockSession.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockSession\:\:setSaveHandler\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockSession.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockSession\:\:startSession\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockSession.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockTable\:\:__call\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockTable.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\PhpStreamWrapper\:\:register\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/PhpStreamWrapper.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\PhpStreamWrapper\:\:restore\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/PhpStreamWrapper.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\PhpStreamWrapper\:\:setContent\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../system/Test/PhpStreamWrapper.php
+
+        -
+            message: '#^Method Tests\\Support\\Cells\\StarterCell\:\:hello\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Cells/StarterCell.php
+
+        -
+            message: '#^Method Tests\\Support\\Config\\BadRegistrar\:\:RegistrarConfig\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Config/BadRegistrar.php
+
+        -
+            message: '#^Method Tests\\Support\\Config\\TestRegistrar\:\:RegistrarConfig\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Config/TestRegistrar.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Hello\:\:index\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Hello.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Newautorouting\:\:getIndex\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Newautorouting.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Newautorouting\:\:postSave\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Newautorouting.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Popcorn\:\:echoJson\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Popcorn.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Popcorn\:\:goaway\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Popcorn.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Popcorn\:\:index\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Popcorn.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Popcorn\:\:index3\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Popcorn.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Popcorn\:\:json\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Popcorn.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Popcorn\:\:oops\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Popcorn.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Popcorn\:\:pop\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Popcorn.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Popcorn\:\:toindex\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Popcorn.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Popcorn\:\:weasel\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Popcorn.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Popcorn\:\:xml\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Popcorn.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Remap\:\:_remap\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Remap.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Remap\:\:abc\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Remap.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Remap\:\:index\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Remap.php
+
+        -
+            message: '#^Method Tests\\Support\\Entity\\CustomUser\:\:__get\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Entity/CustomUser.php
+
+        -
+            message: '#^Method Tests\\Support\\Language\\SecondMockLanguage\:\:loaded\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Language/SecondMockLanguage.php
+
+        -
+            message: '#^Method Tests\\Support\\Language\\SecondMockLanguage\:\:loadem\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Language/SecondMockLanguage.php
+
+        -
+            message: '#^Method Tests\\Support\\Log\\Handlers\\TestHandler\:\:getLogs\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Log/Handlers/TestHandler.php
+
+        -
+            message: '#^Method Tests\\Support\\Models\\EventModel\:\:afterDeleteMethod\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Models/EventModel.php
+
+        -
+            message: '#^Method Tests\\Support\\Models\\EventModel\:\:afterFindMethod\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Models/EventModel.php
+
+        -
+            message: '#^Method Tests\\Support\\Models\\EventModel\:\:afterInsertBatchMethod\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Models/EventModel.php
+
+        -
+            message: '#^Method Tests\\Support\\Models\\EventModel\:\:afterInsertMethod\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Models/EventModel.php
+
+        -
+            message: '#^Method Tests\\Support\\Models\\EventModel\:\:afterUpdateBatchMethod\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Models/EventModel.php
+
+        -
+            message: '#^Method Tests\\Support\\Models\\EventModel\:\:afterUpdateMethod\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Models/EventModel.php
+
+        -
+            message: '#^Method Tests\\Support\\Models\\EventModel\:\:beforeDeleteMethod\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Models/EventModel.php
+
+        -
+            message: '#^Method Tests\\Support\\Models\\EventModel\:\:beforeFindMethod\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Models/EventModel.php
+
+        -
+            message: '#^Method Tests\\Support\\Models\\EventModel\:\:beforeInsertBatchMethod\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Models/EventModel.php
+
+        -
+            message: '#^Method Tests\\Support\\Models\\EventModel\:\:beforeInsertMethod\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Models/EventModel.php
+
+        -
+            message: '#^Method Tests\\Support\\Models\\EventModel\:\:beforeUpdateBatchMethod\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Models/EventModel.php
+
+        -
+            message: '#^Method Tests\\Support\\Models\\EventModel\:\:beforeUpdateMethod\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Models/EventModel.php
+
+        -
+            message: '#^Method Tests\\Support\\Models\\EventModel\:\:hasToken\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Models/EventModel.php
+
+        -
+            message: '#^Method Tests\\Support\\Test\\TestForReflectionHelper\:\:getPrivate\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Test/TestForReflectionHelper.php
+
+        -
+            message: '#^Method Tests\\Support\\Test\\TestForReflectionHelper\:\:getStaticPrivate\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Test/TestForReflectionHelper.php
+
+        -
+            message: '#^Method Tests\\Support\\Test\\TestForReflectionHelper\:\:privateMethod\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Test/TestForReflectionHelper.php
+
+        -
+            message: '#^Method Tests\\Support\\Test\\TestForReflectionHelper\:\:privateStaticMethod\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Test/TestForReflectionHelper.php
+
+        -
+            message: '#^Method Tests\\Support\\Validation\\TestRules\:\:check_object_rule\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Validation/TestRules.php
+
+        -
+            message: '#^Method Tests\\Support\\Validation\\TestRules\:\:customError\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Validation/TestRules.php
+
+        -
+            message: '#^Method Tests\\Support\\View\\Cells\\ListerCell\:\:getItemsProperty\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/View/Cells/ListerCell.php
+
+        -
+            message: '#^Method Tests\\Support\\View\\OtherCells\\SampleClass\:\:hello\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/View/OtherCells/SampleClass.php
+
+        -
+            message: '#^Method Tests\\Support\\View\\SampleClass\:\:echobox\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/View/SampleClass.php
+
+        -
+            message: '#^Method Tests\\Support\\View\\SampleClass\:\:hello\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/View/SampleClass.php
+
+        -
+            message: '#^Method Tests\\Support\\View\\SampleClass\:\:index\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/View/SampleClass.php
+
+        -
+            message: '#^Method Tests\\Support\\View\\SampleClass\:\:staticEcho\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/View/SampleClass.php
+
+        -
+            message: '#^Method Tests\\Support\\View\\SampleClass\:\:work\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/View/SampleClass.php
+
+        -
+            message: '#^Method Tests\\Support\\View\\SampleClassWithInitController\:\:index\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/_support/View/SampleClassWithInitController.php
+
+        -
+            message: '#^Method CodeIgniter\\API\\ResponseTraitTest\:\:invoke\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Method CodeIgniter\\API\\ResponseTraitTest\:\:makeController\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Cache\\Handlers\\BaseTestFileHandler\:\:getFileInfoTest\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Cache/Handlers/FileHandlerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Cache\\Handlers\\FileHandlerTest\:\:getKeyArray\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Cache/Handlers/FileHandlerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Cache\\Handlers\\MemcachedHandlerTest\:\:getKeyArray\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Cache/Handlers/MemcachedHandlerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Cache\\Handlers\\PredisHandlerTest\:\:getKeyArray\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Cache/Handlers/PredisHandlerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Cache\\Handlers\\RedisHandlerTest\:\:getKeyArray\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Cache/Handlers/RedisHandlerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Commands\\CreateDatabaseTest\:\:getBuffer\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Commands/CreateDatabaseTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Commands\\FilterCheckTest\:\:getBuffer\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Commands/FilterCheckTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Commands\\HelpCommandTest\:\:getBuffer\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Commands/HelpCommandTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Commands\\InfoCacheTest\:\:getBuffer\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Commands/InfoCacheTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Commands\\RoutesTest\:\:getBuffer\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Commands/RoutesTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Commands\\Utilities\\NamespacesTest\:\:getBuffer\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Commands/Utilities/NamespacesTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Config\\FactoriesTest\:\:getFactoriesStaticProperty\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Config/FactoriesTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Config\\FactoriesTest\:\:testGetComponentInstances\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Config/FactoriesTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Config\\FactoriesTest\:\:testSetComponentInstances\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Config/FactoriesTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Entity\\EntityTest\:\:getCastNullableEntity\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Entity/EntityTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Entity\\EntityTest\:\:getCustomCastEntity\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Entity/EntityTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Entity\\EntityTest\:\:getEntity\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Entity/EntityTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Entity\\EntityTest\:\:getMappedEntity\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Entity/EntityTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Entity\\EntityTest\:\:getNewSetterGetterEntity\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Entity/EntityTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Entity\\EntityTest\:\:getSimpleSwappedEntity\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Entity/EntityTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Entity\\EntityTest\:\:getSwappedEntity\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Entity/EntityTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Filters\\fixtures\\InvalidClass\:\:index\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Filters/fixtures/InvalidClass.php
+
+        -
+            message: '#^Method CodeIgniter\\HTTP\\ContentSecurityPolicyTest\:\:work\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/ContentSecurityPolicyTest.php
+
+        -
+            message: '#^Function CodeIgniter\\HTTP\\Files\\is_uploaded_file\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/Files/FileMovingTest.php
+
+        -
+            message: '#^Function CodeIgniter\\HTTP\\Files\\move_uploaded_file\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/Files/FileMovingTest.php
+
+        -
+            message: '#^Method CodeIgniter\\RESTful\\ResourceControllerTest\:\:invoke\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollectionReverseRouteTest\:\:getCollector\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Router/RouteCollectionReverseRouteTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollectionTest\:\:getCollector\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Router/RouteCollectionTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Handlers\\Database\\AbstractHandlerTestCase\:\:getInstance\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Handlers\\Database\\MySQLiHandlerTest\:\:getInstance\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Session/Handlers/Database/MySQLiHandlerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Handlers\\Database\\PostgreHandlerTest\:\:getInstance\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Session/Handlers/Database/PostgreHandlerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Handlers\\Database\\RedisHandlerTest\:\:getInstance\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Session/Handlers/Database/RedisHandlerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\SessionTest\:\:getInstance\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Session/SessionTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\BootstrapFCPATHTest\:\:correctFCPATH\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Test/BootstrapFCPATHTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\BootstrapFCPATHTest\:\:fileContents\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Test/BootstrapFCPATHTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\BootstrapFCPATHTest\:\:readOutput\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Test/BootstrapFCPATHTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\FilterTestTraitTest\:\:assertHasFilters\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Test/FilterTestTraitTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\FilterTestTraitTest\:\:assertNotFilter\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Test/FilterTestTraitTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\FilterTestTraitTest\:\:assertNotHasFilters\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Test/FilterTestTraitTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Validation\\DatabaseRelatedRulesTest\:\:createRules\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Validation/DatabaseRelatedRulesTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Validation\\StrictRules\\DatabaseRelatedRulesTest\:\:createRules\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Validation\\ValidationTest\:\:rule1\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Validation/ValidationTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Validation\\ValidationTest\:\:rule2\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/Validation/ValidationTest.php
+
+        -
+            message: '#^Method CodeIgniter\\View\\ParserPluginTest\:\:setHints\(\) has no return type specified\.$#'
+            count: 1
+            path: ../../tests/system/View/ParserPluginTest.php

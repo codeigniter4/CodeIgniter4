@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache;
 
+use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
 use Config\Cache as CacheConfig;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -23,7 +24,7 @@ use PHPUnit\Framework\Attributes\Group;
 final class FactoriesCacheFileHandlerTest extends FactoriesCacheFileVarExportHandlerTest
 {
     /**
-     * @var @var FileVarExportHandler|CacheInterface
+     * @var CacheInterface|FileVarExportHandler
      */
     protected $handler;
 

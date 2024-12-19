@@ -1,0 +1,343 @@
+# total 68 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Method CodeIgniter\\Database\\BasePreparedQuery\:\:execute\(\) has parameter \$data with no type specified\.$#'
+            count: 1
+            path: ../../system/Database/BasePreparedQuery.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\PreparedQueryInterface\:\:execute\(\) has parameter \$data with no type specified\.$#'
+            count: 1
+            path: ../../system/Database/PreparedQueryInterface.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockCURLRequest\:\:setOutput\(\) has parameter \$output with no type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockCURLRequest.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockTable\:\:__call\(\) has parameter \$method with no type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockTable.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockTable\:\:__call\(\) has parameter \$params with no type specified\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockTable.php
+
+        -
+            message: '#^Method Tests\\Support\\Cells\\StarterCell\:\:hello\(\) has parameter \$params with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Cells/StarterCell.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Newautorouting\:\:postSave\(\) has parameter \$c with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Newautorouting.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Remap\:\:_remap\(\) has parameter \$method with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Remap.php
+
+        -
+            message: '#^Method Tests\\Support\\Controllers\\Remap\:\:_remap\(\) has parameter \$params with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Controllers/Remap.php
+
+        -
+            message: '#^Method Tests\\Support\\Test\\TestForReflectionHelper\:\:privateMethod\(\) has parameter \$param1 with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Test/TestForReflectionHelper.php
+
+        -
+            message: '#^Method Tests\\Support\\Test\\TestForReflectionHelper\:\:privateMethod\(\) has parameter \$param2 with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Test/TestForReflectionHelper.php
+
+        -
+            message: '#^Method Tests\\Support\\Test\\TestForReflectionHelper\:\:privateStaticMethod\(\) has parameter \$param1 with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Test/TestForReflectionHelper.php
+
+        -
+            message: '#^Method Tests\\Support\\Test\\TestForReflectionHelper\:\:privateStaticMethod\(\) has parameter \$param2 with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Test/TestForReflectionHelper.php
+
+        -
+            message: '#^Method Tests\\Support\\Validation\\TestRules\:\:array_count\(\) has parameter \$count with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Validation/TestRules.php
+
+        -
+            message: '#^Method Tests\\Support\\Validation\\TestRules\:\:array_count\(\) has parameter \$value with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/Validation/TestRules.php
+
+        -
+            message: '#^Method Tests\\Support\\View\\SampleClass\:\:echobox\(\) has parameter \$params with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/View/SampleClass.php
+
+        -
+            message: '#^Method Tests\\Support\\View\\SampleClass\:\:staticEcho\(\) has parameter \$params with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/View/SampleClass.php
+
+        -
+            message: '#^Method Tests\\Support\\View\\SampleClass\:\:work\(\) has parameter \$p1 with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/View/SampleClass.php
+
+        -
+            message: '#^Method Tests\\Support\\View\\SampleClass\:\:work\(\) has parameter \$p2 with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/View/SampleClass.php
+
+        -
+            message: '#^Method Tests\\Support\\View\\SampleClass\:\:work\(\) has parameter \$p4 with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/View/SampleClass.php
+
+        -
+            message: '#^Method App\\Controllers\\Mycontroller\:\:getSomemethod\(\) has parameter \$first with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/_controller/Mycontroller.php
+
+        -
+            message: '#^Method App\\Controllers\\foo\\bar\\baz\\Some_controller\:\:some_method\(\) has parameter \$first with no type specified\.$#'
+            count: 1
+            path: ../../tests/_support/_controller/foo/bar/baz/Some_controller.php
+
+        -
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:__construct\(\) has parameter \$formatter with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:__construct\(\) has parameter \$request with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:__construct\(\) has parameter \$response with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:177\:\:__construct\(\) has parameter \$formatter with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:177\:\:__construct\(\) has parameter \$request with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:177\:\:__construct\(\) has parameter \$response with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:299\:\:__construct\(\) has parameter \$formatter with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:299\:\:__construct\(\) has parameter \$request with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:299\:\:__construct\(\) has parameter \$response with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:639\:\:__construct\(\) has parameter \$request with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:639\:\:__construct\(\) has parameter \$response with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Commands\\Utilities\\Routes\\AutoRouterImproved\\Controllers\\Dash_folder\\Dash_controller\:\:getDash_method\(\) has parameter \$p1 with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Commands/Utilities/Routes/AutoRouterImproved/Controllers/Dash_folder/Dash_controller.php
+
+        -
+            message: '#^Method CodeIgniter\\Commands\\Utilities\\Routes\\AutoRouterImproved\\Controllers\\Dash_folder\\Dash_controller\:\:getDash_method\(\) has parameter \$p2 with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Commands/Utilities/Routes/AutoRouterImproved/Controllers/Dash_folder/Dash_controller.php
+
+        -
+            message: '#^Method CodeIgniter\\Commands\\Utilities\\Routes\\AutoRouterImproved\\Controllers\\Dash_folder\\Dash_controller\:\:getSomemethod\(\) has parameter \$p1 with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Commands/Utilities/Routes/AutoRouterImproved/Controllers/Dash_folder/Dash_controller.php
+
+        -
+            message: '#^Method CodeIgniter\\Commands\\Utilities\\Routes\\AutoRouterImproved\\Controllers\\SubDir\\BlogController\:\:getSomeMethod\(\) has parameter \$first with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Commands/Utilities/Routes/AutoRouterImproved/Controllers/SubDir/BlogController.php
+
+        -
+            message: '#^Method CodeIgniter\\Config\\FactoriesTest\:\:getFactoriesStaticProperty\(\) has parameter \$params with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Config/FactoriesTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Database\\Migrations\\MigrationRunnerTest\:\:resetTables\(\) has parameter \$db with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Database/Migrations/MigrationRunnerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Entity\\EntityTest\:\:getCastEntity\(\) has parameter \$data with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Entity/EntityTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Filters\\FiltersTest\:\:createFilters\(\) has parameter \$request with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Filters/FiltersTest.php
+
+        -
+            message: '#^Function CodeIgniter\\HTTP\\Files\\is_uploaded_file\(\) has parameter \$filename with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/Files/FileMovingTest.php
+
+        -
+            message: '#^Function CodeIgniter\\HTTP\\Files\\move_uploaded_file\(\) has parameter \$destination with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/Files/FileMovingTest.php
+
+        -
+            message: '#^Function CodeIgniter\\HTTP\\Files\\move_uploaded_file\(\) has parameter \$filename with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/Files/FileMovingTest.php
+
+        -
+            message: '#^Function CodeIgniter\\HTTP\\Files\\rrmdir\(\) has parameter \$src with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/Files/FileMovingTest.php
+
+        -
+            message: '#^Method CodeIgniter\\HTTP\\IncomingRequestTest\:\:createRequest\(\) has parameter \$body with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Helpers\\URLHelper\\CurrentUrlTest\:\:createRequest\(\) has parameter \$body with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/URLHelper/CurrentUrlTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Helpers\\URLHelper\\MiscUrlTest\:\:testUrlTo\(\) has parameter \$args with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/URLHelper/MiscUrlTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Helpers\\URLHelper\\SiteUrlTest\:\:createRequest\(\) has parameter \$body with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/URLHelper/SiteUrlTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\Controllers\\BlogController\:\:getSomeMethod\(\) has parameter \$first with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Router/Controllers/BlogController.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\Controllers\\Index\:\:getIndex\(\) has parameter \$p1 with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Router/Controllers/Index.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\Controllers\\Mycontroller\:\:getSomemethod\(\) has parameter \$first with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Router/Controllers/Mycontroller.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\Controllers\\Remap\:\:_remap\(\) has parameter \$params with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Router/Controllers/Remap.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\Controllers\\SubDir\\BlogController\:\:getSomeMethod\(\) has parameter \$first with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Router/Controllers/SubDir/BlogController.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\Controllers\\Subfolder\\Home\:\:getIndex\(\) has parameter \$p1 with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Router/Controllers/Subfolder/Home.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\Controllers\\Subfolder\\Home\:\:getIndex\(\) has parameter \$p2 with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Router/Controllers/Subfolder/Home.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\Controllers\\Subfolder\\Sub\\BlogController\:\:getSomeMethod\(\) has parameter \$first with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Router/Controllers/Subfolder/Sub/BlogController.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\DefinedRouteCollectorTest\:\:createRouteCollection\(\) has parameter \$moduleConfig with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Router/DefinedRouteCollectorTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollectionReverseRouteTest\:\:getCollector\(\) has parameter \$moduleConfig with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Router/RouteCollectionReverseRouteTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollectionTest\:\:getCollector\(\) has parameter \$moduleConfig with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Router/RouteCollectionTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Security\\SecurityCSRFSessionRandomizeTokenTest\:\:createSession\(\) has parameter \$options with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Security\\SecurityCSRFSessionTest\:\:createSession\(\) has parameter \$options with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Security/SecurityCSRFSessionTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Handlers\\Database\\AbstractHandlerTestCase\:\:getInstance\(\) has parameter \$options with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Handlers\\Database\\MySQLiHandlerTest\:\:getInstance\(\) has parameter \$options with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Session/Handlers/Database/MySQLiHandlerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Handlers\\Database\\PostgreHandlerTest\:\:getInstance\(\) has parameter \$options with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Session/Handlers/Database/PostgreHandlerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\Handlers\\Database\\RedisHandlerTest\:\:getInstance\(\) has parameter \$options with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Session/Handlers/Database/RedisHandlerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Session\\SessionTest\:\:getInstance\(\) has parameter \$options with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/Session/SessionTest.php
+
+        -
+            message: '#^Method CodeIgniter\\View\\ParserPluginTest\:\:setHints\(\) has parameter \$output with no type specified\.$#'
+            count: 1
+            path: ../../tests/system/View/ParserPluginTest.php

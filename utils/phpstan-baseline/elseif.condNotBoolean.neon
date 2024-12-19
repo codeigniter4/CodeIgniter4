@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Only booleans are allowed in an elseif condition, \(callable\)\|null given\.$#'
+            count: 2
+            path: ../../system/Database/BaseBuilder.php

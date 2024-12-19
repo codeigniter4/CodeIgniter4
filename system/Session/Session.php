@@ -248,7 +248,7 @@ class Session implements SessionInterface
             if (! isset($_SESSION['__ci_last_regenerate'])) {
                 $_SESSION['__ci_last_regenerate'] = Time::now()->getTimestamp();
             } elseif ($_SESSION['__ci_last_regenerate'] < (Time::now()->getTimestamp() - $regenerateTime)) {
-                $this->regenerate((bool) $this->config->regenerateDestroy);
+                $this->regenerate($this->config->regenerateDestroy);
             }
         }
         // Another work-around ... PHP doesn't seem to send the session cookie

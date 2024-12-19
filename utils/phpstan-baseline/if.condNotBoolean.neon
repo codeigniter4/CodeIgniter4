@@ -1,0 +1,88 @@
+# total 17 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Only booleans are allowed in an if condition, mixed given\.$#'
+            count: 1
+            path: ../../system/CLI/CLI.php
+
+        -
+            message: '#^Only booleans are allowed in an if condition, Config\\Routing given\.$#'
+            count: 1
+            path: ../../system/Commands/Utilities/Routes.php
+
+        -
+            message: '#^Only booleans are allowed in an if condition, string\|null given\.$#'
+            count: 3
+            path: ../../system/Commands/Utilities/Routes.php
+
+        -
+            message: '#^Only booleans are allowed in an if condition, TWhen given\.$#'
+            count: 1
+            path: ../../system/Database/BaseBuilder.php
+
+        -
+            message: '#^Only booleans are allowed in an if condition, string\|null given\.$#'
+            count: 1
+            path: ../../system/Database/MigrationRunner.php
+
+        -
+            message: '#^Only booleans are allowed in an if condition, string\|null given\.$#'
+            count: 1
+            path: ../../system/Email/Email.php
+
+        -
+            message: '#^Only booleans are allowed in an if condition, array\|string\|null given\.$#'
+            count: 2
+            path: ../../system/Encryption/Handlers/OpenSSLHandler.php
+
+        -
+            message: '#^Only booleans are allowed in an if condition, array\<string, string\> given\.$#'
+            count: 1
+            path: ../../system/HTTP/RedirectResponse.php
+
+        -
+            message: '#^Only booleans are allowed in an if condition, string given\.$#'
+            count: 1
+            path: ../../system/HTTP/Request.php
+
+        -
+            message: '#^Only booleans are allowed in an if condition, string\|null given\.$#'
+            count: 2
+            path: ../../system/HTTP/Response.php
+
+        -
+            message: '#^Only booleans are allowed in an if condition, array\|int\|string\|null given\.$#'
+            count: 2
+            path: ../../system/Model.php
+
+        -
+            message: '#^Only booleans are allowed in an if condition, object\|string\|null given\.$#'
+            count: 1
+            path: ../../system/RESTful/BaseResource.php
+
+        -
+            message: '#^Only booleans are allowed in an if condition, mixed given\.$#'
+            count: 2
+            path: ../../system/Session/Handlers/Database/PostgreHandler.php
+
+        -
+            message: '#^Only booleans are allowed in an if condition, mixed given\.$#'
+            count: 1
+            path: ../../system/Session/Handlers/MemcachedHandler.php
+
+        -
+            message: '#^Only booleans are allowed in an if condition, string\|null given\.$#'
+            count: 1
+            path: ../../system/View/Table.php
+
+        -
+            message: '#^Only booleans are allowed in an if condition, mixed given\.$#'
+            count: 5
+            path: ../../tests/system/Models/FindModelTest.php
+
+        -
+            message: '#^Only booleans are allowed in an if condition, list\<string\> given\.$#'
+            count: 1
+            path: ../../tests/system/Test/FilterTestTraitTest.php

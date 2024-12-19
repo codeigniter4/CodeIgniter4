@@ -1,0 +1,73 @@
+# total 14 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Method CodeIgniter\\Events\\Events\:\:on\(\) has parameter \$callback with no signature specified for callable\.$#'
+            count: 1
+            path: ../../system/Events/Events.php
+
+        -
+            message: '#^Method CodeIgniter\\Events\\Events\:\:removeListener\(\) has parameter \$listener with no signature specified for callable\.$#'
+            count: 1
+            path: ../../system/Events/Events.php
+
+        -
+            message: '#^Class CodeIgniter\\Model has PHPDoc tag @method for method when\(\) parameter \#2 \$callback with no signature specified for callable\.$#'
+            count: 1
+            path: ../../system/Model.php
+
+        -
+            message: '#^Class CodeIgniter\\Model has PHPDoc tag @method for method when\(\) parameter \#3 \$defaultCallback with no signature specified for callable\.$#'
+            count: 1
+            path: ../../system/Model.php
+
+        -
+            message: '#^Class CodeIgniter\\Model has PHPDoc tag @method for method whenNot\(\) parameter \#2 \$callback with no signature specified for callable\.$#'
+            count: 1
+            path: ../../system/Model.php
+
+        -
+            message: '#^Class CodeIgniter\\Model has PHPDoc tag @method for method whenNot\(\) parameter \#3 \$defaultCallback with no signature specified for callable\.$#'
+            count: 1
+            path: ../../system/Model.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollection\:\:group\(\) has parameter \$params with no signature specified for callable\.$#'
+            count: 1
+            path: ../../system/Router/RouteCollection.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollection\:\:set404Override\(\) has parameter \$callable with no signature specified for callable\.$#'
+            count: 1
+            path: ../../system/Router/RouteCollection.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\RouteCollectionInterface\:\:set404Override\(\) has parameter \$callable with no signature specified for callable\.$#'
+            count: 1
+            path: ../../system/Router/RouteCollectionInterface.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\Router\:\:setMatchedRoute\(\) has parameter \$handler with no signature specified for callable\.$#'
+            count: 1
+            path: ../../system/Router/Router.php
+
+        -
+            message: '#^Method CodeIgniter\\View\\Parser\:\:addPlugin\(\) has parameter \$callback with no signature specified for callable\.$#'
+            count: 1
+            path: ../../system/View/Parser.php
+
+        -
+            message: '#^Property CodeIgniter\\View\\Table\:\:\$function type has no signature specified for callable\.$#'
+            count: 1
+            path: ../../system/View/Table.php
+
+        -
+            message: '#^Method CodeIgniter\\DataConverter\\DataConverterTest\:\:createDataConverter\(\) has parameter \$extractor with no signature specified for Closure\.$#'
+            count: 1
+            path: ../../tests/system/DataConverter/DataConverterTest.php
+
+        -
+            message: '#^Method CodeIgniter\\DataConverter\\DataConverterTest\:\:createDataConverter\(\) has parameter \$reconstructor with no signature specified for Closure\.$#'
+            count: 1
+            path: ../../tests/system/DataConverter/DataConverterTest.php

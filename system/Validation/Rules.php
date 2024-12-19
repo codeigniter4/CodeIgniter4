@@ -369,10 +369,8 @@ class Rules
 
         foreach (explode(',', $fields) as $field) {
             if (
-                (array_key_exists($field, $data)
-                    && ! empty($data[$field]))  // @phpstan-ignore-line Use empty()
-                || (str_contains($field, '.')
-                    && ! empty(dot_array_search($field, $data)))  // @phpstan-ignore-line Use empty()
+                (array_key_exists($field, $data) && ! empty($data[$field]))
+                || (str_contains($field, '.') && ! empty(dot_array_search($field, $data)))
             ) {
                 $requiredFields[] = $field;
             }
@@ -419,7 +417,7 @@ class Rules
             if (
                 (! str_contains($otherField, '.'))
                 && (! array_key_exists($otherField, $data)
-                    || empty($data[$otherField])) // @phpstan-ignore-line Use empty()
+                    || empty($data[$otherField]))
             ) {
                 return false;
             }
@@ -434,7 +432,7 @@ class Rules
                 $fieldKey        = $fieldSplitArray[1];
 
                 if (is_array($fieldData)) {
-                    return ! empty(dot_array_search($otherField, $data)[$fieldKey]);  // @phpstan-ignore-line Use empty()
+                    return ! empty(dot_array_search($otherField, $data)[$fieldKey]);
                 }
                 $nowField      = str_replace('*', $fieldKey, $otherField);
                 $nowFieldVaule = dot_array_search($nowField, $data);

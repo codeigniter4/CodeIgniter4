@@ -1,0 +1,18 @@
+# total 3 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Property CodeIgniter\\HTTP\\MessageTest\:\:\$message \(CodeIgniter\\HTTP\\Message\|null\) is never assigned null so it can be removed from the property type\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/MessageTest.php
+
+        -
+            message: '#^Property CodeIgniter\\HTTP\\NegotiateTest\:\:\$negotiate \(CodeIgniter\\HTTP\\Negotiate\|null\) is never assigned null so it can be removed from the property type\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/NegotiateTest.php
+
+        -
+            message: '#^Property CodeIgniter\\HTTP\\NegotiateTest\:\:\$request \(CodeIgniter\\HTTP\\IncomingRequest\|null\) is never assigned null so it can be removed from the property type\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/NegotiateTest.php
