@@ -1,4 +1,4 @@
-# total 21 errors
+# total 20 errors
 
 parameters:
     ignoreErrors:
@@ -6,11 +6,6 @@ parameters:
             message: '#^Property CodeIgniter\\Controller\:\:\$request \(CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest\) does not accept CodeIgniter\\HTTP\\RequestInterface\.$#'
             count: 1
             path: ../../system/Controller.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\Forge\:\:\$fields \(array\<string, array\|string\>\) does not accept array\<int\|string, int\<0, max\>\>\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
 
         -
             message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:639\:\:\$format \(''html''\|''json''\|''xml''\|null\) does not accept ''txt''\.$#'
