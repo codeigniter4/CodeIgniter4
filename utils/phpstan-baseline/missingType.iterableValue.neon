@@ -1,4 +1,4 @@
-# total 1687 errors
+# total 1686 errors
 
 parameters:
     ignoreErrors:
@@ -1704,11 +1704,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Database\\Forge\:\:modifyColumn\(\) has parameter \$fields with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\Forge\:\:\$fields type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/Forge.php
 
