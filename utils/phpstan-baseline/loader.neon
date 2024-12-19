@@ -7,7 +7,6 @@ includes:
     - booleanNot.exprNotBoolean.neon
     - booleanOr.leftNotBoolean.neon
     - booleanOr.rightNotBoolean.neon
-    - catch.neverThrown.neon
     - class.notFound.neon
     - codeigniter.cacheHandlerInstance.neon
     - codeigniter.configArgumentInstanceof.neon
