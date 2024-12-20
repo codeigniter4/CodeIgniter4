@@ -188,12 +188,12 @@ parameters:
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:639\:\:\$request has no type specified\.$#'
+            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:\$request has no type specified\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:639\:\:\$response has no type specified\.$#'
+            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:\$response has no type specified\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 

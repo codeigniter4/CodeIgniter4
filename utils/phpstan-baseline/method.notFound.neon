@@ -1,4 +1,4 @@
-# total 47 errors
+# total 41 errors
 
 parameters:
     ignoreErrors:
@@ -16,36 +16,6 @@ parameters:
             message: '#^Call to an undefined method CodeIgniter\\View\\RendererInterface\:\:getPerformanceData\(\)\.$#'
             count: 2
             path: ../../system/Debug/Toolbar/Collectors/Views.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface\:\:getDefaultNamespace\(\)\.$#'
-            count: 2
-            path: ../../system/Router/Router.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface\:\:getFiltersForRoute\(\)\.$#'
-            count: 1
-            path: ../../system/Router/Router.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface\:\:getRegisteredControllers\(\)\.$#'
-            count: 1
-            path: ../../system/Router/Router.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface\:\:getRoutesOptions\(\)\.$#'
-            count: 1
-            path: ../../system/Router/Router.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface\:\:isFiltered\(\)\.$#'
-            count: 1
-            path: ../../system/Router/Router.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface\:\:setHTTPVerb\(\)\.$#'
-            count: 1
-            path: ../../system/Router/Router.php
 
         -
             message: '#^Call to an undefined method CodeIgniter\\Database\\ConnectionInterface\:\:tableExists\(\)\.$#'
