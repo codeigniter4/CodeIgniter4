@@ -461,7 +461,7 @@ abstract class CIUnitTestCase extends TestCase
      * @param mixed $expected
      * @param mixed $actual
      *
-     * @return bool|void
+     * @return bool|null
      *
      * @throws Exception
      */
@@ -482,6 +482,8 @@ abstract class CIUnitTestCase extends TestCase
         } catch (Exception) {
             return false;
         }
+
+        return null;
     }
 
     // --------------------------------------------------------------------

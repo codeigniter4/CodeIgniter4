@@ -3019,7 +3019,7 @@ class BaseBuilder
      *
      * @param array|string $table The table to inspect
      *
-     * @return string|void
+     * @return string|null
      */
     protected function trackAliases($table)
     {
@@ -3028,7 +3028,7 @@ class BaseBuilder
                 $this->trackAliases($t);
             }
 
-            return;
+            return null;
         }
 
         // Does the string contain a comma?  If so, we need to separate
@@ -3048,6 +3048,8 @@ class BaseBuilder
             // Store the alias, if it doesn't already exist
             $this->db->addTableAlias($alias);
         }
+
+        return null;
     }
 
     /**

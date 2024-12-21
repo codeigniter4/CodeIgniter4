@@ -318,7 +318,7 @@ class CodeIgniter
      *
      * @param bool $returnResponse Used for testing purposes only.
      *
-     * @return ResponseInterface|void
+     * @return ResponseInterface|null
      */
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
@@ -379,6 +379,8 @@ class CodeIgniter
         }
 
         $this->sendResponse();
+
+        return null;
     }
 
     /**
@@ -863,7 +865,7 @@ class CodeIgniter
      * controller method and make the script go. If it's not able to, will
      * show the appropriate Page Not Found error.
      *
-     * @return ResponseInterface|string|void
+     * @return ResponseInterface|string|null
      */
     protected function startController()
     {
@@ -889,6 +891,8 @@ class CodeIgniter
         ) {
             throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
         }
+
+        return null;
     }
 
     /**

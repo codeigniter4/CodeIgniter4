@@ -702,6 +702,8 @@ abstract class BaseHandler implements ImageHandlerInterface
         if (method_exists($this->image(), $name)) {
             return $this->image()->{$name}(...$args);
         }
+
+        return null;
     }
 
     /**

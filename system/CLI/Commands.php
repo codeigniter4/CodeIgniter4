@@ -52,12 +52,12 @@ class Commands
     /**
      * Runs a command given
      *
-     * @return int|void Exit code
+     * @return int Exit code
      */
     public function run(string $command, array $params)
     {
         if (! $this->verifyCommand($command, $this->commands)) {
-            return;
+            return EXIT_ERROR;
         }
 
         // The file would have already been loaded during the

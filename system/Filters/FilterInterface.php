@@ -33,7 +33,7 @@ interface FilterInterface
      *
      * @param list<string>|null $arguments
      *
-     * @return RequestInterface|ResponseInterface|string|void
+     * @return RequestInterface|ResponseInterface|string|null
      */
     public function before(RequestInterface $request, $arguments = null);
 
@@ -45,7 +45,7 @@ interface FilterInterface
      *
      * @param list<string>|null $arguments
      *
-     * @return ResponseInterface|void
+     * @return ResponseInterface|null
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null);
 }

@@ -27,7 +27,7 @@ class CheckPhpIni
     /**
      * @param bool $isCli Set false if you run via Web
      *
-     * @return string|void HTML string or void in CLI
+     * @return string|null HTML string or void in CLI
      */
     public static function run(bool $isCli = true)
     {
@@ -40,7 +40,7 @@ class CheckPhpIni
         if ($isCli) {
             self::outputForCli($output, $thead, $tbody);
 
-            return;
+            return null;
         }
 
         // Web

@@ -1,4 +1,4 @@
-# total 1673 errors
+# total 1672 errors
 
 parameters:
     ignoreErrors:
@@ -4704,11 +4704,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Language\\Language\:\:getTranslationOutput\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Language/Language.php
-
-        -
-            message: '#^Method CodeIgniter\\Language\\Language\:\:load\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Language/Language.php
 
