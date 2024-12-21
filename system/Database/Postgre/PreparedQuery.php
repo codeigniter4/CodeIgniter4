@@ -87,6 +87,12 @@ class PreparedQuery extends BasePreparedQuery
             throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
         }
 
+        foreach ($data as &$item) {
+            if (is_string($item) && mb_detect_encoding($item, 'UTF-8', true) === false) {
+                $item = pg_escape_bytea($this->db->connID, $item);
+            }
+        }
+
         $this->result = pg_execute($this->db->connID, $this->name, $data);
 
         return (bool) $this->result;

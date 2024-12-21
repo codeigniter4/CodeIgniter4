@@ -173,6 +173,10 @@ class Forge extends BaseForge
                 $attributes['TYPE'] = 'TIMESTAMP';
                 break;
 
+            case 'BLOB':
+                $attributes['TYPE'] = 'BYTEA';
+                break;
+
             default:
                 break;
         }
