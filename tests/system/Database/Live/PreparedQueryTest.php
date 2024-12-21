@@ -269,4 +269,23 @@ final class PreparedQueryTest extends CIUnitTestCase
 
         $this->query->close();
     }
+
+    public function testInsertBinaryData(): void
+    {
+        if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'SQLSRV') {
+            $this->markTestSkipped('Blob not supported for Postgre and SQLSRV.');
+        }
+
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('type_test')->insert([
+            'type_blob' => 'binary',
+        ]));
+
+        $fileContent = file_get_contents(TESTPATH . '_support/Images/EXIFsamples/landscape_0.jpg');
+        $this->assertTrue($this->query->execute($fileContent));
+
+        $id   = $this->db->insertId();
+        $file = $this->db->table('type_test')->where('id', $id)->get()->getRow();
+
+        $this->assertSame(strlen($fileContent), strlen($file->type_blob));
+    }
 }
