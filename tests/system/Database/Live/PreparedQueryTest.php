@@ -272,20 +272,32 @@ final class PreparedQueryTest extends CIUnitTestCase
 
     public function testInsertBinaryData(): void
     {
-        if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'SQLSRV') {
-            $this->markTestSkipped('Blob not supported for Postgre and SQLSRV.');
+        $params = [];
+        if ($this->db->DBDriver === 'SQLSRV') {
+            $params = [0 => SQLSRV_PHPTYPE_STREAM(SQLSRV_ENC_BINARY)];
         }
 
         $this->query = $this->db->prepare(static fn ($db) => $db->table('type_test')->insert([
             'type_blob' => 'binary',
-        ]));
+        ]), $params);
 
         $fileContent = file_get_contents(TESTPATH . '_support/Images/EXIFsamples/landscape_0.jpg');
         $this->assertTrue($this->query->execute($fileContent));
 
-        $id   = $this->db->insertId();
-        $file = $this->db->table('type_test')->where('id', $id)->get()->getRow();
+        $id      = $this->db->insertId();
+        $builder = $this->db->table('type_test');
 
-        $this->assertSame(strlen($fileContent), strlen($file->type_blob));
+        if ($this->db->DBDriver === 'Postgre') {
+            $file = $builder->select("ENCODE(type_blob, 'base64') AS type_blob")->where('id', $id)->get()->getRow();
+            $file = base64_decode($file->type_blob, true);
+        } elseif ($this->db->DBDriver === 'OCI8') {
+            $file = $builder->select('type_blob')->where('id', $id)->get()->getRow();
+            $file = $file->type_blob->load();
+        } else {
+            $file = $builder->select('type_blob')->where('id', $id)->get()->getRow();
+            $file = $file->type_blob;
+        }
+
+        $this->assertSame(strlen($fileContent), strlen($file));
     }
 }
