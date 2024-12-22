@@ -73,30 +73,34 @@ class PreparedQuery extends BasePreparedQuery
             throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
         }
 
-        $blobs = [];
+        $binaryData = [];
 
         foreach ($data as $key => $item) {
-            if (is_string($item) && mb_detect_encoding($item, 'UTF-8', true) === false) {
-                $blobs[$key] = oci_new_descriptor($this->db->connID, OCI_D_LOB);
-                oci_bind_by_name($this->statement, ':' . $key, $blobs[$key], -1, OCI_B_BLOB);
+            if (is_string($item) && $this->isBinary($item)) {
+                $binaryData[$key] = oci_new_descriptor($this->db->connID, OCI_D_LOB);
+                oci_bind_by_name($this->statement, ':' . $key, $binaryData[$key], -1, OCI_B_BLOB);
             } else {
                 oci_bind_by_name($this->statement, ':' . $key, $item);
             }
         }
 
-        $result = oci_execute($this->statement, $blobs === [] ? $this->db->commitMode : OCI_NO_AUTO_COMMIT);
+        $result = oci_execute(
+            $this->statement,
+            $binaryData === [] ? $this->db->commitMode : OCI_NO_AUTO_COMMIT
+        );
 
-        if ($blobs !== []) {
-            foreach ($blobs as $key => $blob) {
+        if ($binaryData !== []) {
+            foreach ($binaryData as $key => $blob) {
                 if (! $blob->save($data[$key])) {
                     oci_rollback($this->db->connID);
+
                     return false;
                 }
             }
 
             oci_commit($this->db->connID);
 
-            foreach ($blobs as $blob) {
+            foreach ($binaryData as $blob) {
                 $blob->free();
             }
         }
