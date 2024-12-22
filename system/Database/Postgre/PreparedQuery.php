@@ -88,7 +88,7 @@ class PreparedQuery extends BasePreparedQuery
         }
 
         foreach ($data as &$item) {
-            if (is_string($item) && mb_detect_encoding($item, 'UTF-8', true) === false) {
+            if (is_string($item) && $this->isBinary($item)) {
                 $item = pg_escape_bytea($this->db->connID, $item);
             }
         }
