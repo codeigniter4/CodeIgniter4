@@ -284,7 +284,11 @@ final class PreparedQueryTest extends CIUnitTestCase
         $fileContent = file_get_contents(TESTPATH . '_support/Images/EXIFsamples/landscape_0.jpg');
         $this->assertTrue($this->query->execute($fileContent));
 
-        $id      = $this->db->insertID();
+        $id = $this->db->DBDriver === 'SQLSRV'
+            // It seems like INSERT for a prepared statement is run in the
+            // separate execution context even though it's part of the same session
+            ? (int) ($this->db->query('SELECT @@IDENTITY AS insert_id')->getRow()->insert_id ?? 0)
+            : $this->db->insertID();
         $builder = $this->db->table('type_test');
 
         if ($this->db->DBDriver === 'Postgre') {

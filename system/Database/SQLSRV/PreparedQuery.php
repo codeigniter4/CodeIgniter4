@@ -131,7 +131,11 @@ class PreparedQuery extends BasePreparedQuery
 
         for ($c = 0; $c < $numberOfVariables; $c++) {
             $this->parameters[$c] = null;
-            $params[]             = [&$this->parameters[$c], SQLSRV_PARAM_IN, $options[$c] ?? SQLSRV_PHPTYPE_STRING(SQLSRV_ENC_CHAR)];
+            if (isset($options[$c])) {
+                $params[] = [&$this->parameters[$c], SQLSRV_PARAM_IN, $options[$c]];
+            } else {
+                $params[] = &$this->parameters[$c];
+            }
         }
 
         return $params;
