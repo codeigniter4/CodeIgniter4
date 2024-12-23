@@ -284,7 +284,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         $fileContent = file_get_contents(TESTPATH . '_support/Images/EXIFsamples/landscape_0.jpg');
         $this->assertTrue($this->query->execute($fileContent));
 
-        $id      = $this->db->insertId();
+        $id      = $this->db->insertID();
         $builder = $this->db->table('type_test');
 
         if ($this->db->DBDriver === 'Postgre') {

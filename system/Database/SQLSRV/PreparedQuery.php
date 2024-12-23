@@ -120,6 +120,8 @@ class PreparedQuery extends BasePreparedQuery
 
     /**
      * Handle parameters.
+     *
+     * @param array<int, mixed> $options
      */
     protected function parameterize(string $queryString, array $options): array
     {
