@@ -104,8 +104,8 @@ abstract class AbstractGetFieldDataTestCase extends CIUnitTestCase
         $this->forge->dropTable($this->table, true);
 
         // missing types:
-        //   TINYINT,MEDIUMINT,BIT,YEAR,BINARY,VARBINARY,TINYTEXT,LONGTEXT,
-        //   JSON,Spatial data types
+        //   TINYINT,MEDIUMINT,BIT,YEAR,BINARY,VARBINARY (BLOB more or less handles these two),
+        //   TINYTEXT,LONGTEXT,JSON,Spatial data types
         // `id` must be INTEGER else SQLite3 error on not null for autoincrement field.
         $fields = [
             'id'           => ['type' => 'INTEGER', 'constraint' => 20, 'auto_increment' => true],
@@ -138,8 +138,7 @@ abstract class AbstractGetFieldDataTestCase extends CIUnitTestCase
                 $fields['type_enum'],
                 $fields['type_set'],
                 $fields['type_mediumtext'],
-                $fields['type_double'],
-                $fields['type_blob']
+                $fields['type_double']
             );
         }
 
@@ -147,8 +146,7 @@ abstract class AbstractGetFieldDataTestCase extends CIUnitTestCase
             unset(
                 $fields['type_set'],
                 $fields['type_mediumtext'],
-                $fields['type_double'],
-                $fields['type_blob']
+                $fields['type_double']
             );
         }
 

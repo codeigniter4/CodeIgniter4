@@ -91,7 +91,7 @@ class Migration_Create_test_tables extends Migration
         }
 
         if ($this->db->DBDriver === 'SQLSRV') {
-            unset($dataTypeFields['type_timestamp'], $dataTypeFields['type_blob']);
+            unset($dataTypeFields['type_timestamp']);
             $dataTypeFields['type_text'] = ['type' => 'NVARCHAR(max)', 'null' => true];
         }
 

@@ -263,7 +263,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     /**
      * Whether the input contain binary data.
      */
-    protected function isBinary($input): bool
+    protected function isBinary(string $input): bool
     {
         return mb_detect_encoding($input, 'UTF-8', true) === false;
     }
