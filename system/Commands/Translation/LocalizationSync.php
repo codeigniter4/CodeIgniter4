@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands\Translation;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Exceptions\LogicException;
 use Config\App;
 use Locale;
 use RecursiveDirectoryIterator;
@@ -152,7 +153,7 @@ class LocalizationSync extends BaseCommand
         foreach ($originalLanguageKeys as $key => $value) {
             $placeholderValue = $prefix !== '' ? $prefix . '.' . $key : $key;
 
-            if (! is_array($value)) {
+            if (is_string($value)) {
                 // Keep the old value
                 // TODO: The value type may not match the original one
                 if (array_key_exists($key, $targetLanguageKeys)) {
@@ -163,7 +164,7 @@ class LocalizationSync extends BaseCommand
 
                 // Set new key with placeholder
                 $mergedLanguageKeys[$key] = $placeholderValue;
-            } else {
+            } elseif (is_array($value)) {
                 if (! array_key_exists($key, $targetLanguageKeys)) {
                     $mergedLanguageKeys[$key] = $this->mergeLanguageKeys($value, [], $placeholderValue);
 
@@ -171,6 +172,8 @@ class LocalizationSync extends BaseCommand
                 }
 
                 $mergedLanguageKeys[$key] = $this->mergeLanguageKeys($value, $targetLanguageKeys[$key], $placeholderValue);
+            } else {
+                throw new LogicException('Value for the key "' . $placeholderValue . '" is of the wrong type. Only "array" or "string" is allowed.');
             }
         }
 
