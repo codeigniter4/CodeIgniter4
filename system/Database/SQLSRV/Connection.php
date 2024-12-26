@@ -482,7 +482,14 @@ class Connection extends BaseConnection
         if ($stmt === false) {
             $error = $this->error();
 
-            log_message('error', $error['message']);
+            $traceback = debug_backtrace();
+            $error_msg_traceback = "[SQL]: \n$sql \n[END OF SQL] \n";
+            $spaces = "--";
+            foreach($traceback as $e) {
+                $error_msg_traceback .= $spaces. " in ".(isset($e['file']) ? $e['file'] : 'unknown file')." -> ".(isset($e['function']) ? $e['function'] : 'unknow function')." on line ".(isset($e['line']) ? $e['line'] : "-")."\n";
+                $spaces .= "--";
+            }
+            log_message('error', $error['message']."\n".$error_msg_traceback);
 
             if ($this->DBDebug) {
                 throw new DatabaseException($error['message']);
