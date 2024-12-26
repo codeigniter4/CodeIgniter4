@@ -1,12 +1,7 @@
 includes:
     - argument.type.neon
     - assign.propertyType.neon
-    - booleanAnd.leftNotBoolean.neon
     - booleanAnd.rightAlwaysTrue.neon
-    - booleanAnd.rightNotBoolean.neon
-    - booleanNot.exprNotBoolean.neon
-    - booleanOr.leftNotBoolean.neon
-    - booleanOr.rightNotBoolean.neon
     - class.notFound.neon
     - codeigniter.cacheHandlerInstance.neon
     - codeigniter.configArgumentInstanceof.neon
@@ -18,7 +13,6 @@ includes:
     - codeigniter.superglobalAccessAssign.neon
     - codeigniter.unknownServiceMethod.neon
     - deadCode.unreachable.neon
-    - elseif.condNotBoolean.neon
     - empty.notAllowed.neon
     - empty.property.neon
     - expr.resultUnused.neon
@@ -60,7 +54,6 @@ includes:
     - return.type.neon
     - return.unusedType.neon
     - staticMethod.notFound.neon
-    - ternary.condNotBoolean.neon
     - ternary.shortNotAllowed.neon
     - unset.offset.neon
     - varTag.type.neon
