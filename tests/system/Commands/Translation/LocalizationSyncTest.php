@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Translation;
 
+use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
@@ -34,15 +35,17 @@ final class LocalizationSyncTest extends CIUnitTestCase
      * @var array<string, array<string,mixed>|string|null>
      */
     private array $expectedKeys = [
-        'a' => 'Sync.a',
-        'b' => 'Sync.b',
-        'c' => 'Sync.c',
-        'd' => [],
-        'e' => 'Sync.e',
-        'f' => [
-            'g' => 'Sync.f.g',
-            'h' => [
-                'i' => 'Sync.f.h.i',
+        'title'  => 'Sync.title',
+        'status' => [
+            'error'    => 'Sync.status.error',
+            'done'     => 'Sync.status.done',
+            'critical' => 'Sync.status.critical',
+        ],
+        'description' => 'Sync.description',
+        'empty_array' => [],
+        'more'        => [
+            'nested' => [
+                'key' => 'Sync.more.nested.key',
             ],
         ],
     ];
@@ -51,10 +54,10 @@ final class LocalizationSyncTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        config(App::class)->supportedLocales = ['en', 'ru', 'test'];
+        config(App::class)->supportedLocales = ['en', 'ru', 'de'];
 
         self::$locale           = Locale::getDefault();
-        self::$languageTestPath = SUPPORTPATH . 'Language' . DIRECTORY_SEPARATOR;
+        self::$languageTestPath = SUPPORTPATH . 'Language/';
         $this->makeLanguageFiles();
     }
 
@@ -67,9 +70,9 @@ final class LocalizationSyncTest extends CIUnitTestCase
 
     public function testSyncDefaultLocale(): void
     {
-        command('lang:sync --target test');
+        command('lang:sync --target de');
 
-        $langFile = self::$languageTestPath . 'test/Sync.php';
+        $langFile = self::$languageTestPath . 'de/Sync.php';
 
         $this->assertFileExists($langFile);
 
@@ -81,9 +84,9 @@ final class LocalizationSyncTest extends CIUnitTestCase
 
     public function testSyncWithLocaleOption(): void
     {
-        command('lang:sync --locale ru --target test');
+        command('lang:sync --locale ru --target de');
 
-        $langFile = self::$languageTestPath . 'test/Sync.php';
+        $langFile = self::$languageTestPath . 'de/Sync.php';
 
         $this->assertFileExists($langFile);
 
@@ -95,29 +98,21 @@ final class LocalizationSyncTest extends CIUnitTestCase
 
     public function testSyncWithExistTranslation(): void
     {
-        // First run, add new keys
-        command('lang:sync --target test');
-
-        $langFile = self::$languageTestPath . 'test/Sync.php';
-
-        $this->assertFileExists($langFile);
-
-        $langKeys = include $langFile;
-
-        $this->assertIsArray($langKeys);
-        $this->assertSame($this->expectedKeys, $langKeys);
-
-        // Second run, save old keys
-        $oldLangKeys = [
-            'a' => 'old value 1',
-            'b' => 2000,
-            'c' => null,
-            'd' => [],
-            'e' => '',
-            'f' => [
-                'g' => 'old value 2',
-                'h' => [
-                    'i' => 'old value 3',
+        // Save old values and add new keys from "en/Sync.php"
+        // Add value from the old file "de/Sync.php" to new
+        // Right sort as in "en/Sync.php"
+        $expectedLangKeys = [
+            'title'  => 'Default title (old)',
+            'status' => [
+                'error'    => 'Error! (old)',
+                'done'     => 'Sync.status.done',
+                'critical' => 'Critical! (old)',
+            ],
+            'description' => 'Sync.description',
+            'empty_array' => [],
+            'more'        => [
+                'nested' => [
+                    'key' => 'More nested key... (old)',
                 ],
             ],
         ];
@@ -126,38 +121,81 @@ final class LocalizationSyncTest extends CIUnitTestCase
             <?php
 
             return [
-                'a' => 'old value 1',
-                'b' => 2000,
-                'c' => null,
-                'd' => [],
-                'e' => '',
-                'f' => [
-                    'g' => 'old value 2',
-                    'h' => [
-                        'i' => 'old value 3',
+                'status' => [
+                    'critical' => 'Critical! (old)',
+                    'error'    => 'Error! (old)',
+                ],
+                'skip'        => 'skip this value',
+                'title'  => 'Default title (old)',
+                'more'        => [
+                    'nested' => [
+                        'key' => 'More nested key... (old)',
                     ],
                 ],
+                'empty_array' => [],
             ];
             TEXT_WRAP;
 
-        file_put_contents(self::$languageTestPath . 'test/Sync.php', $lang);
+        $langFile = self::$languageTestPath . 'de/Sync.php';
 
-        command('lang:sync --target test');
+        mkdir(self::$languageTestPath . 'de', 0755);
+        file_put_contents($langFile, $lang);
 
-        $langFile = self::$languageTestPath . 'test/Sync.php';
+        command('lang:sync --target de');
 
         $this->assertFileExists($langFile);
 
         $langKeys = include $langFile;
+
         $this->assertIsArray($langKeys);
-        $this->assertSame($oldLangKeys, $langKeys);
+        $this->assertSame($expectedLangKeys, $langKeys);
     }
 
     public function testSyncWithIncorrectLocaleOption(): void
     {
-        command('lang:sync --locale test_locale_incorrect --target test');
+        command('lang:sync --locale test_locale_incorrect --target de');
 
         $this->assertStringContainsString('is not supported', $this->getStreamFilterBuffer());
+    }
+
+    public function testSyncWithNullableOriginalLangValue(): void
+    {
+        $langWithNullValue = <<<'TEXT_WRAP'
+            <?php
+
+            return [
+                'nullable' => null,
+            ];
+            TEXT_WRAP;
+
+        file_put_contents(self::$languageTestPath . self::$locale . '/SyncInvalid.php', $langWithNullValue);
+        ob_get_flush();
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessageMatches('/Only "array" or "string" is allowed/');
+
+        command('lang:sync --target de');
+    }
+
+    public function testSyncWithIntegerOriginalLangValue(): void
+    {
+        $this->resetStreamFilterBuffer();
+
+        $langWithIntegerValue = <<<'TEXT_WRAP'
+            <?php
+
+            return [
+                'integer' => 1000,
+            ];
+            TEXT_WRAP;
+
+        file_put_contents(self::$languageTestPath . self::$locale . '/SyncInvalid.php', $langWithIntegerValue);
+        ob_get_flush();
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessageMatches('/Only "array" or "string" is allowed/');
+
+        command('lang:sync --target de');
     }
 
     public function testSyncWithIncorrectTargetOption(): void
@@ -173,15 +211,17 @@ final class LocalizationSyncTest extends CIUnitTestCase
             <?php
 
             return [
-                'a' => 'value 1',
-                'b' => 2,
-                'c' => null,
-                'd' => [],
-                'e' => '',
-                'f' => [
-                    'g' => 'value 2',
-                    'h' => [
-                        'i' => 'value 3',
+                'title'  => 'Default title',
+                'status' => [
+                    'error'    => 'Error!',
+                    'done'     => 'Done!',
+                    'critical' => 'Critical!',
+                ],
+                'description' => '',
+                'empty_array' => [],
+                'more'        => [
+                    'nested' => [
+                        'key' => 'More nested key...',
                     ],
                 ],
             ];
@@ -193,22 +233,21 @@ final class LocalizationSyncTest extends CIUnitTestCase
 
     private function clearGeneratedFiles(): void
     {
-        if (is_file(self::$languageTestPath . self::$locale . '/Sync.php')) {
-            unlink(self::$languageTestPath . self::$locale . '/Sync.php');
-        }
+        $files = [
+            self::$languageTestPath . self::$locale . '/Sync.php',
+            self::$languageTestPath . self::$locale . '/SyncInvalid.php',
+            self::$languageTestPath . 'ru/Sync.php',
+        ];
 
-        if (is_file(self::$languageTestPath . 'ru/Sync.php')) {
-            unlink(self::$languageTestPath . 'ru/Sync.php');
-        }
-
-        if (is_dir(self::$languageTestPath . 'test')) {
-            $files = glob(self::$languageTestPath . 'test/*', GLOB_MARK);
-
-            foreach ($files as $file) {
+        foreach ($files as $file) {
+            if (is_file($file)) {
                 unlink($file);
             }
+        }
 
-            rmdir(self::$languageTestPath . 'test');
+        if (is_dir(self::$languageTestPath . 'de')) {
+            delete_files(self::$languageTestPath . 'de');
+            rmdir(self::$languageTestPath . 'de');
         }
     }
 }
