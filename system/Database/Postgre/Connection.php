@@ -461,9 +461,10 @@ class Connection extends BaseConnection
      */
     public function error(): array
     {
+        $lastError = pg_last_error($this->connID);
         return [
             'code'    => '',
-            'message' => ! in_array(pg_last_error($this->connID), ['', '0'], true) ? pg_last_error($this->connID) : '',
+            'message' => ! in_array($lastError, ['', '0'], true) ? $lastError : '',
         ];
     }
 
