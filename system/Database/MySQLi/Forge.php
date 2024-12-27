@@ -116,11 +116,11 @@ class Forge extends BaseForge
             }
         }
 
-        if ($this->db->charset !== '' && in_array(strpos($sql, 'CHARACTER SET'), [0, false], true) && in_array(strpos($sql, 'CHARSET'), [0, false], true)) {
+        if ($this->db->charset !== '' && ! str_contains($sql, 'CHARACTER SET') && ! str_contains($sql, 'CHARSET')) {
             $sql .= ' DEFAULT CHARACTER SET = ' . $this->db->escapeString($this->db->charset);
         }
 
-        if ($this->db->DBCollat !== '' && in_array(strpos($sql, 'COLLATE'), [0, false], true)) {
+        if ($this->db->DBCollat !== '' && ! str_contains($sql, 'COLLATE')) {
             $sql .= ' COLLATE = ' . $this->db->escapeString($this->db->DBCollat);
         }
 
