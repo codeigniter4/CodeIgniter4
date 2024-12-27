@@ -403,16 +403,19 @@ trait ResponseTrait
             if ($value instanceof Header) {
                 header(
                     $name . ': ' . $value->getValueLine(),
-                    false,
+                    true,
                     $this->getStatusCode()
                 );
             } else {
+                $replace = true;
+
                 foreach ($value as $header) {
                     header(
                         $name . ': ' . $header->getValueLine(),
-                        false,
+                        $replace,
                         $this->getStatusCode()
                     );
+                    $replace = false;
                 }
             }
         }
