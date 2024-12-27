@@ -133,7 +133,7 @@ Response headers:
     Expires: Sun, 17 Nov 2024 14:17:37 GMT
 
 Now, we don't know which one will be picked by the browser or which header is the correct one.
-With changes in this version our previous header will be override:
+With changes in this version our previous header will be overridden:
 
 .. code-block:: none
 
