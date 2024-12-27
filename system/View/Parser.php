@@ -613,7 +613,7 @@ class Parser extends View
             $escape = false;
         }
         // If no `esc` filter is found, then we'll need to add one.
-        elseif (in_array(preg_match('/\s+esc/u', $key), [0, false], true)) {
+        elseif (preg_match('/\s+esc/u', $key) !== 1) {
             $escape = 'html';
         }
 
