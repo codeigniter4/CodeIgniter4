@@ -219,6 +219,13 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
                 'default'    => null,
             ],
             16 => (object) [
+                'name'       => 'type_blob',
+                'type'       => 'varbinary',
+                'max_length' => 'max',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            17 => (object) [
                 'name'       => 'type_boolean',
                 'type'       => 'bit',
                 'max_length' => null,

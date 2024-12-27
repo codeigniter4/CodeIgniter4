@@ -41,7 +41,8 @@ Bugs Fixed
 - **Validation:** Fixed a bug where complex language strings were not properly handled.
 - **CURLRequest:** Added support for handling proxy responses using HTTP versions other than 1.1.
 - **Database:** Fixed a bug that caused ``Postgre\Connection::reconnect()`` method to throw an error when the connection had not yet been established.
-- **Model** Fixed a bug that caused the ``Model::getIdValue()`` method to not correctly recognize the primary key in the ``Entity`` object if a data mapping for the primary key was used.
+- **Model:** Fixed a bug that caused the ``Model::getIdValue()`` method to not correctly recognize the primary key in the ``Entity`` object if a data mapping for the primary key was used.
+- **Database:** Fixed a bug in prepared statement to correctly handle binary data.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
