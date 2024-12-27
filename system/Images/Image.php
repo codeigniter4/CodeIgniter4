@@ -102,8 +102,9 @@ class Image extends File
     public function getProperties(bool $return = false)
     {
         $path = $this->getPathname();
+        $vals = getimagesize($path);
 
-        if ($vals = getimagesize($path) === [] || $vals = getimagesize($path) === false) {
+        if ($vals === [] || $vals === false) {
             throw ImageException::forFileNotSupported();
         }
 
