@@ -104,7 +104,7 @@ class Image extends File
         $path = $this->getPathname();
         $vals = getimagesize($path);
 
-        if ($vals === [] || $vals === false) {
+        if ($vals === false) {
             throw ImageException::forFileNotSupported();
         }
 
