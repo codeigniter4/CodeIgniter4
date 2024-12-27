@@ -1736,7 +1736,7 @@ class BaseBuilder
         // Restore the LIMIT setting
         $this->QBLimit = $limit;
 
-        $row = ! $result instanceof ResultInterface ? null : $result->getRow();
+        $row = $result instanceof ResultInterface ? $result->getRow() : null;
 
         if (empty($row)) {
             return 0;
@@ -3167,11 +3167,11 @@ class BaseBuilder
                     $op = $this->getOperator($condition);
                     if (
                         $op === false
-                        || ! preg_match(
+                        || in_array(preg_match(
                             '/^(\(?)(.*)(' . preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/i',
                             $condition,
                             $matches
-                        )
+                        ), [0, false], true)
                     ) {
                         continue;
                     }

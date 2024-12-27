@@ -22,6 +22,7 @@ includes:
     - generator.returnType.neon
     - generator.valueType.neon
     - greaterOrEqual.invalid.neon
+    - identical.alwaysFalse.neon
     - if.condNotBoolean.neon
     - isset.offset.neon
     - isset.property.neon
@@ -40,6 +41,7 @@ includes:
     - nullCoalesce.expr.neon
     - nullCoalesce.property.neon
     - nullCoalesce.variable.neon
+    - offsetAccess.nonOffsetAccessible.neon
     - offsetAccess.notFound.neon
     - parameterByRef.unusedType.neon
     - property.defaultValue.neon

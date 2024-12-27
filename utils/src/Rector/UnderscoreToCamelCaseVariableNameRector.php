@@ -178,7 +178,7 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
             return;
         }
 
-        if (! preg_match(sprintf(self::PARAM_NAME_REGEX, $variableName), $docCommentText)) {
+        if (in_array(preg_match(sprintf(self::PARAM_NAME_REGEX, $variableName), $docCommentText), [0, false], true)) {
             return;
         }
 

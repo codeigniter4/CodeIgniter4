@@ -1,0 +1,23 @@
+# total 4 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Cannot access offset 0 on false\.$#'
+            count: 2
+            path: ../../system/Images/Image.php
+
+        -
+            message: '#^Cannot access offset 1 on false\.$#'
+            count: 2
+            path: ../../system/Images/Image.php
+
+        -
+            message: '#^Cannot access offset 2 on false\.$#'
+            count: 3
+            path: ../../system/Images/Image.php
+
+        -
+            message: '#^Cannot access offset 3 on false\.$#'
+            count: 2
+            path: ../../system/Images/Image.php

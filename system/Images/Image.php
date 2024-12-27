@@ -103,7 +103,7 @@ class Image extends File
     {
         $path = $this->getPathname();
 
-        if (! $vals = getimagesize($path)) {
+        if ($vals = getimagesize($path) === [] || $vals = getimagesize($path) === false) {
             throw ImageException::forFileNotSupported();
         }
 

@@ -569,7 +569,7 @@ trait ResponseTrait
      */
     public function hasCookie(string $name, ?string $value = null, string $prefix = ''): bool
     {
-        $prefix = $prefix ?: Cookie::setDefaults()['prefix']; // to retain BC
+        $prefix = $prefix !== '' && $prefix !== '0' ? $prefix : Cookie::setDefaults()['prefix']; // to retain BC
 
         return $this->cookieStore->has($name, $prefix, $value);
     }
@@ -589,7 +589,7 @@ trait ResponseTrait
         }
 
         try {
-            $prefix = $prefix ?: Cookie::setDefaults()['prefix']; // to retain BC
+            $prefix = $prefix !== '' && $prefix !== '0' ? $prefix : Cookie::setDefaults()['prefix']; // to retain BC
 
             return $this->cookieStore->get($name, $prefix);
         } catch (CookieException $e) {
@@ -610,7 +610,7 @@ trait ResponseTrait
             return $this;
         }
 
-        $prefix = $prefix ?: Cookie::setDefaults()['prefix']; // to retain BC
+        $prefix = $prefix !== '' && $prefix !== '0' ? $prefix : Cookie::setDefaults()['prefix']; // to retain BC
 
         $prefixed = $prefix . $name;
         $store    = $this->cookieStore;

@@ -308,7 +308,7 @@ class FileHandler extends BaseHandler
             if ($filename !== '.' && $filename !== '..') {
                 if (is_dir($path . DIRECTORY_SEPARATOR . $filename) && $filename[0] !== '.') {
                     $this->deleteFiles($path . DIRECTORY_SEPARATOR . $filename, $delDir, $htdocs, $_level + 1);
-                } elseif (! $htdocs || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename)) {
+                } elseif (! $htdocs || in_array(preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename), [0, false], true)) {
                     @unlink($path . DIRECTORY_SEPARATOR . $filename);
                 }
             }

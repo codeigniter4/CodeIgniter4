@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Strict comparison using \=\=\= between array\{0\: int\<0, max\>, 1\: int\<0, max\>, 2\: int, 3\: string, mime\: string, channels\?\: int, bits\?\: int\}\|false and array\{\} will always evaluate to false\.$#'
+            count: 1
+            path: ../../system/Images/Image.php

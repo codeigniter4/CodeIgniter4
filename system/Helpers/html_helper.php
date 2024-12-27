@@ -112,7 +112,7 @@ if (! function_exists('img')) {
         $img = '<img';
 
         // Check for a relative URI
-        if (! preg_match('#^([a-z]+:)?//#i', $src['src']) && ! str_starts_with($src['src'], 'data:')) {
+        if (in_array(preg_match('#^([a-z]+:)?//#i', $src['src']), [0, false], true) && ! str_starts_with($src['src'], 'data:')) {
             if ($indexPage) {
                 $img .= ' src="' . site_url($src['src']) . '"';
             } else {
@@ -206,7 +206,7 @@ if (! function_exists('script_tag')) {
         }
 
         foreach ($src as $k => $v) {
-            if ($k === 'src' && ! preg_match('#^([a-z]+:)?//#i', $v)) {
+            if ($k === 'src' && in_array(preg_match('#^([a-z]+:)?//#i', $v), [0, false], true)) {
                 if ($indexPage) {
                     $script .= 'src="' . site_url($v) . '" ';
                 } else {
@@ -252,7 +252,7 @@ if (! function_exists('link_tag')) {
             $href      = $href['href'] ?? '';
         }
 
-        if (! preg_match('#^([a-z]+:)?//#i', $href)) {
+        if (in_array(preg_match('#^([a-z]+:)?//#i', $href), [0, false], true)) {
             $attributes['href'] = $indexPage ? site_url($href) : slash_item('baseURL') . $href;
         } else {
             $attributes['href'] = $href;
