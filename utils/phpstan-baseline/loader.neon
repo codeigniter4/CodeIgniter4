@@ -41,7 +41,6 @@ includes:
     - nullCoalesce.expr.neon
     - nullCoalesce.property.neon
     - nullCoalesce.variable.neon
-    - offsetAccess.nonOffsetAccessible.neon
     - offsetAccess.notFound.neon
     - parameterByRef.unusedType.neon
     - property.defaultValue.neon
