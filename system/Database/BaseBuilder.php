@@ -3167,11 +3167,11 @@ class BaseBuilder
                     $op = $this->getOperator($condition);
                     if (
                         $op === false
-                        || in_array(preg_match(
+                        || preg_match(
                             '/^(\(?)(.*)(' . preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/i',
                             $condition,
                             $matches
-                        ), [0, false], true)
+                        ) !== 1
                     ) {
                         continue;
                     }
