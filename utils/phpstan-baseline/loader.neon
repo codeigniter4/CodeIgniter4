@@ -43,7 +43,6 @@ includes:
     - missingType.parameter.neon
     - missingType.property.neon
     - missingType.return.neon
-    - new.static.neon
     - notIdentical.alwaysTrue.neon
     - nullCoalesce.expr.neon
     - nullCoalesce.property.neon
