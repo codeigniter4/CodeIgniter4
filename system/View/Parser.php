@@ -691,7 +691,7 @@ class Parser extends View
              *   $matches[1] = all parameters string in opening tag
              *   $matches[2] = content between the tags to send to the plugin.
              */
-            if (in_array(preg_match_all($pattern, $template, $matches, PREG_SET_ORDER), [0, false], true)) {
+            if (preg_match_all($pattern, $template, $matches, PREG_SET_ORDER) === 0) {
                 continue;
             }
 
