@@ -495,7 +495,7 @@ class Email
 
         if ($name !== '') {
             // only use Q encoding if there are characters that would require it
-            if (in_array(preg_match('/[\200-\377]/', $name), [0, false], true)) {
+            if (preg_match('/[\200-\377]/', $name) !== 1) {
                 $name = '"' . addcslashes($name, "\0..\37\177'\"\\") . '"';
             } else {
                 $name = $this->prepQEncoding($name);
@@ -532,7 +532,7 @@ class Email
             $this->tmpArchive['replyName'] = $name;
 
             // only use Q encoding if there are characters that would require it
-            if (in_array(preg_match('/[\200-\377]/', $name), [0, false], true)) {
+            if (preg_match('/[\200-\377]/', $name) !== 1) {
                 $name = '"' . addcslashes($name, "\0..\37\177'\"\\") . '"';
             } else {
                 $name = $this->prepQEncoding($name);

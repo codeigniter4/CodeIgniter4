@@ -234,7 +234,7 @@ class Session implements SessionInterface
 
         // Sanitize the cookie, because apparently PHP doesn't do that for userspace handlers
         if (isset($_COOKIE[$this->config->cookieName])
-            && (! is_string($_COOKIE[$this->config->cookieName]) || in_array(preg_match('#\A' . $this->sidRegexp . '\z#', $_COOKIE[$this->config->cookieName]), [0, false], true))
+            && (! is_string($_COOKIE[$this->config->cookieName]) || preg_match('#\A' . $this->sidRegexp . '\z#', $_COOKIE[$this->config->cookieName]) !== 1)
         ) {
             unset($_COOKIE[$this->config->cookieName]);
         }
