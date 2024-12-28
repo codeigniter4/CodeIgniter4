@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
@@ -73,6 +74,29 @@ final class LikeTest extends CIUnitTestCase
 
         $this->assertSame(1, (int) $job->id);
         $this->assertSame('Developer', $job->name);
+    }
+
+    #[DataProvider('provideMultibyteCharacters')]
+    public function testLikeCaseInsensitiveWithMultibyteCharacter(string $match, string $result): void
+    {
+        $wai = $this->db->table('without_auto_increment')->like('value', $match, 'both', null, true)->get();
+        $wai = $wai->getRow();
+
+        $this->assertSame($result, $wai->key);
+    }
+
+    /**
+     * @return iterable<string, array{0: string, 1: string}>
+     */
+    public static function provideMultibyteCharacters(): iterable
+    {
+        yield from [
+            'polish'    => ['ŁĄ', 'multibyte characters pl'],
+            'farsi'     => ['خٌوب', 'multibyte characters fa'],
+            'bengali'   => ['টাইপ', 'multibyte characters bn'],
+            'korean'    => ['캐스팅', 'multibyte characters ko'],
+            'malayalam' => ['ടൈപ്പ്', 'multibyte characters ml'],
+        ];
     }
 
     public function testOrLike(): void

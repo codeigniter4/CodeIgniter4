@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Exceptions;
 
-use Config\Services;
 use OutOfBoundsException;
 
 class PageNotFoundException extends OutOfBoundsException implements ExceptionInterface, HTTPExceptionInterface
@@ -78,7 +77,7 @@ class PageNotFoundException extends OutOfBoundsException implements ExceptionInt
      */
     private static function lang(string $line, array $args = []): string
     {
-        $lang = Services::language(null, false);
+        $lang = service('language', null, false);
 
         return $lang->getLine($line, $args);
     }

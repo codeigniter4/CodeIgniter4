@@ -42,7 +42,7 @@ class ImageMagickHandler extends BaseHandler
     {
         parent::__construct($config);
 
-        if (! (extension_loaded('imagick') || class_exists(Imagick::class))) {
+        if (! extension_loaded('imagick') && ! class_exists(Imagick::class)) {
             throw ImageException::forMissingExtension('IMAGICK'); // @codeCoverageIgnore
         }
 
@@ -81,7 +81,7 @@ class ImageMagickHandler extends BaseHandler
             $escape = '';
         }
 
-        $action = $maintainRatio === true
+        $action = $maintainRatio
             ? ' -resize ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . ' "' . $source . '" "' . $destination . '"'
             : ' -resize ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . "{$escape}! \"" . $source . '" "' . $destination . '"';
 

@@ -26,7 +26,6 @@ use PHPUnit\Framework\Attributes\Group;
 final class ImageTest extends CIUnitTestCase
 {
     private vfsStreamDirectory $root;
-    private string $origin;
     private string $start;
     private Image $image;
 
@@ -35,8 +34,8 @@ final class ImageTest extends CIUnitTestCase
         // create virtual file system
         $this->root = vfsStream::setup();
         // copy our support files
-        $this->origin = '_support/Images/';
-        vfsStream::copyFromFileSystem(TESTPATH . $this->origin, $this->root);
+        $origin = '_support/Images/';
+        vfsStream::copyFromFileSystem(TESTPATH . $origin, $this->root);
         // make subfolders
         $structure = [
             'work'     => [],

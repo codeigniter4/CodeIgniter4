@@ -1,0 +1,138 @@
+# total 27 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 2
+            path: ../../system/CLI/CLI.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../system/Cache/Handlers/FileHandler.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../system/Commands/Utilities/Namespaces.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 2
+            path: ../../system/Common.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 4
+            path: ../../system/Cookie/Cookie.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../system/Debug/Toolbar/Collectors/Database.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../system/Events/Events.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 3
+            path: ../../system/Files/File.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../system/HTTP/CURLRequest.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../system/HTTP/Exceptions/RedirectException.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 2
+            path: ../../system/HTTP/Response.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 2
+            path: ../../system/Helpers/filesystem_helper.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../system/I18n/Time.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../system/I18n/TimeLegacy.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../system/Pager/Pager.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../system/Router/AutoRouter.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../system/Session/Session.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 2
+            path: ../../system/Test/Mock/MockCache.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../system/Validation/Validation.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 2
+            path: ../../system/View/View.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../tests/_support/Commands/LanguageCommand.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../tests/system/Commands/CellGeneratorTest.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../tests/system/Commands/CommandGeneratorTest.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../tests/system/Commands/ControllerGeneratorTest.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../tests/system/Commands/ModelGeneratorTest.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../tests/system/Commands/ScaffoldGeneratorTest.php
+
+        -
+            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+            count: 1
+            path: ../../tests/system/Publisher/PublisherSupportTest.php

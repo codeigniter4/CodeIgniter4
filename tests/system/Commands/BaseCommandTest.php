@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
-use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Commands\AppInfo;
 
@@ -30,7 +29,7 @@ final class BaseCommandTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->logger = Services::logger();
+        $this->logger = service('logger');
     }
 
     public function testMagicIssetTrue(): void

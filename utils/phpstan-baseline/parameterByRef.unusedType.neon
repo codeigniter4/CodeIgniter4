@@ -1,0 +1,13 @@
+# total 2 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Method CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:sendLogs\(\) never assigns null to &\$response so it can be removed from the by\-ref type\.$#'
+            count: 1
+            path: ../../system/Log/Handlers/ChromeLoggerHandler.php
+
+        -
+            message: '#^Method Tests\\Support\\Validation\\TestRules\:\:customError\(\) never assigns null to &\$error so it can be removed from the by\-ref type\.$#'
+            count: 1
+            path: ../../tests/_support/Validation/TestRules.php

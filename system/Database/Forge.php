@@ -32,9 +32,9 @@ class Forge
     protected $db;
 
     /**
-     * List of fields.
+     * List of fields in the form `[name => attributes]`
      *
-     * @var array<string, array|string> [name => attributes]
+     * @var array<string, array<string, bool|string>|string>
      */
     protected $fields = [];
 
@@ -449,12 +449,12 @@ class Forge
      */
     public function dropKey(string $table, string $keyName, bool $prefixKeyName = true): bool
     {
-        $keyName = $this->db->escapeIdentifiers(($prefixKeyName === true ? $this->db->DBPrefix : '') . $keyName);
+        $keyName = $this->db->escapeIdentifiers(($prefixKeyName ? $this->db->DBPrefix : '') . $keyName);
         $table   = $this->db->escapeIdentifiers($this->db->DBPrefix . $table);
 
         $dropKeyAsConstraint = $this->dropKeyAsConstraint($table, $keyName);
 
-        if ($dropKeyAsConstraint === true) {
+        if ($dropKeyAsConstraint) {
             $sql = sprintf(
                 $this->dropConstraintStr,
                 $table,
@@ -559,7 +559,7 @@ class Forge
         }
 
         // If table exists lets stop here
-        if ($ifNotExists === true && $this->db->tableExists($table, false)) {
+        if ($ifNotExists && $this->db->tableExists($table, false)) {
             $this->reset();
 
             return true;
@@ -573,7 +573,7 @@ class Forge
             }
 
             // Most databases don't support creating indexes from within the CREATE TABLE statement
-            if (! empty($this->keys)) {
+            if ($this->keys !== []) {
                 for ($i = 0, $sqls = $this->_processIndexes($table), $c = count($sqls); $i < $c; $i++) {
                     $this->db->query($sqls[$i]);
                 }
@@ -650,7 +650,7 @@ class Forge
             return false;
         }
 
-        if ($this->db->DBPrefix && str_starts_with($tableName, $this->db->DBPrefix)) {
+        if ($this->db->DBPrefix !== '' && str_starts_with($tableName, $this->db->DBPrefix)) {
             $tableName = substr($tableName, strlen($this->db->DBPrefix));
         }
 
@@ -895,7 +895,7 @@ class Forge
 
             $attributes = array_change_key_case($attributes, CASE_UPPER);
 
-            if ($createTable === true && empty($attributes['TYPE'])) {
+            if ($createTable && empty($attributes['TYPE'])) {
                 continue;
             }
 
@@ -942,7 +942,7 @@ class Forge
                 } else {
                     $field['null'] = ' NOT ' . $this->null;
                 }
-            } elseif ($createTable === true) {
+            } elseif ($createTable) {
                 $field['null'] = ' NOT ' . $this->null;
             }
 
@@ -1085,7 +1085,7 @@ class Forge
         }
 
         if (isset($this->primaryKeys['fields']) && $this->primaryKeys['fields'] !== []) {
-            if ($asQuery === true) {
+            if ($asQuery) {
                 $sql .= 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $table) . ' ADD ';
             } else {
                 $sql .= ",\n\t";
@@ -1108,10 +1108,12 @@ class Forge
         $fk   = $this->foreignKeys;
 
         if ($this->fields === []) {
-            $this->fields = array_flip(array_map(
-                static fn ($columnName) => $columnName->name,
-                $this->db->getFieldData($this->db->DBPrefix . $table)
-            ));
+            $fieldData = $this->db->getFieldData($this->db->DBPrefix . $table);
+
+            $this->fields = array_combine(
+                array_map(static fn ($columnName) => $columnName->name, $fieldData),
+                array_fill(0, count($fieldData), [])
+            );
         }
 
         $fields = $this->fields;
@@ -1229,7 +1231,7 @@ class Forge
             $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
             $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
 
-            if ($asQuery === true) {
+            if ($asQuery) {
                 $sqls[$index] .= 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $table) . ' ADD ';
             } else {
                 $sqls[$index] .= ",\n\t";

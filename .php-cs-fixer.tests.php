@@ -26,6 +26,7 @@ $finder = Finder::create()
         '_support/View/Cells/multiplier.php',
         '_support/View/Cells/colors.php',
         '_support/View/Cells/addition.php',
+        'system/Database/Live/PreparedQueryTest.php',
     ])
     ->notName('#Foobar.php$#');
 

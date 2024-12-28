@@ -13,10 +13,12 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities;
 
+use Closure;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
-use Config\Services;
+use Kint\Kint;
+use Kint\Renderer\CliRenderer;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -26,6 +28,26 @@ use PHPUnit\Framework\Attributes\Group;
 final class ConfigCheckTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
+
+    public static function setUpBeforeClass(): void
+    {
+        App::$override = false;
+
+        putenv('NO_COLOR=1');
+        CliRenderer::$cli_colors = false;
+
+        parent::setUpBeforeClass();
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        App::$override = true;
+
+        putenv('NO_COLOR');
+        CliRenderer::$cli_colors = true;
+
+        parent::tearDownAfterClass();
+    }
 
     protected function setUp(): void
     {
@@ -39,188 +61,71 @@ final class ConfigCheckTest extends CIUnitTestCase
         parent::tearDown();
     }
 
-    protected function getBuffer()
-    {
-        return $this->getStreamFilterBuffer();
-    }
-
-    public function testCommandConfigCheckNoArg(): void
+    public function testCommandConfigCheckWithNoArgumentPassed(): void
     {
         command('config:check');
 
-        $this->assertStringContainsString(
-            'You must specify a Config classname.',
-            $this->getBuffer()
+        $this->assertSame(
+            <<<'EOF'
+                You must specify a Config classname.
+                  Usage: config:check <classname>
+                Example: config:check App
+                         config:check 'CodeIgniter\Shield\Config\Auth'
+
+                EOF,
+            str_replace("\n\n", "\n", $this->getStreamFilterBuffer())
         );
-    }
-
-    public function testCommandConfigCheckApp(): void
-    {
-        command('config:check App');
-
-        $this->assertStringContainsString(App::class, $this->getBuffer());
-        $this->assertStringContainsString("public 'baseURL", $this->getBuffer());
     }
 
     public function testCommandConfigCheckNonexistentClass(): void
     {
         command('config:check Nonexistent');
 
-        $this->assertStringContainsString(
-            'No such Config class: Nonexistent',
-            $this->getBuffer()
+        $this->assertSame(
+            "No such Config class: Nonexistent\n",
+            $this->getStreamFilterBuffer()
         );
     }
 
-    public function testGetKintD(): void
+    public function testConfigCheckWithKintEnabledUsesKintD(): void
     {
-        $command  = new ConfigCheck(Services::logger(), Services::commands());
-        $getKintD = $this->getPrivateMethodInvoker($command, 'getKintD');
+        /** @var Closure(object): string $command */
+        $command = $this->getPrivateMethodInvoker(
+            new ConfigCheck(service('logger'), service('commands')),
+            'getKintD'
+        );
 
-        $output = $getKintD(new App());
+        command('config:check App');
 
-        $output = preg_replace(
+        $this->assertSame(
+            $command(config('App')) . "\n",
+            preg_replace('/\s+Config Caching: \S+/', '', $this->getStreamFilterBuffer())
+        );
+    }
+
+    public function testConfigCheckWithKintDisabledUsesVarDump(): void
+    {
+        /** @var Closure(object): string $command */
+        $command = $this->getPrivateMethodInvoker(
+            new ConfigCheck(service('logger'), service('commands')),
+            'getVarDump'
+        );
+        $clean = static fn (string $input): string => trim(preg_replace(
             '/(\033\[[0-9;]+m)|(\035\[[0-9;]+m)/u',
             '',
-            $output
-        );
+            $input
+        ));
 
-        $this->assertStringContainsString(
-            'Config\App#',
-            $output
-        );
-        $this->assertStringContainsString(
-            <<<'EOL'
-                (
-                    public 'baseURL' -> string (19) "http://example.com/"
-                    public 'allowedHostnames' -> array (0) []
-                    public 'indexPage' -> string (9) "index.php"
-                    public 'uriProtocol' -> string (11) "REQUEST_URI"
-                    public 'permittedURIChars' -> string (14) "a-z 0-9~%.:_\-"
-                    public 'defaultLocale' -> string (2) "en"
-                    public 'negotiateLocale' -> boolean false
-                    public 'supportedLocales' -> array (1) [
-                        0 => string (2) "en"
-                    ]
-                    public 'appTimezone' -> string (3) "UTC"
-                    public 'charset' -> string (5) "UTF-8"
-                    public 'forceGlobalSecureRequests' -> boolean false
-                    public 'proxyIPs' -> array (0) []
-                    public 'CSPEnabled' -> boolean false
-                EOL,
-            $output
-        );
-    }
+        try {
+            Kint::$enabled_mode = false;
+            command('config:check App');
 
-    public function testGetVarDump(): void
-    {
-        $command    = new ConfigCheck(Services::logger(), Services::commands());
-        $getVarDump = $this->getPrivateMethodInvoker($command, 'getVarDump');
-
-        $output = $getVarDump(new App());
-
-        if (
-            ini_get('xdebug.mode')
-            && in_array(
-                'develop',
-                explode(',', ini_get('xdebug.mode')),
-                true
-            )
-        ) {
-            // Xdebug force adds colors on xdebug.cli_color=2
-            $output = preg_replace(
-                '/(\033\[[0-9;]+m)|(\035\[[0-9;]+m)/u',
-                '',
-                $output
+            $this->assertSame(
+                $clean($command(config('App'))),
+                $clean(preg_replace('/\s+Config Caching: \S+/', '', $this->getStreamFilterBuffer()))
             );
-
-            // Xdebug overloads var_dump().
-            $this->assertStringContainsString(
-                'class Config\App#',
-                $output
-            );
-            $this->assertStringContainsString(
-                <<<'EOL'
-                    {
-                      public string $baseURL =>
-                      string(19) "http://example.com/"
-                      public array $allowedHostnames =>
-                      array(0) {
-                      }
-                      public string $indexPage =>
-                      string(9) "index.php"
-                      public string $uriProtocol =>
-                      string(11) "REQUEST_URI"
-                      public string $permittedURIChars =>
-                      string(14) "a-z 0-9~%.:_\-"
-                      public string $defaultLocale =>
-                      string(2) "en"
-                      public bool $negotiateLocale =>
-                      bool(false)
-                      public array $supportedLocales =>
-                      array(1) {
-                        [0] =>
-                        string(2) "en"
-                      }
-                      public string $appTimezone =>
-                      string(3) "UTC"
-                      public string $charset =>
-                      string(5) "UTF-8"
-                      public bool $forceGlobalSecureRequests =>
-                      bool(false)
-                      public array $proxyIPs =>
-                      array(0) {
-                      }
-                      public bool $CSPEnabled =>
-                      bool(false)
-                    }
-                    EOL,
-                $output
-            );
-        } else {
-            // PHP's var_dump().
-            $this->assertStringContainsString(
-                'object(Config\App)#',
-                $output
-            );
-            $this->assertStringContainsString(
-                <<<'EOL'
-                    {
-                      ["baseURL"]=>
-                      string(19) "http://example.com/"
-                      ["allowedHostnames"]=>
-                      array(0) {
-                      }
-                      ["indexPage"]=>
-                      string(9) "index.php"
-                      ["uriProtocol"]=>
-                      string(11) "REQUEST_URI"
-                      ["permittedURIChars"]=>
-                      string(14) "a-z 0-9~%.:_\-"
-                      ["defaultLocale"]=>
-                      string(2) "en"
-                      ["negotiateLocale"]=>
-                      bool(false)
-                      ["supportedLocales"]=>
-                      array(1) {
-                        [0]=>
-                        string(2) "en"
-                      }
-                      ["appTimezone"]=>
-                      string(3) "UTC"
-                      ["charset"]=>
-                      string(5) "UTF-8"
-                      ["forceGlobalSecureRequests"]=>
-                      bool(false)
-                      ["proxyIPs"]=>
-                      array(0) {
-                      }
-                      ["CSPEnabled"]=>
-                      bool(false)
-                    }
-                    EOL,
-                $output
-            );
+        } finally {
+            Kint::$enabled_mode = true;
         }
     }
 }

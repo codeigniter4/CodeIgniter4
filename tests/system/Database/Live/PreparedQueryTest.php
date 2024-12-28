@@ -269,4 +269,39 @@ final class PreparedQueryTest extends CIUnitTestCase
 
         $this->query->close();
     }
+
+    public function testInsertBinaryData(): void
+    {
+        $params = [];
+        if ($this->db->DBDriver === 'SQLSRV') {
+            $params = [0 => SQLSRV_PHPTYPE_STREAM(SQLSRV_ENC_BINARY)];
+        }
+
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('type_test')->insert([
+            'type_blob' => 'binary',
+        ]), $params);
+
+        $fileContent = file_get_contents(TESTPATH . '_support/Images/EXIFsamples/landscape_0.jpg');
+        $this->assertTrue($this->query->execute($fileContent));
+
+        $id = $this->db->DBDriver === 'SQLSRV'
+            // It seems like INSERT for a prepared statement is run in the
+            // separate execution context even though it's part of the same session
+            ? (int) ($this->db->query('SELECT @@IDENTITY AS insert_id')->getRow()->insert_id ?? 0)
+            : $this->db->insertID();
+        $builder = $this->db->table('type_test');
+
+        if ($this->db->DBDriver === 'Postgre') {
+            $file = $builder->select("ENCODE(type_blob, 'base64') AS type_blob")->where('id', $id)->get()->getRow();
+            $file = base64_decode($file->type_blob, true);
+        } elseif ($this->db->DBDriver === 'OCI8') {
+            $file = $builder->select('type_blob')->where('id', $id)->get()->getRow();
+            $file = $file->type_blob->load();
+        } else {
+            $file = $builder->select('type_blob')->where('id', $id)->get()->getRow();
+            $file = $file->type_blob;
+        }
+
+        $this->assertSame(strlen($fileContent), strlen($file));
+    }
 }

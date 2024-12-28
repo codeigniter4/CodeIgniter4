@@ -1,0 +1,1303 @@
+# total 260 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Assigning string directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../system/Commands/Utilities/Routes.php
+
+        -
+            message: '#^Assigning string directly on offset string of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../system/Config/DotEnv.php
+
+        -
+            message: '#^Assigning string directly on offset ''QUERY_STRING'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../system/HTTP/IncomingRequest.php
+
+        -
+            message: '#^Assigning string directly on offset ''CONTENT_TYPE'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Assigning 3 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CLI/CLITest.php
+
+        -
+            message: '#^Assigning array\{''ignored'', ''b'', ''c'', ''\-\-parm'', ''pvalue'', ''d'', ''\-\-p2'', ''\-\-p3'', ''value 3''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CLI/CLITest.php
+
+        -
+            message: '#^Assigning array\{''ignored'', ''b'', ''c'', ''\-\-parm'', ''pvalue'', ''d''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CLI/CLITest.php
+
+        -
+            message: '#^Assigning array\{''ignored'', ''b'', ''c'', ''d'', ''\-\-parm'', ''pvalue'', ''d2'', ''da\-sh'', ''\-\-fix'', ''\-\-opt\-in'', ''sure''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CLI/CLITest.php
+
+        -
+            message: '#^Assigning array\{''ignored'', ''b'', ''c''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CLI/CLITest.php
+
+        -
+            message: '#^Assigning ''http\://example\.com/'' directly on offset ''app\.baseURL'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CLI/ConsoleTest.php
+
+        -
+            message: '#^Assigning int\<1, max\> directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CLI/ConsoleTest.php
+
+        -
+            message: '#^Assigning non\-empty\-array\<int\|string, ''spark''\|array\> directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CLI/ConsoleTest.php
+
+        -
+            message: '#^Assigning ''/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Cache/ResponseCacheTest.php
+
+        -
+            message: '#^Assigning ''public/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Cache/ResponseCacheTest.php
+
+        -
+            message: '#^Assigning non\-empty\-list\<string\> directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Cache/ResponseCacheTest.php
+
+        -
+            message: '#^Assigning non\-falsy\-string directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Cache/ResponseCacheTest.php
+
+        -
+            message: '#^Assigning ''/'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning ''/cannotFound'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning ''/cli'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning ''/example'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 6
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning ''/image'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning ''/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 20
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning ''/pages/about'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 8
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning ''/test'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning ''CLI'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning ''GET'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 4
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning ''HTTP/1\.1'' directly on offset ''SERVER_PROTOCOL'' of \$_SERVER is discouraged\.$#'
+            count: 8
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning ''HTTP/2\.0'' directly on offset ''SERVER_PROTOCOL'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning ''HTTP/3\.0'' directly on offset ''SERVER_PROTOCOL'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning ''POST'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning ''public/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning 1 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
+            count: 5
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning 2 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
+            count: 27
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''/''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 12
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''cli''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''example''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 6
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''image''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''pages/about''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 7
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 5
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning non\-falsy\-string directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Assigning ''production'' directly on offset ''CI_ENVIRONMENT'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Commands/EnvironmentCommandTest.php
+
+        -
+            message: '#^Assigning string directly on offset ''CI_ENVIRONMENT'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Commands/EnvironmentCommandTest.php
+
+        -
+            message: '#^Assigning ''GET'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 4
+            path: ../../tests/system/CommonFunctionsTest.php
+
+        -
+            message: '#^Assigning ''bar'' directly on offset ''foo'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/CommonFunctionsTest.php
+
+        -
+            message: '#^Assigning ''TT'' directly on offset ''SER_VAR'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Config/DotEnvTest.php
+
+        -
+            message: '#^Assigning ''1'' directly on offset ''CODEIGNITER_SCREAM_DEPRECATIONS'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Debug/ExceptionsTest.php
+
+        -
+            message: '#^Assigning ''GET'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Filters/DebugToolbarTest.php
+
+        -
+            message: '#^Assigning ''DELETE'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Filters/FiltersTest.php
+
+        -
+            message: '#^Assigning ''GET'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 36
+            path: ../../tests/system/Filters/FiltersTest.php
+
+        -
+            message: '#^Assigning 2 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Filters/FiltersTest.php
+
+        -
+            message: '#^Assigning array\{''spark'', ''list''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Filters/FiltersTest.php
+
+        -
+            message: '#^Assigning ''POST'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Filters/HoneypotTest.php
+
+        -
+            message: '#^Assigning string directly on offset ''val'' of \$_GET is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Filters/InvalidCharsTest.php
+
+        -
+            message: '#^Assigning ''baz'' directly on offset ''bar'' of \$_GET is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/CLIRequestTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''abc \< def'', ''McDonald\\''s'', ''\<s\>aaa\</s\>''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/CLIRequestTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''pro\-file'', ''\-\-foo'', ''bar'', ''\-\-baz'', ''queue some stuff''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/CLIRequestTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''profile'', ''\-\-foo'', ''bar'', ''\-\-baz'', ''queue some stuff''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/CLIRequestTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''profile'', ''\-\-foo'', ''bar'', ''\-\-foo\-bar'', ''yes''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/CLIRequestTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''profile'', ''\-\-foo'', ''bar''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/CLIRequestTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''profile'', ''\-\-foo'', ''oops'', ''bar'', ''\-\-baz'', ''queue some stuff''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/CLIRequestTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''profile'', ''\-\-foo'', ''oops\-bar'', ''\-\-baz'', ''queue some stuff''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/CLIRequestTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''profile'', ''\-foo'', ''bar''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/CLIRequestTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''profile''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/CLIRequestTest.php
+
+        -
+            message: '#^Assigning array\{''spark'', ''command'', ''param1'', ''param2'', ''\-\-opt1'', ''opt1val'', ''\-\-opt\-2'', ''opt 2 val'', ''param3''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/CLIRequestTest.php
+
+        -
+            message: '#^Assigning ''10'' directly on offset ''HTTP_CONTENT_LENGTH'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/CURLRequestTest.php
+
+        -
+            message: '#^Assigning ''en\-US'' directly on offset ''HTTP_ACCEPT_LANGUAGE'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/CURLRequestTest.php
+
+        -
+            message: '#^Assigning ''gzip, deflate, br'' directly on offset ''HTTP_ACCEPT_ENCODING'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/CURLRequestTest.php
+
+        -
+            message: '#^Assigning ''site1\.com'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/CURLRequestTest.php
+
+        -
+            message: '#^Assigning ''Mozilla/5\.0 \(Linux; U; Android 2\.0\.3; ja\-jp; SC\-02C Build/IML74K\) AppleWebKit/534\.30 \(KHTML, like Gecko\) Version/4\.0 Mobile Safari/534\.30'' directly on offset ''HTTP_USER_AGENT'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/DownloadResponseTest.php
+
+        -
+            message: '#^Assigning '''' directly on offset ''QUERY_STRING'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''/'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''/'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''/\?/ci/woot'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''/ci/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''/ci/index\.php/popcorn/woot'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''/ci/woot'' directly on offset ''QUERY_STRING'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''/ci/woot\?code\=good'' directly on offset ''QUERY_STRING'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 11
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''/index\.php/woot'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 5
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''/index\.php/woot\?code\=good'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''/index\.php\?'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''/index\.php\?/ci/woot'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''/index\.php\?/ci/woot\?code\=good'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''/sub/example'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''/sub/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''/woot'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
+
+        -
+            message: '#^Assigning ''10\.0\.1\.200'' directly on offset ''REMOTE_ADDR'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''10\.10\.1\.200'' directly on offset ''REMOTE_ADDR'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''123\.123\.123\.123'' directly on offset ''HTTP_X_FORWARDED_FOR'' of \$_SERVER is discouraged\.$#'
+            count: 7
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''123\.123\.123\.123'' directly on offset ''REMOTE_ADDR'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''123\.456\.23\.123'' directly on offset ''HTTP_X_FORWARDED_FOR'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''192\.168\.5\.21'' directly on offset ''REMOTE_ADDR'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''2001\:db8\:1234\:ffff\:ffff\:ffff\:ffff\:ffff'' directly on offset ''REMOTE_ADDR'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''2001\:db8\:1235\:ffff\:ffff\:ffff\:ffff\:ffff'' directly on offset ''REMOTE_ADDR'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''2001\:db8\:\:2\:1'' directly on offset ''REMOTE_ADDR'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''2001\:db8\:\:2\:2'' directly on offset ''REMOTE_ADDR'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''2001\:xyz\:\:1'' directly on offset ''HTTP_X_FORWARDED_FOR'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''3'' directly on offset ''TEST'' of \$_GET is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''3'' directly on offset ''get'' of \$_GET is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''Mozilla'' directly on offset ''HTTP_USER_AGENT'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''fr\-FR; q\=1\.0, en; q\=0\.5'' directly on offset ''HTTP_ACCEPT_LANGUAGE'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''fr; q\=1\.0, en; q\=0\.5'' directly on offset ''HTTP_ACCEPT_LANGUAGE'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''on'' directly on offset ''HTTPS'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning 3 directly on offset ''TEST'' of \$_GET is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning 5 directly on offset ''TEST'' of \$_GET is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning mixed directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning mixed directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Assigning ''GET'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/RedirectResponseTest.php
+
+        -
+            message: '#^Assigning ''http\://somewhere\.com'' directly on offset ''HTTP_REFERER'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/RedirectResponseTest.php
+
+        -
+            message: '#^Assigning ''10\.0\.1\.200'' directly on offset ''REMOTE_ADDR'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/RequestTest.php
+
+        -
+            message: '#^Assigning ''10\.10\.1\.200'' directly on offset ''REMOTE_ADDR'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/RequestTest.php
+
+        -
+            message: '#^Assigning ''123\.123\.123\.123'' directly on offset ''HTTP_X_FORWARDED_FOR'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/HTTP/RequestTest.php
+
+        -
+            message: '#^Assigning ''123\.123\.123\.123'' directly on offset ''REMOTE_ADDR'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/RequestTest.php
+
+        -
+            message: '#^Assigning ''123\.456\.23\.123'' directly on offset ''HTTP_X_FORWARDED_FOR'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/RequestTest.php
+
+        -
+            message: '#^Assigning ''192\.168\.5\.21'' directly on offset ''REMOTE_ADDR'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/RequestTest.php
+
+        -
+            message: '#^Assigning ''baz'' directly on offset ''bar'' of \$_GET is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/RequestTest.php
+
+        -
+            message: '#^Assigning ''GET'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/ResponseTest.php
+
+        -
+            message: '#^Assigning ''HTTP/1\.1'' directly on offset ''SERVER_PROTOCOL'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/HTTP/ResponseTest.php
+
+        -
+            message: '#^Assigning ''Microsoft\-IIS'' directly on offset ''SERVER_SOFTWARE'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/ResponseTest.php
+
+        -
+            message: '#^Assigning ''POST'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/ResponseTest.php
+
+        -
+            message: '#^Assigning string directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/ResponseTest.php
+
+        -
+            message: '#^Assigning string directly on offset ''SERVER_PROTOCOL'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/ResponseTest.php
+
+        -
+            message: '#^Assigning string directly on offset ''SERVER_SOFTWARE'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/ResponseTest.php
+
+        -
+            message: '#^Assigning '''' directly on offset ''/ci/woot'' of \$_GET is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/\?/ci/woot'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/candy/snickers'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/ci/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/ci/index\.php/popcorn/woot'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/ci/woot'' directly on offset ''QUERY_STRING'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/ci/woot\?code\=good'' directly on offset ''QUERY_STRING'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/ci431/public/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/ci431/public/index\.php/woot\?code\=good'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/fruits/banana'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 13
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/index\.php/fruits/banana'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/index\.php/woot'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 4
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/index\.php/woot\?code\=good'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/index\.php\?'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/index\.php\?/ci/woot'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/index\.php\?/ci/woot\?code\=good'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/sub/example'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/sub/folder/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/sub/folder/index\.php/fruits/banana'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/sub/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/woot'' directly on offset ''PATH_INFO'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/woot'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''good'' directly on offset ''/ci/woot\?code'' of \$_GET is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning string directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning string directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
+
+        -
+            message: '#^Assigning ''/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/SiteURIFactoryTest.php
+
+        -
+            message: '#^Assigning ''/index\.php/woot\?code\=good'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/SiteURIFactoryTest.php
+
+        -
+            message: '#^Assigning ''/woot'' directly on offset ''PATH_INFO'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/SiteURIFactoryTest.php
+
+        -
+            message: '#^Assigning ''code\=good'' directly on offset ''QUERY_STRING'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/SiteURIFactoryTest.php
+
+        -
+            message: '#^Assigning ''good'' directly on offset ''code'' of \$_GET is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/SiteURIFactoryTest.php
+
+        -
+            message: '#^Assigning ''localhost\:8080'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryTest.php
+
+        -
+            message: '#^Assigning ''users\.example\.jp'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/SiteURIFactoryTest.php
+
+        -
+            message: '#^Assigning '''' directly on offset ''QUERY_STRING'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/HTTP/URITest.php
+
+        -
+            message: '#^Assigning ''/ci/v4/controller/method'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/URITest.php
+
+        -
+            message: '#^Assigning ''/ci/v4/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/HTTP/URITest.php
+
+        -
+            message: '#^Assigning ''/ci/v4/index\.php/controller/method'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/URITest.php
+
+        -
+            message: '#^Assigning ''/controller/method'' directly on offset ''PATH_INFO'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/HTTP/URITest.php
+
+        -
+            message: '#^Assigning ''example\.com'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/HTTP/URITest.php
+
+        -
+            message: '#^Assigning ''http\://codeigniter\.com/user_guide/'' directly on offset ''HTTP_REFERER'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/UserAgentTest.php
+
+        -
+            message: '#^Assigning string directly on offset ''HTTP_USER_AGENT'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/UserAgentTest.php
+
+        -
+            message: '#^Assigning ''/'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/URLHelper/CurrentUrlTest.php
+
+        -
+            message: '#^Assigning ''/assets/image\.jpg'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Helpers/URLHelper/CurrentUrlTest.php
+
+        -
+            message: '#^Assigning ''/foo/public/bar\?baz\=quip'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Helpers/URLHelper/CurrentUrlTest.php
+
+        -
+            message: '#^Assigning ''/foo/public/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Helpers/URLHelper/CurrentUrlTest.php
+
+        -
+            message: '#^Assigning ''/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Helpers/URLHelper/CurrentUrlTest.php
+
+        -
+            message: '#^Assigning ''/public/'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 4
+            path: ../../tests/system/Helpers/URLHelper/CurrentUrlTest.php
+
+        -
+            message: '#^Assigning ''/public/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/Helpers/URLHelper/CurrentUrlTest.php
+
+        -
+            message: '#^Assigning ''/subfolder/assets/image\.jpg'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Helpers/URLHelper/CurrentUrlTest.php
+
+        -
+            message: '#^Assigning ''/subfolder/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Helpers/URLHelper/CurrentUrlTest.php
+
+        -
+            message: '#^Assigning ''8080'' directly on offset ''SERVER_PORT'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/URLHelper/CurrentUrlTest.php
+
+        -
+            message: '#^Assigning ''example\.com'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 11
+            path: ../../tests/system/Helpers/URLHelper/CurrentUrlTest.php
+
+        -
+            message: '#^Assigning ''invalid\.example\.org'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/URLHelper/CurrentUrlTest.php
+
+        -
+            message: '#^Assigning ''www\.example\.jp'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/URLHelper/CurrentUrlTest.php
+
+        -
+            message: '#^Assigning non\-falsy\-string directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/Helpers/URLHelper/CurrentUrlTest.php
+
+        -
+            message: '#^Assigning ''example\.com'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/URLHelper/MiscUrlTest.php
+
+        -
+            message: '#^Assigning ''http\://example\.com/one\?two'' directly on offset ''HTTP_REFERER'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Helpers/URLHelper/MiscUrlTest.php
+
+        -
+            message: '#^Assigning ''/ci/v4/x/y'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/URLHelper/SiteUrlTest.php
+
+        -
+            message: '#^Assigning ''/public'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/Helpers/URLHelper/SiteUrlTest.php
+
+        -
+            message: '#^Assigning ''/public/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/Helpers/URLHelper/SiteUrlTest.php
+
+        -
+            message: '#^Assigning ''/test'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/URLHelper/SiteUrlTest.php
+
+        -
+            message: '#^Assigning ''/test/page'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/URLHelper/SiteUrlTest.php
+
+        -
+            message: '#^Assigning ''example\.com'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/Helpers/URLHelper/SiteUrlTest.php
+
+        -
+            message: '#^Assigning ''www\.example\.jp'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/Helpers/URLHelper/SiteUrlTest.php
+
+        -
+            message: '#^Assigning ''test'' directly on offset ''HTTPS'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/HomeTest.php
+
+        -
+            message: '#^Assigning ''POST'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Honeypot/HoneypotTest.php
+
+        -
+            message: '#^Assigning ''/ci/v4/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Pager/PagerTest.php
+
+        -
+            message: '#^Assigning ''/ci/v4/x/y'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Pager/PagerTest.php
+
+        -
+            message: '#^Assigning ''/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Pager/PagerTest.php
+
+        -
+            message: '#^Assigning ''bar'' directly on offset ''foo'' of \$_GET is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Pager/PagerTest.php
+
+        -
+            message: '#^Assigning ''example\.com'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Pager/PagerTest.php
+
+        -
+            message: '#^Assigning 2 directly on offset ''page'' of \$_GET is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Pager/PagerTest.php
+
+        -
+            message: '#^Assigning 2 directly on offset ''page_foo'' of \$_GET is discouraged\.$#'
+            count: 5
+            path: ../../tests/system/Pager/PagerTest.php
+
+        -
+            message: '#^Assigning 3 directly on offset ''page'' of \$_GET is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Pager/PagerTest.php
+
+        -
+            message: '#^Assigning string directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Pager/PagerTest.php
+
+        -
+            message: '#^Assigning ''/work'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning ''/work/1'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning ''/work/1/edit'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning ''/work/123'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning ''/work/new'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning ''DELETE'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning ''GET'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 4
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning ''HTTP/1\.1'' directly on offset ''SERVER_PROTOCOL'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning ''PATCH'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning ''POST'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning ''PUT'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning 2 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning 3 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
+            count: 5
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning 4 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''work'', ''1'', ''edit''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''work'', ''1''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''work'', ''123''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''work'', ''new''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''work''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Assigning ''/work'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning ''/work/create'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning ''/work/delete/123'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning ''/work/edit/1'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning ''/work/new'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning ''/work/remove/123'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning ''/work/show/1'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning ''/work/update/123'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning ''GET'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 5
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning ''HTTP/1\.1'' directly on offset ''SERVER_PROTOCOL'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning ''POST'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning 2 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning 3 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
+            count: 4
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning 4 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''work'', ''create''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''work'', ''delete'', ''123''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''work'', ''edit'', ''1'', ''edit''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''work'', ''new''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''work'', ''remove'', ''123''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''work'', ''show'', ''1''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''work'', ''update'', ''123''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning array\{''index\.php'', ''work''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourcePresenterTest.php
+
+        -
+            message: '#^Assigning ''adm\.example\.com'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 4
+            path: ../../tests/system/Router/RouteCollectionTest.php
+
+        -
+            message: '#^Assigning ''dev\.example\.com'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/Router/RouteCollectionTest.php
+
+        -
+            message: '#^Assigning ''doc\.domain\.com'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 5
+            path: ../../tests/system/Router/RouteCollectionTest.php
+
+        -
+            message: '#^Assigning ''doc\.example\.com'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/Router/RouteCollectionTest.php
+
+        -
+            message: '#^Assigning ''example\.co\.uk'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Router/RouteCollectionTest.php
+
+        -
+            message: '#^Assigning ''example\.com'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 5
+            path: ../../tests/system/Router/RouteCollectionTest.php
+
+        -
+            message: '#^Assigning ''www\.example\.com'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Router/RouteCollectionTest.php
+
+        -
+            message: '#^Assigning ''POST'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Security/SecurityCSRFCookieRandomizeTokenTest.php
+
+        -
+            message: '#^Assigning ''POST'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 10
+            path: ../../tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php
+
+        -
+            message: '#^Assigning ''PUT'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php
+
+        -
+            message: '#^Assigning ''POST'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 8
+            path: ../../tests/system/Security/SecurityCSRFSessionTest.php
+
+        -
+            message: '#^Assigning ''PUT'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 3
+            path: ../../tests/system/Security/SecurityCSRFSessionTest.php
+
+        -
+            message: '#^Assigning ''GET'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Security/SecurityTest.php
+
+        -
+            message: '#^Assigning ''POST'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 9
+            path: ../../tests/system/Security/SecurityTest.php
+
+        -
+            message: '#^Assigning ''PUT'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Security/SecurityTest.php
+
+        -
+            message: '#^Assigning ''xmlhttprequest'' directly on offset ''HTTP_X_REQUESTED_WITH'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Session/SessionTest.php
+
+        -
+            message: '#^Assigning ''test'' directly on offset ''HTTPS'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Test/FeatureTestAutoRoutingImprovedTest.php
+
+        -
+            message: '#^Assigning ''test'' directly on offset ''HTTPS'' of \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Test/FeatureTestTraitTest.php
+
+        -
+            message: '#^Assigning ''application/json'' directly on offset ''CONTENT_TYPE'' of \$_SERVER is discouraged\.$#'
+            count: 2
+            path: ../../tests/system/Validation/ValidationTest.php

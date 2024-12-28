@@ -67,7 +67,7 @@ abstract class BaseHandler implements CacheInterface
         }
 
         $reserved = config(Cache::class)->reservedCharacters ?? self::RESERVED_CHARACTERS;
-        if ($reserved && strpbrk($key, $reserved) !== false) {
+        if ($reserved !== '' && strpbrk($key, $reserved) !== false) {
             throw new InvalidArgumentException('Cache key contains reserved characters ' . $reserved);
         }
 

@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Factories;
-use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\Router\Controllers\BlogController;
@@ -42,7 +41,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $moduleConfig          = new Modules();
         $moduleConfig->enabled = false;
-        $this->collection      = new RouteCollection(Services::locator(), $moduleConfig, new Routing());
+        $this->collection      = new RouteCollection(service('locator'), $moduleConfig, new Routing());
     }
 
     private function createNewAutoRouter(string $namespace = 'CodeIgniter\Router\Controllers'): AutoRouterImproved

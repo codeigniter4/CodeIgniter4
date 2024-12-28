@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters\fixtures;
 
-use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -22,7 +21,7 @@ class GoogleYou implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        $response = Services::response();
+        $response = service('response');
         $response->setBody('http://google.com');
 
         return $response;

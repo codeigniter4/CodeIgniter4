@@ -234,7 +234,7 @@ class Session implements SessionInterface
 
         // Sanitize the cookie, because apparently PHP doesn't do that for userspace handlers
         if (isset($_COOKIE[$this->config->cookieName])
-            && (! is_string($_COOKIE[$this->config->cookieName]) || ! preg_match('#\A' . $this->sidRegexp . '\z#', $_COOKIE[$this->config->cookieName]))
+            && (! is_string($_COOKIE[$this->config->cookieName]) || preg_match('#\A' . $this->sidRegexp . '\z#', $_COOKIE[$this->config->cookieName]) !== 1)
         ) {
             unset($_COOKIE[$this->config->cookieName]);
         }
@@ -248,7 +248,7 @@ class Session implements SessionInterface
             if (! isset($_SESSION['__ci_last_regenerate'])) {
                 $_SESSION['__ci_last_regenerate'] = Time::now()->getTimestamp();
             } elseif ($_SESSION['__ci_last_regenerate'] < (Time::now()->getTimestamp() - $regenerateTime)) {
-                $this->regenerate((bool) $this->config->regenerateDestroy);
+                $this->regenerate($this->config->regenerateDestroy);
             }
         }
         // Another work-around ... PHP doesn't seem to send the session cookie
@@ -258,7 +258,7 @@ class Session implements SessionInterface
         }
 
         $this->initVars();
-        $this->logger->info("Session: Class initialized using '" . $this->config->driver . "' driver.");
+        $this->logger->debug("Session: Class initialized using '" . $this->config->driver . "' driver.");
 
         return $this;
     }

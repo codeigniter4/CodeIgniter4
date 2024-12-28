@@ -138,7 +138,7 @@ jobs:
     steps:
       - name: Create database for MSSQL Server
         if: ${{ inputs.db-platform == 'SQLSRV' }}
-        run: sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q "CREATE DATABASE test"
+        run: sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q "CREATE DATABASE test COLLATE Latin1_General_100_CS_AS_SC_UTF8"
 
       - name: Install latest ImageMagick
         if: ${{ contains(inputs.extra-extensions, 'imagick') }}
@@ -147,6 +147,12 @@ jobs:
           sudo apt-get install --reinstall libgs9-common fonts-noto-mono libgs9:amd64 libijs-0.35:amd64 fonts-urw-base35 ghostscript poppler-data libjbig2dec0:amd64 libopenjp2-7:amd64 fonts-droid-fallback fonts-dejavu-core
           sudo apt-get install -y gsfonts libmagickwand-dev imagemagick
           sudo apt-get install --fix-broken
+
+      - name: Checkout base branch for PR
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.base_ref }}
 
       - name: Checkout
         uses: actions/checkout@v4

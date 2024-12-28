@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Router;
 
+use Closure;
 use CodeIgniter\Config\Factories;
-use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Exceptions\BadRequestException;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
@@ -44,7 +44,7 @@ final class RouterTest extends CIUnitTestCase
 
         $this->createRouteCollection();
 
-        $this->request = Services::request();
+        $this->request = service('request');
         $this->request->setMethod(Method::GET);
     }
 
@@ -56,7 +56,7 @@ final class RouterTest extends CIUnitTestCase
         $routingConfig ??= new Routing();
         $routingConfig->defaultNamespace = '\\';
 
-        $this->collection = new RouteCollection(Services::locator(), $moduleConfig, $routingConfig);
+        $this->collection = new RouteCollection(service('locator'), $moduleConfig, $routingConfig);
 
         $routes = [
             '/'                                               => 'Home::index',
@@ -69,6 +69,7 @@ final class RouterTest extends CIUnitTestCase
             'posts/(:num)/edit'                               => 'Blog::edit/$1',
             'books/(:num)/(:alpha)/(:num)'                    => 'Blog::show/$3/$1',
             'closure/(:num)/(:alpha)'                         => static fn ($num, $str) => $num . '-' . $str,
+            'closure-dash/(:num)/(:alpha)'                    => static fn ($num, $str) => $num . '-' . $str,
             '{locale}/pages'                                  => 'App\Pages::list_all',
             'test/(:any)/lang/{locale}'                       => 'App\Pages::list_all',
             'admin/admins'                                    => 'App\Admin\Admins::list_all',
@@ -210,10 +211,26 @@ final class RouterTest extends CIUnitTestCase
 
         $closure = $router->controllerName();
 
-        $expects = $closure(...$router->params());
+        $actual = $closure(...$router->params());
 
         $this->assertIsCallable($router->controllerName());
-        $this->assertSame($expects, '123-alpha');
+        $this->assertSame('123-alpha', $actual);
+    }
+
+    public function testClosuresWithTranslateURIDashes(): void
+    {
+        $router = new Router($this->collection, $this->request);
+        $router->setTranslateURIDashes(true);
+
+        $router->handle('closure-dash/123/alpha');
+        $closure = $router->controllerName();
+
+        $this->assertInstanceOf(Closure::class, $closure);
+
+        $actual = $closure(...$router->params());
+
+        $this->assertIsCallable($router->controllerName());
+        $this->assertSame('123-alpha', $actual);
     }
 
     public function testAutoRouteFindsDefaultControllerAndMethod(): void

@@ -215,7 +215,7 @@ class Connection extends BaseConnection
             return $sql .= ' AND [TABLE_NAME] LIKE ' . $this->escape($tableName);
         }
 
-        if ($prefixLimit === true && $this->DBPrefix !== '') {
+        if ($prefixLimit && $this->DBPrefix !== '') {
             $sql .= " AND [TABLE_NAME] LIKE '" . $this->escapeLikeString($this->DBPrefix) . "%' "
                 . sprintf($this->likeEscapeStr, $this->likeEscapeChar);
         }
@@ -368,7 +368,11 @@ class Connection extends BaseConnection
 
             $retVal[$i]->max_length = $query[$i]->CHARACTER_MAXIMUM_LENGTH > 0
                 ? $query[$i]->CHARACTER_MAXIMUM_LENGTH
-                : $query[$i]->NUMERIC_PRECISION;
+                : (
+                    $query[$i]->CHARACTER_MAXIMUM_LENGTH === -1
+                    ? 'max'
+                    : $query[$i]->NUMERIC_PRECISION
+                );
 
             $retVal[$i]->nullable = $query[$i]->IS_NULLABLE !== 'NO';
             $retVal[$i]->default  = $query[$i]->COLUMN_DEFAULT;

@@ -1,0 +1,33 @@
+# total 6 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Calling new DummyHandler\(\) directly is incomplete to get the cache instance\.$#'
+            count: 1
+            path: ../../tests/system/Cache/Handlers/DummyHandlerTest.php
+
+        -
+            message: '#^Calling new BaseTestFileHandler\(\) directly is incomplete to get the cache instance\.$#'
+            count: 1
+            path: ../../tests/system/Cache/Handlers/FileHandlerTest.php
+
+        -
+            message: '#^Calling new FileHandler\(\) directly is incomplete to get the cache instance\.$#'
+            count: 5
+            path: ../../tests/system/Cache/Handlers/FileHandlerTest.php
+
+        -
+            message: '#^Calling new MemcachedHandler\(\) directly is incomplete to get the cache instance\.$#'
+            count: 3
+            path: ../../tests/system/Cache/Handlers/MemcachedHandlerTest.php
+
+        -
+            message: '#^Calling new PredisHandler\(\) directly is incomplete to get the cache instance\.$#'
+            count: 2
+            path: ../../tests/system/Cache/Handlers/PredisHandlerTest.php
+
+        -
+            message: '#^Calling new RedisHandler\(\) directly is incomplete to get the cache instance\.$#'
+            count: 2
+            path: ../../tests/system/Cache/Handlers/RedisHandlerTest.php

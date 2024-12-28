@@ -148,12 +148,25 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame('private, no-transform, no-store, must-revalidate', $response->getHeaderLine('Cache-control'));
     }
 
-    public function testCantSetCache(): void
+    public function testSetCache(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
-        $this->expectException(DownloadException::class);
-        $response->setCache();
+        $date = date('r');
+
+        $options = [
+            'etag'          => '12345678',
+            'last-modified' => $date,
+            'max-age'       => 300,
+            'must-revalidate',
+        ];
+
+        $response->setCache($options);
+        $response->buildHeaders();
+
+        $this->assertSame('12345678', $response->getHeaderLine('ETag'));
+        $this->assertSame($date, $response->getHeaderLine('Last-Modified'));
+        $this->assertSame('max-age=300, must-revalidate', $response->getHeaderLine('Cache-Control'));
     }
 
     public function testWhenFilepathIsSetBinaryCanNotBeSet(): void
@@ -200,30 +213,53 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame($size, $response->getContentLength());
     }
 
-    public function testIsSetDownloadableHeadlersFromBinary(): void
+    public function testIsSetDownloadableHeadersFromBinary(): void
     {
         $response = new DownloadResponse('unit test.txt', false);
 
         $response->setBinary('test');
         $response->buildHeaders();
 
+        $this->assertSame('private, no-transform, no-store, must-revalidate', $response->getHeaderLine('Cache-Control'));
         $this->assertSame('application/octet-stream', $response->getHeaderLine('Content-Type'));
         $this->assertSame('attachment; filename="unit test.txt"; filename*=UTF-8\'\'unit%20test.txt', $response->getHeaderLine('Content-Disposition'));
-        $this->assertSame('0', $response->getHeaderLine('Expires-Disposition'));
         $this->assertSame('binary', $response->getHeaderLine('Content-Transfer-Encoding'));
         $this->assertSame('4', $response->getHeaderLine('Content-Length'));
     }
 
-    public function testIsSetDownloadableHeadlersFromFile(): void
+    public function testIsSetDownloadableHeadersFromFile(): void
     {
         $response = new DownloadResponse('unit-test.php', false);
 
         $response->setFilePath(__FILE__);
         $response->buildHeaders();
 
+        $this->assertSame('private, no-transform, no-store, must-revalidate', $response->getHeaderLine('Cache-Control'));
         $this->assertSame('application/octet-stream', $response->getHeaderLine('Content-Type'));
         $this->assertSame('attachment; filename="unit-test.php"; filename*=UTF-8\'\'unit-test.php', $response->getHeaderLine('Content-Disposition'));
-        $this->assertSame('0', $response->getHeaderLine('Expires-Disposition'));
+        $this->assertSame('binary', $response->getHeaderLine('Content-Transfer-Encoding'));
+        $this->assertSame(filesize(__FILE__), (int) $response->getHeaderLine('Content-Length'));
+    }
+
+    public function testCustomHeaders(): void
+    {
+        $response = new DownloadResponse('unit-test.php', false);
+
+        $response->setFilePath(__FILE__);
+
+        $response->setHeader('Last-Modified', 'Fri, 18 Oct 2024 13:17:37 GMT');
+        $response->setHeader('Expires', 'Sun, 17 Nov 2024 14:17:37 GMT');
+        $response->setHeader('Pragma', 'public');
+        $response->removeHeader('Cache-Control');
+        $response->setHeader('Cache-Control', 'public');
+        $response->buildHeaders();
+
+        $this->assertSame('Fri, 18 Oct 2024 13:17:37 GMT', $response->getHeaderLine('Last-Modified'));
+        $this->assertSame('Sun, 17 Nov 2024 14:17:37 GMT', $response->getHeaderLine('Expires'));
+        $this->assertSame('public', $response->getHeaderLine('Pragma'));
+        $this->assertSame('public', $response->getHeaderLine('Cache-Control'));
+        $this->assertSame('application/octet-stream', $response->getHeaderLine('Content-Type'));
+        $this->assertSame('attachment; filename="unit-test.php"; filename*=UTF-8\'\'unit-test.php', $response->getHeaderLine('Content-Disposition'));
         $this->assertSame('binary', $response->getHeaderLine('Content-Transfer-Encoding'));
         $this->assertSame(filesize(__FILE__), (int) $response->getHeaderLine('Content-Length'));
     }

@@ -15,7 +15,6 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
-use Config\Services;
 
 /**
  * Handle a redirect response
@@ -116,9 +115,8 @@ class RedirectResponse extends Response
     {
         $validation = service('validation');
 
-        if ($validation->getErrors()) {
-            $session = service('session');
-            $session->setFlashdata('_ci_validation_errors', $validation->getErrors());
+        if ($validation->getErrors() !== []) {
+            service('session')->setFlashdata('_ci_validation_errors', $validation->getErrors());
         }
 
         return $this;
@@ -148,7 +146,7 @@ class RedirectResponse extends Response
      */
     public function withCookies()
     {
-        $this->cookieStore = new CookieStore(Services::response()->getCookies());
+        $this->cookieStore = new CookieStore(service('response')->getCookies());
 
         return $this;
     }
@@ -163,7 +161,7 @@ class RedirectResponse extends Response
      */
     public function withHeaders()
     {
-        foreach (Services::response()->headers() as $name => $value) {
+        foreach (service('response')->headers() as $name => $value) {
             if ($value instanceof Header) {
                 $this->setHeader($name, $value->getValue());
             } else {

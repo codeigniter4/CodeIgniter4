@@ -45,6 +45,12 @@ jobs:
     strategy:
       fail-fast: false
     steps:
+      - name: Checkout base branch for PR
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.base_ref }}
+
       - name: Checkout
         uses: actions/checkout@v4
 

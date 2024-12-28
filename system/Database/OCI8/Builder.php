@@ -109,12 +109,12 @@ class Builder extends BaseBuilder
     {
         $fieldNames = array_map(static fn ($columnName) => trim($columnName, '"'), $keys);
 
-        $uniqueIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames) {
+        $uniqueIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames): bool {
             $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
 
             return ($index->type === 'PRIMARY') && $hasAllFields;
         });
-        $replaceableFields = array_filter($keys, static function ($columnName) use ($uniqueIndexes) {
+        $replaceableFields = array_filter($keys, static function ($columnName) use ($uniqueIndexes): bool {
             foreach ($uniqueIndexes as $index) {
                 if (in_array(trim($columnName, '"'), $index->fields, true)) {
                     return false;
@@ -344,7 +344,7 @@ class Builder extends BaseBuilder
             if (empty($constraints)) {
                 $fieldNames = array_map(static fn ($columnName) => trim($columnName, '"'), $keys);
 
-                $uniqueIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames) {
+                $uniqueIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames): bool {
                     $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
 
                     return ($index->type === 'PRIMARY' || $index->type === 'UNIQUE') && $hasAllFields;

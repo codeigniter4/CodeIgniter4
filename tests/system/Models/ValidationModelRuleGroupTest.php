@@ -15,7 +15,6 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Model;
-use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 use Tests\Support\Config\Validation;
@@ -40,7 +39,7 @@ final class ValidationModelRuleGroupTest extends LiveModelTestCase
     protected function createModel(string $modelName, ?BaseConnection $db = null): Model
     {
         $config     = new Validation();
-        $validation = new \CodeIgniter\Validation\Validation($config, Services::renderer());
+        $validation = new \CodeIgniter\Validation\Validation($config, service('renderer'));
 
         $this->db    = $db ?? $this->db;
         $this->model = new $modelName($this->db, $validation);
@@ -398,8 +397,8 @@ final class ValidationModelRuleGroupTest extends LiveModelTestCase
         $errors = $model->errors();
         $this->assertCount(1, $errors);
         $this->assertSame(
-            $errors['field1'],
-            'The field1 field is required when field2,field3,field4 is present.'
+            'The field1 field is required when field2,field3,field4 is present.',
+            $errors['field1']
         );
     }
 
@@ -438,8 +437,8 @@ final class ValidationModelRuleGroupTest extends LiveModelTestCase
         $errors = $model->errors();
         $this->assertCount(1, $errors);
         $this->assertSame(
-            $errors['field1'],
-            'The field1 field is required when field2,field3,field4 is present.'
+            'The field1 field is required when field2,field3,field4 is present.',
+            $errors['field1']
         );
     }
 
@@ -471,8 +470,8 @@ final class ValidationModelRuleGroupTest extends LiveModelTestCase
         $errors = $model->errors();
         $this->assertCount(1, $errors);
         $this->assertSame(
-            $errors['field2'],
-            'The field2 field is required.'
+            'The field2 field is required.',
+            $errors['field2']
         );
     }
 }

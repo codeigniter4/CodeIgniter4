@@ -406,7 +406,7 @@ abstract class BaseConnection implements ConnectionInterface
         /* If an established connection is available, then there's
          * no need to connect and select the database.
          *
-         * Depending on the database driver, conn_id can be either
+         * Depending on the database driver, connID can be either
          * boolean TRUE, a resource or an object.
          */
         if ($this->connID) {
@@ -610,7 +610,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = '')
     {
-        $queryClass = $queryClass ?: $this->queryClass;
+        $queryClass = $queryClass !== '' && $queryClass !== '0' ? $queryClass : $this->queryClass;
 
         if (empty($this->connID)) {
             $this->initialize();
@@ -684,7 +684,7 @@ abstract class BaseConnection implements ConnectionInterface
                 // Let others do something with this query.
                 Events::trigger('DBQuery', $query);
 
-                if ($exception !== null) {
+                if ($exception instanceof DatabaseException) {
                     throw new DatabaseException(
                         $exception->getMessage(),
                         $exception->getCode(),
@@ -846,9 +846,9 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         // Reset the transaction failure flag.
-        // If the $test_mode flag is set to TRUE transactions will be rolled back
+        // If the $testMode flag is set to TRUE transactions will be rolled back
         // even if the queries produce a successful result.
-        $this->transFailure = ($testMode === true);
+        $this->transFailure = $testMode;
 
         if ($this->_transBegin()) {
             $this->transDepth++;
@@ -958,6 +958,8 @@ abstract class BaseConnection implements ConnectionInterface
      *                   ->where('id', 1)
      *                     ->get();
      *           })
+     *
+     * @param Closure(BaseConnection): mixed $func
      *
      * @return BasePreparedQuery|null
      */
@@ -1124,7 +1126,7 @@ abstract class BaseConnection implements ConnectionInterface
                 $item = preg_replace('/^' . $this->swapPre . '(\S+?)/', $this->DBPrefix . '\\1', $item);
             }
             // Do we prefix an item with no segments?
-            elseif ($prefixSingle === true && ! str_starts_with($item, $this->DBPrefix)) {
+            elseif ($prefixSingle && ! str_starts_with($item, $this->DBPrefix)) {
                 $item = $this->DBPrefix . $item;
             }
         }
@@ -1147,7 +1149,7 @@ abstract class BaseConnection implements ConnectionInterface
         // NOTE: The ! empty() condition prevents this method
         // from breaking when QB isn't enabled.
         if (! empty($this->aliasedTables) && in_array($parts[0], $this->aliasedTables, true)) {
-            if ($protectIdentifiers === true) {
+            if ($protectIdentifiers) {
                 foreach ($parts as $key => $val) {
                     if (! in_array($val, $this->reservedIdentifiers, true)) {
                         $parts[$key] = $this->escapeIdentifiers($val);
@@ -1198,7 +1200,7 @@ abstract class BaseConnection implements ConnectionInterface
             $item = implode('.', $parts);
         }
 
-        if ($protectIdentifiers === true) {
+        if ($protectIdentifiers) {
             $item = $this->escapeIdentifiers($item);
         }
 
@@ -1372,7 +1374,7 @@ abstract class BaseConnection implements ConnectionInterface
         $str = $this->_escapeString($str);
 
         // escape LIKE condition wildcards
-        if ($like === true) {
+        if ($like) {
             return str_replace(
                 [
                     $this->likeEscapeChar,
@@ -1501,7 +1503,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function tableExists(string $tableName, bool $cached = true): bool
     {
-        if ($cached === true) {
+        if ($cached) {
             return in_array($this->protectIdentifiers($tableName, true, false, false), $this->listTables(), true);
         }
 

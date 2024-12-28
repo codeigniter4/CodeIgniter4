@@ -21,7 +21,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 use Config\Migrations;
-use Config\Services;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use PHPUnit\Framework\Attributes\Group;
@@ -60,7 +59,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
     protected function setUpAddNamespace(): void
     {
-        Services::autoloader()->addNamespace(
+        service('autoloader')->addNamespace(
             'Tests\Support\MigrationTestMigrations',
             SUPPORTPATH . 'MigrationTestMigrations'
         );

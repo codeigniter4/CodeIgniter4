@@ -290,7 +290,7 @@ class FileHandler extends BaseHandler
 
         while (($file = readdir($directory)) !== false) {
             // If the filename doesn't match this pattern, it's either not a session file or is not ours
-            if (! preg_match($pattern, $file)
+            if (preg_match($pattern, $file) !== 1
                 || ! is_file($this->savePath . DIRECTORY_SEPARATOR . $file)
                 || ($mtime = filemtime($this->savePath . DIRECTORY_SEPARATOR . $file)) === false
                 || $mtime > $ts

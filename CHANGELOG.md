@@ -1,5 +1,62 @@
 # Changelog
 
+## [v4.5.6](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.6) (2024-12-28)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.5...v4.5.6)
+
+### Fixed Bugs
+
+* fix: auto_link() converts invalid strings like `://codeigniter.com` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/9180
+* fix: change session start log level by @element-code in https://github.com/codeigniter4/CodeIgniter4/pull/9221
+* fix: `getValidated()` when validation multiple asterisk by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/9220
+* fix: Parser - Equal key name replace conflict by @CosDiabos in https://github.com/codeigniter4/CodeIgniter4/pull/9246
+* fix: case-insensitivity in the `like()` method when in use with accented characters by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9238
+* fix: TypeError for routes when translateURIDashes is enabled by @maniaba in https://github.com/codeigniter4/CodeIgniter4/pull/9209
+* fix: `fetchGlobal()` with numeric key by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/9251
+* fix: curl request crashes with params that give an int once hexed. by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/9198
+* docs: allow boolean values in the model for PHPStan by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/9276
+* fix: respect complex language strings when using validation by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9201
+* fix: `DownloadResponse` cache headers by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9237
+* docs: fix `@param` `ResponseInterface::setJSON()` also accepts objects by @JulianAtkins in https://github.com/codeigniter4/CodeIgniter4/pull/9287
+* fix: [CURLRequest] body contains "HTTP/1.0 200 Connection established" by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/9285
+* fix: `Postgre\Connection::reconnect()` `TypeError` in `pg_ping()` by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/9279
+* fix: primary key mapping in the model for the entity by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9307
+* fix: check if defined `WRITEPATH` exists by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9317
+* fix: handling binary data for prepared statement by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9337
+
+### Refactoring
+
+* refactor: enable TypedPropertyFromAssignsRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9184
+* refactor: enable ClosureReturnTypeRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9187
+* refactor: remove unnecessary `is_countable()` check in `getMethodParams()` by @datamweb in https://github.com/codeigniter4/CodeIgniter4/pull/9206
+* refactor: add more readonly property definitions on AutoRouteCollector and SiteURI by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9210
+* refactor: starter key handling in SodiumHandler by @datamweb in https://github.com/codeigniter4/CodeIgniter4/pull/9207
+* refactor: enable rector code quality level 14 by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9232
+* refactor: cleanup `DatabaseHandler::gc()` for session by @grimpirate in https://github.com/codeigniter4/CodeIgniter4/pull/9230
+* refactor: enable rector code quality level 15 by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9243
+* refactor: enable SimplifyBoolIdenticalTrueRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9244
+* refactor: enable FlipTypeControlToUseExclusiveTypeRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9253
+* refactor: flip assert and actual value position on tests by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9260
+* perf: Improve call as `service()` by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/9248
+* refactor: use compare empty array on Forge on keys property by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9267
+* refactor: Fix `phpstan` errors related to `Autoloader` by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/9249
+* refactor: use `Superglobals` in setting 'REQUEST_METHOD' in `FeatureT… by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9294
+* refactor: use `baseURI` instead of `base_uri` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9296
+* refactor: Apply code quality level 31 for rector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9303
+* refactor: rename `stdclass` to `stdClass` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9312
+* refactor: fix `phpDoc.parseError` errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9313
+* refactor: fix `method.nameCase` errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9315
+* refactor: rename `controller` to `Controller` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9314
+* refactor: fix implicit array creation by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9316
+* refactor: follow up implicit variable array by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/9319
+* refactor: split phpstan-baseline into smaller files by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9299
+* refactor: upgrade to use phpstan 2 and rector 2 by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9322
+* refactor: fix `Forge::processIndexes()` for empty `$this->fields` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9330
+* refactor: `Reflection*::setAccessible()` is now no-op in PHP 8.1 by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9331
+* refactor: add `@throws RedirectException` in `Controller::initController` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9327
+* refactor: fix warning on new static usage by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9342
+* refactor: fix used void return type by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9341
+* refactor: enable instanceof and strictBooleans rector set by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9339
+
 ## [v4.5.5](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.5) (2024-09-07)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.4...v4.5.5)
 

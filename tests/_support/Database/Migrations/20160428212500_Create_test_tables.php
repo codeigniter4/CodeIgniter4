@@ -92,14 +92,14 @@ class Migration_Create_test_tables extends Migration
 
         if ($this->db->DBDriver === 'SQLSRV') {
             unset($dataTypeFields['type_timestamp']);
+            $dataTypeFields['type_text'] = ['type' => 'NVARCHAR(max)', 'null' => true];
         }
 
         if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'SQLSRV') {
             unset(
                 $dataTypeFields['type_set'],
                 $dataTypeFields['type_mediumtext'],
-                $dataTypeFields['type_double'],
-                $dataTypeFields['type_blob']
+                $dataTypeFields['type_double']
             );
         }
 

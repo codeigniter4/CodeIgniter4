@@ -518,7 +518,7 @@ class Builder extends BaseBuilder
 
         $query = $query->getRow();
 
-        if ($reset === true) {
+        if ($reset) {
             $this->resetSelect();
         }
 
@@ -699,7 +699,7 @@ class Builder extends BaseBuilder
             if (empty($constraints)) {
                 $tableIndexes = $this->db->getIndexData($table);
 
-                $uniqueIndexes = array_filter($tableIndexes, static function ($index) use ($fieldNames) {
+                $uniqueIndexes = array_filter($tableIndexes, static function ($index) use ($fieldNames): bool {
                     $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
 
                     return $index->type === 'PRIMARY' && $hasAllFields;
@@ -707,7 +707,7 @@ class Builder extends BaseBuilder
 
                 // if no primary found then look for unique - since indexes have no order
                 if ($uniqueIndexes === []) {
-                    $uniqueIndexes = array_filter($tableIndexes, static function ($index) use ($fieldNames) {
+                    $uniqueIndexes = array_filter($tableIndexes, static function ($index) use ($fieldNames): bool {
                         $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
 
                         return $index->type === 'UNIQUE' && $hasAllFields;

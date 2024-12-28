@@ -47,7 +47,7 @@ class CURLRequestTest extends CIUnitTestCase
      */
     protected function getRequest(array $options = []): MockCURLRequest
     {
-        $uri = isset($options['base_uri']) ? new URI($options['base_uri']) : new URI();
+        $uri = isset($options['baseURI']) ? new URI($options['baseURI']) : new URI();
         $app = new App();
 
         $config               = new ConfigCURLRequest();
@@ -64,7 +64,7 @@ class CURLRequestTest extends CIUnitTestCase
     {
         config('App')->baseURL = 'http://example.com/fruit/';
 
-        $request = $this->getRequest(['base_uri' => 'http://example.com/v1/']);
+        $request = $this->getRequest(['baseURI' => 'http://example.com/v1/']);
 
         $method = $this->getPrivateMethodInvoker($request, 'prepareURL');
 
@@ -76,7 +76,7 @@ class CURLRequestTest extends CIUnitTestCase
      */
     public function testGetRemembersBaseURI(): void
     {
-        $request = $this->getRequest(['base_uri' => 'http://www.foo.com/api/v1/']);
+        $request = $this->getRequest(['baseURI' => 'http://www.foo.com/api/v1/']);
 
         $request->get('products');
 
@@ -90,7 +90,7 @@ class CURLRequestTest extends CIUnitTestCase
      */
     public function testGetRemembersBaseURIWithHelperMethod(): void
     {
-        $request = Services::curlrequest(['base_uri' => 'http://www.foo.com/api/v1/']);
+        $request = Services::curlrequest(['baseURI' => 'http://www.foo.com/api/v1/']);
 
         $uri = $this->getPrivateProperty($request, 'baseURI');
         $this->assertSame('www.foo.com', $uri->getHost());
@@ -157,28 +157,17 @@ class CURLRequestTest extends CIUnitTestCase
 
     public function testOptionsBaseURIOption(): void
     {
-        $options = ['base_uri' => 'http://www.foo.com/api/v1/'];
+        $options = ['baseURI' => 'http://www.foo.com/api/v1/'];
         $request = $this->getRequest($options);
 
         $this->assertSame('http://www.foo.com/api/v1/', $request->getBaseURI()->__toString());
     }
 
-    public function testOptionsBaseURIOverride(): void
-    {
-        $options = [
-            'base_uri' => 'http://www.foo.com/api/v1/',
-            'baseURI'  => 'http://bogus/com',
-        ];
-        $request = $this->getRequest($options);
-
-        $this->assertSame('http://bogus/com', $request->getBaseURI()->__toString());
-    }
-
     public function testOptionsHeaders(): void
     {
         $options = [
-            'base_uri' => 'http://www.foo.com/api/v1/',
-            'headers'  => ['fruit' => 'apple'],
+            'baseURI' => 'http://www.foo.com/api/v1/',
+            'headers' => ['fruit' => 'apple'],
         ];
         $request = $this->getRequest();
         $this->assertNull($request->header('fruit'));
@@ -195,8 +184,8 @@ class CURLRequestTest extends CIUnitTestCase
         $_SERVER['HTTP_ACCEPT_ENCODING'] = 'gzip, deflate, br';
 
         $options = [
-            'base_uri' => 'http://www.foo.com/api/v1/',
-            'headers'  => [
+            'baseURI' => 'http://www.foo.com/api/v1/',
+            'headers' => [
                 'Host'            => 'www.foo.com',
                 'Accept-Encoding' => '',
             ],
@@ -233,7 +222,7 @@ class CURLRequestTest extends CIUnitTestCase
     public function testHeaderContentLengthNotSharedBetweenRequests(): void
     {
         $options = [
-            'base_uri' => 'http://www.foo.com/api/v1/',
+            'baseURI' => 'http://www.foo.com/api/v1/',
         ];
         $request = $this->getRequest($options);
 
@@ -253,7 +242,7 @@ class CURLRequestTest extends CIUnitTestCase
         $_SERVER['HTTP_CONTENT_LENGTH'] = '10';
 
         $options = [
-            'base_uri' => 'http://www.foo.com/api/v1/',
+            'baseURI' => 'http://www.foo.com/api/v1/',
         ];
         $request = $this->getRequest($options);
         $request->post('example', [
@@ -730,8 +719,8 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
     public function testSendWithQuery(): void
     {
         $request = $this->getRequest([
-            'base_uri' => 'http://www.foo.com/api/v1/',
-            'query'    => [
+            'baseURI' => 'http://www.foo.com/api/v1/',
+            'query'   => [
                 'name' => 'Henry',
                 'd.t'  => 'value',
             ],
@@ -747,8 +736,8 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
     public function testSendWithDelay(): void
     {
         $request = $this->getRequest([
-            'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 100,
+            'baseURI' => 'http://www.foo.com/api/v1/',
+            'delay'   => 100,
         ]);
 
         $request->get('products');
@@ -760,8 +749,8 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
     public function testSendContinued(): void
     {
         $request = $this->getRequest([
-            'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 100,
+            'baseURI' => 'http://www.foo.com/api/v1/',
+            'delay'   => 100,
         ]);
 
         $request->setOutput("HTTP/1.1 100 Continue\x0d\x0a\x0d\x0aHi there");
@@ -775,8 +764,8 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
     public function testSendContinuedWithManyHeaders(): void
     {
         $request = $this->getRequest([
-            'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 100,
+            'baseURI' => 'http://www.foo.com/api/v1/',
+            'delay'   => 100,
         ]);
 
         $output = "HTTP/1.1 100 Continue
@@ -819,11 +808,26 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
     public function testSendProxied(): void
     {
         $request = $this->getRequest([
-            'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 100,
+            'baseURI' => 'http://www.foo.com/api/v1/',
+            'delay'   => 100,
         ]);
 
         $output = "HTTP/1.1 200 Connection established
+Proxy-Agent: Fortinet-Proxy/1.0\x0d\x0a\x0d\x0aHTTP/1.1 200 OK\x0d\x0a\x0d\x0aHi there";
+        $request->setOutput($output);
+
+        $response = $request->get('answer');
+        $this->assertSame('Hi there', $response->getBody());
+    }
+
+    public function testSendProxiedWithHTTP10(): void
+    {
+        $request = $this->getRequest([
+            'baseURI' => 'http://www.foo.com/api/v1/',
+            'delay'   => 100,
+        ]);
+
+        $output = "HTTP/1.0 200 Connection established
 Proxy-Agent: Fortinet-Proxy/1.0\x0d\x0a\x0d\x0aHTTP/1.1 200 OK\x0d\x0a\x0d\x0aHi there";
         $request->setOutput($output);
 
@@ -837,7 +841,7 @@ Proxy-Agent: Fortinet-Proxy/1.0\x0d\x0a\x0d\x0aHTTP/1.1 200 OK\x0d\x0a\x0d\x0aHi
     public function testResponseHeadersWithMultipleRequests(): void
     {
         $request = $this->getRequest([
-            'base_uri' => 'http://www.foo.com/api/v1/',
+            'baseURI' => 'http://www.foo.com/api/v1/',
         ]);
 
         $output = "HTTP/2.0 200 OK
@@ -890,7 +894,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
     public function testResponseHeadersWithMultipleSetCookies(): void
     {
         $request = $this->getRequest([
-            'base_uri' => 'https://github.com/',
+            'baseURI' => 'https://github.com/',
         ]);
 
         $output = "HTTP/2 200
@@ -922,8 +926,8 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
     public function testSplitResponse(): void
     {
         $request = $this->getRequest([
-            'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 100,
+            'baseURI' => 'http://www.foo.com/api/v1/',
+            'delay'   => 100,
         ]);
 
         $request->setOutput("Accept: text/html\x0d\x0a\x0d\x0aHi there");
@@ -934,8 +938,8 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
     public function testApplyBody(): void
     {
         $request = $this->getRequest([
-            'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 100,
+            'baseURI' => 'http://www.foo.com/api/v1/',
+            'delay'   => 100,
         ]);
 
         $request->setBody('name=George');
@@ -949,8 +953,8 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
     public function testApplyBodyByOptions(): void
     {
         $request = $this->getRequest([
-            'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 100,
+            'baseURI' => 'http://www.foo.com/api/v1/',
+            'delay'   => 100,
         ]);
 
         $request->setOutput('Hi there');
@@ -965,8 +969,8 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
     public function testBodyIsResetOnSecondRequest(): void
     {
         $request = $this->getRequest([
-            'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 100,
+            'baseURI' => 'http://www.foo.com/api/v1/',
+            'delay'   => 100,
         ]);
         $request->setBody('name=George');
         $request->setOutput('Hi there');
@@ -980,8 +984,8 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
     public function testResponseHeaders(): void
     {
         $request = $this->getRequest([
-            'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 100,
+            'baseURI' => 'http://www.foo.com/api/v1/',
+            'delay'   => 100,
         ]);
 
         $request->setOutput("HTTP/2.0 234 Ohoh\x0d\x0aAccept: text/html\x0d\x0a\x0d\x0aHi there");
@@ -994,8 +998,8 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
     public function testResponseHeadersShortProtocol(): void
     {
         $request = $this->getRequest([
-            'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 100,
+            'baseURI' => 'http://www.foo.com/api/v1/',
+            'delay'   => 100,
         ]);
 
         $request->setOutput("HTTP/2 235 Ohoh\x0d\x0aAccept: text/html\x0d\x0a\x0d\x0aHi there shortie");

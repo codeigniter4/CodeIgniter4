@@ -1,0 +1,128 @@
+# total 25 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Cannot access property \$insert_id on object\|resource\|false\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockConnection.php
+
+        -
+            message: '#^Cannot access property \$name on array\|object\.$#'
+            count: 1
+            path: ../../tests/system/Database/Live/FabricatorLiveTest.php
+
+        -
+            message: '#^Cannot access property \$currentRow on CodeIgniter\\Database\\ResultInterface\|false\.$#'
+            count: 1
+            path: ../../tests/system/Database/Live/GetTest.php
+
+        -
+            message: '#^Cannot access property \$name on array\|object\.$#'
+            count: 4
+            path: ../../tests/system/Database/Live/GetTest.php
+
+        -
+            message: '#^Cannot access property \$resultID on CodeIgniter\\Database\\ResultInterface\|false\.$#'
+            count: 1
+            path: ../../tests/system/Database/Live/GetTest.php
+
+        -
+            message: '#^Cannot access property \$id on array\.$#'
+            count: 8
+            path: ../../tests/system/Models/FindModelTest.php
+
+        -
+            message: '#^Cannot access property \$name on array\.$#'
+            count: 5
+            path: ../../tests/system/Models/FindModelTest.php
+
+        -
+            message: '#^Cannot access property \$total on array\.$#'
+            count: 1
+            path: ../../tests/system/Models/FindModelTest.php
+
+        -
+            message: '#^Cannot access property \$country on array\.$#'
+            count: 1
+            path: ../../tests/system/Models/InsertModelTest.php
+
+        -
+            message: '#^Cannot access property \$created_at on array\.$#'
+            count: 3
+            path: ../../tests/system/Models/InsertModelTest.php
+
+        -
+            message: '#^Cannot access property \$created_at on array\.$#'
+            count: 1
+            path: ../../tests/system/Models/MiscellaneousModelTest.php
+
+        -
+            message: '#^Cannot access property \$description on array\.$#'
+            count: 3
+            path: ../../tests/system/Models/SaveModelTest.php
+
+        -
+            message: '#^Cannot access property \$id on array\.$#'
+            count: 1
+            path: ../../tests/system/Models/SaveModelTest.php
+
+        -
+            message: '#^Cannot access property \$name on array\.$#'
+            count: 1
+            path: ../../tests/system/Models/SaveModelTest.php
+
+        -
+            message: '#^Cannot access property \$country on array\.$#'
+            count: 2
+            path: ../../tests/system/Models/TimestampModelTest.php
+
+        -
+            message: '#^Cannot access property \$created_at on array\.$#'
+            count: 2
+            path: ../../tests/system/Models/TimestampModelTest.php
+
+        -
+            message: '#^Cannot access property \$id on array\.$#'
+            count: 2
+            path: ../../tests/system/Models/TimestampModelTest.php
+
+        -
+            message: '#^Cannot access property \$updated_at on array\.$#'
+            count: 2
+            path: ../../tests/system/Models/TimestampModelTest.php
+
+        -
+            message: '#^Cannot access property \$value on list\<array\>\.$#'
+            count: 2
+            path: ../../tests/system/Models/UpdateModelTest.php
+
+        -
+            message: '#^Cannot access property \$key on array\.$#'
+            count: 7
+            path: ../../tests/system/Models/WhenWhenNotModelTest.php
+
+        -
+            message: '#^Cannot access property \$value on array\.$#'
+            count: 1
+            path: ../../tests/system/Models/WhenWhenNotModelTest.php
+
+        -
+            message: '#^Cannot access property \$created_at on array\|object\.$#'
+            count: 1
+            path: ../../tests/system/Test/FabricatorTest.php
+
+        -
+            message: '#^Cannot access property \$deleted_at on array\|object\.$#'
+            count: 1
+            path: ../../tests/system/Test/FabricatorTest.php
+
+        -
+            message: '#^Cannot access property \$id on array\|object\.$#'
+            count: 1
+            path: ../../tests/system/Test/FabricatorTest.php
+
+        -
+            message: '#^Cannot access property \$updated_at on array\|object\.$#'
+            count: 1
+            path: ../../tests/system/Test/FabricatorTest.php

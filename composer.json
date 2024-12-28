@@ -17,18 +17,19 @@
         "psr/log": "^3.0"
     },
     "require-dev": {
-        "codeigniter/phpstan-codeigniter": "^1.4",
+        "codeigniter/phpstan-codeigniter": "^1.5.1",
         "fakerphp/faker": "^1.9",
         "kint-php/kint": "^5.0.4",
         "mikey179/vfsstream": "^1.6",
         "nexusphp/tachycardia": "^2.0",
         "phpstan/extension-installer": "^1.4",
-        "phpstan/phpstan": "^1.11",
-        "phpstan/phpstan-strict-rules": "^1.6",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
         "phpunit/phpcov": "^9.0.2 || ^10.0",
         "phpunit/phpunit": "^10.5.16 || ^11.2",
         "predis/predis": "^1.1 || ^2.0",
-        "rector/rector": "1.2.4"
+        "rector/rector": "2.0.4",
+        "shipmonk/phpstan-baseline-per-identifier": "^2.0"
     },
     "replace": {
         "codeigniter4/framework": "self.version"
@@ -80,7 +81,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-develop": "4.x-dev"
+            "dev-develop": "4.x-dev",
+            "dev-master": "4.x-dev"
         }
     },
     "scripts": {
@@ -110,7 +112,12 @@
             "utils/vendor/bin/php-cs-fixer fix --ansi --verbose --diff"
         ],
         "metrics": "utils/vendor/bin/phpmetrics --config=phpmetrics.json",
-        "phpstan:baseline": "vendor/bin/phpstan analyse --ansi --generate-baseline=phpstan-baseline.php",
+        "phpstan:baseline": [
+            "bash -c \"rm -rf utils/phpstan-baseline/*.neon\"",
+            "bash -c \"touch utils/phpstan-baseline/loader.neon\"",
+            "phpstan analyse --ansi --generate-baseline=utils/phpstan-baseline/loader.neon",
+            "split-phpstan-baseline utils/phpstan-baseline/loader.neon"
+        ],
         "phpstan:check": "vendor/bin/phpstan analyse --verbose --ansi",
         "sa": "@analyze",
         "style": "@cs-fix",

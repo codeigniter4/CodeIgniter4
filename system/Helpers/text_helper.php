@@ -741,7 +741,7 @@ if (! function_exists('excerpt')) {
             $count = ++$count + strlen($s);
         }
 
-        $ellPre = $phrase ? $ellipsis : '';
+        $ellPre = $phrase !== null ? $ellipsis : '';
 
         return str_replace('  ', ' ', $ellPre . $prev . $phrase . $post . $ellipsis);
     }

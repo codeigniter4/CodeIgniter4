@@ -32,7 +32,6 @@ use TypeError;
 final class DotEnvTest extends CIUnitTestCase
 {
     private ?vfsStreamDirectory $root;
-    private string $path;
     private string $fixturesFolder;
 
     #[WithoutErrorHandler]
@@ -42,8 +41,8 @@ final class DotEnvTest extends CIUnitTestCase
 
         $this->root           = vfsStream::setup();
         $this->fixturesFolder = $this->root->url();
-        $this->path           = TESTPATH . 'system/Config/fixtures';
-        vfsStream::copyFromFileSystem($this->path, $this->root);
+        $path                 = TESTPATH . 'system/Config/fixtures';
+        vfsStream::copyFromFileSystem($path, $this->root);
 
         $file = 'unreadable.env';
         $path = rtrim($this->fixturesFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;

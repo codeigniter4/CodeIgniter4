@@ -1,11 +1,5 @@
-services:
-	-
-		class: Utils\PHPStan\CheckUseStatementsAfterLicenseRule
-		tags:
-			- phpstan.rules.rule
-
 includes:
-	- phpstan-baseline.php
+	- utils/phpstan-baseline/loader.neon
 
 parameters:
 	phpVersion: 80100
@@ -18,7 +12,6 @@ parameters:
 		- app
 		- system
 		- tests
-		- utils/src/PHPStan
 	excludePaths:
 		- app/Views/errors/cli/*
 		- app/Views/errors/html/*
@@ -40,5 +33,10 @@ parameters:
 		allRules: false
 		disallowedLooseComparison: true
 		booleansInConditions: true
-		disallowedConstructs: true
+		disallowedBacktick: true
+		disallowedEmpty: true
+		disallowedImplicitArrayCreation: true
+		disallowedShortTernary: true
 		matchingInheritedMethodNames: true
+	shipmonkBaselinePerIdentifier:
+		directory: %currentWorkingDirectory%

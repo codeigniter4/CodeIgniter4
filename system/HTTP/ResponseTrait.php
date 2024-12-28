@@ -123,18 +123,21 @@ trait ResponseTrait
      */
     public function setLink(PagerInterface $pager)
     {
-        $links = '';
+        $links    = '';
+        $previous = $pager->getPreviousPageURI();
 
-        if ($previous = $pager->getPreviousPageURI()) {
+        if (is_string($previous) && $previous !== '') {
             $links .= '<' . $pager->getPageURI($pager->getFirstPage()) . '>; rel="first",';
             $links .= '<' . $previous . '>; rel="prev"';
         }
 
-        if (($next = $pager->getNextPageURI()) && $previous) {
+        $next = $pager->getNextPageURI();
+
+        if (is_string($next) && $next !== '' && is_string($previous) && $previous !== '') {
             $links .= ',';
         }
 
-        if ($next) {
+        if (is_string($next) && $next !== '') {
             $links .= '<' . $next . '>; rel="next",';
             $links .= '<' . $pager->getPageURI($pager->getLastPage()) . '>; rel="last"';
         }
@@ -566,7 +569,7 @@ trait ResponseTrait
      */
     public function hasCookie(string $name, ?string $value = null, string $prefix = ''): bool
     {
-        $prefix = $prefix ?: Cookie::setDefaults()['prefix']; // to retain BC
+        $prefix = $prefix !== '' ? $prefix : Cookie::setDefaults()['prefix']; // to retain BC
 
         return $this->cookieStore->has($name, $prefix, $value);
     }
@@ -586,7 +589,7 @@ trait ResponseTrait
         }
 
         try {
-            $prefix = $prefix ?: Cookie::setDefaults()['prefix']; // to retain BC
+            $prefix = $prefix !== '' ? $prefix : Cookie::setDefaults()['prefix']; // to retain BC
 
             return $this->cookieStore->get($name, $prefix);
         } catch (CookieException $e) {
@@ -607,7 +610,7 @@ trait ResponseTrait
             return $this;
         }
 
-        $prefix = $prefix ?: Cookie::setDefaults()['prefix']; // to retain BC
+        $prefix = $prefix !== '' ? $prefix : Cookie::setDefaults()['prefix']; // to retain BC
 
         $prefixed = $prefix . $name;
         $store    = $this->cookieStore;

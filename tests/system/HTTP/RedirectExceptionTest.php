@@ -46,7 +46,7 @@ final class RedirectExceptionTest extends TestCase
     public function testResponse(): void
     {
         $response = (new RedirectException(
-            Services::response()
+            service('response')
                 ->redirect('redirect')
                 ->setCookie('cookie', 'value')
                 ->setHeader('Redirect-Header', 'value')
@@ -65,12 +65,12 @@ final class RedirectExceptionTest extends TestCase
             'The Response object passed to RedirectException does not contain a redirect address.'
         );
 
-        new RedirectException(Services::response());
+        new RedirectException(service('response'));
     }
 
     public function testResponseWithoutStatusCode(): void
     {
-        $response = (new RedirectException(Services::response()->setHeader('Location', 'location')))->getResponse();
+        $response = (new RedirectException(service('response')->setHeader('Location', 'location')))->getResponse();
 
         $this->assertSame('location', $response->getHeaderLine('location'));
         $this->assertSame(302, $response->getStatusCode());
@@ -82,7 +82,7 @@ final class RedirectExceptionTest extends TestCase
 
         $uri      = 'http://location';
         $expected = 'INFO - ' . Time::now()->format('Y-m-d') . ' --> REDIRECTED ROUTE at ' . $uri;
-        $response = (new RedirectException(Services::response()->redirect($uri)))->getResponse();
+        $response = (new RedirectException(service('response')->redirect($uri)))->getResponse();
 
         $logs = TestHandler::getLogs();
 
@@ -97,7 +97,7 @@ final class RedirectExceptionTest extends TestCase
 
         $uri      = 'http://location';
         $expected = 'INFO - ' . Time::now()->format('Y-m-d') . ' --> REDIRECTED ROUTE at ' . $uri;
-        $response = (new RedirectException(Services::response()->redirect($uri, 'refresh')))->getResponse();
+        $response = (new RedirectException(service('response')->redirect($uri, 'refresh')))->getResponse();
 
         $logs = TestHandler::getLogs();
 

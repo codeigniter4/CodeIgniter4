@@ -1,0 +1,33 @@
+#############
+Version 4.5.6
+#############
+
+Release Date: December 28, 2024
+
+**4.5.6 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+**********
+Bugs Fixed
+**********
+
+- **RequestTrait:** Fixed a bug where the ``fetchGlobal()`` method did not allow handling data by numeric key when stored as a list.
+- **Session Library:** The session initialization debug message now uses the correct log type "debug" instead of "info".
+- **Validation:** Fixed the ``getValidated()`` method that did not return valid data when validation rules used multiple asterisks.
+- **Database:** Fixed the case insensitivity option in the ``like()`` method when dealing with accented characters.
+- **Parser:** Fixed bug that caused equal key names to be replaced by the key name defined first.
+- **DownloadResponse:** Fixed a bug that prevented setting custom cache headers. We can now also use the ``setCache()`` method.
+- **DownloadResponse:** Fixed a bug involving sending a custom "Expires-Disposition" header.
+- **Routing:** Fixed a TypeError in `str_replace()` when `Routing::$translateURIDashes` is set to `true` and a route is defined using a closure.
+- **Validation:** Fixed a bug where complex language strings were not properly handled.
+- **CURLRequest:** Added support for handling proxy responses using HTTP versions other than 1.1.
+- **Database:** Fixed a bug that caused ``Postgre\Connection::reconnect()`` method to throw an error when the connection had not yet been established.
+- **Model:** Fixed a bug that caused the ``Model::getIdValue()`` method to not correctly recognize the primary key in the ``Entity`` object if a data mapping for the primary key was used.
+- **Database:** Fixed a bug in prepared statement to correctly handle binary data.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

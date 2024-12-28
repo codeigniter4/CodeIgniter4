@@ -54,7 +54,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
 
-        $this->routes = new RouteCollection(Services::locator(), new Modules(), new Routing());
+        $this->routes = new RouteCollection(service('locator'), new Modules(), new Routing());
         Services::injectMock('routes', $this->routes);
 
         $this->request = new MockIncomingRequest(
@@ -237,7 +237,7 @@ final class RedirectResponseTest extends CIUnitTestCase
     {
         $_SESSION = [];
 
-        $baseResponse = Services::response();
+        $baseResponse = service('response');
         $baseResponse->setCookie('foo', 'bar');
 
         $response = new RedirectResponse(new App());

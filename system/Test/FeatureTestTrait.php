@@ -179,8 +179,8 @@ trait FeatureTestTrait
         $method = strtoupper($method);
 
         // Simulate having a blank session
-        $_SESSION                  = [];
-        $_SERVER['REQUEST_METHOD'] = $method;
+        $_SESSION = [];
+        service('superglobals')->setServer('REQUEST_METHOD', $method);
 
         $request = $this->setupRequest($method, $path);
         $request = $this->setupHeaders($request);
@@ -189,7 +189,9 @@ trait FeatureTestTrait
         $request = $this->setRequestBody($request, $params);
 
         // Initialize the RouteCollection
-        if (! $routes = $this->routes) {
+        $routes = $this->routes;
+
+        if ($routes !== []) {
             $routes = service('routes')->loadRoutes();
         }
 
@@ -200,10 +202,10 @@ trait FeatureTestTrait
         Services::injectMock('request', $request);
 
         // Make sure filters are reset between tests
-        Services::injectMock('filters', Services::filters(null, false));
+        Services::injectMock('filters', service('filters', null, false));
 
         // Make sure validation is reset between tests
-        Services::injectMock('validation', Services::validation(null, false));
+        Services::injectMock('validation', service('validation', null, false));
 
         $response = $this->app
             ->setContext('web')
@@ -321,7 +323,7 @@ trait FeatureTestTrait
 
         Services::injectMock('uri', $uri);
 
-        $request = Services::incomingrequest($config, false);
+        $request = service('incomingrequest', $config, false);
 
         $request->setMethod($method);
         $request->setProtocolVersion('1.1');

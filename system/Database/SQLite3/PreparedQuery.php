@@ -75,6 +75,8 @@ class PreparedQuery extends BasePreparedQuery
                 $bindType = SQLITE3_INTEGER;
             } elseif (is_float($item)) {
                 $bindType = SQLITE3_FLOAT;
+            } elseif (is_string($item) && $this->isBinary($item)) {
+                $bindType = SQLITE3_BLOB;
             } else {
                 $bindType = SQLITE3_TEXT;
             }

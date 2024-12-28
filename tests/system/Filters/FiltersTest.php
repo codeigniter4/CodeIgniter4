@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
-use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\Filters\fixtures\GoogleCurious;
@@ -66,16 +65,16 @@ final class FiltersTest extends CIUnitTestCase
             'App'           => APPPATH,
             'Tests\Support' => TESTPATH . '_support',
         ];
-        Services::autoloader()->addNamespace($defaults);
+        service('autoloader')->addNamespace($defaults);
 
         $_SERVER = [];
 
-        $this->response = Services::response();
+        $this->response = service('response');
     }
 
     private function createFilters(FiltersConfig $config, $request = null): Filters
     {
-        $request ??= Services::request();
+        $request ??= service('request');
 
         return new Filters($config, $request, $this->response);
     }

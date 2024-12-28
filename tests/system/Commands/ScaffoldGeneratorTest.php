@@ -17,7 +17,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Autoload;
 use Config\Modules;
-use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -31,7 +30,7 @@ final class ScaffoldGeneratorTest extends CIUnitTestCase
     protected function setUp(): void
     {
         $this->resetServices();
-        Services::autoloader()->initialize(new Autoload(), new Modules());
+        service('autoloader')->initialize(new Autoload(), new Modules());
 
         parent::setUp();
     }

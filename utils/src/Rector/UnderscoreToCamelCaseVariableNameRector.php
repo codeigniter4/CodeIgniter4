@@ -164,12 +164,12 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
 
     private function updateDocblock(string $variableName, string $camelCaseName, ?FunctionLike $functionLike): void
     {
-        if ($functionLike === null) {
+        if (! $functionLike instanceof FunctionLike) {
             return;
         }
 
         $docComment = $functionLike->getDocComment();
-        if ($docComment === null) {
+        if (! $docComment instanceof Doc) {
             return;
         }
 
@@ -178,7 +178,7 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
             return;
         }
 
-        if (! preg_match(sprintf(self::PARAM_NAME_REGEX, $variableName), $docCommentText)) {
+        if (preg_match(sprintf(self::PARAM_NAME_REGEX, $variableName), $docCommentText) !== 1) {
             return;
         }
 

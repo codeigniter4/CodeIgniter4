@@ -246,6 +246,8 @@ array through in the second parameter:
 
 .. literalinclude:: queries/018.php
 
+.. note:: Currently, the only database that actually uses the array of option is SQLSRV.
+
 Executing the Query
 ===================
 

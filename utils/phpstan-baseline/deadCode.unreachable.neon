@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Unreachable statement \- code above always terminates\.$#'
+            count: 1
+            path: ../../tests/system/Models/UpdateModelTest.php

@@ -105,7 +105,7 @@ final class AutoRouter implements AutoRouterInterface
         if ($httpVerb !== 'CLI') {
             $controller = '\\' . $this->defaultNamespace;
 
-            $controller .= $this->directory ? str_replace('/', '\\', $this->directory) : '';
+            $controller .= $this->directory !== null ? str_replace('/', '\\', $this->directory) : '';
             $controller .= $controllerName;
 
             $controller = strtolower($controller);
@@ -244,7 +244,7 @@ final class AutoRouter implements AutoRouterInterface
      */
     public function setDirectory(?string $dir = null, bool $append = false, bool $validate = true)
     {
-        if ($dir === null || $dir === '') {
+        if ((string) $dir === '') {
             $this->directory = null;
 
             return;
@@ -260,7 +260,7 @@ final class AutoRouter implements AutoRouterInterface
             }
         }
 
-        if ($append !== true || ($this->directory === null || $this->directory === '')) {
+        if (! $append || ((string) $this->directory === '')) {
             $this->directory = trim($dir, '/') . '/';
         } else {
             $this->directory .= trim($dir, '/') . '/';
@@ -275,7 +275,7 @@ final class AutoRouter implements AutoRouterInterface
      */
     public function directory(): string
     {
-        return ($this->directory !== null && $this->directory !== '') ? $this->directory : '';
+        return ((string) $this->directory !== '') ? $this->directory : '';
     }
 
     private function controllerName(): string

@@ -1046,7 +1046,7 @@ final class URITest extends CIUnitTestCase
         $config->indexPage = '';
         Factories::injectMock('config', 'App', $config);
 
-        $request = Services::request($config);
+        $request = service('request', $config);
         Services::injectMock('request', $request);
 
         // going through request
@@ -1080,7 +1080,7 @@ final class URITest extends CIUnitTestCase
         $config->indexPage = 'index.php';
         Factories::injectMock('config', 'App', $config);
 
-        $request = Services::request($config);
+        $request = service('request', $config);
         Services::injectMock('request', $request);
 
         // going through request
@@ -1120,7 +1120,7 @@ final class URITest extends CIUnitTestCase
         $config->forceGlobalSecureRequests = true;
         Factories::injectMock('config', 'App', $config);
 
-        $request = Services::request($config);
+        $request = service('request', $config);
         Services::injectMock('request', $request);
 
         // Detected by request

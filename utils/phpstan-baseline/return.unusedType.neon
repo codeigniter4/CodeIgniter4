@@ -1,0 +1,33 @@
+# total 6 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Method CodeIgniter\\Commands\\Utilities\\ConfigCheck\:\:run\(\) never returns void so it can be removed from the return type\.$#'
+            count: 1
+            path: ../../system/Commands/Utilities/ConfigCheck.php
+
+        -
+            message: '#^Method CodeIgniter\\Commands\\Utilities\\Environment\:\:run\(\) never returns int so it can be removed from the return type\.$#'
+            count: 1
+            path: ../../system/Commands/Utilities/Environment.php
+
+        -
+            message: '#^Method CodeIgniter\\Commands\\Utilities\\Optimize\:\:run\(\) never returns void so it can be removed from the return type\.$#'
+            count: 1
+            path: ../../system/Commands/Utilities/Optimize.php
+
+        -
+            message: '#^Method CodeIgniter\\Commands\\Utilities\\PhpIniCheck\:\:run\(\) never returns void so it can be removed from the return type\.$#'
+            count: 1
+            path: ../../system/Commands/Utilities/PhpIniCheck.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\PhpStreamWrapper\:\:stream_read\(\) never returns false so it can be removed from the return type\.$#'
+            count: 1
+            path: ../../system/Test/PhpStreamWrapper.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\PhpStreamWrapper\:\:stream_stat\(\) never returns false so it can be removed from the return type\.$#'
+            count: 1
+            path: ../../system/Test/PhpStreamWrapper.php

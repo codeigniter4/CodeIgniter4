@@ -356,9 +356,9 @@ class ContentSecurityPolicy
     }
 
     /**
-     * Adds a new base_uri value. Can be either a URI class or a simple string.
+     * Adds a new baseURI value. Can be either a URI class or a simple string.
      *
-     * base_uri restricts the URLs that can appear in a page's <base> element.
+     * baseURI restricts the URLs that can appear in a page's <base> element.
      *
      * @see http://www.w3.org/TR/CSP/#directive-base-uri
      *
@@ -713,7 +713,7 @@ class ContentSecurityPolicy
         $pattern = '/(' . preg_quote($this->styleNonceTag, '/')
             . '|' . preg_quote($this->scriptNonceTag, '/') . ')/';
 
-        $body = preg_replace_callback($pattern, function ($match) {
+        $body = preg_replace_callback($pattern, function ($match): string {
             $nonce = $match[0] === $this->styleNonceTag ? $this->getStyleNonce() : $this->getScriptNonce();
 
             return "nonce=\"{$nonce}\"";

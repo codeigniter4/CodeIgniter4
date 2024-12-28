@@ -84,7 +84,7 @@ final class EventsModelTest extends LiveModelTestCase
 
         $result = $this->model->find(1);
         $this->assertTrue($this->model->hasToken('beforeFind'));
-        $this->assertSame($result, 'foobar');
+        $this->assertSame('foobar', $result);
     }
 
     public function testBeforeFindReturnDataPreventsAfterFind(): void

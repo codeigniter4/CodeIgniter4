@@ -16,7 +16,6 @@ namespace CodeIgniter\Test;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
 use Config\App;
-use Config\Services;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -302,7 +301,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->getTestResponse('');
         $this->response->setJSON($data, true);
 
-        $formatter = Services::format()->getFormatter('application/json');
+        $formatter = service('format')->getFormatter('application/json');
         $this->assertSame($formatter->format($data), $this->testResponse->getJSON());
     }
 
@@ -349,7 +348,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->getTestResponse('');
         $this->response->setXML($data);
 
-        $formatter = Services::format()->getFormatter('application/xml');
+        $formatter = service('format')->getFormatter('application/xml');
         $this->assertSame($formatter->format($data), $this->testResponse->getXML());
     }
 
@@ -429,7 +428,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->getTestResponse('');
         $this->response->setJSON($data, true);
 
-        $formatter = Services::format()->getFormatter('application/json');
+        $formatter = service('format')->getFormatter('application/json');
         $this->testResponse->assertJSONExact($formatter->format($data));
     }
 

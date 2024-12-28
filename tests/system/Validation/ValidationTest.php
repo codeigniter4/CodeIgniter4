@@ -20,7 +20,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
-use Config\Services;
+use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\ExpectationFailedException;
@@ -79,7 +79,7 @@ class ValidationTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->validation = new Validation((object) static::$config, Services::renderer());
+        $this->validation = new Validation((object) static::$config, service('renderer'));
         $this->validation->reset();
     }
 
@@ -224,7 +224,7 @@ class ValidationTest extends CIUnitTestCase
 
         yield 'fail-deep-object' => [
             false,
-            new Validation((object) static::$config, Services::renderer()),
+            new Validation((object) static::$config, service('renderer')),
         ];
 
         yield 'pass-multiple-string' => [
@@ -311,7 +311,7 @@ class ValidationTest extends CIUnitTestCase
         $this->validation->setRules([
             'foo' => [
                 'required',
-                static function ($value, $data, &$error, $field) {
+                static function ($value, $data, &$error, $field): bool {
                     if ($value !== 'abc') {
                         $error = 'The ' . $field . ' value is not "abc"';
 
@@ -1009,7 +1009,7 @@ class ValidationTest extends CIUnitTestCase
             $rulesets = static::$config['ruleSets'];
 
             static::$config['ruleSets'] = null;
-            (new Validation((object) static::$config, Services::renderer()))
+            (new Validation((object) static::$config, service('renderer')))
                 ->reset()
                 ->run(['foo' => '']);
 
@@ -1349,6 +1349,30 @@ class ValidationTest extends CIUnitTestCase
         $this->validation->setRules($rules, []);
         $this->validation->run(['foo' => 'abc']);
         $this->assertSame('The Foo Bar Translated field is very short.', $this->validation->getError('foo'));
+    }
+
+    public function testTranslatedLabelWithCustomErrorMessageAndComplexLanguageString(): void
+    {
+        // Lithuanian language used as an example
+        $rules = [
+            'foo' => [
+                'label'  => 'Lauko pavadinimas',
+                'rules'  => 'min_length[5]',
+                'errors' => [
+                    'min_length' => '{param, plural,
+                        =0 {Lauke „{field}" negali būti mažiau nei nulis ženklų}
+                        =1 {Lauke „{field}" negali būti mažiau nei vienas ženklas}
+                        one {Lauke „{field}" negali būti mažiau nei # ženklas}
+                        few {Lauke „{field}" negali būti mažiau nei # ženklai}
+                        other {Lauke „{field}" negali būti mažiau nei # ženklų}
+                    }',
+                ],
+            ],
+        ];
+
+        $this->validation->setRules($rules, []);
+        $this->validation->run(['foo' => 'abc']);
+        $this->assertSame('Lauke „Lauko pavadinimas" negali būti mažiau nei 5 ženklų', $this->validation->getError('foo'));
     }
 
     public function testTranslatedLabelTagReplacement(): void
@@ -1825,5 +1849,85 @@ class ValidationTest extends CIUnitTestCase
             ['contacts.*.name' => 'The contacts.*.name field is required.'],
             $this->validation->getErrors()
         );
+    }
+
+    /**
+     * @param array<string, mixed>  $data
+     * @param array<string, string> $rules
+     * @param array<string, mixed>  $expectedData
+     *
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9219
+     */
+    #[DataProvider('provideMultipleAsterisk')]
+    public function testRuleWithMultipleAsterisk(
+        array $data = [],
+        array $rules = [],
+        bool $expectedCheck = false,
+        array $expectedData = []
+    ): void {
+        $this->validation->setRules($rules);
+
+        $this->assertSame($expectedCheck, $this->validation->run($data));
+        $this->assertSame($expectedData, $this->validation->getValidated());
+    }
+
+    public static function provideMultipleAsterisk(): Generator
+    {
+        yield 'success' => [
+            [
+                'dates' => [
+                    23 => [
+                        45 => 'Its Mee!',
+                    ],
+                ],
+                'foo' => [
+                    'bar' => [
+                        'data' => [
+                            'name'     => 'John Doe',
+                            'age'      => 29,
+                            'location' => 'Indonesia',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'dates.*.*' => 'required',
+                'foo.*.*.*' => 'required',
+            ],
+            true,
+            [
+                'dates' => [
+                    23 => [
+                        45 => 'Its Mee!',
+                    ],
+                ],
+                'foo' => [
+                    'bar' => [
+                        'data' => [
+                            'name'     => 'John Doe',
+                            'age'      => 29,
+                            'location' => 'Indonesia',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        yield 'failed' => [
+            [
+                'foo' => [
+                    'bar' => [
+                        'data' => [
+                            'name'     => '',
+                            'age'      => 29,
+                            'location' => 'Indonesia',
+                        ],
+                    ],
+                ],
+            ],
+            ['foo.*.*.*' => 'required'],
+            false,
+            [],
+        ];
     }
 }

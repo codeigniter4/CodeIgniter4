@@ -36,7 +36,7 @@ final class AutoRouteCollector
         private readonly string $defaultMethod,
         private readonly array $httpMethods,
         private readonly array $protectedControllers,
-        private string $prefix = ''
+        private readonly string $prefix = ''
     ) {
     }
 
@@ -122,8 +122,10 @@ final class AutoRouteCollector
             $filtersShortest = $filterCollector->get($route['method'], $routePath . $sampleUri);
 
             // Get common array elements
-            $filters['before'] = array_intersect($filtersLongest['before'], $filtersShortest['before']);
-            $filters['after']  = array_intersect($filtersLongest['after'], $filtersShortest['after']);
+            $filters = [
+                'before' => array_intersect($filtersLongest['before'], $filtersShortest['before']),
+                'after'  => array_intersect($filtersLongest['after'], $filtersShortest['after']),
+            ];
 
             $route['before'] = implode(' ', array_map(class_basename(...), $filters['before']));
             $route['after']  = implode(' ', array_map(class_basename(...), $filters['after']));

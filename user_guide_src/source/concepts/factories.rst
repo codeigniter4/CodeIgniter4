@@ -334,14 +334,14 @@ Set the following property to ``true`` in **app/Config/Optimize.php**::
 
     public bool $configCacheEnabled = true;
 
-Since v4.5.0, you can enable this with the ``spark optimize`` command.
+Or you can enable this with the ``spark optimize`` command.
 
 .. note::
     This property cannot be overridden by
     :ref:`environment variables <configuration-classes-and-environment-variables>`.
 
 .. note::
-    Prior to v4.5.0, uncomment the following code in **public/index.php**::
+    In v4.4.x, uncomment the following code in **public/index.php**::
 
         --- a/public/index.php
         +++ b/public/index.php

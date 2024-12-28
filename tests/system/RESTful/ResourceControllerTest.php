@@ -69,14 +69,14 @@ final class ResourceControllerTest extends CIUnitTestCase
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 
         // Inject mock router.
-        $this->routes = Services::routes();
+        $this->routes = service('routes');
         $this->routes->resource('work', ['controller' => '\\' . Worker::class]);
         Services::injectMock('routes', $this->routes);
 
         $config            = new App();
         $this->codeigniter = new MockCodeIgniter($config);
 
-        $response = Services::response();
+        $response = service('response');
         $response->pretend();
     }
 

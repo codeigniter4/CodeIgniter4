@@ -1,0 +1,388 @@
+# total 77 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Cache/Handlers/FileHandler.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Commands/Database/CreateDatabase.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Commands/Database/MigrateStatus.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Commands/Database/Seed.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Config/BaseService.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Config/DotEnv.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Config/Services.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 29
+            path: ../../system/Database/BaseBuilder.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 13
+            path: ../../system/Database/BaseConnection.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 3
+            path: ../../system/Database/BasePreparedQuery.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Database/BaseResult.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 4
+            path: ../../system/Database/BaseUtils.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Database/Database.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 12
+            path: ../../system/Database/Forge.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 5
+            path: ../../system/Database/MigrationRunner.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 11
+            path: ../../system/Database/MySQLi/Connection.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 4
+            path: ../../system/Database/MySQLi/Forge.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Database/MySQLi/Result.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 3
+            path: ../../system/Database/OCI8/Builder.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Database/OCI8/Connection.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 3
+            path: ../../system/Database/OCI8/Forge.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 7
+            path: ../../system/Database/Postgre/Builder.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Database/Postgre/Connection.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 4
+            path: ../../system/Database/Postgre/Forge.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Database/Postgre/Result.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 3
+            path: ../../system/Database/Query.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 9
+            path: ../../system/Database/SQLSRV/Builder.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 6
+            path: ../../system/Database/SQLSRV/Connection.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 5
+            path: ../../system/Database/SQLSRV/Forge.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Database/SQLSRV/Result.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Database/SQLite3/Builder.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Database/SQLite3/Connection.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Database/SQLite3/Forge.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Database/SQLite3/Table.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 5
+            path: ../../system/Debug/Timer.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Debug/Toolbar.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Debug/Toolbar/Collectors/Logs.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 12
+            path: ../../system/Email/Email.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Encryption/Encryption.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Encryption/Handlers/OpenSSLHandler.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Encryption/Handlers/SodiumHandler.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Entity/Entity.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Files/File.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Filters/Filters.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 10
+            path: ../../system/HTTP/CURLRequest.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 6
+            path: ../../system/HTTP/ContentSecurityPolicy.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/HTTP/IncomingRequest.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/HTTP/Message.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 3
+            path: ../../system/HTTP/Request.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/HTTP/Response.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 4
+            path: ../../system/HTTP/SiteURI.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 10
+            path: ../../system/HTTP/URI.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/HTTP/UserAgent.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Helpers/form_helper.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Helpers/test_helper.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Helpers/url_helper.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Honeypot/Honeypot.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 3
+            path: ../../system/Images/Handlers/BaseHandler.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 8
+            path: ../../system/Images/Handlers/ImageMagickHandler.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Images/Image.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Log/Handlers/FileHandler.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Pager/Pager.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 4
+            path: ../../system/RESTful/BaseResource.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 6
+            path: ../../system/Router/RouteCollection.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Router/Router.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Session/Handlers/DatabaseHandler.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Session/Handlers/FileHandler.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/Session/Handlers/MemcachedHandler.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 2
+            path: ../../system/Session/Handlers/RedisHandler.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 4
+            path: ../../system/Validation/Rules.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../system/View/Filters.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../tests/system/HomeTest.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../tests/system/Session/SessionTest.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 4
+            path: ../../tests/system/Test/ControllerTestTraitTest.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../tests/system/Test/FeatureTestAutoRoutingImprovedTest.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../tests/system/Test/FeatureTestTraitTest.php
+
+        -
+            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+            count: 1
+            path: ../../tests/system/Test/FilterTestTraitTest.php

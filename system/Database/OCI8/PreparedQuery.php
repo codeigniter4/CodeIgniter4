@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\OCI8;
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use OCILob;
 
 /**
  * Prepared query for OCI8
@@ -73,11 +74,23 @@ class PreparedQuery extends BasePreparedQuery
             throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
         }
 
+        $binaryData = null;
+
         foreach (array_keys($data) as $key) {
-            oci_bind_by_name($this->statement, ':' . $key, $data[$key]);
+            if (is_string($data[$key]) && $this->isBinary($data[$key])) {
+                $binaryData = oci_new_descriptor($this->db->connID, OCI_D_LOB);
+                $binaryData->writeTemporary($data[$key], OCI_TEMP_BLOB);
+                oci_bind_by_name($this->statement, ':' . $key, $binaryData, -1, OCI_B_BLOB);
+            } else {
+                oci_bind_by_name($this->statement, ':' . $key, $data[$key]);
+            }
         }
 
         $result = oci_execute($this->statement, $this->db->commitMode);
+
+        if ($binaryData instanceof OCILob) {
+            $binaryData->free();
+        }
 
         if ($result && $this->lastInsertTableName !== '') {
             $this->db->lastInsertedTableName = $this->lastInsertTableName;
@@ -113,7 +126,7 @@ class PreparedQuery extends BasePreparedQuery
         // Track our current value
         $count = 0;
 
-        return preg_replace_callback('/\?/', static function ($matches) use (&$count) {
+        return preg_replace_callback('/\?/', static function ($matches) use (&$count): string {
             return ':' . ($count++);
         }, $sql);
     }

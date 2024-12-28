@@ -112,8 +112,8 @@ if (! function_exists('img')) {
         $img = '<img';
 
         // Check for a relative URI
-        if (! preg_match('#^([a-z]+:)?//#i', $src['src']) && ! str_starts_with($src['src'], 'data:')) {
-            if ($indexPage === true) {
+        if (preg_match('#^([a-z]+:)?//#i', $src['src']) !== 1 && ! str_starts_with($src['src'], 'data:')) {
+            if ($indexPage) {
                 $img .= ' src="' . site_url($src['src']) . '"';
             } else {
                 $img .= ' src="' . slash_item('baseURL') . $src['src'] . '"';
@@ -206,8 +206,8 @@ if (! function_exists('script_tag')) {
         }
 
         foreach ($src as $k => $v) {
-            if ($k === 'src' && ! preg_match('#^([a-z]+:)?//#i', $v)) {
-                if ($indexPage === true) {
+            if ($k === 'src' && preg_match('#^([a-z]+:)?//#i', $v) !== 1) {
+                if ($indexPage) {
                     $script .= 'src="' . site_url($v) . '" ';
                 } else {
                     $script .= 'src="' . slash_item('baseURL') . $v . '" ';
@@ -252,7 +252,7 @@ if (! function_exists('link_tag')) {
             $href      = $href['href'] ?? '';
         }
 
-        if (! preg_match('#^([a-z]+:)?//#i', $href)) {
+        if (preg_match('#^([a-z]+:)?//#i', $href) !== 1) {
             $attributes['href'] = $indexPage ? site_url($href) : slash_item('baseURL') . $href;
         } else {
             $attributes['href'] = $href;
@@ -302,7 +302,7 @@ if (! function_exists('video')) {
 
         if (_has_protocol($src)) {
             $video .= ' src="' . $src . '"';
-        } elseif ($indexPage === true) {
+        } elseif ($indexPage) {
             $video .= ' src="' . site_url($src) . '"';
         } else {
             $video .= ' src="' . slash_item('baseURL') . $src . '"';
@@ -349,7 +349,7 @@ if (! function_exists('audio')) {
 
         if (_has_protocol($src)) {
             $audio .= ' src="' . $src . '"';
-        } elseif ($indexPage === true) {
+        } elseif ($indexPage) {
             $audio .= ' src="' . site_url($src) . '"';
         } else {
             $audio .= ' src="' . slash_item('baseURL') . $src . '"';
@@ -422,7 +422,7 @@ if (! function_exists('source')) {
     function source(string $src, string $type = 'unknown', string $attributes = '', bool $indexPage = false): string
     {
         if (! _has_protocol($src)) {
-            $src = $indexPage === true ? site_url($src) : slash_item('baseURL') . $src;
+            $src = $indexPage ? site_url($src) : slash_item('baseURL') . $src;
         }
 
         $source = '<source src="' . $src
@@ -474,7 +474,7 @@ if (! function_exists('object')) {
     function object(string $data, string $type = 'unknown', string $attributes = '', array $params = [], bool $indexPage = false): string
     {
         if (! _has_protocol($data)) {
-            $data = $indexPage === true ? site_url($data) : slash_item('baseURL') . $data;
+            $data = $indexPage ? site_url($data) : slash_item('baseURL') . $data;
         }
 
         $object = '<object data="' . $data . '" '
@@ -527,7 +527,7 @@ if (! function_exists('embed')) {
     function embed(string $src, string $type = 'unknown', string $attributes = '', bool $indexPage = false): string
     {
         if (! _has_protocol($src)) {
-            $src = $indexPage === true ? site_url($src) : slash_item('baseURL') . $src;
+            $src = $indexPage ? site_url($src) : slash_item('baseURL') . $src;
         }
 
         return '<embed src="' . $src

@@ -1,0 +1,78 @@
+# total 15 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Property CodeIgniter\\Log\\Logger\:\:\$logCache \(array\) on left side of \?\? is not nullable\.$#'
+            count: 1
+            path: ../../system/Debug/Toolbar/Collectors/Logs.php
+
+        -
+            message: '#^Property CodeIgniter\\Files\\File\:\:\$size \(int\) on left side of \?\? is not nullable\.$#'
+            count: 1
+            path: ../../system/Files/File.php
+
+        -
+            message: '#^Property CodeIgniter\\HTTP\\Files\\UploadedFile\:\:\$error \(int\) on left side of \?\? is not nullable\.$#'
+            count: 2
+            path: ../../system/HTTP/Files/UploadedFile.php
+
+        -
+            message: '#^Property CodeIgniter\\HTTP\\Message\:\:\$protocolVersion \(string\) on left side of \?\? is not nullable\.$#'
+            count: 1
+            path: ../../system/HTTP/Message.php
+
+        -
+            message: '#^Property CodeIgniter\\HTTP\\URI\:\:\$fragment \(string\) on left side of \?\? is not nullable\.$#'
+            count: 1
+            path: ../../system/HTTP/URI.php
+
+        -
+            message: '#^Property CodeIgniter\\HTTP\\URI\:\:\$host \(string\) on left side of \?\? is not nullable\.$#'
+            count: 1
+            path: ../../system/HTTP/URI.php
+
+        -
+            message: '#^Property CodeIgniter\\HTTP\\URI\:\:\$path \(string\) on left side of \?\? is not nullable\.$#'
+            count: 1
+            path: ../../system/HTTP/URI.php
+
+        -
+            message: '#^Property CodeIgniter\\Images\\Handlers\\BaseHandler\:\:\$height \(int\) on left side of \?\? is not nullable\.$#'
+            count: 4
+            path: ../../system/Images/Handlers/ImageMagickHandler.php
+
+        -
+            message: '#^Property CodeIgniter\\Images\\Handlers\\BaseHandler\:\:\$width \(int\) on left side of \?\? is not nullable\.$#'
+            count: 4
+            path: ../../system/Images/Handlers/ImageMagickHandler.php
+
+        -
+            message: '#^Property CodeIgniter\\Throttle\\Throttler\:\:\$testTime \(int\) on left side of \?\? is not nullable\.$#'
+            count: 1
+            path: ../../system/Throttle/Throttler.php
+
+        -
+            message: '#^Property CodeIgniter\\Test\\CIUnitTestCase\:\:\$session \(array\) on left side of \?\? is not nullable\.$#'
+            count: 1
+            path: ../../tests/system/HomeTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Test\\CIUnitTestCase\:\:\$session \(array\) on left side of \?\? is not nullable\.$#'
+            count: 1
+            path: ../../tests/system/Test/FeatureTestAutoRoutingImprovedTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Test\\CIUnitTestCase\:\:\$session \(array\) on left side of \?\? is not nullable\.$#'
+            count: 1
+            path: ../../tests/system/Test/FeatureTestTraitTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Test\\FilterTestTraitTest\:\:\$request \(CodeIgniter\\HTTP\\RequestInterface\) on left side of \?\?\= is not nullable\.$#'
+            count: 1
+            path: ../../tests/system/Test/FilterTestTraitTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Test\\FilterTestTraitTest\:\:\$response \(CodeIgniter\\HTTP\\ResponseInterface\) on left side of \?\?\= is not nullable\.$#'
+            count: 1
+            path: ../../tests/system/Test/FilterTestTraitTest.php

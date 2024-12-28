@@ -37,7 +37,7 @@ final class Factories
      *
      * @var array<string, array<string, bool|string|null>>
      */
-    private static $options = [];
+    private static array $options = [];
 
     /**
      * Explicit options for the Config
@@ -65,7 +65,7 @@ final class Factories
      *
      * @var array<string, array<string, class-string>>
      */
-    private static $aliases = [];
+    private static array $aliases = [];
 
     /**
      * Store for instances of any component that
@@ -78,7 +78,7 @@ final class Factories
      *
      * @var array<string, array<class-string, object>>
      */
-    private static $instances = [];
+    private static array $instances = [];
 
     /**
      * Whether the component instances are updated?
@@ -87,7 +87,7 @@ final class Factories
      *
      * @internal For caching only
      */
-    private static $updated = [];
+    private static array $updated = [];
 
     /**
      * Define the class to load. You can *override* the concrete class.
@@ -162,7 +162,7 @@ final class Factories
         }
 
         // Try to locate the class
-        if (! $class = self::locateClass($options, $alias)) {
+        if (($class = self::locateClass($options, $alias)) === null) {
             return null;
         }
 
@@ -213,7 +213,7 @@ final class Factories
         }
 
         // Try to locate the class
-        if (! $class = self::locateClass($options, $alias)) {
+        if (($class = self::locateClass($options, $alias)) === null) {
             return null;
         }
 
@@ -310,7 +310,7 @@ final class Factories
         }
         // No namespace? Search for it
         // Check all namespaces, prioritizing App and modules
-        elseif (! $files = $locator->search($options['path'] . DIRECTORY_SEPARATOR . $alias)) {
+        elseif (($files = $locator->search($options['path'] . DIRECTORY_SEPARATOR . $alias)) === []) {
             return null;
         }
 

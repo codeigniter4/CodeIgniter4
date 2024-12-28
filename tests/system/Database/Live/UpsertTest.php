@@ -20,7 +20,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 use PHPUnit\Framework\Attributes\Group;
-use stdclass;
+use stdClass;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
@@ -107,21 +107,21 @@ final class UpsertTest extends CIUnitTestCase
         $data = [];
 
         // new row insert
-        $row          = new stdclass();
+        $row          = new stdClass();
         $row->name    = 'Pedro';
         $row->email   = 'pedro@acme.com';
         $row->country = 'El Salvador';
         $data[]       = $row;
 
         // no change
-        $row          = new stdclass();
+        $row          = new stdClass();
         $row->name    = 'Ahmadinejad';
         $row->email   = 'ahmadinejad@world.com';
         $row->country = 'Iran';
         $data[]       = $row;
 
         // changed country for update
-        $row          = new stdclass();
+        $row          = new stdClass();
         $row->name    = 'Derek Jones';
         $row->email   = 'derek@world.com';
         $row->country = 'Canada';
@@ -190,7 +190,7 @@ final class UpsertTest extends CIUnitTestCase
                 ->upsert($userData);
 
             $new = $this->db->table('user')
-                ->getwhere(['email' => 'ahmadinejad@world.com'])
+                ->getWhere(['email' => 'ahmadinejad@world.com'])
                 ->getRow();
 
             $this->assertSame(5, (int) $new->id);
@@ -460,7 +460,7 @@ final class UpsertTest extends CIUnitTestCase
         $this->db->table('user')->upsert($data);
 
         $original = $this->db->table('user')
-            ->getwhere(['id' => 6])
+            ->getWhere(['id' => 6])
             ->getRow();
 
         $data = [
@@ -474,7 +474,7 @@ final class UpsertTest extends CIUnitTestCase
 
         // get by id
         $row = $this->db->table('user')
-            ->getwhere(['id' => 6])
+            ->getWhere(['id' => 6])
             ->getRow();
 
         $this->assertSame('Random Name 356', $row->name);
@@ -508,17 +508,17 @@ final class UpsertTest extends CIUnitTestCase
 
         // get by id
         $row1 = $this->db->table('user')
-            ->getwhere(['id' => 1])
+            ->getWhere(['id' => 1])
             ->getRow();
 
         // get by id
         $row2 = $this->db->table('user')
-            ->getwhere(['id' => 2])
+            ->getWhere(['id' => 2])
             ->getRow();
 
         // get by id
         $row3 = $this->db->table('user')
-            ->getwhere(['id' => 3])
+            ->getWhere(['id' => 3])
             ->getRow();
 
         $this->assertSame('Upsert One On Id', $row1->name);
@@ -553,17 +553,17 @@ final class UpsertTest extends CIUnitTestCase
 
         // get by id
         $row1 = $this->db->table('user')
-            ->getwhere(['email' => 'nullone@domain.com'])
+            ->getWhere(['email' => 'nullone@domain.com'])
             ->getRow();
 
         // get by id
         $row2 = $this->db->table('user')
-            ->getwhere(['email' => 'nulltwo@domain.com'])
+            ->getWhere(['email' => 'nulltwo@domain.com'])
             ->getRow();
 
         // get by id
         $row3 = $this->db->table('user')
-            ->getwhere(['email' => 'nullthree@domain.com'])
+            ->getWhere(['email' => 'nullthree@domain.com'])
             ->getRow();
 
         $this->assertSame('Null One', $row1->name);
@@ -644,7 +644,7 @@ final class UpsertTest extends CIUnitTestCase
             $builder->setData($moreData);
         }
 
-        $evenMoreData          = new stdclass();
+        $evenMoreData          = new stdClass();
         $evenMoreData->name    = 'New User2 users';
         $evenMoreData->email   = 'newuser2@example.com';
         $evenMoreData->country = 'Netherlands';

@@ -26,7 +26,6 @@ final class FileWithVfsTest extends CIUnitTestCase
 {
     // For VFS stuff
     private ?vfsStreamDirectory $root = null;
-    private string $path;
     private string $start;
     private File $file;
 
@@ -35,8 +34,8 @@ final class FileWithVfsTest extends CIUnitTestCase
         parent::setUp();
 
         $this->root = vfsStream::setup();
-        $this->path = '_support/Files/';
-        vfsStream::copyFromFileSystem(TESTPATH . $this->path, $this->root);
+        $path       = '_support/Files/';
+        vfsStream::copyFromFileSystem(TESTPATH . $path, $this->root);
         $this->start = $this->root->url() . '/';
         $this->file  = new File($this->start . 'able/apple.php');
     }

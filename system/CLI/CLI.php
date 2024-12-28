@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\CLI\Exceptions\CLIException;
-use Config\Services;
 use InvalidArgumentException;
 use Throwable;
 
@@ -226,12 +225,12 @@ class CLI
         $extraOutput = '';
         $default     = '';
 
-        if ($validation && ! is_array($validation) && ! is_string($validation)) {
+        if (isset($validation) && ! is_array($validation) && ! is_string($validation)) {
             throw new InvalidArgumentException('$rules can only be of type string|array');
         }
 
         if (! is_array($validation)) {
-            $validation = $validation ? explode('|', $validation) : [];
+            $validation = ($validation !== null) ? explode('|', $validation) : [];
         }
 
         if (is_string($options)) {
@@ -349,7 +348,7 @@ class CLI
             // return the prompt again if $input contain(s) non-numeric character, except a comma.
             // And if max from $options less than max from input,
             // it means user tried to access null value in $options
-            if (! $pattern || $maxOptions < $maxInput) {
+            if ($pattern === 0 || $maxOptions < $maxInput) {
                 static::error('Please select correctly.');
                 CLI::newLine();
 
@@ -416,7 +415,7 @@ class CLI
     {
         $label      = $field;
         $field      = 'temp';
-        $validation = Services::validation(null, false);
+        $validation = service('validation', null, false);
         $validation->setRules([
             $field => [
                 'label' => $label,
@@ -442,7 +441,7 @@ class CLI
      */
     public static function print(string $text = '', ?string $foreground = null, ?string $background = null)
     {
-        if ($foreground || $background) {
+        if ((string) $foreground !== '' || (string) $background !== '') {
             $text = static::color($text, $foreground, $background);
         }
 
@@ -458,7 +457,7 @@ class CLI
      */
     public static function write(string $text = '', ?string $foreground = null, ?string $background = null)
     {
-        if ($foreground || $background) {
+        if ((string) $foreground !== '' || (string) $background !== '') {
             $text = static::color($text, $foreground, $background);
         }
 
@@ -481,7 +480,7 @@ class CLI
         $stdout            = static::$isColored;
         static::$isColored = static::hasColorSupport(STDERR);
 
-        if ($foreground || $background) {
+        if ($foreground !== '' || (string) $background !== '') {
             $text = static::color($text, $foreground, $background);
         }
 
@@ -514,7 +513,7 @@ class CLI
      */
     public static function wait(int $seconds, bool $countdown = false)
     {
-        if ($countdown === true) {
+        if ($countdown) {
             $time = $seconds;
 
             while ($time > 0) {
@@ -590,7 +589,7 @@ class CLI
             throw CLIException::forInvalidColor('foreground', $foreground);
         }
 
-        if ($background !== null && ! array_key_exists($background, static::$background_colors)) {
+        if ((string) $background !== '' && ! array_key_exists($background, static::$background_colors)) {
             throw CLIException::forInvalidColor('background', $background);
         }
 
@@ -638,7 +637,7 @@ class CLI
     {
         $string = "\033[" . static::$foreground_colors[$foreground] . 'm';
 
-        if ($background !== null) {
+        if ((string) $background !== '') {
             $string .= "\033[" . static::$background_colors[$background] . 'm';
         }
 
@@ -655,7 +654,7 @@ class CLI
      */
     public static function strlen(?string $string): int
     {
-        if ($string === null) {
+        if ((string) $string === '') {
             return 0;
         }
 
@@ -769,7 +768,7 @@ class CLI
 
                     // Look for the next lines ending in ": <number>"
                     // Searching for "Columns:" or "Lines:" will fail on non-English locales
-                    if ($return === 0 && $output && preg_match('/:\s*(\d+)\n[^:]+:\s*(\d+)\n/', implode("\n", $output), $matches)) {
+                    if ($return === 0 && $output !== [] && preg_match('/:\s*(\d+)\n[^:]+:\s*(\d+)\n/', implode("\n", $output), $matches)) {
                         static::$height = (int) $matches[1];
                         static::$width  = (int) $matches[2];
                     }
@@ -836,7 +835,7 @@ class CLI
      */
     public static function wrap(?string $string = null, int $max = 0, int $padLeft = 0): string
     {
-        if ($string === null || $string === '') {
+        if ((string) $string === '') {
             return '';
         }
 

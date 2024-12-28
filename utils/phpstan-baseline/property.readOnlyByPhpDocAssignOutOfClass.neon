@@ -1,0 +1,83 @@
+# total 16 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^@readonly property Config\\Autoload\:\:\$classmap is assigned outside of its declaring class\.$#'
+            count: 2
+            path: ../../tests/system/Autoloader/AutoloaderTest.php
+
+        -
+            message: '#^@readonly property Config\\Autoload\:\:\$files is assigned outside of its declaring class\.$#'
+            count: 1
+            path: ../../tests/system/Autoloader/AutoloaderTest.php
+
+        -
+            message: '#^@readonly property Config\\Autoload\:\:\$helpers is assigned outside of its declaring class\.$#'
+            count: 1
+            path: ../../tests/system/Autoloader/AutoloaderTest.php
+
+        -
+            message: '#^@readonly property Config\\Autoload\:\:\$psr4 is assigned outside of its declaring class\.$#'
+            count: 6
+            path: ../../tests/system/Autoloader/AutoloaderTest.php
+
+        -
+            message: '#^@readonly property Config\\Modules\:\:\$composerPackages is assigned outside of its declaring class\.$#'
+            count: 3
+            path: ../../tests/system/Autoloader/AutoloaderTest.php
+
+        -
+            message: '#^@readonly property Config\\Modules\:\:\$discoverInComposer is assigned outside of its declaring class\.$#'
+            count: 8
+            path: ../../tests/system/Autoloader/AutoloaderTest.php
+
+        -
+            message: '#^@readonly property Config\\Modules\:\:\$enabled is assigned outside of its declaring class\.$#'
+            count: 1
+            path: ../../tests/system/Commands/Utilities/Routes/FilterFinderTest.php
+
+        -
+            message: '#^@readonly property Config\\DocTypes\:\:\$html5 is assigned outside of its declaring class\.$#'
+            count: 1
+            path: ../../tests/system/CommonFunctionsTest.php
+
+        -
+            message: '#^@readonly property Config\\Modules\:\:\$aliases is assigned outside of its declaring class\.$#'
+            count: 1
+            path: ../../tests/system/Events/EventsTest.php
+
+        -
+            message: '#^@readonly property Config\\DocTypes\:\:\$html5 is assigned outside of its declaring class\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/FormHelperTest.php
+
+        -
+            message: '#^@readonly property Config\\DocTypes\:\:\$html5 is assigned outside of its declaring class\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/HTMLHelperTest.php
+
+        -
+            message: '#^@readonly property Config\\Modules\:\:\$enabled is assigned outside of its declaring class\.$#'
+            count: 1
+            path: ../../tests/system/Router/AutoRouterImprovedTest.php
+
+        -
+            message: '#^@readonly property Config\\Modules\:\:\$enabled is assigned outside of its declaring class\.$#'
+            count: 1
+            path: ../../tests/system/Router/DefinedRouteCollectorTest.php
+
+        -
+            message: '#^@readonly property Config\\Modules\:\:\$enabled is assigned outside of its declaring class\.$#'
+            count: 1
+            path: ../../tests/system/Router/RouteCollectionReverseRouteTest.php
+
+        -
+            message: '#^@readonly property Config\\Modules\:\:\$enabled is assigned outside of its declaring class\.$#'
+            count: 3
+            path: ../../tests/system/Router/RouteCollectionTest.php
+
+        -
+            message: '#^@readonly property Config\\Modules\:\:\$enabled is assigned outside of its declaring class\.$#'
+            count: 1
+            path: ../../tests/system/Router/RouterTest.php

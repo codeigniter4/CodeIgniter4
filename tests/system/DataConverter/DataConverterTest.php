@@ -570,7 +570,7 @@ final class DataConverterTest extends CIUnitTestCase
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
-        $reconstructor = static function ($array) {
+        $reconstructor = static function ($array): User {
             $user = new User();
             $user->fill($array);
 
@@ -667,13 +667,11 @@ final class DataConverterTest extends CIUnitTestCase
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
-        $extractor = static function ($obj) {
-            $array['id']         = $obj->id;
-            $array['name']       = $obj->name;
-            $array['created_at'] = $obj->created_at;
-
-            return $array;
-        };
+        $extractor = static fn ($obj): array => [
+            'id'         => $obj->id,
+            'name'       => $obj->name,
+            'created_at' => $obj->created_at,
+        ];
         $converter = $this->createDataConverter($types, [], db_connect(), null, $extractor);
 
         $phpData = [

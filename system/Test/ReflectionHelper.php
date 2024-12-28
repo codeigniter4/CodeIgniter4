@@ -31,15 +31,15 @@ trait ReflectionHelper
      * @param object|string $obj    object or class name
      * @param string        $method method name
      *
-     * @return Closure
+     * @return         Closure
+     * @phpstan-return Closure(mixed ...$args): mixed
      *
      * @throws ReflectionException
      */
     public static function getPrivateMethodInvoker($obj, $method)
     {
         $refMethod = new ReflectionMethod($obj, $method);
-        $refMethod->setAccessible(true);
-        $obj = (gettype($obj) === 'object') ? $obj : null;
+        $obj       = (gettype($obj) === 'object') ? $obj : null;
 
         return static fn (...$args) => $refMethod->invokeArgs($obj, $args);
     }
@@ -58,10 +58,7 @@ trait ReflectionHelper
     {
         $refClass = is_object($obj) ? new ReflectionObject($obj) : new ReflectionClass($obj);
 
-        $refProperty = $refClass->getProperty($property);
-        $refProperty->setAccessible(true);
-
-        return $refProperty;
+        return $refClass->getProperty($property);
     }
 
     /**
@@ -73,7 +70,7 @@ trait ReflectionHelper
      *
      * @throws ReflectionException
      */
-    public static function setPrivateProperty($obj, $property, $value)
+    public static function setPrivateProperty($obj, $property, $value): void
     {
         $refProperty = self::getAccessibleRefProperty($obj, $property);
 
@@ -90,7 +87,7 @@ trait ReflectionHelper
      * @param object|string $obj      object or class name
      * @param string        $property property name
      *
-     * @return mixed value
+     * @return mixed
      *
      * @throws ReflectionException
      */

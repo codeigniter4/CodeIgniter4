@@ -41,7 +41,7 @@ class SiteURI extends URI
     /**
      * The Index File.
      */
-    private string $indexPage;
+    private readonly string $indexPage;
 
     /**
      * List of URI segments in baseURL and indexPage.
@@ -421,7 +421,7 @@ class SiteURI extends URI
         $relativePath = $this->stringifyRelativePath($relativePath);
 
         // Check current host.
-        $host = $config === null ? $this->getHost() : null;
+        $host = $config instanceof App ? null : $this->getHost();
 
         $config ??= config(App::class);
 

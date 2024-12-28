@@ -101,7 +101,7 @@ final class MetadataTest extends CIUnitTestCase
             $expectedTables[] = 'tmp_widgets';
 
             sort($tables);
-            $this->assertSame($expectedTables, array_values($tables));
+            $this->assertSame($expectedTables, $tables);
         } finally {
             $this->dropExtraneousTable();
         }
@@ -117,7 +117,7 @@ final class MetadataTest extends CIUnitTestCase
             $this->assertNotSame([], $tables);
 
             sort($tables);
-            $this->assertSame($this->expectedTables, array_values($tables));
+            $this->assertSame($this->expectedTables, $tables);
         } finally {
             $this->dropExtraneousTable();
         }
@@ -138,7 +138,7 @@ final class MetadataTest extends CIUnitTestCase
             $this->assertNotSame([], $tables);
 
             sort($tables);
-            $this->assertSame(['tmp_widgets'], array_values($tables));
+            $this->assertSame(['tmp_widgets'], $tables);
         } finally {
             $this->db->setPrefix($oldPrefix);
             $this->dropExtraneousTable();

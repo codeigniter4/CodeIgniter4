@@ -211,6 +211,8 @@ if (! function_exists('anchor_popup')) {
             $windowName = '_blank';
         }
 
+        $atts = [];
+
         foreach (['width' => '800', 'height' => '600', 'scrollbars' => 'yes', 'menubar' => 'no', 'status' => 'yes', 'resizable' => 'yes', 'screenx' => '0', 'screeny' => '0'] as $key => $val) {
             $atts[$key] = $attributes[$key] ?? $val;
             unset($attributes[$key]);
@@ -351,7 +353,15 @@ if (! function_exists('auto_link')) {
     function auto_link(string $str, string $type = 'both', bool $popup = false): string
     {
         // Find and replace any URLs.
-        if ($type !== 'email' && preg_match_all('#(\w*://|www\.)[a-z0-9]+(-+[a-z0-9]+)*(\.[a-z0-9]+(-+[a-z0-9]+)*)+(/([^\s()<>;]+\w)?/?)?#i', $str, $matches, PREG_OFFSET_CAPTURE | PREG_SET_ORDER)) {
+        if (
+            $type !== 'email'
+            && preg_match_all(
+                '#([a-z][a-z0-9+\-.]*://|www\.)[a-z0-9]+(-+[a-z0-9]+)*(\.[a-z0-9]+(-+[a-z0-9]+)*)+(/([^\s()<>;]+\w)?/?)?#i',
+                $str,
+                $matches,
+                PREG_OFFSET_CAPTURE | PREG_SET_ORDER
+            )
+        ) {
             // Set our target HTML if using popup links.
             $target = ($popup) ? ' target="_blank"' : '';
 
@@ -370,7 +380,15 @@ if (! function_exists('auto_link')) {
         }
 
         // Find and replace any emails.
-        if ($type !== 'url' && preg_match_all('#([\w\.\-\+]+@[a-z0-9\-]+\.[a-z0-9\-\.]+[^[:punct:]\s])#i', $str, $matches, PREG_OFFSET_CAPTURE)) {
+        if (
+            $type !== 'url'
+            && preg_match_all(
+                '#([\w\.\-\+]+@[a-z0-9\-]+\.[a-z0-9\-\.]+[^[:punct:]\s])#i',
+                $str,
+                $matches,
+                PREG_OFFSET_CAPTURE
+            )
+        ) {
             foreach (array_reverse($matches[0]) as $match) {
                 if (filter_var($match[0], FILTER_VALIDATE_EMAIL) !== false) {
                     $str = substr_replace($str, safe_mailto($match[0]), $match[1], strlen($match[0]));
@@ -440,7 +458,7 @@ if (! function_exists('url_title')) {
             $str = preg_replace('#' . $key . '#iu', $val, $str);
         }
 
-        if ($lowercase === true) {
+        if ($lowercase) {
             $str = mb_strtolower($str);
         }
 

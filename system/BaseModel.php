@@ -26,7 +26,6 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Feature;
-use Config\Services;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
@@ -47,7 +46,7 @@ use stdClass;
  *      - process various callbacks
  *      - allow intermingling calls to the db connection
  *
- * @phpstan-type row_array               array<int|string, float|int|null|object|string>
+ * @phpstan-type row_array               array<int|string, float|int|null|object|string|bool>
  * @phpstan-type event_data_beforeinsert array{data: row_array}
  * @phpstan-type event_data_afterinsert  array{id: int|string, data: row_array, result: bool}
  * @phpstan-type event_data_beforefind   array{id?: int|string, method: string, singleton: bool, limit?: int, offset?: int}
@@ -571,8 +570,8 @@ abstract class BaseModel
      * Loops over records in batches, allowing you to operate on them.
      * This method works only with dbCalls.
      *
-     * @param int     $size     Size
-     * @param Closure $userFunc Callback Function
+     * @param int                                          $size     Size
+     * @param Closure(array<string, string>|object): mixed $userFunc Callback Function
      *
      * @return void
      *
@@ -640,7 +639,7 @@ abstract class BaseModel
 
         $resultSet = $this->doFindColumn($columnName);
 
-        return $resultSet ? array_column($resultSet, $columnName) : null;
+        return $resultSet !== null ? array_column($resultSet, $columnName) : null;
     }
 
     /**
@@ -1138,7 +1137,7 @@ abstract class BaseModel
             throw new InvalidArgumentException('delete(): argument #1 ($id) should not be boolean.');
         }
 
-        if ($id && (is_numeric($id) || is_string($id))) {
+        if (! in_array($id, [null, 0, '0'], true) && (is_numeric($id) || is_string($id))) {
             $id = [$id];
         }
 
@@ -1251,7 +1250,7 @@ abstract class BaseModel
         }
 
         // Do we have validation errors?
-        if (! $forceDB && ! $this->skipValidation && ($errors = $this->validation->getErrors())) {
+        if (! $forceDB && ! $this->skipValidation && ($errors = $this->validation->getErrors()) !== []) {
             return $errors;
         }
 
@@ -1609,7 +1608,7 @@ abstract class BaseModel
     protected function ensureValidation(): void
     {
         if ($this->validation === null) {
-            $this->validation = Services::validation(null, false);
+            $this->validation = service('validation', null, false);
         }
     }
 
@@ -1800,8 +1799,6 @@ abstract class BaseModel
             // Loop over each property,
             // saving the name/value in a new array we can return.
             foreach ($props as $prop) {
-                // Must make protected values accessible.
-                $prop->setAccessible(true);
                 $properties[$prop->getName()] = $prop->getValue($object);
             }
         }

@@ -13,11 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
-use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
-use Config\Services;
 use Config\View as ViewConfig;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -29,7 +28,7 @@ use stdClass;
 #[Group('Others')]
 final class ParserTest extends CIUnitTestCase
 {
-    private FileLocator $loader;
+    private FileLocatorInterface $loader;
     private string $viewsDir;
     private ViewConfig $config;
     private Parser $parser;
@@ -38,7 +37,7 @@ final class ParserTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->loader   = Services::locator();
+        $this->loader   = service('locator');
         $this->viewsDir = __DIR__ . '/Views';
         $this->config   = new ViewConfig();
         $this->parser   = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -338,9 +337,12 @@ final class ParserTest extends CIUnitTestCase
     public function testParseLoopEntityProperties(): void
     {
         $power = new class () extends Entity {
-            public $foo    = 'bar';
-            protected $bar = 'baz';
+            public string $foo    = 'bar';
+            protected string $bar = 'baz';
 
+            /**
+             * @return array<string, mixed>
+             */
             public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
             {
                 return [
@@ -806,7 +808,7 @@ final class ParserTest extends CIUnitTestCase
 
     public function testParserPluginParams(): void
     {
-        $this->parser->addPlugin('growth', static function ($str, array $params) {
+        $this->parser->addPlugin('growth', static function ($str, array $params): string {
             $step  = $params['step'] ?? 1;
             $count = $params['count'] ?? 2;
 
@@ -853,7 +855,7 @@ final class ParserTest extends CIUnitTestCase
 
     public function testParserSingleTagWithQuotedParams(): void
     {
-        $this->parser->addPlugin('count', static function (array $params = []) {
+        $this->parser->addPlugin('count', static function (array $params = []): string {
             $out = '';
 
             foreach ($params as $index => $param) {
@@ -870,7 +872,7 @@ final class ParserTest extends CIUnitTestCase
 
     public function testParserSingleTagWithNamedParams(): void
     {
-        $this->parser->addPlugin('read_params', static function (array $params = []) {
+        $this->parser->addPlugin('read_params', static function (array $params = []): string {
             $out = '';
 
             foreach ($params as $index => $param) {
@@ -1060,5 +1062,45 @@ final class ParserTest extends CIUnitTestCase
             </script>
             EOL;
         $this->assertSame($expected, $this->parser->renderString($template));
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9245
+     */
+    public function testParseSameArrayKeyName(): void
+    {
+        $data = [
+            'type'   => 'Super Powers',
+            'powers' => [
+                [
+                    'type' => 'invisibility',
+                ],
+            ],
+        ];
+
+        $template = '{type} like {powers}{type}{/powers}';
+
+        $this->parser->setData($data);
+        $this->assertSame('Super Powers like invisibility', $this->parser->renderString($template));
+    }
+
+    public function testParseSameArrayKeyNameNested(): void
+    {
+        $data = [
+            'title'   => 'My title',
+            'similar' => [
+                ['items' => [
+                    [
+                        'title' => 'My similar title',
+                    ],
+                ],
+                ],
+            ],
+        ];
+
+        $template = '{title} with similar item {similar}{items}{title}{/items}{/similar}';
+
+        $this->parser->setData($data);
+        $this->assertSame('My title with similar item My similar title', $this->parser->renderString($template));
     }
 }
