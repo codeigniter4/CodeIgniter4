@@ -238,7 +238,7 @@ abstract class CIUnitTestCase extends TestCase
     {
         parent::setUp();
 
-        if (! $this->app) {
+        if (! $this->app instanceof CodeIgniter) {
             $this->app = $this->createApplication();
         }
 

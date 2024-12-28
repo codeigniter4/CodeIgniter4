@@ -267,7 +267,7 @@ class MemcachedHandler extends BaseHandler
         $attempt = 0;
 
         do {
-            if ($this->memcached->get($lockKey)) {
+            if ($this->memcached->get($lockKey) !== false) {
                 sleep(1);
 
                 continue;

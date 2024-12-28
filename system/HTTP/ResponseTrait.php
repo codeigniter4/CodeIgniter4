@@ -123,18 +123,21 @@ trait ResponseTrait
      */
     public function setLink(PagerInterface $pager)
     {
-        $links = '';
+        $links    = '';
+        $previous = $pager->getPreviousPageURI();
 
-        if ($previous = $pager->getPreviousPageURI()) {
+        if (is_string($previous) && $previous !== '') {
             $links .= '<' . $pager->getPageURI($pager->getFirstPage()) . '>; rel="first",';
             $links .= '<' . $previous . '>; rel="prev"';
         }
 
-        if (($next = $pager->getNextPageURI()) && $previous) {
+        $next = $pager->getNextPageURI();
+
+        if (is_string($next) && $next !== '' && is_string($previous) && $previous !== '') {
             $links .= ',';
         }
 
-        if ($next) {
+        if (is_string($next) && $next !== '') {
             $links .= '<' . $next . '>; rel="next",';
             $links .= '<' . $pager->getPageURI($pager->getLastPage()) . '>; rel="last"';
         }

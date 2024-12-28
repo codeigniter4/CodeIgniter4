@@ -44,7 +44,7 @@ final class EmailTest extends CIUnitTestCase
     }
 
     /**
-     * @param mixed $autoClear
+     * @param bool $autoClear
      */
     #[DataProvider('provideEmailSendWithClearance')]
     public function testEmailSendWithClearance($autoClear): void

@@ -59,7 +59,7 @@ trait RequestTrait
      */
     public function getIPAddress(): string
     {
-        if ($this->ipAddress) {
+        if ($this->ipAddress !== '') {
             return $this->ipAddress;
         }
 

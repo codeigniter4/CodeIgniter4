@@ -333,7 +333,7 @@ class Table
         $out = $this->template['table_open'] . $this->newline;
 
         // Add any caption here
-        if ($this->caption) {
+        if (isset($this->caption) && $this->caption !== '') {
             $out .= '<caption>' . $this->caption . '</caption>' . $this->newline;
         }
 

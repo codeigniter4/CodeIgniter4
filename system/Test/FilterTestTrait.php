@@ -221,7 +221,9 @@ trait FilterTestTrait
 
         $this->filters->reset();
 
-        if ($routeFilters = $this->collection->getFiltersForRoute($route)) {
+        $routeFilters = $this->collection->getFiltersForRoute($route);
+
+        if ($routeFilters !== []) {
             $this->filters->enableFilters($routeFilters, $position);
         }
 

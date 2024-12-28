@@ -189,7 +189,9 @@ trait FeatureTestTrait
         $request = $this->setRequestBody($request, $params);
 
         // Initialize the RouteCollection
-        if (! $routes = $this->routes) {
+        $routes = $this->routes;
+
+        if ($routes !== []) {
             $routes = service('routes')->loadRoutes();
         }
 
