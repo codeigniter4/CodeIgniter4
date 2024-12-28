@@ -348,7 +348,7 @@ class CLI
             // return the prompt again if $input contain(s) non-numeric character, except a comma.
             // And if max from $options less than max from input,
             // it means user tried to access null value in $options
-            if (! $pattern || $maxOptions < $maxInput) {
+            if ($pattern === 0 || $pattern === false || $maxOptions < $maxInput) {
                 static::error('Please select correctly.');
                 CLI::newLine();
 
