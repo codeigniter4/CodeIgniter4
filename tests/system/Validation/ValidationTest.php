@@ -284,7 +284,7 @@ class ValidationTest extends CIUnitTestCase
     {
         $this->validation->setRules(
             [
-                'foo' => ['required', static fn ($value) => $value === 'abc'],
+                'foo' => ['required', static fn ($value): bool => $value === 'abc'],
             ],
             [
                 // Errors
@@ -339,7 +339,7 @@ class ValidationTest extends CIUnitTestCase
         $this->validation->setRules([
             'secret' => [
                 'label'  => 'シークレット',
-                'rules'  => ['required', static fn ($value) => $value === 'abc'],
+                'rules'  => ['required', static fn ($value): bool => $value === 'abc'],
                 'errors' => [
                     // Specify the array key for the closure rule.
                     1 => 'The {field} is invalid',

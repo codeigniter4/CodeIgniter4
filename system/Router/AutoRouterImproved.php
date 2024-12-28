@@ -136,7 +136,7 @@ final class AutoRouterImproved implements AutoRouterInterface
     private function createSegments(string $uri): array
     {
         $segments = explode('/', $uri);
-        $segments = array_filter($segments, static fn ($segment) => $segment !== '');
+        $segments = array_filter($segments, static fn ($segment): bool => $segment !== '');
 
         // numerically reindex the array, removing gaps
         return array_values($segments);
@@ -209,7 +209,7 @@ final class AutoRouterImproved implements AutoRouterInterface
             }
 
             $namespaces = array_map(
-                fn ($segment) => $this->translateURI($segment),
+                fn ($segment): string => $this->translateURI($segment),
                 $segments
             );
 

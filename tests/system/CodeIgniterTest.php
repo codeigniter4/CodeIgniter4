@@ -214,7 +214,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $routes = service('routes');
         $routes->add(
             'pages/(:segment)',
-            static fn ($segment) => 'You want to see "' . esc($segment) . '" page.'
+            static fn ($segment): string => 'You want to see "' . esc($segment) . '" page.'
         );
         $router = service('router', $routes, service('incomingrequest'));
         Services::injectMock('router', $router);

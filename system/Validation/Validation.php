@@ -176,7 +176,7 @@ class Validation implements ValidationInterface
 
                 $values = array_filter(
                     $flattenedArray,
-                    static fn ($key) => preg_match(self::getRegex($field), $key),
+                    static fn ($key): bool => preg_match(self::getRegex($field), $key) === 1,
                     ARRAY_FILTER_USE_KEY
                 );
 
@@ -413,7 +413,7 @@ class Validation implements ValidationInterface
             }
 
             // Otherwise remove the if_exist rule and continue the process
-            $rules = array_filter($rules, static fn ($rule) => $rule instanceof Closure || $rule !== 'if_exist');
+            $rules = array_filter($rules, static fn ($rule): bool => $rule instanceof Closure || $rule !== 'if_exist');
         }
 
         return $rules;
@@ -460,7 +460,7 @@ class Validation implements ValidationInterface
                 }
             }
 
-            $rules = array_filter($rules, static fn ($rule) => $rule instanceof Closure || $rule !== 'permit_empty');
+            $rules = array_filter($rules, static fn ($rule): bool => $rule instanceof Closure || $rule !== 'permit_empty');
         }
 
         return $rules;
@@ -867,7 +867,7 @@ class Validation implements ValidationInterface
 
         $errors = array_filter(
             $this->getErrors(),
-            static fn ($key) => preg_match(self::getRegex($field), $key),
+            static fn ($key): bool => preg_match(self::getRegex($field), $key) === 1,
             ARRAY_FILTER_USE_KEY
         );
 

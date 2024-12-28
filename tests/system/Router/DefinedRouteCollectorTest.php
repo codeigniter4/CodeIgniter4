@@ -51,8 +51,8 @@ final class DefinedRouteCollectorTest extends CIUnitTestCase
         $routes->get('journals', 'Blogs');
         $routes->get('100', 'Home::index');
         $routes->get('product/(:num)', 'Catalog::productLookupByID/$1');
-        $routes->get('feed', static fn () => 'A Closure route.');
-        $routes->get('200', static fn () => 'A Closure route.');
+        $routes->get('feed', static fn (): string => 'A Closure route.');
+        $routes->get('200', static fn (): string => 'A Closure route.');
         $routes->view('about', 'pages/about');
 
         $collector = new DefinedRouteCollector($routes);

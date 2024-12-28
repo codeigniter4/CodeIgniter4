@@ -797,7 +797,7 @@ final class ParserTest extends CIUnitTestCase
     public function testParserPluginClosure(): void
     {
         $config                   = $this->config;
-        $config->plugins['hello'] = static fn (array $params = []) => 'Hello, ' . trim($params[0]);
+        $config->plugins['hello'] = static fn (array $params = []): string => 'Hello, ' . trim($params[0]);
 
         $this->parser = new Parser($config, $this->viewsDir, $this->loader);
 
@@ -828,7 +828,7 @@ final class ParserTest extends CIUnitTestCase
 
     public function testParserSingleTag(): void
     {
-        $this->parser->addPlugin('hit:it', static fn () => 'Hip to the Hop', false);
+        $this->parser->addPlugin('hit:it', static fn (): string => 'Hip to the Hop', false);
 
         $template = '{+ hit:it +}';
 
@@ -837,7 +837,7 @@ final class ParserTest extends CIUnitTestCase
 
     public function testParserSingleTagWithParams(): void
     {
-        $this->parser->addPlugin('hit:it', static fn (array $params = []) => "{$params['first']} to the {$params['last']}", false);
+        $this->parser->addPlugin('hit:it', static fn (array $params = []): string => "{$params['first']} to the {$params['last']}", false);
 
         $template = '{+ hit:it first=foo last=bar +}';
 
@@ -846,7 +846,7 @@ final class ParserTest extends CIUnitTestCase
 
     public function testParserSingleTagWithSingleParams(): void
     {
-        $this->parser->addPlugin('hit:it', static fn (array $params = []) => "{$params[0]} to the {$params[1]}", false);
+        $this->parser->addPlugin('hit:it', static fn (array $params = []): string => "{$params[0]} to the {$params[1]}", false);
 
         $template = '{+ hit:it foo bar +}';
 

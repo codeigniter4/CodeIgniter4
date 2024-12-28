@@ -339,7 +339,7 @@ class CLI
             $pattern = preg_match_all('/^\d+(,\d+)*$/', trim($input));
 
             // separate input by comma and convert all to an int[]
-            $inputToArray = array_map(static fn ($value) => (int) $value, explode(',', $input));
+            $inputToArray = array_map(static fn ($value): int => (int) $value, explode(',', $input));
             // find max from key of $options
             $maxOptions = array_key_last($options);
             // find max from input
