@@ -221,7 +221,7 @@ final class ControllerMethodReader
         if ($classShortname === $defaultController) {
             $pattern                = '#' . preg_quote(lcfirst($defaultController), '#') . '\z#';
             $routeWithoutController = rtrim(preg_replace($pattern, '', $uriByClass), '/');
-            $routeWithoutController = $routeWithoutController ?: '/';
+            $routeWithoutController = $routeWithoutController !== '' && $routeWithoutController !== '0' ? $routeWithoutController : '/';
 
             [$params, $routeParams] = $this->getParameters($method);
 

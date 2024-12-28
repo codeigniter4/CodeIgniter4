@@ -140,7 +140,7 @@ class Rules
         if (
             $whereField !== null && $whereField !== ''
             && $whereValue !== null && $whereValue !== ''
-            && ! preg_match('/^\{(\w+)\}$/', $whereValue)
+            && preg_match('/^\{(\w+)\}$/', $whereValue) !== 1
         ) {
             $row = $row->where($whereField, $whereValue);
         }
@@ -198,7 +198,7 @@ class Rules
         if (
             $ignoreField !== null && $ignoreField !== ''
             && $ignoreValue !== null && $ignoreValue !== ''
-            && ! preg_match('/^\{(\w+)\}$/', $ignoreValue)
+            && preg_match('/^\{(\w+)\}$/', $ignoreValue) !== 1
         ) {
             $row = $row->where("{$ignoreField} !=", $ignoreValue);
         }

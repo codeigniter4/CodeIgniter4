@@ -171,7 +171,7 @@ class Typography
         }
 
         // No opening block level tag? Add it if needed.
-        if (! preg_match('/^\s*<(?:' . $this->blockElements . ')/i', $str)) {
+        if (preg_match('/^\s*<(?:' . $this->blockElements . ')/i', $str) !== 1) {
             $str = preg_replace('/^(.*?)<(' . $this->blockElements . ')/i', '<p>$1</p><$2', $str);
         }
 

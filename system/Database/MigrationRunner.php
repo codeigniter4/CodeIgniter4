@@ -450,7 +450,7 @@ class MigrationRunner
 
         $filename = basename($path, '.php');
 
-        if (! preg_match($this->regex, $filename)) {
+        if (preg_match($this->regex, $filename) !== 1) {
             return false;
         }
 

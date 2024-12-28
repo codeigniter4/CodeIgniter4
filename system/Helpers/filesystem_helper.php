@@ -166,7 +166,7 @@ if (! function_exists('delete_files')) {
                     continue;
                 }
 
-                if (! $htdocs || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename)) {
+                if (! $htdocs || preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename) !== 1) {
                     $isDir = $object->isDir();
                     if ($isDir && $delDir) {
                         rmdir($object->getPathname());
