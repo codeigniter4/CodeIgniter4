@@ -560,7 +560,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function getRoutes(?string $verb = null, bool $includeWildcard = true): array
     {
-        if ($verb === null || $verb === '') {
+        if ((string) $verb === '') {
             $verb = $this->getHTTPVerb();
         }
 
@@ -609,7 +609,7 @@ class RouteCollection implements RouteCollectionInterface
     {
         $options = $this->loadRoutesOptions($verb);
 
-        return $from ? $options[$from] ?? [] : $options;
+        return ((string) $from !== '') ? $options[$from] ?? [] : $options;
     }
 
     /**
@@ -779,7 +779,7 @@ class RouteCollection implements RouteCollectionInterface
 
         $callback = array_pop($params);
 
-        if ($params && is_array($params[0])) {
+        if ($params !== [] && is_array($params[0])) {
             $options = array_shift($params);
 
             if (isset($options['filter'])) {
@@ -1329,7 +1329,7 @@ class RouteCollection implements RouteCollectionInterface
         $patterns = $matches[0];
 
         foreach ($patterns as $index => $pattern) {
-            if (! preg_match('#^' . $pattern . '$#u', $params[$index])) {
+            if (preg_match('#^' . $pattern . '$#u', $params[$index]) !== 1) {
                 throw RouterException::forInvalidParameterType();
             }
 
@@ -1391,7 +1391,7 @@ class RouteCollection implements RouteCollectionInterface
             // or maybe $placeholder is not a placeholder, but a regex.
             $pattern = $this->placeholders[$placeholderName] ?? $placeholder;
 
-            if (! preg_match('#^' . $pattern . '$#u', (string) $params[$index])) {
+            if (preg_match('#^' . $pattern . '$#u', (string) $params[$index]) !== 1) {
                 throw RouterException::forInvalidParameterType();
             }
 
@@ -1416,14 +1416,14 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         // Check invalid locale
-        if ($locale !== null) {
+        if ((string) $locale !== '') {
             $config = config(App::class);
             if (! in_array($locale, $config->supportedLocales, true)) {
                 $locale = null;
             }
         }
 
-        if ($locale === null) {
+        if ((string) $locale === '') {
             $locale = service('request')->getLocale();
         }
 

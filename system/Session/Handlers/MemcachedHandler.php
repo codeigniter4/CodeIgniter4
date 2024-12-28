@@ -93,12 +93,12 @@ class MemcachedHandler extends BaseHandler
         }
 
         if (
-            ! preg_match_all(
+            preg_match_all(
                 '#,?([^,:]+)\:(\d{1,5})(?:\:(\d+))?#',
                 $this->savePath,
                 $matches,
                 PREG_SET_ORDER
-            )
+            ) === 0
         ) {
             $this->memcached = null;
             $this->logger->error('Session: Invalid Memcached save path format: ' . $this->savePath);
@@ -267,7 +267,7 @@ class MemcachedHandler extends BaseHandler
         $attempt = 0;
 
         do {
-            if ($this->memcached->get($lockKey)) {
+            if ($this->memcached->get($lockKey) !== false) {
                 sleep(1);
 
                 continue;

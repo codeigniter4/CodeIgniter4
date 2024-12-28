@@ -397,6 +397,11 @@ class Forge extends BaseForge
                 $attributes['TYPE'] = 'BIT';
                 break;
 
+            case 'BLOB':
+                $attributes['TYPE'] = 'VARBINARY';
+                $attributes['CONSTRAINT'] ??= 'MAX';
+                break;
+
             default:
                 break;
         }

@@ -64,7 +64,7 @@ class OutgoingRequest extends Message implements OutgoingRequestInterface
     {
         $host = $uri->getHost();
 
-        return $host . ($uri->getPort() ? ':' . $uri->getPort() : '');
+        return $host . ($uri->getPort() > 0 ? ':' . $uri->getPort() : '');
     }
 
     /**

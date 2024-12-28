@@ -614,7 +614,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function query(string $sql, $binds = null, bool $setEscapeFlags = true, string $queryClass = '')
     {
-        $queryClass = $queryClass ?: $this->queryClass;
+        $queryClass = $queryClass !== '' && $queryClass !== '0' ? $queryClass : $this->queryClass;
 
         if (empty($this->connID)) {
             $this->initialize();

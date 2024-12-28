@@ -3,7 +3,7 @@
 parameters:
     ignoreErrors:
         -
-            message: '#^Assigning non\-falsy\-string directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
+            message: '#^Assigning string directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../system/Commands/Utilities/Routes.php
 

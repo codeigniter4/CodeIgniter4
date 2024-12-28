@@ -99,8 +99,7 @@ class Migration_Create_test_tables extends Migration
             unset(
                 $dataTypeFields['type_set'],
                 $dataTypeFields['type_mediumtext'],
-                $dataTypeFields['type_double'],
-                $dataTypeFields['type_blob']
+                $dataTypeFields['type_double']
             );
         }
 

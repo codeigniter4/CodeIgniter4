@@ -613,7 +613,7 @@ class Parser extends View
             $escape = false;
         }
         // If no `esc` filter is found, then we'll need to add one.
-        elseif (! preg_match('/\s+esc/u', $key)) {
+        elseif (preg_match('/\s+esc/u', $key) !== 1) {
             $escape = 'html';
         }
 
@@ -691,7 +691,7 @@ class Parser extends View
              *   $matches[1] = all parameters string in opening tag
              *   $matches[2] = content between the tags to send to the plugin.
              */
-            if (! preg_match_all($pattern, $template, $matches, PREG_SET_ORDER)) {
+            if (preg_match_all($pattern, $template, $matches, PREG_SET_ORDER) === 0) {
                 continue;
             }
 

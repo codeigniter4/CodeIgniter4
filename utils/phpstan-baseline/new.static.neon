@@ -1,8 +1,0 @@
-# total 1 error
-
-parameters:
-    ignoreErrors:
-        -
-            message: '#^Unsafe usage of new static\(\)\.$#'
-            count: 1
-            path: ../../tests/_support/Entity/CustomUser.php

@@ -639,7 +639,7 @@ abstract class BaseModel
 
         $resultSet = $this->doFindColumn($columnName);
 
-        return $resultSet ? array_column($resultSet, $columnName) : null;
+        return $resultSet !== null ? array_column($resultSet, $columnName) : null;
     }
 
     /**
@@ -1137,7 +1137,7 @@ abstract class BaseModel
             throw new InvalidArgumentException('delete(): argument #1 ($id) should not be boolean.');
         }
 
-        if ($id && (is_numeric($id) || is_string($id))) {
+        if (! in_array($id, [null, 0, '0'], true) && (is_numeric($id) || is_string($id))) {
             $id = [$id];
         }
 
@@ -1250,7 +1250,7 @@ abstract class BaseModel
         }
 
         // Do we have validation errors?
-        if (! $forceDB && ! $this->skipValidation && ($errors = $this->validation->getErrors())) {
+        if (! $forceDB && ! $this->skipValidation && ($errors = $this->validation->getErrors()) !== []) {
             return $errors;
         }
 

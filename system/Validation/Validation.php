@@ -180,7 +180,7 @@ class Validation implements ValidationInterface
                 );
 
                 // if keys not found
-                $values = $values ?: [$field => null];
+                $values = $values !== [] ? $values : [$field => null];
             } else {
                 $values = dot_array_search($field, $data);
             }

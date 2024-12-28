@@ -317,13 +317,13 @@ class Model extends BaseModel
 
         if ($this->tempUseSoftDeletes) {
             $builder->where($this->table . '.' . $this->deletedField, null);
-        } elseif ($this->useSoftDeletes && ($builder->QBGroupBy === []) && $this->primaryKey) {
+        } elseif ($this->useSoftDeletes && ($builder->QBGroupBy === []) && $this->primaryKey !== '') {
             $builder->groupBy($this->table . '.' . $this->primaryKey);
         }
 
         // Some databases, like PostgreSQL, need order
         // information to consistently return correct results.
-        if ($builder->QBGroupBy && ($builder->QBOrderBy === []) && $this->primaryKey) {
+        if ($builder->QBGroupBy !== [] && ($builder->QBOrderBy === []) && $this->primaryKey !== '') {
             $builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
         }
 
@@ -443,7 +443,7 @@ class Model extends BaseModel
 
         $builder = $this->builder();
 
-        if ($id) {
+        if (! in_array($id, [null, '', 0, '0', []], true)) {
             $builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
         }
 
@@ -496,7 +496,7 @@ class Model extends BaseModel
         $set     = [];
         $builder = $this->builder();
 
-        if ($id) {
+        if (! in_array($id, [null, '', 0, '0', []], true)) {
             $builder = $builder->whereIn($this->primaryKey, $id);
         }
 
@@ -690,7 +690,7 @@ class Model extends BaseModel
         // Check for an existing Builder
         if ($this->builder instanceof BaseBuilder) {
             // Make sure the requested table matches the builder
-            if ($table && $this->builder->getTable() !== $table) {
+            if ((string) $table !== '' && $this->builder->getTable() !== $table) {
                 return $this->db->table($table);
             }
 
@@ -704,7 +704,7 @@ class Model extends BaseModel
             throw ModelException::forNoPrimaryKey(static::class);
         }
 
-        $table = ($table === null || $table === '') ? $this->table : $table;
+        $table = ((string) $table === '') ? $this->table : $table;
 
         // Ensure we have a good db connection
         if (! $this->db instanceof BaseConnection) {

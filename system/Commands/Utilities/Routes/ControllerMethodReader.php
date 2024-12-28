@@ -161,7 +161,7 @@ final class ControllerMethodReader
 
         $pattern                = '#' . preg_quote(lcfirst($defaultController), '#') . '\z#';
         $routeWithoutController = rtrim(preg_replace($pattern, '', $uriByClass), '/');
-        $routeWithoutController = $routeWithoutController ?: '/';
+        $routeWithoutController = $routeWithoutController !== '' && $routeWithoutController !== '0' ? $routeWithoutController : '/';
 
         return [[
             'route'   => $routeWithoutController,

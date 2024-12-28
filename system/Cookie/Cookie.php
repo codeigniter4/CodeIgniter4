@@ -482,7 +482,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      */
     public function withPath(?string $path)
     {
-        $path = $path ?: self::$defaults['path'];
+        $path = $path !== null && $path !== '' && $path !== '0' ? $path : self::$defaults['path'];
         $this->validatePrefix($this->prefix, $this->secure, $path, $this->domain);
 
         $cookie = clone $this;

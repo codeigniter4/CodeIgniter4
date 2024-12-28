@@ -20,6 +20,8 @@ use CodeIgniter\Log\Exceptions\LogException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use PHPUnit\Framework\Attributes\Group;
+use ReflectionMethod;
+use ReflectionNamedType;
 use Tests\Support\Log\Handlers\TestHandler;
 use TypeError;
 
@@ -67,7 +69,10 @@ final class LoggerTest extends CIUnitTestCase
 
         $logger = new Logger($config);
 
-        $this->assertNull($logger->log('debug', ''));
+        $refMethod = new ReflectionMethod($logger, 'log');
+        $this->assertTrue($refMethod->hasReturnType());
+        $this->assertInstanceOf(ReflectionNamedType::class, $refMethod->getReturnType());
+        $this->assertSame('void', $refMethod->getReturnType()->getName());
     }
 
     public function testLogActuallyLogs(): void

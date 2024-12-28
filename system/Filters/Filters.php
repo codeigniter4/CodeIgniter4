@@ -653,7 +653,7 @@ class Filters
      */
     public function getArguments(?string $key = null)
     {
-        return $key === null ? $this->arguments : $this->arguments[$key];
+        return ((string) $key === '') ? $this->arguments : $this->arguments[$key];
     }
 
     // --------------------------------------------------------------------
@@ -770,7 +770,7 @@ class Filters
      */
     protected function processFilters(?string $uri = null)
     {
-        if (! isset($this->config->filters) || ! $this->config->filters) {
+        if (! isset($this->config->filters) || $this->config->filters === []) {
             return;
         }
 

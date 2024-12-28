@@ -443,7 +443,7 @@ if (! function_exists('esc')) {
                 $escaper = new Escaper($encoding);
             }
 
-            if ($encoding && $escaper->getEncoding() !== $encoding) {
+            if ($encoding !== null && $escaper->getEncoding() !== $encoding) {
                 $escaper = new Escaper($encoding);
             }
 
@@ -741,13 +741,13 @@ if (! function_exists('lang')) {
         // Get active locale
         $activeLocale = $language->getLocale();
 
-        if ($locale && $locale !== $activeLocale) {
+        if ((string) $locale !== '' && $locale !== $activeLocale) {
             $language->setLocale($locale);
         }
 
         $lines = $language->getLine($line, $args);
 
-        if ($locale && $locale !== $activeLocale) {
+        if ((string) $locale !== '' && $locale !== $activeLocale) {
             // Reset to active locale
             $language->setLocale($activeLocale);
         }
@@ -851,7 +851,7 @@ if (! function_exists('redirect')) {
     {
         $response = service('redirectresponse');
 
-        if ($route !== null) {
+        if ((string) $route !== '') {
             return $response->route($route);
         }
 

@@ -650,7 +650,7 @@ class Forge
             return false;
         }
 
-        if ($this->db->DBPrefix && str_starts_with($tableName, $this->db->DBPrefix)) {
+        if ($this->db->DBPrefix !== '' && str_starts_with($tableName, $this->db->DBPrefix)) {
             $tableName = substr($tableName, strlen($this->db->DBPrefix));
         }
 
