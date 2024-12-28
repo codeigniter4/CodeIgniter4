@@ -26,7 +26,7 @@ use LogicException;
  * @property string    $name
  * @property Time|null $updated_at
  */
-class CustomUser
+final class CustomUser
 {
     private function __construct(
         private readonly int $id,
@@ -40,7 +40,7 @@ class CustomUser
 
     public static function reconstruct(array $data): static
     {
-        return new static(
+        return new self(
             $data['id'],
             $data['name'],
             $data['email'],
