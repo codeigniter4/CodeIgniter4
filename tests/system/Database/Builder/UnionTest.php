@@ -47,7 +47,7 @@ final class UnionTest extends CIUnitTestCase
 
         $builder = $this->db->table('test');
 
-        $builder->union(static fn ($builder) => $builder->from('test'));
+        $builder->union(static fn ($builder): BaseBuilder => $builder->from('test'));
         $this->assertSame($expected, $this->buildSelect($builder));
     }
 
@@ -85,7 +85,7 @@ final class UnionTest extends CIUnitTestCase
 
         $builder = $db->table('users');
 
-        $builder->union(static fn ($builder) => $builder->from('users'));
+        $builder->union(static fn ($builder): BaseBuilder => $builder->from('users'));
         $this->assertSame($expected, $this->buildSelect($builder));
     }
 

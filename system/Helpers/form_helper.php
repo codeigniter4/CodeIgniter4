@@ -739,7 +739,7 @@ if (! function_exists('validation_show_error')) {
         $config = config(Validation::class);
         $view   = service('renderer');
 
-        $errors = array_filter(validation_errors(), static fn ($key) => preg_match(
+        $errors = array_filter(validation_errors(), static fn ($key): false|int => preg_match(
             '/^' . str_replace(['\.\*', '\*\.'], ['\..+', '.+\.'], preg_quote($field, '/')) . '$/',
             $key
         ), ARRAY_FILTER_USE_KEY);

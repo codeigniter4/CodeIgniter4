@@ -1504,7 +1504,7 @@ class RouteCollection implements RouteCollectionInterface
             for ($i = (int) $options['offset'] + 1; $i < (int) $options['offset'] + 7; $i++) {
                 $to = preg_replace_callback(
                     '/\$X/',
-                    static fn ($m) => '$' . $i,
+                    static fn ($m): string => '$' . $i,
                     $to,
                     1
                 );

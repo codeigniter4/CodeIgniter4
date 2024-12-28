@@ -1707,7 +1707,7 @@ final class ForgeTest extends CIUnitTestCase
         // check that db_actions_name key exists
         $indexes = array_filter(
             $allIndexes,
-            static fn ($index) => ($index->name === 'db_actions_name')
+            static fn ($index): bool => ($index->name === 'db_actions_name')
                     && ($index->fields === [0 => 'name'])
         );
         $this->assertCount(1, $indexes);
@@ -1715,7 +1715,7 @@ final class ForgeTest extends CIUnitTestCase
         // check that db_actions_category_name key exists
         $indexes = array_filter(
             $allIndexes,
-            static fn ($index) => ($index->name === 'db_actions_category_name')
+            static fn ($index): bool => ($index->name === 'db_actions_category_name')
                     && ($index->fields === [0 => 'category', 1 => 'name'])
         );
         $this->assertCount(1, $indexes);
@@ -1723,7 +1723,7 @@ final class ForgeTest extends CIUnitTestCase
         // check that the primary key exists
         $indexes = array_filter(
             $allIndexes,
-            static fn ($index) => $index->type === 'PRIMARY'
+            static fn ($index): bool => $index->type === 'PRIMARY'
         );
         $this->assertCount(1, $indexes);
 
@@ -1755,7 +1755,7 @@ final class ForgeTest extends CIUnitTestCase
         // check that db_actions_name key exists
         $indexes = array_filter(
             $allIndexes,
-            static fn ($index) => ($index->name === 'db_actions_name')
+            static fn ($index): bool => ($index->name === 'db_actions_name')
                 && ($index->fields === [0 => 'name'])
         );
         $this->assertCount(1, $indexes);
@@ -1781,7 +1781,7 @@ final class ForgeTest extends CIUnitTestCase
         // check that the primary key exists
         $indexes = array_filter(
             $allIndexes,
-            static fn ($index) => $index->type === 'PRIMARY'
+            static fn ($index): bool => $index->type === 'PRIMARY'
         );
         $this->assertCount(1, $indexes);
 
