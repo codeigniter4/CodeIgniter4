@@ -230,7 +230,7 @@ class CLI
         }
 
         if (! is_array($validation)) {
-            $validation = ((string) $validation !== '') ? explode('|', $validation) : [];
+            $validation = ($validation !== null) ? explode('|', $validation) : [];
         }
 
         if (is_string($options)) {
