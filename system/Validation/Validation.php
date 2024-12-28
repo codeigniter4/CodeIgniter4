@@ -176,7 +176,7 @@ class Validation implements ValidationInterface
 
                 $values = array_filter(
                     $flattenedArray,
-                    static fn ($key): false|int => preg_match(self::getRegex($field), $key),
+                    static fn ($key): bool => preg_match(self::getRegex($field), $key) === 1,
                     ARRAY_FILTER_USE_KEY
                 );
 
@@ -867,7 +867,7 @@ class Validation implements ValidationInterface
 
         $errors = array_filter(
             $this->getErrors(),
-            static fn ($key): false|int => preg_match(self::getRegex($field), $key),
+            static fn ($key): bool => preg_match(self::getRegex($field), $key) === 1,
             ARRAY_FILTER_USE_KEY
         );
 
