@@ -30,6 +30,8 @@ Deprecations
 Bugs Fixed
 **********
 
+- **Common:** Fixed a bug where the ``helper()`` method throw `FileNotFoundException` on valid namespaced helper.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.
