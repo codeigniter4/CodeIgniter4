@@ -603,13 +603,11 @@ run a query. The query is not actually run, and the values don’t matter since 
 as placeholders. This returns a PreparedQuery object:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$db</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">([</span>
-        <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;US&#39;</span><span class="p">,</span>
-    <span class="p">]);</span>
-<span class="p">});</span>
+<span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">static</span> <span class="nx">fn</span> <span class="p">(</span><span class="nv">$db</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">([</span>
+    <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;US&#39;</span><span class="p">,</span>
+<span class="p">]));</span>
 </pre></div>
 </div>
 <p>If you don’t want to use the Query Builder you can create the Query object manually using question marks for
@@ -652,13 +650,11 @@ query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Prepare the Query</span>
-<span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$db</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">([</span>
-        <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;US&#39;</span><span class="p">,</span>
-    <span class="p">]);</span>
-<span class="p">});</span>
+<span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">static</span> <span class="nx">fn</span> <span class="p">(</span><span class="nv">$db</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">([</span>
+    <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;US&#39;</span><span class="p">,</span>
+<span class="p">]));</span>
 
 <span class="c1">// Collect the Data</span>
 <span class="nv">$name</span>    <span class="o">=</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">;</span>
@@ -828,7 +824,7 @@ parameter is the value you want it replaced with:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 29, 2024.
+      <span class="lastupdated">Last updated on Dec 30, 2024.
       </span></p>
   </div>
 
