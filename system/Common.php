@@ -598,7 +598,7 @@ if (! function_exists('helper')) {
             if (str_contains($filename, '\\')) {
                 $path = $loader->locateFile($filename, 'Helpers');
 
-                if ($path !== '') {
+                if (!$path) {
                     throw FileNotFoundException::forFileNotFound($filename);
                 }
 
