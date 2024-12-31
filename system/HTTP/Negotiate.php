@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use Config\Feature;
 
 /**
  * Class Negotiate
@@ -127,7 +128,7 @@ class Negotiate
      */
     public function language(array $supported): string
     {
-        return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-language'), false, false, true);
+        return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-language'), false, false, config(Feature::class)->simpleNegotiateLocale);
     }
 
     // --------------------------------------------------------------------
