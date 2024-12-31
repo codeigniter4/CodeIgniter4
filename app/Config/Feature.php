@@ -26,4 +26,10 @@ class Feature extends BaseConfig
      * If false, `limit(0)` returns no records. (the behavior of 3.1.9 or later in version 3.x.)
      */
     public bool $limitZeroAsAll = true;
+
+    /**
+     * Use an strict localization comparison (with territory en-*) instead of an abbreviated value
+     * Previously, the territory was cut off (en-* as en) before localization comparing
+     */
+    public bool $simpleNegotiateLocale = true;
 }
