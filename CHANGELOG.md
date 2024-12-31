@@ -1,5 +1,17 @@
 # Changelog
 
+## [v4.5.7](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.7) (2024-12-31)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.6...v4.5.7)
+
+### Fixed Bugs
+
+* fix: handle namespaced helper found on Common helper by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9354
+* fix: `Forge::dropColumn()` always returns `false` on SQLite3 driver by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9351
+
+### Refactoring
+
+* refactor: enable AddArrowFunctionReturnTypeRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9343
+
 ## [v4.5.6](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.6) (2024-12-28)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.5...v4.5.6)
 
