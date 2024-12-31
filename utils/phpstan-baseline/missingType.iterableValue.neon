@@ -1,4 +1,4 @@
-# total 1686 errors
+# total 1685 errors
 
 parameters:
     ignoreErrors:
@@ -1694,11 +1694,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Database\\Forge\:\:createTable\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Forge.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\Forge\:\:dropColumn\(\) has parameter \$columnNames with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/Forge.php
 
