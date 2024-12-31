@@ -136,7 +136,7 @@ final class FrameworkCodeTest extends TestCase
 
         $testClasses = array_filter(
             $testClasses,
-            static fn (string $class) => is_subclass_of($class, TestCase::class)
+            static fn (string $class): bool => is_subclass_of($class, TestCase::class)
         );
 
         sort($testClasses);

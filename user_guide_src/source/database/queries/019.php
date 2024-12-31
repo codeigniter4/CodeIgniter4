@@ -1,13 +1,11 @@
 <?php
 
 // Prepare the Query
-$pQuery = $db->prepare(static function ($db) {
-    return $db->table('user')->insert([
-        'name'    => 'x',
-        'email'   => 'y',
-        'country' => 'US',
-    ]);
-});
+$pQuery = $db->prepare(static fn ($db) => $db->table('user')->insert([
+    'name'    => 'x',
+    'email'   => 'y',
+    'country' => 'US',
+]));
 
 // Collect the Data
 $name    = 'John Doe';

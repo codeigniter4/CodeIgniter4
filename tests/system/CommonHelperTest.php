@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
+use CodeIgniter\Autoloader\Autoloader;
 use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 use PHPUnit\Framework\Attributes\CoversFunction;
@@ -147,5 +149,34 @@ final class CommonHelperTest extends CIUnitTestCase
         }
 
         $this->assertSame($this->dummyHelpers[0], foo_bar_baz());
+    }
+
+    public function testNamespacedHelperNotFound(): void
+    {
+        $this->expectException(FileNotFoundException::class);
+
+        $locator = $this->getMockLocator();
+        Services::injectMock('locator', $locator);
+
+        helper('foo\barbaz');
+    }
+
+    public function testNamespacedHelperFound(): void
+    {
+        $autoloader = new Autoloader();
+        $autoloader->addNamespace('Tests\Support\Helpers', TESTPATH . '_support/Helpers');
+        $locator = new FileLocator($autoloader);
+
+        Services::injectMock('locator', $locator);
+
+        $found = true;
+
+        try {
+            helper('Tests\Support\Helpers\baguette');
+        } catch (FileNotFoundException) {
+            $found = false;
+        }
+
+        $this->assertTrue($found);
     }
 }

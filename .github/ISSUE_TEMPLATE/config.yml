@@ -2,7 +2,7 @@ blank_issues_enabled: false
 contact_links:
   - name: CodeIgniter Forum
     url: https://forum.codeigniter.com/forum-30.html
-    about: Please ask your support questions in the forums. Thanks!
+    about: Please ask your support questions and/or feature requests in the forums. Thanks!
 
   - name: CodeIgniter Slack channel
     url: https://codeigniterchat.slack.com

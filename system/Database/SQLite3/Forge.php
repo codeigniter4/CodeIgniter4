@@ -111,6 +111,31 @@ class Forge extends BaseForge
     }
 
     /**
+     * @param list<string>|string $columnNames
+     *
+     * @throws DatabaseException
+     */
+    public function dropColumn(string $table, $columnNames): bool
+    {
+        $columns = is_array($columnNames) ? $columnNames : array_map(trim(...), explode(',', $columnNames));
+        $result  = (new Table($this->db, $this))
+            ->fromTable($this->db->DBPrefix . $table)
+            ->dropColumn($columns)
+            ->run();
+
+        if (! $result && $this->db->DBDebug) {
+            throw new DatabaseException(sprintf(
+                'Failed to drop column%s "%s" on "%s" table.',
+                count($columns) > 1 ? 's' : '',
+                implode('", "', $columns),
+                $table,
+            ));
+        }
+
+        return $result;
+    }
+
+    /**
      * @param array|string $processedFields Processed column definitions
      *                                      or column names to DROP
      *
@@ -121,17 +146,6 @@ class Forge extends BaseForge
     protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         switch ($alterType) {
-            case 'DROP':
-                $columnNamesToDrop = $processedFields;
-
-                $sqlTable = new Table($this->db, $this);
-
-                $sqlTable->fromTable($table)
-                    ->dropColumn($columnNamesToDrop)
-                    ->run();
-
-                return ''; // Why empty string?
-
             case 'CHANGE':
                 $fieldsToModify = [];
 

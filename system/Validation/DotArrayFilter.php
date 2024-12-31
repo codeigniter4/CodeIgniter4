@@ -32,7 +32,7 @@ final class DotArrayFilter
 
         foreach ($indexes as $index) {
             $segments = preg_split('/(?<!\\\\)\./', $index, -1, PREG_SPLIT_NO_EMPTY);
-            $segments = array_map(static fn ($key) => str_replace('\.', '.', $key), $segments);
+            $segments = array_map(static fn ($key): string => str_replace('\.', '.', $key), $segments);
 
             $filteredArray = self::filter($segments, $array);
 

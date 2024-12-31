@@ -187,7 +187,7 @@ class Routes extends BaseCommand
 
         // Sort by Handler.
         if ($sortByHandler) {
-            usort($tbody, static fn ($handler1, $handler2) => strcmp($handler1[3], $handler2[3]));
+            usort($tbody, static fn ($handler1, $handler2): int => strcmp($handler1[3], $handler2[3]));
         }
 
         if ($host !== null) {

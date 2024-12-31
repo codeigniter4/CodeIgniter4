@@ -1,0 +1,41 @@
+# https://mergeable.readthedocs.io/en/latest/configuration.html
+
+version: 2
+mergeable:
+  - when: issues.opened
+    validate:
+      - do: description
+        and:
+          - must_include:
+              regex: '^### PHP Version'
+          - must_include:
+              regex: '^### CodeIgniter4 Version'
+      - do: author
+        and:
+          - must_exclude:
+              regex: 'kenjis'
+          - must_exclude:
+              regex: 'lonnieezell'
+          - must_exclude:
+              regex: 'MGatner'
+          - must_exclude:
+              regex: 'michalsn'
+          - must_exclude:
+              regex: 'paulbalandan'
+          - must_exclude:
+              regex: 'samsonasik'
+    fail:
+      - do: comment
+        payload: |
+          Hi there! :wave:
+
+          It looks like you opened an issue without following the bug report template:
+
+          Bug report ([open an issue](https://github.com/codeigniter4/CodeIgniter4/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml&title=Bug%3A+))
+
+          If you are opening a feature request or support question, please do so in the [forums](https://forum.codeigniter.com/forum-30.html).
+
+          The current issue will be closed. This is a precaution to save maintainers' time, I hope you'll understand.
+
+          Sincerely, the mergeable bot 🤖
+      - do: close

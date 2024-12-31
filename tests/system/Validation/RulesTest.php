@@ -119,7 +119,7 @@ class RulesTest extends CIUnitTestCase
             ],
             // Testing with closure
             [
-                ['foo' => ['if_exist', static fn ($value) => true]],
+                ['foo' => ['if_exist', static fn ($value): bool => true]],
                 ['foo' => []],
                 true,
             ],
@@ -299,7 +299,7 @@ class RulesTest extends CIUnitTestCase
             ],
             [
                 // Testing with closure
-                ['foo' => ['permit_empty', static fn ($value) => true]],
+                ['foo' => ['permit_empty', static fn ($value): bool => true]],
                 ['foo' => ''],
                 true,
             ],
