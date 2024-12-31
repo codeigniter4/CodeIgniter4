@@ -2023,7 +2023,7 @@ class BaseBuilder
             $sql = 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ")\n{:_table_:}ON DUPLICATE KEY UPDATE\n" . implode(
                 ",\n",
                 array_map(
-                    static fn ($key, $value) => $table . '.' . $key . ($value instanceof RawSql ?
+                    static fn ($key, $value): string => $table . '.' . $key . ($value instanceof RawSql ?
                         ' = ' . $value :
                         ' = VALUES(' . $value . ')'),
                     array_keys($updateFields),
@@ -2113,7 +2113,7 @@ class BaseBuilder
             if (is_string($set)) {
                 $set = explode(',', $set);
 
-                $set = array_map(static fn ($key) => trim($key), $set);
+                $set = array_map(static fn ($key): string => trim($key), $set);
             }
 
             if ($set instanceof RawSql) {
@@ -2157,7 +2157,7 @@ class BaseBuilder
         if (is_string($query)) {
             if ($columns !== null && is_string($columns)) {
                 $columns = explode(',', $columns);
-                $columns = array_map(static fn ($key) => trim($key), $columns);
+                $columns = array_map(static fn ($key): string => trim($key), $columns);
             }
 
             $columns = (array) $columns;
@@ -2195,7 +2195,7 @@ class BaseBuilder
      */
     protected function formatValues(array $values): array
     {
-        return array_map(static fn ($index) => '(' . implode(',', $index) . ')', $values);
+        return array_map(static fn ($index): string => '(' . implode(',', $index) . ')', $values);
     }
 
     /**
@@ -2654,7 +2654,7 @@ class BaseBuilder
             $sql .= implode(
                 ",\n",
                 array_map(
-                    static fn ($key, $value) => $key . ($value instanceof RawSql ?
+                    static fn ($key, $value): string => $key . ($value instanceof RawSql ?
                         ' = ' . $value :
                         ' = ' . $alias . '.' . $value),
                     array_keys($updateFields),
@@ -2696,8 +2696,8 @@ class BaseBuilder
             $data = implode(
                 " UNION ALL\n",
                 array_map(
-                    static fn ($value) => 'SELECT ' . implode(', ', array_map(
-                        static fn ($key, $index) => $index . ' ' . $key,
+                    static fn ($value): string => 'SELECT ' . implode(', ', array_map(
+                        static fn ($key, $index): string => $index . ' ' . $key,
                         $keys,
                         $value
                     )),
@@ -2951,8 +2951,8 @@ class BaseBuilder
             $data = implode(
                 " UNION ALL\n",
                 array_map(
-                    static fn ($value) => 'SELECT ' . implode(', ', array_map(
-                        static fn ($key, $index) => $index . ' ' . $key,
+                    static fn ($value): string => 'SELECT ' . implode(', ', array_map(
+                        static fn ($key, $index): string => $index . ' ' . $key,
                         $keys,
                         $value
                     )),

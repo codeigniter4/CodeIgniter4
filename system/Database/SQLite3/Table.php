@@ -113,7 +113,7 @@ class Table
         $this->keys = array_merge($this->keys, $this->formatKeys($this->db->getIndexData($table)));
 
         // if primary key index exists twice then remove psuedo index name 'primary'.
-        $primaryIndexes = array_filter($this->keys, static fn ($index) => $index['type'] === 'primary');
+        $primaryIndexes = array_filter($this->keys, static fn ($index): bool => $index['type'] === 'primary');
 
         if ($primaryIndexes !== [] && count($primaryIndexes) > 1 && array_key_exists('primary', $this->keys)) {
             unset($this->keys['primary']);
@@ -202,7 +202,7 @@ class Table
      */
     public function dropPrimaryKey(): Table
     {
-        $primaryIndexes = array_filter($this->keys, static fn ($index) => strtolower($index['type']) === 'primary');
+        $primaryIndexes = array_filter($this->keys, static fn ($index): bool => strtolower($index['type']) === 'primary');
 
         foreach (array_keys($primaryIndexes) as $key) {
             unset($this->keys[$key]);
@@ -235,7 +235,7 @@ class Table
      */
     public function addPrimaryKey(array $fields): Table
     {
-        $primaryIndexes = array_filter($this->keys, static fn ($index) => strtolower($index['type']) === 'primary');
+        $primaryIndexes = array_filter($this->keys, static fn ($index): bool => strtolower($index['type']) === 'primary');
 
         // if primary key already exists we can't add another one
         if ($primaryIndexes !== []) {
@@ -308,7 +308,7 @@ class Table
 
         $this->keys = array_filter(
             $this->keys,
-            static fn ($index) => count(array_intersect($index['fields'], $fieldNames)) === count($index['fields'])
+            static fn ($index): bool => count(array_intersect($index['fields'], $fieldNames)) === count($index['fields'])
         );
 
         // Unique/Index keys

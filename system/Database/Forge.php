@@ -778,7 +778,7 @@ class Forge
     }
 
     /**
-     * @param array|string $columnNames column names to DROP
+     * @param list<string>|string $columnNames column names to DROP
      *
      * @return bool
      *
@@ -861,7 +861,7 @@ class Forge
                 $columnNamesToDrop = explode(',', $columnNamesToDrop);
             }
 
-            $columnNamesToDrop = array_map(fn ($field) => 'DROP COLUMN ' . $this->db->escapeIdentifiers(trim($field)), $columnNamesToDrop);
+            $columnNamesToDrop = array_map(fn ($field): string => 'DROP COLUMN ' . $this->db->escapeIdentifiers(trim($field)), $columnNamesToDrop);
 
             return $sql . implode(', ', $columnNamesToDrop);
         }

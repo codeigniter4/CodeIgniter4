@@ -225,7 +225,7 @@ class Forge extends BaseForge
 
             $sql = 'ALTER TABLE ' . $fullTable . ' DROP ';
 
-            $fields = array_map(static fn ($item) => 'COLUMN [' . trim($item) . ']', (array) $columnNamesToDrop);
+            $fields = array_map(static fn ($item): string => 'COLUMN [' . trim($item) . ']', (array) $columnNamesToDrop);
 
             return $sql . implode(',', $fields);
         }
@@ -380,7 +380,7 @@ class Forge extends BaseForge
                 // https://learn.microsoft.com/en-us/sql/t-sql/data-types/char-and-varchar-transact-sql?view=sql-server-ver16#remarks
                 $maxLength = max(
                     array_map(
-                        static fn ($value) => strlen($value),
+                        static fn ($value): int => strlen($value),
                         $attributes['CONSTRAINT']
                     )
                 );

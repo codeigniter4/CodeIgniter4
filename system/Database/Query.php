@@ -418,7 +418,7 @@ class Query implements QueryInterface, Stringable
          */
         $search = '/\b(?:' . implode('|', $highlight) . ')\b(?![^(&#039;)]*&#039;(?:(?:[^(&#039;)]*&#039;){2})*[^(&#039;)]*$)/';
 
-        return preg_replace_callback($search, static fn ($matches) => '<strong>' . str_replace(' ', '&nbsp;', $matches[0]) . '</strong>', $sql);
+        return preg_replace_callback($search, static fn ($matches): string => '<strong>' . str_replace(' ', '&nbsp;', $matches[0]) . '</strong>', $sql);
     }
 
     /**

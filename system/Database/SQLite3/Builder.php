@@ -143,7 +143,7 @@ class Builder extends BaseBuilder
             $constraints = $this->QBOptions['constraints'] ?? [];
 
             if (empty($constraints)) {
-                $fieldNames = array_map(static fn ($columnName) => trim($columnName, '`'), $keys);
+                $fieldNames = array_map(static fn ($columnName): string => trim($columnName, '`'), $keys);
 
                 $allIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames): bool {
                     $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
@@ -179,7 +179,7 @@ class Builder extends BaseBuilder
 
             $sql = 'INSERT INTO ' . $table . ' (';
 
-            $sql .= implode(', ', array_map(static fn ($columnName) => $columnName, $keys));
+            $sql .= implode(', ', array_map(static fn ($columnName): string => $columnName, $keys));
 
             $sql .= ")\n";
 
@@ -192,7 +192,7 @@ class Builder extends BaseBuilder
             $sql .= implode(
                 ",\n",
                 array_map(
-                    static fn ($key, $value) => $key . ($value instanceof RawSql ?
+                    static fn ($key, $value): string => $key . ($value instanceof RawSql ?
                         " = {$value}" :
                         " = {$alias}.{$value}"),
                     array_keys($updateFields),
@@ -265,8 +265,8 @@ class Builder extends BaseBuilder
             $data = implode(
                 " UNION ALL\n",
                 array_map(
-                    static fn ($value) => 'SELECT ' . implode(', ', array_map(
-                        static fn ($key, $index) => $index . ' ' . $key,
+                    static fn ($value): string => 'SELECT ' . implode(', ', array_map(
+                        static fn ($key, $index): string => $index . ' ' . $key,
                         $keys,
                         $value
                     )),

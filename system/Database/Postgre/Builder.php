@@ -353,7 +353,7 @@ class Builder extends BaseBuilder
             $sql .= implode(
                 ",\n",
                 array_map(
-                    static fn ($key, $value) => $key . ($value instanceof RawSql ?
+                    static fn ($key, $value): string => $key . ($value instanceof RawSql ?
                             ' = ' . $value :
                             ' = ' . $that->cast($alias . '.' . $value, $that->getFieldType($table, $key))),
                     array_keys($updateFields),
@@ -394,8 +394,8 @@ class Builder extends BaseBuilder
             $data = implode(
                 " UNION ALL\n",
                 array_map(
-                    static fn ($value) => 'SELECT ' . implode(', ', array_map(
-                        static fn ($key, $index) => $index . ' ' . $key,
+                    static fn ($value): string => 'SELECT ' . implode(', ', array_map(
+                        static fn ($key, $index): string => $index . ' ' . $key,
                         $keys,
                         $value
                     )),
@@ -458,7 +458,7 @@ class Builder extends BaseBuilder
 
         // if this is the first iteration of batch then we need to build skeleton sql
         if ($sql === '') {
-            $fieldNames = array_map(static fn ($columnName) => trim($columnName, '"'), $keys);
+            $fieldNames = array_map(static fn ($columnName): string => trim($columnName, '"'), $keys);
 
             $constraints = $this->QBOptions['constraints'] ?? [];
 
@@ -524,7 +524,7 @@ class Builder extends BaseBuilder
             $sql .= implode(
                 ",\n",
                 array_map(
-                    static fn ($key, $value) => $key . ($value instanceof RawSql ?
+                    static fn ($key, $value): string => $key . ($value instanceof RawSql ?
                     " = {$value}" :
                     " = {$alias}.{$value}"),
                     array_keys($updateFields),
@@ -617,8 +617,8 @@ class Builder extends BaseBuilder
             $data = implode(
                 " UNION ALL\n",
                 array_map(
-                    static fn ($value) => 'SELECT ' . implode(', ', array_map(
-                        static fn ($key, $index) => $index . ' ' . $key,
+                    static fn ($value): string => 'SELECT ' . implode(', ', array_map(
+                        static fn ($key, $index): string => $index . ' ' . $key,
                         $keys,
                         $value
                     )),

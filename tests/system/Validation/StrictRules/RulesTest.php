@@ -91,7 +91,7 @@ final class RulesTest extends TraditionalRulesTest
             ],
             // Testing with closure
             [
-                ['foo' => ['permit_empty', static fn ($value) => true]],
+                ['foo' => ['permit_empty', static fn ($value): bool => true]],
                 ['foo' => ''],
                 true,
             ],

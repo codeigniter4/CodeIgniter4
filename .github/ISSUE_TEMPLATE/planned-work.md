@@ -1,10 +1,10 @@
 ---
 name: Planned work
-about: Approved work planning
+about: Maintainers' space. DO NOT use this for your bug reports!
 title: 'Dev: '
 labels: dev
 assignees: ''
 
 ---
 
-Repo maintainers will create "issues" for planned work, so it can be tracked.
+Maintainers will create "issues" for planned work, so it can be tracked.

@@ -157,7 +157,7 @@ final class TimerTest extends CIUnitTestCase
     public function testRecordArrowFunction(): void
     {
         $timer       = new Timer();
-        $returnValue = $timer->record('longjohn', static fn () => strlen('CI4'));
+        $returnValue = $timer->record('longjohn', static fn (): int => strlen('CI4'));
 
         $this->assertLessThan(0.1, $timer->getElapsedTime('longjohn'));
         $this->assertSame(3, $returnValue);
@@ -196,7 +196,7 @@ final class TimerTest extends CIUnitTestCase
 
     public function testCommonNoNameCallableExpectTimer(): void
     {
-        $returnValue = timer(null, static fn () => strlen('CI4'));
+        $returnValue = timer(null, static fn (): int => strlen('CI4'));
 
         $this->assertInstanceOf(Timer::class, $returnValue);
     }
@@ -212,7 +212,7 @@ final class TimerTest extends CIUnitTestCase
 
     public function testCommonCallableExpectWithReturn(): void
     {
-        $returnValue = timer('common', static fn () => strlen('CI4'));
+        $returnValue = timer('common', static fn (): int => strlen('CI4'));
 
         $this->assertNotInstanceOf(Timer::class, $returnValue);
         $this->assertSame(3, $returnValue);
