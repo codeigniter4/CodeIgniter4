@@ -18,6 +18,17 @@ BREAKING
 Message Changes
 ***************
 
+************
+Enhancements
+************
+
+Negotiator
+==========
+
+- Added a feature flag ``Feature::$simpleNegotiateLocale`` fix simple locale comparison.
+  Previously, response with language headers ``Accept-language: en-US,en-GB;q=0.9`` returned the first allowed language ``en`` could instead of the exact language ``en-US`` or ``en-GB``.
+  Set the value to ``false`` to be able to get ``en-*``
+
 *******
 Changes
 *******
