@@ -419,7 +419,7 @@ class Parser extends View
          * $matches[][0] is the raw match
          * $matches[][1] is the contents
          */
-        if (preg_match_all($pattern, $template, $matches, PREG_SET_ORDER)) {
+        if (preg_match_all($pattern, $template, $matches, PREG_SET_ORDER) >= 1) {
             foreach ($matches as $match) {
                 // Create a hash of the contents to insert in its place.
                 $hash                       = md5($match[1]);
@@ -691,7 +691,7 @@ class Parser extends View
              *   $matches[1] = all parameters string in opening tag
              *   $matches[2] = content between the tags to send to the plugin.
              */
-            if (preg_match_all($pattern, $template, $matches, PREG_SET_ORDER) === 0) {
+            if (preg_match_all($pattern, $template, $matches, PREG_SET_ORDER) < 1) {
                 continue;
             }
 

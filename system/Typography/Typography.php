@@ -96,7 +96,7 @@ class Typography
 
         // HTML comment tags don't conform to patterns of normal tags, so pull them out separately, only if needed
         $htmlComments = [];
-        if (str_contains($str, '<!--') && preg_match_all('#(<!\-\-.*?\-\->)#s', $str, $matches)) {
+        if (str_contains($str, '<!--') && preg_match_all('#(<!\-\-.*?\-\->)#s', $str, $matches) >= 1) {
             for ($i = 0, $total = count($matches[0]); $i < $total; $i++) {
                 $htmlComments[] = $matches[0][$i];
                 $str            = str_replace($matches[0][$i], '{@HC' . $i . '}', $str);
