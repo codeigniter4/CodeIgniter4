@@ -805,4 +805,14 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame(str_contains(php_uname(), 'Windows'), is_windows());
         $this->assertSame(defined('PHP_WINDOWS_VERSION_MAJOR'), is_windows());
     }
+
+    public function testRenderBacktrace(): void
+    {
+        $trace   = (new RuntimeException('Test exception'))->getTrace();
+        $renders = explode("\n", render_backtrace($trace));
+
+        foreach ($renders as $render) {
+            $this->assertMatchesRegularExpression('/^\s*\d* .+(?:\(\d+\))?: \S+(?:(?:\->|::)\S+)?\(.*\)$/', $render);
+        }
+    }
 }
