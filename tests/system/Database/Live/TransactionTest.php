@@ -254,7 +254,7 @@ final class TransactionTest extends CIUnitTestCase
             ],
         ];
 
-        $this->db->transBegin();
+        $this->db->transStrict(false)->transBegin();
         $this->db->table('job')->insertBatch($data);
 
         $this->assertFalse($this->db->transStatus());
