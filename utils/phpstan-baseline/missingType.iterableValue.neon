@@ -1,4 +1,4 @@
-# total 1672 errors
+# total 1670 errors
 
 parameters:
     ignoreErrors:
@@ -2414,11 +2414,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:maskSensitiveData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Exceptions.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:renderBacktrace\(\) has parameter \$backtrace with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Debug/Exceptions.php
 
