@@ -254,12 +254,24 @@ final class TransactionTest extends CIUnitTestCase
             ],
         ];
 
-        $this->db->transStrict(false)->transBegin();
-        $this->db->table('job')->insertBatch($data);
+        $db = $this->db;
 
-        $this->assertFalse($this->db->transStatus());
+        if ($this->db->DBDriver === 'MySQLi') {
+            // strict mode is required for MySQLi to throw an exception here
+            $config                   = config('Database');
+            $config->tests['strictOn'] = true;
 
-        $this->db->transComplete();
+            $db = Database::connect($config->tests);
+        }
+
+        $db->transStrict(false)->transBegin();
+        $db->table('job')->insertBatch($data);
+
+        $this->assertFalse($db->transStatus());
+
+        $db->transComplete();
+
+        $db->transStrict();
 
         $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
     }

@@ -102,7 +102,17 @@ final class InsertTest extends CIUnitTestCase
             ],
         ];
 
-        $this->db->table('job')->insertBatch($data);
+        $db = $this->db;
+
+        if ($this->db->DBDriver === 'MySQLi') {
+            // strict mode is required for MySQLi to throw an exception here
+            $config                   = config('Database');
+            $config->tests['strictOn'] = true;
+
+            $db = Database::connect($config->tests);
+        }
+
+        $db->table('job')->insertBatch($data);
     }
 
     public function testReplaceWithNoMatchingData(): void
