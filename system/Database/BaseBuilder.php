@@ -663,7 +663,7 @@ class BaseBuilder
         } else {
             // Split multiple conditions
             // @TODO This does not parse `BETWEEN a AND b` correctly.
-            if (preg_match_all('/\sAND\s|\sOR\s/i', $cond, $joints, PREG_OFFSET_CAPTURE)) {
+            if (preg_match_all('/\sAND\s|\sOR\s/i', $cond, $joints, PREG_OFFSET_CAPTURE) >= 1) {
                 $conditions = [];
                 $joints     = $joints[0];
                 array_unshift($joints, ['', 0]);
@@ -3470,7 +3470,7 @@ class BaseBuilder
             '/' . implode('|', $this->pregOperators) . '/i',
             $str,
             $match
-        ) ? ($list ? $match[0] : $match[0][0]) : false;
+        ) >= 1 ? ($list ? $match[0] : $match[0][0]) : false;
     }
 
     /**
@@ -3501,7 +3501,7 @@ class BaseBuilder
             '/' . implode('|', $pregOperators) . '/i',
             $whereKey,
             $match
-        ) ? $match[0] : false;
+        ) >= 1 ? $match[0] : false;
     }
 
     /**
