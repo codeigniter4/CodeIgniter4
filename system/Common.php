@@ -984,7 +984,7 @@ if (! function_exists('render_backtrace')) {
                 $frame['class'],
                 $frame['type'],
                 $frame['function'],
-                $args
+                $args,
             );
         }
 
