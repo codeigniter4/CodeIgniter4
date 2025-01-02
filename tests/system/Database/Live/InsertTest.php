@@ -106,7 +106,7 @@ final class InsertTest extends CIUnitTestCase
 
         if ($this->db->DBDriver === 'MySQLi') {
             // strict mode is required for MySQLi to throw an exception here
-            $config                   = config('Database');
+            $config                    = config('Database');
             $config->tests['strictOn'] = true;
 
             $db = Database::connect($config->tests);
