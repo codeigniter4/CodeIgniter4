@@ -488,14 +488,21 @@ class Connection extends BaseConnection
      */
     protected function execute(string $sql)
     {
-        $stmt = ($this->scrollable === false || $this->isWriteType($sql)) ?
-            sqlsrv_query($this->connID, $sql) :
-            sqlsrv_query($this->connID, $sql, [], ['Scrollable' => $this->scrollable]);
+        $stmt = ($this->scrollable === false || $this->isWriteType($sql))
+            ? sqlsrv_query($this->connID, $sql)
+            : sqlsrv_query($this->connID, $sql, [], ['Scrollable' => $this->scrollable]);
 
         if ($stmt === false) {
             $error = $this->error();
+            $trace = debug_backtrace();
+            $first = array_shift($trace);
 
-            log_message('error', $error['message']);
+            log_message('error', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
+                'message' => $error['message'],
+                'exFile'  => clean_path($first['file']),
+                'exLine'  => $first['line'],
+                'trace'   => render_backtrace($trace),
+            ]);
 
             if ($this->DBDebug) {
                 throw new DatabaseException($error['message']);
