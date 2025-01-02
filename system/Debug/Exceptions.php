@@ -528,7 +528,7 @@ class Exceptions
                 'errFile' => clean_path($file ?? ''),
                 'errLine' => $line ?? 0,
                 'trace'   => render_backtrace($trace),
-            ]
+            ],
         );
 
         return true;
