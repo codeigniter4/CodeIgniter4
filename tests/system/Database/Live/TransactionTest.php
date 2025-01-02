@@ -239,4 +239,28 @@ final class TransactionTest extends CIUnitTestCase
 
         $this->enableDBDebug();
     }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9362
+     */
+    public function testTransInsertBatchFailed(): void
+    {
+        $data = [
+            [
+                'name' => 'Grocery Sales',
+            ],
+            [
+                'name' => null,
+            ],
+        ];
+
+        $this->db->transBegin();
+        $this->db->table('job')->insertBatch($data);
+
+        $this->assertFalse($this->db->transStatus());
+
+        $this->db->transRollback();
+
+        $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
+    }
 }

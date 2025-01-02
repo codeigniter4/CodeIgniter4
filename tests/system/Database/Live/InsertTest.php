@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -79,11 +80,29 @@ final class InsertTest extends CIUnitTestCase
             ],
         ];
 
-        $this->db->table($table)->insertBatch($data);
+        $count = $this->db->table($table)->insertBatch($data);
+
+        $this->assertSame(2, $count);
 
         $expected = $data;
         $this->seeInDatabase($table, $expected[0]);
         $this->seeInDatabase($table, $expected[1]);
+    }
+
+    public function testInsertBatchFailed(): void
+    {
+        $this->expectException(DatabaseException::class);
+
+        $data = [
+            [
+                'name' => 'Grocery Sales',
+            ],
+            [
+                'name' => null,
+            ],
+        ];
+
+        $this->db->table('job')->insertBatch($data);
     }
 
     public function testReplaceWithNoMatchingData(): void

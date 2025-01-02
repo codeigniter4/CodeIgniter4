@@ -2198,7 +2198,7 @@ class BaseBuilder
      *
      * @param array|object|null $set a dataset
      *
-     * @return false|int|list<string> Number of rows inserted or FALSE on failure, SQL array when testMode
+     * @return false|int|list<string> Number of rows inserted or FALSE on no data to perform an insert operation, SQL array when testMode
      */
     public function insertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
