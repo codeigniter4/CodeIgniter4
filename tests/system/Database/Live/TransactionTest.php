@@ -259,7 +259,7 @@ final class TransactionTest extends CIUnitTestCase
 
         $this->assertFalse($this->db->transStatus());
 
-        $this->db->transRollback();
+        $this->db->transComplete();
 
         $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
     }
