@@ -123,12 +123,16 @@ class Negotiate
      * types the application says it supports, and the types requested
      * by the client.
      *
-     * If no match is found, the first, highest-ranking client requested
+     * If loose locale negotiation is enabled and no match is found, the first, highest-ranking client requested
      * type is returned.
      */
     public function language(array $supported): string
     {
-        return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-language'), false, false, config(Feature::class)->simpleNegotiateLocale);
+        if (config(Feature::class)->looseLocaleNegotiation) {
+            return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-language'), false, false, true);
+        }
+
+        return $this->getBestLocaleMatch($supported, $this->request->getHeaderLine('accept-language'));
     }
 
     // --------------------------------------------------------------------
@@ -188,6 +192,62 @@ class Negotiate
 
         // No matches? Return the first supported element.
         return $strictMatch ? '' : $supported[0];
+    }
+
+    /**
+     * Strict locale search, including territories (en-*)
+     *
+     * @param list<string> $supported App-supported values
+     * @param ?string      $header    Compatible 'Accept-Language' header string
+     */
+    protected function getBestLocaleMatch(array $supported, ?string $header): string
+    {
+        if ($supported === []) {
+            throw HTTPException::forEmptySupportedNegotiations();
+        }
+
+        if ($header === null || $header === '') {
+            return $supported[0];
+        }
+
+        $acceptable      = $this->parseHeader($header);
+        $fallbackLocales = [];
+
+        foreach ($acceptable as $accept) {
+            // if acceptable quality is zero, skip it.
+            if ($accept['q'] === 0.0) {
+                continue;
+            }
+
+            // if acceptable value is "anything", return the first available
+            if ($accept['value'] === '*' || $accept['value'] === '*/*') {
+                return $supported[0];
+            }
+
+            // look for exact match
+            if (in_array($accept['value'], $supported, true)) {
+                return $accept['value'];
+            }
+
+            // set a fallback locale
+            $fallbackLocales[] = strtok($accept['value'], '-');
+        }
+
+        foreach ($fallbackLocales as $fallbackLocale) {
+            // look for exact match
+            if (in_array($fallbackLocale, $supported, true)) {
+                return $fallbackLocale;
+            }
+
+            // look for locale variants match
+            foreach ($supported as $locale) {
+                if (str_starts_with($locale, $fallbackLocale . '-')) {
+                    return $locale;
+                }
+            }
+        }
+
+        return $supported[0];
     }
 
     /**
