@@ -28,8 +28,8 @@ class Feature extends BaseConfig
     public bool $limitZeroAsAll = true;
 
     /**
-     * Use an strict localization comparison (with territory en-*) instead of an abbreviated value
-     * Previously, the territory was cut off (en-* as en) before localization comparing
+     * Set `false` to use strict localization comparison (with territory en-*) instead of an abbreviated value.
+     * Set `true`, so territory was cut off (en-* as en) before localization comparing.
      */
-    public bool $simpleNegotiateLocale = true;
+    public bool $looseLocaleNegotiation = true;
 }
