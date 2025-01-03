@@ -203,6 +203,60 @@ Then add validation rules in the controller (**Form.php**):
 
 If you submit the form you should see the success page or the form with error messages.
 
+****************************
+Working with different types
+****************************
+
+Since the input value is not limited to scalar types, you can check various objects, enumerations or global data (see :ref:`rules-for-file-uploads`).
+Working with the validator is no different, you only need to add custom rules.
+This behavior can be useful when creating entities.
+
+An example for validation can be ``DateTime`` for the creation date, ``URI`` for the profile link, ``SplFileInfo`` for the avatar file.
+
+Let's check the input data before creating a new user, with a file structure:
+
+.. code-block:: text
+
+    app/
+    ├── Config
+    │   └── Validation.php:
+    ├── Controllers
+    │   └── UserController.php
+    ├── Entity
+    │   └── User.php
+    ├── Validation
+    │   └── UserRules.php
+    └── ValueObject
+        └── Name.php
+
+Add custom value-object ``Name``. It is required when working with the ``User``:
+
+.. literalinclude:: validation/048.php
+    :lines: 2-
+
+Create rule. We want to make sure that the username will be of the specified type and have a non-empty value:
+
+.. literalinclude:: validation/049.php
+    :lines: 2-
+
+Add rule to list in **app/Config/Validation.php**:
+
+.. literalinclude:: validation/050.php
+   :lines: 2-
+
+We can check the data manually. It looks more efficiently with the ``Validator``:
+
+
+.. literalinclude:: validation/051.php
+   :lines: 2-
+
+.. note:: Additionally, some basic rules can be applied, such as ``required``, ``permit_empty``, ``field_exists``, ``if_exist``.
+
+Try to create a ``User`` in the controller. Depending on the result, we can throw an exception or handle errors:
+
+.. literalinclude:: validation/052.php
+   :lines: 2-
+
 *********************
 Config for Validation
 *********************
