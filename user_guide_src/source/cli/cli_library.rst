@@ -5,7 +5,7 @@ CLI Library
 CodeIgniter's CLI library makes creating interactive command-line scripts simple, including:
 
 * Prompting the user for more information
-* Writing multi-colored text the terminal
+* Writing multi-colored text in the terminal
 * Beeping (be nice!)
 * Showing progress bars during long tasks
 * Wrapping long text lines to fit the window.
@@ -79,7 +79,7 @@ promptByMultipleKeys()
 
 .. versionadded:: 4.3.0
 
-This method is the same as ``promptByKey()``, but it supports multiple value.
+This method is the same as ``promptByKey()``, but it supports multiple values.
 
 .. literalinclude:: cli_library/023.php
 
@@ -91,7 +91,7 @@ Providing Feedback
 write()
 =======
 
-Several methods are provided for you to provide feedback to your users. This can be as simple as a single status update
+There are several methods for you to provide feedback to your users. This can be as simple as a single status update
 or a complex table of information that wraps to the user's terminal window. At the core of this is the ``write()``
 method which takes the string to output as the first parameter:
 
@@ -140,9 +140,9 @@ And a smaller number are available as background colors:
 print()
 =======
 
-Print functions identically to the ``write()`` method, except that it does not force a newline either before or after.
-Instead it prints it to the screen wherever the cursor is currently. This allows you to print multiple items all on
-the same line, from different calls. This is especially helpful when you want to show a status, do something, then
+print() functions identically to the ``write()`` method, except that it does not force a newline either before or after.
+Instead it prints output to the screen wherever the cursor currently is. This allows you to print multiple items
+from different calls all on the same line. This is especially helpful when you want to show a status, do something, then
 print "Done" on the same line:
 
 .. literalinclude:: cli_library/012.php
@@ -152,7 +152,7 @@ print "Done" on the same line:
 color()
 =======
 
-While the ``write()`` command will write a single line to the terminal, ending it with a EOL character, you can
+While the ``write()`` command will write a single line to the terminal, ending it with an EOL character, you can
 use the ``color()`` method to make a string fragment that can be used in the same way, except that it will not force
 an EOL after printing. This allows you to create multiple outputs on the same row. Or, more commonly, you can use
 it inside of a ``write()`` method to create a string of a different color inside:
@@ -166,7 +166,7 @@ error()
 =======
 
 If you need to output errors, you should use the appropriately named ``error()`` method. This writes light-red text
-to STDERR, instead of STDOUT, like ``write()`` and ``color()`` do. This can be useful if you have scripts watching
+to STDERR, instead of STDOUT like ``write()`` and ``color()`` do. This can be useful if you have scripts watching
 for errors so they don't have to sift through all of the information, only the actual error messages. You use it
 exactly as you would the ``write()`` method:
 
@@ -199,12 +199,14 @@ Would create something like this:
 
 .. code-block:: none
 
-    task1a     Lorem Ipsum is simply dummy
-               text of the printing and
-               typesetting industry.
-    task1abc   Lorem Ipsum has been the
-               industry's standard dummy
-               text ever since the
+    task1a     Lorem ipsum dolor sit amet,
+               consectetur adipiscing elit.
+               Mauris congue est sit amet
+               turpis laoreet porta.
+    task1abc   Mauris iaculis eleifend
+               ultricies. Sed mollis urna in
+               ultricies hendrerit. Mauris
+               dictum, est a euismod
 
 newLine()
 =========
