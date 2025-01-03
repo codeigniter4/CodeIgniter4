@@ -102,10 +102,57 @@ and German you would do something like:
 In this example, 'en' would be returned as the current language. If no match is found, it will return the first element
 in the ``$supported`` array, so that should always be the preferred language.
 
+Strict Locale Negotiation
+-------------------------
+
 .. versionadded:: 4.6.0
 
-Disabling the ``Config\Feature::$looseLocaleNegotiation`` value allows you to strictly search for the requested language from the specified territory (``en-*``).
-In the case of a non-strict search, the language may be limited only by the country ``en``. Don't forget to create files for the ``en-*`` locale if you need a translation.
+By default, locale is determined on a lossy comparison basis. So only the first part of the locale string is taken
+into account (language). This is usually sufficient. But sometimes we want to be able to distinguish between regional versions such as
+``en-US`` and ``en-GB`` to serve different content.
+
+For such cases, we have introduced a new setting that can be enabled via ``Config\Feature::$strictLocaleNegotiation``. This will ensure
+that the strict comparison will be made in the first place.
+
+.. note::
+
+    CodeIgniter comes with translations only for primary language tags ('en', 'fr', etc.). So if you enable this feature and your
+    settings in ``Config\App::$supportedLocales`` include regional language tags ('en-US', 'fr-FR', etc.), then keep in mind that
+    if you have your own translation files, you **must also change** the folder names for CodeIgniter's translation files to match
+    what you put in the ``$supportedLocales`` array.
+
+    Now let's consider the below example. The browser's preferred language will be set as this::
+
+    GET /foo HTTP/1.1
+    Accept-Language: fr; q=1.0, en-GB; q=0.5
+
+In this example, the browser would prefer French, with a second choice of English (United Kingdom). Your website on another hand will
+supports German and English (United States):
+
+.. code-block:: php
+
+    $supported = [
+        'de',
+        'en-US',
+    ];
+
+    $lang = $request->negotiate('language', $supported);
+    // or
+    $lang = $negotiate->language($supported);
+
+In this example, 'en-US' would be returned as the current language. If no match is found, it will return the first element
+in the ``$supported`` array. Here is how exactly the locale selection process works.
+
+Even though the 'fr' is preferred by the browser it is not in our ``$supported`` array. The same problem occurs with 'en-GB', but here
+we will be able to search for variants. First, we will fallback to the most general locale (in this case 'en') which again is not in our
+array. Then we will search for the regional locale 'en-'. And that's when our value from the ``$supported`` array will be matched.
+We will return 'en-US'.
+
+So the process of selecting a locale is as follows:
+
+#. strict match ('en-GB') - ISO 639-1 plus ISO 3166-1 alpha-2
+#. general locale match ('en') - ISO 639-1
+#. regional locale match ('en-') - ISO 639-1 plus "wildcard" for ISO 3166-1 alpha-2
 
 Encoding
 ========

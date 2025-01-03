@@ -242,9 +242,9 @@ Routing
 Negotiator
 ==========
 
-- Added a feature flag ``Feature::$looseLocaleNegotiation`` fix simple locale comparison.
+- Added a feature flag ``Feature::$strictLocaleNegotiation`` to enable strict locale comparision.
   Previously, response with language headers ``Accept-language: en-US,en-GB;q=0.9`` returned the first allowed language ``en`` could instead of the exact language ``en-US`` or ``en-GB``.
-  Set the value to ``false`` to be able to get ``en-*``
+  Set the value to ``true`` to enable comparison not only by language code ('en' - ISO 639-1) but also by regional code ('en-US' - ISO 639-1 plus ISO 3166-1 alpha).
 
 Testing
 =======

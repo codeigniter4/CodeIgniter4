@@ -211,9 +211,10 @@ Config
 
 - app/Config/Feature.php
     - ``Config\Feature::$autoRoutesImproved`` has been changed to ``true``.
-    - ``Config\Feature::$looseLocaleNegotiation`` has been added.
+    - ``Config\Feature::$strictLocaleNegotiation`` has been added.
 - app/Config/Routing.php
     - ``Config\Routing::$translateUriToCamelCase`` has been changed to ``true``.
+
 All Changes
 ===========
 
@@ -221,4 +222,3 @@ This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
 - app/Config/Feature.php
-- @TODO
