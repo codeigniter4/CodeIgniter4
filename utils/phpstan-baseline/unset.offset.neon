@@ -1,8 +1,0 @@
-# total 1 error
-
-parameters:
-    ignoreErrors:
-        -
-            message: '#^Cannot unset offset string on list\<int\>\|null\.$#'
-            count: 2
-            path: ../../system/Test/Mock/MockCache.php
