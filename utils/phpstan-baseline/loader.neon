@@ -22,7 +22,6 @@ includes:
     - generator.returnType.neon
     - generator.valueType.neon
     - greaterOrEqual.invalid.neon
-    - if.condNotBoolean.neon
     - isset.offset.neon
     - isset.property.neon
     - method.alreadyNarrowedType.neon
