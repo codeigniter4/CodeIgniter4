@@ -102,6 +102,11 @@ and German you would do something like:
 In this example, 'en' would be returned as the current language. If no match is found, it will return the first element
 in the ``$supported`` array, so that should always be the preferred language.
 
+.. versionadded:: 4.6.0
+
+Disabling the ``Config\Feature::$looseLocaleNegotiation`` value allows you to strictly search for the requested language from the specified territory (``en-*``).
+In the case of a non-strict search, the language may be limited only by the country ``en``. Don't forget to create files for the ``en-*`` locale if you need a translation.
+
 Encoding
 ========
 

@@ -44,10 +44,7 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-app/Config/Feature.php
-^^^^^^^^^^^^^^^^^^^^^^
-
-- ``Config\Feature::$simpleNegotiateLocale`` has been added.
+- @TODO
 
 All Changes
 ===========
@@ -55,4 +52,4 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- app/Config/Feature.php
+- @TODO
