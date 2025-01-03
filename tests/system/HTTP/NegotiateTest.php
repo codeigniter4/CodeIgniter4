@@ -122,7 +122,7 @@ final class NegotiateTest extends CIUnitTestCase
         $this->assertSame('en-us', $this->negotiate->language(['en-us', 'en-gb', 'en']));
         $this->assertSame('en', $this->negotiate->language(['en', 'en-us', 'en-gb']));
 
-        config(Feature::class)->simpleNegotiateLocale = false;
+        config(Feature::class)->looseLocaleNegotiation = false;
 
         $this->assertSame('da', $this->negotiate->language(['da', 'en']));
         $this->assertSame('en-gb', $this->negotiate->language(['en-gb', 'en']));
@@ -142,13 +142,15 @@ final class NegotiateTest extends CIUnitTestCase
         $this->assertSame('fr-FR', $this->negotiate->language(['fr-FR', 'fr', 'en']));
         $this->assertSame('fr-BE', $this->negotiate->language(['fr-BE', 'fr', 'en']));
         $this->assertSame('en', $this->negotiate->language(['en', 'en-US']));
+        $this->assertSame('fr-BE', $this->negotiate->language(['ru', 'en-GB', 'fr-BE']));
 
-        config(Feature::class)->simpleNegotiateLocale = false;
+        config(Feature::class)->looseLocaleNegotiation = false;
 
         $this->assertSame('fr-FR', $this->negotiate->language(['fr', 'fr-FR', 'en']));
         $this->assertSame('fr-FR', $this->negotiate->language(['fr-FR', 'fr', 'en']));
         $this->assertSame('fr', $this->negotiate->language(['fr-BE', 'fr', 'en']));
         $this->assertSame('en-US', $this->negotiate->language(['en', 'en-US']));
+        $this->assertSame('fr-BE', $this->negotiate->language(['ru', 'en-GB', 'fr-BE']));
     }
 
     public function testBestMatchEmpty(): void
