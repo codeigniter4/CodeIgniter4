@@ -289,7 +289,7 @@ class CLI
 
         CLI::isZeroOptions($options);
 
-        if ($line = array_shift($text)) {
+        if (($line = array_shift($text)) !== null) {
             CLI::write($line);
         }
 
