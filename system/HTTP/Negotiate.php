@@ -123,16 +123,16 @@ class Negotiate
      * types the application says it supports, and the types requested
      * by the client.
      *
-     * If loose locale negotiation is enabled and no match is found, the first, highest-ranking client requested
+     * If strict locale negotiation is disabled and no match is found, the first, highest-ranking client requested
      * type is returned.
      */
     public function language(array $supported): string
     {
-        if (config(Feature::class)->looseLocaleNegotiation) {
-            return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-language'), false, false, true);
+        if (config(Feature::class)->strictLocaleNegotiation) {
+            return $this->getBestLocaleMatch($supported, $this->request->getHeaderLine('accept-language'));
         }
 
-        return $this->getBestLocaleMatch($supported, $this->request->getHeaderLine('accept-language'));
+        return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-language'), false, false, true);
     }
 
     // --------------------------------------------------------------------
@@ -195,19 +195,26 @@ class Negotiate
     }
 
     /**
-     * Strict locale search, including territories (en-*)
+     * Try to find the best matching locale. It supports strict locale comparison.
      *
-     * @param list<string> $supported App-supported values
-     * @param ?string      $header    Compatible 'Accept-Language' header string
+     * If Config\App::$supportedLocales have "en-US" and "en-GB" locales, they can be recognized
+     * as two different locales. This method checks first for the strict match, then fallback
+     * to the most general locale (in this case "en") ISO 639-1 and finally to the locale variant
+     * "en-*" (ISO 639-1 plus "wildcard" for ISO 3166-1 alpha-2).
+     *
+     * If nothing from above is matched, then it returns the first option from the $supportedLocales array.
+     *
+     * @param list<string> $supportedLocales App-supported values
+     * @param ?string      $header           Compatible 'Accept-Language' header string
      */
-    protected function getBestLocaleMatch(array $supported, ?string $header): string
+    protected function getBestLocaleMatch(array $supportedLocales, ?string $header): string
     {
-        if ($supported === []) {
+        if ($supportedLocales === []) {
             throw HTTPException::forEmptySupportedNegotiations();
         }
 
         if ($header === null || $header === '') {
-            return $supported[0];
+            return $supportedLocales[0];
         }
 
         $acceptable      = $this->parseHeader($header);
@@ -221,11 +228,11 @@ class Negotiate
 
             // if acceptable value is "anything", return the first available
             if ($accept['value'] === '*' || $accept['value'] === '*/*') {
-                return $supported[0];
+                return $supportedLocales[0];
             }
 
             // look for exact match
-            if (in_array($accept['value'], $supported, true)) {
+            if (in_array($accept['value'], $supportedLocales, true)) {
                 return $accept['value'];
             }
 
@@ -235,19 +242,19 @@ class Negotiate
 
         foreach ($fallbackLocales as $fallbackLocale) {
             // look for exact match
-            if (in_array($fallbackLocale, $supported, true)) {
+            if (in_array($fallbackLocale, $supportedLocales, true)) {
                 return $fallbackLocale;
             }
 
-            // look for locale variants match
-            foreach ($supported as $locale) {
+            // look for regional locale match
+            foreach ($supportedLocales as $locale) {
                 if (str_starts_with($locale, $fallbackLocale . '-')) {
                     return $locale;
                 }
             }
         }
 
-        return $supported[0];
+        return $supportedLocales[0];
     }
 
     /**
