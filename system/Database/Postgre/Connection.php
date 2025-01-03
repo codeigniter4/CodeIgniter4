@@ -227,6 +227,10 @@ class Connection extends BaseConnection
      */
     public function affectedRows(): int
     {
+        if ($this->resultID === false) {
+            return 0;
+        }
+
         return pg_affected_rows($this->resultID);
     }
 
