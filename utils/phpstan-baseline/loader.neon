@@ -18,7 +18,6 @@ includes:
     - expr.resultUnused.neon
     - function.alreadyNarrowedType.neon
     - function.inner.neon
-    - function.notFound.neon
     - generator.returnType.neon
     - generator.valueType.neon
     - greaterOrEqual.invalid.neon

@@ -1,8 +1,0 @@
-# total 1 error
-
-parameters:
-    ignoreErrors:
-        -
-            message: '#^Function foo_bar_baz not found\.$#'
-            count: 1
-            path: ../../tests/system/CommonHelperTest.php
