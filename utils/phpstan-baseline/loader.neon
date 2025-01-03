@@ -1,7 +1,6 @@
 includes:
     - argument.type.neon
     - assign.propertyType.neon
-    - booleanAnd.rightAlwaysTrue.neon
     - codeigniter.cacheHandlerInstance.neon
     - codeigniter.configArgumentInstanceof.neon
     - codeigniter.frameworkExceptionInstance.neon
