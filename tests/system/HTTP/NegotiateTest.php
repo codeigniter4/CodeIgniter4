@@ -16,6 +16,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Config\Feature;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -111,11 +112,23 @@ final class NegotiateTest extends CIUnitTestCase
 
     public function testAcceptLanguageBasics(): void
     {
-        $this->request->setHeader('Accept-Language', 'da, en-gb;q=0.8, en;q=0.7');
+        $this->request->setHeader('Accept-Language', 'da, en-gb, en-us;q=0.8, en;q=0.7');
 
         $this->assertSame('da', $this->negotiate->language(['da', 'en']));
         $this->assertSame('en-gb', $this->negotiate->language(['en-gb', 'en']));
         $this->assertSame('en', $this->negotiate->language(['en']));
+
+        // Will find the first locale instead of "en-gb"
+        $this->assertSame('en-us', $this->negotiate->language(['en-us', 'en-gb', 'en']));
+        $this->assertSame('en', $this->negotiate->language(['en', 'en-us', 'en-gb']));
+
+        config(Feature::class)->strictLocaleNegotiation = true;
+
+        $this->assertSame('da', $this->negotiate->language(['da', 'en']));
+        $this->assertSame('en-gb', $this->negotiate->language(['en-gb', 'en']));
+        $this->assertSame('en', $this->negotiate->language(['en']));
+        $this->assertSame('en-gb', $this->negotiate->language(['en-us', 'en-gb', 'en']));
+        $this->assertSame('en-gb', $this->negotiate->language(['en', 'en-us', 'en-gb']));
     }
 
     /**
@@ -125,7 +138,19 @@ final class NegotiateTest extends CIUnitTestCase
     {
         $this->request->setHeader('Accept-Language', 'fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7');
 
-        $this->assertSame('fr', $this->negotiate->language(['fr', 'en']));
+        $this->assertSame('fr', $this->negotiate->language(['fr', 'fr-FR', 'en']));
+        $this->assertSame('fr-FR', $this->negotiate->language(['fr-FR', 'fr', 'en']));
+        $this->assertSame('fr-BE', $this->negotiate->language(['fr-BE', 'fr', 'en']));
+        $this->assertSame('en', $this->negotiate->language(['en', 'en-US']));
+        $this->assertSame('fr-BE', $this->negotiate->language(['ru', 'en-GB', 'fr-BE']));
+
+        config(Feature::class)->strictLocaleNegotiation = true;
+
+        $this->assertSame('fr-FR', $this->negotiate->language(['fr', 'fr-FR', 'en']));
+        $this->assertSame('fr-FR', $this->negotiate->language(['fr-FR', 'fr', 'en']));
+        $this->assertSame('fr', $this->negotiate->language(['fr-BE', 'fr', 'en']));
+        $this->assertSame('en-US', $this->negotiate->language(['en', 'en-US']));
+        $this->assertSame('fr-BE', $this->negotiate->language(['ru', 'en-GB', 'fr-BE']));
     }
 
     public function testBestMatchEmpty(): void

@@ -26,4 +26,12 @@ class Feature extends BaseConfig
      * If false, `limit(0)` returns no records. (the behavior of 3.1.9 or later in version 3.x.)
      */
     public bool $limitZeroAsAll = true;
+
+    /**
+     * Use strict location negotiation.
+     *
+     * By default, the locale is selected based on a loose comparison of the language code (ISO 639-1)
+     * Enabling strict comparison will also consider the region code (ISO 3166-1 alpha-2).
+     */
+    public bool $strictLocaleNegotiation = false;
 }
