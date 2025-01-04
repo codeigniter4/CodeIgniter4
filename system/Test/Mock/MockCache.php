@@ -31,7 +31,7 @@ class MockCache extends BaseHandler implements CacheInterface
     /**
      * Expiration times.
      *
-     * @var ?list<int>
+     * @var array<string, int|null>
      */
     protected $expirations = [];
 
