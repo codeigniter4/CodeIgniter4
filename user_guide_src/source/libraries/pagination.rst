@@ -340,3 +340,28 @@ getPageCount()
 --------------
 
 This method returns total number of pages.
+
+Displaying the Number of Items on the Page
+==========================================
+
+.. warning:: The methods `getTotal()`, `getPerPage()`, `getPerPageStart()`, and `getPerPageEnd()` were introduced in v4.6.0.
+
+When paginating items, it’s often helpful to display the total number of items and the range of items shown on the current page. To simplify this task, new methods have been added. These methods make it easier to manage and display pagination details. Here's an example:
+
+.. literalinclude:: pagination/019.php
+
+getTotal()
+----------
+Returns the total items of the page.
+
+getPerPage()
+------------
+Returns the number of items to be displayed on the page.
+
+getPerPageStart()
+-----------------
+Returns the number of items the page starts with.
+
+getPerPageEnd()
+---------------
+Returns the number of items the page ends with.

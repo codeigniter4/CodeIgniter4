@@ -83,17 +83,17 @@ class PagerRenderer
     protected $pageSelector;
 
     /**
-     * The maximum number of items displayed per page.
+     * Returns the number of results per page that should be shown.
      */
     protected ?int $perPage;
 
     /**
-     * The index of the first item on the current page.
+     * The number of items the page starts with.
      */
     protected ?int $perPageStart;
 
     /**
-     * The index of the last item on the current page.s
+     * The number of items the page ends with.
      */
     protected ?int $perPageEnd;
 
