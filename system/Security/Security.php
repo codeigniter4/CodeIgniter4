@@ -307,7 +307,7 @@ class Security implements SecurityInterface
         // Does the token exist in POST, HEADER or optionally php:://input - json data or PUT, DELETE, PATCH - raw data.
 
         if ($tokenValue = $request->getPost($this->config->tokenName)) {
-            return $tokenValue;
+            return is_string($tokenValue) ? $tokenValue : null;
         }
 
         if ($request->hasHeader($this->config->headerName)
