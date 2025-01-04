@@ -121,24 +121,15 @@ that the strict comparison will be made in the first place.
     if you have your own translation files, you **must also change** the folder names for CodeIgniter's translation files to match
     what you put in the ``$supportedLocales`` array.
 
-    Now let's consider the below example. The browser's preferred language will be set as this::
+Now let's consider the below example. The browser's preferred language will be set as this::
 
     GET /foo HTTP/1.1
     Accept-Language: fr; q=1.0, en-GB; q=0.5
 
-In this example, the browser would prefer French, with a second choice of English (United Kingdom). Your website on another hand will
+In this example, the browser would prefer French, with a second choice of English (United Kingdom). Your website on another hand
 supports German and English (United States):
 
-.. code-block:: php
-
-    $supported = [
-        'de',
-        'en-US',
-    ];
-
-    $lang = $request->negotiate('language', $supported);
-    // or
-    $lang = $negotiate->language($supported);
+.. literalinclude:: content_negotiation/008.php
 
 In this example, 'en-US' would be returned as the current language. If no match is found, it will return the first element
 in the ``$supported`` array. Here is how exactly the locale selection process works.
