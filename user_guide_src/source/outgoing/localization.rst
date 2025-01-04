@@ -370,13 +370,13 @@ Detailed information can be found by running the command:
 .. _sync-translations-command:
 
 Synchronization Translation Files via Command
-=============================================
+---------------------------------------------
 
 .. versionadded:: 4.6.0
 
-After working on your translation for the current language for a long time, in some cases you will need to create files for another language.
-The ``spark lang:find`` command can be used, it is not prohibited. But it cannot fully detect absolutely all translations. Especially if the parameters are dynamically set as ``lang('App.status.' . $key, ['payload' => 'John'], 'en')``.
-In this case, the best solution is to copy the finished language files and translate them. This way you can save your unique keys that the command did not find.
+You may need to create files for another language when you've finished translating for the current language. You can use the spark ``lang:find`` command to help with this. However, it might not detect all translations, particularly those with dynamically set parameters like ``lang('App.status.' . $key, ['payload' => 'John'], 'en')``.
+
+To ensure no translations are missed, it's best to copy the completed language files and translate them manually. This approach preserves any unique keys the command might have overlooked.
 
 All you need to do is execute:
 
