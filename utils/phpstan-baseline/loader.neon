@@ -20,7 +20,6 @@ includes:
     - function.inner.neon
     - generator.returnType.neon
     - generator.valueType.neon
-    - greaterOrEqual.invalid.neon
     - isset.offset.neon
     - isset.property.neon
     - method.alreadyNarrowedType.neon
