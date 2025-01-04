@@ -621,6 +621,9 @@ final class PagerRendererTest extends CIUnitTestCase
         $this->assertNull($pager->getNextPageNumber());
     }
 
+    /**
+     * @param array<string, array<string, mixed>> $details
+     */
     #[DataProvider('providePageStartEnd')]
     public function testPageStartEnd(array $details, int $pageStart, int $pageEnd): void
     {
@@ -631,6 +634,9 @@ final class PagerRendererTest extends CIUnitTestCase
         $this->assertSame($pager->getPerPageEnd(), $pageEnd);
     }
 
+    /**
+     * @return array<string, array<string, mixed>> $details
+     */
     public static function providePageStartEnd(): iterable
     {
         $uri = new URI('http://example.com/foo');
@@ -668,6 +674,28 @@ final class PagerRendererTest extends CIUnitTestCase
                 ],
                 'pageStart' => 21,
                 'pageEnd'   => 25,
+            ],
+            'current greater last page' => [
+                'details' => [
+                    'uri'         => $uri,
+                    'pageCount'   => 3,
+                    'total'       => 25,
+                    'currentPage' => 5,
+                    'perPage'     => 10,
+                ],
+                'pageStart' => 41,
+                'pageEnd'   => 50,
+            ],
+            'current equal last page' => [
+                'details' => [
+                    'uri'         => $uri,
+                    'pageCount'   => 1,
+                    'total'       => 10,
+                    'currentPage' => 1,
+                    'perPage'     => 10,
+                ],
+                'pageStart' => 1,
+                'pageEnd'   => 10,
             ],
         ];
     }
