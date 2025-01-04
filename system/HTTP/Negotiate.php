@@ -227,7 +227,7 @@ class Negotiate
             }
 
             // if acceptable value is "anything", return the first available
-            if ($accept['value'] === '*' || $accept['value'] === '*/*') {
+            if ($accept['value'] === '*') {
                 return $supportedLocales[0];
             }
 
