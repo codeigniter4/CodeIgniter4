@@ -84,24 +84,18 @@ class PagerRenderer
 
     /**
      * The number of items a page.
-     *
-     * @var int|null
      */
-    protected $perPage;
+    protected ?int $perPage;
 
     /**
      * The total items the current has started.
-     *
-     * @var int|null
      */
-    protected $perPageStart;
+    protected ?int $perPageStart;
 
     /**
      * The total items of the current page;
-     *
-     * @var int|null
      */
-    protected $perPageEnd;
+    protected ?int $perPageEnd;
 
     /**
      * Constructor.
