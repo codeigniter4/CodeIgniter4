@@ -53,6 +53,5 @@ includes:
     - return.unusedType.neon
     - staticMethod.notFound.neon
     - ternary.shortNotAllowed.neon
-    - unset.offset.neon
     - varTag.type.neon
     - variable.undefined.neon
