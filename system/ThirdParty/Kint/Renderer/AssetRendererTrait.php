@@ -31,7 +31,7 @@ trait AssetRendererTrait
 {
     public static ?string $theme = null;
 
-    /** @psalm-var array{js?:string, css?:array<path, string>} */
+    /** @psalm-var array{js?:string, css?:array<path, string|false>} */
     private static array $assetCache = [];
 
     /** @psalm-api */
@@ -54,9 +54,15 @@ trait AssetRendererTrait
         if (!isset(self::$assetCache['css'][self::$theme])) {
             if (\file_exists(KINT_DIR.'/resources/compiled/'.self::$theme)) {
                 self::$assetCache['css'][self::$theme] = \file_get_contents(KINT_DIR.'/resources/compiled/'.self::$theme);
-            } else {
+            } elseif (\file_exists(self::$theme)) {
                 self::$assetCache['css'][self::$theme] = \file_get_contents(self::$theme);
+            } else {
+                self::$assetCache['css'][self::$theme] = false;
             }
+        }
+
+        if (false === self::$assetCache['css'][self::$theme]) {
+            return null;
         }
 
         return self::$assetCache['css'][self::$theme];

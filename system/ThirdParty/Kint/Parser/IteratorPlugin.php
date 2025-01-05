@@ -54,7 +54,7 @@ class IteratorPlugin extends AbstractPlugin implements PluginCompleteInterface
      * when traversed. Others are just huge. Either way, put them in here
      * and you won't have to worry about them being parsed.
      *
-     * @psalm-var class-string<Traversable>[]
+     * @psalm-var class-string[]
      */
     public static array $blacklist = [
         NamedNodeMap::class,

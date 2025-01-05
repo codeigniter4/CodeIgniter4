@@ -102,7 +102,12 @@ class DomPlugin extends AbstractPlugin implements PluginBeginInterface
         'previousElementSibling' => true,
         'nextElementSibling' => true,
         'innerHTML' => false,
+        'outerHTML' => false,
         'substitutedNodeValue' => false,
+    ];
+
+    public const DOM_NS_VERSIONS = [
+        'outerHTML' => KINT_PHP85,
     ];
 
     /**
@@ -457,6 +462,16 @@ class DomPlugin extends AbstractPlugin implements PluginBeginInterface
 
             if ($var instanceof Attr || $var instanceof CharacterData) {
                 $known_properties['nodeValue'] = false;
+            }
+
+            foreach (self::DOM_NS_VERSIONS as $key => $val) {
+                /**
+                 * @psalm-var bool $val
+                 * Psalm bug #4509
+                 */
+                if (false === $val) {
+                    unset($known_properties[$key]); // @codeCoverageIgnore
+                }
             }
         } else {
             $known_properties = self::DOMNODE_PROPS;
