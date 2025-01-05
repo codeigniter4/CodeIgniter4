@@ -44,35 +44,40 @@ if (! function_exists('character_limiter')) {
     /**
      * Character Limiter
      *
-     * Limits the string based on the character count.  Preserves complete words
+     * Limits the string based on the character count. Preserves complete words
      * so the character count may not be exactly as specified.
      *
      * @param string $endChar the end character. Usually an ellipsis
      */
-    function character_limiter(string $str, int $n = 500, string $endChar = '&#8230;'): string
+    function character_limiter(string $string, int $limit = 500, string $endChar = '&#8230;'): string
     {
-        if (mb_strlen($str) < $n) {
-            return $str;
+        if (mb_strlen($string) < $limit) {
+            return $string;
         }
 
         // a bit complicated, but faster than preg_replace with \s+
-        $str = preg_replace('/ {2,}/', ' ', str_replace(["\r", "\n", "\t", "\x0B", "\x0C"], ' ', $str));
+        $string       = preg_replace('/ {2,}/', ' ', str_replace(["\r", "\n", "\t", "\x0B", "\x0C"], ' ', $string));
+        $stringLength = mb_strlen($string);
 
-        if (mb_strlen($str) <= $n) {
-            return $str;
+        if ($stringLength <= $limit) {
+            return $string;
         }
 
-        $out = '';
+        $output       = '';
+        $outputLength = 0;
+        $words        = explode(' ', trim($string));
 
-        foreach (explode(' ', trim($str)) as $val) {
-            $out .= $val . ' ';
-            if (mb_strlen($out) >= $n) {
-                $out = trim($out);
+        foreach ($words as $word) {
+            $output .= $word . ' ';
+            $outputLength = mb_strlen($output);
+
+            if ($outputLength >= $limit) {
+                $output = trim($output);
                 break;
             }
         }
 
-        return (mb_strlen($out) === mb_strlen($str)) ? $out : $out . $endChar;
+        return ($outputLength === $stringLength) ? $output : $output . $endChar;
     }
 }
 
@@ -722,9 +727,9 @@ if (! function_exists('excerpt')) {
         $beforeWords = explode(' ', mb_substr($text, 0, $phrasePosition));
         $afterWords  = explode(' ', mb_substr($text, $phrasePosition + $phraseLength));
 
-        $firstPartOutput  = ' ';
-        $endPartOutput    = ' ';
-        $count = 0;
+        $firstPartOutput = ' ';
+        $endPartOutput   = ' ';
+        $count           = 0;
 
         foreach (array_reverse($beforeWords) as $beforeWord) {
             $beforeWordLength = mb_strlen($beforeWord);
