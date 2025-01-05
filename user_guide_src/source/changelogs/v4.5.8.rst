@@ -31,6 +31,8 @@ Bugs Fixed
 **********
 
 - **Database:** Fixed a bug where ``Builder::affectedRows()`` threw an error when the previous query call failed in ``Postgre`` and ``SQLSRV`` drivers.
+- **View:** Added support for multibyte strings for ``View::excerpt()``.
+- **Helpers:** Added support for multibyte strings for ``excerpt()``.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
