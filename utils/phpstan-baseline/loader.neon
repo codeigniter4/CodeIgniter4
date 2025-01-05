@@ -2,7 +2,6 @@ includes:
     - argument.type.neon
     - assign.propertyType.neon
     - booleanAnd.rightAlwaysTrue.neon
-    - class.notFound.neon
     - codeigniter.cacheHandlerInstance.neon
     - codeigniter.configArgumentInstanceof.neon
     - codeigniter.frameworkExceptionInstance.neon
