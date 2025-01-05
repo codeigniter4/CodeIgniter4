@@ -18,7 +18,6 @@ includes:
     - expr.resultUnused.neon
     - function.alreadyNarrowedType.neon
     - function.inner.neon
-    - generator.returnType.neon
     - generator.valueType.neon
     - isset.offset.neon
     - isset.property.neon
