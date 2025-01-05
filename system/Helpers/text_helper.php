@@ -712,34 +712,34 @@ if (! function_exists('excerpt')) {
     function excerpt(string $text, ?string $phrase = null, int $radius = 100, string $ellipsis = '...'): string
     {
         if (isset($phrase)) {
-            $phrasePos = stripos($text, $phrase);
-            $phraseLen = strlen($phrase);
+            $phrasePos = mb_stripos($text, $phrase);
+            $phraseLen = mb_strlen($phrase);
         } else {
             $phrasePos = $radius / 2;
             $phraseLen = 1;
         }
 
-        $pre = explode(' ', substr($text, 0, $phrasePos));
-        $pos = explode(' ', substr($text, $phrasePos + $phraseLen));
+        $pre = explode(' ', mb_substr($text, 0, $phrasePos));
+        $pos = explode(' ', mb_substr($text, $phrasePos + $phraseLen));
 
         $prev  = ' ';
         $post  = ' ';
         $count = 0;
 
         foreach (array_reverse($pre) as $e) {
-            if ((strlen($e) + $count + 1) < $radius) {
+            if ((mb_strlen($e) + $count + 1) < $radius) {
                 $prev = ' ' . $e . $prev;
             }
-            $count = ++$count + strlen($e);
+            $count = ++$count + mb_strlen($e);
         }
 
         $count = 0;
 
         foreach ($pos as $s) {
-            if ((strlen($s) + $count + 1) < $radius) {
+            if ((mb_strlen($s) + $count + 1) < $radius) {
                 $post .= $s . ' ';
             }
-            $count = ++$count + strlen($s);
+            $count = ++$count + mb_strlen($s);
         }
 
         $ellPre = $phrase !== null ? $ellipsis : '';

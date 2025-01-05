@@ -394,6 +394,11 @@ final class TextHelperTest extends CIUnitTestCase
         $string = $this->_long_string;
         $result = ' Once upon a time, a framework had no tests. It sad  So some nice people began to write tests. The more time that went on, the happier it became. ...';
         $this->assertSame(excerpt($string), $result);
+
+        $multibyteString = 'Давным-давно во фреймворке не было тестов. Это печально. И вот несколько хороших людей начали писать тесты. Чем больше времени проходило, тем счастливее становилось. Все были счастливы.';
+        $multibyteResult = ' Давным-давно во фреймворке не было тестов. Это печ льно. И вот несколько хороших людей начали писать тесты. Чем больше времени проходило, тем ...';
+
+        $this->assertSame(excerpt($multibyteString), $multibyteResult);
     }
 
     public function testExcerptRadius(): void
@@ -402,6 +407,11 @@ final class TextHelperTest extends CIUnitTestCase
         $phrase = 'began';
         $result = '... people began to ...';
         $this->assertSame(excerpt($string, $phrase, 10), $result);
+
+        $multibyteString = 'Давным-давно во фреймворке не было тестов. Это печально. И вот несколько хороших людей начали писать тесты. Чем больше времени проходило, тем счастливее становилось. Все были счастливы.';
+        $multibyteResult = '... Это печально . И вот ...';
+
+        $this->assertSame(excerpt($multibyteString, 'печально', 10), $multibyteResult);
     }
 
     public function testAlternator(): void
