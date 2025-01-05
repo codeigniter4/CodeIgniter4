@@ -712,38 +712,44 @@ if (! function_exists('excerpt')) {
     function excerpt(string $text, ?string $phrase = null, int $radius = 100, string $ellipsis = '...'): string
     {
         if (isset($phrase)) {
-            $phrasePos = mb_stripos($text, $phrase);
-            $phraseLen = mb_strlen($phrase);
+            $phrasePosition = mb_stripos($text, $phrase);
+            $phraseLength   = mb_strlen($phrase);
         } else {
-            $phrasePos = $radius / 2;
-            $phraseLen = 1;
+            $phrasePosition = $radius / 2;
+            $phraseLength   = 1;
         }
 
-        $pre = explode(' ', mb_substr($text, 0, $phrasePos));
-        $pos = explode(' ', mb_substr($text, $phrasePos + $phraseLen));
+        $beforeWords = explode(' ', mb_substr($text, 0, $phrasePosition));
+        $afterWords  = explode(' ', mb_substr($text, $phrasePosition + $phraseLength));
 
-        $prev  = ' ';
-        $post  = ' ';
+        $firstPartOutput  = ' ';
+        $endPartOutput    = ' ';
         $count = 0;
 
-        foreach (array_reverse($pre) as $e) {
-            if ((mb_strlen($e) + $count + 1) < $radius) {
-                $prev = ' ' . $e . $prev;
+        foreach (array_reverse($beforeWords) as $beforeWord) {
+            $beforeWordLength = mb_strlen($beforeWord);
+
+            if (($beforeWordLength + $count + 1) < $radius) {
+                $firstPartOutput = ' ' . $beforeWord . $firstPartOutput;
             }
-            $count = ++$count + mb_strlen($e);
+
+            $count = ++$count + $beforeWordLength;
         }
 
         $count = 0;
 
-        foreach ($pos as $s) {
-            if ((mb_strlen($s) + $count + 1) < $radius) {
-                $post .= $s . ' ';
+        foreach ($afterWords as $afterWord) {
+            $afterWordLength = mb_strlen($afterWord);
+
+            if (($afterWordLength + $count + 1) < $radius) {
+                $endPartOutput .= $afterWord . ' ';
             }
-            $count = ++$count + mb_strlen($s);
+
+            $count = ++$count + $afterWordLength;
         }
 
         $ellPre = $phrase !== null ? $ellipsis : '';
 
-        return str_replace('  ', ' ', $ellPre . $prev . $phrase . $post . $ellipsis);
+        return str_replace('  ', ' ', $ellPre . $firstPartOutput . $phrase . $endPartOutput . $ellipsis);
     }
 }
