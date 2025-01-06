@@ -341,6 +341,8 @@ getPageCount()
 
 This method returns total number of pages.
 
+.. _displaying-the-number-of-items-on-the-page:
+
 Displaying the Number of Items on the Page
 ==========================================
 
