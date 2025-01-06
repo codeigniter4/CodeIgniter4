@@ -334,7 +334,7 @@ class PagerRenderer
             return;
         }
 
-        // When the page is the last, performs a different calculation.
+        // When the page is the last, perform a different calculation.
         if ($this->last === $this->current) {
             $this->perPageStart = $this->perPage * ($this->current - 1) + 1;
             $this->perPageEnd   = $this->total;

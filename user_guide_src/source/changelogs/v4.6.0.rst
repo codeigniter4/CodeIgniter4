@@ -250,7 +250,7 @@ Pagination
 ==========
 
 - Added a new feature to get the total and the range number of items of the current page.
-  See the section ``Displaying the Number of Items on the Page`` of the :ref:`displaying-the-number-of-items-on-the-page` for more details.
+  See :ref:`Displaying the Number of Items on the Page <displaying-the-number-of-items-on-the-page>` for more details.
 
 Testing
 =======

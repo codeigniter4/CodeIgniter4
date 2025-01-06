@@ -630,8 +630,8 @@ final class PagerRendererTest extends CIUnitTestCase
         $pager = new PagerRenderer($details);
         $pager->setSurroundCount(2);
 
-        $this->assertSame($pager->getPerPageStart(), $pageStart);
-        $this->assertSame($pager->getPerPageEnd(), $pageEnd);
+        $this->assertSame($pageStart, $pager->getPerPageStart());
+        $this->assertSame($pageEnd, $pager->getPerPageEnd());
     }
 
     /**
