@@ -360,7 +360,7 @@ if (! function_exists('auto_link')) {
                 $str,
                 $matches,
                 PREG_OFFSET_CAPTURE | PREG_SET_ORDER
-            )
+            ) >= 1
         ) {
             // Set our target HTML if using popup links.
             $target = ($popup) ? ' target="_blank"' : '';
@@ -387,7 +387,7 @@ if (! function_exists('auto_link')) {
                 $str,
                 $matches,
                 PREG_OFFSET_CAPTURE
-            )
+            ) >= 1
         ) {
             foreach (array_reverse($matches[0]) as $match) {
                 if (filter_var($match[0], FILTER_VALIDATE_EMAIL) !== false) {

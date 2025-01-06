@@ -98,7 +98,7 @@ class MemcachedHandler extends BaseHandler
                 $this->savePath,
                 $matches,
                 PREG_SET_ORDER
-            ) === 0
+            ) < 1
         ) {
             $this->memcached = null;
             $this->logger->error('Session: Invalid Memcached save path format: ' . $this->savePath);

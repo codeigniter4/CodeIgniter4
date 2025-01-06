@@ -18,11 +18,7 @@ includes:
     - expr.resultUnused.neon
     - function.alreadyNarrowedType.neon
     - function.inner.neon
-    - function.notFound.neon
-    - generator.returnType.neon
     - generator.valueType.neon
-    - greaterOrEqual.invalid.neon
-    - if.condNotBoolean.neon
     - isset.offset.neon
     - isset.property.neon
     - method.alreadyNarrowedType.neon
@@ -55,6 +51,5 @@ includes:
     - return.unusedType.neon
     - staticMethod.notFound.neon
     - ternary.shortNotAllowed.neon
-    - unset.offset.neon
     - varTag.type.neon
     - variable.undefined.neon

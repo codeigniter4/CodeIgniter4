@@ -396,23 +396,6 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     abstract protected function _flip(string $direction);
 
-    /**
-     * Overlays a string of text over the image.
-     *
-     * Valid options:
-     *
-     *  - color         Text Color (hex number)
-     *  - shadowColor   Color of the shadow (hex number)
-     *  - hAlign        Horizontal alignment: left, center, right
-     *  - vAlign        Vertical alignment: top, middle, bottom
-     *  - hOffset
-     *  - vOffset
-     *  - fontPath
-     *  - fontSize
-     *  - shadowOffset
-     *
-     * @return $this
-     */
     public function text(string $text, array $options = [])
     {
         $options                = array_merge($this->textDefaults, $options);
@@ -426,6 +409,21 @@ abstract class BaseHandler implements ImageHandlerInterface
 
     /**
      * Handler-specific method for overlaying text on an image.
+     *
+     * @param array{
+     *     color?: string,
+     *     shadowColor?: string,
+     *     hAlign?: string,
+     *     vAlign?: string,
+     *     hOffset?: int,
+     *     vOffset?: int,
+     *     fontPath?: string,
+     *     fontSize?: int,
+     *     shadowOffset?: int,
+     *     opacity?: float,
+     *     padding?: int,
+     *     withShadow?: bool|string
+     * } $options
      *
      * @return void
      */

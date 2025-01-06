@@ -19,6 +19,7 @@ use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -82,7 +83,7 @@ final class SelectTest extends CIUnitTestCase
     }
 
     /**
-     * @return list<list<RawSql|string>|string>
+     * @return Generator<list<RawSql|string>|string>
      */
     public static function provideSelectAcceptsArrayWithRawSql(): iterable
     {

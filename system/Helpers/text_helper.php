@@ -132,7 +132,7 @@ if (! function_exists('entities_to_ascii')) {
      */
     function entities_to_ascii(string $str, bool $all = true): string
     {
-        if (preg_match_all('/\&#(\d+)\;/', $str, $matches)) {
+        if (preg_match_all('/\&#(\d+)\;/', $str, $matches) >= 1) {
             for ($i = 0, $s = count($matches[0]); $i < $s; $i++) {
                 $digits = (int) $matches[1][$i];
                 $out    = '';
@@ -196,7 +196,7 @@ if (! function_exists('word_censor')) {
                     "\\1{$replacement}\\3",
                     $str
                 );
-            } elseif (preg_match_all("/{$delim}(" . $badword . "){$delim}/i", $str, $matches, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE)) {
+            } elseif (preg_match_all("/{$delim}(" . $badword . "){$delim}/i", $str, $matches, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) >= 1) {
                 $matches = $matches[1];
 
                 for ($i = count($matches) - 1; $i >= 0; $i--) {
@@ -352,7 +352,7 @@ if (! function_exists('word_wrap')) {
         // strip the entire chunk and replace it with a marker.
         $unwrap = [];
 
-        if (preg_match_all('|\{unwrap\}(.+?)\{/unwrap\}|s', $str, $matches)) {
+        if (preg_match_all('|\{unwrap\}(.+?)\{/unwrap\}|s', $str, $matches) >= 1) {
             for ($i = 0, $c = count($matches[0]); $i < $c; $i++) {
                 $unwrap[] = $matches[1][$i];
                 $str      = str_replace($matches[0][$i], '{{unwrapped' . $i . '}}', $str);

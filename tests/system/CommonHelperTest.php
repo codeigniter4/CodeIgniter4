@@ -148,7 +148,7 @@ final class CommonHelperTest extends CIUnitTestCase
             }
         }
 
-        $this->assertSame($this->dummyHelpers[0], foo_bar_baz());
+        $this->assertSame($this->dummyHelpers[0], foo_bar_baz()); // @phpstan-ignore-line function.notFound
     }
 
     public function testNamespacedHelperNotFound(): void

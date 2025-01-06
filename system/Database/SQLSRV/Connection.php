@@ -453,6 +453,10 @@ class Connection extends BaseConnection
      */
     public function affectedRows(): int
     {
+        if ($this->resultID === false) {
+            return 0;
+        }
+
         return sqlsrv_rows_affected($this->resultID);
     }
 

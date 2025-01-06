@@ -239,4 +239,40 @@ final class TransactionTest extends CIUnitTestCase
 
         $this->enableDBDebug();
     }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9362
+     */
+    public function testTransInsertBatchFailed(): void
+    {
+        $data = [
+            [
+                'name' => 'Grocery Sales',
+            ],
+            [
+                'name' => null,
+            ],
+        ];
+
+        $db = $this->db;
+
+        if ($this->db->DBDriver === 'MySQLi') {
+            // strict mode is required for MySQLi to throw an exception here
+            $config                    = config('Database');
+            $config->tests['strictOn'] = true;
+
+            $db = Database::connect($config->tests);
+        }
+
+        $db->transStrict(false)->transBegin();
+        $db->table('job')->insertBatch($data);
+
+        $this->assertFalse($db->transStatus());
+
+        $db->transComplete();
+
+        $db->transStrict();
+
+        $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
+    }
 }
