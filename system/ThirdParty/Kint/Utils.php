@@ -309,7 +309,7 @@ final class Utils
      */
     public static function errorSanitizeString(string $input): string
     {
-        if (KINT_PHP82) {
+        if (KINT_PHP82 || '' === $input) {
             return $input;
         }
 

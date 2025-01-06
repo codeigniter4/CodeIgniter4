@@ -28,6 +28,7 @@ declare(strict_types=1);
 namespace Kint\Renderer\Rich;
 
 use Kint\Value\AbstractValue;
+use Kint\Value\MethodValue;
 use Kint\Value\TraceFrameValue;
 
 class TraceFramePlugin extends AbstractPlugin implements ValuePluginInterface
@@ -45,7 +46,13 @@ class TraceFramePlugin extends AbstractPlugin implements ValuePluginInterface
         }
 
         if ($callable = $v->getCallable()) {
-            $function = $this->renderer->escape($callable->getDisplayName());
+            if ($callable instanceof MethodValue) {
+                $function = $callable->getFullyQualifiedDisplayName();
+            } else {
+                $function = $callable->getDisplayName();
+            }
+
+            $function = $this->renderer->escape($function);
 
             if (null !== ($url = $callable->getPhpDocUrl())) {
                 $function = '<a href="'.$url.'" target=_blank>'.$function.'</a>';

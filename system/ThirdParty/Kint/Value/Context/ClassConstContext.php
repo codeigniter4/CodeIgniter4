@@ -31,6 +31,11 @@ class ClassConstContext extends ClassDeclaredContext
 {
     public bool $final = false;
 
+    public function getName(): string
+    {
+        return $this->owner_class.'::'.$this->name;
+    }
+
     public function getOperator(): string
     {
         return '::';

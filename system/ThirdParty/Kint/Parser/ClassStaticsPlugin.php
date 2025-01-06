@@ -30,7 +30,6 @@ namespace Kint\Parser;
 use Kint\Value\AbstractValue;
 use Kint\Value\Context\ClassConstContext;
 use Kint\Value\Context\ClassDeclaredContext;
-use Kint\Value\Context\ClassOwnedContext;
 use Kint\Value\Context\StaticPropertyContext;
 use Kint\Value\InstanceValue;
 use Kint\Value\Representation\ContainerRepresentation;
@@ -42,7 +41,7 @@ use UnitEnum;
 
 class ClassStaticsPlugin extends AbstractPlugin implements PluginCompleteInterface
 {
-    /** @psalm-var array<class-string, array<1|0, list<AbstractValue>>> */
+    /** @psalm-var array<class-string, array<1|0, array<AbstractValue>>> */
     private array $cache = [];
 
     public function getTypes(): array
@@ -69,162 +68,163 @@ class ClassStaticsPlugin extends AbstractPlugin implements PluginCompleteInterfa
             return $v;
         }
 
-        $class = $v->getClassName();
-        $parser = $this->getParser();
-        $r = new ReflectionClass($class);
+        $deep = 0 === $this->getParser()->getDepthLimit();
 
-        $statics_full_name = false;
-        $statics = [];
-        $props = $r->getProperties(ReflectionProperty::IS_STATIC);
-        foreach ($props as $prop) {
-            $statics[$prop->name] = $prop;
+        $r = new ReflectionClass($v->getClassName());
+
+        if ($statics = $this->getStatics($r, $v->getContext()->getDepth() + 1)) {
+            $v->addRepresentation(new ContainerRepresentation('Static properties', \array_values($statics), 'statics'));
         }
 
-        $parent = $r;
-        while ($parent = $parent->getParentClass()) {
-            foreach ($parent->getProperties(ReflectionProperty::IS_STATIC) as $static) {
-                if (isset($statics[$static->name]) && $statics[$static->name]->getDeclaringClass()->name === $static->getDeclaringClass()->name) {
-                    continue;
-                }
-                $statics[] = $static;
-            }
-        }
-
-        $statics_parsed = [];
-        $found_statics = [];
-
-        $cdepth = $v->getContext()->getDepth();
-
-        foreach ($statics as $static) {
-            $prop = new StaticPropertyContext(
-                '$'.$static->getName(),
-                $static->getDeclaringClass()->name,
-                ClassDeclaredContext::ACCESS_PUBLIC
-            );
-            $prop->depth = $cdepth + 1;
-            $prop->final = KINT_PHP84 && $static->isFinal();
-
-            if ($static->isProtected()) {
-                $prop->access = ClassDeclaredContext::ACCESS_PROTECTED;
-            } elseif ($static->isPrivate()) {
-                $prop->access = ClassDeclaredContext::ACCESS_PRIVATE;
-            }
-
-            if ($prop->isAccessible($parser->getCallerClass())) {
-                $prop->access_path = '\\'.$prop->owner_class.'::'.$prop->name;
-            }
-
-            if (isset($found_statics[$prop->name])) {
-                $statics_full_name = true;
-            } else {
-                $found_statics[$prop->name] = true;
-
-                if ($prop->owner_class !== $class && ClassDeclaredContext::ACCESS_PRIVATE === $prop->access) {
-                    $statics_full_name = true;
-                }
-            }
-
-            if ($statics_full_name) {
-                $prop->name = $prop->owner_class.'::'.$prop->name;
-            }
-
-            $static->setAccessible(true);
-
-            /**
-             * @psalm-suppress TooFewArguments
-             * Appears to have been fixed in master
-             */
-            if (!$static->isInitialized()) {
-                $statics_parsed[] = new UninitializedValue($prop);
-            } else {
-                $static = $static->getValue();
-                $statics_parsed[] = $parser->parse($static, $prop);
-            }
-        }
-
-        if ($statics_parsed) {
-            $v->addRepresentation(new ContainerRepresentation('Static properties', $statics_parsed, 'statics'));
-        }
-
-        if ($consts = $this->getCachedConstants($r)) {
-            $v->addRepresentation(new ContainerRepresentation('Class constants', $consts, 'constants'));
+        if ($consts = $this->getCachedConstants($r, $deep)) {
+            $v->addRepresentation(new ContainerRepresentation('Class constants', \array_values($consts), 'constants'));
         }
 
         return $v;
     }
 
-    /** @psalm-return list<AbstractValue> */
-    private function getCachedConstants(ReflectionClass $r): array
+    /** @psalm-return array<AbstractValue> */
+    private function getStatics(ReflectionClass $r, int $depth): array
+    {
+        $cdepth = $depth ?: 1;
+        $class = $r->getName();
+        $parent = $r->getParentClass();
+
+        $parent_statics = $parent ? $this->getStatics($parent, $depth) : [];
+        $statics = [];
+
+        foreach ($r->getProperties(ReflectionProperty::IS_STATIC) as $pr) {
+            $canon_name = \strtolower($pr->getDeclaringClass()->name.'::'.$pr->name);
+
+            if ($pr->getDeclaringClass()->name === $class) {
+                $statics[$canon_name] = $this->buildStaticValue($pr, $cdepth);
+            } elseif (isset($parent_statics[$canon_name])) {
+                $statics[$canon_name] = $parent_statics[$canon_name];
+                unset($parent_statics[$canon_name]);
+            } else {
+                // This should never happen since abstract static properties can't exist
+                $statics[$canon_name] = $this->buildStaticValue($pr, $cdepth); // @codeCoverageIgnore
+            }
+        }
+
+        foreach ($parent_statics as $canon_name => $value) {
+            $statics[$canon_name] = $value;
+        }
+
+        return $statics;
+    }
+
+    private function buildStaticValue(ReflectionProperty $pr, int $depth): AbstractValue
+    {
+        $context = new StaticPropertyContext(
+            $pr->name,
+            $pr->getDeclaringClass()->name,
+            ClassDeclaredContext::ACCESS_PUBLIC
+        );
+        $context->depth = $depth;
+        $context->final = KINT_PHP84 && $pr->isFinal();
+
+        if ($pr->isProtected()) {
+            $context->access = ClassDeclaredContext::ACCESS_PROTECTED;
+        } elseif ($pr->isPrivate()) {
+            $context->access = ClassDeclaredContext::ACCESS_PRIVATE;
+        }
+
+        $parser = $this->getParser();
+
+        if ($context->isAccessible($parser->getCallerClass())) {
+            $context->access_path = '\\'.$context->owner_class.'::$'.$context->name;
+        }
+
+        $pr->setAccessible(true);
+
+        /**
+         * @psalm-suppress TooFewArguments
+         * Appears to have been fixed in master.
+         */
+        if (!$pr->isInitialized()) {
+            $context->access_path = null;
+
+            return new UninitializedValue($context);
+        }
+
+        $val = $pr->getValue();
+
+        $out = $this->getParser()->parse($val, $context);
+        $context->access_path = null;
+
+        return $out;
+    }
+
+    /** @psalm-return array<AbstractValue> */
+    private function getCachedConstants(ReflectionClass $r, bool $deep): array
     {
         $parser = $this->getParser();
-        $pdepth = $parser->getDepthLimit();
-        $pdepth_enabled = (int) ($pdepth > 0);
+        $cdepth = $parser->getDepthLimit() ?: 1;
+        $deepkey = (int) $deep;
         $class = $r->getName();
 
         // Separate cache for dumping with/without depth limit
         // This means we can do immediate depth limit on normal dumps
-        if (!isset($this->cache[$class][$pdepth_enabled])) {
+        if (!isset($this->cache[$class][$deepkey])) {
             $consts = [];
-            $reflectors = [];
 
+            $parent_consts = [];
+            if ($parent = $r->getParentClass()) {
+                $parent_consts = $this->getCachedConstants($parent, $deep);
+            }
             foreach ($r->getConstants() as $name => $val) {
                 $cr = new ReflectionClassConstant($class, $name);
 
                 // Skip enum constants
-                if (\is_a($cr->class, UnitEnum::class, true) && $val instanceof UnitEnum && $cr->class === \get_class($val)) {
+                if ($cr->class === $class && \is_a($class, UnitEnum::class, true)) {
                     continue;
                 }
 
-                $reflectors[$cr->name] = [$cr, $val];
-                $consts[$cr->name] = null;
-            }
+                $canon_name = \strtolower($cr->getDeclaringClass()->name.'::'.$name);
 
-            if ($r = $r->getParentClass()) {
-                $parents = $this->getCachedConstants($r);
+                if ($cr->getDeclaringClass()->name === $class) {
+                    $context = $this->buildConstContext($cr);
+                    $context->depth = $cdepth;
 
-                foreach ($parents as $value) {
-                    $c = $value->getContext();
-                    $cname = $c->getName();
-
-                    if (isset($reflectors[$cname]) && $c instanceof ClassOwnedContext && $reflectors[$cname][0]->getDeclaringClass()->name === $c->owner_class) {
-                        $consts[$cname] = $value;
-                        unset($reflectors[$cname]);
-                    } else {
-                        $value = clone $value;
-                        $c = $value->getContext();
-                        if ($c instanceof ClassOwnedContext) {
-                            $c->name = $c->owner_class.'::'.$cname;
-                        }
-                        $consts[] = $value;
-                    }
-                }
-            }
-
-            foreach ($reflectors as [$cr, $val]) {
-                $context = new ClassConstContext(
-                    $cr->name,
-                    $cr->getDeclaringClass()->name,
-                    ClassDeclaredContext::ACCESS_PUBLIC
-                );
-                $context->depth = $pdepth ?: 1;
-                $context->final = KINT_PHP81 && $cr->isFinal();
-
-                if ($cr->isProtected()) {
-                    $context->access = ClassDeclaredContext::ACCESS_PROTECTED;
-                } elseif ($cr->isPrivate()) {
-                    $context->access = ClassDeclaredContext::ACCESS_PRIVATE;
+                    $consts[$canon_name] = $parser->parse($val, $context);
+                    $context->access_path = null;
+                } elseif (isset($parent_consts[$canon_name])) {
+                    $consts[$canon_name] = $parent_consts[$canon_name];
                 } else {
-                    // No access path for protected/private. Tough shit the cache is worth it
-                    $context->access_path = '\\'.$context->owner_class.'::'.$context->name;
+                    $context = $this->buildConstContext($cr);
+                    $context->depth = $cdepth;
+
+                    $consts[$canon_name] = $parser->parse($val, $context);
+                    $context->access_path = null;
                 }
 
-                $consts[$cr->name] = $parser->parse($val, $context);
+                unset($parent_consts[$canon_name]);
             }
 
-            /** @psalm-var AbstractValue[] $consts */
-            $this->cache[$class][$pdepth_enabled] = \array_values($consts);
+            $this->cache[$class][$deepkey] = $consts + $parent_consts;
         }
 
-        return $this->cache[$class][$pdepth_enabled];
+        return $this->cache[$class][$deepkey];
+    }
+
+    private function buildConstContext(ReflectionClassConstant $cr): ClassConstContext
+    {
+        $context = new ClassConstContext(
+            $cr->name,
+            $cr->getDeclaringClass()->name,
+            ClassDeclaredContext::ACCESS_PUBLIC
+        );
+        $context->final = KINT_PHP81 && $cr->isFinal();
+
+        if ($cr->isProtected()) {
+            $context->access = ClassDeclaredContext::ACCESS_PROTECTED;
+        } elseif ($cr->isPrivate()) {
+            $context->access = ClassDeclaredContext::ACCESS_PRIVATE;
+        } else {
+            $context->access_path = '\\'.$context->owner_class.'::'.$context->name;
+        }
+
+        return $context;
     }
 }
