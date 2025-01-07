@@ -142,13 +142,13 @@ final class CommonHelperTest extends CIUnitTestCase
 
         // this chunk is not needed really; just added so that IDEs will be happy
         if (! function_exists('foo_bar_baz')) {
-            function foo_bar_baz(): string
+            function foo_bar_baz(): string // @phpstan-ignore function.inner
             {
                 return __FILE__;
             }
         }
 
-        $this->assertSame($this->dummyHelpers[0], foo_bar_baz()); // @phpstan-ignore-line function.notFound
+        $this->assertSame($this->dummyHelpers[0], foo_bar_baz()); // @phpstan-ignore function.notFound
     }
 
     public function testNamespacedHelperNotFound(): void

@@ -400,7 +400,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testModelNotExists(): void
     {
-        $this->assertNull(model(UnexsistenceClass::class));
+        $this->assertNull(model(UnexsistenceClass::class)); // @phpstan-ignore class.notFound
     }
 
     public function testModelExistsBasename(): void

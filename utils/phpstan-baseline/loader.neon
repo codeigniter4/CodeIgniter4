@@ -2,7 +2,6 @@ includes:
     - argument.type.neon
     - assign.propertyType.neon
     - booleanAnd.rightAlwaysTrue.neon
-    - class.notFound.neon
     - codeigniter.cacheHandlerInstance.neon
     - codeigniter.configArgumentInstanceof.neon
     - codeigniter.frameworkExceptionInstance.neon
@@ -17,7 +16,6 @@ includes:
     - empty.property.neon
     - expr.resultUnused.neon
     - function.alreadyNarrowedType.neon
-    - function.inner.neon
     - generator.valueType.neon
     - isset.offset.neon
     - isset.property.neon
