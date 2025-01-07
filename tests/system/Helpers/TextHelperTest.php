@@ -24,7 +24,8 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class TextHelperTest extends CIUnitTestCase
 {
-    private string $_long_string = 'Once upon a time, a framework had no tests. It sad. So some nice people began to write tests. The more time that went on, the happier it became. Everyone was happy.';
+    private string $longString   = 'Once upon a time, a framework had no tests. It sad. So some nice people began to write tests. The more time that went on, the happier it became. Everyone was happy.';
+    private string $mbLongString = 'Давным-давно во фреймворке не было тестов. Это печально. И вот несколько хороших людей начали писать тесты. Чем больше времени проходило, тем счастливее становилось. Все были счастливы.';
 
     protected function setUp(): void
     {
@@ -165,19 +166,29 @@ final class TextHelperTest extends CIUnitTestCase
 
     public function testWordLimiter(): void
     {
-        $this->assertSame('Once upon a time,&#8230;', word_limiter($this->_long_string, 4));
-        $this->assertSame('Once upon a time,&hellip;', word_limiter($this->_long_string, 4, '&hellip;'));
+        $this->assertSame('Once upon a time,&#8230;', word_limiter($this->longString, 4));
+        $this->assertSame('Once upon a time,&hellip;', word_limiter($this->longString, 4, '&hellip;'));
         $this->assertSame('', word_limiter('', 4));
-        $this->assertSame('Once upon a&hellip;', word_limiter($this->_long_string, 3, '&hellip;'));
+        $this->assertSame('Once upon a&hellip;', word_limiter($this->longString, 3, '&hellip;'));
         $this->assertSame('Once upon a time', word_limiter('Once upon a time', 4, '&hellip;'));
+
+        $this->assertSame('Давным-давно во фреймворке не было тестов.&#8230;', word_limiter($this->mbLongString, 6));
+        $this->assertSame('Давным-давно во фреймворке не было тестов.&hellip;', word_limiter($this->mbLongString, 6, '&hellip;'));
+        $this->assertSame('Давным-давно во фреймворке&hellip;', word_limiter($this->mbLongString, 3, '&hellip;'));
+        $this->assertSame('Давным-давно во фреймворке не было тестов.', word_limiter('Давным-давно во фреймворке не было тестов.', 6, '&hellip;'));
     }
 
     public function testCharacterLimiter(): void
     {
-        $this->assertSame('Once upon a time, a&#8230;', character_limiter($this->_long_string, 20));
-        $this->assertSame('Once upon a time, a&hellip;', character_limiter($this->_long_string, 20, '&hellip;'));
+        $this->assertSame('Once upon a time, a&#8230;', character_limiter($this->longString, 20));
+        $this->assertSame('Once upon a time, a&hellip;', character_limiter($this->longString, 20, '&hellip;'));
         $this->assertSame('Short', character_limiter('Short', 20));
         $this->assertSame('Short', character_limiter('Short', 5));
+
+        $this->assertSame('Давным-давно во фреймворке не было тестов.&#8230;', character_limiter($this->mbLongString, 41));
+        $this->assertSame('Давным-давно во фреймворке не было тестов.&hellip;', character_limiter($this->mbLongString, 41, '&hellip;'));
+        $this->assertSame('Короткий', character_limiter('Короткий', 20));
+        $this->assertSame('Короткий', character_limiter('Короткий', 8));
     }
 
     public function testAsciiToEntities(): void
@@ -391,17 +402,25 @@ final class TextHelperTest extends CIUnitTestCase
 
     public function testExcerpt(): void
     {
-        $string = $this->_long_string;
+        $string = $this->longString;
         $result = ' Once upon a time, a framework had no tests. It sad  So some nice people began to write tests. The more time that went on, the happier it became. ...';
-        $this->assertSame(excerpt($string), $result);
+        $this->assertSame($result, excerpt($string));
+
+        $multibyteResult = ' Давным-давно во фреймворке не было тестов. Это печ льно. И вот несколько хороших людей начали писать тесты. Чем больше времени проходило, тем ...';
+
+        $this->assertSame($multibyteResult, excerpt($this->mbLongString));
     }
 
     public function testExcerptRadius(): void
     {
-        $string = $this->_long_string;
+        $string = $this->longString;
         $phrase = 'began';
         $result = '... people began to ...';
         $this->assertSame(excerpt($string, $phrase, 10), $result);
+
+        $multibyteResult = '... Это печально . И вот ...';
+
+        $this->assertSame($multibyteResult, excerpt($this->mbLongString, 'печально', 10));
     }
 
     public function testAlternator(): void

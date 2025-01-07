@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\ReflectionHelper;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -24,6 +25,7 @@ use PHPUnit\Framework\Attributes\Group;
 final class NamespacesTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
+    use ReflectionHelper;
 
     protected function setUp(): void
     {
@@ -83,5 +85,15 @@ final class NamespacesTest extends CIUnitTestCase
             '|Config|APPPATH/Config|Yes|',
             str_replace(' ', '', $this->getBuffer())
         );
+    }
+
+    public function testTruncateNamespaces(): void
+    {
+        $commandObject  = new Namespaces(service('logger'), service('commands'));
+        $truncateRunner = $this->getPrivateMethodInvoker($commandObject, 'truncate');
+
+        $this->assertSame('App\Controllers\...', $truncateRunner('App\Controllers\Admin', 19));
+        // multibyte namespace
+        $this->assertSame('App\Контроллеры\...', $truncateRunner('App\Контроллеры\Админ', 19));
     }
 }

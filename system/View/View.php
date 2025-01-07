@@ -339,7 +339,7 @@ class View implements RendererInterface
      */
     public function excerpt(string $string, int $length = 20): string
     {
-        return (strlen($string) > $length) ? substr($string, 0, $length - 3) . '...' : $string;
+        return (mb_strlen($string) > $length) ? mb_substr($string, 0, $length - 3) . '...' : $string;
     }
 
     /**

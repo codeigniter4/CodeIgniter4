@@ -166,11 +166,11 @@ The following functions are available:
 
     .. literalinclude:: text_helper/012.php
 
-.. php:function:: word_limiter($str[, $limit = 100[, $end_char = '&#8230;']])
+.. php:function:: word_limiter($str[, $limit = 100[, $endChar = '&#8230;']])
 
     :param    string    $str: Input string
     :param    int    $limit: Limit
-    :param    string    $end_char: End character (usually an ellipsis)
+    :param    string    $endChar: End character (usually an ellipsis)
     :returns:    Word-limited string
     :rtype:    string
 
@@ -181,11 +181,11 @@ The following functions are available:
     The third parameter is an optional suffix added to the string. By
     default it adds an ellipsis.
 
-.. php:function:: character_limiter($str[, $n = 500[, $end_char = '&#8230;']])
+.. php:function:: character_limiter($string[, $limit = 500[, $endChar = '&#8230;']])
 
-    :param    string    $str: Input string
-    :param    int    $n: Number of characters
-    :param    string    $end_char: End character (usually an ellipsis)
+    :param    string    $string: Input string
+    :param    int    $limit: Number of characters
+    :param    string    $endChar: End character (usually an ellipsis)
     :returns:    Character-limited string
     :rtype:    string
 
