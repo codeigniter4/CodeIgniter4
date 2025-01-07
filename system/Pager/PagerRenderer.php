@@ -90,12 +90,12 @@ class PagerRenderer
     /**
      * The number of items the page starts with.
      */
-    protected ?int $perPageStart;
+    protected ?int $perPageStart = null;
 
     /**
      * The number of items the page ends with.
      */
-    protected ?int $perPageEnd;
+    protected ?int $perPageEnd = null;
 
     /**
      * Constructor.
