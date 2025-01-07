@@ -652,7 +652,7 @@ class RouteCollection implements RouteCollectionInterface
      * It does not allow any options to be set on the route, or to
      * define the method used.
      */
-    public function map(array $routes = [], ?array $options = null): static
+    public function map(array $routes = [], ?array $options = null): RouteCollectionInterface
     {
         foreach ($routes as $from => $to) {
             $this->add($from, $to, $options);
