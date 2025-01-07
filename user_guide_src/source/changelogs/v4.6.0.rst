@@ -168,6 +168,7 @@ Method Signature Changes
 - **Time:** The first parameter type of the ``createFromTimestamp()`` has been
   changed from ``int`` to ``int|float``, and the return type ``static`` has been
   added.
+- **Helpers:** ``character_limiter()`` parameter names have been updated. If you use named arguments, you need to update the function calls.
 
 Removed Type Definitions
 ------------------------
@@ -350,6 +351,8 @@ Bugs Fixed
 - **Response:**
     - Headers set using the ``Response`` class are now prioritized and replace headers
       that can be set manually using the PHP ``header()`` function.
+- **View:** Added support for multibyte strings for ``View::excerpt()``.
+- **Helpers:** Added support for multibyte strings for ``excerpt()``.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
