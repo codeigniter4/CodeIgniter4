@@ -15,6 +15,7 @@ namespace CodeIgniter\Pager;
 
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -618,5 +619,84 @@ final class PagerRendererTest extends CIUnitTestCase
         $pager->setSurroundCount(2);
 
         $this->assertNull($pager->getNextPageNumber());
+    }
+
+    /**
+     * @param array<string, array<string, mixed>> $details
+     */
+    #[DataProvider('providePageStartEnd')]
+    public function testPageStartEnd(array $details, int $pageStart, int $pageEnd): void
+    {
+        $pager = new PagerRenderer($details);
+        $pager->setSurroundCount(2);
+
+        $this->assertSame($pageStart, $pager->getPerPageStart());
+        $this->assertSame($pageEnd, $pager->getPerPageEnd());
+    }
+
+    /**
+     * @return array<string, array<string, mixed>> $details
+     */
+    public static function providePageStartEnd(): iterable
+    {
+        $uri = new URI('http://example.com/foo');
+
+        return [
+            'first page' => [
+                'details' => [
+                    'uri'         => $uri,
+                    'pageCount'   => 3,
+                    'total'       => 25,
+                    'currentPage' => 1,
+                    'perPage'     => 10,
+                ],
+                'pageStart' => 1,
+                'pageEnd'   => 10,
+            ],
+            'second page' => [
+                'details' => [
+                    'uri'         => $uri,
+                    'pageCount'   => 3,
+                    'total'       => 25,
+                    'currentPage' => 2,
+                    'perPage'     => 10,
+                ],
+                'pageStart' => 11,
+                'pageEnd'   => 20,
+            ],
+            'last page' => [
+                'details' => [
+                    'uri'         => $uri,
+                    'pageCount'   => 3,
+                    'total'       => 25,
+                    'currentPage' => 3,
+                    'perPage'     => 10,
+                ],
+                'pageStart' => 21,
+                'pageEnd'   => 25,
+            ],
+            'current greater last page' => [
+                'details' => [
+                    'uri'         => $uri,
+                    'pageCount'   => 3,
+                    'total'       => 25,
+                    'currentPage' => 5,
+                    'perPage'     => 10,
+                ],
+                'pageStart' => 41,
+                'pageEnd'   => 50,
+            ],
+            'current equal last page' => [
+                'details' => [
+                    'uri'         => $uri,
+                    'pageCount'   => 1,
+                    'total'       => 10,
+                    'currentPage' => 1,
+                    'perPage'     => 10,
+                ],
+                'pageStart' => 1,
+                'pageEnd'   => 10,
+            ],
+        ];
     }
 }
