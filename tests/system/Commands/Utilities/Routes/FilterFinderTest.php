@@ -21,6 +21,7 @@ use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Router\Router;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ConfigFromArrayTrait;
@@ -53,7 +54,7 @@ final class FilterFinderTest extends CIUnitTestCase
         $this->moduleConfig->enabled = false;
     }
 
-    private function createRouteCollection(array $routes = []): RouteCollection
+    private function createRouteCollection(array $routes = []): RouteCollectionInterface
     {
         $collection = new RouteCollection(service('locator'), $this->moduleConfig, new Routing());
 
@@ -66,7 +67,7 @@ final class FilterFinderTest extends CIUnitTestCase
         return $collection->map($routes);
     }
 
-    private function createRouter(RouteCollection $collection): Router
+    private function createRouter(RouteCollectionInterface $collection): Router
     {
         return new Router($collection, $this->request);
     }
@@ -101,6 +102,9 @@ final class FilterFinderTest extends CIUnitTestCase
 
     public function testFindGlobalsFilters(): void
     {
+        /**
+         * @var RouteCollection $collection
+         */
         $collection = $this->createRouteCollection();
         $router     = $this->createRouter($collection);
         $filters    = $this->createFilters();
@@ -118,6 +122,9 @@ final class FilterFinderTest extends CIUnitTestCase
 
     public function testFindGlobalsFiltersWithRedirectRoute(): void
     {
+        /**
+         * @var RouteCollection $collection
+         */
         $collection = $this->createRouteCollection();
         $collection->addRedirect('users/about', 'profile');
 
@@ -137,6 +144,9 @@ final class FilterFinderTest extends CIUnitTestCase
 
     public function testFindGlobalsAndRouteFilters(): void
     {
+        /**
+         * @var RouteCollection $collection
+         */
         $collection = $this->createRouteCollection();
         $collection->get('admin', ' AdminController::index', ['filter' => 'honeypot']);
         $router  = $this->createRouter($collection);
@@ -155,6 +165,9 @@ final class FilterFinderTest extends CIUnitTestCase
 
     public function testFindGlobalsAndRouteClassnameFilters(): void
     {
+        /**
+         * @var RouteCollection $collection
+         */
         $collection = $this->createRouteCollection();
         $collection->get('admin', ' AdminController::index', ['filter' => InvalidChars::class]);
         $router  = $this->createRouter($collection);
@@ -173,6 +186,9 @@ final class FilterFinderTest extends CIUnitTestCase
 
     public function testFindGlobalsAndRouteMultipleFilters(): void
     {
+        /**
+         * @var RouteCollection $collection
+         */
         $collection = $this->createRouteCollection();
         $collection->get('admin', ' AdminController::index', ['filter' => ['honeypot', InvalidChars::class]]);
         $router  = $this->createRouter($collection);
@@ -191,6 +207,9 @@ final class FilterFinderTest extends CIUnitTestCase
 
     public function testFilterOrder(): void
     {
+        /**
+         * @var RouteCollection $collection
+         */
         $collection = $this->createRouteCollection([]);
         $collection->get('/', ' Home::index', ['filter' => ['route1', 'route2']]);
         $router  = $this->createRouter($collection);
@@ -256,6 +275,9 @@ final class FilterFinderTest extends CIUnitTestCase
         $feature                 = config(Feature::class);
         $feature->oldFilterOrder = true;
 
+        /**
+         * @var RouteCollection $collection
+         */
         $collection = $this->createRouteCollection([]);
         $collection->get('/', ' Home::index', ['filter' => ['route1', 'route2']]);
         $router  = $this->createRouter($collection);

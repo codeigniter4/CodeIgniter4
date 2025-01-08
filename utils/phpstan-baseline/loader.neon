@@ -43,7 +43,6 @@ includes:
     - property.readOnlyByPhpDocDefaultValue.neon
     - property.unusedType.neon
     - return.missing.neon
-    - return.type.neon
     - return.unusedType.neon
     - staticMethod.notFound.neon
     - ternary.shortNotAllowed.neon
