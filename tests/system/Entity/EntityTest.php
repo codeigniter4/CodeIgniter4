@@ -479,7 +479,7 @@ final class EntityTest extends CIUnitTestCase
         $entity        = $this->getCastEntity();
         $entity->ninth = 'some string';
 
-        $entity->ninth;
+        $entity->ninth; // @phpstan-ignore expr.resultUnused
     }
 
     public function testCastArray(): void
