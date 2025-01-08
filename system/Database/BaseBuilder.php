@@ -3175,6 +3175,7 @@ class BaseBuilder
                     ) {
                         continue;
                     }
+
                     // $matches = [
                     //  0 => '(test <= foo)',   /* the whole thing */
                     //  1 => '(',               /* optional */
@@ -3184,7 +3185,7 @@ class BaseBuilder
                     //  5 => ')'                /* optional */
                     // ];
 
-                    if (isset($matches[4]) && $matches[4] !== '') {
+                    if ($matches[4] !== '') {
                         $protectIdentifiers = false;
                         if (str_contains($matches[4], '.')) {
                             $protectIdentifiers = true;
