@@ -14,7 +14,6 @@ includes:
     - deadCode.unreachable.neon
     - empty.notAllowed.neon
     - empty.property.neon
-    - expr.resultUnused.neon
     - function.alreadyNarrowedType.neon
     - generator.valueType.neon
     - isset.offset.neon
