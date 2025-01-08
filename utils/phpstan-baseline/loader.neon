@@ -20,7 +20,6 @@ includes:
     - method.alreadyNarrowedType.neon
     - method.childParameterType.neon
     - method.childReturnType.neon
-    - method.impossibleType.neon
     - method.notFound.neon
     - method.unused.neon
     - missingType.callable.neon
