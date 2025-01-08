@@ -31,7 +31,6 @@ includes:
     - missingType.property.neon
     - missingType.return.neon
     - notIdentical.alwaysTrue.neon
-    - nullCoalesce.expr.neon
     - nullCoalesce.property.neon
     - nullCoalesce.variable.neon
     - offsetAccess.notFound.neon

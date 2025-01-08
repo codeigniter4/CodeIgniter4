@@ -325,7 +325,7 @@ class UploadedFile extends File implements UploadedFileInterface
      */
     public function getClientExtension(): string
     {
-        return pathinfo($this->originalName, PATHINFO_EXTENSION) ?? '';
+        return pathinfo($this->originalName, PATHINFO_EXTENSION);
     }
 
     /**

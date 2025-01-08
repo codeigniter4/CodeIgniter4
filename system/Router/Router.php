@@ -144,6 +144,7 @@ class Router implements RouterInterface
     public function __construct(RouteCollectionInterface $routes, ?Request $request = null)
     {
         $config = config(App::class);
+
         if (isset($config->permittedURIChars)) {
             $this->permittedURIChars = $config->permittedURIChars;
         }
@@ -154,7 +155,7 @@ class Router implements RouterInterface
         $this->controller = $this->collection->getDefaultController();
         $this->method     = $this->collection->getDefaultMethod();
 
-        $this->collection->setHTTPVerb($request->getMethod() ?? $_SERVER['REQUEST_METHOD']);
+        $this->collection->setHTTPVerb($request->getMethod() === '' ? $_SERVER['REQUEST_METHOD'] : $request->getMethod());
 
         $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
 
