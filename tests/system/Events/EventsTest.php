@@ -324,7 +324,8 @@ final class EventsTest extends CIUnitTestCase
         $this->assertSame(0, $result);
     }
 
-    private function getEditableObject(): stdClass {
+    private function getEditableObject(): stdClass
+    {
         $user       = new stdClass();
         $user->name = 'Ivan';
         $user->age  = 30;
