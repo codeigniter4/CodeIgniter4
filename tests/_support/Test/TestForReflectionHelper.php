@@ -28,12 +28,12 @@ class TestForReflectionHelper
         return self::$static_private;
     }
 
-    private function privateMethod($param1, $param2)
+    private function privateMethod($param1, $param2) // @phpstan-ignore method.unused
     {
         return 'private ' . $param1 . $param2;
     }
 
-    private static function privateStaticMethod($param1, $param2)
+    private static function privateStaticMethod($param1, $param2) // @phpstan-ignore method.unused
     {
         return 'private_static ' . $param1 . $param2;
     }

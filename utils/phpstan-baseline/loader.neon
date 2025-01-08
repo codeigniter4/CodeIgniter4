@@ -22,7 +22,6 @@ includes:
     - method.childReturnType.neon
     - method.impossibleType.neon
     - method.notFound.neon
-    - method.unused.neon
     - missingType.callable.neon
     - missingType.iterableValue.neon
     - missingType.parameter.neon
