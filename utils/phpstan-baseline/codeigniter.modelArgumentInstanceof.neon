@@ -1,4 +1,4 @@
-# total 2 errors
+# total 1 error
 
 parameters:
     ignoreErrors:
@@ -6,8 +6,3 @@ parameters:
             message: '#^Argument \#1 \$name \(class\-string\) passed to function model does not extend CodeIgniter\\\\Model\.$#'
             count: 1
             path: ../../system/RESTful/BaseResource.php
-
-        -
-            message: '#^Argument \#1 \$name \(''CodeIgniter\\\\UnexsistenceClass''\) passed to function model does not extend CodeIgniter\\\\Model\.$#'
-            count: 1
-            path: ../../tests/system/CommonFunctionsTest.php
