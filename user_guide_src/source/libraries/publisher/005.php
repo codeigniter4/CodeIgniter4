@@ -7,6 +7,6 @@ foreach (Publisher::discover() as $publisher) {
     $result = $publisher->publish();
 
     if ($result === false) {
-        CLI::error(get_class($publisher) . ' failed to publish!', 'red');
+        CLI::error($publisher::class . ' failed to publish!', 'red');
     }
 }
