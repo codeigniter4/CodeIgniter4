@@ -46,6 +46,7 @@ $overrides = [
         'elements'      => [
             'array_destructuring',
             'arrays',
+            'match',
             'parameters',
         ],
     ],
