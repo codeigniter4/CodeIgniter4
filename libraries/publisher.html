@@ -401,7 +401,7 @@ the powerful <code class="docutils literal notranslate"><span class="pre">Autolo
     <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">publish</span><span class="p">();</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="nv">$result</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">error</span><span class="p">(</span><span class="nb">get_class</span><span class="p">(</span><span class="nv">$publisher</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39; failed to publish!&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">error</span><span class="p">(</span><span class="nv">$publisher</span><span class="o">::</span><span class="na">class</span> <span class="o">.</span> <span class="s1">&#39; failed to publish!&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
