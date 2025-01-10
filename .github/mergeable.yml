@@ -2,40 +2,33 @@
 
 version: 2
 mergeable:
-  - when: issues.opened
+  - when: issues.opened, issues.reopened
     validate:
-      - do: description
-        and:
-          - must_include:
-              regex: '^### PHP Version'
-          - must_include:
-              regex: '^### CodeIgniter4 Version'
-      - do: author
-        and:
-          - must_exclude:
-              regex: 'kenjis'
-          - must_exclude:
-              regex: 'lonnieezell'
-          - must_exclude:
-              regex: 'MGatner'
-          - must_exclude:
-              regex: 'michalsn'
-          - must_exclude:
-              regex: 'paulbalandan'
-          - must_exclude:
-              regex: 'samsonasik'
+      - do: or
+        validate:
+          - do: and
+            validate:
+              - do: description
+                must_include:
+                  regex: '### PHP Version'
+              - do: description
+                must_include:
+                  regex: '### CodeIgniter Version'
+          - do: author
+            must_include:
+              regex: ^kenjis|lonnieezell|MGatner|michalsn|paulbalandan|samsonasik$
     fail:
       - do: comment
-        payload: |
-          Hi there! :wave:
+        payload:
+          body: |
+            Hi there, @@author! :wave:
 
-          It looks like you opened an issue without following the bug report template:
+            It looks like you opened an issue without following the bug report template:
 
-          Bug report ([open an issue](https://github.com/codeigniter4/CodeIgniter4/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml&title=Bug%3A+))
+            * Bug report ([open an issue](https://github.com/codeigniter4/CodeIgniter4/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml&title=Bug%3A+))
+            * For feature request or support question, please use the [forums](https://forum.codeigniter.com/forum-30.html).
 
-          If you are opening a feature request or support question, please do so in the [forums](https://forum.codeigniter.com/forum-30.html).
+            The current issue will be closed. This is a precaution to save maintainers' time, I hope you'll understand.
 
-          The current issue will be closed. This is a precaution to save maintainers' time, I hope you'll understand.
-
-          Sincerely, the mergeable bot 🤖
+            Sincerely, the mergeable bot 🤖
       - do: close
