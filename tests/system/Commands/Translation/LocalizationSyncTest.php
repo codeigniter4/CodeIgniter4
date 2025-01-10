@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands\Translation;
 
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\ReflectionHelper;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\App;
 use Locale;
@@ -27,6 +28,7 @@ use PHPUnit\Framework\Attributes\Group;
 final class LocalizationSyncTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
+    use ReflectionHelper;
 
     private static string $locale;
     private static string $languageTestPath;
@@ -203,6 +205,26 @@ final class LocalizationSyncTest extends CIUnitTestCase
         command('lang:sync --locale en --target test_locale_incorrect');
 
         $this->assertStringContainsString('is not supported', $this->getStreamFilterBuffer());
+    }
+
+    public function testProcessWithInvalidOption(): void
+    {
+        $langPath = SUPPORTPATH . 'Language';
+        $command  = new LocalizationSync(service('logger'), service('commands'));
+        $this->setPrivateProperty($command, 'languagePath', $langPath);
+        $runner = $this->getPrivateMethodInvoker($command, 'process');
+
+        $status = $runner('de', 'jp');
+
+        $this->assertSame(EXIT_ERROR, $status);
+        $this->assertStringContainsString('Error: The "ROOTPATH/tests/_support/Language/de" directory was not found.', $this->getStreamFilterBuffer());
+
+        chmod($langPath, 0544);
+        $status = $runner('en', 'jp');
+        chmod($langPath, 0775);
+
+        $this->assertSame(EXIT_ERROR, $status);
+        $this->assertStringContainsString('Error: The target directory "ROOTPATH/tests/_support/Language/jp" cannot be accessed.', $this->getStreamFilterBuffer());
     }
 
     private function makeLanguageFiles(): void

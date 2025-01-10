@@ -17,6 +17,8 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Exceptions\LogicException;
 use Config\App;
+use ErrorException;
+use FilesystemIterator;
 use Locale;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -87,31 +89,45 @@ class LocalizationSync extends BaseCommand
             $this->languagePath = SUPPORTPATH . 'Language';
         }
 
-        $this->process($optionLocale, $optionTargetLocale);
-
-        CLI::write('All operations done!');
+        if ($this->process($optionLocale, $optionTargetLocale) === EXIT_SUCCESS) {
+            CLI::write('All operations done!');
+        }
 
         return EXIT_SUCCESS;
     }
 
-    private function process(string $originalLocale, string $targetLocale): void
+    private function process(string $originalLocale, string $targetLocale): int
     {
         $originalLocaleDir = $this->languagePath . DIRECTORY_SEPARATOR . $originalLocale;
         $targetLocaleDir   = $this->languagePath . DIRECTORY_SEPARATOR . $targetLocale;
 
         if (! is_dir($originalLocaleDir)) {
             CLI::error(
-                'Error: The "' . $originalLocaleDir . '" directory was not found.'
+                'Error: The "' . clean_path($originalLocaleDir) . '" directory was not found.'
             );
+
+            return EXIT_ERROR;
         }
 
-        if (! is_dir($targetLocaleDir) && ! mkdir($targetLocaleDir, 0775)) {
+        // Unifying the error - mkdir() may cause an exception.
+        try {
+            if (! is_dir($targetLocaleDir) && ! mkdir($targetLocaleDir, 0775)) {
+                throw new ErrorException();
+            }
+        } catch (ErrorException $e) {
             CLI::error(
-                'Error: The target directory "' . $targetLocaleDir . '" cannot be accessed.'
+                'Error: The target directory "' . clean_path($targetLocaleDir) . '" cannot be accessed.'
             );
+
+            return EXIT_ERROR;
         }
 
-        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($originalLocaleDir));
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator(
+                $originalLocaleDir,
+                FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS
+            )
+        );
 
         /**
          * @var list<SplFileInfo> $files
@@ -120,7 +136,7 @@ class LocalizationSync extends BaseCommand
         ksort($files);
 
         foreach ($files as $originalLanguageFile) {
-            if ($this->isIgnoredFile($originalLanguageFile)) {
+            if ($originalLanguageFile->getExtension() !== 'php') {
                 continue;
             }
 
@@ -138,6 +154,8 @@ class LocalizationSync extends BaseCommand
             $content = "<?php\n\nreturn " . var_export($targetLanguageKeys, true) . ";\n";
             file_put_contents($targetLanguageFile, $content);
         }
+
+        return EXIT_SUCCESS;
     }
 
     /**
@@ -178,10 +196,5 @@ class LocalizationSync extends BaseCommand
         }
 
         return $mergedLanguageKeys;
-    }
-
-    private function isIgnoredFile(SplFileInfo $file): bool
-    {
-        return $file->isDir() || $file->getFilename() === '.' || $file->getFilename() === '..' || $file->getExtension() !== 'php';
     }
 }
