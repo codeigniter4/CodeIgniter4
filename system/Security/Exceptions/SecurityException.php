@@ -50,7 +50,7 @@ class SecurityException extends FrameworkException implements HTTPExceptionInter
     {
         return new static(
             'Invalid UTF-8 characters in ' . $source . ': ' . $string,
-            400
+            400,
         );
     }
 
@@ -66,7 +66,7 @@ class SecurityException extends FrameworkException implements HTTPExceptionInter
     {
         return new static(
             'Invalid Control characters in ' . $source . ': ' . $string,
-            400
+            400,
         );
     }
 

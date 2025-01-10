@@ -180,7 +180,7 @@ class RedisHandler extends BaseHandler
             ! $redis->connect(
                 $this->savePath['host'],
                 $this->savePath['port'],
-                $this->savePath['timeout']
+                $this->savePath['timeout'],
             )
         ) {
             $this->logger->error('Session: Unable to connect to Redis with the configured settings.');
@@ -188,7 +188,7 @@ class RedisHandler extends BaseHandler
             $this->logger->error('Session: Unable to authenticate to Redis instance.');
         } elseif (isset($this->savePath['database']) && ! $redis->select($this->savePath['database'])) {
             $this->logger->error(
-                'Session: Unable to select Redis database with index ' . $this->savePath['database']
+                'Session: Unable to select Redis database with index ' . $this->savePath['database'],
             );
         } else {
             $this->redis = $redis;
@@ -318,7 +318,7 @@ class RedisHandler extends BaseHandler
         if (isset($this->redis, $this->lockKey)) {
             if (($result = $this->redis->del($this->keyPrefix . $id)) !== 1) {
                 $this->logger->debug(
-                    'Session: Redis::del() expected to return 1, got ' . var_export($result, true) . ' instead.'
+                    'Session: Redis::del() expected to return 1, got ' . var_export($result, true) . ' instead.',
                 );
             }
 
@@ -369,7 +369,7 @@ class RedisHandler extends BaseHandler
                 (string) Time::now()->getTimestamp(),
                 // NX -- Only set the key if it does not already exist.
                 // EX seconds -- Set the specified expire time, in seconds.
-                ['nx', 'ex' => 300]
+                ['nx', 'ex' => 300],
             );
 
             if (! $result) {
@@ -385,7 +385,7 @@ class RedisHandler extends BaseHandler
         if ($attempt === 300) {
             $this->logger->error(
                 'Session: Unable to obtain lock for ' . $this->keyPrefix . $sessionID
-                . ' after 300 attempts, aborting.'
+                . ' after 300 attempts, aborting.',
             );
 
             return false;

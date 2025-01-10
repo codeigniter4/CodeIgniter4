@@ -250,12 +250,12 @@ class ValidationTest extends CIUnitTestCase
         $this->validation->setRules([]);
         $this->validation->run([]);
         $count1 = count(
-            $this->getPrivateProperty($this->validation, 'ruleSetInstances')
+            $this->getPrivateProperty($this->validation, 'ruleSetInstances'),
         );
 
         $this->validation->run([]);
         $count2 = count(
-            $this->getPrivateProperty($this->validation, 'ruleSetInstances')
+            $this->getPrivateProperty($this->validation, 'ruleSetInstances'),
         );
 
         $this->assertSame($count1, $count2);
@@ -301,7 +301,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertFalse($result);
         $this->assertSame(
             ['foo' => 'The value is not "abc"'],
-            $this->validation->getErrors()
+            $this->validation->getErrors(),
         );
         $this->assertSame([], $this->validation->getValidated());
     }
@@ -329,7 +329,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertFalse($result);
         $this->assertSame(
             ['foo' => 'The foo value is not "abc"'],
-            $this->validation->getErrors()
+            $this->validation->getErrors(),
         );
         $this->assertSame([], $this->validation->getValidated());
     }
@@ -353,7 +353,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertFalse($result);
         $this->assertSame(
             ['secret' => 'The シークレット is invalid'],
-            $this->validation->getErrors()
+            $this->validation->getErrors(),
         );
     }
 
@@ -388,7 +388,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertFalse($result);
         $this->assertSame(
             ['foo' => 'The value is not "abc"'],
-            $this->validation->getErrors()
+            $this->validation->getErrors(),
         );
         $this->assertSame([], $this->validation->getValidated());
     }
@@ -424,7 +424,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertFalse($result);
         $this->assertSame(
             ['foo' => 'The foo value is not "abc"'],
-            $this->validation->getErrors()
+            $this->validation->getErrors(),
         );
         $this->assertSame([], $this->validation->getValidated());
     }
@@ -448,7 +448,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertFalse($result);
         $this->assertSame(
             ['secret' => 'The シークレット is invalid'],
-            $this->validation->getErrors()
+            $this->validation->getErrors(),
         );
     }
 
@@ -589,13 +589,13 @@ class ValidationTest extends CIUnitTestCase
             'foo',
             'Foo',
             ['foo'        => 'is_numeric'],
-            ['is_numeric' => 'Nope. Not a number.']
+            ['is_numeric' => 'Nope. Not a number.'],
         );
         $this->validation->setRule(
             'bar',
             'Bar',
             ['bar'        => 'is_numeric'],
-            ['is_numeric' => 'Nope. Not a number.']
+            ['is_numeric' => 'Nope. Not a number.'],
         );
         $result = $this->validation->run($data);
 
@@ -733,7 +733,7 @@ class ValidationTest extends CIUnitTestCase
         ];
         $this->validation->setRules(
             ['foo.*.bar' => ['label' => 'foo bar', 'rules' => 'required']],
-            ['foo.*.bar' => ['required' => 'Required']]
+            ['foo.*.bar' => ['required' => 'Required']],
         );
         $this->validation->run($data);
         $this->assertSame([
@@ -1097,7 +1097,7 @@ class ValidationTest extends CIUnitTestCase
             ['Username' => 'min_length[6]'],
             ['Username' => [
                 'min_length' => 'Supplied value ({value}) for {field} must have at least {param} characters.',
-            ]]
+            ]],
         );
         $result = $this->validation->run($data);
 
@@ -1277,11 +1277,11 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame(
             "The name_user.* field may only contain alphabetical characters.\n"
             . 'The name_user.* field may only contain alphabetical characters.',
-            $this->validation->getError('name_user.*')
+            $this->validation->getError('name_user.*'),
         );
         $this->assertSame(
             'The contacts.friends.*.name field is required.',
-            $this->validation->getError('contacts.friends.*.name')
+            $this->validation->getError('contacts.friends.*.name'),
         );
     }
 
@@ -1385,7 +1385,7 @@ class ValidationTest extends CIUnitTestCase
             ]],
             ['Username' => [
                 'min_length' => 'Foo.bar.min_length2',
-            ]]
+            ]],
         );
         $result = $this->validation->run($data);
 
@@ -1620,7 +1620,7 @@ class ValidationTest extends CIUnitTestCase
         // to test if placeholderReplacementResultDetermination() works we provoke and expect an exception
         $this->expectException(ExpectationFailedException::class);
         $this->expectExceptionMessage(
-            'Failed asserting that \'filter[{id}]\' [ASCII](length: 12) does not contain "{id}" [ASCII](length: 4).'
+            'Failed asserting that \'filter[{id}]\' [ASCII](length: 12) does not contain "{id}" [ASCII](length: 4).',
         );
 
         $this->validation->setRule('foo', 'foo-label', 'required|filter[{id}]');
@@ -1801,7 +1801,7 @@ class ValidationTest extends CIUnitTestCase
 
         $this->assertSame(
             'The a.*.c field is required when a.*.b is not present.',
-            $this->validation->getError('a.1.c')
+            $this->validation->getError('a.1.c'),
         );
     }
 
@@ -1827,7 +1827,7 @@ class ValidationTest extends CIUnitTestCase
         ];
 
         $this->validation->setRules(
-            ['contacts.just.friends.*.name' => 'required|max_length[1]']
+            ['contacts.just.friends.*.name' => 'required|max_length[1]'],
         );
         $this->assertFalse($this->validation->run($data));
         $this->assertSame(
@@ -1835,19 +1835,19 @@ class ValidationTest extends CIUnitTestCase
                 'contacts.just.friends.0.name' => 'The contacts.just.friends.*.name field cannot exceed 1 characters in length.',
                 'contacts.just.friends.1.name' => 'The contacts.just.friends.*.name field cannot exceed 1 characters in length.',
             ],
-            $this->validation->getErrors()
+            $this->validation->getErrors(),
         );
 
         $this->validation->reset();
         $this->validation->setRules(
-            ['contacts.*.name' => 'required|max_length[1]']
+            ['contacts.*.name' => 'required|max_length[1]'],
         );
         $this->assertFalse($this->validation->run($data));
         $this->assertSame(
             // The data for `contacts.*.name` does not exist. So it is interpreted
             // as `null`, and this error message returns.
             ['contacts.*.name' => 'The contacts.*.name field is required.'],
-            $this->validation->getErrors()
+            $this->validation->getErrors(),
         );
     }
 

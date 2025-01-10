@@ -90,7 +90,7 @@ final class JoinTest extends CIUnitTestCase
         $builder->join(
             'leases',
             'units.unit_id = leases.unit_id AND CURDATE() BETWEEN lease_start_date AND lease_exp_date',
-            'LEFT'
+            'LEFT',
         );
 
         // @TODO Should be `... CURDATE() BETWEEN "lease_start_date" AND "lease_exp_date"`

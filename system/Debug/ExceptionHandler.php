@@ -68,10 +68,10 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
                         'HTTP/%s %s %s',
                         $request->getProtocolVersion(),
                         $response->getStatusCode(),
-                        $response->getReasonPhrase()
+                        $response->getReasonPhrase(),
                     ),
                     true,
-                    $statusCode
+                    $statusCode,
                 );
             }
 
@@ -138,7 +138,7 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
             in_array(
                 strtolower(ini_get('display_errors')),
                 ['1', 'true', 'on', 'yes'],
-                true
+                true,
             )
         ) {
             $view = 'error_exception.php';

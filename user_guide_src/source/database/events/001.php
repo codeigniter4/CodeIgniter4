@@ -14,5 +14,5 @@ Events::on(
     'DBQuery',
     static function (\CodeIgniter\Database\Query $query) {
         log_message('info', (string) $query);
-    }
+    },
 );

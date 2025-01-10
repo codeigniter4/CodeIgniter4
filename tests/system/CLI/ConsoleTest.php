@@ -54,8 +54,8 @@ final class ConsoleTest extends CIUnitTestCase
             0,
             strpos(
                 $this->getStreamFilterBuffer(),
-                sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION)
-            )
+                sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION),
+            ),
         );
     }
 
@@ -143,7 +143,7 @@ final class ConsoleTest extends CIUnitTestCase
         $this->assertStringContainsString('env [<environment>]', $this->getStreamFilterBuffer());
         $this->assertStringContainsString(
             'Retrieves the current environment, or set a new one.',
-            $this->getStreamFilterBuffer()
+            $this->getStreamFilterBuffer(),
         );
     }
 

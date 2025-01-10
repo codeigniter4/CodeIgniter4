@@ -59,7 +59,7 @@ final class AutoRouteCollector
             $routes = $reader->read(
                 $class,
                 $this->defaultController,
-                $this->defaultMethod
+                $this->defaultMethod,
             );
 
             if ($routes === []) {

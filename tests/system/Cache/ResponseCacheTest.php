@@ -65,7 +65,7 @@ final class ResponseCacheTest extends CIUnitTestCase
             $appConfig,
             $siteUri,
             null,
-            new UserAgent()
+            new UserAgent(),
         );
     }
 

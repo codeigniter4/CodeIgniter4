@@ -47,7 +47,7 @@ if ($isMinorUpdate) {
 replace_file_content(
     $changelogIndex,
     '/\.\. toctree::\n    :titlesonly:\n/u',
-    ".. toctree::\n    :titlesonly:\n\n    v{$version}"
+    ".. toctree::\n    :titlesonly:\n\n    v{$version}",
 );
 // Replace {version}
 $length    = mb_strlen("Version {$version}");
@@ -55,12 +55,12 @@ $underline = str_repeat('#', $length);
 replace_file_content(
     $changelog,
     '/#################\nVersion {version}\n#################/u',
-    "{$underline}\nVersion {$version}\n{$underline}"
+    "{$underline}\nVersion {$version}\n{$underline}",
 );
 replace_file_content(
     $changelog,
     '/{version}/u',
-    "{$version}"
+    "{$version}",
 );
 
 // Copy upgrading
@@ -72,7 +72,7 @@ copy('./admin/next-upgrading-guide.rst', $upgrading);
 replace_file_content(
     $upgradingIndex,
     '/    backward_compatibility_notes\n/u',
-    "    backward_compatibility_notes\n\n    upgrade_{$versionWithoutDots}"
+    "    backward_compatibility_notes\n\n    upgrade_{$versionWithoutDots}",
 );
 // Replace {version}
 $length    = mb_strlen("Upgrading from {$versionCurrent} to {$version}");
@@ -80,7 +80,7 @@ $underline = str_repeat('#', $length);
 replace_file_content(
     $upgrading,
     '/##############################\nUpgrading from {version} to {version}\n##############################/u',
-    "{$underline}\nUpgrading from {$versionCurrent} to {$version}\n{$underline}"
+    "{$underline}\nUpgrading from {$versionCurrent} to {$version}\n{$underline}",
 );
 
 // Commits

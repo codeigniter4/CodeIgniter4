@@ -78,7 +78,7 @@ final class ControllerMethodReader
                             $classname,
                             $methodName,
                             $httpVerb,
-                            $method
+                            $method,
                         );
 
                         if ($routeForDefaultController !== []) {
@@ -193,7 +193,7 @@ final class ControllerMethodReader
     {
         if ($this->translateUriToCamelCase) {
             $string = strtolower(
-                preg_replace('/([a-z\d])([A-Z])/', '$1-$2', $string)
+                preg_replace('/([a-z\d])([A-Z])/', '$1-$2', $string),
             );
         } elseif ($this->translateURIDashes) {
             $string = str_replace('_', '-', $string);

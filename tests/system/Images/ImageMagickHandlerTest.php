@@ -382,7 +382,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 
             $this->assertNotSame(
                 file_get_contents($this->origin . 'ci-logo.' . $type),
-                file_get_contents($this->root . 'ci-logo.' . $type)
+                file_get_contents($this->root . 'ci-logo.' . $type),
             );
         }
     }
@@ -396,7 +396,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 
             $this->assertSame(
                 file_get_contents($this->origin . 'ci-logo.' . $type),
-                file_get_contents($this->origin . 'ci-logo.' . $type)
+                file_get_contents($this->origin . 'ci-logo.' . $type),
             );
         }
     }
@@ -416,7 +416,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 
             $this->assertNotSame(
                 file_get_contents($this->origin . 'ci-logo.' . $type),
-                file_get_contents($this->root . 'ci-logo.' . $type)
+                file_get_contents($this->root . 'ci-logo.' . $type),
             );
         }
     }
@@ -437,7 +437,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 
             $this->assertNotSame(
                 file_get_contents($this->origin . 'ci-logo.' . $type),
-                file_get_contents($this->root . 'ci-logo.' . $type)
+                file_get_contents($this->root . 'ci-logo.' . $type),
             );
         }
     }

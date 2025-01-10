@@ -48,7 +48,7 @@ final class DatabaseTest extends CIUnitTestCase
             $this->assertArrayHasKey('index', $trace);
             $this->assertSame(
                 sprintf('%s', $i + 1),
-                preg_replace(sprintf('/%s/', chr(0xC2) . chr(0xA0)), '', $trace['index'])
+                preg_replace(sprintf('/%s/', chr(0xC2) . chr(0xA0)), '', $trace['index']),
             );
 
             // since we merged file & line together

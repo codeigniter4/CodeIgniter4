@@ -212,7 +212,7 @@ class Events
             if ($check === $listener) {
                 unset(
                     static::$listeners[$eventName][1][$index],
-                    static::$listeners[$eventName][2][$index]
+                    static::$listeners[$eventName][2][$index],
                 );
 
                 return true;

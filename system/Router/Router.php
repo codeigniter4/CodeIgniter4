@@ -167,7 +167,7 @@ class Router implements RouterInterface
                     $this->collection->getDefaultNamespace(),
                     $this->collection->getDefaultController(),
                     $this->collection->getDefaultMethod(),
-                    $this->translateURIDashes
+                    $this->translateURIDashes,
                 );
             } else {
                 $this->autoRouter = new AutoRouter(
@@ -175,7 +175,7 @@ class Router implements RouterInterface
                     $this->collection->getDefaultNamespace(),
                     $this->collection->getDefaultController(),
                     $this->collection->getDefaultMethod(),
-                    $this->translateURIDashes
+                    $this->translateURIDashes,
                 );
             }
         }
@@ -221,7 +221,7 @@ class Router implements RouterInterface
         // want this, like in the case of API's.
         if (! $this->collection->shouldAutoRoute()) {
             throw new PageNotFoundException(
-                "Can't find a route for '{$this->collection->getHTTPVerb()}: {$uri}'."
+                "Can't find a route for '{$this->collection->getHTTPVerb()}: {$uri}'.",
             );
         }
 
@@ -442,7 +442,7 @@ class Router implements RouterInterface
 
                     throw new RedirectException(
                         preg_replace('#\A' . $routeKey . '\z#u', $redirectTo, $uri),
-                        $this->collection->getRedirectCode($routeKey)
+                        $this->collection->getRedirectCode($routeKey),
                     );
                 }
                 // Store our locale so CodeIgniter object can
@@ -451,7 +451,7 @@ class Router implements RouterInterface
                     preg_match(
                         '#^' . str_replace('{locale}', '(?<locale>[^/]+)', $matchedKey) . '$#u',
                         $uri,
-                        $matched
+                        $matched,
                     );
 
                     if ($this->collection->shouldUseSupportedLocalesOnly()
@@ -546,7 +546,7 @@ class Router implements RouterInterface
 
                 return $matches[$index] ?? '';
             },
-            $input
+            $input,
         );
     }
 
@@ -736,7 +736,7 @@ class Router implements RouterInterface
                 && preg_match('/\A[' . $this->permittedURIChars . ']+\z/iu', $segment) !== 1
             ) {
                 throw new BadRequestException(
-                    'The URI you submitted has disallowed characters: "' . $segment . '"'
+                    'The URI you submitted has disallowed characters: "' . $segment . '"',
                 );
             }
         }

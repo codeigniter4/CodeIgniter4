@@ -66,7 +66,7 @@ final class FrameworkCodeTest extends TestCase
 
                 return $groupAttribute->name();
             }, $attributes),
-            self::$recognizedGroupAttributeNames
+            self::$recognizedGroupAttributeNames,
         );
         $this->assertEmpty($unrecognizedGroups, sprintf(
             "[%s] Unexpected #[Group] attribute%s:\n%s\nExpected group names to be in \"%s\".",
@@ -74,9 +74,9 @@ final class FrameworkCodeTest extends TestCase
             count($unrecognizedGroups) > 1 ? 's' : '',
             implode("\n", array_map(
                 static fn (string $group): string => sprintf('  * #[Group(\'%s\')]', $group),
-                $unrecognizedGroups
+                $unrecognizedGroups,
             )),
-            implode(', ', self::$recognizedGroupAttributeNames)
+            implode(', ', self::$recognizedGroupAttributeNames),
         ));
     }
 
@@ -100,9 +100,9 @@ final class FrameworkCodeTest extends TestCase
         $iterator = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator(
                 $directory,
-                FilesystemIterator::SKIP_DOTS
+                FilesystemIterator::SKIP_DOTS,
             ),
-            RecursiveIteratorIterator::CHILD_FIRST
+            RecursiveIteratorIterator::CHILD_FIRST,
         );
 
         $testClasses = array_map(
@@ -111,32 +111,32 @@ final class FrameworkCodeTest extends TestCase
                     $file->getPathname(),
                     '',
                     0,
-                    strlen($directory)
+                    strlen($directory),
                 );
                 $relativePath = substr_replace(
                     $relativePath,
                     '',
-                    strlen($relativePath) - strlen(DIRECTORY_SEPARATOR . $file->getBasename())
+                    strlen($relativePath) - strlen(DIRECTORY_SEPARATOR . $file->getBasename()),
                 );
 
                 return sprintf(
                     'CodeIgniter\\%s%s%s',
                     strtr($relativePath, DIRECTORY_SEPARATOR, '\\'),
                     $relativePath === '' ? '' : '\\',
-                    $file->getBasename('.' . $file->getExtension())
+                    $file->getBasename('.' . $file->getExtension()),
                 );
             },
             array_filter(
                 iterator_to_array($iterator, false),
                 static fn (SplFileInfo $file): bool => $file->isFile()
                     && ! str_contains($file->getPathname(), DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR)
-                    && ! str_contains($file->getPathname(), DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR)
-            )
+                    && ! str_contains($file->getPathname(), DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR),
+            ),
         );
 
         $testClasses = array_filter(
             $testClasses,
-            static fn (string $class): bool => is_subclass_of($class, TestCase::class)
+            static fn (string $class): bool => is_subclass_of($class, TestCase::class),
         );
 
         sort($testClasses);

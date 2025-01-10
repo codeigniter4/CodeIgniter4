@@ -288,7 +288,7 @@ class Boot
 
         $message = sprintf(
             'The framework needs the following extension(s) installed and loaded: %s.',
-            implode(', ', $missingExtensions)
+            implode(', ', $missingExtensions),
         );
 
         header('HTTP/1.1 503 Service Unavailable.', true, 503);

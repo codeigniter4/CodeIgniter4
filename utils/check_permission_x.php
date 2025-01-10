@@ -44,7 +44,7 @@ function findExecutableFiles($dir)
 
     // Create a Recursive Directory Iterator
     $iterator = new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($dir)
+        new RecursiveDirectoryIterator($dir),
     );
 
     // Iterate over each item in the directory

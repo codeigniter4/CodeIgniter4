@@ -92,10 +92,10 @@ class Builder extends BaseBuilder
                     static fn ($value): string => 'SELECT ' . implode(', ', array_map(
                         static fn ($key, $index): string => $index . ' ' . $key,
                         $keys,
-                        $value
+                        $value,
                     )),
-                    $values
-                )
+                    $values,
+                ),
             ) . " FROM DUAL\n";
         }
 
@@ -287,8 +287,8 @@ class Builder extends BaseBuilder
                         )
                     ),
                     array_keys($constraints),
-                    $constraints
-                )
+                    $constraints,
+                ),
             ) . ")\n";
 
             $sql .= "WHEN MATCHED THEN UPDATE\n";
@@ -302,8 +302,8 @@ class Builder extends BaseBuilder
                     ' = ' . $value :
                     ' = ' . $alias . '.' . $value),
                     array_keys($updateFields),
-                    $updateFields
-                )
+                    $updateFields,
+                ),
             );
 
             $this->QBOptions['sql'] = $sql;
@@ -318,10 +318,10 @@ class Builder extends BaseBuilder
                     static fn ($value): string => 'SELECT ' . implode(', ', array_map(
                         static fn ($key, $index): string => $index . ' ' . $key,
                         $keys,
-                        $value
+                        $value,
                     )) . ' FROM DUAL',
-                    $values
-                )
+                    $values,
+                ),
             ) . "\n";
         }
 
@@ -392,8 +392,8 @@ class Builder extends BaseBuilder
                         )
                     ),
                     array_keys($constraints),
-                    $constraints
-                )
+                    $constraints,
+                ),
             ) . ")\n";
 
             $sql .= "WHEN MATCHED THEN UPDATE SET\n";
@@ -405,8 +405,8 @@ class Builder extends BaseBuilder
                     " = {$value}" :
                     " = {$alias}.{$value}"),
                     array_keys($updateFields),
-                    $updateFields
-                )
+                    $updateFields,
+                ),
             );
 
             $sql .= "\nWHEN NOT MATCHED THEN INSERT (" . implode(', ', $keys) . ")\nVALUES ";
@@ -427,10 +427,10 @@ class Builder extends BaseBuilder
                     static fn ($value): string => 'SELECT ' . implode(', ', array_map(
                         static fn ($key, $index): string => $index . ' ' . $key,
                         $keys,
-                        $value
+                        $value,
                     )),
-                    $values
-                )
+                    $values,
+                ),
             ) . " FROM DUAL\n";
         }
 
@@ -477,8 +477,8 @@ class Builder extends BaseBuilder
                         )
                     ),
                     array_keys($constraints),
-                    $constraints
-                )
+                    $constraints,
+                ),
             );
 
             // convert binds in where
@@ -491,7 +491,7 @@ class Builder extends BaseBuilder
             $sql .= ' ' . str_replace(
                 'WHERE ',
                 'AND ',
-                $this->compileWhereHaving('QBWhere')
+                $this->compileWhereHaving('QBWhere'),
             ) . ')';
 
             $this->QBOptions['sql'] = $sql;
@@ -506,10 +506,10 @@ class Builder extends BaseBuilder
                     static fn ($value): string => 'SELECT ' . implode(', ', array_map(
                         static fn ($key, $index): string => $index . ' ' . $key,
                         $keys,
-                        $value
+                        $value,
                     )),
-                    $values
-                )
+                    $values,
+                ),
             ) . " FROM DUAL\n";
         }
 

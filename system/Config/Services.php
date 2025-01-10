@@ -213,7 +213,7 @@ class Services extends BaseService
             $config,
             new URI($options['baseURI'] ?? null),
             $response,
-            $options
+            $options,
         );
     }
 
@@ -569,7 +569,7 @@ class Services extends BaseService
             $config,
             AppServices::get('uri'),
             'php://input',
-            new UserAgent()
+            new UserAgent(),
         );
     }
 
@@ -689,7 +689,7 @@ class Services extends BaseService
         if (! class_exists($driverName) || ! is_a($driverName, SessionBaseHandler::class, true)) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid session handler "%s" provided.',
-                $driverName
+                $driverName,
             ));
         }
 

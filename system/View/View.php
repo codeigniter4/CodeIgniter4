@@ -200,7 +200,7 @@ class View implements RendererInterface
                 $this->logPerformance(
                     $this->renderVars['start'],
                     microtime(true),
-                    $this->renderVars['view']
+                    $this->renderVars['view'],
                 );
 
                 return $output;
@@ -213,7 +213,7 @@ class View implements RendererInterface
             $this->renderVars['file'] = $this->loader->locateFile(
                 $this->renderVars['view'],
                 'Views',
-                ($fileExt === '') ? 'php' : $fileExt
+                ($fileExt === '') ? 'php' : $fileExt,
             );
         }
 
@@ -257,7 +257,7 @@ class View implements RendererInterface
         $this->logPerformance(
             $this->renderVars['start'],
             microtime(true),
-            $this->renderVars['view']
+            $this->renderVars['view'],
         );
 
         // Check if DebugToolbar is enabled.
@@ -292,7 +292,7 @@ class View implements RendererInterface
             cache()->save(
                 $this->renderVars['cacheName'],
                 $output,
-                (int) $this->renderVars['options']['cache']
+                (int) $this->renderVars['options']['cache'],
             );
         }
 

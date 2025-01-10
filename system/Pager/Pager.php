@@ -295,7 +295,7 @@ class Pager implements PagerInterface
                 $uri->getAuthority(),
                 $uri->getPath(),
                 $uri->getQuery(),
-                $uri->getFragment()
+                $uri->getFragment(),
             );
     }
 

@@ -115,7 +115,7 @@ class CommandGenerator extends BaseCommand
             $class,
             ['{group}', '{command}'],
             [$group, $command],
-            ['type' => $type]
+            ['type' => $type],
         );
     }
 }

@@ -85,7 +85,7 @@ final class RoutesTest extends CIUnitTestCase
             EOL;
         $this->assertStringContainsString(
             $expected,
-            preg_replace('/\033\[.+?m/u', '', $this->getBuffer())
+            preg_replace('/\033\[.+?m/u', '', $this->getBuffer()),
         );
     }
 

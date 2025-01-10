@@ -93,7 +93,7 @@ final class CookieTest extends CIUnitTestCase
             'value',
             [
                 'prefix' => $optionPrefix,
-            ]
+            ],
         );
 
         $this->assertSame($expected, $cookie->getPrefixedName());
@@ -271,19 +271,19 @@ final class CookieTest extends CIUnitTestCase
 
         $this->assertSame(
             'cookie=lover; Path=/; HttpOnly; SameSite=Lax',
-            $a->toHeaderString()
+            $a->toHeaderString(),
         );
         $this->assertSame(
             "cookie=monster; Expires=Sun, 14-Feb-2021 00:00:00 GMT; Max-Age={$max}; Path=/web; Domain=localhost; HttpOnly; SameSite=Lax",
-            (string) $b
+            (string) $b,
         );
         $this->assertSame(
             'cookie=lover; Path=/; Secure; SameSite=Strict',
-            (string) $c
+            (string) $c,
         );
         $this->assertSame(
             'cookie=deleted; Expires=Thu, 01-Jan-1970 00:00:00 GMT; Max-Age=0; Path=/; HttpOnly; SameSite=Lax',
-            (string) $d
+            (string) $d,
         );
 
         Cookie::setDefaults($old);

@@ -61,7 +61,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
     {
         service('autoloader')->addNamespace(
             'Tests\Support\MigrationTestMigrations',
-            SUPPORTPATH . 'MigrationTestMigrations'
+            SUPPORTPATH . 'MigrationTestMigrations',
         );
     }
 
@@ -89,7 +89,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         ) . $dbConfig->tests['database'];
         $this->assertSame(
             $database,
-            $this->getPrivateProperty($db, 'database')
+            $this->getPrivateProperty($db, 'database'),
         );
         $this->assertSame($dbConfig->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
     }
@@ -297,7 +297,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
         vfsStream::copyFromFileSystem(
             TESTPATH . '_support/MigrationTestMigrations/Database/Migrations',
-            $this->root
+            $this->root,
         );
 
         $this->expectException(ConfigException::class);

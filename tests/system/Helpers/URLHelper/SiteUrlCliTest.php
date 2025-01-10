@@ -325,11 +325,11 @@ final class SiteUrlCliTest extends CIUnitTestCase
 
         $this->assertSame(
             '//example.com/index.php/test',
-            site_url('test', '', $this->config)
+            site_url('test', '', $this->config),
         );
         $this->assertSame(
             '//example.com/img/test.jpg',
-            base_url('img/test.jpg', '')
+            base_url('img/test.jpg', ''),
         );
     }
 }

@@ -64,7 +64,7 @@ final class EnvironmentCommandTest extends CIUnitTestCase
         command('env testing');
         $this->assertStringContainsString(
             'The "testing" environment is reserved for PHPUnit testing.',
-            $this->getStreamFilterBuffer()
+            $this->getStreamFilterBuffer(),
         );
     }
 
@@ -83,7 +83,7 @@ final class EnvironmentCommandTest extends CIUnitTestCase
         $this->assertStringContainsString('Both default shipped', $this->getStreamFilterBuffer());
         $this->assertStringContainsString(
             'It is impossible to write the new environment type.',
-            $this->getStreamFilterBuffer()
+            $this->getStreamFilterBuffer(),
         );
     }
 

@@ -53,7 +53,7 @@ class PerformanceMetrics implements FilterInterface
                     (string) $benchmark->getElapsedTime('total_execution'),
                     number_format(memory_get_peak_usage() / 1024 / 1024, 3),
                 ],
-                $body
+                $body,
             );
 
             $response->setBody($output);

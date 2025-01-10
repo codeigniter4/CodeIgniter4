@@ -79,7 +79,7 @@ final class ControllerMethodReaderTest extends CIUnitTestCase
         Factories::injectMock('config', Routing::class, $config);
 
         $reader = $this->createControllerMethodReader(
-            'CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers'
+            'CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers',
         );
 
         $routes = $reader->read(Dash_controller::class);
@@ -116,7 +116,7 @@ final class ControllerMethodReaderTest extends CIUnitTestCase
         Factories::injectMock('config', Routing::class, $config);
 
         $reader = $this->createControllerMethodReader(
-            'CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers'
+            'CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers',
         );
 
         $routes = $reader->read(BlogController::class);
@@ -147,7 +147,7 @@ final class ControllerMethodReaderTest extends CIUnitTestCase
     public function testReadDefaultController(): void
     {
         $reader = $this->createControllerMethodReader(
-            'CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers'
+            'CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers',
         );
 
         $routes = $reader->read(Home::class);

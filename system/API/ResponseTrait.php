@@ -319,7 +319,7 @@ trait ResponseTrait
             $mime = $this->request->negotiate(
                 'media',
                 $format->getConfig()->supportedResponseFormats,
-                false
+                false,
             );
         }
 

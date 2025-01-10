@@ -407,14 +407,14 @@ trait ResponseTrait
                 header(
                     $name . ': ' . $value->getValueLine(),
                     false,
-                    $this->getStatusCode()
+                    $this->getStatusCode(),
                 );
             } else {
                 foreach ($value as $header) {
                     header(
                         $name . ': ' . $header->getValueLine(),
                         false,
-                        $this->getStatusCode()
+                        $this->getStatusCode(),
                     );
                 }
             }

@@ -610,11 +610,11 @@ class CLI
             $nonColoredText = preg_replace(
                 $pattern,
                 '<<__colored_string__>>',
-                $text
+                $text,
             );
             $nonColoredChunks = preg_split(
                 '/<<__colored_string__>>/u',
-                $nonColoredText
+                $nonColoredText,
             );
 
             foreach ($nonColoredChunks as $i => $chunk) {

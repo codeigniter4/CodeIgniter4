@@ -69,7 +69,7 @@ final class DatabaseTestCaseMigrationOnce1Test extends CIUnitTestCase
     {
         service('autoloader')->addNamespace(
             'Tests\Support\MigrationTestMigrations',
-            SUPPORTPATH . 'MigrationTestMigrations'
+            SUPPORTPATH . 'MigrationTestMigrations',
         );
     }
 

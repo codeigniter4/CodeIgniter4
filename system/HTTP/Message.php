@@ -119,7 +119,7 @@ class Message implements MessageInterface
         if ($this->hasMultipleHeaders($name)) {
             throw new InvalidArgumentException(
                 'The header "' . $name . '" already has multiple headers.'
-                . ' You cannot use getHeaderLine().'
+                . ' You cannot use getHeaderLine().',
             );
         }
 

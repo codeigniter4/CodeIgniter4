@@ -375,7 +375,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
         $this->assertSame(
             ['alias.0' => 'The alias.* field does not match the name field.'],
-            $this->validation->getErrors()
+            $this->validation->getErrors(),
         );
     }
 
@@ -456,7 +456,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
         $this->assertSame(
             ['alias.1' => 'The alias.* field must differ from the name field.'],
-            $this->validation->getErrors()
+            $this->validation->getErrors(),
         );
     }
 
@@ -1007,7 +1007,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
         $this->assertSame(
             ['fiz.*.baz' => 'The fiz.*.baz field must exist.'],
-            $this->validation->getErrors()
+            $this->validation->getErrors(),
         );
     }
 }

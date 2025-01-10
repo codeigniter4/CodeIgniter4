@@ -164,7 +164,7 @@ class DotEnv
                 %1$s          # and the closing quote
                 .*$           # and discard any string after the closing quote
                 /mx',
-                $quote
+                $quote,
             );
 
             $value = preg_replace($regexPattern, '$1', $value);
@@ -206,7 +206,7 @@ class DotEnv
 
                     return $nestedVariable;
                 },
-                $value
+                $value,
             );
         }
 

@@ -283,7 +283,7 @@ final class CLITest extends CIUnitTestCase
 
         $this->assertSame(
             "\033[1;37m\033[42m\033[4mtest\033[0m",
-            CLI::color('test', 'white', 'green', 'underline')
+            CLI::color('test', 'white', 'green', 'underline'),
         );
     }
 
@@ -291,7 +291,7 @@ final class CLITest extends CIUnitTestCase
     {
         $this->assertSame(
             '',
-            CLI::color('', 'white', 'green', 'underline')
+            CLI::color('', 'white', 'green', 'underline'),
         );
     }
 
@@ -358,7 +358,7 @@ final class CLITest extends CIUnitTestCase
     {
         CLI::write(
             CLI::color('green', 'green') . ' red ' . CLI::color('green', 'green'),
-            'red'
+            'red',
         );
 
         $expected = "\033[0;32mgreen\033[0m\033[0;31m red \033[0m\033[0;32mgreen\033[0m" . PHP_EOL;
@@ -440,15 +440,15 @@ final class CLITest extends CIUnitTestCase
         $this->assertSame('', CLI::wrap(''));
         $this->assertSame(
             '1234' . PHP_EOL . ' 5678' . PHP_EOL . ' 90' . PHP_EOL . ' abc' . PHP_EOL . ' de' . PHP_EOL . ' fghij' . PHP_EOL . ' 0987654321',
-            CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', 5, 1)
+            CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', 5, 1),
         );
         $this->assertSame(
             '1234 5678 90' . PHP_EOL . '  abc de fghij' . PHP_EOL . '  0987654321',
-            CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', 999, 2)
+            CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', 999, 2),
         );
         $this->assertSame(
             '1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321',
-            CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321')
+            CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321'),
         );
     }
 

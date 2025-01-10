@@ -67,7 +67,7 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
                             $someValue = $aB;
                         }
                     }
-                    CODE_SAMPLE
+                    CODE_SAMPLE,
             ),
         ]);
     }
@@ -99,7 +99,7 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
                 }
 
                 return null;
-            }
+            },
         );
 
         if ($this->hasChanged) {

@@ -57,7 +57,7 @@ final class MiscellaneousModelTest extends LiveModelTestCase
         $result = $this->model->where('name', 'Senior Developer')->first();
         $this->assertSame(
             Time::createFromTimestamp($time)->toDateTimeString(),
-            $result->created_at->toDateTimeString()
+            $result->created_at->toDateTimeString(),
         );
     }
 

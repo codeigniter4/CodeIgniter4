@@ -902,12 +902,12 @@ final class MiscUrlTest extends CIUnitTestCase
         $routes->add(
             '{locale}/path/(:segment)/to/(:num)',
             'myController::goto/$1/$2',
-            ['as' => 'path-to']
+            ['as' => 'path-to'],
         );
 
         $this->assertSame(
             'http://example.com/index.php/en/path/string/to/13',
-            url_to('path-to', 'string', 13, 'en')
+            url_to('path-to', 'string', 13, 'en'),
         );
     }
 
@@ -928,7 +928,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
         $this->assertSame(
             'http://example.com/index.php/docs/10.9/install',
-            url_to('docs.version', '10.9', 'install')
+            url_to('docs.version', '10.9', 'install'),
         );
     }
 
@@ -944,7 +944,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
         $this->assertSame(
             'http://example.com/index.php/images/test.jpg',
-            url_to('Images::getFile', 'test.jpg')
+            url_to('Images::getFile', 'test.jpg'),
         );
     }
 

@@ -424,7 +424,7 @@ abstract class BaseConnection implements ConnectionInterface
             $connectionErrors[] = sprintf(
                 'Main connection [%s]: %s',
                 $this->DBDriver,
-                $e->getMessage()
+                $e->getMessage(),
             );
             log_message('error', 'Error connecting to the database: ' . $e);
         }
@@ -450,7 +450,7 @@ abstract class BaseConnection implements ConnectionInterface
                             'Failover #%d [%s]: %s',
                             ++$index,
                             $this->DBDriver,
-                            $e->getMessage()
+                            $e->getMessage(),
                         );
                         log_message('error', 'Error connecting to the database: ' . $e);
                     }
@@ -467,7 +467,7 @@ abstract class BaseConnection implements ConnectionInterface
                 throw new DatabaseException(sprintf(
                     'Unable to connect to the database.%s%s',
                     PHP_EOL,
-                    implode(PHP_EOL, $connectionErrors)
+                    implode(PHP_EOL, $connectionErrors),
                 ));
             }
         }
@@ -688,7 +688,7 @@ abstract class BaseConnection implements ConnectionInterface
                     throw new DatabaseException(
                         $exception->getMessage(),
                         $exception->getCode(),
-                        $exception
+                        $exception,
                     );
                 }
 
@@ -1220,7 +1220,7 @@ abstract class BaseConnection implements ConnectionInterface
             . str_replace(
                 $this->escapeChar,
                 $this->escapeChar . $this->escapeChar,
-                $item
+                $item,
             )
             . $this->escapeChar;
     }
@@ -1277,7 +1277,7 @@ abstract class BaseConnection implements ConnectionInterface
                 return preg_replace(
                     '/' . $this->pregEscapeChar[0] . '?([^' . $this->pregEscapeChar[1] . '\.]+)' . $this->pregEscapeChar[1] . '?\./i',
                     $this->pregEscapeChar[2] . '$1' . $this->pregEscapeChar[3] . '.',
-                    $item
+                    $item,
                 );
             }
         }
@@ -1286,7 +1286,7 @@ abstract class BaseConnection implements ConnectionInterface
         return preg_replace(
             '/' . $this->pregEscapeChar[0] . '?([^' . $this->pregEscapeChar[1] . '\.]+)' . $this->pregEscapeChar[1] . '?(\.)?/i',
             $this->pregEscapeChar[2] . '$1' . $this->pregEscapeChar[3] . '$2',
-            $item
+            $item,
         );
     }
 
@@ -1386,7 +1386,7 @@ abstract class BaseConnection implements ConnectionInterface
                     $this->likeEscapeChar . '%',
                     $this->likeEscapeChar . '_',
                 ],
-                $str
+                $str,
             );
         }
 
@@ -1522,7 +1522,7 @@ abstract class BaseConnection implements ConnectionInterface
             $key = array_search(
                 strtolower($tableName),
                 array_map(strtolower(...), $this->dataCache['table_names']),
-                true
+                true,
             );
 
             // table doesn't exist but still in cache - lets reset cache, it can be rebuilt later

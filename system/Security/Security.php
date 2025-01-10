@@ -530,7 +530,7 @@ class Security implements SecurityInterface
             $this->hash,
             [
                 'expires' => $this->config->expires === 0 ? 0 : Time::now()->getTimestamp() + $this->config->expires,
-            ]
+            ],
         );
 
         $response = service('response');

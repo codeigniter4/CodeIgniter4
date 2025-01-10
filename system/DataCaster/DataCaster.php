@@ -83,7 +83,7 @@ final class DataCaster
                     && ! is_subclass_of($handler, EntityCastInterface::class)
                 ) {
                     throw new InvalidArgumentException(
-                        'Invalid class type. It must implement CastInterface. class: ' . $handler
+                        'Invalid class type. It must implement CastInterface. class: ' . $handler,
                     );
                 }
             }
@@ -169,7 +169,7 @@ final class DataCaster
 
         if (! isset($handlers[$type])) {
             throw new InvalidArgumentException(
-                'No such handler for "' . $field . '". Invalid type: ' . $type
+                'No such handler for "' . $field . '". Invalid type: ' . $type,
             );
         }
 

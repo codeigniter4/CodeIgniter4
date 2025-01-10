@@ -139,7 +139,7 @@ final class ExceptionsTest extends CIUnitTestCase
         foreach ($renderedBacktrace as $trace) {
             $this->assertMatchesRegularExpression(
                 '/^\s*\d* .+(?:\(\d+\))?: \S+(?:(?:\->|::)\S+)?\(.*\)$/',
-                $trace
+                $trace,
             );
         }
     }

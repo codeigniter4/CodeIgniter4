@@ -125,7 +125,7 @@ class Rules
         [$field, $whereField, $whereValue] = array_pad(
             explode(',', $field),
             3,
-            null
+            null,
         );
 
         // Break the table and field apart
@@ -184,7 +184,7 @@ class Rules
         [$field, $ignoreField, $ignoreValue] = array_pad(
             explode(',', $field),
             3,
-            null
+            null,
         );
 
         sscanf($field, '%[^.].%[^.]', $table, $field);

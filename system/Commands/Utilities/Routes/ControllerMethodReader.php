@@ -57,7 +57,7 @@ final class ControllerMethodReader
                 $defaultController,
                 $uriByClass,
                 $classname,
-                $methodName
+                $methodName,
             );
             $output = [...$output, ...$routeWithoutController];
 
@@ -89,7 +89,7 @@ final class ControllerMethodReader
                     $defaultController,
                     $uriByClass,
                     $classname,
-                    $methodName
+                    $methodName,
                 );
                 $output = [...$output, ...$routeWithoutController];
 

@@ -357,8 +357,8 @@ class Builder extends BaseBuilder
                             ' = ' . $value :
                             ' = ' . $that->cast($alias . '.' . $value, $that->getFieldType($table, $key))),
                     array_keys($updateFields),
-                    $updateFields
-                )
+                    $updateFields,
+                ),
             ) . "\n";
 
             $sql .= "FROM (\n{:_table_:}";
@@ -381,8 +381,8 @@ class Builder extends BaseBuilder
                             . $that->cast($alias . '.' . $value, $that->getFieldType($table, $value));
                     },
                     array_keys($constraints),
-                    $constraints
-                )
+                    $constraints,
+                ),
             );
 
             $this->QBOptions['sql'] = $sql;
@@ -397,10 +397,10 @@ class Builder extends BaseBuilder
                     static fn ($value): string => 'SELECT ' . implode(', ', array_map(
                         static fn ($key, $index): string => $index . ' ' . $key,
                         $keys,
-                        $value
+                        $value,
                     )),
-                    $values
-                )
+                    $values,
+                ),
             ) . "\n";
         }
 
@@ -528,8 +528,8 @@ class Builder extends BaseBuilder
                     " = {$value}" :
                     " = {$alias}.{$value}"),
                     array_keys($updateFields),
-                    $updateFields
-                )
+                    $updateFields,
+                ),
             );
 
             $this->QBOptions['sql'] = $sql;
@@ -584,15 +584,15 @@ class Builder extends BaseBuilder
                             return $table . '.' . $key . ' = '
                                 . $that->cast(
                                     $alias . '.' . $value,
-                                    $that->getFieldType($table, $key)
+                                    $that->getFieldType($table, $key),
                                 );
                         }
 
                         return $table . '.' . $value . ' = ' . $alias . '.' . $value;
                     },
                     array_keys($constraints),
-                    $constraints
-                )
+                    $constraints,
+                ),
             );
 
             // convert binds in where
@@ -605,7 +605,7 @@ class Builder extends BaseBuilder
             $sql .= ' ' . str_replace(
                 'WHERE ',
                 'AND ',
-                $this->compileWhereHaving('QBWhere')
+                $this->compileWhereHaving('QBWhere'),
             );
 
             $this->QBOptions['sql'] = $sql;
@@ -620,10 +620,10 @@ class Builder extends BaseBuilder
                     static fn ($value): string => 'SELECT ' . implode(', ', array_map(
                         static fn ($key, $index): string => $index . ' ' . $key,
                         $keys,
-                        $value
+                        $value,
                     )),
-                    $values
-                )
+                    $values,
+                ),
             ) . "\n";
         }
 

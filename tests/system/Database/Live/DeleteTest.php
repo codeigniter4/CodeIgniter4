@@ -134,15 +134,15 @@ final class DeleteTest extends CIUnitTestCase
 
         $this->dontSeeInDatabase(
             $table,
-            ['type_date' => '2023-12-01', 'type_varchar' => 'test1']
+            ['type_date' => '2023-12-01', 'type_varchar' => 'test1'],
         );
         $this->dontSeeInDatabase(
             $table,
-            ['type_date' => '2023-12-02', 'type_varchar' => 'test2']
+            ['type_date' => '2023-12-02', 'type_varchar' => 'test2'],
         );
         $this->seeInDatabase(
             $table,
-            ['type_date' => '2023-12-03', 'type_varchar' => 'test3']
+            ['type_date' => '2023-12-03', 'type_varchar' => 'test3'],
         );
     }
 

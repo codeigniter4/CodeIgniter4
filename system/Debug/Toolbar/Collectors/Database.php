@@ -228,7 +228,7 @@ class Database extends BaseCollector
             $uniqueCount,
             $uniqueCount > 1 ? 'of them' : '',
             $connectionCount,
-            $connectionCount > 1 ? 's' : ''
+            $connectionCount > 1 ? 's' : '',
         );
     }
 

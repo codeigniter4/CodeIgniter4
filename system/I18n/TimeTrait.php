@@ -665,7 +665,7 @@ trait TimeTrait
             (int) $minute,
             (int) $second,
             $this->getTimezoneName(),
-            $this->locale
+            $this->locale,
         );
     }
 

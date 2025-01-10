@@ -90,7 +90,7 @@ class Negotiate
             $supported,
             $this->request->getHeaderLine('accept-charset'),
             false,
-            true
+            true,
         );
 
         // If no charset is shown as a match, ignore the directive
@@ -212,7 +212,7 @@ class Negotiate
                 if (preg_match(
                     '/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/',
                     $pair,
-                    $param
+                    $param,
                 )) {
                     $parameters[trim($param['name'])] = trim($param['value']);
                 }

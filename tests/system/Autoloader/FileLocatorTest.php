@@ -218,7 +218,7 @@ class FileLocatorTest extends CIUnitTestCase
                 SYSTEMPATH . 'Language/en/Validation.php',
                 APPPATH . 'Language/en/Validation.php',
             ],
-            $foundFiles
+            $foundFiles,
         );
     }
 
@@ -243,7 +243,7 @@ class FileLocatorTest extends CIUnitTestCase
         $directory = str_replace(
             '/',
             DIRECTORY_SEPARATOR,
-            APPPATH . 'Config/Boot'
+            APPPATH . 'Config/Boot',
         );
         $this->assertNotContains($directory, $files);
     }
@@ -308,7 +308,7 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $this->assertSame(
             self::class,
-            $this->locator->getClassname(__FILE__)
+            $this->locator->getClassname(__FILE__),
         );
     }
 
@@ -316,7 +316,7 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $this->assertSame(
             '',
-            $this->locator->getClassname(SYSTEMPATH . 'bootstrap.php')
+            $this->locator->getClassname(SYSTEMPATH . 'bootstrap.php'),
         );
     }
 
@@ -324,7 +324,7 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $this->assertSame(
             '',
-            $this->locator->getClassname(SYSTEMPATH)
+            $this->locator->getClassname(SYSTEMPATH),
         );
     }
 }
