@@ -39,7 +39,9 @@ $finder = Finder::create()
         __DIR__ . '/spark',
     ]);
 
-$overrides = [];
+$overrides = [
+    'get_class_to_class_keyword' => true,
+];
 
 $options = [
     'cacheFile'    => 'build/.php-cs-fixer.cache',
