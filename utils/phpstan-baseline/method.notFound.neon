@@ -1,4 +1,4 @@
-# total 47 errors
+# total 46 errors
 
 parameters:
     ignoreErrors:
@@ -76,11 +76,6 @@ parameters:
             message: '#^Call to an undefined method CodeIgniter\\HTTP\\ResponseInterface\:\:pretend\(\)\.$#'
             count: 3
             path: ../../tests/system/Debug/ExceptionHandlerTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Events\\Events\:\:unInitialize\(\)\.$#'
-            count: 1
-            path: ../../tests/system/Events/EventsTest.php
 
         -
             message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getCookie\(\)\.$#'

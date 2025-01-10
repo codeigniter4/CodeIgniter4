@@ -19,7 +19,6 @@ includes:
     - method.alreadyNarrowedType.neon
     - method.childParameterType.neon
     - method.childReturnType.neon
-    - method.impossibleType.neon
     - method.notFound.neon
     - missingType.callable.neon
     - missingType.iterableValue.neon

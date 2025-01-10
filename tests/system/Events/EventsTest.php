@@ -20,6 +20,7 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\Attributes\WithoutErrorHandler;
+use stdClass;
 
 /**
  * @internal
@@ -29,6 +30,8 @@ final class EventsTest extends CIUnitTestCase
 {
     /**
      * Accessible event manager instance
+     *
+     * @var MockEvents
      */
     private Events $manager;
 
@@ -181,63 +184,68 @@ final class EventsTest extends CIUnitTestCase
 
     public function testRemoveListener(): void
     {
-        $result = false;
+        $user = $this->getEditableObject();
 
-        $callback = static function () use (&$result): void {
-            $result = true;
+        $callback = static function () use (&$user): void {
+            $user->name = 'Boris';
+            $user->age  = 40;
         };
 
         Events::on('foo', $callback);
 
-        Events::trigger('foo');
-        $this->assertTrue($result);
+        $this->assertTrue(Events::trigger('foo'));
+        $this->assertSame('Boris', $user->name);
 
-        $result = false;
+        $user = $this->getEditableObject();
+
         $this->assertTrue(Events::removeListener('foo', $callback));
 
-        Events::trigger('foo');
-        $this->assertFalse($result);
+        $this->assertTrue(Events::trigger('foo'));
+        $this->assertSame('Ivan', $user->name);
     }
 
     public function testRemoveListenerTwice(): void
     {
-        $result = false;
+        $user = $this->getEditableObject();
 
-        $callback = static function () use (&$result): void {
-            $result = true;
+        $callback = static function () use (&$user): void {
+            $user->name = 'Boris';
+            $user->age  = 40;
         };
 
         Events::on('foo', $callback);
 
-        Events::trigger('foo');
-        $this->assertTrue($result);
+        $this->assertTrue(Events::trigger('foo'));
+        $this->assertSame('Boris', $user->name);
 
-        $result = false;
+        $user = $this->getEditableObject();
+
         $this->assertTrue(Events::removeListener('foo', $callback));
         $this->assertFalse(Events::removeListener('foo', $callback));
 
-        Events::trigger('foo');
-        $this->assertFalse($result);
+        $this->assertTrue(Events::trigger('foo'));
+        $this->assertSame('Ivan', $user->name);
     }
 
     public function testRemoveUnknownListener(): void
     {
-        $result = false;
+        $user = $this->getEditableObject();
 
-        $callback = static function () use (&$result): void {
-            $result = true;
+        $callback = static function () use (&$user): void {
+            $user->name = 'Boris';
+            $user->age  = 40;
         };
 
         Events::on('foo', $callback);
 
-        Events::trigger('foo');
-        $this->assertTrue($result);
+        $this->assertTrue(Events::trigger('foo'));
+        $this->assertSame('Boris', $user->name);
 
-        $result = false;
+        $user = $this->getEditableObject();
+
         $this->assertFalse(Events::removeListener('bar', $callback));
-
-        Events::trigger('foo');
-        $this->assertTrue($result);
+        $this->assertTrue(Events::trigger('foo'));
+        $this->assertSame('Boris', $user->name);
     }
 
     public function testRemoveAllListenersWithSingleEvent(): void
@@ -314,5 +322,14 @@ final class EventsTest extends CIUnitTestCase
         Events::trigger('foo');
 
         $this->assertSame(0, $result);
+    }
+
+    private function getEditableObject(): stdClass
+    {
+        $user       = new stdClass();
+        $user->name = 'Ivan';
+        $user->age  = 30;
+
+        return clone $user;
     }
 }
