@@ -425,7 +425,7 @@ class Forge
         $tableField = '',
         string $onUpdate = '',
         string $onDelete = '',
-        string $fkName = ''
+        string $fkName = '',
     ): Forge {
         $fieldName  = (array) $fieldName;
         $tableField = (array) $tableField;

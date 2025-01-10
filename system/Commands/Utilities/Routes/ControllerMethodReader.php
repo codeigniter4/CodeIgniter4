@@ -153,7 +153,7 @@ final class ControllerMethodReader
         string $defaultController,
         string $uriByClass,
         string $classname,
-        string $methodName
+        string $methodName,
     ): array {
         if ($classShortname !== $defaultController) {
             return [];

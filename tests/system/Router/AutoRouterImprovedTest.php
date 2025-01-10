@@ -488,7 +488,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         string $expMethod,
         int $controllerPos,
         ?int $methodPos,
-        ?int $paramPos
+        ?int $paramPos,
     ): void {
         $config                          = config(Routing::class);
         $config->translateUriToCamelCase = true;

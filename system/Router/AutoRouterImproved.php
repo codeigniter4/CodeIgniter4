@@ -121,7 +121,7 @@ final class AutoRouterImproved implements AutoRouterInterface
          * Whether dashes in URI's should be converted
          * to underscores when determining method names.
          */
-        private readonly bool $translateURIDashes
+        private readonly bool $translateURIDashes,
     ) {
         $this->namespace = rtrim($namespace, '\\');
 

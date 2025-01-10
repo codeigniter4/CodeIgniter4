@@ -43,7 +43,7 @@ class OutgoingRequest extends Message implements OutgoingRequestInterface
         ?URI $uri = null,
         array $headers = [],
         $body = null,
-        string $version = '1.1'
+        string $version = '1.1',
     ) {
         $this->method = $method;
         $this->uri    = $uri;

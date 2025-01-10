@@ -276,7 +276,7 @@ final class ResponseTest extends CIUnitTestCase
         string $protocol,
         string $method,
         ?int $code,
-        int $expectedCode
+        int $expectedCode,
     ): void {
         $_SERVER['SERVER_SOFTWARE'] = $server;
         $_SERVER['SERVER_PROTOCOL'] = $protocol;
@@ -319,7 +319,7 @@ final class ResponseTest extends CIUnitTestCase
         string $protocol,
         string $method,
         ?int $code,
-        int $expectedCode
+        int $expectedCode,
     ): void {
         $_SERVER['SERVER_SOFTWARE'] = 'Microsoft-IIS';
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';

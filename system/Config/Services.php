@@ -267,7 +267,7 @@ class Services extends BaseService
      */
     public static function exceptions(
         ?ExceptionsConfig $config = null,
-        bool $getShared = true
+        bool $getShared = true,
     ) {
         if ($getShared) {
             return static::getSharedInstance('exceptions', $config);
@@ -721,7 +721,7 @@ class Services extends BaseService
     public static function siteurifactory(
         ?App $config = null,
         ?Superglobals $superglobals = null,
-        bool $getShared = true
+        bool $getShared = true,
     ) {
         if ($getShared) {
             return static::getSharedInstance('siteurifactory', $config, $superglobals);
@@ -741,7 +741,7 @@ class Services extends BaseService
     public static function superglobals(
         ?array $server = null,
         ?array $get = null,
-        bool $getShared = true
+        bool $getShared = true,
     ) {
         if ($getShared) {
             return static::getSharedInstance('superglobals', $server, $get);

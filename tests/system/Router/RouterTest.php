@@ -938,7 +938,7 @@ final class RouterTest extends CIUnitTestCase
         string $redirectTo,
         string $url,
         string $expectedPath,
-        string $alias
+        string $alias,
     ): void {
         $collection = clone $this->collection;
         $collection->resetRoutes();

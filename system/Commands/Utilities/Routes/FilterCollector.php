@@ -32,7 +32,7 @@ final class FilterCollector
          *
          * If set to true, route filters are not found.
          */
-        private readonly bool $resetRoutes = false
+        private readonly bool $resetRoutes = false,
     ) {
     }
 

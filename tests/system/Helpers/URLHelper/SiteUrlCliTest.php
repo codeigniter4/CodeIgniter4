@@ -81,7 +81,7 @@ final class SiteUrlCliTest extends CIUnitTestCase
         $secure,
         $path,
         $expectedSiteUrl,
-        $expectedBaseUrl
+        $expectedBaseUrl,
     ): void {
         // Set the config
         $this->config->baseURL                   = $baseURL;

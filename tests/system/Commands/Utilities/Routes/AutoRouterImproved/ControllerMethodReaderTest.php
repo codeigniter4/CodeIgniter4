@@ -30,7 +30,7 @@ use Tests\Support\Controllers\Remap;
 final class ControllerMethodReaderTest extends CIUnitTestCase
 {
     private function createControllerMethodReader(
-        string $namespace = 'Tests\Support\Controllers'
+        string $namespace = 'Tests\Support\Controllers',
     ): ControllerMethodReader {
         $methods = [
             'get',

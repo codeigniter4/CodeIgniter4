@@ -222,7 +222,7 @@ trait TimeTrait
         ?int $minutes = null,
         ?int $seconds = null,
         $timezone = null,
-        ?string $locale = null
+        ?string $locale = null,
     ) {
         $year ??= date('Y');
         $month ??= date('m');

@@ -11,7 +11,7 @@ class CastBase64 extends BaseCast
     public static function get(
         mixed $value,
         array $params = [],
-        ?object $helper = null
+        ?object $helper = null,
     ): string {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
@@ -29,7 +29,7 @@ class CastBase64 extends BaseCast
     public static function set(
         mixed $value,
         array $params = [],
-        ?object $helper = null
+        ?object $helper = null,
     ): string {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);

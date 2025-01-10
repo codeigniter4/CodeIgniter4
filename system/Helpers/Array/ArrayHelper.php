@@ -210,7 +210,7 @@ final class ArrayHelper
         array $result,
         array $row,
         array $indexes,
-        bool $includeEmpty
+        bool $includeEmpty,
     ): array {
         if (($index = array_shift($indexes)) === null) {
             $result[] = $row;

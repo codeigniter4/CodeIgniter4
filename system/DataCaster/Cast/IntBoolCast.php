@@ -24,7 +24,7 @@ final class IntBoolCast extends BaseCast
     public static function get(
         mixed $value,
         array $params = [],
-        ?object $helper = null
+        ?object $helper = null,
     ): bool {
         if (! is_int($value) && ! is_string($value)) {
             self::invalidTypeValueError($value);
@@ -36,7 +36,7 @@ final class IntBoolCast extends BaseCast
     public static function set(
         mixed $value,
         array $params = [],
-        ?object $helper = null
+        ?object $helper = null,
     ): int {
         if (! is_bool($value)) {
             self::invalidTypeValueError($value);

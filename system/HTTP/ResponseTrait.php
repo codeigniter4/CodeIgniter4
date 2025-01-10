@@ -512,7 +512,7 @@ trait ResponseTrait
         $prefix = '',
         $secure = null,
         $httponly = null,
-        $samesite = null
+        $samesite = null,
     ) {
         if ($name instanceof Cookie) {
             $this->cookieStore = $this->cookieStore->put($name);

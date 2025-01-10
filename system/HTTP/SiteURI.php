@@ -95,7 +95,7 @@ class SiteURI extends URI
         App $configApp,
         string $relativePath = '',
         ?string $host = null,
-        ?string $scheme = null
+        ?string $scheme = null,
     ) {
         $this->indexPage = $configApp->indexPage;
 
@@ -142,7 +142,7 @@ class SiteURI extends URI
     private function determineBaseURL(
         App $configApp,
         ?string $host,
-        ?string $scheme
+        ?string $scheme,
     ): URI {
         $baseURL = $this->normalizeBaseURL($configApp);
 

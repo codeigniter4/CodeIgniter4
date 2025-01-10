@@ -281,7 +281,7 @@ class Validation implements ValidationInterface
         $value,
         $rules = null,       // @TODO remove `= null`
         ?array $data = null, // @TODO remove `= null`
-        ?string $originalField = null
+        ?string $originalField = null,
     ): bool {
         if ($data === null) {
             throw new InvalidArgumentException('You must supply the parameter: data.');
@@ -914,7 +914,7 @@ class Validation implements ValidationInterface
         ?string $label = null,
         ?string $param = null,
         ?string $value = null,
-        ?string $originalField = null
+        ?string $originalField = null,
     ): string {
         $param ??= '';
 

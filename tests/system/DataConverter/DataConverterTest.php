@@ -530,7 +530,7 @@ final class DataConverterTest extends CIUnitTestCase
         array $handlers = [],
         ?object $helper = null,
         Closure|string|null $reconstructor = 'reconstruct',
-        Closure|string|null $extractor = null
+        Closure|string|null $extractor = null,
     ): DataConverter {
         return new DataConverter($types, $handlers, $helper, $reconstructor, $extractor);
     }

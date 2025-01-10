@@ -163,7 +163,7 @@ class URI implements Stringable
         ?string $authority = null,
         ?string $path = null,
         ?string $query = null,
-        ?string $fragment = null
+        ?string $fragment = null,
     ): string {
         $uri = '';
         if ($scheme !== null && $scheme !== '') {

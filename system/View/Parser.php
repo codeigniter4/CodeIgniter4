@@ -86,7 +86,7 @@ class Parser extends View
         ?string $viewPath = null,
         $loader = null,
         ?bool $debug = null,
-        ?LoggerInterface $logger = null
+        ?LoggerInterface $logger = null,
     ) {
         // Ensure user plugins override core plugins.
         $this->plugins = $config->plugins;

@@ -370,7 +370,7 @@ trait GeneratorTrait
         string $class,
         array $search = [],
         array $replace = [],
-        array $data = []
+        array $data = [],
     ): string {
         // Retrieves the namespace part from the fully qualified class name.
         $namespace = trim(

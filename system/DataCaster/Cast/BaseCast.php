@@ -20,7 +20,7 @@ abstract class BaseCast implements CastInterface
     public static function get(
         mixed $value,
         array $params = [],
-        ?object $helper = null
+        ?object $helper = null,
     ): mixed {
         return $value;
     }
@@ -28,7 +28,7 @@ abstract class BaseCast implements CastInterface
     public static function set(
         mixed $value,
         array $params = [],
-        ?object $helper = null
+        ?object $helper = null,
     ): mixed {
         return $value;
     }

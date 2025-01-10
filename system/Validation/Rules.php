@@ -386,7 +386,7 @@ class Rules
         ?string $otherFields = null,
         array $data = [],
         ?string $error = null,
-        ?string $field = null
+        ?string $field = null,
     ): bool {
         if ($otherFields === null || $data === []) {
             throw new InvalidArgumentException('You must supply the parameters: otherFields, data.');
@@ -447,7 +447,7 @@ class Rules
         ?string $param = null,
         array $data = [],
         ?string $error = null,
-        ?string $field = null
+        ?string $field = null,
     ): bool {
         if (str_contains($field, '.')) {
             return ArrayHelper::dotKeyExists($field, $data);

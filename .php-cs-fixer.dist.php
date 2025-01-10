@@ -40,7 +40,14 @@ $finder = Finder::create()
     ]);
 
 $overrides = [
-    'get_class_to_class_keyword' => true,
+    'get_class_to_class_keyword'  => true,
+    'trailing_comma_in_multiline' => [
+        'after_heredoc' => true,
+        'elements'      => [
+            'arrays',
+            'parameters',
+        ],
+    ],
 ];
 
 $options = [

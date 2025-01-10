@@ -61,7 +61,7 @@ abstract class BaseExceptionHandler
         RequestInterface $request,
         ResponseInterface $response,
         int $statusCode,
-        int $exitCode
+        int $exitCode,
     );
 
     /**

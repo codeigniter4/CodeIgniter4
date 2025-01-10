@@ -33,7 +33,7 @@ final class ControllerMethodReader
      */
     public function __construct(
         private readonly string $namespace,
-        private readonly array $httpMethods
+        private readonly array $httpMethods,
     ) {
         $config                        = config(Routing::class);
         $this->translateURIDashes      = $config->translateURIDashes;
@@ -214,7 +214,7 @@ final class ControllerMethodReader
         string $classname,
         string $methodName,
         string $httpVerb,
-        ReflectionMethod $method
+        ReflectionMethod $method,
     ): array {
         $output = [];
 

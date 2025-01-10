@@ -202,7 +202,7 @@ if (! function_exists('get_filenames')) {
         string $sourceDir,
         ?bool $includePath = false,
         bool $hidden = false,
-        bool $includeDir = true
+        bool $includeDir = true,
     ): array {
         $files = [];
 

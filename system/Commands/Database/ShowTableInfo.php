@@ -272,7 +272,7 @@ class ShowTableInfo extends BaseCommand
         string $tableName,
         int $limitRows,
         int $limitFieldValue,
-        ?string $sortField = null
+        ?string $sortField = null,
     ): array {
         $this->tbody = [];
 

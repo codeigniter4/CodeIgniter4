@@ -46,7 +46,7 @@ final class ResponseCacheTest extends CIUnitTestCase
     private function createIncomingRequest(
         string $uri = '',
         array $query = [],
-        ?AppConfig $appConfig = null
+        ?AppConfig $appConfig = null,
     ): IncomingRequest {
         $_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
 

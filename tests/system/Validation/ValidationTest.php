@@ -1863,7 +1863,7 @@ class ValidationTest extends CIUnitTestCase
         array $data = [],
         array $rules = [],
         bool $expectedCheck = false,
-        array $expectedData = []
+        array $expectedData = [],
     ): void {
         $this->validation->setRules($rules);
 

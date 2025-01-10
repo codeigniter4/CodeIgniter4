@@ -505,7 +505,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testNestedGroupingWorksWithRootPrefix(
         string $group,
         string $subgroup,
-        array $expected
+        array $expected,
     ): void {
         $routes = $this->getCollector();
 

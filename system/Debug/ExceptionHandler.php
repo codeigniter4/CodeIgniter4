@@ -47,7 +47,7 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
         RequestInterface $request,
         ResponseInterface $response,
         int $statusCode,
-        int $exitCode
+        int $exitCode,
     ): void {
         // ResponseTrait needs these properties.
         $this->request  = $request;
@@ -129,7 +129,7 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
     protected function determineView(
         Throwable $exception,
         string $templatePath,
-        int $statusCode = 500
+        int $statusCode = 500,
     ): string {
         // Production environments should have a custom exception file.
         $view = 'production.php';

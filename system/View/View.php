@@ -147,7 +147,7 @@ class View implements RendererInterface
         ?string $viewPath = null,
         ?FileLocatorInterface $loader = null,
         ?bool $debug = null,
-        ?LoggerInterface $logger = null
+        ?LoggerInterface $logger = null,
     ) {
         $this->config   = $config;
         $this->viewPath = rtrim($viewPath, '\\/ ') . DIRECTORY_SEPARATOR;

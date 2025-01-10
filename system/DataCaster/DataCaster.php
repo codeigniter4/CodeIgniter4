@@ -68,7 +68,7 @@ final class DataCaster
         ?array $castHandlers = null,
         ?array $types = null,
         private readonly ?object $helper = null,
-        private readonly bool $strict = true
+        private readonly bool $strict = true,
     ) {
         $this->castHandlers = array_merge($this->castHandlers, $castHandlers);
 
