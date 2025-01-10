@@ -96,7 +96,7 @@ if (! function_exists('directory_mirror')) {
                 if (! is_dir($target)) {
                     mkdir($target, 0755);
                 }
-            } elseif (! is_file($target) || ($overwrite && is_file($target))) {
+            } elseif ($overwrite || ! is_file($target)) {
                 copy($origin, $target);
             }
         }
