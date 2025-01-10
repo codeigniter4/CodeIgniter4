@@ -44,6 +44,7 @@ $overrides = [
     'trailing_comma_in_multiline' => [
         'after_heredoc' => true,
         'elements'      => [
+            'array_destructuring',
             'arrays',
             'parameters',
         ],

@@ -116,7 +116,7 @@ class LocalizationFinder extends BaseCommand
         [
             'foundLanguageKeys' => $foundLanguageKeys,
             'badLanguageKeys'   => $badLanguageKeys,
-            'countFiles'        => $countFiles
+            'countFiles'        => $countFiles,
         ] = $this->findLanguageKeysInFiles($files);
 
         ksort($foundLanguageKeys);
