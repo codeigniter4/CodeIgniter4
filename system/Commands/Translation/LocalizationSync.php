@@ -77,7 +77,7 @@ class LocalizationSync extends BaseCommand
 
         if ($optionTargetLocale === $optionLocale) {
             CLI::error(
-                'Error: You cannot have the same values "--target" and "--locale".'
+                'Error: You cannot have the same values for "--target" and "--locale".'
             );
 
             return EXIT_USER_INPUT;
