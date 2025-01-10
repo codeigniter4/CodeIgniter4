@@ -116,14 +116,10 @@ final class ResponseTraitTest extends CIUnitTestCase
         return new class ($this->request, $this->response, $this->formatter) {
             use ResponseTrait;
 
-            protected $request;
-            protected $response;
             protected $formatter;
 
-            public function __construct($request, $response, $formatter)
+            public function __construct(protected $request, protected $response, $formatter)
             {
-                $this->request   = $request;
-                $this->response  = $response;
                 $this->formatter = $formatter;
             }
 
@@ -177,15 +173,11 @@ final class ResponseTraitTest extends CIUnitTestCase
         $controller = new class ($this->request, $this->response, $this->formatter) {
             use ResponseTrait;
 
-            protected $request;
-            protected $response;
             protected $formatter;
             protected bool $stringAsHtml = true;
 
-            public function __construct($request, $response, $formatter)
+            public function __construct(protected $request, protected $response, $formatter)
             {
-                $this->request   = $request;
-                $this->response  = $response;
                 $this->formatter = $formatter;
             }
         };
@@ -299,15 +291,11 @@ final class ResponseTraitTest extends CIUnitTestCase
         $controller = new class ($this->request, $this->response, $this->formatter) {
             use ResponseTrait;
 
-            protected $request;
-            protected $response;
             protected $formatter;
             protected bool $stringAsHtml = true;
 
-            public function __construct($request, $response, $formatter)
+            public function __construct(protected $request, protected $response, $formatter)
             {
-                $this->request   = $request;
-                $this->response  = $response;
                 $this->formatter = $formatter;
             }
         };
@@ -639,14 +627,8 @@ final class ResponseTraitTest extends CIUnitTestCase
         $controller = new class ($request, $response) {
             use ResponseTrait;
 
-            protected $request;
-            protected $response;
-
-            public function __construct($request, $response)
+            public function __construct(protected $request, protected $response)
             {
-                $this->request  = $request;
-                $this->response = $response;
-
                 $this->format = 'txt';
             }
         };
