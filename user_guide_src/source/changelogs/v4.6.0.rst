@@ -235,6 +235,8 @@ Commands
   arguments.
 - The ``spark filter:check`` command now displays filter classnames.
 - The ``spark lang:sync`` command to synchronize translation files. See :ref:`sync-translations-command`
+- The ``spark phpini:check`` command now has an optional ``opcache`` argument,
+  which when used will display information about opcache settings.
 
 Routing
 =======
