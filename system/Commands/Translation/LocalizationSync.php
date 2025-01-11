@@ -89,9 +89,11 @@ class LocalizationSync extends BaseCommand
             $this->languagePath = SUPPORTPATH . 'Language';
         }
 
-        if ($this->process($optionLocale, $optionTargetLocale) === EXIT_SUCCESS) {
-            CLI::write('All operations done!');
+        if ($this->process($optionLocale, $optionTargetLocale) === EXIT_ERROR) {
+            return EXIT_ERROR;
         }
+
+        CLI::write('All operations done!');
 
         return EXIT_SUCCESS;
     }
@@ -130,7 +132,7 @@ class LocalizationSync extends BaseCommand
         );
 
         /**
-         * @var list<SplFileInfo> $files
+         * @var array<non-empty-string, SplFileInfo> $files
          */
         $files = iterator_to_array($iterator, true);
         ksort($files);
