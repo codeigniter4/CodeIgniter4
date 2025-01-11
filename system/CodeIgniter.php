@@ -29,7 +29,6 @@ use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\ResponsableInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
-use CodeIgniter\Router\Exceptions\RedirectException as DeprecatedRedirectException;
 use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Router\Router;
 use Config\App;
@@ -353,11 +352,8 @@ class CodeIgniter
         } else {
             try {
                 $this->response = $this->handleRequest($routes, config(Cache::class), $returnResponse);
-            } catch (DeprecatedRedirectException|ResponsableInterface $e) {
+            } catch (ResponsableInterface $e) {
                 $this->outputBufferingEnd();
-                if ($e instanceof DeprecatedRedirectException) {
-                    $e = new RedirectException($e->getMessage(), $e->getCode(), $e);
-                }
 
                 $this->response = $e->getResponse();
             } catch (PageNotFoundException $e) {
