@@ -1,4 +1,4 @@
-# total 48 errors
+# total 47 errors
 
 parameters:
     ignoreErrors:
@@ -171,11 +171,6 @@ parameters:
             message: '#^PHPDoc type string\|null of property CodeIgniter\\Images\\Handlers\\ImageMagickHandler\:\:\$resource is not the same as PHPDoc type resource\|null of overridden property CodeIgniter\\Images\\Handlers\\BaseHandler\:\:\$resource\.$#'
             count: 1
             path: ../../system/Images/Handlers/ImageMagickHandler.php
-
-        -
-            message: '#^PHPDoc type int of property CodeIgniter\\Router\\Exceptions\\RedirectException\:\:\$code is not the same as PHPDoc type mixed of overridden property Exception\:\:\$code\.$#'
-            count: 1
-            path: ../../system/Router/Exceptions/RedirectException.php
 
         -
             message: '#^PHPDoc type string of property CodeIgniter\\Session\\Handlers\\FileHandler\:\:\$savePath is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Session\\Handlers\\BaseHandler\:\:\$savePath\.$#'
