@@ -16,13 +16,11 @@ namespace CodeIgniter;
 use CodeIgniter\Exceptions\DebugTraceableTrait;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Test\CIUnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
  */
-#[CoversClass(DebugTraceableTrait::class)]
 #[Group('Others')]
 final class DebugTraceableTraitTest extends CIUnitTestCase
 {
