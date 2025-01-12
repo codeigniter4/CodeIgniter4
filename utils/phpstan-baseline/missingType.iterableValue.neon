@@ -1,4 +1,4 @@
-# total 1667 errors
+# total 1665 errors
 
 parameters:
     ignoreErrors:
@@ -851,16 +851,6 @@ parameters:
             message: '#^Method CodeIgniter\\Controller\:\:validateData\(\) has parameter \$rules with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Controller.php
-
-        -
-            message: '#^Method CodeIgniter\\Cookie\\CookieStore\:\:setCookie\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cookie/CookieStore.php
-
-        -
-            message: '#^Method CodeIgniter\\Cookie\\CookieStore\:\:setRawCookie\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cookie/CookieStore.php
 
         -
             message: '#^Method CodeIgniter\\Cookie\\CookieStore\:\:validateCookies\(\) has parameter \$cookies with no value type specified in iterable type array\.$#'
