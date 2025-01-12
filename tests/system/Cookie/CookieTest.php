@@ -235,7 +235,6 @@ final class CookieTest extends CIUnitTestCase
         $e = $a->withValue('muffin');
         $f = $a->withExpires('+30 days');
         $g = $a->withExpired();
-        $h = $a->withNeverExpiring();
         $i = $a->withDomain('localhost');
         $j = $a->withPath('/web');
         $k = $a->withSecure();
@@ -248,7 +247,6 @@ final class CookieTest extends CIUnitTestCase
         $this->assertNotSame($a, $e);
         $this->assertNotSame($a, $f);
         $this->assertNotSame($a, $g);
-        $this->assertNotSame($a, $h);
         $this->assertNotSame($a, $i);
         $this->assertNotSame($a, $j);
         $this->assertNotSame($a, $k);

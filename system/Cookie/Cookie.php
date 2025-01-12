@@ -466,18 +466,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     }
 
     /**
-     * @deprecated See https://github.com/codeigniter4/CodeIgniter4/pull/6413
-     */
-    public function withNeverExpiring()
-    {
-        $cookie = clone $this;
-
-        $cookie->expires = Time::now()->getTimestamp() + 5 * YEAR;
-
-        return $cookie;
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function withPath(?string $path)
