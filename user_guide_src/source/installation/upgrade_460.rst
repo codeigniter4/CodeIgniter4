@@ -224,3 +224,4 @@ many will be simple comments or formatting that have no effect on the runtime:
 - app/Config/Feature.php
 - app/Config/Constants.php
 - app/Config/Cache.php
+- app/Config/Format.php
