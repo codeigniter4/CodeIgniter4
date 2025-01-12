@@ -37,14 +37,14 @@ final class CacheFactoryTest extends CIUnitTestCase
 
         // Initialize path
         $this->config = new Cache();
-        $this->config->storePath .= self::$directory;
+        $this->config->file['storePath'] .= self::$directory;
     }
 
     protected function tearDown(): void
     {
-        if (is_dir($this->config->storePath)) {
-            chmod($this->config->storePath, 0777);
-            rmdir($this->config->storePath);
+        if (is_dir($this->config->file['storePath'])) {
+            chmod($this->config->file['storePath'], 0777);
+            rmdir($this->config->file['storePath']);
         }
     }
 
@@ -75,8 +75,8 @@ final class CacheFactoryTest extends CIUnitTestCase
 
     public function testGetDummyHandler(): void
     {
-        if (! is_dir($this->config->storePath)) {
-            mkdir($this->config->storePath, 0555, true);
+        if (! is_dir($this->config->file['storePath'])) {
+            mkdir($this->config->file['storePath'], 0555, true);
         }
 
         $this->config->handler = 'dummy';
@@ -85,13 +85,13 @@ final class CacheFactoryTest extends CIUnitTestCase
 
         // Initialize path
         $this->config = new Cache();
-        $this->config->storePath .= self::$directory;
+        $this->config->file['storePath'] .= self::$directory;
     }
 
     public function testHandlesBadHandler(): void
     {
-        if (! is_dir($this->config->storePath)) {
-            mkdir($this->config->storePath, 0555, true);
+        if (! is_dir($this->config->file['storePath'])) {
+            mkdir($this->config->file['storePath'], 0555, true);
         }
 
         $this->config->handler = 'dummy';
@@ -104,6 +104,6 @@ final class CacheFactoryTest extends CIUnitTestCase
 
         // Initialize path
         $this->config = new Cache();
-        $this->config->storePath .= self::$directory;
+        $this->config->file['storePath'] .= self::$directory;
     }
 }
