@@ -29,6 +29,8 @@ final class EventsTest extends CIUnitTestCase
 {
     /**
      * Accessible event manager instance
+     *
+     * @var MockEvents
      */
     private Events $manager;
 
@@ -96,8 +98,8 @@ final class EventsTest extends CIUnitTestCase
         $callback2 = static function (): void {
         };
 
-        Events::on('foo', $callback1, EVENT_PRIORITY_HIGH);
-        Events::on('foo', $callback2, EVENT_PRIORITY_NORMAL);
+        Events::on('foo', $callback1, Events::PRIORITY_HIGH);
+        Events::on('foo', $callback2, Events::PRIORITY_NORMAL);
 
         $this->assertSame([$callback1, $callback2], Events::listeners('foo'));
     }
@@ -142,14 +144,14 @@ final class EventsTest extends CIUnitTestCase
             $result = 1;
 
             return false;
-        }, EVENT_PRIORITY_NORMAL);
+        }, Events::PRIORITY_NORMAL);
         // Since this has a higher priority, it will
         // run first.
         Events::on('foo', static function () use (&$result): bool {
             $result = 2;
 
             return false;
-        }, EVENT_PRIORITY_HIGH);
+        }, Events::PRIORITY_HIGH);
 
         $this->assertFalse(Events::trigger('foo', 'bar'));
         $this->assertSame(2, $result);
