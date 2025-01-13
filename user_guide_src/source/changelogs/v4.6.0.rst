@@ -198,7 +198,8 @@ Removed Deprecated Items
 - **Logger:** The deprecated ``CodeIgniter\Log\Logger::cleanFilenames()`` and
   ``CodeIgniter\Test\TestLogger::cleanup()`` have been removed. Use the
   ``clean_path()`` function instead.
-  **Router:** The deprecated ``CodeIgniter\Router\Exceptions\RedirectException`` has been removed. Use ``CodeIgniter\HTTP\Exceptions\RedirectException`` instead.
+- **Router:** The deprecated ``CodeIgniter\Router\Exceptions\RedirectException`` has been removed. Use ``CodeIgniter\HTTP\Exceptions\RedirectException`` instead.
+- **Constants:** The deprecated constants ``EVENT_PRIORITY_*`` in has been removed. Use the class constants ``CodeIgniter\Events\Events::PRIORITY_LOW``, ``CodeIgniter\Events\Events::PRIORITY_NORMAL`` and ``CodeIgniter\Events\Events::PRIORITY_HIGH`` instead.
 
 ************
 Enhancements
