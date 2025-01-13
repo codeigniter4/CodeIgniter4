@@ -202,6 +202,7 @@ Removed Deprecated Items
 - **Constants:** The deprecated constants ``EVENT_PRIORITY_*`` in has been removed. Use the class constants ``CodeIgniter\Events\Events::PRIORITY_LOW``, ``CodeIgniter\Events\Events::PRIORITY_NORMAL`` and ``CodeIgniter\Events\Events::PRIORITY_HIGH`` instead.
 - **View:** The deprecated property ``CodeIgniter\View\View::$currentSection`` has been removed.
 - **Config:** The deprecated property ``Config\Cache::$storePath`` has been removed. Use ``Config\Cache::$file['storePath']`` instead.
+- **Formatter:** The deprecated ``Config\Format::getFormatter()`` has been removed. Use ``CodeIgniter\Format\Format::getFormatter()`` instead.
 
 ************
 Enhancements
