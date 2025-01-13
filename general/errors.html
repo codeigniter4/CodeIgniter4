@@ -679,7 +679,7 @@ The new handler must implement a single method: <code class="docutils literal no
         <span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span>
         <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">,</span>
         <span class="nx">int</span> <span class="nv">$statusCode</span><span class="p">,</span>
-        <span class="nx">int</span> <span class="nv">$exitCode</span>
+        <span class="nx">int</span> <span class="nv">$exitCode</span><span class="p">,</span>
     <span class="p">)</span><span class="o">:</span> <span class="nx">void</span> <span class="p">{</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="nv">$exception</span><span class="p">,</span> <span class="nv">$statusCode</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">viewPath</span> <span class="o">.</span> <span class="s2">&quot;error_</span><span class="si">{</span><span class="nv">$statusCode</span><span class="si">}</span><span class="s2">.php&quot;</span><span class="p">);</span>
 
@@ -762,7 +762,7 @@ it then return a new instance of that class:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 11, 2025.
+      <span class="lastupdated">Last updated on Jan 13, 2025.
       </span></p>
   </div>
 

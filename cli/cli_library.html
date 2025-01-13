@@ -638,12 +638,12 @@ every line after the first line, so that you will have a crisp column edge on th
         <span class="nb">substr</span><span class="p">(</span>
             <span class="nv">$titles</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">.</span> <span class="nb">str_repeat</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="nv">$maxlen</span> <span class="o">+</span> <span class="mi">3</span><span class="p">),</span>
             <span class="mi">0</span><span class="p">,</span>
-            <span class="nv">$maxlen</span> <span class="o">+</span> <span class="mi">3</span>
+            <span class="nv">$maxlen</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span>
         <span class="p">)</span> <span class="o">.</span>
         <span class="c1">// Wrap the descriptions in a right-hand column</span>
         <span class="c1">// with its left side 3 characters wider than</span>
         <span class="c1">// the longest item on the left.</span>
-        <span class="nx">CLI</span><span class="o">::</span><span class="na">wrap</span><span class="p">(</span><span class="nv">$descriptions</span><span class="p">[</span><span class="nv">$i</span><span class="p">],</span> <span class="mi">40</span><span class="p">,</span> <span class="nv">$maxlen</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">wrap</span><span class="p">(</span><span class="nv">$descriptions</span><span class="p">[</span><span class="nv">$i</span><span class="p">],</span> <span class="mi">40</span><span class="p">,</span> <span class="nv">$maxlen</span> <span class="o">+</span> <span class="mi">3</span><span class="p">),</span>
     <span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
@@ -768,7 +768,7 @@ waiting for a key press.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 11, 2025.
+      <span class="lastupdated">Last updated on Jan 13, 2025.
       </span></p>
   </div>
 
