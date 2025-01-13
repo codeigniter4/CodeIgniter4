@@ -100,7 +100,7 @@ class FilterCheck extends BaseCommand
                 CLI::color(
                     '"' . strtoupper($method) . ' ' . $route . '"',
                     'black',
-                    'light_gray'
+                    'light_gray',
                 ),
             );
 

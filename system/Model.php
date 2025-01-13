@@ -373,17 +373,17 @@ class Model extends BaseModel
                 $allFields = $this->db->protectIdentifiers(
                     array_map(
                         static fn ($row) => $row->name,
-                        $this->db->getFieldData($this->table)
+                        $this->db->getFieldData($this->table),
                     ),
                     false,
-                    true
+                    true,
                 );
 
                 $sql = sprintf(
                     'INSERT INTO %s (%s) VALUES (%s)',
                     $table,
                     implode(',', $allFields),
-                    substr(str_repeat(',DEFAULT', count($allFields)), 1)
+                    substr(str_repeat(',DEFAULT', count($allFields)), 1),
                 );
             } else {
                 $sql = 'INSERT INTO ' . $table . ' DEFAULT VALUES';
@@ -454,7 +454,7 @@ class Model extends BaseModel
 
         if ($builder->getCompiledQBWhere() === []) {
             throw new DatabaseException(
-                'Updates are not allowed unless they contain a "where" or "like" clause.'
+                'Updates are not allowed unless they contain a "where" or "like" clause.',
             );
         }
 
@@ -503,7 +503,7 @@ class Model extends BaseModel
         if ($this->useSoftDeletes && ! $purge) {
             if ($builder->getCompiledQBWhere() === []) {
                 throw new DatabaseException(
-                    'Deletes are not allowed unless they contain a "where" or "like" clause.'
+                    'Deletes are not allowed unless they contain a "where" or "like" clause.',
                 );
             }
 

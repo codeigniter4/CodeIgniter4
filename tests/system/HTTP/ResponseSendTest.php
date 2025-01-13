@@ -173,7 +173,7 @@ final class ResponseSendTest extends CIUnitTestCase
             '',
             '/',
             '',
-            true
+            true,
         );
 
         // send it

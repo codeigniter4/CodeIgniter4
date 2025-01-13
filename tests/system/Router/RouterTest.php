@@ -492,7 +492,7 @@ final class RouterTest extends CIUnitTestCase
     public function testRouteWithSlashInControllerName(): void
     {
         $this->expectExceptionMessage(
-            'The namespace delimiter is a backslash (\), not a slash (/). Route handler: "\App/Admin/Admins::edit_show/$1"'
+            'The namespace delimiter is a backslash (\), not a slash (/). Route handler: "\App/Admin/Admins::edit_show/$1"',
         );
 
         $router = new Router($this->collection, $this->request);
@@ -938,7 +938,7 @@ final class RouterTest extends CIUnitTestCase
         string $redirectTo,
         string $url,
         string $expectedPath,
-        string $alias
+        string $alias,
     ): void {
         $collection = clone $this->collection;
         $collection->resetRoutes();

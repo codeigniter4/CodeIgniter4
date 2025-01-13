@@ -152,7 +152,7 @@ if (! function_exists('entities_to_ascii')) {
             return str_replace(
                 ['&amp;', '&lt;', '&gt;', '&quot;', '&apos;', '&#45;'],
                 ['&', '<', '>', '"', "'", '-'],
-                $str
+                $str,
             );
         }
 
@@ -193,7 +193,7 @@ if (! function_exists('word_censor')) {
                 $str = preg_replace(
                     "/({$delim})(" . $badword . ")({$delim})/i",
                     "\\1{$replacement}\\3",
-                    $str
+                    $str,
                 );
             } elseif (preg_match_all("/{$delim}(" . $badword . "){$delim}/i", $str, $matches, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) >= 1) {
                 $matches = $matches[1];
@@ -205,7 +205,7 @@ if (! function_exists('word_censor')) {
                         $str,
                         str_repeat('#', $length),
                         $matches[$i][1],
-                        $length
+                        $length,
                     );
                 }
             }
@@ -235,7 +235,7 @@ if (! function_exists('highlight_code')) {
         $str = str_replace(
             ['&lt;', '&gt;', '<?', '?>', '<%', '%>', '\\', '</script>'],
             ['<', '>', 'phptagopen', 'phptagclose', 'asptagopen', 'asptagclose', 'backslashtmp', 'scriptclose'],
-            $str
+            $str,
         );
 
         // The highlight_string function requires that the text be surrounded
@@ -254,7 +254,7 @@ if (! function_exists('highlight_code')) {
                 "$1</span>\n</span>\n</code>",
                 '',
             ],
-            $str
+            $str,
         );
 
         // Replace our markers back to PHP tags.
@@ -275,7 +275,7 @@ if (! function_exists('highlight_code')) {
                 '\\',
                 '&lt;/script&gt;',
             ],
-            $str
+            $str,
         );
     }
 }
@@ -581,7 +581,7 @@ if (! function_exists('random_string')) {
             case 'crypto':
                 if ($len % 2 !== 0) {
                     throw new InvalidArgumentException(
-                        'You must set an even number to the second parameter when you use `crypto`.'
+                        'You must set an even number to the second parameter when you use `crypto`.',
                     );
                 }
 
@@ -611,7 +611,7 @@ if (! function_exists('_from_random')) {
     {
         if ($length <= 0) {
             throw new InvalidArgumentException(
-                sprintf('A strictly positive length is expected, "%d" given.', $length)
+                sprintf('A strictly positive length is expected, "%d" given.', $length),
             );
         }
 
@@ -619,7 +619,7 @@ if (! function_exists('_from_random')) {
         $bits     = (int) ceil(log($poolSize, 2.0));
         if ($bits <= 0 || $bits > 56) {
             throw new InvalidArgumentException(
-                'The length of the alphabet must in the [2^1, 2^56] range.'
+                'The length of the alphabet must in the [2^1, 2^56] range.',
             );
         }
 

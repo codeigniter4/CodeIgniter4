@@ -251,7 +251,7 @@ final class BaseQueryTest extends CIUnitTestCase
 
         $query->setQuery(
             "SELECT mytable.id, DATE_FORMAT(mytable.created_at,'%d/%m/%Y %H:%i:%s') AS created_at_uk FROM mytable WHERE mytable.id = ?",
-            [1]
+            [1],
         );
 
         $expected = "SELECT mytable.id, DATE_FORMAT(mytable.created_at,'%d/%m/%Y %H:%i:%s') AS created_at_uk FROM mytable WHERE mytable.id = 1";
@@ -326,7 +326,7 @@ final class BaseQueryTest extends CIUnitTestCase
 
         $query->setQuery(
             'SELECT * FROM posts WHERE content = :content: OR foobar = :foobar:',
-            ['content' => 'a placeholder looks like :foobar:', 'foobar' => 'bazqux']
+            ['content' => 'a placeholder looks like :foobar:', 'foobar' => 'bazqux'],
         );
 
         $expected = "SELECT * FROM posts WHERE content = 'a placeholder looks like :foobar:' OR foobar = 'bazqux'";
@@ -381,7 +381,7 @@ final class BaseQueryTest extends CIUnitTestCase
         $query->setQuery(
             'SELECT * FROM product WHERE date_pickup < DateAdd(month, ?, Convert(date, GetDate())',
             [-6],
-            true
+            true,
         );
 
         $expected = 'SELECT * FROM product WHERE date_pickup < DateAdd(month, -6, Convert(date, GetDate())';
@@ -395,7 +395,7 @@ final class BaseQueryTest extends CIUnitTestCase
 
         $query->setQuery(
             'SELECT * FROM product WHERE date_pickup < DateAdd(month, :num:, Convert(date, GetDate())',
-            ['num' => -6]
+            ['num' => -6],
         );
 
         $expected = 'SELECT * FROM product WHERE date_pickup < DateAdd(month, -6, Convert(date, GetDate())';

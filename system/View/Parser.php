@@ -86,7 +86,7 @@ class Parser extends View
         ?string $viewPath = null,
         $loader = null,
         ?bool $debug = null,
-        ?LoggerInterface $logger = null
+        ?LoggerInterface $logger = null,
     ) {
         // Ensure user plugins override core plugins.
         $this->plugins = $config->plugins;
@@ -329,7 +329,7 @@ class Parser extends View
             $this->leftDelimiter . '\s*/' . preg_quote($variable, '#') . '\s*' . $this->rightDelimiter . '#us',
             $template,
             $matches,
-            PREG_SET_ORDER
+            PREG_SET_ORDER,
         );
 
         /*
@@ -484,12 +484,12 @@ class Parser extends View
         $template = preg_replace(
             '/' . $leftDelimiter . '\s*else\s*' . $rightDelimiter . '/ums',
             '<?php else: ?>',
-            $template
+            $template,
         );
         $template = preg_replace(
             '/' . $leftDelimiter . '\s*endif\s*' . $rightDelimiter . '/ums',
             '<?php endif; ?>',
-            $template
+            $template,
         );
 
         // Parse the PHP itself, or insert an error so they can debug

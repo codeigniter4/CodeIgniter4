@@ -177,7 +177,7 @@ class Validation implements ValidationInterface
                 $values = array_filter(
                     $flattenedArray,
                     static fn ($key): bool => preg_match(self::getRegex($field), $key) === 1,
-                    ARRAY_FILTER_USE_KEY
+                    ARRAY_FILTER_USE_KEY,
                 );
 
                 // if keys not found
@@ -208,7 +208,7 @@ class Validation implements ValidationInterface
             // Store data that was actually validated.
             $this->validated = DotArrayFilter::run(
                 array_keys($this->rules),
-                $this->data
+                $this->data,
             );
 
             return true;
@@ -226,7 +226,7 @@ class Validation implements ValidationInterface
             . str_replace(
                 ['\.\*', '\*\.'],
                 ['\.[^.]+', '[^.]+\.'],
-                preg_quote($field, '/')
+                preg_quote($field, '/'),
             )
             . '\z/';
     }
@@ -248,11 +248,11 @@ class Validation implements ValidationInterface
             'check',
             null,
             $rules,
-            $errors
+            $errors,
         )->run(
             ['check' => $value],
             null,
-            $dbGroup
+            $dbGroup,
         );
     }
 
@@ -281,7 +281,7 @@ class Validation implements ValidationInterface
         $value,
         $rules = null,       // @TODO remove `= null`
         ?array $data = null, // @TODO remove `= null`
-        ?string $originalField = null
+        ?string $originalField = null,
     ): bool {
         if ($data === null) {
             throw new InvalidArgumentException('You must supply the parameter: data.');
@@ -368,7 +368,7 @@ class Validation implements ValidationInterface
                     $label,
                     $param,
                     (string) $value,
-                    $originalField
+                    $originalField,
                 );
 
                 return false;
@@ -805,7 +805,7 @@ class Validation implements ValidationInterface
                             throw new LogicException(
                                 'No validation rules for the placeholder: "' . $field
                                 . '". You must set the validation rules for the field.'
-                                . ' See <https://codeigniter4.github.io/userguide/libraries/validation.html#validation-placeholders>.'
+                                . ' See <https://codeigniter4.github.io/userguide/libraries/validation.html#validation-placeholders>.',
                             );
                         }
 
@@ -813,7 +813,7 @@ class Validation implements ValidationInterface
                         foreach ($placeholderRules as $placeholderRule) {
                             if ($this->retrievePlaceholders($placeholderRule, $data) !== []) {
                                 throw new LogicException(
-                                    'The placeholder field cannot use placeholder: ' . $field
+                                    'The placeholder field cannot use placeholder: ' . $field,
                                 );
                             }
                         }
@@ -868,7 +868,7 @@ class Validation implements ValidationInterface
         $errors = array_filter(
             $this->getErrors(),
             static fn ($key): bool => preg_match(self::getRegex($field), $key) === 1,
-            ARRAY_FILTER_USE_KEY
+            ARRAY_FILTER_USE_KEY,
         );
 
         return $errors === [] ? '' : implode("\n", $errors);
@@ -914,7 +914,7 @@ class Validation implements ValidationInterface
         ?string $label = null,
         ?string $param = null,
         ?string $value = null,
-        ?string $originalField = null
+        ?string $originalField = null,
     ): string {
         $param ??= '';
 

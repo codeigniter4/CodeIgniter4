@@ -21,11 +21,11 @@ for ($i = 0; $i < count($titles); $i++) {
         substr(
             $titles[$i] . str_repeat(' ', $maxlen + 3),
             0,
-            $maxlen + 3
+            $maxlen + 3,
         ) .
         // Wrap the descriptions in a right-hand column
         // with its left side 3 characters wider than
         // the longest item on the left.
-        CLI::wrap($descriptions[$i], 40, $maxlen + 3)
+        CLI::wrap($descriptions[$i], 40, $maxlen + 3),
     );
 }

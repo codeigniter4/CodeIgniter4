@@ -74,11 +74,11 @@ final class LanguageTest extends CIUnitTestCase
 
         $this->assertSame(
             'We kept the book free from the boogeyman',
-            $this->lang->getLine('books.bookSaved.foo')
+            $this->lang->getLine('books.bookSaved.foo'),
         );
         $this->assertSame(
             'We saved some more',
-            $this->lang->getLine('books.booksSaved.bar.baz')
+            $this->lang->getLine('books.booksSaved.bar.baz'),
         );
     }
 
@@ -93,11 +93,11 @@ final class LanguageTest extends CIUnitTestCase
 
         $this->assertSame(
             'books.bookSaved.foo', // Can't get the message.
-            $this->lang->getLine('books.bookSaved.foo')
+            $this->lang->getLine('books.bookSaved.foo'),
         );
         $this->assertSame(
             'books.booksSaved.bar.baz', // Can't get the message.
-            $this->lang->getLine('books.booksSaved.bar.baz')
+            $this->lang->getLine('books.booksSaved.bar.baz'),
         );
     }
 
@@ -112,11 +112,11 @@ final class LanguageTest extends CIUnitTestCase
 
         $this->assertSame(
             'books.bookSaved.foo', // Can't get the message.
-            $this->lang->getLine('books.bookSaved.foo')
+            $this->lang->getLine('books.bookSaved.foo'),
         );
         $this->assertSame(
             'books.booksSaved.bar.baz', // Can't get the message.
-            $this->lang->getLine('books.booksSaved.bar.baz')
+            $this->lang->getLine('books.booksSaved.bar.baz'),
         );
     }
 

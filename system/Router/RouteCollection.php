@@ -634,7 +634,7 @@ class RouteCollection implements RouteCollectionInterface
             @trigger_error(
                 'Passing lowercase HTTP method "' . $verb . '" is deprecated.'
                 . ' Use uppercase HTTP method like "' . strtoupper($verb) . '".',
-                E_USER_DEPRECATED
+                E_USER_DEPRECATED,
             );
         }
 
@@ -791,7 +791,7 @@ class RouteCollection implements RouteCollectionInterface
             // Merge options other than filters.
             $this->currentOptions = array_merge(
                 $this->currentOptions ?? [],
-                $options
+                $options,
             );
         }
 
@@ -1026,7 +1026,7 @@ class RouteCollection implements RouteCollectionInterface
                 @trigger_error(
                     'Passing lowercase HTTP method "' . $verb . '" is deprecated.'
                     . ' Use uppercase HTTP method like "' . strtoupper($verb) . '".',
-                    E_USER_DEPRECATED
+                    E_USER_DEPRECATED,
                 );
             }
 
@@ -1382,7 +1382,7 @@ class RouteCollection implements RouteCollectionInterface
         foreach ($placeholders as $index => $placeholder) {
             if (! isset($params[$index])) {
                 throw new InvalidArgumentException(
-                    'Missing argument for "' . $placeholder . '" in route "' . $from . '".'
+                    'Missing argument for "' . $placeholder . '" in route "' . $from . '".',
                 );
             }
 
@@ -1506,7 +1506,7 @@ class RouteCollection implements RouteCollectionInterface
                     '/\$X/',
                     static fn ($m): string => '$' . $i,
                     $to,
-                    1
+                    1,
                 );
             }
         }
@@ -1773,7 +1773,7 @@ class RouteCollection implements RouteCollectionInterface
             @trigger_error(
                 'Passing lowercase HTTP method "' . $verb . '" is deprecated.'
                 . ' Use uppercase HTTP method like "' . strtoupper($verb) . '".',
-                E_USER_DEPRECATED
+                E_USER_DEPRECATED,
             );
         }
 

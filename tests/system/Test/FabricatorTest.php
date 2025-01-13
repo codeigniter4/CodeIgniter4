@@ -524,7 +524,7 @@ final class FabricatorTest extends CIUnitTestCase
 
         $this->assertLessThan(
             count($result),
-            count(array_filter($result))
+            count(array_filter($result)),
         );
     }
 
@@ -544,7 +544,7 @@ final class FabricatorTest extends CIUnitTestCase
             $this->assertSame(
                 0,
                 $digit % 2,
-                sprintf('Failed asserting that %s is even.', number_format($digit))
+                sprintf('Failed asserting that %s is even.', number_format($digit)),
             );
         }
     }

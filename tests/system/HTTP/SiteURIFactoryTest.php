@@ -93,7 +93,7 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         string $uriString,
         string $expectUriString,
         string $expectedPath,
-        string $expectedRoutePath
+        string $expectedRoutePath,
     ): void {
         $factory = $this->createSiteURIFactory();
 
@@ -134,7 +134,7 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         string $uriString,
         string $expectUriString,
         string $expectedPath,
-        string $expectedRoutePath
+        string $expectedRoutePath,
     ): void {
         $config            = new App();
         $config->indexPage = '';

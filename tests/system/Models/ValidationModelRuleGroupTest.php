@@ -398,7 +398,7 @@ final class ValidationModelRuleGroupTest extends LiveModelTestCase
         $this->assertCount(1, $errors);
         $this->assertSame(
             'The field1 field is required when field2,field3,field4 is present.',
-            $errors['field1']
+            $errors['field1'],
         );
     }
 
@@ -438,7 +438,7 @@ final class ValidationModelRuleGroupTest extends LiveModelTestCase
         $this->assertCount(1, $errors);
         $this->assertSame(
             'The field1 field is required when field2,field3,field4 is present.',
-            $errors['field1']
+            $errors['field1'],
         );
     }
 
@@ -471,7 +471,7 @@ final class ValidationModelRuleGroupTest extends LiveModelTestCase
         $this->assertCount(1, $errors);
         $this->assertSame(
             'The field2 field is required.',
-            $errors['field2']
+            $errors['field2'],
         );
     }
 }

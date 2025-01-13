@@ -133,7 +133,7 @@ class Routes extends BaseCommand
                     $collection->getDefaultController(),
                     $collection->getDefaultMethod(),
                     $methods,
-                    $collection->getRegisteredControllers('*')
+                    $collection->getRegisteredControllers('*'),
                 );
 
                 $autoRoutes = $autoRouteCollector->get();
@@ -149,7 +149,7 @@ class Routes extends BaseCommand
                             $collection->getDefaultMethod(),
                             $methods,
                             $collection->getRegisteredControllers('*'),
-                            $uri
+                            $uri,
                         );
 
                         $autoRoutes = [...$autoRoutes, ...$autoRouteCollector->get()];
@@ -159,7 +159,7 @@ class Routes extends BaseCommand
                 $autoRouteCollector = new AutoRouteCollector(
                     $collection->getDefaultNamespace(),
                     $collection->getDefaultController(),
-                    $collection->getDefaultMethod()
+                    $collection->getDefaultMethod(),
                 );
 
                 $autoRoutes = $autoRouteCollector->get();

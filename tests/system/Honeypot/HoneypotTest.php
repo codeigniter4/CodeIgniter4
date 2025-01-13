@@ -199,7 +199,7 @@ final class HoneypotTest extends CIUnitTestCase
 
         $this->assertSame(
             '<div style="display:none">{template}</div>',
-            $this->getPrivateProperty($honeypot, 'config')->container
+            $this->getPrivateProperty($honeypot, 'config')->container,
         );
     }
 
@@ -211,7 +211,7 @@ final class HoneypotTest extends CIUnitTestCase
 
         $this->assertSame(
             '<div style="display:none">{template}</div>',
-            $this->getPrivateProperty($honeypot, 'config')->container
+            $this->getPrivateProperty($honeypot, 'config')->container,
         );
     }
 }

@@ -40,7 +40,7 @@ final class ReflectionHelperTest extends CIUnitTestCase
     {
         $actual = $this->getPrivateProperty(
             TestForReflectionHelper::class,
-            'static_private'
+            'static_private',
         );
         $this->assertSame('xyz', $actual);
     }
@@ -51,7 +51,7 @@ final class ReflectionHelperTest extends CIUnitTestCase
         $this->setPrivateProperty(
             $obj,
             'private',
-            'open'
+            'open',
         );
         $this->assertSame('open', $obj->getPrivate());
     }
@@ -61,11 +61,11 @@ final class ReflectionHelperTest extends CIUnitTestCase
         $this->setPrivateProperty(
             TestForReflectionHelper::class,
             'static_private',
-            'abc'
+            'abc',
         );
         $this->assertSame(
             'abc',
-            TestForReflectionHelper::getStaticPrivate()
+            TestForReflectionHelper::getStaticPrivate(),
         );
     }
 
@@ -74,11 +74,11 @@ final class ReflectionHelperTest extends CIUnitTestCase
         $obj    = new TestForReflectionHelper();
         $method = $this->getPrivateMethodInvoker(
             $obj,
-            'privateMethod'
+            'privateMethod',
         );
         $this->assertSame(
             'private param1param2',
-            $method('param1', 'param2')
+            $method('param1', 'param2'),
         );
     }
 
@@ -86,11 +86,11 @@ final class ReflectionHelperTest extends CIUnitTestCase
     {
         $method = $this->getPrivateMethodInvoker(
             TestForReflectionHelper::class,
-            'privateStaticMethod'
+            'privateStaticMethod',
         );
         $this->assertSame(
             'private_static param1param2',
-            $method('param1', 'param2')
+            $method('param1', 'param2'),
         );
     }
 }

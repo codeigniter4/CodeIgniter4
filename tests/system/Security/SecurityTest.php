@@ -67,7 +67,7 @@ final class SecurityTest extends CIUnitTestCase
 
         $this->assertSame(
             '8b9218a55906f9dcc1dc263dce7f005a',
-            $security->getHash()
+            $security->getHash(),
         );
     }
 
@@ -116,7 +116,7 @@ final class SecurityTest extends CIUnitTestCase
             $config,
             new SiteURI($config),
             null,
-            new UserAgent()
+            new UserAgent(),
         );
     }
 
@@ -176,7 +176,7 @@ final class SecurityTest extends CIUnitTestCase
         $request  = $this->createIncomingRequest();
 
         $request->setBody(
-            '{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a"}'
+            '{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a"}',
         );
 
         $this->expectException(SecurityException::class);
@@ -192,7 +192,7 @@ final class SecurityTest extends CIUnitTestCase
         $request  = $this->createIncomingRequest();
 
         $request->setBody(
-            '{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a","foo":"bar"}'
+            '{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a","foo":"bar"}',
         );
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
@@ -210,7 +210,7 @@ final class SecurityTest extends CIUnitTestCase
         $request  = $this->createIncomingRequest();
 
         $request->setBody(
-            'csrf_test_name=8b9218a55906f9dcc1dc263dce7f005a'
+            'csrf_test_name=8b9218a55906f9dcc1dc263dce7f005a',
         );
 
         $this->expectException(SecurityException::class);
@@ -226,7 +226,7 @@ final class SecurityTest extends CIUnitTestCase
         $request  = $this->createIncomingRequest();
 
         $request->setBody(
-            'csrf_test_name=8b9218a55906f9dcc1dc263dce7f005a&foo=bar'
+            'csrf_test_name=8b9218a55906f9dcc1dc263dce7f005a&foo=bar',
         );
 
         $this->assertInstanceOf(Security::class, $security->verify($request));

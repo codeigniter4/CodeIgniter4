@@ -121,7 +121,7 @@ final class AutoRouterImproved implements AutoRouterInterface
          * Whether dashes in URI's should be converted
          * to underscores when determining method names.
          */
-        private readonly bool $translateURIDashes
+        private readonly bool $translateURIDashes,
     ) {
         $this->namespace = rtrim($namespace, '\\');
 
@@ -210,7 +210,7 @@ final class AutoRouterImproved implements AutoRouterInterface
 
             $namespaces = array_map(
                 fn ($segment): string => $this->translateURI($segment),
-                $segments
+                $segments,
             );
 
             $controller = '\\' . $this->namespace
@@ -288,7 +288,7 @@ final class AutoRouterImproved implements AutoRouterInterface
                 strtolower($baseControllerName) === strtolower($this->defaultController)
             ) {
                 throw new PageNotFoundException(
-                    'Cannot access the default controller "' . $this->controller . '" with the controller name URI path.'
+                    'Cannot access the default controller "' . $this->controller . '" with the controller name URI path.',
                 );
             }
         } elseif ($this->searchLastDefaultController()) {
@@ -329,14 +329,14 @@ final class AutoRouterImproved implements AutoRouterInterface
             // Prevent access to default controller's method
             if (strtolower($baseControllerName) === strtolower($this->defaultController)) {
                 throw new PageNotFoundException(
-                    'Cannot access the default controller "' . $this->controller . '::' . $this->method . '"'
+                    'Cannot access the default controller "' . $this->controller . '::' . $this->method . '"',
                 );
             }
 
             // Prevent access to default method path
             if (strtolower($this->method) === strtolower($defaultMethod)) {
                 throw new PageNotFoundException(
-                    'Cannot access the default method "' . $this->method . '" with the method name URI path.'
+                    'Cannot access the default method "' . $this->method . '" with the method name URI path.',
                 );
             }
         } elseif (method_exists($this->controller, $defaultMethod)) {
@@ -400,7 +400,7 @@ final class AutoRouterImproved implements AutoRouterInterface
         $dir = str_replace(
             '\\',
             '/',
-            ltrim(substr($namespaces, strlen($this->namespace)), '\\')
+            ltrim(substr($namespaces, strlen($this->namespace)), '\\'),
         );
 
         if ($dir !== '') {
@@ -417,7 +417,7 @@ final class AutoRouterImproved implements AutoRouterInterface
 
             if ($routeLowerCase === $controller) {
                 throw new PageNotFoundException(
-                    'Cannot access the controller in Defined Routes. Controller: ' . $controllerInRoutes
+                    'Cannot access the controller in Defined Routes. Controller: ' . $controllerInRoutes,
                 );
             }
         }
@@ -446,7 +446,7 @@ final class AutoRouterImproved implements AutoRouterInterface
             throw new PageNotFoundException(
                 'The param count in the URI are greater than the controller method params.'
                 . ' Handler:' . $this->controller . '::' . $this->method
-                . ', URI:' . $this->uri
+                . ', URI:' . $this->uri,
             );
         }
     }
@@ -459,7 +459,7 @@ final class AutoRouterImproved implements AutoRouterInterface
 
             throw new PageNotFoundException(
                 'AutoRouterImproved does not support `_remap()` method.'
-                . ' Controller:' . $this->controller
+                . ' Controller:' . $this->controller,
             );
         } catch (ReflectionException) {
             // Do nothing.
@@ -482,7 +482,7 @@ final class AutoRouterImproved implements AutoRouterInterface
                     . ' when $translateURIDashes is enabled.'
                     . ' Please use the dash.'
                     . ' Handler:' . $this->controller . '::' . $this->method
-                    . ', URI:' . $this->uri
+                    . ', URI:' . $this->uri,
                 );
             }
         }
@@ -502,7 +502,7 @@ final class AutoRouterImproved implements AutoRouterInterface
 
         if (! in_array(ltrim($classname, '\\'), get_declared_classes(), true)) {
             throw new PageNotFoundException(
-                '"' . $classname . '" is not found.'
+                '"' . $classname . '" is not found.',
             );
         }
     }
@@ -531,7 +531,7 @@ final class AutoRouterImproved implements AutoRouterInterface
             && ! in_array($method, get_class_methods($this->controller), true)
         ) {
             throw new PageNotFoundException(
-                '"' . $this->controller . '::' . $method . '()" is not found.'
+                '"' . $this->controller . '::' . $method . '()" is not found.',
             );
         }
     }
@@ -558,7 +558,7 @@ final class AutoRouterImproved implements AutoRouterInterface
                     . ' containing uppercase letters ("' . $segment . '")'
                     . ' when $translateUriToCamelCase is enabled.'
                     . ' Please use the dash.'
-                    . ' URI:' . $this->uri
+                    . ' URI:' . $this->uri,
                 );
             }
 
@@ -568,7 +568,7 @@ final class AutoRouterImproved implements AutoRouterInterface
                     . ' containing double dash ("' . $segment . '")'
                     . ' when $translateUriToCamelCase is enabled.'
                     . ' Please use the single dash.'
-                    . ' URI:' . $this->uri
+                    . ' URI:' . $this->uri,
                 );
             }
 
@@ -576,8 +576,8 @@ final class AutoRouterImproved implements AutoRouterInterface
                 ' ',
                 '',
                 ucwords(
-                    preg_replace('/[\-]+/', ' ', $segment)
-                )
+                    preg_replace('/[\-]+/', ' ', $segment),
+                ),
             );
         }
 

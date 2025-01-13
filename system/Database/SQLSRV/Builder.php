@@ -764,8 +764,8 @@ class Builder extends BaseBuilder
                         )
                     ),
                     array_keys($constraints),
-                    $constraints
-                )
+                    $constraints,
+                ),
             ) . ")\n";
 
             $sql .= "WHEN MATCHED THEN UPDATE SET\n";
@@ -777,8 +777,8 @@ class Builder extends BaseBuilder
                         ' = ' . $value :
                     " = {$alias}.{$value}"),
                     array_keys($updateFields),
-                    $updateFields
-                )
+                    $updateFields,
+                ),
             );
 
             $sql .= "\nWHEN NOT MATCHED THEN INSERT (" . implode(', ', $keys) . ")\nVALUES ";
@@ -792,8 +792,8 @@ class Builder extends BaseBuilder
                     . 'isnull(IDENT_CURRENT(\'' . $fullTableName . '\')+IDENT_INCR(\''
                     . $fullTableName . "'),1)) ELSE {$alias}.{$columnName} END"
                     : "{$alias}.{$columnName}",
-                        $keys
-                    )
+                        $keys,
+                    ),
                 ) . ');'
             );
 

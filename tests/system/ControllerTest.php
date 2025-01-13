@@ -195,7 +195,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->assertFalse($method($data, $rule));
         $this->assertSame(
             'The password field must be at least 10 characters in length.',
-            service('validation')->getError('password')
+            service('validation')->getError('password'),
         );
     }
 
@@ -224,11 +224,11 @@ final class ControllerTest extends CIUnitTestCase
         $this->assertFalse($method($data, $rules, $errors));
         $this->assertSame(
             '"username" must be 3 letters or longer.',
-            service('validation')->getError('username')
+            service('validation')->getError('username'),
         );
         $this->assertSame(
             'The password field must be at least 10 characters in length.',
-            service('validation')->getError('password')
+            service('validation')->getError('password'),
         );
     }
 
@@ -262,11 +262,11 @@ final class ControllerTest extends CIUnitTestCase
         $this->assertFalse($method($data, $rules));
         $this->assertSame(
             '"Username" must be 3 letters or longer.',
-            service('validation')->getError('username')
+            service('validation')->getError('username'),
         );
         $this->assertSame(
             'The Password field must be at least 10 characters in length.',
-            service('validation')->getError('password')
+            service('validation')->getError('password'),
         );
     }
 

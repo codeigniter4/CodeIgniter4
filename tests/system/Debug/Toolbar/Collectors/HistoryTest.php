@@ -88,7 +88,7 @@ final class HistoryTest extends CIUnitTestCase
             $this->assertSame($request['time'], sprintf('%.6f', $time));
             $this->assertSame(
                 $request['datetime'],
-                DateTime::createFromFormat('U.u', $time)->format('Y-m-d H:i:s.u')
+                DateTime::createFromFormat('U.u', $time)->format('Y-m-d H:i:s.u'),
             );
             $this->assertSame($request['active'], ($time === $activeRowTime));
 

@@ -61,7 +61,7 @@ final class MigrationIntegrationTest extends CIUnitTestCase
         command('migrate -n App');
         $this->assertStringContainsString(
             '(App) 20160428212500_App\Database\Migrations\Migration_Create_test_tables',
-            $this->getStreamFilterBuffer()
+            $this->getStreamFilterBuffer(),
         );
 
         $this->resetStreamFilterBuffer();
@@ -69,7 +69,7 @@ final class MigrationIntegrationTest extends CIUnitTestCase
         command('migrate:rollback -n App');
         $this->assertStringContainsString(
             '(App) 20160428212500_App\Database\Migrations\Migration_Create_test_tables',
-            $this->getStreamFilterBuffer()
+            $this->getStreamFilterBuffer(),
         );
     }
 }

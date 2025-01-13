@@ -188,7 +188,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         bool $protectIdentifiers,
         bool $fieldExists,
         string $item,
-        string $expected
+        string $expected,
     ): void {
         $db = new MockConnection($this->options);
 

@@ -41,7 +41,7 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
         $name = array_search(
             $column,
             array_column($fields, 'name'),
-            true
+            true,
         );
 
         if ($name === false) {

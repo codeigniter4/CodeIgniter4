@@ -265,7 +265,7 @@ final class CellTest extends CIUnitTestCase
     {
         $this->assertSame(
             Response::class,
-            $this->cell->render('\Tests\Support\View\SampleClassWithInitController::index')
+            $this->cell->render('\Tests\Support\View\SampleClassWithInitController::index'),
         );
     }
 

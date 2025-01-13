@@ -175,7 +175,7 @@ final class ResponseTest extends CIUnitTestCase
 
         $this->assertSame(
             '<http://example.com/test/index.php/?page=1>; rel="first",<http://example.com/test/index.php/?page=2>; rel="prev",<http://example.com/test/index.php/?page=4>; rel="next",<http://example.com/test/index.php/?page=20>; rel="last"',
-            $response->header('Link')->getValue()
+            $response->header('Link')->getValue(),
         );
 
         $pager->store('default', 1, 10, 200);
@@ -183,7 +183,7 @@ final class ResponseTest extends CIUnitTestCase
 
         $this->assertSame(
             '<http://example.com/test/index.php/?page=2>; rel="next",<http://example.com/test/index.php/?page=20>; rel="last"',
-            $response->header('Link')->getValue()
+            $response->header('Link')->getValue(),
         );
 
         $pager->store('default', 20, 10, 200);
@@ -191,7 +191,7 @@ final class ResponseTest extends CIUnitTestCase
 
         $this->assertSame(
             '<http://example.com/test/index.php/?page=1>; rel="first",<http://example.com/test/index.php/?page=19>; rel="prev"',
-            $response->header('Link')->getValue()
+            $response->header('Link')->getValue(),
         );
     }
 
@@ -276,7 +276,7 @@ final class ResponseTest extends CIUnitTestCase
         string $protocol,
         string $method,
         ?int $code,
-        int $expectedCode
+        int $expectedCode,
     ): void {
         $_SERVER['SERVER_SOFTWARE'] = $server;
         $_SERVER['SERVER_PROTOCOL'] = $protocol;
@@ -319,7 +319,7 @@ final class ResponseTest extends CIUnitTestCase
         string $protocol,
         string $method,
         ?int $code,
-        int $expectedCode
+        int $expectedCode,
     ): void {
         $_SERVER['SERVER_SOFTWARE'] = 'Microsoft-IIS';
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';

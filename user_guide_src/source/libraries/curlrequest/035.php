@@ -3,5 +3,5 @@
 $client->request(
     'GET',
     'http://example.com',
-    ['proxy' => 'http://localhost:3128']
+    ['proxy' => 'http://localhost:3128'],
 );

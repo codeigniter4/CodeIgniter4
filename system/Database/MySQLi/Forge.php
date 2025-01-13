@@ -258,7 +258,7 @@ class Forge extends BaseForge
     {
         $sql = sprintf(
             'ALTER TABLE %s DROP PRIMARY KEY',
-            $this->db->escapeIdentifiers($this->db->DBPrefix . $table)
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
         );
 
         return $this->db->query($sql);

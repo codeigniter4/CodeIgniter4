@@ -11,7 +11,7 @@ echo video(
     'http://www.codeigniter.com/test.mp4',
     'Your browser does not support the video tag.',
     'controls',
-    $tracks
+    $tracks,
 );
 
 echo video(
@@ -23,5 +23,5 @@ echo video(
     ],
     'Your browser does not support the video tag.',
     'class="test" controls',
-    $tracks
+    $tracks,
 );

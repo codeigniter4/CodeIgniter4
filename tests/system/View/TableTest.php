@@ -75,7 +75,7 @@ final class TableTest extends CIUnitTestCase
                 ['data' => 'color'],
                 ['data' => 'size'],
             ],
-            $this->table->heading
+            $this->table->heading,
         );
     }
 
@@ -94,7 +94,7 @@ final class TableTest extends CIUnitTestCase
                 ['data' => 'Subtotal'],
                 ['data' => $subtotal],
             ],
-            $this->table->footing
+            $this->table->footing,
         );
     }
 
@@ -120,7 +120,7 @@ final class TableTest extends CIUnitTestCase
                     'style' => $this->styleTableOne,
                 ],
             ],
-            $this->table->heading
+            $this->table->heading,
         );
     }
 
@@ -146,7 +146,7 @@ final class TableTest extends CIUnitTestCase
                     'style' => $this->styleTableTwo,
                 ],
             ],
-            $this->table->footing
+            $this->table->footing,
         );
     }
 
@@ -169,7 +169,7 @@ final class TableTest extends CIUnitTestCase
                 ['data' => 'pony'],
                 ['data' => 'stinks'],
             ],
-            $this->table->rows[1]
+            $this->table->rows[1],
         );
     }
 
@@ -202,7 +202,7 @@ final class TableTest extends CIUnitTestCase
 
         $this->assertSame(
             $expected,
-            $this->table->prepArgs(['name', 'color', 'size'])
+            $this->table->prepArgs(['name', 'color', 'size']),
         );
 
         // with cell attributes
@@ -214,7 +214,7 @@ final class TableTest extends CIUnitTestCase
 
         $this->assertSame(
             $expected,
-            $this->table->prepArgs(['name', 'color', 'size', ['data' => 'weight', 'class' => 'awesome']])
+            $this->table->prepArgs(['name', 'color', 'size', ['data' => 'weight', 'class' => 'awesome']]),
         );
     }
 
@@ -285,7 +285,7 @@ final class TableTest extends CIUnitTestCase
         // No column count - no changes to the array
         $this->assertSame(
             $fiveValues,
-            $this->table->makeColumns($fiveValues)
+            $this->table->makeColumns($fiveValues),
         );
 
         // Column count of 3 leaves us with one &nbsp;
@@ -294,7 +294,7 @@ final class TableTest extends CIUnitTestCase
                 ['Laura', 'Red', '15'],
                 ['Katie', 'Blue', '&nbsp;'],
             ],
-            $this->table->makeColumns($fiveValues, 3)
+            $this->table->makeColumns($fiveValues, 3),
         );
     }
 

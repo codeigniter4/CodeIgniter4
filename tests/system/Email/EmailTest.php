@@ -182,11 +182,11 @@ final class EmailTest extends CIUnitTestCase
         $this->assertStringStartsWith('ci-logo.png@', $cid);
         $this->assertStringStartsWith(
             'ci-logo.png@',
-            $email->archive['attachments'][0]['cid']
+            $email->archive['attachments'][0]['cid'],
         );
         $this->assertMatchesRegularExpression(
             '/<img src="cid:ci-logo.png@(.+?)" alt="CI Logo">/u',
-            $email->archive['body']
+            $email->archive['body'],
         );
     }
 
@@ -208,11 +208,11 @@ final class EmailTest extends CIUnitTestCase
         $this->assertStringStartsWith('image001.png@', $cid);
         $this->assertStringStartsWith(
             'image001.png@',
-            $email->archive['attachments'][0]['cid']
+            $email->archive['attachments'][0]['cid'],
         );
         $this->assertMatchesRegularExpression(
             '/<img src="cid:image001.png@(.+?)" alt="CI Logo">/u',
-            $email->archive['body']
+            $email->archive['body'],
         );
     }
 }

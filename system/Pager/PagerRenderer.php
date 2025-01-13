@@ -148,7 +148,7 @@ class PagerRenderer
             $uri->getAuthority(),
             $uri->getPath(),
             $uri->getQuery(),
-            $uri->getFragment()
+            $uri->getFragment(),
         );
     }
 
@@ -186,7 +186,7 @@ class PagerRenderer
             $uri->getAuthority(),
             $uri->getPath(),
             $uri->getQuery(),
-            $uri->getFragment()
+            $uri->getFragment(),
         );
     }
 
@@ -208,7 +208,7 @@ class PagerRenderer
             $uri->getAuthority(),
             $uri->getPath(),
             $uri->getQuery(),
-            $uri->getFragment()
+            $uri->getFragment(),
         );
     }
 
@@ -230,7 +230,7 @@ class PagerRenderer
             $uri->getAuthority(),
             $uri->getPath(),
             $uri->getQuery(),
-            $uri->getFragment()
+            $uri->getFragment(),
         );
     }
 
@@ -252,7 +252,7 @@ class PagerRenderer
             $uri->getAuthority(),
             $uri->getPath(),
             $uri->getQuery(),
-            $uri->getFragment()
+            $uri->getFragment(),
         );
     }
 
@@ -278,7 +278,7 @@ class PagerRenderer
                     $uri->getAuthority(),
                     $uri->getPath(),
                     $uri->getQuery(),
-                    $uri->getFragment()
+                    $uri->getFragment(),
                 ),
                 'title'  => $i,
                 'active' => ($i === $this->current),
@@ -341,7 +341,7 @@ class PagerRenderer
             $uri->getAuthority(),
             $uri->getPath(),
             $uri->getQuery(),
-            $uri->getFragment()
+            $uri->getFragment(),
         );
     }
 
@@ -379,7 +379,7 @@ class PagerRenderer
             $uri->getAuthority(),
             $uri->getPath(),
             $uri->getQuery(),
-            $uri->getFragment()
+            $uri->getFragment(),
         );
     }
 

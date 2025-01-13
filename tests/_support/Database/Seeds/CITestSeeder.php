@@ -151,7 +151,7 @@ class CITestSeeder extends Seeder
                 $data['type_test'][0]['type_real'],
                 $data['type_test'][0]['type_double'],
                 $data['type_test'][0]['type_decimal'],
-                $data['type_test'][0]['type_blob']
+                $data['type_test'][0]['type_blob'],
             );
         }
 
@@ -166,7 +166,7 @@ class CITestSeeder extends Seeder
                 $data['type_test'][0]['type_set'],
                 $data['type_test'][0]['type_mediumtext'],
                 $data['type_test'][0]['type_double'],
-                $data['type_test'][0]['type_blob']
+                $data['type_test'][0]['type_blob'],
             );
         }
 

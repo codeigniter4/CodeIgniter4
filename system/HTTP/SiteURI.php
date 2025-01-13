@@ -95,7 +95,7 @@ class SiteURI extends URI
         App $configApp,
         string $relativePath = '',
         ?string $host = null,
-        ?string $scheme = null
+        ?string $scheme = null,
     ) {
         $this->indexPage = $configApp->indexPage;
 
@@ -142,7 +142,7 @@ class SiteURI extends URI
     private function determineBaseURL(
         App $configApp,
         ?string $host,
-        ?string $scheme
+        ?string $scheme,
     ): URI {
         $baseURL = $this->normalizeBaseURL($configApp);
 
@@ -199,7 +199,7 @@ class SiteURI extends URI
         // Validate baseURL
         if (filter_var($baseURL, FILTER_VALIDATE_URL) === false) {
             throw new ConfigException(
-                'Config\App::$baseURL "' . $baseURL . '" is not a valid URL.'
+                'Config\App::$baseURL "' . $baseURL . '" is not a valid URL.',
             );
         }
 
@@ -266,7 +266,7 @@ class SiteURI extends URI
             $this->getAuthority(),
             $this->getPath(),
             $this->getQuery(),
-            $this->getFragment()
+            $this->getFragment(),
         );
     }
 

@@ -130,7 +130,7 @@ class ControllerGenerator extends BaseCommand
             $class,
             ['{useStatement}', '{extends}'],
             [$useStatement, $extends],
-            ['type' => $rest]
+            ['type' => $rest],
         );
     }
 }

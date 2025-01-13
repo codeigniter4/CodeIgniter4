@@ -47,14 +47,14 @@ final class PublisherContentReplaceTest extends CIUnitTestCase
         $result = $this->publisher->addLineAfter(
             $this->file,
             '    public int $myOwnConfig = 1000;',
-            'public bool $CSPEnabled = false;'
+            'public bool $CSPEnabled = false;',
         );
 
         $this->assertTrue($result);
         $this->assertStringContainsString(
             '    public bool $CSPEnabled = false;
     public int $myOwnConfig = 1000;',
-            file_get_contents($this->file)
+            file_get_contents($this->file),
         );
     }
 
@@ -63,14 +63,14 @@ final class PublisherContentReplaceTest extends CIUnitTestCase
         $result = $this->publisher->addLineBefore(
             $this->file,
             '    public int $myOwnConfig = 1000;',
-            'public bool $CSPEnabled = false;'
+            'public bool $CSPEnabled = false;',
         );
 
         $this->assertTrue($result);
         $this->assertStringContainsString(
             '    public int $myOwnConfig = 1000;
     public bool $CSPEnabled = false;',
-            file_get_contents($this->file)
+            file_get_contents($this->file),
         );
     }
 
@@ -81,21 +81,21 @@ final class PublisherContentReplaceTest extends CIUnitTestCase
             [
                 'use CodeIgniter\Config\BaseConfig;' . "\n" => '',
                 'class App extends BaseConfig'              => 'class App extends \Some\Package\SomeConfig',
-            ]
+            ],
         );
 
         $this->assertTrue($result);
         $this->assertStringNotContainsString(
             'use CodeIgniter\Config\BaseConfig;',
-            file_get_contents($this->file)
+            file_get_contents($this->file),
         );
         $this->assertStringContainsString(
             'class App extends \Some\Package\SomeConfig',
-            file_get_contents($this->file)
+            file_get_contents($this->file),
         );
         $this->assertStringNotContainsString(
             'class App extends BaseConfig',
-            file_get_contents($this->file)
+            file_get_contents($this->file),
         );
     }
 }

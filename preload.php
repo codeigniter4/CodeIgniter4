@@ -86,7 +86,7 @@ class preload
             $phpFiles  = new RegexIterator(
                 $fullTree,
                 '/.+((?<!Test)+\.php$)/i',
-                RecursiveRegexIterator::GET_MATCH
+                RecursiveRegexIterator::GET_MATCH,
             );
 
             foreach ($phpFiles as $key => $file) {

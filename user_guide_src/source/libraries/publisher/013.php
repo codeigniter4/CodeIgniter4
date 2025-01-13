@@ -12,5 +12,5 @@ $publisher->replace(
     [
         'use CodeIgniter\Config\BaseConfig;' . "\n" => '',
         'class App extends BaseConfig'              => 'class App extends \Some\Package\SomeConfig',
-    ]
+    ],
 );

@@ -32,7 +32,7 @@ final class FilterCollector
          *
          * If set to true, route filters are not found.
          */
-        private readonly bool $resetRoutes = false
+        private readonly bool $resetRoutes = false,
     ) {
     }
 
@@ -50,7 +50,7 @@ final class FilterCollector
             @trigger_error(
                 'Passing lowercase HTTP method "' . $method . '" is deprecated.'
                 . ' Use uppercase HTTP method like "' . strtoupper($method) . '".',
-                E_USER_DEPRECATED
+                E_USER_DEPRECATED,
             );
         }
 

@@ -92,7 +92,7 @@ final class ResponseTraitTest extends CIUnitTestCase
                 $config,
                 new SiteURI($config, $routePath),
                 null,
-                new UserAgent()
+                new UserAgent(),
             );
             $this->response = new MockResponse($config);
         }
@@ -135,7 +135,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->formatter = null;
         $controller      = $this->makeController(
             '',
-            ['Accept' => 'application/json']
+            ['Accept' => 'application/json'],
         );
 
         $this->invoke($controller, 'respondCreated', [['id' => 3], 'A Custom Reason']);
@@ -156,7 +156,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->formatter = null;
         $controller      = $this->makeController(
             '',
-            ['Accept' => 'application/json']
+            ['Accept' => 'application/json'],
         );
 
         $this->invoke($controller, 'respondCreated', ['A Custom Reason']);
@@ -187,7 +187,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame('A Custom Reason', $this->response->getBody());
         $this->assertStringStartsWith(
             'text/html',
-            $this->response->getHeaderLine('Content-Type')
+            $this->response->getHeaderLine('Content-Type'),
         );
     }
 
@@ -279,7 +279,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame('"something"', $this->response->getBody());
         $this->assertStringStartsWith(
             'application/json',
-            $this->response->getHeaderLine('Content-Type')
+            $this->response->getHeaderLine('Content-Type'),
         );
         $this->assertSame('Created', $this->response->getReasonPhrase());
     }
@@ -460,7 +460,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->invoke(
             $controller,
             'failValidationErrors',
-            [['foo' => 'Nope', 'bar' => 'No way'], 'FAT CHANCE', 'A Custom Reason']
+            [['foo' => 'Nope', 'bar' => 'No way'], 'FAT CHANCE', 'A Custom Reason'],
         );
 
         $expected = [
@@ -571,14 +571,14 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame(
             $mimeType,
             $this->request->getHeaderLine('Accept'),
-            'Request header...'
+            'Request header...',
         );
 
         $this->response->setContentType($contentType);
         $this->assertSame(
             $contentType,
             $this->response->getHeaderLine('Content-Type'),
-            'Response header pre-response...'
+            'Response header pre-response...',
         );
 
         $_SERVER = $original;
@@ -637,7 +637,7 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $this->assertStringStartsWith(
             config('Format')->supportedResponseFormats[0],
-            $response->getHeaderLine('Content-Type')
+            $response->getHeaderLine('Content-Type'),
         );
     }
 
@@ -651,7 +651,7 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $this->assertStringStartsWith(
             'application/json',
-            $this->response->getHeaderLine('Content-Type')
+            $this->response->getHeaderLine('Content-Type'),
         );
         $this->assertSame($this->formatter->format($data), $this->response->getJSON());
 
@@ -660,7 +660,7 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $this->assertStringStartsWith(
             'application/xml',
-            $this->response->getHeaderLine('Content-Type')
+            $this->response->getHeaderLine('Content-Type'),
         );
     }
 

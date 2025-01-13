@@ -129,7 +129,7 @@ final class CommonHelperTest extends CIUnitTestCase
         foreach ($this->dummyHelpers as $helper) {
             $this->assertFileDoesNotExist($helper, sprintf(
                 'The dummy helper file "%s" should not be existing before it is tested.',
-                $helper
+                $helper,
             ));
         }
 

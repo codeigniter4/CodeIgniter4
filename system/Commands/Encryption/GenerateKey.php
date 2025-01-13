@@ -182,7 +182,7 @@ class GenerateKey extends BaseCommand
             $newFileContents = preg_replace(
                 '/^[#\s]*encryption.key[=\s]*(?:hex2bin\:[a-f0-9]{64}|base64\:(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?)$/m',
                 $replacementKey,
-                $oldFileContents
+                $oldFileContents,
             );
         }
 

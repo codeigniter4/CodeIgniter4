@@ -9,7 +9,7 @@ class SomeHandler extends BaseCast
     public static function get(
         mixed $value,
         array $params = [],
-        ?object $helper = null
+        ?object $helper = null,
     ): mixed {
         var_dump($params);
         /*

@@ -36,7 +36,7 @@ final class AutoRouteCollector
         private readonly string $defaultMethod,
         private readonly array $httpMethods,
         private readonly array $protectedControllers,
-        private readonly string $prefix = ''
+        private readonly string $prefix = '',
     ) {
     }
 
@@ -59,7 +59,7 @@ final class AutoRouteCollector
             $routes = $reader->read(
                 $class,
                 $this->defaultController,
-                $this->defaultMethod
+                $this->defaultMethod,
             );
 
             if ($routes === []) {

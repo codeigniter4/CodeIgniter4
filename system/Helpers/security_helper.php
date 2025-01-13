@@ -35,7 +35,7 @@ if (! function_exists('strip_image_tags')) {
                 '#<img[\s/]+.*?src\s*=\s*?(([^\s"\'=<>`]+)).*?\>#i',
             ],
             '\\2',
-            $str
+            $str,
         );
     }
 }

@@ -18,7 +18,7 @@ class MyExceptionHandler extends BaseExceptionHandler implements ExceptionHandle
         RequestInterface $request,
         ResponseInterface $response,
         int $statusCode,
-        int $exitCode
+        int $exitCode,
     ): void {
         $this->render($exception, $statusCode, $this->viewPath . "error_{$statusCode}.php");
 

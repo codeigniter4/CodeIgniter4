@@ -109,20 +109,20 @@ final class CorsTest extends CIUnitTestCase
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Origin',
-            'http://localhost:8080'
+            'http://localhost:8080',
         );
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Headers',
-            'X-API-KEY, X-Requested-With, Content-Type, Accept'
+            'X-API-KEY, X-Requested-With, Content-Type, Accept',
         );
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Methods',
-            'PUT'
+            'PUT',
         );
         $this->assertFalse(
-            $response->hasHeader('Access-Control-Allow-Credentials')
+            $response->hasHeader('Access-Control-Allow-Credentials'),
         );
     }
 
@@ -144,22 +144,22 @@ final class CorsTest extends CIUnitTestCase
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Origin',
-            'https://api.example.com'
+            'https://api.example.com',
         );
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Headers',
-            'X-API-KEY, X-Requested-With, Content-Type, Accept'
+            'X-API-KEY, X-Requested-With, Content-Type, Accept',
         );
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Methods',
-            'PUT'
+            'PUT',
         );
         $this->assertHeader(
             $response,
             'Vary',
-            'Origin'
+            'Origin',
         );
     }
 
@@ -182,22 +182,22 @@ final class CorsTest extends CIUnitTestCase
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Origin',
-            'https://api.example.com'
+            'https://api.example.com',
         );
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Headers',
-            'X-API-KEY, X-Requested-With, Content-Type, Accept'
+            'X-API-KEY, X-Requested-With, Content-Type, Accept',
         );
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Methods',
-            'PUT'
+            'PUT',
         );
         $this->assertHeader(
             $response,
             'Vary',
-            'Accept-Language, Origin'
+            'Accept-Language, Origin',
         );
     }
 
@@ -217,13 +217,13 @@ final class CorsTest extends CIUnitTestCase
         $response = $cors->handlePreflightRequest($request, $response);
 
         $this->assertFalse(
-            $response->hasHeader('Access-Control-Allow-Origin')
+            $response->hasHeader('Access-Control-Allow-Origin'),
         );
         $this->assertFalse(
-            $response->hasHeader('Access-Control-Allow-Headers')
+            $response->hasHeader('Access-Control-Allow-Headers'),
         );
         $this->assertFalse(
-            $response->hasHeader('Access-Control-Allow-Methods')
+            $response->hasHeader('Access-Control-Allow-Methods'),
         );
     }
 
@@ -245,22 +245,22 @@ final class CorsTest extends CIUnitTestCase
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Origin',
-            'https://api.example.com'
+            'https://api.example.com',
         );
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Headers',
-            'X-API-KEY, X-Requested-With, Content-Type, Accept'
+            'X-API-KEY, X-Requested-With, Content-Type, Accept',
         );
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Methods',
-            'PUT'
+            'PUT',
         );
         $this->assertHeader(
             $response,
             'Vary',
-            'Origin'
+            'Origin',
         );
     }
 
@@ -280,13 +280,13 @@ final class CorsTest extends CIUnitTestCase
         $response = $cors->handlePreflightRequest($request, $response);
 
         $this->assertFalse(
-            $response->hasHeader('Access-Control-Allow-Origin')
+            $response->hasHeader('Access-Control-Allow-Origin'),
         );
         $this->assertFalse(
-            $response->hasHeader('Access-Control-Allow-Headers')
+            $response->hasHeader('Access-Control-Allow-Headers'),
         );
         $this->assertFalse(
-            $response->hasHeader('Access-Control-Allow-Methods')
+            $response->hasHeader('Access-Control-Allow-Methods'),
         );
     }
 
@@ -309,22 +309,22 @@ final class CorsTest extends CIUnitTestCase
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Origin',
-            'http://localhost:8080'
+            'http://localhost:8080',
         );
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Headers',
-            'X-API-KEY, X-Requested-With, Content-Type, Accept'
+            'X-API-KEY, X-Requested-With, Content-Type, Accept',
         );
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Methods',
-            'PUT'
+            'PUT',
         );
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Credentials',
-            'true'
+            'true',
         );
     }
 
@@ -346,16 +346,16 @@ final class CorsTest extends CIUnitTestCase
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Origin',
-            'http://localhost:8080'
+            'http://localhost:8080',
         );
         $this->assertFalse(
-            $response->hasHeader('Access-Control-Allow-Headers')
+            $response->hasHeader('Access-Control-Allow-Headers'),
         );
         $this->assertFalse(
-            $response->hasHeader('Access-Control-Allow-Methods')
+            $response->hasHeader('Access-Control-Allow-Methods'),
         );
         $this->assertFalse(
-            $response->hasHeader('Access-Control-Allow-Credentials')
+            $response->hasHeader('Access-Control-Allow-Credentials'),
         );
     }
 
@@ -377,7 +377,7 @@ final class CorsTest extends CIUnitTestCase
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Origin',
-            'http://localhost:8080'
+            'http://localhost:8080',
         );
     }
 
@@ -401,12 +401,12 @@ final class CorsTest extends CIUnitTestCase
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Origin',
-            'http://localhost:8080'
+            'http://localhost:8080',
         );
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Credentials',
-            'true'
+            'true',
         );
     }
 
@@ -429,12 +429,12 @@ final class CorsTest extends CIUnitTestCase
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Origin',
-            'http://localhost:8080'
+            'http://localhost:8080',
         );
         $this->assertHeader(
             $response,
             'Access-Control-Expose-Headers',
-            'Content-Length, X-Kuma-Revision'
+            'Content-Length, X-Kuma-Revision',
         );
     }
 
@@ -455,18 +455,18 @@ final class CorsTest extends CIUnitTestCase
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Origin',
-            'https://api.example.com'
+            'https://api.example.com',
         );
         $this->assertHeader(
             $response,
             'Vary',
-            'Origin'
+            'Origin',
         );
         $this->assertFalse(
-            $response->hasHeader('Access-Control-Allow-Headers')
+            $response->hasHeader('Access-Control-Allow-Headers'),
         );
         $this->assertFalse(
-            $response->hasHeader('Access-Control-Allow-Methods')
+            $response->hasHeader('Access-Control-Allow-Methods'),
         );
     }
 
@@ -488,12 +488,12 @@ final class CorsTest extends CIUnitTestCase
         $this->assertHeader(
             $response,
             'Access-Control-Allow-Origin',
-            'https://api.example.com'
+            'https://api.example.com',
         );
         $this->assertHeader(
             $response,
             'Vary',
-            'Accept-Language, Origin'
+            'Accept-Language, Origin',
         );
     }
 
@@ -512,13 +512,13 @@ final class CorsTest extends CIUnitTestCase
         $response = $cors->addResponseHeaders($request, $response);
 
         $this->assertFalse(
-            $response->hasHeader('Access-Control-Allow-Origin')
+            $response->hasHeader('Access-Control-Allow-Origin'),
         );
         $this->assertFalse(
-            $response->hasHeader('Access-Control-Allow-Headers')
+            $response->hasHeader('Access-Control-Allow-Headers'),
         );
         $this->assertFalse(
-            $response->hasHeader('Access-Control-Allow-Methods')
+            $response->hasHeader('Access-Control-Allow-Methods'),
         );
     }
 }
