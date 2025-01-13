@@ -102,7 +102,7 @@ final class DbUtilsTest extends CIUnitTestCase
 
         if ($this->db->DBDriver === 'OCI8') {
             $this->markTestSkipped(
-                'Unsupported feature of the oracle database platform.'
+                'Unsupported feature of the oracle database platform.',
             );
         }
 
@@ -146,7 +146,7 @@ final class DbUtilsTest extends CIUnitTestCase
 
         if ($this->db->DBDriver === 'OCI8') {
             $this->markTestSkipped(
-                'Unsupported feature of the oracle database platform.'
+                'Unsupported feature of the oracle database platform.',
             );
         }
 

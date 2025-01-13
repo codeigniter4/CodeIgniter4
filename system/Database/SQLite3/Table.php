@@ -308,7 +308,7 @@ class Table
 
         $this->keys = array_filter(
             $this->keys,
-            static fn ($index): bool => count(array_intersect($index['fields'], $fieldNames)) === count($index['fields'])
+            static fn ($index): bool => count(array_intersect($index['fields'], $fieldNames)) === count($index['fields']),
         );
 
         // Unique/Index keys
@@ -334,7 +334,7 @@ class Table
             $this->forge->addForeignKey(
                 $foreignKey->column_name,
                 trim($foreignKey->foreign_table_name, $this->db->DBPrefix),
-                $foreignKey->foreign_column_name
+                $foreignKey->foreign_column_name,
             );
         }
 
@@ -358,15 +358,15 @@ class Table
 
         $exFields = implode(
             ', ',
-            array_map(fn ($item) => $this->db->protectIdentifiers($item), $exFields)
+            array_map(fn ($item) => $this->db->protectIdentifiers($item), $exFields),
         );
         $newFields = implode(
             ', ',
-            array_map(fn ($item) => $this->db->protectIdentifiers($item), $newFields)
+            array_map(fn ($item) => $this->db->protectIdentifiers($item), $newFields),
         );
 
         $this->db->query(
-            "INSERT INTO {$this->prefixedTableName}({$newFields}) SELECT {$exFields} FROM {$this->db->DBPrefix}temp_{$this->tableName}"
+            "INSERT INTO {$this->prefixedTableName}({$newFields}) SELECT {$exFields} FROM {$this->db->DBPrefix}temp_{$this->tableName}",
         );
     }
 

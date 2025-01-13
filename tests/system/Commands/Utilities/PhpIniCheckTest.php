@@ -68,7 +68,7 @@ final class PhpIniCheckTest extends CIUnitTestCase
 
         $this->assertStringContainsString(
             'You must specify a correct argument.',
-            $this->getBuffer()
+            $this->getBuffer(),
         );
     }
 }

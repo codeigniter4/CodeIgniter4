@@ -361,7 +361,7 @@ abstract class CIUnitTestCase extends TestCase
         $this->assertTrue($result, sprintf(
             'Failed asserting that expected message "%s" with level "%s" was logged.',
             $expectedMessage ?? '',
-            $level
+            $level,
         ));
 
         return $result;
@@ -377,8 +377,8 @@ abstract class CIUnitTestCase extends TestCase
             $message !== '' ? $message : sprintf(
                 'Failed asserting that logs have a record of message containing "%s" with level "%s".',
                 $logMessage,
-                $level
-            )
+                $level,
+            ),
         );
     }
 
@@ -417,7 +417,7 @@ abstract class CIUnitTestCase extends TestCase
     {
         $this->assertNotNull(
             $this->getHeaderEmitted($header, $ignoreCase, __METHOD__),
-            "Didn't find header for {$header}"
+            "Didn't find header for {$header}",
         );
     }
 
@@ -431,7 +431,7 @@ abstract class CIUnitTestCase extends TestCase
     {
         $this->assertNull(
             $this->getHeaderEmitted($header, $ignoreCase, __METHOD__),
-            "Found header for {$header}"
+            "Found header for {$header}",
         );
     }
 

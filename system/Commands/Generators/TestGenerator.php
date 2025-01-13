@@ -102,9 +102,9 @@ class TestGenerator extends BaseCommand
                 str_replace(
                     '/',
                     '\\',
-                    $this->getOption('namespace')
+                    $this->getOption('namespace'),
                 ),
-                '\\'
+                '\\',
             );
         }
 
@@ -143,7 +143,7 @@ class TestGenerator extends BaseCommand
             CLI::error(
                 lang('CLI.namespaceNotDefined', [$namespace]),
                 'light_gray',
-                'red'
+                'red',
             );
             CLI::newLine();
 
@@ -157,7 +157,7 @@ class TestGenerator extends BaseCommand
             . str_replace(
                 '\\',
                 DIRECTORY_SEPARATOR,
-                trim(str_replace($namespace . '\\', '', $class), '\\')
+                trim(str_replace($namespace . '\\', '', $class), '\\'),
             ) . '.php';
 
         return implode(
@@ -165,8 +165,8 @@ class TestGenerator extends BaseCommand
             array_slice(
                 explode(DIRECTORY_SEPARATOR, $file),
                 0,
-                -1
-            )
+                -1,
+            ),
         ) . DIRECTORY_SEPARATOR . $this->basename($file);
     }
 

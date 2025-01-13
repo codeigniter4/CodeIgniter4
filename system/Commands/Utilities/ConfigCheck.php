@@ -109,7 +109,7 @@ final class ConfigCheck extends BaseCommand
             CLI::write($this->getKintD($config));
         } else {
             CLI::write(
-                CLI::color($this->getVarDump($config), 'cyan')
+                CLI::color($this->getVarDump($config), 'cyan'),
             );
         }
 
@@ -150,7 +150,7 @@ final class ConfigCheck extends BaseCommand
         return preg_replace(
             '!.*system/Commands/Utilities/ConfigCheck.php.*\n!u',
             '',
-            $output
+            $output,
         );
     }
 }

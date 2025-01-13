@@ -12,5 +12,5 @@ $validation->setRules(
         'password' => [
             'min_length' => 'Your password is too short. You want to get hacked?',
         ],
-    ]
+    ],
 );

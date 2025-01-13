@@ -338,7 +338,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
         $this->assertSame(
             '/en/path/string/to/13',
-            route_to('path-to', 'string', 13, 'en')
+            route_to('path-to', 'string', 13, 'en'),
         );
     }
 
@@ -352,7 +352,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
         $this->assertSame(
             '/en/path/string/to/13',
-            route_to('path-to', 'string', 13, 'invalid')
+            route_to('path-to', 'string', 13, 'invalid'),
         );
     }
 
@@ -642,7 +642,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
             $this->assertInstanceOf(RedirectException::class, $e);
             $this->assertSame(
                 'https://example.com/index.php/',
-                $e->getResponse()->header('Location')->getValue()
+                $e->getResponse()->header('Location')->getValue(),
             );
             $this->assertFalse($e->getResponse()->hasCookie('force'));
             $this->assertSame('header', $e->getResponse()->getHeaderLine('Force'));
@@ -668,7 +668,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
             $this->assertInstanceOf(RedirectException::class, $e);
             $this->assertSame(
                 'https://example.jp/codeIgniter/index.php/en/home?foo=bar',
-                $e->getResponse()->header('Location')->getValue()
+                $e->getResponse()->header('Location')->getValue(),
             );
         }
     }

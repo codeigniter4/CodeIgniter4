@@ -222,7 +222,7 @@ trait TimeTrait
         ?int $minutes = null,
         ?int $seconds = null,
         $timezone = null,
-        ?string $locale = null
+        ?string $locale = null,
     ) {
         $year ??= date('Y');
         $month ??= date('m');
@@ -315,7 +315,7 @@ trait TimeTrait
         return DateTime::createFromFormat(
             'Y-m-d H:i:s.u',
             $this->format('Y-m-d H:i:s.u'),
-            $this->getTimezone()
+            $this->getTimezone(),
         );
     }
 
@@ -664,7 +664,7 @@ trait TimeTrait
             (int) $minute,
             (int) $second,
             $this->getTimezoneName(),
-            $this->locale
+            $this->locale,
         );
     }
 

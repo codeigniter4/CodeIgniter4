@@ -1,4 +1,4 @@
-# total 135 errors
+# total 127 errors
 
 parameters:
     ignoreErrors:
@@ -148,53 +148,13 @@ parameters:
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:\$request has no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:\$response has no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:177\:\:\$formatter has no type specified\.$#'
+            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:\$formatter has no type specified\.$#'
             count: 2
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:177\:\:\$request has no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:177\:\:\$response has no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:299\:\:\$formatter has no type specified\.$#'
+            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:\$formatter has no type specified\.$#'
             count: 2
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:299\:\:\$request has no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:299\:\:\$response has no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:\$request has no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:\$response has no type specified\.$#'
-            count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -

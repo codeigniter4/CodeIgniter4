@@ -27,6 +27,6 @@ interface ExceptionHandlerInterface
         RequestInterface $request,
         ResponseInterface $response,
         int $statusCode,
-        int $exitCode
+        int $exitCode,
     ): void;
 }

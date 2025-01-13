@@ -153,7 +153,7 @@ class Filters
         $this->request = &$request;
         $this->setResponse($response);
 
-        $this->modules = $modules ?? config(Modules::class);
+        $this->modules = $modules instanceof Modules ? $modules : new Modules();
 
         if ($this->modules->shouldDiscover('filters')) {
             $this->discoverFilters();
@@ -744,7 +744,7 @@ class Filters
             @trigger_error(
                 'Setting lowercase HTTP method key "' . strtolower($method) . '" is deprecated.'
                 . ' Use uppercase HTTP method like "' . strtoupper($method) . '".',
-                E_USER_DEPRECATED
+                E_USER_DEPRECATED,
             );
 
             $found  = true;

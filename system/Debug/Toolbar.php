@@ -58,7 +58,7 @@ class Toolbar
                 log_message(
                     'critical',
                     'Toolbar collector does not exist (' . $collector . ').'
-                    . ' Please check $collectors in the app/Config/Toolbar.php file.'
+                    . ' Please check $collectors in the app/Config/Toolbar.php file.',
                 );
 
                 continue;
@@ -391,7 +391,7 @@ class Toolbar
                 $stats['startTime'],
                 $stats['totalTime'],
                 $request,
-                $response
+                $response,
             );
 
             helper('filesystem');
@@ -439,8 +439,8 @@ class Toolbar
                         '/<head>/',
                         '<head>' . $script,
                         $response->getBody(),
-                        1
-                    )
+                        1,
+                    ),
                 );
 
                 return;
@@ -516,7 +516,7 @@ class Toolbar
             $history = new History();
             $history->setFiles(
                 $debugbarTime[0],
-                $this->config->maxHistory
+                $this->config->maxHistory,
             );
 
             $data['collectors'][] = $history->getAsArray();

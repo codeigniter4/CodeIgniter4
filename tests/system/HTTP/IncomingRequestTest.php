@@ -290,7 +290,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $this->assertSame(
             'utf-8',
-            $this->request->negotiate('charset', ['iso-8859', 'unicode-1-2'])
+            $this->request->negotiate('charset', ['iso-8859', 'unicode-1-2']),
         );
     }
 
@@ -299,7 +299,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->request->setHeader('Accept', 'text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c');
         $this->assertSame(
             'text/html',
-            $this->request->negotiate('media', ['text/html', 'text/x-c', 'text/x-dvi', 'text/plain'])
+            $this->request->negotiate('media', ['text/html', 'text/x-c', 'text/x-dvi', 'text/plain']),
         );
     }
 
@@ -436,17 +436,17 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $this->assertSame(
             $expected,
-            $request->getJsonVar(null, true, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)
+            $request->getJsonVar(null, true, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
         );
 
         $this->assertSame(
             $expected['array'],
-            $request->getJsonVar('array', true, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)
+            $request->getJsonVar('array', true, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
         );
 
         $this->assertSame(
             ['array' => $expected['array'], 'float' => $expected['float']],
-            $request->getJsonVar(['array', 'float'], true, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)
+            $request->getJsonVar(['array', 'float'], true, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
         );
 
         $result = $request->getJsonVar(['array', 'float'], false, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
@@ -1165,7 +1165,7 @@ final class IncomingRequestTest extends CIUnitTestCase
     {
         $this->expectException(ConfigException::class);
         $this->expectExceptionMessage(
-            'You must set an array with Proxy IP address key and HTTP header name value in Config\App::$proxyIPs.'
+            'You must set an array with Proxy IP address key and HTTP header name value in Config\App::$proxyIPs.',
         );
 
         $config           = new App();

@@ -41,7 +41,7 @@ final class AutoRouteCollector
             $output = $reader->read(
                 $class,
                 $this->defaultController,
-                $this->defaultMethod
+                $this->defaultMethod,
             );
 
             foreach ($output as $item) {

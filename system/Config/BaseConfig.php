@@ -246,7 +246,7 @@ class BaseConfig
                 throw new ConfigException(
                     'During Auto-Discovery of Registrars,'
                     . ' "' . static::class . '" executes Auto-Discovery again.'
-                    . ' "' . clean_path(static::$registrarFile) . '" seems to have bad code.'
+                    . ' "' . clean_path(static::$registrarFile) . '" seems to have bad code.',
                 );
             }
 

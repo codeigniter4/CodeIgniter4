@@ -9,7 +9,7 @@ $time2 = new Time('2024-01-01 12:00:00');
 $time1 = Time::createFromFormat(
     'Y-m-d H:i:s',
     $time1->format('Y-m-d H:i:s'),
-    $time1->getTimezone()
+    $time1->getTimezone(),
 );
 
 $time1->equals($time2);

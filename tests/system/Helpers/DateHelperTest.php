@@ -46,7 +46,7 @@ final class DateHelperTest extends CIUnitTestCase
         // Chicago should be two hours ahead of Vancouver
         $this->assertSame(
             7200,
-            now('America/Chicago') - now('America/Vancouver')
+            now('America/Chicago') - now('America/Vancouver'),
         );
 
         Time::setTestNow();
@@ -84,7 +84,7 @@ final class DateHelperTest extends CIUnitTestCase
 
         $this->assertSame(
             $expected,
-            timezone_select('custom-select', 'Asia/Jakarta', $spesificRegion)
+            timezone_select('custom-select', 'Asia/Jakarta', $spesificRegion),
         );
     }
 
@@ -105,7 +105,7 @@ final class DateHelperTest extends CIUnitTestCase
 
         $this->assertSame(
             $expected,
-            timezone_select('custom-select', 'Asia/Jakarta', $spesificRegion, $country)
+            timezone_select('custom-select', 'Asia/Jakarta', $spesificRegion, $country),
         );
     }
 }

@@ -342,7 +342,7 @@ class CURLRequest extends OutgoingRequest
             $uri->getAuthority(),
             $uri->getPath(),
             $uri->getQuery(),
-            $uri->getFragment()
+            $uri->getFragment(),
         );
     }
 
@@ -654,7 +654,7 @@ class CURLRequest extends OutgoingRequest
             $curlOptions[CURLOPT_IPRESOLVE] = match ($config['force_ip_resolve']) {
                 'v4'    => CURL_IPRESOLVE_V4,
                 'v6'    => CURL_IPRESOLVE_V6,
-                default => CURL_IPRESOLVE_WHATEVER
+                default => CURL_IPRESOLVE_WHATEVER,
             };
         }
 

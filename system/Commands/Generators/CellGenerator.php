@@ -96,7 +96,7 @@ class CellGenerator extends BaseCommand
         $viewName  = preg_replace(
             '/([a-z][a-z0-9_\/\\\\]+)(_cell)$/i',
             '$1',
-            $viewName
+            $viewName,
         ) ?? $viewName;
         $namespace = substr($className, 0, strrpos($className, '\\') + 1);
 

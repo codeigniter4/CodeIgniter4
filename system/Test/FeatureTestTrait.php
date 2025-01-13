@@ -58,7 +58,7 @@ trait FeatureTestTrait
                     @trigger_error(
                         'Passing lowercase HTTP method "' . $route[0] . '" is deprecated.'
                         . ' Use uppercase HTTP method like "' . strtoupper($route[0]) . '".',
-                        E_USER_DEPRECATED
+                        E_USER_DEPRECATED,
                     );
                 }
 
@@ -168,7 +168,7 @@ trait FeatureTestTrait
             @trigger_error(
                 'Passing lowercase HTTP method "' . $method . '" is deprecated.'
                 . ' Use uppercase HTTP method like "' . strtoupper($method) . '".',
-                E_USER_DEPRECATED
+                E_USER_DEPRECATED,
             );
         }
 
@@ -385,7 +385,7 @@ trait FeatureTestTrait
             $request->setGlobal($name, $params);
             $request->setGlobal(
                 'request',
-                $request->fetchGlobal('post') + $request->fetchGlobal('get')
+                $request->fetchGlobal('post') + $request->fetchGlobal('get'),
             );
         }
 

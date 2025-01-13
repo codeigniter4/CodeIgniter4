@@ -338,18 +338,18 @@ final class FactoriesTest extends CIUnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Already defined in Factories: models CodeIgniter\Shield\Models\UserModel -> Tests\Support\Models\UserModel'
+            'Already defined in Factories: models CodeIgniter\Shield\Models\UserModel -> Tests\Support\Models\UserModel',
         );
 
         Factories::define(
             'models',
             'CodeIgniter\Shield\Models\UserModel',
-            UserModel::class
+            UserModel::class,
         );
         Factories::define(
             'models',
             'CodeIgniter\Shield\Models\UserModel',
-            EntityModel::class
+            EntityModel::class,
         );
     }
 
@@ -358,12 +358,12 @@ final class FactoriesTest extends CIUnitTestCase
         Factories::define(
             'models',
             'CodeIgniter\Shield\Models\UserModel',
-            UserModel::class
+            UserModel::class,
         );
         Factories::define(
             'models',
             'CodeIgniter\Shield\Models\UserModel',
-            UserModel::class
+            UserModel::class,
         );
 
         $model = model('CodeIgniter\Shield\Models\UserModel');
@@ -379,7 +379,7 @@ final class FactoriesTest extends CIUnitTestCase
         Factories::define(
             'models',
             'CodeIgniter\Shield\Models\UserModel',
-            'App\Models\UserModel'
+            'App\Models\UserModel',
         );
     }
 
@@ -387,7 +387,7 @@ final class FactoriesTest extends CIUnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Already defined in Factories: models Tests\Support\Models\UserModel -> Tests\Support\Models\UserModel'
+            'Already defined in Factories: models Tests\Support\Models\UserModel -> Tests\Support\Models\UserModel',
         );
 
         model(UserModel::class);
@@ -395,7 +395,7 @@ final class FactoriesTest extends CIUnitTestCase
         Factories::define(
             'models',
             UserModel::class,
-            'App\Models\UserModel'
+            'App\Models\UserModel',
         );
     }
 
@@ -404,7 +404,7 @@ final class FactoriesTest extends CIUnitTestCase
         Factories::define(
             'models',
             UserModel::class,
-            EntityModel::class
+            EntityModel::class,
         );
 
         $model = model(UserModel::class);
@@ -417,7 +417,7 @@ final class FactoriesTest extends CIUnitTestCase
         Factories::define(
             'models',
             UserModel::class,
-            EntityModel::class
+            EntityModel::class,
         );
 
         $model = Factories::get('models', UserModel::class);

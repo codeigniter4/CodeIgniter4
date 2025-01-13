@@ -145,7 +145,7 @@ class ShowTableInfo extends BaseCommand
             $tableNameNo = CLI::promptByKey(
                 ['Here is the list of your database tables:', 'Which table do you want to see?'],
                 $tables,
-                'required'
+                'required',
             );
             CLI::newLine();
 
@@ -175,7 +175,7 @@ class ShowTableInfo extends BaseCommand
         ]];
         CLI::table(
             $data,
-            ['hostname', 'database', 'username', 'DBDriver', 'DBPrefix', 'port']
+            ['hostname', 'database', 'username', 'DBDriver', 'DBPrefix', 'port'],
         );
     }
 
@@ -273,7 +273,7 @@ class ShowTableInfo extends BaseCommand
         string $tableName,
         int $limitRows,
         int $limitFieldValue,
-        ?string $sortField = null
+        ?string $sortField = null,
     ): array {
         $this->tbody = [];
 
@@ -291,7 +291,7 @@ class ShowTableInfo extends BaseCommand
                 static fn ($item): string => mb_strlen((string) $item) > $limitFieldValue
                     ? mb_substr((string) $item, 0, $limitFieldValue) . '...'
                     : (string) $item,
-                $row
+                $row,
             );
             $this->tbody[] = $row;
         }

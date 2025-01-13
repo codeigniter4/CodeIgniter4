@@ -407,7 +407,7 @@ trait ResponseTrait
                 header(
                     $name . ': ' . $value->getValueLine(),
                     true,
-                    $this->getStatusCode()
+                    $this->getStatusCode(),
                 );
             } else {
                 $replace = true;
@@ -416,7 +416,7 @@ trait ResponseTrait
                     header(
                         $name . ': ' . $header->getValueLine(),
                         $replace,
-                        $this->getStatusCode()
+                        $this->getStatusCode(),
                     );
                     $replace = false;
                 }
@@ -515,7 +515,7 @@ trait ResponseTrait
         $prefix = '',
         $secure = null,
         $httponly = null,
-        $samesite = null
+        $samesite = null,
     ) {
         if ($name instanceof Cookie) {
             $this->cookieStore = $this->cookieStore->put($name);

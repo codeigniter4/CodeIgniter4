@@ -379,7 +379,7 @@ abstract class BaseModel
             $this->converter = new DataConverter(
                 $this->casts,
                 $this->castHandlers,
-                $this->db
+                $this->db,
             );
         }
     }
@@ -1081,7 +1081,7 @@ abstract class BaseModel
                 if ($updateIndex === null) {
                     throw new InvalidArgumentException(
                         'The index ("' . $index . '") for updateBatch() is missing in the data: '
-                        . json_encode($row)
+                        . json_encode($row),
                     );
                 }
 

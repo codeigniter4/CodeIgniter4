@@ -287,7 +287,7 @@ final class InsertTest extends CIUnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'RawSql "expires = DATE_ADD(NOW(), INTERVAL 2 HOUR)" cannot be used here.'
+            'RawSql "expires = DATE_ADD(NOW(), INTERVAL 2 HOUR)" cannot be used here.',
         );
 
         $builder = $this->db->table('auth_bearer');

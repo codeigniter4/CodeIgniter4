@@ -54,12 +54,12 @@ final class ArrayHelper
             '/(?<!\\\\)\./',
             rtrim($index, '* '),
             0,
-            PREG_SPLIT_NO_EMPTY
+            PREG_SPLIT_NO_EMPTY,
         );
 
         return array_map(
             static fn ($key): string => str_replace('\.', '.', $key),
-            $segments
+            $segments,
         );
     }
 
@@ -130,7 +130,7 @@ final class ArrayHelper
     {
         if (str_ends_with($index, '*') || str_contains($index, '*.*')) {
             throw new InvalidArgumentException(
-                'You must set key right after "*". Invalid index: "' . $index . '"'
+                'You must set key right after "*". Invalid index: "' . $index . '"',
             );
         }
 
@@ -210,7 +210,7 @@ final class ArrayHelper
         array $result,
         array $row,
         array $indexes,
-        bool $includeEmpty
+        bool $includeEmpty,
     ): array {
         if (($index = array_shift($indexes)) === null) {
             $result[] = $row;

@@ -77,6 +77,7 @@ class MockResult extends BaseResult
      */
     protected function fetchAssoc()
     {
+        return [];
     }
 
     /**

@@ -127,7 +127,7 @@ class Connection extends BaseConnection
             if ($this->strictOn) {
                 $this->mysqli->options(
                     MYSQLI_INIT_COMMAND,
-                    "SET SESSION sql_mode = CONCAT(@@sql_mode, ',', 'STRICT_ALL_TABLES')"
+                    "SET SESSION sql_mode = CONCAT(@@sql_mode, ',', 'STRICT_ALL_TABLES')",
                 );
             } else {
                 $this->mysqli->options(
@@ -139,7 +139,7 @@ class Connection extends BaseConnection
                                 'STRICT_ALL_TABLES', ''),
                             'STRICT_TRANS_TABLES,', ''),
                         ',STRICT_TRANS_TABLES', ''),
-                    'STRICT_TRANS_TABLES', '')"
+                    'STRICT_TRANS_TABLES', '')",
                 );
             }
         }
@@ -186,7 +186,7 @@ class Connection extends BaseConnection
                     $ssl['cert'] ?? null,
                     $ssl['ca'] ?? null,
                     $ssl['capath'] ?? null,
-                    $ssl['cipher'] ?? null
+                    $ssl['cipher'] ?? null,
                 );
             }
 
@@ -205,7 +205,7 @@ class Connection extends BaseConnection
                 $this->database,
                 $port,
                 $socket,
-                $clientFlags
+                $clientFlags,
             )) {
                 // Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
                 if (($clientFlags & MYSQLI_CLIENT_SSL) !== 0 && version_compare($this->mysqli->client_info, 'mysqlnd 5.7.3', '<=')
@@ -396,7 +396,7 @@ class Connection extends BaseConnection
         return str_replace(
             [$this->likeEscapeChar, '%', '_'],
             ['\\' . $this->likeEscapeChar, '\\%', '\\_'],
-            $str
+            $str,
         );
     }
 
@@ -432,7 +432,7 @@ class Connection extends BaseConnection
             $table,
             true,
             null,
-            false
+            false,
         );
 
         return 'SHOW COLUMNS FROM ' . $tableName;

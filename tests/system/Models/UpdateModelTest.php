@@ -159,7 +159,7 @@ final class UpdateModelTest extends LiveModelTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'The index ("not_exist") for updateBatch() is missing in the data: {"name":"Derek Jones","country":"Greece"}'
+            'The index ("not_exist") for updateBatch() is missing in the data: {"name":"Derek Jones","country":"Greece"}',
         );
 
         $data = [
@@ -473,7 +473,7 @@ final class UpdateModelTest extends LiveModelTestCase
 
         // See https://github.com/codeigniter4/CodeIgniter4/pull/8282#issuecomment-1836974182
         $this->markTestSkipped(
-            'batchUpdate() is currently not working due to data type issues in the generated SQL statement.'
+            'batchUpdate() is currently not working due to data type issues in the generated SQL statement.',
         );
 
         $this->createUuidTable();

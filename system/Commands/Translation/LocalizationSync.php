@@ -53,7 +53,7 @@ class LocalizationSync extends BaseCommand
         if (! in_array($optionLocale, config(App::class)->supportedLocales, true)) {
             CLI::error(
                 'Error: "' . $optionLocale . '" is not supported. Supported locales: '
-                . implode(', ', config(App::class)->supportedLocales)
+                . implode(', ', config(App::class)->supportedLocales),
             );
 
             return EXIT_USER_INPUT;
@@ -62,7 +62,7 @@ class LocalizationSync extends BaseCommand
         if ($optionTargetLocale === '') {
             CLI::error(
                 'Error: "--target" is not configured. Supported locales: '
-                . implode(', ', config(App::class)->supportedLocales)
+                . implode(', ', config(App::class)->supportedLocales),
             );
 
             return EXIT_USER_INPUT;
@@ -71,7 +71,7 @@ class LocalizationSync extends BaseCommand
         if (! in_array($optionTargetLocale, config(App::class)->supportedLocales, true)) {
             CLI::error(
                 'Error: "' . $optionTargetLocale . '" is not supported. Supported locales: '
-                . implode(', ', config(App::class)->supportedLocales)
+                . implode(', ', config(App::class)->supportedLocales),
             );
 
             return EXIT_USER_INPUT;
@@ -79,7 +79,7 @@ class LocalizationSync extends BaseCommand
 
         if ($optionTargetLocale === $optionLocale) {
             CLI::error(
-                'Error: You cannot have the same values for "--target" and "--locale".'
+                'Error: You cannot have the same values for "--target" and "--locale".',
             );
 
             return EXIT_USER_INPUT;
@@ -105,7 +105,7 @@ class LocalizationSync extends BaseCommand
 
         if (! is_dir($originalLocaleDir)) {
             CLI::error(
-                'Error: The "' . clean_path($originalLocaleDir) . '" directory was not found.'
+                'Error: The "' . clean_path($originalLocaleDir) . '" directory was not found.',
             );
 
             return EXIT_ERROR;
@@ -118,7 +118,7 @@ class LocalizationSync extends BaseCommand
             }
         } catch (ErrorException $e) {
             CLI::error(
-                'Error: The target directory "' . clean_path($targetLocaleDir) . '" cannot be accessed.'
+                'Error: The target directory "' . clean_path($targetLocaleDir) . '" cannot be accessed.',
             );
 
             return EXIT_ERROR;
@@ -127,8 +127,8 @@ class LocalizationSync extends BaseCommand
         $iterator = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator(
                 $originalLocaleDir,
-                FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS
-            )
+                FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS,
+            ),
         );
 
         /**

@@ -338,7 +338,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
         $this->assertMatchesRegularExpression(
             '!<script nonce="\w+?" src="http://site.com/js/mystyles.js".*?>!u',
-            $html
+            $html,
         );
 
         // Reset CSP object
@@ -414,7 +414,7 @@ final class HTMLHelperTest extends CIUnitTestCase
             'alternate',
             '',
             '',
-            'only screen and (max-width: 640px)'
+            'only screen and (max-width: 640px)',
         );
 
         $expected = '<link href="http://sp.example.com/" rel="alternate" media="only screen and (max-width: 640px)">';

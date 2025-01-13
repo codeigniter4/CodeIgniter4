@@ -62,7 +62,7 @@ final class ComposerJsonTest extends TestCase
                 $dependency,
                 $expectedVersion,
                 $fwRequireDev[$dependency],
-                clean_path(dirname(__DIR__, 3) . '/admin/framework/composer.json')
+                clean_path(dirname(__DIR__, 3) . '/admin/framework/composer.json'),
             ));
         }
     }
@@ -77,7 +77,7 @@ final class ComposerJsonTest extends TestCase
         $this->checkConfig(
             $this->devComposer['config'],
             $this->frameworkComposer['config'],
-            'framework'
+            'framework',
         );
     }
 
@@ -86,7 +86,7 @@ final class ComposerJsonTest extends TestCase
         $this->checkConfig(
             $this->devComposer['config'],
             $this->starterComposer['config'],
-            'starter'
+            'starter',
         );
     }
 
@@ -101,7 +101,7 @@ final class ComposerJsonTest extends TestCase
         $this->assertSame(
             $this->devComposer[$section],
             $sectionContent,
-            sprintf('The %s\'s "%s" section is not updated with the main composer.json', strtolower($component), $section)
+            sprintf('The %s\'s "%s" section is not updated with the main composer.json', strtolower($component), $section),
         );
     }
 
@@ -119,7 +119,7 @@ final class ComposerJsonTest extends TestCase
             $this->assertSame($expectedValue, $actualValue, sprintf(
                 '%s\'s value for config property "%s" is not same with the main composer.json\'s config.',
                 ucfirst($component),
-                $key
+                $key,
             ));
         }
     }
@@ -132,7 +132,7 @@ final class ComposerJsonTest extends TestCase
             $this->fail(sprintf(
                 'The composer.json at "%s" is not readable or does not exist. Error was "%s".',
                 clean_path($path),
-                $e->getMessage()
+                $e->getMessage(),
             ));
         }
     }

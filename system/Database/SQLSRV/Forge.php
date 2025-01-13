@@ -134,12 +134,12 @@ class Forge extends BaseForge
             $sql = sprintf(
                 $this->createDatabaseIfStr,
                 $dbName,
-                $this->db->escapeIdentifier($dbName)
+                $this->db->escapeIdentifier($dbName),
             );
         } else {
             $sql = sprintf(
                 $this->createDatabaseStr,
-                $this->db->escapeIdentifier($dbName)
+                $this->db->escapeIdentifier($dbName),
             );
         }
 
@@ -381,8 +381,8 @@ class Forge extends BaseForge
                 $maxLength = max(
                     array_map(
                         static fn ($value): int => strlen($value),
-                        $attributes['CONSTRAINT']
-                    )
+                        $attributes['CONSTRAINT'],
+                    ),
                 );
 
                 $attributes['TYPE']       = 'VARCHAR';

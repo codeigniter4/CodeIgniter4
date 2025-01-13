@@ -953,15 +953,15 @@ final class URITest extends CIUnitTestCase
     {
         $this->assertSame(
             'http://entirely.different.com/subfolder',
-            (string) (new URI('entirely.different.com/subfolder'))
+            (string) (new URI('entirely.different.com/subfolder')),
         );
         $this->assertSame(
             'http://localhost/subfolder',
-            (string) (new URI('localhost/subfolder'))
+            (string) (new URI('localhost/subfolder')),
         );
         $this->assertSame(
             'http://localtest.me/subfolder',
-            (string) (new URI('localtest.me/subfolder'))
+            (string) (new URI('localtest.me/subfolder')),
         );
     }
 
@@ -1052,7 +1052,7 @@ final class URITest extends CIUnitTestCase
         // going through request
         $this->assertSame(
             'http://example.com/ci/v4/controller/method',
-            (string) $request->getUri()
+            (string) $request->getUri(),
         );
         $this->assertSame('/ci/v4/controller/method', $request->getUri()->getPath());
         $this->assertSame('controller/method', $request->getUri()->getRoutePath());
@@ -1086,18 +1086,18 @@ final class URITest extends CIUnitTestCase
         // going through request
         $this->assertSame(
             'http://example.com/ci/v4/index.php/controller/method',
-            (string) $request->getUri()
+            (string) $request->getUri(),
         );
         $this->assertSame(
             '/ci/v4/index.php/controller/method',
-            $request->getUri()->getPath()
+            $request->getUri()->getPath(),
         );
 
         // standalone
         $uri = new URI('http://example.com/ci/v4/index.php/controller/method');
         $this->assertSame(
             'http://example.com/ci/v4/index.php/controller/method',
-            (string) $uri
+            (string) $uri,
         );
         $this->assertSame('/ci/v4/index.php/controller/method', $uri->getPath());
 
@@ -1126,7 +1126,7 @@ final class URITest extends CIUnitTestCase
         // Detected by request
         $this->assertSame(
             'https://example.com/ci/v4/controller/method',
-            (string) $request->getUri()
+            (string) $request->getUri(),
         );
 
         // Standalone
@@ -1135,7 +1135,7 @@ final class URITest extends CIUnitTestCase
 
         $this->assertSame(
             trim($uri->getPath(), '/'),
-            trim($request->getUri()->getPath(), '/')
+            trim($request->getUri()->getPath(), '/'),
         );
     }
 

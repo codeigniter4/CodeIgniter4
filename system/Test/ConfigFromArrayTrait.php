@@ -39,7 +39,7 @@ trait ConfigFromArrayTrait
             }
 
             throw new LogicException(
-                'No such property: ' . $classname . '::$' . $key
+                'No such property: ' . $classname . '::$' . $key,
             );
         }
 

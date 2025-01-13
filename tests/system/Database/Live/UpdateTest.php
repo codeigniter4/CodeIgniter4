@@ -443,7 +443,7 @@ final class UpdateTest extends CIUnitTestCase
             null,
             ['id', new RawSql($this->db->protectIdentifiers('d')
             . '.' . $this->db->protectIdentifiers('country')
-            . " LIKE 'U%'")]
+            . " LIKE 'U%'")],
         );
 
         $this->seeInDatabase('user', [

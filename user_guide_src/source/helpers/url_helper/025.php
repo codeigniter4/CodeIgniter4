@@ -4,7 +4,7 @@
 $routes->add(
     '{locale}/users/(:num)/gallery/(:num)',
     'Galleries::showUserGallery/$1/$2',
-    ['as' => 'user_gallery']
+    ['as' => 'user_gallery'],
 );
 
 ?>

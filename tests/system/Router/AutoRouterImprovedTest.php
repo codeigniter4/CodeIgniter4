@@ -51,7 +51,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             $namespace,
             $this->collection->getDefaultController(),
             $this->collection->getDefaultMethod(),
-            true
+            true,
         );
     }
 
@@ -151,7 +151,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
     {
         $this->expectException(PageNotFoundException::class);
         $this->expectExceptionMessage(
-            'Handler:\CodeIgniter\Router\Controllers\Mycontroller::getSomemethod, URI:mycontroller/somemethod/a/b'
+            'Handler:\CodeIgniter\Router\Controllers\Mycontroller::getSomemethod, URI:mycontroller/somemethod/a/b',
         );
 
         $router = $this->createNewAutoRouter();
@@ -221,7 +221,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame('Dash_folder/', $directory);
         $this->assertSame(
             '\\' . Controllers\Dash_folder\Mycontroller::class,
-            $controller
+            $controller,
         );
         $this->assertSame('getSomemethod', $method);
         $this->assertSame([], $params);
@@ -424,7 +424,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
     {
         $this->expectException(PageNotFoundException::class);
         $this->expectExceptionMessage(
-            'AutoRouterImproved does not support `_remap()` method. Controller:\CodeIgniter\Router\Controllers\Remap'
+            'AutoRouterImproved does not support `_remap()` method. Controller:\CodeIgniter\Router\Controllers\Remap',
         );
 
         $router = $this->createNewAutoRouter();
@@ -436,7 +436,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
     {
         $this->expectException(PageNotFoundException::class);
         $this->expectExceptionMessage(
-            'AutoRouterImproved prohibits access to the URI containing underscores ("dash_folder")'
+            'AutoRouterImproved prohibits access to the URI containing underscores ("dash_folder")',
         );
 
         $router = $this->createNewAutoRouter();
@@ -448,7 +448,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
     {
         $this->expectException(PageNotFoundException::class);
         $this->expectExceptionMessage(
-            'AutoRouterImproved prohibits access to the URI containing underscores ("dash_controller")'
+            'AutoRouterImproved prohibits access to the URI containing underscores ("dash_controller")',
         );
 
         $this->disableTranslateUriToCamelCase();
@@ -462,7 +462,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
     {
         $this->expectException(PageNotFoundException::class);
         $this->expectExceptionMessage(
-            'AutoRouterImproved prohibits access to the URI containing underscores ("dash_method")'
+            'AutoRouterImproved prohibits access to the URI containing underscores ("dash_method")',
         );
 
         $this->disableTranslateUriToCamelCase();
@@ -506,7 +506,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         string $expMethod,
         int $controllerPos,
         ?int $methodPos,
-        ?int $paramPos
+        ?int $paramPos,
     ): void {
         $config                          = config(Routing::class);
         $config->translateUriToCamelCase = true;
@@ -575,7 +575,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
     {
         $this->expectException(PageNotFoundException::class);
         $this->expectExceptionMessage(
-            $expMsg
+            $expMsg,
         );
 
         $config                          = config(Routing::class);

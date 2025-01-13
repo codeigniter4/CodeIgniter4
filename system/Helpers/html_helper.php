@@ -238,7 +238,7 @@ if (! function_exists('link_tag')) {
         string $title = '',
         string $media = '',
         bool $indexPage = false,
-        string $hreflang = ''
+        string $hreflang = '',
     ): string {
         $attributes = [];
         // extract fields if needed

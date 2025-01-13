@@ -34,7 +34,7 @@ class TableName
         private readonly string $logicalTable = '',
         private readonly string $schema = '',
         private readonly string $database = '',
-        private readonly string $alias = ''
+        private readonly string $alias = '',
     ) {
     }
 
@@ -51,7 +51,7 @@ class TableName
             $table,
             '',
             '',
-            $alias
+            $alias,
         );
     }
 
@@ -74,7 +74,7 @@ class TableName
             $actualTable,
             $logicalTable,
             '',
-            $alias
+            $alias,
         );
     }
 
@@ -91,14 +91,14 @@ class TableName
         string $table,
         string $schema = '',
         string $database = '',
-        string $alias = ''
+        string $alias = '',
     ): self {
         return new self(
             $dbPrefix . $table,
             $table,
             $schema,
             $database,
-            $alias
+            $alias,
         );
     }
 

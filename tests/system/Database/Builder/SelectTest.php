@@ -220,7 +220,7 @@ final class SelectTest extends CIUnitTestCase
 
         $builder->select(
             'REGEXP_SUBSTR(ral_anno,"[0-9]{1,2}([,.][0-9]{1,3})([,.][0-9]{1,3})") AS ral',
-            false
+            false,
         );
 
         $expected = <<<'SQL'
@@ -405,7 +405,7 @@ final class SelectTest extends CIUnitTestCase
         $sql = $builder->getCompiledSelect();
         $this->assertSame(
             'SELECT * FROM "users"',
-            str_replace("\n", ' ', $sql)
+            str_replace("\n", ' ', $sql),
         );
     }
 }

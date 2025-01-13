@@ -151,11 +151,11 @@ final class ExceptionHandlerTest extends CIUnitTestCase
 
         $this->assertStringContainsString(
             'ERROR: 404',
-            $this->getStreamFilterBuffer()
+            $this->getStreamFilterBuffer(),
         );
         $this->assertStringContainsString(
             'Controller or its method is not found: Foo::bar',
-            $this->getStreamFilterBuffer()
+            $this->getStreamFilterBuffer(),
         );
 
         $this->resetStreamFilterBuffer();

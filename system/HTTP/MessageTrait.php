@@ -182,7 +182,7 @@ trait MessageTrait
         if ($this->hasMultipleHeaders($name)) {
             throw new InvalidArgumentException(
                 'The header "' . $name . '" already has multiple headers.'
-                . ' You cannot change them. If you really need to change, remove the header first.'
+                . ' You cannot change them. If you really need to change, remove the header first.',
             );
         }
     }

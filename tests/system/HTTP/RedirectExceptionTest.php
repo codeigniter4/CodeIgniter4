@@ -49,7 +49,7 @@ final class RedirectExceptionTest extends TestCase
             service('response')
                 ->redirect('redirect')
                 ->setCookie('cookie', 'value')
-                ->setHeader('Redirect-Header', 'value')
+                ->setHeader('Redirect-Header', 'value'),
         ))->getResponse();
 
         $this->assertSame('redirect', $response->getHeaderLine('location'));
@@ -62,7 +62,7 @@ final class RedirectExceptionTest extends TestCase
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage(
-            'The Response object passed to RedirectException does not contain a redirect address.'
+            'The Response object passed to RedirectException does not contain a redirect address.',
         );
 
         new RedirectException(service('response'));

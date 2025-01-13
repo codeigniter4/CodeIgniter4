@@ -311,7 +311,7 @@ final class MessageTest extends CIUnitTestCase
     {
         $this->message->addHeader(
             'Set-Cookie',
-            'logged_in=no; Path=/'
+            'logged_in=no; Path=/',
         );
 
         $header = $this->message->header('Set-Cookie');
@@ -324,11 +324,11 @@ final class MessageTest extends CIUnitTestCase
     {
         $this->message->addHeader(
             'Set-Cookie',
-            'logged_in=no; Path=/'
+            'logged_in=no; Path=/',
         );
         $this->message->addHeader(
             'Set-Cookie',
-            'sessid=123456; Path=/'
+            'sessid=123456; Path=/',
         );
 
         $headers = $this->message->header('Set-Cookie');
@@ -342,16 +342,16 @@ final class MessageTest extends CIUnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'The header "Set-Cookie" already has multiple headers. You cannot change them. If you really need to change, remove the header first.'
+            'The header "Set-Cookie" already has multiple headers. You cannot change them. If you really need to change, remove the header first.',
         );
 
         $this->message->addHeader(
             'Set-Cookie',
-            'logged_in=no; Path=/'
+            'logged_in=no; Path=/',
         );
         $this->message->addHeader(
             'Set-Cookie',
-            'sessid=123456; Path=/'
+            'sessid=123456; Path=/',
         );
 
         $this->message->appendHeader('Set-Cookie', 'HttpOnly');
@@ -361,16 +361,16 @@ final class MessageTest extends CIUnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'The header "Set-Cookie" already has multiple headers. You cannot use getHeaderLine().'
+            'The header "Set-Cookie" already has multiple headers. You cannot use getHeaderLine().',
         );
 
         $this->message->addHeader(
             'Set-Cookie',
-            'logged_in=no; Path=/'
+            'logged_in=no; Path=/',
         );
         $this->message->addHeader(
             'Set-Cookie',
-            'sessid=123456; Path=/'
+            'sessid=123456; Path=/',
         );
 
         $this->message->getHeaderLine('Set-Cookie');

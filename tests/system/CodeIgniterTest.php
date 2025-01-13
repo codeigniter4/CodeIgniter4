@@ -215,7 +215,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $routes = service('routes');
         $routes->add(
             'pages/(:segment)',
-            static fn ($segment): string => 'You want to see "' . esc($segment) . '" page.'
+            static fn ($segment): string => 'You want to see "' . esc($segment) . '" page.',
         );
         $router = service('router', $routes, service('incomingrequest'));
         Services::injectMock('router', $router);
@@ -294,7 +294,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $routes->add(
             'pages/about',
             static fn () => service('incomingrequest')->getBody(),
-            ['filter' => Customfilter::class]
+            ['filter' => Customfilter::class],
         );
 
         $router = service('router', $routes, service('incomingrequest'));
@@ -322,7 +322,7 @@ final class CodeIgniterTest extends CIUnitTestCase
             'pages/about',
             static fn () => service('incomingrequest')->getBody(),
             // Set filter with no argument.
-            ['filter' => 'test-customfilter']
+            ['filter' => 'test-customfilter'],
         );
 
         $router = service('router', $routes, service('incomingrequest'));
@@ -360,7 +360,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $routes->add(
             'pages/about',
             static fn () => service('incomingrequest')->getBody(),
-            ['filter' => Customfilter::class]
+            ['filter' => Customfilter::class],
         );
         $router = service('router', $routes, service('incomingrequest'));
         Services::injectMock('router', $router);
@@ -822,7 +822,7 @@ final class CodeIgniterTest extends CIUnitTestCase
     public function testPageCacheWithCacheQueryString(
         $cacheQueryStringValue,
         int $expectedPagesInCache,
-        array $testingUrls
+        array $testingUrls,
     ): void {
         // Suppress command() output
         CITestStreamFilter::registration();

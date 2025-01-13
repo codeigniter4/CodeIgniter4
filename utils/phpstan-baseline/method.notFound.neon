@@ -28,6 +28,11 @@ parameters:
             path: ../../tests/system/CodeIgniterTest.php
 
         -
+            message: '#^Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface\:\:get\(\)\.$#'
+            count: 2
+            path: ../../tests/system/Commands/Utilities/Routes/FilterFinderTest.php
+
+        -
             message: '#^Call to an undefined method CodeIgniter\\Database\\BaseConnection\:\:escapeLikeStringDirect\(\)\.$#'
             count: 1
             path: ../../tests/system/Database/Live/EscapeTest.php
@@ -46,11 +51,6 @@ parameters:
             message: '#^Call to an undefined method CodeIgniter\\HTTP\\ResponseInterface\:\:pretend\(\)\.$#'
             count: 3
             path: ../../tests/system/Debug/ExceptionHandlerTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Events\\Events\:\:unInitialize\(\)\.$#'
-            count: 1
-            path: ../../tests/system/Events/EventsTest.php
 
         -
             message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getCookie\(\)\.$#'

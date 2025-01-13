@@ -106,8 +106,8 @@ class Builder extends BaseBuilder
                         )
                     ),
                     array_keys($constraints),
-                    $constraints
-                )
+                    $constraints,
+                ),
             ) . "\n";
 
             $sql .= "SET\n";
@@ -119,8 +119,8 @@ class Builder extends BaseBuilder
                         ' = ' . $value :
                         ' = ' . $alias . '.' . $value),
                     array_keys($updateFields),
-                    $updateFields
-                )
+                    $updateFields,
+                ),
             );
 
             $this->QBOptions['sql'] = $sql;
@@ -135,10 +135,10 @@ class Builder extends BaseBuilder
                     static fn ($value): string => 'SELECT ' . implode(', ', array_map(
                         static fn ($key, $index): string => $index . ' ' . $key,
                         $keys,
-                        $value
+                        $value,
                     )),
-                    $values
-                )
+                    $values,
+                ),
             ) . "\n";
         }
 

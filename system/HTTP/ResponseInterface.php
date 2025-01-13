@@ -331,7 +331,7 @@ interface ResponseInterface extends MessageInterface
         $prefix = '',
         $secure = false,
         $httponly = false,
-        $samesite = null
+        $samesite = null,
     );
 
     /**

@@ -1659,7 +1659,7 @@ class Email
         $this->finalBody = preg_replace_callback(
             '/\{unwrap\}(.*?)\{\/unwrap\}/si',
             $this->removeNLCallback(...),
-            $this->finalBody
+            $this->finalBody,
         );
     }
 
@@ -1900,7 +1900,7 @@ class Email
             $this->SMTPPort,
             $errno,
             $errstr,
-            $this->SMTPTimeout
+            $this->SMTPTimeout,
         );
 
         if (! is_resource($this->SMTPConnect)) {
@@ -1921,7 +1921,7 @@ class Email
                 STREAM_CRYPTO_METHOD_TLSv1_0_CLIENT
                 | STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT
                 | STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT
-                | STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT
+                | STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT,
             );
 
             if ($crypto !== true) {

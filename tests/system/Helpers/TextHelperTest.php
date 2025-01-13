@@ -145,7 +145,7 @@ final class TextHelperTest extends CIUnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'You must set an even number to the second parameter when you use `crypto`'
+            'You must set an even number to the second parameter when you use `crypto`',
         );
 
         random_string('crypto', 9);

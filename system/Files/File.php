@@ -102,7 +102,7 @@ class File extends SplFileInfo
         return match (strtolower($unit)) {
             'kb'    => $this->getSizeByBinaryUnit(FileSizeUnit::KB),
             'mb'    => $this->getSizeByBinaryUnit(FileSizeUnit::MB),
-            default => $this->getSize()
+            default => $this->getSize(),
         };
     }
 

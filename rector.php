@@ -61,7 +61,7 @@ return RectorConfig::configure()
     ->withCache(
         // Github action cache or local
         is_dir('/tmp') ? '/tmp/rector' : null,
-        FileCacheStorage::class
+        FileCacheStorage::class,
     )
     // paths to refactor; solid alternative to CLI arguments
     ->withPaths([

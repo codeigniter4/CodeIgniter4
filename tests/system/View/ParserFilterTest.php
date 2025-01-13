@@ -122,7 +122,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $parser->setData($data);
         $this->assertSame(
             'foo bar baz test { undef|default(far) }',
-            $parser->renderString($template)
+            $parser->renderString($template),
         );
     }
 

@@ -303,7 +303,7 @@ final class GDHandlerTest extends CIUnitTestCase
         $this->handler->withFile($this->path);
         $this->handler->text(
             'vertical',
-            ['hAlign' => 'right', 'vAlign' => 'bottom', 'opacity' => 0.5]
+            ['hAlign' => 'right', 'vAlign' => 'bottom', 'opacity' => 0.5],
         );
         $this->assertSame(155, $this->handler->getWidth());
         $this->assertSame(200, $this->handler->getHeight());
@@ -346,7 +346,7 @@ final class GDHandlerTest extends CIUnitTestCase
 
             $this->assertNotSame(
                 file_get_contents($this->origin . 'ci-logo.' . $type),
-                $this->root->getChild('work/ci-logo.' . $type)->getContent()
+                $this->root->getChild('work/ci-logo.' . $type)->getContent(),
             );
         }
     }
@@ -360,7 +360,7 @@ final class GDHandlerTest extends CIUnitTestCase
 
             $this->assertSame(
                 file_get_contents($this->origin . 'ci-logo.' . $type),
-                file_get_contents($this->origin . 'ci-logo.' . $type)
+                file_get_contents($this->origin . 'ci-logo.' . $type),
             );
         }
     }
@@ -380,7 +380,7 @@ final class GDHandlerTest extends CIUnitTestCase
 
             $this->assertNotSame(
                 file_get_contents($this->origin . 'ci-logo.' . $type),
-                $this->root->getChild('work/ci-logo.' . $type)->getContent()
+                $this->root->getChild('work/ci-logo.' . $type)->getContent(),
             );
         }
     }
@@ -401,7 +401,7 @@ final class GDHandlerTest extends CIUnitTestCase
 
             $this->assertNotSame(
                 file_get_contents($this->origin . 'ci-logo.' . $type),
-                $this->root->getChild('work/ci-logo.' . $type)->getContent()
+                $this->root->getChild('work/ci-logo.' . $type)->getContent(),
             );
         }
     }

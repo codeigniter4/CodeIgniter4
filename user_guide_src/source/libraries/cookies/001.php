@@ -16,7 +16,7 @@ $cookie = new Cookie(
         'httponly' => true,
         'raw'      => false,
         'samesite' => Cookie::SAMESITE_LAX,
-    ]
+    ],
 );
 
 // Supplying a Set-Cookie header string

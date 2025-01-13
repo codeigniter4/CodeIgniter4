@@ -426,7 +426,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertStringContainsString(
             // All GET values will be strings.
             '{"true":"1","false":"","int":"2","null":"","float":"1.23","string":"foo"}',
-            $response->getBody()
+            $response->getBody(),
         );
     }
 
@@ -453,7 +453,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertStringContainsString(
             // All GET values will be strings.
             '{"true":"1","false":"","int":"2","null":"","float":"1.23","string":"foo"}',
-            $response->getBody()
+            $response->getBody(),
         );
     }
 
@@ -480,7 +480,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertStringContainsString(
             // All POST values will be strings.
             '{"true":"1","false":"","int":"2","null":"","float":"1.23","string":"foo"}',
-            $response->getBody()
+            $response->getBody(),
         );
     }
 
@@ -507,7 +507,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertStringContainsString(
             // All POST values will be strings.
             '{"true":"1","false":"","int":"2","null":"","float":"1.23","string":"foo"}',
-            $response->getBody()
+            $response->getBody(),
         );
     }
 
@@ -622,11 +622,11 @@ final class FeatureTestTraitTest extends CIUnitTestCase
 
         $this->assertJsonStringEqualsJsonString(
             json_encode(['foo1' => 'bar1']),
-            $request->getBody()
+            $request->getBody(),
         );
         $this->assertSame(
             'application/json',
-            $request->header('Content-Type')->getValue()
+            $request->header('Content-Type')->getValue(),
         );
     }
 

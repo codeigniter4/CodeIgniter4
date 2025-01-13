@@ -56,7 +56,7 @@ final class FormatTest extends CIUnitTestCase
     {
         $this->format->getConfig()->formatters = array_merge(
             $this->format->getConfig()->formatters,
-            ['text/xml' => 'App\Foo']
+            ['text/xml' => 'App\Foo'],
         );
 
         $this->expectException(FormatException::class);
@@ -68,7 +68,7 @@ final class FormatTest extends CIUnitTestCase
     {
         $this->format->getConfig()->formatters = array_merge(
             $this->format->getConfig()->formatters,
-            ['text/xml' => URI::class]
+            ['text/xml' => URI::class],
         );
 
         $this->expectException(FormatException::class);

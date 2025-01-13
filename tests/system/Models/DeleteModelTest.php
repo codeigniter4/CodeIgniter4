@@ -249,7 +249,7 @@ final class DeleteModelTest extends LiveModelTestCase
         // BaseBuilder throws Exception.
         $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage(
-            'Deletes are not allowed unless they contain a "where" or "like" clause.'
+            'Deletes are not allowed unless they contain a "where" or "like" clause.',
         );
 
         // $useSoftDeletes = false
@@ -267,7 +267,7 @@ final class DeleteModelTest extends LiveModelTestCase
         // Model throws Exception.
         $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage(
-            'Deletes are not allowed unless they contain a "where" or "like" clause.'
+            'Deletes are not allowed unless they contain a "where" or "like" clause.',
         );
 
         // $useSoftDeletes = true

@@ -277,7 +277,7 @@ final class SessionTest extends CIUnitTestCase
                 'cooking' => 'baking',
                 'sport'   => 'tennis',
             ],
-            $session->get('hobbies')
+            $session->get('hobbies'),
         );
     }
 

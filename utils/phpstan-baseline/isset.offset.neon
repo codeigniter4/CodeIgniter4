@@ -1,8 +1,0 @@
-# total 1 error
-
-parameters:
-    ignoreErrors:
-        -
-            message: '#^Offset 4 on array\{string, string, string, string, string, string\} in isset\(\) always exists and is not nullable\.$#'
-            count: 1
-            path: ../../system/Database/BaseBuilder.php

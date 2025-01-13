@@ -94,7 +94,7 @@ class FilterCheck extends BaseCommand
                 CLI::color(
                     '"' . strtoupper($method) . ' ' . $route . '"',
                     'black',
-                    'light_gray'
+                    'light_gray',
                 ),
             );
 
@@ -131,7 +131,7 @@ class FilterCheck extends BaseCommand
         FilterCollector $filterCollector,
         array $filters,
         string $method,
-        string $route
+        string $route,
     ): void {
         $thead = [
             'Method',
@@ -179,7 +179,7 @@ class FilterCheck extends BaseCommand
     private function showFilterClasses(
         FilterCollector $filterCollector,
         string $method,
-        string $route
+        string $route,
     ): void {
         $requiredFilterClasses = $filterCollector->getRequiredFilterClasses();
         $filterClasses         = $filterCollector->getClasses($method, $route);

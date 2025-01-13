@@ -163,7 +163,7 @@ class URI implements Stringable
         ?string $authority = null,
         ?string $path = null,
         ?string $query = null,
-        ?string $fragment = null
+        ?string $fragment = null,
     ): string {
         $uri = '';
         if ($scheme !== null && $scheme !== '') {
@@ -638,7 +638,7 @@ class URI implements Stringable
             $this->getAuthority(),
             $path, // Absolute URIs should use a "/" for an empty path
             $this->getQuery(),
-            $this->getFragment()
+            $this->getFragment(),
         );
     }
 
@@ -1022,7 +1022,7 @@ class URI implements Stringable
         $path = preg_replace_callback(
             '/(?:[^' . static::CHAR_UNRESERVED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/',
             static fn (array $matches): string => rawurlencode($matches[0]),
-            $path
+            $path,
         );
 
         return $path;
@@ -1170,7 +1170,7 @@ class URI implements Stringable
         $params = array_map(static fn (string $chunk): ?string => preg_replace_callback(
             '/^(?<key>[^&=]+?)(?:\[[^&=]*\])?=(?<value>[^&=]+)/',
             static fn (array $match): string => str_replace($match['key'], bin2hex($match['key']), $match[0]),
-            urldecode($chunk)
+            urldecode($chunk),
         ), $query);
 
         $params = implode('&', $params);

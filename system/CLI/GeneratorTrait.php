@@ -171,7 +171,7 @@ trait GeneratorTrait
                 CLI::prompt(
                     'Are you sure you want to continue?',
                     ['y', 'n'],
-                    'required'
+                    'required',
                 ) === 'n'
             ) {
                 CLI::newLine();
@@ -193,7 +193,7 @@ trait GeneratorTrait
             CLI::error(
                 lang('CLI.generator.fileExist', [clean_path($target)]),
                 'light_gray',
-                'red'
+                'red',
             );
             CLI::newLine();
 
@@ -216,7 +216,7 @@ trait GeneratorTrait
             CLI::error(
                 lang('CLI.generator.fileError', [clean_path($target)]),
                 'light_gray',
-                'red'
+                'red',
             );
             CLI::newLine();
 
@@ -227,7 +227,7 @@ trait GeneratorTrait
         if ($this->getOption('force') && $isFile) {
             CLI::write(
                 lang('CLI.generator.fileOverwrite', [clean_path($target)]),
-                'yellow'
+                'yellow',
             );
             CLI::newLine();
 
@@ -236,7 +236,7 @@ trait GeneratorTrait
 
         CLI::write(
             lang('CLI.generator.fileCreate', [clean_path($target)]),
-            'green'
+            'green',
         );
         CLI::newLine();
     }
@@ -326,10 +326,10 @@ trait GeneratorTrait
                 '\\',
                 array_map(
                     pascalize(...),
-                    explode('\\', str_replace('/', '\\', trim($class)))
-                )
+                    explode('\\', str_replace('/', '\\', trim($class))),
+                ),
             ),
-            '\\/'
+            '\\/',
         );
     }
 
@@ -351,7 +351,7 @@ trait GeneratorTrait
             return view(
                 "CodeIgniter\\Commands\\Generators\\Views\\{$this->template}",
                 $data,
-                ['debug' => false]
+                ['debug' => false],
             );
         }
     }
@@ -370,15 +370,15 @@ trait GeneratorTrait
         string $class,
         array $search = [],
         array $replace = [],
-        array $data = []
+        array $data = [],
     ): string {
         // Retrieves the namespace part from the fully qualified class name.
         $namespace = trim(
             implode(
                 '\\',
-                array_slice(explode('\\', $class), 0, -1)
+                array_slice(explode('\\', $class), 0, -1),
             ),
-            '\\'
+            '\\',
         );
         $search[]  = '<@php';
         $search[]  = '{namespace}';
@@ -404,7 +404,7 @@ trait GeneratorTrait
             && preg_match(
                 '/(?P<imports>(?:^use [^;]+;$\n?)+)/m',
                 $template,
-                $match
+                $match,
             )
         ) {
             $imports = explode("\n", trim($match['imports']));
@@ -432,7 +432,7 @@ trait GeneratorTrait
             CLI::error(
                 lang('CLI.namespaceNotDefined', [$namespace]),
                 'light_gray',
-                'red'
+                'red',
             );
             CLI::newLine();
 
@@ -446,7 +446,7 @@ trait GeneratorTrait
             . str_replace(
                 '\\',
                 DIRECTORY_SEPARATOR,
-                trim(str_replace($namespace . '\\', '', $class), '\\')
+                trim(str_replace($namespace . '\\', '', $class), '\\'),
             ) . '.php';
 
         return implode(
@@ -454,8 +454,8 @@ trait GeneratorTrait
             array_slice(
                 explode(DIRECTORY_SEPARATOR, $file),
                 0,
-                -1
-            )
+                -1,
+            ),
         ) . DIRECTORY_SEPARATOR . $this->basename($file);
     }
 
@@ -470,9 +470,9 @@ trait GeneratorTrait
             str_replace(
                 '/',
                 '\\',
-                $this->getOption('namespace') ?? APP_NAMESPACE
+                $this->getOption('namespace') ?? APP_NAMESPACE,
             ),
-            '\\'
+            '\\',
         );
     }
 

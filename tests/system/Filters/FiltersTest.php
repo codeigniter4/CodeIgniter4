@@ -96,7 +96,7 @@ final class FiltersTest extends CIUnitTestCase
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
         $filters       = $this->createFilters(
             $filtersConfig,
-            new CLIRequest(new MockAppConfig())
+            new CLIRequest(new MockAppConfig()),
         );
 
         $expected = [

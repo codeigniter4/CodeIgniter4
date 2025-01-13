@@ -283,7 +283,7 @@ class FileHandler extends BaseHandler
 
         $pattern = sprintf(
             '#\A%s' . $pattern . $this->sessionIDRegex . '\z#',
-            preg_quote($this->cookieName, '#')
+            preg_quote($this->cookieName, '#'),
         );
 
         $collected = 0;

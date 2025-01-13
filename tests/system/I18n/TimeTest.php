@@ -64,7 +64,7 @@ final class TimeTest extends CIUnitTestCase
             IntlDateFormatter::SHORT,
             'America/Chicago',
             IntlDateFormatter::GREGORIAN,
-            'yyyy-MM-dd HH:mm:ss'
+            'yyyy-MM-dd HH:mm:ss',
         );
 
         $time = new Time('', 'America/Chicago');
@@ -79,7 +79,7 @@ final class TimeTest extends CIUnitTestCase
             IntlDateFormatter::SHORT,
             'Europe/London',
             IntlDateFormatter::GREGORIAN,
-            'yyyy-MM-dd HH:mm:ss'
+            'yyyy-MM-dd HH:mm:ss',
         );
 
         $time = new Time('now', 'Europe/London');
@@ -95,7 +95,7 @@ final class TimeTest extends CIUnitTestCase
             IntlDateFormatter::SHORT,
             'Europe/London',
             IntlDateFormatter::GREGORIAN,
-            'yyyy-MM-dd HH:mm:ss'
+            'yyyy-MM-dd HH:mm:ss',
         );
 
         $time = new Time('now', 'Europe/London', 'fr_FR');
@@ -111,7 +111,7 @@ final class TimeTest extends CIUnitTestCase
             IntlDateFormatter::SHORT,
             'Europe/London',
             IntlDateFormatter::GREGORIAN,
-            'yyyy-MM-dd HH:mm:ss'
+            'yyyy-MM-dd HH:mm:ss',
         );
 
         $time = new Time('now', new DateTimeZone('Europe/London'), 'fr_FR');
@@ -734,7 +734,7 @@ final class TimeTest extends CIUnitTestCase
     {
         $time1 = new DateTimeImmutable(
             'May 10, 2017',
-            new DateTimeZone('America/Chicago')
+            new DateTimeZone('America/Chicago'),
         );
 
         $stamp = strtotime('2017-04-01'); // We use UTC as the default timezone.

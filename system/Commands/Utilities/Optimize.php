@@ -110,13 +110,13 @@ final class Optimize extends BaseCommand
             [
                 'public bool $configCacheEnabled = false;'  => 'public bool $configCacheEnabled = true;',
                 'public bool $locatorCacheEnabled = false;' => 'public bool $locatorCacheEnabled = true;',
-            ]
+            ],
         );
 
         if ($result) {
             CLI::write(
                 'Config Caching and FileLocator Caching are enabled in "app/Config/Optimize.php".',
-                'green'
+                'green',
             );
 
             return;

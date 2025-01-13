@@ -40,7 +40,7 @@ final class ConnectTest extends CIUnitTestCase
         $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage(
             'Unable to connect to the database.
-Main connection [Postgre]: ERROR:  invalid value for parameter "client_encoding": "utf8mb4"'
+Main connection [Postgre]: ERROR:  invalid value for parameter "client_encoding": "utf8mb4"',
         );
 
         $config = config('Database');

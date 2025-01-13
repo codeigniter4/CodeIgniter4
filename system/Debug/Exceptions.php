@@ -164,7 +164,7 @@ class Exceptions
                 $this->request,
                 $this->response,
                 $statusCode,
-                $exitCode
+                $exitCode,
             );
 
             return;
@@ -247,7 +247,7 @@ class Exceptions
                     'message' => $message,
                     'errFile' => clean_path($file ?? ''),
                     'errLine' => $line ?? 0,
-                ]
+                ],
             );
 
             return true;
@@ -279,7 +279,7 @@ class Exceptions
                     'message' => $message,
                     'errFile' => clean_path($file ?? ''),
                     'errLine' => $line ?? 0,
-                ]
+                ],
             );
 
             return true;
@@ -336,7 +336,7 @@ class Exceptions
             in_array(
                 strtolower(ini_get('display_errors')),
                 ['1', 'true', 'on', 'yes'],
-                true
+                true,
             )
         ) {
             $view = 'error_exception.php';
@@ -528,7 +528,7 @@ class Exceptions
                 'errFile' => clean_path($file ?? ''),
                 'errLine' => $line ?? 0,
                 'trace'   => self::renderBacktrace($trace),
-            ]
+            ],
         );
 
         return true;
@@ -633,7 +633,7 @@ class Exceptions
                     "<span class='line highlight'><span class='number'>{$format}</span> %s\n</span>%s",
                     $n + $start + 1,
                     strip_tags($row),
-                    implode('', $tags[0])
+                    implode('', $tags[0]),
                 );
             } else {
                 $out .= sprintf('<span class="line"><span class="number">' . $format . '</span> %s', $n + $start + 1, $row) . "\n";
@@ -677,7 +677,7 @@ class Exceptions
                 $frame['class'],
                 $frame['type'],
                 $frame['function'],
-                $args
+                $args,
             );
         }
 

@@ -6508,92 +6508,92 @@ parameters:
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:177\:\:fail\(\) has parameter \$messages with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:fail\(\) has parameter \$messages with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:177\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:177\:\:respond\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:respond\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:177\:\:respondCreated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:respondCreated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:177\:\:respondDeleted\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:respondDeleted\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:177\:\:respondUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:respondUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:299\:\:fail\(\) has parameter \$messages with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:fail\(\) has parameter \$messages with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:299\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:299\:\:respond\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:respond\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:299\:\:respondCreated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:respondCreated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:299\:\:respondDeleted\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:respondDeleted\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:299\:\:respondUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:respondUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:fail\(\) has parameter \$messages with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:609\:\:fail\(\) has parameter \$messages with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:609\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:respond\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:609\:\:respond\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:respondCreated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:609\:\:respondCreated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:respondDeleted\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:609\:\:respondDeleted\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:respondUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:609\:\:respondUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 

@@ -66,7 +66,7 @@ class FrameworkException extends RuntimeException
             // @codeCoverageIgnoreStart
             $message = sprintf(
                 'The framework needs the following extension(s) installed and loaded: %s.',
-                $extension
+                $extension,
             );
             // @codeCoverageIgnoreEnd
         } else {

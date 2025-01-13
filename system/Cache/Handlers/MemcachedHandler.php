@@ -86,7 +86,7 @@ class MemcachedHandler extends BaseHandler
                 $this->memcached->addServer(
                     $this->config['host'],
                     $this->config['port'],
-                    $this->config['weight']
+                    $this->config['weight'],
                 );
 
                 // attempt to get status of servers
@@ -104,7 +104,7 @@ class MemcachedHandler extends BaseHandler
                 // Check if we can connect to the server
                 $canConnect = $this->memcached->connect(
                     $this->config['host'],
-                    $this->config['port']
+                    $this->config['port'],
                 );
 
                 // If we can't connect, throw a CriticalError exception
@@ -117,7 +117,7 @@ class MemcachedHandler extends BaseHandler
                     $this->config['host'],
                     $this->config['port'],
                     true,
-                    $this->config['weight']
+                    $this->config['weight'],
                 );
             } else {
                 throw new CriticalError('Cache: Not support Memcache(d) extension.');

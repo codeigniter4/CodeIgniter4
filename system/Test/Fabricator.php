@@ -438,21 +438,21 @@ class Fabricator
                 if (isset($this->modifiedFields['unique'][$field])) {
                     $faker = $faker->unique(
                         $this->modifiedFields['unique'][$field]['reset'],
-                        $this->modifiedFields['unique'][$field]['maxRetries']
+                        $this->modifiedFields['unique'][$field]['maxRetries'],
                     );
                 }
 
                 if (isset($this->modifiedFields['optional'][$field])) {
                     $faker = $faker->optional(
                         $this->modifiedFields['optional'][$field]['weight'],
-                        $this->modifiedFields['optional'][$field]['default']
+                        $this->modifiedFields['optional'][$field]['default'],
                     );
                 }
 
                 if (isset($this->modifiedFields['valid'][$field])) {
                     $faker = $faker->valid(
                         $this->modifiedFields['valid'][$field]['validator'],
-                        $this->modifiedFields['valid'][$field]['maxRetries']
+                        $this->modifiedFields['valid'][$field]['maxRetries'],
                     );
                 }
 

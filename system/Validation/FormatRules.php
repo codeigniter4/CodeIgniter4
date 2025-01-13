@@ -428,7 +428,7 @@ class FormatRules
         $scheme       = strtolower((string) parse_url($str, PHP_URL_SCHEME));
         $validSchemes = explode(
             ',',
-            strtolower($validSchemes ?? 'http,https')
+            strtolower($validSchemes ?? 'http,https'),
         );
 
         return in_array($scheme, $validSchemes, true)

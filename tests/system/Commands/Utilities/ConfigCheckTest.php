@@ -73,7 +73,7 @@ final class ConfigCheckTest extends CIUnitTestCase
                          config:check 'CodeIgniter\Shield\Config\Auth'
 
                 EOF,
-            str_replace("\n\n", "\n", $this->getStreamFilterBuffer())
+            str_replace("\n\n", "\n", $this->getStreamFilterBuffer()),
         );
     }
 
@@ -83,7 +83,7 @@ final class ConfigCheckTest extends CIUnitTestCase
 
         $this->assertSame(
             "No such Config class: Nonexistent\n",
-            $this->getStreamFilterBuffer()
+            $this->getStreamFilterBuffer(),
         );
     }
 
@@ -92,14 +92,14 @@ final class ConfigCheckTest extends CIUnitTestCase
         /** @var Closure(object): string $command */
         $command = $this->getPrivateMethodInvoker(
             new ConfigCheck(service('logger'), service('commands')),
-            'getKintD'
+            'getKintD',
         );
 
         command('config:check App');
 
         $this->assertSame(
             $command(config('App')) . "\n",
-            preg_replace('/\s+Config Caching: \S+/', '', $this->getStreamFilterBuffer())
+            preg_replace('/\s+Config Caching: \S+/', '', $this->getStreamFilterBuffer()),
         );
     }
 
@@ -108,12 +108,12 @@ final class ConfigCheckTest extends CIUnitTestCase
         /** @var Closure(object): string $command */
         $command = $this->getPrivateMethodInvoker(
             new ConfigCheck(service('logger'), service('commands')),
-            'getVarDump'
+            'getVarDump',
         );
         $clean = static fn (string $input): string => trim(preg_replace(
             '/(\033\[[0-9;]+m)|(\035\[[0-9;]+m)/u',
             '',
-            $input
+            $input,
         ));
 
         try {
@@ -122,7 +122,7 @@ final class ConfigCheckTest extends CIUnitTestCase
 
             $this->assertSame(
                 $clean($command(config('App'))),
-                $clean(preg_replace('/\s+Config Caching: \S+/', '', $this->getStreamFilterBuffer()))
+                $clean(preg_replace('/\s+Config Caching: \S+/', '', $this->getStreamFilterBuffer())),
             );
         } finally {
             Kint::$enabled_mode = true;

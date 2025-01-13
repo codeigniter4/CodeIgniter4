@@ -112,7 +112,7 @@ final class ResponseCache
         return $this->cache->save(
             $this->generateCacheKey($request),
             serialize(['headers' => $headers, 'output' => $response->getBody()]),
-            $this->ttl
+            $this->ttl,
         );
     }
 

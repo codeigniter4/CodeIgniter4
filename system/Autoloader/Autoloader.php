@@ -347,7 +347,7 @@ class Autoloader
 
             throw new InvalidArgumentException(
                 'The file path contains special characters "' . $chars
-                . '" that are not allowed: "' . $filename . '"'
+                . '" that are not allowed: "' . $filename . '"',
             );
         }
         if ($result === false) {
@@ -386,7 +386,7 @@ class Autoloader
             throw new RuntimeException(
                 'Your Composer version is too old.'
                 . ' Please update Composer (run `composer self-update`) to v2.0.14 or later'
-                . ' and remove your vendor/ directory, and run `composer update`.'
+                . ' and remove your vendor/ directory, and run `composer update`.',
             );
         }
         // This method requires Composer 2.0.14 or later.

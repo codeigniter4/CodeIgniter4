@@ -26,7 +26,7 @@ class TimestampCast extends BaseCast
     public static function get(
         mixed $value,
         array $params = [],
-        ?object $helper = null
+        ?object $helper = null,
     ): Time {
         if (! is_int($value) && ! is_string($value)) {
             self::invalidTypeValueError($value);
@@ -38,7 +38,7 @@ class TimestampCast extends BaseCast
     public static function set(
         mixed $value,
         array $params = [],
-        ?object $helper = null
+        ?object $helper = null,
     ): int {
         if (! $value instanceof Time) {
             self::invalidTypeValueError($value);
