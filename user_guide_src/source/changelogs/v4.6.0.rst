@@ -200,6 +200,7 @@ Removed Deprecated Items
   ``clean_path()`` function instead.
 - **Router:** The deprecated ``CodeIgniter\Router\Exceptions\RedirectException`` has been removed. Use ``CodeIgniter\HTTP\Exceptions\RedirectException`` instead.
 - **Constants:** The deprecated constants ``EVENT_PRIORITY_*`` in has been removed. Use the class constants ``CodeIgniter\Events\Events::PRIORITY_LOW``, ``CodeIgniter\Events\Events::PRIORITY_NORMAL`` and ``CodeIgniter\Events\Events::PRIORITY_HIGH`` instead.
+- **View:** The deprecated property ``CodeIgniter\View\View::$currentSection`` has been removed.
 
 ************
 Enhancements

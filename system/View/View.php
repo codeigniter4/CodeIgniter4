@@ -128,16 +128,6 @@ class View implements RendererInterface
      * The name of the current section being rendered,
      * if any.
      *
-     * @var string|null
-     *
-     * @deprecated
-     */
-    protected $currentSection;
-
-    /**
-     * The name of the current section being rendered,
-     * if any.
-     *
      * @var list<string>
      */
     protected $sectionStack = [];
@@ -420,8 +410,6 @@ class View implements RendererInterface
      */
     public function section(string $name)
     {
-        // Saved to prevent BC.
-        $this->currentSection = $name;
         $this->sectionStack[] = $name;
 
         ob_start();
