@@ -28,7 +28,7 @@ final class DebugTraceableTraitTest extends CIUnitTestCase
 {
     public function testFactoryInstanceReturnsWhereItIsRaised(): void
     {
-        $e1 = new FrameworkException('Hello.');
+        $e1 = new FrameworkException('Hello.'); // @phpstan-ignore codeigniter.frameworkExceptionInstance
         $e2 = FrameworkException::forEnabledZlibOutputCompression();
 
         $this->assertContainsEquals(DebugTraceableTrait::class, class_uses(FrameworkException::class));
