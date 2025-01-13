@@ -2,7 +2,6 @@ includes:
     - argument.type.neon
     - assign.propertyType.neon
     - codeigniter.cacheHandlerInstance.neon
-    - codeigniter.configArgumentInstanceof.neon
     - codeigniter.frameworkExceptionInstance.neon
     - codeigniter.getReassignArray.neon
     - codeigniter.modelArgumentInstanceof.neon
