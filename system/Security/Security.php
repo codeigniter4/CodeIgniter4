@@ -321,7 +321,9 @@ class Security implements SecurityInterface
         if ($body !== '') {
             $json = json_decode($body);
             if ($json !== null && json_last_error() === JSON_ERROR_NONE) {
-                return $json->{$this->config->tokenName} ?? null;
+                $tokenValue = $json->{$this->config->tokenName} ?? null;
+
+                return is_string($tokenValue) ? $tokenValue : null;
             }
 
             parse_str($body, $parsed);

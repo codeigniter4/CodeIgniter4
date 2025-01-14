@@ -342,4 +342,34 @@ final class SecurityTest extends CIUnitTestCase
 
         $this->assertNull($method($request));
     }
+
+    public function testGetPostedTokenReturnsTokenFromJsonInput(): void
+    {
+        $_POST    = [];
+        $jsonBody = json_encode(['csrf_test_name' => '8b9218a55906f9dcc1dc263dce7f005a']);
+        $request  = $this->createIncomingRequest()->setBody($jsonBody);
+        $method   = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+
+        $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
+    }
+
+    public function testGetPostedTokenReturnsTokenFromFormEncodedInput(): void
+    {
+        $_POST    = [];
+        $formBody = 'csrf_test_name=8b9218a55906f9dcc1dc263dce7f005a';
+        $request  = $this->createIncomingRequest()->setBody($formBody);
+        $method   = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+
+        $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
+    }
+
+    public function testGetPostedTokenReturnsNullFromMaliciousJsonInput(): void
+    {
+        $_POST         = [];
+        $maliciousJson = json_encode(['csrf_test_name' => ['malicious' => 'data']]);
+        $request       = $this->createIncomingRequest()->setBody($maliciousJson);
+        $method        = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+
+        $this->assertNull($method($request));
+    }
 }
