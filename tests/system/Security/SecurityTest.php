@@ -25,8 +25,6 @@ use CodeIgniter\Test\Mock\MockSecurity;
 use Config\Security as SecurityConfig;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
-use ReflectionClass;
-use ReflectionMethod;
 
 /**
  * @internal
@@ -49,16 +47,6 @@ final class SecurityTest extends CIUnitTestCase
         $config ??= new SecurityConfig();
 
         return new MockSecurity($config);
-    }
-
-    private function getPostedTokenMethod(): ReflectionMethod
-    {
-        $reflection = new ReflectionClass(Security::class);
-        $method     = $reflection->getMethod('getPostedToken');
-
-        $method->setAccessible(true);
-
-        return $method;
     }
 
     public function testBasicConfigIsSaved(): void
@@ -330,34 +318,28 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testGetPostedTokenReturnsTokenWhenValid(): void
     {
-        $method   = $this->getPostedTokenMethod();
-        $security = $this->createMockSecurity();
-
         $_POST['csrf_test_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
         $request                 = $this->createIncomingRequest();
+        $method                  = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
 
-        $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method->invoke($security, $request));
+        $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
     }
 
     public function testGetPostedTokenReturnsNullWhenEmpty(): void
     {
-        $method   = $this->getPostedTokenMethod();
-        $security = $this->createMockSecurity();
-
         $_POST   = [];
         $request = $this->createIncomingRequest();
+        $method  = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
 
-        $this->assertNull($method->invoke($security, $request));
+        $this->assertNull($method($request));
     }
 
     public function testGetPostedTokenReturnsNullWhenMaliciousData(): void
     {
-        $method   = $this->getPostedTokenMethod();
-        $security = $this->createMockSecurity();
-
         $_POST['csrf_test_name'] = ['malicious' => 'data'];
         $request                 = $this->createIncomingRequest();
+        $method                  = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
 
-        $this->assertNull($method->invoke($security, $request));
+        $this->assertNull($method($request));
     }
 }
