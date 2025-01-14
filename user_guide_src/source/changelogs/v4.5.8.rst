@@ -14,6 +14,11 @@ Release Date: Unreleased
 BREAKING
 ********
 
+Header
+======
+
+Added validation of the name and value for ``CodeIgniter\HTTP\Header``. Some specific headers can cause the system to crash.
+
 ***************
 Message Changes
 ***************
@@ -31,6 +36,7 @@ Bugs Fixed
 **********
 
 - **Database:** Fixed a bug where ``Builder::affectedRows()`` threw an error when the previous query call failed in ``Postgre`` and ``SQLSRV`` drivers.
+- **Header:** Improper headers parsing. Line breaks and other incorrect characters in headers (``CodeIgniter\HTTP\Header``) may break the HTTP request. See https://datatracker.ietf.org/doc/html/rfc7230 for more details.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
