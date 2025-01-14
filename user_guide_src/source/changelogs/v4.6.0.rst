@@ -203,6 +203,8 @@ Removed Deprecated Items
 - **View:** The deprecated property ``CodeIgniter\View\View::$currentSection`` has been removed.
 - **Config:** The deprecated property ``Config\Cache::$storePath`` has been removed. Use ``Config\Cache::$file['storePath']`` instead.
 - **Formatter:** The deprecated ``Config\Format::getFormatter()`` has been removed. Use ``CodeIgniter\Format\Format::getFormatter()`` instead.
+- **Security:** ``Config\Security::$samesite`` has been removed. Use ``Config\Cookie::$samesite`` instead.
+- **Cookie:** Methods ``dispatch()``, ``setRawCookie()``, ``setCookie()`` in ``CodeIgniter\Cookie\CookieStore`` has been removed. They are now part of ``CodeIgniter\HTTP\ResponseTrait``.
 
 ************
 Enhancements
