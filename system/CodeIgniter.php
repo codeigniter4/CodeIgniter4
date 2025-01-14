@@ -344,7 +344,7 @@ class CodeIgniter
         /**
          * Start up the filters
          *
-         * @var \CodeIgniter\Filters\Filters $filters
+         * @var Filters $filters
          */
         $filters = service('filters');
         // Run required before filters
