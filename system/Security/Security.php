@@ -327,8 +327,9 @@ class Security implements SecurityInterface
             }
 
             parse_str($body, $parsed);
+            $tokenValue = $parsed[$this->config->tokenName] ?? null;
 
-            return $parsed[$this->config->tokenName] ?? null;
+            return is_string($tokenValue) ? $tokenValue : null;
         }
 
         return null;

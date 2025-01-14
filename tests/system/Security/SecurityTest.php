@@ -316,7 +316,7 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertIsBool($security->shouldRedirect());
     }
 
-    public function testGetPostedTokenReturnsTokenWhenValid(): void
+    public function testGetPostedTokenReturnsTokenFromPost(): void
     {
         $_POST['csrf_test_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
         $request                 = $this->createIncomingRequest();
@@ -325,25 +325,16 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
     }
 
-    public function testGetPostedTokenReturnsNullWhenEmpty(): void
+    public function testGetPostedTokenReturnsTokenFromHeader(): void
     {
         $_POST   = [];
-        $request = $this->createIncomingRequest();
+        $request = $this->createIncomingRequest()->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
         $method  = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
 
-        $this->assertNull($method($request));
+        $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
     }
 
-    public function testGetPostedTokenReturnsNullWhenMaliciousData(): void
-    {
-        $_POST['csrf_test_name'] = ['malicious' => 'data'];
-        $request                 = $this->createIncomingRequest();
-        $method                  = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
-
-        $this->assertNull($method($request));
-    }
-
-    public function testGetPostedTokenReturnsTokenFromJsonInput(): void
+    public function testGetPostedTokenReturnsTokenFromJsonBody(): void
     {
         $_POST    = [];
         $jsonBody = json_encode(['csrf_test_name' => '8b9218a55906f9dcc1dc263dce7f005a']);
@@ -353,7 +344,7 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
     }
 
-    public function testGetPostedTokenReturnsTokenFromFormEncodedInput(): void
+    public function testGetPostedTokenReturnsTokenFromFormBody(): void
     {
         $_POST    = [];
         $formBody = 'csrf_test_name=8b9218a55906f9dcc1dc263dce7f005a';
@@ -363,13 +354,24 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
     }
 
-    public function testGetPostedTokenReturnsNullFromMaliciousJsonInput(): void
+    public function testGetPostedTokenReturnsNullForInvalidInputs(): void
     {
-        $_POST         = [];
-        $maliciousJson = json_encode(['csrf_test_name' => ['malicious' => 'data']]);
-        $request       = $this->createIncomingRequest()->setBody($maliciousJson);
-        $method        = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+        $method    = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+        $testCases = [
+            'empty_post'            => $this->createIncomingRequest(),
+            'malicious_post'        => $this->createIncomingRequest()->setGlobal('post', ['csrf_test_name' => ['malicious' => 'data']]),
+            'empty_header'          => $this->createIncomingRequest()->setHeader('X-CSRF-TOKEN', ''),
+            'malicious_json'        => $this->createIncomingRequest()->setBody(json_encode(['csrf_test_name' => ['malicious' => 'data']])),
+            'invalid_json'          => $this->createIncomingRequest()->setBody('{invalid json}'),
+            'missing_token_in_body' => $this->createIncomingRequest()->setBody('other=value&another=test'),
+            'malicious_form'        => $this->createIncomingRequest()->setBody('csrf_test_name[]=malicious'),
+        ];
 
-        $this->assertNull($method($request));
+        foreach ($testCases as $case => $request) {
+            $this->assertNull(
+                $method($request),
+                "Failed asserting that {$case} returns null"
+            );
+        }
     }
 }
