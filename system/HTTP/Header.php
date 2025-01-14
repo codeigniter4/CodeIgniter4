@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use InvalidArgumentException;
 use Stringable;
 
 /**
@@ -54,7 +55,7 @@ class Header implements Stringable
      */
     public function __construct(string $name, $value = null)
     {
-        $this->name = $name;
+        $this->setName($name);
         $this->setValue($value);
     }
 
@@ -81,9 +82,13 @@ class Header implements Stringable
      * Sets the name of the header, overwriting any previous value.
      *
      * @return $this
+     *
+     * @throws InvalidArgumentException
      */
     public function setName(string $name)
     {
+        $this->validateName($name);
+
         $this->name = $name;
 
         return $this;
@@ -95,10 +100,14 @@ class Header implements Stringable
      * @param array<int|string, array<string, string>|string>|string|null $value
      *
      * @return $this
+     *
+     * @throws InvalidArgumentException
      */
     public function setValue($value = null)
     {
         $this->value = is_array($value) ? $value : (string) $value;
+
+        $this->validateValue($value);
 
         return $this;
     }
@@ -110,12 +119,16 @@ class Header implements Stringable
      * @param array<string, string>|string|null $value
      *
      * @return $this
+     *
+     * @throws InvalidArgumentException
      */
     public function appendValue($value = null)
     {
         if ($value === null) {
             return $this;
         }
+
+        $this->validateValue($value);
 
         if (! is_array($this->value)) {
             $this->value = [$this->value];
@@ -135,9 +148,13 @@ class Header implements Stringable
      * @param array<string, string>|string|null $value
      *
      * @return $this
+     *
+     * @throws InvalidArgumentException
      */
     public function prependValue($value = null)
     {
+        $this->validateValue($value);
+
         if ($value === null) {
             return $this;
         }
@@ -192,5 +209,35 @@ class Header implements Stringable
     public function __toString(): string
     {
         return $this->name . ': ' . $this->getValueLine();
+    }
+
+    /**
+     * @see https://datatracker.ietf.org/doc/html/rfc7230#section-3.2
+     *
+     * @throws InvalidArgumentException
+     */
+    private function validateName(string $name): void
+    {
+        if (preg_match("@^[!#$%&'*+.^_`|~0-9A-Za-z-]+$@D", $name) !== 1) {
+            throw new InvalidArgumentException('Header name must be an RFC 7230 compatible string.');
+        }
+    }
+
+    /**
+     * @param array<string, string>|string|null $value
+     *
+     * @throws InvalidArgumentException
+     */
+    private function validateValue($value): void
+    {
+        if (is_string($value) && preg_match("@^[ \t\x21-\x7E\x80-\xFF]*$@D", $value) !== 1) {
+            throw new InvalidArgumentException('Header values must be RFC 7230 compatible strings.');
+        }
+
+        if (is_array($value)) {
+            array_map(function ($v): void {
+                $this->validateValue($v);
+            }, $value);
+        }
     }
 }

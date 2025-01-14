@@ -15,6 +15,8 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Error;
+use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 
@@ -233,5 +235,71 @@ final class HeaderTest extends CIUnitTestCase
         $header->setValue('bar')->appendValue(['baz' => 'fuzz']);
 
         $this->assertSame($expected, (string) $header);
+    }
+
+    /**
+     * @param string $name
+     */
+    #[DataProvider('invalidNamesProvider')]
+    public function testInvalidHeaderNames($name): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        new Header($name, 'text/html');
+    }
+
+    /**
+     * @return list<list<string>>
+     */
+    public static function invalidNamesProvider(): array
+    {
+        return [
+            ["Content-Type\r\n\r\n"],
+            ["Content-Type\r\n"],
+            ["Content-Type\n"],
+            ["\tContent-Type\t"],
+            ["\n\nContent-Type\n\n"],
+            ["\r\nContent-Type"],
+            ["\nContent-Type"],
+            ["Content\r\n-Type"],
+            ["\n"],
+            ["\r\n"],
+            ["\t"],
+            ['   Content-Type   '],
+            ['Content - Type'],
+            [''],
+        ];
+    }
+
+    /**
+     * @param array<int|string, array<string, string>|string>|string|null $value
+     */
+    #[DataProvider('invalidValuesProvider')]
+    public function testInvalidHeaderValues($value): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        new Header('X-Test-Header', $value);
+    }
+
+    /**
+     * @return list<list<list<string>|string>>
+     */
+    public static function invalidValuesProvider(): array
+    {
+        return [
+            ["Header\n Value"],
+            ["Header\r\n Value"],
+            ["Header\r Value"],
+            ["Header Value\n"],
+            ["\nHeader Value"],
+            ["Header Value\r\n"],
+            ["\n\rHeader Value"],
+            ["\n\nHeader Value\n\n"],
+            [
+                ["Header\n Value"],
+                ["Header\r\n Value"],
+            ],
+        ];
     }
 }
