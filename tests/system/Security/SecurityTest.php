@@ -359,12 +359,12 @@ final class SecurityTest extends CIUnitTestCase
         $method    = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
         $testCases = [
             'empty_post'            => $this->createIncomingRequest(),
-            'malicious_post'        => $this->createIncomingRequest()->setGlobal('post', ['csrf_test_name' => ['malicious' => 'data']]),
+            'invalid_post_data'     => $this->createIncomingRequest()->setGlobal('post', ['csrf_test_name' => ['invalid' => 'data']]),
             'empty_header'          => $this->createIncomingRequest()->setHeader('X-CSRF-TOKEN', ''),
-            'malicious_json'        => $this->createIncomingRequest()->setBody(json_encode(['csrf_test_name' => ['malicious' => 'data']])),
+            'invalid_json_data'     => $this->createIncomingRequest()->setBody(json_encode(['csrf_test_name' => ['invalid' => 'data']])),
             'invalid_json'          => $this->createIncomingRequest()->setBody('{invalid json}'),
             'missing_token_in_body' => $this->createIncomingRequest()->setBody('other=value&another=test'),
-            'malicious_form'        => $this->createIncomingRequest()->setBody('csrf_test_name[]=malicious'),
+            'invalid_form_data'     => $this->createIncomingRequest()->setBody('csrf_test_name[]=invalid'),
         ];
 
         foreach ($testCases as $case => $request) {
