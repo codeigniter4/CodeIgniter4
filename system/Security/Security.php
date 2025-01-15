@@ -310,10 +310,10 @@ class Security implements SecurityInterface
             return is_string($tokenValue) ? $tokenValue : null;
         }
 
-        if ($request->hasHeader($this->config->headerName)
-            && $request->header($this->config->headerName)->getValue() !== ''
-            && $request->header($this->config->headerName)->getValue() !== []) {
-            return $request->header($this->config->headerName)->getValue();
+        if ($request->hasHeader($this->config->headerName)) {
+            $tokenValue = $request->header($this->config->headerName)->getValue();
+
+            return ($tokenValue !== '' && $tokenValue !== [] && is_string($tokenValue)) ? $tokenValue : null;
         }
 
         $body = (string) $request->getBody();
