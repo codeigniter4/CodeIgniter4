@@ -96,7 +96,7 @@ final class CacheFactoryTest extends CIUnitTestCase
 
         $this->config->handler = 'dummy';
 
-        if (stripos('win', php_uname()) === 0) {
+        if (str_starts_with('win', strtolower(php_uname()))) {
             $this->assertTrue(true); // can't test properly if we are on Windows
         } else {
             $this->assertInstanceOf(DummyHandler::class, $this->cacheFactory->getHandler($this->config, 'wincache', 'wincache'));

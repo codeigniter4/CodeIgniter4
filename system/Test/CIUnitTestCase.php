@@ -516,7 +516,7 @@ abstract class CIUnitTestCase extends TestCase
 
         foreach (xdebug_get_headers() as $emittedHeader) {
             $found = $ignoreCase
-                ? (stripos($emittedHeader, $header) === 0)
+                ? (str_starts_with(strtolower($emittedHeader), strtolower($header)))
                 : (str_starts_with($emittedHeader, $header));
 
             if ($found) {
