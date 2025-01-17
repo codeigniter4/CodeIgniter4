@@ -39,7 +39,7 @@ Bugs Fixed
 **********
 
 - **Database:** Fixed a bug where ``Builder::affectedRows()`` threw an error when the previous query call failed in ``Postgre`` and ``SQLSRV`` drivers.
-- **Security** Fixed a security issue in `Security` class where CSRF token validation might fail in specific malformed request inputs.
+- **Security** Fixed a bug where the CSRF token validation could fail on malformed input, causing a generic 500 error instead of handling the input gracefully.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
