@@ -13,7 +13,7 @@ mergeable:
                   regex: '### PHP Version'
               - do: description
                 must_include:
-                  regex: '### CodeIgniter Version'
+                  regex: '### CodeIgniter4 Version'
           - do: author
             must_include:
               regex: ^kenjis|lonnieezell|MGatner|michalsn|paulbalandan|samsonasik$
