@@ -380,12 +380,12 @@ class Fabricator
 
         // Check some common partials
         foreach (['email', 'name', 'title', 'text', 'date', 'url'] as $term) {
-            if (stripos($field, $term) !== false) {
+            if (str_contains(strtolower($field), strtolower($term))) {
                 return $term;
             }
         }
 
-        if (stripos($field, 'phone') !== false) {
+        if (str_contains(strtolower($field), 'phone')) {
             return 'phoneNumber';
         }
 

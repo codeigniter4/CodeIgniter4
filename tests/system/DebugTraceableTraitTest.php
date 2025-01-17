@@ -16,19 +16,17 @@ namespace CodeIgniter;
 use CodeIgniter\Exceptions\DebugTraceableTrait;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Test\CIUnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
  */
-#[CoversClass(DebugTraceableTrait::class)]
 #[Group('Others')]
 final class DebugTraceableTraitTest extends CIUnitTestCase
 {
     public function testFactoryInstanceReturnsWhereItIsRaised(): void
     {
-        $e1 = new FrameworkException('Hello.');
+        $e1 = new FrameworkException('Hello.'); // @phpstan-ignore codeigniter.frameworkExceptionInstance
         $e2 = FrameworkException::forEnabledZlibOutputCompression();
 
         $this->assertContainsEquals(DebugTraceableTrait::class, class_uses(FrameworkException::class));

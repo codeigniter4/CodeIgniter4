@@ -1,4 +1,4 @@
-# total 17 errors
+# total 16 errors
 
 parameters:
     ignoreErrors:
@@ -11,11 +11,6 @@ parameters:
             message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsInt\(\) with int will always evaluate to true\.$#'
             count: 2
             path: ../../tests/system/CLI/CLITest.php
-
-        -
-            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
-            count: 1
-            path: ../../tests/system/Cache/CacheFactoryTest.php
 
         -
             message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
