@@ -313,7 +313,7 @@ class Security implements SecurityInterface
         if ($request->hasHeader($this->config->headerName)) {
             $tokenValue = $request->header($this->config->headerName)->getValue();
 
-            return ($tokenValue !== '' && $tokenValue !== [] && is_string($tokenValue)) ? $tokenValue : null;
+            return (is_string($tokenValue) && $tokenValue !== '') ? $tokenValue : null;
         }
 
         $body = (string) $request->getBody();
