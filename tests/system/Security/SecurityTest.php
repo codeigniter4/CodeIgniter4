@@ -24,6 +24,7 @@ use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
 use Config\Security as SecurityConfig;
 use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -42,11 +43,21 @@ final class SecurityTest extends CIUnitTestCase
         $this->resetServices();
     }
 
-    private function createMockSecurity(?SecurityConfig $config = null): MockSecurity
+    private static function createMockSecurity(SecurityConfig $config = new SecurityConfig()): MockSecurity
     {
-        $config ??= new SecurityConfig();
-
         return new MockSecurity($config);
+    }
+
+    private static function createIncomingRequest(): IncomingRequest
+    {
+        $config = new MockAppConfig();
+
+        return new IncomingRequest(
+            $config,
+            new SiteURI($config),
+            null,
+            new UserAgent(),
+        );
     }
 
     public function testBasicConfigIsSaved(): void
@@ -106,18 +117,6 @@ final class SecurityTest extends CIUnitTestCase
 
         $this->expectException(SecurityException::class);
         $security->verify($request);
-    }
-
-    private function createIncomingRequest(): IncomingRequest
-    {
-        $config = new MockAppConfig();
-
-        return new IncomingRequest(
-            $config,
-            new SiteURI($config),
-            null,
-            new UserAgent(),
-        );
     }
 
     public function testCSRFVerifyPostReturnsSelfOnMatch(): void
@@ -354,24 +353,34 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
     }
 
-    public function testGetPostedTokenReturnsNullForInvalidInputs(): void
+    #[DataProvider('provideGetPostedTokenReturnsNullForInvalidInputs')]
+    public function testGetPostedTokenReturnsNullForInvalidInputs(string $case, IncomingRequest $request): void
     {
-        $method    = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+        $method = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+
+        $this->assertNull(
+            $method($request),
+            sprintf('Failed asserting that %s returns null on invalid input.', $case),
+        );
+    }
+
+    /**
+     * @return iterable<string, array{string, IncomingRequest}>
+     */
+    public static function provideGetPostedTokenReturnsNullForInvalidInputs(): iterable
+    {
         $testCases = [
-            'empty_post'            => $this->createIncomingRequest(),
-            'invalid_post_data'     => $this->createIncomingRequest()->setGlobal('post', ['csrf_test_name' => ['invalid' => 'data']]),
-            'empty_header'          => $this->createIncomingRequest()->setHeader('X-CSRF-TOKEN', ''),
-            'invalid_json_data'     => $this->createIncomingRequest()->setBody(json_encode(['csrf_test_name' => ['invalid' => 'data']])),
-            'invalid_json'          => $this->createIncomingRequest()->setBody('{invalid json}'),
-            'missing_token_in_body' => $this->createIncomingRequest()->setBody('other=value&another=test'),
-            'invalid_form_data'     => $this->createIncomingRequest()->setBody('csrf_test_name[]=invalid'),
+            'empty_post'            => self::createIncomingRequest(),
+            'invalid_post_data'     => self::createIncomingRequest()->setGlobal('post', ['csrf_test_name' => ['invalid' => 'data']]),
+            'empty_header'          => self::createIncomingRequest()->setHeader('X-CSRF-TOKEN', ''),
+            'invalid_json_data'     => self::createIncomingRequest()->setBody(json_encode(['csrf_test_name' => ['invalid' => 'data']])),
+            'invalid_json'          => self::createIncomingRequest()->setBody('{invalid json}'),
+            'missing_token_in_body' => self::createIncomingRequest()->setBody('other=value&another=test'),
+            'invalid_form_data'     => self::createIncomingRequest()->setBody('csrf_test_name[]=invalid'),
         ];
 
         foreach ($testCases as $case => $request) {
-            $this->assertNull(
-                $method($request),
-                "Failed asserting that {$case} returns null"
-            );
+            yield $case => [$case, $request];
         }
     }
 }
