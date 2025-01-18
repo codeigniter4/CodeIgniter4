@@ -24,6 +24,7 @@ use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
 use Config\Security as SecurityConfig;
 use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -42,11 +43,21 @@ final class SecurityTest extends CIUnitTestCase
         $this->resetServices();
     }
 
-    private function createMockSecurity(?SecurityConfig $config = null): MockSecurity
+    private static function createMockSecurity(SecurityConfig $config = new SecurityConfig()): MockSecurity
     {
-        $config ??= new SecurityConfig();
-
         return new MockSecurity($config);
+    }
+
+    private static function createIncomingRequest(): IncomingRequest
+    {
+        $config = new MockAppConfig();
+
+        return new IncomingRequest(
+            $config,
+            new SiteURI($config),
+            null,
+            new UserAgent(),
+        );
     }
 
     public function testBasicConfigIsSaved(): void
@@ -106,18 +117,6 @@ final class SecurityTest extends CIUnitTestCase
 
         $this->expectException(SecurityException::class);
         $security->verify($request);
-    }
-
-    private function createIncomingRequest(): IncomingRequest
-    {
-        $config = new MockAppConfig();
-
-        return new IncomingRequest(
-            $config,
-            new SiteURI($config),
-            null,
-            new UserAgent(),
-        );
     }
 
     public function testCSRFVerifyPostReturnsSelfOnMatch(): void
@@ -314,5 +313,74 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertIsString($security->getHeaderName());
         $this->assertIsString($security->getCookieName());
         $this->assertIsBool($security->shouldRedirect());
+    }
+
+    public function testGetPostedTokenReturnsTokenFromPost(): void
+    {
+        $_POST['csrf_test_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
+        $request                 = $this->createIncomingRequest();
+        $method                  = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+
+        $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
+    }
+
+    public function testGetPostedTokenReturnsTokenFromHeader(): void
+    {
+        $_POST   = [];
+        $request = $this->createIncomingRequest()->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
+        $method  = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+
+        $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
+    }
+
+    public function testGetPostedTokenReturnsTokenFromJsonBody(): void
+    {
+        $_POST    = [];
+        $jsonBody = json_encode(['csrf_test_name' => '8b9218a55906f9dcc1dc263dce7f005a']);
+        $request  = $this->createIncomingRequest()->setBody($jsonBody);
+        $method   = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+
+        $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
+    }
+
+    public function testGetPostedTokenReturnsTokenFromFormBody(): void
+    {
+        $_POST    = [];
+        $formBody = 'csrf_test_name=8b9218a55906f9dcc1dc263dce7f005a';
+        $request  = $this->createIncomingRequest()->setBody($formBody);
+        $method   = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+
+        $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
+    }
+
+    #[DataProvider('provideGetPostedTokenReturnsNullForInvalidInputs')]
+    public function testGetPostedTokenReturnsNullForInvalidInputs(string $case, IncomingRequest $request): void
+    {
+        $method = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+
+        $this->assertNull(
+            $method($request),
+            sprintf('Failed asserting that %s returns null on invalid input.', $case),
+        );
+    }
+
+    /**
+     * @return iterable<string, array{string, IncomingRequest}>
+     */
+    public static function provideGetPostedTokenReturnsNullForInvalidInputs(): iterable
+    {
+        $testCases = [
+            'empty_post'            => self::createIncomingRequest(),
+            'invalid_post_data'     => self::createIncomingRequest()->setGlobal('post', ['csrf_test_name' => ['invalid' => 'data']]),
+            'empty_header'          => self::createIncomingRequest()->setHeader('X-CSRF-TOKEN', ''),
+            'invalid_json_data'     => self::createIncomingRequest()->setBody(json_encode(['csrf_test_name' => ['invalid' => 'data']])),
+            'invalid_json'          => self::createIncomingRequest()->setBody('{invalid json}'),
+            'missing_token_in_body' => self::createIncomingRequest()->setBody('other=value&another=test'),
+            'invalid_form_data'     => self::createIncomingRequest()->setBody('csrf_test_name[]=invalid'),
+        ];
+
+        foreach ($testCases as $case => $request) {
+            yield $case => [$case, $request];
+        }
     }
 }
