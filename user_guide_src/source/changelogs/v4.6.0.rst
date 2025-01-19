@@ -2,19 +2,13 @@
 Version 4.6.0
 #############
 
-Release Date: Unreleased
+Release Date: January 19, 2025
 
 **4.6.0 release of CodeIgniter4**
 
 .. contents::
     :local:
     :depth: 3
-
-**********
-Highlights
-**********
-
-- TBD
 
 ********
 BREAKING
@@ -33,7 +27,6 @@ The following breaking changes have been made accordingly:
 
 - ``Validation::setRule()`` now throws ``CodeIgniter\Exceptions\InvalidArgumentException``
   instead of ``TypeError``.
-
 - ``CriticalError`` now extends ``CodeIgniter\Exceptions\RuntimeException``
   instead of ``Error``.
 - ``DatabaseException`` now extends ``CodeIgniter\Exceptions\RuntimeException``
@@ -263,17 +256,8 @@ Pagination
 - Added a new feature to get the total and the range number of items of the current page.
   See :ref:`Displaying the Number of Items on the Page <displaying-the-number-of-items-on-the-page>` for more details.
 
-Testing
-=======
-
 Database
 ========
-
-Query Builder
--------------
-
-Forge
------
 
 Others
 ------
@@ -283,9 +267,6 @@ Others
   status. See :ref:`transactions-resetting-transaction-status` for details.
 - SQLite3 has a new Config item ``synchronous`` to adjust how strict SQLite is at flushing
   to disk during transactions. Modifying this can be useful if we use journal mode set to ``WAL``.
-
-Model
-=====
 
 Libraries
 =========
@@ -298,9 +279,6 @@ Libraries
   :ref:`Validation <rules-for-file-uploads>`.
 - **Validation:** Rules: ``is_unique`` and ``is_not_unique`` now accept the optional
   ``dbGroup`` as part of the first parameter. See :ref:`Validation <rules-for-general-use>`.
-
-Helpers and Functions
-=====================
 
 Others
 ======
@@ -342,7 +320,6 @@ The following changes have been made accordingly:
   ``CodeIgniter\Exceptions\BadMethodCallException``.
 - Classes that threw ``BadFunctionCallException`` have been changed to throw
   ``CodeIgniter\Exceptions\BadFunctionCallException``.
-
 - ``RedirectException`` now extends ``CodeIgniter\Exceptions\RuntimeException``
   instead of ``Exception``.
 - ``PageNotFoundException`` now extends ``CodeIgniter\Exceptions\RuntimeException``

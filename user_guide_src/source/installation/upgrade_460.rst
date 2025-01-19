@@ -1,5 +1,5 @@
 #############################
-Upgrading from 4.5.x to 4.6.0
+Upgrading from 4.5.8 to 4.6.0
 #############################
 
 Please refer to the upgrade instructions corresponding to your installation method.
@@ -11,10 +11,6 @@ Please refer to the upgrade instructions corresponding to your installation meth
 .. contents::
     :local:
     :depth: 2
-
-**********************
-Mandatory File Changes
-**********************
 
 ****************
 Breaking Changes
@@ -221,7 +217,16 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- app/Config/Feature.php
-- app/Config/Constants.php
 - app/Config/Cache.php
+- app/Config/Constants.php
+- app/Config/Database.php
+- app/Config/Feature.php
 - app/Config/Format.php
+- app/Config/Kint.php
+- app/Config/Routing.php
+- app/Config/Security.php
+- app/Views/errors/html/debug.css
+- app/Views/errors/html/error_400.php
+- preload.php
+- public/index.php
+- spark
