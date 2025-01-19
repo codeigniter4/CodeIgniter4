@@ -1031,7 +1031,7 @@ class Email
 
         $unwrap = [];
 
-        if (preg_match_all('|\{unwrap\}(.+?)\{/unwrap\}|s', $str, $matches)) {
+        if (preg_match_all('|\{unwrap\}(.+?)\{/unwrap\}|s', $str, $matches) >= 1) {
             for ($i = 0, $c = count($matches[0]); $i < $c; $i++) {
                 $unwrap[] = $matches[1][$i];
                 $str      = str_replace($matches[0][$i], '{{unwrapped' . $i . '}}', $str);
@@ -1659,7 +1659,7 @@ class Email
         $this->finalBody = preg_replace_callback(
             '/\{unwrap\}(.*?)\{\/unwrap\}/si',
             $this->removeNLCallback(...),
-            $this->finalBody
+            $this->finalBody,
         );
     }
 
@@ -1900,7 +1900,7 @@ class Email
             $this->SMTPPort,
             $errno,
             $errstr,
-            $this->SMTPTimeout
+            $this->SMTPTimeout,
         );
 
         if (! is_resource($this->SMTPConnect)) {
@@ -1921,7 +1921,7 @@ class Email
                 STREAM_CRYPTO_METHOD_TLSv1_0_CLIENT
                 | STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT
                 | STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT
-                | STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT
+                | STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT,
             );
 
             if ($crypto !== true) {

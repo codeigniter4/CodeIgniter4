@@ -295,9 +295,9 @@ class FileLocator implements FileLocatorInterface
                         str_replace(
                             '/',
                             '\\',
-                            mb_substr($path, mb_strlen($namespace['path']))
+                            mb_substr($path, mb_strlen($namespace['path'])),
                         ),
-                        '\\'
+                        '\\',
                     );
                 // Remove the file extension (.php)
                 $className = mb_substr($className, 0, -4);

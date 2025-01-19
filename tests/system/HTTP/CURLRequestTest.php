@@ -914,12 +914,12 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
         $this->assertCount(3, $setCookieHeaders);
         $this->assertSame(
             'logged_in=no; Path=/; Domain=github.com; Expires=Mon, 11 Nov 2024 02:27:05 GMT; HttpOnly; Secure; SameSite=Lax',
-            $setCookieHeaders[2]->getValue()
+            $setCookieHeaders[2]->getValue(),
         );
 
         $this->assertSame(
             '_octo=GH1.1.599292127.1699669625; Path=/; Domain=github.com; Expires=Mon, 11 Nov 2024 02:27:05 GMT; Secure; SameSite=Lax',
-            $setCookieHeaders[1]->getValueLine()
+            $setCookieHeaders[1]->getValueLine(),
         );
     }
 
@@ -1067,7 +1067,7 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
 
         $this->assertSame(
             http_build_query($params),
-            $this->request->curl_options[CURLOPT_POSTFIELDS]
+            $this->request->curl_options[CURLOPT_POSTFIELDS],
         );
 
         $params['afile'] = new CURLFile(__FILE__);
@@ -1076,7 +1076,7 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
 
         $this->assertSame(
             $params,
-            $this->request->curl_options[CURLOPT_POSTFIELDS]
+            $this->request->curl_options[CURLOPT_POSTFIELDS],
         );
     }
 
@@ -1098,7 +1098,7 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
         $expected = json_encode($params);
         $this->assertSame(
             $expected,
-            $this->request->curl_options[CURLOPT_POSTFIELDS]
+            $this->request->curl_options[CURLOPT_POSTFIELDS],
         );
     }
 
@@ -1116,11 +1116,11 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
         $expected = json_encode($params);
         $this->assertSame(
             $expected,
-            $this->request->curl_options[CURLOPT_POSTFIELDS]
+            $this->request->curl_options[CURLOPT_POSTFIELDS],
         );
         $this->assertSame(
             'Content-Type: application/json',
-            $this->request->curl_options[CURLOPT_HTTPHEADER][0]
+            $this->request->curl_options[CURLOPT_HTTPHEADER][0],
         );
     }
 

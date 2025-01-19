@@ -39,7 +39,9 @@ $finder = Finder::create()
         __DIR__ . '/spark',
     ]);
 
-$overrides = [];
+$overrides = [
+    'modernize_strpos' => ['modernize_stripos' => true],
+];
 
 $options = [
     'cacheFile'    => 'build/.php-cs-fixer.cache',
@@ -53,5 +55,5 @@ $options = [
 return Factory::create(new CodeIgniter4(), $overrides, $options)->forLibrary(
     'CodeIgniter 4 framework',
     'CodeIgniter Foundation',
-    'admin@codeigniter.com'
+    'admin@codeigniter.com',
 );

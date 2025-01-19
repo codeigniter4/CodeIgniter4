@@ -86,7 +86,7 @@ class Parser extends View
         ?string $viewPath = null,
         $loader = null,
         ?bool $debug = null,
-        ?LoggerInterface $logger = null
+        ?LoggerInterface $logger = null,
     ) {
         // Ensure user plugins override core plugins.
         $this->plugins = $config->plugins;
@@ -329,7 +329,7 @@ class Parser extends View
             $this->leftDelimiter . '\s*/' . preg_quote($variable, '#') . '\s*' . $this->rightDelimiter . '#us',
             $template,
             $matches,
-            PREG_SET_ORDER
+            PREG_SET_ORDER,
         );
 
         /*
@@ -419,7 +419,7 @@ class Parser extends View
          * $matches[][0] is the raw match
          * $matches[][1] is the contents
          */
-        if (preg_match_all($pattern, $template, $matches, PREG_SET_ORDER)) {
+        if (preg_match_all($pattern, $template, $matches, PREG_SET_ORDER) >= 1) {
             foreach ($matches as $match) {
                 // Create a hash of the contents to insert in its place.
                 $hash                       = md5($match[1]);
@@ -484,12 +484,12 @@ class Parser extends View
         $template = preg_replace(
             '/' . $leftDelimiter . '\s*else\s*' . $rightDelimiter . '/ums',
             '<?php else: ?>',
-            $template
+            $template,
         );
         $template = preg_replace(
             '/' . $leftDelimiter . '\s*endif\s*' . $rightDelimiter . '/ums',
             '<?php endif; ?>',
-            $template
+            $template,
         );
 
         // Parse the PHP itself, or insert an error so they can debug
@@ -691,7 +691,7 @@ class Parser extends View
              *   $matches[1] = all parameters string in opening tag
              *   $matches[2] = content between the tags to send to the plugin.
              */
-            if (preg_match_all($pattern, $template, $matches, PREG_SET_ORDER) === 0) {
+            if (preg_match_all($pattern, $template, $matches, PREG_SET_ORDER) < 1) {
                 continue;
             }
 

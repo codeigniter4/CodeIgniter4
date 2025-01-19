@@ -234,8 +234,8 @@ class Forge
                     $ifNotExists ? $this->createDatabaseIfStr : $this->createDatabaseStr,
                     $this->db->escapeIdentifier($dbName),
                     $this->db->charset,
-                    $this->db->DBCollat
-                )
+                    $this->db->DBCollat,
+                ),
             )) {
                 // @codeCoverageIgnoreStart
                 if ($this->db->DBDebug) {
@@ -294,7 +294,7 @@ class Forge
         }
 
         if (! $this->db->query(
-            sprintf($this->dropDatabaseStr, $this->db->escapeIdentifier($dbName))
+            sprintf($this->dropDatabaseStr, $this->db->escapeIdentifier($dbName)),
         )) {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('Unable to drop the specified database.');
@@ -307,7 +307,7 @@ class Forge
             $key = array_search(
                 strtolower($dbName),
                 array_map(strtolower(...), $this->db->dataCache['db_names']),
-                true
+                true,
             );
             if ($key !== false) {
                 unset($this->db->dataCache['db_names'][$key]);
@@ -425,7 +425,7 @@ class Forge
         $tableField = '',
         string $onUpdate = '',
         string $onDelete = '',
-        string $fkName = ''
+        string $fkName = '',
     ): Forge {
         $fieldName  = (array) $fieldName;
         $tableField = (array) $tableField;
@@ -525,7 +525,7 @@ class Forge
         $sql = sprintf(
             (string) $this->dropConstraintStr,
             $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
-            $this->db->escapeIdentifiers($foreignName)
+            $this->db->escapeIdentifiers($foreignName),
         );
 
         if ($sql === '') {
@@ -618,7 +618,7 @@ class Forge
             'CREATE TABLE',
             $this->db->escapeIdentifiers($table),
             $processedFields,
-            $this->_createTableAttributes($attributes)
+            $this->_createTableAttributes($attributes),
         );
     }
 
@@ -668,7 +668,7 @@ class Forge
             $key = array_search(
                 strtolower($this->db->DBPrefix . $tableName),
                 array_map(strtolower(...), $this->db->dataCache['table_names']),
-                true
+                true,
             );
 
             if ($key !== false) {
@@ -723,14 +723,14 @@ class Forge
         $result = $this->db->query(sprintf(
             $this->renameTableStr,
             $this->db->escapeIdentifiers($this->db->DBPrefix . $tableName),
-            $this->db->escapeIdentifiers($this->db->DBPrefix . $newTableName)
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $newTableName),
         ));
 
         if ($result && ! empty($this->db->dataCache['table_names'])) {
             $key = array_search(
                 strtolower($this->db->DBPrefix . $tableName),
                 array_map(strtolower(...), $this->db->dataCache['table_names']),
-                true
+                true,
             );
 
             if ($key !== false) {
@@ -1061,7 +1061,7 @@ class Forge
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
         if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true
-            && stripos($field['type'], 'int') !== false
+            && str_contains(strtolower($field['type']), 'int')
         ) {
             $field['auto_increment'] = ' AUTO_INCREMENT';
         }
@@ -1112,7 +1112,7 @@ class Forge
 
             $this->fields = array_combine(
                 array_map(static fn ($columnName) => $columnName->name, $fieldData),
-                array_fill(0, count($fieldData), [])
+                array_fill(0, count($fieldData), []),
             );
         }
 

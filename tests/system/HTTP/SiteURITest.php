@@ -40,7 +40,7 @@ final class SiteURITest extends CIUnitTestCase
         string $expectedQuery,
         string $expectedFragment,
         array $expectedSegments,
-        int $expectedTotalSegments
+        int $expectedTotalSegments,
     ): void {
         $config            = new App();
         $config->indexPage = $indexPage;
@@ -337,7 +337,7 @@ final class SiteURITest extends CIUnitTestCase
         string $expectedQuery,
         string $expectedFragment,
         array $expectedSegments,
-        int $expectedTotalSegments
+        int $expectedTotalSegments,
     ): void {
         $config            = new App();
         $config->indexPage = $indexPage;

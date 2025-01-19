@@ -124,7 +124,7 @@ final class ExceptionsTest extends CIUnitTestCase
         $this->assertSame([500, EXIT_ERROR], $determineCodes(new RuntimeException('There.', 404)));
         $this->assertSame([500, EXIT_ERROR], $determineCodes(new RuntimeException('This.', 167)));
         $this->assertSame([500, EXIT_CONFIG], $determineCodes(new ConfigException('This.')));
-        $this->assertSame([500, EXIT_CONFIG], $determineCodes(new CastException('This.')));
+        $this->assertSame([500, EXIT_CONFIG], $determineCodes(CastException::forInvalidInterface('This.')));
         $this->assertSame([500, EXIT_DATABASE], $determineCodes(new DatabaseException('This.')));
     }
 
@@ -139,7 +139,7 @@ final class ExceptionsTest extends CIUnitTestCase
         foreach ($renderedBacktrace as $trace) {
             $this->assertMatchesRegularExpression(
                 '/^\s*\d* .+(?:\(\d+\))?: \S+(?:(?:\->|::)\S+)?\(.*\)$/',
-                $trace
+                $trace,
             );
         }
     }

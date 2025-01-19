@@ -471,7 +471,7 @@ final class DataConverterTest extends CIUnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            '[CodeIgniter\DataCaster\Cast\JsonCast] Invalid value type: bool, and its value: true'
+            '[CodeIgniter\DataCaster\Cast\JsonCast] Invalid value type: bool, and its value: true',
         );
 
         $types = [
@@ -491,7 +491,7 @@ final class DataConverterTest extends CIUnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Invalid class type. It must implement CastInterface. class: CodeIgniter\DataConverter\DataConverter'
+            'Invalid class type. It must implement CastInterface. class: CodeIgniter\DataConverter\DataConverter',
         );
 
         $types = [
@@ -530,7 +530,7 @@ final class DataConverterTest extends CIUnitTestCase
         array $handlers = [],
         ?object $helper = null,
         Closure|string|null $reconstructor = 'reconstruct',
-        Closure|string|null $extractor = null
+        Closure|string|null $extractor = null,
     ): DataConverter {
         return new DataConverter($types, $handlers, $helper, $reconstructor, $extractor);
     }

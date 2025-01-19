@@ -51,7 +51,7 @@ final class MigrateStatusTest extends CIUnitTestCase
         $contents = str_replace(
             'namespace Tests\Support\MigrationTestMigrations\Database\Migrations;',
             'namespace App\Database\Migrations;',
-            $contents
+            $contents,
         );
         file_put_contents($this->migrationFileTo, $contents);
 

@@ -4,7 +4,7 @@ $request = new \CodeIgniter\HTTP\IncomingRequest(
     new \Config\App(),
     new \CodeIgniter\HTTP\URI('http://example.com'),
     null,
-    new \CodeIgniter\HTTP\UserAgent()
+    new \CodeIgniter\HTTP\UserAgent(),
 );
 
 $request->setLocale($locale);

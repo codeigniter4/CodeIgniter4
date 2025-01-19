@@ -24,7 +24,7 @@ class IntegerCast extends BaseCast
     public static function get(
         mixed $value,
         array $params = [],
-        ?object $helper = null
+        ?object $helper = null,
     ): int {
         if (! is_string($value) && ! is_int($value)) {
             self::invalidTypeValueError($value);

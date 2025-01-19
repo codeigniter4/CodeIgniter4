@@ -56,7 +56,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.5.7';
+    public const CI_VERSION = '4.5.8';
 
     /**
      * App startup time.
@@ -325,7 +325,7 @@ class CodeIgniter
         if ($this->context === null) {
             throw new LogicException(
                 'Context must be set before run() is called. If you are upgrading from 4.1.x, '
-                . 'you need to merge `public/index.php` and `spark` file from `vendor/codeigniter4/framework`.'
+                . 'you need to merge `public/index.php` and `spark` file from `vendor/codeigniter4/framework`.',
             );
         }
 
@@ -799,7 +799,7 @@ class CodeIgniter
         return str_replace(
             ['{elapsed_time}', '{memory_usage}'],
             [(string) $this->totalTime, number_format(memory_get_peak_usage() / 1024 / 1024, 3)],
-            $output
+            $output,
         );
     }
 
@@ -979,7 +979,7 @@ class CodeIgniter
 
         // Throws new PageNotFoundException and remove exception message on production.
         throw PageNotFoundException::forPageNotFound(
-            (ENVIRONMENT !== 'production' || ! $this->isWeb()) ? $e->getMessage() : null
+            (ENVIRONMENT !== 'production' || ! $this->isWeb()) ? $e->getMessage() : null,
         );
     }
 
@@ -1064,7 +1064,7 @@ class CodeIgniter
                 $uri->getAuthority(),
                 $uri->getPath(),
                 $uri->getQuery(),
-                $uri->getFragment()
+                $uri->getFragment(),
             ));
         }
     }

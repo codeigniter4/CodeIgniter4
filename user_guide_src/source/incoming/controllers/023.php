@@ -11,7 +11,7 @@ class Product extends BaseController
     public function initController(
         RequestInterface $request,
         ResponseInterface $response,
-        LoggerInterface $logger
+        LoggerInterface $logger,
     ) {
         parent::initController($request, $response, $logger);
 

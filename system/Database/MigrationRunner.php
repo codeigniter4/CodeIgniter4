@@ -605,7 +605,7 @@ class MigrationRunner
                 CLI::color(lang('Migrations.added'), 'yellow'),
                 $migration->namespace,
                 $migration->version,
-                $migration->class
+                $migration->class,
             );
         }
     }
@@ -625,7 +625,7 @@ class MigrationRunner
                 CLI::color(lang('Migrations.removed'), 'yellow'),
                 $history->namespace,
                 $history->version,
-                $history->class
+                $history->class,
             );
         }
     }

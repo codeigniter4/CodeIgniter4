@@ -379,12 +379,12 @@ class Fabricator
 
         // Check some common partials
         foreach (['email', 'name', 'title', 'text', 'date', 'url'] as $term) {
-            if (stripos($field, $term) !== false) {
+            if (str_contains(strtolower($field), strtolower($term))) {
                 return $term;
             }
         }
 
-        if (stripos($field, 'phone') !== false) {
+        if (str_contains(strtolower($field), 'phone')) {
             return 'phoneNumber';
         }
 
@@ -437,21 +437,21 @@ class Fabricator
                 if (isset($this->modifiedFields['unique'][$field])) {
                     $faker = $faker->unique(
                         $this->modifiedFields['unique'][$field]['reset'],
-                        $this->modifiedFields['unique'][$field]['maxRetries']
+                        $this->modifiedFields['unique'][$field]['maxRetries'],
                     );
                 }
 
                 if (isset($this->modifiedFields['optional'][$field])) {
                     $faker = $faker->optional(
                         $this->modifiedFields['optional'][$field]['weight'],
-                        $this->modifiedFields['optional'][$field]['default']
+                        $this->modifiedFields['optional'][$field]['default'],
                     );
                 }
 
                 if (isset($this->modifiedFields['valid'][$field])) {
                     $faker = $faker->valid(
                         $this->modifiedFields['valid'][$field]['validator'],
-                        $this->modifiedFields['valid'][$field]['maxRetries']
+                        $this->modifiedFields['valid'][$field]['maxRetries'],
                     );
                 }
 

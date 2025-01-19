@@ -51,7 +51,7 @@ final class SampleURIGeneratorTest extends CIUnitTestCase
         $routes = service('routes');
         $routes->addPlaceholder(
             'uuid',
-            '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+            '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
         );
 
         $generator = new SampleURIGenerator();

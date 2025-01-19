@@ -85,7 +85,7 @@ class Honeypot
             $this->config->container = str_ireplace(
                 '>{template}',
                 ' id="' . $this->config->containerId . '">{template}',
-                $this->config->container
+                $this->config->container,
             );
         }
 

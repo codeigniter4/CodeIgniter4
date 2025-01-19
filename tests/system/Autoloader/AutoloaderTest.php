@@ -202,7 +202,7 @@ final class AutoloaderTest extends CIUnitTestCase
 
         $this->assertSame(
             __FILE__,
-            ($this->classLoader)('App\Controllers\AutoloaderTest')
+            ($this->classLoader)('App\Controllers\AutoloaderTest'),
         );
     }
 
@@ -235,7 +235,7 @@ final class AutoloaderTest extends CIUnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'The file path contains special characters "${}!#" that are not allowed: "${../path}!#/to/some/file.php_"'
+            'The file path contains special characters "${}!#" that are not allowed: "${../path}!#/to/some/file.php_"',
         );
 
         $test = '${../path}!#/to/some/file.php_';
@@ -247,7 +247,7 @@ final class AutoloaderTest extends CIUnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'The characters ".-_" are not allowed in filename edges: "/path/to/some/file.php_"'
+            'The characters ".-_" are not allowed in filename edges: "/path/to/some/file.php_"',
         );
 
         $test = '/path/to/some/file.php_';

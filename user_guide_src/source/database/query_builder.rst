@@ -1870,7 +1870,7 @@ Class Reference
         :param array $set: Data to insert
         :param bool $escape: Whether to escape values
         :param int $batch_size: Count of rows to insert at once
-        :returns: Number of rows inserted or ``false`` on failure
+        :returns: Number of rows inserted or ``false`` on no data to perform an insert operation
         :rtype:    int|false
 
         Compiles and executes batch ``INSERT`` statements.

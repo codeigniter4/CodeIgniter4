@@ -63,7 +63,7 @@ final class TimeLegacyTest extends CIUnitTestCase
             IntlDateFormatter::SHORT,
             'America/Chicago', // Default for CodeIgniter
             IntlDateFormatter::GREGORIAN,
-            'yyyy-MM-dd HH:mm:ss'
+            'yyyy-MM-dd HH:mm:ss',
         );
 
         $time = new TimeLegacy('', 'America/Chicago');
@@ -78,7 +78,7 @@ final class TimeLegacyTest extends CIUnitTestCase
             IntlDateFormatter::SHORT,
             'Europe/London', // Default for CodeIgniter
             IntlDateFormatter::GREGORIAN,
-            'yyyy-MM-dd HH:mm:ss'
+            'yyyy-MM-dd HH:mm:ss',
         );
 
         $time = new TimeLegacy('now', 'Europe/London');
@@ -94,7 +94,7 @@ final class TimeLegacyTest extends CIUnitTestCase
             IntlDateFormatter::SHORT,
             'Europe/London', // Default for CodeIgniter
             IntlDateFormatter::GREGORIAN,
-            'yyyy-MM-dd HH:mm:ss'
+            'yyyy-MM-dd HH:mm:ss',
         );
 
         $time = new TimeLegacy('now', 'Europe/London', 'fr_FR');
@@ -110,7 +110,7 @@ final class TimeLegacyTest extends CIUnitTestCase
             IntlDateFormatter::SHORT,
             'Europe/London',
             IntlDateFormatter::GREGORIAN,
-            'yyyy-MM-dd HH:mm:ss'
+            'yyyy-MM-dd HH:mm:ss',
         );
 
         $time = new TimeLegacy('now', new DateTimeZone('Europe/London'), 'fr_FR');

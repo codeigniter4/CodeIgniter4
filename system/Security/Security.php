@@ -307,13 +307,13 @@ class Security implements SecurityInterface
         // Does the token exist in POST, HEADER or optionally php:://input - json data or PUT, DELETE, PATCH - raw data.
 
         if ($tokenValue = $request->getPost($this->config->tokenName)) {
-            return $tokenValue;
+            return is_string($tokenValue) ? $tokenValue : null;
         }
 
-        if ($request->hasHeader($this->config->headerName)
-            && $request->header($this->config->headerName)->getValue() !== ''
-            && $request->header($this->config->headerName)->getValue() !== []) {
-            return $request->header($this->config->headerName)->getValue();
+        if ($request->hasHeader($this->config->headerName)) {
+            $tokenValue = $request->header($this->config->headerName)->getValue();
+
+            return (is_string($tokenValue) && $tokenValue !== '') ? $tokenValue : null;
         }
 
         $body = (string) $request->getBody();
@@ -321,12 +321,15 @@ class Security implements SecurityInterface
         if ($body !== '') {
             $json = json_decode($body);
             if ($json !== null && json_last_error() === JSON_ERROR_NONE) {
-                return $json->{$this->config->tokenName} ?? null;
+                $tokenValue = $json->{$this->config->tokenName} ?? null;
+
+                return is_string($tokenValue) ? $tokenValue : null;
             }
 
             parse_str($body, $parsed);
+            $tokenValue = $parsed[$this->config->tokenName] ?? null;
 
-            return $parsed[$this->config->tokenName] ?? null;
+            return is_string($tokenValue) ? $tokenValue : null;
         }
 
         return null;
@@ -530,7 +533,7 @@ class Security implements SecurityInterface
             $this->hash,
             [
                 'expires' => $this->config->expires === 0 ? 0 : Time::now()->getTimestamp() + $this->config->expires,
-            ]
+            ],
         );
 
         $response = service('response');

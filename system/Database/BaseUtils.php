@@ -217,7 +217,7 @@ abstract class BaseUtils
                 $line[] = $enclosure . str_replace(
                     $enclosure,
                     $enclosure . $enclosure,
-                    (string) $item
+                    (string) $item,
                 ) . $enclosure;
             }
 

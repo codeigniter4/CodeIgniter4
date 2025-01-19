@@ -128,42 +128,42 @@ parameters:
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:177\:\:__construct\(\) has parameter \$formatter with no type specified\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:__construct\(\) has parameter \$formatter with no type specified\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:177\:\:__construct\(\) has parameter \$request with no type specified\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:__construct\(\) has parameter \$request with no type specified\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:177\:\:__construct\(\) has parameter \$response with no type specified\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:__construct\(\) has parameter \$response with no type specified\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:299\:\:__construct\(\) has parameter \$formatter with no type specified\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:__construct\(\) has parameter \$formatter with no type specified\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:299\:\:__construct\(\) has parameter \$request with no type specified\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:__construct\(\) has parameter \$request with no type specified\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:299\:\:__construct\(\) has parameter \$response with no type specified\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:__construct\(\) has parameter \$response with no type specified\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:639\:\:__construct\(\) has parameter \$request with no type specified\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:627\:\:__construct\(\) has parameter \$request with no type specified\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 
         -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:639\:\:__construct\(\) has parameter \$response with no type specified\.$#'
+            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:627\:\:__construct\(\) has parameter \$response with no type specified\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 

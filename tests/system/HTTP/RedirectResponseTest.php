@@ -61,7 +61,7 @@ final class RedirectResponseTest extends CIUnitTestCase
             $this->config,
             new SiteURI($this->config),
             null,
-            new UserAgent()
+            new UserAgent(),
         );
         Services::injectMock('request', $this->request);
     }

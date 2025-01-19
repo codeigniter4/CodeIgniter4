@@ -58,7 +58,7 @@ final class PagerTest extends CIUnitTestCase
             $config,
             new SiteURI($config, ltrim($requestUri, '/')),
             'php://input',
-            new UserAgent()
+            new UserAgent(),
         );
         $request = $request->withMethod('GET');
         Services::injectMock('request', $request);
@@ -165,11 +165,11 @@ final class PagerTest extends CIUnitTestCase
         $this->assertSame('http://example.com/?page=5&foo=bar', $this->pager->getPageURI(5));
         $this->assertSame(
             'http://example.com/?foo=bar&page=5',
-            $this->pager->only(['foo'])->getPageURI(5)
+            $this->pager->only(['foo'])->getPageURI(5),
         );
         $this->assertSame(
             'http://example.com/?page=5',
-            $this->pager->only([])->getPageURI(5)
+            $this->pager->only([])->getPageURI(5),
         );
     }
 
@@ -185,11 +185,11 @@ final class PagerTest extends CIUnitTestCase
         $this->assertSame('http://example.com/5?page=3&foo=bar', $this->pager->getPageURI(5));
         $this->assertSame(
             'http://example.com/5?foo=bar',
-            $this->pager->only(['foo'])->getPageURI(5)
+            $this->pager->only(['foo'])->getPageURI(5),
         );
         $this->assertSame(
             'http://example.com/5',
-            $this->pager->only([])->getPageURI(5)
+            $this->pager->only([])->getPageURI(5),
         );
     }
 
@@ -371,15 +371,15 @@ final class PagerTest extends CIUnitTestCase
 
         $this->assertSame(
             $this->pager->only($onlyQueries)->getPreviousPageURI(),
-            (string) $uri->setQuery('search=foo&order=asc&page=1')
+            (string) $uri->setQuery('search=foo&order=asc&page=1'),
         );
         $this->assertSame(
             $this->pager->only($onlyQueries)->getNextPageURI(),
-            (string) $uri->setQuery('search=foo&order=asc&page=3')
+            (string) $uri->setQuery('search=foo&order=asc&page=3'),
         );
         $this->assertSame(
             $this->pager->only($onlyQueries)->getPageURI(4),
-            (string) $uri->setQuery('search=foo&order=asc&page=4')
+            (string) $uri->setQuery('search=foo&order=asc&page=4'),
         );
     }
 
@@ -406,47 +406,47 @@ final class PagerTest extends CIUnitTestCase
     {
         $this->assertStringContainsString(
             '<ul class="pagination">',
-            $this->pager->makeLinks(4, 10, 50)
+            $this->pager->makeLinks(4, 10, 50),
         );
         $this->assertStringContainsString(
             '<ul class="pagination">',
-            $this->pager->makeLinks(4, 10, 50, 'default_full')
+            $this->pager->makeLinks(4, 10, 50, 'default_full'),
         );
         $this->assertStringContainsString(
             '<ul class="pager">',
-            $this->pager->makeLinks(4, 10, 50, 'default_simple')
+            $this->pager->makeLinks(4, 10, 50, 'default_simple'),
         );
         $this->assertStringContainsString(
             '<link rel="canonical"',
-            $this->pager->makeLinks(4, 10, 50, 'default_head')
+            $this->pager->makeLinks(4, 10, 50, 'default_head'),
         );
         $this->assertStringContainsString(
             '?page=1',
-            $this->pager->makeLinks(1, 10, 1, 'default_full', 0)
+            $this->pager->makeLinks(1, 10, 1, 'default_full', 0),
         );
         $this->assertStringContainsString(
             '?page=1',
-            $this->pager->makeLinks(1, 10, 1, 'default_full', 0, '')
+            $this->pager->makeLinks(1, 10, 1, 'default_full', 0, ''),
         );
         $this->assertStringContainsString(
             '?page=1',
-            $this->pager->makeLinks(1, 10, 1, 'default_full', 0, 'default')
+            $this->pager->makeLinks(1, 10, 1, 'default_full', 0, 'default'),
         );
         $this->assertStringContainsString(
             '?page_custom=1',
-            $this->pager->makeLinks(1, 10, 1, 'default_full', 0, 'custom')
+            $this->pager->makeLinks(1, 10, 1, 'default_full', 0, 'custom'),
         );
         $this->assertStringContainsString(
             '?page_custom=1',
-            $this->pager->makeLinks(1, null, 1, 'default_full', 0, 'custom')
+            $this->pager->makeLinks(1, null, 1, 'default_full', 0, 'custom'),
         );
         $this->assertStringContainsString(
             '/1',
-            $this->pager->makeLinks(1, 10, 1, 'default_full', 1)
+            $this->pager->makeLinks(1, 10, 1, 'default_full', 1),
         );
         $this->assertStringContainsString(
             '<li class="active">',
-            $this->pager->makeLinks(1, 10, 1, 'default_full', 1)
+            $this->pager->makeLinks(1, 10, 1, 'default_full', 1),
         );
     }
 
@@ -487,7 +487,7 @@ final class PagerTest extends CIUnitTestCase
             $config,
             new SiteURI($config, 'x/y'),
             'php://input',
-            new UserAgent()
+            new UserAgent(),
         );
         $request = $request->withMethod('GET');
         Services::injectMock('request', $request);

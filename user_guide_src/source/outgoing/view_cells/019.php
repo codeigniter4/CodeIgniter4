@@ -15,7 +15,7 @@ class RecentPostsCell extends Cell
         $this->posts = model('PostModel')
             ->when(
                 $categoryId,
-                static fn ($query, $categoryId) => $query->where('category_id', $categoryId)
+                static fn ($query, $categoryId) => $query->where('category_id', $categoryId),
             )
             ->orderBy('created_at', 'DESC')
             ->findAll(10);

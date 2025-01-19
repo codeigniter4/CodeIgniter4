@@ -63,7 +63,7 @@ class Console
             'CodeIgniter v%s Command Line Tool - Server Time: %s UTC%s',
             CodeIgniter::CI_VERSION,
             date('Y-m-d H:i:s'),
-            date('P')
+            date('P'),
         ), 'green');
         CLI::newLine();
     }

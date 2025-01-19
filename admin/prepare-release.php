@@ -33,31 +33,31 @@ system('git switch -c release-' . $version);
 replace_file_content(
     './system/CodeIgniter.php',
     '/public const CI_VERSION = \'.*?\';/u',
-    "public const CI_VERSION = '{$version}';"
+    "public const CI_VERSION = '{$version}';",
 );
 
 // Updates version number in "conf.py".
 replace_file_content(
     './user_guide_src/source/conf.py',
     '/^version = \'.*?\'/mu',
-    "version = '{$minor}'"
+    "version = '{$minor}'",
 );
 replace_file_content(
     './user_guide_src/source/conf.py',
     '/^release = \'.*?\'/mu',
-    "release = '{$version}'"
+    "release = '{$version}'",
 );
 
 // Updates version number in "phpdoc.dist.xml".
 replace_file_content(
     './phpdoc.dist.xml',
     '!<title>CodeIgniter v.*? API</title>!mu',
-    "<title>CodeIgniter v{$minor} API</title>"
+    "<title>CodeIgniter v{$minor} API</title>",
 );
 replace_file_content(
     './phpdoc.dist.xml',
     '/<version number=".*?">/mu',
-    "<version number=\"{$version}\">"
+    "<version number=\"{$version}\">",
 );
 
 // Updates release date in changelogs.
@@ -65,7 +65,7 @@ $date = date('F j, Y');
 replace_file_content(
     "./user_guide_src/source/changelogs/v{$version}.rst",
     '/^Release Date: .*/mu',
-    "Release Date: {$date}"
+    "Release Date: {$date}",
 );
 
 // Commits

@@ -18,7 +18,7 @@ $data = [
 ];
 
 $validation->setRules(
-    ['contacts.*.name' => 'required|max_length[8]']
+    ['contacts.*.name' => 'required|max_length[8]'],
 );
 
 $validation->run($data); // false

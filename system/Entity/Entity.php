@@ -138,7 +138,7 @@ class Entity implements JsonSerializable
             array_merge($this->defaultCastHandlers, $this->castHandlers),
             null,
             null,
-            false
+            false,
         );
 
         $this->syncOriginal();
@@ -185,7 +185,7 @@ class Entity implements JsonSerializable
 
         if (is_array($this->datamap)) {
             $keys = array_unique(
-                [...array_diff($keys, $this->datamap), ...array_keys($this->datamap)]
+                [...array_diff($keys, $this->datamap), ...array_keys($this->datamap)],
             );
         }
 

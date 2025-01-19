@@ -137,7 +137,7 @@ final class GenerateKeyTest extends CIUnitTestCase
             'encryption.key = ' . $key,
             '# encryption.key = ' . $key,
             file_get_contents($this->envPath),
-            $count
+            $count,
         ));
         $this->assertSame(1, $count, 'Failed commenting out the previously set application key.');
 
@@ -155,7 +155,7 @@ final class GenerateKeyTest extends CIUnitTestCase
             'encryption.key = ' . $key,
             '# encryption.key = ' . $key,
             file_get_contents($this->envPath),
-            $count
+            $count,
         ));
         $this->assertSame(1, $count, 'Failed commenting out the previously set application key.');
 

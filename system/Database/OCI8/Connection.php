@@ -523,7 +523,7 @@ class Connection extends BaseConnection
         $sql = sprintf(
             'BEGIN %s (' . substr(str_repeat(',%s', count($params)), 1) . '); END;',
             $procedureName,
-            ...array_map(static fn ($row) => $row['name'], $params)
+            ...array_map(static fn ($row) => $row['name'], $params),
         );
 
         $this->resetStmtId = false;
@@ -554,7 +554,7 @@ class Connection extends BaseConnection
                 $param['name'],
                 $param['value'],
                 $param['length'] ?? -1,
-                $param['type'] ?? SQLT_CHR
+                $param['type'] ?? SQLT_CHR,
             );
         }
     }

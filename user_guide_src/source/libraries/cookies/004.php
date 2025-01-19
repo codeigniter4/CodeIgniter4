@@ -16,7 +16,7 @@ $cookie = new Cookie(
         'httponly' => true,
         'raw'      => false,
         'samesite' => Cookie::SAMESITE_LAX,
-    ]
+    ],
 );
 
 $cookie->getName();             // 'remember_token'

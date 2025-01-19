@@ -39,7 +39,7 @@ final class RemoveErrorSuppressInTryCatchStmtsRector extends AbstractRector
                     try {
                     	rmdir($dirname);
                     } catch (Exception $e) {}
-                    CODE_SAMPLE
+                    CODE_SAMPLE,
             ),
         ]);
     }
@@ -73,7 +73,7 @@ final class RemoveErrorSuppressInTryCatchStmtsRector extends AbstractRector
                 }
 
                 return null;
-            }
+            },
         );
 
         if ($hasChanged) {

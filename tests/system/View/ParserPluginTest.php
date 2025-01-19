@@ -152,7 +152,7 @@ final class ParserPluginTest extends CIUnitTestCase
 
         $this->assertMatchesRegularExpression(
             '/aaa nonce="[0-9a-z]{24}" bbb/',
-            $this->parser->renderString($template)
+            $this->parser->renderString($template),
         );
     }
 }

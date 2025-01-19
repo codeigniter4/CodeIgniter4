@@ -24,7 +24,7 @@ class BooleanCast extends BaseCast
     public static function get(
         mixed $value,
         array $params = [],
-        ?object $helper = null
+        ?object $helper = null,
     ): bool {
         // For PostgreSQL
         if ($value === 't') {

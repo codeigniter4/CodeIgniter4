@@ -146,7 +146,7 @@ if (! function_exists('command')) {
                 // @codeCoverageIgnoreStart
                 throw new InvalidArgumentException(sprintf(
                     'Unable to parse input near "... %s ...".',
-                    substr($command, $cursor, 10)
+                    substr($command, $cursor, 10),
                 ));
                 // @codeCoverageIgnoreEnd
             }
@@ -470,7 +470,7 @@ if (! function_exists('force_https')) {
     function force_https(
         int $duration = 31_536_000,
         ?RequestInterface $request = null,
-        ?ResponseInterface $response = null
+        ?ResponseInterface $response = null,
     ): void {
         $request ??= service('request');
 
@@ -1065,7 +1065,7 @@ if (! function_exists('slash_item')) {
                 'Cannot convert "%s::$%s" of type "%s" to type "string".',
                 App::class,
                 $item,
-                gettype($configItem)
+                gettype($configItem),
             ));
         }
 

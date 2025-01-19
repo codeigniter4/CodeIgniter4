@@ -144,6 +144,7 @@ class Router implements RouterInterface
     public function __construct(RouteCollectionInterface $routes, ?Request $request = null)
     {
         $config = config(App::class);
+
         if (isset($config->permittedURIChars)) {
             $this->permittedURIChars = $config->permittedURIChars;
         }
@@ -154,7 +155,7 @@ class Router implements RouterInterface
         $this->controller = $this->collection->getDefaultController();
         $this->method     = $this->collection->getDefaultMethod();
 
-        $this->collection->setHTTPVerb($request->getMethod() ?? $_SERVER['REQUEST_METHOD']);
+        $this->collection->setHTTPVerb($request->getMethod() === '' ? $_SERVER['REQUEST_METHOD'] : $request->getMethod());
 
         $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
 
@@ -166,7 +167,7 @@ class Router implements RouterInterface
                     $this->collection->getDefaultNamespace(),
                     $this->collection->getDefaultController(),
                     $this->collection->getDefaultMethod(),
-                    $this->translateURIDashes
+                    $this->translateURIDashes,
                 );
             } else {
                 $this->autoRouter = new AutoRouter(
@@ -174,7 +175,7 @@ class Router implements RouterInterface
                     $this->collection->getDefaultNamespace(),
                     $this->collection->getDefaultController(),
                     $this->collection->getDefaultMethod(),
-                    $this->translateURIDashes
+                    $this->translateURIDashes,
                 );
             }
         }
@@ -220,7 +221,7 @@ class Router implements RouterInterface
         // want this, like in the case of API's.
         if (! $this->collection->shouldAutoRoute()) {
             throw new PageNotFoundException(
-                "Can't find a route for '{$this->collection->getHTTPVerb()}: {$uri}'."
+                "Can't find a route for '{$this->collection->getHTTPVerb()}: {$uri}'.",
             );
         }
 
@@ -441,7 +442,7 @@ class Router implements RouterInterface
 
                     throw new RedirectException(
                         preg_replace('#\A' . $routeKey . '\z#u', $redirectTo, $uri),
-                        $this->collection->getRedirectCode($routeKey)
+                        $this->collection->getRedirectCode($routeKey),
                     );
                 }
                 // Store our locale so CodeIgniter object can
@@ -450,7 +451,7 @@ class Router implements RouterInterface
                     preg_match(
                         '#^' . str_replace('{locale}', '(?<locale>[^/]+)', $matchedKey) . '$#u',
                         $uri,
-                        $matched
+                        $matched,
                     );
 
                     if ($this->collection->shouldUseSupportedLocalesOnly()
@@ -545,7 +546,7 @@ class Router implements RouterInterface
 
                 return $matches[$index] ?? '';
             },
-            $input
+            $input,
         );
     }
 
@@ -735,7 +736,7 @@ class Router implements RouterInterface
                 && preg_match('/\A[' . $this->permittedURIChars . ']+\z/iu', $segment) !== 1
             ) {
                 throw new BadRequestException(
-                    'The URI you submitted has disallowed characters: "' . $segment . '"'
+                    'The URI you submitted has disallowed characters: "' . $segment . '"',
                 );
             }
         }

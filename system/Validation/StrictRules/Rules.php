@@ -42,7 +42,7 @@ class Rules
         string $otherField,
         array $data,
         ?string $error = null,
-        ?string $field = null
+        ?string $field = null,
     ): bool {
         if (str_contains($otherField, '.')) {
             return $str !== dot_array_search($otherField, $data);
@@ -149,7 +149,7 @@ class Rules
         [$field, $whereField, $whereValue] = array_pad(
             explode(',', $field),
             3,
-            null
+            null,
         );
 
         // Break the table and field apart
@@ -210,7 +210,7 @@ class Rules
         [$field, $ignoreField, $ignoreValue] = array_pad(
             explode(',', $field),
             3,
-            null
+            null,
         );
 
         sscanf($field, '%[^.].%[^.]', $table, $field);
@@ -279,7 +279,7 @@ class Rules
         string $otherField,
         array $data,
         ?string $error = null,
-        ?string $field = null
+        ?string $field = null,
     ): bool {
         if (str_contains($otherField, '.')) {
             return $str === dot_array_search($otherField, $data);
@@ -410,7 +410,7 @@ class Rules
         ?string $otherFields = null,
         array $data = [],
         ?string $error = null,
-        ?string $field = null
+        ?string $field = null,
     ): bool {
         return $this->nonStrictRules->required_without($str, $otherFields, $data, $error, $field);
     }
@@ -428,7 +428,7 @@ class Rules
         ?string $param = null,
         array $data = [],
         ?string $error = null,
-        ?string $field = null
+        ?string $field = null,
     ): bool {
         if (str_contains($field, '.')) {
             return ArrayHelper::dotKeyExists($field, $data);

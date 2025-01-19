@@ -87,7 +87,7 @@ if (! function_exists('directory_mirror')) {
          */
         foreach (new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($originDir, FilesystemIterator::SKIP_DOTS),
-            RecursiveIteratorIterator::SELF_FIRST
+            RecursiveIteratorIterator::SELF_FIRST,
         ) as $file) {
             $origin = $file->getPathname();
             $target = $targetDir . substr($origin, $dirLen);
@@ -96,7 +96,7 @@ if (! function_exists('directory_mirror')) {
                 if (! is_dir($target)) {
                     mkdir($target, 0755);
                 }
-            } elseif (! is_file($target) || ($overwrite && is_file($target))) {
+            } elseif ($overwrite || ! is_file($target)) {
                 copy($origin, $target);
             }
         }
@@ -159,7 +159,7 @@ if (! function_exists('delete_files')) {
         try {
             foreach (new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
-                RecursiveIteratorIterator::CHILD_FIRST
+                RecursiveIteratorIterator::CHILD_FIRST,
             ) as $object) {
                 $filename = $object->getFilename();
                 if (! $hidden && $filename[0] === '.') {
@@ -202,7 +202,7 @@ if (! function_exists('get_filenames')) {
         string $sourceDir,
         ?bool $includePath = false,
         bool $hidden = false,
-        bool $includeDir = true
+        bool $includeDir = true,
     ): array {
         $files = [];
 
@@ -212,7 +212,7 @@ if (! function_exists('get_filenames')) {
         try {
             foreach (new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator($sourceDir, RecursiveDirectoryIterator::SKIP_DOTS | FilesystemIterator::FOLLOW_SYMLINKS),
-                RecursiveIteratorIterator::SELF_FIRST
+                RecursiveIteratorIterator::SELF_FIRST,
             ) as $name => $object) {
                 $basename = pathinfo($name, PATHINFO_BASENAME);
                 if (! $hidden && $basename[0] === '.') {

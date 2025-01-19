@@ -10,5 +10,5 @@ $file = APPPATH . 'Config/App.php';
 $publisher->addLineAfter(
     $file,
     '    public int $myOwnConfig = 1000;', // Adds this line
-    'public bool $CSPEnabled = false;'     // After this line
+    'public bool $CSPEnabled = false;',     // After this line
 );

@@ -66,7 +66,7 @@ final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
 
         $this->assertSame(
             $this->randomizedToken,
-            $security->getHash()
+            $security->getHash(),
         );
     }
 

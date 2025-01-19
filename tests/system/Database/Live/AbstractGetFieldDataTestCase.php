@@ -138,7 +138,7 @@ abstract class AbstractGetFieldDataTestCase extends CIUnitTestCase
                 $fields['type_enum'],
                 $fields['type_set'],
                 $fields['type_mediumtext'],
-                $fields['type_double']
+                $fields['type_double'],
             );
         }
 
@@ -146,7 +146,7 @@ abstract class AbstractGetFieldDataTestCase extends CIUnitTestCase
             unset(
                 $fields['type_set'],
                 $fields['type_mediumtext'],
-                $fields['type_double']
+                $fields['type_double'],
             );
         }
 

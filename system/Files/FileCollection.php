@@ -103,7 +103,7 @@ class FileCollection implements Countable, IteratorAggregate
             $pattern = str_replace(
                 ['#', '.', '*', '?'],
                 ['\#', '\.', '.*', '.'],
-                $pattern
+                $pattern,
             );
             $pattern = "#\\A{$pattern}\\z#";
         }

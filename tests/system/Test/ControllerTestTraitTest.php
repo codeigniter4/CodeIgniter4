@@ -51,7 +51,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $logger = new Logger(new LoggerConfig());
         $this->withUri('http://example.com')
             ->withLogger($logger)
-            ->controller(NeverHeardOfIt::class)
+            ->controller(NeverHeardOfIt::class) // @phpstan-ignore class.notFound
             ->execute('index');
     }
 

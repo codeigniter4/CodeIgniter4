@@ -46,7 +46,7 @@ if (! function_exists('set_cookie')) {
         string $prefix = '',
         ?bool $secure = null,
         ?bool $httpOnly = null,
-        ?string $sameSite = null
+        ?string $sameSite = null,
     ): void {
         $response = service('response');
         $response->setCookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httpOnly, $sameSite);

@@ -944,12 +944,12 @@ final class FormHelperTest extends CIUnitTestCase
 
         $this->assertSame(
             '',
-            set_checkbox('fruit', 'apple', true)
+            set_checkbox('fruit', 'apple', true),
         );
 
         $this->assertSame(
             '',
-            set_checkbox('fruit', 'apple')
+            set_checkbox('fruit', 'apple'),
         );
     }
 

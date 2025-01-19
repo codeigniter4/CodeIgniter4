@@ -72,7 +72,7 @@ trait RequestTrait
 
         if (! empty($proxyIPs) && (! is_array($proxyIPs) || is_int(array_key_first($proxyIPs)))) {
             throw new ConfigException(
-                'You must set an array with Proxy IP address key and HTTP header name value in Config\App::$proxyIPs.'
+                'You must set an array with Proxy IP address key and HTTP header name value in Config\App::$proxyIPs.',
             );
         }
 

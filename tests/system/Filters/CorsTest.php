@@ -89,7 +89,7 @@ final class CorsTest extends CIUnitTestCase
                 'maxAge'              => 0,
                 'supportsCredentials' => false,
             ],
-            $options
+            $options,
         );
 
         return new Cors($passedOptions);
@@ -119,7 +119,7 @@ final class CorsTest extends CIUnitTestCase
 
         $this->assertHeader(
             'Access-Control-Allow-Origin',
-            'http://localhost'
+            'http://localhost',
         );
     }
 
@@ -208,7 +208,7 @@ final class CorsTest extends CIUnitTestCase
     {
         $this->expectException(ConfigException::class);
         $this->expectExceptionMessage(
-            'When responding to a credentialed request, the server must not specify the "*" wildcard for the Access-Control-Allow-Headers response-header value.'
+            'When responding to a credentialed request, the server must not specify the "*" wildcard for the Access-Control-Allow-Headers response-header value.',
         );
 
         $this->cors = $this->createCors(['allowedHeaders' => ['*'], 'supportsCredentials' => true]);
@@ -249,7 +249,7 @@ final class CorsTest extends CIUnitTestCase
         $this->assertTrue($response->hasHeader('Access-Control-Expose-Headers'));
         $this->assertHeader(
             'Access-Control-Expose-Headers',
-            'x-exposed-header, x-another-exposed-header'
+            'x-exposed-header, x-another-exposed-header',
         );
     }
 
@@ -257,7 +257,7 @@ final class CorsTest extends CIUnitTestCase
     {
         $this->expectException(ConfigException::class);
         $this->expectExceptionMessage(
-            'When responding to a credentialed request, the server must not specify the "*" wildcard for the Access-Control-Allow-Origin response-header value.'
+            'When responding to a credentialed request, the server must not specify the "*" wildcard for the Access-Control-Allow-Origin response-header value.',
         );
 
         $this->cors = $this->createCors([
@@ -273,7 +273,7 @@ final class CorsTest extends CIUnitTestCase
     {
         $this->expectException(ConfigException::class);
         $this->expectExceptionMessage(
-            'When responding to a credentialed request, the server must not specify the "*" wildcard for the Access-Control-Allow-Origin response-header value.'
+            'When responding to a credentialed request, the server must not specify the "*" wildcard for the Access-Control-Allow-Origin response-header value.',
         );
 
         $this->cors = $this->createCors([
@@ -303,7 +303,7 @@ final class CorsTest extends CIUnitTestCase
     {
         $this->expectException(ConfigException::class);
         $this->expectExceptionMessage(
-            "If wildcard is specified, you must set `'allowedOrigins' => ['*']`. But using wildcard is not recommended."
+            "If wildcard is specified, you must set `'allowedOrigins' => ['*']`. But using wildcard is not recommended.",
         );
 
         $this->cors = $this->createCors([

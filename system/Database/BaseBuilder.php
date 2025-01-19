@@ -663,7 +663,7 @@ class BaseBuilder
         } else {
             // Split multiple conditions
             // @TODO This does not parse `BETWEEN a AND b` correctly.
-            if (preg_match_all('/\sAND\s|\sOR\s/i', $cond, $joints, PREG_OFFSET_CAPTURE)) {
+            if (preg_match_all('/\sAND\s|\sOR\s/i', $cond, $joints, PREG_OFFSET_CAPTURE) >= 1) {
                 $conditions = [];
                 $joints     = $joints[0];
                 array_unshift($joints, ['', 0]);
@@ -807,7 +807,7 @@ class BaseBuilder
                     '/\s*(!?=|<>|IS(?:\s+NOT)?)\s*$/i',
                     $k,
                     $match,
-                    PREG_OFFSET_CAPTURE
+                    PREG_OFFSET_CAPTURE,
                 )
             ) {
                 $k  = substr($k, 0, $match[0][1]);
@@ -2022,8 +2022,8 @@ class BaseBuilder
                         ' = ' . $value :
                         ' = VALUES(' . $value . ')'),
                     array_keys($updateFields),
-                    $updateFields
-                )
+                    $updateFields,
+                ),
             );
 
             $this->QBOptions['sql'] = $sql;
@@ -2198,7 +2198,7 @@ class BaseBuilder
      *
      * @param array|object|null $set a dataset
      *
-     * @return false|int|list<string> Number of rows inserted or FALSE on failure, SQL array when testMode
+     * @return false|int|list<string> Number of rows inserted or FALSE on no data to perform an insert operation, SQL array when testMode
      */
     public function insertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
@@ -2291,10 +2291,10 @@ class BaseBuilder
                 $this->removeAlias($this->QBFrom[0]),
                 true,
                 null,
-                false
+                false,
             ),
             array_keys($this->QBSet),
-            array_values($this->QBSet)
+            array_values($this->QBSet),
         );
 
         if ($reset) {
@@ -2328,10 +2328,10 @@ class BaseBuilder
                 $this->removeAlias($this->QBFrom[0]),
                 true,
                 $escape,
-                false
+                false,
             ),
             array_keys($this->QBSet),
-            array_values($this->QBSet)
+            array_values($this->QBSet),
         );
 
         if (! $this->testMode) {
@@ -2653,8 +2653,8 @@ class BaseBuilder
                         ' = ' . $value :
                         ' = ' . $alias . '.' . $value),
                     array_keys($updateFields),
-                    $updateFields
-                )
+                    $updateFields,
+                ),
             ) . "\n";
 
             $sql .= "FROM (\n{:_table_:}";
@@ -2678,8 +2678,8 @@ class BaseBuilder
                         )
                     ),
                     array_keys($constraints),
-                    $constraints
-                )
+                    $constraints,
+                ),
             );
 
             $this->QBOptions['sql'] = $sql;
@@ -2694,10 +2694,10 @@ class BaseBuilder
                     static fn ($value): string => 'SELECT ' . implode(', ', array_map(
                         static fn ($key, $index): string => $index . ' ' . $key,
                         $keys,
-                        $value
+                        $value,
                     )),
-                    $values
-                )
+                    $values,
+                ),
             ) . "\n";
         }
 
@@ -2924,8 +2924,8 @@ class BaseBuilder
                         )
                     ),
                     array_keys($constraints),
-                    $constraints
-                )
+                    $constraints,
+                ),
             );
 
             // convert binds in where
@@ -2949,10 +2949,10 @@ class BaseBuilder
                     static fn ($value): string => 'SELECT ' . implode(', ', array_map(
                         static fn ($key, $index): string => $index . ' ' . $key,
                         $keys,
-                        $value
+                        $value,
                     )),
-                    $values
-                )
+                    $values,
+                ),
             ) . "\n";
         }
 
@@ -3160,7 +3160,7 @@ class BaseBuilder
                     '/((?:^|\s+)AND\s+|(?:^|\s+)OR\s+)/i',
                     $qbkey['condition'],
                     -1,
-                    PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
+                    PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY,
                 );
 
                 foreach ($conditions as &$condition) {
@@ -3170,11 +3170,12 @@ class BaseBuilder
                         || preg_match(
                             '/^(\(?)(.*)(' . preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/i',
                             $condition,
-                            $matches
+                            $matches,
                         ) !== 1
                     ) {
                         continue;
                     }
+
                     // $matches = [
                     //  0 => '(test <= foo)',   /* the whole thing */
                     //  1 => '(',               /* optional */
@@ -3184,7 +3185,7 @@ class BaseBuilder
                     //  5 => ')'                /* optional */
                     // ];
 
-                    if (isset($matches[4]) && $matches[4] !== '') {
+                    if ($matches[4] !== '') {
                         $protectIdentifiers = false;
                         if (str_contains($matches[4], '.')) {
                             $protectIdentifiers = true;
@@ -3435,7 +3436,7 @@ class BaseBuilder
     {
         return preg_match(
             '/(<|>|!|=|\sIS NULL|\sIS NOT NULL|\sEXISTS|\sBETWEEN|\sLIKE|\sIN\s*\(|\s)/i',
-            trim($str)
+            trim($str),
         ) === 1;
     }
 
@@ -3469,8 +3470,8 @@ class BaseBuilder
         return preg_match_all(
             '/' . implode('|', $this->pregOperators) . '/i',
             $str,
-            $match
-        ) ? ($list ? $match[0] : $match[0][0]) : false;
+            $match,
+        ) >= 1 ? ($list ? $match[0] : $match[0][0]) : false;
     }
 
     /**
@@ -3500,8 +3501,8 @@ class BaseBuilder
         return preg_match_all(
             '/' . implode('|', $pregOperators) . '/i',
             $whereKey,
-            $match
-        ) ? $match[0] : false;
+            $match,
+        ) >= 1 ? $match[0] : false;
     }
 
     /**

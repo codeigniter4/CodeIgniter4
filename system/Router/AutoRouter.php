@@ -51,7 +51,7 @@ final class AutoRouter implements AutoRouterInterface
          * Whether dashes in URI's should be converted
          * to underscores when determining method names.
          */
-        private bool $translateURIDashes
+        private bool $translateURIDashes,
     ) {
     }
 
@@ -118,19 +118,19 @@ final class AutoRouter implements AutoRouterInterface
                     // Like $routes->cli('hello/(:segment)', 'Home::$1')
                     if (str_contains($handler, '::$')) {
                         throw new PageNotFoundException(
-                            'Cannot access CLI Route: ' . $uri
+                            'Cannot access CLI Route: ' . $uri,
                         );
                     }
 
                     if (str_starts_with($handler, $controller . '::' . $methodName)) {
                         throw new PageNotFoundException(
-                            'Cannot access CLI Route: ' . $uri
+                            'Cannot access CLI Route: ' . $uri,
                         );
                     }
 
                     if ($handler === $controller) {
                         throw new PageNotFoundException(
-                            'Cannot access CLI Route: ' . $uri
+                            'Cannot access CLI Route: ' . $uri,
                         );
                     }
                 }
@@ -153,9 +153,9 @@ final class AutoRouter implements AutoRouterInterface
                 str_replace(
                     '/',
                     '\\',
-                    $this->defaultNamespace . $this->directory . $controllerName
+                    $this->defaultNamespace . $this->directory . $controllerName,
                 ),
-                '\\'
+                '\\',
             );
         }
 
@@ -199,7 +199,7 @@ final class AutoRouter implements AutoRouterInterface
 
         while ($c-- > 0) {
             $segmentConvert = ucfirst(
-                $this->translateURIDashes ? str_replace('-', '_', $segments[0]) : $segments[0]
+                $this->translateURIDashes ? str_replace('-', '_', $segments[0]) : $segments[0],
             );
             // as soon as we encounter any segment that is not PSR-4 compliant, stop searching
             if (! $this->isValidSegment($segmentConvert)) {

@@ -28,7 +28,7 @@ final class ControllerFinder
      * @param string $namespace namespace to search
      */
     public function __construct(
-        private readonly string $namespace
+        private readonly string $namespace,
     ) {
         $this->locator = service('locator');
     }

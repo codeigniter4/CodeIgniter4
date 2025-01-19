@@ -359,8 +359,8 @@ if (! function_exists('auto_link')) {
                 '#([a-z][a-z0-9+\-.]*://|www\.)[a-z0-9]+(-+[a-z0-9]+)*(\.[a-z0-9]+(-+[a-z0-9]+)*)+(/([^\s()<>;]+\w)?/?)?#i',
                 $str,
                 $matches,
-                PREG_OFFSET_CAPTURE | PREG_SET_ORDER
-            )
+                PREG_OFFSET_CAPTURE | PREG_SET_ORDER,
+            ) >= 1
         ) {
             // Set our target HTML if using popup links.
             $target = ($popup) ? ' target="_blank"' : '';
@@ -386,8 +386,8 @@ if (! function_exists('auto_link')) {
                 '#([\w\.\-\+]+@[a-z0-9\-]+\.[a-z0-9\-\.]+[^[:punct:]\s])#i',
                 $str,
                 $matches,
-                PREG_OFFSET_CAPTURE
-            )
+                PREG_OFFSET_CAPTURE,
+            ) >= 1
         ) {
             foreach (array_reverse($matches[0]) as $match) {
                 if (filter_var($match[0], FILTER_VALIDATE_EMAIL) !== false) {
