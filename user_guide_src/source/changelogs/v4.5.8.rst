@@ -2,7 +2,7 @@
 Version 4.5.8
 #############
 
-Release Date: Unreleased
+Release Date: January 19, 2025
 
 **4.5.8 release of CodeIgniter4**
 
@@ -17,22 +17,6 @@ SECURITY
 - **Header:** *Validation of header name and value* was fixed.
   See the `Security advisory GHSA-x5mq-jjr3-vmx6 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-x5mq-jjr3-vmx6>`_
   for more information.
-
-********
-BREAKING
-********
-
-***************
-Message Changes
-***************
-
-*******
-Changes
-*******
-
-************
-Deprecations
-************
 
 **********
 Bugs Fixed
