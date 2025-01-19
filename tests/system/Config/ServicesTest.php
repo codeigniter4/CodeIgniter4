@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Config;
 
+use AfterAutoloadModule\Test;
 use CodeIgniter\Autoloader\Autoloader;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Database\MigrationRunner;
@@ -20,6 +21,7 @@ use CodeIgniter\Debug\Iterator;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Debug\Toolbar;
 use CodeIgniter\Email\Email;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Format\Format;
 use CodeIgniter\Honeypot\Honeypot;
@@ -53,7 +55,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\Attributes\WithoutErrorHandler;
-use RuntimeException;
 use Tests\Support\Config\Services;
 
 /**
@@ -375,6 +376,29 @@ final class ServicesTest extends CIUnitTestCase
         Services::resetSingle('Response');
         $someService = service('response');
         $this->assertNotInstanceOf(MockResponse::class, $someService);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testResetServiceCache(): void
+    {
+        Services::injectMock('response', new MockResponse(new App()));
+        $response = service('response');
+        $this->assertInstanceOf(MockResponse::class, $response);
+        service('response')->setStatusCode(200);
+
+        Services::autoloader()->addNamespace(
+            'AfterAutoloadModule',
+            SUPPORTPATH . '_AfterAutoloadModule/',
+        );
+        Services::resetServicesCache();
+
+        $response = service('response');
+        $this->assertInstanceOf(MockResponse::class, $response);
+        $this->assertSame(200, $response->getStatusCode());
+
+        $test = service('test');
+        $this->assertInstanceOf(Test::class, $test);
     }
 
     public function testFilters(): void

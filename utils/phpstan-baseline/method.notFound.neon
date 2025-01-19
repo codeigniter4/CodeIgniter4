@@ -1,4 +1,4 @@
-# total 46 errors
+# total 40 errors
 
 parameters:
     ignoreErrors:
@@ -18,36 +18,6 @@ parameters:
             path: ../../system/Debug/Toolbar/Collectors/Views.php
 
         -
-            message: '#^Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface\:\:getDefaultNamespace\(\)\.$#'
-            count: 2
-            path: ../../system/Router/Router.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface\:\:getFiltersForRoute\(\)\.$#'
-            count: 1
-            path: ../../system/Router/Router.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface\:\:getRegisteredControllers\(\)\.$#'
-            count: 1
-            path: ../../system/Router/Router.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface\:\:getRoutesOptions\(\)\.$#'
-            count: 1
-            path: ../../system/Router/Router.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface\:\:isFiltered\(\)\.$#'
-            count: 1
-            path: ../../system/Router/Router.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface\:\:setHTTPVerb\(\)\.$#'
-            count: 1
-            path: ../../system/Router/Router.php
-
-        -
             message: '#^Call to an undefined method CodeIgniter\\Database\\ConnectionInterface\:\:tableExists\(\)\.$#'
             count: 1
             path: ../../tests/_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php
@@ -56,6 +26,11 @@ parameters:
             message: '#^Call to an undefined method CodeIgniter\\HTTP\\ResponseInterface\:\:pretend\(\)\.$#'
             count: 1
             path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface\:\:get\(\)\.$#'
+            count: 2
+            path: ../../tests/system/Commands/Utilities/Routes/FilterFinderTest.php
 
         -
             message: '#^Call to an undefined method CodeIgniter\\Database\\BaseConnection\:\:escapeLikeStringDirect\(\)\.$#'

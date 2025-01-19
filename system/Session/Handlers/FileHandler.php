@@ -309,32 +309,25 @@ class FileHandler extends BaseHandler
 
     /**
      * Configure Session ID regular expression
+     *
+     * To make life easier, we force the PHP defaults. Because PHP9 forces them.
+     * See https://wiki.php.net/rfc/deprecations_php_8_4#sessionsid_length_and_sessionsid_bits_per_character
      */
     protected function configureSessionIDRegex()
     {
         $bitsPerCharacter = (int) ini_get('session.sid_bits_per_character');
-        $SIDLength        = (int) ini_get('session.sid_length');
+        $sidLength        = (int) ini_get('session.sid_length');
 
-        if (($bits = $SIDLength * $bitsPerCharacter) < 160) {
-            // Add as many more characters as necessary to reach at least 160 bits
-            $SIDLength += (int) ceil((160 % $bits) / $bitsPerCharacter);
-            ini_set('session.sid_length', (string) $SIDLength);
+        // We force the PHP defaults.
+        if (PHP_VERSION_ID < 90000) {
+            if ($bitsPerCharacter !== 4) {
+                ini_set('session.sid_bits_per_character', '4');
+            }
+            if ($sidLength !== 32) {
+                ini_set('session.sid_length', '32');
+            }
         }
 
-        switch ($bitsPerCharacter) {
-            case 4:
-                $this->sessionIDRegex = '[0-9a-f]';
-                break;
-
-            case 5:
-                $this->sessionIDRegex = '[0-9a-v]';
-                break;
-
-            case 6:
-                $this->sessionIDRegex = '[0-9a-zA-Z,-]';
-                break;
-        }
-
-        $this->sessionIDRegex .= '{' . $SIDLength . '}';
+        $this->sessionIDRegex = '[0-9a-f]{32}';
     }
 }

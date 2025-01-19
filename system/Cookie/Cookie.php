@@ -15,11 +15,11 @@ namespace CodeIgniter\Cookie;
 
 use ArrayAccess;
 use CodeIgniter\Cookie\Exceptions\CookieException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
+use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\I18n\Time;
 use Config\Cookie as CookieConfig;
 use DateTimeInterface;
-use InvalidArgumentException;
-use LogicException;
 use ReturnTypeWillChange;
 
 /**
@@ -461,18 +461,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
         $cookie = clone $this;
 
         $cookie->expires = 0;
-
-        return $cookie;
-    }
-
-    /**
-     * @deprecated See https://github.com/codeigniter4/CodeIgniter4/pull/6413
-     */
-    public function withNeverExpiring()
-    {
-        $cookie = clone $this;
-
-        $cookie->expires = Time::now()->getTimestamp() + 5 * YEAR;
 
         return $cookie;
     }

@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace CodeIgniter\View;
 
 use CodeIgniter\Autoloader\FileLocatorInterface;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config;
 use PHPUnit\Framework\Attributes\Group;
-use RuntimeException;
 
 /**
  * @internal
@@ -389,6 +389,13 @@ final class ViewTest extends CIUnitTestCase
         $this->assertStringContainsString('<p>Third</p>', $content);
     }
 
+    public function testRenderSectionReturnsEmptyStringToNonExistentSection(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
+
+        $this->assertSame('', $view->renderSection('does_not_exist'));
+    }
+
     public function testRenderSectionSavingData(): void
     {
         $view     = new View($this->config, $this->viewsDir, $this->loader);
@@ -397,5 +404,13 @@ final class ViewTest extends CIUnitTestCase
         $view->setVar('pageTitle', 'Welcome to CodeIgniter 4!');
         $view->setVar('testString', 'Hello World');
         $this->assertStringContainsString($expected, $view->render('extend_reuse_section'));
+    }
+
+    public function testViewExcerpt(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
+
+        $this->assertSame('CodeIgniter is a PHP full-stack web framework...', $view->excerpt('CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.', 48));
+        $this->assertSame('CodeIgniter - это полнофункциональный веб-фреймворк...', $view->excerpt('CodeIgniter - это полнофункциональный веб-фреймворк на PHP, который является легким, быстрым, гибким и безопасным.', 54));
     }
 }

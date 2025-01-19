@@ -1,4 +1,4 @@
-# total 43 errors
+# total 39 errors
 
 parameters:
     ignoreErrors:
@@ -126,26 +126,6 @@ parameters:
             message: '#^Return type \(CodeIgniter\\HTTP\\URI\|null\) of method CodeIgniter\\HTTP\\OutgoingRequest\:\:getUri\(\) should be covariant with return type \(CodeIgniter\\HTTP\\URI\) of method CodeIgniter\\HTTP\\OutgoingRequestInterface\:\:getUri\(\)$#'
             count: 1
             path: ../../system/HTTP/OutgoingRequest.php
-
-        -
-            message: '#^Return type \(CodeIgniter\\I18n\\Time\) of method CodeIgniter\\I18n\\Time\:\:setTimestamp\(\) should be covariant with return type \(static\(DateTimeImmutable\)\) of method DateTimeImmutable\:\:setTimestamp\(\)$#'
-            count: 1
-            path: ../../system/I18n/Time.php
-
-        -
-            message: '#^Return type \(CodeIgniter\\I18n\\Time\) of method CodeIgniter\\I18n\\Time\:\:setTimezone\(\) should be covariant with return type \(static\(DateTimeImmutable\)\) of method DateTimeImmutable\:\:setTimezone\(\)$#'
-            count: 1
-            path: ../../system/I18n/Time.php
-
-        -
-            message: '#^Return type \(CodeIgniter\\I18n\\TimeLegacy\) of method CodeIgniter\\I18n\\TimeLegacy\:\:setTimestamp\(\) should be covariant with return type \(static\(DateTime\)\) of method DateTime\:\:setTimestamp\(\)$#'
-            count: 1
-            path: ../../system/I18n/TimeLegacy.php
-
-        -
-            message: '#^Return type \(CodeIgniter\\I18n\\TimeLegacy\) of method CodeIgniter\\I18n\\TimeLegacy\:\:setTimezone\(\) should be covariant with return type \(static\(DateTime\)\) of method DateTime\:\:setTimezone\(\)$#'
-            count: 1
-            path: ../../system/I18n/TimeLegacy.php
 
         -
             message: '#^Return type \(CodeIgniter\\Images\\Handlers\\BaseHandler\) of method CodeIgniter\\Images\\Handlers\\BaseHandler\:\:fit\(\) should be covariant with return type \(\$this\(CodeIgniter\\Images\\ImageHandlerInterface\)\) of method CodeIgniter\\Images\\ImageHandlerInterface\:\:fit\(\)$#'

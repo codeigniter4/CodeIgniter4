@@ -20,6 +20,7 @@ use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
+use Config\Feature;
 use Config\Routing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -358,17 +359,19 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @param mixed $from
-     * @param mixed $to
-     * @param mixed $httpGet
-     */
+    private function disableAutoRoutesImproved(): void
+    {
+        $featureConfig                     = config(Feature::class);
+        $featureConfig->autoRoutesImproved = false;
+    }
+
     #[DataProvider('provideOpenCliRoutesFromHttpGot404')]
-    public function testOpenCliRoutesFromHttpGot404($from, $to, $httpGet): void
+    public function testOpenCliRoutesFromHttpGot404(string $from, string $to, string $httpGet): void
     {
         $this->expectException(PageNotFoundException::class);
         $this->expectExceptionMessage('Cannot access CLI Route: ');
 
+        $this->disableAutoRoutesImproved();
         $collection = service('routes');
         $collection->setAutoRoute(true);
         $collection->setDefaultNamespace('Tests\Support\Controllers');
@@ -660,6 +663,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
 
     public function testAutoRoutingLegacy(): void
     {
+        $this->disableAutoRoutesImproved();
         $config            = config(Routing::class);
         $config->autoRoute = true;
         Factories::injectMock('config', Routing::class, $config);

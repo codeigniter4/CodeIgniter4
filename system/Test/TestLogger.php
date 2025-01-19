@@ -92,18 +92,4 @@ class TestLogger extends Logger
 
         return false;
     }
-
-    /**
-     * Expose filenames.
-     *
-     * @param string $file
-     *
-     * @return string
-     *
-     * @deprecated No longer needed as underlying protected method is also deprecated.
-     */
-    public function cleanup($file)
-    {
-        return clean_path($file);
-    }
 }

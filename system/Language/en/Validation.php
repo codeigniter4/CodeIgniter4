@@ -74,4 +74,5 @@ return [
     'mime_in'  => '{field} does not have a valid mime type.',
     'ext_in'   => '{field} does not have a valid file extension.',
     'max_dims' => '{field} is either not an image, or it is too wide or tall.',
+    'min_dims' => '{field} is either not an image, or it is not wide or tall enough.',
 ];

@@ -17,8 +17,8 @@ use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Autoloader\FileLocatorCached;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Publisher\Publisher;
-use RuntimeException;
 
 /**
  * Optimize for production.

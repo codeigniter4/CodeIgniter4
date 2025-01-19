@@ -71,15 +71,37 @@ class File extends SplFileInfo
     }
 
     /**
+     * Retrieve the file size by unit, calculated in IEC standards with 1024 as base value.
+     *
+     * @phpstan-param positive-int $precision
+     */
+    public function getSizeByBinaryUnit(FileSizeUnit $unit = FileSizeUnit::B, int $precision = 3): int|string
+    {
+        return $this->getSizeByUnitInternal(1024, $unit, $precision);
+    }
+
+    /**
+     * Retrieve the file size by unit, calculated in metric standards with 1000 as base value.
+     *
+     * @phpstan-param positive-int $precision
+     */
+    public function getSizeByMetricUnit(FileSizeUnit $unit = FileSizeUnit::B, int $precision = 3): int|string
+    {
+        return $this->getSizeByUnitInternal(1000, $unit, $precision);
+    }
+
+    /**
      * Retrieve the file size by unit.
+     *
+     * @deprecated 4.6.0 Use getSizeByBinaryUnit() or getSizeByMetricUnit() instead
      *
      * @return false|int|string
      */
     public function getSizeByUnit(string $unit = 'b')
     {
         return match (strtolower($unit)) {
-            'kb'    => number_format($this->getSize() / 1024, 3),
-            'mb'    => number_format(($this->getSize() / 1024) / 1024, 3),
+            'kb'    => $this->getSizeByBinaryUnit(FileSizeUnit::KB),
+            'mb'    => $this->getSizeByBinaryUnit(FileSizeUnit::MB),
             default => $this->getSize(),
         };
     }
@@ -188,5 +210,18 @@ class File extends SplFileInfo
         }
 
         return $destination;
+    }
+
+    private function getSizeByUnitInternal(int $fileSizeBase, FileSizeUnit $unit, int $precision): int|string
+    {
+        $exponent = $unit->value;
+        $divider  = $fileSizeBase ** $exponent;
+        $size     = $this->getSize() / $divider;
+
+        if ($unit !== FileSizeUnit::B) {
+            $size = number_format($size, $precision);
+        }
+
+        return $size;
     }
 }

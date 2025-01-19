@@ -228,9 +228,7 @@ the instance with the modified instance.
 Dispatching Cookies in Store
 ============================
 
-.. deprecated:: 4.1.6
-
-.. important:: This method is deprecated. It will be removed in future releases.
+.. important:: This method was deprecated as of version 4.1.6 and was removed in 4.6.0.
 
 More often than not, you do not need to concern yourself in manually sending cookies. CodeIgniter will do this
 for you. However, if you really need to manually send cookies, you can use the ``dispatch`` method. Just like
@@ -369,9 +367,7 @@ Class Reference
 
     .. php:method:: withNeverExpiring()
 
-        .. deprecated:: 4.2.6
-
-        .. important:: This method is deprecated. It will be removed in future releases.
+        .. important:: This method was deprecated as of version 4.2.6 and was removed in 4.6.0.
 
         :param string $name:
         :rtype: ``Cookie``
@@ -483,6 +479,8 @@ Class Reference
         The original collection is left unchanged.
 
     .. php:method:: dispatch(): void
+
+        .. important:: This method was deprecated as of version 4.1.6 and was removed in 4.6.0.
 
         :rtype: void
 

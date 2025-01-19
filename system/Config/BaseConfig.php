@@ -11,11 +11,12 @@
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\Exceptions\ConfigException;
+use CodeIgniter\Exceptions\RuntimeException;
 use Config\Encryption;
 use Config\Modules;
 use ReflectionClass;
 use ReflectionException;
-use RuntimeException;
 
 /**
  * Class BaseConfig
@@ -45,11 +46,21 @@ class BaseConfig
     public static bool $override = true;
 
     /**
-     * Has module discovery happened yet?
+     * Has module discovery completed?
      *
      * @var bool
      */
     protected static $didDiscovery = false;
+
+    /**
+     * Is module discovery running or not?
+     */
+    protected static bool $discovering = false;
+
+    /**
+     * The processing Registrar file for error message.
+     */
+    protected static string $registrarFile = '';
 
     /**
      * The modules configuration.
@@ -230,10 +241,24 @@ class BaseConfig
         }
 
         if (! static::$didDiscovery) {
+            // Discovery must be completed before the first instantiation of any Config class.
+            if (static::$discovering) {
+                throw new ConfigException(
+                    'During Auto-Discovery of Registrars,'
+                    . ' "' . static::class . '" executes Auto-Discovery again.'
+                    . ' "' . clean_path(static::$registrarFile) . '" seems to have bad code.',
+                );
+            }
+
+            static::$discovering = true;
+
             $locator         = service('locator');
             $registrarsFiles = $locator->search('Config/Registrar.php');
 
             foreach ($registrarsFiles as $file) {
+                // Saves the file for error message.
+                static::$registrarFile = $file;
+
                 $className = $locator->findQualifiedNameFromPath($file);
 
                 if ($className === false) {
@@ -244,6 +269,7 @@ class BaseConfig
             }
 
             static::$didDiscovery = true;
+            static::$discovering  = false;
         }
 
         $shortName = (new ReflectionClass($this))->getShortName();

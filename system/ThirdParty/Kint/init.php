@@ -26,39 +26,40 @@ declare(strict_types=1);
  */
 
 use Kint\Kint;
+use Kint\Renderer\AbstractRenderer;
 use Kint\Utils;
 
 if (\defined('KINT_DIR')) {
     return;
 }
 
-if (\version_compare(PHP_VERSION, '7.1') < 0) {
-    throw new Exception('Kint 5 requires PHP 7.1 or higher');
+if (\version_compare(PHP_VERSION, '7.4') < 0) {
+    throw new Exception('Kint 6 requires PHP 7.4 or higher');
 }
 
 \define('KINT_DIR', __DIR__);
 \define('KINT_WIN', DIRECTORY_SEPARATOR !== '/');
-\define('KINT_PHP72', \version_compare(PHP_VERSION, '7.2') >= 0);
-\define('KINT_PHP73', \version_compare(PHP_VERSION, '7.3') >= 0);
-\define('KINT_PHP74', \version_compare(PHP_VERSION, '7.4') >= 0);
 \define('KINT_PHP80', \version_compare(PHP_VERSION, '8.0') >= 0);
 \define('KINT_PHP81', \version_compare(PHP_VERSION, '8.1') >= 0);
 \define('KINT_PHP82', \version_compare(PHP_VERSION, '8.2') >= 0);
 \define('KINT_PHP83', \version_compare(PHP_VERSION, '8.3') >= 0);
 \define('KINT_PHP84', \version_compare(PHP_VERSION, '8.4') >= 0);
+\define('KINT_PHP85', \version_compare(PHP_VERSION, '8.5') >= 0);
 
 // Dynamic default settings
-if (false !== \ini_get('xdebug.file_link_format')) {
-    Kint::$file_link_format = \ini_get('xdebug.file_link_format');
+if (\strlen((string) \ini_get('xdebug.file_link_format')) > 0) {
+    /** @psalm-var non-empty-string ini_get('xdebug.file_link_format') */
+    AbstractRenderer::$file_link_format = \ini_get('xdebug.file_link_format');
 }
 if (isset($_SERVER['DOCUMENT_ROOT']) && false === \strpos($_SERVER['DOCUMENT_ROOT'], "\0")) {
-    Kint::$app_root_dirs = [
+    Utils::$path_aliases = [
         $_SERVER['DOCUMENT_ROOT'] => '<ROOT>',
     ];
 
     // Suppressed for unreadable document roots (related to open_basedir)
     if (false !== @\realpath($_SERVER['DOCUMENT_ROOT'])) {
-        Kint::$app_root_dirs[\realpath($_SERVER['DOCUMENT_ROOT'])] = '<ROOT>';
+        /** @psalm-suppress PropertyTypeCoercion */
+        Utils::$path_aliases[\realpath($_SERVER['DOCUMENT_ROOT'])] = '<ROOT>';
     }
 }
 

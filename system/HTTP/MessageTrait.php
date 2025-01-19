@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
-use InvalidArgumentException;
 
 /**
  * Message Trait

@@ -13,21 +13,21 @@
         "php": "^8.1",
         "ext-intl": "*",
         "ext-mbstring": "*",
-        "laminas/laminas-escaper": "^2.13",
+        "laminas/laminas-escaper": "^2.14",
         "psr/log": "^3.0"
     },
     "require-dev": {
         "codeigniter/phpstan-codeigniter": "^1.5.1",
-        "fakerphp/faker": "^1.9",
-        "kint-php/kint": "^5.0.4",
-        "mikey179/vfsstream": "^1.6",
+        "fakerphp/faker": "^1.24",
+        "kint-php/kint": "^6.0",
+        "mikey179/vfsstream": "^1.6.12",
         "nexusphp/tachycardia": "^2.0",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.0",
         "phpstan/phpstan-strict-rules": "^2.0",
         "phpunit/phpcov": "^9.0.2 || ^10.0",
         "phpunit/phpunit": "^10.5.16 || ^11.2",
-        "predis/predis": "^1.1 || ^2.0",
+        "predis/predis": "^1.1 || ^2.3",
         "rector/rector": "2.0.6",
         "shipmonk/phpstan-baseline-per-identifier": "^2.0"
     },
@@ -90,7 +90,7 @@
             "CodeIgniter\\ComposerScripts::postUpdate"
         ],
         "post-autoload-dump": [
-            "@composer update --working-dir=utils"
+            "@composer update --working-dir=utils --ignore-platform-req=php"
         ],
         "analyze": [
             "Composer\\Config::disableProcessTimeout",

@@ -15,13 +15,13 @@ namespace CodeIgniter\Router;
 
 use Closure;
 use CodeIgniter\Autoloader\FileLocatorInterface;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
 use Config\Modules;
 use Config\Routing;
-use InvalidArgumentException;
 
 /**
  * @todo Implement nested resource routing (See CakePHP)
@@ -1563,13 +1563,20 @@ class RouteCollection implements RouteCollectionInterface
      * Compares the hostname passed in against the current hostname
      * on this page request.
      *
-     * @param string $hostname Hostname in route options
+     * @param list<string>|string $hostname Hostname in route options
      */
     private function checkHostname($hostname): bool
     {
         // CLI calls can't be on hostname.
         if (! isset($this->httpHost)) {
             return false;
+        }
+
+        // Has multiple hostnames
+        if (is_array($hostname)) {
+            $hostnameLower = array_map('strtolower', $hostname);
+
+            return in_array(strtolower($this->httpHost), $hostnameLower, true);
         }
 
         return strtolower($this->httpHost) === strtolower($hostname);

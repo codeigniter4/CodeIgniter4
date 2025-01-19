@@ -13,20 +13,22 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation\StrictRules;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Validation;
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
+ *
+ * @no-final
  */
 #[Group('Others')]
-final class FileRulesTest extends CIUnitTestCase
+class FileRulesTest extends CIUnitTestCase
 {
-    private Validation $validation;
-    private array $config = [
+    protected Validation $validation;
+    protected array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
@@ -227,6 +229,24 @@ final class FileRulesTest extends CIUnitTestCase
     public function testMaxDimsBad(): void
     {
         $this->validation->setRules(['avatar' => 'max_dims[unknown,640,480]']);
+        $this->assertFalse($this->validation->run([]));
+    }
+
+    public function testMinDims(): void
+    {
+        $this->validation->setRules(['avatar' => 'min_dims[avatar,320,240]']);
+        $this->assertTrue($this->validation->run([]));
+    }
+
+    public function testMinDimsFail(): void
+    {
+        $this->validation->setRules(['avatar' => 'min_dims[avatar,800,600]']);
+        $this->assertFalse($this->validation->run([]));
+    }
+
+    public function testMinDimsBad(): void
+    {
+        $this->validation->setRules(['avatar' => 'min_dims[unknown,640,480]']);
         $this->assertFalse($this->validation->run([]));
     }
 

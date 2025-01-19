@@ -37,6 +37,19 @@ final class CheckPhpIniTest extends CIUnitTestCase
         $this->assertSame($expected, $output['display_errors']);
     }
 
+    public function testCheckIniOpcache(): void
+    {
+        $output = CheckPhpIni::checkIni('opcache');
+
+        $expected = [
+            'global'      => '1',
+            'current'     => '1',
+            'recommended' => '0',
+            'remark'      => 'Enable when you using package require docblock annotation',
+        ];
+        $this->assertSame($expected, $output['opcache.save_comments']);
+    }
+
     public function testRunCli(): void
     {
         // Set MockInputOutput to CLI.

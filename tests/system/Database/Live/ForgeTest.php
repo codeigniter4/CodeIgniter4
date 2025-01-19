@@ -15,12 +15,12 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge;
+use CodeIgniter\Exceptions\LogicException;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
-use LogicException;
 use PHPUnit\Framework\Attributes\Group;
-use RuntimeException;
 use stdClass;
 use Tests\Support\Database\Seeds\CITestSeeder;
 

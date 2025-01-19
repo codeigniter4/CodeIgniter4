@@ -16,13 +16,13 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Exceptions as ExceptionsConfig;
 use ErrorException;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhp;
-use RuntimeException;
 
 /**
  * @internal

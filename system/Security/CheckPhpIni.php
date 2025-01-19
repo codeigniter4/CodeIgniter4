@@ -27,11 +27,11 @@ class CheckPhpIni
     /**
      * @param bool $isCli Set false if you run via Web
      *
-     * @return string|void HTML string or void in CLI
+     * @return string|null HTML string or void in CLI
      */
-    public static function run(bool $isCli = true)
+    public static function run(bool $isCli = true, ?string $argument = null)
     {
-        $output = static::checkIni();
+        $output = static::checkIni($argument);
 
         $thead = ['Directive', 'Global', 'Current', 'Recommended', 'Remark'];
         $tbody = [];
@@ -40,7 +40,7 @@ class CheckPhpIni
         if ($isCli) {
             self::outputForCli($output, $thead, $tbody);
 
-            return;
+            return null;
         }
 
         // Web
@@ -115,8 +115,9 @@ class CheckPhpIni
      * @internal Used for testing purposes only.
      * @testTag
      */
-    public static function checkIni(): array
+    public static function checkIni(?string $argument = null): array
     {
+        // Default items
         $items = [
             'error_reporting'         => ['recommended' => '5111'],
             'display_errors'          => ['recommended' => '0'],
@@ -124,18 +125,40 @@ class CheckPhpIni
             'log_errors'              => [],
             'error_log'               => [],
             'default_charset'         => ['recommended' => 'UTF-8'],
+            'max_execution_time'      => ['remark' => 'The default is 30.'],
             'memory_limit'            => ['remark' => '> post_max_size'],
             'post_max_size'           => ['remark' => '> upload_max_filesize'],
             'upload_max_filesize'     => ['remark' => '< post_max_size'],
+            'max_input_vars'          => ['remark' => 'The default is 1000.'],
             'request_order'           => ['recommended' => 'GP'],
             'variables_order'         => ['recommended' => 'GPCS'],
             'date.timezone'           => ['recommended' => 'UTC'],
             'mbstring.language'       => ['recommended' => 'neutral'],
             'opcache.enable'          => ['recommended' => '1'],
-            'opcache.enable_cli'      => [],
-            'opcache.jit'             => [],
-            'opcache.jit_buffer_size' => [],
+            'opcache.enable_cli'      => ['recommended' => '1'],
+            'opcache.jit'             => ['recommended' => 'tracing'],
+            'opcache.jit_buffer_size' => ['recommended' => '128', 'remark' => 'Adjust with your free space of memory'],
+            'zend.assertions'         => ['recommended' => '-1'],
         ];
+
+        if ($argument === 'opcache') {
+            $items = [
+                'opcache.enable'                  => ['recommended' => '1'],
+                'opcache.enable_cli'              => ['recommended' => '0', 'remark' => 'Enable when you using CLI'],
+                'opcache.jit'                     => ['recommended' => 'tracing', 'remark' => 'Disable when you used third-party extensions'],
+                'opcache.jit_buffer_size'         => ['recommended' => '128', 'remark' => 'Adjust with your free space of memory'],
+                'opcache.memory_consumption'      => ['recommended' => '128', 'remark' => 'Adjust with your free space of memory'],
+                'opcache.interned_strings_buffer' => ['recommended' => '16'],
+                'opcache.max_accelerated_files'   => ['remark' => 'Adjust based on the number of PHP files in your project (e.g.: find your_project/ -iname \'*.php\'|wc -l)'],
+                'opcache.max_wasted_percentage'   => ['recommended' => '10'],
+                'opcache.validate_timestamps'     => ['recommended' => '0', 'remark' => 'When you disabled, opcache hold your code into shared memory. Restart webserver needed'],
+                'opcache.revalidate_freq'         => [],
+                'opcache.file_cache'              => ['remark' => 'Location file caching, It should improve performance when SHM memory is full'],
+                'opcache.file_cache_only'         => ['remark' => 'Opcode caching in shared memory, Disabled when you using Windows'],
+                'opcache.file_cache_fallback'     => ['remark' => 'Set enable when you using Windows'],
+                'opcache.save_comments'           => ['recommended' => '0', 'remark' => 'Enable when you using package require docblock annotation'],
+            ];
+        }
 
         $output = [];
         $ini    = ini_get_all();

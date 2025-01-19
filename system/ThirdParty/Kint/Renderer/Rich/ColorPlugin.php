@@ -27,33 +27,33 @@ declare(strict_types=1);
 
 namespace Kint\Renderer\Rich;
 
-use Kint\Zval\Representation\ColorRepresentation;
-use Kint\Zval\Representation\Representation;
-use Kint\Zval\Value;
+use Kint\Value\AbstractValue;
+use Kint\Value\Representation\ColorRepresentation;
+use Kint\Value\Representation\RepresentationInterface;
 
 class ColorPlugin extends AbstractPlugin implements TabPluginInterface, ValuePluginInterface
 {
-    public function renderValue(Value $o): ?string
+    public function renderValue(AbstractValue $v): ?string
     {
-        $r = $o->getRepresentation('color');
+        $r = $v->getRepresentation('color');
 
         if (!$r instanceof ColorRepresentation) {
             return null;
         }
 
-        $children = $this->renderer->renderChildren($o);
+        $children = $this->renderer->renderChildren($v);
 
-        $header = $this->renderer->renderHeader($o);
+        $header = $this->renderer->renderHeader($v);
         $header .= '<div class="kint-color-preview"><div style="background:';
         $header .= $r->getColor(ColorRepresentation::COLOR_RGBA);
         $header .= '"></div></div>';
 
-        $header = $this->renderer->renderHeaderWrapper($o, (bool) \strlen($children), $header);
+        $header = $this->renderer->renderHeaderWrapper($v->getContext(), (bool) \strlen($children), $header);
 
         return '<dl>'.$header.$children.'</dl>';
     }
 
-    public function renderTab(Representation $r): ?string
+    public function renderTab(RepresentationInterface $r, AbstractValue $v): ?string
     {
         if (!$r instanceof ColorRepresentation) {
             return null;

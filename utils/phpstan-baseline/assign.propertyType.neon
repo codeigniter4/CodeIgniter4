@@ -8,7 +8,7 @@ parameters:
             path: ../../system/Controller.php
 
         -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:627\:\:\$format \(''html''\|''json''\|''xml''\|null\) does not accept ''txt''\.$#'
+            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:609\:\:\$format \(''html''\|''json''\|''xml''\|null\) does not accept ''txt''\.$#'
             count: 1
             path: ../../tests/system/API/ResponseTraitTest.php
 

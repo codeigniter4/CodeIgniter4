@@ -949,13 +949,16 @@ is_natural              No         Fails if field contains anything other than
 is_natural_no_zero      No         Fails if field contains anything other than
                                    a natural number, except zero: ``1``, ``2``,
                                    ``3``, etc.
-is_not_unique           Yes        Checks the database to see if the given value ``is_not_unique[table.field,where_field,where_value]``
+is_not_unique           Yes        Checks the database to see if the given value ``is_not_unique[table.field,where_field,where_value]`` or ``is_not_unique[dbGroup.table.field,where_field,where_value]``
                                    exists. Can ignore records by field/value to
                                    filter (currently accept only one filter).
-is_unique               Yes        Checks if this field value exists in the      ``is_unique[table.field,ignore_field,ignore_value]``
+                                   (Since v4.6.0, you can optionally pass
+                                   the dbGroup as a parameter)
+is_unique               Yes        Checks if this field value exists in the      ``is_unique[table.field,ignore_field,ignore_value]`` or ``is_unique[dbGroup.table.field,ignore_field,ignore_value]``
                                    database. Optionally set a column and value
                                    to ignore, useful when updating records to
-                                   ignore itself.
+                                   ignore itself. (Since v4.6.0, you can
+                                   optionally pass the dbGroup as a parameter)
 less_than               Yes        Fails if field is greater than or equal to    ``less_than[8]``
                                    the parameter value or not numeric.
 less_than_equal_to      Yes        Fails if field is greater than the parameter  ``less_than_equal_to[8]``
@@ -1089,6 +1092,13 @@ max_dims                Yes         Fails if the maximum width and height of an 
                                     the width, and the third is the height. Will
                                     also fail if the file cannot be determined
                                     to be an image.
+min_dims                Yes         Fails if the minimum width and height of an  ``min_dims[field_name,300,150]``
+                                    uploaded image not meet values. The first
+                                    parameter is the field name. The second is
+                                    the width, and the third is the height. Will
+                                    also fail if the file cannot be determined
+                                    to be an image. (This rule was added in
+                                    v4.6.0.)
 mime_in                 Yes         Fails if the file's mime type is not one     ``mime_in[field_name,image/png,image/jpeg]``
                                     listed in the parameters.
 ext_in                  Yes         Fails if the file's extension is not one     ``ext_in[field_name,png,jpg,gif]``

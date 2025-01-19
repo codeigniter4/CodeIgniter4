@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Postgre;
 
-use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Exceptions\BadMethodCallException;
 use Exception;
 use PgSql\Connection as PgSqlConnection;
 use PgSql\Result as PgSqlResult;

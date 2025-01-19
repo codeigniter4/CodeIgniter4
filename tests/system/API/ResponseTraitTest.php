@@ -435,24 +435,6 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testValidationError(): void
-    {
-        $controller = $this->makeController();
-
-        $this->invoke($controller, 'failValidationError', ['Nope', 'FAT CHANCE', 'A Custom Reason']);
-
-        $expected = [
-            'status'   => 400,
-            'error'    => 'FAT CHANCE',
-            'messages' => [
-                'error' => 'Nope',
-            ],
-        ];
-        $this->assertSame('A Custom Reason', $this->response->getReasonPhrase());
-        $this->assertSame(400, $this->response->getStatusCode());
-        $this->assertSame($this->formatter->format($expected), $this->response->getBody());
-    }
-
     public function testValidationErrors(): void
     {
         $controller = $this->makeController();

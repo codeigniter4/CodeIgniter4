@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
-use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\Filters\fixtures\GoogleCurious;
 use CodeIgniter\Filters\fixtures\GoogleEmpty;
@@ -282,6 +281,10 @@ final class FiltersTest extends CIUnitTestCase
                     'before' => ['admin/*'],
                     'after'  => ['/users/*'],
                 ],
+                'bar: arg1, arg2' => [
+                    'before' => ['admin/*'],
+                    'after'  => ['/users/*'],
+                ],
             ],
         ];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
@@ -289,7 +292,7 @@ final class FiltersTest extends CIUnitTestCase
 
         $uri      = 'admin/foo/bar';
         $expected = [
-            'before' => ['foo'],
+            'before' => ['foo', 'bar:arg1,arg2'],
             'after'  => [],
         ];
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
@@ -311,6 +314,10 @@ final class FiltersTest extends CIUnitTestCase
                     'before' => ['admin/*'],
                     'after'  => ['/users/*'],
                 ],
+                'bar: arg1, arg2' => [
+                    'before' => ['admin/*'],
+                    'after'  => ['/users/*'],
+                ],
             ],
         ];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
@@ -319,9 +326,7 @@ final class FiltersTest extends CIUnitTestCase
         $uri      = 'users/foo/bar';
         $expected = [
             'before' => [],
-            'after'  => [
-                'foo',
-            ],
+            'after'  => ['bar:arg1,arg2', 'foo'],
         ];
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
@@ -833,8 +838,8 @@ final class FiltersTest extends CIUnitTestCase
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
         $filters       = $this->createFilters($filtersConfig);
 
-        $filters = $filters->initialize('admin/foo/bar');
         $filters->enableFilters(['google'], 'before');
+        $filters = $filters->initialize('admin/foo/bar');
         $filters = $filters->getFilters();
 
         $this->assertContains('google', $filters['before']);
@@ -861,9 +866,7 @@ final class FiltersTest extends CIUnitTestCase
         $filters = $filters->initialize('admin/foo/bar');
         $found   = $filters->getFilters();
 
-        $this->assertContains('role', $found['before']);
-        $this->assertSame(['admin', 'super'], $filters->getArguments('role'));
-        $this->assertSame(['role' => ['admin', 'super']], $filters->getArguments());
+        $this->assertContains('role:admin,super', $found['before']);
 
         $response = $filters->run('admin/foo/bar', 'before');
 
@@ -874,11 +877,8 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame('admin;super', $response->getBody());
     }
 
-    public function testFilterWithArgumentsIsDefined(): void
+    public function testFilterWithDiffernetArguments(): void
     {
-        $this->expectException(ConfigException::class);
-        $this->expectExceptionMessage('"role" already has arguments: admin,super');
-
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $config = [
@@ -897,6 +897,10 @@ final class FiltersTest extends CIUnitTestCase
         $filters       = $this->createFilters($filtersConfig);
 
         $filters->initialize('admin/user/bar');
+        $found = $filters->getFilters();
+
+        $this->assertContains('role:admin,super', $found['before']);
+        $this->assertContains('role:super', $found['before']);
     }
 
     public function testFilterWithoutArgumentsIsDefined(): void
@@ -922,8 +926,6 @@ final class FiltersTest extends CIUnitTestCase
         $found   = $filters->getFilters();
 
         $this->assertContains('role', $found['before']);
-        $this->assertSame(['super'], $filters->getArguments('role'));
-        $this->assertSame(['role' => ['super']], $filters->getArguments());
     }
 
     public function testEnableFilterWithArguments(): void
@@ -940,14 +942,11 @@ final class FiltersTest extends CIUnitTestCase
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
         $filters       = $this->createFilters($filtersConfig);
 
-        $filters = $filters->initialize('admin/foo/bar');
         $filters->enableFilters(['role:admin , super'], 'before');
         $filters->enableFilters(['role:admin , super'], 'after');
         $found = $filters->getFilters();
 
-        $this->assertContains('role', $found['before']);
-        $this->assertSame(['admin', 'super'], $filters->getArguments('role'));
-        $this->assertSame(['role' => ['admin', 'super']], $filters->getArguments());
+        $this->assertContains('role:admin,super', $found['before']);
 
         $response = $filters->run('admin/foo/bar', 'before');
 
@@ -972,7 +971,6 @@ final class FiltersTest extends CIUnitTestCase
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
         $filters       = $this->createFilters($filtersConfig);
 
-        $filters = $filters->initialize('admin/foo/bar');
         $filters->enableFilters(['role'], 'before');
         $filters->enableFilters(['role'], 'after');
         $found = $filters->getFilters();
@@ -1004,8 +1002,8 @@ final class FiltersTest extends CIUnitTestCase
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
         $filters       = $this->createFilters($filtersConfig);
 
-        $filters = $filters->initialize('admin/foo/bar');
         $filters->enableFilters(['goggle'], 'before');
+        $filters->initialize('admin/foo/bar');
     }
 
     /**
@@ -1322,8 +1320,8 @@ final class FiltersTest extends CIUnitTestCase
         $expected = [
             'before' => [],
             'after'  => [
-                Multiple1::class,
-                Multiple2::class,
+                [Multiple1::class, []],
+                [Multiple2::class, []],
             ],
         ];
         $this->assertSame($expected, $filters->getFiltersClass());
@@ -1350,5 +1348,43 @@ final class FiltersTest extends CIUnitTestCase
         $uri = 'admin';
         $this->assertSame(['foo'], $filters->initialize($uri)->getFilters()['before']);
         $this->assertSame([], $filters->reset()->getFilters()['before']);
+    }
+
+    public function testRunRequiredDoesBefore(): void
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $config = [
+            'aliases'  => ['google' => GoogleMe::class],
+            'required' => [
+                'before' => ['google'],
+                'after'  => [],
+            ],
+        ];
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
+
+        $request = $filters->runRequired('before');
+
+        $this->assertSame('http://google.com', $request->getBody());
+    }
+
+    public function testRunRequiredDoesAfter(): void
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $config = [
+            'aliases'  => ['google' => GoogleMe::class],
+            'required' => [
+                'before' => [],
+                'after'  => ['google'],
+            ],
+        ];
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
+
+        $response = $filters->runRequired('after');
+
+        $this->assertSame('http://google.com', $response->getBody());
     }
 }

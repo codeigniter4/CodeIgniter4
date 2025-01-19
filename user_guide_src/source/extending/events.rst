@@ -51,7 +51,7 @@ but you might find they aid readability:
 
 .. literalinclude:: events/004.php
 
-.. important:: The constants ``EVENT_PRIORITY_LOW``, ``EVENT_PRIORITY_NORMAL`` and ``EVENT_PRIORITY_HIGH`` are deprecated, and the definitions are moved to ``app/Config/Constants.php``. These will be removed in future releases.
+.. important:: The constants ``EVENT_PRIORITY_LOW``, ``EVENT_PRIORITY_NORMAL`` and ``EVENT_PRIORITY_HIGH`` has been removed in v4.6.0.
 
 Once sorted, all subscribers are executed in order. If any subscriber returns a boolean false value, then execution of
 the subscribers will stop.

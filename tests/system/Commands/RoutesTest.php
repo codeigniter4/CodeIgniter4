@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Config\Feature;
 use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -213,6 +214,8 @@ final class RoutesTest extends CIUnitTestCase
         $routes = $this->getCleanRoutes();
         $routes->loadRoutes();
 
+        $featureConfig                     = config(Feature::class);
+        $featureConfig->autoRoutesImproved = false;
         $routes->setAutoRoute(true);
 
         command('routes');

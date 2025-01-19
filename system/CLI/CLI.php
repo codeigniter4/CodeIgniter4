@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\CLI\Exceptions\CLIException;
-use InvalidArgumentException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use Throwable;
 
 /**

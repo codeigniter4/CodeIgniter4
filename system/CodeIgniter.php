@@ -16,6 +16,7 @@ use CodeIgniter\Cache\ResponseCache;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
+use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\HTTP\CLIRequest;
@@ -28,7 +29,6 @@ use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\ResponsableInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
-use CodeIgniter\Router\Exceptions\RedirectException as DeprecatedRedirectException;
 use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Router\Router;
 use Config\App;
@@ -41,7 +41,6 @@ use Kint;
 use Kint\Renderer\CliRenderer;
 use Kint\Renderer\RichRenderer;
 use Locale;
-use LogicException;
 use Throwable;
 
 /**
@@ -56,7 +55,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.5.8';
+    public const CI_VERSION = '4.6.0';
 
     /**
      * App startup time.
@@ -294,7 +293,7 @@ class CodeIgniter
 
         RichRenderer::$theme  = $config->richTheme;
         RichRenderer::$folder = $config->richFolder;
-        RichRenderer::$sort   = $config->richSort;
+
         if (isset($config->richObjectPlugins) && is_array($config->richObjectPlugins)) {
             RichRenderer::$value_plugins = $config->richObjectPlugins;
         }
@@ -318,7 +317,7 @@ class CodeIgniter
      *
      * @param bool $returnResponse Used for testing purposes only.
      *
-     * @return ResponseInterface|void
+     * @return ResponseInterface|null
      */
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
@@ -353,11 +352,8 @@ class CodeIgniter
         } else {
             try {
                 $this->response = $this->handleRequest($routes, config(Cache::class), $returnResponse);
-            } catch (DeprecatedRedirectException|ResponsableInterface $e) {
+            } catch (ResponsableInterface $e) {
                 $this->outputBufferingEnd();
-                if ($e instanceof DeprecatedRedirectException) {
-                    $e = new RedirectException($e->getMessage(), $e->getCode(), $e);
-                }
 
                 $this->response = $e->getResponse();
             } catch (PageNotFoundException $e) {
@@ -379,6 +375,8 @@ class CodeIgniter
         }
 
         $this->sendResponse();
+
+        return null;
     }
 
     /**
@@ -863,7 +861,7 @@ class CodeIgniter
      * controller method and make the script go. If it's not able to, will
      * show the appropriate Page Not Found error.
      *
-     * @return ResponseInterface|string|void
+     * @return ResponseInterface|string|null
      */
     protected function startController()
     {
@@ -889,6 +887,8 @@ class CodeIgniter
         ) {
             throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
         }
+
+        return null;
     }
 
     /**

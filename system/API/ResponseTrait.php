@@ -225,18 +225,6 @@ trait ResponseTrait
     }
 
     /**
-     * Used when the data provided by the client cannot be validated.
-     *
-     * @return ResponseInterface
-     *
-     * @deprecated Use failValidationErrors instead
-     */
-    protected function failValidationError(string $description = 'Bad Request', ?string $code = null, string $message = '')
-    {
-        return $this->fail($description, $this->codes['invalid_data'], $code, $message);
-    }
-
-    /**
      * Used when the data provided by the client cannot be validated on one or more fields.
      *
      * @param list<string>|string $errors

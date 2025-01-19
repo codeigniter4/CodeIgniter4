@@ -16,16 +16,16 @@ namespace CodeIgniter\Autoloader;
 use App\Controllers\Home;
 use Closure;
 use CodeIgniter\Exceptions\ConfigException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Autoload;
 use Config\Modules;
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\Attributes\WithoutErrorHandler;
-use RuntimeException;
 use UnnamespacedClass;
 
 /**

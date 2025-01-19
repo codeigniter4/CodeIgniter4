@@ -27,11 +27,13 @@ declare(strict_types=1);
 
 namespace Kint\Parser;
 
-use DateTime;
-use Kint\Zval\DateTimeValue;
-use Kint\Zval\Value;
+use DateTimeInterface;
+use Error;
+use Kint\Value\AbstractValue;
+use Kint\Value\DateTimeValue;
+use Kint\Value\InstanceValue;
 
-class DateTimePlugin extends AbstractPlugin
+class DateTimePlugin extends AbstractPlugin implements PluginCompleteInterface
 {
     public function getTypes(): array
     {
@@ -43,15 +45,23 @@ class DateTimePlugin extends AbstractPlugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parseComplete(&$var, AbstractValue $v, int $trigger): AbstractValue
     {
-        if (!$var instanceof DateTime) {
-            return;
+        if (!$var instanceof DateTimeInterface || !$v instanceof InstanceValue) {
+            return $v;
         }
 
-        $object = new DateTimeValue($var);
-        $object->transplant($o);
+        try {
+            $dtv = new DateTimeValue($v->getContext(), $var);
+        } catch (Error $e) {
+            // Only happens if someone makes a DateTimeInterface with a private __clone
+            return $v;
+        }
 
-        $o = $object;
+        $dtv->setChildren($v->getChildren());
+        $dtv->flags = $v->flags;
+        $dtv->appendRepresentations($v->getRepresentations());
+
+        return $dtv;
     }
 }

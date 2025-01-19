@@ -27,15 +27,15 @@ declare(strict_types=1);
 
 namespace Kint\Parser;
 
-use BackedEnum;
-use Kint\Zval\EnumValue;
-use Kint\Zval\Representation\Representation;
-use Kint\Zval\Value;
+use Kint\Value\AbstractValue;
+use Kint\Value\Context\BaseContext;
+use Kint\Value\EnumValue;
+use Kint\Value\Representation\ContainerRepresentation;
 use UnitEnum;
 
-class EnumPlugin extends AbstractPlugin
+class EnumPlugin extends AbstractPlugin implements PluginCompleteInterface
 {
-    private static $cache = [];
+    private array $cache = [];
 
     public function getTypes(): array
     {
@@ -51,38 +51,34 @@ class EnumPlugin extends AbstractPlugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parseComplete(&$var, AbstractValue $v, int $trigger): AbstractValue
     {
         if (!$var instanceof UnitEnum) {
-            return;
+            return $v;
         }
 
+        $c = $v->getContext();
         $class = \get_class($var);
 
-        if (!isset(self::$cache[$class])) {
-            $cases = new Representation('Enum values', 'enum');
-            $cases->contents = [];
+        if (!isset($this->cache[$class])) {
+            $contents = [];
 
             foreach ($var->cases() as $case) {
-                $base_obj = Value::blank($class.'::'.$case->name, '\\'.$class.'::'.$case->name);
-                $base_obj->depth = $o->depth + 1;
-
-                if ($var instanceof BackedEnum) {
-                    $c = $case->value;
-                    $cases->contents[] = $this->parser->parse($c, $base_obj);
-                } else {
-                    $cases->contents[] = $base_obj;
-                }
+                $base = new BaseContext($case->name);
+                $base->access_path = '\\'.$class.'::'.$case->name;
+                $base->depth = $c->getDepth() + 1;
+                $contents[] = new EnumValue($base, $case);
             }
 
-            self::$cache[$class] = $cases;
+            /** @psalm-var non-empty-array<EnumValue> $contents */
+            $this->cache[$class] = new ContainerRepresentation('Enum values', $contents, 'enum');
         }
 
-        $object = new EnumValue($var);
-        $object->transplant($o);
+        $object = new EnumValue($c, $var);
+        $object->flags = $v->flags;
+        $object->appendRepresentations($v->getRepresentations());
+        $object->addRepresentation($this->cache[$class], 0);
 
-        $object->addRepresentation(self::$cache[$class], 0);
-
-        $o = $object;
+        return $object;
     }
 }

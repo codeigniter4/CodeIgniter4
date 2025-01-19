@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Router;
 
+use App\Controllers\Home;
 use App\Controllers\Product;
 use CodeIgniter\Controller;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\Feature;
 use Config\Modules;
 use Config\Routing;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -1742,6 +1744,46 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expects, $router->handle('/'));
     }
 
+    public function testRouteMatchingHostMultipleCorrect(): void
+    {
+        service('superglobals')->setServer('HTTP_HOST', 'two.domain.com');
+        service('request')->setMethod(Method::GET);
+
+        $routes = $this->getCollector();
+        $router = new Router($routes, service('request'));
+
+        $routes->setDefaultNamespace('App\Controllers');
+        $routes->setDefaultController('Home');
+        $routes->setDefaultMethod('index');
+
+        $routes->get('/', 'Home::index', ['as' => 'home']);
+        $routes->get('/', '\App\Controllers\Site\CDoc::index', ['hostname' => ['one.domain.com', 'two.domain.com', 'three.domain.com']]);
+
+        $expect = '\App\Controllers\Site\CDoc';
+
+        $this->assertSame($expect, $router->handle('/'));
+    }
+
+    public function testRouteMatchingHostMultipleFail(): void
+    {
+        service('superglobals')->setServer('HTTP_HOST', 'doc.domain.com');
+        service('request')->setMethod(Method::GET);
+
+        $routes = $this->getCollector();
+        $router = new Router($routes, service('request'));
+
+        $routes->setDefaultNamespace('App\Controllers');
+        $routes->setDefaultController('Home');
+        $routes->setDefaultMethod('index');
+
+        $routes->get('/', 'Home::index', ['as' => 'home']);
+        $routes->get('/', '\App\Controllers\Site\CDoc::index', ['hostname' => ['one.domain.com', 'two.domain.com', 'three.domain.com']]);
+
+        $expect = '\\' . Home::class;
+
+        $this->assertSame($expect, $router->handle('/'));
+    }
+
     /**
      * Tests for router DefaultNameSpace issue
      *
@@ -1783,12 +1825,12 @@ final class RouteCollectionTest extends CIUnitTestCase
         ];
     }
 
-    /**
-     * @param mixed $namespace
-     */
     #[DataProvider('provideRouteDefaultNamespace')]
-    public function testAutoRoutesControllerNameReturnsFQCN($namespace): void
+    public function testAutoRoutesControllerNameReturnsFQCN(string $namespace): void
     {
+        $featureConfig                     = config(Feature::class);
+        $featureConfig->autoRoutesImproved = false;
+
         $routes = $this->getCollector();
         $routes->setAutoRoute(true);
         $routes->setDefaultNamespace($namespace);
@@ -1803,11 +1845,8 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame('\\' . Product::class, $router->controllerName());
     }
 
-    /**
-     * @param mixed $namespace
-     */
     #[DataProvider('provideRouteDefaultNamespace')]
-    public function testRoutesControllerNameReturnsFQCN($namespace): void
+    public function testRoutesControllerNameReturnsFQCN(string $namespace): void
     {
         service('request')->setMethod(Method::GET);
         $routes = $this->getCollector();

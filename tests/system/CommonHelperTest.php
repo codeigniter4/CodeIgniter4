@@ -15,13 +15,13 @@ namespace CodeIgniter;
 
 use CodeIgniter\Autoloader\Autoloader;
 use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 use PHPUnit\Framework\Attributes\CoversFunction;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
-use RuntimeException;
 use Tests\Support\Autoloader\FatalLocator;
 
 /**

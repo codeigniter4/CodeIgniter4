@@ -27,7 +27,7 @@ declare(strict_types=1);
 
 namespace Kint\Renderer;
 
-use Kint\Zval\Value;
+use Kint\Value\AbstractValue;
 use Throwable;
 
 class CliRenderer extends TextRenderer
@@ -35,52 +35,46 @@ class CliRenderer extends TextRenderer
     /**
      * @var bool enable colors
      */
-    public static $cli_colors = true;
-
-    /**
-     * Forces utf8 output on windows.
-     *
-     * @var bool
-     */
-    public static $force_utf8 = false;
+    public static bool $cli_colors = true;
 
     /**
      * Detects the terminal width on startup.
-     *
-     * @var bool
      */
-    public static $detect_width = true;
+    public static bool $detect_width = true;
 
     /**
      * The minimum width to detect terminal size as.
      *
      * Less than this is ignored and falls back to default width.
-     *
-     * @var int
      */
-    public static $min_terminal_width = 40;
+    public static int $min_terminal_width = 40;
+
+    /**
+     * Forces utf8 output on windows.
+     */
+    public static bool $force_utf8 = false;
 
     /**
      * Which stream to check for VT100 support on windows.
      *
      * uses STDOUT by default if it's defined
      *
-     * @var ?resource
+     * @psalm-var ?resource
      */
     public static $windows_stream = null;
 
-    protected static $terminal_width = null;
+    protected static ?int $terminal_width = null;
 
-    protected $windows_output = false;
+    protected bool $windows_output = false;
 
-    protected $colors = false;
+    protected bool $colors = false;
 
     public function __construct()
     {
         parent::__construct();
 
         if (!self::$force_utf8 && KINT_WIN) {
-            if (!KINT_PHP72 || !\function_exists('sapi_windows_vt100_support')) {
+            if (!\function_exists('sapi_windows_vt100_support')) {
                 $this->windows_output = true;
             } else {
                 $stream = self::$windows_stream;
@@ -97,16 +91,23 @@ class CliRenderer extends TextRenderer
             }
         }
 
-        if (!self::$terminal_width) {
-            if (!KINT_WIN && self::$detect_width) {
+        if (null === self::$terminal_width) {
+            if (self::$detect_width) {
                 try {
-                    self::$terminal_width = (int) \exec('tput cols');
+                    $tput = KINT_WIN ? \exec('tput cols 2>nul') : \exec('tput cols 2>/dev/null');
+                    if ((bool) $tput) {
+                        /**
+                         * @psalm-suppress InvalidCast
+                         * Psalm bug #11080
+                         */
+                        self::$terminal_width = (int) $tput;
+                    }
                 } catch (Throwable $t) {
                     self::$terminal_width = self::$default_width;
                 }
             }
 
-            if (self::$terminal_width < self::$min_terminal_width) {
+            if (!isset(self::$terminal_width) || self::$terminal_width < self::$min_terminal_width) {
                 self::$terminal_width = self::$default_width;
             }
         }
@@ -143,13 +144,13 @@ class CliRenderer extends TextRenderer
         return "\x1b[36m".\str_replace("\n", "\x1b[0m\n\x1b[36m", $string)."\x1b[0m";
     }
 
-    public function renderTitle(Value $o): string
+    public function renderTitle(AbstractValue $v): string
     {
         if ($this->windows_output) {
-            return $this->utf8ToWindows(parent::renderTitle($o));
+            return $this->utf8ToWindows(parent::renderTitle($v));
         }
 
-        return parent::renderTitle($o);
+        return parent::renderTitle($v);
     }
 
     public function preRender(): string

@@ -38,7 +38,7 @@ class PageCache implements FilterInterface
      *
      * @param array|null $arguments
      *
-     * @return ResponseInterface|void
+     * @return ResponseInterface|null
      */
     public function before(RequestInterface $request, $arguments = null)
     {
@@ -51,14 +51,14 @@ class PageCache implements FilterInterface
         if ($cachedResponse instanceof ResponseInterface) {
             return $cachedResponse;
         }
+
+        return null;
     }
 
     /**
      * Cache the page.
      *
      * @param array|null $arguments
-     *
-     * @return void
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
@@ -72,6 +72,10 @@ class PageCache implements FilterInterface
             // so that we can have live speed updates along the way.
             // Must be run after filters to preserve the Response headers.
             $this->pageCache->make($request, $response);
+
+            return $response;
         }
+
+        return null;
     }
 }

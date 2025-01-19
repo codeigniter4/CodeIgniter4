@@ -24,7 +24,8 @@ class RedirectFilter implements FilterInterface
         return redirect()->to('login');
     }
 
-    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null): void
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
+        return null;
     }
 }
