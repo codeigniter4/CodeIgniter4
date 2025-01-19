@@ -1,5 +1,32 @@
 # Changelog
 
+## [v4.5.8](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.8) (2025-01-19)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.7...v4.5.8)
+
+### Security
+
+* **HTTP** *Validation of header name and value*: Fixed a potential vulnerability on lack of proper header validation
+    for its name and value. See the [security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-x5mq-jjr3-vmx6)
+    for more information. Credits to @neznaika0 for reporting.
+* **Security** fix: ensure csrf token is string by @datlechin in https://github.com/codeigniter4/CodeIgniter4/pull/9365
+
+### Fixed Bugs
+
+* fix: gather affected rows after query call failed by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9363
+
+### Refactoring
+
+* refactor: use more strict result check on preg_match_all() result by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/9361
+* refactor: Fix phpstan if.condNotBoolean by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/9368
+* refactor: Fix phpstan when delete string key by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/9369
+* refactor: Fix phpstan greaterOrEqual.invalid by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/9370
+* refactor: Fix phpstan nullCoalesce by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/9374
+* refactor: Fix phpstan isset offset by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/9383
+* refactor: Fix phpstan return.missing by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/9382
+* refactor: Fix phpstan booleanAnd.rightAlwaysTrue by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/9367
+* refactor: Fix phpstan codeigniter.configArgumentInstanceof by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/9390
+* refactor: Use `strtolower` with `str_contains`/`str_**_with` as replacement for `stripos` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9414
+
 ## [v4.5.7](https://github.com/codeigniter4/CodeIgniter4/tree/v4.5.7) (2024-12-31)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.6...v4.5.7)
 
