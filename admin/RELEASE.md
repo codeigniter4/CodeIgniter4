@@ -3,6 +3,7 @@
 > Documentation guide based on the releases of `4.0.5` and `4.1.0` on January 31, 2021.
 >
 > Updated for `4.5.0` on April 7, 2024.
+> Updated for `4.6.0` on January 19, 2025.
 >
 > -MGatner, kenjis
 
@@ -33,10 +34,12 @@ git push upstream HEAD
 
 If you release a new minor version.
 
-* [ ] Create PR to merge `4.y` into `develop` and merge it
+* [ ] Create PR to merge `4.y` into `develop`:
+  * Title: `4.y.0 Merge code`
+  * Description: blank
 * [ ] Rename the current minor version (e.g., `4.5`) in Setting > Branches >
-  "Branch protection rules" to the next minor version. E.g. `4.5` → `4.6`
-* [ ] Delete the merged `4.y` branch (This closes all PRs to the branch)
+  "Branch protection rules" to the next minor version (e.g. `4.5` → `4.6`).
+* [ ] Delete the merged `4.y` branch (this closes all PRs to the branch).
 
 ## Preparation
 
@@ -60,7 +63,7 @@ Work off direct clones of the repos so the release branches persist for a time.
 
 ## Changelog
 
-When generating the changelog each Pull Request to be included must have one of
+When generating the changelog, each pull request to be included must have one of
 the following [labels](https://github.com/codeigniter4/CodeIgniter4/labels):
 - **bug** ... PRs that fix bugs
 - **enhancement** ... PRs to improve existing functionalities
@@ -72,11 +75,11 @@ PRs with breaking changes must have the following additional label:
 
 ### Generate Changelog
 
-To auto-generate, navigate to the
+To auto-generate the changelog, navigate to the
 [Releases](https://github.com/codeigniter4/CodeIgniter4/releases) page,
 click the "Draft a new release" button.
 
-* Tag: `v4.x.x` (Create new tag)
+* Choose a tag: `v4.x.x` (Create new tag: v4.x.x on publish)
 * Target: `develop`
 
 Click the "Generate release notes" button.
@@ -85,7 +88,7 @@ Check the resulting content. If there are items in the *Others* section which
 should be included in the changelog, add a label to the PR and regenerate
 the changelog.
 
-Copy the resulting content into **CHANGELOG.md** and adjust the format to match
+Copy the resulting contents into **CHANGELOG.md** and adjust the format to match
 the existing content.
 
 ## Process
@@ -95,23 +98,27 @@ the existing content.
 > been included with their PR, so this process assumes you will not be
 > generating much new content.
 
-* [ ] Merge any Security Advisory PRs in private forks
-* [ ] Replace **CHANGELOG.md** with the new version generated above
+* [ ] Merge any security advisory PRs in private forks.
+* [ ] Add the current version to **CHANGELOG.md** with the contents generated above.
 * [ ] Update **user_guide_src/source/changelogs/v4.x.x.rst**
   * Remove the section titles that have no items
 * [ ] Update **user_guide_src/source/installation/upgrade_4xx.rst**
-  * [ ] fill in the "All Changes" section, and add it to **upgrade_4xx.rst**
-    * git diff --name-status origin/master -- . ':!system' ':!tests' ':!user_guide_src'
-    * Note: `tests/` is not used for distribution repos. See `admin/starter/tests/`
+  * [ ] fill in the "All Changes" section using the following command, and add it to **upgrade_4xx.rst**:
+    ```
+    git diff --name-status origin/master -- . ':!.github/' ':!admin/' ':!system/' ':!tests/' \
+        ':!user_guide_src/' ':!utils/' ':!*.json' ':!*.xml' ':!*.dist' ':!rector.php' \
+        ':!phpstan*' ':!psalm*' ':!.php-cs-fixer.*' ':!LICENSE' ':!CHANGELOG.md'
+    ```
+    * Note: `tests/` is not used for distribution repos. See `admin/starter/tests/`.
   * [ ] Remove the section titles that have no items
-  * [ ] [Minor version only] Update the "from" version in the title. E.g., `from 4.3.x` → `from 4.3.8`
-* [ ] Run `php admin/prepare-release.php 4.x.x` and push to origin
+  * [ ] [Minor version only] Update the "from" version in the title, (e.g., `from 4.3.x` → `from 4.3.8`).
+* [ ] Run `php admin/prepare-release.php 4.x.x` and push to origin.
   * The above command does the following:
     * Create a new branch `release-4.x.x`
     * Update **system/CodeIgniter.php** with the new version number:
       `const CI_VERSION = '4.x.x';`
-    * Update **user_guide_src/source/conf.py** with the new `version = '4.x'` (if applicable)
-      and `release = '4.x.x'`
+    * Update **user_guide_src/source/conf.py** with the new `version = '4.x'` (if releasing
+      the minor version) and `release = '4.x.x'`.
     * Update **user_guide_src/source/changelogs/{version}.rst**
       * Set the date to format `Release Date: January 31, 2021`
     * Update **phpdoc.dist.xml** with the new `<title>CodeIgniter v4.x API</title>`
@@ -126,15 +133,17 @@ the existing content.
     Previous version: #xxxx
     Release Code: TODO
     New Changelog: TODO
-    ```
+
     (plus checklist)
-* [ ] Let all tests run, then review and merge the PR
+    ```
+
+* [ ] Let all tests run, then review and merge the PR.
 * [ ] Create a new PR from `develop` to `master`:
   * Title: `4.x.x Ready code`
   * Description: blank
 * [ ] Merge the PR and wait for all tests.
 * [ ] Create a new Release:
-  * Tag: `v4.x.x` (Create new tag)
+  * Choose a tag: `v4.x.x` (Create new tag: v4.x.x on publish)
   * Target: `master`
   * Title: `CodeIgniter 4.x.x`
   * Description:
@@ -167,31 +176,31 @@ the existing content.
     created when v4.3.8 was released.
 * [ ] Fast-forward `develop` branch to catch the merge commit from `master`
     ```console
-    git fetch origin
+    git fetch upstream
     git checkout develop
-    git merge origin/develop
-    git merge origin/master
-    git push origin HEAD
+    git merge upstream/develop
+    git merge upstream/master
+    git push upstream HEAD
     ```
 * [ ] Update the next minor version branch `4.y`:
     ```console
-    git fetch origin
-    git checkout 4.y
-    git merge origin/4.y
-    git merge origin/develop
-    git push origin HEAD
+    git fetch upstream
+    git switch 4.y
+    git merge upstream/4.y
+    git merge upstream/develop
+    git push upstream HEAD
     ```
 * [ ] [Minor version only] Create the new next minor version branch `4.z`:
     ```console
-    git fetch origin
+    git fetch upstream
     git switch develop
     git switch -c 4.z
-    git push origin HEAD
+    git push upstream HEAD
     ```
-* [ ] Request CVEs and Publish any Security Advisories that were resolved from private forks
-  (note: publishing is restricted to administrators):
+* [ ] Request CVEs and publish any security advisories that were resolved from private forks
+  (note: publishing is restricted to administrators).
 * [ ] Announce the release on the forums and Slack channel
-  (note: this forum is restricted to administrators):
+  (note: this forum is restricted to administrators).
   * Make a new topic in the "News & Discussion" forums:
     https://forum.codeigniter.com/forum-2.html
   * The content is somewhat organic, but should include any major features and
