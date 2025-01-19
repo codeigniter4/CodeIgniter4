@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Content Negotiation &mdash; CodeIgniter 4.5.8 documentation</title>
+  <title>Content Negotiation &mdash; CodeIgniter 4.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -116,6 +116,7 @@
 <li class="toctree-l2"><a class="reference internal" href="routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="request.html">Request Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="incomingrequest.html">IncomingRequest Class</a></li>
@@ -414,6 +415,55 @@ and German you would do something like:</p>
 </div>
 <p>In this example, ‘en’ would be returned as the current language. If no match is found, it will return the first element
 in the <code class="docutils literal notranslate"><span class="pre">$supported</span></code> array, so that should always be the preferred language.</p>
+<section id="strict-locale-negotiation">
+<h4>Strict Locale Negotiation<a class="headerlink" href="#strict-locale-negotiation" title="Permalink to this heading"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.6.0.</span></p>
+</div>
+<p>By default, locale is determined on a lossy comparison basis. So only the first part of the locale string is taken
+into account (language). This is usually sufficient. But sometimes we want to be able to distinguish between regional versions such as
+<code class="docutils literal notranslate"><span class="pre">en-US</span></code> and <code class="docutils literal notranslate"><span class="pre">en-GB</span></code> to serve different content.</p>
+<p>For such cases, we have introduced a new setting that can be enabled via <code class="docutils literal notranslate"><span class="pre">Config\Feature::$strictLocaleNegotiation</span></code>. This will ensure
+that the strict comparison will be made in the first place.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>CodeIgniter comes with translations only for primary language tags (‘en’, ‘fr’, etc.). So if you enable this feature and your
+settings in <code class="docutils literal notranslate"><span class="pre">Config\App::$supportedLocales</span></code> include regional language tags (‘en-US’, ‘fr-FR’, etc.), then keep in mind that
+if you have your own translation files, you <strong>must also change</strong> the folder names for CodeIgniter’s translation files to match
+what you put in the <code class="docutils literal notranslate"><span class="pre">$supportedLocales</span></code> array.</p>
+</div>
+<p>Now let’s consider the below example. The browser’s preferred language will be set as this:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">GET</span> <span class="o">/</span><span class="nx">foo</span> <span class="nx">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="nx">Accept</span><span class="o">-</span><span class="nx">Language</span><span class="o">:</span> <span class="nx">fr</span><span class="p">;</span> <span class="nx">q</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="nx">en</span><span class="o">-</span><span class="nx">GB</span><span class="p">;</span> <span class="nx">q</span><span class="o">=</span><span class="mf">0.5</span>
+</pre></div>
+</div>
+<p>In this example, the browser would prefer French, with a second choice of English (United Kingdom). Your website on another hand
+supports German and English (United States):</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;de&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;en-US&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$lang</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;language&#39;</span><span class="p">,</span> <span class="nv">$supported</span><span class="p">);</span>
+<span class="c1">// or</span>
+<span class="nv">$lang</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">language</span><span class="p">(</span><span class="nv">$supported</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In this example, ‘en-US’ would be returned as the current language. If no match is found, it will return the first element
+in the <code class="docutils literal notranslate"><span class="pre">$supported</span></code> array. Here is how exactly the locale selection process works.</p>
+<p>Even though the ‘fr’ is preferred by the browser it is not in our <code class="docutils literal notranslate"><span class="pre">$supported</span></code> array. The same problem occurs with ‘en-GB’, but here
+we will be able to search for variants. First, we will fallback to the most general locale (in this case ‘en’) which again is not in our
+array. Then we will search for the regional locale ‘en-’. And that’s when our value from the <code class="docutils literal notranslate"><span class="pre">$supported</span></code> array will be matched.
+We will return ‘en-US’.</p>
+<p>So the process of selecting a locale is as follows:</p>
+<ol class="arabic simple">
+<li><p>strict match (‘en-GB’) - ISO 639-1 plus ISO 3166-1 alpha-2</p></li>
+<li><p>general locale match (‘en’) - ISO 639-1</p></li>
+<li><p>regional locale match (‘en-’) - ISO 639-1 plus “wildcard” for ISO 3166-1 alpha-2</p></li>
+</ol>
+</section>
 </section>
 <section id="encoding">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">Encoding</a><a class="headerlink" href="#encoding" title="Permalink to this heading"></a></h3>

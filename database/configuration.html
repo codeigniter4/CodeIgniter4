@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Database Configuration &mdash; CodeIgniter 4.5.8 documentation</title>
+  <title>Database Configuration &mdash; CodeIgniter 4.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -116,6 +116,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
@@ -709,8 +710,15 @@ To enforce Foreign Key constraint, set this config item to true.</p>
 <tr class="row-even"><td><p><strong>busyTimeout</strong></p></td>
 <td><p>(<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only) milliseconds (int) - Sleeps for a specified amount of time when a table is locked.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>numberNative</strong></p></td>
+<tr class="row-odd"><td><p><strong>synchronous</strong></p></td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only) flag (int) - How strict SQLite will be at flushing to disk during transactions.
+Use <cite>null</cite> to stay with the default setting. This can be used since v4.6.0.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>numberNative</strong></p></td>
 <td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only) true/false (boolean) - Whether to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>foundRows</strong></p></td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only) true/false (boolean) - Whether to enable MYSQLI_CLIENT_FOUND_ROWS.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>dateFormat</strong></p></td>
 <td><p>The default date/time formats as PHP’s <a class="reference external" href="https://www.php.net/manual/en/datetime.format.php">DateTime format</a>.

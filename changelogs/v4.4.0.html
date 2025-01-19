@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Version 4.4.0 &mdash; CodeIgniter 4.5.8 documentation</title>
+  <title>Version 4.4.0 &mdash; CodeIgniter 4.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -116,6 +116,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
@@ -620,12 +621,12 @@ See <a class="reference internal" href="../outgoing/response.html#open-file-in-b
 <li><p><strong>View:</strong> Added optional 2nd parameter <code class="docutils literal notranslate"><span class="pre">$saveData</span></code> on <code class="docutils literal notranslate"><span class="pre">renderSection()</span></code> to prevent from auto cleans the data after displaying. See <a class="reference internal" href="../outgoing/view_layouts.html#creating-a-layout"><span class="std std-ref">View Layouts</span></a> for details.</p></li>
 <li><dl class="simple">
 <dt><strong>Auto Routing (Improved)</strong>:</dt><dd><ul>
-<li><p>Now you can route to Modules. See <a class="reference internal" href="../incoming/routing.html#auto-routing-improved-module-routing"><span class="std std-ref">Module Routing</span></a>
+<li><p>Now you can route to Modules. See <a class="reference internal" href="../incoming/auto_routing_improved.html#auto-routing-improved-module-routing"><span class="std std-ref">Module Routing</span></a>
 for details.</p></li>
 <li><p>If a controller is found that corresponds to a URI segment and that controller
 does not have a method defined for the URI segment, the default method will
 now be executed. This addition allows for more flexible handling of URIs in
-auto routing. See <a class="reference internal" href="../incoming/controllers.html#controller-default-method-fallback"><span class="std std-ref">Default Method Fallback</span></a> for details.</p></li>
+auto routing. See <a class="reference internal" href="../incoming/auto_routing_improved.html#auto-routing-improved-default-method-fallback"><span class="std std-ref">Default Method Fallback</span></a> for details.</p></li>
 </ul>
 </dd>
 </dl>

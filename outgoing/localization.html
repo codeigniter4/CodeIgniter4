@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Localization &mdash; CodeIgniter 4.5.8 documentation</title>
+  <title>Localization &mdash; CodeIgniter 4.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -116,6 +116,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
@@ -327,7 +328,11 @@
 <li><p><a class="reference internal" href="#language-fallback" id="id20">Language Fallback</a></p></li>
 <li><p><a class="reference internal" href="#system-message-translations" id="id21">System Message Translations</a></p></li>
 <li><p><a class="reference internal" href="#overriding-system-message-translations" id="id22">Overriding System Message Translations</a></p></li>
-<li><p><a class="reference internal" href="#generating-translation-files-via-command" id="id23">Generating Translation Files via Command</a></p></li>
+<li><p><a class="reference internal" href="#generating-translation-files-via-command" id="id23">Generating Translation Files via Command</a></p>
+<ul>
+<li><p><a class="reference internal" href="#synchronization-translation-files-via-command" id="id24">Synchronization Translation Files via Command</a></p></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -829,6 +834,28 @@ It is recommended to format them. For example, run <code class="docutils literal
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark lang:find --help</span>
 </pre></div>
 </div>
+<section id="synchronization-translation-files-via-command">
+<span id="sync-translations-command"></span><h4><a class="toc-backref" href="#id24" role="doc-backlink">Synchronization Translation Files via Command</a><a class="headerlink" href="#synchronization-translation-files-via-command" title="Permalink to this heading"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.6.0.</span></p>
+</div>
+<p>You may need to create files for another language when you’ve finished translating for the current language. You can use the spark <code class="docutils literal notranslate"><span class="pre">lang:find</span></code> command to help with this. However, it might not detect all translations, particularly those with dynamically set parameters like <code class="docutils literal notranslate"><span class="pre">lang('App.status.'</span> <span class="pre">.</span> <span class="pre">$key,</span> <span class="pre">['payload'</span> <span class="pre">=&gt;</span> <span class="pre">'John'],</span> <span class="pre">'en')</span></code>.</p>
+<p>To ensure no translations are missed, it’s best to copy the completed language files and translate them manually. This approach preserves any unique keys the command might have overlooked.</p>
+<p>All you need to do is execute:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">// Specify the locale for new/updated translations</span>
+<span class="go">php spark lang:sync --target ru</span>
+
+<span class="go">// or set the original locale</span>
+<span class="go">php spark lang:sync --locale en --target ru</span>
+</pre></div>
+</div>
+<p>As a result, you will receive files with the translation keys.
+If there were duplicate keys in the target locale, they are saved.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Non-matching keys in new translations are deleted!</p>
+</div>
+</section>
 </section>
 </section>
 </section>

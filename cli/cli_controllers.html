@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Running Controllers via CLI &mdash; CodeIgniter 4.5.8 documentation</title>
+  <title>Running Controllers via CLI &mdash; CodeIgniter 4.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -116,6 +116,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
@@ -336,7 +337,7 @@ in it:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you use <a class="reference internal" href="../incoming/routing.html#auto-routing-improved"><span class="std std-ref">Auto Routing (Improved)</span></a>, change the method name to <code class="docutils literal notranslate"><span class="pre">cliMessage()</span></code>.</p>
+<p>If you use <a class="reference internal" href="../incoming/auto_routing_improved.html#auto-routing-improved"><span class="std std-ref">Auto Routing (Improved)</span></a>, change the method name to <code class="docutils literal notranslate"><span class="pre">cliMessage()</span></code>.</p>
 </div>
 <p>Then save the file to your <strong>app/Controllers/</strong> directory.</p>
 </section>
@@ -389,7 +390,7 @@ command line. Remember that this is just a normal controller, so routing
 and <code class="docutils literal notranslate"><span class="pre">_remap()</span></code> works fine.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">_remap()</span></code> does not work with <a class="reference internal" href="../incoming/routing.html#auto-routing-improved"><span class="std std-ref">Auto Routing (Improved)</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">_remap()</span></code> does not work with <a class="reference internal" href="../incoming/auto_routing_improved.html#auto-routing-improved"><span class="std std-ref">Auto Routing (Improved)</span></a>.</p>
 </div>
 <p>If you want to make sure running via CLI, check the return value of <a class="reference internal" href="../general/common_functions.html#is_cli" title="is_cli"><code class="xref php php-func docutils literal notranslate"><span class="pre">is_cli()</span></code></a>.</p>
 <p>However, CodeIgniter provides additional tools to make creating CLI-accessible

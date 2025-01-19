@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Using CodeIgniter’s Model &mdash; CodeIgniter 4.5.8 documentation</title>
+  <title>Using CodeIgniter’s Model &mdash; CodeIgniter 4.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -116,6 +116,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
@@ -324,80 +325,81 @@
 <ul>
 <li><p><a class="reference internal" href="#csv" id="id28">csv</a></p></li>
 <li><p><a class="reference internal" href="#datetime" id="id29">datetime</a></p></li>
+<li><p><a class="reference internal" href="#timestamp" id="id30">timestamp</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#custom-casting" id="id30">Custom Casting</a></p>
+<li><p><a class="reference internal" href="#custom-casting" id="id31">Custom Casting</a></p>
 <ul>
-<li><p><a class="reference internal" href="#creating-custom-handlers" id="id31">Creating Custom Handlers</a></p></li>
-<li><p><a class="reference internal" href="#registering-custom-handlers" id="id32">Registering Custom Handlers</a></p></li>
-<li><p><a class="reference internal" href="#parameters" id="id33">Parameters</a></p></li>
+<li><p><a class="reference internal" href="#creating-custom-handlers" id="id32">Creating Custom Handlers</a></p></li>
+<li><p><a class="reference internal" href="#registering-custom-handlers" id="id33">Registering Custom Handlers</a></p></li>
+<li><p><a class="reference internal" href="#parameters" id="id34">Parameters</a></p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#working-with-data" id="id34">Working with Data</a></p>
+<li><p><a class="reference internal" href="#working-with-data" id="id35">Working with Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#finding-data" id="id35">Finding Data</a></p>
+<li><p><a class="reference internal" href="#finding-data" id="id36">Finding Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#find" id="id36">find()</a></p></li>
-<li><p><a class="reference internal" href="#findcolumn" id="id37">findColumn()</a></p></li>
-<li><p><a class="reference internal" href="#findall" id="id38">findAll()</a></p></li>
-<li><p><a class="reference internal" href="#first" id="id39">first()</a></p></li>
-<li><p><a class="reference internal" href="#withdeleted" id="id40">withDeleted()</a></p></li>
-<li><p><a class="reference internal" href="#onlydeleted" id="id41">onlyDeleted()</a></p></li>
+<li><p><a class="reference internal" href="#find" id="id37">find()</a></p></li>
+<li><p><a class="reference internal" href="#findcolumn" id="id38">findColumn()</a></p></li>
+<li><p><a class="reference internal" href="#findall" id="id39">findAll()</a></p></li>
+<li><p><a class="reference internal" href="#first" id="id40">first()</a></p></li>
+<li><p><a class="reference internal" href="#withdeleted" id="id41">withDeleted()</a></p></li>
+<li><p><a class="reference internal" href="#onlydeleted" id="id42">onlyDeleted()</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#saving-data" id="id42">Saving Data</a></p>
+<li><p><a class="reference internal" href="#saving-data" id="id43">Saving Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#insert" id="id43">insert()</a></p></li>
-<li><p><a class="reference internal" href="#model-allow-empty-inserts" id="id44">allowEmptyInserts()</a></p></li>
-<li><p><a class="reference internal" href="#update" id="id45">update()</a></p></li>
-<li><p><a class="reference internal" href="#save" id="id46">save()</a></p></li>
-<li><p><a class="reference internal" href="#saving-dates" id="id47">Saving Dates</a></p></li>
+<li><p><a class="reference internal" href="#insert" id="id44">insert()</a></p></li>
+<li><p><a class="reference internal" href="#model-allow-empty-inserts" id="id45">allowEmptyInserts()</a></p></li>
+<li><p><a class="reference internal" href="#update" id="id46">update()</a></p></li>
+<li><p><a class="reference internal" href="#save" id="id47">save()</a></p></li>
+<li><p><a class="reference internal" href="#saving-dates" id="id48">Saving Dates</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#deleting-data" id="id48">Deleting Data</a></p>
+<li><p><a class="reference internal" href="#deleting-data" id="id49">Deleting Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#delete" id="id49">delete()</a></p></li>
-<li><p><a class="reference internal" href="#purgedeleted" id="id50">purgeDeleted()</a></p></li>
+<li><p><a class="reference internal" href="#delete" id="id50">delete()</a></p></li>
+<li><p><a class="reference internal" href="#purgedeleted" id="id51">purgeDeleted()</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#in-model-validation" id="id51">In-Model Validation</a></p>
+<li><p><a class="reference internal" href="#in-model-validation" id="id52">In-Model Validation</a></p>
 <ul>
-<li><p><a class="reference internal" href="#validating-data" id="id52">Validating Data</a></p></li>
-<li><p><a class="reference internal" href="#setting-validation-rules" id="id53">Setting Validation Rules</a></p></li>
-<li><p><a class="reference internal" href="#getting-validation-result" id="id54">Getting Validation Result</a></p></li>
-<li><p><a class="reference internal" href="#getting-validation-errors" id="id55">Getting Validation Errors</a></p></li>
-<li><p><a class="reference internal" href="#retrieving-validation-rules" id="id56">Retrieving Validation Rules</a></p></li>
-<li><p><a class="reference internal" href="#validation-placeholders" id="id57">Validation Placeholders</a></p></li>
+<li><p><a class="reference internal" href="#validating-data" id="id53">Validating Data</a></p></li>
+<li><p><a class="reference internal" href="#setting-validation-rules" id="id54">Setting Validation Rules</a></p></li>
+<li><p><a class="reference internal" href="#getting-validation-result" id="id55">Getting Validation Result</a></p></li>
+<li><p><a class="reference internal" href="#getting-validation-errors" id="id56">Getting Validation Errors</a></p></li>
+<li><p><a class="reference internal" href="#retrieving-validation-rules" id="id57">Retrieving Validation Rules</a></p></li>
+<li><p><a class="reference internal" href="#validation-placeholders" id="id58">Validation Placeholders</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#protecting-fields" id="id58">Protecting Fields</a></p></li>
-<li><p><a class="reference internal" href="#runtime-return-type-changes" id="id59">Runtime Return Type Changes</a></p>
+<li><p><a class="reference internal" href="#protecting-fields" id="id59">Protecting Fields</a></p></li>
+<li><p><a class="reference internal" href="#runtime-return-type-changes" id="id60">Runtime Return Type Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#asarray" id="id60">asArray()</a></p></li>
-<li><p><a class="reference internal" href="#asobject" id="id61">asObject()</a></p></li>
+<li><p><a class="reference internal" href="#asarray" id="id61">asArray()</a></p></li>
+<li><p><a class="reference internal" href="#asobject" id="id62">asObject()</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#processing-large-amounts-of-data" id="id62">Processing Large Amounts of Data</a></p></li>
+<li><p><a class="reference internal" href="#processing-large-amounts-of-data" id="id63">Processing Large Amounts of Data</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#working-with-query-builder" id="id63">Working with Query Builder</a></p>
+<li><p><a class="reference internal" href="#working-with-query-builder" id="id64">Working with Query Builder</a></p>
 <ul>
-<li><p><a class="reference internal" href="#getting-query-builder-for-the-model-s-table" id="id64">Getting Query Builder for the Model’s Table</a></p></li>
-<li><p><a class="reference internal" href="#getting-query-builder-for-another-table" id="id65">Getting Query Builder for Another Table</a></p></li>
-<li><p><a class="reference internal" href="#mixing-methods-of-query-builder-and-model" id="id66">Mixing Methods of Query Builder and Model</a></p></li>
+<li><p><a class="reference internal" href="#getting-query-builder-for-the-model-s-table" id="id65">Getting Query Builder for the Model’s Table</a></p></li>
+<li><p><a class="reference internal" href="#getting-query-builder-for-another-table" id="id66">Getting Query Builder for Another Table</a></p></li>
+<li><p><a class="reference internal" href="#mixing-methods-of-query-builder-and-model" id="id67">Mixing Methods of Query Builder and Model</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#model-events" id="id67">Model Events</a></p>
+<li><p><a class="reference internal" href="#model-events" id="id68">Model Events</a></p>
 <ul>
-<li><p><a class="reference internal" href="#defining-callbacks" id="id68">Defining Callbacks</a></p></li>
-<li><p><a class="reference internal" href="#specifying-callbacks-to-run" id="id69">Specifying Callbacks To Run</a></p></li>
-<li><p><a class="reference internal" href="#event-parameters" id="id70">Event Parameters</a></p></li>
-<li><p><a class="reference internal" href="#modifying-find-data" id="id71">Modifying Find* Data</a></p></li>
+<li><p><a class="reference internal" href="#defining-callbacks" id="id69">Defining Callbacks</a></p></li>
+<li><p><a class="reference internal" href="#specifying-callbacks-to-run" id="id70">Specifying Callbacks To Run</a></p></li>
+<li><p><a class="reference internal" href="#event-parameters" id="id71">Event Parameters</a></p></li>
+<li><p><a class="reference internal" href="#modifying-find-data" id="id72">Modifying Find* Data</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#manual-model-creation" id="id72">Manual Model Creation</a></p></li>
+<li><p><a class="reference internal" href="#manual-model-creation" id="id73">Manual Model Creation</a></p></li>
 </ul>
 </nav>
 <section id="models">
@@ -902,13 +904,43 @@ or <code class="docutils literal notranslate"><span class="pre">datetime[us]</sp
 <p>The datetime format is set in the <code class="docutils literal notranslate"><span class="pre">dateFormat</span></code> array of the
 <a class="reference internal" href="../database/configuration.html#database-config-explanation-of-values"><span class="std std-ref">database configuration</span></a> in the
 <strong>app/Config/Database.php</strong> file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When you set <code class="docutils literal notranslate"><span class="pre">ms</span></code> or <code class="docutils literal notranslate"><span class="pre">us</span></code> as a parameter, <strong>Model</strong> takes care of second’s
+fractional part of the Time. But <strong>Query Builder</strong> does not. So you still need
+to use the <code class="docutils literal notranslate"><span class="pre">format()</span></code> method when you pass the Time to Query Builder’s methods
+like <code class="docutils literal notranslate"><span class="pre">where()</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;SomeModel&#39;</span><span class="p">);</span>
+
+<span class="nv">$now</span> <span class="o">=</span> <span class="nx">\CodeIgniter\I18n\Time</span><span class="o">::</span><span class="na">now</span><span class="p">();</span>
+
+<span class="c1">// The following code passes the microseconds to Query Builder.</span>
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;my_dt_field&#39;</span><span class="p">,</span> <span class="nv">$now</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">&#39;Y-m-d H:i:s.u&#39;</span><span class="p">))</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+<span class="c1">// Generates: SELECT * FROM `my_table` WHERE `my_dt_field` = &#39;2024-07-28 18:57:58.900326&#39;</span>
+
+<span class="c1">// But the following code loses the microseconds.</span>
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;my_dt_field&#39;</span><span class="p">,</span> <span class="nv">$now</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+<span class="c1">// Generates: SELECT * FROM `my_table` WHERE `my_dt_field` = &#39;2024-07-28 18:57:58&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to v4.6.0, you cannot use <code class="docutils literal notranslate"><span class="pre">ms</span></code> or <code class="docutils literal notranslate"><span class="pre">us</span></code> as a parameter.
+Because the second’s fractional part of Time was lost due to bugs.</p>
+</div>
+</section>
+<section id="timestamp">
+<h4><a class="toc-backref" href="#id30" role="doc-backlink">timestamp</a><a class="headerlink" href="#timestamp" title="Permalink to this heading"></a></h4>
+<p>The timezone of the <code class="docutils literal notranslate"><span class="pre">Time</span></code> instance created will be the default timezone
+(app’s timezone), not UTC.</p>
 </section>
 </section>
 <section id="custom-casting">
-<h3><a class="toc-backref" href="#id30" role="doc-backlink">Custom Casting</a><a class="headerlink" href="#custom-casting" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id31" role="doc-backlink">Custom Casting</a><a class="headerlink" href="#custom-casting" title="Permalink to this heading"></a></h3>
 <p>You can define your own conversion types.</p>
 <section id="creating-custom-handlers">
-<h4><a class="toc-backref" href="#id31" role="doc-backlink">Creating Custom Handlers</a><a class="headerlink" href="#creating-custom-handlers" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id32" role="doc-backlink">Creating Custom Handlers</a><a class="headerlink" href="#creating-custom-handlers" title="Permalink to this heading"></a></h4>
 <p>At first you need to create a handler class for your type.
 Let’s say the class will be located in the <strong>app/Models/Cast</strong> directory:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -986,7 +1018,7 @@ don’t implement the appropriate method:</p>
 </div>
 </section>
 <section id="registering-custom-handlers">
-<h4><a class="toc-backref" href="#id32" role="doc-backlink">Registering Custom Handlers</a><a class="headerlink" href="#registering-custom-handlers" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id33" role="doc-backlink">Registering Custom Handlers</a><a class="headerlink" href="#registering-custom-handlers" title="Permalink to this heading"></a></h4>
 <p>Now you need to register it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1015,7 +1047,7 @@ don’t implement the appropriate method:</p>
 </div>
 </section>
 <section id="parameters">
-<h4><a class="toc-backref" href="#id33" role="doc-backlink">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id34" role="doc-backlink">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h4>
 <p>In some cases, one type is not enough. In this situation, you can use additional
 parameters. Additional parameters are indicated in square brackets and listed
 with a comma like <code class="docutils literal notranslate"><span class="pre">type[param1,</span> <span class="pre">param2]</span></code>.</p>
@@ -1084,13 +1116,13 @@ then <code class="docutils literal notranslate"><span class="pre">nullable</span
 </section>
 </section>
 <section id="working-with-data">
-<h2><a class="toc-backref" href="#id34" role="doc-backlink">Working with Data</a><a class="headerlink" href="#working-with-data" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id35" role="doc-backlink">Working with Data</a><a class="headerlink" href="#working-with-data" title="Permalink to this heading"></a></h2>
 <section id="finding-data">
-<h3><a class="toc-backref" href="#id35" role="doc-backlink">Finding Data</a><a class="headerlink" href="#finding-data" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id36" role="doc-backlink">Finding Data</a><a class="headerlink" href="#finding-data" title="Permalink to this heading"></a></h3>
 <p>Several functions are provided for doing basic CRUD work on your tables, including <code class="docutils literal notranslate"><span class="pre">find()</span></code>,
 <code class="docutils literal notranslate"><span class="pre">insert()</span></code>, <code class="docutils literal notranslate"><span class="pre">update()</span></code>, <code class="docutils literal notranslate"><span class="pre">delete()</span></code> and more.</p>
 <section id="find">
-<h4><a class="toc-backref" href="#id36" role="doc-backlink">find()</a><a class="headerlink" href="#find" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id37" role="doc-backlink">find()</a><a class="headerlink" href="#find" title="Permalink to this heading"></a></h4>
 <p>Returns a single row where the primary key matches the value passed in as the first parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1112,7 +1144,7 @@ effectively acting like <code class="docutils literal notranslate"><span class="
 </div>
 </section>
 <section id="findcolumn">
-<h4><a class="toc-backref" href="#id37" role="doc-backlink">findColumn()</a><a class="headerlink" href="#findcolumn" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id38" role="doc-backlink">findColumn()</a><a class="headerlink" href="#findcolumn" title="Permalink to this heading"></a></h4>
 <p>Returns null or an indexed array of column values:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1122,7 +1154,7 @@ effectively acting like <code class="docutils literal notranslate"><span class="
 <p><code class="docutils literal notranslate"><span class="pre">$column_name</span></code> should be a name of single column else you will get the <code class="docutils literal notranslate"><span class="pre">DataException</span></code>.</p>
 </section>
 <section id="findall">
-<h4><a class="toc-backref" href="#id38" role="doc-backlink">findAll()</a><a class="headerlink" href="#findall" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id39" role="doc-backlink">findAll()</a><a class="headerlink" href="#findall" title="Permalink to this heading"></a></h4>
 <p>Returns all results:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1144,7 +1176,7 @@ parameters, respectively:</p>
 </div>
 </section>
 <section id="first">
-<h4><a class="toc-backref" href="#id39" role="doc-backlink">first()</a><a class="headerlink" href="#first" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id40" role="doc-backlink">first()</a><a class="headerlink" href="#first" title="Permalink to this heading"></a></h4>
 <p>Returns the first row in the result set. This is best used in combination with the query builder.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1153,7 +1185,7 @@ parameters, respectively:</p>
 </div>
 </section>
 <section id="withdeleted">
-<h4><a class="toc-backref" href="#id40" role="doc-backlink">withDeleted()</a><a class="headerlink" href="#withdeleted" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id41" role="doc-backlink">withDeleted()</a><a class="headerlink" href="#withdeleted" title="Permalink to this heading"></a></h4>
 <p>If <a class="reference internal" href="#usesoftdeletes">$useSoftDeletes</a> is true, then the <strong>find*()</strong> methods will not return any rows where <code class="docutils literal notranslate"><span class="pre">deleted_at</span> <span class="pre">IS</span> <span class="pre">NOT</span> <span class="pre">NULL</span></code>.
 To temporarily override this, you can use the <code class="docutils literal notranslate"><span class="pre">withDeleted()</span></code> method prior to calling the <strong>find*()</strong> method.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1167,7 +1199,7 @@ To temporarily override this, you can use the <code class="docutils literal notr
 </div>
 </section>
 <section id="onlydeleted">
-<h4><a class="toc-backref" href="#id41" role="doc-backlink">onlyDeleted()</a><a class="headerlink" href="#onlydeleted" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id42" role="doc-backlink">onlyDeleted()</a><a class="headerlink" href="#onlydeleted" title="Permalink to this heading"></a></h4>
 <p>Whereas <code class="docutils literal notranslate"><span class="pre">withDeleted()</span></code> will return both deleted and not-deleted rows, this method modifies
 the next <strong>find*()</strong> methods to return only soft deleted rows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1178,9 +1210,9 @@ the next <strong>find*()</strong> methods to return only soft deleted rows:</p>
 </section>
 </section>
 <section id="saving-data">
-<h3><a class="toc-backref" href="#id42" role="doc-backlink">Saving Data</a><a class="headerlink" href="#saving-data" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id43" role="doc-backlink">Saving Data</a><a class="headerlink" href="#saving-data" title="Permalink to this heading"></a></h3>
 <section id="insert">
-<h4><a class="toc-backref" href="#id43" role="doc-backlink">insert()</a><a class="headerlink" href="#insert" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id44" role="doc-backlink">insert()</a><a class="headerlink" href="#insert" title="Permalink to this heading"></a></h4>
 <p>The first parameter is an associative array of data to create a new row of data in the database.
 If an object is passed instead of an array, it will attempt to convert it to an array.</p>
 <p>The array’s keys must match the name of the columns in the <a class="reference internal" href="#table">$table</a>, while the array’s values are the values to save for that key.</p>
@@ -1206,7 +1238,7 @@ which indicates the success or failure of the query.</p>
 </div>
 </section>
 <section id="model-allow-empty-inserts">
-<span id="id3"></span><h4><a class="toc-backref" href="#id44" role="doc-backlink">allowEmptyInserts()</a><a class="headerlink" href="#model-allow-empty-inserts" title="Permalink to this heading"></a></h4>
+<span id="id3"></span><h4><a class="toc-backref" href="#id45" role="doc-backlink">allowEmptyInserts()</a><a class="headerlink" href="#model-allow-empty-inserts" title="Permalink to this heading"></a></h4>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.3.0.</span></p>
 </div>
@@ -1220,7 +1252,7 @@ which indicates the success or failure of the query.</p>
 <p>You can enable the check again by calling <code class="docutils literal notranslate"><span class="pre">allowEmptyInserts(false)</span></code>.</p>
 </section>
 <section id="update">
-<h4><a class="toc-backref" href="#id45" role="doc-backlink">update()</a><a class="headerlink" href="#update" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id46" role="doc-backlink">update()</a><a class="headerlink" href="#update" title="Permalink to this heading"></a></h4>
 <p>Updates an existing record in the database. The first parameter is the <a class="reference internal" href="#primarykey">$primaryKey</a> of the record to update.
 An associative array of data is passed into this method as the second parameter. The array’s keys must match the name
 of the columns in a <a class="reference internal" href="#table">$table</a>, while the array’s values are the values to save for that key:</p>
@@ -1264,7 +1296,7 @@ update command, with the added benefit of validation, events, etc:</p>
 </div>
 </section>
 <section id="save">
-<span id="model-save"></span><h4><a class="toc-backref" href="#id46" role="doc-backlink">save()</a><a class="headerlink" href="#save" title="Permalink to this heading"></a></h4>
+<span id="model-save"></span><h4><a class="toc-backref" href="#id47" role="doc-backlink">save()</a><a class="headerlink" href="#save" title="Permalink to this heading"></a></h4>
 <p>This is a wrapper around the <code class="docutils literal notranslate"><span class="pre">insert()</span></code> and <code class="docutils literal notranslate"><span class="pre">update()</span></code> methods that handle inserting or updating the record
 automatically, based on whether it finds an array key matching the <strong>primary key</strong> value:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1361,7 +1393,7 @@ that provides several handy features that make developing Entities simpler.</p>
 </div>
 </section>
 <section id="saving-dates">
-<span id="model-saving-dates"></span><h4><a class="toc-backref" href="#id47" role="doc-backlink">Saving Dates</a><a class="headerlink" href="#saving-dates" title="Permalink to this heading"></a></h4>
+<span id="model-saving-dates"></span><h4><a class="toc-backref" href="#id48" role="doc-backlink">Saving Dates</a><a class="headerlink" href="#saving-dates" title="Permalink to this heading"></a></h4>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.5.0.</span></p>
 </div>
@@ -1377,9 +1409,9 @@ and <code class="docutils literal notranslate"><span class="pre">Y-m-d</span></c
 </section>
 </section>
 <section id="deleting-data">
-<h3><a class="toc-backref" href="#id48" role="doc-backlink">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id49" role="doc-backlink">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this heading"></a></h3>
 <section id="delete">
-<h4><a class="toc-backref" href="#id49" role="doc-backlink">delete()</a><a class="headerlink" href="#delete" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id50" role="doc-backlink">delete()</a><a class="headerlink" href="#delete" title="Permalink to this heading"></a></h4>
 <p>Takes a primary key value as the first parameter and deletes the matching record from the model’s table:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1403,7 +1435,7 @@ previously:</p>
 </div>
 </section>
 <section id="purgedeleted">
-<h4><a class="toc-backref" href="#id50" role="doc-backlink">purgeDeleted()</a><a class="headerlink" href="#purgedeleted" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id51" role="doc-backlink">purgeDeleted()</a><a class="headerlink" href="#purgedeleted" title="Permalink to this heading"></a></h4>
 <p>Cleans out the database table by permanently removing all rows that have ‘deleted_at IS NOT NULL’.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1413,7 +1445,7 @@ previously:</p>
 </section>
 </section>
 <section id="in-model-validation">
-<span id="id4"></span><h3><a class="toc-backref" href="#id51" role="doc-backlink">In-Model Validation</a><a class="headerlink" href="#in-model-validation" title="Permalink to this heading"></a></h3>
+<span id="id4"></span><h3><a class="toc-backref" href="#id52" role="doc-backlink">In-Model Validation</a><a class="headerlink" href="#in-model-validation" title="Permalink to this heading"></a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>In-Model validation is performed just before data is stored in the
@@ -1421,7 +1453,7 @@ database. Prior to that point, the data has not yet been validated. Processing
 user-input data prior to validation may introduce vulnerabilities.</p>
 </div>
 <section id="validating-data">
-<h4><a class="toc-backref" href="#id52" role="doc-backlink">Validating Data</a><a class="headerlink" href="#validating-data" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id53" role="doc-backlink">Validating Data</a><a class="headerlink" href="#validating-data" title="Permalink to this heading"></a></h4>
 <p>The Model class provides a way to automatically have all data validated
 prior to saving to the database with the <code class="docutils literal notranslate"><span class="pre">insert()</span></code>, <code class="docutils literal notranslate"><span class="pre">update()</span></code>, or <code class="docutils literal notranslate"><span class="pre">save()</span></code> methods.</p>
 <div class="admonition important">
@@ -1437,7 +1469,7 @@ values of other fields may not work as expected.</p>
 </div>
 </section>
 <section id="setting-validation-rules">
-<span id="model-setting-validation-rules"></span><h4><a class="toc-backref" href="#id53" role="doc-backlink">Setting Validation Rules</a><a class="headerlink" href="#setting-validation-rules" title="Permalink to this heading"></a></h4>
+<span id="model-setting-validation-rules"></span><h4><a class="toc-backref" href="#id54" role="doc-backlink">Setting Validation Rules</a><a class="headerlink" href="#setting-validation-rules" title="Permalink to this heading"></a></h4>
 <p>The first step is to fill out the <a class="reference internal" href="#validationrules">$validationRules</a> class property with the
 fields and rules that should be applied.</p>
 <div class="admonition note">
@@ -1596,12 +1628,12 @@ group you created:</p>
 
 </section>
 <section id="getting-validation-result">
-<h4><a class="toc-backref" href="#id54" role="doc-backlink">Getting Validation Result</a><a class="headerlink" href="#getting-validation-result" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id55" role="doc-backlink">Getting Validation Result</a><a class="headerlink" href="#getting-validation-result" title="Permalink to this heading"></a></h4>
 <p>Now, whenever you call the <code class="docutils literal notranslate"><span class="pre">insert()</span></code>, <code class="docutils literal notranslate"><span class="pre">update()</span></code>, or <code class="docutils literal notranslate"><span class="pre">save()</span></code> methods, the data will be validated. If it fails,
 the model will return boolean <strong>false</strong>.</p>
 </section>
 <section id="getting-validation-errors">
-<span id="model-getting-validation-errors"></span><h4><a class="toc-backref" href="#id55" role="doc-backlink">Getting Validation Errors</a><a class="headerlink" href="#getting-validation-errors" title="Permalink to this heading"></a></h4>
+<span id="model-getting-validation-errors"></span><h4><a class="toc-backref" href="#id56" role="doc-backlink">Getting Validation Errors</a><a class="headerlink" href="#getting-validation-errors" title="Permalink to this heading"></a></h4>
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">errors()</span></code> method to retrieve the validation errors:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1623,7 +1655,7 @@ errors at the top of the form, or to display them individually:</p>
 </div>
 </section>
 <section id="retrieving-validation-rules">
-<h4><a class="toc-backref" href="#id56" role="doc-backlink">Retrieving Validation Rules</a><a class="headerlink" href="#retrieving-validation-rules" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id57" role="doc-backlink">Retrieving Validation Rules</a><a class="headerlink" href="#retrieving-validation-rules" title="Permalink to this heading"></a></h4>
 <p>You can retrieve a model’s validation rules by accessing its <code class="docutils literal notranslate"><span class="pre">validationRules</span></code>
 property:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1651,7 +1683,7 @@ value an array of fieldnames of interest:</p>
 </div>
 </section>
 <section id="validation-placeholders">
-<h4><a class="toc-backref" href="#id57" role="doc-backlink">Validation Placeholders</a><a class="headerlink" href="#validation-placeholders" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id58" role="doc-backlink">Validation Placeholders</a><a class="headerlink" href="#validation-placeholders" title="Permalink to this heading"></a></h4>
 <p>The model provides a simple method to replace parts of your rules based on data that’s being passed into it. This
 sounds fairly obscure but can be especially handy with the <code class="docutils literal notranslate"><span class="pre">is_unique</span></code> validation rule. Placeholders are simply
 the name of the field (or array key) that was passed in as <code class="docutils literal notranslate"><span class="pre">$data</span></code> surrounded by curly brackets. It will be
@@ -1717,7 +1749,7 @@ keys passed in don’t conflict with your form data.</p>
 </section>
 </section>
 <section id="protecting-fields">
-<h3><a class="toc-backref" href="#id58" role="doc-backlink">Protecting Fields</a><a class="headerlink" href="#protecting-fields" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id59" role="doc-backlink">Protecting Fields</a><a class="headerlink" href="#protecting-fields" title="Permalink to this heading"></a></h3>
 <p>To help protect against Mass Assignment Attacks, the Model class <strong>requires</strong> that you list all of the field names
 that can be changed during inserts and updates in the <a class="reference internal" href="#allowedfields">$allowedFields</a> class property. Any data provided
 in addition to these will be removed prior to hitting the database. This is great for ensuring that timestamps,
@@ -1747,7 +1779,7 @@ testing, migrations, or seeds. In these cases, you can turn the protection on or
 </div>
 </section>
 <section id="runtime-return-type-changes">
-<h3><a class="toc-backref" href="#id59" role="doc-backlink">Runtime Return Type Changes</a><a class="headerlink" href="#runtime-return-type-changes" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id60" role="doc-backlink">Runtime Return Type Changes</a><a class="headerlink" href="#runtime-return-type-changes" title="Permalink to this heading"></a></h3>
 <p>You can specify the format that data should be returned as when using the <strong>find*()</strong> methods as the class property,
 <a class="reference internal" href="#returntype">$returnType</a>. There may be times that you would like the data back in a different format, though. The Model
 provides methods that allow you to do just that.</p>
@@ -1757,7 +1789,7 @@ provides methods that allow you to do just that.</p>
 it is reset to its default value.</p>
 </div>
 <section id="asarray">
-<h4><a class="toc-backref" href="#id60" role="doc-backlink">asArray()</a><a class="headerlink" href="#asarray" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id61" role="doc-backlink">asArray()</a><a class="headerlink" href="#asarray" title="Permalink to this heading"></a></h4>
 <p>Returns data from the next <strong>find*()</strong> method as associative arrays:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1766,7 +1798,7 @@ it is reset to its default value.</p>
 </div>
 </section>
 <section id="asobject">
-<h4><a class="toc-backref" href="#id61" role="doc-backlink">asObject()</a><a class="headerlink" href="#asobject" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id62" role="doc-backlink">asObject()</a><a class="headerlink" href="#asobject" title="Permalink to this heading"></a></h4>
 <p>Returns data from the next <strong>find*()</strong> method as standard objects or custom class instances:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1780,7 +1812,7 @@ it is reset to its default value.</p>
 </section>
 </section>
 <section id="processing-large-amounts-of-data">
-<h3><a class="toc-backref" href="#id62" role="doc-backlink">Processing Large Amounts of Data</a><a class="headerlink" href="#processing-large-amounts-of-data" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id63" role="doc-backlink">Processing Large Amounts of Data</a><a class="headerlink" href="#processing-large-amounts-of-data" title="Permalink to this heading"></a></h3>
 <p>Sometimes, you need to process large amounts of data and would run the risk of running out of memory.
 To make this simpler, you may use the chunk() method to get smaller chunks of data that you can then
 do your work on. The first parameter is the number of rows to retrieve in a single chunk. The second
@@ -1797,9 +1829,9 @@ parameter is a Closure that will be called for each row of data.</p>
 </section>
 </section>
 <section id="working-with-query-builder">
-<span id="model-events-callbacks"></span><h2><a class="toc-backref" href="#id63" role="doc-backlink">Working with Query Builder</a><a class="headerlink" href="#working-with-query-builder" title="Permalink to this heading"></a></h2>
+<span id="model-events-callbacks"></span><h2><a class="toc-backref" href="#id64" role="doc-backlink">Working with Query Builder</a><a class="headerlink" href="#working-with-query-builder" title="Permalink to this heading"></a></h2>
 <section id="getting-query-builder-for-the-model-s-table">
-<h3><a class="toc-backref" href="#id64" role="doc-backlink">Getting Query Builder for the Model’s Table</a><a class="headerlink" href="#getting-query-builder-for-the-model-s-table" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id65" role="doc-backlink">Getting Query Builder for the Model’s Table</a><a class="headerlink" href="#getting-query-builder-for-the-model-s-table" title="Permalink to this heading"></a></h3>
 <p>CodeIgniter Model has one instance of the Query Builder for that model’s database connection.
 You can get access to the <strong>shared</strong> instance of the Query Builder any time you need it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1816,7 +1848,7 @@ However, since Query Builder is not a Model, you cannot call methods of the Mode
 </div>
 </section>
 <section id="getting-query-builder-for-another-table">
-<h3><a class="toc-backref" href="#id65" role="doc-backlink">Getting Query Builder for Another Table</a><a class="headerlink" href="#getting-query-builder-for-another-table" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id66" role="doc-backlink">Getting Query Builder for Another Table</a><a class="headerlink" href="#getting-query-builder-for-another-table" title="Permalink to this heading"></a></h3>
 <p>If you need access to another table, you can get another instance of the Query Builder.
 Pass the table name in as a parameter, but be aware that this will <strong>not</strong> return
 a shared instance:</p>
@@ -1827,7 +1859,7 @@ a shared instance:</p>
 </div>
 </section>
 <section id="mixing-methods-of-query-builder-and-model">
-<h3><a class="toc-backref" href="#id66" role="doc-backlink">Mixing Methods of Query Builder and Model</a><a class="headerlink" href="#mixing-methods-of-query-builder-and-model" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id67" role="doc-backlink">Mixing Methods of Query Builder and Model</a><a class="headerlink" href="#mixing-methods-of-query-builder-and-model" title="Permalink to this heading"></a></h3>
 <p>You can also use Query Builder methods and the Model’s CRUD methods in the same chained call, allowing for
 very elegant use:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1861,7 +1893,7 @@ and specify the model’s method at the end of the method chaining.</p>
 </section>
 </section>
 <section id="model-events">
-<span id="id5"></span><h2><a class="toc-backref" href="#id67" role="doc-backlink">Model Events</a><a class="headerlink" href="#model-events" title="Permalink to this heading"></a></h2>
+<span id="id5"></span><h2><a class="toc-backref" href="#id68" role="doc-backlink">Model Events</a><a class="headerlink" href="#model-events" title="Permalink to this heading"></a></h2>
 <p>There are several points within the model’s execution that you can specify multiple callback methods to run.
 These methods can be used to normalize data, hash passwords, save related entities, and much more.</p>
 <p>The following
@@ -1880,7 +1912,7 @@ points in the model’s execution can be affected, each through a class property
 <code class="docutils literal notranslate"><span class="pre">$afterUpdateBatch</span></code> can be used since v4.3.0.</p>
 </div>
 <section id="defining-callbacks">
-<h3><a class="toc-backref" href="#id68" role="doc-backlink">Defining Callbacks</a><a class="headerlink" href="#defining-callbacks" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id69" role="doc-backlink">Defining Callbacks</a><a class="headerlink" href="#defining-callbacks" title="Permalink to this heading"></a></h3>
 <p>You specify the callbacks by first creating a new class method in your model to use.</p>
 <p>This class method will always receive a <code class="docutils literal notranslate"><span class="pre">$data</span></code> array as its only parameter.</p>
 <p>The exact contents of the <code class="docutils literal notranslate"><span class="pre">$data</span></code> array will vary between events, but will always
@@ -1917,7 +1949,7 @@ have the full information.</p>
 </div>
 </section>
 <section id="specifying-callbacks-to-run">
-<h3><a class="toc-backref" href="#id69" role="doc-backlink">Specifying Callbacks To Run</a><a class="headerlink" href="#specifying-callbacks-to-run" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id70" role="doc-backlink">Specifying Callbacks To Run</a><a class="headerlink" href="#specifying-callbacks-to-run" title="Permalink to this heading"></a></h3>
 <p>You specify when to run the callbacks by adding the method name to the appropriate class property (<a class="reference internal" href="#beforeinsert">$beforeInsert</a>, <a class="reference internal" href="#afterupdate">$afterUpdate</a>,
 etc). Multiple callbacks can be added to a single event and they will be processed one after the other. You can
 use the same callback in multiple events:</p>
@@ -1964,7 +1996,7 @@ use the same callback in multiple events:</p>
 </div>
 </section>
 <section id="event-parameters">
-<h3><a class="toc-backref" href="#id70" role="doc-backlink">Event Parameters</a><a class="headerlink" href="#event-parameters" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id71" role="doc-backlink">Event Parameters</a><a class="headerlink" href="#event-parameters" title="Permalink to this heading"></a></h3>
 <p>Since the exact data passed to each callback varies a bit, here are the details on what is in the <code class="docutils literal notranslate"><span class="pre">$data</span></code> parameter
 passed to each event:</p>
 <table class="docutils align-default">
@@ -2048,7 +2080,7 @@ passed to each event:</p>
 </table>
 </section>
 <section id="modifying-find-data">
-<h3><a class="toc-backref" href="#id71" role="doc-backlink">Modifying Find* Data</a><a class="headerlink" href="#modifying-find-data" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id72" role="doc-backlink">Modifying Find* Data</a><a class="headerlink" href="#modifying-find-data" title="Permalink to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">beforeFind</span></code> and <code class="docutils literal notranslate"><span class="pre">afterFind</span></code> methods can both return a modified set of data to override the normal response
 from the model. For <code class="docutils literal notranslate"><span class="pre">afterFind</span></code> any changes made to <code class="docutils literal notranslate"><span class="pre">data</span></code> in the return array will automatically be passed back
 to the calling context. In order for <code class="docutils literal notranslate"><span class="pre">beforeFind</span></code> to intercept the find workflow it must also return an additional
@@ -2085,7 +2117,7 @@ boolean, <code class="docutils literal notranslate"><span class="pre">returnData
 </section>
 </section>
 <section id="manual-model-creation">
-<h2><a class="toc-backref" href="#id72" role="doc-backlink">Manual Model Creation</a><a class="headerlink" href="#manual-model-creation" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id73" role="doc-backlink">Manual Model Creation</a><a class="headerlink" href="#manual-model-creation" title="Permalink to this heading"></a></h2>
 <p>You do not need to extend any special class to create a model for your application. All you need is to get an
 instance of the database connection and you’re good to go. This allows you to bypass the features CodeIgniter’s
 Model gives you out of the box, and create a fully custom experience.</p>

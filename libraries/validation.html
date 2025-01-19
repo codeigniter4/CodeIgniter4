@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Validation &mdash; CodeIgniter 4.5.8 documentation</title>
+  <title>Validation &mdash; CodeIgniter 4.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -116,6 +116,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
@@ -1841,16 +1842,19 @@ a natural number, except zero: <code class="docutils literal notranslate"><span 
 <td><p>Yes</p></td>
 <td><p>Checks the database to see if the given value
 exists. Can ignore records by field/value to
-filter (currently accept only one filter).</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">is_not_unique[table.field,where_field,where_value]</span></code></p></td>
+filter (currently accept only one filter).
+(Since v4.6.0, you can optionally pass
+the dbGroup as a parameter)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">is_not_unique[table.field,where_field,where_value]</span></code> or <code class="docutils literal notranslate"><span class="pre">is_not_unique[dbGroup.table.field,where_field,where_value]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>is_unique</p></td>
 <td><p>Yes</p></td>
 <td><p>Checks if this field value exists in the
 database. Optionally set a column and value
 to ignore, useful when updating records to
-ignore itself.</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">is_unique[table.field,ignore_field,ignore_value]</span></code></p></td>
+ignore itself. (Since v4.6.0, you can
+optionally pass the dbGroup as a parameter)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">is_unique[table.field,ignore_field,ignore_value]</span></code> or <code class="docutils literal notranslate"><span class="pre">is_unique[dbGroup.table.field,ignore_field,ignore_value]</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>less_than</p></td>
 <td><p>Yes</p></td>
@@ -2092,19 +2096,30 @@ also fail if the file cannot be determined
 to be an image.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">max_dims[field_name,300,150]</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p>mime_in</p></td>
+<tr class="row-odd"><td><p>min_dims</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if the minimum width and height of an
+uploaded image not meet values. The first
+parameter is the field name. The second is
+the width, and the third is the height. Will
+also fail if the file cannot be determined
+to be an image. (This rule was added in
+v4.6.0.)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">min_dims[field_name,300,150]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>mime_in</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if the file’s mime type is not one
 listed in the parameters.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">mime_in[field_name,image/png,image/jpeg]</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p>ext_in</p></td>
+<tr class="row-odd"><td><p>ext_in</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if the file’s extension is not one
 listed in the parameters.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">ext_in[field_name,png,jpg,gif]</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p>is_image</p></td>
+<tr class="row-even"><td><p>is_image</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if the file cannot be determined to be
 an image based on the mime type.</p></td>

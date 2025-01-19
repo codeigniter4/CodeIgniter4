@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>File Collections &mdash; CodeIgniter 4.5.8 documentation</title>
+  <title>File Collections &mdash; CodeIgniter 4.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -116,6 +116,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
@@ -316,11 +317,12 @@ across the filesystem.</p>
 <ul>
 <li><p><a class="reference internal" href="#removepattern-string-pattern-string-scope-null" id="id13">removePattern(string $pattern, string $scope = null)</a></p></li>
 <li><p><a class="reference internal" href="#retainpattern-string-pattern-string-scope-null" id="id14">retainPattern(string $pattern, string $scope = null)</a></p></li>
+<li><p><a class="reference internal" href="#retainmultiplepatterns-array-pattern-string-scope-null" id="id15">retainMultiplePatterns(array $pattern, string $scope = null)</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#retrieving-files" id="id15">Retrieving Files</a></p>
+<li><p><a class="reference internal" href="#retrieving-files" id="id16">Retrieving Files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#get-string" id="id16">get(): string[]</a></p></li>
+<li><p><a class="reference internal" href="#get-string" id="id17">get(): string[]</a></p></li>
 </ul>
 </li>
 </ul>
@@ -462,11 +464,21 @@ is provided then all files are subject.</p>
 </pre></div>
 </div>
 </section>
+<section id="retainmultiplepatterns-array-pattern-string-scope-null">
+<span id="file-collections-retain-multiple-patterns"></span><h3><a class="toc-backref" href="#id15" role="doc-backlink">retainMultiplePatterns(array $pattern, string $scope = null)</a><a class="headerlink" href="#retainmultiplepatterns-array-pattern-string-scope-null" title="Permalink to this heading"></a></h3>
+<p>Provides the same functionality as <code class="docutils literal notranslate"><span class="pre">retainPattern()</span></code> but accepts an array of patterns to retain files from all patterns.</p>
+<p>Example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">retainMultiplePatterns</span><span class="p">([</span><span class="s1">&#39;*.css&#39;</span><span class="p">,</span> <span class="s1">&#39;*.js&#39;</span><span class="p">]);</span> <span class="c1">// Would keep only *.css and *.js files</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="retrieving-files">
-<h2><a class="toc-backref" href="#id15" role="doc-backlink">Retrieving Files</a><a class="headerlink" href="#retrieving-files" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">Retrieving Files</a><a class="headerlink" href="#retrieving-files" title="Permalink to this heading"></a></h2>
 <section id="get-string">
-<h3><a class="toc-backref" href="#id16" role="doc-backlink">get(): string[]</a><a class="headerlink" href="#get-string" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">get(): string[]</a><a class="headerlink" href="#get-string" title="Permalink to this heading"></a></h3>
 <p>Returns an array of all the loaded input files.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Controller Filters &mdash; CodeIgniter 4.5.8 documentation</title>
+  <title>Controller Filters &mdash; CodeIgniter 4.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -26,7 +26,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="HTTP Messages" href="message.html" />
+    <link rel="next" title="Auto Routing (Improved)" href="auto_routing_improved.html" />
     <link rel="prev" title="Controllers" href="controllers.html" /> 
 </head>
 
@@ -116,6 +116,7 @@
 <li class="toctree-l2"><a class="reference internal" href="routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="controllers.html">Controllers</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="request.html">Request Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="incomingrequest.html">IncomingRequest Class</a></li>
@@ -730,6 +731,11 @@ See <a class="reference internal" href="../installation/upgrade_447.html#upgrade
 will be passed in <code class="docutils literal notranslate"><span class="pre">$arguments</span></code> to the <code class="docutils literal notranslate"><span class="pre">group</span></code> filter’s <code class="docutils literal notranslate"><span class="pre">before()</span></code> methods.
 When the URI matches <code class="docutils literal notranslate"><span class="pre">admin/users/*'</span></code>, the array <code class="docutils literal notranslate"><span class="pre">['users.manage']</span></code>
 will be passed in <code class="docutils literal notranslate"><span class="pre">$arguments</span></code> to the <code class="docutils literal notranslate"><span class="pre">permission</span></code> filter’s <code class="docutils literal notranslate"><span class="pre">before()</span></code> methods.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to v4.6.0, the same filter cannot be run multiple times with
+different arguments.</p>
+</div>
 </section>
 </section>
 </section>
@@ -773,12 +779,22 @@ See <a class="reference internal" href="../installation/upgrade_450.html#upgrade
 </pre></div>
 </div>
 <p>The output is like the following:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+--------+-------+----------------+---------------+
-| Method | Route | Before Filters | After Filters |
-+--------+-------+----------------+---------------+
-| GET    | /     |                | toolbar       |
-+--------+-------+----------------+---------------+
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+--------+-------+----------------------+-------------------------------+
+| Method | Route | Before Filters       | After Filters                 |
++--------+-------+----------------------+-------------------------------+
+| GET    | /     | forcehttps pagecache | pagecache performance toolbar |
++--------+-------+----------------------+-------------------------------+
+
+Before Filter Classes:
+CodeIgniter\Filters\ForceHTTPS → CodeIgniter\Filters\PageCache
+After Filter Classes:
+CodeIgniter\Filters\PageCache → CodeIgniter\Filters\PerformanceMetrics → CodeIgniter\Filters\DebugToolbar
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.6.0, filter arguments have been displayed in the output table.
+Also, the actual filter classnames have been displayed in the end.</p>
 </div>
 <p>You can also see the routes and filters by the <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">routes</span></code> command,
 but it might not show accurate filters when you use regular expressions for routes.
@@ -873,7 +889,7 @@ pseudo-variable:</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="controllers.html" class="btn btn-neutral float-left" title="Controllers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="message.html" class="btn btn-neutral float-right" title="HTTP Messages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="auto_routing_improved.html" class="btn btn-neutral float-right" title="Auto Routing (Improved)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

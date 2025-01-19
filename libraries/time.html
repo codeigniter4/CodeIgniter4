@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Times and Dates &mdash; CodeIgniter 4.5.8 documentation</title>
+  <title>Times and Dates &mdash; CodeIgniter 4.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -116,6 +116,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
@@ -488,7 +489,8 @@ and returns a <code class="docutils literal notranslate"><span class="pre">Time<
 </section>
 <section id="createfromtimestamp">
 <span id="time-createfromtimestamp"></span><h3><a class="toc-backref" href="#id12" role="doc-backlink">createFromTimestamp()</a><a class="headerlink" href="#createfromtimestamp" title="Permalink to this heading"></a></h3>
-<p>This method takes a UNIX timestamp and, optionally, the timezone and locale, to create a new Time instance:</p>
+<p>This method takes a UNIX timestamp and, optionally, the timezone and locale, to
+create a new Time instance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
@@ -496,10 +498,16 @@ and returns a <code class="docutils literal notranslate"><span class="pre">Time<
 <span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromTimestamp</span><span class="p">(</span><span class="mi">1501821586</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>If you do not explicitly pass a timezone, it returns a Time instance with <strong>UTC</strong>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Due to a bug, prior to v4.4.6, this method returned a Time instance
-in timezone UTC when you do not specify a timezone.</p>
+<p>We recommend to always call <code class="docutils literal notranslate"><span class="pre">createFromTimestamp()</span></code> with 2 parameters
+(i.e. explicitly pass a timezone) unless using UTC as the default timezone.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In v4.4.6 to prior to v4.6.0, this method returned a Time instance
+with the default timezone when you do not specify a timezone.</p>
 </div>
 </section>
 <section id="createfrominstance">
@@ -843,12 +851,19 @@ thrown.</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
 
-<span class="nv">$time</span>  <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;May 10, 2017&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="c1">// The Application Timezone is &quot;America/Chicago&quot;.</span>
+
+<span class="nv">$time</span>  <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;May 10, 2017&#39;</span><span class="p">);</span>
 <span class="nv">$time2</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setTimestamp</span><span class="p">(</span><span class="nb">strtotime</span><span class="p">(</span><span class="s1">&#39;April 1, 2017&#39;</span><span class="p">));</span>
 
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toDateTimeString</span><span class="p">();</span>  <span class="c1">// 2017-05-10 00:00:00</span>
 <span class="k">echo</span> <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">toDateTimeString</span><span class="p">();</span> <span class="c1">// 2017-04-01 00:00:00</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to v4.6.0, due to a bug, this method might return incorrect
+date/time. See <a class="reference internal" href="../installation/upgrade_460.html#upgrade-460-time-set-timestamp"><span class="std std-ref">Upgrading Guide</span></a> for details.</p>
 </div>
 </section>
 </section>

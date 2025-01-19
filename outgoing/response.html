@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HTTP Responses &mdash; CodeIgniter 4.5.8 documentation</title>
+  <title>HTTP Responses &mdash; CodeIgniter 4.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -116,6 +116,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
@@ -377,6 +378,12 @@ which can be either a string or an array of values that will be combined correct
 </div>
 <p>Using these functions instead of using the native PHP functions allows you to ensure that no headers are sent
 prematurely, causing errors, and makes testing possible.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Since v4.6.0, if you set a header using PHP’s native <code class="docutils literal notranslate"><span class="pre">header()</span></code>
+function and then use the <code class="docutils literal notranslate"><span class="pre">Response</span></code> class to set the same header, the
+previous one will be overwritten.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This method just sets headers to the response instance. So, if you create
