@@ -32,7 +32,7 @@ class TimestampCast extends BaseCast
             self::invalidTypeValueError($value);
         }
 
-        return Time::createFromTimestamp((int) $value);
+        return Time::createFromTimestamp((int) $value, date_default_timezone_get());
     }
 
     public static function set(

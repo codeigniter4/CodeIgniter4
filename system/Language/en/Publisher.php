@@ -18,7 +18,8 @@ return [
     'fileNotAllowed'        => '"{0}" fails the following restriction for "{1}": {2}',
 
     // Publish Command
-    'publishMissing' => 'No Publisher classes detected in {0} across all namespaces.',
-    'publishSuccess' => '"{0}" published {1} file(s) to "{2}".',
-    'publishFailure' => '"{0}" failed to publish to "{1}".',
+    'publishMissing'          => 'No Publisher classes detected in {0} across all namespaces.',
+    'publishMissingNamespace' => 'No Publisher classes detected in {0} in the {1} namespace.',
+    'publishSuccess'          => '"{0}" published {1} file(s) to "{2}".',
+    'publishFailure'          => '"{0}" failed to publish to "{1}".',
 ];

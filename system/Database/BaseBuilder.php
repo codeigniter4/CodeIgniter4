@@ -16,9 +16,9 @@ namespace CodeIgniter\Database;
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Traits\ConditionalTrait;
 use Config\Feature;
-use InvalidArgumentException;
 
 /**
  * Class BaseBuilder
@@ -298,7 +298,7 @@ class BaseBuilder
     /**
      * Constructor
      *
-     * @param array|string $tableName tablename or tablenames with or without aliases
+     * @param array|string|TableName $tableName tablename or tablenames with or without aliases
      *
      * Examples of $tableName: `mytable`, `jobs j`, `jobs j, users u`, `['jobs j','users u']`
      *
@@ -315,14 +315,19 @@ class BaseBuilder
          */
         $this->db = $db;
 
+        if ($tableName instanceof TableName) {
+            $this->tableName = $tableName->getTableName();
+            $this->QBFrom[]  = $this->db->escapeIdentifier($tableName);
+            $this->db->addTableAlias($tableName->getAlias());
+        }
         // If it contains `,`, it has multiple tables
-        if (is_string($tableName) && ! str_contains($tableName, ',')) {
+        elseif (is_string($tableName) && ! str_contains($tableName, ',')) {
             $this->tableName = $tableName;  // @TODO remove alias if exists
+            $this->from($tableName);
         } else {
             $this->tableName = '';
+            $this->from($tableName);
         }
-
-        $this->from($tableName);
 
         if ($options !== null && $options !== []) {
             foreach ($options as $key => $value) {
@@ -3014,7 +3019,7 @@ class BaseBuilder
      *
      * @param array|string $table The table to inspect
      *
-     * @return string|void
+     * @return string|null
      */
     protected function trackAliases($table)
     {
@@ -3023,7 +3028,7 @@ class BaseBuilder
                 $this->trackAliases($t);
             }
 
-            return;
+            return null;
         }
 
         // Does the string contain a comma?  If so, we need to separate
@@ -3038,11 +3043,13 @@ class BaseBuilder
             $table = preg_replace('/\s+AS\s+/i', ' ', $table);
 
             // Grab the alias
-            $table = trim(strrchr($table, ' '));
+            $alias = trim(strrchr($table, ' '));
 
             // Store the alias, if it doesn't already exist
-            $this->db->addTableAlias($table);
+            $this->db->addTableAlias($alias);
         }
+
+        return null;
     }
 
     /**

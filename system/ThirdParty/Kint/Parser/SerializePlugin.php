@@ -27,10 +27,13 @@ declare(strict_types=1);
 
 namespace Kint\Parser;
 
-use Kint\Zval\Representation\Representation;
-use Kint\Zval\Value;
+use Kint\Value\AbstractValue;
+use Kint\Value\Context\BaseContext;
+use Kint\Value\Representation\ValueRepresentation;
+use Kint\Value\UninitializedValue;
 
-class SerializePlugin extends AbstractPlugin
+/** @psalm-api */
+class SerializePlugin extends AbstractPlugin implements PluginCompleteInterface
 {
     /**
      * Disables automatic unserialization on arrays and objects.
@@ -43,13 +46,11 @@ class SerializePlugin extends AbstractPlugin
      *
      * The natural way to stop that from happening is to just refuse to unserialize
      * stuff by default. Which is what we're doing for anything that's not scalar.
-     *
-     * @var bool
      */
-    public static $safe_mode = true;
+    public static bool $safe_mode = true;
 
     /**
-     * @var bool|class-string[]
+     * @psalm-var bool|class-string[]
      */
     public static $allowed_classes = false;
 
@@ -63,47 +64,48 @@ class SerializePlugin extends AbstractPlugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parseComplete(&$var, AbstractValue $v, int $trigger): AbstractValue
     {
         $trimmed = \rtrim($var);
 
         if ('N;' !== $trimmed && !\preg_match('/^(?:[COabis]:\\d+[:;]|d:\\d+(?:\\.\\d+);)/', $trimmed)) {
-            return;
+            return $v;
         }
 
         $options = ['allowed_classes' => self::$allowed_classes];
 
-        if (!self::$safe_mode || !\in_array($trimmed[0], ['C', 'O', 'a'], true)) {
+        $c = $v->getContext();
+
+        $base = new BaseContext('unserialize('.$c->getName().')');
+        $base->depth = $c->getDepth() + 1;
+
+        if (null !== ($ap = $c->getAccessPath())) {
+            $base->access_path = 'unserialize('.$ap;
+            if (true === self::$allowed_classes) {
+                $base->access_path .= ')';
+            } else {
+                $base->access_path .= ', '.\var_export($options, true).')';
+            }
+        }
+
+        if (self::$safe_mode && \in_array($trimmed[0], ['C', 'O', 'a'], true)) {
+            $data = new UninitializedValue($base);
+            $data->flags |= AbstractValue::FLAG_BLACKLIST;
+        } else {
             // Suppress warnings on unserializeable variable
             $data = @\unserialize($trimmed, $options);
 
             if (false === $data && 'b:0;' !== \substr($trimmed, 0, 4)) {
-                return;
+                return $v;
             }
+
+            $data = $this->getParser()->parse($data, $base);
         }
 
-        $base_obj = new Value();
-        $base_obj->depth = $o->depth + 1;
-        $base_obj->name = 'unserialize('.$o->name.')';
+        $data->flags |= AbstractValue::FLAG_GENERATED;
 
-        if ($o->access_path) {
-            $base_obj->access_path = 'unserialize('.$o->access_path;
-            if (true === self::$allowed_classes) {
-                $base_obj->access_path .= ')';
-            } else {
-                $base_obj->access_path .= ', '.\var_export($options, true).')';
-            }
-        }
+        $v->addRepresentation(new ValueRepresentation('Serialized', $data), 0);
 
-        $r = new Representation('Serialized');
-
-        if (isset($data)) {
-            $r->contents = $this->parser->parse($data, $base_obj);
-        } else {
-            $base_obj->hints[] = 'blacklist';
-            $r->contents = $base_obj;
-        }
-
-        $o->addRepresentation($r, 0);
+        return $v;
     }
 }

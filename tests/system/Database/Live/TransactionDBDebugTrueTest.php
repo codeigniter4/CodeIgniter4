@@ -208,6 +208,54 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'Comedian']);
     }
 
+    public function testTransStrictTrueAndResetTransStatus(): void
+    {
+        $builder = $this->db->table('job');
+
+        // The first transaction group
+        $this->db->transStart();
+
+        $jobData = [
+            'name'        => 'Grocery Sales',
+            'description' => 'Discount!',
+        ];
+        $builder->insert($jobData);
+
+        $this->assertTrue($this->db->transStatus());
+
+        // Duplicate entry '1' for key 'PRIMARY'
+        $jobData = [
+            'id'          => 1,
+            'name'        => 'Comedian',
+            'description' => 'Theres something in your teeth',
+        ];
+        $builder->insert($jobData);
+
+        $this->assertFalse($this->db->transStatus());
+
+        $this->db->transComplete();
+
+        $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
+
+        // Resets TransStatus
+        $this->db->resetTransStatus();
+
+        // The second transaction group
+        $this->db->transStart();
+
+        $jobData = [
+            'name'        => 'Comedian',
+            'description' => 'Theres something in your teeth',
+        ];
+        $builder->insert($jobData);
+
+        $this->assertTrue($this->db->transStatus());
+
+        $this->db->transComplete();
+
+        $this->seeInDatabase('job', ['name' => 'Comedian']);
+    }
+
     public function testTransBegin(): void
     {
         $builder = $this->db->table('job');

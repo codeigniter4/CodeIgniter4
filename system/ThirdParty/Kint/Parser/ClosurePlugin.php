@@ -28,13 +28,14 @@ declare(strict_types=1);
 namespace Kint\Parser;
 
 use Closure;
-use Kint\Zval\ClosureValue;
-use Kint\Zval\ParameterValue;
-use Kint\Zval\Representation\Representation;
-use Kint\Zval\Value;
+use Kint\Value\AbstractValue;
+use Kint\Value\ClosureValue;
+use Kint\Value\Context\BaseContext;
+use Kint\Value\Representation\ContainerRepresentation;
 use ReflectionFunction;
+use ReflectionReference;
 
-class ClosurePlugin extends AbstractPlugin
+class ClosurePlugin extends AbstractPlugin implements PluginCompleteInterface
 {
     public function getTypes(): array
     {
@@ -46,29 +47,21 @@ class ClosurePlugin extends AbstractPlugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parseComplete(&$var, AbstractValue $v, int $trigger): AbstractValue
     {
         if (!$var instanceof Closure) {
-            return;
+            return $v;
         }
 
-        $object = new ClosureValue();
-        $object->transplant($o);
-        $o = $object;
+        $c = $v->getContext();
+
+        $object = new ClosureValue($c, $var);
+        $object->flags = $v->flags;
+        $object->appendRepresentations($v->getRepresentations());
+
         $object->removeRepresentation('properties');
 
         $closure = new ReflectionFunction($var);
-
-        $o->filename = $closure->getFileName();
-        $o->startline = $closure->getStartLine();
-
-        foreach ($closure->getParameters() as $param) {
-            $o->parameters[] = new ParameterValue($param);
-        }
-
-        $p = new Representation('Parameters');
-        $p->contents = $o->parameters;
-        $o->addRepresentation($p, 0);
 
         $statics = [];
 
@@ -76,21 +69,25 @@ class ClosurePlugin extends AbstractPlugin
             $statics = ['this' => $v];
         }
 
-        if (\count($statics = $statics + $closure->getStaticVariables())) {
+        $statics = $statics + $closure->getStaticVariables();
+
+        $cdepth = $c->getDepth();
+
+        if (\count($statics)) {
             $statics_parsed = [];
 
-            foreach ($statics as $name => &$static) {
-                $obj = Value::blank('$'.$name);
-                $obj->depth = $o->depth + 1;
-                $statics_parsed[$name] = $this->parser->parse($static, $obj);
-                if (null === $statics_parsed[$name]->value) {
-                    $statics_parsed[$name]->access_path = null;
-                }
+            $parser = $this->getParser();
+
+            foreach ($statics as $name => $_) {
+                $base = new BaseContext('$'.$name);
+                $base->depth = $cdepth + 1;
+                $base->reference = null !== ReflectionReference::fromArrayElement($statics, $name);
+                $statics_parsed[$name] = $parser->parse($statics[$name], $base);
             }
 
-            $r = new Representation('Uses');
-            $r->contents = $statics_parsed;
-            $o->addRepresentation($r, 0);
+            $object->addRepresentation(new ContainerRepresentation('Uses', $statics_parsed), 0);
         }
+
+        return $object;
     }
 }

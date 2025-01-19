@@ -23,7 +23,7 @@ use Generator;
  */
 final class DefinedRouteCollector
 {
-    public function __construct(private readonly RouteCollection $routeCollection)
+    public function __construct(private readonly RouteCollectionInterface $routeCollection)
     {
     }
 

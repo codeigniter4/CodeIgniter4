@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Files;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use Countable;
 use Generator;
-use InvalidArgumentException;
 use IteratorAggregate;
 
 /**
@@ -338,6 +338,44 @@ class FileCollection implements Countable, IteratorAggregate
 
         // Matches the pattern within the scoped files and remove their inverse.
         return $this->removeFiles(array_diff($files, self::matchFiles($files, $pattern)));
+    }
+
+    /**
+     * Keeps only the files from the list that match multiple patterns
+     * (within the optional scope).
+     *
+     * @param list<string> $patterns Array of regex or pseudo-regex strings
+     * @param string|null  $scope    A directory to limit the scope
+     *
+     * @return $this
+     */
+    public function retainMultiplePatterns(array $patterns, ?string $scope = null)
+    {
+        if ($patterns === []) {
+            return $this;
+        }
+
+        if (count($patterns) === 1 && $patterns[0] === '') {
+            return $this;
+        }
+
+        // Start with all files or those in scope
+        $files = $scope === null ? $this->files : self::filterFiles($this->files, $scope);
+
+        // Add files to retain to array
+        $filesToRetain = [];
+
+        foreach ($patterns as $pattern) {
+            if ($pattern === '') {
+                continue;
+            }
+
+            // Matches the pattern within the scoped files
+            $filesToRetain = array_merge($filesToRetain, self::matchFiles($files, $pattern));
+        }
+
+        // Remove the inverse of files to retain
+        return $this->removeFiles(array_diff($files, $filesToRetain));
     }
 
     // --------------------------------------------------------------------

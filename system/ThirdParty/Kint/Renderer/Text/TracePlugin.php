@@ -27,59 +27,63 @@ declare(strict_types=1);
 
 namespace Kint\Renderer\Text;
 
-use Kint\Zval\MethodValue;
-use Kint\Zval\Value;
+use Kint\Value\AbstractValue;
+use Kint\Value\MethodValue;
+use Kint\Value\Representation\SourceRepresentation;
+use Kint\Value\TraceFrameValue;
+use Kint\Value\TraceValue;
 
 class TracePlugin extends AbstractPlugin
 {
-    public function render(Value $o): string
+    public function render(AbstractValue $v): ?string
     {
-        $out = '';
-
-        if (0 == $o->depth) {
-            $out .= $this->renderer->colorTitle($this->renderer->renderTitle($o)).PHP_EOL;
+        if (!$v instanceof TraceValue) {
+            return null;
         }
 
-        $out .= $this->renderer->renderHeader($o).':'.PHP_EOL;
+        $c = $v->getContext();
 
-        $indent = \str_repeat(' ', ($o->depth + 1) * $this->renderer->indent_width);
+        $out = '';
+
+        if (0 === $c->getDepth()) {
+            $out .= $this->renderer->colorTitle($this->renderer->renderTitle($v)).PHP_EOL;
+        }
+
+        $out .= $this->renderer->renderHeader($v).':'.PHP_EOL;
+
+        $indent = \str_repeat(' ', ($c->getDepth() + 1) * $this->renderer->indent_width);
 
         $i = 1;
-        foreach ($o->value->contents as $frame) {
+        foreach ($v->getContents() as $frame) {
+            if (!$frame instanceof TraceFrameValue) {
+                continue;
+            }
+
             $framedesc = $indent.\str_pad($i.': ', 4, ' ');
 
-            if ($frame->trace['file']) {
-                $framedesc .= $this->renderer->ideLink($frame->trace['file'], $frame->trace['line']).PHP_EOL;
+            if (null !== ($file = $frame->getFile()) && null !== ($line = $frame->getLine())) {
+                $framedesc .= $this->renderer->ideLink($file, $line).PHP_EOL;
             } else {
                 $framedesc .= 'PHP internal call'.PHP_EOL;
             }
 
-            $framedesc .= $indent.'    ';
+            if ($callable = $frame->getCallable()) {
+                $framedesc .= $indent.'    ';
 
-            if ($frame->trace['class']) {
-                $framedesc .= $this->renderer->escape($frame->trace['class']);
-
-                if ($frame->trace['object']) {
-                    $framedesc .= $this->renderer->escape('->');
-                } else {
-                    $framedesc .= '::';
+                if ($callable instanceof MethodValue) {
+                    $framedesc .= $this->renderer->escape($callable->getContext()->owner_class.$callable->getContext()->getOperator());
                 }
-            }
 
-            if (\is_string($frame->trace['function'])) {
-                $framedesc .= $this->renderer->escape($frame->trace['function']).'(...)';
-            } elseif ($frame->trace['function'] instanceof MethodValue) {
-                if (null !== ($s = $frame->trace['function']->getName())) {
-                    $framedesc .= $this->renderer->escape($s);
-                    $framedesc .= '('.$this->renderer->escape($frame->trace['function']->getParams()).')';
-                }
+                $framedesc .= $this->renderer->escape($callable->getDisplayName());
             }
 
             $out .= $this->renderer->colorType($framedesc).PHP_EOL.PHP_EOL;
 
-            if ($source = $frame->getRepresentation('source')) {
-                $line_wanted = $source->line;
-                $source = $source->source;
+            $source = $frame->getRepresentation('source');
+
+            if ($source instanceof SourceRepresentation) {
+                $line_wanted = $source->getLine();
+                $source = $source->getSourceLines();
 
                 // Trim empty lines from the start and end of the source
                 foreach ($source as $linenum => $line) {
@@ -99,7 +103,7 @@ class TracePlugin extends AbstractPlugin
                 }
 
                 foreach ($source as $lineno => $line) {
-                    if ($lineno == $line_wanted) {
+                    if ($lineno === $line_wanted) {
                         $out .= $indent.$this->renderer->colorValue($this->renderer->escape($line)).PHP_EOL;
                     } else {
                         $out .= $indent.$this->renderer->escape($line).PHP_EOL;

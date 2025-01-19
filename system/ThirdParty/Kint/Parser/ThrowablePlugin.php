@@ -27,12 +27,14 @@ declare(strict_types=1);
 
 namespace Kint\Parser;
 
-use Kint\Zval\Representation\SourceRepresentation;
-use Kint\Zval\ThrowableValue;
-use Kint\Zval\Value;
+use Kint\Value\AbstractValue;
+use Kint\Value\InstanceValue;
+use Kint\Value\Representation\SourceRepresentation;
+use Kint\Value\ThrowableValue;
+use RuntimeException;
 use Throwable;
 
-class ThrowablePlugin extends AbstractPlugin
+class ThrowablePlugin extends AbstractPlugin implements PluginCompleteInterface
 {
     public function getTypes(): array
     {
@@ -44,18 +46,22 @@ class ThrowablePlugin extends AbstractPlugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parseComplete(&$var, AbstractValue $v, int $trigger): AbstractValue
     {
-        if (!$var instanceof Throwable) {
-            return;
+        if (!$var instanceof Throwable || !$v instanceof InstanceValue) {
+            return $v;
         }
 
-        $throw = new ThrowableValue($var);
-        $throw->transplant($o);
-        $r = new SourceRepresentation($var->getFile(), $var->getLine());
-        $r->showfilename = true;
-        $throw->addRepresentation($r, 0);
+        $throw = new ThrowableValue($v->getContext(), $var);
+        $throw->setChildren($v->getChildren());
+        $throw->flags = $v->flags;
+        $throw->appendRepresentations($v->getRepresentations());
 
-        $o = $throw;
+        try {
+            $throw->addRepresentation(new SourceRepresentation($var->getFile(), $var->getLine(), null, true), 0);
+        } catch (RuntimeException $e) {
+        }
+
+        return $throw;
     }
 }

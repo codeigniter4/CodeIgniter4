@@ -48,18 +48,18 @@ class Cors implements FilterInterface
     /**
      * @param list<string>|null $arguments
      *
-     * @return ResponseInterface|string|void
+     * @return ResponseInterface|null
      */
     public function before(RequestInterface $request, $arguments = null)
     {
         if (! $request instanceof IncomingRequest) {
-            return;
+            return null;
         }
 
         $this->createCorsService($arguments);
 
         if (! $this->cors->isPreflightRequest($request)) {
-            return;
+            return null;
         }
 
         /** @var ResponseInterface $response */
@@ -88,12 +88,12 @@ class Cors implements FilterInterface
     /**
      * @param list<string>|null $arguments
      *
-     * @return ResponseInterface|void
+     * @return ResponseInterface|null
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         if (! $request instanceof IncomingRequest) {
-            return;
+            return null;
         }
 
         $this->createCorsService($arguments);

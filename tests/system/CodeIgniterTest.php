@@ -16,11 +16,9 @@ namespace CodeIgniter;
 use App\Controllers\Home;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Debug\Timer;
-use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
@@ -124,6 +122,9 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('You want to see "about" page.', $output);
     }
 
+    /**
+     * @psalm-suppress UndefinedClass
+     */
     public function testRun404Override(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
@@ -310,9 +311,6 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRegisterSameFilterTwiceWithDifferentArgument(): void
     {
-        $this->expectException(ConfigException::class);
-        $this->expectExceptionMessage('"test-customfilter" already has arguments: null');
-
         $_SERVER['argv'] = ['index.php', 'pages/about'];
         $_SERVER['argc'] = 2;
 
@@ -340,7 +338,11 @@ final class CodeIgniterTest extends CIUnitTestCase
         ];
         service('filters', $filterConfig);
 
+        ob_start();
         $this->codeigniter->run();
+        $output = ob_get_clean();
+
+        $this->assertStringContainsString('http://hellowworld.comhttp://hellowworld.com', $output);
 
         $this->resetServices();
     }
@@ -595,29 +597,6 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
         $this->assertSame(301, $response->getStatusCode());
-    }
-
-    /**
-     * test for deprecated \CodeIgniter\Router\Exceptions\RedirectException for backward compatibility
-     */
-    public function testRedirectExceptionDeprecated(): void
-    {
-        $_SERVER['argv'] = ['index.php', '/'];
-        $_SERVER['argc'] = 2;
-
-        // Inject mock router.
-        $routes = service('routes');
-        $routes->get('/', static function (): never {
-            throw new RedirectException('redirect-exception', 503);
-        });
-
-        $router = service('router', $routes, service('incomingrequest'));
-        Services::injectMock('router', $router);
-
-        $response = $this->codeigniter->run($routes, true);
-
-        $this->assertSame(503, $response->getStatusCode());
-        $this->assertSame('http://example.com/redirect-exception', $response->getHeaderLine('Location'));
     }
 
     public function testStoresPreviousURL(): void

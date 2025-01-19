@@ -162,6 +162,8 @@ class Router implements RouterInterface
         if ($this->collection->shouldAutoRoute()) {
             $autoRoutesImproved = config(Feature::class)->autoRoutesImproved ?? false;
             if ($autoRoutesImproved) {
+                assert($this->collection instanceof RouteCollection);
+
                 $this->autoRouter = new AutoRouterImproved(
                     $this->collection->getRegisteredControllers('*'),
                     $this->collection->getDefaultNamespace(),
@@ -171,7 +173,7 @@ class Router implements RouterInterface
                 );
             } else {
                 $this->autoRouter = new AutoRouter(
-                    $this->collection->getRoutes('CLI', false), // @phpstan-ignore-line
+                    $this->collection->getRoutes('CLI', false),
                     $this->collection->getDefaultNamespace(),
                     $this->collection->getDefaultController(),
                     $this->collection->getDefaultMethod(),
@@ -402,7 +404,6 @@ class Router implements RouterInterface
      */
     protected function checkRoutes(string $uri): bool
     {
-        // @phpstan-ignore-next-line
         $routes = $this->collection->getRoutes($this->collection->getHTTPVerb());
 
         // Don't waste any time

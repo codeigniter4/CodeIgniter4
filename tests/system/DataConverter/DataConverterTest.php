@@ -368,7 +368,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'   => 'int',
             'date' => 'datetime',
         ];
-        $converter = $this->createDataConverter($types);
+        $converter = $this->createDataConverter($types, [], db_connect());
 
         $phpData = [
             'id'   => '1',
@@ -379,8 +379,31 @@ final class DataConverterTest extends CIUnitTestCase
         $this->assertSame('2023-11-18 14:18:18', $data['date']);
     }
 
+    public function testDateTimeConvertDataToDBWithFormat(): void
+    {
+        $types = [
+            'id'   => 'int',
+            'date' => 'datetime[us]',
+        ];
+        $converter = $this->createDataConverter($types, [], db_connect());
+
+        $phpData = [
+            'id'   => '1',
+            'date' => Time::parse('2009-02-15 00:00:01.123456'),
+        ];
+        $data = $converter->toDataSource($phpData);
+
+        $this->assertSame('2009-02-15 00:00:01.123456', $data['date']);
+    }
+
     public function testTimestampConvertDataFromDB(): void
     {
+        // Save the current timezone.
+        $tz = date_default_timezone_get();
+
+        // Change the timezone other than UTC.
+        date_default_timezone_set('Asia/Tokyo'); // +09:00
+
         $types = [
             'id'   => 'int',
             'date' => 'timestamp',
@@ -395,10 +418,20 @@ final class DataConverterTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Time::class, $data['date']);
         $this->assertSame(1_700_285_831, $data['date']->getTimestamp());
+        $this->assertSame('Asia/Tokyo', $data['date']->getTimezoneName());
+
+        // Restore timezone.
+        date_default_timezone_set($tz);
     }
 
     public function testTimestampConvertDataToDB(): void
     {
+        // Save the current timezone.
+        $tz = date_default_timezone_get();
+
+        // Change the timezone other than UTC.
+        date_default_timezone_set('Asia/Tokyo'); // +09:00
+
         $types = [
             'id'   => 'int',
             'date' => 'timestamp',
@@ -412,6 +445,9 @@ final class DataConverterTest extends CIUnitTestCase
         $data = $converter->toDataSource($phpData);
 
         $this->assertSame(1_700_285_831, $data['date']);
+
+        // Restore timezone.
+        date_default_timezone_set($tz);
     }
 
     public function testURIConvertDataFromDB(): void
@@ -603,7 +639,7 @@ final class DataConverterTest extends CIUnitTestCase
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
-        $converter = $this->createDataConverter($types);
+        $converter = $this->createDataConverter($types, [], db_connect());
 
         $phpData = [
             'id'         => 1,
@@ -635,7 +671,7 @@ final class DataConverterTest extends CIUnitTestCase
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
-        $converter = $this->createDataConverter($types, [], null, 'toRawArray');
+        $converter = $this->createDataConverter($types, [], db_connect(), 'toRawArray');
 
         $phpData = [
             'id'         => 1,

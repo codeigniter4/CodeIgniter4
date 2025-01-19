@@ -31,12 +31,22 @@ use InvalidArgumentException;
 use Kint\Parser\ConstructablePluginInterface;
 use Kint\Parser\Parser;
 use Kint\Parser\PluginInterface;
+use Kint\Renderer\ConstructableRendererInterface;
 use Kint\Renderer\RendererInterface;
 use Kint\Renderer\TextRenderer;
-use Kint\Zval\Value;
+use Kint\Value\Context\BaseContext;
+use Kint\Value\Context\ContextInterface;
+use Kint\Value\UninitializedValue;
 
 /**
  * @psalm-consistent-constructor
+ * Psalm bug #8523
+ *
+ * @psalm-import-type CallParameter from CallFinder
+ *
+ * @psalm-type KintMode = Kint::MODE_*|bool
+ *
+ * @psalm-api
  */
 class Kint implements FacadeInterface
 {
@@ -51,134 +61,111 @@ class Kint implements FacadeInterface
      * false: Disabled
      * true: Enabled, default mode selection
      * other: Manual mode selection
+     *
+     * @psalm-var KintMode
      */
     public static $enabled_mode = true;
 
     /**
      * Default mode.
      *
-     * @var string
+     * @psalm-var KintMode
      */
     public static $mode_default = self::MODE_RICH;
 
     /**
      * Default mode in CLI with cli_detection on.
      *
-     * @var string
+     * @psalm-var KintMode
      */
     public static $mode_default_cli = self::MODE_CLI;
-
-    /**
-     * @var bool Return output instead of echoing
-     */
-    public static $return;
-
-    /**
-     * @var string format of the link to the source file in trace entries.
-     *
-     * Use %f for file path, %l for line number.
-     *
-     * [!] EXAMPLE (works with for phpStorm and RemoteCall Plugin):
-     *
-     * Kint::$file_link_format = 'http://localhost:8091/?message=%f:%l';
-     */
-    public static $file_link_format = '';
-
-    /**
-     * @var bool whether to display where kint was called from
-     */
-    public static $display_called_from = true;
-
-    /**
-     * @var array base directories of your application that will be displayed instead of the full path.
-     *
-     * Keys are paths, values are replacement strings
-     *
-     * [!] EXAMPLE (for Laravel 5):
-     *
-     * Kint::$app_root_dirs = [
-     *     base_path() => '<BASE>',
-     *     app_path() => '<APP>',
-     *     config_path() => '<CONFIG>',
-     *     database_path() => '<DATABASE>',
-     *     public_path() => '<PUBLIC>',
-     *     resource_path() => '<RESOURCE>',
-     *     storage_path() => '<STORAGE>',
-     * ];
-     *
-     * Defaults to [$_SERVER['DOCUMENT_ROOT'] => '<ROOT>']
-     */
-    public static $app_root_dirs = [];
-
-    /**
-     * @var int depth limit for array/object traversal. 0 for no limit
-     */
-    public static $depth_limit = 7;
-
-    /**
-     * @var bool expand all trees by default for rich view
-     */
-    public static $expanded = false;
 
     /**
      * @var bool enable detection when Kint is command line.
      *
      * Formats output with whitespace only; does not HTML-escape it
      */
-    public static $cli_detection = true;
+    public static bool $cli_detection = true;
+
+    /**
+     * @var bool Return output instead of echoing
+     */
+    public static bool $return = false;
+
+    /**
+     * @var int depth limit for array/object traversal. 0 for no limit
+     */
+    public static int $depth_limit = 7;
+
+    /**
+     * @var bool expand all trees by default for rich view
+     */
+    public static bool $expanded = false;
+
+    /**
+     * @var bool whether to display where kint was called from
+     */
+    public static bool $display_called_from = true;
 
     /**
      * @var array Kint aliases. Add debug functions in Kint wrappers here to fix modifiers and backtraces
      */
-    public static $aliases = [
-        ['Kint\\Kint', 'dump'],
-        ['Kint\\Kint', 'trace'],
-        ['Kint\\Kint', 'dumpAll'],
+    public static array $aliases = [
+        [self::class, 'dump'],
+        [self::class, 'trace'],
+        [self::class, 'dumpAll'],
     ];
 
     /**
-     * @psalm-var class-string[] Array of modes to renderer class names
+     * @psalm-var array<RendererInterface|class-string<ConstructableRendererInterface>>
+     *
+     * Array of modes to renderer class names
      */
-    public static $renderers = [
-        self::MODE_RICH => \Kint\Renderer\RichRenderer::class,
-        self::MODE_PLAIN => \Kint\Renderer\PlainRenderer::class,
-        self::MODE_TEXT => \Kint\Renderer\TextRenderer::class,
-        self::MODE_CLI => \Kint\Renderer\CliRenderer::class,
+    public static array $renderers = [
+        self::MODE_RICH => Renderer\RichRenderer::class,
+        self::MODE_PLAIN => Renderer\PlainRenderer::class,
+        self::MODE_TEXT => TextRenderer::class,
+        self::MODE_CLI => Renderer\CliRenderer::class,
     ];
 
     /**
-     * @psalm-var class-string[]
+     * @psalm-var array<PluginInterface|class-string<ConstructablePluginInterface>>
      */
-    public static $plugins = [
+    public static array $plugins = [
         \Kint\Parser\ArrayLimitPlugin::class,
         \Kint\Parser\ArrayObjectPlugin::class,
         \Kint\Parser\Base64Plugin::class,
+        \Kint\Parser\BinaryPlugin::class,
         \Kint\Parser\BlacklistPlugin::class,
+        \Kint\Parser\ClassHooksPlugin::class,
         \Kint\Parser\ClassMethodsPlugin::class,
         \Kint\Parser\ClassStaticsPlugin::class,
+        \Kint\Parser\ClassStringsPlugin::class,
         \Kint\Parser\ClosurePlugin::class,
         \Kint\Parser\ColorPlugin::class,
         \Kint\Parser\DateTimePlugin::class,
+        \Kint\Parser\DomPlugin::class,
         \Kint\Parser\EnumPlugin::class,
         \Kint\Parser\FsPathPlugin::class,
+        \Kint\Parser\HtmlPlugin::class,
         \Kint\Parser\IteratorPlugin::class,
         \Kint\Parser\JsonPlugin::class,
         \Kint\Parser\MicrotimePlugin::class,
+        \Kint\Parser\MysqliPlugin::class,
+        // \Kint\Parser\SerializePlugin::class,
         \Kint\Parser\SimpleXMLElementPlugin::class,
         \Kint\Parser\SplFileInfoPlugin::class,
-        \Kint\Parser\SplObjectStoragePlugin::class,
         \Kint\Parser\StreamPlugin::class,
         \Kint\Parser\TablePlugin::class,
         \Kint\Parser\ThrowablePlugin::class,
         \Kint\Parser\TimestampPlugin::class,
+        \Kint\Parser\ToStringPlugin::class,
         \Kint\Parser\TracePlugin::class,
         \Kint\Parser\XmlPlugin::class,
     ];
 
-    protected static $plugin_pool = [];
-
-    protected $parser;
-    protected $renderer;
+    protected Parser $parser;
+    protected RendererInterface $renderer;
 
     public function __construct(Parser $p, RendererInterface $r)
     {
@@ -210,7 +197,7 @@ class Kint implements FacadeInterface
     {
         $this->renderer->setStatics($statics);
 
-        $this->parser->setDepthLimit(isset($statics['depth_limit']) ? $statics['depth_limit'] : 0);
+        $this->parser->setDepthLimit($statics['depth_limit'] ?? 0);
         $this->parser->clearPlugins();
 
         if (!isset($statics['plugins'])) {
@@ -222,19 +209,22 @@ class Kint implements FacadeInterface
         foreach ($statics['plugins'] as $plugin) {
             if ($plugin instanceof PluginInterface) {
                 $plugins[] = $plugin;
-            } elseif (\is_string($plugin) && \is_subclass_of($plugin, ConstructablePluginInterface::class)) {
-                if (!isset(static::$plugin_pool[$plugin])) {
-                    $p = new $plugin();
-                    static::$plugin_pool[$plugin] = $p;
-                }
-                $plugins[] = static::$plugin_pool[$plugin];
+            } elseif (\is_string($plugin) && \is_a($plugin, ConstructablePluginInterface::class, true)) {
+                $plugins[] = new $plugin($this->parser);
             }
         }
 
         $plugins = $this->renderer->filterParserPlugins($plugins);
 
         foreach ($plugins as $plugin) {
-            $this->parser->addPlugin($plugin);
+            try {
+                $this->parser->addPlugin($plugin);
+            } catch (InvalidArgumentException $e) {
+                \trigger_error(
+                    'Plugin '.Utils::errorSanitizeString(\get_class($plugin)).' could not be added to a Kint parser: '.Utils::errorSanitizeString($e->getMessage()),
+                    E_USER_WARNING
+                );
+            }
         }
     }
 
@@ -246,7 +236,7 @@ class Kint implements FacadeInterface
             $this->parser->setDepthLimit(0);
         }
 
-        $this->parser->setCallerClass(isset($info['caller']['class']) ? $info['caller']['class'] : null);
+        $this->parser->setCallerClass($info['caller']['class'] ?? null);
     }
 
     public function dumpAll(array $vars, array $base): string
@@ -255,19 +245,28 @@ class Kint implements FacadeInterface
             throw new InvalidArgumentException('Kint::dumpAll requires arrays of identical size and keys as arguments');
         }
 
+        if ([] === $vars) {
+            return $this->dumpNothing();
+        }
+
         $output = $this->renderer->preRender();
 
-        if ([] === $vars) {
-            $output .= $this->renderer->renderNothing();
-        }
-
-        foreach ($vars as $key => $arg) {
-            if (!$base[$key] instanceof Value) {
-                throw new InvalidArgumentException('Kint::dumpAll requires all elements of the second argument to be Value instances');
+        foreach ($vars as $key => $_) {
+            if (!$base[$key] instanceof ContextInterface) {
+                throw new InvalidArgumentException('Kint::dumpAll requires all elements of the second argument to be ContextInterface instances');
             }
-            $output .= $this->dumpVar($arg, $base[$key]);
+            $output .= $this->dumpVar($vars[$key], $base[$key]);
         }
 
+        $output .= $this->renderer->postRender();
+
+        return $output;
+    }
+
+    protected function dumpNothing(): string
+    {
+        $output = $this->renderer->preRender();
+        $output .= $this->renderer->render(new UninitializedValue(new BaseContext('No argument')));
         $output .= $this->renderer->postRender();
 
         return $output;
@@ -277,12 +276,11 @@ class Kint implements FacadeInterface
      * Dumps and renders a var.
      *
      * @param mixed &$var Data to dump
-     * @param Value $base Base object
      */
-    protected function dumpVar(&$var, Value $base): string
+    protected function dumpVar(&$var, ContextInterface $c): string
     {
         return $this->renderer->render(
-            $this->parser->parse($var, $base)
+            $this->parser->parse($var, $c)
         );
     }
 
@@ -295,13 +293,11 @@ class Kint implements FacadeInterface
     {
         return [
             'aliases' => static::$aliases,
-            'app_root_dirs' => static::$app_root_dirs,
             'cli_detection' => static::$cli_detection,
             'depth_limit' => static::$depth_limit,
             'display_called_from' => static::$display_called_from,
             'enabled_mode' => static::$enabled_mode,
             'expanded' => static::$expanded,
-            'file_link_format' => static::$file_link_format,
             'mode_default' => static::$mode_default,
             'mode_default_cli' => static::$mode_default_cli,
             'plugins' => static::$plugins,
@@ -335,67 +331,57 @@ class Kint implements FacadeInterface
             return null;
         }
 
-        /** @psalm-var class-string[] $statics['renderers'] */
-        if (isset($statics['renderers'][$mode]) && \is_subclass_of($statics['renderers'][$mode], RendererInterface::class)) {
-            $renderer = new $statics['renderers'][$mode]();
-        } else {
-            $renderer = new TextRenderer();
+        $renderer = null;
+        if (isset($statics['renderers'][$mode])) {
+            if ($statics['renderers'][$mode] instanceof RendererInterface) {
+                $renderer = $statics['renderers'][$mode];
+            }
+
+            if (\is_a($statics['renderers'][$mode], ConstructableRendererInterface::class, true)) {
+                $renderer = new $statics['renderers'][$mode]();
+            }
         }
+
+        $renderer ??= new TextRenderer();
 
         return new static(new Parser(), $renderer);
     }
 
     /**
-     * Creates base objects given parameter info.
+     * Creates base contexts given parameter info.
      *
-     * @param array $params Parameters as returned from getCallInfo
-     * @param int   $argc   Number of arguments the helper was called with
+     * @psalm-param list<CallParameter> $params
      *
-     * @return Value[] Base objects for the arguments
+     * @return BaseContext[] Base contexts for the arguments
      */
     public static function getBasesFromParamInfo(array $params, int $argc): array
     {
-        static $blacklist = [
-            'null',
-            'true',
-            'false',
-            'array(...)',
-            'array()',
-            '[...]',
-            '[]',
-            '(...)',
-            '()',
-            '"..."',
-            'b"..."',
-            "'...'",
-            "b'...'",
-        ];
-
-        $params = \array_values($params);
         $bases = [];
 
         for ($i = 0; $i < $argc; ++$i) {
             $param = $params[$i] ?? null;
 
-            if (!isset($param['name']) || \is_numeric($param['name'])) {
-                $name = null;
-            } elseif (\in_array(\strtolower($param['name']), $blacklist, true)) {
-                $name = null;
+            if (!empty($param['literal'])) {
+                $name = 'literal';
             } else {
-                $name = $param['name'];
+                $name = $param['name'] ?? '$'.$i;
             }
 
             if (isset($param['path'])) {
                 $access_path = $param['path'];
 
-                if (!empty($param['expression'])) {
+                if ($param['expression']) {
                     $access_path = '('.$access_path.')';
+                } elseif ($param['new_without_parens']) {
+                    $access_path .= '()';
                 }
             } else {
                 $access_path = '$'.$i;
             }
 
-            $bases[] = Value::blank($name, $access_path);
+            $base = new BaseContext($name);
+            $base->access_path = $access_path;
+            $bases[] = $base;
         }
 
         return $bases;
@@ -411,6 +397,8 @@ class Kint implements FacadeInterface
      * @param array   $args    Arguments
      *
      * @return array Call info
+     *
+     * @psalm-param list<non-empty-array> $trace
      */
     public static function getCallInfo(array $aliases, array $trace, array $args): array
     {
@@ -419,7 +407,7 @@ class Kint implements FacadeInterface
         $caller = null;
         $miniTrace = [];
 
-        foreach ($trace as $index => $frame) {
+        foreach ($trace as $frame) {
             if (Utils::traceFrameIsListed($frame, $aliases)) {
                 $found = true;
                 $miniTrace = [];
@@ -456,7 +444,7 @@ class Kint implements FacadeInterface
             'trace' => $miniTrace,
         ];
 
-        if ($call) {
+        if (null !== $call) {
             $ret['params'] = $call['parameters'];
             $ret['modifiers'] = $call['modifiers'];
         }
@@ -477,7 +465,7 @@ class Kint implements FacadeInterface
             return 0;
         }
 
-        Utils::normalizeAliases(static::$aliases);
+        static::$aliases = Utils::normalizeAliases(static::$aliases);
 
         $call_info = static::getCallInfo(static::$aliases, \debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), []);
 
@@ -514,10 +502,9 @@ class Kint implements FacadeInterface
 
         \array_shift($trimmed_trace);
 
-        $output = $kintstance->dumpAll(
-            [$trimmed_trace],
-            [Value::blank('Kint\\Kint::trace()', 'debug_backtrace()')]
-        );
+        $base = new BaseContext('Kint\\Kint::trace()');
+        $base->access_path = 'debug_backtrace()';
+        $output = $kintstance->dumpAll([$trimmed_trace], [$base]);
 
         if (static::$return || \in_array('@', $call_info['modifiers'], true)) {
             return $output;
@@ -537,7 +524,7 @@ class Kint implements FacadeInterface
      *
      * Functionally equivalent to Kint::dump(1) or Kint::dump(debug_backtrace())
      *
-     * @psalm-param array ...$args
+     * @psalm-param mixed ...$args
      *
      * @return int|string
      */
@@ -547,7 +534,7 @@ class Kint implements FacadeInterface
             return 0;
         }
 
-        Utils::normalizeAliases(static::$aliases);
+        static::$aliases = Utils::normalizeAliases(static::$aliases);
 
         $call_info = static::getCallInfo(static::$aliases, \debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), $args);
 
@@ -588,54 +575,6 @@ class Kint implements FacadeInterface
     }
 
     /**
-     * generic path display callback, can be configured in app_root_dirs; purpose is
-     * to show relevant path info and hide as much of the path as possible.
-     */
-    public static function shortenPath(string $file): string
-    {
-        $file = \array_values(\array_filter(\explode('/', \str_replace('\\', '/', $file)), 'strlen'));
-
-        $longest_match = 0;
-        $match = '/';
-
-        foreach (static::$app_root_dirs as $path => $alias) {
-            /** @psalm-var string $path */
-            if (empty($path)) {
-                continue;
-            }
-
-            $path = \array_values(\array_filter(\explode('/', \str_replace('\\', '/', $path)), 'strlen'));
-
-            if (\array_slice($file, 0, \count($path)) === $path && \count($path) > $longest_match) {
-                $longest_match = \count($path);
-                $match = $alias;
-            }
-        }
-
-        if ($longest_match) {
-            $file = \array_merge([$match], \array_slice($file, $longest_match));
-
-            return \implode('/', $file);
-        }
-
-        // fallback to find common path with Kint dir
-        $kint = \array_values(\array_filter(\explode('/', \str_replace('\\', '/', KINT_DIR)), 'strlen'));
-
-        foreach ($file as $i => $part) {
-            if (!isset($kint[$i]) || $kint[$i] !== $part) {
-                return ($i ? '.../' : '/').\implode('/', \array_slice($file, $i));
-            }
-        }
-
-        return '/'.\implode('/', $file);
-    }
-
-    public static function getIdeLink(string $file, int $line): string
-    {
-        return \str_replace(['%f', '%l'], [$file, $line], static::$file_link_format);
-    }
-
-    /**
      * Returns specific function call info from a stack trace frame, or null if no match could be found.
      *
      * @param array $frame The stack trace frame in question
@@ -648,7 +587,7 @@ class Kint implements FacadeInterface
         if (
             !isset($frame['file'], $frame['line'], $frame['function']) ||
             !\is_readable($frame['file']) ||
-            !$source = \file_get_contents($frame['file'])
+            false === ($source = \file_get_contents($frame['file']))
         ) {
             return null;
         }
@@ -686,6 +625,8 @@ class Kint implements FacadeInterface
                                     'name' => \substr($param['name'], 3).'['.\var_export($key, true).']',
                                     'path' => \substr($param['path'], 3).'['.\var_export($key, true).']',
                                     'expression' => false,
+                                    'literal' => false,
+                                    'new_without_parens' => false,
                                 ];
                             }
                         } else {
@@ -696,6 +637,8 @@ class Kint implements FacadeInterface
                                     'name' => 'array_values('.\substr($param['name'], 3).')['.$j.']',
                                     'path' => 'array_values('.\substr($param['path'], 3).')['.$j.']',
                                     'expression' => false,
+                                    'literal' => false,
+                                    'new_without_parens' => false,
                                 ];
                             }
                         }

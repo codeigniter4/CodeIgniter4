@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\PhpStreamWrapper;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionProperty;
-use RuntimeException;
 
 /**
  * @internal

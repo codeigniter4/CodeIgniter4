@@ -62,7 +62,7 @@ Routing
 
 - **AutoRouting Improved:** The ``$translateUriToCamelCase`` option has been added
   that allows using CamelCase controller and method names. See
-  :ref:`controller-translate-uri-to-camelcase`.
+  :ref:`translate-uri-to-camelcase`.
 - **Others:**
     - Added option ``$multipleSegmentsOneParam``. When this option is
       enabled, a placeholder that matches multiple segments, such as ``(:any)``, will

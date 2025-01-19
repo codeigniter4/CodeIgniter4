@@ -14,13 +14,12 @@ declare(strict_types=1);
 namespace CodeIgniter\Encryption\Exceptions;
 
 use CodeIgniter\Exceptions\DebugTraceableTrait;
-use CodeIgniter\Exceptions\ExceptionInterface;
-use RuntimeException;
+use CodeIgniter\Exceptions\RuntimeException;
 
 /**
  * Encryption exception
  */
-class EncryptionException extends RuntimeException implements ExceptionInterface
+class EncryptionException extends RuntimeException
 {
     use DebugTraceableTrait;
 

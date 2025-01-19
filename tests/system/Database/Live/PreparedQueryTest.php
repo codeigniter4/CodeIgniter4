@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
-use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Database\ResultInterface;
+use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use PHPUnit\Framework\Attributes\Group;

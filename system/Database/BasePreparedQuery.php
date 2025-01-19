@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace CodeIgniter\Database;
 
 use ArgumentCountError;
-use BadMethodCallException;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Events\Events;
+use CodeIgniter\Exceptions\BadMethodCallException;
 use ErrorException;
 
 /**

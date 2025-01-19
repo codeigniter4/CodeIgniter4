@@ -15,12 +15,12 @@ namespace CodeIgniter\View;
 
 use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Debug\Toolbar\Collectors\Views;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\Toolbar;
 use Config\View as ViewConfig;
 use Psr\Log\LoggerInterface;
-use RuntimeException;
 
 /**
  * Class View
@@ -123,16 +123,6 @@ class View implements RendererInterface
      * @var array<string, list<string>>
      */
     protected $sections = [];
-
-    /**
-     * The name of the current section being rendered,
-     * if any.
-     *
-     * @var string|null
-     *
-     * @deprecated
-     */
-    protected $currentSection;
 
     /**
      * The name of the current section being rendered,
@@ -339,7 +329,7 @@ class View implements RendererInterface
      */
     public function excerpt(string $string, int $length = 20): string
     {
-        return (strlen($string) > $length) ? substr($string, 0, $length - 3) . '...' : $string;
+        return (mb_strlen($string) > $length) ? mb_substr($string, 0, $length - 3) . '...' : $string;
     }
 
     /**
@@ -420,8 +410,6 @@ class View implements RendererInterface
      */
     public function section(string $name)
     {
-        // Saved to prevent BC.
-        $this->currentSection = $name;
         $this->sectionStack[] = $name;
 
         ob_start();
@@ -457,23 +445,23 @@ class View implements RendererInterface
      *
      * @param bool $saveData If true, saves data for subsequent calls,
      *                       if false, cleans the data after displaying.
-     *
-     * @return void
      */
-    public function renderSection(string $sectionName, bool $saveData = false)
+    public function renderSection(string $sectionName, bool $saveData = false): string
     {
         if (! isset($this->sections[$sectionName])) {
-            echo '';
-
-            return;
+            return '';
         }
 
+        $output = '';
+
         foreach ($this->sections[$sectionName] as $key => $contents) {
-            echo $contents;
+            $output .= $contents;
             if ($saveData === false) {
                 unset($this->sections[$sectionName][$key]);
             }
         }
+
+        return $output;
     }
 
     /**

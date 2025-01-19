@@ -120,10 +120,10 @@ class Namespaces extends BaseCommand
 
     private function truncate(string $string, int $max): string
     {
-        $length = strlen($string);
+        $length = mb_strlen($string);
 
         if ($length > $max) {
-            return substr($string, 0, $max - 3) . '...';
+            return mb_substr($string, 0, $max - 3) . '...';
         }
 
         return $string;

@@ -205,7 +205,7 @@ class Session implements SessionInterface
     /**
      * Initialize the session container and starts up the session.
      *
-     * @return $this|void
+     * @return $this|null
      */
     public function start()
     {
@@ -213,20 +213,20 @@ class Session implements SessionInterface
             // @codeCoverageIgnoreStart
             $this->logger->debug('Session: Initialization under CLI aborted.');
 
-            return;
+            return null;
             // @codeCoverageIgnoreEnd
         }
 
         if ((bool) ini_get('session.auto_start')) {
             $this->logger->error('Session: session.auto_start is enabled in php.ini. Aborting.');
 
-            return;
+            return null;
         }
 
         if (session_status() === PHP_SESSION_ACTIVE) {
             $this->logger->warning('Session: Sessions is enabled, and one exists. Please don\'t $session->start();');
 
-            return;
+            return null;
         }
 
         $this->configure();
@@ -316,49 +316,25 @@ class Session implements SessionInterface
     /**
      * Configure session ID length
      *
-     * To make life easier, we used to force SHA-1 and 4 bits per
-     * character on everyone. And of course, someone was unhappy.
-     *
-     * Then PHP 7.1 broke backwards-compatibility because ext/session
-     * is such a mess that nobody wants to touch it with a pole stick,
-     * and the one guy who does, nobody has the energy to argue with.
-     *
-     * So we were forced to make changes, and OF COURSE something was
-     * going to break and now we have this pile of shit. -- Narf
+     * To make life easier, we force the PHP defaults. Because PHP9 forces them.
+     * See https://wiki.php.net/rfc/deprecations_php_8_4#sessionsid_length_and_sessionsid_bits_per_character
      */
     protected function configureSidLength()
     {
-        $bitsPerCharacter = (int) (ini_get('session.sid_bits_per_character') !== false
-            ? ini_get('session.sid_bits_per_character')
-            : 4);
+        $bitsPerCharacter = (int) ini_get('session.sid_bits_per_character');
+        $sidLength        = (int) ini_get('session.sid_length');
 
-        $sidLength = (int) (ini_get('session.sid_length') !== false
-            ? ini_get('session.sid_length')
-            : 40);
-
-        if (($sidLength * $bitsPerCharacter) < 160) {
-            $bits = ($sidLength * $bitsPerCharacter);
-            // Add as many more characters as necessary to reach at least 160 bits
-            $sidLength += (int) ceil((160 % $bits) / $bitsPerCharacter);
-            ini_set('session.sid_length', (string) $sidLength);
+        // We force the PHP defaults.
+        if (PHP_VERSION_ID < 90000) {
+            if ($bitsPerCharacter !== 4) {
+                ini_set('session.sid_bits_per_character', '4');
+            }
+            if ($sidLength !== 32) {
+                ini_set('session.sid_length', '32');
+            }
         }
 
-        // Yes, 4,5,6 are the only known possible values as of 2016-10-27
-        switch ($bitsPerCharacter) {
-            case 4:
-                $this->sidRegexp = '[0-9a-f]';
-                break;
-
-            case 5:
-                $this->sidRegexp = '[0-9a-v]';
-                break;
-
-            case 6:
-                $this->sidRegexp = '[0-9a-zA-Z,-]';
-                break;
-        }
-
-        $this->sidRegexp .= '{' . $sidLength . '}';
+        $this->sidRegexp = '[0-9a-f]{32}';
     }
 
     /**

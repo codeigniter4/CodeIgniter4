@@ -16,10 +16,11 @@ namespace CodeIgniter\Test;
 use App\Controllers\Home;
 use App\Controllers\NeverHeardOfIt;
 use CodeIgniter\Controller;
+use CodeIgniter\Exceptions\InvalidArgumentException;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\App;
-use Exception;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -47,7 +48,8 @@ final class ControllerTestTraitTest extends CIUnitTestCase
 
     public function testBadController(): void
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
+
         $logger = new Logger(new LoggerConfig());
         $this->withUri('http://example.com')
             ->withLogger($logger)
@@ -57,7 +59,8 @@ final class ControllerTestTraitTest extends CIUnitTestCase
 
     public function testBadControllerMethod(): void
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
+
         $logger = new Logger(new LoggerConfig());
         $this->withUri('http://example.com')
             ->withLogger($logger)
@@ -258,12 +261,12 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->controller = new class () extends Controller {
             public function throwsBody(): never
             {
-                throw new Exception($this->request->getBody());
+                throw new RuntimeException($this->request->getBody());
             }
         };
         $this->controller->initController($this->request, $this->response, $this->logger);
 
-        $this->expectException(Exception::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('banana');
 
         $this->withBody('banana')->execute('throwsBody');

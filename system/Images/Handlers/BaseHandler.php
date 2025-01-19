@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Images\Handlers;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Image;
 use CodeIgniter\Images\ImageHandlerInterface;
 use Config\Images;
-use InvalidArgumentException;
 
 /**
  * Base image handling implementation
@@ -700,6 +700,8 @@ abstract class BaseHandler implements ImageHandlerInterface
         if (method_exists($this->image(), $name)) {
             return $this->image()->{$name}(...$args);
         }
+
+        return null;
     }
 
     /**

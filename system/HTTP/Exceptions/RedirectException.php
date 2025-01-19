@@ -14,17 +14,17 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP\Exceptions;
 
 use CodeIgniter\Exceptions\HTTPExceptionInterface;
+use CodeIgniter\Exceptions\InvalidArgumentException;
+use CodeIgniter\Exceptions\LogicException;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\ResponsableInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Exception;
-use InvalidArgumentException;
-use LogicException;
 use Throwable;
 
 /**
  * RedirectException
  */
-class RedirectException extends Exception implements ResponsableInterface, HTTPExceptionInterface
+class RedirectException extends RuntimeException implements ExceptionInterface, ResponsableInterface, HTTPExceptionInterface
 {
     /**
      * HTTP status code for redirects

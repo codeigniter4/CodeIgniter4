@@ -28,14 +28,13 @@ class PerformanceMetrics implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
+        return null;
     }
 
     /**
      * Replaces the performance metrics.
      *
      * @param array|null $arguments
-     *
-     * @return void
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
@@ -57,6 +56,10 @@ class PerformanceMetrics implements FilterInterface
             );
 
             $response->setBody($output);
+
+            return $response;
         }
+
+        return null;
     }
 }

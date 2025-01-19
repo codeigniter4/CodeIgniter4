@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\Services;
-use LogicException;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\Log\Handlers\TestHandler;

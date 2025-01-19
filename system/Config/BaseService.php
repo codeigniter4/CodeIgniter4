@@ -29,6 +29,7 @@ use CodeIgniter\Debug\Timer;
 use CodeIgniter\Debug\Toolbar;
 use CodeIgniter\Email\Email;
 use CodeIgniter\Encryption\EncrypterInterface;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Format\Format;
 use CodeIgniter\Honeypot\Honeypot;
@@ -79,7 +80,6 @@ use Config\Session as ConfigSession;
 use Config\Toolbar as ConfigToolbar;
 use Config\Validation as ConfigValidation;
 use Config\View as ConfigView;
-use InvalidArgumentException;
 
 /**
  * Services Configuration file.
@@ -387,6 +387,15 @@ class BaseService
     {
         static::$instances[$name]         = $mock;
         static::$mocks[strtolower($name)] = $mock;
+    }
+
+    /**
+     * Resets the service cache.
+     */
+    public static function resetServicesCache(): void
+    {
+        self::$serviceNames = [];
+        static::$discovered = false;
     }
 
     protected static function buildServicesCache(): void

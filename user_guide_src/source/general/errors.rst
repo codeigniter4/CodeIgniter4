@@ -57,8 +57,12 @@ Configuration
 Error Reporting
 ---------------
 
-By default, CodeIgniter will display a detailed error report with all errors in the ``development`` and ``testing`` environments, and will not
-display any errors in the ``production`` environment.
+When ``display_errors`` in PHP ini setting is enabled, CodeIgniter will display
+a detailed error report with all errors
+
+So by default, CodeIgniter will display a detailed error report in the ``development``
+and ``testing`` environments, and will not display any errors in the ``production``
+environment.
 
 .. image:: ../images/error.png
 
@@ -136,7 +140,35 @@ setting the environment variable ``CODEIGNITER_SCREAM_DEPRECATIONS`` to a truthy
 Framework Exceptions
 ====================
 
-The following framework exceptions are available:
+.. _exception-design:
+
+Exception Design
+----------------
+
+Staring with v4.6.0, all Exception classes that the framework throws:
+
+- implement ``CodeIgniter\Exceptions\ExceptionInterface``
+- extend ``CodeIgniter\Exceptions\LogicException`` or ``CodeIgniter\Exceptions\RuntimeException``
+
+.. note:: The framework only throws the above kind of exception classes, but PHP
+    or other libraries that are used may throw other exceptions.
+
+There are two base Exception classes that the framework throws:
+
+LogicException
+--------------
+
+``CodeIgniter\Exceptions\LogicException`` extends ``\LogicException``.
+This exception represents error in the program logic. This kind of exception
+should lead directly to a fix in your code.
+
+RuntimeException
+----------------
+
+``CodeIgniter\Exceptions\RuntimeException`` extends ``\RuntimeException``.
+This exception is thrown if an error which can only be found on runtime occurs.
+
+The following framework exceptions are also available:
 
 PageNotFoundException
 ---------------------
@@ -177,7 +209,7 @@ RedirectException
 
 .. note:: Since v4.4.0, the namespace of ``RedirectException`` has been changed.
     Previously it was ``CodeIgniter\Router\Exceptions\RedirectException``. The
-    previous class is deprecated.
+    previous class has been removed in v4.6.0.
 
 This exception is a special case allowing for overriding of all other response routing and
 forcing a redirect to a specific URI:
@@ -223,7 +255,7 @@ the **error_404.php** in the **app/Views/errors/cli** folder.
 If there is no view file corresponding to the HTTP status code, **production.php**
 or **error_exception.php** will be displayed.
 
-.. note:: If ``display_errors`` is on in the PHP INI configuration,
+.. note:: If ``display_errors`` is on in the PHP ini setting,
     **error_exception.php** is selected and a detailed error report is displayed.
 
 You should customize all of the error views in the **app/Views/errors/html** folder

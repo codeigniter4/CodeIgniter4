@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache;
 
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
@@ -23,7 +24,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\App as AppConfig;
 use Config\Cache as CacheConfig;
 use ErrorException;
-use Exception;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -245,7 +245,7 @@ final class ResponseCacheTest extends CIUnitTestCase
 
     public function testInvalidCacheError(): void
     {
-        $this->expectException(Exception::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Error unserializing page cache');
 
         $cache       = mock(CacheFactory::class);

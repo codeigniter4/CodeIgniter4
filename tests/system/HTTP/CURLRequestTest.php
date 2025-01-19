@@ -1160,6 +1160,58 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
         $this->assertSame(CURL_HTTP_VERSION_2_0, $options[CURLOPT_HTTP_VERSION]);
     }
 
+    public function testHTTPv3(): void
+    {
+        $this->request->request('POST', '/post', [
+            'version' => 3.0,
+        ]);
+
+        $options = $this->request->curl_options;
+
+        if (! defined('CURL_HTTP_VERSION_3')) {
+            define('CURL_HTTP_VERSION_3', 30);
+        }
+
+        $this->assertArrayHasKey(CURLOPT_HTTP_VERSION, $options);
+        $this->assertSame(CURL_HTTP_VERSION_3, $options[CURLOPT_HTTP_VERSION]);
+    }
+
+    public function testForceResolveIPv4(): void
+    {
+        $this->request->request('POST', '/post', [
+            'force_ip_resolve' => 'v4',
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_IPRESOLVE, $options);
+        $this->assertSame(CURL_IPRESOLVE_V4, $options[CURLOPT_IPRESOLVE]);
+    }
+
+    public function testForceResolveIPv6(): void
+    {
+        $this->request->request('POST', '/post', [
+            'force_ip_resolve' => 'v6',
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_IPRESOLVE, $options);
+        $this->assertSame(CURL_IPRESOLVE_V6, $options[CURLOPT_IPRESOLVE]);
+    }
+
+    public function testForceResolveIPUnknown(): void
+    {
+        $this->request->request('POST', '/post', [
+            'force_ip_resolve' => 'v?',
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_IPRESOLVE, $options);
+        $this->assertSame(\CURL_IPRESOLVE_WHATEVER, $options[CURLOPT_IPRESOLVE]);
+    }
+
     public function testCookieOption(): void
     {
         $holder = SUPPORTPATH . 'HTTP/Files/CookiesHolder.txt';

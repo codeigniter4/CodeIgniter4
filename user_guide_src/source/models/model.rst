@@ -395,6 +395,24 @@ The datetime format is set in the ``dateFormat`` array of the
 :ref:`database configuration <database-config-explanation-of-values>` in the
 **app/Config/Database.php** file.
 
+.. note::
+    When you set ``ms`` or ``us`` as a parameter, **Model** takes care of second's
+    fractional part of the Time. But **Query Builder** does not. So you still need
+    to use the ``format()`` method when you pass the Time to Query Builder's methods
+    like ``where()``:
+
+    .. literalinclude:: model/063.php
+        :lines: 2-
+
+.. note:: Prior to v4.6.0, you cannot use ``ms`` or ``us`` as a parameter.
+    Because the second's fractional part of Time was lost due to bugs.
+
+timestamp
+---------
+
+The timezone of the ``Time`` instance created will be the default timezone
+(app's timezone), not UTC.
+
 Custom Casting
 ==============
 

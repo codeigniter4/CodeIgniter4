@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace CodeIgniter\Publisher;
 
 use CodeIgniter\Autoloader\FileLocatorInterface;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Files\FileCollection;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Publisher\Exceptions\PublisherException;
 use Config\Publisher as PublisherConfig;
-use RuntimeException;
 use Throwable;
 
 /**
@@ -99,18 +99,24 @@ class Publisher extends FileCollection
      *
      * @return list<self>
      */
-    final public static function discover(string $directory = 'Publishers'): array
+    final public static function discover(string $directory = 'Publishers', string $namespace = ''): array
     {
-        if (isset(self::$discovered[$directory])) {
-            return self::$discovered[$directory];
+        $key = implode('.', [$namespace, $directory]);
+
+        if (isset(self::$discovered[$key])) {
+            return self::$discovered[$key];
         }
 
-        self::$discovered[$directory] = [];
+        self::$discovered[$key] = [];
 
         /** @var FileLocatorInterface $locator */
         $locator = service('locator');
 
-        if ([] === $files = $locator->listFiles($directory)) {
+        $files = $namespace === ''
+            ? $locator->listFiles($directory)
+            : $locator->listNamespaceFiles($namespace, $directory);
+
+        if ([] === $files) {
             return [];
         }
 
@@ -119,13 +125,13 @@ class Publisher extends FileCollection
             $className = $locator->findQualifiedNameFromPath($file);
 
             if ($className !== false && class_exists($className) && is_a($className, self::class, true)) {
-                self::$discovered[$directory][] = new $className();
+                self::$discovered[$key][] = new $className();
             }
         }
 
-        sort(self::$discovered[$directory]);
+        sort(self::$discovered[$key]);
 
-        return self::$discovered[$directory];
+        return self::$discovered[$key];
     }
 
     /**

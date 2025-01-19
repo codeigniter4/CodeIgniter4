@@ -61,6 +61,20 @@ final class PublisherSupportTest extends CIUnitTestCase
         $this->assertSame([], $result);
     }
 
+    public function testDiscoverInNamespace(): void
+    {
+        $result = Publisher::discover('Publishers', 'Tests\Support');
+        $this->assertCount(1, $result);
+        $this->assertInstanceOf(TestPublisher::class, $result[0]);
+    }
+
+    public function testDiscoverInUnknowNamespace(): void
+    {
+        $result = Publisher::discover('Publishers', 'Nothing\App');
+
+        $this->assertSame([], $result);
+    }
+
     public function testDiscoverStores(): void
     {
         $publisher = Publisher::discover()[0];

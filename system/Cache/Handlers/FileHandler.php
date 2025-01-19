@@ -54,13 +54,6 @@ class FileHandler extends BaseHandler
      */
     public function __construct(Cache $config)
     {
-        if (! property_exists($config, 'file')) {
-            $config->file = [
-                'storePath' => $config->storePath ?? WRITEPATH . 'cache',
-                'mode'      => 0640,
-            ];
-        }
-
         $this->path = ! empty($config->file['storePath']) ? $config->file['storePath'] : WRITEPATH . 'cache';
         $this->path = rtrim($this->path, '/') . '/';
 

@@ -19,7 +19,6 @@ use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
 use Rector\CodeQuality\Rector\FuncCall\CompactToVariablesRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
-use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
 use Rector\CodeQuality\Rector\Ternary\TernaryEmptyArrayArrayDimFetchToCoalesceRector;
 use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
@@ -183,7 +182,6 @@ return RectorConfig::configure()
         ChangeIfElseValueAssignToEarlyReturnRector::class,
         InlineIfToExplicitIfRector::class,
         PreparedValueToEarlyReturnRector::class,
-        ShortenElseIfRector::class,
         UnusedForeachValueToArrayKeysRector::class,
         ChangeArrayPushToArrayAssignRector::class,
         RemoveErrorSuppressInTryCatchStmtsRector::class,
@@ -208,4 +206,4 @@ return RectorConfig::configure()
         // keep '\\' prefix string on string '\Foo\Bar'
         StringClassNameToClassConstantRector::SHOULD_KEEP_PRE_SLASH => true,
     ])
-    ->withCodeQualityLevel(31);
+    ->withCodeQualityLevel(34);

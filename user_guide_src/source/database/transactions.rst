@@ -14,7 +14,7 @@ transactions.
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 CodeIgniter's Approach to Transactions
 ======================================
@@ -52,15 +52,32 @@ or failure of any given query.
 Strict Mode
 ===========
 
-By default, CodeIgniter runs all transactions in Strict Mode. When strict
-mode is enabled, if you are running multiple groups of transactions, if
-one group fails all subsequent groups will be rolled back. If strict mode is
-disabled, each group is treated independently, meaning a failure of one
-group will not affect any others.
+By default, CodeIgniter runs all transactions in Strict Mode.
+
+When strict mode is enabled, if you are running multiple groups of transactions,
+if one group fails all subsequent groups will be rolled back.
+
+If strict mode is disabled, each group is treated independently, meaning a failure
+of one group will not affect any others.
 
 Strict Mode can be disabled as follows:
 
 .. literalinclude:: transactions/002.php
+
+.. _transactions-resetting-transaction-status:
+
+Resetting Transaction Status
+----------------------------
+
+.. versionadded:: 4.6.0
+
+When strict mode is enabled, if one transaction fails, all subsequent transactions
+will be rolled back.
+
+If you wan to restart transactions after a failure, you can reset the transaction
+status:
+
+.. literalinclude:: transactions/009.php
 
 .. _transactions-managing-errors:
 

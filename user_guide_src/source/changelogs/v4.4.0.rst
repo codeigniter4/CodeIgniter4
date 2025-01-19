@@ -261,7 +261,7 @@ Others
     - If a controller is found that corresponds to a URI segment and that controller
       does not have a method defined for the URI segment, the default method will
       now be executed. This addition allows for more flexible handling of URIs in
-      auto routing. See :ref:`controller-default-method-fallback` for details.
+      auto routing. See :ref:`auto-routing-improved-default-method-fallback` for details.
 - **Filters:** Now you can use Filter Arguments with :ref:`$filters property <filters-filters-filter-arguments>`.
 - **Request:** Added ``IncomingRequest::setValidLocales()`` method to set valid locales.
 - **Table:** Added ``Table::setSyncRowsWithHeading()`` method to synchronize row columns with headings. See :ref:`table-sync-rows-with-headings` for details.

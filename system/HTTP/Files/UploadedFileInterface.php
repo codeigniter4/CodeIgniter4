@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP\Files;
 
-use InvalidArgumentException;
-use RuntimeException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
+use CodeIgniter\Exceptions\RuntimeException;
 
 /**
  * Value object representing a single file uploaded through an

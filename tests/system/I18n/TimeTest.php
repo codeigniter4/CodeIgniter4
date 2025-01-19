@@ -18,6 +18,7 @@ use CodeIgniter\I18n\Exceptions\I18nException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use DateTime;
+use DateTimeImmutable;
 use DateTimeZone;
 use IntlDateFormatter;
 use Locale;
@@ -61,7 +62,7 @@ final class TimeTest extends CIUnitTestCase
             'en_US',
             IntlDateFormatter::SHORT,
             IntlDateFormatter::SHORT,
-            'America/Chicago', // Default for CodeIgniter
+            'America/Chicago',
             IntlDateFormatter::GREGORIAN,
             'yyyy-MM-dd HH:mm:ss',
         );
@@ -76,7 +77,7 @@ final class TimeTest extends CIUnitTestCase
             'en_US',
             IntlDateFormatter::SHORT,
             IntlDateFormatter::SHORT,
-            'Europe/London', // Default for CodeIgniter
+            'Europe/London',
             IntlDateFormatter::GREGORIAN,
             'yyyy-MM-dd HH:mm:ss',
         );
@@ -92,7 +93,7 @@ final class TimeTest extends CIUnitTestCase
             'fr_FR',
             IntlDateFormatter::SHORT,
             IntlDateFormatter::SHORT,
-            'Europe/London', // Default for CodeIgniter
+            'Europe/London',
             IntlDateFormatter::GREGORIAN,
             'yyyy-MM-dd HH:mm:ss',
         );
@@ -234,6 +235,13 @@ final class TimeTest extends CIUnitTestCase
         $this->assertCloseEnoughString(date('2017-01-15 H:i:s', $now->getTimestamp()), $time->toDateTimeString());
     }
 
+    public function testCreateFromFormatWithMicroseconds(): void
+    {
+        $time = Time::createFromFormat('Y-m-d H:i:s.u', '2024-07-09 09:13:34.654321');
+
+        $this->assertSame('2024-07-09 09:13:34.654321', $time->format('Y-m-d H:i:s.u'));
+    }
+
     public function testCreateFromFormatWithTimezoneString(): void
     {
         $time = Time::createFromFormat('F j, Y', 'January 15, 2017', 'Europe/London');
@@ -270,13 +278,24 @@ final class TimeTest extends CIUnitTestCase
 
         $timestamp = strtotime('2017-03-18 midnight');
 
+        // The timezone will be UTC if you don't specify.
         $time = Time::createFromTimestamp($timestamp);
 
-        $this->assertSame('Asia/Tokyo', $time->getTimezone()->getName());
-        $this->assertSame('2017-03-18 00:00:00', $time->format('Y-m-d H:i:s'));
+        $this->assertSame('UTC', $time->getTimezone()->getName());
+        $this->assertSame('2017-03-17 15:00:00', $time->format('Y-m-d H:i:s'));
 
         // Restore timezone.
         date_default_timezone_set($tz);
+    }
+
+    public function testCreateFromTimestampWithMicroseconds(): void
+    {
+        $timestamp = 1489762800.654321;
+
+        // The timezone will be UTC if you don't specify.
+        $time = Time::createFromTimestamp($timestamp);
+
+        $this->assertSame('2017-03-17 15:00:00.654321', $time->format('Y-m-d H:i:s.u'));
     }
 
     public function testCreateFromTimestampWithTimezone(): void
@@ -701,13 +720,28 @@ final class TimeTest extends CIUnitTestCase
 
     public function testSetTimestamp(): void
     {
-        $time  = Time::parse('May 10, 2017', 'America/Chicago');
-        $stamp = strtotime('April 1, 2017');
-        $time2 = $time->setTimestamp($stamp);
+        $time1 = Time::parse('May 10, 2017', 'America/Chicago');
+
+        $stamp = strtotime('2017-04-01'); // We use UTC as the default timezone.
+        $time2 = $time1->setTimestamp($stamp);
 
         $this->assertInstanceOf(Time::class, $time2);
-        $this->assertNotSame($time, $time2);
-        $this->assertSame('2017-04-01 00:00:00', $time2->toDateTimeString());
+        $this->assertSame('2017-05-10 00:00:00 -05:00', $time1->format('Y-m-d H:i:s P'));
+        $this->assertSame('2017-03-31 19:00:00 -05:00', $time2->format('Y-m-d H:i:s P'));
+    }
+
+    public function testSetTimestampDateTimeImmutable(): void
+    {
+        $time1 = new DateTimeImmutable(
+            'May 10, 2017',
+            new DateTimeZone('America/Chicago'),
+        );
+
+        $stamp = strtotime('2017-04-01'); // We use UTC as the default timezone.
+        $time2 = $time1->setTimestamp($stamp);
+
+        $this->assertSame('2017-05-10 00:00:00 -05:00', $time1->format('Y-m-d H:i:s P'));
+        $this->assertSame('2017-03-31 19:00:00 -05:00', $time2->format('Y-m-d H:i:s P'));
     }
 
     public function testToDateString(): void
@@ -875,11 +909,19 @@ final class TimeTest extends CIUnitTestCase
         $this->assertTrue($time1->equals('January 11, 2017 03:50:00', 'Europe/London'));
     }
 
-    public function testEqualWithStringAndNotimezone(): void
+    public function testEqualWithStringAndNoTimezone(): void
     {
         $time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
 
         $this->assertTrue($time1->equals('January 10, 2017 21:50:00'));
+    }
+
+    public function testEqualWithDifferentMicroseconds(): void
+    {
+        $time1 = new Time('2024-01-01 12:00:00.654321');
+        $time2 = new Time('2024-01-01 12:00:00');
+
+        $this->assertFalse($time1->equals($time2));
     }
 
     public function testSameSuccess(): void
@@ -921,6 +963,24 @@ final class TimeTest extends CIUnitTestCase
         $this->assertFalse($time2->isBefore($time1));
     }
 
+    public function testBeforeSameTime(): void
+    {
+        $time1 = new Time('2024-01-01 12:00:00.000000');
+        $time2 = new Time('2024-01-01 12:00:00.000000');
+
+        $this->assertFalse($time1->isBefore($time2));
+        $this->assertFalse($time2->isBefore($time1));
+    }
+
+    public function testBeforeWithMicroseconds(): void
+    {
+        $time1 = new Time('2024-01-01 12:00:00.000000');
+        $time2 = new Time('2024-01-01 12:00:00.654321');
+
+        $this->assertTrue($time1->isBefore($time2));
+        $this->assertFalse($time2->isBefore($time1));
+    }
+
     public function testAfter(): void
     {
         $time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
@@ -928,6 +988,24 @@ final class TimeTest extends CIUnitTestCase
 
         $this->assertFalse($time1->isAfter($time2));
         $this->assertTrue($time2->isAfter($time1));
+    }
+
+    public function testAfterSameTime(): void
+    {
+        $time1 = new Time('2024-01-01 12:00:00.000000');
+        $time2 = new Time('2024-01-01 12:00:00.000000');
+
+        $this->assertFalse($time1->isAfter($time2));
+        $this->assertFalse($time2->isAfter($time1));
+    }
+
+    public function testAfterWithMicroseconds(): void
+    {
+        $time1 = new Time('2024-01-01 12:00:00.654321');
+        $time2 = new Time('2024-01-01 12:00:00.000000');
+
+        $this->assertTrue($time1->isAfter($time2));
+        $this->assertFalse($time2->isAfter($time1));
     }
 
     public function testHumanizeYearsSingle(): void

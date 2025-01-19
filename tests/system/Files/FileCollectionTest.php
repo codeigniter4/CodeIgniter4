@@ -557,6 +557,76 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $collection->get());
     }
 
+    public function testRetainMultiplePatternsEmptyArray(): void
+    {
+        $collection = new FileCollection();
+        $collection->addDirectory(SUPPORTPATH . 'Files', true);
+
+        $files = $collection->get();
+
+        $collection->retainMultiplePatterns([]);
+
+        $this->assertSame($files, $collection->get());
+    }
+
+    public function testRetainMultiplePatternsEmptyString(): void
+    {
+        $collection = new FileCollection();
+        $collection->addDirectory(SUPPORTPATH . 'Files', true);
+
+        $files = $collection->get();
+
+        $collection->retainMultiplePatterns(['']);
+
+        $this->assertSame($files, $collection->get());
+    }
+
+    public function testRetainMultiplePatternsRegex(): void
+    {
+        $collection = new FileCollection();
+        $collection->addDirectory(SUPPORTPATH . 'Files', true);
+
+        $expected = [
+            SUPPORTPATH . 'Files/able/apple.php',
+            SUPPORTPATH . 'Files/baker/banana.php',
+        ];
+
+        $collection->retainMultiplePatterns(['#(apple).*#', '#(banana).*#']);
+
+        $this->assertSame($expected, $collection->get());
+    }
+
+    public function testRetainMultiplePatternsPseudo(): void
+    {
+        $collection = new FileCollection();
+        $collection->addDirectory(SUPPORTPATH . 'Files', true);
+
+        $expected = [
+            SUPPORTPATH . 'Files/able/apple.php',
+            SUPPORTPATH . 'Files/baker/banana.php',
+        ];
+
+        $collection->retainMultiplePatterns(['apple*', 'banana*']);
+
+        $this->assertSame($expected, $collection->get());
+    }
+
+    public function testRetainMultiplePatternsScope(): void
+    {
+        $collection = new FileCollection();
+        $collection->addDirectory(SUPPORTPATH . 'Files', true);
+
+        $expected = [
+            $this->directory . 'fig_3.php',
+            SUPPORTPATH . 'Files/baker/banana.php',
+            SUPPORTPATH . 'Files/baker/fig_3.php.txt',
+        ];
+
+        $collection->retainMultiplePatterns(['*_?.php'], $this->directory);
+
+        $this->assertSame($expected, $collection->get());
+    }
+
     public function testCount(): void
     {
         $collection = new FileCollection();

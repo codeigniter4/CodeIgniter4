@@ -10,6 +10,7 @@ Controllers handle incoming requests.
     routing
     controllers
     filters
+    auto_routing_improved
     message
     request
     incomingrequest

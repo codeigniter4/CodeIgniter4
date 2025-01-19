@@ -32,14 +32,14 @@ class ForceHTTPS implements FilterInterface
      *
      * @param array|null $arguments
      *
-     * @return ResponseInterface|void
+     * @return ResponseInterface|null
      */
     public function before(RequestInterface $request, $arguments = null)
     {
         $config = config(App::class);
 
         if ($config->forceGlobalSecureRequests !== true) {
-            return;
+            return null;
         }
 
         $response = service('response');
@@ -49,16 +49,17 @@ class ForceHTTPS implements FilterInterface
         } catch (RedirectException $e) {
             return $e->getResponse();
         }
+
+        return null;
     }
 
     /**
      * We don't have anything to do here.
      *
      * @param array|null $arguments
-     *
-     * @return void
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
+        return null;
     }
 }

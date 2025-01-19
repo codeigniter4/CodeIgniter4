@@ -15,6 +15,7 @@ namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\TableName;
 use stdClass;
 
 /**
@@ -225,12 +226,20 @@ class Connection extends BaseConnection
 
     /**
      * Generates a platform-specific query string so that the column names can be fetched.
+     *
+     * @param string|TableName $table
      */
-    protected function _listColumns(string $table = ''): string
+    protected function _listColumns($table = ''): string
     {
+        if ($table instanceof TableName) {
+            $tableName = $this->escape(strtolower($table->getActualTableName()));
+        } else {
+            $tableName = $this->escape($this->DBPrefix . strtolower($table));
+        }
+
         return 'SELECT [COLUMN_NAME] '
             . ' FROM [INFORMATION_SCHEMA].[COLUMNS]'
-            . ' WHERE  [TABLE_NAME] = ' . $this->escape($this->DBPrefix . $table)
+            . ' WHERE  [TABLE_NAME] = ' . $tableName
             . ' AND [TABLE_SCHEMA] = ' . $this->escape($this->schema);
     }
 

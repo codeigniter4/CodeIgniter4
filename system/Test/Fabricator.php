@@ -15,13 +15,14 @@ namespace CodeIgniter\Test;
 
 use Closure;
 use CodeIgniter\Exceptions\FrameworkException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use Config\App;
 use Faker\Factory;
 use Faker\Generator;
-use InvalidArgumentException;
-use RuntimeException;
+use InvalidArgumentException as BaseInvalidArgumentException;
 
 /**
  * Fabricator
@@ -359,7 +360,7 @@ class Fabricator
             $this->faker->getFormatter($field);
 
             return $field;
-        } catch (InvalidArgumentException) {
+        } catch (BaseInvalidArgumentException) {
             // No match, keep going
         }
 

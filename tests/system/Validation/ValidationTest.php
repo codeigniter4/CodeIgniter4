@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SiteURI;
@@ -26,7 +27,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\ExpectationFailedException;
 use Tests\Support\Validation\TestRules;
 use Throwable;
-use TypeError;
 
 /**
  * @internal
@@ -197,7 +197,7 @@ class ValidationTest extends CIUnitTestCase
     public function testSetRuleRulesFormat(bool $expected, $rules): void
     {
         if (! $expected) {
-            $this->expectException(TypeError::class);
+            $this->expectException(InvalidArgumentException::class);
             $this->expectExceptionMessage('$rules must be of type string|array');
         }
 

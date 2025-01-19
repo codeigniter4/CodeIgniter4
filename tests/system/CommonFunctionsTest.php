@@ -15,6 +15,7 @@ namespace CodeIgniter;
 
 use CodeIgniter\Config\BaseService;
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -47,7 +48,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\Attributes\WithoutErrorHandler;
-use RuntimeException;
 use stdClass;
 use Tests\Support\Models\JobModel;
 
