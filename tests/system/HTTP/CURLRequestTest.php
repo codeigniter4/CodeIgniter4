@@ -1313,4 +1313,71 @@ alt-svc: h3=":443"; ma=86400' . "\x0d\x0a\x0d\x0aResponse Body";
         $this->assertArrayHasKey(CURLOPT_HTTP_VERSION, $options);
         $this->assertSame(CURL_HTTP_VERSION_2_0, $options[CURLOPT_HTTP_VERSION]);
     }
+
+    public function testRemoveMultipleRedirectHeaderSections(): void
+    {
+        $testBody = 'Hello world';
+
+        $output = "HTTP/1.1 301 Moved Permanently
+content-type: text/html; charset=utf-8
+content-length: 211
+location: http://example.com
+date: Mon, 20 Jan 2025 11:46:34 GMT
+server: nginx/1.21.6
+vary: Origin\r\n\r\nHTTP/1.1 302 Found
+content-type: text/html; charset=utf-8
+content-length: 211
+location: http://example.com
+date: Mon, 20 Jan 2025 11:46:34 GMT
+server: nginx/1.21.6
+vary: Origin\r\n\r\nHTTP/1.1 307 Temporary Redirect
+content-type: text/html; charset=utf-8
+content-length: 211
+location: http://example.com
+date: Mon, 20 Jan 2025 11:46:34 GMT
+server: nginx/1.21.6
+vary: Origin\r\n\r\nHTTP/2 308
+content-type: text/html; charset=utf-8
+content-length: 211
+location: http://example.com
+date: Mon, 20 Jan 2025 11:46:34 GMT
+server: nginx/1.21.6
+vary: Origin\r\n\r\nHTTP/1.1 200 OK
+content-type: text/html; charset=utf-8
+content-length: 211
+date: Mon, 20 Jan 2025 11:46:34 GMT
+server: nginx/1.21.6
+vary: Origin\r\n\r\n" . $testBody;
+
+        $this->request->setOutput($output);
+
+        $response = $this->request->request('GET', 'http://example.com', [
+            'allow_redirects' => true,
+        ]);
+
+        $this->assertSame(200, $response->getStatusCode());
+
+        $this->assertSame($testBody, $response->getBody());
+    }
+
+    public function testNotRemoveMultipleRedirectHeaderSectionsWithoutLocationHeader() {
+        $testBody = 'Hello world';
+
+        $output = "HTTP/1.1 301 Moved Permanently
+content-type: text/html; charset=utf-8
+content-length: 211
+date: Mon, 20 Jan 2025 11:46:34 GMT
+server: nginx/1.21.6
+vary: Origin\r\n\r\n" . $testBody;
+
+        $this->request->setOutput($output);
+
+        $response = $this->request->request('GET', 'http://example.com', [
+            'allow_redirects' => true,
+        ]);
+
+        $this->assertSame(301, $response->getStatusCode());
+
+        $this->assertSame($testBody, $response->getBody());
+    }
 }
