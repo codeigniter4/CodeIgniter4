@@ -1330,7 +1330,7 @@ content-length: 211
 location: http://example.com
 date: Mon, 20 Jan 2025 11:46:34 GMT
 server: nginx/1.21.6
-vary: Origin\r\n\r\nHTTP/1.1 307 Temporary Redirect
+vary: Origin\r\n\r\nHTTP/1.1 399 Custom Redirect
 content-type: text/html; charset=utf-8
 content-length: 211
 location: http://example.com
