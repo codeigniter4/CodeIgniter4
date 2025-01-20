@@ -1360,7 +1360,8 @@ vary: Origin\r\n\r\n" . $testBody;
         $this->assertSame($testBody, $response->getBody());
     }
 
-    public function testNotRemoveMultipleRedirectHeaderSectionsWithoutLocationHeader() {
+    public function testNotRemoveMultipleRedirectHeaderSectionsWithoutLocationHeader(): void
+    {
         $testBody = 'Hello world';
 
         $output = "HTTP/1.1 301 Moved Permanently
