@@ -385,27 +385,8 @@ class CURLRequest extends OutgoingRequest
         // Set the string we want to break our response from
         $breakString = "\r\n\r\n";
 
-        // Strip out multiple redirect header sections
         if (isset($this->config['allow_redirects']) && $this->config['allow_redirects'] !== false) {
-            while (preg_match('/^HTTP\/\d(?:\.\d)? 3\d\d/', $output)) {
-                $breakStringPos        = strpos($output, $breakString);
-                $redirectHeaderSection = substr($output, 0, $breakStringPos);
-                $redirectHeaders       = explode("\n", $redirectHeaderSection);
-                $locationHeaderFound   = false;
-
-                foreach ($redirectHeaders as $header) {
-                    if (str_starts_with(strtolower($header), 'location:')) {
-                        $locationHeaderFound = true;
-                        break;
-                    }
-                }
-
-                if ($locationHeaderFound) {
-                    $output = substr($output, $breakStringPos + 4);
-                } else {
-                    break;
-                }
-            }
+            $output = $this->handleRedirectHeaders($output, $breakString);
         }
 
         while (str_starts_with($output, 'HTTP/1.1 100 Continue')) {
@@ -733,6 +714,32 @@ class CURLRequest extends OutgoingRequest
         }
 
         curl_close($ch);
+
+        return $output;
+    }
+
+    private function handleRedirectHeaders(string $output, string $breakString): string
+    {
+        // Strip out multiple redirect header sections
+        while (preg_match('/^HTTP\/\d(?:\.\d)? 3\d\d/', $output)) {
+            $breakStringPos        = strpos($output, $breakString);
+            $redirectHeaderSection = substr($output, 0, $breakStringPos);
+            $redirectHeaders       = explode("\n", $redirectHeaderSection);
+            $locationHeaderFound   = false;
+
+            foreach ($redirectHeaders as $header) {
+                if (str_starts_with(strtolower($header), 'location:')) {
+                    $locationHeaderFound = true;
+                    break;
+                }
+            }
+
+            if ($locationHeaderFound) {
+                $output = substr($output, $breakStringPos + 4);
+            } else {
+                break;
+            }
+        }
 
         return $output;
     }
