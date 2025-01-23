@@ -30,6 +30,8 @@ Deprecations
 Bugs Fixed
 **********
 
+- **CURLRequest:** Fixed an issue where multiple header sections appeared in the CURL response body during multiple redirects from the target server.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.
