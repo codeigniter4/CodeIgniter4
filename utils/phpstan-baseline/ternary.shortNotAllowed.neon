@@ -1,4 +1,4 @@
-# total 38 errors
+# total 37 errors
 
 parameters:
     ignoreErrors:
@@ -46,11 +46,6 @@ parameters:
             message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
             count: 1
             path: ../../system/HTTP/CURLRequest.php
-
-        -
-            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
-            count: 1
-            path: ../../system/HTTP/Exceptions/RedirectException.php
 
         -
             message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
