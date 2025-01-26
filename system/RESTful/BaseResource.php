@@ -18,6 +18,7 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Model;
 use Psr\Log\LoggerInterface;
 
 abstract class BaseResource extends Controller
@@ -30,12 +31,12 @@ abstract class BaseResource extends Controller
     protected $request;
 
     /**
-     * @var string|null The model that holding this resource's data
+     * @var class-string<Model>|string|null The model that holding this resource's data
      */
     protected $modelName;
 
     /**
-     * @var object|null The model that holding this resource's data
+     * @var Model|object|null The model that holding this resource's data
      */
     protected $model;
 
@@ -55,7 +56,7 @@ abstract class BaseResource extends Controller
      * Set or change the model this controller is bound to.
      * Given either the name or the object, determine the other.
      *
-     * @param object|string|null $which
+     * @param class-string<Model>|Model|object|string|null $which
      *
      * @return void
      */
@@ -63,7 +64,7 @@ abstract class BaseResource extends Controller
     {
         if ($which !== null) {
             $this->model     = is_object($which) ? $which : null;
-            $this->modelName = is_object($which) ? null : $which;
+            $this->modelName = is_object($which) ? '' : $which;
         }
 
         if (empty($this->model) && ! empty($this->modelName) && class_exists($this->modelName)) {
