@@ -13,7 +13,6 @@ class Filters extends BaseFilters
         // ...
         'cors' => [
             'before' => ['api/*'],
-            'after'  => ['api/*'],
         ],
     ];
 }
