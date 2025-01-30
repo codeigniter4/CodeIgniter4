@@ -37,8 +37,6 @@ mergeable:
     filter:
       - do: payload
         pull_request:
-          draft:
-            match: false
           author_association:
             must_include:
               regex: ^NONE|FIRST_TIME_CONTRIBUTOR|FIRST_TIMER$
