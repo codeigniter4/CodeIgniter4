@@ -242,13 +242,9 @@ class Cors
             return false;
         }
 
-        if ($this->config['exposedHeaders'] !== [] && (! $response->hasHeader('Access-Control-Expose-Headers') || ! str_contains(
+        return ! ($this->config['exposedHeaders'] !== [] && (! $response->hasHeader('Access-Control-Expose-Headers') || ! str_contains(
             $response->getHeaderLine('Access-Control-Expose-Headers'),
             implode(', ', $this->config['exposedHeaders']),
-        ))) {
-            return false;
-        }
-
-        return true;
+        )));
     }
 }
