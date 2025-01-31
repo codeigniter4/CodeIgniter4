@@ -22,8 +22,6 @@ Message Changes
 Changes
 *******
 
-- **Cors:** From now on only the ``before`` filter is used. You can remove all the ``after`` filter occurrences from your configuration for CORS.
-
 ************
 Deprecations
 ************
@@ -33,7 +31,7 @@ Bugs Fixed
 **********
 
 - **CURLRequest:** Fixed an issue where multiple header sections appeared in the CURL response body during multiple redirects from the target server.
-- **Cors:** Fixed a bug in the Cors filter that caused the appropriate headers to not be added when another filter returned a response object. From now on all CORS headers are added in the ``before`` filter and the ``after`` filter is no longer used.
+- **Cors:** Fixed a bug in the Cors filter that caused the appropriate headers to not be added when another filter returned a response object in the ``before`` filter.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

@@ -100,6 +100,24 @@ class Cors implements FilterInterface
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        return null;
+        if (! $request instanceof IncomingRequest) {
+            return null;
+        }
+
+        $this->createCorsService($arguments);
+
+        if ($this->cors->hasResponseHeaders($request, $response)) {
+            return null;
+        }
+
+        // Always adds `Vary: Access-Control-Request-Method` header for cacheability.
+        // If there is an intermediate cache server such as a CDN, if a plain
+        // OPTIONS request is sent, it may be cached. But valid preflight requests
+        // have this header, so it will be cached separately.
+        if ($request->is('OPTIONS')) {
+            $response->appendHeader('Vary', 'Access-Control-Request-Method');
+        }
+
+        return $this->cors->addResponseHeaders($request, $response);
     }
 }
