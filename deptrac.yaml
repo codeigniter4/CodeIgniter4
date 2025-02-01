@@ -218,6 +218,7 @@ parameters:
     RESTful:
       - +API
       - +Controller
+      - +Model
     Router:
       - HTTP
     Security:
