@@ -447,7 +447,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         $this->handler->withFile($this->origin . 'ci-logo.jpeg');
         $this->handler->convert(IMAGETYPE_PNG);
         $this->handler->save($this->root . 'ci-logo.png');
-        $this->assertSame(exif_imagetype($this->root . 'ci-logo.png'), IMAGETYPE_PNG);
+        $this->assertSame(IMAGETYPE_PNG, exif_imagetype($this->root . 'ci-logo.png'));
     }
 
     public function testImageReorientLandscape(): void

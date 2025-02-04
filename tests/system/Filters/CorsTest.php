@@ -102,7 +102,7 @@ final class CorsTest extends CIUnitTestCase
 
         $return = $this->cors->before($cliRequest);
 
-        $this->assertNull($return);
+        $this->assertNotInstanceOf(ResponseInterface::class, $return);
     }
 
     private function assertHeader(string $name, string $value): void

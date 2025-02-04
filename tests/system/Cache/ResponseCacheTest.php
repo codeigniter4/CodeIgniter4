@@ -128,7 +128,7 @@ final class ResponseCacheTest extends CIUnitTestCase
 
         $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
 
-        $this->assertNull($cachedResponse);
+        $this->assertNotInstanceOf(ResponseInterface::class, $cachedResponse);
     }
 
     public function testCachePageIncomingRequestWithCacheQueryString(): void
@@ -159,14 +159,14 @@ final class ResponseCacheTest extends CIUnitTestCase
         $request        = $this->createIncomingRequest('foo/bar', ['xfoo' => 'bar', 'bar' => 'baz']);
         $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
 
-        $this->assertNull($cachedResponse);
+        $this->assertNotInstanceOf(ResponseInterface::class, $cachedResponse);
 
         // Check cache with another request with the different URI path.
         $request = $this->createIncomingRequest('another');
 
         $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
 
-        $this->assertNull($cachedResponse);
+        $this->assertNotInstanceOf(ResponseInterface::class, $cachedResponse);
     }
 
     public function testCachePageIncomingRequestWithHttpMethods(): void
@@ -186,7 +186,7 @@ final class ResponseCacheTest extends CIUnitTestCase
         $request        = $this->createIncomingRequest('foo/bar')->withMethod('POST');
         $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
 
-        $this->assertNull($cachedResponse);
+        $this->assertNotInstanceOf(ResponseInterface::class, $cachedResponse);
     }
 
     public function testCachePageCLIRequest(): void
@@ -214,7 +214,7 @@ final class ResponseCacheTest extends CIUnitTestCase
 
         $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
 
-        $this->assertNull($cachedResponse);
+        $this->assertNotInstanceOf(ResponseInterface::class, $cachedResponse);
     }
 
     public function testUnserializeError(): void
