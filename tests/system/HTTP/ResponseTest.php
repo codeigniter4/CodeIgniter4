@@ -495,7 +495,7 @@ final class ResponseTest extends CIUnitTestCase
 
         $actual = $response->download();
 
-        $this->assertNull($actual);
+        $this->assertNotInstanceOf(DownloadResponse::class, $actual);
     }
 
     public function testPretendMode(): void

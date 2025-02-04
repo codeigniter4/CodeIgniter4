@@ -524,7 +524,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $collection = new FileCollection();
         $file       = $collection->getFile('fileuser');
-        $this->assertNull($file);
+        $this->assertNotInstanceOf(UploadedFile::class, $file);
     }
 
     public function testFileReturnValidMultipleFiles(): void
@@ -686,7 +686,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $collection = new FileCollection();
 
         $this->assertFalse($collection->hasFile('my-form.detailz.avatars.0'));
-        $this->assertNull($collection->getFile('my-form.detailz.avatars.0'));
+        $this->assertNotInstanceOf(UploadedFile::class, $collection->getFile('my-form.detailz.avatars.0'));
     }
 
     public function testGetFileMultipleHasNoFile(): void
