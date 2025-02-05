@@ -1047,8 +1047,9 @@ This method returns a list of filters that are currently active for the route be
 Getting Matched Route Options for the Current Route
 ===================================================
 
-After creating a route, it may have additional parameters (they are described above): ``filter``, ``namespace``, ``hostname``, ``subdomain``, ``offset``, ``priority``, ``as``, ``redirect``.
-To access these parameters, call ``Router::getMatchedRouteOptions()``. Example of the returned array:
+When we're defining routes, they may have optional parameters: ``filter``, ``namespace``, ``hostname``, ``subdomain``, ``offset``, ``priority``, ``as``. All of them were described earlier above.
+Additionally, if we use ``addRedirect()`` we can also expect the ``redirect`` key.
+To access the values of these parameters, we can call ``Router::getMatchedRouteOptions()``. Here is an example of the returned array:
 
 .. literalinclude:: routing/074.php
 

@@ -15,10 +15,9 @@ print_r($options);
 // (
 //     [filter] => api-auth
 //     [namespace] => App\API\v1
-//     [hostname] => accounts.example.com
-//     [subdomain] => media
+//     [hostname] => example.com
+//     [subdomain] => api
 //     [offset] => 1
 //     [priority] => 1
 //     [as] => api:auth
-//     [redirect] => 302
 // )
