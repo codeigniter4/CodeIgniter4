@@ -63,6 +63,14 @@ class Modules extends BaseModules
     public $composerPackages = [];
 
     /**
+     * If set to `true`, Registrars may have previous config values as an array.
+     * This is useful when updating arrays or checking properties.
+     *
+     * NOTE: Enable this option only for trusted modules/packages.
+     */
+    public bool $registrarHasData = false;
+
+    /**
      * --------------------------------------------------------------------------
      * Auto-Discovery Rules
      * --------------------------------------------------------------------------
