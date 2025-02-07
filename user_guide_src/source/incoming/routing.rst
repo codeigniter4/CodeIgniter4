@@ -1044,3 +1044,12 @@ This method returns a list of filters that are currently active for the route be
 .. note:: The ``getFilters()`` method returns only the filters defined for the specific route.
      It does not include global filters or those specified in the **app/Config/Filters.php** file.
 
+Getting Matched Route Options for the Current Route
+===================================================
+
+When we're defining routes, they may have optional parameters: ``filter``, ``namespace``, ``hostname``, ``subdomain``, ``offset``, ``priority``, ``as``. All of them were described earlier above.
+Additionally, if we use ``addRedirect()`` we can also expect the ``redirect`` key.
+To access the values of these parameters, we can call ``Router::getMatchedRouteOptions()``. Here is an example of the returned array:
+
+.. literalinclude:: routing/074.php
+
