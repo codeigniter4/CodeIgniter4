@@ -1,4 +1,4 @@
-# total 33 errors
+# total 35 errors
 
 parameters:
     ignoreErrors:
@@ -41,6 +41,11 @@ parameters:
             message: '#^@readonly property Config\\DocTypes\:\:\$html5 is assigned outside of its declaring class\.$#'
             count: 1
             path: ../../tests/system/CommonFunctionsTest.php
+
+        -
+            message: '#^@readonly property Config\\Modules\:\:\$registrarHasData is assigned outside of its declaring class\.$#'
+            count: 2
+            path: ../../tests/system/Config/BaseConfigTest.php
 
         -
             message: '#^@readonly property Config\\Modules\:\:\$aliases is assigned outside of its declaring class\.$#'
