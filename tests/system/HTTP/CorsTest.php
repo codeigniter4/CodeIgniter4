@@ -521,4 +521,41 @@ final class CorsTest extends CIUnitTestCase
             $response->hasHeader('Access-Control-Allow-Methods'),
         );
     }
+
+    public function testHasResponseHeadersFalse(): void
+    {
+        $config                   = $this->getDefaultConfig();
+        $config['allowedOrigins'] = ['http://localhost:8080'];
+        $config['allowedMethods'] = ['GET', 'POST', 'PUT'];
+        $cors                     = $this->createCors($config);
+
+        $request = $this->createRequest()
+            ->withMethod('GET')
+            ->setHeader('Origin', 'http://localhost:8080');
+
+        $response = service('redirectresponse', null, false);
+
+        $this->assertFalse(
+            $cors->hasResponseHeaders($request, $response),
+        );
+    }
+
+    public function testHasResponseHeadersTrue(): void
+    {
+        $config                   = $this->getDefaultConfig();
+        $config['allowedOrigins'] = ['http://localhost:8080'];
+        $config['allowedMethods'] = ['GET', 'POST'];
+        $cors                     = $this->createCors($config);
+
+        $request = $this->createRequest()
+            ->withMethod('GET')
+            ->setHeader('Origin', 'http://localhost:8080');
+
+        $response = service('redirectresponse', null, false);
+        $response = $cors->addResponseHeaders($request, $response);
+
+        $this->assertTrue(
+            $cors->hasResponseHeaders($request, $response),
+        );
+    }
 }

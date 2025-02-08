@@ -16,6 +16,7 @@ namespace CodeIgniter\Filters;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\SiteURI;
@@ -148,6 +149,25 @@ final class CorsTest extends CIUnitTestCase
 
         $response = $this->cors->after($request, $response);
         $response ??= service('response');
+
+        $this->response = $response;
+
+        return $response;
+    }
+
+    private function handleRedirect(RequestInterface $request): ResponseInterface
+    {
+        $response = $this->cors->before($request);
+        if ($response instanceof ResponseInterface) {
+            $this->response = $response;
+
+            return $response;
+        }
+
+        $response = service('redirectresponse');
+
+        $response = $this->cors->after($request, $response);
+        $response ??= service('redirectresponse');
 
         $this->response = $response;
 
@@ -460,5 +480,30 @@ final class CorsTest extends CIUnitTestCase
         $this->assertFalse($response->hasHeader('Access-Control-Allow-Headers'));
         // Always adds `Vary: Access-Control-Request-Method` header.
         $this->assertHeader('Vary', 'Access-Control-Request-Method');
+    }
+
+    public function testItReturnsAllowOriginHeaderOnValidActualRequestWithRedirect(): void
+    {
+        $this->cors = $this->createCors();
+        $request    = $this->createValidActualRequest();
+
+        $response = $this->handleRedirect($request);
+
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertTrue($response->hasHeader('Access-Control-Allow-Origin'));
+        $this->assertHeader('Access-Control-Allow-Origin', 'http://localhost');
+    }
+
+    public function testItReturnsAllowOriginHeaderOnAllowAllOriginRequestWithRedirect(): void
+    {
+        $this->cors = $this->createCors(['allowedOrigins' => ['*']]);
+        $request    = $this->createRequest();
+        $request->setHeader('Origin', 'http://localhost');
+
+        $response = $this->handleRedirect($request);
+
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertTrue($response->hasHeader('Access-Control-Allow-Origin'));
+        $this->assertHeader('Access-Control-Allow-Origin', '*');
     }
 }
