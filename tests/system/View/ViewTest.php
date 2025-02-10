@@ -250,7 +250,7 @@ final class ViewTest extends CIUnitTestCase
     {
         // Make sure debugging is on for our view
         $view = new View($this->config, $this->viewsDir, $this->loader, true);
-        $this->assertCount(0, $view->getPerformanceData());
+        $this->assertEmpty($view->getPerformanceData());
 
         $view->setVar('testString', 'Hello World');
         $expected = '<h1>Hello World</h1>';
@@ -262,12 +262,12 @@ final class ViewTest extends CIUnitTestCase
     {
         // Make sure debugging is on for our view
         $view = new View($this->config, $this->viewsDir, $this->loader, false);
-        $this->assertCount(0, $view->getPerformanceData());
+        $this->assertEmpty($view->getPerformanceData());
 
         $view->setVar('testString', 'Hello World');
         $expected = '<h1>Hello World</h1>';
         $this->assertSame($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
-        $this->assertCount(0, $view->getPerformanceData());
+        $this->assertEmpty($view->getPerformanceData());
     }
 
     public function testRenderLayoutExtendsCorrectly(): void

@@ -130,7 +130,7 @@ final class FindModelTest extends LiveModelTestCase
 
         // Binds should be reset to 0 after each one
         $binds = $this->model->builder()->getBinds();
-        $this->assertCount(0, $binds);
+        $this->assertEmpty($binds);
 
         $query = $this->model->getLastQuery();
         $this->assertCount(1, $this->getPrivateProperty($query, 'binds'));
