@@ -1292,7 +1292,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropKey('forge_test_1', $index, false);
         $this->forge->dropKey('forge_test_1', $uniqueIndex, false);
 
-        $this->assertEmpty($this->db->getIndexData('forge_test_1'));
+        $this->assertCount(0, $this->db->getIndexData('forge_test_1'));
 
         $this->forge->dropTable('forge_test_1', true);
     }
@@ -1500,7 +1500,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertFalse($this->db->tableExists('dropTest'));
 
         if ($this->db->DBDriver === 'SQLite3') {
-            $this->assertEmpty($this->db->getIndexData('droptest'));
+            $this->assertCount(0, $this->db->getIndexData('droptest'));
         }
     }
 
@@ -1668,7 +1668,7 @@ final class ForgeTest extends CIUnitTestCase
 
         $indexes = $this->db->getIndexData('forge_test_users');
 
-        $this->assertEmpty($indexes);
+        $this->assertCount(0, $indexes);
 
         $this->forge->dropTable('forge_test_users', true);
     }

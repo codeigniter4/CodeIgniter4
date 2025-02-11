@@ -37,6 +37,7 @@ use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
+use Rector\PHPUnit\CodeQuality\Rector\MethodCall\AssertCountWithZeroToAssertEmptyRector;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
@@ -168,6 +169,8 @@ return RectorConfig::configure()
         NullToStrictStringFuncCallArgRector::class,
 
         CompactToVariablesRector::class,
+
+        AssertCountWithZeroToAssertEmptyRector::class,
     ])
     // auto import fully qualified class names
     ->withImportNames(removeUnusedImports: true)

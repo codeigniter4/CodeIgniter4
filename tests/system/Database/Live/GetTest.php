@@ -58,7 +58,7 @@ final class GetTest extends CIUnitTestCase
 
         $jobs = $this->db->table('job')->limit(0)->get()->getResult();
 
-        $this->assertEmpty($jobs);
+        $this->assertCount(0, $jobs);
     }
 
     public function testGetWithLimitZeroAsAll(): void

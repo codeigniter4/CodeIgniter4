@@ -103,7 +103,7 @@ final class LoggerTest extends CIUnitTestCase
 
         $logs = TestHandler::getLogs();
 
-        $this->assertEmpty($logs);
+        $this->assertCount(0, $logs);
     }
 
     public function testLogInterpolatesMessage(): void
