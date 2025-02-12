@@ -1,12 +1,7 @@
-# total 47 errors
+# total 46 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^PHPDoc type array\<string, array\<string, list\<string\>\>\> of property Config\\Filters\:\:\$filters is not the same as PHPDoc type array of overridden property CodeIgniter\\Config\\Filters\:\:\$filters\.$#'
-            count: 1
-            path: ../../app/Config/Filters.php
-
         -
             message: '#^PHPDoc type string of property CodeIgniter\\Database\\MySQLi\\Connection\:\:\$escapeChar is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Database\\BaseConnection\<mysqli,mysqli_result\>\:\:\$escapeChar\.$#'
             count: 1
