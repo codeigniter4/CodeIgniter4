@@ -1689,8 +1689,9 @@ class Email
     protected function spoolEmail()
     {
         $this->unwrapSpecials();
-        $protocol = $this->getProtocol();
-        $method   = 'sendWith' . ucfirst($protocol);
+        $protocol           = $this->getProtocol();
+        $upperFirstProtocol = ucfirst($protocol);
+        $method             = 'sendWith' . $upperFirstProtocol;
 
         try {
             $success = $this->{$method}();
@@ -1700,7 +1701,7 @@ class Email
         }
 
         if (! $success) {
-            $message = lang('Email.sendFailure' . ($protocol === 'mail' ? 'PHPMail' : ucfirst($protocol)));
+            $message = lang('Email.sendFailure' . ($protocol === 'mail' ? 'PHPMail' : $upperFirstProtocol));
 
             log_message('error', 'Email: ' . $message);
             log_message('error', $this->printDebuggerRaw());
