@@ -49,7 +49,7 @@ jobs:
 
       - name: Download latest phpDocumentor
         working-directory: source
-        run: phive --no-progress install --trust-gpg-keys 8AC0BAA79732DD42 phpDocumentor
+        run: phive --no-progress install --trust-gpg-keys 6DA3ACC4991FFAE5 phpDocumentor
 
       - name: Prepare API repo
         working-directory: api
