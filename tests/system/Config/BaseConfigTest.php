@@ -252,18 +252,87 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertFalse($config->QFALSE);
     }
 
-    public function testRegistrars(): void
+    public function testRegistrarsWithDisabledRegistrarHasData(): void
     {
+        $modules = new Modules();
+
+        $modules->registrarHasData = false;
+        BaseConfig::setModules($modules);
+
         $config              = new RegistrarConfig();
         $config::$registrars = [TestRegistrar::class];
+
         $this->setPrivateProperty($config, 'didDiscovery', true);
         $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
         $method();
+
+        $cars = [
+            'Sedans' => [
+                'Toyota' => [
+                    'year'  => 2018,
+                    'color' => 'silver',
+                ],
+            ],
+            'Trucks' => [
+                'Volvo' => [
+                    'year'  => 2019,
+                    'color' => 'dark blue',
+                ],
+            ],
+            'Sedans Lux' => [
+                'Toyota' => [
+                    'year'  => 2025,
+                    'color' => 'silver',
+                ],
+            ],
+        ];
 
         // no change to unmodified property
         $this->assertSame('bar', $config->foo);
         // add to an existing array property
         $this->assertSame(['baz', 'first', 'second'], $config->bar);
+        // replace some of the keys with another value
+        $this->assertSame($cars, $config->cars);
+    }
+
+    public function testRegistrarsWithEnabledRegistrarHasData(): void
+    {
+        $modules = new Modules();
+
+        $modules->registrarHasData = true;
+        BaseConfig::setModules($modules);
+
+        $config              = new RegistrarConfig();
+        $config::$registrars = [TestRegistrar::class];
+
+        $this->setPrivateProperty($config, 'didDiscovery', true);
+        $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
+        $method();
+
+        $cars = [
+            'Sedans' => [
+                'Toyota' => [
+                    'year'  => 2018,
+                    'color' => 'silver',
+                ],
+            ],
+            'Trucks' => [
+                'Volvo' => [
+                    'year'  => 2019,
+                    'color' => 'dark blue',
+                ],
+            ],
+            'Sedans Lux' => [
+                'Toyota' => [
+                    'year'  => 2025,
+                    'color' => 'silver',
+                ],
+            ],
+        ];
+
+        $this->assertSame('bar', $config->foo);
+        $this->assertSame(['first', 'second'], $config->bar);
+        $this->assertSame($cars, $config->cars);
     }
 
     public function testBadRegistrar(): void

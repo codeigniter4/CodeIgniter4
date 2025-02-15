@@ -274,6 +274,19 @@ class BaseConfig
 
         $shortName = (new ReflectionClass($this))->getShortName();
 
+        if (static::$moduleConfig->registrarHasData) {
+            // Get all public properties for this config
+            $worker = new class () {
+                /**
+                 * @return array<string, mixed>
+                 */
+                public function getProperties(BaseConfig $obj): array
+                {
+                    return get_object_vars($obj);
+                }
+            };
+        }
+
         // Check the registrar class for a method named after this class' shortName
         foreach (static::$registrars as $callable) {
             // ignore non-applicable registrars
@@ -281,14 +294,16 @@ class BaseConfig
                 continue; // @codeCoverageIgnore
             }
 
-            $properties = $callable::$shortName();
+            $currentProps = static::$moduleConfig->registrarHasData ? $worker->getProperties($this) : [];
+            $properties   = $callable::$shortName($currentProps);
 
             if (! is_array($properties)) {
                 throw new RuntimeException('Registrars must return an array of properties and their values.');
             }
 
             foreach ($properties as $property => $value) {
-                if (isset($this->{$property}) && is_array($this->{$property}) && is_array($value)) {
+                // TODO: The array check can be removed if the option `registrarHasData` is accepted.
+                if (isset($this->{$property}) && is_array($this->{$property}) && is_array($value) && ! static::$moduleConfig->registrarHasData) {
                     $this->{$property} = array_merge($this->{$property}, $value);
                 } else {
                     $this->{$property} = $value;

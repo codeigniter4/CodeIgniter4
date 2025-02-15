@@ -20,13 +20,53 @@ namespace Tests\Support\Config;
  */
 class TestRegistrar
 {
-    public static function RegistrarConfig()
+    /**
+     * @param array<int|string, mixed> $previous
+     */
+    public static function RegistrarConfig(array $previous = [])
     {
+        if ($previous === []) {
+            return [
+                'bar' => [
+                    'first',
+                    'second',
+                ],
+                'cars' => [
+                    'Trucks' => [
+                        'Volvo' => [
+                            'year'  => 2019,
+                            'color' => 'dark blue',
+                        ],
+                    ],
+                    'Sedans Lux' => [
+                        'Toyota' => [
+                            'year'  => 2025,
+                            'color' => 'silver',
+                        ],
+                    ],
+                ],
+            ];
+        }
+
         return [
             'bar' => [
                 'first',
                 'second',
             ],
+            'cars' => array_replace_recursive($previous['cars'], [
+                'Trucks' => [
+                    'Volvo' => [
+                        'year'  => 2019,
+                        'color' => 'dark blue',
+                    ],
+                ],
+                'Sedans Lux' => [
+                    'Toyota' => [
+                        'year'  => 2025,
+                        'color' => 'silver',
+                    ],
+                ],
+            ]),
         ];
     }
 }
