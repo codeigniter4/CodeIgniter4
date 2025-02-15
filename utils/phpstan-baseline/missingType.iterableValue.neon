@@ -1,4 +1,4 @@
-# total 1672 errors
+# total 1671 errors
 
 parameters:
     ignoreErrors:
@@ -791,11 +791,6 @@ parameters:
             message: '#^Property CodeIgniter\\Config\\Factory\:\:\$models type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Config/Factory.php
-
-        -
-            message: '#^Property CodeIgniter\\Config\\Filters\:\:\$filters type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Config/Filters.php
 
         -
             message: '#^Method CodeIgniter\\Config\\Services\:\:curlrequest\(\) has parameter \$options with no value type specified in iterable type array\.$#'
