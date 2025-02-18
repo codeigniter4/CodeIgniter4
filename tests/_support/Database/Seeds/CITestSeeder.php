@@ -109,13 +109,13 @@ class CITestSeeder extends Seeder
             ],
             'cities' => [
                 [
-                    'city' => 'Tokyo',
-                    'country' => 'Japan',
+                    'city'       => 'Tokyo',
+                    'country'    => 'Japan',
                     'population' => 37_115_035,
                 ],
                 [
-                    'city' => 'Delhi',
-                    'country' => 'India',
+                    'city'       => 'Delhi',
+                    'country'    => 'India',
                     'population' => 33_807_403,
                 ],
             ],

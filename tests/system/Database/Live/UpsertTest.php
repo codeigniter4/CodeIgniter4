@@ -617,13 +617,13 @@ final class UpsertTest extends CIUnitTestCase
                 'id'         => 1,
                 'city'       => 'Tokyo',
                 'country'    => 'Japan',
-                'population' => 222
+                'population' => 222,
             ],
             [
                 'id'         => 2,
                 'city'       => 'Delhi',
                 'country'    => 'India',
-                'population' => 111
+                'population' => 111,
             ],
         ];
 
