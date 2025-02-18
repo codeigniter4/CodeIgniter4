@@ -44,6 +44,7 @@ final class MetadataTest extends CIUnitTestCase
 
         $tables = [
             $prefix . 'migrations',
+            $prefix . 'cities',
             $prefix . 'user',
             $prefix . 'job',
             $prefix . 'misc',

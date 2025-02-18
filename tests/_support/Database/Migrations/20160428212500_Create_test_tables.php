@@ -47,6 +47,16 @@ class Migration_Create_test_tables extends Migration
             'value' => ['type' => 'VARCHAR', 'constraint' => 400, 'null' => true],
         ])->addKey('id', true)->createTable('misc', true);
 
+        $this->forge->addField([
+            'id'         => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
+            'city'       => ['type' => 'VARCHAR', 'constraint' => 40],
+            'country'    => ['type' => 'VARCHAR', 'constraint' => 40],
+            'population' => ['type' => 'INTEGER', 'constraint' => 3, 'unsigned' => true, 'null' => true],
+            'created_at' => ['type' => 'DATETIME', 'null' => true],
+            'updated_at' => ['type' => 'DATETIME', 'null' => true],
+            'deleted_at' => ['type' => 'DATETIME', 'null' => true],
+        ])->addKey('id', true)->addUniqueKey(['city', 'country'])->createTable('cities', true);
+
         // Database Type test table
         // missing types:
         //   TINYINT,MEDIUMINT,BIT,YEAR,BINARY,VARBINARY,TINYTEXT,LONGTEXT,

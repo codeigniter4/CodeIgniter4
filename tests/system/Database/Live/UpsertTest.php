@@ -448,7 +448,7 @@ final class UpsertTest extends CIUnitTestCase
         $this->assertSame('El Salvador', $data[4]->country);
     }
 
-    public function testUpsertWithMatchingDataOnUniqueIndexandPrimaryKey(): void
+    public function testUpsertWithMatchingDataOnUniqueIndexAndPrimaryKey(): void
     {
         $data = [
             'id'      => 6,
@@ -605,6 +605,33 @@ final class UpsertTest extends CIUnitTestCase
             $this->seeInDatabase('user', ['id' => 2, 'country' => 'Greece']);
             $this->seeInDatabase('user', ['id' => 3, 'country' => 'Greece']);
         }
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9450
+     */
+    public function testUpsertBatchCompositeUniqueIndex(): void
+    {
+        $data = [
+            [
+                'id'         => 1,
+                'city'       => 'Tokyo',
+                'country'    => 'Japan',
+                'population' => 222
+            ],
+            [
+                'id'         => 2,
+                'city'       => 'Delhi',
+                'country'    => 'India',
+                'population' => 111
+            ],
+        ];
+
+        // uses city_country (city,country) - composite unique index
+        $this->db->table('cities')->upsertBatch($data);
+
+        $this->seeInDatabase('cities', ['id' => 1, 'population' => 222]);
+        $this->seeInDatabase('cities', ['id' => 2, 'population' => 111]);
     }
 
     public function testSetBatchOneRow(): void
