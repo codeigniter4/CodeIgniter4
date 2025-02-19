@@ -937,6 +937,10 @@ constraint by default. Here is an example using an array:
 
 .. literalinclude:: query_builder/112.php
 
+.. note:: For databases other than MySQL, if a table has multiple keys (primary or unique),
+    the primary key will be prioritized by default when handling constraints. If you prefer
+    to use a different unique key instead of the primary key, use the ``onConstraint()`` method.
+
 The first parameter is an associative array of values.
 
 Here is an example using an object:
