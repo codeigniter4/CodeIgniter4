@@ -614,24 +614,27 @@ final class UpsertTest extends CIUnitTestCase
     {
         $data = [
             [
-                'id'         => 1,
-                'city'       => 'Tokyo',
-                'country'    => 'Japan',
-                'population' => 222,
+                'team_id'   => 1,
+                'person_id' => 22,
+                'role'      => 'leader',
+                'status'    => 'active',
             ],
             [
-                'id'         => 2,
-                'city'       => 'Delhi',
-                'country'    => 'India',
-                'population' => 111,
+                'team_id'   => 1,
+                'person_id' => 33,
+                'role'      => 'member',
+                'status'    => 'active',
             ],
         ];
 
-        // uses city_country (city,country) - composite unique index
-        $this->db->table('cities')->upsertBatch($data);
+        // uses (team_id, person_id) - composite unique index
+        $this->db->table('team_members')->upsertBatch($data);
 
-        $this->seeInDatabase('cities', ['id' => 1, 'population' => 222]);
-        $this->seeInDatabase('cities', ['id' => 2, 'population' => 111]);
+        $this->seeInDatabase('team_members', ['team_id' => 1, 'person_id' => 22, 'role' => 'leader']);
+        $this->dontSeeInDatabase('team_members', ['team_id' => 1, 'person_id' => 22, 'role' => 'member']);
+
+        $this->seeInDatabase('team_members', ['team_id' => 1, 'person_id' => 33, 'role' => 'member']);
+        $this->dontSeeInDatabase('team_members', ['team_id' => 1, 'person_id' => 33, 'role' => 'mentor']);
     }
 
     public function testSetBatchOneRow(): void

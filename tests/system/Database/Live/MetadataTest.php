@@ -44,10 +44,10 @@ final class MetadataTest extends CIUnitTestCase
 
         $tables = [
             $prefix . 'migrations',
-            $prefix . 'cities',
             $prefix . 'user',
             $prefix . 'job',
             $prefix . 'misc',
+            $prefix . 'team_members',
             $prefix . 'type_test',
             $prefix . 'empty',
             $prefix . 'secondary',

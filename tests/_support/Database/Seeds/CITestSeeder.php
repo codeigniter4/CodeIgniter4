@@ -107,16 +107,18 @@ class CITestSeeder extends Seeder
                     'value' => 'ടൈപ്പ്',
                 ],
             ],
-            'cities' => [
+            'team_members' => [
                 [
-                    'city'       => 'Tokyo',
-                    'country'    => 'Japan',
-                    'population' => 37_115_035,
+                    'team_id'   => 1,
+                    'person_id' => 22,
+                    'role'      => 'member',
+                    'status'    => 'active',
                 ],
                 [
-                    'city'       => 'Delhi',
-                    'country'    => 'India',
-                    'population' => 33_807_403,
+                    'team_id'   => 1,
+                    'person_id' => 33,
+                    'role'      => 'mentor',
+                    'status'    => 'active',
                 ],
             ],
             'type_test' => [
