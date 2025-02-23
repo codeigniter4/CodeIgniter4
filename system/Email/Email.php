@@ -280,6 +280,13 @@ class Email
     protected $SMTPAuth = false;
 
     /**
+     * Which SMTP AUTH method to use ('LOGIN', 'PLAIN')
+     *
+     * @var string
+     */
+    protected $SMTPAuthMethod = 'LOGIN';
+
+    /**
      * Whether to send a Reply-To header
      *
      * @var bool
@@ -1920,9 +1927,9 @@ class Email
                 $this->SMTPConnect,
                 true,
                 STREAM_CRYPTO_METHOD_TLSv1_0_CLIENT
-                | STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT
-                | STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT
-                | STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT,
+                    | STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT
+                    | STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT
+                    | STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT,
             );
 
             if ($crypto !== true) {
@@ -2015,53 +2022,86 @@ class Email
      */
     protected function SMTPAuthenticate()
     {
-        if (! $this->SMTPAuth) {
+        if (!$this->SMTPAuth) {
             return true;
         }
 
-        if ($this->SMTPUser === '' && $this->SMTPPass === '') {
+        // If no username or password is set
+        if ($this->SMTPUser === '' || $this->SMTPPass === '') {
             $this->setErrorMessage(lang('Email.noSMTPAuth'));
-
             return false;
         }
 
-        $this->sendData('AUTH LOGIN');
-        $reply = $this->getSMTPData();
+        switch ($this->SMTPAuthMethod) {
+            case 'LOGIN':
+                $this->sendData('AUTH LOGIN'); // Start authentication
+                if (!$this->checkSMTPAuthResponse($this->getSMTPData())) {
+                    return false;
+                }
 
-        if (str_starts_with($reply, '503')) {    // Already authenticated
-            return true;
-        }
+                // Send encoded username
+                $this->sendData(base64_encode($this->SMTPUser));
+                if (!$this->checkSMTPAuthResponse($this->getSMTPData())) {
+                    return false;
+                }
 
-        if (! str_starts_with($reply, '334')) {
-            $this->setErrorMessage(lang('Email.failedSMTPLogin', [$reply]));
+                // Send encoded password
+                $this->sendData(base64_encode($this->SMTPPass));
+                $reply = $this->getSMTPData();
 
-            return false;
-        }
+                // Authentication success (235 expected)
+                if (!str_starts_with($reply, '235')) {
+                    $this->setErrorMessage(lang('Email.SMTPAuthPassword', [$reply]));
+                    return false;
+                }
+                break;
+            case 'PLAIN':
+                // Generate single command for PLAIN authentication
+                $authString = "\0" . $this->SMTPUser . "\0" . $this->SMTPPass;
 
-        $this->sendData(base64_encode($this->SMTPUser));
-        $reply = $this->getSMTPData();
+                $this->sendData('AUTH PLAIN ' . base64_encode($authString));
 
-        if (! str_starts_with($reply, '334')) {
-            $this->setErrorMessage(lang('Email.SMTPAuthUsername', [$reply]));
+                if (!$this->checkSMTPAuthResponse($this->getSMTPData())) {
+                    return false;
+                }
 
-            return false;
-        }
-
-        $this->sendData(base64_encode($this->SMTPPass));
-        $reply = $this->getSMTPData();
-
-        if (! str_starts_with($reply, '235')) {
-            $this->setErrorMessage(lang('Email.SMTPAuthPassword', [$reply]));
-
-            return false;
+                break;
+            default:
+                $this->setErrorMessage(lang('Email.noSMTPAuthMethod'));
+                return false;
+                break;
         }
 
         if ($this->SMTPKeepAlive) {
-            $this->SMTPAuth = false;
+            $this->SMTPAuth = false; // Prevent re-authentication for keep-alive sessions
         }
 
         return true;
     }
+
+
+    private function checkSMTPAuthResponse($replyData)
+    {
+        // 503 already authenticated || 235 authentication success ('AUTH PLAIN')
+        if (str_starts_with($replyData, '503') || str_starts_with($replyData, '235')) {
+            return true;
+        }
+
+        if (str_starts_with($replyData, '535')) { // Authentication failed (bad credentials)
+            $this->setErrorMessage(lang('Email.failedSMTPLogin', [$replyData]));
+            return false;
+        }
+
+        if (str_starts_with($replyData, '334')) { // Server requesting username or password
+            return true;
+        }
+
+        // Unexpected response 
+        $this->setErrorMessage(lang('Email.SMTPUnexpectedResponse', [$replyData]));
+        return false;
+    }
+
+
 
     /**
      * @param string $data
