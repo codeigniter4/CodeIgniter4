@@ -1,4 +1,4 @@
-# total 73 errors
+# total 147 errors
 
 parameters:
     ignoreErrors:
@@ -119,11 +119,6 @@ parameters:
 
         -
             message: '#^Parameter \#1 \$db of class CodeIgniter\\Database\\SQLite3\\Table constructor expects CodeIgniter\\Database\\SQLite3\\Connection, CodeIgniter\\Database\\BaseConnection given\.$#'
-            count: 1
-            path: ../../tests/system/Database/Live/SQLite3/AlterTableTest.php
-
-        -
-            message: '#^Parameter \#2 \$forge of class CodeIgniter\\Database\\SQLite3\\Table constructor expects CodeIgniter\\Database\\SQLite3\\Forge, CodeIgniter\\Database\\Forge given\.$#'
             count: 1
             path: ../../tests/system/Database/Live/SQLite3/AlterTableTest.php
 
