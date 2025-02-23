@@ -47,6 +47,15 @@ class Migration_Create_test_tables extends Migration
             'value' => ['type' => 'VARCHAR', 'constraint' => 400, 'null' => true],
         ])->addKey('id', true)->createTable('misc', true);
 
+        // Team members Table (composite key)
+        $this->forge->addField([
+            'team_id'    => ['type' => 'INTEGER', 'constraint' => 3],
+            'person_id'  => ['type' => 'INTEGER', 'constraint' => 3],
+            'role'       => ['type' => 'VARCHAR', 'constraint' => 40],
+            'status'     => ['type' => 'VARCHAR', 'constraint' => 40],
+            'created_at' => ['type' => 'DATETIME', 'null' => true],
+        ])->addUniqueKey(['team_id', 'person_id'])->createTable('team_members', true);
+
         // Database Type test table
         // missing types:
         //   TINYINT,MEDIUMINT,BIT,YEAR,BINARY,VARBINARY,TINYTEXT,LONGTEXT,
