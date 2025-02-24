@@ -179,7 +179,9 @@ $errorId = uniqid('error', true);
                             <tr>
                                 <td><?= esc($key) ?></td>
                                 <td>
-                                    <?php if (is_string($value)) : ?>
+                                    <?php if (in_array($key, config('exceptions')->sensitiveDataInServer ?? [])) : ?>
+                                        <?= esc('**********') ?>
+                                    <?php elseif (is_string($value)) : ?>
                                         <?= esc($value) ?>
                                     <?php else: ?>
                                         <pre><?= esc(print_r($value, true)) ?></pre>

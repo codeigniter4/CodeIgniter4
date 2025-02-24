@@ -60,6 +60,17 @@ class Exceptions extends BaseConfig
 
     /**
      * --------------------------------------------------------------------------
+     * HIDE FROM DEBUG SERVER
+     * --------------------------------------------------------------------------
+     * Any data that you would like to hide from the debug server.
+     * ex. ['database.default.password']
+     *
+     * @var list<string>
+     */
+    public array $sensitiveDataInServer = ['database.default.password'];
+
+    /**
+     * --------------------------------------------------------------------------
      * WHETHER TO THROW AN EXCEPTION ON DEPRECATED ERRORS
      * --------------------------------------------------------------------------
      * If set to `true`, DEPRECATED errors are only logged and no exceptions are
