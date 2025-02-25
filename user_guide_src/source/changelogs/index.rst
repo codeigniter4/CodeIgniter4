@@ -12,6 +12,7 @@ See all the changes.
 .. toctree::
     :titlesonly:
 
+    v4.7.0
     v4.6.1
     v4.6.0
     v4.5.8
