@@ -31,11 +31,9 @@
 #debug-icon .debug-bar-ndisplay {
   display: none;
 }
-
 .debug-bar-vars {
   cursor: pointer;
 }
-
 #debug-bar {
   bottom: 0;
   left: 0;
@@ -44,8 +42,7 @@
   z-index: 10000;
   height: 36px;
   line-height: 36px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   font-size: 16px;
   font-weight: 400;
 }
@@ -54,8 +51,7 @@
   font-weight: normal;
   margin: 0 0 0 auto;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 }
 #debug-bar h1 svg {
   width: 16px;
@@ -106,7 +102,6 @@
   margin: 5px 10px 15px 10px;
   width: calc(100% - 10px);
 }
-
 @media screen and (max-width: 768px) {
   #debug-bar table {
     display: block;
@@ -124,7 +119,6 @@
     font-size: 14px;
   }
 }
-
 @media screen and (max-width: 480px) {
   #debug-bar table {
     font-size: 11px;
@@ -182,16 +176,13 @@
   align-items: center;
   min-height: 36px;
 }
-
 #debug-bar .toolbar::-webkit-scrollbar {
   height: 4px;
 }
-
 #debug-bar .toolbar::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.2);
   border-radius: 2px;
 }
-
 #debug-bar .toolbar .rotate {
   animation: toolbar-rotate 9s linear infinite;
 }
@@ -332,8 +323,7 @@
   cursor: pointer;
 }
 #debug-bar .timeline .timeline-parent td:first-child nav {
-  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAxNTAiPjxwYXRoIGQ9Ik02IDdoMThsLTkgMTV6bTAgMzBoMThsLTkgMTV6bTAgNDVoMThsLTktMTV6bTAgMzBoMThsLTktMTV6bTAgMTJsMTggMThtLTE4IDBsMTgtMTgiIGZpbGw9IiM1NTUiLz48cGF0aCBkPSJNNiAxMjZsMTggMThtLTE4IDBsMTgtMTgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlPSIjNTU1Ii8+PC9zdmc+")
-    no-repeat scroll 0 0/15px 75px transparent;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAxNTAiPjxwYXRoIGQ9Ik02IDdoMThsLTkgMTV6bTAgMzBoMThsLTkgMTV6bTAgNDVoMThsLTktMTV6bTAgMzBoMThsLTktMTV6bTAgMTJsMTggMThtLTE4IDBsMTgtMTgiIGZpbGw9IiM1NTUiLz48cGF0aCBkPSJNNiAxMjZsMTggMThtLTE4IDBsMTgtMTgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlPSIjNTU1Ii8+PC9zdmc+") no-repeat scroll 0 0/15px 75px transparent;
   background-position: 0 25%;
   display: inline-block;
   height: 15px;
@@ -363,12 +353,10 @@
 #debug-bar > .debug-bar-dblock {
   display: block;
 }
-
 .debug-view.show-view {
   border: 1px solid;
   margin: 4px;
 }
-
 .debug-view-path {
   font-family: monospace;
   font-size: 12px;
@@ -377,11 +365,9 @@
   padding: 2px;
   text-align: left;
 }
-
 .show-view .debug-view-path {
   display: block !important;
 }
-
 @media screen and (max-width: 1024px) {
   #debug-bar .ci-label img {
     margin: unset;
@@ -413,7 +399,6 @@
 #debug-icon a:visited {
   color: #dd8615;
 }
-
 #debug-bar {
   background-color: #ffffff;
   color: #434343;
@@ -504,16 +489,13 @@
 #debug-bar .timeline .timer {
   background-color: #dd8615;
 }
-
 .debug-view.show-view {
   border-color: #dd8615;
 }
-
 .debug-view-path {
   background-color: #fdc894;
   color: #434343;
 }
-
 @media (prefers-color-scheme: dark) {
   #debug-icon {
     background-color: #252525;
@@ -742,7 +724,6 @@
   background: #000;
   color: #fff;
 }
-
 #toolbarContainer.light #debug-icon {
   background-color: #ffffff;
   box-shadow: 0 0 4px #dfdfdf;
@@ -851,87 +832,66 @@
   background-color: #fdc894;
   color: #434343;
 }
-
 .debug-bar-width30 {
   width: 30%;
 }
-
 .debug-bar-width10 {
   width: 10%;
 }
-
 .debug-bar-width70p {
   width: 70px;
 }
-
 .debug-bar-width190p {
   width: 190px;
 }
-
 .debug-bar-width20e {
   width: 20em;
 }
-
 .debug-bar-width6r {
   width: 6rem;
 }
-
 .debug-bar-ndisplay {
   display: none;
 }
-
 .debug-bar-alignRight {
   text-align: right;
 }
-
 .debug-bar-alignLeft {
   text-align: left;
 }
-
 .debug-bar-noverflow {
   overflow: hidden;
 }
-
 .debug-bar-dtableRow {
   display: table-row;
 }
-
 .debug-bar-dinlineBlock {
   display: inline-block;
 }
-
 .debug-bar-pointer {
   cursor: pointer;
 }
-
 .debug-bar-mleft4 {
   margin-left: 4px;
 }
-
 .debug-bar-level-0 {
   --level: 0;
 }
-
 .debug-bar-level-1 {
   --level: 1;
 }
-
 .debug-bar-level-2 {
   --level: 2;
 }
-
 .debug-bar-level-3 {
   --level: 3;
 }
-
 .debug-bar-level-4 {
   --level: 4;
 }
-
 .debug-bar-level-5 {
   --level: 5;
 }
-
 .debug-bar-level-6 {
   --level: 6;
 }
