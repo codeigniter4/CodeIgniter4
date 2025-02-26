@@ -281,8 +281,6 @@ class Email
 
     /**
      * Which SMTP authentication method to use: login, plain
-     *
-     * @var string
      */
     protected string $SMTPAuthMethod = 'login';
 
