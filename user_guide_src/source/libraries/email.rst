@@ -120,7 +120,7 @@ Preference          Default Value       Options                      Description
                                         or ``smtp``
 **mailPath**        /usr/sbin/sendmail                               The server path to Sendmail.
 **SMTPHost**                                                         SMTP Server Hostname.
-**SMTPAuthMethod**  login               ``login``, ``plain``         SMTP Authentication Method.
+**SMTPAuthMethod**  login               ``login``, ``plain``         SMTP Authentication Method. (Available since 4.7.0)
 **SMTPUser**                                                         SMTP Username.
 **SMTPPass**                                                         SMTP Password.
 **SMTPPort**        25                                               SMTP Port. (If set to ``465``, TLS will be used for the connection
