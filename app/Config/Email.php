@@ -31,6 +31,11 @@ class Email extends BaseConfig
     public string $SMTPHost = '';
 
     /**
+     * Which SMTP authentication method to use: login, plain
+     */
+    public string $SMTPAuthMethod = 'login';
+
+    /**
      * SMTP Username
      */
     public string $SMTPUser = '';
