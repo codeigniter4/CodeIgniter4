@@ -5,7 +5,7 @@ namespace {namespace};
 use {useStatement};
 use CodeIgniter\HTTP\ResponseInterface;
 
-class {class} extends {extend}
+class {class} extends {extends}
 {
     public function initController(
         RequestInterface $request,
