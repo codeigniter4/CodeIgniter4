@@ -7,6 +7,18 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class {class} extends {extends}
 {
+    public function initController(
+        RequestInterface $request,
+        ResponseInterface $response,
+        LoggerInterface $logger
+    ) {
+        parent::initController($request, $response, $logger);
+
+        // Initialize a model, library, or helper here
+        // $this->modelName = new \App\Models\ModelName();
+    }
+}
+
 <?php if ($type === 'controller'): ?>
     /**
      * Return an array of resource objects, themselves in array format.
