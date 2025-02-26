@@ -57,7 +57,7 @@ Model
 Libraries
 =========
 
-**Email:** Added support for choosing the SMTP authorization method. You can change it via Config\Email::$SMTPAuthMethod option
+**Email:** Added support for choosing the SMTP authorization method. You can change it via ``Config\Email::$SMTPAuthMethod`` option
 
 Helpers and Functions
 =====================
