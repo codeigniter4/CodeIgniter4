@@ -284,7 +284,7 @@ class Email
      *
      * @var string
      */
-    protected $SMTPAuthMethod = 'login';
+    protected string $SMTPAuthMethod = 'login';
 
     /**
      * Whether to send a Reply-To header
