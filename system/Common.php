@@ -375,7 +375,7 @@ if (! function_exists('env')) {
      *
      * @param T $default
      *
-     * @return T
+     * @return ($default is null ? array<int|string, mixed>|bool|float|int|string|null : T)
      */
     function env(string $key, $default = null)
     {
