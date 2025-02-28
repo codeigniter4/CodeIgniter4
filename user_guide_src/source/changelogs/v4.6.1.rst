@@ -33,6 +33,7 @@ Bugs Fixed
 - **CURLRequest:** Fixed an issue where multiple header sections appeared in the CURL response body during multiple redirects from the target server.
 - **Cors:** Fixed a bug in the Cors filter that caused the appropriate headers to not be added when another filter returned a response object in the ``before`` filter.
 - **Database:** Fixed a bug in ``Postgre`` and ``SQLite3`` handlers where composite unique keys were not fully taken into account for ``upsert`` type of queries.
+- **Database:** Fixed a bug in the ``OCI8`` driver where ``getVersion()`` returned an empty string when the database connection was not yet established.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
