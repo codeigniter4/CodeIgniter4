@@ -1,4 +1,4 @@
-# total 58 errors
+# total 59 errors
 
 parameters:
     ignoreErrors:
@@ -41,6 +41,11 @@ parameters:
             message: '#^Access to an undefined property CodeIgniter\\Test\\Mock\\MockConnection\:\:\$foobar\.$#'
             count: 2
             path: ../../tests/system/Database/BaseConnectionTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$mysqli\.$#'
+            count: 1
+            path: ../../tests/system/Database/Live/GetVersionTest.php
 
         -
             message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$foundRows\.$#'
