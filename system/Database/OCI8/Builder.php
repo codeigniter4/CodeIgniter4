@@ -214,19 +214,13 @@ class Builder extends BaseBuilder
     protected function _limit(string $sql, bool $offsetIgnore = false): string
     {
         $offset = (int) ($offsetIgnore === false ? $this->QBOffset : 0);
-        if (version_compare($this->db->getVersion(), '12.1', '>=')) {
-            // OFFSET-FETCH can be used only with the ORDER BY clause
-            if (empty($this->QBOrderBy)) {
-                $sql .= ' ORDER BY 1';
-            }
 
-            return $sql . ' OFFSET ' . $offset . ' ROWS FETCH NEXT ' . $this->QBLimit . ' ROWS ONLY';
+        // OFFSET-FETCH can be used only with the ORDER BY clause
+        if (empty($this->QBOrderBy)) {
+            $sql .= ' ORDER BY 1';
         }
 
-        $this->limitUsed    = true;
-        $limitTemplateQuery = 'SELECT * FROM (SELECT INNER_QUERY.*, ROWNUM RNUM FROM (%s) INNER_QUERY WHERE ROWNUM < %d)' . ($offset !== 0 ? ' WHERE RNUM >= %d' : '');
-
-        return sprintf($limitTemplateQuery, $sql, $offset + $this->QBLimit + 1, $offset);
+        return $sql . ' OFFSET ' . $offset . ' ROWS FETCH NEXT ' . $this->QBLimit . ' ROWS ONLY';
     }
 
     /**
