@@ -49,16 +49,6 @@ class Builder extends BaseBuilder
     protected $countString = 'SELECT COUNT(1) ';
 
     /**
-     * Limit used flag
-     *
-     * If we use LIMIT, we'll add a field that will
-     * throw off num_fields later.
-     *
-     * @var bool
-     */
-    protected $limitUsed = false;
-
-    /**
      * A reference to the database connection.
      *
      * @var Connection
@@ -221,15 +211,6 @@ class Builder extends BaseBuilder
         }
 
         return $sql . ' OFFSET ' . $offset . ' ROWS FETCH NEXT ' . $this->QBLimit . ' ROWS ONLY';
-    }
-
-    /**
-     * Resets the query builder values.  Called by the get() function
-     */
-    protected function resetSelect()
-    {
-        $this->limitUsed = false;
-        parent::resetSelect();
     }
 
     /**
