@@ -464,23 +464,23 @@ Provided Plugins
 
 The following plugins are available when using the parser:
 
-================== ========================= ============================================ ================================================================
+================== ========================= ============================================ ===================================================================
 Plugin             Arguments                 Description                                    Example
-================== ========================= ============================================ ================================================================
-current_url                                  Alias for the current_url helper function.   {+ current_url +}
-previous_url                                 Alias for the previous_url helper function.  {+ previous_url +}
-siteURL                                      Alias for the site_url helper function.      {+ siteURL "login" +}
-mailto             email, title, attributes  Alias for the mailto helper function.        {+ mailto email=foo@example.com title="Stranger Things" +}
-safe_mailto        email, title, attributes  Alias for the safe_mailto helper function.   {+ safe_mailto email=foo@example.com title="Stranger Things" +}
-lang               language string           Alias for the lang helper function.          {+ lang number.terabyteAbbr +}
-validation_errors  fieldname(optional)       Returns either error string for the field    {+ validation_errors +} , {+ validation_errors field="email" +}
+================== ========================= ============================================ ===================================================================
+current_url                                  Alias for the current_url helper function.   ``{+ current_url +}``
+previous_url                                 Alias for the previous_url helper function.  ``{+ previous_url +}``
+siteURL                                      Alias for the site_url helper function.      ``{+ siteURL "login" +}``
+mailto             email, title, attributes  Alias for the mailto helper function.        ``{+ mailto email=foo@example.com title="Stranger Things" +}``
+safe_mailto        email, title, attributes  Alias for the safe_mailto helper function.   ``{+ safe_mailto email=foo@example.com title="Stranger Things" +}``
+lang               language string           Alias for the lang helper function.          ``{+ lang number.terabyteAbbr +}``
+validation_errors  fieldname(optional)       Returns either error string for the field    ``{+ validation_errors +} , {+ validation_errors field="email" +}``
                                              (if specified) or all validation errors.
-route              route name                Alias for the route_to helper function.      {+ route "login" +}
-csp_script_nonce                             Alias for the csp_script_nonce helper        {+ csp_script_nonce +}
+route              route name                Alias for the route_to helper function.      ``{+ route "login" +}``
+csp_script_nonce                             Alias for the csp_script_nonce helper        ``{+ csp_script_nonce +}``
                                              function.
-csp_style_nonce                              Alias for the csp_style_nonce helper         {+ csp_style_nonce +}
+csp_style_nonce                              Alias for the csp_style_nonce helper         ``{+ csp_style_nonce +}``
                                              function.
-================== ========================= ============================================ ================================================================
+================== ========================= ============================================ ===================================================================
 
 Registering a Plugin
 --------------------
