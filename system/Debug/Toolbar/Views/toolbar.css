@@ -405,7 +405,7 @@
   #debug-bar .timeline {
     display: block;
     white-space: nowrap;
-    font-size: 14px;
+    font-size: 12px;
   }
 
   #debug-bar .toolbar {
