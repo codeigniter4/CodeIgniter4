@@ -457,6 +457,31 @@
     }
 }
 
+@media screen and (max-width: 768px) {
+    #debug-bar {
+      table {
+        display: block;
+        overflow-x: auto;
+        font-size: 12px;
+        margin: 5px 5px 10px 5px;
+  
+        td,
+        th {
+          padding: 4px 6px;
+        }
+      }
+  
+      .timeline {
+        display: block;
+        white-space: nowrap;
+        font-size: 12px;
+      }
+  
+      .toolbar {
+        overflow-x: auto;
+      }
+    }
+  }
 
 // THEMES
 // ========================================================================== */
