@@ -135,7 +135,7 @@ class CheckPhpIni
             'date.timezone'           => ['recommended' => 'UTC'],
             'mbstring.language'       => ['recommended' => 'neutral'],
             'opcache.enable'          => ['recommended' => '1'],
-            'opcache.enable_cli'      => ['recommended' => '1'],
+            'opcache.enable_cli'      => ['recommended' => '0', 'remark' => 'Enable when you using CLI'],
             'opcache.jit'             => ['recommended' => 'tracing'],
             'opcache.jit_buffer_size' => ['recommended' => '128', 'remark' => 'Adjust with your free space of memory'],
             'zend.assertions'         => ['recommended' => '-1'],
