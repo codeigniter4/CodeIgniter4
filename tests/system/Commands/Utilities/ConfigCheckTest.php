@@ -89,7 +89,9 @@ final class ConfigCheckTest extends CIUnitTestCase
 
     public function testConfigCheckWithKintEnabledUsesKintD(): void
     {
-        /** @var Closure(object): string $command */
+        /**
+         * @var Closure(mixed...): string
+         */
         $command = $this->getPrivateMethodInvoker(
             new ConfigCheck(service('logger'), service('commands')),
             'getKintD',
@@ -105,7 +107,9 @@ final class ConfigCheckTest extends CIUnitTestCase
 
     public function testConfigCheckWithKintDisabledUsesVarDump(): void
     {
-        /** @var Closure(object): string $command */
+        /**
+         * @var Closure(mixed...): string
+         */
         $command = $this->getPrivateMethodInvoker(
             new ConfigCheck(service('logger'), service('commands')),
             'getVarDump',
