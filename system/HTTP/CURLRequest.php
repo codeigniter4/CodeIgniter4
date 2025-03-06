@@ -125,9 +125,7 @@ class CURLRequest extends OutgoingRequest
         $this->baseURI        = $uri->useRawQueryString();
         $this->defaultOptions = $options;
 
-        /** @var ConfigCURLRequest|null $configCURLRequest */
-        $configCURLRequest  = config(ConfigCURLRequest::class);
-        $this->shareOptions = $configCURLRequest->shareOptions ?? true;
+        $this->shareOptions = config(ConfigCURLRequest::class)->shareOptions ?? true;
 
         $this->config = $this->defaultConfig;
         $this->parseOptions($options);
