@@ -93,10 +93,12 @@ final class TimestampModelTest extends LiveModelTestCase
         $user = $this->model->find($id);
 
         $expected = '2023-11-25 12:00:00';
+
         if ($this->db->DBDriver === 'SQLSRV') {
             $expected .= '.000';
         }
-        $this->assertSame($expected, $user['created_at']);
+
+        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
         $this->assertSame($expected, $user['updated_at']);
     }
 
@@ -116,10 +118,12 @@ final class TimestampModelTest extends LiveModelTestCase
         $user = $this->model->find($id);
 
         $expected = '2023-11-25 12:00:00';
+
         if ($this->db->DBDriver === 'SQLSRV') {
             $expected .= '.000';
         }
-        $this->assertSame($expected, $user['created_at']);
+
+        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
         $this->assertSame($expected, $user['updated_at']);
     }
 
@@ -139,15 +143,17 @@ final class TimestampModelTest extends LiveModelTestCase
         $user = $this->model->find($id);
 
         $user['country'] = 'CA';
-        $this->model->update($user['id'], $user);
+        $this->model->update($user['id'], $user); // @phpstan-ignore offsetAccess.notFound
 
         $user = $this->model->find($id);
 
         $expected = '2023-11-25 12:00:00';
+
         if ($this->db->DBDriver === 'SQLSRV') {
             $expected .= '.000';
         }
-        $this->assertSame($expected, $user['created_at']);
+
+        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
         $this->assertSame($expected, $user['updated_at']);
     }
 
@@ -197,10 +203,12 @@ final class TimestampModelTest extends LiveModelTestCase
         $user = $this->model->find($id);
 
         $expected = '2023-11-25 12:00:00';
+
         if ($this->db->DBDriver === 'SQLSRV') {
             $expected .= '.000';
         }
-        $this->assertSame($expected, $user['created_at']);
+
+        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
         $this->assertSame($expected, $user['updated_at']);
     }
 
@@ -224,10 +232,12 @@ final class TimestampModelTest extends LiveModelTestCase
         $user = $this->model->find($id);
 
         $expected = '2000-01-01 12:00:00';
+
         if ($this->db->DBDriver === 'SQLSRV') {
             $expected .= '.000';
         }
-        $this->assertSame($expected, $user['created_at']);
+
+        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
         $this->assertSame($expected, $user['updated_at']);
     }
 
@@ -251,15 +261,17 @@ final class TimestampModelTest extends LiveModelTestCase
         $user = $this->model->find($id);
 
         $user['country'] = 'CA';
-        $this->model->update($user['id'], $user);
+        $this->model->update($user['id'], $user); // @phpstan-ignore offsetAccess.notFound
 
         $user = $this->model->find($id);
 
         $expected = '2000-01-01 12:00:00';
+
         if ($this->db->DBDriver === 'SQLSRV') {
             $expected .= '.000';
         }
-        $this->assertSame($expected, $user['created_at']);
+
+        $this->assertSame($expected, $user['created_at']); // @phpstan-ignore offsetAccess.notFound
         $this->assertSame($expected, $user['updated_at']);
     }
 
