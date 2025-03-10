@@ -15,6 +15,9 @@ namespace Tests\Support\Validation;
 
 class TestRules
 {
+    /**
+     * @param-out string $error
+     */
     public function customError(string $str, ?string &$error = null)
     {
         $error = 'My lovely error';
