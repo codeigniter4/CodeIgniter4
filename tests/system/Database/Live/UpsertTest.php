@@ -448,7 +448,7 @@ final class UpsertTest extends CIUnitTestCase
         $this->assertSame('El Salvador', $data[4]->country);
     }
 
-    public function testUpsertWithMatchingDataOnUniqueIndexandPrimaryKey(): void
+    public function testUpsertWithMatchingDataOnUniqueIndexAndPrimaryKey(): void
     {
         $data = [
             'id'      => 6,
@@ -605,6 +605,36 @@ final class UpsertTest extends CIUnitTestCase
             $this->seeInDatabase('user', ['id' => 2, 'country' => 'Greece']);
             $this->seeInDatabase('user', ['id' => 3, 'country' => 'Greece']);
         }
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9450
+     */
+    public function testUpsertBatchCompositeUniqueIndex(): void
+    {
+        $data = [
+            [
+                'team_id'   => 1,
+                'person_id' => 22,
+                'role'      => 'leader',
+                'status'    => 'active',
+            ],
+            [
+                'team_id'   => 1,
+                'person_id' => 33,
+                'role'      => 'member',
+                'status'    => 'active',
+            ],
+        ];
+
+        // uses (team_id, person_id) - composite unique index
+        $this->db->table('team_members')->upsertBatch($data);
+
+        $this->seeInDatabase('team_members', ['team_id' => 1, 'person_id' => 22, 'role' => 'leader']);
+        $this->dontSeeInDatabase('team_members', ['team_id' => 1, 'person_id' => 22, 'role' => 'member']);
+
+        $this->seeInDatabase('team_members', ['team_id' => 1, 'person_id' => 33, 'role' => 'member']);
+        $this->dontSeeInDatabase('team_members', ['team_id' => 1, 'person_id' => 33, 'role' => 'mentor']);
     }
 
     public function testSetBatchOneRow(): void
