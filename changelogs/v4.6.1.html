@@ -320,6 +320,7 @@
 <ul class="simple">
 <li><p><strong>CURLRequest:</strong> Fixed an issue where multiple header sections appeared in the CURL response body during multiple redirects from the target server.</p></li>
 <li><p><strong>Cors:</strong> Fixed a bug in the Cors filter that caused the appropriate headers to not be added when another filter returned a response object in the <code class="docutils literal notranslate"><span class="pre">before</span></code> filter.</p></li>
+<li><p><strong>Database:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Postgre</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> handlers where composite unique keys were not fully taken into account for <code class="docutils literal notranslate"><span class="pre">upsert</span></code> type of queries.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
@@ -339,7 +340,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 01, 2025.
+      <span class="lastupdated">Last updated on Mar 10, 2025.
       </span></p>
   </div>
 
