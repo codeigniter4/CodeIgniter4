@@ -256,6 +256,61 @@ if (! function_exists('form_multiselect')) {
     }
 }
 
+if (! function_exists('form_dropdown_timezone')) {
+    /**
+     * Timezone Drop-down Menu
+     *
+     * @param array|string        $data
+     * @param array|string        $selected
+     * @param array|object|string $extra         string, array, object that can be cast to array
+     * @param int|null            $timezoneGroup DateTimeZone class constants
+     * @param string|null         $countryCode   ISO 3166-1 compatible country code
+     * @param bool                $showOffset    Whether to show UTC offset or not
+     */
+	function form_dropdown_timezone($data = '', $selected = [], $extra = '', $useOptgroups = true, ?int $timezoneGroup = null, ?string $countryCode = null, bool $showOffset = true): string {
+		if (!$timezoneGroup) {
+			$timezoneGroup = ($countryCode) ? DateTimeZone::PER_COUNTRY : DateTimeZone::ALL;
+		}
+		
+		if ($countryCode && $timezoneGroup !== DateTimeZone::PER_COUNTRY) {
+			throw new InvalidArgumentException('$timezoneGroup must be DateTimeZone::PER_COUNTRY when specifying $countryCode');
+		}
+		
+		if ($showOffset) {
+			$datetime = new DateTime();
+		}
+		
+		$options = [];
+		
+		foreach (DateTimeZone::listIdentifiers($timezoneGroup, $countryCode) as $identifier) {
+			if ($useOptgroups) {
+				list($group) = explode('/', $identifier);
+				
+				$options[$group][$identifier] = substr($identifier, strlen($group) + 1) ?: $group;
+			} else {
+				$options[$identifier] = $identifier;
+			}
+			
+			if ($showOffset) {
+				$datetime->setTimezone(new DateTimeZone($identifier));
+				$seconds = $datetime->getOffset();
+				$hours = intval($seconds / 3600);
+				$minutes = abs(intval(($seconds % 3600) / 60));
+				$formatted = sprintf(' (%+03d:%02d)', $hours, $minutes);
+				
+				
+				if ($useOptgroups) {
+					$options[$group][$identifier] .= $formatted;
+				} else {
+					$options[$identifier] .= $formatted;
+				}
+			}
+		}
+		
+        return form_dropdown($data, $options, $selected, $extra);
+	}
+}
+
 if (! function_exists('form_dropdown')) {
     /**
      * Drop-down Menu
