@@ -181,7 +181,7 @@ class RedisHandler extends BaseHandler
         $iterator    = null;
 
         do {
-            /** @var false|list<string>|Redis $keys */
+            /** @var false|list<string> $keys */
             $keys = $this->redis->scan($iterator, $pattern);
 
             if (is_array($keys)) {
