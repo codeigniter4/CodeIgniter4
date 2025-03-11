@@ -1176,11 +1176,11 @@ final class TimeTest extends CIUnitTestCase
         $this->resetServices();
 
         $currentLocale = Locale::getDefault();
-        Locale::setDefault('ar');
+        Locale::setDefault('ar-SA');
 
         $config                   = new App();
-        $config->supportedLocales = ['ar'];
-        $config->defaultLocale    = 'ar';
+        $config->supportedLocales = ['ar-SA'];
+        $config->defaultLocale    = 'ar-SA';
         Factories::injectMock('config', 'App', $config);
 
         Time::setTestNow('2022-06-14 12:00', 'America/Chicago');
