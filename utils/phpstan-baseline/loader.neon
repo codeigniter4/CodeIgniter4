@@ -26,7 +26,6 @@ includes:
     - notIdentical.alwaysTrue.neon
     - nullCoalesce.property.neon
     - nullCoalesce.variable.neon
-    - offsetAccess.notFound.neon
     - parameterByRef.unusedType.neon
     - property.defaultValue.neon
     - property.nonObject.neon
