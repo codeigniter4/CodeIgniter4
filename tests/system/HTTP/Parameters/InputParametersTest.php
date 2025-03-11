@@ -52,7 +52,7 @@ final class InputParametersTest extends CIUnitTestCase
 
         $this->expectException(InvalidArgumentException::class);
 
-        $parameters->get('undefined_throw', new stdClass());
+        $parameters->get('undefined_throw', new stdClass()); // @phpstan-ignore argument.type
     }
 
     public function testAttemptSetNullValues(): void
@@ -61,7 +61,7 @@ final class InputParametersTest extends CIUnitTestCase
 
         $this->expectException(InvalidArgumentException::class);
 
-        $parameters->set('nullable', null);
+        $parameters->set('nullable', null); // @phpstan-ignore argument.type
     }
 
     public function testAttemptSetNonScalarValues(): void
@@ -70,7 +70,7 @@ final class InputParametersTest extends CIUnitTestCase
 
         $this->expectException(InvalidArgumentException::class);
 
-        $parameters->set('nullable', null);
+        $parameters->set('nullable', new stdClass()); // @phpstan-ignore argument.type
     }
 
     public function testUpdateAndSetNewValues(): void

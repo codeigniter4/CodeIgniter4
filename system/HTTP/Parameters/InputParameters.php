@@ -18,7 +18,9 @@ use CodeIgniter\Exceptions\RuntimeException;
 
 /**
  * @template TKey of string
- * @template TValue of bool|float|int|string|array<int|string, mixed>
+ * @template TValue of scalar|array<(int|string), mixed>
+ *
+ * @extends Parameters<TKey, TValue>
  *
  * @see \CodeIgniter\HTTP\Parameters\InputParametersTest
  */
@@ -33,7 +35,7 @@ class InputParameters extends Parameters
         }
     }
 
-    public function get(string $key, $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
         if ($default !== null && ! is_scalar($default)) {
             throw new InvalidArgumentException(sprintf('The default value for the InputParameters must be a scalar type, "%s" given.', gettype($default)));
@@ -51,7 +53,7 @@ class InputParameters extends Parameters
         return $value === $tempDefault ? $default : $value;
     }
 
-    public function set(string $key, $value): void
+    public function set(string $key, mixed $value): void
     {
         if (! is_scalar($value) && ! is_array($value)) {
             throw new InvalidArgumentException(sprintf('The value for the InputParameters must be a scalar type, "%s" given.', gettype($value)));

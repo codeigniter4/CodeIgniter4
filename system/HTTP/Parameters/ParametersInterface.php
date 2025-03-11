@@ -18,7 +18,9 @@ use IteratorAggregate;
 
 /**
  * @template TKey of string
- * @template TValue of mixed
+ * @template TValue
+ *
+ * @extends IteratorAggregate<TKey, TValue>
  */
 interface ParametersInterface extends IteratorAggregate, Countable
 {
@@ -41,15 +43,15 @@ interface ParametersInterface extends IteratorAggregate, Countable
      * @param TKey   $key
      * @param TValue $default
      *
-     * @return ?TValue
+     * @return TValue|null
      */
-    public function get(string $key, $default = null);
+    public function get(string $key, mixed $default = null): mixed;
 
     /**
      * @param TKey   $key
      * @param TValue $value
      */
-    public function set(string $key, $value): void;
+    public function set(string $key, mixed $value): void;
 
     /**
      * @param TKey $key
@@ -59,7 +61,7 @@ interface ParametersInterface extends IteratorAggregate, Countable
     public function all(?string $key = null): array;
 
     /**
-     * @return array<int, TKey>
+     * @return list<TKey>
      */
     public function keys(): array;
 }

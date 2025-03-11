@@ -18,14 +18,17 @@ use CodeIgniter\Exceptions\RuntimeException;
 
 /**
  * @template TKey of string
- * @template TValue of mixed
+ * @template TValue
  *
- * @property array<TKey, TValue> $parameters
+ * @implements ParametersInterface<TKey, TValue>
  *
  * @see \CodeIgniter\HTTP\Parameters\ParametersTest
  */
 class Parameters implements ParametersInterface
 {
+    /**
+     * @param array<TKey, TValue> $parameters
+     */
     public function __construct(
         protected array $parameters = [],
     ) {
@@ -41,12 +44,12 @@ class Parameters implements ParametersInterface
         return array_key_exists($key, $this->parameters);
     }
 
-    public function get(string $key, $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
         return array_key_exists($key, $this->parameters) ? $this->parameters[$key] : $default;
     }
 
-    public function set(string $key, $value): void
+    public function set(string $key, mixed $value): void
     {
         $this->parameters[$key] = $value;
     }

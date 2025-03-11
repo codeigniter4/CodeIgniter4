@@ -13,6 +13,12 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP\Parameters;
 
+/**
+ * @template TKey of string
+ * @template TValue
+ *
+ * @extends Parameters<TKey, TValue>
+ */
 class ServerParameters extends Parameters
 {
 }
