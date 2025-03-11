@@ -62,7 +62,7 @@ interface FileLocatorInterface
      * Find the qualified name of a file according to
      * the namespace of the first matched namespace path.
      *
-     * @return false|string The qualified name or false if the path is not found
+     * @return class-string|false The qualified name or false if the path is not found
      */
     public function findQualifiedNameFromPath(string $path);
 

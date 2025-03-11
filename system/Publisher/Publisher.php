@@ -109,7 +109,7 @@ class Publisher extends FileCollection
 
         self::$discovered[$key] = [];
 
-        /** @var FileLocatorInterface $locator */
+        /** @var FileLocatorInterface */
         $locator = service('locator');
 
         $files = $namespace === ''
@@ -125,6 +125,7 @@ class Publisher extends FileCollection
             $className = $locator->findQualifiedNameFromPath($file);
 
             if ($className !== false && class_exists($className) && is_a($className, self::class, true)) {
+                /** @var class-string<self> $className */
                 self::$discovered[$key][] = new $className();
             }
         }

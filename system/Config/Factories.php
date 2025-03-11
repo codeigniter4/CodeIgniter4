@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Model;
@@ -299,6 +300,7 @@ final class Factories
         }
 
         // Have to do this the hard way...
+        /** @var FileLocatorInterface */
         $locator = service('locator');
 
         // Check if the class alias was namespaced
