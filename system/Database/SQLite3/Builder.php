@@ -151,8 +151,8 @@ class Builder extends BaseBuilder
                     return ($index->type === 'PRIMARY' || $index->type === 'UNIQUE') && $hasAllFields;
                 });
 
-                foreach (array_map(static fn ($index) => $index->fields, $allIndexes) as $index) {
-                    $constraints[] = current($index);
+                foreach ($allIndexes as $index) {
+                    $constraints = $index->fields;
                     break;
                 }
 

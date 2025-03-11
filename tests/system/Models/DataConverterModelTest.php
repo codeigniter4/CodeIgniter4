@@ -36,7 +36,7 @@ final class DataConverterModelTest extends LiveModelTestCase
 
         $user = $this->model->find($id);
 
-        $this->assertIsInt($user['id']);
+        $this->assertIsInt($user['id']); // @phpstan-ignore offsetAccess.notFound
         $this->assertInstanceOf(Time::class, $user['created_at']);
         $this->assertSame('John Smith', $user['name']);
         // `name` is cast by custom CastBase64 handler.
@@ -128,9 +128,9 @@ final class DataConverterModelTest extends LiveModelTestCase
 
         $users = $this->model->findAll();
 
-        $this->assertIsInt($users[0]['id']);
+        $this->assertIsInt($users[0]['id']); // @phpstan-ignore offsetAccess.notFound
         $this->assertInstanceOf(Time::class, $users[0]['created_at']);
-        $this->assertIsInt($users[1]['id']);
+        $this->assertIsInt($users[1]['id']); // @phpstan-ignore offsetAccess.notFound
         $this->assertInstanceOf(Time::class, $users[1]['created_at']);
     }
 
@@ -208,7 +208,7 @@ final class DataConverterModelTest extends LiveModelTestCase
 
         $user = $this->model->first();
 
-        $this->assertIsInt($user['id']);
+        $this->assertIsInt($user['id']); // @phpstan-ignore offsetAccess.notFound
         $this->assertInstanceOf(Time::class, $user['created_at']);
     }
 
@@ -264,7 +264,8 @@ final class DataConverterModelTest extends LiveModelTestCase
         $id = $this->model->insert($data, true);
 
         $user = $this->model->find($id);
-        $this->assertSame(['joe@example.com'], $user['email']);
+
+        $this->assertSame(['joe@example.com'], $user['email']); // @phpstan-ignore offsetAccess.notFound
     }
 
     public function testInsertObject(): void
@@ -279,7 +280,8 @@ final class DataConverterModelTest extends LiveModelTestCase
         $id = $this->model->insert($data, true);
 
         $user = $this->model->find($id);
-        $this->assertSame(['joe@example.com'], $user['email']);
+
+        $this->assertSame(['joe@example.com'], $user['email']); // @phpstan-ignore offsetAccess.notFound
     }
 
     public function testUpdateArray(): void
@@ -288,14 +290,14 @@ final class DataConverterModelTest extends LiveModelTestCase
         $user = $this->model->find($id);
 
         $user['email'][] = 'private@example.org';
-        $this->model->update($user['id'], $user);
+        $this->model->update($user['id'], $user); // @phpstan-ignore offsetAccess.notFound
 
         $user = $this->model->find($id);
 
         $this->assertSame([
             'john@example.com',
             'private@example.org',
-        ], $user['email']);
+        ], $user['email']); // @phpstan-ignore offsetAccess.notFound
     }
 
     public function testUpdateObject(): void
@@ -311,7 +313,7 @@ final class DataConverterModelTest extends LiveModelTestCase
         $this->assertSame([
             'john@example.com',
             'private@example.org',
-        ], $user['email']);
+        ], $user['email']); // @phpstan-ignore offsetAccess.notFound
     }
 
     public function testUpdateCustomObject(): void
@@ -363,7 +365,7 @@ final class DataConverterModelTest extends LiveModelTestCase
         $this->assertSame([
             'john@example.com',
             'private@example.org',
-        ], $user['email']);
+        ], $user['email']); // @phpstan-ignore offsetAccess.notFound
     }
 
     public function testSaveObject(): void
@@ -379,7 +381,7 @@ final class DataConverterModelTest extends LiveModelTestCase
         $this->assertSame([
             'john@example.com',
             'private@example.org',
-        ], $user['email']);
+        ], $user['email']); // @phpstan-ignore offsetAccess.notFound
     }
 
     public function testSaveCustomObject(): void

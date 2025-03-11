@@ -32,7 +32,7 @@ use ReturnTypeWillChange;
 trait TimeTrait
 {
     /**
-     * @var DateTimeZone
+     * @var DateTimeZone|string
      */
     protected $timezone;
 

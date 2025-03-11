@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Filters as FilterConfig;
 use PHPUnit\Framework\Attributes\BackupGlobals;
@@ -60,11 +61,13 @@ final class DebugToolbarTest extends CIUnitTestCase
         $expectedAfter  = $this->response;
 
         // nothing should change here, since we have no before logic
-        $filter->before($this->request);
+        $result = $filter->before($this->request);
         $this->assertSame($expectedBefore, $this->request);
+        $this->assertNull($result);
 
         // nothing should change here, since we are running in the CLI
-        $filter->after($this->request, $this->response);
+        $result = $filter->after($this->request, $this->response);
         $this->assertSame($expectedAfter, $this->response);
+        $this->assertNotInstanceOf(ResponseInterface::class, $result);
     }
 }

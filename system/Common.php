@@ -371,9 +371,9 @@ if (! function_exists('env')) {
      * retrieving values set from the .env file for
      * use in config files.
      *
-     * @param string|null $default
+     * @param array<int|string, mixed>|bool|float|int|object|string|null $default
      *
-     * @return bool|string|null
+     * @return array<int|string, mixed>|bool|float|int|object|string|null
      */
     function env(string $key, $default = null)
     {
