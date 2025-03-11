@@ -58,7 +58,7 @@ parameters:
             path: ../../tests/system/CLI/ConsoleTest.php
 
         -
-            message: '#^Assigning non\-empty\-array\<int\|string, ''spark''\|array\> directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
+            message: '#^Assigning non\-empty\-array\<int\|string, string\> directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../tests/system/CLI/ConsoleTest.php
 
