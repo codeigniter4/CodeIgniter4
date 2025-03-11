@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP\Parameters;
 
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
@@ -60,6 +61,7 @@ final class ParametersTest extends CIUnitTestCase
         $parameters = new Parameters();
 
         $this->assertSame([], $parameters->all());
+        $this->assertSame([], $parameters->keys());
     }
 
     public function testGetValues(): void
@@ -163,5 +165,29 @@ final class ParametersTest extends CIUnitTestCase
         $parameters->remove('DISPLAY');
 
         $this->assertCount(count($this->original) - 2, $parameters);
+    }
+
+    public function testGetAll(): void
+    {
+        $parameters = new Parameters($this->original);
+
+        $this->assertSame($this->original, $parameters->all());
+        $this->assertSame(
+            [
+                'vendor/bin/phpunit',
+                './tests/ParametersTest.php',
+                '--no-coverage',
+            ],
+            $parameters->all('argv'),
+        );
+    }
+
+    public function testAttemptGetAllNonIterableValues(): void
+    {
+        $parameters = new Parameters($this->original);
+
+        $this->expectException(RuntimeException::class);
+
+        $parameters->all('argc');
     }
 }
