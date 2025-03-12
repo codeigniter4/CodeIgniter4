@@ -487,7 +487,7 @@ Returns null or an indexed array of column values:
 
 .. literalinclude:: model/008.php
 
-``$column_name`` should be a name of single column else you will get the ``DataException``.
+``$columnName`` should be a name of single column else you will get the ``DataException``.
 
 findAll()
 ---------
