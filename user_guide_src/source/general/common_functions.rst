@@ -293,9 +293,9 @@ Miscellaneous Functions
     .. note:: This function is also used when you set
         ``Config\App:$forceGlobalSecureRequests`` to true.
 
-.. php:function:: function_usable($function_name)
+.. php:function:: function_usable($functionName)
 
-    :param string $function_name: Function to check for
+    :param string $functionName: Function to check for
     :returns: true if the function exists and is safe to call, false otherwise.
     :rtype: bool
 

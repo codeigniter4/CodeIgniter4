@@ -287,9 +287,9 @@ Class Reference
 
         Usage: see `Getting an Array of stdClass`_.
 
-    .. php:method:: getCustomResultObject($class_name)
+    .. php:method:: getCustomResultObject($className)
 
-        :param    string    $class_name: Class name for the resulting rows
+        :param    string    $className: Class name for the resulting rows
         :returns:    Array containing the fetched rows
         :rtype:    array
 
