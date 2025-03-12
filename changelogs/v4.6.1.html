@@ -321,6 +321,7 @@
 <li><p><strong>CURLRequest:</strong> Fixed an issue where multiple header sections appeared in the CURL response body during multiple redirects from the target server.</p></li>
 <li><p><strong>Cors:</strong> Fixed a bug in the Cors filter that caused the appropriate headers to not be added when another filter returned a response object in the <code class="docutils literal notranslate"><span class="pre">before</span></code> filter.</p></li>
 <li><p><strong>Database:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Postgre</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> handlers where composite unique keys were not fully taken into account for <code class="docutils literal notranslate"><span class="pre">upsert</span></code> type of queries.</p></li>
+<li><p><strong>Database:</strong> Fixed a bug in the <code class="docutils literal notranslate"><span class="pre">OCI8</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> drivers where <code class="docutils literal notranslate"><span class="pre">getVersion()</span></code> returned an empty string when the database connection was not yet established.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
