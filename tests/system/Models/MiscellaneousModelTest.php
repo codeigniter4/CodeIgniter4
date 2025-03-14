@@ -109,7 +109,7 @@ final class MiscellaneousModelTest extends LiveModelTestCase
         $this->expectExceptionMessage('Invalid type "whatever" used upon transforming data to array.');
 
         $this->createModel(JobModel::class);
-        $method = $this->getPrivateMethodInvoker($this->model, 'transformDataToArray');
+        $method = self::getPrivateMethodInvoker($this->model, 'transformDataToArray');
         $method([], 'whatever');
     }
 
@@ -119,7 +119,7 @@ final class MiscellaneousModelTest extends LiveModelTestCase
         $this->expectExceptionMessage('There is no data to insert.');
 
         $this->createModel(JobModel::class);
-        $method = $this->getPrivateMethodInvoker($this->model, 'transformDataToArray');
+        $method = self::getPrivateMethodInvoker($this->model, 'transformDataToArray');
         $method([], 'insert');
     }
 }

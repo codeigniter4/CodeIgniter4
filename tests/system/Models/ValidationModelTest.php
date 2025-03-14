@@ -182,7 +182,7 @@ final class ValidationModelTest extends LiveModelTestCase
 
     public function testCleanValidationRemovesAllWhenNoDataProvided(): void
     {
-        $cleaner = $this->getPrivateMethodInvoker($this->model, 'cleanValidationRules');
+        $cleaner = self::getPrivateMethodInvoker($this->model, 'cleanValidationRules');
 
         $rules = [
             'name' => 'required',
@@ -195,7 +195,7 @@ final class ValidationModelTest extends LiveModelTestCase
 
     public function testCleanValidationRemovesOnlyForFieldsNotProvided(): void
     {
-        $cleaner = $this->getPrivateMethodInvoker($this->model, 'cleanValidationRules');
+        $cleaner = self::getPrivateMethodInvoker($this->model, 'cleanValidationRules');
 
         $rules = [
             'name' => 'required',
@@ -213,7 +213,7 @@ final class ValidationModelTest extends LiveModelTestCase
 
     public function testCleanValidationReturnsAllWhenAllExist(): void
     {
-        $cleaner = $this->getPrivateMethodInvoker($this->model, 'cleanValidationRules');
+        $cleaner = self::getPrivateMethodInvoker($this->model, 'cleanValidationRules');
 
         $rules = [
             'name' => 'required',

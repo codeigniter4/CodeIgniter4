@@ -212,7 +212,7 @@ final class LocalizationSyncTest extends CIUnitTestCase
         $langPath = SUPPORTPATH . 'Language';
         $command  = new LocalizationSync(service('logger'), service('commands'));
         $this->setPrivateProperty($command, 'languagePath', $langPath);
-        $runner = $this->getPrivateMethodInvoker($command, 'process');
+        $runner = self::getPrivateMethodInvoker($command, 'process');
 
         $status = $runner('de', 'jp');
 

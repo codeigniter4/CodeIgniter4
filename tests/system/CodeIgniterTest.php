@@ -460,8 +460,8 @@ final class CodeIgniterTest extends CIUnitTestCase
         $codeigniter = new MockCodeIgniter($config);
         $codeigniter->setContext('web');
 
-        $this->getPrivateMethodInvoker($codeigniter, 'getRequestObject')();
-        $this->getPrivateMethodInvoker($codeigniter, 'getResponseObject')();
+        self::getPrivateMethodInvoker($codeigniter, 'getRequestObject')();
+        self::getPrivateMethodInvoker($codeigniter, 'getResponseObject')();
 
         $response = $this->getPrivateProperty($codeigniter, 'response');
         $this->assertNull($response->header('Location'));
@@ -949,7 +949,7 @@ final class CodeIgniterTest extends CIUnitTestCase
     {
         $this->setPrivateProperty($this->codeigniter, 'benchmark', new Timer());
         $this->setPrivateProperty($this->codeigniter, 'controller', '\\' . Home::class);
-        $startController = $this->getPrivateMethodInvoker($this->codeigniter, 'startController');
+        $startController = self::getPrivateMethodInvoker($this->codeigniter, 'startController');
 
         $this->setPrivateProperty($this->codeigniter, 'method', '__invoke');
         $startController();
