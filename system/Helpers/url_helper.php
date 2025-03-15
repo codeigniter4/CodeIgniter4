@@ -150,11 +150,8 @@ if (! function_exists('anchor')) {
      * @param array|object|string $attributes Any attributes
      * @param App|null            $altConfig  Alternate configuration to use
      */
-    function anchor($uri = '', string $title = '', $attributes = '', ?App $altConfig = null): string
+    function anchor($uri = '', string $title = '', $attributes = '', ?App $config = null): string
     {
-        // use alternate config if provided, else default one
-        $config = $altConfig ?? config(App::class);
-
         $siteUrl = is_array($uri) ? site_url($uri, null, $config) : (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config));
         // eliminate trailing slash
         $siteUrl = rtrim($siteUrl, '/');
