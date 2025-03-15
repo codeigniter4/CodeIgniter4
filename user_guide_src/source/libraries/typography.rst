@@ -24,10 +24,10 @@ Available static functions
 
 The following functions are available:
 
-.. php:function:: autoTypography($str[, $reduce_linebreaks = false])
+.. php:function:: autoTypography($str[, $reduceLinebreaks = false])
 
     :param    string    $str: Input string
-    :param    bool    $reduce_linebreaks: Whether to reduce multiple instances of double newlines to two
+    :param    bool    $reduceLinebreaks: Whether to reduce multiple instances of double newlines to two
     :returns:    HTML-formatted typography-safe string
     :rtype: string
 

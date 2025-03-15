@@ -493,10 +493,10 @@ Class Reference
 
         Creates a new table. Usage: See `Creating a Table`_.
 
-    .. php:method:: dropColumn($table, $column_name)
+    .. php:method:: dropColumn($table, $columnNames)
 
         :param    string    $table: Table name
-        :param    mixed    $column_names: Comma-delimited string or an array of column names
+        :param    mixed    $columnNames: Comma-delimited string or an array of column names
         :returns:    true on success, false on failure
         :rtype:    bool
 
@@ -563,10 +563,10 @@ Class Reference
 
         Modifies a table column. Usage: See `Modifying a Field in a Table`_.
 
-    .. php:method:: renameTable($table_name, $new_table_name)
+    .. php:method:: renameTable($tableName, $newTableName)
 
-        :param    string    $table: Current of the table
-        :param    string    $new_table_name: New name of the table
+        :param    string    $tableName: Current of the table
+        :param    string    $newTableName: New name of the table
         :returns:  Query object on success, false on failure
         :rtype:    mixed
 
