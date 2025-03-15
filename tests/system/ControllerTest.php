@@ -89,13 +89,17 @@ final class ControllerTest extends CIUnitTestCase
         $_SERVER = $original; // restore so code coverage doesn't break
     }
 
-    public function testCachePage(): void
+    public function testCachePageSetsTtl(): void
     {
         $this->controller = new Controller();
         $this->controller->initController($this->request, $this->response, $this->logger);
 
         $method = self::getPrivateMethodInvoker($this->controller, 'cachePage');
-        $this->assertNull($method(10));
+
+        $this->assertSame(0, self::getPrivateProperty(service('responsecache'), 'ttl'));
+
+        $method(10);
+        $this->assertSame(10, self::getPrivateProperty(service('responsecache'), 'ttl'));
     }
 
     public function testValidate(): void
