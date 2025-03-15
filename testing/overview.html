@@ -630,7 +630,7 @@ parameter is an instance of the class to test. The second parameter is the name 
 <span class="nv">$obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Foo</span><span class="p">();</span>
 
 <span class="c1">// Get the invoker for the &#39;privateMethod&#39; method.</span>
-<span class="nv">$method</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getPrivateMethodInvoker</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s1">&#39;privateMethod&#39;</span><span class="p">);</span>
+<span class="nv">$method</span> <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="na">getPrivateMethodInvoker</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s1">&#39;privateMethod&#39;</span><span class="p">);</span>
 
 <span class="c1">// Test the results</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="nv">$method</span><span class="p">(</span><span class="s1">&#39;param1&#39;</span><span class="p">,</span> <span class="s1">&#39;param2&#39;</span><span class="p">));</span>
