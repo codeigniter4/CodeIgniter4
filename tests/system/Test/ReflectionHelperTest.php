@@ -72,7 +72,7 @@ final class ReflectionHelperTest extends CIUnitTestCase
     public function testGetPrivateMethodInvokerWithObject(): void
     {
         $obj    = new TestForReflectionHelper();
-        $method = $this->getPrivateMethodInvoker(
+        $method = self::getPrivateMethodInvoker(
             $obj,
             'privateMethod',
         );
@@ -84,7 +84,7 @@ final class ReflectionHelperTest extends CIUnitTestCase
 
     public function testGetPrivateMethodInvokerWithStatic(): void
     {
-        $method = $this->getPrivateMethodInvoker(
+        $method = self::getPrivateMethodInvoker(
             TestForReflectionHelper::class,
             'privateStaticMethod',
         );

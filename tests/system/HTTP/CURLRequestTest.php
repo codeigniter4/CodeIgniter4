@@ -66,7 +66,7 @@ class CURLRequestTest extends CIUnitTestCase
 
         $request = $this->getRequest(['baseURI' => 'http://example.com/v1/']);
 
-        $method = $this->getPrivateMethodInvoker($request, 'prepareURL');
+        $method = self::getPrivateMethodInvoker($request, 'prepareURL');
 
         $this->assertSame('http://example.com/v1/bananas', $method('bananas'));
     }

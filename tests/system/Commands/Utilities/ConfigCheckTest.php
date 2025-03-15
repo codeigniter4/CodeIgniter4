@@ -92,7 +92,7 @@ final class ConfigCheckTest extends CIUnitTestCase
         /**
          * @var Closure(mixed...): string
          */
-        $command = $this->getPrivateMethodInvoker(
+        $command = self::getPrivateMethodInvoker(
             new ConfigCheck(service('logger'), service('commands')),
             'getKintD',
         );
@@ -110,7 +110,7 @@ final class ConfigCheckTest extends CIUnitTestCase
         /**
          * @var Closure(mixed...): string
          */
-        $command = $this->getPrivateMethodInvoker(
+        $command = self::getPrivateMethodInvoker(
             new ConfigCheck(service('logger'), service('commands')),
             'getVarDump',
         );
