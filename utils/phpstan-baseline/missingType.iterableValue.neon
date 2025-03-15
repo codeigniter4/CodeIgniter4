@@ -1,4 +1,4 @@
-# total 1671 errors
+# total 1659 errors
 
 parameters:
     ignoreErrors:
@@ -183,16 +183,6 @@ parameters:
             path: ../../system/BaseModel.php
 
         -
-            message: '#^Method CodeIgniter\\CLI\\CLI\:\:getOptions\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\CLI\:\:getSegments\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
             message: '#^Method CodeIgniter\\CLI\\CLI\:\:isZeroOptions\(\) has parameter \$options with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/CLI/CLI.php
@@ -246,51 +236,6 @@ parameters:
             message: '#^Method CodeIgniter\\CLI\\CLI\:\:validate\(\) has parameter \$rules with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Property CodeIgniter\\CLI\\CLI\:\:\$options type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Property CodeIgniter\\CLI\\CLI\:\:\$segments type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\Commands\:\:getCommandAlternatives\(\) has parameter \$collection with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/Commands.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\Commands\:\:getCommandAlternatives\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/Commands.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\Commands\:\:getCommands\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/Commands.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\Commands\:\:run\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/Commands.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\Commands\:\:verifyCommand\(\) has parameter \$commands with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/Commands.php
-
-        -
-            message: '#^Property CodeIgniter\\CLI\\Commands\:\:\$commands type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/Commands.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\Console\:\:parseParamsForHelpOption\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/Console.php
 
         -
             message: '#^Method CodeIgniter\\CLI\\Console\:\:parseParamsForHelpOption\(\) return type has no value type specified in iterable type array\.$#'
@@ -6651,11 +6596,6 @@ parameters:
             message: '#^Method CodeIgniter\\CLI\\CLITest\:\:testTable\(\) has parameter \$thead with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/CLI/CLITest.php
-
-        -
-            message: '#^Method CodeIgniter\\CLI\\ConsoleTest\:\:initCLI\(\) has parameter \$command with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/CLI/ConsoleTest.php
 
         -
             message: '#^Method CodeIgniter\\Cache\\Handlers\\BaseHandlerTest\:\:provideValidateKeyInvalidType\(\) return type has no value type specified in iterable type iterable\.$#'

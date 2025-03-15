@@ -169,7 +169,7 @@ final class ConsoleTest extends CIUnitTestCase
     }
 
     /**
-     * @param array $command
+     * @param string ...$command
      */
     protected function initCLI(...$command): void
     {

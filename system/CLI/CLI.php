@@ -107,12 +107,12 @@ class CLI
     /**
      * List of array segments.
      *
-     * @var array
+     * @var list<string>
      */
     protected static $segments = [];
 
     /**
-     * @var array
+     * @var array<string, string|null>
      */
     protected static $options = [];
 
@@ -944,6 +944,8 @@ class CLI
 
     /**
      * Returns the raw array of segments found.
+     *
+     * @return list<string>
      */
     public static function getSegments(): array
     {
@@ -971,6 +973,8 @@ class CLI
 
     /**
      * Returns the raw array of options found.
+     *
+     * @return array<string, string|null>
      */
     public static function getOptions(): array
     {
