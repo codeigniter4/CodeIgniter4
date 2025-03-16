@@ -43,7 +43,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
 
     public function testDetermineViewsPageNotFoundException(): void
     {
-        $determineView = $this->getPrivateMethodInvoker($this->handler, 'determineView');
+        $determineView = self::getPrivateMethodInvoker($this->handler, 'determineView');
 
         $exception    = PageNotFoundException::forControllerNotFound('Foo', 'bar');
         $templatePath = APPPATH . 'Views/errors/html';
@@ -54,7 +54,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
 
     public function testDetermineViewsRuntimeException(): void
     {
-        $determineView = $this->getPrivateMethodInvoker($this->handler, 'determineView');
+        $determineView = self::getPrivateMethodInvoker($this->handler, 'determineView');
 
         $exception    = new RuntimeException('Exception');
         $templatePath = APPPATH . 'Views/errors/html';
@@ -65,7 +65,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
 
     public function testDetermineViewsRuntimeExceptionCode404(): void
     {
-        $determineView = $this->getPrivateMethodInvoker($this->handler, 'determineView');
+        $determineView = self::getPrivateMethodInvoker($this->handler, 'determineView');
 
         $exception    = new RuntimeException('foo', 404);
         $templatePath = APPPATH . 'Views/errors/html';
@@ -78,7 +78,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
     {
         ini_set('display_errors', '0');
 
-        $determineView = $this->getPrivateMethodInvoker($this->handler, 'determineView');
+        $determineView = self::getPrivateMethodInvoker($this->handler, 'determineView');
 
         $exception    = new RuntimeException('Exception');
         $templatePath = APPPATH . 'Views/errors/html';
@@ -91,7 +91,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
 
     public function testCollectVars(): void
     {
-        $collectVars = $this->getPrivateMethodInvoker($this->handler, 'collectVars');
+        $collectVars = self::getPrivateMethodInvoker($this->handler, 'collectVars');
 
         $vars = $collectVars(new RuntimeException('This.'), 404);
 
@@ -163,7 +163,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
 
     public function testMaskSensitiveData(): void
     {
-        $maskSensitiveData = $this->getPrivateMethodInvoker($this->handler, 'maskSensitiveData');
+        $maskSensitiveData = self::getPrivateMethodInvoker($this->handler, 'maskSensitiveData');
 
         $trace = [
             0 => [
@@ -212,7 +212,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
 
     public function testMaskSensitiveDataTraceDataKey(): void
     {
-        $maskSensitiveData = $this->getPrivateMethodInvoker($this->handler, 'maskSensitiveData');
+        $maskSensitiveData = self::getPrivateMethodInvoker($this->handler, 'maskSensitiveData');
 
         $trace = [
             0 => [
@@ -248,7 +248,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
             'highlight.comment', 'highlight.default', 'highlight.html', 'highlight.keyword', 'highlight.string',
         ]);
 
-        $highlightFile = $this->getPrivateMethodInvoker($this->handler, 'highlightFile');
+        $highlightFile = self::getPrivateMethodInvoker($this->handler, 'highlightFile');
         $result        = $highlightFile(SUPPORTPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Hello.php', 16);
 
         $resultFile = match (true) {

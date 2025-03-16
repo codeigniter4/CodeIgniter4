@@ -319,7 +319,7 @@ final class SecurityTest extends CIUnitTestCase
     {
         $_POST['csrf_test_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
         $request                 = $this->createIncomingRequest();
-        $method                  = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+        $method                  = self::getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
 
         $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
     }
@@ -328,7 +328,7 @@ final class SecurityTest extends CIUnitTestCase
     {
         $_POST   = [];
         $request = $this->createIncomingRequest()->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
-        $method  = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+        $method  = self::getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
 
         $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
     }
@@ -338,7 +338,7 @@ final class SecurityTest extends CIUnitTestCase
         $_POST    = [];
         $jsonBody = json_encode(['csrf_test_name' => '8b9218a55906f9dcc1dc263dce7f005a']);
         $request  = $this->createIncomingRequest()->setBody($jsonBody);
-        $method   = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+        $method   = self::getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
 
         $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
     }
@@ -348,7 +348,7 @@ final class SecurityTest extends CIUnitTestCase
         $_POST    = [];
         $formBody = 'csrf_test_name=8b9218a55906f9dcc1dc263dce7f005a';
         $request  = $this->createIncomingRequest()->setBody($formBody);
-        $method   = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+        $method   = self::getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
 
         $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $method($request));
     }
@@ -356,7 +356,7 @@ final class SecurityTest extends CIUnitTestCase
     #[DataProvider('provideGetPostedTokenReturnsNullForInvalidInputs')]
     public function testGetPostedTokenReturnsNullForInvalidInputs(string $case, IncomingRequest $request): void
     {
-        $method = $this->getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
+        $method = self::getPrivateMethodInvoker($this->createMockSecurity(), 'getPostedToken');
 
         $this->assertNull(
             $method($request),

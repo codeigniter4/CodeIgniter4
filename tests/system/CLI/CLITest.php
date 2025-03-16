@@ -539,6 +539,7 @@ final class CLITest extends CIUnitTestCase
 
         $this->assertSame(['parm' => 'pvalue', 'p2' => null, 'p3' => 'value 3'], CLI::getOptions());
         $this->assertSame('pvalue', CLI::getOption('parm'));
+        $this->assertTrue(CLI::getOption('p2'));
         $this->assertSame('-parm pvalue -p2 -p3 "value 3" ', CLI::getOptionString());
         $this->assertSame('-parm pvalue -p2 -p3 "value 3"', CLI::getOptionString(false, true));
         $this->assertSame('--parm pvalue --p2 --p3 "value 3" ', CLI::getOptionString(true));

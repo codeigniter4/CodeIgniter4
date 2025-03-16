@@ -47,14 +47,14 @@ final class FileCollectionTest extends CIUnitTestCase
 
     public function testResolveDirectoryDirectory(): void
     {
-        $method = $this->getPrivateMethodInvoker(FileCollection::class, 'resolveDirectory');
+        $method = self::getPrivateMethodInvoker(FileCollection::class, 'resolveDirectory');
 
         $this->assertSame($this->directory, $method($this->directory));
     }
 
     public function testResolveDirectoryFile(): void
     {
-        $method = $this->getPrivateMethodInvoker(FileCollection::class, 'resolveDirectory');
+        $method = self::getPrivateMethodInvoker(FileCollection::class, 'resolveDirectory');
 
         $this->expectException(FileException::class);
         $this->expectExceptionMessage(lang('Files.expectedDirectory', ['invokeArgs']));
@@ -68,7 +68,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $link = sys_get_temp_dir() . DIRECTORY_SEPARATOR . bin2hex(random_bytes(4));
         symlink($this->directory, $link);
 
-        $method = $this->getPrivateMethodInvoker(FileCollection::class, 'resolveDirectory');
+        $method = self::getPrivateMethodInvoker(FileCollection::class, 'resolveDirectory');
 
         $this->assertSame($this->directory, $method($link));
 
@@ -77,7 +77,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
     public function testResolveFileFile(): void
     {
-        $method = $this->getPrivateMethodInvoker(FileCollection::class, 'resolveFile');
+        $method = self::getPrivateMethodInvoker(FileCollection::class, 'resolveFile');
 
         $this->assertSame($this->file, $method($this->file));
     }
@@ -88,7 +88,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $link = sys_get_temp_dir() . DIRECTORY_SEPARATOR . bin2hex(random_bytes(4));
         symlink($this->file, $link);
 
-        $method = $this->getPrivateMethodInvoker(FileCollection::class, 'resolveFile');
+        $method = self::getPrivateMethodInvoker(FileCollection::class, 'resolveFile');
 
         $this->assertSame($this->file, $method($link));
 
@@ -97,7 +97,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
     public function testResolveFileDirectory(): void
     {
-        $method = $this->getPrivateMethodInvoker(FileCollection::class, 'resolveFile');
+        $method = self::getPrivateMethodInvoker(FileCollection::class, 'resolveFile');
 
         $this->expectException(FileException::class);
         $this->expectExceptionMessage(lang('Files.expectedFile', ['invokeArgs']));

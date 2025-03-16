@@ -64,7 +64,7 @@ final class AutoloaderTest extends CIUnitTestCase
         $this->loader = new Autoloader();
         $this->loader->initialize($config, $modules)->register();
 
-        $this->classLoader = $this->getPrivateMethodInvoker($this->loader, 'loadInNamespace');
+        $this->classLoader = self::getPrivateMethodInvoker($this->loader, 'loadInNamespace');
     }
 
     protected function tearDown(): void
@@ -111,7 +111,7 @@ final class AutoloaderTest extends CIUnitTestCase
 
     public function testServiceAutoLoaderFromShareInstances(): void
     {
-        $classLoader = $this->getPrivateMethodInvoker(service('autoloader'), 'loadInNamespace');
+        $classLoader = self::getPrivateMethodInvoker(service('autoloader'), 'loadInNamespace');
 
         // look for Home controller, as that should be in base repo
         $actual   = $classLoader(Home::class);
@@ -129,7 +129,7 @@ final class AutoloaderTest extends CIUnitTestCase
         $autoloader->initialize(new Autoload(), new Modules());
         $autoloader->register();
 
-        $classLoader = $this->getPrivateMethodInvoker($autoloader, 'loadInNamespace');
+        $classLoader = self::getPrivateMethodInvoker($autoloader, 'loadInNamespace');
 
         // look for Home controller, as that should be in base repo
         $actual   = $classLoader(Home::class);

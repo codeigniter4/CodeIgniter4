@@ -19,6 +19,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Commands\AppInfo;
 use Tests\Support\Commands\ParamsReveal;
 
 /**
@@ -74,9 +75,12 @@ final class CommandTest extends CIUnitTestCase
     {
         command('app:info');
         $commands = $this->commands->getCommands();
-        $command  = new $commands['app:info']['class']($this->logger, $this->commands);
+
+        /** @var AppInfo */
+        $command = new $commands['app:info']['class']($this->logger, $this->commands);
 
         $command->helpme();
+
         $this->assertStringContainsString('Displays basic usage information.', $this->getBuffer());
     }
 
@@ -84,9 +88,12 @@ final class CommandTest extends CIUnitTestCase
     {
         command('app:info');
         $commands = $this->commands->getCommands();
-        $command  = new $commands['app:info']['class']($this->logger, $this->commands);
+
+        /** @var AppInfo */
+        $command = new $commands['app:info']['class']($this->logger, $this->commands);
 
         $command->bomb();
+
         $this->assertStringContainsString('Invalid "background" color:', $this->getBuffer());
     }
 

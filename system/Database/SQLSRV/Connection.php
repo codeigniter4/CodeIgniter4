@@ -561,11 +561,15 @@ class Connection extends BaseConnection
             return $this->dataCache['version'];
         }
 
-        if (! $this->connID || ($info = sqlsrv_server_info($this->connID)) === []) {
+        if (! $this->connID) {
             $this->initialize();
         }
 
-        return isset($info['SQLServerVersion']) ? $this->dataCache['version'] = $info['SQLServerVersion'] : false;
+        if (($info = sqlsrv_server_info($this->connID)) === []) {
+            return '';
+        }
+
+        return isset($info['SQLServerVersion']) ? $this->dataCache['version'] = $info['SQLServerVersion'] : '';
     }
 
     /**

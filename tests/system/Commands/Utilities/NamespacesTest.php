@@ -90,7 +90,7 @@ final class NamespacesTest extends CIUnitTestCase
     public function testTruncateNamespaces(): void
     {
         $commandObject  = new Namespaces(service('logger'), service('commands'));
-        $truncateRunner = $this->getPrivateMethodInvoker($commandObject, 'truncate');
+        $truncateRunner = self::getPrivateMethodInvoker($commandObject, 'truncate');
 
         $this->assertSame('App\Controllers\...', $truncateRunner('App\Controllers\Admin', 19));
         // multibyte namespace

@@ -124,7 +124,6 @@ if (! function_exists('command')) {
      */
     function command(string $command)
     {
-        $runner      = service('commands');
         $regexString = '([^\s]+?)(?:\s|(?<!\\\\)"|(?<!\\\\)\'|$)';
         $regexQuoted = '(?:"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\')';
 
@@ -156,8 +155,9 @@ if (! function_exists('command')) {
             $cursor += strlen($match[0]);
         }
 
-        $command     = array_shift($args);
+        /** @var array<int|string, string|null> */
         $params      = [];
+        $command     = array_shift($args);
         $optionValue = false;
 
         foreach ($args as $i => $arg) {
@@ -187,7 +187,7 @@ if (! function_exists('command')) {
         }
 
         ob_start();
-        $runner->run($command, $params);
+        service('commands')->run($command, $params);
 
         return ob_get_clean();
     }

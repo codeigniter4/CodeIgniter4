@@ -156,7 +156,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
     {
         $runner = new MigrationRunner($this->config);
 
-        $method = $this->getPrivateMethodInvoker($runner, 'getMigrationNumber');
+        $method = self::getPrivateMethodInvoker($runner, 'getMigrationNumber');
 
         $this->assertSame('20190806235100', $method('20190806235100_Foo'));
     }
@@ -165,7 +165,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
     {
         $runner = new MigrationRunner($this->config);
 
-        $method = $this->getPrivateMethodInvoker($runner, 'getMigrationNumber');
+        $method = self::getPrivateMethodInvoker($runner, 'getMigrationNumber');
 
         $this->assertSame('2019-08-06-235100', $method('2019-08-06-235100_Foo'));
     }
@@ -174,7 +174,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
     {
         $runner = new MigrationRunner($this->config);
 
-        $method = $this->getPrivateMethodInvoker($runner, 'getMigrationNumber');
+        $method = self::getPrivateMethodInvoker($runner, 'getMigrationNumber');
 
         $this->assertSame('2019_08_06_235100', $method('2019_08_06_235100_Foo'));
     }
@@ -183,7 +183,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
     {
         $runner = new MigrationRunner($this->config);
 
-        $method = $this->getPrivateMethodInvoker($runner, 'getMigrationNumber');
+        $method = self::getPrivateMethodInvoker($runner, 'getMigrationNumber');
 
         $this->assertSame('0', $method('Foo'));
     }
@@ -192,7 +192,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
     {
         $runner = new MigrationRunner($this->config);
 
-        $method = $this->getPrivateMethodInvoker($runner, 'getMigrationName');
+        $method = self::getPrivateMethodInvoker($runner, 'getMigrationName');
 
         $this->assertSame('Foo_bar', $method('2019-08-06-235100_Foo_bar'));
     }
@@ -201,7 +201,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
     {
         $runner = new MigrationRunner($this->config);
 
-        $method = $this->getPrivateMethodInvoker($runner, 'getMigrationName');
+        $method = self::getPrivateMethodInvoker($runner, 'getMigrationName');
 
         $this->assertSame('Foo_bar', $method('2019_08_06_235100_Foo_bar'));
     }

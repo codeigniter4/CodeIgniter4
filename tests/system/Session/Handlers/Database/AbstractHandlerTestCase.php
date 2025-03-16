@@ -97,13 +97,13 @@ abstract class AbstractHandlerTestCase extends CIUnitTestCase
         $this->setPrivateProperty($handler, 'sessionID', '1f5o06b43phsnnf8if6bo33b635e4p2o');
         $this->setPrivateProperty($handler, 'rowExists', true);
 
-        $lockSession = $this->getPrivateMethodInvoker($handler, 'lockSession');
+        $lockSession = self::getPrivateMethodInvoker($handler, 'lockSession');
         $lockSession('1f5o06b43phsnnf8if6bo33b635e4p2o');
 
         $data = '__ci_last_regenerate|i:1624650854;_ci_previous_url|s:40:\"http://localhost/index.php/home/index\";';
         $this->assertTrue($handler->write('1f5o06b43phsnnf8if6bo33b635e4p2o', $data));
 
-        $releaseLock = $this->getPrivateMethodInvoker($handler, 'releaseLock');
+        $releaseLock = self::getPrivateMethodInvoker($handler, 'releaseLock');
         $releaseLock();
 
         $row = $this->db->table('ci_sessions')
