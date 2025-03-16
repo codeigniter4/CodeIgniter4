@@ -3,7 +3,6 @@ includes:
     - assign.propertyType.neon
     - codeigniter.cacheHandlerInstance.neon
     - codeigniter.getReassignArray.neon
-    - codeigniter.modelArgumentInstanceof.neon
     - codeigniter.modelArgumentType.neon
     - codeigniter.superglobalAccess.neon
     - codeigniter.superglobalAccessAssign.neon
