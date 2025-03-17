@@ -148,7 +148,7 @@ if (! function_exists('anchor')) {
      * @param array|string        $uri        URI string or array of URI segments
      * @param string              $title      The link title
      * @param array|object|string $attributes Any attributes
-     * @param App|null            $altConfig  Alternate configuration to use
+     * @param App|null            $config  Alternate configuration to use
      */
     function anchor($uri = '', string $title = '', $attributes = '', ?App $config = null): string
     {
@@ -178,13 +178,10 @@ if (! function_exists('anchor_popup')) {
      * @param string                    $uri        the URL
      * @param string                    $title      the link title
      * @param array|false|object|string $attributes any attributes
-     * @param App|null                  $altConfig  Alternate configuration to use
+     * @param App|null                  $config  Alternate configuration to use
      */
-    function anchor_popup($uri = '', string $title = '', $attributes = false, ?App $altConfig = null): string
+    function anchor_popup($uri = '', string $title = '', $attributes = false, ?App $config = null): string
     {
-        // use alternate config if provided, else default one
-        $config = $altConfig ?? config(App::class);
-
         $siteUrl = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config);
         $siteUrl = rtrim($siteUrl, '/');
 
