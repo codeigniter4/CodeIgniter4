@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database;
 
+use CodeIgniter\Database\Postgre\Connection as PostgreConnection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -149,7 +150,7 @@ final class ConfigTest extends CIUnitTestCase
     public function testConnectionGroupWithDSNPostgre(): void
     {
         $conn = Config::connect($this->dsnGroupPostgre, false);
-        $this->assertInstanceOf(BaseConnection::class, $conn);
+        $this->assertInstanceOf(PostgreConnection::class, $conn);
 
         $this->assertSame('', $this->getPrivateProperty($conn, 'DSN'));
         $this->assertSame('localhost', $this->getPrivateProperty($conn, 'hostname'));
@@ -205,7 +206,7 @@ final class ConfigTest extends CIUnitTestCase
         //      Should deprecate?
         $this->dsnGroupPostgreNative['DSN'] = $input;
         $conn                               = Config::connect($this->dsnGroupPostgreNative, false);
-        $this->assertInstanceOf(BaseConnection::class, $conn);
+        $this->assertInstanceOf(PostgreConnection::class, $conn);
 
         $method = self::getPrivateMethodInvoker($conn, 'convertDSN');
         $method();
