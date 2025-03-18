@@ -41,5 +41,6 @@ parameters:
 	codeigniter:
 		additionalServices:
 			- AfterAutoloadModule\Config\Services
+		checkArgumentTypeOfModel: false
 	shipmonkBaselinePerIdentifier:
 		directory: %currentWorkingDirectory%
