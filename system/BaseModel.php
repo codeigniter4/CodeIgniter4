@@ -121,9 +121,13 @@ abstract class BaseModel
     protected ?DataConverter $converter = null;
 
     /**
-     * If this model should use "softDeletes" and
-     * simply set a date when rows are deleted, or
-     * do hard deletes.
+     * Determines whether the model should protect field names during
+     * mass assignment operations such as insert() and update().
+     *
+     * When set to true, only the fields explicitly defined in the $allowedFields
+     * property will be allowed for mass assignment. This helps prevent
+     * unintended modification of database fields and improves security
+     * by avoiding mass assignment vulnerabilities.
      *
      * @var bool
      */
