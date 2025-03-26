@@ -484,6 +484,12 @@ class Toolbar
         if ($request->getGet('debugbar_time')) {
             helper('security');
 
+            //Validate and sanitize the debugbar_time parameter -- ss
+            $debugbarTime= $request->getGet('debugbar_time');
+            if (!preg_match('/^[a-zA-Z0-9_]+$/', $debugbarTime)) {
+                throw new \InvalidArgumentException('Invalid debugbar_time parameter.');
+            }
+
             // Negotiate the content-type to format the output
             $format = $request->negotiate('media', ['text/html', 'application/json', 'application/xml']);
             $format = explode('/', $format)[1];
@@ -491,18 +497,12 @@ class Toolbar
             $filename = sanitize_filename('debugbar_' . $request->getGet('debugbar_time'));
             $filename = WRITEPATH . 'debugbar/' . $filename . '.json';
 
-            if (is_file($filename)) {
+            if (is_file($filename) && is_readable($filename)) {
                 // Show the toolbar if it exists
-                echo $this->format(file_get_contents($filename), $format);
+                echo htmlspecialchars($this->format(file_get_contents($filename), $format), ENT_QUOTES, 'UTF-8');
 
                 exit;
             }
-
-            // Filename not found
-            http_response_code(404);
-
-            exit; // Exit here is needed to avoid loading the index page
-        }
     }
 
     /**
