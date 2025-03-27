@@ -484,10 +484,10 @@ class Toolbar
         if ($request->getGet('debugbar_time')) {
             helper('security');
 
-            //Validate and sanitize the debugbar_time parameter -- ss
-            $debugbarTime= $request->getGet('debugbar_time');
-            if (!preg_match('/^\d+(\.\d+)?$/', $debugbarTime)) {
-                throw new \InvalidArgumentException('Invalid debugbar_time parameter.');
+            // Validate and sanitize the debugbar_time parameter -- ss
+            $debugbarTime = $request->getGet('debugbar_time');
+            if (! preg_match('/^\d+(\.\d+)?$/', $debugbarTime)) {
+                throw new InvalidArgumentException('Invalid debugbar_time parameter.');
             }
 
             // Negotiate the content-type to format the output
