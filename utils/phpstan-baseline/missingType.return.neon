@@ -1,4 +1,4 @@
-# total 201 errors
+# total 200 errors
 
 parameters:
     ignoreErrors:
@@ -111,11 +111,6 @@ parameters:
             message: '#^Method CodeIgniter\\Database\\MigrationRunner\:\:removeHistory\(\) has no return type specified\.$#'
             count: 1
             path: ../../system/Database/MigrationRunner.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\OCI8\\Builder\:\:resetSelect\(\) has no return type specified\.$#'
-            count: 1
-            path: ../../system/Database/OCI8/Builder.php
 
         -
             message: '#^Method CodeIgniter\\Database\\Postgre\\Connection\:\:buildDSN\(\) has no return type specified\.$#'
