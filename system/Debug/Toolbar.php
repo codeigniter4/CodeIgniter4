@@ -486,7 +486,7 @@ class Toolbar
 
             //Validate and sanitize the debugbar_time parameter -- ss
             $debugbarTime= $request->getGet('debugbar_time');
-            if (!preg_match('/^[a-zA-Z0-9_]+$/', $debugbarTime)) {
+            if (!preg_match('/^\d+(\.\d+)?$/', $debugbarTime)) {
                 throw new \InvalidArgumentException('Invalid debugbar_time parameter.');
             }
 
@@ -503,6 +503,12 @@ class Toolbar
 
                 exit;
             }
+
+            // Filename not found
+            http_response_code(404);
+
+            exit; // Exit here is needed to avoid loading the index page
+        }
     }
 
     /**
