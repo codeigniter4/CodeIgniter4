@@ -27,24 +27,25 @@ var ciDebugBar = {
             .getElementById("debug-icon-link")
             .addEventListener("click", ciDebugBar.toggleToolbar, true);
 
-        if (this.toolbar.querySelector(".ci-history-load")) {
-            // Allows highlighting the row of the current history request
-            var btn = this.toolbar.querySelector(
-                'button[data-time="' + localStorage.getItem("debugbar-time") + '"]'
-            );
-            ciDebugBar.addClass(btn.parentNode.parentNode, "current");
-        }
-
         historyLoad = this.toolbar.getElementsByClassName("ci-history-load");
 
-        for (var i = 0; i < historyLoad.length; i++) {
-            historyLoad[i].addEventListener(
-                "click",
-                function () {
-                    loadDoc(this.getAttribute("data-time"));
-                },
-                true
+        if (historyLoad.length) {
+            // Allows highlighting the row of the current history request
+            var btn = this.toolbar.querySelector(
+                'button[data-time="' + localStorage.getItem("debugbar-time-new") + '"]'
             );
+            ciDebugBar.addClass(btn.parentNode.parentNode, "current");
+
+
+            for (var i = 0; i < historyLoad.length; i++) {
+                historyLoad[i].addEventListener(
+                    "click",
+                    function () {
+                        loadDoc(this.getAttribute("data-time"));
+                    },
+                    true
+                );
+            }
         }
 
         // Display the active Tab on page load
