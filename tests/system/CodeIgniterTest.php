@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
-use CodeIgniter\HTTP\ResponseInterface;
 use App\Controllers\Home;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;

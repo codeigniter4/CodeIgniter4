@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
-use CodeIgniter\HTTP\RequestInterface;
 use App\Controllers\Home;
 use App\Controllers\NeverHeardOfIt;
 use CodeIgniter\Controller;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\RuntimeException;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\App;
