@@ -264,7 +264,7 @@ final class FileMovingTest extends CIUnitTestCase
         $this->expectException(HTTPException::class);
 
         $file = $collection->getFile('userfile');
-        $this->assertInstanceof(UploadedFile::class, $file);
+        $this->assertInstanceOf(UploadedFile::class, $file);
         $file->move($destination, $file->getName(), false);
     }
 
@@ -291,7 +291,7 @@ final class FileMovingTest extends CIUnitTestCase
         $this->expectException(HTTPException::class);
 
         $file = $collection->getFile('userfile');
-        $this->assertInstanceof(UploadedFile::class, $file);
+        $this->assertInstanceOf(UploadedFile::class, $file);
         $file->move($destination, $file->getName(), false);
     }
 
@@ -323,7 +323,7 @@ final class FileMovingTest extends CIUnitTestCase
         $this->expectExceptionMessage('move_uploaded_file() returned false');
 
         $file = $collection->getFile('userfile1');
-        $this->assertInstanceof(UploadedFile::class, $file);
+        $this->assertInstanceOf(UploadedFile::class, $file);
         $file->move($destination, $file->getName(), false);
     }
 }

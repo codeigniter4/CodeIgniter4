@@ -635,7 +635,7 @@ final class PagerRendererTest extends CIUnitTestCase
     }
 
     /**
-     * @return array<string, array<string, mixed>> $details
+     * @return array<string, list<array<string, int|URI>|int>> $details
      */
     public static function providePageStartEnd(): iterable
     {

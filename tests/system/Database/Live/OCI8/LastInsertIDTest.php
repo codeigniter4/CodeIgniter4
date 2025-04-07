@@ -84,7 +84,7 @@ final class LastInsertIDTest extends CIUnitTestCase
 
             return (new Query($db))->setQuery($sql);
         });
-        $this->assertInstanceof(BasePreparedQuery::class, $query);
+        $this->assertInstanceOf(BasePreparedQuery::class, $query);
 
         $query->execute('foo', 'bar');
         $actual = $this->db->insertID();

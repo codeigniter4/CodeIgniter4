@@ -359,7 +359,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $collection = new FileCollection();
         $file       = $collection->getFile('userfile');
-        $this->assertInstanceof(UploadedFile::class, $file);
+        $this->assertInstanceOf(UploadedFile::class, $file);
 
         $this->assertSame($expected, $file->getErrorString());
     }
@@ -380,7 +380,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $collection = new FileCollection();
         $file       = $collection->getFile('userfile');
-        $this->assertInstanceof(UploadedFile::class, $file);
+        $this->assertInstanceOf(UploadedFile::class, $file);
 
         $this->assertSame($expected, $file->getErrorString());
     }
@@ -400,7 +400,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $collection = new FileCollection();
         $file       = $collection->getFile('userfile');
-        $this->assertInstanceof(UploadedFile::class, $file);
+        $this->assertInstanceOf(UploadedFile::class, $file);
 
         $this->assertSame($expected, $file->getErrorString());
     }
@@ -419,7 +419,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $collection = new FileCollection();
         $file       = $collection->getFile('userfile');
-        $this->assertInstanceof(UploadedFile::class, $file);
+        $this->assertInstanceOf(UploadedFile::class, $file);
 
         $this->assertSame(UPLOAD_ERR_INI_SIZE, $file->getError());
     }
@@ -437,7 +437,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $collection = new FileCollection();
         $file       = $collection->getFile('userfile');
-        $this->assertInstanceof(UploadedFile::class, $file);
+        $this->assertInstanceOf(UploadedFile::class, $file);
 
         $this->assertSame(0, $file->getError());
     }
@@ -456,7 +456,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $collection = new FileCollection();
         $file       = $collection->getFile('userfile');
-        $this->assertInstanceof(UploadedFile::class, $file);
+        $this->assertInstanceOf(UploadedFile::class, $file);
 
         $this->assertSame(UPLOAD_ERR_OK, $file->getError());
     }
@@ -475,7 +475,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $collection = new FileCollection();
         $file       = $collection->getFile('userfile');
-        $this->assertInstanceof(UploadedFile::class, $file);
+        $this->assertInstanceOf(UploadedFile::class, $file);
 
         $this->assertSame('someDir/someFile.txt', $file->getClientPath());
     }
@@ -493,7 +493,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $collection = new FileCollection();
         $file       = $collection->getFile('userfile');
-        $this->assertInstanceof(UploadedFile::class, $file);
+        $this->assertInstanceOf(UploadedFile::class, $file);
 
         $this->assertNull($file->getClientPath());
     }

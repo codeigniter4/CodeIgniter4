@@ -162,7 +162,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('popper');
 
         $req = $result->request();
-        $this->assertInstanceof(RequestInterface::class, $req);
+        $this->assertInstanceOf(RequestInterface::class, $req);
         $this->assertSame('GET', $req->getMethod());
     }
 
