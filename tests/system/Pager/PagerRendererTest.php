@@ -643,59 +643,59 @@ final class PagerRendererTest extends CIUnitTestCase
 
         return [
             'first page' => [
-                'details' => [
+                [
                     'uri'         => $uri,
                     'pageCount'   => 3,
                     'total'       => 25,
                     'currentPage' => 1,
                     'perPage'     => 10,
                 ],
-                'pageStart' => 1,
-                'pageEnd'   => 10,
+                1,
+                10,
             ],
             'second page' => [
-                'details' => [
+                [
                     'uri'         => $uri,
                     'pageCount'   => 3,
                     'total'       => 25,
                     'currentPage' => 2,
                     'perPage'     => 10,
                 ],
-                'pageStart' => 11,
-                'pageEnd'   => 20,
+                11,
+                20,
             ],
             'last page' => [
-                'details' => [
+                [
                     'uri'         => $uri,
                     'pageCount'   => 3,
                     'total'       => 25,
                     'currentPage' => 3,
                     'perPage'     => 10,
                 ],
-                'pageStart' => 21,
-                'pageEnd'   => 25,
+                21,
+                25,
             ],
             'current greater last page' => [
-                'details' => [
+                [
                     'uri'         => $uri,
                     'pageCount'   => 3,
                     'total'       => 25,
                     'currentPage' => 5,
                     'perPage'     => 10,
                 ],
-                'pageStart' => 41,
-                'pageEnd'   => 50,
+                41,
+                50,
             ],
             'current equal last page' => [
-                'details' => [
+                [
                     'uri'         => $uri,
                     'pageCount'   => 1,
                     'total'       => 10,
                     'currentPage' => 1,
                     'perPage'     => 10,
                 ],
-                'pageStart' => 1,
-                'pageEnd'   => 10,
+                1,
+                10,
             ],
         ];
     }

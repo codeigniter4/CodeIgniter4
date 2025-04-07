@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
+use CodeIgniter\HTTP\ResponseInterface;
 use App\Controllers\Home;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Debug\Timer;
@@ -95,6 +96,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 1;
 
         $response = $this->codeigniter->run(null, true);
+        $this->assertInstanceof(ResponseInterface::class, $response);
 
         $this->assertStringContainsString('Welcome to CodeIgniter', $response->getBody());
     }
@@ -159,6 +161,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         $response = $this->codeigniter->run($routes, true);
+        $this->assertInstanceof(ResponseInterface::class, $response);
 
         $this->assertStringContainsString('Oops', $response->getBody());
         $this->assertSame(567, $response->getStatusCode());
@@ -177,6 +180,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         $response = $this->codeigniter->run($routes, true);
+        $this->assertInstanceof(ResponseInterface::class, $response);
 
         $this->assertStringContainsString('Oops', $response->getBody());
     }
@@ -467,6 +471,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertNull($response->header('Location'));
 
         $response = $codeigniter->run(null, true);
+        $this->assertInstanceof(ResponseInterface::class, $response);
 
         $this->assertSame('https://example.com/index.php/', $response->header('Location')->getValue());
     }

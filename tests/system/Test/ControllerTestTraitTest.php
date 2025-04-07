@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
+use CodeIgniter\HTTP\RequestInterface;
 use App\Controllers\Home;
 use App\Controllers\NeverHeardOfIt;
 use CodeIgniter\Controller;
@@ -161,6 +162,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('popper');
 
         $req = $result->request();
+        $this->assertInstanceof(RequestInterface::class, $req);
         $this->assertSame('GET', $req->getMethod());
     }
 

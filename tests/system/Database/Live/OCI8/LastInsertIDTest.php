@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live\OCI8;
 
+use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
@@ -83,6 +84,7 @@ final class LastInsertIDTest extends CIUnitTestCase
 
             return (new Query($db))->setQuery($sql);
         });
+        $this->assertInstanceof(BasePreparedQuery::class, $query);
 
         $query->execute('foo', 'bar');
         $actual = $this->db->insertID();

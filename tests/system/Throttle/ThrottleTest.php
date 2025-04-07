@@ -213,9 +213,9 @@ final class ThrottleTest extends CIUnitTestCase
     {
         return [
             '2 capacity / 200 seconds (100s refresh, 0.01 tokens/s) -> 5 checks, 1 cost each' => [
-                'capacity'    => 2,
-                'seconds'     => 200,
-                'checkInputs' => [
+                2,
+                200,
+                [
                     [   // 2 -> 1
                         'testTime'            => 0,
                         'cost'                => 1,
@@ -255,9 +255,9 @@ final class ThrottleTest extends CIUnitTestCase
                 ],
             ],
             '1 capacity / 3600 seconds (3600s refresh, 2.77e-4 tokens/s) -> 2 checks with 1 cost each' => [
-                'capacity'    => 1,
-                'seconds'     => 3600,
-                'checkInputs' => [
+                1,
+                3600,
+                [
                     [   // 1 -> 0
                         'testTime'            => 0,
                         'cost'                => 1,
@@ -273,9 +273,9 @@ final class ThrottleTest extends CIUnitTestCase
                 ],
             ],
             '10 capacity / 200 seconds (20s refresh, 0.05 tokens/s) -> 7 checks with different costs (RNG)' => [
-                'capacity'    => 10,
-                'seconds'     => 200,
-                'checkInputs' => [
+                10,
+                200,
+                [
                     [   // -2t / 10 -> 8
                         'testTime'            => 0,
                         'cost'                => 2,
