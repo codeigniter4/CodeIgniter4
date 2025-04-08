@@ -344,14 +344,12 @@ intend to reuse that same key in the same request, you'd want to use
 
 .. literalinclude:: sessions/036.php
 
-Flag Manipulation
-=================
+Changing the Session Key Type
+=============================
 
-Since the data is stored in the session and the Flashdata/Tempdata methods only manipulates flags, you can change the type for one value.
+Since session data values like Flashdata and Tempdata are differentiated only by internal flags, you can change a value's type without rewriting its data.
 
 .. literalinclude:: sessions/045.php
-
-You may never use it, but know that it works.
 
 Closing a Session
 =================

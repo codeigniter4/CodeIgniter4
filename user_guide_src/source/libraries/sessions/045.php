@@ -8,10 +8,10 @@ session()->setFlashdata('alerts', 'Operation success!');
  * echo session()->getFlashdata('alerts');
  */
 
-// Switch flag
+// You can switch the session key type from Flashdata to Tempdata like this:
 session()->markAsTempdata('alerts');
 
-// or rewrite
+// Or simply rewrite it directly
 session()->setTempdata('alerts', 'Operation success!');
 
 /**
