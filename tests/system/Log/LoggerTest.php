@@ -236,6 +236,23 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertGreaterThan(1, strpos($logs[0], $expected));
     }
 
+    public function testLogInterpolatesLineOnly(): void
+    {
+        $config = new LoggerConfig();
+
+        $logger = new Logger($config);
+
+        $_ENV['foo'] = 'bar';
+
+        $logger->log('debug', 'Test message Sample {line}');
+        $line     = __LINE__ - 1;
+        $expected = "Sample {$line}";
+
+        $logs = TestHandler::getLogs();
+
+        $this->assertGreaterThan(1, strpos($logs[0], $expected));
+    }
+
     public function testLogInterpolatesExceptions(): void
     {
         $config = new LoggerConfig();
