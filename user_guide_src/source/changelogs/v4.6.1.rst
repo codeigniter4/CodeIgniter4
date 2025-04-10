@@ -35,6 +35,8 @@ Bugs Fixed
 - **Database:** Fixed a bug in ``Postgre`` and ``SQLite3`` handlers where composite unique keys were not fully taken into account for ``upsert`` type of queries.
 - **Database:** Fixed a bug in the ``OCI8`` and ``SQLSRV`` drivers where ``getVersion()`` returned an empty string when the database connection was not yet established.
 - **Logger:** Fixed a bug where the ``{line}`` variable couldn't be used without specifying the ``{file}`` variable when logging the message.
+- **Toolbar:** Fixed a bug where setting ``maxHistory`` to ``0`` would produce a JavaScript error in the Debug Toolbar.
+- **Toolbar:** Fixed a bug where setting ``maxHistory`` to ``0`` prevented log files from being properly cleared.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
