@@ -135,7 +135,7 @@ class CheckPhpIni
             'date.timezone'           => ['recommended' => 'UTC'],
             'mbstring.language'       => ['recommended' => 'neutral'],
             'opcache.enable'          => ['recommended' => '1'],
-            'opcache.enable_cli'      => ['recommended' => '1'],
+            'opcache.enable_cli'      => ['recommended' => '0', 'remark' => 'Enable when you are using queues or running repetitive CLI tasks'],
             'opcache.jit'             => ['recommended' => 'tracing'],
             'opcache.jit_buffer_size' => ['recommended' => '128', 'remark' => 'Adjust with your free space of memory'],
             'zend.assertions'         => ['recommended' => '-1'],
@@ -144,7 +144,7 @@ class CheckPhpIni
         if ($argument === 'opcache') {
             $items = [
                 'opcache.enable'                  => ['recommended' => '1'],
-                'opcache.enable_cli'              => ['recommended' => '0', 'remark' => 'Enable when you using CLI'],
+                'opcache.enable_cli'              => ['recommended' => '0', 'remark' => 'Enable when you are using queues or running repetitive CLI tasks'],
                 'opcache.jit'                     => ['recommended' => 'tracing', 'remark' => 'Disable when you used third-party extensions'],
                 'opcache.jit_buffer_size'         => ['recommended' => '128', 'remark' => 'Adjust with your free space of memory'],
                 'opcache.memory_consumption'      => ['recommended' => '128', 'remark' => 'Adjust with your free space of memory'],

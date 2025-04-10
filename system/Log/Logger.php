@@ -341,7 +341,7 @@ class Logger implements LoggerInterface
         $replace['{env}']       = ENVIRONMENT;
 
         // Allow us to log the file/line that we are logging from
-        if (str_contains($message, '{file}')) {
+        if (str_contains($message, '{file}') || str_contains($message, '{line}')) {
             [$file, $line] = $this->determineFile();
 
             $replace['{file}'] = $file;

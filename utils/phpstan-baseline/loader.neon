@@ -1,3 +1,4 @@
+# total 3760 errors
 includes:
     - argument.type.neon
     - assign.propertyType.neon
@@ -25,6 +26,7 @@ includes:
     - notIdentical.alwaysTrue.neon
     - nullCoalesce.property.neon
     - nullCoalesce.variable.neon
+    - offsetAccess.notFound.neon
     - property.defaultValue.neon
     - property.nonObject.neon
     - property.notFound.neon

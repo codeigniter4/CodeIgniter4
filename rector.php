@@ -18,7 +18,6 @@ use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
 use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
 use Rector\CodeQuality\Rector\FuncCall\CompactToVariablesRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
-use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
 use Rector\CodeQuality\Rector\Ternary\TernaryEmptyArrayArrayDimFetchToCoalesceRector;
 use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
@@ -36,8 +35,8 @@ use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\RemoveDataProviderParamKeysRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
-use Rector\PHPUnit\CodeQuality\Rector\MethodCall\AssertCountWithZeroToAssertEmptyRector;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
@@ -46,7 +45,6 @@ use Rector\TypeDeclaration\Rector\ClassMethod\AddMethodCallBasedStrictParamTypeR
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
 use Rector\TypeDeclaration\Rector\Closure\AddClosureVoidReturnTypeWhereNoReturnRector;
 use Rector\TypeDeclaration\Rector\Closure\ClosureReturnTypeRector;
-use Rector\TypeDeclaration\Rector\Empty_\EmptyOnNullableObjectToInstanceOfRector;
 use Rector\TypeDeclaration\Rector\Function_\AddFunctionVoidReturnTypeWhereNoReturnRector;
 use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
@@ -170,7 +168,7 @@ return RectorConfig::configure()
 
         CompactToVariablesRector::class,
 
-        AssertCountWithZeroToAssertEmptyRector::class,
+        RemoveDataProviderParamKeysRector::class,
     ])
     // auto import fully qualified class names
     ->withImportNames(removeUnusedImports: true)
@@ -192,7 +190,6 @@ return RectorConfig::configure()
         MakeInheritedMethodVisibilitySameAsParentRector::class,
         SimplifyEmptyCheckOnEmptyArrayRector::class,
         TernaryEmptyArrayArrayDimFetchToCoalesceRector::class,
-        EmptyOnNullableObjectToInstanceOfRector::class,
         DisallowedEmptyRuleFixerRector::class,
         PrivatizeFinalClassPropertyRector::class,
         BooleanInIfConditionRuleFixerRector::class,
@@ -202,7 +199,6 @@ return RectorConfig::configure()
         AddMethodCallBasedStrictParamTypeRector::class,
         TypedPropertyFromAssignsRector::class,
         ClosureReturnTypeRector::class,
-        FlipTypeControlToUseExclusiveTypeRector::class,
         AddArrowFunctionReturnTypeRector::class,
     ])
     ->withConfiguredRule(StringClassNameToClassConstantRector::class, [

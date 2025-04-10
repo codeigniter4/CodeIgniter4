@@ -278,7 +278,7 @@ class UserAgent implements Stringable
         $this->setPlatform();
 
         foreach (['setRobot', 'setBrowser', 'setMobile'] as $function) {
-            if ($this->{$function}() === true) {
+            if ($this->{$function}()) {
                 break;
             }
         }
