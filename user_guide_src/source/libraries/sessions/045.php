@@ -1,9 +1,9 @@
 <?php
 
-session()->setFlashdata('alerts', 'Operation success!');
+session()->setFlashdata('alerts', 'Operation successful!');
 
-/**
- * Get flash value 'Operation success!' in another controller.
+/*
+ * Get flash value 'Operation successful!' in another controller.
  *
  * echo session()->getFlashdata('alerts');
  */
@@ -12,10 +12,10 @@ session()->setFlashdata('alerts', 'Operation success!');
 session()->markAsTempdata('alerts');
 
 // Or simply rewrite it directly
-session()->setTempdata('alerts', 'Operation success!');
+session()->setTempdata('alerts', 'Operation successful!');
 
-/**
- * Get temp value 'Operation success!' in another controller.
+/*
+ * Get temp value 'Operation successful!' in another controller.
  *
  * echo session()->getTempdata('alerts');
  *
