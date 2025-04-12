@@ -26,6 +26,11 @@ Changes
 Deprecations
 ************
 
+- **Cache:** The ``FileHandler::writeFile()`` method is deprecated. Use ``write_file()`` instead.
+- **Cache:** The ``FileHandler::deleteFiles()`` method is deprecated. Use ``delete_files()`` instead.
+- **Cache:** The ``FileHandler::getDirFileInfo()`` method is deprecated. Use ``get_dir_file_info()`` instead.
+- **Cache:** The ``FileHandler::getFileInfo()`` method is deprecated. Use ``get_file_info()`` instead.
+
 **********
 Bugs Fixed
 **********
