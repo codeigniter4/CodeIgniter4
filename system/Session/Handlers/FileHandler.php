@@ -201,7 +201,9 @@ class FileHandler extends BaseHandler
         if (($length = strlen($data)) > 0) {
             $result = null;
 
-            for ($written = 0; $written < $length; $written += $result) {
+            $written = 0;
+
+            for (; $written < $length; $written += $result) {
                 if (($result = fwrite($this->fileHandle, substr($data, $written))) === false) {
                     break;
                 }
