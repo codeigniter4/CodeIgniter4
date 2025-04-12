@@ -1,4 +1,4 @@
-# total 1629 errors
+# total 1628 errors
 
 parameters:
     ignoreErrors:
@@ -5596,11 +5596,6 @@ parameters:
             message: '#^Method CodeIgniter\\Test\\Mock\\MockResult\:\:getFieldNames\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Test/Mock/MockResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\PhpStreamWrapper\:\:stream_stat\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/PhpStreamWrapper.php
 
         -
             message: '#^Method CodeIgniter\\Test\\TestResponse\:\:assertJSONExact\(\) has parameter \$test with no value type specified in iterable type array\.$#'
