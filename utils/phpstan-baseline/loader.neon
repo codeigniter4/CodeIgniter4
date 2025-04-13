@@ -1,4 +1,4 @@
-# total 3589 errors
+# total 3587 errors
 includes:
     - argument.type.neon
     - assign.propertyType.neon
@@ -11,7 +11,6 @@ includes:
     - deadCode.unreachable.neon
     - empty.notAllowed.neon
     - empty.property.neon
-    - function.alreadyNarrowedType.neon
     - generator.valueType.neon
     - isset.property.neon
     - method.alreadyNarrowedType.neon
