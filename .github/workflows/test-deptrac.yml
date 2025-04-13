@@ -34,7 +34,7 @@ permissions:
 jobs:
   build:
     name: Architectural Inspection
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout base branch for PR
         if: github.event_name == 'pull_request'

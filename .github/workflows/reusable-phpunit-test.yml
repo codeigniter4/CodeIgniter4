@@ -61,7 +61,7 @@ env:
 jobs:
   tests:
     name: ${{ inputs.job-name }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     # Service containers cannot be extracted to caller workflows yet
     services:
@@ -138,13 +138,16 @@ jobs:
     steps:
       - name: Create database for MSSQL Server
         if: ${{ inputs.db-platform == 'SQLSRV' }}
-        run: sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q "CREATE DATABASE test COLLATE Latin1_General_100_CS_AS_SC_UTF8"
+        run: |
+          sudo apt-get install -y mssql-tools18 unixodbc-dev
+          sudo ln -sfn /opt/mssql-tools18/bin/sqlcmd /usr/bin/sqlcmd
+          sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q "CREATE DATABASE test COLLATE Latin1_General_100_CS_AS_SC_UTF8" -C
 
       - name: Install latest ImageMagick
         if: ${{ contains(inputs.extra-extensions, 'imagick') }}
         run: |
           sudo apt-get update
-          sudo apt-get install --reinstall libgs9-common fonts-noto-mono libgs9:amd64 libijs-0.35:amd64 fonts-urw-base35 ghostscript poppler-data libjbig2dec0:amd64 libopenjp2-7:amd64 fonts-droid-fallback fonts-dejavu-core
+          sudo apt-get install --reinstall libgs-common fonts-noto-mono libgs10:amd64 libijs-0.35:amd64 fonts-urw-base35 ghostscript poppler-data libjbig2dec0:amd64 libopenjp2-7:amd64 fonts-droid-fallback fonts-dejavu-core
           sudo apt-get install -y gsfonts libmagickwand-dev imagemagick
           sudo apt-get install --fix-broken
 
