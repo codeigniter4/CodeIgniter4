@@ -11,7 +11,9 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-class SimpleConfig extends CodeIgniter\Config\BaseConfig
+use CodeIgniter\Config\BaseConfig;
+
+class SimpleConfig extends BaseConfig
 {
     public $QZERO;
     public $QZEROSTR;

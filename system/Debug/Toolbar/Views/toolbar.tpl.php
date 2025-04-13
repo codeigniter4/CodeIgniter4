@@ -1,21 +1,24 @@
 <?php declare(strict_types=1);
+use CodeIgniter\Debug\Toolbar;
+use CodeIgniter\View\Parser;
+
 /**
- * @var CodeIgniter\Debug\Toolbar $this
- * @var int                       $totalTime
- * @var int                       $totalMemory
- * @var string                    $url
- * @var string                    $method
- * @var bool                      $isAJAX
- * @var int                       $startTime
- * @var int                       $totalTime
- * @var int                       $totalMemory
- * @var float                     $segmentDuration
- * @var int                       $segmentCount
- * @var string                    $CI_VERSION
- * @var array                     $collectors
- * @var array                     $vars
- * @var array                     $styles
- * @var CodeIgniter\View\Parser   $parser
+ * @var Toolbar $this
+ * @var int     $totalTime
+ * @var int     $totalMemory
+ * @var string  $url
+ * @var string  $method
+ * @var bool    $isAJAX
+ * @var int     $startTime
+ * @var int     $totalTime
+ * @var int     $totalMemory
+ * @var float   $segmentDuration
+ * @var int     $segmentCount
+ * @var string  $CI_VERSION
+ * @var array   $collectors
+ * @var array   $vars
+ * @var array   $styles
+ * @var Parser  $parser
  */
 ?>
 <style>
