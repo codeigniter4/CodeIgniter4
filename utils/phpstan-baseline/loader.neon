@@ -22,7 +22,6 @@ includes:
     - missingType.return.neon
     - notIdentical.alwaysTrue.neon
     - nullCoalesce.property.neon
-    - nullCoalesce.variable.neon
     - offsetAccess.notFound.neon
     - property.defaultValue.neon
     - property.nonObject.neon
