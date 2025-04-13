@@ -1,4 +1,4 @@
-# total 3608 errors
+# total 3605 errors
 includes:
     - argument.type.neon
     - assign.propertyType.neon
@@ -34,7 +34,6 @@ includes:
     - property.protected.neon
     - property.readOnlyByPhpDocAssignOutOfClass.neon
     - property.readOnlyByPhpDocDefaultValue.neon
-    - property.unusedType.neon
     - staticMethod.notFound.neon
     - ternary.shortNotAllowed.neon
     - varTag.type.neon
