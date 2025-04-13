@@ -1,4 +1,4 @@
-# total 3587 errors
+# total 3575 errors
 includes:
     - argument.type.neon
     - assign.propertyType.neon
@@ -10,7 +10,6 @@ includes:
     - codeigniter.unknownServiceMethod.neon
     - deadCode.unreachable.neon
     - empty.notAllowed.neon
-    - empty.property.neon
     - generator.valueType.neon
     - isset.property.neon
     - method.alreadyNarrowedType.neon

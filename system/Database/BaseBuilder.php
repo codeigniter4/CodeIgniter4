@@ -3407,7 +3407,7 @@ class BaseBuilder
             'QBUnion'    => [],
         ]);
 
-        if (! empty($this->db)) {
+        if ($this->db instanceof BaseConnection) {
             $this->db->setAliasedTables([]);
         }
 
