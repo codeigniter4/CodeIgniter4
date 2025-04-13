@@ -1,4 +1,4 @@
-# total 40 errors
+# total 38 errors
 
 parameters:
     ignoreErrors:
@@ -186,13 +186,3 @@ parameters:
             message: '#^Return type \(mixed\) of method CodeIgniter\\Test\\Mock\\MockResult\:\:fetchAssoc\(\) should be covariant with return type \(array\|false\|null\) of method CodeIgniter\\Database\\BaseResult\<object\|resource,object\|resource\>\:\:fetchAssoc\(\)$#'
             count: 1
             path: ../../system/Test/Mock/MockResult.php
-
-        -
-            message: '#^Return type \(mixed\) of method Tests\\Support\\Entity\\Cast\\CastPassParameters\:\:set\(\) should be covariant with return type \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\BaseCast\:\:set\(\)$#'
-            count: 1
-            path: ../../tests/_support/Entity/Cast/CastPassParameters.php
-
-        -
-            message: '#^Return type \(mixed\) of method Tests\\Support\\Entity\\Cast\\CastPassParameters\:\:set\(\) should be covariant with return type \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\CastInterface\:\:set\(\)$#'
-            count: 1
-            path: ../../tests/_support/Entity/Cast/CastPassParameters.php

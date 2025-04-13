@@ -1,4 +1,4 @@
-# total 3760 errors
+# total 3615 errors
 includes:
     - argument.type.neon
     - assign.propertyType.neon
@@ -39,4 +39,3 @@ includes:
     - staticMethod.notFound.neon
     - ternary.shortNotAllowed.neon
     - varTag.type.neon
-    - variable.undefined.neon

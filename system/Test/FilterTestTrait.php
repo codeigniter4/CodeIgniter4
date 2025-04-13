@@ -163,6 +163,8 @@ trait FilterTestTrait
 
         if ($position === 'before') {
             return static function (?array $params = null) use ($filterInstances, $request) {
+                $result = null;
+
                 foreach ($filterInstances as $filter) {
                     $result = $filter->before($request, $params);
 
@@ -188,6 +190,8 @@ trait FilterTestTrait
         $response = clone $this->response;
 
         return static function (?array $params = null) use ($filterInstances, $request, $response) {
+            $result = null;
+
             foreach ($filterInstances as $filter) {
                 $result = $filter->after($request, $response, $params);
 

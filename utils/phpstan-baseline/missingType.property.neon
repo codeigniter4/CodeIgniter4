@@ -1,4 +1,4 @@
-# total 130 errors
+# total 119 errors
 
 parameters:
     ignoreErrors:
@@ -86,61 +86,6 @@ parameters:
             message: '#^Property CodeIgniter\\Test\\Mock\\MockSession\:\:\$didRegenerate has no type specified\.$#'
             count: 1
             path: ../../system/Test/Mock/MockSession.php
-
-        -
-            message: '#^Property Tests\\Support\\Commands\\ParamsReveal\:\:\$args has no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Commands/ParamsReveal.php
-
-        -
-            message: '#^Property Tests\\Support\\Config\\Validation\:\:\$signup has no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Config/Validation.php
-
-        -
-            message: '#^Property Tests\\Support\\Config\\Validation\:\:\$signup_errors has no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Config/Validation.php
-
-        -
-            message: '#^Property Tests\\Support\\Models\\EventModel\:\:\$beforeFindReturnData has no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Models/EventModel.php
-
-        -
-            message: '#^Property Tests\\Support\\Models\\EventModel\:\:\$eventData has no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Models/EventModel.php
-
-        -
-            message: '#^Property Tests\\Support\\Models\\EventModel\:\:\$tokens has no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Models/EventModel.php
-
-        -
-            message: '#^Property Tests\\Support\\Models\\JobModel\:\:\$description has no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Models/JobModel.php
-
-        -
-            message: '#^Property Tests\\Support\\Models\\JobModel\:\:\$name has no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Models/JobModel.php
-
-        -
-            message: '#^Property Tests\\Support\\Models\\UserModel\:\:\$country has no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Models/UserModel.php
-
-        -
-            message: '#^Property Tests\\Support\\Models\\UserModel\:\:\$email has no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Models/UserModel.php
-
-        -
-            message: '#^Property Tests\\Support\\Models\\UserModel\:\:\$name has no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Models/UserModel.php
 
         -
             message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:\$formatter has no type specified\.$#'
