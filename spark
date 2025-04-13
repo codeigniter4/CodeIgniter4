@@ -10,6 +10,9 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+use CodeIgniter\Boot;
+use Config\Paths;
+
 /*
  * --------------------------------------------------------------------
  * CODEIGNITER COMMAND-LINE TOOLS
@@ -76,9 +79,9 @@ chdir(FCPATH);
 require FCPATH . '../app/Config/Paths.php';
 // ^^^ Change this line if you move your application folder
 
-$paths = new Config\Paths();
+$paths = new Paths();
 
 // LOAD THE FRAMEWORK BOOTSTRAP FILE
 require $paths->systemDirectory . '/Boot.php';
 
-exit(CodeIgniter\Boot::bootSpark($paths));
+exit(Boot::bootSpark($paths));
