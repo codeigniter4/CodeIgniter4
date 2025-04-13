@@ -1,4 +1,4 @@
-# total 68 errors
+# total 51 errors
 
 parameters:
     ignoreErrors:
@@ -26,91 +26,6 @@ parameters:
             message: '#^Method CodeIgniter\\Test\\Mock\\MockTable\:\:__call\(\) has parameter \$params with no type specified\.$#'
             count: 1
             path: ../../system/Test/Mock/MockTable.php
-
-        -
-            message: '#^Method Tests\\Support\\Cells\\StarterCell\:\:hello\(\) has parameter \$params with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Cells/StarterCell.php
-
-        -
-            message: '#^Method Tests\\Support\\Controllers\\Newautorouting\:\:postSave\(\) has parameter \$c with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Controllers/Newautorouting.php
-
-        -
-            message: '#^Method Tests\\Support\\Controllers\\Remap\:\:_remap\(\) has parameter \$method with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Controllers/Remap.php
-
-        -
-            message: '#^Method Tests\\Support\\Controllers\\Remap\:\:_remap\(\) has parameter \$params with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Controllers/Remap.php
-
-        -
-            message: '#^Method Tests\\Support\\Test\\TestForReflectionHelper\:\:privateMethod\(\) has parameter \$param1 with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Test/TestForReflectionHelper.php
-
-        -
-            message: '#^Method Tests\\Support\\Test\\TestForReflectionHelper\:\:privateMethod\(\) has parameter \$param2 with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Test/TestForReflectionHelper.php
-
-        -
-            message: '#^Method Tests\\Support\\Test\\TestForReflectionHelper\:\:privateStaticMethod\(\) has parameter \$param1 with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Test/TestForReflectionHelper.php
-
-        -
-            message: '#^Method Tests\\Support\\Test\\TestForReflectionHelper\:\:privateStaticMethod\(\) has parameter \$param2 with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Test/TestForReflectionHelper.php
-
-        -
-            message: '#^Method Tests\\Support\\Validation\\TestRules\:\:array_count\(\) has parameter \$count with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Validation/TestRules.php
-
-        -
-            message: '#^Method Tests\\Support\\Validation\\TestRules\:\:array_count\(\) has parameter \$value with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/Validation/TestRules.php
-
-        -
-            message: '#^Method Tests\\Support\\View\\SampleClass\:\:echobox\(\) has parameter \$params with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/View/SampleClass.php
-
-        -
-            message: '#^Method Tests\\Support\\View\\SampleClass\:\:staticEcho\(\) has parameter \$params with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/View/SampleClass.php
-
-        -
-            message: '#^Method Tests\\Support\\View\\SampleClass\:\:work\(\) has parameter \$p1 with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/View/SampleClass.php
-
-        -
-            message: '#^Method Tests\\Support\\View\\SampleClass\:\:work\(\) has parameter \$p2 with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/View/SampleClass.php
-
-        -
-            message: '#^Method Tests\\Support\\View\\SampleClass\:\:work\(\) has parameter \$p4 with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/View/SampleClass.php
-
-        -
-            message: '#^Method App\\Controllers\\Mycontroller\:\:getSomemethod\(\) has parameter \$first with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/_controller/Mycontroller.php
-
-        -
-            message: '#^Method App\\Controllers\\foo\\bar\\baz\\Some_controller\:\:some_method\(\) has parameter \$first with no type specified\.$#'
-            count: 1
-            path: ../../tests/_support/_controller/foo/bar/baz/Some_controller.php
 
         -
             message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:__construct\(\) has parameter \$formatter with no type specified\.$#'

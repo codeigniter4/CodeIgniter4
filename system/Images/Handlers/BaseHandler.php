@@ -34,7 +34,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * The image/file instance
      *
-     * @var Image
+     * @var Image|null
      */
     protected $image;
 
@@ -138,6 +138,8 @@ abstract class BaseHandler implements ImageHandlerInterface
      * Sets another image for this handler to work on.
      * Keeps us from needing to continually instantiate the handler.
      *
+     * @phpstan-assert Image $this->image
+     *
      * @return $this
      */
     public function withFile(string $path)
@@ -176,7 +178,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Verifies that a file has been supplied and it is an image.
      *
-     * @return Image The image instance
+     * @phpstan-assert Image $this->image
      *
      * @throws ImageException
      */
@@ -187,7 +189,7 @@ abstract class BaseHandler implements ImageHandlerInterface
         }
 
         // Verify withFile has been called
-        if (empty($this->image)) {
+        if ($this->image === null) {
             throw ImageException::forMissingImage();
         }
 

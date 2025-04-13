@@ -55,7 +55,7 @@ final class Optimize extends BaseCommand
     protected $usage = 'optimize';
 
     /**
-     * {@inheritDoc}
+     * @return int
      */
     public function run(array $params)
     {
@@ -63,13 +63,13 @@ final class Optimize extends BaseCommand
             $this->enableCaching();
             $this->clearCache();
             $this->removeDevPackages();
+
+            return EXIT_SUCCESS;
         } catch (RuntimeException) {
             CLI::error('The "spark optimize" failed.');
 
             return EXIT_ERROR;
         }
-
-        return EXIT_SUCCESS;
     }
 
     private function clearCache(): void

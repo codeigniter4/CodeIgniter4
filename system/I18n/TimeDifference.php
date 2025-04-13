@@ -17,7 +17,13 @@ use DateTime;
 use IntlCalendar;
 
 /**
- * Class TimeDifference
+ * @property-read float|int $days
+ * @property-read float|int $hours
+ * @property-read float|int $minutes
+ * @property-read float|int $months
+ * @property-read int       $seconds
+ * @property-read float|int $weeks
+ * @property-read float|int $years
  *
  * @see \CodeIgniter\I18n\TimeDifferenceTest
  */

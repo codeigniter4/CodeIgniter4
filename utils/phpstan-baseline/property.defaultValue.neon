@@ -1,4 +1,4 @@
-# total 6 errors
+# total 4 errors
 
 parameters:
     ignoreErrors:
@@ -11,16 +11,6 @@ parameters:
             message: '#^Property CodeIgniter\\Test\\CIUnitTestCase\:\:\$seed \(class\-string\<CodeIgniter\\Database\\Seeder\>\|list\<class\-string\<CodeIgniter\\Database\\Seeder\>\>\) does not accept default value of type ''''\.$#'
             count: 1
             path: ../../system/Test/CIUnitTestCase.php
-
-        -
-            message: '#^Property Tests\\Support\\Models\\ValidErrorsModel\:\:\$validationRules \(array\<string, array\<string, array\<string, string\>\|string\>\|string\>\|string\) does not accept default value of type array\<string, array\<int\|string, array\<string, string\>\|string\>\|string\>\.$#'
-            count: 1
-            path: ../../tests/_support/Models/ValidErrorsModel.php
-
-        -
-            message: '#^Property Tests\\Support\\Models\\ValidModel\:\:\$validationRules \(array\<string, array\<string, array\<string, string\>\|string\>\|string\>\|string\) does not accept default value of type array\<string, list\<string\>\|string\>\.$#'
-            count: 1
-            path: ../../tests/_support/Models/ValidModel.php
 
         -
             message: '#^Property CodeIgniter\\Models\\DataConverterModelTest\:\:\$seed \(class\-string\<CodeIgniter\\Database\\Seeder\>\|list\<class\-string\<CodeIgniter\\Database\\Seeder\>\>\) does not accept default value of type ''''\.$#'

@@ -52,7 +52,7 @@ final class PhpStreamWrapper
     }
 
     /**
-     * @return false|string
+     * @return string
      */
     public function stream_read(int $count)
     {
@@ -63,7 +63,7 @@ final class PhpStreamWrapper
     }
 
     /**
-     * @return array|false
+     * @return array{}
      */
     public function stream_stat()
     {

@@ -80,7 +80,7 @@ final class Environment extends BaseCommand
     ];
 
     /**
-     * {@inheritDoc}
+     * @return int
      */
     public function run(array $params)
     {
@@ -88,7 +88,7 @@ final class Environment extends BaseCommand
             CLI::write(sprintf('Your environment is currently set as %s.', CLI::color($_SERVER['CI_ENVIRONMENT'] ?? ENVIRONMENT, 'green')));
             CLI::newLine();
 
-            return;
+            return EXIT_ERROR;
         }
 
         $env = strtolower(array_shift($params));
@@ -98,21 +98,21 @@ final class Environment extends BaseCommand
             CLI::error('You will not be able to run spark under a "testing" environment.', 'light_gray', 'red');
             CLI::newLine();
 
-            return;
+            return EXIT_ERROR;
         }
 
         if (! in_array($env, self::$knownTypes, true)) {
             CLI::error(sprintf('Invalid environment type "%s". Expected one of "%s".', $env, implode('" and "', self::$knownTypes)), 'light_gray', 'red');
             CLI::newLine();
 
-            return;
+            return EXIT_ERROR;
         }
 
         if (! $this->writeNewEnvironmentToEnvFile($env)) {
             CLI::error('Error in writing new environment to .env file.', 'light_gray', 'red');
             CLI::newLine();
 
-            return;
+            return EXIT_ERROR;
         }
 
         // force DotEnv to reload the new environment
@@ -124,6 +124,8 @@ final class Environment extends BaseCommand
         CLI::write(sprintf('Environment is successfully changed to "%s".', $env), 'green');
         CLI::write('The ENVIRONMENT constant will be changed in the next script execution.');
         CLI::newLine();
+
+        return EXIT_SUCCESS;
     }
 
     /**

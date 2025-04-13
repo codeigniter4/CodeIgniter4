@@ -25,8 +25,8 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class NegotiateTest extends CIUnitTestCase
 {
-    private ?IncomingRequest $request;
-    private ?Negotiate $negotiate;
+    private IncomingRequest $request;
+    private Negotiate $negotiate;
 
     protected function setUp(): void
     {
