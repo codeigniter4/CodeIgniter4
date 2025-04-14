@@ -123,7 +123,7 @@ class Autoloader
             $this->files = $config->files;
         }
 
-        if (isset($config->helpers)) {
+        if ($config->helpers !== []) {
             $this->helpers = [...$this->helpers, ...$config->helpers];
         }
 

@@ -393,7 +393,7 @@ class Email
     /**
      * mbstring.func_overload flag
      *
-     * @var bool
+     * @var bool|null
      */
     protected static $func_overload;
 
@@ -403,8 +403,9 @@ class Email
     public function __construct($config = null)
     {
         $this->initialize($config);
+
         if (! isset(static::$func_overload)) {
-            static::$func_overload = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'));
+            static::$func_overload = extension_loaded('mbstring') && ini_get('mbstring.func_overload');
         }
     }
 
