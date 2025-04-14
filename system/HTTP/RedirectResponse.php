@@ -92,15 +92,9 @@ class RedirectResponse extends Response
     public function withInput()
     {
         $session = service('session');
-
-        // @phpstan-ignore-next-line
-        $get = $_GET ?? [];
-        // @phpstan-ignore-next-line
-        $post = $_POST ?? [];
-
         $session->setFlashdata('_ci_old_input', [
-            'get'  => $get,
-            'post' => $post,
+            'get'  => $_GET ?? [], // @phpstan-ignore-next-line
+            'post' => $_POST ?? [], // @phpstan-ignore-next-line
         ]);
 
         $this->withErrors();
