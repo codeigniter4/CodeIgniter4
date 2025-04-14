@@ -268,7 +268,7 @@ class Session implements SessionInterface
      * Destroys the current session.
      *
      * @deprecated Use destroy() instead.
-     * 
+     *
      * @return void
      */
     public function stop()
@@ -280,7 +280,7 @@ class Session implements SessionInterface
      * Configuration.
      *
      * Handle input binds and configuration defaults.
-     * 
+     *
      * @return void
      */
     protected function configure()
@@ -323,7 +323,7 @@ class Session implements SessionInterface
      *
      * To make life easier, we force the PHP defaults. Because PHP9 forces them.
      * See https://wiki.php.net/rfc/deprecations_php_8_4#sessionsid_length_and_sessionsid_bits_per_character
-     * 
+     *
      * @return void
      */
     protected function configureSidLength()
@@ -349,7 +349,7 @@ class Session implements SessionInterface
      *
      * Clears old "flash" data, marks the new one for deletion and handles
      * "temp" data deletion.
-     * 
+     *
      * @return void
      */
     protected function initVars()
@@ -379,7 +379,7 @@ class Session implements SessionInterface
      * Regenerates the session ID.
      *
      * @param bool $destroy Should old session data be destroyed?
-     * 
+     *
      * @return void
      */
     public function regenerate(bool $destroy = false)
@@ -412,7 +412,7 @@ class Session implements SessionInterface
 
     /**
      * Destroys the current session.
-     * 
+     *
      * @return void
      */
     public function destroy()
@@ -449,7 +449,7 @@ class Session implements SessionInterface
      *
      * @param array|string                            $data  Property name or associative array of properties
      * @param array|bool|float|int|object|string|null $value Property value if single key provided
-     * 
+     *
      * @return void
      */
     public function set($data, $value = null)
@@ -525,7 +525,7 @@ class Session implements SessionInterface
      *
      * @param string $key  Identifier of the session property we are interested in.
      * @param array  $data value to be pushed to existing session key.
-     * 
+     *
      * @return void
      */
     public function push(string $key, array $data)
@@ -543,7 +543,7 @@ class Session implements SessionInterface
      * of a specific session property to remove.
      *
      * @param array|string $key Identifier of the session property or properties to remove.
-     * 
+     *
      * @return void
      */
     public function remove($key)
@@ -617,7 +617,7 @@ class Session implements SessionInterface
      *
      * @param array|string                            $data  Property identifier or associative array of properties
      * @param array|bool|float|int|object|string|null $value Property value if $data is a scalar
-     * 
+     *
      * @return void
      */
     public function setFlashdata($data, $value = null)
@@ -659,7 +659,7 @@ class Session implements SessionInterface
      * Keeps a single piece of flash data alive for one more request.
      *
      * @param array|string $key Property identifier or array of them
-     * 
+     *
      * @return void
      */
     public function keepFlashdata($key)
@@ -703,7 +703,7 @@ class Session implements SessionInterface
      * Unmark data in the session as flashdata.
      *
      * @param array|string $key Property identifier or array of them
-     * 
+     *
      * @return void
      */
     public function unmarkFlashdata($key)
@@ -756,7 +756,7 @@ class Session implements SessionInterface
      * @param array|string                            $data  Session data key or associative array of items
      * @param array|bool|float|int|object|string|null $value Value to store
      * @param int                                     $ttl   Time-to-live in seconds
-     * 
+     *
      * @return void
      */
     public function setTempdata($data, $value = null, int $ttl = 300)
@@ -797,7 +797,7 @@ class Session implements SessionInterface
      * Removes a single piece of temporary data from the session.
      *
      * @param string $key Session data key
-     * 
+     *
      * @return void
      */
     public function removeTempdata(string $key)
@@ -859,7 +859,7 @@ class Session implements SessionInterface
      * lifespan and allowing it to live as long as the session does.
      *
      * @param array|string $key Property identifier or array of them
-     * 
+     *
      * @return void
      */
     public function unmarkTempdata($key)
@@ -906,7 +906,7 @@ class Session implements SessionInterface
     /**
      * Sets the driver as the session handler in PHP.
      * Extracted for easier testing.
-     * 
+     *
      * @return void
      */
     protected function setSaveHandler()
@@ -917,7 +917,7 @@ class Session implements SessionInterface
     /**
      * Starts the session.
      * Extracted for testing reasons.
-     * 
+     *
      * @return void
      */
     protected function startSession()
@@ -935,7 +935,7 @@ class Session implements SessionInterface
      * Takes care of setting the cookie on the client side.
      *
      * @codeCoverageIgnore
-     * 
+     *
      * @return void
      */
     protected function setCookie()
