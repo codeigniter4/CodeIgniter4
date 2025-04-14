@@ -93,8 +93,10 @@ class RedirectResponse extends Response
     {
         $session = service('session');
         $session->setFlashdata('_ci_old_input', [
-            'get'  => $_GET ?? [], // @phpstan-ignore-next-line
-            'post' => $_POST ?? [], // @phpstan-ignore-next-line
+            // @phpstan-ignore-next-line
+            'get'  => $_GET ?? [],
+            // @phpstan-ignore-next-line
+            'post' => $_POST ?? [],
         ]);
 
         $this->withErrors();
