@@ -1,4 +1,4 @@
-# total 37 errors
+# total 38 errors
 
 parameters:
     ignoreErrors:
@@ -138,12 +138,17 @@ parameters:
             path: ../../system/Images/Handlers/BaseHandler.php
 
         -
+            message: '#^Return type \(CodeIgniter\\Images\\Handlers\\ImageMagickHandler\) of method CodeIgniter\\Images\\Handlers\\ImageMagickHandler\:\:_crop\(\) should be covariant with return type \(\$this\(CodeIgniter\\Images\\Handlers\\BaseHandler\)\) of method CodeIgniter\\Images\\Handlers\\BaseHandler\:\:_crop\(\)$#'
+            count: 1
+            path: ../../system/Images/Handlers/ImageMagickHandler.php
+
+        -
             message: '#^Return type \(CodeIgniter\\Images\\Handlers\\ImageMagickHandler\) of method CodeIgniter\\Images\\Handlers\\ImageMagickHandler\:\:_resize\(\) should be covariant with return type \(\$this\(CodeIgniter\\Images\\Handlers\\BaseHandler\)\) of method CodeIgniter\\Images\\Handlers\\BaseHandler\:\:_resize\(\)$#'
             count: 1
             path: ../../system/Images/Handlers/ImageMagickHandler.php
 
         -
-            message: '#^Return type \(bool\|CodeIgniter\\Images\\Handlers\\ImageMagickHandler\) of method CodeIgniter\\Images\\Handlers\\ImageMagickHandler\:\:_crop\(\) should be covariant with return type \(\$this\(CodeIgniter\\Images\\Handlers\\BaseHandler\)\) of method CodeIgniter\\Images\\Handlers\\BaseHandler\:\:_crop\(\)$#'
+            message: '#^Return type \(mixed\) of method CodeIgniter\\Images\\Handlers\\ImageMagickHandler\:\:getVersion\(\) should be covariant with return type \(string\) of method CodeIgniter\\Images\\Handlers\\BaseHandler\:\:getVersion\(\)$#'
             count: 1
             path: ../../system/Images/Handlers/ImageMagickHandler.php
 

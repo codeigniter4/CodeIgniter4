@@ -1,4 +1,4 @@
-# total 146 errors
+# total 144 errors
 
 parameters:
     ignoreErrors:
@@ -211,11 +211,6 @@ parameters:
             message: '#^Parameter \#1 \$image of function imagecolorsforindex expects GdImage, resource given\.$#'
             count: 2
             path: ../../tests/system/Images/GDHandlerTest.php
-
-        -
-            message: '#^Parameter \#1 \$filename of function file_get_contents expects string, resource given\.$#'
-            count: 2
-            path: ../../tests/system/Images/ImageMagickHandlerTest.php
 
         -
             message: '#^Parameter \#2 \$message of method CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:handle\(\) expects string, stdClass given\.$#'

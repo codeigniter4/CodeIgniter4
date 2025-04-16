@@ -1,4 +1,4 @@
-# total 1582 errors
+# total 1581 errors
 
 parameters:
     ignoreErrors:
@@ -4531,11 +4531,6 @@ parameters:
             message: '#^Property CodeIgniter\\Images\\Handlers\\BaseHandler\:\:\$textDefaults type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Images/Handlers/BaseHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Images\\Handlers\\ImageMagickHandler\:\:process\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Images/Handlers/ImageMagickHandler.php
 
         -
             message: '#^Method CodeIgniter\\Images\\Image\:\:getProperties\(\) return type has no value type specified in iterable type array\.$#'

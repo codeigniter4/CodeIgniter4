@@ -57,7 +57,8 @@ Model
 Libraries
 =========
 
-**Email:** Added support for choosing the SMTP authorization method. You can change it via ``Config\Email::$SMTPAuthMethod`` option
+**Email:** Added support for choosing the SMTP authorization method. You can change it via ``Config\Email::$SMTPAuthMethod`` option.
+**Image:** The ``ImageMagickHandler`` has been rewritten to rely solely on the PHP ``imagick`` extension.
 
 Helpers and Functions
 =====================
@@ -70,7 +71,7 @@ Message Changes
 ***************
 
 - Added ``Email.invalidSMTPAuthMethod`` and ``Email.failureSMTPAuthMethod``
-- Deprecated ``Email.failedSMTPLogin``
+- Deprecated ``Email.failedSMTPLogin`` and ``Image.libPathInvalid``
 
 *******
 Changes
@@ -79,6 +80,10 @@ Changes
 ************
 Deprecations
 ************
+
+- **Image:**
+    - The config property ``Config\Image::libraryPath`` has been deprecated. No longer used.
+    - The exception method ``CodeIgniter\Images\Exceptions\ImageException::forInvalidImageLibraryPath`` has been deprecated. No longer used.
 
 **********
 Bugs Fixed

@@ -1,4 +1,4 @@
-# total 251 errors
+# total 243 errors
 
 parameters:
     ignoreErrors:
@@ -281,11 +281,6 @@ parameters:
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
             count: 2
             path: ../../system/Images/Handlers/BaseHandler.php
-
-        -
-            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 8
-            path: ../../system/Images/Handlers/ImageMagickHandler.php
 
         -
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
