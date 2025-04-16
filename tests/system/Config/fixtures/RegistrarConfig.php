@@ -19,4 +19,22 @@ class RegistrarConfig extends BaseConfig
     public $bar = [
         'baz',
     ];
+
+    /**
+     * @var array<string, array<string, mixed>>
+     */
+    public $cars = [
+        'Sedans' => [
+            'Toyota' => [
+                'year'  => 2018,
+                'color' => 'silver',
+            ],
+        ],
+        'Trucks' => [
+            'Volvo' => [
+                'year'  => 2019,
+                'color' => 'blue',
+            ],
+        ],
+    ];
 }
