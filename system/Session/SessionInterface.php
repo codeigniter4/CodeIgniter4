@@ -22,11 +22,15 @@ interface SessionInterface
      * Regenerates the session ID.
      *
      * @param bool $destroy Should old session data be destroyed?
+     *
+     * @return void
      */
     public function regenerate(bool $destroy = false);
 
     /**
      * Destroys the current session.
+     *
+     * @return void
      */
     public function destroy();
 
@@ -41,6 +45,8 @@ interface SessionInterface
      *
      * @param array|string                            $data  Property name or associative array of properties
      * @param array|bool|float|int|object|string|null $value Property value if single key provided
+     *
+     * @return void
      */
     public function set($data, $value = null);
 
@@ -74,6 +80,8 @@ interface SessionInterface
      * of a specific session property to remove.
      *
      * @param array|string $key Identifier of the session property or properties to remove.
+     *
+     * @return void
      */
     public function remove($key);
 
@@ -88,6 +96,8 @@ interface SessionInterface
      *
      * @param array|string $data  Property identifier or associative array of properties
      * @param array|string $value Property value if $data is a scalar
+     *
+     * @return void
      */
     public function setFlashdata($data, $value = null);
 
@@ -107,6 +117,8 @@ interface SessionInterface
      * Keeps a single piece of flash data alive for one more request.
      *
      * @param array|string $key Property identifier or array of them
+     *
+     * @return void
      */
     public function keepFlashdata($key);
 
@@ -123,6 +135,8 @@ interface SessionInterface
      * Unmark data in the session as flashdata.
      *
      * @param array|string $key Property identifier or array of them
+     *
+     * @return void
      */
     public function unmarkFlashdata($key);
 
@@ -140,6 +154,8 @@ interface SessionInterface
      * @param array|string                            $data  Session data key or associative array of items
      * @param array|bool|float|int|object|string|null $value Value to store
      * @param int                                     $ttl   Time-to-live in seconds
+     *
+     * @return void
      */
     public function setTempdata($data, $value = null, int $ttl = 300);
 
@@ -157,6 +173,8 @@ interface SessionInterface
      * Removes a single piece of temporary data from the session.
      *
      * @param string $key Session data key
+     *
+     * @return void
      */
     public function removeTempdata(string $key);
 
@@ -176,6 +194,8 @@ interface SessionInterface
      * lifespan and allowing it to live as long as the session does.
      *
      * @param array|string $key Property identifier or array of them
+     *
+     * @return void
      */
     public function unmarkTempdata($key);
 
