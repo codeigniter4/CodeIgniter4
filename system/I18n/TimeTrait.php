@@ -750,6 +750,29 @@ trait TimeTrait
     }
 
     /**
+     * Returns a new Time instance with $months calendar months added to the time.
+     */
+    public function addCalendarMonths(int $months): Time
+    {
+        $time = clone $this;
+
+        $year  = (int) $time->getYear();
+        $month = (int) $time->getMonth() + $months;
+        $day   = (int) $time->getDay();
+
+        // Adjust year and month for overflow
+        $year += intdiv($month - 1, 12);
+        $month = (($month - 1) % 12) + 1;
+
+        // Find the last valid day of the target month
+        $lastDayOfMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        $correctedDay   = min($day, $lastDayOfMonth);
+
+        // Return new time instance
+        return static::create($year, $month, $correctedDay, (int) $this->getHour(), (int) $this->getMinute(), (int) $this->getSecond(), $this->getTimezone(), $this->locale);
+    }
+
+    /**
      * Returns a new Time instance with $years added to the time.
      *
      * @return static
