@@ -1,4 +1,4 @@
-# total 1628 errors
+# total 1618 errors
 
 parameters:
     ignoreErrors:
@@ -3933,11 +3933,6 @@ parameters:
             path: ../../system/HTTP/ResponseInterface.php
 
         -
-            message: '#^Method CodeIgniter\\HTTP\\SiteURI\:\:applyParts\(\) has parameter \$parts with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/SiteURI.php
-
-        -
             message: '#^Method CodeIgniter\\HTTP\\SiteURI\:\:baseUrl\(\) has parameter \$relativePath with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/SiteURI.php
@@ -3968,52 +3963,7 @@ parameters:
             path: ../../system/HTTP/SiteURI.php
 
         -
-            message: '#^Property CodeIgniter\\HTTP\\SiteURI\:\:\$segments type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/SiteURI.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\URI\:\:applyParts\(\) has parameter \$parts with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/URI.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\URI\:\:changeSchemeAndPath\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/URI.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\URI\:\:getQuery\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/URI.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\URI\:\:getSegments\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/URI.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\URI\:\:parseStr\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/URI.php
-
-        -
             message: '#^Method CodeIgniter\\HTTP\\URI\:\:setQueryArray\(\) has parameter \$query with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/URI.php
-
-        -
-            message: '#^Property CodeIgniter\\HTTP\\URI\:\:\$defaultPorts type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/URI.php
-
-        -
-            message: '#^Property CodeIgniter\\HTTP\\URI\:\:\$query type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/URI.php
-
-        -
-            message: '#^Property CodeIgniter\\HTTP\\URI\:\:\$segments type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/URI.php
 
