@@ -162,7 +162,7 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Crops the image.
      *
-     * @return ImageMagickHandler
+     * @return $this
      *
      * @throws ImagickException
      */
@@ -276,7 +276,7 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Get a driver version
      *
-     * @return mixed
+     * @return string
      */
     public function getVersion()
     {
@@ -286,7 +286,7 @@ class ImageMagickHandler extends BaseHandler
             return $matches[1];
         }
 
-        return false;
+        return '';
     }
 
     /**
