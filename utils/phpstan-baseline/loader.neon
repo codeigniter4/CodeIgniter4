@@ -10,7 +10,6 @@ includes:
     - codeigniter.unknownServiceMethod.neon
     - deadCode.unreachable.neon
     - empty.notAllowed.neon
-    - generator.valueType.neon
     - method.alreadyNarrowedType.neon
     - method.childParameterType.neon
     - method.childReturnType.neon
