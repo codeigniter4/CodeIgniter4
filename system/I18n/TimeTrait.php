@@ -752,7 +752,7 @@ trait TimeTrait
     /**
      * Returns a new Time instance with $months calendar months added to the time.
      */
-    public function addCalendarMonths(int $months)
+    public function addCalendarMonths(int $months): static
     {
         $time = clone $this;
 
