@@ -1,4 +1,4 @@
-# total 22 errors
+# total 20 errors
 
 parameters:
     ignoreErrors:
@@ -24,16 +24,6 @@ parameters:
 
         -
             message: '#^Property CodeIgniter\\HTTP\\URI\:\:\$fragment \(string\) on left side of \?\? is not nullable\.$#'
-            count: 1
-            path: ../../system/HTTP/URI.php
-
-        -
-            message: '#^Property CodeIgniter\\HTTP\\URI\:\:\$host \(string\) on left side of \?\? is not nullable\.$#'
-            count: 1
-            path: ../../system/HTTP/URI.php
-
-        -
-            message: '#^Property CodeIgniter\\HTTP\\URI\:\:\$path \(string\) on left side of \?\? is not nullable\.$#'
             count: 1
             path: ../../system/HTTP/URI.php
 

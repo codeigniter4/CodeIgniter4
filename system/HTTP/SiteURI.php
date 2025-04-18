@@ -68,7 +68,7 @@ class SiteURI extends URI
      *       0 => 'test',
      *   ];
      *
-     * @var array
+     * @var array<int, string>
      *
      * @deprecated This property will be private.
      */
@@ -331,35 +331,48 @@ class SiteURI extends URI
 
     /**
      * Saves our parts from a parse_url() call.
+     *
+     * @param array{
+     *  host?: string,
+     *  user?: string,
+     *  path?: string,
+     *  query?: string,
+     *  fragment?: string,
+     *  scheme?: string,
+     *  port?: int,
+     *  pass?: string,
+     * } $parts
      */
     protected function applyParts(array $parts): void
     {
-        if (! empty($parts['host'])) {
+        if (isset($parts['host']) && $parts['host'] !== '') {
             $this->host = $parts['host'];
         }
-        if (! empty($parts['user'])) {
+
+        if (isset($parts['user']) && $parts['user'] !== '') {
             $this->user = $parts['user'];
         }
+
         if (isset($parts['path']) && $parts['path'] !== '') {
             $this->path = $this->filterPath($parts['path']);
         }
-        if (! empty($parts['query'])) {
+
+        if (isset($parts['query']) && $parts['query'] !== '') {
             $this->setQuery($parts['query']);
         }
-        if (! empty($parts['fragment'])) {
+
+        if (isset($parts['fragment']) && $parts['fragment'] !== '') {
             $this->fragment = $parts['fragment'];
         }
 
-        // Scheme
         if (isset($parts['scheme'])) {
             $this->setScheme(rtrim($parts['scheme'], ':/'));
         } else {
             $this->setScheme('http');
         }
 
-        // Port
-        if (isset($parts['port']) && $parts['port'] !== null) {
-            // Valid port numbers are enforced by earlier parse_url() or setPort()
+        if (isset($parts['port'])) {
+            // Valid port numbers are enforced by earlier parse_url or setPort()
             $this->port = $parts['port'];
         }
 
