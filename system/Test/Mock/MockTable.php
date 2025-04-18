@@ -18,7 +18,14 @@ use CodeIgniter\View\Table;
 
 class MockTable extends Table
 {
-    // Override inaccessible protected method
+    /**
+     * Override inaccessible protected method
+     *
+     * @param string      $method
+     * @param list<mixed> $params
+     *
+     * @return mixed
+     */
     public function __call($method, $params)
     {
         if (is_callable([$this, '_' . $method])) {

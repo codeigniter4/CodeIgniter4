@@ -30,17 +30,26 @@ final class PhpStreamWrapper
     private static string $content = '';
     private int $position          = 0;
 
+    /**
+     * @return void
+     */
     public static function setContent(string $content)
     {
         self::$content = $content;
     }
 
+    /**
+     * @return void
+     */
     public static function register()
     {
         stream_wrapper_unregister('php');
         stream_wrapper_register('php', self::class);
     }
 
+    /**
+     * @return void
+     */
     public static function restore()
     {
         stream_wrapper_restore('php');

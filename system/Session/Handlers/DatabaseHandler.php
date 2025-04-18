@@ -154,6 +154,8 @@ class DatabaseHandler extends BaseHandler
 
     /**
      * Sets SELECT clause
+     *
+     * @return void
      */
     protected function setSelect(BaseBuilder $builder)
     {

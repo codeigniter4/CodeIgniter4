@@ -14,10 +14,9 @@ declare(strict_types=1);
 namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\HTTP\CURLRequest;
+use CodeIgniter\HTTP\URI;
 
 /**
- * Class MockCURLRequest
- *
  * Simply allows us to not actually call cURL during the
  * test runs. Instead, we can set the desired output
  * and get back the set options.
@@ -27,6 +26,11 @@ class MockCURLRequest extends CURLRequest
     public $curl_options;
     protected $output = '';
 
+    /**
+     * @param string $output
+     *
+     * @return $this
+     */
     public function setOutput($output)
     {
         $this->output = $output;
@@ -44,13 +48,21 @@ class MockCURLRequest extends CURLRequest
         return $this->output;
     }
 
-    // for testing purposes only
+    /**
+     * for testing purposes only
+     *
+     * @return URI
+     */
     public function getBaseURI()
     {
         return $this->baseURI;
     }
 
-    // for testing purposes only
+    /**
+     * for testing purposes only
+     *
+     * @return float
+     */
     public function getDelay()
     {
         return $this->delay;
