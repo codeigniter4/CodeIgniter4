@@ -1,4 +1,4 @@
-# total 3383 errors
+# total 3373 errors
 includes:
     - argument.type.neon
     - assign.propertyType.neon
@@ -7,7 +7,6 @@ includes:
     - codeigniter.modelArgumentType.neon
     - codeigniter.superglobalAccess.neon
     - codeigniter.superglobalAccessAssign.neon
-    - codeigniter.unknownServiceMethod.neon
     - deadCode.unreachable.neon
     - empty.notAllowed.neon
     - method.alreadyNarrowedType.neon
