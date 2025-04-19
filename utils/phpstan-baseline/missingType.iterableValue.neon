@@ -1,4 +1,4 @@
-# total 1618 errors
+# total 1619 errors
 
 parameters:
     ignoreErrors:
@@ -5486,6 +5486,11 @@ parameters:
             message: '#^Method CodeIgniter\\Test\\Mock\\MockCache\:\:getMetaData\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Test/Mock/MockCache.php
+
+        -
+            message: '#^Method CodeIgniter\\Test\\Mock\\MockEvents\:\:getListeners\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockEvents.php
 
         -
             message: '#^Method CodeIgniter\\Test\\Mock\\MockFileLogger\:\:__construct\(\) has parameter \$config with no value type specified in iterable type array\.$#'

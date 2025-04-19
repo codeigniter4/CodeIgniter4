@@ -1,4 +1,4 @@
-# total 51 errors
+# total 48 errors
 
 parameters:
     ignoreErrors:
@@ -11,21 +11,6 @@ parameters:
             message: '#^Method CodeIgniter\\Database\\PreparedQueryInterface\:\:execute\(\) has parameter \$data with no type specified\.$#'
             count: 1
             path: ../../system/Database/PreparedQueryInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockCURLRequest\:\:setOutput\(\) has parameter \$output with no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockCURLRequest.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockTable\:\:__call\(\) has parameter \$method with no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockTable.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockTable\:\:__call\(\) has parameter \$params with no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockTable.php
 
         -
             message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:__construct\(\) has parameter \$formatter with no type specified\.$#'

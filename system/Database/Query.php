@@ -287,6 +287,8 @@ class Query implements QueryInterface, Stringable
      * Escapes and inserts any binds into the finalQueryString property.
      *
      * @see https://regex101.com/r/EUEhay/5
+     *
+     * @return void
      */
     protected function compileBinds()
     {

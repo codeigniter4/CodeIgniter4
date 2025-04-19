@@ -948,7 +948,9 @@ class CodeIgniter
         $this->response->setStatusCode($e->getCode());
 
         // Is there a 404 Override available?
-        if ($override = $this->router->get404Override()) {
+        $override = $this->router->get404Override();
+
+        if ($override !== null) {
             $returned = null;
 
             if ($override instanceof Closure) {

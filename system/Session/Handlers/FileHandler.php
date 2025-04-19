@@ -313,7 +313,10 @@ class FileHandler extends BaseHandler
      * Configure Session ID regular expression
      *
      * To make life easier, we force the PHP defaults. Because PHP9 forces them.
-     * See https://wiki.php.net/rfc/deprecations_php_8_4#sessionsid_length_and_sessionsid_bits_per_character
+     *
+     * @see https://wiki.php.net/rfc/deprecations_php_8_4#sessionsid_length_and_sessionsid_bits_per_character
+     *
+     * @return void
      */
     protected function configureSessionIDRegex()
     {
