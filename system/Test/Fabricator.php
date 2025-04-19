@@ -154,6 +154,8 @@ class Fabricator
 
     /**
      * Reset internal counts
+     *
+     * @return void
      */
     public static function resetCounts()
     {

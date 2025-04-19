@@ -67,7 +67,7 @@ final class ComposerScripts
      * This static method is called by Composer after every update event,
      * i.e., `composer install`, `composer update`, `composer remove`.
      */
-    public static function postUpdate()
+    public static function postUpdate(): void
     {
         self::recursiveDelete(self::$path);
 

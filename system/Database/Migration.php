@@ -64,11 +64,15 @@ abstract class Migration
 
     /**
      * Perform a migration step.
+     *
+     * @return void
      */
     abstract public function up();
 
     /**
      * Revert a migration step.
+     *
+     * @return void
      */
     abstract public function down();
 }

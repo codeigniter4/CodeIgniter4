@@ -170,6 +170,8 @@ interface ResultInterface
 
     /**
      * Frees the current result.
+     *
+     * @return void
      */
     public function freeResult();
 

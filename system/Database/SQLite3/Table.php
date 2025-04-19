@@ -17,8 +17,6 @@ use CodeIgniter\Database\Exceptions\DataException;
 use stdClass;
 
 /**
- * Class Table
- *
  * Provides missing features for altering tables that are common
  * in other supported databases, but are missing from SQLite.
  * These are needed in order to support migrations during testing
@@ -345,6 +343,8 @@ class Table
      * Copies data from our old table to the new one,
      * taking care map data correctly based on any columns
      * that have been renamed.
+     *
+     * @return void
      */
     protected function copyData()
     {
@@ -472,6 +472,8 @@ class Table
     /**
      * Attempts to drop all indexes and constraints
      * from the database for this table.
+     *
+     * @return void
      */
     protected function dropIndexes()
     {
