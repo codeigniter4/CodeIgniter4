@@ -34,8 +34,8 @@ final class CommonSingleServiceTest extends CIUnitTestCase
     {
         Services::injectMock('security', new MockSecurity(new SecurityConfig()));
 
-        $service1 = single_service($service);
-        $service2 = single_service($service);
+        $service1 = single_service($service); // @phpstan-ignore codeigniter.unknownServiceMethod
+        $service2 = single_service($service); // @phpstan-ignore codeigniter.unknownServiceMethod
 
         assert($service1 !== null);
 
@@ -62,8 +62,8 @@ final class CommonSingleServiceTest extends CIUnitTestCase
 
         $params[] = $method->getNumberOfParameters() === 1 ? true : $method->getParameters()[0]->getDefaultValue();
 
-        $service1 = single_service($service, ...$params);
-        $service2 = single_service($service, ...$params);
+        $service1 = single_service($service, ...$params); // @phpstan-ignore codeigniter.unknownServiceMethod
+        $service2 = single_service($service, ...$params); // @phpstan-ignore codeigniter.unknownServiceMethod
 
         assert($service1 !== null);
 
@@ -91,13 +91,16 @@ final class CommonSingleServiceTest extends CIUnitTestCase
 
     public function testSingleServiceWithGibberishGiven(): void
     {
-        $this->assertNull(single_service('foo'));
-        $this->assertNull(single_service('bar'));
-        $this->assertNull(single_service('baz'));
-        $this->assertNull(single_service('caches'));
-        $this->assertNull(single_service('timers'));
+        $this->assertNull(single_service('foo')); // @phpstan-ignore codeigniter.unknownServiceMethod
+        $this->assertNull(single_service('bar')); // @phpstan-ignore codeigniter.unknownServiceMethod
+        $this->assertNull(single_service('baz')); // @phpstan-ignore codeigniter.unknownServiceMethod
+        $this->assertNull(single_service('caches')); // @phpstan-ignore codeigniter.unknownServiceMethod
+        $this->assertNull(single_service('timers')); // @phpstan-ignore codeigniter.unknownServiceMethod
     }
 
+    /**
+     * @return iterable<string, array{string}>
+     */
     public static function provideServiceNames(): iterable
     {
         static $services = [];

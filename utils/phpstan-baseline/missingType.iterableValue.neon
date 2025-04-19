@@ -1,4 +1,4 @@
-# total 1619 errors
+# total 1618 errors
 
 parameters:
     ignoreErrors:
@@ -6476,11 +6476,6 @@ parameters:
             message: '#^Property CodeIgniter\\CommonHelperTest\:\:\$dummyHelpers type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/CommonHelperTest.php
-
-        -
-            message: '#^Method CodeIgniter\\CommonSingleServiceTest\:\:provideServiceNames\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/CommonSingleServiceTest.php
 
         -
             message: '#^Method CodeIgniter\\Config\\DotEnvTest\:\:provideLoadsVars\(\) return type has no value type specified in iterable type iterable\.$#'
