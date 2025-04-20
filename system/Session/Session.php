@@ -447,26 +447,22 @@ class Session implements SessionInterface
      * If $data is an array, it is expected to be an array of key/value pairs
      * to be set as session properties.
      *
-     * @param array|string                            $data  Property name or associative array of properties
-     * @param array|bool|float|int|object|string|null $value Property value if single key provided
+     * @param array<string, mixed>|list<string>|string $data  Property name or associative array of properties
+     * @param mixed                                    $value Property value if single key provided
      *
      * @return void
      */
     public function set($data, $value = null)
     {
-        if (is_array($data)) {
-            foreach ($data as $key => &$value) {
-                if (is_int($key)) {
-                    $_SESSION[$value] = null;
-                } else {
-                    $_SESSION[$key] = $value;
-                }
-            }
+        $data = is_array($data) ? $data : [$data => $value];
 
-            return;
+        if (array_is_list($data)) {
+            $data = array_fill_keys($data, null);
         }
 
-        $_SESSION[$data] = $value;
+        foreach ($data as $sessionKey => $sessionValue) {
+            $_SESSION[$sessionKey] = $sessionValue;
+        }
     }
 
     /**
@@ -478,31 +474,27 @@ class Session implements SessionInterface
      *
      * Replaces the legacy method $session->userdata();
      *
-     * @param non-empty-string|null $key Identifier of the session property to retrieve
+     * @param string|null $key Identifier of the session property to retrieve
      *
-     * @return array|bool|float|int|object|string|null The property value(s)
+     * @return ($key is string ? mixed : array<string, mixed>)
      */
     public function get(?string $key = null)
     {
-        if ($key !== null && $key !== '' && (null !== ($value = $_SESSION[$key] ?? null) || null !== ($value = dot_array_search($key, $_SESSION ?? [])))) {
-            return $value;
-        }
-
         if (! isset($_SESSION) || $_SESSION === []) {
             return $key === null ? [] : null;
         }
 
-        if ($key !== null && $key !== '') {
-            return null;
+        $key ??= '';
+
+        if ($key !== '') {
+            return $_SESSION[$key] ?? dot_array_search($key, $_SESSION);
         }
 
         $userdata = [];
-        $_exclude = array_merge(['__ci_vars'], $this->getFlashKeys(), $this->getTempKeys());
+        $exclude  = array_merge(['__ci_vars'], $this->getFlashKeys(), $this->getTempKeys());
 
-        $keys = array_keys($_SESSION);
-
-        foreach ($keys as $key) {
-            if (! in_array($key, $_exclude, true)) {
+        foreach (array_keys($_SESSION) as $key) {
+            if (! in_array($key, $exclude, true)) {
                 $userdata[$key] = $_SESSION[$key];
             }
         }
@@ -523,8 +515,8 @@ class Session implements SessionInterface
     /**
      * Push new value onto session value that is array.
      *
-     * @param string $key  Identifier of the session property we are interested in.
-     * @param array  $data value to be pushed to existing session key.
+     * @param string               $key  Identifier of the session property we are interested in.
+     * @param array<string, mixed> $data value to be pushed to existing session key.
      *
      * @return void
      */
@@ -542,29 +534,27 @@ class Session implements SessionInterface
      * identifiers to remove. Otherwise, it is interpreted as the identifier
      * of a specific session property to remove.
      *
-     * @param array|string $key Identifier of the session property or properties to remove.
+     * @param list<string>|string $key Identifier of the session property or properties to remove.
      *
      * @return void
      */
     public function remove($key)
     {
-        if (is_array($key)) {
-            foreach ($key as $k) {
-                unset($_SESSION[$k]);
-            }
+        $key = is_array($key) ? $key : [$key];
 
-            return;
+        foreach ($key as $k) {
+            unset($_SESSION[$k]);
         }
-
-        unset($_SESSION[$key]);
     }
 
     /**
      * Magic method to set variables in the session by simply calling
      *  $session->foo = bar;
      *
-     * @param string       $key   Identifier of the session property to set.
-     * @param array|string $value
+     * @param string $key   Identifier of the session property to set.
+     * @param mixed  $value
+     *
+     * @return void
      */
     public function __set(string $key, $value)
     {
@@ -577,7 +567,7 @@ class Session implements SessionInterface
      *
      * @param string $key Identifier of the session property to remove.
      *
-     * @return string|null
+     * @return mixed
      */
     public function __get(string $key)
     {
@@ -596,14 +586,15 @@ class Session implements SessionInterface
 
     /**
      * Magic method to check for session variables.
-     * Different from has() in that it will validate 'session_id' as well.
-     * Mostly used by internal PHP functions, users should stick to has()
+     *
+     * Different from `has()` in that it will validate 'session_id' as well.
+     * Mostly used by internal PHP functions, users should stick to `has()`.
      *
      * @param string $key Identifier of the session property to remove.
      */
     public function __isset(string $key): bool
     {
-        return isset($_SESSION[$key]) || ($key === 'session_id');
+        return isset($_SESSION[$key]) || $key === 'session_id';
     }
 
     /**
@@ -615,8 +606,8 @@ class Session implements SessionInterface
      * Otherwise, it is interpreted as the identifier of a specific
      * flashdata property, with $value containing the property value.
      *
-     * @param array|string                            $data  Property identifier or associative array of properties
-     * @param array|bool|float|int|object|string|null $value Property value if $data is a scalar
+     * @param array<string, mixed>|string $data  Property identifier or associative array of properties
+     * @param mixed                       $value Property value if $data is a scalar
      *
      * @return void
      */
@@ -631,24 +622,27 @@ class Session implements SessionInterface
      *
      * If the item key is null, return all flashdata.
      *
-     * @param string $key Property identifier
+     * @param string|null $key Property identifier
      *
-     * @return array|null The requested property value, or an associative array  of them
+     * @return ($key is string ? mixed : array<string, mixed>)
      */
     public function getFlashdata(?string $key = null)
     {
+        $_SESSION['__ci_vars'] ??= [];
+
         if (isset($key)) {
-            return (isset($_SESSION['__ci_vars'], $_SESSION['__ci_vars'][$key], $_SESSION[$key])
-                && ! is_int($_SESSION['__ci_vars'][$key])) ? $_SESSION[$key] : null;
+            if (! isset($_SESSION['__ci_vars'][$key]) || is_int($_SESSION['__ci_vars'][$key])) {
+                return null;
+            }
+
+            return $_SESSION[$key] ?? null;
         }
 
         $flashdata = [];
 
-        if (isset($_SESSION['__ci_vars'])) {
-            foreach ($_SESSION['__ci_vars'] as $key => &$value) {
-                if (! is_int($value)) {
-                    $flashdata[$key] = $_SESSION[$key];
-                }
+        foreach ($_SESSION['__ci_vars'] as $key => $value) {
+            if (! is_int($value)) {
+                $flashdata[$key] = $_SESSION[$key];
             }
         }
 
@@ -658,7 +652,7 @@ class Session implements SessionInterface
     /**
      * Keeps a single piece of flash data alive for one more request.
      *
-     * @param array|string $key Property identifier or array of them
+     * @param list<string>|string $key Property identifier or array of them
      *
      * @return void
      */
@@ -668,33 +662,23 @@ class Session implements SessionInterface
     }
 
     /**
-     * Mark a session property or properties as flashdata.
+     * Mark a session property or properties as flashdata. This returns
+     * `false` if any of the properties were not already set.
      *
-     * @param array|string $key Property identifier or array of them
-     *
-     * @return bool False if any of the properties are not already set
+     * @param list<string>|string $key Property identifier or array of them
      */
     public function markAsFlashdata($key): bool
     {
-        if (is_array($key)) {
-            foreach ($key as $sessionKey) {
-                if (! isset($_SESSION[$sessionKey])) {
-                    return false;
-                }
+        $keys = is_array($key) ? $key : [$key];
+
+        foreach ($keys as $sessionKey) {
+            if (! isset($_SESSION[$sessionKey])) {
+                return false;
             }
-
-            $new = array_fill_keys($key, 'new');
-
-            $_SESSION['__ci_vars'] = isset($_SESSION['__ci_vars']) ? array_merge($_SESSION['__ci_vars'], $new) : $new;
-
-            return true;
         }
 
-        if (! isset($_SESSION[$key])) {
-            return false;
-        }
-
-        $_SESSION['__ci_vars'][$key] = 'new';
+        $_SESSION['__ci_vars'] ??= [];
+        $_SESSION['__ci_vars'] = [...$_SESSION['__ci_vars'], ...array_fill_keys($keys, 'new')];
 
         return true;
     }
@@ -702,7 +686,7 @@ class Session implements SessionInterface
     /**
      * Unmark data in the session as flashdata.
      *
-     * @param array|string $key Property identifier or array of them
+     * @param list<string>|string $key Property identifier or array of them
      *
      * @return void
      */
@@ -730,7 +714,7 @@ class Session implements SessionInterface
     /**
      * Retrieve all of the keys for session data marked as flashdata.
      *
-     * @return array The property names of all flashdata
+     * @return list<string>
      */
     public function getFlashKeys(): array
     {
@@ -753,9 +737,9 @@ class Session implements SessionInterface
      * Sets new data into the session, and marks it as temporary data
      * with a set lifespan.
      *
-     * @param array|string                            $data  Session data key or associative array of items
-     * @param array|bool|float|int|object|string|null $value Value to store
-     * @param int                                     $ttl   Time-to-live in seconds
+     * @param array<string, mixed>|list<string>|string $data  Session data key or associative array of items
+     * @param mixed                                    $value Value to store
+     * @param int                                      $ttl   Time-to-live in seconds
      *
      * @return void
      */
@@ -769,24 +753,27 @@ class Session implements SessionInterface
      * Returns either a single piece of tempdata, or all temp data currently
      * in the session.
      *
-     * @param string $key Session data key
+     * @param string|null $key Session data key
      *
-     * @return array|bool|float|int|object|string|null Session data value or null if not found.
+     * @return ($key is string ? mixed : array<string, mixed>)
      */
     public function getTempdata(?string $key = null)
     {
+        $_SESSION['__ci_vars'] ??= [];
+
         if (isset($key)) {
-            return (isset($_SESSION['__ci_vars'], $_SESSION['__ci_vars'][$key], $_SESSION[$key])
-                && is_int($_SESSION['__ci_vars'][$key])) ? $_SESSION[$key] : null;
+            if (! isset($_SESSION['__ci_vars'][$key]) || ! is_int($_SESSION['__ci_vars'][$key])) {
+                return null;
+            }
+
+            return $_SESSION[$key] ?? null;
         }
 
         $tempdata = [];
 
-        if (isset($_SESSION['__ci_vars'])) {
-            foreach ($_SESSION['__ci_vars'] as $key => &$value) {
-                if (is_int($value)) {
-                    $tempdata[$key] = $_SESSION[$key];
-                }
+        foreach ($_SESSION['__ci_vars'] as $key => $value) {
+            if (is_int($value)) {
+                $tempdata[$key] = $_SESSION[$key];
             }
         }
 
@@ -810,10 +797,10 @@ class Session implements SessionInterface
      * Mark one of more pieces of data as being temporary, meaning that
      * it has a set lifespan within the session.
      *
-     * @param array|string $key Property identifier or array of them
-     * @param int          $ttl Time to live, in seconds
+     * Returns `false` if any of the properties were not set.
      *
-     * @return bool False if any of the properties were not set
+     * @param array<string, mixed>|list<string>|string $key Property identifier or array of them
+     * @param int                                      $ttl Time to live, in seconds
      */
     public function markAsTempdata($key, int $ttl = 300): bool
     {
@@ -858,7 +845,7 @@ class Session implements SessionInterface
      * Unmarks temporary data in the session, effectively removing its
      * lifespan and allowing it to live as long as the session does.
      *
-     * @param array|string $key Property identifier or array of them
+     * @param list<string>|string $key Property identifier or array of them
      *
      * @return void
      */
@@ -885,6 +872,8 @@ class Session implements SessionInterface
 
     /**
      * Retrieve the keys of all session data that have been marked as temporary data.
+     *
+     * @return list<string>
      */
     public function getTempKeys(): array
     {
