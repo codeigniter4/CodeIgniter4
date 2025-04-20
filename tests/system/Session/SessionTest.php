@@ -477,6 +477,23 @@ final class SessionTest extends CIUnitTestCase
     }
 
     /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9534
+     */
+    public function testSetTempDataOnArrayData(): void
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $time = time();
+
+        $session->setTempdata(['foo1' => 'bar1'], null, 200);
+        $session->setTempdata('foo2', 'bar2', 200);
+
+        $this->assertLessThanOrEqual($_SESSION['__ci_vars']['foo1'], $time + 200);
+        $this->assertLessThanOrEqual($_SESSION['__ci_vars']['foo2'], $time + 200);
+    }
+
+    /**
      * @see https://github.com/codeigniter4/CodeIgniter4/pull/9536#discussion_r2051798869
      */
     public function testMarkAsTempdataFailsWhenAtLeastOneKeyIsNotInSession(): void
