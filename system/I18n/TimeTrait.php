@@ -330,11 +330,9 @@ trait TimeTrait
      * @param DateTimeInterface|self|string|null $datetime
      * @param DateTimeZone|string|null           $timezone
      *
-     * @return void
-     *
      * @throws Exception
      */
-    public static function setTestNow($datetime = null, $timezone = null, ?string $locale = null)
+    public static function setTestNow($datetime = null, $timezone = null, ?string $locale = null): void
     {
         // Reset the test instance
         if ($datetime === null) {
@@ -757,19 +755,29 @@ trait TimeTrait
         $time = clone $this;
 
         $year  = (int) $time->getYear();
-        $month = (int) $time->getMonth() + $months;
+        $month = (int) $time->getMonth();
         $day   = (int) $time->getDay();
 
-        // Adjust year and month for overflow
-        $year += intdiv($month - 1, 12);
-        $month = (($month - 1) % 12) + 1;
+        // Adjust total months since year 0
+        $totalMonths = ($year * 12 + $month - 1) + $months;
 
-        // Find the last valid day of the target month
-        $lastDayOfMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        // Recalculate year and month
+        $newYear  = intdiv($totalMonths, 12);
+        $newMonth = $totalMonths % 12 + 1;
+
+        // Get last day of new month
+        $lastDayOfMonth = cal_days_in_month(CAL_GREGORIAN, $newMonth, $newYear);
         $correctedDay   = min($day, $lastDayOfMonth);
 
-        // Return new time instance
-        return static::create($year, $month, $correctedDay, (int) $this->getHour(), (int) $this->getMinute(), (int) $this->getSecond(), $this->getTimezone(), $this->locale);
+        return static::create($newYear, $newMonth, $correctedDay, (int) $this->getHour(), (int) $this->getMinute(), (int) $this->getSecond(), $this->getTimezone(), $this->locale);
+    }
+
+    /**
+     * Returns a new Time instance with $months calendar months subtracted from the time
+     */
+    public function subCalendarMonths(int $months): static
+    {
+        return $this->addCalendarMonths(-$months);
     }
 
     /**
