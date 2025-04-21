@@ -330,9 +330,11 @@ trait TimeTrait
      * @param DateTimeInterface|self|string|null $datetime
      * @param DateTimeZone|string|null           $timezone
      *
+     * @return void
+     *
      * @throws Exception
      */
-    public static function setTestNow($datetime = null, $timezone = null, ?string $locale = null): void
+    public static function setTestNow($datetime = null, $timezone = null, ?string $locale = null)
     {
         // Reset the test instance
         if ($datetime === null) {
