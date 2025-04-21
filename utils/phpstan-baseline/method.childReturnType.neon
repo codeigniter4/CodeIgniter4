@@ -1,4 +1,4 @@
-# total 38 errors
+# total 37 errors
 
 parameters:
     ignoreErrors:
@@ -151,11 +151,6 @@ parameters:
             message: '#^Return type \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Model\:\:__call\(\) should be covariant with return type \(\$this\(CodeIgniter\\BaseModel\)\|null\) of method CodeIgniter\\BaseModel\:\:__call\(\)$#'
             count: 1
             path: ../../system/Model.php
-
-        -
-            message: '#^Return type \(bool\) of method CodeIgniter\\Session\\Session\:\:markAsFlashdata\(\) should be covariant with return type \(false\) of method CodeIgniter\\Session\\SessionInterface\:\:markAsFlashdata\(\)$#'
-            count: 1
-            path: ../../system/Session/Session.php
 
         -
             message: '#^Return type \(array\{code\: int\|string\|null, message\: string\|null\}\) of method CodeIgniter\\Test\\Mock\\MockConnection\:\:error\(\) should be covariant with return type \(array\<string, int\|string\>\) of method CodeIgniter\\Database\\ConnectionInterface\<object\|resource,object\|resource\>\:\:error\(\)$#'
