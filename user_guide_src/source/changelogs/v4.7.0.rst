@@ -33,6 +33,11 @@ Method Signature Changes
 Enhancements
 ************
 
+Libraries
+=========
+
+- **Time:** added functions ``Time::addCalendarMonths()`` and ``Time::subCalendarMonths()``
+
 Commands
 ========
 
