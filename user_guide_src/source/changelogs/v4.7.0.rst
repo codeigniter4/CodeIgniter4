@@ -36,7 +36,7 @@ Enhancements
 Libraries
 =========
 
-- **Time:** added functions ``Time::addCalendarMonths()`` and ``Time::subCalendarMonths()``
+- **Time:** added methods ``Time::addCalendarMonths()`` and ``Time::subCalendarMonths()``
 
 Commands
 ========
