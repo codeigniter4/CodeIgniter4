@@ -344,6 +344,20 @@ final class SessionTest extends CIUnitTestCase
         $this->assertFalse($session->has('foo'));
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/pull/9535#discussion_r2052022296
+     */
+    public function testMarkAsFlashdataFailsWhenAtLeastOneKeyIsNotInSession(): void
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $session->set(['foo1' => 'bar1', 'foo2' => 'bar2']);
+
+        $this->assertFalse($session->markAsFlashdata(['foo1', 'foo2', 'foo3']));
+        $this->assertArrayNotHasKey('__ci_vars', $_SESSION);
+    }
+
     public function testCanFlashArray(): void
     {
         $session = $this->getInstance();
@@ -460,6 +474,20 @@ final class SessionTest extends CIUnitTestCase
         $this->assertLessThanOrEqual($_SESSION['__ci_vars']['foo'], $time + 200);
         $this->assertLessThanOrEqual($_SESSION['__ci_vars']['bar'], $time + 200);
         $this->assertLessThanOrEqual($_SESSION['__ci_vars']['baz'], $time + 200);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/pull/9536#discussion_r2051798869
+     */
+    public function testMarkAsTempdataFailsWhenAtLeastOneKeyIsNotInSession(): void
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $session->set(['foo1' => 'bar1', 'foo2' => 'bar2']);
+
+        $this->assertFalse($session->markAsTempdata(['foo1', 'foo2', 'foo3'], 200));
+        $this->assertArrayNotHasKey('__ci_vars', $_SESSION);
     }
 
     public function testGetTestDataReturnsAll(): void
