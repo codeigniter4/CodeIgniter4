@@ -812,6 +812,22 @@ final class TimeTest extends CIUnitTestCase
         $this->assertSame('2018-02-10 13:20:33', $newTime->toDateTimeString());
     }
 
+    public function testCanAddCalendarMonths(): void
+    {
+        $time    = Time::parse('January 31, 2017 13:20:33', 'America/Chicago');
+        $newTime = $time->addCalendarMonths(1);
+        $this->assertSame('2017-01-31 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2017-02-28 13:20:33', $newTime->toDateTimeString());
+    }
+
+    public function testCanAddCalendarMonthsOverYearBoundary(): void
+    {
+        $time    = Time::parse('January 31, 2017 13:20:33', 'America/Chicago');
+        $newTime = $time->addCalendarMonths(13);
+        $this->assertSame('2017-01-31 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2018-02-28 13:20:33', $newTime->toDateTimeString());
+    }
+
     public function testCanAddYears(): void
     {
         $time    = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
@@ -858,6 +874,22 @@ final class TimeTest extends CIUnitTestCase
         $newTime = $time->subMonths(3);
         $this->assertSame('2017-01-10 13:20:33', $time->toDateTimeString());
         $this->assertSame('2016-10-10 13:20:33', $newTime->toDateTimeString());
+    }
+
+    public function testCanSubtractCalendarMonths(): void
+    {
+        $time    = Time::parse('March 31, 2017 13:20:33', 'America/Chicago');
+        $newTime = $time->subCalendarMonths(1);
+        $this->assertSame('2017-03-31 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2017-02-28 13:20:33', $newTime->toDateTimeString());
+    }
+
+    public function testCanSubtractCalendarMonthsOverYearBoundary(): void
+    {
+        $time    = Time::parse('March 31, 2017 13:20:33', 'America/Chicago');
+        $newTime = $time->subCalendarMonths(13);
+        $this->assertSame('2017-03-31 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2016-02-29 13:20:33', $newTime->toDateTimeString());
     }
 
     public function testCanSubtractYears(): void
