@@ -804,39 +804,31 @@ class Session implements SessionInterface
      */
     public function markAsTempdata($key, int $ttl = 300): bool
     {
-        $ttl += Time::now()->getTimestamp();
+        $time = Time::now()->getTimestamp();
+        $keys = is_array($key) ? $key : [$key];
 
-        if (is_array($key)) {
-            $temp = [];
+        if (array_is_list($keys)) {
+            $keys = array_fill_keys($keys, $ttl);
+        }
 
-            foreach ($key as $k => $v) {
-                // Do we have a key => ttl pair, or just a key?
-                if (is_int($k)) {
-                    $k = $v;
-                    $v = $ttl;
-                } elseif (is_string($v)) {
-                    $v = Time::now()->getTimestamp() + $ttl;
-                } else {
-                    $v += Time::now()->getTimestamp();
-                }
+        $tempdata = [];
 
-                if (! array_key_exists($k, $_SESSION)) {
-                    return false;
-                }
-
-                $temp[$k] = $v;
+        foreach ($keys as $sessionKey => $timeToLive) {
+            if (! array_key_exists($sessionKey, $_SESSION)) {
+                return false;
             }
 
-            $_SESSION['__ci_vars'] = isset($_SESSION['__ci_vars']) ? array_merge($_SESSION['__ci_vars'], $temp) : $temp;
+            if (is_int($timeToLive)) {
+                $timeToLive += $time;
+            } else {
+                $timeToLive = $time + $ttl;
+            }
 
-            return true;
+            $tempdata[$sessionKey] = $timeToLive;
         }
 
-        if (! isset($_SESSION[$key])) {
-            return false;
-        }
-
-        $_SESSION['__ci_vars'][$key] = $ttl;
+        $_SESSION['__ci_vars'] ??= [];
+        $_SESSION['__ci_vars'] = [...$_SESSION['__ci_vars'], ...$tempdata];
 
         return true;
     }
