@@ -329,6 +329,7 @@
 <li><p><strong>Database:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Postgre</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> handlers where composite unique keys were not fully taken into account for <code class="docutils literal notranslate"><span class="pre">upsert</span></code> type of queries.</p></li>
 <li><p><strong>Database:</strong> Fixed a bug in the <code class="docutils literal notranslate"><span class="pre">OCI8</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> drivers where <code class="docutils literal notranslate"><span class="pre">getVersion()</span></code> returned an empty string when the database connection was not yet established.</p></li>
 <li><p><strong>Logger:</strong> Fixed a bug where the <code class="docutils literal notranslate"><span class="pre">{line}</span></code> variable couldn’t be used without specifying the <code class="docutils literal notranslate"><span class="pre">{file}</span></code> variable when logging the message.</p></li>
+<li><p><strong>Session:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">Session::markAsTempdata()</span></code> would give the wrong TTL when array data is supplied to <code class="docutils literal notranslate"><span class="pre">Session::setTempdata()</span></code>.</p></li>
 <li><p><strong>Toolbar:</strong> Fixed a bug where setting <code class="docutils literal notranslate"><span class="pre">maxHistory</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code> would produce a JavaScript error in the Debug Toolbar.</p></li>
 <li><p><strong>Toolbar:</strong> Fixed a bug where setting <code class="docutils literal notranslate"><span class="pre">maxHistory</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code> prevented log files from being properly cleared.</p></li>
 </ul>
@@ -350,7 +351,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 12, 2025.
+      <span class="lastupdated">Last updated on Apr 21, 2025.
       </span></p>
   </div>
 
