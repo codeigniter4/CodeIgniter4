@@ -260,3 +260,30 @@ The possible options that are recognized are as follows:
 - ``vOffset``        Additional offset on the y axis, in pixels
 - ``fontPath``        The full server path to the TTF font you wish to use. System font will be used if none is given.
 - ``fontSize``        The font size to use. When using the GD handler with the system font, valid values are between ``1`` to ``5``.
+
+Clearing Image Metadata
+=======================
+
+This method provides control over which metadata is preserved or removed from an image.
+
+.. important:: The GD image library automatically strips all metadata during processing,
+        so this method has no additional effect when using the GD handler.
+        This behavior is built into GD itself and cannot be modified.
+
+.. note:: Some essential technical metadata (dimensions, color depth) will be regenerated
+        during save operations as they're required for image display. However, all privacy-sensitive
+        information such as GPS location, camera details, and timestamps can be completely removed.
+
+The method supports three different operations depending on the provided parameters:
+
+**Clear all metadata** - When an empty array is passed, all metadata is stripped from the image.
+
+.. literalinclude:: images/015.php
+
+**Keep only specific properties** - When using the 'except' key, only the specified properties are preserved.
+
+.. literalinclude:: images/016.php
+
+**Delete specific properties** - When providing a list of property names, only those properties are removed.
+
+.. literalinclude:: images/017.php

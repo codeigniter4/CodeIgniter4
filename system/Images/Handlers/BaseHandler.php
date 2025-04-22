@@ -769,4 +769,19 @@ abstract class BaseHandler implements ImageHandlerInterface
     {
         return ($this->resource !== null) ? $this->_getHeight() : $this->height;
     }
+
+    /**
+     * Clears image metadata.
+     *
+     * This method has no use in the GDHandler,
+     * since all the data are cleared automatically.
+     *
+     * GDHandler can't preserve the image metadata.
+     *
+     * @param array<int|string, array<int, string>|string> $data
+     */
+    public function clearMetadata(array $data = []): static
+    {
+        return $this;
+    }
 }

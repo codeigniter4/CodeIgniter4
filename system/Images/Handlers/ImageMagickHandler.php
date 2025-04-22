@@ -537,4 +537,51 @@ class ImageMagickHandler extends BaseHandler
             default => $this,
         };
     }
+
+    /**
+     * Clears metadata from the image based on specified parameters.
+     *
+     * Configuration for metadata clearing:
+     *    - If empty, all metadata is stripped
+     *    - If contains 'except' key, keeps only those properties
+     *    - Otherwise, deletes only the specified keys
+     *
+     * @param array<int|string, array<int, string>|string> $data
+     *
+     * @return $this
+     *
+     * @throws ImagickException
+     */
+    public function clearMetadata(array $data = []): static
+    {
+        $this->ensureResource();
+
+        // Strip all metadata when no parameters are provided
+        if ($data === []) {
+            $this->resource->stripImage();
+
+            return $this;
+        }
+
+        // Keep only properties specified in 'except' array
+        if (isset($data['except'])) {
+            $propertiesToKeep = (array) $data['except'];
+            $allPropertyNames = $this->resource->getImageProperties('*', false);
+
+            foreach ($allPropertyNames as $property) {
+                if (! in_array($property, $propertiesToKeep, true)) {
+                    $this->resource->deleteImageProperty($property);
+                }
+            }
+
+            return $this;
+        }
+
+        // Delete only specific properties
+        foreach ($data as $property) {
+            $this->resource->deleteImageProperty($property);
+        }
+
+        return $this;
+    }
 }
