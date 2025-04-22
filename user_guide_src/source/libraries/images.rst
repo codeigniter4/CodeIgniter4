@@ -36,9 +36,6 @@ The available Handlers are as follows:
 - ``gd``      The GD/GD2 image library
 - ``imagick`` The ImageMagick library.
 
-If using the ImageMagick library, you must set the path to the library on your
-server in **app/Config/Images.php**.
-
 .. note:: The ImageMagick handler requires the imagick extension.
 
 *******************
@@ -263,6 +260,3 @@ The possible options that are recognized are as follows:
 - ``vOffset``        Additional offset on the y axis, in pixels
 - ``fontPath``        The full server path to the TTF font you wish to use. System font will be used if none is given.
 - ``fontSize``        The font size to use. When using the GD handler with the system font, valid values are between ``1`` to ``5``.
-
-.. note:: The ImageMagick driver does not recognize full server path for fontPath. Instead, simply provide the
-        name of one of the installed system fonts that you wish to use, i.e., Calibri.

@@ -16,11 +16,9 @@ namespace CodeIgniter\Images;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Handlers\BaseHandler;
-use CodeIgniter\Images\Handlers\ImageMagickHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Images;
 use Imagick;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
@@ -46,6 +44,10 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        if (! extension_loaded('imagick')) {
+            $this->markTestSkipped('The IMAGICK extension is not available.');
+        }
+
         $this->root = WRITEPATH . 'cache/';
 
         // cleanup everything
@@ -58,52 +60,8 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         $this->path = $this->origin . 'ci-logo.png';
 
         // get our locally available `convert`
-        $config = new Images();
-        $found  = false;
-
-        foreach ([
-            '/usr/bin/convert',
-            trim((string) shell_exec('which convert')),
-            $config->libraryPath,
-        ] as $convert) {
-            if (is_file($convert)) {
-                $config->libraryPath = $convert;
-
-                $found = true;
-                break;
-            }
-        }
-
-        if (! $found) {
-            $this->markTestSkipped('Cannot test imagick as there is no available convert program.');
-        }
-
+        $config        = new Images();
         $this->handler = Services::image('imagick', $config, false);
-    }
-
-    #[DataProvider('provideNonexistentLibraryPathTerminatesProcessing')]
-    public function testNonexistentLibraryPathTerminatesProcessing(string $path, string $invalidPath): void
-    {
-        $this->expectException(ImageException::class);
-        $this->expectExceptionMessage(lang('Images.libPathInvalid', [$invalidPath]));
-
-        $config = new Images();
-
-        $config->libraryPath = $path;
-
-        new ImageMagickHandler($config);
-    }
-
-    /**
-     * @return iterable<string, list<string>>
-     */
-    public static function provideNonexistentLibraryPathTerminatesProcessing(): iterable
-    {
-        yield 'empty string' => ['', ''];
-
-        yield 'invalid file' => ['/var/log/convert', '/var/log/convert'];
-
-        yield 'nonexistent file' => ['/var/www/file', '/var/www/file/convert'];
     }
 
     public function testGetVersion(): void
@@ -458,12 +416,11 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 
             $this->handler->withFile($source);
             $this->handler->reorient();
+            $this->handler->save($result);
 
-            $resource = imagecreatefromstring(file_get_contents($this->handler->getResource()));
+            $resource = imagecreatefromjpeg($result);
             $point    = imagecolorat($resource, 0, 0);
             $rgb      = imagecolorsforindex($resource, $point);
-
-            $this->handler->save($result);
 
             $this->assertSame(['red' => 62, 'green' => 62, 'blue' => 62, 'alpha' => 0], $rgb);
         }
@@ -477,12 +434,11 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 
             $this->handler->withFile($source);
             $this->handler->reorient();
+            $this->handler->save($result);
 
-            $resource = imagecreatefromstring(file_get_contents($this->handler->getResource()));
+            $resource = imagecreatefromjpeg($result);
             $point    = imagecolorat($resource, 0, 0);
             $rgb      = imagecolorsforindex($resource, $point);
-
-            $this->handler->save($result);
 
             $this->assertSame(['red' => 62, 'green' => 62, 'blue' => 62, 'alpha' => 0], $rgb);
         }

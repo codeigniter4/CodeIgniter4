@@ -100,6 +100,8 @@ class ImageException extends FrameworkException
     /**
      * Thrown when the image library path is invalid.
      *
+     * @deprecated 4.7.0 No longer used.
+     *
      * @return static
      */
     public static function forInvalidImageLibraryPath(?string $path = null)
