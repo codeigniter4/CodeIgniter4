@@ -325,11 +325,8 @@ modify the existing Time instance, but will return a new instance.
 
 .. literalinclude:: time/031.php
 
-addCalendarMonths()
--------------------
-
-subCalendarMonths()
--------------------
+addCalendarMonths() / subCalendarMonths()
+-----------------------------------------
 
 Modifies the current Time by adding or subtracting whole calendar months. These methods can be useful if you 
 require no calendar months are skipped in recurring dates. Refer to the table below for a comparison between 
