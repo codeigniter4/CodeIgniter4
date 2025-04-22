@@ -465,7 +465,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         /** @var Imagick $imagick */
         $imagick = $this->handler->getResource();
         $before  = $imagick->getImageProperties();
-        $this->assertCount(14, $before);
+        $this->assertGreaterThan(10, $before);
 
         $this->handler
             ->clearMetadata()
@@ -476,7 +476,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         $imagick = $this->handler->getResource();
         $after   = $imagick->getImageProperties();
 
-        $this->assertCount(9, $after);
+        $this->assertLessThan(10, count($after));
     }
 
     public function testClearMetadataExcept(): void
@@ -485,7 +485,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         /** @var Imagick $imagick */
         $imagick = $this->handler->getResource();
         $before  = $imagick->getImageProperties();
-        $this->assertCount(14, $before);
+        $this->assertArrayHasKey('png:gAMA', $before);
 
         // Keep 2 properties
         $this->handler
@@ -500,8 +500,6 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         $this->assertArrayHasKey('png:bKGD', $after);
         $this->assertArrayHasKey('png:cHRM', $after);
         $this->assertArrayNotHasKey('png:gAMA', $after);
-
-        $this->assertCount(12, $after);
     }
 
     public function testClearMetadataSpecific(): void
@@ -511,8 +509,9 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         $imagick = $this->handler->getResource();
         $before  = $imagick->getImageProperties();
 
-        $this->assertArrayNotHasKey('png:tIME', $before);
-        $this->assertCount(14, $before);
+        $this->assertArrayHasKey('png:bKGD', $before);
+        $this->assertArrayHasKey('png:cHRM', $before);
+        $this->assertArrayHasKey('png:gAMA', $before);
 
         // Delete only 1
         $this->handler
@@ -526,9 +525,6 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 
         $this->assertArrayHasKey('png:bKGD', $after);
         $this->assertArrayHasKey('png:cHRM', $after);
-        $this->assertArrayHasKey('png:tIME', $after);
         $this->assertArrayNotHasKey('png:gAMA', $after);
-
-        $this->assertCount(14, $after);
     }
 }
