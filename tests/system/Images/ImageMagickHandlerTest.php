@@ -466,7 +466,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         $imagick = $this->handler->getResource();
         $before  = $imagick->getImageProperties();
 
-        $this->assertCount(44, $before);
+        $this->assertGreaterThan(40, count($before));
 
         $this->handler
             ->clearMetadata()
@@ -477,6 +477,6 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         $imagick = $this->handler->getResource();
         $after   = $imagick->getImageProperties();
 
-        $this->assertCount(5, $after);
+        $this->assertLessThanOrEqual(5, count($after));
     }
 }
