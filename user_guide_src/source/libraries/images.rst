@@ -264,26 +264,14 @@ The possible options that are recognized are as follows:
 Clearing Image Metadata
 =======================
 
-This method provides control over which metadata is preserved or removed from an image.
+This method removes metadata (EXIF, XMP, ICC, IPTC, comments, etc.) from an image.
 
 .. important:: The GD image library automatically strips all metadata during processing,
         so this method has no additional effect when using the GD handler.
         This behavior is built into GD itself and cannot be modified.
 
-.. note:: Some essential technical metadata (dimensions, color depth) will be regenerated
-        during save operations as they're required for image display. However, all privacy-sensitive
-        information such as GPS location, camera details, and timestamps can be completely removed.
-
-The method supports three different operations depending on the provided parameters:
-
-**Clear all metadata** - When an empty array is passed, all metadata is stripped from the image.
+Some essential technical metadata (dimensions, color depth) will be regenerated during save operations
+as they're required for image display. However, all privacy-sensitive information such as GPS location,
+camera details, and timestamps will be completely removed.
 
 .. literalinclude:: images/015.php
-
-**Keep only specific properties** - When using the 'except' key, only the specified properties are preserved.
-
-.. literalinclude:: images/016.php
-
-**Delete specific properties** - When providing a list of property names, only those properties are removed.
-
-.. literalinclude:: images/017.php

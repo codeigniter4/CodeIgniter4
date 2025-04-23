@@ -777,10 +777,8 @@ abstract class BaseHandler implements ImageHandlerInterface
      * since all the data are cleared automatically.
      *
      * GDHandler can't preserve the image metadata.
-     *
-     * @param array<int|string, array<int, string>|string> $data
      */
-    public function clearMetadata(array $data = []): static
+    public function clearMetadata(): static
     {
         return $this;
     }

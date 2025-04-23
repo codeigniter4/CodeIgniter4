@@ -459,72 +459,24 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         $this->assertSame($this->handler, $result);
     }
 
-    public function testClearMetadataAll(): void
+    public function testClearMetadata(): void
     {
-        $this->handler->withFile($this->path);
+        $this->handler->withFile($this->origin . 'Steveston_dusk.JPG');
         /** @var Imagick $imagick */
         $imagick = $this->handler->getResource();
         $before  = $imagick->getImageProperties();
-        $this->assertGreaterThan(10, $before);
+
+        $this->assertCount(44, $before);
 
         $this->handler
             ->clearMetadata()
-            ->save($this->root . 'ci-logo-no-metadata.png');
+            ->save($this->root . 'exif-info-no-metadata.jpg');
 
-        $this->handler->withFile($this->root . 'ci-logo-no-metadata.png');
+        $this->handler->withFile($this->root . 'exif-info-no-metadata.jpg');
         /** @var Imagick $imagick */
         $imagick = $this->handler->getResource();
         $after   = $imagick->getImageProperties();
 
-        $this->assertLessThan(10, count($after));
-    }
-
-    public function testClearMetadataExcept(): void
-    {
-        $this->handler->withFile($this->path);
-        /** @var Imagick $imagick */
-        $imagick = $this->handler->getResource();
-        $before  = $imagick->getImageProperties();
-        $this->assertArrayHasKey('png:gAMA', $before);
-
-        // Keep 2 properties
-        $this->handler
-            ->clearMetadata(['except' => ['png:bKGD', 'png:cHRM']])
-            ->save($this->root . 'ci-logo-no-metadata.png');
-
-        $this->handler->withFile($this->root . 'ci-logo-no-metadata.png');
-        /** @var Imagick $imagick */
-        $imagick = $this->handler->getResource();
-        $after   = $imagick->getImageProperties();
-
-        $this->assertArrayHasKey('png:bKGD', $after);
-        $this->assertArrayHasKey('png:cHRM', $after);
-        $this->assertArrayNotHasKey('png:gAMA', $after);
-    }
-
-    public function testClearMetadataSpecific(): void
-    {
-        $this->handler->withFile($this->path);
-        /** @var Imagick $imagick */
-        $imagick = $this->handler->getResource();
-        $before  = $imagick->getImageProperties();
-
-        $this->assertArrayHasKey('png:bKGD', $before);
-        $this->assertArrayHasKey('png:cHRM', $before);
-        $this->assertArrayHasKey('png:gAMA', $before);
-
-        // Delete only 1
-        $this->handler
-            ->clearMetadata(['png:gAMA'])
-            ->save($this->root . 'ci-logo-no-metadata.png');
-
-        $this->handler->withFile($this->root . 'ci-logo-no-metadata.png');
-        /** @var Imagick $imagick */
-        $imagick = $this->handler->getResource();
-        $after   = $imagick->getImageProperties();
-
-        $this->assertArrayHasKey('png:bKGD', $after);
-        $this->assertArrayHasKey('png:cHRM', $after);
-        $this->assertArrayNotHasKey('png:gAMA', $after);
+        $this->assertCount(5, $after);
     }
 }
