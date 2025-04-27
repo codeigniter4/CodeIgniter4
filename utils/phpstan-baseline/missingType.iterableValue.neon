@@ -1,4 +1,4 @@
-# total 1582 errors
+# total 1576 errors
 
 parameters:
     ignoreErrors:
@@ -684,11 +684,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Config\\Factories\:\:createInstance\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Config/Factories.php
-
-        -
-            message: '#^Method CodeIgniter\\Config\\Factories\:\:getComponentInstances\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Config/Factories.php
 
@@ -6223,11 +6218,6 @@ parameters:
             path: ../../tests/system/Cache/Handlers/BaseHandlerTest.php
 
         -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\FileHandlerTest\:\:provideSaveMode\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Cache/Handlers/FileHandlerTest.php
-
-        -
             message: '#^Method CodeIgniter\\Cache\\ResponseCacheTest\:\:createIncomingRequest\(\) has parameter \$query with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Cache/ResponseCacheTest.php
@@ -6301,16 +6291,6 @@ parameters:
             message: '#^Method CodeIgniter\\Config\\DotEnvTest\:\:provideLoadsVars\(\) return type has no value type specified in iterable type iterable\.$#'
             count: 1
             path: ../../tests/system/Config/DotEnvTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Config\\FactoriesTest\:\:testIsUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Config/FactoriesTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Config\\FactoriesTest\:\:testSetComponentInstances\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Config/FactoriesTest.php
 
         -
             message: '#^Method CodeIgniter\\Config\\MimesTest\:\:provideGuessExtensionFromType\(\) return type has no value type specified in iterable type iterable\.$#'
@@ -7328,11 +7308,6 @@ parameters:
             path: ../../tests/system/Validation/CreditCardRulesTest.php
 
         -
-            message: '#^Property CodeIgniter\\Validation\\DatabaseRelatedRulesTest\:\:\$config type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Validation/DatabaseRelatedRulesTest.php
-
-        -
             message: '#^Property CodeIgniter\\Validation\\FileRulesTest\:\:\$config type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Validation/FileRulesTest.php
@@ -7646,11 +7621,6 @@ parameters:
             message: '#^Property CodeIgniter\\Validation\\StrictRules\\CreditCardRulesTest\:\:\$config type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Validation/StrictRules/CreditCardRulesTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Validation\\StrictRules\\DatabaseRelatedRulesTest\:\:\$config type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php
 
         -
             message: '#^Property CodeIgniter\\Validation\\StrictRules\\FileRulesTest\:\:\$config type has no value type specified in iterable type array\.$#'

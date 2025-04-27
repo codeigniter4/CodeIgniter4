@@ -362,7 +362,7 @@ class ValidationTest extends CIUnitTestCase
      *
      * @param mixed $value
      */
-    public function rule1($value)
+    public function rule1($value): bool
     {
         return $value === 'abc';
     }
@@ -394,11 +394,9 @@ class ValidationTest extends CIUnitTestCase
     }
 
     /**
-     * Validation rule1
-     *
-     * @param mixed $value
+     * Validation rule2
      */
-    public function rule2($value, array $data, ?string &$error, string $field)
+    public function rule2(mixed $value, array $data, ?string &$error, string $field): bool
     {
         if ($value !== 'abc') {
             $error = 'The ' . $field . ' value is not "abc"';

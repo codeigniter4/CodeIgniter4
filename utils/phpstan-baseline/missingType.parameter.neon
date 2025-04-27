@@ -1,4 +1,4 @@
-# total 48 errors
+# total 47 errors
 
 parameters:
     ignoreErrors:
@@ -236,8 +236,3 @@ parameters:
             message: '#^Method CodeIgniter\\Session\\SessionTest\:\:getInstance\(\) has parameter \$options with no type specified\.$#'
             count: 1
             path: ../../tests/system/Session/SessionTest.php
-
-        -
-            message: '#^Method CodeIgniter\\View\\ParserPluginTest\:\:setHints\(\) has parameter \$output with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/View/ParserPluginTest.php
