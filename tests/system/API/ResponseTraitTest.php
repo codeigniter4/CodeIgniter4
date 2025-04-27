@@ -108,7 +108,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         }
     }
 
-    protected function makeController(string $routePath = '', array $userHeaders = [])
+    protected function makeController(string $routePath = '', array $userHeaders = []): object
     {
         $this->createRequestAndResponse($routePath, $userHeaders);
 
@@ -659,7 +659,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($xmlFormatter->format($data), $this->response->getXML());
     }
 
-    private function invoke(object $controller, string $method, array $args = [])
+    private function invoke(object $controller, string $method, array $args = []): object
     {
         $method = self::getPrivateMethodInvoker($controller, $method);
 

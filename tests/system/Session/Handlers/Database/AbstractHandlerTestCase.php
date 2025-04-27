@@ -44,7 +44,7 @@ abstract class AbstractHandlerTestCase extends CIUnitTestCase
         }
     }
 
-    abstract protected function getInstance($options = []);
+    abstract protected function getInstance($options = []): DatabaseHandler;
 
     public function testOpen(): void
     {

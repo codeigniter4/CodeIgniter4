@@ -513,6 +513,12 @@ final class Factories
     /**
      * Gets component data for caching.
      *
+     * @return array{
+     *   options: array<string, bool|string|null>,
+     *   aliases: array<string, class-string>,
+     *   instances: array<class-string, object>,
+     * }
+     *
      * @internal For caching only
      */
     public static function getComponentInstances(string $component): array

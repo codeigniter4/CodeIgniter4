@@ -120,7 +120,7 @@ trait FilterTestTrait
      * @param FilterInterface|string $filter   The filter instance, class, or alias
      * @param string                 $position "before" or "after"
      *
-     * @phpstan-return Closure(list<string>|null=): mixed
+     * @return Closure(list<string>|null=): mixed
      */
     protected function getFilterCaller($filter, string $position): Closure
     {
@@ -268,6 +268,8 @@ trait FilterTestTrait
      * @param string $route    The route to test
      * @param string $position "before" or "after"
      * @param string $alias    Alias for the anticipated filter
+     *
+     * @return void
      */
     protected function assertNotFilter(string $route, string $position, string $alias)
     {
@@ -286,6 +288,8 @@ trait FilterTestTrait
      *
      * @param string $route    The route to test
      * @param string $position "before" or "after"
+     *
+     * @return void
      */
     protected function assertHasFilters(string $route, string $position)
     {
@@ -303,6 +307,8 @@ trait FilterTestTrait
      *
      * @param string $route    The route to test
      * @param string $position "before" or "after"
+     *
+     * @return void
      */
     protected function assertNotHasFilters(string $route, string $position)
     {

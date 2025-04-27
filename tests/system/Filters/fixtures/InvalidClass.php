@@ -15,7 +15,7 @@ namespace CodeIgniter\Filters\fixtures;
 
 class InvalidClass
 {
-    public function index()
+    public function index(): string
     {
         return 'bad';
     }

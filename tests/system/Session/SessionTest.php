@@ -44,7 +44,7 @@ final class SessionTest extends CIUnitTestCase
         $_SESSION = [];
     }
 
-    protected function getInstance($options = [])
+    protected function getInstance($options = []): MockSession
     {
         $defaults = [
             'driver'            => FileHandler::class,
@@ -209,7 +209,7 @@ final class SessionTest extends CIUnitTestCase
 
         $session->set('foo', 'bar');
 
-        $this->assertSame('bar', $session->foo);
+        $this->assertSame('bar', $session->foo); // @phpstan-ignore property.notFound
     }
 
     public function testGetAsNormal(): void
@@ -248,7 +248,7 @@ final class SessionTest extends CIUnitTestCase
         $session->start();
         $_SESSION['foo'] = 'bar';
 
-        $issetReturn = isset($session->foo);
+        $issetReturn = isset($session->foo); // @phpstan-ignore property.notFound
 
         $this->assertTrue($issetReturn);
     }
@@ -259,7 +259,7 @@ final class SessionTest extends CIUnitTestCase
         $session->start();
         $_SESSION['foo'] = 'bar';
 
-        $issetReturn = isset($session->bar);
+        $issetReturn = isset($session->bar); // @phpstan-ignore property.notFound
 
         $this->assertFalse($issetReturn);
     }
@@ -316,7 +316,7 @@ final class SessionTest extends CIUnitTestCase
         $session = $this->getInstance();
         $session->start();
 
-        $session->foo = 'bar';
+        $session->foo = 'bar'; // @phpstan-ignore property.notFound
 
         $this->assertArrayHasKey('foo', $_SESSION);
         $this->assertSame('bar', $_SESSION['foo']);

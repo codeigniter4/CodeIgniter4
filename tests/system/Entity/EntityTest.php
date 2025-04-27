@@ -1094,7 +1094,7 @@ final class EntityTest extends CIUnitTestCase
         $this->assertSame(json_encode($entity->toArray()), json_encode($entity));
     }
 
-    protected function getEntity()
+    private function getEntity(): object
     {
         return new class () extends Entity {
             protected $attributes = [
@@ -1132,7 +1132,7 @@ final class EntityTest extends CIUnitTestCase
         };
     }
 
-    protected function getNewSetterGetterEntity()
+    private function getNewSetterGetterEntity(): object
     {
         return new class () extends Entity {
             protected $attributes = [
@@ -1178,7 +1178,7 @@ final class EntityTest extends CIUnitTestCase
         };
     }
 
-    protected function getMappedEntity()
+    private function getMappedEntity(): object
     {
         return new class () extends Entity {
             protected $attributes = [
@@ -1208,7 +1208,7 @@ final class EntityTest extends CIUnitTestCase
         };
     }
 
-    protected function getSwappedEntity()
+    private function getSwappedEntity(): object
     {
         return new class () extends Entity {
             protected $attributes = [
@@ -1227,7 +1227,7 @@ final class EntityTest extends CIUnitTestCase
         };
     }
 
-    protected function getSimpleSwappedEntity()
+    private function getSimpleSwappedEntity(): object
     {
         return new class () extends Entity {
             protected $attributes = [
@@ -1245,7 +1245,7 @@ final class EntityTest extends CIUnitTestCase
         };
     }
 
-    protected function getCastEntity($data = null): Entity
+    private function getCastEntity($data = null): object
     {
         return new class ($data) extends Entity {
             protected $attributes = [
@@ -1303,7 +1303,7 @@ final class EntityTest extends CIUnitTestCase
         };
     }
 
-    protected function getCastNullableEntity()
+    private function getCastNullableEntity(): object
     {
         return new class () extends Entity {
             protected $attributes = [
@@ -1332,7 +1332,7 @@ final class EntityTest extends CIUnitTestCase
         };
     }
 
-    protected function getCustomCastEntity()
+    private function getCustomCastEntity(): object
     {
         return new class () extends Entity {
             protected $attributes = [

@@ -23,6 +23,13 @@ use Tests\Support\Validation\TestRules;
 #[Group('DatabaseLive')]
 final class DatabaseRelatedRulesTest extends StrictDatabaseRelatedRulesTest
 {
+    /**
+     * @var array{
+     *   ruleSets: list<class-string>,
+     *   groupA: array<string, string>,
+     *   groupA_errors: array<string, array<string, string>>,
+     * }
+     */
     protected array $config = [
         'ruleSets' => [
             Rules::class,
@@ -41,7 +48,7 @@ final class DatabaseRelatedRulesTest extends StrictDatabaseRelatedRulesTest
         ],
     ];
 
-    protected function createRules()
+    protected function createRules(): object
     {
         return new Rules();
     }

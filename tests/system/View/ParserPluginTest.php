@@ -138,7 +138,7 @@ final class ParserPluginTest extends CIUnitTestCase
         $this->assertSame($this->setHints($this->validator->listErrors()), $this->setHints($this->parser->renderString($template)));
     }
 
-    public function setHints($output)
+    public function setHints(string $output): string
     {
         return preg_replace('/(<!-- DEBUG-VIEW+) (\w+) (\d+)/', '${1}', $output);
     }

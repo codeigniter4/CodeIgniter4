@@ -367,7 +367,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
-    private function invoke(object $controller, string $method, array $args = [])
+    private function invoke(object $controller, string $method, array $args = []): object
     {
         $method = self::getPrivateMethodInvoker($controller, $method);
 
