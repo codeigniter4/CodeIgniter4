@@ -21,6 +21,7 @@ Message Changes
 *******
 Changes
 *******
+- Added the ``application/octet-stream`` type for the ``stl`` mime inside the ``Config\Mimes`` class.
 
 ************
 Deprecations
