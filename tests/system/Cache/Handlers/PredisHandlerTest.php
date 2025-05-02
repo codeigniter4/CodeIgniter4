@@ -26,7 +26,10 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
 {
     private Cache $config;
 
-    private static function getKeyArray()
+    /**
+     * @return list<string>
+     */
+    private static function getKeyArray(): array
     {
         return [
             self::$key1,

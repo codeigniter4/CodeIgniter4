@@ -193,9 +193,14 @@ class Connection extends BaseConnection
             return $this->dataCache['version'];
         }
 
-        if (! $this->connID || ($versionString = oci_server_version($this->connID)) === false) {
+        if ($this->connID === false) {
+            $this->initialize();
+        }
+
+        if (($versionString = oci_server_version($this->connID)) === false) {
             return '';
         }
+
         if (preg_match('#Release\s(\d+(?:\.\d+)+)#', $versionString, $match)) {
             return $this->dataCache['version'] = $match[1];
         }

@@ -51,7 +51,8 @@ class RedirectException extends RuntimeException implements ExceptionInterface, 
 
         if ($message instanceof ResponseInterface) {
             $this->response = $message;
-            $message        = '';
+
+            $message = '';
 
             if ($this->response->getHeaderLine('Location') === '' && $this->response->getHeaderLine('Refresh') === '') {
                 throw new LogicException(
@@ -70,14 +71,19 @@ class RedirectException extends RuntimeException implements ExceptionInterface, 
     public function getResponse(): ResponseInterface
     {
         if (! $this->response instanceof ResponseInterface) {
-            $this->response = service('response')
-                ->redirect(base_url($this->getMessage()), 'auto', $this->getCode());
+            $this->response = service('response')->redirect(
+                base_url($this->getMessage()),
+                'auto',
+                $this->getCode(),
+            );
         }
 
-        service('logger')->info(
-            'REDIRECTED ROUTE at '
-             . ($this->response->getHeaderLine('Location') ?: substr($this->response->getHeaderLine('Refresh'), 6)),
-        );
+        $location = $this->response->getHeaderLine('Location');
+
+        service(('logger'))->info(sprintf(
+            'REDIRECTED ROUTE at %s',
+            $location !== '' ? $location : substr($this->response->getHeaderLine('Refresh'), 6),
+        ));
 
         return $this->response;
     }

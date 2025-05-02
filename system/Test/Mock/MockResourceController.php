@@ -17,16 +17,25 @@ use CodeIgniter\RESTful\ResourceController;
 
 class MockResourceController extends ResourceController
 {
+    /**
+     * @return object|null
+     */
     public function getModel()
     {
         return $this->model;
     }
 
+    /**
+     * @return class-string|null
+     */
     public function getModelName()
     {
         return $this->modelName;
     }
 
+    /**
+     * @return 'json'|'xml'|null
+     */
     public function getFormat()
     {
         return $this->format;

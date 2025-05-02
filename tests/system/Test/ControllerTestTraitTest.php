@@ -18,6 +18,7 @@ use App\Controllers\NeverHeardOfIt;
 use CodeIgniter\Controller;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\RuntimeException;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\App;
@@ -161,6 +162,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('popper');
 
         $req = $result->request();
+        $this->assertInstanceOf(RequestInterface::class, $req);
         $this->assertSame('GET', $req->getMethod());
     }
 

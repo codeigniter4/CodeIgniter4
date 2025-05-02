@@ -201,7 +201,9 @@ class FileHandler extends BaseHandler
         if (($length = strlen($data)) > 0) {
             $result = null;
 
-            for ($written = 0; $written < $length; $written += $result) {
+            $written = 0;
+
+            for (; $written < $length; $written += $result) {
                 if (($result = fwrite($this->fileHandle, substr($data, $written))) === false) {
                     break;
                 }
@@ -311,7 +313,10 @@ class FileHandler extends BaseHandler
      * Configure Session ID regular expression
      *
      * To make life easier, we force the PHP defaults. Because PHP9 forces them.
-     * See https://wiki.php.net/rfc/deprecations_php_8_4#sessionsid_length_and_sessionsid_bits_per_character
+     *
+     * @see https://wiki.php.net/rfc/deprecations_php_8_4#sessionsid_length_and_sessionsid_bits_per_character
+     *
+     * @return void
      */
     protected function configureSessionIDRegex()
     {

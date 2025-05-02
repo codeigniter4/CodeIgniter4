@@ -95,7 +95,7 @@ trait ControllerTestTrait
         // The URL helper is always loaded by the system so ensure it is available.
         helper('url');
 
-        if (empty($this->appConfig)) {
+        if (! $this->appConfig instanceof App) {
             $this->appConfig = config(App::class);
         }
 
@@ -104,7 +104,7 @@ trait ControllerTestTrait
             $this->uri = $factory->createFromGlobals();
         }
 
-        if (empty($this->request)) {
+        if (! $this->request instanceof IncomingRequest) {
             // Do some acrobatics, so we can use the Request service with our own URI
             $tempUri = service('uri');
             Services::injectMock('uri', $this->uri);
@@ -115,11 +115,11 @@ trait ControllerTestTrait
             Services::injectMock('uri', $tempUri);
         }
 
-        if (empty($this->response)) {
+        if (! $this->response instanceof ResponseInterface) {
             $this->response = service('response', $this->appConfig, false);
         }
 
-        if (empty($this->logger)) {
+        if (! $this->logger instanceof LoggerInterface) {
             $this->logger = service('logger');
         }
     }

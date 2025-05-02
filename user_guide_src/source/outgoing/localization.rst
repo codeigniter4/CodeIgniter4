@@ -120,7 +120,7 @@ Language Locale
 ---------------
 
 The ``Language`` class used in the :php:func:`lang()` function also has the current
-locale. This is set to the ``IncommingRequest`` locale during instantiating.
+locale. This is set to the ``IncomingRequest`` locale during instantiating.
 
 If you want to change the locale after instantiating the language class, use the
 ``Language::setLocale()`` method.

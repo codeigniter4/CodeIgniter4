@@ -25,7 +25,10 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('CacheLive')]
 final class MemcachedHandlerTest extends AbstractHandlerTestCase
 {
-    private static function getKeyArray()
+    /**
+     * @return list<string>
+     */
+    private static function getKeyArray(): array
     {
         return [
             self::$key1,

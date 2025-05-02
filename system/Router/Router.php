@@ -269,6 +269,8 @@ class Router implements RouterInterface
     /**
      * Returns the 404 Override settings from the Collection.
      * If the override is a string, will split to controller/index array.
+     *
+     * @return array{string, string}|(Closure(string): (ResponseInterface|string|void))|null
      */
     public function get404Override()
     {

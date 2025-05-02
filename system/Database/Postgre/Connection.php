@@ -517,6 +517,8 @@ class Connection extends BaseConnection
 
     /**
      * Build a DSN from the provided parameters
+     *
+     * @return void
      */
     protected function buildDSN()
     {

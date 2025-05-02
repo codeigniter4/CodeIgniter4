@@ -1,5 +1,39 @@
 # Changelog
 
+## [v4.6.1](https://github.com/codeigniter4/CodeIgniter4/tree/v4.6.0) (2025-05-02)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.6.0...v4.6.1)
+
+### Fixed Bugs
+* fix(CURLRequest): multiple header sections after redirects by @ducng99 in https://github.com/codeigniter4/CodeIgniter4/pull/9426
+* fix: set headers for CORS by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9437
+* fix: upsert with composite unique index by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9454
+* fix: `getVersion()` for OCI8 and SQLSRV drivers by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9471
+* fix: Toolbar when `maxHistory` is set to `0` by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9506
+* fix: `Session::markAsTempdata()` adding wrong TTL by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9536
+* fix: added "application/octet-stream" to the "stl" mime type in the M… by @Franky5831 in https://github.com/codeigniter4/CodeIgniter4/pull/9543
+
+### Refactoring
+* refactor: get upper first protocol only one call in Email by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/9449
+* refactor: PHPDocs in `env()` by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/9468
+* refactor: remove lowercase event name for logging by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/9483
+* refactor: OCI8 `limit()` method by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9472
+* refactor: deprecate redundant `FileHandler` cache methods by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9511
+* refactor: fix `variable.undefined` (and other) errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9513
+* refactor: fix `return.unusedType` errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9514
+* refactor: add `CITestStreamFilter` to phpstan-analysed list and fix errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9515
+* refactor: fix `property.protected` errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9517
+* refactor: fix `function.alreadyNarrowedType` errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9518
+* refactor: fix `empty.property` errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9519
+* refactor: import FQCNs by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9520
+* refactor: fix `isset.property` errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9522
+* refactor: fix `missingType.return` errors by @warcooft in https://github.com/codeigniter4/CodeIgniter4/pull/9523
+* refactor: fix `nullCoalesce.variable` errors by @warcooft in https://github.com/codeigniter4/CodeIgniter4/pull/9524
+* refactor: fix phpstan errors in `URI` and `SiteURI` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9525
+* refactor: fix `@readonly` property errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9529
+* refactor: fix `missingType.return` errors in system files by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9530
+* refactor: fix `codeigniter.modelArgumentType` errors by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9533
+* refactor: fix `Session` and `SessionInterface` code by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9535
+
 ## [v4.6.0](https://github.com/codeigniter4/CodeIgniter4/tree/v4.6.0) (2025-01-19)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.5.8...v4.6.0)
 

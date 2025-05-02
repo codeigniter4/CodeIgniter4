@@ -227,4 +227,24 @@ class Cors
             );
         }
     }
+
+    /**
+     * Check if response headers were set
+     */
+    public function hasResponseHeaders(RequestInterface $request, ResponseInterface $response): bool
+    {
+        if (! $response->hasHeader('Access-Control-Allow-Origin')) {
+            return false;
+        }
+
+        if ($this->config['supportsCredentials']
+            && ! $response->hasHeader('Access-Control-Allow-Credentials')) {
+            return false;
+        }
+
+        return ! ($this->config['exposedHeaders'] !== [] && (! $response->hasHeader('Access-Control-Expose-Headers') || ! str_contains(
+            $response->getHeaderLine('Access-Control-Expose-Headers'),
+            implode(', ', $this->config['exposedHeaders']),
+        )));
+    }
 }

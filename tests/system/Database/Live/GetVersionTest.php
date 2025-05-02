@@ -29,6 +29,12 @@ final class GetVersionTest extends CIUnitTestCase
 
     public function testGetVersion(): void
     {
+        if ($this->db->DBDriver === 'MySQLi') {
+            $this->db->mysqli = false;
+        }
+
+        $this->db->connID = false;
+
         $version = $this->db->getVersion();
 
         $this->assertMatchesRegularExpression('/\A\d+(\.\d+)*\z/', $version);

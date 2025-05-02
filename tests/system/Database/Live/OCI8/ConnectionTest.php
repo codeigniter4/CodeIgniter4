@@ -47,7 +47,7 @@ final class ConnectionTest extends CIUnitTestCase
 
         $db = new Connection($this->settings);
 
-        $isValidDSN = $this->getPrivateMethodInvoker($db, 'isValidDSN');
+        $isValidDSN = self::getPrivateMethodInvoker($db, 'isValidDSN');
 
         $this->assertTrue($isValidDSN());
     }

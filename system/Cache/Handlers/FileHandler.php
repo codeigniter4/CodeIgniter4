@@ -63,6 +63,8 @@ class FileHandler extends BaseHandler
 
         $this->mode   = $config->file['mode'] ?? 0640;
         $this->prefix = $config->prefix;
+
+        helper('filesystem');
     }
 
     /**
@@ -96,7 +98,7 @@ class FileHandler extends BaseHandler
             'data' => $value,
         ];
 
-        if ($this->writeFile($this->path . $key, serialize($contents))) {
+        if (write_file($this->path . $key, serialize($contents))) {
             try {
                 chmod($this->path . $key, $this->mode);
 
@@ -176,7 +178,7 @@ class FileHandler extends BaseHandler
      */
     public function clean()
     {
-        return $this->deleteFiles($this->path, false, true);
+        return delete_files($this->path, false, true);
     }
 
     /**
@@ -184,7 +186,7 @@ class FileHandler extends BaseHandler
      */
     public function getCacheInfo()
     {
-        return $this->getDirFileInfo($this->path);
+        return get_dir_file_info($this->path);
     }
 
     /**
@@ -251,6 +253,8 @@ class FileHandler extends BaseHandler
     /**
      * Writes a file to disk, or returns false if not successful.
      *
+     * @deprecated 4.6.1 Use `write_file()` instead.
+     *
      * @param string $path
      * @param string $data
      * @param string $mode
@@ -265,7 +269,9 @@ class FileHandler extends BaseHandler
 
         flock($fp, LOCK_EX);
 
-        for ($result = $written = 0, $length = strlen($data); $written < $length; $written += $result) {
+        $result = 0;
+
+        for ($written = 0, $length = strlen($data); $written < $length; $written += $result) {
             if (($result = fwrite($fp, substr($data, $written))) === false) {
                 break;
             }
@@ -282,6 +288,8 @@ class FileHandler extends BaseHandler
      * Files must be writable or owned by the system in order to be deleted.
      * If the second parameter is set to TRUE, any directories contained
      * within the supplied base directory will be nuked as well.
+     *
+     * @deprecated 4.6.1 Use `delete_files()` instead.
      *
      * @param string $path   File path
      * @param bool   $delDir Whether to delete any directories found in the path
@@ -317,6 +325,8 @@ class FileHandler extends BaseHandler
      * filesize, dates, and permissions
      *
      * Any sub-folders contained within the specified path are read as well.
+     *
+     * @deprecated 4.6.1 Use `get_dir_file_info()` instead.
      *
      * @param string $sourceDir    Path to source
      * @param bool   $topLevelOnly Look only at the top level directory specified?
@@ -359,6 +369,8 @@ class FileHandler extends BaseHandler
      * Second parameter allows you to explicitly declare what information you want returned
      * Options are: name, server_path, size, date, readable, writable, executable, fileperms
      * Returns FALSE if the file cannot be found.
+     *
+     * @deprecated 4.6.1 Use `get_file_info()` instead.
      *
      * @param string       $file           Path to file
      * @param array|string $returnedValues Array or comma separated string of information returned

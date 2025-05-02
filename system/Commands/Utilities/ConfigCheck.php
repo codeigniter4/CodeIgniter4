@@ -73,7 +73,7 @@ final class ConfigCheck extends BaseCommand
     protected $options = [];
 
     /**
-     * {@inheritDoc}
+     * @return int
      */
     public function run(array $params)
     {

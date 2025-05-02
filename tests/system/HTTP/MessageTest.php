@@ -25,7 +25,7 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class MessageTest extends CIUnitTestCase
 {
-    private ?Message $message;
+    private Message $message;
 
     protected function setUp(): void
     {

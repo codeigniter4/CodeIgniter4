@@ -141,7 +141,7 @@ final class PublisherSupportTest extends CIUnitTestCase
         mkdir($directory, 0700);
         $this->assertDirectoryExists($directory);
 
-        $method = $this->getPrivateMethodInvoker(Publisher::class, 'wipeDirectory');
+        $method = self::getPrivateMethodInvoker(Publisher::class, 'wipeDirectory');
         $method($directory);
 
         $this->assertDirectoryDoesNotExist($directory);
@@ -149,7 +149,7 @@ final class PublisherSupportTest extends CIUnitTestCase
 
     public function testWipeIgnoresFiles(): void
     {
-        $method = $this->getPrivateMethodInvoker(Publisher::class, 'wipeDirectory');
+        $method = self::getPrivateMethodInvoker(Publisher::class, 'wipeDirectory');
         $method($this->file);
 
         $this->assertFileExists($this->file);

@@ -19,6 +19,7 @@ use CodeIgniter\Debug\Timer;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
@@ -95,6 +96,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 1;
 
         $response = $this->codeigniter->run(null, true);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
 
         $this->assertStringContainsString('Welcome to CodeIgniter', $response->getBody());
     }
@@ -159,6 +161,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         $response = $this->codeigniter->run($routes, true);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
 
         $this->assertStringContainsString('Oops', $response->getBody());
         $this->assertSame(567, $response->getStatusCode());
@@ -177,6 +180,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         $response = $this->codeigniter->run($routes, true);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
 
         $this->assertStringContainsString('Oops', $response->getBody());
     }
@@ -460,13 +464,14 @@ final class CodeIgniterTest extends CIUnitTestCase
         $codeigniter = new MockCodeIgniter($config);
         $codeigniter->setContext('web');
 
-        $this->getPrivateMethodInvoker($codeigniter, 'getRequestObject')();
-        $this->getPrivateMethodInvoker($codeigniter, 'getResponseObject')();
+        self::getPrivateMethodInvoker($codeigniter, 'getRequestObject')();
+        self::getPrivateMethodInvoker($codeigniter, 'getResponseObject')();
 
         $response = $this->getPrivateProperty($codeigniter, 'response');
         $this->assertNull($response->header('Location'));
 
         $response = $codeigniter->run(null, true);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
 
         $this->assertSame('https://example.com/index.php/', $response->header('Location')->getValue());
     }
@@ -949,7 +954,7 @@ final class CodeIgniterTest extends CIUnitTestCase
     {
         $this->setPrivateProperty($this->codeigniter, 'benchmark', new Timer());
         $this->setPrivateProperty($this->codeigniter, 'controller', '\\' . Home::class);
-        $startController = $this->getPrivateMethodInvoker($this->codeigniter, 'startController');
+        $startController = self::getPrivateMethodInvoker($this->codeigniter, 'startController');
 
         $this->setPrivateProperty($this->codeigniter, 'method', '__invoke');
         $startController();

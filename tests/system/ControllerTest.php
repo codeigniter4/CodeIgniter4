@@ -89,13 +89,17 @@ final class ControllerTest extends CIUnitTestCase
         $_SERVER = $original; // restore so code coverage doesn't break
     }
 
-    public function testCachePage(): void
+    public function testCachePageSetsTtl(): void
     {
         $this->controller = new Controller();
         $this->controller->initController($this->request, $this->response, $this->logger);
 
-        $method = $this->getPrivateMethodInvoker($this->controller, 'cachePage');
-        $this->assertNull($method(10));
+        $method = self::getPrivateMethodInvoker($this->controller, 'cachePage');
+
+        $this->assertSame(0, self::getPrivateProperty(service('responsecache'), 'ttl'));
+
+        $method(10);
+        $this->assertSame(10, self::getPrivateProperty(service('responsecache'), 'ttl'));
     }
 
     public function testValidate(): void
@@ -105,7 +109,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->controller->initController($this->request, $this->response, $this->logger);
 
         // and that we can attempt validation, with no rules
-        $method = $this->getPrivateMethodInvoker($this->controller, 'validate');
+        $method = self::getPrivateMethodInvoker($this->controller, 'validate');
         $this->assertFalse($method([]));
     }
 
@@ -117,7 +121,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->controller = new Controller();
         $this->controller->initController($this->request, $this->response, $this->logger);
 
-        $method = $this->getPrivateMethodInvoker($this->controller, 'validate');
+        $method = self::getPrivateMethodInvoker($this->controller, 'validate');
         $this->assertFalse($method('signup'));
     }
 
@@ -146,7 +150,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->controller = new Controller();
         $this->controller->initController($this->request, $this->response, $this->logger);
 
-        $method = $this->getPrivateMethodInvoker($this->controller, 'validate');
+        $method = self::getPrivateMethodInvoker($this->controller, 'validate');
         $this->assertFalse($method('signup'));
         $this->assertSame('You must choose a username.', service('validation')->getError('username'));
     }
@@ -167,7 +171,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->controller = new Controller();
         $this->controller->initController($this->request, $this->response, $this->logger);
 
-        $method = $this->getPrivateMethodInvoker($this->controller, 'validate');
+        $method = self::getPrivateMethodInvoker($this->controller, 'validate');
         $this->assertFalse($method('signup', [
             'username' => [
                 'required' => 'You must choose a username.',
@@ -182,7 +186,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->controller = new Controller();
         $this->controller->initController($this->request, $this->response, $this->logger);
 
-        $method = $this->getPrivateMethodInvoker($this->controller, 'validateData');
+        $method = self::getPrivateMethodInvoker($this->controller, 'validateData');
 
         $data = [
             'username' => 'mike',
@@ -205,7 +209,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->controller = new Controller();
         $this->controller->initController($this->request, $this->response, $this->logger);
 
-        $method = $this->getPrivateMethodInvoker($this->controller, 'validateData');
+        $method = self::getPrivateMethodInvoker($this->controller, 'validateData');
 
         $data = [
             'username' => 'a',
@@ -238,7 +242,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->controller = new Controller();
         $this->controller->initController($this->request, $this->response, $this->logger);
 
-        $method = $this->getPrivateMethodInvoker($this->controller, 'validateData');
+        $method = self::getPrivateMethodInvoker($this->controller, 'validateData');
 
         $data = [
             'username' => 'a',

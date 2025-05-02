@@ -1,4 +1,4 @@
-# total 3 errors
+# total 1 error
 
 parameters:
     ignoreErrors:
@@ -6,13 +6,3 @@ parameters:
             message: '#^Strict comparison using \!\=\= between mixed and null will always evaluate to true\.$#'
             count: 1
             path: ../../system/BaseModel.php
-
-        -
-            message: '#^Strict comparison using \!\=\= between mixed and null will always evaluate to true\.$#'
-            count: 1
-            path: ../../system/HTTP/SiteURI.php
-
-        -
-            message: '#^Strict comparison using \!\=\= between mixed and null will always evaluate to true\.$#'
-            count: 1
-            path: ../../system/HTTP/URI.php

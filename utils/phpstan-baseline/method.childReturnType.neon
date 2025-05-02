@@ -1,4 +1,4 @@
-# total 39 errors
+# total 37 errors
 
 parameters:
     ignoreErrors:
@@ -153,11 +153,6 @@ parameters:
             path: ../../system/Model.php
 
         -
-            message: '#^Return type \(bool\) of method CodeIgniter\\Session\\Session\:\:markAsFlashdata\(\) should be covariant with return type \(false\) of method CodeIgniter\\Session\\SessionInterface\:\:markAsFlashdata\(\)$#'
-            count: 1
-            path: ../../system/Session/Session.php
-
-        -
             message: '#^Return type \(array\{code\: int\|string\|null, message\: string\|null\}\) of method CodeIgniter\\Test\\Mock\\MockConnection\:\:error\(\) should be covariant with return type \(array\<string, int\|string\>\) of method CodeIgniter\\Database\\ConnectionInterface\<object\|resource,object\|resource\>\:\:error\(\)$#'
             count: 1
             path: ../../system/Test/Mock/MockConnection.php
@@ -186,13 +181,3 @@ parameters:
             message: '#^Return type \(mixed\) of method CodeIgniter\\Test\\Mock\\MockResult\:\:fetchAssoc\(\) should be covariant with return type \(array\|false\|null\) of method CodeIgniter\\Database\\BaseResult\<object\|resource,object\|resource\>\:\:fetchAssoc\(\)$#'
             count: 1
             path: ../../system/Test/Mock/MockResult.php
-
-        -
-            message: '#^Return type \(mixed\) of method Tests\\Support\\Entity\\Cast\\CastPassParameters\:\:set\(\) should be covariant with return type \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\BaseCast\:\:set\(\)$#'
-            count: 1
-            path: ../../tests/_support/Entity/Cast/CastPassParameters.php
-
-        -
-            message: '#^Return type \(mixed\) of method Tests\\Support\\Entity\\Cast\\CastPassParameters\:\:set\(\) should be covariant with return type \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Entity\\Cast\\CastInterface\:\:set\(\)$#'
-            count: 1
-            path: ../../tests/_support/Entity/Cast/CastPassParameters.php

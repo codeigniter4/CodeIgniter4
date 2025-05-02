@@ -119,8 +119,7 @@ class Fabricator
      */
     public function __construct($model, ?array $formatters = null, ?string $locale = null)
     {
-        if (is_string($model)) {
-            // Create a new model instance
+        if (is_string($model) && class_exists($model)) {
             $model = model($model, false);
         }
 
@@ -154,6 +153,8 @@ class Fabricator
 
     /**
      * Reset internal counts
+     *
+     * @return void
      */
     public static function resetCounts()
     {

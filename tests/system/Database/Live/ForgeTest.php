@@ -371,7 +371,7 @@ final class ForgeTest extends CIUnitTestCase
             ],
         ]);
 
-        $createTable = $this->getPrivateMethodInvoker($this->forge, '_createTable');
+        $createTable = self::getPrivateMethodInvoker($this->forge, '_createTable');
 
         $sql = $createTable('forge_nullable_table', false, []);
 

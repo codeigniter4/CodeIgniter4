@@ -393,7 +393,7 @@ class Email
     /**
      * mbstring.func_overload flag
      *
-     * @var bool
+     * @var bool|null
      */
     protected static $func_overload;
 
@@ -403,8 +403,9 @@ class Email
     public function __construct($config = null)
     {
         $this->initialize($config);
+
         if (! isset(static::$func_overload)) {
-            static::$func_overload = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'));
+            static::$func_overload = extension_loaded('mbstring') && ini_get('mbstring.func_overload');
         }
     }
 
@@ -1689,8 +1690,9 @@ class Email
     protected function spoolEmail()
     {
         $this->unwrapSpecials();
-        $protocol = $this->getProtocol();
-        $method   = 'sendWith' . ucfirst($protocol);
+        $protocol           = $this->getProtocol();
+        $upperFirstProtocol = ucfirst($protocol);
+        $method             = 'sendWith' . $upperFirstProtocol;
 
         try {
             $success = $this->{$method}();
@@ -1700,7 +1702,7 @@ class Email
         }
 
         if (! $success) {
-            $message = lang('Email.sendFailure' . ($protocol === 'mail' ? 'PHPMail' : ucfirst($protocol)));
+            $message = lang('Email.sendFailure' . ($protocol === 'mail' ? 'PHPMail' : $upperFirstProtocol));
 
             log_message('error', 'Email: ' . $message);
             log_message('error', $this->printDebuggerRaw());

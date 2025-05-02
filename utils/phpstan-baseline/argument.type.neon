@@ -1,4 +1,4 @@
-# total 73 errors
+# total 138 errors
 
 parameters:
     ignoreErrors:
@@ -31,11 +31,6 @@ parameters:
             message: '#^Parameter \#2 \$message_type of function error_log expects 0\|1\|3\|4, int given\.$#'
             count: 1
             path: ../../system/Log/Handlers/ErrorlogHandler.php
-
-        -
-            message: '#^Parameter \#1 \$fields of method CodeIgniter\\Database\\Forge\:\:addField\(\) expects array\<string, array\|string\>\|string, array\<int\|string, array\<string, bool\|int\|string\>\|string\> given\.$#'
-            count: 2
-            path: ../../tests/_support/Database/Migrations/20160428212500_Create_test_tables.php
 
         -
             message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: \(CodeIgniter\\HTTP\\DownloadResponse\|null\) given\.$#'
@@ -119,11 +114,6 @@ parameters:
 
         -
             message: '#^Parameter \#1 \$db of class CodeIgniter\\Database\\SQLite3\\Table constructor expects CodeIgniter\\Database\\SQLite3\\Connection, CodeIgniter\\Database\\BaseConnection given\.$#'
-            count: 1
-            path: ../../tests/system/Database/Live/SQLite3/AlterTableTest.php
-
-        -
-            message: '#^Parameter \#2 \$forge of class CodeIgniter\\Database\\SQLite3\\Table constructor expects CodeIgniter\\Database\\SQLite3\\Forge, CodeIgniter\\Database\\Forge given\.$#'
             count: 1
             path: ../../tests/system/Database/Live/SQLite3/AlterTableTest.php
 
@@ -234,7 +224,7 @@ parameters:
 
         -
             message: '#^Parameter \#1 \$config of class CodeIgniter\\Log\\Logger constructor expects Config\\Logger, CodeIgniter\\Test\\Mock\\MockLogger given\.$#'
-            count: 24
+            count: 25
             path: ../../tests/system/Log/LoggerTest.php
 
         -
@@ -306,36 +296,6 @@ parameters:
             message: '#^Parameter \#1 \$body of method CodeIgniter\\HTTP\\Response\:\:setJSON\(\) expects array\|object\|string, true given\.$#'
             count: 1
             path: ../../tests/system/Test/TestResponseTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
-            count: 1
-            path: ../../tests/system/Validation/FormatRulesTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
-            count: 1
-            path: ../../tests/system/Validation/RulesTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
-            count: 1
-            path: ../../tests/system/Validation/StrictRules/CreditCardRulesTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
-            count: 1
-            path: ../../tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
-            count: 1
-            path: ../../tests/system/Validation/StrictRules/FileRulesTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
-            count: 3
-            path: ../../tests/system/Validation/ValidationTest.php
 
         -
             message: '#^Parameter \#3 \$errors of method CodeIgniter\\Validation\\Validation\:\:check\(\) expects list\<string\>, array\{is_numeric\: ''Nope\. Not a number\.''\} given\.$#'

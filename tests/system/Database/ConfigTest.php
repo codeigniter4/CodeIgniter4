@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database;
 
+use CodeIgniter\Database\Postgre\Connection as PostgreConnection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -149,7 +150,7 @@ final class ConfigTest extends CIUnitTestCase
     public function testConnectionGroupWithDSNPostgre(): void
     {
         $conn = Config::connect($this->dsnGroupPostgre, false);
-        $this->assertInstanceOf(BaseConnection::class, $conn);
+        $this->assertInstanceOf(PostgreConnection::class, $conn);
 
         $this->assertSame('', $this->getPrivateProperty($conn, 'DSN'));
         $this->assertSame('localhost', $this->getPrivateProperty($conn, 'hostname'));
@@ -167,7 +168,7 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertSame('5', $this->getPrivateProperty($conn, 'connect_timeout'));
         $this->assertSame('1', $this->getPrivateProperty($conn, 'sslmode'));
 
-        $method = $this->getPrivateMethodInvoker($conn, 'buildDSN');
+        $method = self::getPrivateMethodInvoker($conn, 'buildDSN');
         $method();
 
         $expected = "host=localhost port=5432 user=user password='pass' dbname=dbname connect_timeout='5' sslmode='1'";
@@ -205,9 +206,9 @@ final class ConfigTest extends CIUnitTestCase
         //      Should deprecate?
         $this->dsnGroupPostgreNative['DSN'] = $input;
         $conn                               = Config::connect($this->dsnGroupPostgreNative, false);
-        $this->assertInstanceOf(BaseConnection::class, $conn);
+        $this->assertInstanceOf(PostgreConnection::class, $conn);
 
-        $method = $this->getPrivateMethodInvoker($conn, 'convertDSN');
+        $method = self::getPrivateMethodInvoker($conn, 'convertDSN');
         $method();
 
         $this->assertSame($expected, $this->getPrivateProperty($conn, 'DSN'));

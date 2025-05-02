@@ -487,7 +487,7 @@ Returns null or an indexed array of column values:
 
 .. literalinclude:: model/008.php
 
-``$column_name`` should be a name of single column else you will get the ``DataException``.
+``$columnName`` should be a name of single column else you will get the ``DataException``.
 
 findAll()
 ---------
@@ -1016,9 +1016,9 @@ beforeFind        The name of the calling **method**, whether a **singleton** wa
 - ``findAll()``   **limit** = the number of rows to find.
                   **offset** = the number of rows to skip during the search.
 afterFind         Same as **beforeFind** but including the resulting row(s) of data, or null if no result found.
-beforeDelete      **id** = primary key of row being passed to the ``delete()`` method.
+beforeDelete      **id** = an array of primary key rows being passed to the ``delete()`` method.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
-afterDelete       **id** = primary key of row being passed to the ``delete()`` method.
+afterDelete       **id** = an array of primary key rows being passed to the ``delete()`` method.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
                   **result** = the result of the ``delete()`` call on the Query Builder.
                   **data** = unused.

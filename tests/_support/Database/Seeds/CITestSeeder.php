@@ -107,6 +107,20 @@ class CITestSeeder extends Seeder
                     'value' => 'ടൈപ്പ്',
                 ],
             ],
+            'team_members' => [
+                [
+                    'team_id'   => 1,
+                    'person_id' => 22,
+                    'role'      => 'member',
+                    'status'    => 'active',
+                ],
+                [
+                    'team_id'   => 1,
+                    'person_id' => 33,
+                    'role'      => 'mentor',
+                    'status'    => 'active',
+                ],
+            ],
             'type_test' => [
                 [
                     'type_varchar'    => 'test',

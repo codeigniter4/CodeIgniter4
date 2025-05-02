@@ -543,6 +543,14 @@ with the name of the route:
 
 This has the added benefit of making the views more readable, too.
 
+.. note:: By default, all defined routes have names matching their paths, with placeholders replaced by their corresponding
+    regular expressions. For example, if you define a route like ``$routes->get('edit/(:num)', 'PostController::edit/$1');``,
+    you can generate the corresponding URL using ``route_to('edit/([0-9]+)', 12)``.
+
+.. warning:: According to :ref:`routing-priority`, if a not-named route is defined first (e.g., ``$routes->get('edit', 'PostController::edit');``)
+    and another named route is defined later with the same name as the path of the first route (e.g., ``$routes->get('edit/(:num)', 'PostController::edit/$1', ['as' => 'edit']);``),
+    the second route will not be registered because its name will conflict with the automatically assigned name of the first route.
+
 Grouping Routes
 ***************
 
@@ -1043,4 +1051,13 @@ This method returns a list of filters that are currently active for the route be
 
 .. note:: The ``getFilters()`` method returns only the filters defined for the specific route.
      It does not include global filters or those specified in the **app/Config/Filters.php** file.
+
+Getting Matched Route Options for the Current Route
+===================================================
+
+When we're defining routes, they may have optional parameters: ``filter``, ``namespace``, ``hostname``, ``subdomain``, ``offset``, ``priority``, ``as``. All of them were described earlier above.
+Additionally, if we use ``addRedirect()`` we can also expect the ``redirect`` key.
+To access the values of these parameters, we can call ``Router::getMatchedRouteOptions()``. Here is an example of the returned array:
+
+.. literalinclude:: routing/074.php
 
