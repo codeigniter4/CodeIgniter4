@@ -2,21 +2,13 @@
 Version 4.6.1
 #############
 
-Release Date: Unreleased
+Release Date: May 2, 2025
 
 **4.6.1 release of CodeIgniter4**
 
 .. contents::
     :local:
     :depth: 3
-
-********
-BREAKING
-********
-
-***************
-Message Changes
-***************
 
 *******
 Changes
