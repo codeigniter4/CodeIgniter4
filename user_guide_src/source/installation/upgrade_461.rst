@@ -12,18 +12,6 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-**********************
-Mandatory File Changes
-**********************
-
-****************
-Breaking Changes
-****************
-
-*********************
-Breaking Enhancements
-*********************
-
 *************
 Project Files
 *************
@@ -44,7 +32,9 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- @TODO
+- app/Config/Mimes.php
+    - ``Config\Mimes::$mimes`` has been updated to include the ``application/octet-stream`` and
+        ``model/stl`` MIME types for the ``.stl`` file extension.
 
 All Changes
 ===========
@@ -52,4 +42,14 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- app/Config/Autoload.php
+- app/Config/Cache.php
+- app/Config/DocTypes.php
+- app/Config/Mimes.php
+- app/Config/Modules.php
+- app/Config/Optimize.php
+- app/Config/Paths.php
+- app/Views/errors/html/debug.css
+- preload.php
+- public/index.php
+- spark
