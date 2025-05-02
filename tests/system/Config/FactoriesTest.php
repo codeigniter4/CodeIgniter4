@@ -41,7 +41,7 @@ final class FactoriesTest extends CIUnitTestCase
         Factories::reset();
     }
 
-    protected function getFactoriesStaticProperty(...$params)
+    protected function getFactoriesStaticProperty(...$params): mixed
     {
         // First parameter is the actual property
         $name = array_shift($params);
@@ -425,7 +425,14 @@ final class FactoriesTest extends CIUnitTestCase
         $this->assertInstanceOf(EntityModel::class, $model);
     }
 
-    public function testGetComponentInstances()
+    /**
+     * @return array{
+     *   options: array<string, bool|string|null>,
+     *   aliases: array<string, class-string>,
+     *   instances: array<class-string, object>,
+     * }
+     */
+    public function testGetComponentInstances(): array
     {
         Factories::config('App');
         Factories::config(Database::class);
@@ -439,6 +446,19 @@ final class FactoriesTest extends CIUnitTestCase
         return $data;
     }
 
+    /**
+     * @param array{
+     *   options: array<string, bool|string|null>,
+     *   aliases: array<string, class-string>,
+     *   instances: array<class-string, object>,
+     * } $data
+     *
+     * @return array{
+     *   options: array<string, bool|string|null>,
+     *   aliases: array<string, class-string>,
+     *   instances: array<class-string, object>,
+     * }
+     */
     #[Depends('testGetComponentInstances')]
     public function testSetComponentInstances(array $data)
     {
@@ -456,6 +476,13 @@ final class FactoriesTest extends CIUnitTestCase
         return $data;
     }
 
+    /**
+     * @param array{
+     *   options: array<string, bool|string|null>,
+     *   aliases: array<string, class-string>,
+     *   instances: array<class-string, object>,
+     * } $data
+     */
     #[Depends('testSetComponentInstances')]
     public function testIsUpdated(array $data): void
     {

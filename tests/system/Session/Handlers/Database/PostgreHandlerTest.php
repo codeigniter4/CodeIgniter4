@@ -32,7 +32,7 @@ final class PostgreHandlerTest extends AbstractHandlerTestCase
         }
     }
 
-    protected function getInstance($options = [])
+    protected function getInstance($options = []): PostgreHandler
     {
         $defaults = [
             'driver'            => $this->sessionDriver,

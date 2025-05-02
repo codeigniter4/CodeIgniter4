@@ -16,8 +16,6 @@ namespace CodeIgniter\Test;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class BootstrapFCPATHTest
- *
  * This test confirms that the bootstrap.php
  * will set the correct FCPATH regardless of the current directory
  *
@@ -57,7 +55,7 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
         $this->assertSame($correctPath, $result1);
     }
 
-    private function correctFCPATH()
+    private function correctFCPATH(): string
     {
         return realpath(__DIR__ . '/../../../public') . DIRECTORY_SEPARATOR;
     }
@@ -88,7 +86,7 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
         }
     }
 
-    private function fileContents()
+    private function fileContents(): string
     {
         $fileContents = '';
         $fileContents .= '<?php' . PHP_EOL;
@@ -99,9 +97,12 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
         $fileContents .= "include_once '" . $this->currentDir . "' . '/../../../system/Test/bootstrap.php';" . PHP_EOL;
         $fileContents .= '// return value of FCPATH' . PHP_EOL;
 
-        return $fileContents . ('echo FCPATH;' . PHP_EOL);
+        return $fileContents . 'echo FCPATH;' . PHP_EOL;
     }
 
+    /**
+     * @return false|string
+     */
     private function readOutput(string $file)
     {
         ob_start();

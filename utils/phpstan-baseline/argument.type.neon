@@ -1,4 +1,4 @@
-# total 144 errors
+# total 136 errors
 
 parameters:
     ignoreErrors:
@@ -291,36 +291,6 @@ parameters:
             message: '#^Parameter \#1 \$body of method CodeIgniter\\HTTP\\Response\:\:setJSON\(\) expects array\|object\|string, true given\.$#'
             count: 1
             path: ../../tests/system/Test/TestResponseTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
-            count: 1
-            path: ../../tests/system/Validation/FormatRulesTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
-            count: 1
-            path: ../../tests/system/Validation/RulesTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
-            count: 1
-            path: ../../tests/system/Validation/StrictRules/CreditCardRulesTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
-            count: 1
-            path: ../../tests/system/Validation/StrictRules/DatabaseRelatedRulesTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
-            count: 1
-            path: ../../tests/system/Validation/StrictRules/FileRulesTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Validation\\Validation constructor expects Config\\Validation, stdClass given\.$#'
-            count: 3
-            path: ../../tests/system/Validation/ValidationTest.php
 
         -
             message: '#^Parameter \#3 \$errors of method CodeIgniter\\Validation\\Validation\:\:check\(\) expects list\<string\>, array\{is_numeric\: ''Nope\. Not a number\.''\} given\.$#'

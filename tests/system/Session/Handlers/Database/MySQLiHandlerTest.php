@@ -32,7 +32,7 @@ final class MySQLiHandlerTest extends AbstractHandlerTestCase
         }
     }
 
-    protected function getInstance($options = [])
+    protected function getInstance($options = []): MySQLiHandler
     {
         $defaults = [
             'driver'            => $this->sessionDriver,

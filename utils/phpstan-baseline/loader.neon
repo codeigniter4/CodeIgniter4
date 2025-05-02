@@ -1,4 +1,4 @@
-# total 3314 errors
+# total 3253 errors
 includes:
     - argument.type.neon
     - assign.propertyType.neon
@@ -17,7 +17,6 @@ includes:
     - missingType.iterableValue.neon
     - missingType.parameter.neon
     - missingType.property.neon
-    - missingType.return.neon
     - notIdentical.alwaysTrue.neon
     - nullCoalesce.property.neon
     - offsetAccess.notFound.neon

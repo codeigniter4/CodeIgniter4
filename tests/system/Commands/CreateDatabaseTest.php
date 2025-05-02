@@ -64,7 +64,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
         }
     }
 
-    protected function getBuffer()
+    protected function getBuffer(): string
     {
         return $this->getStreamFilterBuffer();
     }

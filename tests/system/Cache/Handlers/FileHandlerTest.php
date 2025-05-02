@@ -30,7 +30,10 @@ final class FileHandlerTest extends AbstractHandlerTestCase
     private static string $directory = 'FileHandler';
     private Cache $config;
 
-    private static function getKeyArray()
+    /**
+     * @return list<string>
+     */
+    private static function getKeyArray(): array
     {
         return [
             self::$key1,
@@ -328,25 +331,16 @@ final class FileHandlerTest extends AbstractHandlerTestCase
         $this->assertSame($string, $mode);
     }
 
+    /**
+     * @return iterable<int, array{int, numeric-string}>
+     */
     public static function provideSaveMode(): iterable
     {
         return [
-            [
-                0640,
-                '640',
-            ],
-            [
-                0600,
-                '600',
-            ],
-            [
-                0660,
-                '660',
-            ],
-            [
-                0777,
-                '777',
-            ],
+            [0640, '640'],
+            [0600, '600'],
+            [0660, '660'],
+            [0777, '777'],
         ];
     }
 
@@ -382,14 +376,19 @@ final class BaseTestFileHandler extends FileHandler
         $this->config->file['storePath'] .= self::$directory;
 
         parent::__construct($this->config);
+
+        helper('filesystem');
     }
 
-    public function getFileInfoTest()
+    /**
+     * @return array<string, bool|int|string>|null
+     */
+    public function getFileInfoTest(): ?array
     {
         $tmpHandle = tmpfile();
         stream_get_meta_data($tmpHandle);
 
-        return $this->getFileInfo(stream_get_meta_data($tmpHandle)['uri'], [
+        return get_file_info(stream_get_meta_data($tmpHandle)['uri'], [
             'name',
             'server_path',
             'size',

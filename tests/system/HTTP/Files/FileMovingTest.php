@@ -334,8 +334,7 @@ final class FileMovingTest extends CIUnitTestCase
  *
  * This overwrite is for testing the move operation.
  */
-
-function is_uploaded_file($filename)
+function is_uploaded_file($filename): bool
 {
     if (! is_file($filename)) {
         file_put_contents($filename, 'data');
@@ -349,8 +348,7 @@ function is_uploaded_file($filename)
  *
  * This overwrite is for testing the move operation.
  */
-
-function move_uploaded_file($filename, $destination, ?bool $setReturnValue = null)
+function move_uploaded_file($filename, $destination, ?bool $setReturnValue = null): bool
 {
     static $return = true;
 

@@ -54,7 +54,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->csp = $this->response->getCSP();
     }
 
-    protected function work(string $parm = 'Hello')
+    protected function work(string $parm = 'Hello'): bool
     {
         $body = $parm;
         $this->response->setBody($body);

@@ -33,6 +33,14 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected Validation $validation;
+
+    /**
+     * @var array{
+     *   ruleSets: list<class-string>,
+     *   groupA: array<string, string>,
+     *   groupA_errors: array<string, array<string, string>>,
+     * }
+     */
     protected array $config = [
         'ruleSets' => [
             Rules::class,
@@ -58,7 +66,7 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
         $this->validation->reset();
     }
 
-    protected function createRules()
+    protected function createRules(): object
     {
         return new Rules();
     }
