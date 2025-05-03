@@ -771,12 +771,9 @@ abstract class BaseHandler implements ImageHandlerInterface
     }
 
     /**
-     * Clears image metadata.
+     * Placeholder method for implementing metadata clearing logic.
      *
-     * This method has no use in the GDHandler,
-     * since all the data are cleared automatically.
-     *
-     * GDHandler can't preserve the image metadata.
+     * This method should be implemented to remove or reset metadata as needed.
      */
     public function clearMetadata(): static
     {
