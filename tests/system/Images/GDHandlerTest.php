@@ -454,4 +454,13 @@ final class GDHandlerTest extends CIUnitTestCase
             $this->assertSame(['red' => 62, 'green' => 62, 'blue' => 62, 'alpha' => 0], $rgb);
         }
     }
+
+    public function testClearMetadataReturnsSelf(): void
+    {
+        $this->handler->withFile($this->path);
+
+        $result = $this->handler->clearMetadata();
+
+        $this->assertSame($this->handler, $result);
+    }
 }

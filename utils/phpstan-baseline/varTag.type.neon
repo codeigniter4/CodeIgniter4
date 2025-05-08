@@ -1,7 +1,12 @@
-# total 2 errors
+# total 4 errors
 
 parameters:
     ignoreErrors:
+        -
+            message: '#^PHPDoc tag @var with type Imagick is not subtype of type resource\.$#'
+            count: 2
+            path: ../../tests/system/Images/ImageMagickHandlerTest.php
+
         -
             message: '#^PHPDoc tag @var with type Tests\\Support\\Entity\\UserWithCasts is not subtype of type list\<array\{\}\>\|null\.$#'
             count: 1

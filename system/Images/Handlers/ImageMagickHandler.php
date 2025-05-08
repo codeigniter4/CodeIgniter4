@@ -537,4 +537,20 @@ class ImageMagickHandler extends BaseHandler
             default => $this,
         };
     }
+
+    /**
+     * Clears metadata from the image.
+     *
+     * @return $this
+     *
+     * @throws ImagickException
+     */
+    public function clearMetadata(): static
+    {
+        $this->ensureResource();
+
+        $this->resource->stripImage();
+
+        return $this;
+    }
 }
