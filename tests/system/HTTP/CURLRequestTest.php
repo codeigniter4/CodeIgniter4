@@ -1212,6 +1212,30 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
         $this->assertSame(\CURL_IPRESOLVE_WHATEVER, $options[CURLOPT_IPRESOLVE]);
     }
 
+    public function testDNSCacheTimeoutEmptyOption(): void
+    {
+        $this->request->request('POST', '/post', [
+            'dns_cache_timeout' => 0,
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayNotHasKey(CURLOPT_DNS_CACHE_TIMEOUT, $options);
+    }
+
+    public function testDNSCacheTimeoutSetOption(): void
+    {
+        $timeout = 160;
+        $this->request->request('POST', '/post', [
+            'dns_cache_timeout' => $timeout,
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_DNS_CACHE_TIMEOUT, $options);
+        $this->assertSame($timeout, $options[CURLOPT_DNS_CACHE_TIMEOUT]);
+    }
+
     public function testCookieOption(): void
     {
         $holder = SUPPORTPATH . 'HTTP/Files/CookiesHolder.txt';
