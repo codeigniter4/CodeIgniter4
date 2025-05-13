@@ -251,6 +251,16 @@ Allows you to pause a number of milliseconds before sending the request:
 
 .. literalinclude:: curlrequest/023.php
 
+dns_cache_timeout
+=================
+
+.. versionadded:: 4.7.0
+
+By default, CodeIgniter does not change the PHP DNS Cache Timeout value. If you need to
+modify this value, you can do so by passing an amount of time in seconds with the ``dns_cache_timeout`` option.
+
+.. literalinclude:: curlrequest/037.php
+
 form_params
 ===========
 
