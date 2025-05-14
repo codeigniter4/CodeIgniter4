@@ -34,6 +34,7 @@ function findExecutableFiles($dir)
         'admin/starter/builds',
         'user_guide_src/add-edit-this-page',
     ];
+    $excludeFolder = 'utils/vendor';
 
     $executableFiles = [];
 
@@ -52,6 +53,10 @@ function findExecutableFiles($dir)
         // Check if the item is a file and is executable
         if ($fileinfo->isFile() && is_executable($fileinfo->getPathname())) {
             $filePath = $fileinfo->getPathname();
+
+            if (str_contains($filePath, $excludeFolder)) {
+                continue;
+            }
 
             // Check allow list
             if (in_array($filePath, $execFileList, true)) {
