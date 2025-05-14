@@ -27,6 +27,7 @@ EXCLUDE_FILES=(
     ':!admin/starter/builds'
     ':!admin/userguide/.github/scripts/deploy.sh'
     ':!user_guide_src/add-edit-this-page'
+    ':!utils/check-file-permissions'
 )
 FILES_WITH_WRONG_PERMISSIONS=$(
     git ls-files --stage "${INCLUDE_DIRS[@]}" "${EXCLUDE_FILES[@]}" \
