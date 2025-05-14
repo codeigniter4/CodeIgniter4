@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -eu
+
+INCLUDE_DIRS=(
+    '.github/'
+    'admin/'
+    'app/'
+    'changelogs/'
+    'contributing/'
+    'public/'
+    'system/'
+    'tests/'
+    'user_guide_src/'
+    'utils/'
+    'writable/'
+)
+EXCLUDE_FILES=(
+    ':!.github/scripts/deploy-userguide'
+    ':!admin/release-userguide'
+    ':!admin/release-deploy'
+    ':!admin/apibot'
+    ':!admin/alldocs'
+    ':!admin/release'
+    ':!admin/docbot'
+    ':!admin/release-notes.bb'
+    ':!admin/release-revert'
+    ':!admin/starter/builds'
+    ':!admin/userguide/.github/scripts/deploy.sh'
+    ':!user_guide_src/add-edit-this-page'
+)
+FILES_WITH_WRONG_PERMISSIONS=$(
+    git ls-files --stage "${INCLUDE_DIRS[@]}" "${EXCLUDE_FILES[@]}" \
+    | grep --extended-regexp "^100755 " \
+    | sort -fh
+)
+
+if [[ -n "$FILES_WITH_WRONG_PERMISSIONS" ]]; then
+    printf '\033[41m FAIL \033[0m Files with unnecessary execution permissions were detected:\n'
+    [[ -z "${GITHUB_ACTIONS+x}" ]] || echo '::group::Non-executable files'
+    echo "$FILES_WITH_WRONG_PERMISSIONS" | awk '{print " - " $4}'
+    echo ''
+    echo "$FILES_WITH_WRONG_PERMISSIONS" | awk '{print $4}' | xargs -n1 printf 'Please run "\033[32msudo chmod\033[0m -x %s".\n'
+    [[ -z "${GITHUB_ACTIONS+x}" ]] || echo '::endgroup::'
+fi
+
+if [[ -n "$FILES_WITH_WRONG_PERMISSIONS" ]]; then
+    exit 1
+fi
+
+printf '\033[42m OK \033[0m No files with unnecessary execution permissions were detected.\n'

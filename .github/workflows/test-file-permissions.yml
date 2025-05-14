@@ -21,4 +21,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Detect unnecessary execution permissions
-        run: php utils/check_permission_x.php
+        run: utils/check-file-permissions
