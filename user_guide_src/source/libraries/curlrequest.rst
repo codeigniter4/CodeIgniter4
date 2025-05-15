@@ -256,10 +256,12 @@ dns_cache_timeout
 
 .. versionadded:: 4.7.0
 
-By default, CodeIgniter does not change the DNS Cache Timeout value (``120`` seconds). If you need to
+By default PHP, CodeIgniter does not change the DNS Cache Timeout value (``120`` seconds). If you need to
 modify this value, you can do so by passing an amount of time in seconds with the ``dns_cache_timeout`` option.
 
 .. literalinclude:: curlrequest/037.php
+
+.. note:: Based on documentation `libcurl <https://curl.se/libcurl/c/CURLOPT_DNS_CACHE_TIMEOUT.html>`__, you can set to zero to completely disable caching, or set to -1 to make the cached entries remain forever.
 
 form_params
 ===========

@@ -1216,7 +1216,7 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
     /**
      * @return array<string, array<string, bool|int|string>>
      *
-     * @see https://linux.die.net/man/3/curl_easy_setopt
+     * @see https://curl.se/libcurl/c/CURLOPT_DNS_CACHE_TIMEOUT.html
      */
     public static function provideDNSCacheTimeout(): iterable
     {
