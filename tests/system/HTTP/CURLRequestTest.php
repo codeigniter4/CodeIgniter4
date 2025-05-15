@@ -1236,8 +1236,18 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
                 'expectedHasKey' => true,
                 'expectedValue'  => 0,
             ],
+            'valid timeout (zero / disabled using string)' => [
+                'input'          => '0',
+                'expectedHasKey' => true,
+                'expectedValue'  => 0,
+            ],
             'valid timeout (forever)' => [
                 'input'          => -1,
+                'expectedHasKey' => true,
+                'expectedValue'  => -1,
+            ],
+            'valid timeout (forever using string)' => [
+                'input'          => '-1',
                 'expectedHasKey' => true,
                 'expectedValue'  => -1,
             ],
