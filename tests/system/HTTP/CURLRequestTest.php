@@ -1229,6 +1229,10 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
                 'expectedHasKey' => true,
                 'expectedValue'  => '180',
             ],
+            'invalid timeout (null)' => [
+                'input'          => null,
+                'expectedHasKey' => false,
+            ],
             'invalid timeout (string)' => [
                 'input'          => 'is_wrong',
                 'expectedHasKey' => false,
@@ -1245,7 +1249,7 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
     }
 
     #[DataProvider('provideDNSCacheTimeout')]
-    public function testDNSCacheTimeoutOption($input, bool $expectedHasKey, $expectedValue = null): void
+    public function testDNSCacheTimeoutOption(int|string|null $input, bool $expectedHasKey, int|string|null $expectedValue = null): void
     {
         $this->request->request('POST', '/post', [
             'dns_cache_timeout' => $input,
