@@ -283,7 +283,7 @@ fresh_connect
 
 .. versionadded:: 4.7.0
 
-You can send request as fresh connection by the ``fresh_connect`` option:
+By default, the request is sent using a fresh connection. You can disable this behavior using the ``fresh_connect`` option:
 
 .. literalinclude:: curlrequest/038.php
 
