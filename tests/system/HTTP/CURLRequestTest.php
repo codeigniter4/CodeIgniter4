@@ -22,6 +22,7 @@ use Config\App;
 use Config\CURLRequest as ConfigCURLRequest;
 use CURLFile;
 use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -1210,6 +1211,76 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
 
         $this->assertArrayHasKey(CURLOPT_IPRESOLVE, $options);
         $this->assertSame(\CURL_IPRESOLVE_WHATEVER, $options[CURLOPT_IPRESOLVE]);
+    }
+
+    /**
+     * @return iterable<string, array{input: int|string|null, expectedHasKey: bool, expectedValue?: int}>
+     *
+     * @see https://curl.se/libcurl/c/CURLOPT_DNS_CACHE_TIMEOUT.html
+     */
+    public static function provideDNSCacheTimeout(): iterable
+    {
+        yield from [
+            'valid timeout (integer)' => [
+                'input'          => 160,
+                'expectedHasKey' => true,
+                'expectedValue'  => 160,
+            ],
+            'valid timeout (numeric string)' => [
+                'input'          => '180',
+                'expectedHasKey' => true,
+                'expectedValue'  => 180,
+            ],
+            'valid timeout (zero / disabled)' => [
+                'input'          => 0,
+                'expectedHasKey' => true,
+                'expectedValue'  => 0,
+            ],
+            'valid timeout (zero / disabled using string)' => [
+                'input'          => '0',
+                'expectedHasKey' => true,
+                'expectedValue'  => 0,
+            ],
+            'valid timeout (forever)' => [
+                'input'          => -1,
+                'expectedHasKey' => true,
+                'expectedValue'  => -1,
+            ],
+            'valid timeout (forever using string)' => [
+                'input'          => '-1',
+                'expectedHasKey' => true,
+                'expectedValue'  => -1,
+            ],
+            'invalid timeout (null)' => [
+                'input'          => null,
+                'expectedHasKey' => false,
+            ],
+            'invalid timeout (string)' => [
+                'input'          => 'is_wrong',
+                'expectedHasKey' => false,
+            ],
+            'invalid timeout (negative number / below -1)' => [
+                'input'          => -2,
+                'expectedHasKey' => false,
+            ],
+        ];
+    }
+
+    #[DataProvider('provideDNSCacheTimeout')]
+    public function testDNSCacheTimeoutOption(int|string|null $input, bool $expectedHasKey, ?int $expectedValue = null): void
+    {
+        $this->request->request('POST', '/post', [
+            'dns_cache_timeout' => $input,
+        ]);
+
+        $options = $this->request->curl_options;
+
+        if ($expectedHasKey) {
+            $this->assertArrayHasKey(CURLOPT_DNS_CACHE_TIMEOUT, $options);
+            $this->assertSame($expectedValue, $options[CURLOPT_DNS_CACHE_TIMEOUT]);
+        } else {
+            $this->assertArrayNotHasKey(CURLOPT_DNS_CACHE_TIMEOUT, $options);
+        }
     }
 
     public function testCookieOption(): void

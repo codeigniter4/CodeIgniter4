@@ -38,6 +38,10 @@ Enhancements
 Libraries
 =========
 
+- **CURLRequest:** Added ``dns_cache_timeout`` option to change default DNS cache timeout.
+- **Email:** Added support for choosing the SMTP authorization method. You can change it via ``Config\Email::$SMTPAuthMethod`` option.
+- **Image:** The ``ImageMagickHandler`` has been rewritten to rely solely on the PHP ``imagick`` extension.
+- **Image:** Added ``ImageMagickHandler::clearMetadata()`` method to remove image metadata for privacy protection.
 - **Time:** added methods ``Time::addCalendarMonths()`` and ``Time::subCalendarMonths()``
 
 Commands
@@ -60,13 +64,6 @@ Others
 
 Model
 =====
-
-Libraries
-=========
-
-**Email:** Added support for choosing the SMTP authorization method. You can change it via ``Config\Email::$SMTPAuthMethod`` option.
-**Image:** The ``ImageMagickHandler`` has been rewritten to rely solely on the PHP ``imagick`` extension.
-**Image:** Added ``ImageMagickHandler::clearMetadata()`` method to remove image metadata for privacy protection.
 
 Helpers and Functions
 =====================

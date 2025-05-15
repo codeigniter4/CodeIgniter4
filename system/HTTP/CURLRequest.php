@@ -616,6 +616,11 @@ class CURLRequest extends OutgoingRequest
             }
         }
 
+        // DNS Cache Timeout
+        if (isset($config['dns_cache_timeout']) && is_numeric($config['dns_cache_timeout']) && $config['dns_cache_timeout'] >= -1) {
+            $curlOptions[CURLOPT_DNS_CACHE_TIMEOUT] = (int) $config['dns_cache_timeout'];
+        }
+
         // Timeout
         $curlOptions[CURLOPT_TIMEOUT_MS] = (float) $config['timeout'] * 1000;
 
