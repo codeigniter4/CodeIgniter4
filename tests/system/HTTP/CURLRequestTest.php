@@ -1215,6 +1215,8 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
 
     /**
      * @return array<string, array<string, bool|int|string>>
+     *
+     * @see https://linux.die.net/man/3/curl_easy_setopt
      */
     public static function provideDNSCacheTimeout(): iterable
     {
@@ -1227,7 +1229,17 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
             'valid timeout (numeric string)' => [
                 'input'          => '180',
                 'expectedHasKey' => true,
-                'expectedValue'  => '180',
+                'expectedValue'  => 180,
+            ],
+            'valid timeout (zero / disabled)' => [
+                'input'          => 0,
+                'expectedHasKey' => true,
+                'expectedValue'  => 0,
+            ],
+            'valid timeout (forever)' => [
+                'input'          => -1,
+                'expectedHasKey' => true,
+                'expectedValue'  => -1,
             ],
             'invalid timeout (null)' => [
                 'input'          => null,
@@ -1237,11 +1249,7 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
                 'input'          => 'is_wrong',
                 'expectedHasKey' => false,
             ],
-            'invalid timeout (zero)' => [
-                'input'          => 0,
-                'expectedHasKey' => false,
-            ],
-            'invalid timeout (negative number)' => [
+            'invalid timeout (negative number / below -1)' => [
                 'input'          => -2,
                 'expectedHasKey' => false,
             ],
