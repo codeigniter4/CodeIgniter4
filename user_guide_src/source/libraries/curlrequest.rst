@@ -261,7 +261,7 @@ modify this value, you can do so by passing an amount of time in seconds with th
 
 .. literalinclude:: curlrequest/037.php
 
-.. note:: Based on documentation `libcurl <https://curl.se/libcurl/c/CURLOPT_DNS_CACHE_TIMEOUT.html>`__, you can set to zero to completely disable caching, or set to -1 to make the cached entries remain forever.
+.. note:: Based on the `libcurl <https://curl.se/libcurl/c/CURLOPT_DNS_CACHE_TIMEOUT.html>`__ documentation, you can set to zero (``0``) to completely disable caching, or set to ``-1`` to make the cached entries remain forever.
 
 form_params
 ===========
