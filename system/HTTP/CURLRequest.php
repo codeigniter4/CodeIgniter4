@@ -365,7 +365,6 @@ class CURLRequest extends OutgoingRequest
         $curlOptions[CURLOPT_URL]            = $url;
         $curlOptions[CURLOPT_RETURNTRANSFER] = true;
         $curlOptions[CURLOPT_HEADER]         = true;
-        $curlOptions[CURLOPT_FRESH_CONNECT]  = true;
         // Disable @file uploads in post data.
         $curlOptions[CURLOPT_SAFE_UPLOAD] = true;
 
@@ -620,6 +619,11 @@ class CURLRequest extends OutgoingRequest
         if (isset($config['dns_cache_timeout']) && is_numeric($config['dns_cache_timeout']) && $config['dns_cache_timeout'] >= -1) {
             $curlOptions[CURLOPT_DNS_CACHE_TIMEOUT] = (int) $config['dns_cache_timeout'];
         }
+
+        // Fresh Connect (default true)
+        $curlOptions[CURLOPT_FRESH_CONNECT] = isset($config['fresh_connect']) && is_bool($config['fresh_connect'])
+            ? $config['fresh_connect']
+            : true;
 
         // Timeout
         $curlOptions[CURLOPT_TIMEOUT_MS] = (float) $config['timeout'] * 1000;
