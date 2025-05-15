@@ -22,6 +22,8 @@ Message Changes
 Changes
 *******
 
+- **Security:** The ``sanitize_filename()`` function from the Security helper now supports a second parameter to control whether relative paths are allowed.
+
 ************
 Deprecations
 ************
@@ -29,6 +31,8 @@ Deprecations
 **********
 Bugs Fixed
 **********
+
+- **Security:** Fixed a bug where the ``sanitize_filename()`` function from the Security helper would throw an error when used in CLI requests.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

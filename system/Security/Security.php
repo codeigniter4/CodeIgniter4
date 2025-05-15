@@ -432,54 +432,9 @@ class Security implements SecurityInterface
      */
     public function sanitizeFilename(string $str, bool $relativePath = false): string
     {
-        // List of sanitize filename strings
-        $bad = [
-            '../',
-            '<!--',
-            '-->',
-            '<',
-            '>',
-            "'",
-            '"',
-            '&',
-            '$',
-            '#',
-            '{',
-            '}',
-            '[',
-            ']',
-            '=',
-            ';',
-            '?',
-            '%20',
-            '%22',
-            '%3c',
-            '%253c',
-            '%3e',
-            '%0e',
-            '%28',
-            '%29',
-            '%2528',
-            '%26',
-            '%24',
-            '%3f',
-            '%3b',
-            '%3d',
-        ];
+        helper('security');
 
-        if (! $relativePath) {
-            $bad[] = './';
-            $bad[] = '/';
-        }
-
-        $str = remove_invisible_characters($str, false);
-
-        do {
-            $old = $str;
-            $str = str_replace($bad, '', $str);
-        } while ($old !== $str);
-
-        return stripslashes($str);
+        return sanitize_filename($str, $relativePath);
     }
 
     /**
