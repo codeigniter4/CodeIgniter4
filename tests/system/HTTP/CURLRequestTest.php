@@ -1214,7 +1214,7 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
     }
 
     /**
-     * @return array<string, array<string, bool|int|string>>
+     * @return iterable<string, array{input: int|string|null, expectedHasKey: bool, expectedValue?: int}>
      *
      * @see https://curl.se/libcurl/c/CURLOPT_DNS_CACHE_TIMEOUT.html
      */
