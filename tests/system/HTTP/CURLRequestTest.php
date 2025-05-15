@@ -1267,7 +1267,7 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
     }
 
     #[DataProvider('provideDNSCacheTimeout')]
-    public function testDNSCacheTimeoutOption(int|string|null $input, bool $expectedHasKey, int|string|null $expectedValue = null): void
+    public function testDNSCacheTimeoutOption(int|string|null $input, bool $expectedHasKey, ?int $expectedValue = null): void
     {
         $this->request->request('POST', '/post', [
             'dns_cache_timeout' => $input,
