@@ -108,7 +108,7 @@ class CURLRequest extends OutgoingRequest
      * If true, all the options won't be reset between requests.
      * It may cause an error request with unnecessary headers.
      */
-    private readonly CurlShareHandle $shareConnection;
+    protected ?CurlShareHandle $shareConnection = null;
 
     /**
      * Takes an array of options to set the following possible class properties:
@@ -140,9 +140,18 @@ class CURLRequest extends OutgoingRequest
         $this->parseOptions($options);
 
         // Share Connection
-        $this->shareConnection = curl_share_init();
-        curl_share_setopt($this->shareConnection, CURLSHOPT_SHARE, CURL_LOCK_DATA_CONNECT);
-        curl_share_setopt($this->shareConnection, CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
+        $optShareConnection = config(ConfigCURLRequest::class)->shareConnection ?? [
+            CURL_LOCK_DATA_CONNECT,
+            CURL_LOCK_DATA_DNS,
+        ];
+
+        if ($optShareConnection !== []) {
+            $this->shareConnection = curl_share_init();
+
+            foreach (array_unique($optShareConnection) as $opt) {
+                curl_share_setopt($this->shareConnection, CURLSHOPT_SHARE, $opt);
+            }
+        }
     }
 
     /**
@@ -377,9 +386,13 @@ class CURLRequest extends OutgoingRequest
         }
 
         $curlOptions[CURLOPT_URL]            = $url;
-        $curlOptions[CURLOPT_SHARE]          = $this->shareConnection;
         $curlOptions[CURLOPT_RETURNTRANSFER] = true;
-        $curlOptions[CURLOPT_HEADER]         = true;
+
+        if ($this->shareConnection instanceof CurlShareHandle) {
+            $curlOptions[CURLOPT_SHARE] = $this->shareConnection;
+        }
+
+        $curlOptions[CURLOPT_HEADER] = true;
         // Disable @file uploads in post data.
         $curlOptions[CURLOPT_SAFE_UPLOAD] = true;
 

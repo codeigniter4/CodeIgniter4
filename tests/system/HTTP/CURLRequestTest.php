@@ -46,13 +46,18 @@ class CURLRequestTest extends CIUnitTestCase
     /**
      * @param array<string, mixed> $options
      */
-    protected function getRequest(array $options = []): MockCURLRequest
+    protected function getRequest(array $options = [], bool $emptyShareConnection = false): MockCURLRequest
     {
         $uri = isset($options['baseURI']) ? new URI($options['baseURI']) : new URI();
         $app = new App();
 
         $config               = new ConfigCURLRequest();
         $config->shareOptions = false;
+
+        if ($emptyShareConnection) {
+            $config->shareConnection = [];
+        }
+
         Factories::injectMock('config', 'CURLRequest', $config);
 
         return new MockCURLRequest(($app), $uri, new Response($app), $options);
@@ -1233,6 +1238,25 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
 
         $this->assertArrayHasKey(CURLOPT_IPRESOLVE, $options);
         $this->assertSame(\CURL_IPRESOLVE_WHATEVER, $options[CURLOPT_IPRESOLVE]);
+    }
+
+    public function testShareConnectionDefault(): void
+    {
+        $this->request->request('GET', 'http://example.com');
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_SHARE, $options);
+    }
+
+    public function testShareConnectionEmpty(): void
+    {
+        $request = $this->getRequest(emptyShareConnection: true);
+        $request->request('GET', 'http://example.com');
+
+        $options = $request->curl_options;
+
+        $this->assertArrayNotHasKey(CURLOPT_SHARE, $options);
     }
 
     /**

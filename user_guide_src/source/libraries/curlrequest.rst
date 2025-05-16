@@ -23,6 +23,21 @@ to change very little to move over to use Guzzle.
 Config for CURLRequest
 **********************
 
+.. _curlrequest-sharing-connection:
+
+Sharing Connection
+==================
+
+.. versionadded:: 4.7.0
+
+If you want to share connection between requests, set ``$shareConnection`` with array constant `CURL_LOCK_DATA_* <https://www.php.net/manual/en/curl.constants.php#constant.curl-lock-data-connect>`_ in **app/Config/CURLRequest.php**:
+
+.. literalinclude:: curlrequest/039.php
+
+or when you want to disable it, just change to empty array:
+
+.. literalinclude:: curlrequest/040.php
+
 .. _curlrequest-sharing-options:
 
 Sharing Options
