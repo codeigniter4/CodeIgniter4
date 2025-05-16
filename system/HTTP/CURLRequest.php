@@ -103,10 +103,7 @@ class CURLRequest extends OutgoingRequest
     private readonly bool $shareOptions;
 
     /**
-     * Whether share options between requests or not.
-     *
-     * If true, all the options won't be reset between requests.
-     * It may cause an error request with unnecessary headers.
+     * Whether share connection between requests.
      */
     protected ?CurlShareHandle $shareConnection = null;
 
