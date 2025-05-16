@@ -583,6 +583,28 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertTrue($options[CURLOPT_HTTPPROXYTUNNEL]);
     }
 
+    public function testFreshConnectDefault(): void
+    {
+        $this->request->request('get', 'http://example.com');
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_FRESH_CONNECT, $options);
+        $this->assertTrue($options[CURLOPT_FRESH_CONNECT]);
+    }
+
+    public function testFreshConnectFalseOption(): void
+    {
+        $this->request->request('get', 'http://example.com', [
+            'fresh_connect' => false,
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_FRESH_CONNECT, $options);
+        $this->assertFalse($options[CURLOPT_FRESH_CONNECT]);
+    }
+
     public function testDebugOptionTrue(): void
     {
         $this->request->request('get', 'http://example.com', [

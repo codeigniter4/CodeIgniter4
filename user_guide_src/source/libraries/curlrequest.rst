@@ -278,6 +278,15 @@ if it's not already set:
 
 .. _curlrequest-request-options-headers:
 
+fresh_connect
+=============
+
+.. versionadded:: 4.7.0
+
+By default, the request is sent using a fresh connection. You can disable this behavior using the ``fresh_connect`` option:
+
+.. literalinclude:: curlrequest/038.php
+
 headers
 =======
 
