@@ -22,10 +22,8 @@ class CastPassParameters extends BaseCast
      *
      * @param mixed $value  Data
      * @param array $params Additional param
-     *
-     * @return mixed
      */
-    public static function set($value, array $params = [])
+    public static function set($value, array $params = []): string
     {
         return $value . ':' . json_encode($params);
     }
