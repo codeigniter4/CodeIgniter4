@@ -25,20 +25,20 @@ interface CookieInterface
      * first-party and cross-origin requests. If `SameSite=None` is set,
      * the cookie `Secure` attribute must also be set (or the cookie will be blocked).
      */
-    public const SAMESITE_NONE = 'none';
+    public const SAMESITE_NONE = 'None';
 
     /**
      * Cookies are not sent on normal cross-site subrequests (for example to
      * load images or frames into a third party site), but are sent when a
      * user is navigating to the origin site (i.e. when following a link).
      */
-    public const SAMESITE_LAX = 'lax';
+    public const SAMESITE_LAX = 'Lax';
 
     /**
      * Cookies will only be sent in a first-party context and not be sent
      * along with requests initiated by third party websites.
      */
-    public const SAMESITE_STRICT = 'strict';
+    public const SAMESITE_STRICT = 'Strict';
 
     /**
      * RFC 6265 allowed values for the "SameSite" attribute.
