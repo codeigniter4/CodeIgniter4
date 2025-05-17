@@ -28,6 +28,9 @@ Changes
 Deprecations
 ************
 
+- **Security:** The ``Security::sanitizeFilename()`` method is deprecated. Use ``sanitize_filename()`` instead.
+- **Security:** The ``SecurityInterface::sanitizeFilename()`` method is deprecated.
+
 **********
 Bugs Fixed
 **********
