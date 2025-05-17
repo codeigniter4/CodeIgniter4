@@ -83,6 +83,8 @@ Message Changes
 Changes
 *******
 
+- **Cookie:** The ``CookieInterface::EXPIRES_FORMAT`` has been changed to ``D, d M Y H:i:s \G\M\T`` to follow the recommended format in RFC 7231.
+
 ************
 Deprecations
 ************
