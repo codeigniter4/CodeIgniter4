@@ -145,7 +145,14 @@ interface CookieInterface
      * Gets the options that are passable to the `setcookie` variant
      * available on PHP 7.3+
      *
-     * @return array<string, bool|int|string>
+     * @return array{
+     *  expires: int,
+     *  path: string,
+     *  domain: string,
+     *  secure: bool,
+     *  httponly: bool,
+     *  samesite: string,
+     * }
      */
     public function getOptions(): array;
 
@@ -164,7 +171,18 @@ interface CookieInterface
     /**
      * Returns the array representation of the Cookie object.
      *
-     * @return array<string, bool|int|string>
+     * @return array{
+     *  name: string,
+     *  value: string,
+     *  prefix: string,
+     *  raw: bool,
+     *  expires: int,
+     *  path: string,
+     *  domain: string,
+     *  secure: bool,
+     *  httponly: bool,
+     *  samesite: string,
+     * }
      */
     public function toArray(): array;
 }

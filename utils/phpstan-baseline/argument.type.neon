@@ -1,4 +1,4 @@
-# total 138 errors
+# total 136 errors
 
 parameters:
     ignoreErrors:
@@ -81,16 +81,6 @@ parameters:
             message: '#^Parameter \#3 \$classname of static method CodeIgniter\\Config\\Factories\:\:define\(\) expects class\-string, string given\.$#'
             count: 2
             path: ../../tests/system/Config/FactoriesTest.php
-
-        -
-            message: '#^Parameter \#1 \$cookies of class CodeIgniter\\Cookie\\CookieStore constructor expects array\<CodeIgniter\\Cookie\\Cookie\>, array\<int, DateTimeImmutable\> given\.$#'
-            count: 1
-            path: ../../tests/system/Cookie/CookieStoreTest.php
-
-        -
-            message: '#^Parameter \#3 \$options of class CodeIgniter\\Cookie\\Cookie constructor expects array\<string, bool\|int\|string\>, array\<string, DateTimeImmutable\> given\.$#'
-            count: 1
-            path: ../../tests/system/Cookie/CookieTest.php
 
         -
             message: '#^Parameter \#1 \$from of method CodeIgniter\\Database\\BaseBuilder\:\:from\(\) expects array\|string, null given\.$#'
