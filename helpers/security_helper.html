@@ -312,11 +312,12 @@
 <p>The following functions are available:</p>
 <dl class="php function">
 <dt class="sig sig-object php" id="sanitize_filename">
-<span class="sig-name descname"><span class="pre">sanitize_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$filename</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sanitize_filename" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">sanitize_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$filename</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$relativePath</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#sanitize_filename" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$filename</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Filename</p></li>
+<li><p><strong>$relativePath</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether the relative path is acceptable (available since v4.6.2)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -327,8 +328,7 @@
 </dd>
 </dl>
 <p>Provides protection against directory traversal.</p>
-<p>This function is an alias for <code class="docutils literal notranslate"><span class="pre">\CodeIgniter\Security::sanitizeFilename()</span></code>.
-For more info, please see the <a class="reference internal" href="../libraries/security.html"><span class="doc">Security Library</span></a>
+<p>For more info, please see the <a class="reference internal" href="../libraries/security.html"><span class="doc">Security Library</span></a>
 documentation.</p>
 </dd></dl>
 
@@ -398,7 +398,7 @@ It leaves the image URL as plain text.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 03, 2025.
+      <span class="lastupdated">Last updated on May 18, 2025.
       </span></p>
   </div>
 
