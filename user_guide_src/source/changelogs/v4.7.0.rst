@@ -97,6 +97,8 @@ Deprecations
 Bugs Fixed
 **********
 
+- **Cookie:** The ``CookieInterface::SAMESITE_STRICT``, ``CookieInterface::SAMESITE_LAX``, and ``CookieInterface::SAMESITE_NONE`` constants are now written in ucfirst style to be consistent with usage in the rest of the framework.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.
