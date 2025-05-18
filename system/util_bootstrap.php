@@ -61,6 +61,10 @@ $paths = new Paths();
 defined('CIPATH') || define('CIPATH', realpath($paths->systemDirectory . '/../') . DIRECTORY_SEPARATOR);
 defined('FCPATH') || define('FCPATH', PUBLICPATH);
 
+if (is_dir($paths->testsDirectory . '/_support/') && ! defined('SUPPORTPATH')) {
+    define('SUPPORTPATH', realpath($paths->testsDirectory . '/_support/') . DIRECTORY_SEPARATOR);
+}
+
 if (is_dir(HOMEPATH . 'vendor/')) {
     define('VENDORPATH', realpath(HOMEPATH . 'vendor/') . DIRECTORY_SEPARATOR);
     define('COMPOSER_PATH', (string) realpath(HOMEPATH . 'vendor/autoload.php'));
