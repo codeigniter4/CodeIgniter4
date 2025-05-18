@@ -100,10 +100,7 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
         return $fileContents . 'echo FCPATH;' . PHP_EOL;
     }
 
-    /**
-     * @return false|string
-     */
-    private function readOutput(string $file)
+    private function readOutput(string $file): false|string
     {
         ob_start();
         system('php -f ' . $file);
