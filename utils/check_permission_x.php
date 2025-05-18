@@ -13,16 +13,24 @@ declare(strict_types=1);
 
 namespace Utils;
 
-require __DIR__ . '/../system/Test/bootstrap.php';
+require __DIR__ . '/../system/util_bootstrap.php';
 
 use CodeIgniter\CLI\CLI;
+use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RuntimeException;
+use SplFileInfo;
 
-function findExecutableFiles($dir)
+/**
+ * @param list<string> $excludeDirs
+ *
+ * @return list<string>
+ */
+function findExecutableFiles(string $dir, array $excludeDirs = []): array
 {
-    $execFileList = [
+    static $execFileList = [
+        '.github/scripts/deploy-userguide',
         'admin/release-userguide',
         'admin/release-deploy',
         'admin/apibot',
@@ -37,23 +45,28 @@ function findExecutableFiles($dir)
 
     $executableFiles = [];
 
-    // Check if the directory exists
     if (! is_dir($dir)) {
         throw new RuntimeException('No such directory: ' . $dir);
     }
 
-    // Create a Recursive Directory Iterator
     $iterator = new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($dir),
+        new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS | FilesystemIterator::CURRENT_AS_FILEINFO),
+        RecursiveIteratorIterator::CHILD_FIRST | RecursiveIteratorIterator::LEAVES_ONLY,
     );
 
-    // Iterate over each item in the directory
+    /** @var SplFileInfo $fileinfo */
     foreach ($iterator as $fileinfo) {
-        // Check if the item is a file and is executable
-        if ($fileinfo->isFile() && is_executable($fileinfo->getPathname())) {
-            $filePath = $fileinfo->getPathname();
+        $filePath = $fileinfo->getPathname();
 
-            // Check allow list
+        if ($fileinfo->isFile() && is_executable($filePath)) {
+            $dirPath = dirname($filePath);
+
+            foreach ($excludeDirs as $excludeDir) {
+                if (str_contains($dirPath, $excludeDir)) {
+                    continue 2;
+                }
+            }
+
             if (in_array($filePath, $execFileList, true)) {
                 continue;
             }
@@ -72,12 +85,13 @@ function findExecutableFiles($dir)
 // Main
 chdir(__DIR__ . '/../');
 
-$dirs = ['admin', 'app', 'system', 'tests', 'user_guide_src', 'utils', 'writable'];
+$includeDirs = ['.github', 'admin', 'app', 'public', 'system', 'tests', 'user_guide_src', 'utils', 'writable'];
+$excludeDirs = ['utils/vendor'];
 
 $executableFiles = [];
 
-foreach ($dirs as $dir) {
-    $executableFiles = array_merge($executableFiles, findExecutableFiles($dir));
+foreach ($includeDirs as $dir) {
+    $executableFiles = array_merge($executableFiles, findExecutableFiles($dir, $excludeDirs));
 }
 
 if ($executableFiles !== []) {
