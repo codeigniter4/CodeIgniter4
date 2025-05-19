@@ -2036,15 +2036,15 @@ class Email
         $this->SMTPAuthMethod = strtolower($this->SMTPAuthMethod);
 
         // Validate supported authentication methods
-        $validMethods = ['login', 'plain'];
-        if (! in_array($this->SMTPAuthMethod, $validMethods, true)) {
+        if (! in_array($this->SMTPAuthMethod, ['login', 'plain'], true)) {
             $this->setErrorMessage(lang('Email.invalidSMTPAuthMethod', [$this->SMTPAuthMethod]));
 
             return false;
         }
 
+        $upperAuthMethod = strtoupper($this->SMTPAuthMethod);
         // send initial 'AUTH' command
-        $this->sendData('AUTH ' . strtoupper($this->SMTPAuthMethod));
+        $this->sendData('AUTH ' . $upperAuthMethod);
         $reply = $this->getSMTPData();
 
         if (str_starts_with($reply, '503')) {    // Already authenticated
@@ -2053,7 +2053,7 @@ class Email
 
         // if 'AUTH' command is unsuported by the server
         if (! str_starts_with($reply, '334')) {
-            $this->setErrorMessage(lang('Email.failureSMTPAuthMethod', [strtoupper($this->SMTPAuthMethod)]));
+            $this->setErrorMessage(lang('Email.failureSMTPAuthMethod', [$upperAuthMethod]));
 
             return false;
         }
