@@ -137,7 +137,7 @@ class CURLRequest extends OutgoingRequest
         $this->parseOptions($options);
 
         // Share Connection
-        $optShareConnection = config(ConfigCURLRequest::class)->shareConnection ?? [
+        $optShareConnection = config(ConfigCURLRequest::class)->shareConnectionOptions ?? [
             CURL_LOCK_DATA_CONNECT,
             CURL_LOCK_DATA_DNS,
         ];

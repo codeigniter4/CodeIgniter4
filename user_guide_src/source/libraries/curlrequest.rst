@@ -30,7 +30,9 @@ Sharing Connection
 
 .. versionadded:: 4.7.0
 
-If you want to share connection between requests, set ``$shareConnection`` with array constant `CURL_LOCK_DATA_* <https://www.php.net/manual/en/curl.constants.php#constant.curl-lock-data-connect>`_ in **app/Config/CURLRequest.php**:
+.. important:: By default this behavior already enabled with two constants ``CURL_LOCK_DATA_CONNECT`` and ``CURL_LOCK_DATA_DNS``.
+
+If you want to share connection between requests, set ``$shareConnectionOptions`` with array constant `CURL_LOCK_DATA_* <https://www.php.net/manual/en/curl.constants.php#constant.curl-lock-data-connect>`_ in **app/Config/CURLRequest.php**:
 
 .. literalinclude:: curlrequest/039.php
 
