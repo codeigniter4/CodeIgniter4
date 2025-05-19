@@ -784,10 +784,16 @@ Here you can find an example configuration using PHP 8.1 FPM (unix sockets) unde
 </section>
 <section id="bootstrapping-the-app">
 <h2><a class="toc-backref" href="#id30" role="doc-backlink">Bootstrapping the App</a><a class="headerlink" href="#bootstrapping-the-app" title="Permalink to this heading"></a></h2>
-<p>In some scenarios you will want to load the framework without actually running the whole
+<p>In some scenarios, you will want to load the framework without actually running the whole
 application. This is particularly useful for unit testing your project, but may also be
 handy for using third-party tools to analyze and modify your code. The framework comes
-with a separate bootstrap script specifically for this scenario: <strong>system/Test/bootstrap.php</strong>.</p>
+with two separate bootstrap scripts specifically for these scenarios:</p>
+<ul class="simple">
+<li><p><strong>system/Test/bootstrap.php</strong>: This script is used primarily for unit testing.</p></li>
+<li><p><strong>system/util_bootstrap.php</strong>: This script is used for other scripts that need access to the
+framework. It is recommended for use in scripts that are not part for testing as this will NOT
+fail gracefully if an exception is thrown.</p></li>
+</ul>
 <p>Most of the paths to your project are defined during the bootstrap process. You may use
 pre-defined constants to override these, but when using the defaults be sure that your
 paths align with the expected directory structure for your installation method.</p>
@@ -806,7 +812,7 @@ paths align with the expected directory structure for your installation method.<
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 18, 2025.
+      <span class="lastupdated">Last updated on May 19, 2025.
       </span></p>
   </div>
 
