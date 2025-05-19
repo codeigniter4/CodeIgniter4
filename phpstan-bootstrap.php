@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/system/Test/bootstrap.php';
+require __DIR__ . '/system/util_bootstrap.php';
 
 if (! defined('OCI_COMMIT_ON_SUCCESS')) {
     define('OCI_COMMIT_ON_SUCCESS', 32);
