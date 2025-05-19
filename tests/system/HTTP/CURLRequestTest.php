@@ -55,7 +55,7 @@ class CURLRequestTest extends CIUnitTestCase
         $config->shareOptions = false;
 
         if ($emptyShareConnection) {
-            $config->shareConnection = [];
+            $config->shareConnectionOptions = [];
         }
 
         Factories::injectMock('config', 'CURLRequest', $config);
