@@ -8,10 +8,10 @@ class CURLRequest extends BaseConfig
 {
     /**
      * --------------------------------------------------------------------------
-     * CURLRequest Share Connection
+     * CURLRequest Share Connection Options
      * --------------------------------------------------------------------------
      *
-     * Whether share connection between requests.
+     * Share connection options between requests.
      *
      * @var list<int>
      *

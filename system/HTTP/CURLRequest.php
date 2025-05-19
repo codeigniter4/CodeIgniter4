@@ -103,7 +103,7 @@ class CURLRequest extends OutgoingRequest
     private readonly bool $shareOptions;
 
     /**
-     * Whether share connection between requests.
+     * The share connection instance.
      */
     protected ?CurlShareHandle $shareConnection = null;
 
