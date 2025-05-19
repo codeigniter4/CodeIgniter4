@@ -78,7 +78,7 @@ final class CookieStoreTest extends CIUnitTestCase
     public function testInvalidCookieStored(): void
     {
         $this->expectException(CookieException::class);
-        new CookieStore([new DateTimeImmutable('now')]);
+        new CookieStore([new DateTimeImmutable('now')]); // @phpstan-ignore argument.type
     }
 
     public function testPutRemoveCookiesInStore(): void
