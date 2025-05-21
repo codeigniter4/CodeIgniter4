@@ -501,10 +501,15 @@ See :ref:`Deployment <deployment-to-shared-hosting-services>`.
 Bootstrapping the App
 *********************
 
-In some scenarios you will want to load the framework without actually running the whole
+In some scenarios, you will want to load the framework without actually running the whole
 application. This is particularly useful for unit testing your project, but may also be
 handy for using third-party tools to analyze and modify your code. The framework comes
-with a separate bootstrap script specifically for this scenario: **system/Test/bootstrap.php**.
+with two separate bootstrap scripts specifically for these scenarios:
+
+- **system/Test/bootstrap.php**: This script is used primarily for unit testing.
+- **system/util_bootstrap.php**: This script is used for other scripts that need access to the
+  framework. It is recommended for use in scripts that are not part for testing as this will NOT
+  fail gracefully if an exception is thrown.
 
 Most of the paths to your project are defined during the bootstrap process. You may use
 pre-defined constants to override these, but when using the defaults be sure that your

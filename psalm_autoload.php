@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/system/Test/bootstrap.php';
+require __DIR__ . '/system/util_bootstrap.php';
 
 $helperDirs = [
     'system/Helpers',

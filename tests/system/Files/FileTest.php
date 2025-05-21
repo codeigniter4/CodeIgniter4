@@ -172,7 +172,7 @@ final class FileTest extends CIUnitTestCase
     /**
      * @return array<string, array<int, FileSizeUnit>>
      */
-    public static function provideGetSizeData()
+    public static function provideGetSizeData(): array
     {
         return [
             'returns KB binary' => [
