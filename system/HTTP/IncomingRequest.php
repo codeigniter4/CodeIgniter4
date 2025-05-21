@@ -348,8 +348,6 @@ class IncomingRequest extends Request
 
     /**
      * Checks this request type.
-     *
-     * @param 'ajax'|'delete'|'get'|'head'|'json'|'options'|'patch'|'post'|'put'|string $type
      */
     public function is(string $type): bool
     {
