@@ -1,4 +1,4 @@
-# total 1576 errors
+# total 1574 errors
 
 parameters:
     ignoreErrors:
@@ -533,11 +533,6 @@ parameters:
             path: ../../system/Commands/Utilities/Routes/FilterFinder.php
 
         -
-            message: '#^Function cache\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Common.php
-
-        -
             message: '#^Function class_uses_recursive\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Common.php
@@ -584,11 +579,6 @@ parameters:
 
         -
             message: '#^Function service\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Common.php
-
-        -
-            message: '#^Function session\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Common.php
 

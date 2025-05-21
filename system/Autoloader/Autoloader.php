@@ -219,8 +219,7 @@ class Autoloader
      *
      * If a prefix param is set, returns only paths to the given prefix.
      *
-     * @return         array<string, list<string>>|list<string>
-     * @phpstan-return ($prefix is null ? array<string, list<string>> : list<string>)
+     * @return ($prefix is null ? array<string, list<string>> : list<string>)
      */
     public function getNamespace(?string $prefix = null)
     {
