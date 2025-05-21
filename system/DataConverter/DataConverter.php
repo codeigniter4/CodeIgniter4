@@ -20,6 +20,8 @@ use CodeIgniter\Entity\Entity;
 /**
  * PHP data <==> DataSource data converter
  *
+ * @template TEntity of object
+ *
  * @see \CodeIgniter\DataConverter\DataConverterTest
  */
 final class DataConverter
@@ -30,8 +32,6 @@ final class DataConverter
     private readonly DataCaster $dataCaster;
 
     /**
-     * @template TEntity of object
-     *
      * @param array<string, class-string> $castHandlers Custom convert handlers
      *
      * @internal
@@ -104,8 +104,6 @@ final class DataConverter
 
     /**
      * Takes database data array and creates a specified type object.
-     *
-     * @template TEntity of object
      *
      * @param class-string<TEntity> $classname
      * @param array<string, mixed>  $row       Raw data from database
