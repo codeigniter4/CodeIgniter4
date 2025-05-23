@@ -35,6 +35,7 @@ Deprecations
 Bugs Fixed
 **********
 
+- **Database:** Fixed a bug where ``when()`` and ``whenNot()`` in ``ConditionalTrait`` incorrectly evaluated certain falsy values (such as ``[]``, ``0``, ``0.0``, and ``'0'``) as truthy, causing callbacks to be executed unexpectedly. These methods now cast the condition to a boolean using ``(bool)`` to ensure consistent behavior with PHP's native truthiness.
 - **Security:** Fixed a bug where the ``sanitize_filename()`` function from the Security helper would throw an error when used in CLI requests.
 
 See the repo's

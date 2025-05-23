@@ -29,7 +29,7 @@ trait ConditionalTrait
      */
     public function when($condition, callable $callback, ?callable $defaultCallback = null): self
     {
-        if ($condition !== '' && $condition !== false && $condition !== null) {
+        if ((bool) $condition) {
             $callback($this, $condition);
         } elseif ($defaultCallback !== null) {
             $defaultCallback($this);
@@ -52,7 +52,7 @@ trait ConditionalTrait
      */
     public function whenNot($condition, callable $callback, ?callable $defaultCallback = null): self
     {
-        if ($condition === '' || $condition === null || $condition === false || $condition === '0') {
+        if (! (bool) $condition) {
             $callback($this, $condition);
         } elseif ($defaultCallback !== null) {
             $defaultCallback($this);
