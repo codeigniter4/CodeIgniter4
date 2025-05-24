@@ -24,8 +24,13 @@ foreach ($helperDirs as $dir) {
 }
 
 $dirs = [
-    'tests/_support/Controllers',
     'tests/_support/_controller',
+    'tests/_support/Controllers',
+    'tests/_support/Entity',
+    'tests/_support/Entity/Cast',
+    'tests/_support/Models',
+    'tests/_support/Validation',
+    'tests/_support/View',
     'tests/system/Config/fixtures',
 ];
 

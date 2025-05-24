@@ -2,6 +2,7 @@
 includes:
     - argument.type.neon
     - assign.propertyType.neon
+    - booleanAnd.rightNotBoolean.neon
     - codeigniter.cacheHandlerInstance.neon
     - codeigniter.getReassignArray.neon
     - codeigniter.modelArgumentType.neon
@@ -9,6 +10,7 @@ includes:
     - codeigniter.superglobalAccessAssign.neon
     - deadCode.unreachable.neon
     - empty.notAllowed.neon
+    - if.condNotBoolean.neon
     - method.alreadyNarrowedType.neon
     - method.childParameterType.neon
     - method.childReturnType.neon

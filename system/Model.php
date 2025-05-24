@@ -778,8 +778,7 @@ class Model extends BaseModel
      * @phpstan-param row_array|object|null $row
      * @param         bool                  $returnID Whether insert ID should be returned or not.
      *
-     * @return         bool|int|string
-     * @phpstan-return ($returnID is true ? int|string|false : bool)
+     * @return ($returnID is true ? false|int|string : bool)
      *
      * @throws ReflectionException
      */

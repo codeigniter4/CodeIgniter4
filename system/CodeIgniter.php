@@ -141,7 +141,7 @@ class CodeIgniter
      *  web:     Invoked by HTTP request
      *  php-cli: Invoked by CLI via `php public/index.php`
      *
-     * @phpstan-var 'php-cli'|'web'
+     * @var 'php-cli'|'web'|null
      */
     protected ?string $context = null;
 
@@ -1128,7 +1128,7 @@ class CodeIgniter
     /**
      * Sets the app context.
      *
-     * @phpstan-param 'php-cli'|'web' $context
+     * @param 'php-cli'|'web' $context
      *
      * @return $this
      */
