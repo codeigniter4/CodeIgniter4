@@ -117,10 +117,14 @@ class Parser extends View
         $cacheName = $options['cache_name'] ?? str_replace('.php', '', $view);
 
         // Was it cached?
-        if (isset($options['cache']) && ($output = cache($cacheName))) {
-            $this->logPerformance($start, microtime(true), $view);
+        if (isset($options['cache'])) {
+            $output = cache($cacheName);
 
-            return $output;
+            if (is_string($output) && $output !== '') {
+                $this->logPerformance($start, microtime(true), $view);
+
+                return $output;
+            }
         }
 
         $file = $this->viewPath . $view;
