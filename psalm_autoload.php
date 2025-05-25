@@ -4,49 +4,40 @@ declare(strict_types=1);
 
 require __DIR__ . '/system/util_bootstrap.php';
 
-$helperDirs = [
+$directories = [
     'system/Helpers',
-];
-
-foreach ($helperDirs as $dir) {
-    $dir = __DIR__ . '/' . $dir;
-    if (! is_dir($dir)) {
-        continue;
-    }
-
-    chdir($dir);
-
-    foreach (glob('*_helper.php') as $filename) {
-        $filePath = realpath($dir . '/' . $filename);
-
-        require_once $filePath;
-    }
-}
-
-$dirs = [
-    'tests/_support/_controller',
-    'tests/_support/Controllers',
-    'tests/_support/Entity',
-    'tests/_support/Entity/Cast',
-    'tests/_support/Models',
-    'tests/_support/Validation',
-    'tests/_support/View',
+    'tests/_support',
     'tests/system/Config/fixtures',
 ];
+$excludeDirs = [
+    'tests/_support/Config',
+    'tests/_support/View/Cells',
+    'tests/_support/View/Views',
+];
 
-foreach ($dirs as $dir) {
-    $dir = __DIR__ . '/' . $dir;
-    if (! is_dir($dir)) {
-        continue;
-    }
+foreach ($directories as $directory) {
+    $iterator = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator(
+            $directory,
+            RecursiveDirectoryIterator::UNIX_PATHS | RecursiveDirectoryIterator::CURRENT_AS_FILEINFO,
+        ),
+        RecursiveIteratorIterator::CHILD_FIRST,
+    );
 
-    chdir($dir);
+    /** @var SplFileInfo $file */
+    foreach ($iterator as $file) {
+        if (! $file->isFile()) {
+            continue;
+        }
 
-    foreach (glob('*.php') as $filename) {
-        $filePath = realpath($dir . '/' . $filename);
+        if (in_array($file->getPath(), $excludeDirs, true)) {
+            continue;
+        }
 
-        require_once $filePath;
+        if ($file->getExtension() !== 'php') {
+            continue;
+        }
+
+        require_once $file->getPathname();
     }
 }
-
-chdir(__DIR__);
