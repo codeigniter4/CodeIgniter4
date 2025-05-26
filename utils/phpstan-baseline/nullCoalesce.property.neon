@@ -1,12 +1,7 @@
-# total 20 errors
+# total 19 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Property CodeIgniter\\Log\\Logger\:\:\$logCache \(array\) on left side of \?\? is not nullable\.$#'
-            count: 1
-            path: ../../system/Debug/Toolbar/Collectors/Logs.php
-
         -
             message: '#^Property CodeIgniter\\Files\\File\:\:\$size \(int\) on left side of \?\? is not nullable\.$#'
             count: 1
