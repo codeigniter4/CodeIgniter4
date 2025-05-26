@@ -325,6 +325,7 @@
 <section id="bugs-fixed">
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this heading"></a></h2>
 <ul class="simple">
+<li><p><strong>Database:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">when()</span></code> and <code class="docutils literal notranslate"><span class="pre">whenNot()</span></code> in <code class="docutils literal notranslate"><span class="pre">ConditionalTrait</span></code> incorrectly evaluated certain falsy values (such as <code class="docutils literal notranslate"><span class="pre">[]</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">0.0</span></code>, and <code class="docutils literal notranslate"><span class="pre">'0'</span></code>) as truthy, causing callbacks to be executed unexpectedly. These methods now cast the condition to a boolean using <code class="docutils literal notranslate"><span class="pre">(bool)</span></code> to ensure consistent behavior with PHP’s native truthiness.</p></li>
 <li><p><strong>Security:</strong> Fixed a bug where the <code class="docutils literal notranslate"><span class="pre">sanitize_filename()</span></code> function from the Security helper would throw an error when used in CLI requests.</p></li>
 </ul>
 <p>See the repo’s
@@ -345,7 +346,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 19, 2025.
+      <span class="lastupdated">Last updated on May 26, 2025.
       </span></p>
   </div>
 
