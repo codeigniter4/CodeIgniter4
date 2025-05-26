@@ -17,6 +17,7 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 use Config\CURLRequest as ConfigCURLRequest;
+use CurlShareHandle;
 
 /**
  * A lightweight HTTP client for sending synchronous HTTP requests via cURL.
@@ -102,6 +103,11 @@ class CURLRequest extends OutgoingRequest
     private readonly bool $shareOptions;
 
     /**
+     * The share connection instance.
+     */
+    protected ?CurlShareHandle $shareConnection = null;
+
+    /**
      * Takes an array of options to set the following possible class properties:
      *
      *  - baseURI
@@ -129,6 +135,20 @@ class CURLRequest extends OutgoingRequest
 
         $this->config = $this->defaultConfig;
         $this->parseOptions($options);
+
+        // Share Connection
+        $optShareConnection = config(ConfigCURLRequest::class)->shareConnectionOptions ?? [
+            CURL_LOCK_DATA_CONNECT,
+            CURL_LOCK_DATA_DNS,
+        ];
+
+        if ($optShareConnection !== []) {
+            $this->shareConnection = curl_share_init();
+
+            foreach (array_unique($optShareConnection) as $opt) {
+                curl_share_setopt($this->shareConnection, CURLSHOPT_SHARE, $opt);
+            }
+        }
     }
 
     /**
@@ -364,7 +384,12 @@ class CURLRequest extends OutgoingRequest
 
         $curlOptions[CURLOPT_URL]            = $url;
         $curlOptions[CURLOPT_RETURNTRANSFER] = true;
-        $curlOptions[CURLOPT_HEADER]         = true;
+
+        if ($this->shareConnection instanceof CurlShareHandle) {
+            $curlOptions[CURLOPT_SHARE] = $this->shareConnection;
+        }
+
+        $curlOptions[CURLOPT_HEADER] = true;
         // Disable @file uploads in post data.
         $curlOptions[CURLOPT_SAFE_UPLOAD] = true;
 

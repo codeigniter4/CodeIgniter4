@@ -21,6 +21,7 @@ use CodeIgniter\Test\Mock\MockCURLRequest;
 use Config\App;
 use Config\CURLRequest as ConfigCURLRequest;
 use CURLFile;
+use CurlShareHandle;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -45,14 +46,20 @@ class CURLRequestTest extends CIUnitTestCase
 
     /**
      * @param array<string, mixed> $options
+     * @param array<int, int>|null $shareConnectionOptions
      */
-    protected function getRequest(array $options = []): MockCURLRequest
+    protected function getRequest(array $options = [], ?array $shareConnectionOptions = null): MockCURLRequest
     {
         $uri = isset($options['baseURI']) ? new URI($options['baseURI']) : new URI();
         $app = new App();
 
         $config               = new ConfigCURLRequest();
         $config->shareOptions = false;
+
+        if ($shareConnectionOptions !== null) {
+            $config->shareConnectionOptions = $shareConnectionOptions;
+        }
+
         Factories::injectMock('config', 'CURLRequest', $config);
 
         return new MockCURLRequest(($app), $uri, new Response($app), $options);
@@ -1233,6 +1240,42 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
 
         $this->assertArrayHasKey(CURLOPT_IPRESOLVE, $options);
         $this->assertSame(\CURL_IPRESOLVE_WHATEVER, $options[CURLOPT_IPRESOLVE]);
+    }
+
+    public function testShareConnectionDefault(): void
+    {
+        $this->request->request('GET', 'http://example.com');
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_SHARE, $options);
+        $this->assertInstanceOf(CurlShareHandle::class, $options[CURLOPT_SHARE]);
+    }
+
+    public function testShareConnectionEmpty(): void
+    {
+        $request = $this->getRequest(shareConnectionOptions: []);
+        $request->request('GET', 'http://example.com');
+
+        $options = $request->curl_options;
+
+        $this->assertArrayNotHasKey(CURLOPT_SHARE, $options);
+    }
+
+    public function testShareConnectionDuplicate(): void
+    {
+        $request = $this->getRequest(shareConnectionOptions: [
+            CURL_LOCK_DATA_CONNECT,
+            CURL_LOCK_DATA_DNS,
+            CURL_LOCK_DATA_CONNECT,
+            CURL_LOCK_DATA_DNS,
+        ]);
+        $request->request('GET', 'http://example.com');
+
+        $options = $request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_SHARE, $options);
+        $this->assertInstanceOf(CurlShareHandle::class, $options[CURLOPT_SHARE]);
     }
 
     /**

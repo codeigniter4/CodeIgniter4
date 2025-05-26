@@ -28,13 +28,18 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class CURLRequestShareOptionsTest extends CURLRequestTest
 {
-    protected function getRequest(array $options = []): MockCURLRequest
+    protected function getRequest(array $options = [], ?array $shareConnectionOptions = null): MockCURLRequest
     {
         $uri = isset($options['baseURI']) ? new URI($options['baseURI']) : new URI();
         $app = new App();
 
         $config               = new ConfigCURLRequest();
         $config->shareOptions = true;
+
+        if ($shareConnectionOptions !== null) {
+            $config->shareConnectionOptions = $shareConnectionOptions;
+        }
+
         Factories::injectMock('config', 'CURLRequest', $config);
 
         return new MockCURLRequest(($app), $uri, new Response($app), $options);
