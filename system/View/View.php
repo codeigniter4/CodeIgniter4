@@ -186,7 +186,9 @@ class View implements RendererInterface
 
             $this->renderVars['cacheName'] = $cacheName;
 
-            if ($output = cache($this->renderVars['cacheName'])) {
+            $output = cache($this->renderVars['cacheName']);
+
+            if (is_string($output) && $output !== '') {
                 $this->logPerformance(
                     $this->renderVars['start'],
                     microtime(true),
