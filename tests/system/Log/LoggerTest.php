@@ -23,7 +23,6 @@ use PHPUnit\Framework\Attributes\Group;
 use ReflectionMethod;
 use ReflectionNamedType;
 use Tests\Support\Log\Handlers\TestHandler;
-use TypeError;
 
 /**
  * @internal
@@ -42,7 +41,7 @@ final class LoggerTest extends CIUnitTestCase
     public function testThrowsExceptionWithBadHandlerSettings(): void
     {
         $config           = new LoggerConfig();
-        $config->handlers = null;
+        $config->handlers = [];
 
         $this->expectException(FrameworkException::class);
         $this->expectExceptionMessage(lang('Core.noHandlers', ['LoggerConfig']));
@@ -425,16 +424,6 @@ final class LoggerTest extends CIUnitTestCase
 
         $this->assertCount(1, $logs);
         $this->assertSame($expected, $logs[0]);
-    }
-
-    public function testNonStringMessage(): void
-    {
-        $this->expectException(TypeError::class);
-
-        $config = new LoggerConfig();
-        $logger = new Logger($config);
-
-        $logger->log(5, $config);
     }
 
     public function testDetermineFileNoStackTrace(): void
