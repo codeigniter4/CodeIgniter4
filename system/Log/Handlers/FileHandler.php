@@ -28,35 +28,43 @@ class FileHandler extends BaseHandler
      *
      * @var string
      */
-    protected $path;
+    protected $path = WRITEPATH . 'logs/';
 
     /**
      * Extension to use for log files
      *
      * @var string
      */
-    protected $fileExtension;
+    protected $fileExtension = 'log';
 
     /**
      * Permissions for new log files
      *
      * @var int
      */
-    protected $filePermissions;
+    protected $filePermissions = 0644;
 
     /**
-     * Constructor
+     * @param array{handles?: list<string>, path?: string, fileExtension?: string, filePermissions?: int} $config
      */
     public function __construct(array $config = [])
     {
         parent::__construct($config);
 
-        $this->path = empty($config['path']) ? WRITEPATH . 'logs/' : $config['path'];
+        $config = [
+            ...['path' => WRITEPATH . 'logs/', 'fileExtension' => 'log', 'filePermissions' => 0644],
+            ...$config,
+        ];
 
-        $this->fileExtension = empty($config['fileExtension']) ? 'log' : $config['fileExtension'];
-        $this->fileExtension = ltrim($this->fileExtension, '.');
+        if ($config['path'] !== '') {
+            $this->path = $config['path'];
+        }
 
-        $this->filePermissions = $config['filePermissions'] ?? 0644;
+        if ($config['fileExtension'] !== '') {
+            $this->fileExtension = ltrim($config['fileExtension'], '.');
+        }
+
+        $this->filePermissions = $config['filePermissions'];
     }
 
     /**
@@ -108,10 +116,8 @@ class FileHandler extends BaseHandler
 
         for ($written = 0, $length = strlen($msg); $written < $length; $written += $result) {
             if (($result = fwrite($fp, substr($msg, $written))) === false) {
-                // if we get this far, we'll never see this during travis-ci
-                // @codeCoverageIgnoreStart
-                break;
-                // @codeCoverageIgnoreEnd
+                // if we get this far, we'll never see this during unit testing
+                break; // @codeCoverageIgnore
             }
         }
 
