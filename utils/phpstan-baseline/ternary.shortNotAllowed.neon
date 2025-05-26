@@ -1,4 +1,4 @@
-# total 36 errors
+# total 35 errors
 
 parameters:
     ignoreErrors:
@@ -31,11 +31,6 @@ parameters:
             message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
             count: 1
             path: ../../system/Debug/Toolbar/Collectors/Database.php
-
-        -
-            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
-            count: 1
-            path: ../../system/Events/Events.php
 
         -
             message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'

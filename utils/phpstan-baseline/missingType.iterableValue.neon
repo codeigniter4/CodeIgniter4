@@ -1,4 +1,4 @@
-# total 1574 errors
+# total 1571 errors
 
 parameters:
     ignoreErrors:
@@ -2971,21 +2971,6 @@ parameters:
             message: '#^Method CodeIgniter\\Entity\\Entity\:\:toRawArray\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Entity/Entity.php
-
-        -
-            message: '#^Method CodeIgniter\\Events\\Events\:\:listeners\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Events/Events.php
-
-        -
-            message: '#^Method CodeIgniter\\Events\\Events\:\:setFiles\(\) has parameter \$files with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Events/Events.php
-
-        -
-            message: '#^Property CodeIgniter\\Events\\Events\:\:\$listeners type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Events/Events.php
 
         -
             message: '#^Method CodeIgniter\\Exceptions\\PageNotFoundException\:\:lang\(\) has parameter \$args with no value type specified in iterable type array\.$#'
