@@ -1,8 +1,0 @@
-# total 1 error
-
-parameters:
-    ignoreErrors:
-        -
-            message: '#^Strict comparison using \!\=\= between mixed and null will always evaluate to true\.$#'
-            count: 1
-            path: ../../system/BaseModel.php

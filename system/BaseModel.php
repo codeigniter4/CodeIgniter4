@@ -1093,9 +1093,7 @@ abstract class BaseModel
                 $row = $this->doProtectFields($row);
 
                 // Restore updateIndex value in case it was wiped out
-                if ($updateIndex !== null) {
-                    $row[$index] = $updateIndex;
-                }
+                $row[$index] = $updateIndex;
 
                 $row = $this->setUpdatedField($row, $this->setDate());
             }
