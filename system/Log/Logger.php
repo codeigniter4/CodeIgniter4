@@ -123,7 +123,7 @@ class Logger implements LoggerInterface
      */
     public function __construct($config, bool $debug = CI_DEBUG)
     {
-        $loggableLevels = is_array($config->threshold) ? $config->threshold : range(1, $config->threshold);
+        $loggableLevels = is_array($config->threshold) ? $config->threshold : range(1, (int) $config->threshold);
 
         // Now convert loggable levels to strings.
         // We only use numbers to make the threshold setting convenient for users.
@@ -142,7 +142,7 @@ class Logger implements LoggerInterface
             $this->dateFormat = $config->dateFormat;
         }
 
-        if ((array) $config->handlers === []) {
+        if ($config->handlers === []) {
             throw LogException::forNoHandlers('LoggerConfig');
         }
 

@@ -28,21 +28,21 @@ class FileHandler extends BaseHandler
      *
      * @var string
      */
-    protected $path = WRITEPATH . 'logs/';
+    protected $path;
 
     /**
      * Extension to use for log files
      *
      * @var string
      */
-    protected $fileExtension = 'log';
+    protected $fileExtension;
 
     /**
      * Permissions for new log files
      *
      * @var int
      */
-    protected $filePermissions = 0644;
+    protected $filePermissions;
 
     /**
      * @param array{handles?: list<string>, path?: string, fileExtension?: string, filePermissions?: int} $config
@@ -51,18 +51,14 @@ class FileHandler extends BaseHandler
     {
         parent::__construct($config);
 
-        $config = [
-            ...['path' => WRITEPATH . 'logs/', 'fileExtension' => 'log', 'filePermissions' => 0644],
-            ...$config,
-        ];
+        $defaults = ['path' => WRITEPATH . 'logs/', 'fileExtension' => 'log', 'filePermissions' => 0644];
+        $config   = [...$defaults, ...$config];
 
-        if ($config['path'] !== '') {
-            $this->path = $config['path'];
-        }
+        $this->path = $config['path'] === '' ? $defaults['path'] : $config['path'];
 
-        if ($config['fileExtension'] !== '') {
-            $this->fileExtension = ltrim($config['fileExtension'], '.');
-        }
+        $this->fileExtension = $config['fileExtension'] === ''
+            ? $defaults['fileExtension']
+            : ltrim($config['fileExtension'], '.');
 
         $this->filePermissions = $config['filePermissions'];
     }
