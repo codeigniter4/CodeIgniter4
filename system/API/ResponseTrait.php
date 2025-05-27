@@ -69,8 +69,7 @@ trait ResponseTrait
      * Either 'json' or 'xml'. If null is set, it will be determined through
      * content negotiation.
      *
-     * @var         string|null
-     * @phpstan-var 'html'|'json'|'xml'|null
+     * @var 'html'|'json'|'xml'|null
      */
     protected $format = 'json';
 
@@ -348,8 +347,7 @@ trait ResponseTrait
     /**
      * Sets the format the response should be in.
      *
-     * @param         string|null  $format Response format
-     * @phpstan-param 'json'|'xml' $format
+     * @param 'json'|'xml' $format Response format
      *
      * @return $this
      */

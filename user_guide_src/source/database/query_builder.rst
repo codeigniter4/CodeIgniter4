@@ -1272,9 +1272,10 @@ $builder->when()
 .. versionadded:: 4.3.0
 
 This allows modifying the query based on a condition without breaking out of the
-query builder chain. The first parameter is the condition, and it should evaluate
-to a boolean. The second parameter is a callable that will be ran
-when the condition is true.
+query builder chain. The first parameter is the condition, and it is evaluated
+using PHP's native boolean logic - meaning that values like ``false``, ``null``,
+``0``, ``'0'``, ``0.0``, empty string ``''`` and empty array ``[]`` will be considered false.
+The second parameter is a callable that will be ran when the condition is true.
 
 For example, you might only want to apply a given WHERE statement based on the
 value sent within an HTTP request:

@@ -17,6 +17,7 @@ use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Exceptions\ModelException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use stdClass;
 use Tests\Support\Entity\UserWithCasts;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
@@ -115,7 +116,7 @@ final class FindModelTest extends LiveModelTestCase
         $this->createModel(UserModel::class);
 
         $user = $this->model->find(4);
-        $this->assertEmpty($user);
+        $this->assertNotInstanceOf(stdClass::class, $user);
 
         $user  = $this->model->withDeleted()->find(4);
         $count = is_object($user) ? 1 : 0;

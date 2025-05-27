@@ -683,6 +683,11 @@ class Services extends BaseService
                 $driverName = MySQLiHandler::class;
             } elseif ($driverPlatform === 'Postgre') {
                 $driverName = PostgreHandler::class;
+            } else {
+                throw new InvalidArgumentException(sprintf(
+                    'Invalid session database handler "%s" provided. Only "MySQLi" and "Postgre" are supported.',
+                    $driverPlatform,
+                ));
             }
         }
 

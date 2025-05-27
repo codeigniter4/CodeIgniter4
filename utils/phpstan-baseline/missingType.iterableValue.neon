@@ -1,4 +1,4 @@
-# total 1575 errors
+# total 1564 errors
 
 parameters:
     ignoreErrors:
@@ -533,11 +533,6 @@ parameters:
             path: ../../system/Commands/Utilities/Routes/FilterFinder.php
 
         -
-            message: '#^Function cache\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Common.php
-
-        -
             message: '#^Function class_uses_recursive\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Common.php
@@ -584,11 +579,6 @@ parameters:
 
         -
             message: '#^Function service\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Common.php
-
-        -
-            message: '#^Function session\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Common.php
 
@@ -2983,21 +2973,6 @@ parameters:
             path: ../../system/Entity/Entity.php
 
         -
-            message: '#^Method CodeIgniter\\Events\\Events\:\:listeners\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Events/Events.php
-
-        -
-            message: '#^Method CodeIgniter\\Events\\Events\:\:setFiles\(\) has parameter \$files with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Events/Events.php
-
-        -
-            message: '#^Property CodeIgniter\\Events\\Events\:\:\$listeners type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Events/Events.php
-
-        -
             message: '#^Method CodeIgniter\\Exceptions\\PageNotFoundException\:\:lang\(\) has parameter \$args with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Exceptions/PageNotFoundException.php
@@ -3076,26 +3051,6 @@ parameters:
             message: '#^Method CodeIgniter\\Filters\\PerformanceMetrics\:\:before\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Filters/PerformanceMetrics.php
-
-        -
-            message: '#^Method CodeIgniter\\Format\\FormatterInterface\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Format/FormatterInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Format\\JSONFormatter\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Format/JSONFormatter.php
-
-        -
-            message: '#^Method CodeIgniter\\Format\\XMLFormatter\:\:arrayToXML\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Format/XMLFormatter.php
-
-        -
-            message: '#^Method CodeIgniter\\Format\\XMLFormatter\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Format/XMLFormatter.php
 
         -
             message: '#^Method CodeIgniter\\HTTP\\CLIRequest\:\:getArgs\(\) return type has no value type specified in iterable type array\.$#'
@@ -6536,16 +6491,6 @@ parameters:
             message: '#^Method CodeIgniter\\Filters\\InvalidCharsTest\:\:provideCheckControlStringWithLineBreakAndTabReturnsTheString\(\) return type has no value type specified in iterable type iterable\.$#'
             count: 1
             path: ../../tests/system/Filters/InvalidCharsTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Format\\XMLFormatterTest\:\:provideValidatingInvalidTags\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Format/XMLFormatterTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Format\\XMLFormatterTest\:\:testValidatingInvalidTags\(\) has parameter \$input with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Format/XMLFormatterTest.php
 
         -
             message: '#^Method CodeIgniter\\HTTP\\IncomingRequestTest\:\:provideCanGrabGetRawInputVar\(\) return type has no value type specified in iterable type iterable\.$#'

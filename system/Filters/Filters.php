@@ -206,8 +206,8 @@ class Filters
      * Runs through all the filters (except "Required Filters") for the specified
      * URI and position.
      *
-     * @param         string           $uri      URI path relative to baseURL
-     * @phpstan-param 'before'|'after' $position
+     * @param string           $uri      URI path relative to baseURL
+     * @param 'after'|'before' $position
      *
      * @return RequestInterface|ResponseInterface|string|null
      *
@@ -310,7 +310,7 @@ class Filters
     /**
      * Returns the "Required Filters" class list.
      *
-     * @phpstan-param 'before'|'after' $position
+     * @param 'after'|'before' $position
      *
      * @return list<array{0: class-string, 1: list<string>}> [[classname, arguments], ...]
      */
@@ -340,7 +340,7 @@ class Filters
     /**
      * Runs "Required Filters" for the specified position.
      *
-     * @phpstan-param 'before'|'after' $position
+     * @param 'after'|'before' $position
      *
      * @return RequestInterface|ResponseInterface|string|null
      *
@@ -367,7 +367,7 @@ class Filters
     /**
      * Returns "Required Filters" for the specified position.
      *
-     * @phpstan-param 'before'|'after' $position
+     * @param 'after'|'before' $position
      *
      * @internal
      */
@@ -544,7 +544,7 @@ class Filters
      * MUST be called prior to initialize();
      * Intended for use within routes files.
      *
-     * @phpstan-param 'before'|'after' $position
+     * @param 'after'|'before' $position
      *
      * @return $this
      */
@@ -574,9 +574,9 @@ class Filters
      * after the filter name, followed by a comma-separated list of arguments that
      * are passed to the filter when executed.
      *
-     * @param         string           $filter   filter_name or filter_name:arguments like 'role:admin,manager'
-     *                                           or filter classname.
-     * @phpstan-param 'before'|'after' $position
+     * @param string           $filter   filter_name or filter_name:arguments like 'role:admin,manager'
+     *                                   or filter classname.
+     * @param 'after'|'before' $position
      */
     private function enableFilter(string $filter, string $position = 'before'): void
     {
@@ -824,7 +824,7 @@ class Filters
     /**
      * Maps filter aliases to the equivalent filter classes
      *
-     * @phpstan-param 'before'|'after' $position
+     * @param 'after'|'before' $position
      *
      * @return void
      *

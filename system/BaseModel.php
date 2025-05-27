@@ -793,8 +793,7 @@ abstract class BaseModel
      * @phpstan-param row_array|object|null $row
      * @param         bool                  $returnID Whether insert ID should be returned or not.
      *
-     * @return         bool|int|string                               insert ID or true on success. false on failure.
-     * @phpstan-return ($returnID is true ? int|string|false : bool)
+     * @return ($returnID is true ? false|int|string : bool)
      *
      * @throws ReflectionException
      */
@@ -1094,9 +1093,7 @@ abstract class BaseModel
                 $row = $this->doProtectFields($row);
 
                 // Restore updateIndex value in case it was wiped out
-                if ($updateIndex !== null) {
-                    $row[$index] = $updateIndex;
-                }
+                $row[$index] = $updateIndex;
 
                 $row = $this->setUpdatedField($row, $this->setDate());
             }
