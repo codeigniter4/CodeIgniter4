@@ -49,6 +49,8 @@ format both XML and JSON responses:
 
 .. literalinclude:: api_responses/003.php
 
+.. note:: Since ``v4.7.0``, you can change the default JSON formatting depth by editing **app/Config/Format.php**. The ``$jsonDepthOptions`` value defines the maximum depth, with a default of ``512``.
+
 This is the array that is used during :doc:`Content Negotiation </incoming/content_negotiation>` to determine which
 type of response to return. If no matches are found between what the client requested and what you support, the first
 format in this array is what will be returned.
