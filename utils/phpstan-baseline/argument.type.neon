@@ -1,4 +1,4 @@
-# total 136 errors
+# total 135 errors
 
 parameters:
     ignoreErrors:
@@ -244,11 +244,6 @@ parameters:
 
         -
             message: '#^Parameter \#1 \$id of method CodeIgniter\\Model\:\:update\(\) expects array\|int\|string\|null, false\|null given\.$#'
-            count: 1
-            path: ../../tests/system/Models/UpdateModelTest.php
-
-        -
-            message: '#^Parameter \#1 \$row of method CodeIgniter\\BaseModel\:\:save\(\) expects array\<int\|string, bool\|float\|int\|object\|string\|null\>\|object, list\<array\>\|null given\.$#'
             count: 1
             path: ../../tests/system/Models/UpdateModelTest.php
 

@@ -1,4 +1,4 @@
-# total 82 errors
+# total 81 errors
 
 parameters:
     ignoreErrors:
@@ -151,11 +151,6 @@ parameters:
             message: '#^Call to an undefined method org\\bovigo\\vfs\\vfsStreamContent\:\:getContent\(\)\.$#'
             count: 3
             path: ../../tests/system/Images/GDHandlerTest.php
-
-        -
-            message: '#^Call to an undefined method CodeIgniter\\Model\:\:affectedRows\(\)\.$#'
-            count: 1
-            path: ../../tests/system/Models/AffectedRowsTest.php
 
         -
             message: '#^Call to an undefined method CodeIgniter\\Model\:\:getLastQuery\(\)\.$#'

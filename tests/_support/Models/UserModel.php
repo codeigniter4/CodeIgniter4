@@ -15,6 +15,9 @@ namespace Tests\Support\Models;
 
 use CodeIgniter\Model;
 
+/**
+ * @method int affectedRows()
+ */
 class UserModel extends Model
 {
     protected $table         = 'user';
