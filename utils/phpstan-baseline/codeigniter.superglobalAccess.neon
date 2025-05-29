@@ -1,4 +1,4 @@
-# total 83 errors
+# total 79 errors
 
 parameters:
     ignoreErrors:
@@ -66,16 +66,6 @@ parameters:
             message: '#^Accessing offset ''SERVER_PROTOCOL'' directly on \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../system/Config/Services.php
-
-        -
-            message: '#^Accessing offset ''SERVER_ADDR'' directly on \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Accessing offset ''SERVER_NAME'' directly on \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../system/Email/Email.php
 
         -
             message: '#^Accessing offset ''HTTP_USER_AGENT'' directly on \$_SERVER is discouraged\.$#'
