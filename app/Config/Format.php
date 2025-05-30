@@ -64,10 +64,10 @@ class Format extends BaseConfig
 
     /**
      * --------------------------------------------------------------------------
-     * JSON Formatters Depth
+     * Maximum depth for JSON encoding.
      * --------------------------------------------------------------------------
      *
-     * Additional options to adjust default depth JSON Encode.
+     * This value determines how deep the JSON encoder will traverse nested structures.
      */
-    public int $jsonDepthOptions = 512;
+    public int $jsonEncodeDepth = 512;
 }
