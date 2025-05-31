@@ -1,4 +1,4 @@
-# total 1565 errors
+# total 1547 errors
 
 parameters:
     ignoreErrors:
@@ -2498,21 +2498,6 @@ parameters:
             path: ../../system/Debug/Toolbar/Collectors/History.php
 
         -
-            message: '#^Method CodeIgniter\\Debug\\Toolbar\\Collectors\\Logs\:\:collectLogs\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Toolbar/Collectors/Logs.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\Toolbar\\Collectors\\Logs\:\:display\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Toolbar/Collectors/Logs.php
-
-        -
-            message: '#^Property CodeIgniter\\Debug\\Toolbar\\Collectors\\Logs\:\:\$data type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Toolbar/Collectors/Logs.php
-
-        -
             message: '#^Method CodeIgniter\\Debug\\Toolbar\\Collectors\\Timers\:\:formatTimelineData\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Debug/Toolbar/Collectors/Timers.php
@@ -4533,71 +4518,6 @@ parameters:
             path: ../../system/Language/Language.php
 
         -
-            message: '#^Method CodeIgniter\\Log\\Handlers\\BaseHandler\:\:__construct\(\) has parameter \$config with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/BaseHandler.php
-
-        -
-            message: '#^Property CodeIgniter\\Log\\Handlers\\BaseHandler\:\:\$handles type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/BaseHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:__construct\(\) has parameter \$config with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/ChromeLoggerHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:format\(\) has parameter \$object with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/ChromeLoggerHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:format\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/ChromeLoggerHandler.php
-
-        -
-            message: '#^Property CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:\$json type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/ChromeLoggerHandler.php
-
-        -
-            message: '#^Property CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:\$levels type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/ChromeLoggerHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Log\\Handlers\\FileHandler\:\:__construct\(\) has parameter \$config with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/FileHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Log\\Logger\:\:determineFile\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Logger.php
-
-        -
-            message: '#^Method CodeIgniter\\Log\\Logger\:\:interpolate\(\) has parameter \$context with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Logger.php
-
-        -
-            message: '#^Property CodeIgniter\\Log\\Logger\:\:\$handlers type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Logger.php
-
-        -
-            message: '#^Property CodeIgniter\\Log\\Logger\:\:\$logCache type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Logger.php
-
-        -
-            message: '#^Property CodeIgniter\\Log\\Logger\:\:\$loggableLevels type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Logger.php
-
-        -
             message: '#^Method CodeIgniter\\Model\:\:__call\(\) has parameter \$params with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Model.php
@@ -5261,11 +5181,6 @@ parameters:
             message: '#^Method CodeIgniter\\Test\\Mock\\MockEvents\:\:getListeners\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Test/Mock/MockEvents.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockFileLogger\:\:__construct\(\) has parameter \$config with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockFileLogger.php
 
         -
             message: '#^Method CodeIgniter\\Test\\Mock\\MockInputOutput\:\:getOutputs\(\) return type has no value type specified in iterable type array\.$#'
@@ -6931,11 +6846,6 @@ parameters:
             message: '#^Method CodeIgniter\\Language\\LanguageTest\:\:provideBundleUniqueKeys\(\) return type has no value type specified in iterable type iterable\.$#'
             count: 1
             path: ../../tests/system/Language/LanguageTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Log\\Handlers\\ErrorlogHandlerTest\:\:getMockedHandler\(\) has parameter \$config with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Log/Handlers/ErrorlogHandlerTest.php
 
         -
             message: '#^Method CodeIgniter\\Models\\DeleteModelTest\:\:emptyPkValues\(\) return type has no value type specified in iterable type iterable\.$#'

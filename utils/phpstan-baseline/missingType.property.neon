@@ -1,4 +1,4 @@
-# total 119 errors
+# total 115 errors
 
 parameters:
     ignoreErrors:
@@ -51,26 +51,6 @@ parameters:
             message: '#^Property CodeIgniter\\Test\\Mock\\MockCURLRequest\:\:\$output has no type specified\.$#'
             count: 1
             path: ../../system/Test/Mock/MockCURLRequest.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockFileLogger\:\:\$destination has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockFileLogger.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockLogger\:\:\$dateFormat has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockLogger.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockLogger\:\:\$handlers has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockLogger.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockLogger\:\:\$threshold has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockLogger.php
 
         -
             message: '#^Property CodeIgniter\\Test\\Mock\\MockServices\:\:\$classmap has no type specified\.$#'
