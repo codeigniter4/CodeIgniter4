@@ -10,9 +10,12 @@ $directories = [
     'tests/system/Config/fixtures',
 ];
 $excludeDirs = [
-    'tests/_support/Config',
     'tests/_support/View/Cells',
     'tests/_support/View/Views',
+];
+$excludeFiles = [
+    'tests/_support/Config/Filters.php',
+    'tests/_support/Config/Routes.php',
 ];
 
 foreach ($directories as $directory) {
@@ -35,6 +38,10 @@ foreach ($directories as $directory) {
         }
 
         if ($file->getExtension() !== 'php') {
+            continue;
+        }
+
+        if (in_array($file->getPathname(), $excludeFiles, true)) {
             continue;
         }
 
