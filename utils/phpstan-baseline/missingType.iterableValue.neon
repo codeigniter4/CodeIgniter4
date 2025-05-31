@@ -1,4 +1,4 @@
-# total 1547 errors
+# total 1542 errors
 
 parameters:
     ignoreErrors:
@@ -2553,16 +2553,6 @@ parameters:
             path: ../../system/Email/Email.php
 
         -
-            message: '#^Method CodeIgniter\\Email\\Email\:\:stringToArray\(\) has parameter \$email with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Method CodeIgniter\\Email\\Email\:\:stringToArray\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
             message: '#^Method CodeIgniter\\Email\\Email\:\:validateEmail\(\) has parameter \$email with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Email/Email.php
@@ -2588,27 +2578,12 @@ parameters:
             path: ../../system/Email/Email.php
 
         -
-            message: '#^Property CodeIgniter\\Email\\Email\:\:\$bitDepths type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
             message: '#^Property CodeIgniter\\Email\\Email\:\:\$debugMessage type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Email/Email.php
 
         -
             message: '#^Property CodeIgniter\\Email\\Email\:\:\$headers type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Property CodeIgniter\\Email\\Email\:\:\$priorities type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Property CodeIgniter\\Email\\Email\:\:\$protocols type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Email/Email.php
 

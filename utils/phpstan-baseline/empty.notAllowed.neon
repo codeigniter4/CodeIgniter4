@@ -1,4 +1,4 @@
-# total 247 errors
+# total 240 errors
 
 parameters:
     ignoreErrors:
@@ -184,7 +184,7 @@ parameters:
 
         -
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 12
+            count: 5
             path: ../../system/Email/Email.php
 
         -
