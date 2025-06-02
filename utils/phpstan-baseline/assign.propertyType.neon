@@ -1,4 +1,4 @@
-# total 29 errors
+# total 28 errors
 
 parameters:
     ignoreErrors:
@@ -6,11 +6,6 @@ parameters:
             message: '#^Property CodeIgniter\\Controller\:\:\$request \(CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest\) does not accept CodeIgniter\\HTTP\\RequestInterface\.$#'
             count: 1
             path: ../../system/Controller.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:609\:\:\$format \(''html''\|''json''\|''xml''\|null\) does not accept ''txt''\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
 
         -
             message: '#^Property CodeIgniter\\Commands\\Utilities\\Routes\\FilterFinderTest\:\:\$response \(CodeIgniter\\HTTP\\Response\) does not accept CodeIgniter\\HTTP\\ResponseInterface\.$#'

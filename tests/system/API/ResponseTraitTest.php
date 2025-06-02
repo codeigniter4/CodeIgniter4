@@ -17,6 +17,8 @@ use CodeIgniter\Config\Factories;
 use CodeIgniter\Format\FormatterInterface;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -24,6 +26,7 @@ use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use Config\Cookie;
+use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 
@@ -82,6 +85,12 @@ final class ResponseTraitTest extends CIUnitTestCase
         return $cookie;
     }
 
+    /**
+     * @param array<string, string> $userHeaders
+     *
+     * @phpstan-assert RequestInterface  $this->request
+     * @phpstan-assert ResponseInterface $this->response
+     */
     private function createRequestAndResponse(string $routePath = '', array $userHeaders = []): void
     {
         $config = $this->createAppConfig();
@@ -97,29 +106,28 @@ final class ResponseTraitTest extends CIUnitTestCase
             $this->response = new MockResponse($config);
         }
 
-        // Insert headers into request.
-        $headers = [
-            'Accept' => 'text/html',
-        ];
-        $headers = array_merge($headers, $userHeaders);
+        $headers = array_merge(['Accept' => 'text/html'], $userHeaders);
 
         foreach ($headers as $key => $value) {
             $this->request->setHeader($key, $value);
         }
     }
 
+    /**
+     * @param array<string, string> $userHeaders
+     */
     protected function makeController(string $routePath = '', array $userHeaders = []): object
     {
         $this->createRequestAndResponse($routePath, $userHeaders);
 
-        // Create the controller class finally.
         return new class ($this->request, $this->response, $this->formatter) {
             use ResponseTrait;
 
-            protected $formatter;
-
-            public function __construct(protected $request, protected $response, $formatter)
-            {
+            public function __construct(
+                protected RequestInterface $request,
+                protected ResponseInterface $response,
+                ?FormatterInterface $formatter,
+            ) {
                 $this->formatter = $formatter;
             }
 
@@ -173,11 +181,13 @@ final class ResponseTraitTest extends CIUnitTestCase
         $controller = new class ($this->request, $this->response, $this->formatter) {
             use ResponseTrait;
 
-            protected $formatter;
             protected bool $stringAsHtml = true;
 
-            public function __construct(protected $request, protected $response, $formatter)
-            {
+            public function __construct(
+                protected RequestInterface $request,
+                protected ResponseInterface $response,
+                ?FormatterInterface $formatter,
+            ) {
                 $this->formatter = $formatter;
             }
         };
@@ -291,11 +301,13 @@ final class ResponseTraitTest extends CIUnitTestCase
         $controller = new class ($this->request, $this->response, $this->formatter) {
             use ResponseTrait;
 
-            protected $formatter;
             protected bool $stringAsHtml = true;
 
-            public function __construct(protected $request, protected $response, $formatter)
-            {
+            public function __construct(
+                protected RequestInterface $request,
+                protected ResponseInterface $response,
+                ?FormatterInterface $formatter,
+            ) {
                 $this->formatter = $formatter;
             }
         };
@@ -546,8 +558,8 @@ final class ResponseTraitTest extends CIUnitTestCase
 
     private function tryValidContentType(string $mimeType, string $contentType): void
     {
-        $original                = $_SERVER;
-        $_SERVER['CONTENT_TYPE'] = $mimeType;
+        $originalContentType = Services::superglobals()->server('CONTENT_TYPE') ?? '';
+        Services::superglobals()->setServer('CONTENT_TYPE', $mimeType);
 
         $this->makeController('', ['Accept' => $mimeType]);
         $this->assertSame(
@@ -563,7 +575,7 @@ final class ResponseTraitTest extends CIUnitTestCase
             'Response header pre-response...',
         );
 
-        $_SERVER = $original;
+        Services::superglobals()->setServer('CONTENT_TYPE', $originalContentType);
     }
 
     public function testValidResponses(): void
@@ -609,9 +621,11 @@ final class ResponseTraitTest extends CIUnitTestCase
         $controller = new class ($request, $response) {
             use ResponseTrait;
 
-            public function __construct(protected $request, protected $response)
-            {
-                $this->format = 'txt';
+            public function __construct(
+                protected RequestInterface $request,
+                protected ResponseInterface $response,
+            ) {
+                $this->format = 'txt'; // @phpstan-ignore assign.propertyType (needed for testing)
             }
         };
 
@@ -659,6 +673,9 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($xmlFormatter->format($data), $this->response->getXML());
     }
 
+    /**
+     * @param list<mixed> $args
+     */
     private function invoke(object $controller, string $method, array $args = []): object
     {
         $method = self::getPrivateMethodInvoker($controller, $method);
