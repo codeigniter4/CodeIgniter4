@@ -217,7 +217,7 @@ class FileHandler extends BaseHandler
 
     /**
      * Does the heavy lifting of actually retrieving the file and
-     * verifying it's age.
+     * verifying its age.
      *
      * @return array{data: mixed, ttl: int, time: int}|false
      */
@@ -227,7 +227,17 @@ class FileHandler extends BaseHandler
             return false;
         }
 
-        $data = @unserialize(file_get_contents($this->path . $filename));
+        $content = @file_get_contents($this->path . $filename);
+
+        if ($content === false) {
+            return false;
+        }
+
+        try {
+            $data = unserialize($content);
+        } catch (Throwable) {
+            return false;
+        }
 
         if (! is_array($data)) {
             return false;

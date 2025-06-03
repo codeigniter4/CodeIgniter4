@@ -1,4 +1,4 @@
-# total 3216 errors
+# total 3057 errors
 includes:
     - argument.type.neon
     - assign.propertyType.neon

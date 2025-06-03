@@ -1,4 +1,4 @@
-# total 119 errors
+# total 109 errors
 
 parameters:
     ignoreErrors:
@@ -53,26 +53,6 @@ parameters:
             path: ../../system/Test/Mock/MockCURLRequest.php
 
         -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockFileLogger\:\:\$destination has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockFileLogger.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockLogger\:\:\$dateFormat has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockLogger.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockLogger\:\:\$handlers has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockLogger.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockLogger\:\:\$threshold has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockLogger.php
-
-        -
             message: '#^Property CodeIgniter\\Test\\Mock\\MockServices\:\:\$classmap has no type specified\.$#'
             count: 1
             path: ../../system/Test/Mock/MockServices.php
@@ -86,21 +66,6 @@ parameters:
             message: '#^Property CodeIgniter\\Test\\Mock\\MockSession\:\:\$didRegenerate has no type specified\.$#'
             count: 1
             path: ../../system/Test/Mock/MockSession.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:\$formatter has no type specified\.$#'
-            count: 2
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:\$formatter has no type specified\.$#'
-            count: 2
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:\$formatter has no type specified\.$#'
-            count: 2
-            path: ../../tests/system/API/ResponseTraitTest.php
 
         -
             message: '#^Property CodeIgniter\\Config\\Factory@anonymous/tests/system/Config/FactoriesTest\.php\:89\:\:\$widgets has no type specified\.$#'

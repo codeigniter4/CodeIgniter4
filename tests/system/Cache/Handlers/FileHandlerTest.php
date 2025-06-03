@@ -363,6 +363,30 @@ final class FileHandlerTest extends AbstractHandlerTestCase
     {
         $this->assertFalse($this->handler->getMetaData(self::$dummy));
     }
+
+    #[RequiresOperatingSystem('Linux|Darwin')]
+    public function testGetUnreadableFile(): void
+    {
+        $this->handler->save(self::$key1, 'value');
+
+        $filePath = $this->config->file['storePath'] . DIRECTORY_SEPARATOR . $this->config->prefix . self::$key1;
+
+        // Make the file unreadable
+        chmod($filePath, 0000);
+
+        $this->assertNull($this->handler->get(self::$key1));
+    }
+
+    public function testGetItemWithCorruptedData(): void
+    {
+        $filePath = $this->config->file['storePath'] . DIRECTORY_SEPARATOR . $this->config->prefix . self::$key1;
+
+        file_put_contents($filePath, 'corrupted_serialized_data_that_cannot_be_unserialized');
+
+        $this->assertFileExists($filePath);
+
+        $this->assertNull($this->handler->get(self::$key1));
+    }
 }
 
 final class BaseTestFileHandler extends FileHandler

@@ -1,4 +1,4 @@
-# total 243 errors
+# total 232 errors
 
 parameters:
     ignoreErrors:
@@ -184,12 +184,7 @@ parameters:
 
         -
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 2
-            path: ../../system/Debug/Toolbar/Collectors/Logs.php
-
-        -
-            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 12
+            count: 5
             path: ../../system/Email/Email.php
 
         -
@@ -286,11 +281,6 @@ parameters:
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
             count: 1
             path: ../../system/Images/Image.php
-
-        -
-            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 2
-            path: ../../system/Log/Handlers/FileHandler.php
 
         -
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'

@@ -16,9 +16,11 @@ namespace CodeIgniter\Email;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockEmail;
+use CodeIgniter\Test\ReflectionHelper;
 use ErrorException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use ReflectionException;
 
 /**
  * @internal
@@ -26,6 +28,8 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class EmailTest extends CIUnitTestCase
 {
+    use ReflectionHelper;
+
     public function testEmailValidation(): void
     {
         $config           = config('Email');
@@ -214,5 +218,52 @@ final class EmailTest extends CIUnitTestCase
             '/<img src="cid:image001.png@(.+?)" alt="CI Logo">/u',
             $email->archive['body'],
         );
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function testGetHostnameUsesServerName(): void
+    {
+        $email = $this->createMockEmail();
+
+        $superglobals = service('superglobals');
+        $superglobals->setServer('SERVER_NAME', 'example.test');
+
+        $getHostname = self::getPrivateMethodInvoker($email, 'getHostname');
+
+        $this->assertSame('example.test', $getHostname());
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function testGetHostnameUsesServerAddr(): void
+    {
+        $email = $this->createMockEmail();
+
+        $superglobals = service('superglobals');
+        $superglobals->setServer('SERVER_NAME', '');
+        $superglobals->setServer('SERVER_ADDR', '192.168.1.10');
+
+        $getHostname = self::getPrivateMethodInvoker($email, 'getHostname');
+
+        $this->assertSame('[192.168.1.10]', $getHostname());
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function testGetHostnameFallsBackToGethostnameFunction(): void
+    {
+        $email = $this->createMockEmail();
+
+        $superglobals = service('superglobals');
+        $superglobals->setServer('SERVER_NAME', '');
+        $superglobals->setServer('SERVER_ADDR', '');
+
+        $getHostname = self::getPrivateMethodInvoker($email, 'getHostname');
+
+        $this->assertSame(gethostname(), $getHostname());
     }
 }
