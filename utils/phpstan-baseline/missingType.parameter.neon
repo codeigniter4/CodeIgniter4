@@ -1,4 +1,4 @@
-# total 47 errors
+# total 36 errors
 
 parameters:
     ignoreErrors:
@@ -11,61 +11,6 @@ parameters:
             message: '#^Method CodeIgniter\\Database\\PreparedQueryInterface\:\:execute\(\) has parameter \$data with no type specified\.$#'
             count: 1
             path: ../../system/Database/PreparedQueryInterface.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:__construct\(\) has parameter \$formatter with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:__construct\(\) has parameter \$request with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:__construct\(\) has parameter \$response with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:__construct\(\) has parameter \$formatter with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:__construct\(\) has parameter \$request with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:__construct\(\) has parameter \$response with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:__construct\(\) has parameter \$formatter with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:__construct\(\) has parameter \$request with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:__construct\(\) has parameter \$response with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:609\:\:__construct\(\) has parameter \$request with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:609\:\:__construct\(\) has parameter \$response with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
 
         -
             message: '#^Method CodeIgniter\\Commands\\Utilities\\Routes\\AutoRouterImproved\\Controllers\\Dash_folder\\Dash_controller\:\:getDash_method\(\) has parameter \$p1 with no type specified\.$#'

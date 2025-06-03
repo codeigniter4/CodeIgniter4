@@ -1,4 +1,4 @@
-# total 582 errors
+# total 581 errors
 
 parameters:
     ignoreErrors:
@@ -16,11 +16,6 @@ parameters:
             message: '#^Assigning string directly on offset ''QUERY_STRING'' of \$_SERVER is discouraged\.$#'
             count: 3
             path: ../../system/HTTP/IncomingRequest.php
-
-        -
-            message: '#^Assigning string directly on offset ''CONTENT_TYPE'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
 
         -
             message: '#^Assigning 3 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'

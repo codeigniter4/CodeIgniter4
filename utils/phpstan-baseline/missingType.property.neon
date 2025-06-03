@@ -1,4 +1,4 @@
-# total 115 errors
+# total 109 errors
 
 parameters:
     ignoreErrors:
@@ -66,21 +66,6 @@ parameters:
             message: '#^Property CodeIgniter\\Test\\Mock\\MockSession\:\:\$didRegenerate has no type specified\.$#'
             count: 1
             path: ../../system/Test/Mock/MockSession.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:\$formatter has no type specified\.$#'
-            count: 2
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:\$formatter has no type specified\.$#'
-            count: 2
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:\$formatter has no type specified\.$#'
-            count: 2
-            path: ../../tests/system/API/ResponseTraitTest.php
 
         -
             message: '#^Property CodeIgniter\\Config\\Factory@anonymous/tests/system/Config/FactoriesTest\.php\:89\:\:\$widgets has no type specified\.$#'
