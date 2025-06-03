@@ -229,7 +229,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
+        $this->db->shouldReturn('execute', new class () {});
         $builder->updateBatch($updateData, 'id');
 
         $query = $this->db->getLastQuery();
@@ -268,7 +268,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ], 'id', $escape);
 
-        $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
+        $this->db->shouldReturn('execute', new class () {});
         $builder->updateBatch(null, 'id');
 
         $query = $this->db->getLastQuery();

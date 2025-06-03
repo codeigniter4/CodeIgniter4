@@ -696,6 +696,8 @@ class CURLRequest extends OutgoingRequest
      * Does the actual work of initializing cURL, setting the options,
      * and grabbing the output.
      *
+     * @param array<int, mixed> $curlOptions
+     *
      * @codeCoverageIgnore
      */
     protected function sendRequest(array $curlOptions = []): string

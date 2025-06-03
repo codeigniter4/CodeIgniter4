@@ -214,8 +214,9 @@ class MockCache extends BaseHandler implements CacheInterface
     /**
      * Returns detailed information about the specific item in the cache.
      *
-     * @return array|null Returns null if the item does not exist, otherwise array<string, mixed>
-     *                    with at least the 'expire' key for absolute epoch expiry (or null).
+     * @return array{expire: int|null}|null Returns null if the item does not exist,
+     *                                      otherwise, array with the 'expire' key for
+     *                                      absolute epoch expiry (or null).
      */
     public function getMetaData(string $key)
     {

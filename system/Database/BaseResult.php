@@ -529,9 +529,9 @@ abstract class BaseResult implements ResultInterface
     /**
      * Returns the result set as an object.
      *
-     * Overridden by child classes.
+     * @param class-string $className
      *
-     * @return Entity|false|object|stdClass
+     * @return false|object
      */
-    abstract protected function fetchObject(string $className = 'stdClass');
+    abstract protected function fetchObject(string $className = stdClass::class);
 }
