@@ -587,8 +587,10 @@ if (! function_exists('random_string')) {
         }
 
         throw new InvalidArgumentException(
-            sprintf('Invalid type "%s". Accepted types: alpha, alnum, numeric, nozero, or crypto.'),
-            $type,
+            sprintf(
+                'Invalid type "%s". Accepted types: alpha, alnum, numeric, nozero, or crypto.',
+                $type,
+            ),
         );
     }
 }
