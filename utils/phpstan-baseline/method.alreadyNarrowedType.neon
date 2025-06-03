@@ -1,4 +1,4 @@
-# total 24 errors
+# total 23 errors
 
 parameters:
     ignoreErrors:
@@ -6,11 +6,6 @@ parameters:
             message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with bool will always evaluate to true\.$#'
             count: 1
             path: ../../admin/starter/tests/unit/HealthTest.php
-
-        -
-            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with bool will always evaluate to true\.$#'
-            count: 1
-            path: ../../tests/system/Autoloader/AutoloaderTest.php
 
         -
             message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsBool\(\) with bool will always evaluate to true\.$#'
