@@ -151,7 +151,7 @@ final class TextHelperTest extends CIUnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'You must set a valid type to the first parameter when you use `random_string`.',
+           'Invalid type "basic". Accepted types: alpha, alnum, numeric, nozero, or crypto.',
         );
 
         random_string('basic');

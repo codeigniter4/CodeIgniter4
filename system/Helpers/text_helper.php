@@ -545,7 +545,7 @@ if (! function_exists('random_string')) {
      *
      * Useful for generating passwords or hashes.
      *
-     * @param string $type Type of random string.  basic, alpha, alnum, numeric, nozero, md5, sha1, and crypto
+     * @param string $type Type of random string:  alpha, alnum, numeric, nozero, or crypto
      * @param int    $len  Number of characters
      */
     function random_string(string $type = 'alnum', int $len = 8): string
@@ -587,7 +587,8 @@ if (! function_exists('random_string')) {
         }
 
         throw new InvalidArgumentException(
-            'You must set a valid type to the first parameter when you use `random_string`.',
+            sprintf('Invalid type "%s". Accepted types: alpha, alnum, numeric, nozero, or crypto.'),
+            $type,
         );
     }
 }
