@@ -78,6 +78,8 @@ final class MockInputOutput extends InputOutput
 
     /**
      * Returns the outputs array.
+     *
+     * @return list<string>
      */
     public function getOutputs(): array
     {

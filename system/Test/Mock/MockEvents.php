@@ -18,7 +18,7 @@ use CodeIgniter\Events\Events;
 class MockEvents extends Events
 {
     /**
-     * @return array
+     * @return array<string, array{0: bool, 1: list<int>, 2: list<callable(mixed): mixed>}>
      */
     public function getListeners()
     {
@@ -26,7 +26,7 @@ class MockEvents extends Events
     }
 
     /**
-     * @return array<int, string>
+     * @return list<string>
      */
     public function getEventsFile()
     {

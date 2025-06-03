@@ -1,4 +1,4 @@
-# total 1491 errors
+# total 1479 errors
 
 parameters:
     ignoreErrors:
@@ -1158,11 +1158,6 @@ parameters:
             path: ../../system/Database/BaseBuilder.php
 
         -
-            message: '#^Property CodeIgniter\\Database\\BaseBuilder\:\:\$supportedIgnoreStatements type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseBuilder.php
-
-        -
             message: '#^Class CodeIgniter\\Database\\BaseConnection has PHPDoc tag @property\-read for property \$aliasedTables with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/BaseConnection.php
@@ -1663,11 +1658,6 @@ parameters:
             path: ../../system/Database/MigrationRunner.php
 
         -
-            message: '#^Property CodeIgniter\\Database\\MySQLi\\Builder\:\:\$supportedIgnoreStatements type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Builder.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\MySQLi\\Forge\:\:_alterTable\(\) has parameter \$processedFields with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/MySQLi/Forge.php
@@ -1824,11 +1814,6 @@ parameters:
 
         -
             message: '#^Property CodeIgniter\\Database\\Postgre\\Builder\:\:\$randomKeyword type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Builder.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\Postgre\\Builder\:\:\$supportedIgnoreStatements type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/Postgre/Builder.php
 
@@ -2114,11 +2099,6 @@ parameters:
 
         -
             message: '#^Property CodeIgniter\\Database\\SQLite3\\Builder\:\:\$randomKeyword type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Builder.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\SQLite3\\Builder\:\:\$supportedIgnoreStatements type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/SQLite3/Builder.php
 
@@ -3134,11 +3114,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\HTTP\\CURLRequest\:\:request\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/CURLRequest.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\CURLRequest\:\:sendRequest\(\) has parameter \$curlOptions with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/CURLRequest.php
 
@@ -5048,31 +5023,6 @@ parameters:
             path: ../../system/Test/Fabricator.php
 
         -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockBuilder\:\:\$supportedIgnoreStatements type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockBuilder.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockCURLRequest\:\:sendRequest\(\) has parameter \$curlOptions with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockCURLRequest.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockCache\:\:getMetaData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockCache.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockEvents\:\:getListeners\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockEvents.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockInputOutput\:\:getOutputs\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockInputOutput.php
-
-        -
             message: '#^Method CodeIgniter\\Test\\Mock\\MockLanguage\:\:requireFile\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Test/Mock/MockLanguage.php
@@ -5081,16 +5031,6 @@ parameters:
             message: '#^Method CodeIgniter\\Test\\Mock\\MockLanguage\:\:setData\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Test/Mock/MockLanguage.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockResult\:\:getFieldData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockResult\:\:getFieldNames\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockResult.php
 
         -
             message: '#^Method CodeIgniter\\Test\\TestResponse\:\:assertJSONExact\(\) has parameter \$test with no value type specified in iterable type array\.$#'

@@ -108,24 +108,39 @@ final class BaseConnectionTest extends CIUnitTestCase
 
     public function testCanConnectAndStoreConnection(): void
     {
-        $db = new MockConnection($this->options);
-        $db->shouldReturn('connect', 123)->initialize();
+        $conn = new class () {};
 
-        $this->assertSame(123, $db->getConnection());
+        $db = new MockConnection($this->options);
+        $db->shouldReturn('connect', $conn)->initialize();
+
+        $this->assertSame($conn, $db->getConnection());
     }
 
     public function testCanConnectToFailoverWhenNoConnectionAvailable(): void
     {
-        $options             = $this->options;
-        $options['failover'] = [$this->failoverOptions];
+        $options = [
+            ...$this->options,
+            ...['failover' => [$this->failoverOptions]],
+        ];
 
-        $db = new class ($options) extends MockConnection {
-            protected $returnValues = [
-                'connect' => [false, 345],
-            ];
+        $conn = new class () {};
+
+        $db = new class ($options, $conn) extends MockConnection {
+            /**
+             * @param array<string, mixed> $params
+             */
+            public function __construct(array $params, object $return)
+            {
+                // need to call it here before any initialization
+                // we cannot do it directly in the property as objects
+                // cannot be set directly in properties
+                $this->shouldReturn('connect', [false, $return]);
+
+                parent::__construct($params);
+            }
         };
 
-        $this->assertSame(345, $db->getConnection());
+        $this->assertSame($conn, $db->getConnection());
         $this->assertSame('failover', $db->username);
     }
 
