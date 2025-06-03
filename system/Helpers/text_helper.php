@@ -547,8 +547,6 @@ if (! function_exists('random_string')) {
      *
      * @param string $type Type of random string.  basic, alpha, alnum, numeric, nozero, md5, sha1, and crypto
      * @param int    $len  Number of characters
-     *
-     * @deprecated The type 'basic', 'md5', and 'sha1' are deprecated. They are not cryptographically secure.
      */
     function random_string(string $type = 'alnum', int $len = 8): string
     {
@@ -578,12 +576,6 @@ if (! function_exists('random_string')) {
 
                 return sprintf('%0' . $len . 'd', $rand);
 
-            case 'md5':
-                return md5(uniqid((string) mt_rand(), true));
-
-            case 'sha1':
-                return sha1(uniqid((string) mt_rand(), true));
-
             case 'crypto':
                 if ($len % 2 !== 0) {
                     throw new InvalidArgumentException(
@@ -594,8 +586,9 @@ if (! function_exists('random_string')) {
                 return bin2hex(random_bytes($len / 2));
         }
 
-        // 'basic' type treated as default
-        return (string) mt_rand();
+        throw new InvalidArgumentException(
+            'You must set a valid type to the first parameter when you use `random_string`.',
+        );
     }
 }
 

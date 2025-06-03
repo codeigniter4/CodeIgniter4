@@ -1,4 +1,4 @@
-# total 24 errors
+# total 23 errors
 
 parameters:
     ignoreErrors:
@@ -59,7 +59,7 @@ parameters:
 
         -
             message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsString\(\) with string will always evaluate to true\.$#'
-            count: 2
+            count: 1
             path: ../../tests/system/Helpers/TextHelperTest.php
 
         -

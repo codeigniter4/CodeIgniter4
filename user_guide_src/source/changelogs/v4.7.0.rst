@@ -31,6 +31,11 @@ Interface Changes
 Method Signature Changes
 ========================
 
+Removed Deprecated Items
+========================
+
+- **Text Helper:** The deprecated types in ``random_string()`` function: ``basic``, ``md5``, and ``sha1`` has been removed.
+
 ************
 Enhancements
 ************
