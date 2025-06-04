@@ -102,6 +102,8 @@ abstract class BaseCommand
      * @param array<int|string, string|null> $params
      *
      * @return int|void
+     *
+     * @deprecated 4.6.1 Using `void` as a return value is deprecated. Use `int` to return the exit code.
      */
     abstract public function run(array $params);
 
@@ -113,6 +115,8 @@ abstract class BaseCommand
      * @return int|void
      *
      * @throws ReflectionException
+     *
+     * @deprecated 4.6.1 Using `void` as a return value is deprecated. Use `int` to return the exit code.
      */
     protected function call(string $command, array $params = [])
     {

@@ -31,6 +31,8 @@ class Console
      * @return int|void Exit code
      *
      * @throws Exception
+     *
+     * @deprecated 4.6.1 Using `void` as a return value is deprecated. Use `int` to return the exit code.
      */
     public function run()
     {
