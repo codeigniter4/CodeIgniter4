@@ -113,7 +113,7 @@ class FormatRulesTest extends CIUnitTestCase
             'phone'      => '1234567890',
             'prefix'     => 'ABC',
             'min_digits' => 10,
-            'max_digits' => 15
+            'max_digits' => 15,
         ];
 
         $this->validation->setRules([
