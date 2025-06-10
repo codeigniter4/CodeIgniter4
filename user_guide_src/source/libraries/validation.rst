@@ -976,7 +976,10 @@ numeric                 No         Fails if field contains anything other than
 permit_empty            No         Allows the field to receive an empty array,
                                    empty string, null or false.
 regex_match             Yes        Fails if field does not match the regular     ``regex_match[/regex/]``
-                                   expression.
+                                   expression. **Note:** Since v4.7.0, if
+                                   you're using a placeholder with this rule,
+                                   you must use double braces ``{{...}}``
+                                   instead of single ones ``{...}``.
 required                No         Fails if the field is an empty array, empty
                                    string, null or false.
 required_with           Yes        The field is required when any of the other   ``required_with[field1,field2]``
