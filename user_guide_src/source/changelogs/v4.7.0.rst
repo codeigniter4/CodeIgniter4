@@ -23,6 +23,16 @@ BREAKING
 Behavior Changes
 ================
 
+Validation Rules
+----------------
+
+Placeholders in the ``regex_match`` validation rule must now use double curly braces.
+If you previously used single braces like ``regex_match[/^{placeholder}$/]``, you must
+update it to use double braces: ``regex_match[/^{{placeholder}}$/]``.
+
+This change was introduced to avoid ambiguity with regular expression syntax,
+where single curly braces (e.g., ``{1,3}``) are used for quantifiers.
+
 Interface Changes
 =================
 
