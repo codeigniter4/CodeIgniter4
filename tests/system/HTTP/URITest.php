@@ -622,6 +622,22 @@ final class URITest extends CIUnitTestCase
                 'http://me@foo.com:3000/bar',
                 'me@foo.com:3000',
             ],
+            'rtsp-with-port' => [
+                'rtsp://localhost:1234/stream',
+                'localhost:1234',
+            ],
+            'rtsp-no-port' => [
+                'rtsp://localhost/stream',
+                'localhost',
+            ],
+            'custom-scheme-with-port' => [
+                'myscheme://server:9999/resource',
+                'server:9999',
+            ],
+            'custom-scheme-no-port' => [
+                'myscheme://server/resource',
+                'server',
+            ],
         ];
     }
 
@@ -1225,5 +1241,18 @@ final class URITest extends CIUnitTestCase
         $uri      = new URI($expected);
 
         $this->assertSame($expected, (string) $uri);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9604
+     */
+    public function testAuthorityIncludesPortForCustomSchemes(): void
+    {
+        $url = 'rtsp://localhost:1234/stream';
+        $uri = new URI($url);
+
+        $this->assertSame('rtsp://localhost:1234/stream', (string) $uri);
+        $this->assertSame('localhost:1234', $uri->getAuthority());
+        $this->assertSame(1234, $uri->getPort());
     }
 }
