@@ -341,5 +341,7 @@ final class PreparedQueryTest extends CIUnitTestCase
             'key'   => 'test_key',
             'value' => 'test_value'
         ]);
+
+        $this->db->resetTransStatus();
     }
 }
