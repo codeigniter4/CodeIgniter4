@@ -40,7 +40,7 @@ Bugs Fixed
 - **Email:** Fixed a bug where ``Email::getHostname()`` failed to use ``$_SERVER['SERVER_ADDR']`` when ``$_SERVER['SERVER_NAME']`` was not set.
 - **Security:** Fixed a bug where the ``sanitize_filename()`` function from the Security helper would throw an error when used in CLI requests.
 - **Session:** Fixed a bug where using the ``DatabaseHandler`` with an unsupported database driver (such as ``SQLSRV``, ``OCI8``, or ``SQLite3``) did not throw an appropriate error.
-- **URI:** Fixes a bug in ``URI::getAuthority()`` where schemes without defined default ports (like ``rtsp://``) would cause issues due to missing array key handling.
+- **URI:** Fixed a bug in ``URI::getAuthority()`` where schemes without defined default ports (like ``rtsp://``) would cause issues due to missing array key handling.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
