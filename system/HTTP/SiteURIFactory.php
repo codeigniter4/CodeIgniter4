@@ -111,9 +111,43 @@ final class SiteURIFactory
      */
     private function parseRequestURI(): string
     {
+        $serverScriptName = $this->superglobals->server('SCRIPT_NAME'); // This is the SCRIPT_NAME, it's a variable that contains the name of the script being executed, it's used from the codeigniter framework to perform the routing process.
+        // We need to check if the project is in a subdirectory
+        $projectIsInSubDir = false; // Variable used to check if the project is in a subdirectory
+        $baseURLConfig = config(\Config\App::class)->baseURL; // Base URL configuration from the Config\App class or .env file
+        $baseUrlParsed = parse_url($baseURLConfig); // PHP function to parse the URL
+        $baseUrlPath = ""; // If the url does not have a / at the end like https://example.com the path will not be set by parse_url
+        if(isset($baseUrlParsed['path'])) { // Check if the path is set in the parsed URL (read the line above)
+            $baseUrlPath = $baseUrlParsed['path'] ?? "";
+        }
+
+        // We need to check that the project is in a subdirectory, if it is in a subdirectory we need to remove the public directory from the script name
+        $baseUrlPathArr = explode('/', $baseUrlPath);
+        foreach($baseUrlPathArr as $i => $pathFragment){
+            if($pathFragment === "") unset($baseUrlPathArr[$i]);
+        }
+        if(count($baseUrlPathArr) > 0){ // Check that the path has at least one fragment
+            $projectIsInSubDir = true; // The project is running in a subdirectory
+        }
+
+        // We need to remove public from the script name, this way we can correctly perform the routing
+        if($projectIsInSubDir){
+            $subDirPath = "/" . implode("/", $baseUrlPathArr); // This is the path of the subdirectory, we are using arrays because it can be multiple levels deep
+            $subDirPathPosition = strpos($serverScriptName, $subDirPath."/public"); // This is the position of the public directory in the script name. The strpos function returns only the first instance
+            if ($subDirPathPosition !== false) { // We are checking if the public directory is found in the script name.
+                $serverScriptName = substr_replace(
+                    $serverScriptName, // The input string.
+                    $subDirPath, // The replacement string.
+                    $subDirPathPosition, // The offset from where we are replacing.
+                    strlen($subDirPath."/public") // The length of the portion of string which is to be replaced.
+                );
+            }
+        }
+
+
         if (
             $this->superglobals->server('REQUEST_URI') === null
-            || $this->superglobals->server('SCRIPT_NAME') === null
+            || $serverScriptName === null
         ) {
             return '';
         }
@@ -128,13 +162,13 @@ final class SiteURIFactory
 
         // Strip the SCRIPT_NAME path from the URI
         if (
-            $path !== '' && $this->superglobals->server('SCRIPT_NAME') !== ''
-            && pathinfo($this->superglobals->server('SCRIPT_NAME'), PATHINFO_EXTENSION) === 'php'
+            $path !== '' && $serverScriptName !== ''
+            && pathinfo($serverScriptName, PATHINFO_EXTENSION) === 'php'
         ) {
             // Compare each segment, dropping them until there is no match
             $segments = $keep = explode('/', $path);
 
-            foreach (explode('/', $this->superglobals->server('SCRIPT_NAME')) as $i => $segment) {
+            foreach (explode('/', $serverScriptName) as $i => $segment) {
                 // If these segments are not the same then we're done
                 if (! isset($segments[$i]) || $segment !== $segments[$i]) {
                     break;
