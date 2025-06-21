@@ -210,6 +210,8 @@ Config
     - ``Config\Feature::$strictLocaleNegotiation`` has been added.
 - app/Config/Routing.php
     - ``Config\Routing::$translateUriToCamelCase`` has been changed to ``true``.
+- app/Config/Kint.php
+    - ``Config\Kint::$richSort`` has been removed.
 
 All Changes
 ===========
@@ -222,7 +224,6 @@ many will be simple comments or formatting that have no effect on the runtime:
 - app/Config/Database.php
 - app/Config/Feature.php
 - app/Config/Format.php
-- app/Config/Kint.php
 - app/Config/Routing.php
 - app/Config/Security.php
 - app/Views/errors/html/debug.css
