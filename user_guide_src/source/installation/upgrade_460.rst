@@ -211,7 +211,7 @@ Config
 - app/Config/Routing.php
     - ``Config\Routing::$translateUriToCamelCase`` has been changed to ``true``.
 - app/Config/Kint.php
-    - ``Config\Kint::$richSort`` has been removed.
+    - ``Config\Kint::$richSort`` has been removed. Kint in v6 no longer uses ``AbstractRenderer::SORT_FULL``. Leaving this property in your code will cause a runtime error due to the undefined constant.
 
 All Changes
 ===========
