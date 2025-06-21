@@ -224,6 +224,7 @@ many will be simple comments or formatting that have no effect on the runtime:
 - app/Config/Database.php
 - app/Config/Feature.php
 - app/Config/Format.php
+- app/Config/Kint.php
 - app/Config/Routing.php
 - app/Config/Security.php
 - app/Views/errors/html/debug.css
