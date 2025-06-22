@@ -592,6 +592,13 @@ and it is recommended that you merge the updated versions with your application:
 </dd>
 </dl>
 </li>
+<li><dl class="simple">
+<dt>app/Config/Kint.php</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Config\Kint::$richSort</span></code> has been removed. Kint in v6 no longer uses <code class="docutils literal notranslate"><span class="pre">AbstractRenderer::SORT_FULL</span></code>. Leaving this property in your code will cause a runtime error due to the undefined constant.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </section>
 </section>
