@@ -111,8 +111,32 @@ final class SiteURIFactory
      */
     private function parseRequestURI(): string
     {
+        $appConfig = config(\Config\App::class);
+        $baseUrl = $appConfig->baseURL;
+        $indexPage = $appConfig->indexPage;
+        $baseUri = false;
+        $parsedUrl = parse_url($baseUrl);
+        
+        if(isset($parsedUrl['path'])){ // The path could be empty if the url is just a domain
+            $baseUri = $parsedUrl['path'];
+        }
+        if($baseUri){
+            $baseUriArray = explode('/', $baseUri);
+            $baseUriArray = array_filter($baseUriArray); // We remove the empty strings from the array
+            $baseUri = implode('/', $baseUriArray); // We join the array back into a string with slashes
+            if(strlen($baseUri) > 0){
+                $baseUri = "/" . $baseUri; // We add a slash at the beginning of the base Uri as implode will not do that
+            }else{
+                $baseUri = false;
+            }
+        }
+
+        $serverRequestUri = $this->superglobals->server('REQUEST_URI'); // We get the request URI from the server superglobals
+        if($baseUri) $serverRequestUri = ltrim($serverRequestUri, $baseUri); // We remove the base Uri from the request URI if it exists, baseUri is the path to the subdirectory
+        if($indexPage) $serverRequestUri = ltrim($serverRequestUri, "/" . $indexPage); // We remove the index page from the request URI if it exists
+
         if (
-            $this->superglobals->server('REQUEST_URI') === null
+            $serverRequestUri === null
             || $this->superglobals->server('SCRIPT_NAME') === null
         ) {
             return '';
@@ -122,7 +146,7 @@ final class SiteURIFactory
         // string contains a colon followed by a number. So we attach a dummy
         // host since REQUEST_URI does not include the host. This allows us to
         // parse out the query string and path.
-        $parts = parse_url('http://dummy' . $this->superglobals->server('REQUEST_URI'));
+        $parts = parse_url('http://dummy' . $serverRequestUri);
         $query = $parts['query'] ?? '';
         $path  = $parts['path'] ?? '';
 
