@@ -135,7 +135,7 @@ final class SiteURIFactory
 
         if(!is_null($serverRequestUri)){
             if($baseUri && str_starts_with($serverRequestUri, $baseUri)) $serverRequestUri = substr($serverRequestUri, strlen($baseUri)); // We remove the base Uri from the request URI if it exists, baseUri is the path to the subdirectory
-            if($indexPage && str_starts_with($serverRequestUri, "/" . $indexPage)) $serverRequestUri = substr($serverRequestUri, strlen("/" . $indexPage)); // We remove the index page from the request URI if it exists
+            if($indexPage != false && str_starts_with($serverRequestUri, "/" . $indexPage)) $serverRequestUri = substr($serverRequestUri, strlen("/" . $indexPage)); // We remove the index page from the request URI if it exists
             $serverRequestUri = "/". ltrim($serverRequestUri, '/'); // makes sure that the uri starts with a slash
         }
 
