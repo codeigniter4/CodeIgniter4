@@ -111,32 +111,36 @@ final class SiteURIFactory
      */
     private function parseRequestURI(): string
     {
-        $appConfig = config(\Config\App::class);
-        $baseUrl = $appConfig->baseURL;
+        $appConfig = config(App::class);
+        $baseUrl   = $appConfig->baseURL;
         $indexPage = $appConfig->indexPage;
-        $baseUri = false;
+        $baseUri   = false;
         $parsedUrl = parse_url($baseUrl);
-        
-        if(isset($parsedUrl['path'])){ // The path could be empty if the url is just a domain
+
+        if (isset($parsedUrl['path'])) { // The path could be empty if the url is just a domain
             $baseUri = $parsedUrl['path'];
         }
-        if($baseUri){
+        if ($baseUri) {
             $baseUriArray = explode('/', $baseUri);
             $baseUriArray = array_filter($baseUriArray); // We remove the empty strings from the array
-            $baseUri = implode('/', $baseUriArray); // We join the array back into a string with slashes
-            if(strlen($baseUri) > 0){
-                $baseUri = "/" . $baseUri; // We add a slash at the beginning of the base Uri as implode will not do that
-            }else{
+            $baseUri      = implode('/', $baseUriArray); // We join the array back into a string with slashes
+            if ($baseUri !== '') {
+                $baseUri = '/' . $baseUri; // We add a slash at the beginning of the base Uri as implode will not do that
+            } else {
                 $baseUri = false;
             }
         }
 
         $serverRequestUri = $this->superglobals->server('REQUEST_URI'); // We get the request URI from the server superglobals
 
-        if(!is_null($serverRequestUri)){
-            if($baseUri && str_starts_with($serverRequestUri, $baseUri)) $serverRequestUri = substr($serverRequestUri, strlen($baseUri)); // We remove the base Uri from the request URI if it exists, baseUri is the path to the subdirectory
-            if($indexPage != false && str_starts_with($serverRequestUri, "/" . $indexPage)) $serverRequestUri = substr($serverRequestUri, strlen("/" . $indexPage)); // We remove the index page from the request URI if it exists
-            $serverRequestUri = "/". ltrim($serverRequestUri, '/'); // makes sure that the uri starts with a slash
+        if (null !== $serverRequestUri) {
+            if ($baseUri && str_starts_with($serverRequestUri, $baseUri)) {
+                $serverRequestUri = substr($serverRequestUri, strlen($baseUri));
+            } // We remove the base Uri from the request URI if it exists, baseUri is the path to the subdirectory
+            if ($indexPage !== false && str_starts_with($serverRequestUri, '/' . $indexPage)) {
+                $serverRequestUri = substr($serverRequestUri, strlen('/' . $indexPage));
+            } // We remove the index page from the request URI if it exists
+            $serverRequestUri = '/' . ltrim($serverRequestUri, '/'); // makes sure that the uri starts with a slash
         }
 
         if (
