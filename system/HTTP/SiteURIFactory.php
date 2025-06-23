@@ -132,8 +132,10 @@ final class SiteURIFactory
         }
 
         $serverRequestUri = $this->superglobals->server('REQUEST_URI'); // We get the request URI from the server superglobals
-        if($baseUri) $serverRequestUri = ltrim($serverRequestUri, $baseUri); // We remove the base Uri from the request URI if it exists, baseUri is the path to the subdirectory
-        if($indexPage) $serverRequestUri = ltrim($serverRequestUri, "/" . $indexPage); // We remove the index page from the request URI if it exists
+
+        if($baseUri && !is_null($serverRequestUri)) $serverRequestUri = ltrim($serverRequestUri, $baseUri); // We remove the base Uri from the request URI if it exists, baseUri is the path to the subdirectory
+        if($indexPage && !is_null($serverRequestUri)) $serverRequestUri = ltrim($serverRequestUri, "/" . $indexPage); // We remove the index page from the request URI if it exists
+        $serverRequestUri = "/". ltrim($serverRequestUri, '/'); // makes sure that the uri starts with a slash
 
         if (
             $serverRequestUri === null
