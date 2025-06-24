@@ -111,7 +111,7 @@ final class SiteURIFactory
      */
     private function parseRequestURI(): string
     {
-        $appConfig = $this->appConfig;
+        $appConfig = config(App::class);
         $baseUrl   = $appConfig->baseURL;
         $indexPage = $appConfig->indexPage;
         $baseUri   = false;

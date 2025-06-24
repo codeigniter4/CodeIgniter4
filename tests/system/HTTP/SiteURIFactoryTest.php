@@ -171,4 +171,44 @@ final class SiteURIFactoryTest extends CIUnitTestCase
             ],
         ];
     }
+
+    public function testCreateFromStringWithIndexPageSubDirCombinations(){
+        $standardUrl = "http://localhost:8080";
+        $subDirectoryAppsOptions = array(
+            array(
+                "subDir" => "",
+                "indexPage" => ""
+            ),
+            array(
+                "subDir" => "",
+                "indexPage" => "index.php"
+            ),
+            array(
+                "subDir" => "/subdir",
+                "indexPage" => ""
+            ),
+            array(
+                "subDir" => "/subdir",
+                "indexPage" => "index.php"
+            ),
+            array(
+                "subDir" => "/subdir/subsubdir",
+                "indexPage" => "index.php"
+            ),
+        );
+        foreach($subDirectoryAppsOptions as $option){
+            $route = "woot";
+            config(App::class)->baseURL = $standardUrl . $option["subDir"];
+            config(App::class)->indexPage = $option["indexPage"];
+            
+            $_SERVER['PATH_INFO']    = '/' . $route;
+            $_SERVER['REQUEST_URI']  = $option["subDir"] . "/" . $option["indexPage"] . $_SERVER['PATH_INFO'];
+            $_SERVER['SCRIPT_NAME']  = $option["subDir"] . "/" .$option["indexPage"];
+            $_SERVER['HTTP_HOST']    = $standardUrl;
+
+            $factory = $this->createSiteURIFactory();
+            $detectedRoutePath = $factory->detectRoutePath();
+            $this->assertSame($route, $detectedRoutePath);
+        }
+    }
 }
