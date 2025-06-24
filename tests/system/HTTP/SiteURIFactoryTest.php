@@ -172,41 +172,43 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         ];
     }
 
-    public function testCreateFromStringWithIndexPageSubDirCombinations(){
-        $standardUrl = "http://localhost:8080";
+    public function testCreateFromStringWithIndexPageSubDirCombinations(): void
+    {
+        $standardUrl             = 'http://localhost:8080';
         $subDirectoryAppsOptions = [
             [
-                "subDir" => "",
-                "indexPage" => ""
+                'subDir'    => '',
+                'indexPage' => '',
             ],
             [
-                "subDir" => "",
-                "indexPage" => "index.php"
+                'subDir'    => '',
+                'indexPage' => 'index.php',
             ],
             [
-                "subDir" => "/subdir",
-                "indexPage" => ""
+                'subDir'    => '/subdir',
+                'indexPage' => '',
             ],
             [
-                "subDir" => "/subdir",
-                "indexPage" => "index.php"
+                'subDir'    => '/subdir',
+                'indexPage' => 'index.php',
             ],
             [
-                "subDir" => "/subdir/subsubdir",
-                "indexPage" => "index.php"
+                'subDir'    => '/subdir/subsubdir',
+                'indexPage' => 'index.php',
             ],
         ];
-        foreach($subDirectoryAppsOptions as $option){
-            $route = "woot";
-            config(App::class)->baseURL = $standardUrl . $option["subDir"];
-            config(App::class)->indexPage = $option["indexPage"];
-            
-            $_SERVER['PATH_INFO']    = '/' . $route;
-            $_SERVER['REQUEST_URI']  = $option["subDir"] . "/" . $option["indexPage"] . $_SERVER['PATH_INFO'];
-            $_SERVER['SCRIPT_NAME']  = $option["subDir"] . "/" .$option["indexPage"];
-            $_SERVER['HTTP_HOST']    = $standardUrl;
 
-            $factory = $this->createSiteURIFactory();
+        foreach ($subDirectoryAppsOptions as $option) {
+            $route                        = 'woot';
+            config(App::class)->baseURL   = $standardUrl . $option['subDir'];
+            config(App::class)->indexPage = $option['indexPage'];
+
+            $_SERVER['PATH_INFO']   = '/' . $route;
+            $_SERVER['REQUEST_URI'] = $option['subDir'] . '/' . $option['indexPage'] . $_SERVER['PATH_INFO'];
+            $_SERVER['SCRIPT_NAME'] = $option['subDir'] . '/' . $option['indexPage'];
+            $_SERVER['HTTP_HOST']   = $standardUrl;
+
+            $factory           = $this->createSiteURIFactory();
             $detectedRoutePath = $factory->detectRoutePath();
             $this->assertSame($route, $detectedRoutePath);
         }
