@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\Cache;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -26,8 +28,7 @@ final class DummyHandlerTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        $this->handler = new DummyHandler();
-        $this->handler->initialize();
+        $this->handler = CacheFactory::getHandler(new Cache(), 'dummy');
     }
 
     public function testNew(): void

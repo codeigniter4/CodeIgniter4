@@ -35,6 +35,7 @@ final class CacheMockTest extends CIUnitTestCase
 
     public function testMockCaching(): void
     {
+        /** @var MockCache $mock */
         $mock = mock(CacheFactory::class);
 
         // Ensure it stores the value normally

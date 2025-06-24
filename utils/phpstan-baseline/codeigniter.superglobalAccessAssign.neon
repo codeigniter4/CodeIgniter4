@@ -1,4 +1,4 @@
-# total 466 errors
+# total 463 errors
 
 parameters:
     ignoreErrors:
@@ -21,21 +21,6 @@ parameters:
             message: '#^Assigning ''http\://example\.com/'' directly on offset ''app\.baseURL'' of \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../tests/system/CLI/ConsoleTest.php
-
-        -
-            message: '#^Assigning ''/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/Cache/ResponseCacheTest.php
-
-        -
-            message: '#^Assigning ''public/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/Cache/ResponseCacheTest.php
-
-        -
-            message: '#^Assigning non\-falsy\-string directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/Cache/ResponseCacheTest.php
 
         -
             message: '#^Assigning ''/'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'

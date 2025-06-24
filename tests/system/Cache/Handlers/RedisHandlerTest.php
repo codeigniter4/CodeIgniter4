@@ -48,11 +48,8 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
             $this->markTestSkipped('redis extension not loaded.');
         }
 
-        $this->config = new Cache();
-
-        $this->handler = new RedisHandler($this->config);
-
-        $this->handler->initialize();
+        $this->config  = new Cache();
+        $this->handler = CacheFactory::getHandler($this->config, 'redis');
     }
 
     protected function tearDown(): void
@@ -69,9 +66,7 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
 
     public function testDestruct(): void
     {
-        $this->handler = new RedisHandler($this->config);
-        $this->handler->initialize();
-
+        $this->handler = CacheFactory::getHandler($this->config, 'redis');
         $this->assertInstanceOf(RedisHandler::class, $this->handler);
     }
 

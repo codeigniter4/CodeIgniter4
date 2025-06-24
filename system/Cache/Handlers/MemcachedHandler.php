@@ -38,7 +38,7 @@ class MemcachedHandler extends BaseHandler
     /**
      * Memcached Configuration
      *
-     * @var array
+     * @var array{host: string, port: int, weight: int, raw: bool}
      */
     protected $config = [
         'host'   => '127.0.0.1',
@@ -76,43 +76,32 @@ class MemcachedHandler extends BaseHandler
     {
         try {
             if (class_exists(Memcached::class)) {
-                // Create new instance of Memcached
                 $this->memcached = new Memcached();
+
                 if ($this->config['raw']) {
                     $this->memcached->setOption(Memcached::OPT_BINARY_PROTOCOL, true);
                 }
 
-                // Add server
                 $this->memcached->addServer(
                     $this->config['host'],
                     $this->config['port'],
                     $this->config['weight'],
                 );
 
-                // attempt to get status of servers
                 $stats = $this->memcached->getStats();
 
                 // $stats should be an associate array with a key in the format of host:port.
                 // If it doesn't have the key, we know the server is not working as expected.
-                if (! isset($stats[$this->config['host'] . ':' . $this->config['port']])) {
+                if (! is_array($stats) || ! isset($stats[$this->config['host'] . ':' . $this->config['port']])) {
                     throw new CriticalError('Cache: Memcached connection failed.');
                 }
             } elseif (class_exists(Memcache::class)) {
-                // Create new instance of Memcache
                 $this->memcached = new Memcache();
 
-                // Check if we can connect to the server
-                $canConnect = $this->memcached->connect(
-                    $this->config['host'],
-                    $this->config['port'],
-                );
-
-                // If we can't connect, throw a CriticalError exception
-                if ($canConnect === false) {
+                if (! $this->memcached->connect($this->config['host'], $this->config['port'])) {
                     throw new CriticalError('Cache: Memcache connection failed.');
                 }
 
-                // Add server, third parameter is persistence and defaults to TRUE.
                 $this->memcached->addServer(
                     $this->config['host'],
                     $this->config['port'],

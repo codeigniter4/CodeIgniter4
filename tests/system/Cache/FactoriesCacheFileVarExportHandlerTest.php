@@ -14,78 +14,17 @@ declare(strict_types=1);
 namespace CodeIgniter\Cache;
 
 use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
-use CodeIgniter\Config\Factories;
-use CodeIgniter\Test\CIUnitTestCase;
-use Config\App;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
- * @no-final
  */
 #[Group('Others')]
-class FactoriesCacheFileVarExportHandlerTest extends CIUnitTestCase
+final class FactoriesCacheFileVarExportHandlerTest extends AbstractFactoriesCacheHandlerTestCase
 {
-    protected FactoriesCache $cache;
-
-    /**
-     * @var CacheInterface|FileVarExportHandler
-     */
-    protected $handler;
-
     protected function createFactoriesCache(): void
     {
         $this->handler = new FileVarExportHandler();
         $this->cache   = new FactoriesCache($this->handler);
-    }
-
-    public function testInstantiate(): void
-    {
-        $this->createFactoriesCache();
-
-        $this->assertInstanceOf(FactoriesCache::class, $this->cache);
-    }
-
-    public function testSave(): void
-    {
-        Factories::reset();
-        Factories::config('App');
-
-        $this->createFactoriesCache();
-
-        $this->cache->save('config');
-
-        $cachedData = $this->handler->get('FactoriesCache_config');
-
-        $this->assertArrayHasKey('aliases', $cachedData);
-        $this->assertArrayHasKey('instances', $cachedData);
-        $this->assertArrayHasKey('App', $cachedData['aliases']);
-    }
-
-    public function testLoad(): void
-    {
-        Factories::reset();
-        /** @var App $appConfig */
-        $appConfig          = Factories::config('App');
-        $appConfig->baseURL = 'http://test.example.jp/this-is-test/';
-
-        $this->createFactoriesCache();
-        $this->cache->save('config');
-
-        Factories::reset();
-
-        $this->cache->load('config');
-
-        $appConfig = Factories::config('App');
-        $this->assertSame('http://test.example.jp/this-is-test/', $appConfig->baseURL);
-    }
-
-    public function testDelete(): void
-    {
-        $this->createFactoriesCache();
-
-        $this->cache->delete('config');
-
-        $this->assertFalse($this->cache->load('config'));
     }
 }
