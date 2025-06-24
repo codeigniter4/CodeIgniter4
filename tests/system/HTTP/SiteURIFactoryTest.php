@@ -174,28 +174,28 @@ final class SiteURIFactoryTest extends CIUnitTestCase
 
     public function testCreateFromStringWithIndexPageSubDirCombinations(){
         $standardUrl = "http://localhost:8080";
-        $subDirectoryAppsOptions = array(
-            array(
+        $subDirectoryAppsOptions = [
+            [
                 "subDir" => "",
                 "indexPage" => ""
-            ),
-            array(
+            ],
+            [
                 "subDir" => "",
                 "indexPage" => "index.php"
-            ),
-            array(
+            ],
+            [
                 "subDir" => "/subdir",
                 "indexPage" => ""
-            ),
-            array(
+            ],
+            [
                 "subDir" => "/subdir",
                 "indexPage" => "index.php"
-            ),
-            array(
+            ],
+            [
                 "subDir" => "/subdir/subsubdir",
                 "indexPage" => "index.php"
-            ),
-        );
+            ],
+        ];
         foreach($subDirectoryAppsOptions as $option){
             $route = "woot";
             config(App::class)->baseURL = $standardUrl . $option["subDir"];
