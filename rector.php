@@ -71,7 +71,7 @@ return RectorConfig::configure()
     ])
     // do you need to include constants, class aliases or custom autoloader? files listed will be executed
     ->withBootstrapFiles([
-        __DIR__ . '/system/util_bootstrap.php',
+        __DIR__ . '/phpstan-bootstrap.php',
     ])
     ->withPHPStanConfigs([
         __DIR__ . '/phpstan.neon.dist',
