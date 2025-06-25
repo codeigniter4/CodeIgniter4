@@ -311,4 +311,97 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
             ],
         ];
     }
+
+    #[DataProvider('provideRequestURIRewrite')]
+    public function testRequestURIRewrite(
+        string $requestUri,
+        string $scriptName,
+        string $indexPage,
+        string $expected,
+    ): void {
+        $server                = [];
+        $server['REQUEST_URI'] = $requestUri;
+        $server['SCRIPT_NAME'] = $scriptName;
+
+        $appConfig            = new App();
+        $appConfig->indexPage = $indexPage;
+
+        $factory = $this->createSiteURIFactory($server, $appConfig);
+
+        $this->assertSame($expected, $factory->detectRoutePath('REQUEST_URI'));
+    }
+
+    /**
+     * @return iterable<string, array{
+     *     requestUri: string,
+     *     scriptName: string,
+     *     indexPage: string,
+     *     expected: string
+     * }>
+     */
+    public static function provideRequestURIRewrite(): iterable
+    {
+        return [
+            'rewrite_with_route' => [
+                'requestUri' => '/ci/index.php/sample/method',
+                'scriptName' => '/ci/public/index.php',
+                'indexPage'  => 'index.php',
+                'expected'   => 'sample/method',
+            ],
+            'rewrite_root' => [
+                'requestUri' => '/ci/index.php',
+                'scriptName' => '/ci/public/index.php',
+                'indexPage'  => 'index.php',
+                'expected'   => '/',
+            ],
+            'rewrite_no_index_page' => [
+                'requestUri' => '/ci/sample/method',
+                'scriptName' => '/ci/public/index.php',
+                'indexPage'  => '',
+                'expected'   => 'sample/method',
+            ],
+            'rewrite_nested_subfolder' => [
+                'requestUri' => '/projects/index.php/api/users/list',
+                'scriptName' => '/projects/myapp/public/index.php',
+                'indexPage'  => 'index.php',
+                'expected'   => 'api/users/list',
+            ],
+            'rewrite_multiple_public_folders' => [
+                'requestUri' => '/public-sites/myapp/index.php/content/view',
+                'scriptName' => '/public-sites/myapp/public/index.php',
+                'indexPage'  => 'index.php',
+                'expected'   => 'content/view',
+            ],
+            'rewrite_custom_app_folder' => [
+                'requestUri' => '/myapp/index.php/products/category/electronics',
+                'scriptName' => '/myapp/web/index.php',
+                'indexPage'  => 'index.php',
+                'expected'   => 'products/category/electronics',
+            ],
+            'multiple_index_php_in_path' => [
+                'requestUri' => '/app/index.php/user/index.php/profile',
+                'scriptName' => '/app/public/index.php',
+                'indexPage'  => 'index.php',
+                'expected'   => 'user/index.php/profile',
+            ],
+            'custom_index_page_name' => [
+                'requestUri' => '/ci/app.php/users/list',
+                'scriptName' => '/ci/public/app.php',
+                'indexPage'  => 'app.php',
+                'expected'   => 'users/list',
+            ],
+            'custom_index_page_root' => [
+                'requestUri' => '/project/main.php',
+                'scriptName' => '/project/web/main.php',
+                'indexPage'  => 'main.php',
+                'expected'   => '/',
+            ],
+            'partial_match_should_not_remove' => [
+                'requestUri' => '/app/myindex.php/route',
+                'scriptName' => '/app/public/index.php',
+                'indexPage'  => 'index.php',
+                'expected'   => 'myindex.php/route',
+            ],
+        ];
+    }
 }
