@@ -16,9 +16,6 @@ namespace CodeIgniter\Cache\Exceptions;
 use CodeIgniter\Exceptions\DebugTraceableTrait;
 use CodeIgniter\Exceptions\RuntimeException;
 
-/**
- * CacheException
- */
 class CacheException extends RuntimeException
 {
     use DebugTraceableTrait;
@@ -26,7 +23,7 @@ class CacheException extends RuntimeException
     /**
      * Thrown when handler has no permission to write cache.
      *
-     * @return CacheException
+     * @return static
      */
     public static function forUnableToWrite(string $path)
     {
@@ -36,7 +33,7 @@ class CacheException extends RuntimeException
     /**
      * Thrown when an unrecognized handler is used.
      *
-     * @return CacheException
+     * @return static
      */
     public static function forInvalidHandlers()
     {
@@ -46,7 +43,7 @@ class CacheException extends RuntimeException
     /**
      * Thrown when no backup handler is setup in config.
      *
-     * @return CacheException
+     * @return static
      */
     public static function forNoBackup()
     {
@@ -56,7 +53,7 @@ class CacheException extends RuntimeException
     /**
      * Thrown when specified handler was not found.
      *
-     * @return CacheException
+     * @return static
      */
     public static function forHandlerNotFound()
     {

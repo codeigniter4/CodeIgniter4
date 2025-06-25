@@ -1,12 +1,7 @@
-# total 22 errors
+# total 19 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
-            count: 3
-            path: ../../tests/system/Cache/ResponseCacheTest.php
-
         -
             message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
             count: 3

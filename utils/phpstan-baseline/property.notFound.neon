@@ -1,4 +1,4 @@
-# total 59 errors
+# total 58 errors
 
 parameters:
     ignoreErrors:
@@ -26,11 +26,6 @@ parameters:
             message: '#^Access to an undefined property Config\\Session\:\:\$lockWait\.$#'
             count: 1
             path: ../../system/Session/Handlers/RedisHandler.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Config\\BaseConfig\:\:\$baseURL\.$#'
-            count: 1
-            path: ../../tests/system/Cache/FactoriesCacheFileVarExportHandlerTest.php
 
         -
             message: '#^Access to an undefined property Tests\\Support\\Commands\\AppInfo\:\:\$foobar\.$#'

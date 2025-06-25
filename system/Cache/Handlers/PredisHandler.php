@@ -31,7 +31,13 @@ class PredisHandler extends BaseHandler
     /**
      * Default config
      *
-     * @var array
+     * @var array{
+     *   scheme: string,
+     *   host: string,
+     *   password: string|null,
+     *   port: int,
+     *   timeout: int
+     * }
      */
     protected $config = [
         'scheme'   => 'tcp',

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
@@ -42,11 +43,8 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
     {
         parent::setUp();
 
-        $this->config = new Cache();
-
-        $this->handler = new PredisHandler($this->config);
-
-        $this->handler->initialize();
+        $this->config  = new Cache();
+        $this->handler = CacheFactory::getHandler($this->config, 'predis');
     }
 
     protected function tearDown(): void
@@ -63,9 +61,7 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
 
     public function testDestruct(): void
     {
-        $this->handler = new PredisHandler($this->config);
-        $this->handler->initialize();
-
+        $this->handler = CacheFactory::getHandler($this->config, 'predis');
         $this->assertInstanceOf(PredisHandler::class, $this->handler);
     }
 

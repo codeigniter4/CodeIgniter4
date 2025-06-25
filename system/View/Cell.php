@@ -87,7 +87,9 @@ class Cell
         // Is the output cached?
         $cacheName ??= str_replace(['\\', '/'], '', $class) . $method . md5(serialize($params));
 
-        if ($output = $this->cache->get($cacheName)) {
+        $output = $this->cache->get($cacheName);
+
+        if (is_string($output) && $output !== '') {
             return $output;
         }
 

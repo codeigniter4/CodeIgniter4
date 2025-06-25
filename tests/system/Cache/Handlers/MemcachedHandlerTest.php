@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\I18n\Time;
@@ -45,11 +46,7 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
             $this->markTestSkipped('Memcached extension not loaded.');
         }
 
-        $config = new Cache();
-
-        $this->handler = new MemcachedHandler($config);
-
-        $this->handler->initialize();
+        $this->handler = CacheFactory::getHandler(new Cache(), 'memcached');
     }
 
     protected function tearDown(): void
@@ -139,9 +136,8 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
 
         $config                   = new Cache();
         $config->memcached['raw'] = true;
-        $memcachedHandler         = new MemcachedHandler($config);
-        $memcachedHandler->initialize();
 
+        $memcachedHandler = CacheFactory::getHandler($config, 'memcached');
         $memcachedHandler->save(self::$key1, 1);
         $memcachedHandler->save(self::$key2, 'value');
 
@@ -158,9 +154,8 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
 
         $config                   = new Cache();
         $config->memcached['raw'] = true;
-        $memcachedHandler         = new MemcachedHandler($config);
-        $memcachedHandler->initialize();
 
+        $memcachedHandler = CacheFactory::getHandler($config, 'memcached');
         $memcachedHandler->save(self::$key1, 10);
         $memcachedHandler->save(self::$key2, 'value');
 
