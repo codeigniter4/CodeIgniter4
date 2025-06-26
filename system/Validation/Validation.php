@@ -869,7 +869,7 @@ class Validation implements ValidationInterface
             ARRAY_FILTER_USE_KEY,
         );
 
-        return $errors === [] ? '' : implode("\n", $errors);
+        return implode("\n", $errors);
     }
 
     /**
