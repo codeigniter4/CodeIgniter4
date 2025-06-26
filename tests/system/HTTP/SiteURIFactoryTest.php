@@ -180,16 +180,17 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         $standardUrl        = 'http://localhost:8080';
         $standardScriptName = '/public/index.php';
 
-        $route                        = 'controller/method';
-        config(App::class)->baseURL   = $standardUrl . $subDir;
-        config(App::class)->indexPage = $indexPage;
+        $route                = 'controller/method';
+        $appConfig            = new App();
+        $appConfig->baseURL   = $standardUrl . $subDir;
+        $appConfig->indexPage = $indexPage;
 
         $_SERVER['PATH_INFO']   = '/' . $route;
         $_SERVER['REQUEST_URI'] = $subDir . '/' . $indexPage . $_SERVER['PATH_INFO'];
         $_SERVER['SCRIPT_NAME'] = $subDir . $standardScriptName;
         $_SERVER['HTTP_HOST']   = $standardUrl;
 
-        $factory           = $this->createSiteURIFactory();
+        $factory           = $this->createSiteURIFactory($appConfig);
         $detectedRoutePath = $factory->detectRoutePath();
         $this->assertSame($route, $detectedRoutePath);
     }
