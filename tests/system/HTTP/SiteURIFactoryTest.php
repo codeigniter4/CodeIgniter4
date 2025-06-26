@@ -172,45 +172,51 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         ];
     }
 
-    public function testCreateFromStringWithIndexPageSubDirCombinations(): void
+    #[DataProvider('provideCreateFromStringWithIndexPageSubDirCombinations')]
+    public function testCreateFromStringWithIndexPageSubDirCombinations(
+        string $subDir,
+        string $indexPage,
+    ): void {
+        $standardUrl        = 'http://localhost:8080';
+        $standardScriptName = '/public/index.php';
+
+        $route                        = 'controller/method';
+        config(App::class)->baseURL   = $standardUrl . $subDir;
+        config(App::class)->indexPage = $indexPage;
+
+        $_SERVER['PATH_INFO']   = '/' . $route;
+        $_SERVER['REQUEST_URI'] = $subDir . '/' . $indexPage . $_SERVER['PATH_INFO'];
+        $_SERVER['SCRIPT_NAME'] = $subDir . $standardScriptName;
+        $_SERVER['HTTP_HOST']   = $standardUrl;
+
+        $factory           = $this->createSiteURIFactory();
+        $detectedRoutePath = $factory->detectRoutePath();
+        $this->assertSame($route, $detectedRoutePath);
+    }
+
+    public static function provideCreateFromStringWithIndexPageSubDirCombinations(): iterable
     {
-        $standardUrl             = 'http://localhost:8080';
-        $subDirectoryAppsOptions = [
-            [
-                'subDir'    => '',
-                'indexPage' => '',
+        return [
+            'no subdir and no index' => [
+                '',
+                '',
             ],
-            [
-                'subDir'    => '',
-                'indexPage' => 'index.php',
+            'no subdir and index' => [
+                '',
+                'index.php',
             ],
-            [
-                'subDir'    => '/subdir',
-                'indexPage' => '',
+            'subdir and no index' => [
+                '/subdir',
+                '',
             ],
-            [
-                'subDir'    => '/subdir',
-                'indexPage' => 'index.php',
+            'subdir and index' => [
+                '/subdir',
+                'index.php',
             ],
-            [
-                'subDir'    => '/subdir/subsubdir',
-                'indexPage' => 'index.php',
+            'subdir 2 levels deep string and index' => [
+                '/subdir/subsubdir',
+                'index.php',
             ],
         ];
-
-        foreach ($subDirectoryAppsOptions as $option) {
-            $route                        = 'woot';
-            config(App::class)->baseURL   = $standardUrl . $option['subDir'];
-            config(App::class)->indexPage = $option['indexPage'];
-
-            $_SERVER['PATH_INFO']   = '/' . $route;
-            $_SERVER['REQUEST_URI'] = $option['subDir'] . '/' . $option['indexPage'] . $_SERVER['PATH_INFO'];
-            $_SERVER['SCRIPT_NAME'] = $option['subDir'] . '/' . $option['indexPage'];
-            $_SERVER['HTTP_HOST']   = $standardUrl;
-
-            $factory           = $this->createSiteURIFactory();
-            $detectedRoutePath = $factory->detectRoutePath();
-            $this->assertSame($route, $detectedRoutePath);
-        }
     }
 }
