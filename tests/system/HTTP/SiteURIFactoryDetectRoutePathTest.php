@@ -402,6 +402,18 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
                 'indexPage'  => 'index.php',
                 'expected'   => 'myindex.php/route',
             ],
+            'multibyte_characters' => [
+                'requestUri' => '/%ED%85%8C%EC%8A%A4%ED%8A%B81/index.php/route',
+                'scriptName' => '/테스트1/public/index.php',
+                'indexPage'  => 'index.php',
+                'expected'   => 'route',
+            ],
+            'multibyte_characters_with_nested_subfolder' => [
+                'requestUri' => '/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82/%D1%82%D0%B5%D1%81%D1%821/index.php/route',
+                'scriptName' => '/проект/тест1/public/index.php',
+                'indexPage'  => 'index.php',
+                'expected'   => 'route',
+            ],
         ];
     }
 }
