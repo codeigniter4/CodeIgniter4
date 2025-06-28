@@ -1280,12 +1280,49 @@ abstract class BaseModel
         }
 
         $page = $page >= 1 ? $page : $pager->getCurrentPage($group);
+
+        // Get the tempPager to estimate required variables, use dummy count of 1
+        $tempPager = $pager->store($group, $page, $perPage, 1, $segment);
+        $perPage   = $tempPager->getPerPage($group);
+        $offset    = ($page - 1) * $perPage;
+
+        if ($this->tempAllowCallbacks) {
+            // Call the before event and check for a return
+            $eventData = $this->trigger('beforeFind', [
+                'method'    => 'findAll',
+                'limit'     => $perPage,
+                'offset'    => $offset,
+                'singleton' => false,
+            ]);
+
+            if (isset($eventData['returnData']) && $eventData['returnData'] === true) {
+                return $eventData['data'];
+            }
+        }
+
         // Store it in the Pager library, so it can be paginated in the views.
         $this->pager = $pager->store($group, $page, $perPage, $this->countAllResults(false), $segment);
         $perPage     = $this->pager->getPerPage($group);
         $offset      = ($pager->getCurrentPage($group) - 1) * $perPage;
 
-        return $this->findAll($perPage, $offset);
+        // Backup since it will be reset in the findAll method
+        $tempAllowCallbacks = $this->tempAllowCallbacks;
+
+        $data = $this->allowCallbacks(false)->findAll($perPage, $offset);
+
+        if ($tempAllowCallbacks) {
+            $eventData = $this->trigger('afterFind', [
+                'data'      => $data,
+                'limit'     => $perPage,
+                'offset'    => $offset,
+                'method'    => 'findAll',
+                'singleton' => false,
+            ]);
+
+            return $eventData['data'];
+        }
+
+        return $data;
     }
 
     /**

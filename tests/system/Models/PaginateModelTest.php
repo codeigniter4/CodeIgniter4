@@ -15,6 +15,7 @@ namespace CodeIgniter\Models;
 
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\UserModel;
+use Tests\Support\Models\UserWithEventsModel;
 use Tests\Support\Models\ValidModel;
 
 /**
@@ -108,5 +109,55 @@ final class PaginateModelTest extends LiveModelTestCase
         $this->assertStringContainsString('?page_user=2"', $pager->links('user'));
         $this->assertStringContainsString('?page_user=3"', $pager->links('user'));
         $this->assertStringContainsString('?page_user=4"', $pager->links('user'));
+    }
+
+    public function testPaginateWithBeforeFindEvents(): void
+    {
+        $this->createModel(UserWithEventsModel::class);
+
+        $this->seedPaginateEventModel();
+
+        // Test pagination - beforeFind event should filter to only US users
+        $data = $this->model->paginate(2);
+
+        // Should only get US users in results
+        $this->assertCount(2, $data);
+        $this->assertSame(3, $this->model->pager->getDetails()['total']);
+        $this->assertSame(2, $this->model->pager->getPageCount());
+
+        // Verify all returned users are from US
+        foreach ($data as $user) {
+            $this->assertSame('US', $user->country);
+        }
+    }
+
+    public function testPaginateWithBeforeFindEventsAndDisabledCallbacks(): void
+    {
+        $this->createModel(UserWithEventsModel::class);
+
+        $this->seedPaginateEventModel();
+
+        $data = $this->model->allowCallbacks(false)->paginate(2);
+
+        // Should get all users
+        $this->assertCount(2, $data);
+        $this->assertSame(9, $this->model->pager->getDetails()['total']);
+
+        // Should have users from different countries
+        $countries = array_unique(array_column($data, 'country'));
+        $this->assertGreaterThan(1, count($countries));
+    }
+
+    private function seedPaginateEventModel(): void
+    {
+        $testData = [
+            ['name' => 'Jean', 'email' => 'jean@test.com', 'country' => 'France'],
+            ['name' => 'Marie', 'email' => 'marie@test.com', 'country' => 'France'],
+            ['name' => 'John', 'email' => 'john@test.com', 'country' => 'US'],
+            ['name' => 'Hans', 'email' => 'hans@test.com', 'country' => 'Germany'],
+            ['name' => 'Luigi', 'email' => 'luigi@test.com', 'country' => 'Italy'],
+        ];
+
+        $this->model->insertBatch($testData);
     }
 }
