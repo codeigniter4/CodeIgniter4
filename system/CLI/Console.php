@@ -59,10 +59,9 @@ class Console
         }
 
         CLI::write(sprintf(
-            'CodeIgniter v%s Command Line Tool - Server Time: %s UTC%s',
+            'CodeIgniter v%s Command Line Tool - Server Time: %s',
             CodeIgniter::CI_VERSION,
-            date('Y-m-d H:i:s'),
-            date('P'),
+            date('Y-m-d H:i:s \\U\\T\\CP'),
         ), 'green');
         CLI::newLine();
     }
