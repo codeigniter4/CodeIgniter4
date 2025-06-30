@@ -132,7 +132,8 @@ final class SiteURIFactory
             && pathinfo($this->superglobals->server('SCRIPT_NAME'), PATHINFO_EXTENSION) === 'php'
         ) {
             // Compare each segment, dropping them until there is no match
-            $segments = $keep = explode('/', $path);
+            $segments = explode('/', rawurldecode($path));
+            $keep     = explode('/', $path);
 
             foreach (explode('/', $this->superglobals->server('SCRIPT_NAME')) as $i => $segment) {
                 // If these segments are not the same then we're done
