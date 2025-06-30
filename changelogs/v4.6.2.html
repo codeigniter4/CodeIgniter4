@@ -331,6 +331,7 @@
 <li><p><strong>Email:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">Email::getHostname()</span></code> failed to use <code class="docutils literal notranslate"><span class="pre">$_SERVER['SERVER_ADDR']</span></code> when <code class="docutils literal notranslate"><span class="pre">$_SERVER['SERVER_NAME']</span></code> was not set.</p></li>
 <li><p><strong>Security:</strong> Fixed a bug where the <code class="docutils literal notranslate"><span class="pre">sanitize_filename()</span></code> function from the Security helper would throw an error when used in CLI requests.</p></li>
 <li><p><strong>Session:</strong> Fixed a bug where using the <code class="docutils literal notranslate"><span class="pre">DatabaseHandler</span></code> with an unsupported database driver (such as <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code>, <code class="docutils literal notranslate"><span class="pre">OCI8</span></code>, or <code class="docutils literal notranslate"><span class="pre">SQLite3</span></code>) did not throw an appropriate error.</p></li>
+<li><p><strong>SiteURI:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">SiteURIFactory::parseRequestURI()</span></code> where serving the app from a subfolder using <code class="docutils literal notranslate"><span class="pre">mod_rewrite</span></code> while preserving the <code class="docutils literal notranslate"><span class="pre">index.php</span></code> file would cause incorrect route path detection.</p></li>
 <li><p><strong>URI:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">URI::getAuthority()</span></code> where schemes without defined default ports (like <code class="docutils literal notranslate"><span class="pre">rtsp://</span></code>) would cause issues due to missing array key handling.</p></li>
 </ul>
 <p>See the repo’s
@@ -351,7 +352,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 22, 2025.
+      <span class="lastupdated">Last updated on Jun 30, 2025.
       </span></p>
   </div>
 
