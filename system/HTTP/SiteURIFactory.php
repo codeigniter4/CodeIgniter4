@@ -146,6 +146,15 @@ final class SiteURIFactory
             $path = implode('/', $keep);
         }
 
+        // Cleanup: if indexPage is still visible in the path, remove it
+        if ($this->appConfig->indexPage !== '' && str_starts_with($path, $this->appConfig->indexPage)) {
+            $remainingPath = substr($path, strlen($this->appConfig->indexPage));
+            // Only remove if followed by '/' (route) or nothing (root)
+            if ($remainingPath === '' || str_starts_with($remainingPath, '/')) {
+                $path = ltrim($remainingPath, '/');
+            }
+        }
+
         // This section ensures that even on servers that require the URI to
         // contain the query string (Nginx) a correct URI is found, and also
         // fixes the QUERY_STRING Server var and $_GET array.
