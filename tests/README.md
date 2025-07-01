@@ -105,7 +105,7 @@ Individual tests can be run by including the relative path to the test file.
 You can run the tests without running the live database and the live cache tests.
 
 ```console
-./phpunit --exclude-group DatabaseLive,CacheLive
+./phpunit --exclude-group DatabaseLive --exclude-group CacheLive
 ```
 
 ## Generating Code Coverage
