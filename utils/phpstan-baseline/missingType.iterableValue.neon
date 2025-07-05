@@ -1,4 +1,4 @@
-# total 1436 errors
+# total 1435 errors
 
 parameters:
     ignoreErrors:
@@ -24,11 +24,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\BaseModel\:\:convertToReturnType\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:delete\(\) has parameter \$id with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/BaseModel.php
 

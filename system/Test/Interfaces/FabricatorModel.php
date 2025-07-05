@@ -39,7 +39,7 @@ interface FabricatorModel
      *
      * @param int|list<int|string>|string|null $id One primary key or an array of primary keys
      *
-     * @phpstan-return ($id is int|string ? row_array|object|null : list<row_array|object>)
+     * @return ($id is int|string ? object|row_array|null : list<object|row_array>)
      */
     public function find($id = null);
 
@@ -47,9 +47,8 @@ interface FabricatorModel
      * Inserts data into the current table. If an object is provided,
      * it will attempt to convert it to an array.
      *
-     * @param         array|object|null     $row
-     * @phpstan-param row_array|object|null $row
-     * @param         bool                  $returnID Whether insert ID should be returned or not.
+     * @param object|row_array|null $row
+     * @param bool                  $returnID Whether insert ID should be returned or not.
      *
      * @return bool|int|string
      *
