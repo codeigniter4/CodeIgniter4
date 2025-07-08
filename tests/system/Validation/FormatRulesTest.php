@@ -114,19 +114,6 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($isStrict, $this->validation->run($data));
     }
 
-    public function testValidURLStrictWithSchema(): void
-    {
-        $data = [
-            'foo' => 'http://www.codeigniter.com',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'valid_url_strict[https]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
-    }
-
     public static function provideValidUrl(): iterable
     {
         yield from [
@@ -226,6 +213,19 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
+    public function testValidURLStrictWithSchema(): void
+    {
+        $data = [
+            'foo' => 'http://www.codeigniter.com',
+        ];
+
+        $this->validation->setRules([
+            'foo' => 'valid_url_strict[https]',
+        ]);
+
+        $this->assertFalse($this->validation->run($data));
+    }
+
     #[DataProvider('provideValidEmail')]
     public function testValidEmail(?string $email, bool $expected): void
     {
@@ -235,20 +235,6 @@ class FormatRulesTest extends CIUnitTestCase
 
         $this->validation->setRules([
             'foo' => 'valid_email',
-        ]);
-
-        $this->assertSame($expected, $this->validation->run($data));
-    }
-
-    #[DataProvider('provideValidEmails')]
-    public function testValidEmails(?string $email, bool $expected): void
-    {
-        $data = [
-            'foo' => $email,
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'valid_emails',
         ]);
 
         $this->assertSame($expected, $this->validation->run($data));
@@ -270,6 +256,20 @@ class FormatRulesTest extends CIUnitTestCase
                 false,
             ],
         ];
+    }
+
+    #[DataProvider('provideValidEmails')]
+    public function testValidEmails(?string $email, bool $expected): void
+    {
+        $data = [
+            'foo' => $email,
+        ];
+
+        $this->validation->setRules([
+            'foo' => 'valid_emails',
+        ]);
+
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public static function provideValidEmails(): iterable

@@ -263,7 +263,7 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertInstanceOf(Session::class, $actual);
     }
 
-    #[DataProvider('provideNewSessionInvalid')]
+    #[DataProvider('provideNewSessionWithInvalidHandler')]
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testNewSessionWithInvalidHandler(string $driver): void
@@ -275,6 +275,18 @@ final class ServicesTest extends CIUnitTestCase
 
         $config->driver = $driver;
         Services::session($config, false);
+    }
+
+    /**
+     * @return iterable<string, array{0: string}>
+     */
+    public static function provideNewSessionWithInvalidHandler(): iterable
+    {
+        yield 'just a string' => ['file'];
+
+        yield 'inexistent class' => ['Foo'];
+
+        yield 'other class' => [self::class];
     }
 
     #[PreserveGlobalState(false)]
@@ -294,18 +306,6 @@ final class ServicesTest extends CIUnitTestCase
 
         $config->driver = DatabaseHandler::class;
         Services::session($config, false);
-    }
-
-    /**
-     * @return iterable<string, array{0: string}>
-     */
-    public static function provideNewSessionInvalid(): iterable
-    {
-        yield 'just a string' => ['file'];
-
-        yield 'inexistent class' => ['Foo'];
-
-        yield 'other class' => [self::class];
     }
 
     #[PreserveGlobalState(false)]

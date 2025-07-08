@@ -83,15 +83,6 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertSame(['href' => 'http://example.com'], $selector['attr']);
     }
 
-    public static function provideText(): iterable
-    {
-        return [
-            'en' => ['Hello World'],
-            'sv' => ['Hej, världen'],
-            'ja' => ['こんにちは、世界'],
-        ];
-    }
-
     /**
      * @param string $text
      */
@@ -151,6 +142,15 @@ final class DOMParserTest extends CIUnitTestCase
         $dom->withString($html);
 
         $this->assertTrue($dom->see($text, 'h1'));
+    }
+
+    public static function provideText(): iterable
+    {
+        return [
+            'en' => ['Hello World'],
+            'sv' => ['Hej, världen'],
+            'ja' => ['こんにちは、世界'],
+        ];
     }
 
     public function testSeeElementPartialText(): void

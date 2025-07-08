@@ -395,14 +395,6 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public static function provideWhereInvalidKeyThrowInvalidArgumentException(): iterable
-    {
-        return [
-            'null'         => [null],
-            'empty string' => [''],
-        ];
-    }
-
     /**
      * @param mixed $key
      */
@@ -415,12 +407,11 @@ final class WhereTest extends CIUnitTestCase
         $builder->whereIn($key, ['Politician', 'Accountant']);
     }
 
-    public static function provideWhereInEmptyValuesThrowInvalidArgumentException(): iterable
+    public static function provideWhereInvalidKeyThrowInvalidArgumentException(): iterable
     {
         return [
-            'null'                    => [null],
-            'not array'               => ['not array'],
-            'not instanceof \Closure' => [new stdClass()],
+            'null'         => [null],
+            'empty string' => [''],
         ];
     }
 
@@ -434,6 +425,15 @@ final class WhereTest extends CIUnitTestCase
         $builder = $this->db->table('jobs');
 
         $builder->whereIn('name', $values);
+    }
+
+    public static function provideWhereInEmptyValuesThrowInvalidArgumentException(): iterable
+    {
+        return [
+            'null'                    => [null],
+            'not array'               => ['not array'],
+            'not instanceof \Closure' => [new stdClass()],
+        ];
     }
 
     public function testWhereNotIn(): void

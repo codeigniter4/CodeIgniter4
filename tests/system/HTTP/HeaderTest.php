@@ -240,7 +240,7 @@ final class HeaderTest extends CIUnitTestCase
     /**
      * @param string $name
      */
-    #[DataProvider('invalidNamesProvider')]
+    #[DataProvider('provideInvalidHeaderNames')]
     public function testInvalidHeaderNames($name): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -251,7 +251,7 @@ final class HeaderTest extends CIUnitTestCase
     /**
      * @return list<list<string>>
      */
-    public static function invalidNamesProvider(): array
+    public static function provideInvalidHeaderNames(): iterable
     {
         return [
             ["Content-Type\r\n\r\n"],
@@ -277,7 +277,7 @@ final class HeaderTest extends CIUnitTestCase
     /**
      * @param array<int|string, array<string, string>|string>|string|null $value
      */
-    #[DataProvider('invalidValuesProvider')]
+    #[DataProvider('provideInvalidHeaderValues')]
     public function testInvalidHeaderValues($value): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -288,7 +288,7 @@ final class HeaderTest extends CIUnitTestCase
     /**
      * @return list<list<array<(int|string), string>|string>>
      */
-    public static function invalidValuesProvider(): array
+    public static function provideInvalidHeaderValues(): iterable
     {
         return [
             ["Header\n Value"],

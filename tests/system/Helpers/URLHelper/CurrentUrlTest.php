@@ -242,6 +242,44 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('assets/image.jpg', uri_string());
     }
 
+    #[DataProvider('provideUrlIs')]
+    public function testUrlIs(string $currentPath, string $testPath, bool $expected): void
+    {
+        $_SERVER['HTTP_HOST']   = 'example.com';
+        $_SERVER['REQUEST_URI'] = '/' . $currentPath;
+
+        $this->createRequest($this->config);
+
+        $this->assertSame($expected, url_is($testPath));
+    }
+
+    #[DataProvider('provideUrlIs')]
+    public function testUrlIsNoIndex(string $currentPath, string $testPath, bool $expected): void
+    {
+        $_SERVER['HTTP_HOST']   = 'example.com';
+        $_SERVER['REQUEST_URI'] = '/' . $currentPath;
+
+        $this->config->indexPage = '';
+
+        $this->createRequest($this->config);
+
+        $this->assertSame($expected, url_is($testPath));
+    }
+
+    #[DataProvider('provideUrlIs')]
+    public function testUrlIsWithSubfolder(string $currentPath, string $testPath, bool $expected): void
+    {
+        $_SERVER['HTTP_HOST']   = 'example.com';
+        $_SERVER['REQUEST_URI'] = '/' . $currentPath;
+        $_SERVER['SCRIPT_NAME'] = '/subfolder/index.php';
+
+        $this->config->baseURL = 'http://example.com/subfolder/';
+
+        $this->createRequest($this->config);
+
+        $this->assertSame($expected, url_is($testPath));
+    }
+
     public static function provideUrlIs(): iterable
     {
         return [
@@ -281,43 +319,5 @@ final class CurrentUrlTest extends CIUnitTestCase
                 true,
             ],
         ];
-    }
-
-    #[DataProvider('provideUrlIs')]
-    public function testUrlIs(string $currentPath, string $testPath, bool $expected): void
-    {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/' . $currentPath;
-
-        $this->createRequest($this->config);
-
-        $this->assertSame($expected, url_is($testPath));
-    }
-
-    #[DataProvider('provideUrlIs')]
-    public function testUrlIsNoIndex(string $currentPath, string $testPath, bool $expected): void
-    {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/' . $currentPath;
-
-        $this->config->indexPage = '';
-
-        $this->createRequest($this->config);
-
-        $this->assertSame($expected, url_is($testPath));
-    }
-
-    #[DataProvider('provideUrlIs')]
-    public function testUrlIsWithSubfolder(string $currentPath, string $testPath, bool $expected): void
-    {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/' . $currentPath;
-        $_SERVER['SCRIPT_NAME'] = '/subfolder/index.php';
-
-        $this->config->baseURL = 'http://example.com/subfolder/';
-
-        $this->createRequest($this->config);
-
-        $this->assertSame($expected, url_is($testPath));
     }
 }

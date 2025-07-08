@@ -189,25 +189,6 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame('json, html, xml', $this->message->getHeaderLine('Accept'));
     }
 
-    public static function provideArrayHeaderValue(): iterable
-    {
-        return [
-            'existing for next not append' => [
-                [
-                    'json',
-                    'html',
-                    'xml',
-                ],
-            ],
-            'existing for next append' => [
-                [
-                    'json',
-                    'html',
-                ],
-            ],
-        ];
-    }
-
     /**
      * @param array $arrayHeaderValue
      */
@@ -230,6 +211,25 @@ final class MessageTest extends CIUnitTestCase
         $this->message->setHeader('Accept', ['xml']);
 
         $this->assertSame('json, html, xml', $this->message->getHeaderLine('Accept'));
+    }
+
+    public static function provideArrayHeaderValue(): iterable
+    {
+        return [
+            'existing for next not append' => [
+                [
+                    'json',
+                    'html',
+                    'xml',
+                ],
+            ],
+            'existing for next append' => [
+                [
+                    'json',
+                    'html',
+                ],
+            ],
+        ];
     }
 
     public function testSetHeaderWithExistingArrayValuesAppendNullValue(): void

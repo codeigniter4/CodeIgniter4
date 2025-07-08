@@ -210,24 +210,6 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize()->getFilters());
     }
 
-    public static function provideProcessMethodProcessGlobalsWithExcept(): iterable
-    {
-        return [
-            [
-                ['admin/*'],
-            ],
-            [
-                ['admin/*', 'foo/*'],
-            ],
-            [
-                ['*'],
-            ],
-            [
-                'admin/*',
-            ],
-        ];
-    }
-
     /**
      * @param array|string $except
      */
@@ -263,6 +245,24 @@ final class FiltersTest extends CIUnitTestCase
             'after' => ['baz'],
         ];
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
+    }
+
+    public static function provideProcessMethodProcessGlobalsWithExcept(): iterable
+    {
+        return [
+            [
+                ['admin/*'],
+            ],
+            [
+                ['admin/*', 'foo/*'],
+            ],
+            [
+                ['*'],
+            ],
+            [
+                'admin/*',
+            ],
+        ];
     }
 
     public function testProcessMethodProcessesFiltersBefore(): void

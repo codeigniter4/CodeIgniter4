@@ -24,6 +24,12 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class MimesTest extends CIUnitTestCase
 {
+    #[DataProvider('provideGuessExtensionFromType')]
+    public function testGuessExtensionFromType(?string $expected, string $mime): void
+    {
+        $this->assertSame($expected, Mimes::guessExtensionFromType($mime));
+    }
+
     public static function provideGuessExtensionFromType(): iterable
     {
         return [
@@ -50,10 +56,10 @@ final class MimesTest extends CIUnitTestCase
         ];
     }
 
-    #[DataProvider('provideGuessExtensionFromType')]
-    public function testGuessExtensionFromType(?string $expected, string $mime): void
+    #[DataProvider('provideGuessTypeFromExtension')]
+    public function testGuessTypeFromExtension(?string $expected, string $ext): void
     {
-        $this->assertSame($expected, Mimes::guessExtensionFromType($mime));
+        $this->assertSame($expected, Mimes::guessTypeFromExtension($ext));
     }
 
     public static function provideGuessTypeFromExtension(): iterable
@@ -80,11 +86,5 @@ final class MimesTest extends CIUnitTestCase
                 'BMP',
             ],
         ];
-    }
-
-    #[DataProvider('provideGuessTypeFromExtension')]
-    public function testGuessTypeFromExtension(?string $expected, string $ext): void
-    {
-        $this->assertSame($expected, Mimes::guessTypeFromExtension($ext));
     }
 }
