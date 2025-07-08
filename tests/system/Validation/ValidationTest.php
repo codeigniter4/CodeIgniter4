@@ -1868,6 +1868,14 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expectedData, $this->validation->getValidated());
     }
 
+    /**
+     * @return iterable<string, array{
+     *     0: array<string, mixed>,
+     *     1: array<string, string>,
+     *     2: bool,
+     *     3: array<string, mixed>
+     * }>
+     */
     public static function provideRuleWithMultipleAsterisk(): iterable
     {
         yield 'success' => [
