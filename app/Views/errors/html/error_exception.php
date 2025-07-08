@@ -24,7 +24,7 @@ $errorId = uniqid('error', true);
     <!-- Header -->
     <div class="header">
         <div class="environment">
-            Displayed at <?= esc(date('H:i:sa')) ?> &mdash;
+            Displayed at <?= esc(date('H:i:s')) ?> &mdash;
             PHP: <?= esc(PHP_VERSION) ?>  &mdash;
             CodeIgniter: <?= esc(CodeIgniter::CI_VERSION) ?> --
             Environment: <?= ENVIRONMENT ?>
