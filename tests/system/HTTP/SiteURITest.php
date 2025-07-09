@@ -66,6 +66,149 @@ final class SiteURITest extends CIUnitTestCase
         return array_merge(self::provideSetPath(), self::provideRelativePathWithQueryOrFragment());
     }
 
+    public static function provideRelativePathWithQueryOrFragment(): iterable
+    {
+        return [
+            'one/two?foo=1&bar=2' => [
+                'http://example.com/',                              // $baseURL
+                'index.php',                                        // $indexPage
+                'one/two?foo=1&bar=2',                              // $relativePath
+                'http://example.com/index.php/one/two?foo=1&bar=2', // $expectedURI
+                'one/two',                                          // $expectedRoutePath
+                '/index.php/one/two',                               // $expectedPath
+                'foo=1&bar=2',                                      // $expectedQuery
+                '',                                                 // $expectedFragment
+                ['one', 'two'],                                     // $expectedSegments
+                2,                                                  // $expectedTotalSegments
+            ],
+            'one/two#sec1' => [
+                'http://example.com/',
+                'index.php',
+                'one/two#sec1',
+                'http://example.com/index.php/one/two#sec1',
+                'one/two',
+                '/index.php/one/two',
+                '',
+                'sec1',
+                ['one', 'two'],
+                2,
+            ],
+            'one/two?foo=1&bar=2#sec1' => [
+                'http://example.com/',
+                'index.php',
+                'one/two?foo=1&bar=2#sec1',
+                'http://example.com/index.php/one/two?foo=1&bar=2#sec1',
+                'one/two',
+                '/index.php/one/two',
+                'foo=1&bar=2',
+                'sec1',
+                ['one', 'two'],
+                2,
+            ],
+            'Subfolder: one/two?foo=1&bar=2' => [
+                'http://example.com/ci4/',
+                'index.php',
+                'one/two?foo=1&bar=2',
+                'http://example.com/ci4/index.php/one/two?foo=1&bar=2',
+                'one/two',
+                '/ci4/index.php/one/two',
+                'foo=1&bar=2',
+                '',
+                ['one', 'two'],
+                2,
+            ],
+        ];
+    }
+
+    public function testConstructorHost(): void
+    {
+        $config                   = new App();
+        $config->allowedHostnames = ['sub.example.com'];
+
+        $uri = new SiteURI($config, '', 'sub.example.com');
+
+        $this->assertInstanceOf(SiteURI::class, $uri);
+        $this->assertSame('http://sub.example.com/index.php', (string) $uri);
+        $this->assertSame('', $uri->getRoutePath());
+        $this->assertSame('/index.php', $uri->getPath());
+        $this->assertSame('http://sub.example.com/', $uri->getBaseURL());
+    }
+
+    public function testConstructorScheme(): void
+    {
+        $config = new App();
+
+        $uri = new SiteURI($config, '', null, 'https');
+
+        $this->assertInstanceOf(SiteURI::class, $uri);
+        $this->assertSame('https://example.com/index.php', (string) $uri);
+        $this->assertSame('https://example.com/', $uri->getBaseURL());
+    }
+
+    public function testConstructorEmptyScheme(): void
+    {
+        $config = new App();
+
+        $uri = new SiteURI($config, '', null, '');
+
+        $this->assertInstanceOf(SiteURI::class, $uri);
+        $this->assertSame('http://example.com/index.php', (string) $uri);
+        $this->assertSame('http://example.com/', $uri->getBaseURL());
+    }
+
+    public function testConstructorForceGlobalSecureRequests(): void
+    {
+        $config                            = new App();
+        $config->forceGlobalSecureRequests = true;
+
+        $uri = new SiteURI($config);
+
+        $this->assertSame('https://example.com/index.php', (string) $uri);
+        $this->assertSame('https://example.com/', $uri->getBaseURL());
+    }
+
+    public function testConstructorInvalidBaseURL(): void
+    {
+        $this->expectException(ConfigException::class);
+
+        $config          = new App();
+        $config->baseURL = 'invalid';
+
+        new SiteURI($config);
+    }
+
+    #[DataProvider('provideSetPath')]
+    public function testSetPath(
+        string $baseURL,
+        string $indexPage,
+        string $relativePath,
+        string $expectedURI,
+        string $expectedRoutePath,
+        string $expectedPath,
+        string $expectedQuery,
+        string $expectedFragment,
+        array $expectedSegments,
+        int $expectedTotalSegments,
+    ): void {
+        $config            = new App();
+        $config->indexPage = $indexPage;
+        $config->baseURL   = $baseURL;
+
+        $uri = new SiteURI($config);
+
+        $uri->setPath($relativePath);
+
+        $this->assertSame($expectedURI, (string) $uri);
+        $this->assertSame($expectedRoutePath, $uri->getRoutePath());
+        $this->assertSame($expectedPath, $uri->getPath());
+        $this->assertSame($expectedQuery, $uri->getQuery());
+        $this->assertSame($expectedFragment, $uri->getFragment());
+        $this->assertSame($baseURL, $uri->getBaseURL());
+
+        $this->assertSame($expectedSegments, $uri->getSegments());
+        $this->assertSame($expectedTotalSegments, $uri->getTotalSegments());
+    }
+
     public static function provideSetPath(): iterable
     {
         return [
@@ -213,149 +356,6 @@ final class SiteURITest extends CIUnitTestCase
                 0,
             ],
         ];
-    }
-
-    public static function provideRelativePathWithQueryOrFragment(): iterable
-    {
-        return [
-            'one/two?foo=1&bar=2' => [
-                'http://example.com/',                              // $baseURL
-                'index.php',                                        // $indexPage
-                'one/two?foo=1&bar=2',                              // $relativePath
-                'http://example.com/index.php/one/two?foo=1&bar=2', // $expectedURI
-                'one/two',                                          // $expectedRoutePath
-                '/index.php/one/two',                               // $expectedPath
-                'foo=1&bar=2',                                      // $expectedQuery
-                '',                                                 // $expectedFragment
-                ['one', 'two'],                                     // $expectedSegments
-                2,                                                  // $expectedTotalSegments
-            ],
-            'one/two#sec1' => [
-                'http://example.com/',
-                'index.php',
-                'one/two#sec1',
-                'http://example.com/index.php/one/two#sec1',
-                'one/two',
-                '/index.php/one/two',
-                '',
-                'sec1',
-                ['one', 'two'],
-                2,
-            ],
-            'one/two?foo=1&bar=2#sec1' => [
-                'http://example.com/',
-                'index.php',
-                'one/two?foo=1&bar=2#sec1',
-                'http://example.com/index.php/one/two?foo=1&bar=2#sec1',
-                'one/two',
-                '/index.php/one/two',
-                'foo=1&bar=2',
-                'sec1',
-                ['one', 'two'],
-                2,
-            ],
-            'Subfolder: one/two?foo=1&bar=2' => [
-                'http://example.com/ci4/',
-                'index.php',
-                'one/two?foo=1&bar=2',
-                'http://example.com/ci4/index.php/one/two?foo=1&bar=2',
-                'one/two',
-                '/ci4/index.php/one/two',
-                'foo=1&bar=2',
-                '',
-                ['one', 'two'],
-                2,
-            ],
-        ];
-    }
-
-    public function testConstructorHost(): void
-    {
-        $config                   = new App();
-        $config->allowedHostnames = ['sub.example.com'];
-
-        $uri = new SiteURI($config, '', 'sub.example.com');
-
-        $this->assertInstanceOf(SiteURI::class, $uri);
-        $this->assertSame('http://sub.example.com/index.php', (string) $uri);
-        $this->assertSame('', $uri->getRoutePath());
-        $this->assertSame('/index.php', $uri->getPath());
-        $this->assertSame('http://sub.example.com/', $uri->getBaseURL());
-    }
-
-    public function testConstructorScheme(): void
-    {
-        $config = new App();
-
-        $uri = new SiteURI($config, '', null, 'https');
-
-        $this->assertInstanceOf(SiteURI::class, $uri);
-        $this->assertSame('https://example.com/index.php', (string) $uri);
-        $this->assertSame('https://example.com/', $uri->getBaseURL());
-    }
-
-    public function testConstructorEmptyScheme(): void
-    {
-        $config = new App();
-
-        $uri = new SiteURI($config, '', null, '');
-
-        $this->assertInstanceOf(SiteURI::class, $uri);
-        $this->assertSame('http://example.com/index.php', (string) $uri);
-        $this->assertSame('http://example.com/', $uri->getBaseURL());
-    }
-
-    public function testConstructorForceGlobalSecureRequests(): void
-    {
-        $config                            = new App();
-        $config->forceGlobalSecureRequests = true;
-
-        $uri = new SiteURI($config);
-
-        $this->assertSame('https://example.com/index.php', (string) $uri);
-        $this->assertSame('https://example.com/', $uri->getBaseURL());
-    }
-
-    public function testConstructorInvalidBaseURL(): void
-    {
-        $this->expectException(ConfigException::class);
-
-        $config          = new App();
-        $config->baseURL = 'invalid';
-
-        new SiteURI($config);
-    }
-
-    #[DataProvider('provideSetPath')]
-    public function testSetPath(
-        string $baseURL,
-        string $indexPage,
-        string $relativePath,
-        string $expectedURI,
-        string $expectedRoutePath,
-        string $expectedPath,
-        string $expectedQuery,
-        string $expectedFragment,
-        array $expectedSegments,
-        int $expectedTotalSegments,
-    ): void {
-        $config            = new App();
-        $config->indexPage = $indexPage;
-        $config->baseURL   = $baseURL;
-
-        $uri = new SiteURI($config);
-
-        $uri->setPath($relativePath);
-
-        $this->assertSame($expectedURI, (string) $uri);
-        $this->assertSame($expectedRoutePath, $uri->getRoutePath());
-        $this->assertSame($expectedPath, $uri->getPath());
-        $this->assertSame($expectedQuery, $uri->getQuery());
-        $this->assertSame($expectedFragment, $uri->getFragment());
-        $this->assertSame($baseURL, $uri->getBaseURL());
-
-        $this->assertSame($expectedSegments, $uri->getSegments());
-        $this->assertSame($expectedTotalSegments, $uri->getTotalSegments());
     }
 
     public function testSetSegment(): void

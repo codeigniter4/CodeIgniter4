@@ -134,15 +134,6 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         $this->assertSame('/en/contact', $routes->reverseRoute('myController::goto'));
     }
 
-    public static function provideReverseRoutingDefaultNamespaceAppController(): iterable
-    {
-        return yield from [
-            'Omit namespace'                  => ['Galleries::showUserGallery'],
-            'Specify full ns starting with /' => ['\App\Controllers\Galleries::showUserGallery'],
-            'Specify full ns w/o staring /'   => ['App\Controllers\Galleries::showUserGallery'],
-        ];
-    }
-
     #[DataProvider('provideReverseRoutingDefaultNamespaceAppController')]
     public function testReverseRoutingDefaultNamespaceAppController(string $controller): void
     {
@@ -154,6 +145,15 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         $match = $routes->reverseRoute($controller, 15, 12);
 
         $this->assertSame('/users/15/gallery12', $match);
+    }
+
+    public static function provideReverseRoutingDefaultNamespaceAppController(): iterable
+    {
+        return yield from [
+            'Omit namespace'                  => ['Galleries::showUserGallery'],
+            'Specify full ns starting with /' => ['\App\Controllers\Galleries::showUserGallery'],
+            'Specify full ns w/o staring /'   => ['App\Controllers\Galleries::showUserGallery'],
+        ];
     }
 
     public function testReverseRoutingDefaultNamespaceAppControllerSubNamespace(): void

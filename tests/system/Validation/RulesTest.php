@@ -379,14 +379,6 @@ class RulesTest extends CIUnitTestCase
         );
     }
 
-    public static function provideMatchesNestedCases(): iterable
-    {
-        yield from [
-            [['nested' => ['foo' => 'match', 'bar' => 'match']], true],
-            [['nested' => ['foo' => 'match', 'bar' => 'nope']], false],
-        ];
-    }
-
     #[DataProvider('provideDiffers')]
     public function testDiffers(array $data, bool $expected): void
     {
@@ -414,6 +406,14 @@ class RulesTest extends CIUnitTestCase
     {
         $this->validation->setRules(['nested.foo' => 'differs[nested.bar]']);
         $this->assertSame(! $expected, $this->validation->run($data));
+    }
+
+    public static function provideMatchesNestedCases(): iterable
+    {
+        yield from [
+            [['nested' => ['foo' => 'match', 'bar' => 'match']], true],
+            [['nested' => ['foo' => 'match', 'bar' => 'nope']], false],
+        ];
     }
 
     public function testDiffersWithDotArrayPass(): void

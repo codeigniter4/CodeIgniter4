@@ -206,7 +206,7 @@ final class WhenTest extends CIUnitTestCase
     /**
      * @return array<string, array{0: mixed, 1: bool}>
      */
-    public static function provideConditionValues(): array
+    public static function provideConditionValues(): iterable
     {
         return [
             'false'            => [false, true], // [condition, expectedDefaultCallbackRuns]
