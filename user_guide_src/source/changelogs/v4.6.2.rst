@@ -36,6 +36,7 @@ Bugs Fixed
 **********
 
 - **Cache:** Fixed a bug where a corrupted or unreadable cache file could cause an unhandled exception in ``FileHandler::getItem()``.
+- **CURLRequest:** Fixed a bug where intermediate HTTP responses were not properly removed from the response chain in certain scenarios, causing incorrect status codes and headers to be returned instead of the final response.
 - **Database:** Fixed a bug where ``when()`` and ``whenNot()`` in ``ConditionalTrait`` incorrectly evaluated certain falsy values (such as ``[]``, ``0``, ``0.0``, and ``'0'``) as truthy, causing callbacks to be executed unexpectedly. These methods now cast the condition to a boolean using ``(bool)`` to ensure consistent behavior with PHP's native truthiness.
 - **Database:** Fixed encapsulation violation in ``BasePreparedQuery`` when accessing ``BaseConnection::transStatus`` protected property.
 - **Email:** Fixed a bug where ``Email::getHostname()`` failed to use ``$_SERVER['SERVER_ADDR']`` when ``$_SERVER['SERVER_NAME']`` was not set.
