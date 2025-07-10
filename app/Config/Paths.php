@@ -75,4 +75,14 @@ class Paths
      * is used when no value is provided to `Services::renderer()`.
      */
     public string $viewDirectory = __DIR__ . '/../Views';
+
+    /**
+     * ---------------------------------------------------------------
+     * ENVIRONMENT DIRECTORY NAME
+     * ---------------------------------------------------------------
+     *
+     * This variable must contain the name of the directory for
+     * environment files.
+     */
+    public string $environmentDirectory = __DIR__ . '/../../';
 }

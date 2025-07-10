@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands\Utilities;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\DotEnv;
+use Config\Paths;
 
 /**
  * Command to display the current environment,
@@ -119,7 +120,7 @@ final class Environment extends BaseCommand
         // however we cannot redefine the ENVIRONMENT constant
         putenv('CI_ENVIRONMENT');
         unset($_ENV['CI_ENVIRONMENT'], $_SERVER['CI_ENVIRONMENT']);
-        (new DotEnv(ROOTPATH))->load();
+        (new DotEnv((new Paths())->environmentDirectory))->load();
 
         CLI::write(sprintf('Environment is successfully changed to "%s".', $env), 'green');
         CLI::write('The ENVIRONMENT constant will be changed in the next script execution.');
@@ -134,7 +135,7 @@ final class Environment extends BaseCommand
     private function writeNewEnvironmentToEnvFile(string $newEnv): bool
     {
         $baseEnv = ROOTPATH . 'env';
-        $envFile = ROOTPATH . '.env';
+        $envFile = (new Paths())->environmentDirectory . '.env';
 
         if (! is_file($envFile)) {
             if (! is_file($baseEnv)) {

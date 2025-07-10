@@ -170,7 +170,7 @@ class Boot
     protected static function loadDotEnv(Paths $paths): void
     {
         require_once $paths->systemDirectory . '/Config/DotEnv.php';
-        (new DotEnv($paths->appDirectory . '/../'))->load();
+        (new DotEnv($paths->environmentDirectory))->load();
     }
 
     protected static function defineEnvironment(): void
