@@ -1,8 +1,7 @@
-# total 3056 errors
+# total 2846 errors
 includes:
     - argument.type.neon
     - assign.propertyType.neon
-    - codeigniter.cacheHandlerInstance.neon
     - codeigniter.getReassignArray.neon
     - codeigniter.modelArgumentType.neon
     - codeigniter.superglobalAccess.neon

@@ -26,14 +26,11 @@ use PHPUnit\Framework\Attributes\Group;
 final class CacheFactoryTest extends CIUnitTestCase
 {
     private static string $directory = 'CacheFactory';
-    private CacheFactory $cacheFactory;
     private Cache $config;
 
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->cacheFactory = new CacheFactory();
 
         // Initialize path
         $this->config = new Cache();
@@ -48,11 +45,6 @@ final class CacheFactoryTest extends CIUnitTestCase
         }
     }
 
-    public function testNew(): void
-    {
-        $this->assertInstanceOf(CacheFactory::class, $this->cacheFactory);
-    }
-
     public function testGetHandlerExceptionCacheInvalidHandlers(): void
     {
         $this->expectException(CacheException::class);
@@ -60,7 +52,7 @@ final class CacheFactoryTest extends CIUnitTestCase
 
         $this->config->validHandlers = [];
 
-        $this->cacheFactory->getHandler($this->config);
+        CacheFactory::getHandler($this->config);
     }
 
     public function testGetHandlerExceptionCacheHandlerNotFound(): void
@@ -70,7 +62,7 @@ final class CacheFactoryTest extends CIUnitTestCase
 
         unset($this->config->validHandlers[$this->config->handler]);
 
-        $this->cacheFactory->getHandler($this->config);
+        CacheFactory::getHandler($this->config);
     }
 
     public function testGetDummyHandler(): void
@@ -81,7 +73,7 @@ final class CacheFactoryTest extends CIUnitTestCase
 
         $this->config->handler = 'dummy';
 
-        $this->assertInstanceOf(DummyHandler::class, $this->cacheFactory->getHandler($this->config));
+        $this->assertInstanceOf(DummyHandler::class, CacheFactory::getHandler($this->config));
 
         // Initialize path
         $this->config = new Cache();
@@ -99,7 +91,7 @@ final class CacheFactoryTest extends CIUnitTestCase
         if (is_windows()) {
             $this->markTestSkipped('Cannot test this properly on Windows.');
         } else {
-            $this->assertInstanceOf(DummyHandler::class, $this->cacheFactory->getHandler($this->config, 'wincache', 'wincache'));
+            $this->assertInstanceOf(DummyHandler::class, CacheFactory::getHandler($this->config, 'wincache', 'wincache'));
         }
 
         // Initialize path

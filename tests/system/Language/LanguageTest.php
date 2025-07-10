@@ -308,6 +308,19 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('billions and billions', lang('Core.bazillion', [], 'en'));
     }
 
+    /**
+     * There's not a whole lot that can be done with message bundles,
+     * but we can at least try loading them ... more accurate code coverage?
+     *
+     * @param mixed $bundle
+     */
+    #[DataProvider('provideBundleUniqueKeys')]
+    public function testBundleUniqueKeys($bundle): void
+    {
+        $messages = require SYSTEMPATH . 'Language/en/' . $bundle . '.php';
+        $this->assertGreaterThan(0, count($messages));
+    }
+
     public static function provideBundleUniqueKeys(): iterable
     {
         return [
@@ -333,19 +346,6 @@ final class LanguageTest extends CIUnitTestCase
             ['Validation'],
             ['View'],
         ];
-    }
-
-    /**
-     * There's not a whole lot that can be done with message bundles,
-     * but we can at least try loading them ... more accurate code coverage?
-     *
-     * @param mixed $bundle
-     */
-    #[DataProvider('provideBundleUniqueKeys')]
-    public function testBundleUniqueKeys($bundle): void
-    {
-        $messages = require SYSTEMPATH . 'Language/en/' . $bundle . '.php';
-        $this->assertGreaterThan(0, count($messages));
     }
 
     // Testing base locale vs variants

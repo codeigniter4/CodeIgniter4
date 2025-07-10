@@ -21,7 +21,6 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\ExpectationFailedException;
@@ -1856,7 +1855,7 @@ class ValidationTest extends CIUnitTestCase
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/9219
      */
-    #[DataProvider('provideMultipleAsterisk')]
+    #[DataProvider('provideRuleWithMultipleAsterisk')]
     public function testRuleWithMultipleAsterisk(
         array $data = [],
         array $rules = [],
@@ -1869,7 +1868,15 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expectedData, $this->validation->getValidated());
     }
 
-    public static function provideMultipleAsterisk(): Generator
+    /**
+     * @return iterable<string, array{
+     *     0: array<string, mixed>,
+     *     1: array<string, string>,
+     *     2: bool,
+     *     3: array<string, mixed>
+     * }>
+     */
+    public static function provideRuleWithMultipleAsterisk(): iterable
     {
         yield 'success' => [
             [

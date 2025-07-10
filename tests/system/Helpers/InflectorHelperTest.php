@@ -246,6 +246,12 @@ final class InflectorHelperTest extends CIUnitTestCase
         }
     }
 
+    #[DataProvider('provideOrdinal')]
+    public function testOrdinal(string $suffix, int $number): void
+    {
+        $this->assertSame($suffix, ordinal($number));
+    }
+
     public static function provideOrdinal(): iterable
     {
         return [
@@ -260,12 +266,6 @@ final class InflectorHelperTest extends CIUnitTestCase
             ['rd', 23],
             ['th', 24],
         ];
-    }
-
-    #[DataProvider('provideOrdinal')]
-    public function testOrdinal(string $suffix, int $number): void
-    {
-        $this->assertSame($suffix, ordinal($number));
     }
 
     public function testOrdinalize(): void

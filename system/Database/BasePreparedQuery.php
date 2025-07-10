@@ -134,9 +134,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
             $query->setDuration($startTime, $startTime);
 
             // This will trigger a rollback if transactions are being used
-            if ($this->db->transDepth !== 0) {
-                $this->db->transStatus = false;
-            }
+            $this->db->handleTransStatus();
 
             if ($this->db->DBDebug) {
                 // We call this function in order to roll-back queries

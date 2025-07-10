@@ -1,12 +1,7 @@
-# total 232 errors
+# total 231 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/FileHandler.php
-
         -
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
             count: 1

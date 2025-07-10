@@ -61,7 +61,7 @@ writable/uploads/*
 !writable/uploads/index.html
 
 writable/debugbar/*
-!writable/debugbar/.gitkeep
+!writable/debugbar/index.html
 
 php_errors.log
 

@@ -162,7 +162,7 @@ final class InsertTest extends CIUnitTestCase
             ],
         ];
 
-        $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
+        $this->db->shouldReturn('execute', new class () {});
         $builder->insertBatch($insertData, true);
 
         $query = $this->db->getLastQuery();
@@ -197,7 +197,7 @@ final class InsertTest extends CIUnitTestCase
             ],
         ];
 
-        $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
+        $this->db->shouldReturn('execute', new class () {});
         $builder->ignore()->insertBatch($insertData, true, 1);
 
         $query = $this->db->getLastQuery();
@@ -231,7 +231,7 @@ final class InsertTest extends CIUnitTestCase
             ],
         ];
 
-        $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
+        $this->db->shouldReturn('execute', new class () {});
         $builder->insertBatch($insertData, false);
 
         $query = $this->db->getLastQuery();
@@ -255,7 +255,7 @@ final class InsertTest extends CIUnitTestCase
             ['ip' => '4.4.4.0', 'ip2' => '4.4.4.2'],
         ];
 
-        $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
+        $this->db->shouldReturn('execute', new class () {});
         $builder->insertBatch($data, true);
 
         $query = $this->db->getLastQuery();

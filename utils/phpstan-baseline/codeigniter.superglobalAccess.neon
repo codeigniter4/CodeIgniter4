@@ -1,4 +1,4 @@
-# total 79 errors
+# total 77 errors
 
 parameters:
     ignoreErrors:
@@ -9,11 +9,6 @@ parameters:
 
         -
             message: '#^Accessing offset ''NO_COLOR'' directly on \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Accessing offset ''argv'' directly on \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../system/CLI/CLI.php
 
@@ -149,11 +144,6 @@ parameters:
 
         -
             message: '#^Accessing offset ''app\.baseURL'' directly on \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/CLI/ConsoleTest.php
-
-        -
-            message: '#^Accessing offset ''argv'' directly on \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../tests/system/CLI/ConsoleTest.php
 

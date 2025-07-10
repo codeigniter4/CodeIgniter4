@@ -76,7 +76,7 @@ final class LikeTest extends CIUnitTestCase
         $this->assertSame('Developer', $job->name);
     }
 
-    #[DataProvider('provideMultibyteCharacters')]
+    #[DataProvider('provideLikeCaseInsensitiveWithMultibyteCharacter')]
     public function testLikeCaseInsensitiveWithMultibyteCharacter(string $match, string $result): void
     {
         $wai = $this->db->table('without_auto_increment')->like('value', $match, 'both', null, true)->get();
@@ -88,7 +88,7 @@ final class LikeTest extends CIUnitTestCase
     /**
      * @return iterable<string, array{0: string, 1: string}>
      */
-    public static function provideMultibyteCharacters(): iterable
+    public static function provideLikeCaseInsensitiveWithMultibyteCharacter(): iterable
     {
         yield from [
             'polish'    => ['ŁĄ', 'multibyte characters pl'],

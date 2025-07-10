@@ -328,6 +328,33 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->get('0');
     }
 
+    private function disableAutoRoutesImproved(): void
+    {
+        $featureConfig                     = config(Feature::class);
+        $featureConfig->autoRoutesImproved = false;
+    }
+
+    #[DataProvider('provideOpenCliRoutesFromHttpGot404')]
+    public function testOpenCliRoutesFromHttpGot404(string $from, string $to, string $httpGet): void
+    {
+        $this->expectException(PageNotFoundException::class);
+        $this->expectExceptionMessage('Cannot access CLI Route: ');
+
+        $this->disableAutoRoutesImproved();
+        $collection = service('routes');
+        $collection->setAutoRoute(true);
+        $collection->setDefaultNamespace('Tests\Support\Controllers');
+
+        $this->withRoutes([
+            [
+                'CLI',
+                $from,
+                $to,
+            ],
+        ]);
+        $this->get($httpGet);
+    }
+
     public static function provideOpenCliRoutesFromHttpGot404(): iterable
     {
         return [
@@ -357,33 +384,6 @@ final class FeatureTestTraitTest extends CIUnitTestCase
                 'HELLO/INDEX',
             ],
         ];
-    }
-
-    private function disableAutoRoutesImproved(): void
-    {
-        $featureConfig                     = config(Feature::class);
-        $featureConfig->autoRoutesImproved = false;
-    }
-
-    #[DataProvider('provideOpenCliRoutesFromHttpGot404')]
-    public function testOpenCliRoutesFromHttpGot404(string $from, string $to, string $httpGet): void
-    {
-        $this->expectException(PageNotFoundException::class);
-        $this->expectExceptionMessage('Cannot access CLI Route: ');
-
-        $this->disableAutoRoutesImproved();
-        $collection = service('routes');
-        $collection->setAutoRoute(true);
-        $collection->setDefaultNamespace('Tests\Support\Controllers');
-
-        $this->withRoutes([
-            [
-                'CLI',
-                $from,
-                $to,
-            ],
-        ]);
-        $this->get($httpGet);
     }
 
     /**

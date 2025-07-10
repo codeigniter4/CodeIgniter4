@@ -75,7 +75,7 @@ class CacheFactory
             }
         }
 
-        // If $adapter->initialization throws a CriticalError exception, we will attempt to
+        // If $adapter->initialize() throws a CriticalError exception, we will attempt to
         // use the $backup handler, if that also fails, we resort to the dummy handler.
         try {
             $adapter->initialize();

@@ -49,7 +49,7 @@ class Builder extends BaseBuilder
     ];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $supportedIgnoreStatements = [
         'insert' => 'OR IGNORE',

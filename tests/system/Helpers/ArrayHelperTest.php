@@ -241,6 +241,32 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
+    public static function provideArrayDeepSearch(): iterable
+    {
+        return [
+            [
+                'key6441',
+                'Value 6.4.4.1',
+            ],
+            [
+                'key64421',
+                null,
+            ],
+            [
+                42,
+                'Value 42',
+            ],
+            [
+                'key644',
+                ['key6441' => 'Value 6.4.4.1'],
+            ],
+            [
+                '',
+                null,
+            ],
+        ];
+    }
+
     public function testArrayDeepSearchReturnNullEmptyArray(): void
     {
         $data = [];
@@ -306,32 +332,6 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
 
         array_sort_by_multiple_keys($data, $sortColumns);
-    }
-
-    public static function provideArrayDeepSearch(): iterable
-    {
-        return [
-            [
-                'key6441',
-                'Value 6.4.4.1',
-            ],
-            [
-                'key64421',
-                null,
-            ],
-            [
-                42,
-                'Value 42',
-            ],
-            [
-                'key644',
-                ['key6441' => 'Value 6.4.4.1'],
-            ],
-            [
-                '',
-                null,
-            ],
-        ];
     }
 
     public static function provideSortByMultipleKeys(): iterable
@@ -491,14 +491,6 @@ final class ArrayHelperTest extends CIUnitTestCase
         $actual = array_group_by($data, $indexes, true);
 
         $this->assertSame($expected, $actual, 'array including empty not the same');
-    }
-
-    #[DataProvider('provideArrayGroupByExcludeEmpty')]
-    public function testArrayGroupByExcludeEmpty(array $indexes, array $data, array $expected): void
-    {
-        $actual = array_group_by($data, $indexes, false);
-
-        $this->assertSame($expected, $actual, 'array excluding empty not the same');
     }
 
     public static function provideArrayGroupByIncludeEmpty(): iterable
@@ -910,6 +902,14 @@ final class ArrayHelperTest extends CIUnitTestCase
                 ],
             ],
         ];
+    }
+
+    #[DataProvider('provideArrayGroupByExcludeEmpty')]
+    public function testArrayGroupByExcludeEmpty(array $indexes, array $data, array $expected): void
+    {
+        $actual = array_group_by($data, $indexes, false);
+
+        $this->assertSame($expected, $actual, 'array excluding empty not the same');
     }
 
     public static function provideArrayGroupByExcludeEmpty(): iterable

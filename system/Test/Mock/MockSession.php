@@ -30,9 +30,9 @@ class MockSession extends Session
      *
      * @var list<Cookie>
      */
-    public $cookies = [];
+    public array $cookies = [];
 
-    public $didRegenerate = false;
+    public bool $didRegenerate = false;
 
     /**
      * Sets the driver as the session handler in PHP.

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
@@ -58,8 +59,7 @@ final class FileHandlerTest extends AbstractHandlerTestCase
             mkdir($this->config->file['storePath'], 0777, true);
         }
 
-        $this->handler = new FileHandler($this->config);
-        $this->handler->initialize();
+        $this->handler = CacheFactory::getHandler($this->config, 'file');
     }
 
     protected function tearDown(): void
@@ -98,19 +98,16 @@ final class FileHandlerTest extends AbstractHandlerTestCase
         $this->expectException(CacheException::class);
 
         chmod($this->config->file['storePath'], 0444);
-        new FileHandler($this->config);
+        CacheFactory::getHandler($this->config, 'file');
     }
 
     public function testSetDefaultPath(): void
     {
         // Initialize path
-        $config                    = new Cache();
-        $config->file['storePath'] = null;
+        $config = new Cache();
+        unset($config->file['storePath']);
 
-        $this->handler = new FileHandler($config);
-        $this->handler->initialize();
-
-        $this->assertInstanceOf(FileHandler::class, $this->handler);
+        $this->assertInstanceOf(FileHandler::class, CacheFactory::getHandler($config, 'file'));
     }
 
     /**
@@ -245,9 +242,8 @@ final class FileHandlerTest extends AbstractHandlerTestCase
     public function testIncrementWithDefaultPrefix(): void
     {
         $this->config->prefix = 'test_';
-        $this->handler        = new FileHandler($this->config);
-        $this->handler->initialize();
 
+        $this->handler = CacheFactory::getHandler($this->config, 'file');
         $this->handler->save(self::$key1, 1);
         $this->handler->save(self::$key2, 'value');
 
@@ -320,9 +316,7 @@ final class FileHandlerTest extends AbstractHandlerTestCase
         $config               = new Cache();
         $config->file['mode'] = $int;
 
-        $this->handler = new FileHandler($config);
-        $this->handler->initialize();
-
+        $this->handler = CacheFactory::getHandler($config, 'file');
         $this->handler->save(self::$key1, 'value');
 
         $file = $config->file['storePath'] . DIRECTORY_SEPARATOR . self::$key1;
@@ -346,10 +340,17 @@ final class FileHandlerTest extends AbstractHandlerTestCase
 
     public function testFileHandler(): void
     {
-        $fileHandler = new BaseTestFileHandler();
+        $cache = new Cache();
+
+        $cache->validHandlers['file'] = BaseTestFileHandler::class;
+
+        /** @var BaseTestFileHandler $fileHandler */
+        $fileHandler = CacheFactory::getHandler($cache, 'file');
+        $this->assertInstanceOf(BaseTestFileHandler::class, $fileHandler);
 
         $actual = $fileHandler->getFileInfoTest();
-
+        $this->assertIsArray($actual);
+        $this->assertArrayHasKey('name', $actual);
         $this->assertArrayHasKey('server_path', $actual);
         $this->assertArrayHasKey('size', $actual);
         $this->assertArrayHasKey('date', $actual);
@@ -389,6 +390,9 @@ final class FileHandlerTest extends AbstractHandlerTestCase
     }
 }
 
+/**
+ * @internal
+ */
 final class BaseTestFileHandler extends FileHandler
 {
     private static string $directory = 'FileHandler';
@@ -405,7 +409,16 @@ final class BaseTestFileHandler extends FileHandler
     }
 
     /**
-     * @return array<string, bool|int|string>|null
+     * @return array{
+     *  name: string,
+     *  server_path: string,
+     *  size: int,
+     *  date: int,
+     *  readable: bool,
+     *  writable: bool,
+     *  executable: bool,
+     *  fileperms: int,
+     * }|null
      */
     public function getFileInfoTest(): ?array
     {

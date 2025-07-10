@@ -3,8 +3,8 @@
         "php": "^8.1",
         "codeigniter/coding-standard": "^1.7",
         "ergebnis/composer-normalize": "^2.28",
-        "friendsofphp/php-cs-fixer": "^3.63.2",
-        "nexusphp/cs-config": "^3.6",
+        "friendsofphp/php-cs-fixer": "^3.76",
+        "nexusphp/cs-config": "^3.26",
         "phpmetrics/phpmetrics": "^2.8 || ^3.0rc6",
         "vimeo/psalm": "^5.0"
     },

@@ -21,8 +21,9 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
-use Config\App as AppConfig;
-use Config\Cache as CacheConfig;
+use CodeIgniter\Test\Mock\MockCache;
+use Config\App;
+use Config\Cache;
 use ErrorException;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
@@ -34,138 +35,112 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class ResponseCacheTest extends CIUnitTestCase
 {
-    private AppConfig $appConfig;
-
-    protected function setUp(): void
+    /**
+     * @param array<string, string> $query
+     */
+    private function createIncomingRequest(string $uri = '', array $query = [], App $app = new App()): IncomingRequest
     {
-        parent::setUp();
+        $superglobals = service('superglobals');
+        $superglobals->setServer('REQUEST_URI', sprintf('/%s%s', $uri, $query !== [] ? '?' . http_build_query($query) : ''));
+        $superglobals->setServer('SCRIPT_NAME', '/index.php');
 
-        $this->appConfig = new AppConfig();
-    }
+        $siteUri = new SiteURI($app, $uri);
 
-    private function createIncomingRequest(
-        string $uri = '',
-        array $query = [],
-        ?AppConfig $appConfig = null,
-    ): IncomingRequest {
-        $_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
-
-        $_SERVER['REQUEST_URI'] = '/' . $uri . ($query !== [] ? '?' . http_build_query($query) : '');
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
-
-        $appConfig ??= $this->appConfig;
-
-        $siteUri = new SiteURI($appConfig, $uri);
         if ($query !== []) {
-            $_GET = $_REQUEST = $query;
             $siteUri->setQueryArray($query);
         }
 
-        return new IncomingRequest(
-            $appConfig,
-            $siteUri,
-            null,
-            new UserAgent(),
-        );
+        return new IncomingRequest($app, $siteUri, null, new UserAgent());
     }
 
     /**
      * @param list<string> $params
      */
-    private function createCLIRequest(array $params = [], ?AppConfig $appConfig = null): CLIRequest
+    private function createCLIRequest(array $params = [], App $app = new App()): CLIRequest
     {
-        $_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
+        $_SERVER['argv'] = ['public/index.php', ...$params];
 
-        $_SERVER['argv']        = ['public/index.php', ...$params];
-        $_SERVER['SCRIPT_NAME'] = 'public/index.php';
+        $superglobals = service('superglobals');
+        $superglobals->setServer('SCRIPT_NAME', 'public/index.php');
 
-        $appConfig ??= $this->appConfig;
-
-        return new CLIRequest($appConfig);
+        return new CLIRequest($app);
     }
 
-    private function createResponseCache(?CacheConfig $cacheConfig = null): ResponseCache
+    private function createResponseCache(Cache $cache = new Cache()): ResponseCache
     {
-        $cache = mock(CacheFactory::class);
+        /** @var MockCache $mockCache */
+        $mockCache = mock(CacheFactory::class);
 
-        $cacheConfig ??= new CacheConfig();
-
-        return (new ResponseCache($cacheConfig, $cache))->setTtl(300);
+        return (new ResponseCache($cache, $mockCache))->setTtl(300);
     }
 
     public function testCachePageIncomingRequest(): void
     {
         $pageCache = $this->createResponseCache();
 
-        $request = $this->createIncomingRequest('foo/bar');
-
-        $response = new Response($this->appConfig);
+        $response = new Response(new App());
         $response->setHeader('ETag', 'abcd1234');
         $response->setBody('The response body.');
 
-        $return = $pageCache->make($request, $response);
-
-        $this->assertTrue($return);
+        $this->assertTrue($pageCache->make(
+            $this->createIncomingRequest('foo/bar'),
+            $response,
+        ));
 
         // Check cache with a request with the same URI path.
-        $request        = $this->createIncomingRequest('foo/bar');
-        $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
-
+        $cachedResponse = $pageCache->get($this->createIncomingRequest('foo/bar'), new Response(new App()));
         $this->assertInstanceOf(ResponseInterface::class, $cachedResponse);
         $this->assertSame('The response body.', $cachedResponse->getBody());
         $this->assertSame('abcd1234', $cachedResponse->getHeaderLine('ETag'));
 
         // Check cache with a request with the same URI path and different query string.
-        $request        = $this->createIncomingRequest('foo/bar', ['foo' => 'bar', 'bar' => 'baz']);
-        $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
-
+        $cachedResponse = $pageCache->get(
+            $this->createIncomingRequest('foo/bar', ['foo' => 'bar', 'bar' => 'baz']),
+            new Response(new App()),
+        );
         $this->assertInstanceOf(ResponseInterface::class, $cachedResponse);
         $this->assertSame('The response body.', $cachedResponse->getBody());
         $this->assertSame('abcd1234', $cachedResponse->getHeaderLine('ETag'));
 
         // Check cache with another request with the different URI path.
-        $request = $this->createIncomingRequest('another');
-
-        $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
-
+        $cachedResponse = $pageCache->get($this->createIncomingRequest('another'), new Response(new App()));
         $this->assertNotInstanceOf(ResponseInterface::class, $cachedResponse);
     }
 
     public function testCachePageIncomingRequestWithCacheQueryString(): void
     {
-        $cacheConfig                   = new CacheConfig();
-        $cacheConfig->cacheQueryString = true;
-        $pageCache                     = $this->createResponseCache($cacheConfig);
+        $cache = new Cache();
+
+        $cache->cacheQueryString = true;
+
+        $pageCache = $this->createResponseCache($cache);
 
         $request = $this->createIncomingRequest('foo/bar', ['foo' => 'bar', 'bar' => 'baz']);
 
-        $response = new Response($this->appConfig);
+        $response = new Response(new App());
         $response->setHeader('ETag', 'abcd1234');
         $response->setBody('The response body.');
 
-        $return = $pageCache->make($request, $response);
-
-        $this->assertTrue($return);
+        $this->assertTrue($pageCache->make($request, $response));
 
         // Check cache with a request with the same URI path and same query string.
-        $this->createIncomingRequest('foo/bar', ['foo' => 'bar', 'bar' => 'baz']);
-        $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
-
+        $cachedResponse = $pageCache->get(
+            $this->createIncomingRequest('foo/bar', ['foo' => 'bar', 'bar' => 'baz']),
+            new Response(new App()),
+        );
         $this->assertInstanceOf(ResponseInterface::class, $cachedResponse);
         $this->assertSame('The response body.', $cachedResponse->getBody());
         $this->assertSame('abcd1234', $cachedResponse->getHeaderLine('ETag'));
 
         // Check cache with a request with the same URI path and different query string.
-        $request        = $this->createIncomingRequest('foo/bar', ['xfoo' => 'bar', 'bar' => 'baz']);
-        $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
-
+        $cachedResponse = $pageCache->get(
+            $this->createIncomingRequest('foo/bar', ['xfoo' => 'bar', 'bar' => 'baz']),
+            new Response(new App()),
+        );
         $this->assertNotInstanceOf(ResponseInterface::class, $cachedResponse);
 
         // Check cache with another request with the different URI path.
-        $request = $this->createIncomingRequest('another');
-
-        $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
-
+        $cachedResponse = $pageCache->get($this->createIncomingRequest('another'), new Response(new App()));
         $this->assertNotInstanceOf(ResponseInterface::class, $cachedResponse);
     }
 
@@ -173,19 +148,16 @@ final class ResponseCacheTest extends CIUnitTestCase
     {
         $pageCache = $this->createResponseCache();
 
-        $request = $this->createIncomingRequest('foo/bar');
-
-        $response = new Response($this->appConfig);
+        $response = new Response(new App());
         $response->setBody('The response body.');
 
-        $return = $pageCache->make($request, $response);
-
-        $this->assertTrue($return);
+        $this->assertTrue($pageCache->make($this->createIncomingRequest('foo/bar'), $response));
 
         // Check cache with a request with the same URI path and different HTTP method
-        $request        = $this->createIncomingRequest('foo/bar')->withMethod('POST');
-        $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
-
+        $cachedResponse = $pageCache->get(
+            $this->createIncomingRequest('foo/bar')->withMethod('POST'),
+            new Response(new App()),
+        );
         $this->assertNotInstanceOf(ResponseInterface::class, $cachedResponse);
     }
 
@@ -193,27 +165,18 @@ final class ResponseCacheTest extends CIUnitTestCase
     {
         $pageCache = $this->createResponseCache();
 
-        $request = $this->createCLIRequest(['foo', 'bar']);
-
-        $response = new Response($this->appConfig);
+        $response = new Response(new App());
         $response->setBody('The response body.');
 
-        $return = $pageCache->make($request, $response);
-
-        $this->assertTrue($return);
+        $this->assertTrue($pageCache->make($this->createCLIRequest(['foo', 'bar']), $response));
 
         // Check cache with a request with the same params.
-        $request        = $this->createCLIRequest(['foo', 'bar']);
-        $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
-
+        $cachedResponse = $pageCache->get($this->createCLIRequest(['foo', 'bar']), new Response(new App()));
         $this->assertInstanceOf(ResponseInterface::class, $cachedResponse);
         $this->assertSame('The response body.', $cachedResponse->getBody());
 
         // Check cache with another request with the different params.
-        $request = $this->createCLIRequest(['baz']);
-
-        $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
-
+        $cachedResponse = $pageCache->get($this->createCLIRequest(['baz']), new Response(new App()));
         $this->assertNotInstanceOf(ResponseInterface::class, $cachedResponse);
     }
 
@@ -222,13 +185,13 @@ final class ResponseCacheTest extends CIUnitTestCase
         $this->expectException(ErrorException::class);
         $this->expectExceptionMessage('unserialize(): Error at offset 0 of 12 bytes');
 
-        $cache       = mock(CacheFactory::class);
-        $cacheConfig = new CacheConfig();
-        $pageCache   = new ResponseCache($cacheConfig, $cache);
+        /** @var MockCache $mockCache */
+        $mockCache = mock(CacheFactory::class);
+        $pageCache = new ResponseCache(new Cache(), $mockCache);
 
         $request = $this->createIncomingRequest('foo/bar');
 
-        $response = new Response($this->appConfig);
+        $response = new Response(new App());
         $response->setHeader('ETag', 'abcd1234');
         $response->setBody('The response body.');
 
@@ -237,10 +200,10 @@ final class ResponseCacheTest extends CIUnitTestCase
         $cacheKey = $pageCache->generateCacheKey($request);
 
         // Save invalid data.
-        $cache->save($cacheKey, 'Invalid data');
+        $mockCache->save($cacheKey, 'Invalid data');
 
         // Check cache with a request with the same URI path.
-        $pageCache->get($request, new Response($this->appConfig));
+        $pageCache->get($request, new Response(new App()));
     }
 
     public function testInvalidCacheError(): void
@@ -248,13 +211,13 @@ final class ResponseCacheTest extends CIUnitTestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Error unserializing page cache');
 
-        $cache       = mock(CacheFactory::class);
-        $cacheConfig = new CacheConfig();
-        $pageCache   = new ResponseCache($cacheConfig, $cache);
+        /** @var MockCache $mockCache */
+        $mockCache = mock(CacheFactory::class);
+        $pageCache = new ResponseCache(new Cache(), $mockCache);
 
         $request = $this->createIncomingRequest('foo/bar');
 
-        $response = new Response($this->appConfig);
+        $response = new Response(new App());
         $response->setHeader('ETag', 'abcd1234');
         $response->setBody('The response body.');
 
@@ -263,9 +226,9 @@ final class ResponseCacheTest extends CIUnitTestCase
         $cacheKey = $pageCache->generateCacheKey($request);
 
         // Save invalid data.
-        $cache->save($cacheKey, serialize(['a' => '1']));
+        $mockCache->save($cacheKey, serialize(['a' => '1']));
 
         // Check cache with a request with the same URI path.
-        $pageCache->get($request, new Response($this->appConfig));
+        $pageCache->get($request, new Response(new App()));
     }
 }

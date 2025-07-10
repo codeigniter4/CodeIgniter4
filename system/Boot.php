@@ -373,9 +373,8 @@ class Boot
         $console = new Console();
 
         // Show basic information before we do anything else.
-        // @phpstan-ignore-next-line
         if (is_int($suppress = array_search('--no-header', $_SERVER['argv'], true))) {
-            unset($_SERVER['argv'][$suppress]); // @phpstan-ignore-line
+            unset($_SERVER['argv'][$suppress]);
             $suppress = true;
         }
 

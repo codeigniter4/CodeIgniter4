@@ -468,6 +468,19 @@ final class URITest extends CIUnitTestCase
         ];
     }
 
+    /**
+     * @param string $path
+     * @param string $expected
+     */
+    #[DataProvider('providePathGetsFiltered')]
+    public function testPathGetsFiltered($path, $expected): void
+    {
+        $uri = new URI();
+        $uri->setPath($path);
+
+        $this->assertSame($expected, $uri->getPath());
+    }
+
     public static function providePathGetsFiltered(): iterable
     {
         return [
@@ -508,19 +521,6 @@ final class URITest extends CIUnitTestCase
                 '/pa%252-th',
             ],
         ];
-    }
-
-    /**
-     * @param string $path
-     * @param string $expected
-     */
-    #[DataProvider('providePathGetsFiltered')]
-    public function testPathGetsFiltered($path, $expected): void
-    {
-        $uri = new URI();
-        $uri->setPath($path);
-
-        $this->assertSame($expected, $uri->getPath());
     }
 
     public function testSetFragmentSetsValue(): void
@@ -603,6 +603,18 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('', $uri->getQuery());
     }
 
+    /**
+     * @param string $url
+     * @param string $expected
+     */
+    #[DataProvider('provideAuthorityReturnsExceptedValues')]
+    public function testAuthorityReturnsExceptedValues($url, $expected): void
+    {
+        $uri = new URI($url);
+
+        $this->assertSame($expected, $uri->getAuthority());
+    }
+
     public static function provideAuthorityReturnsExceptedValues(): iterable
     {
         return [
@@ -622,31 +634,21 @@ final class URITest extends CIUnitTestCase
                 'http://me@foo.com:3000/bar',
                 'me@foo.com:3000',
             ],
-        ];
-    }
-
-    /**
-     * @param string $url
-     * @param string $expected
-     */
-    #[DataProvider('provideAuthorityReturnsExceptedValues')]
-    public function testAuthorityReturnsExceptedValues($url, $expected): void
-    {
-        $uri = new URI($url);
-
-        $this->assertSame($expected, $uri->getAuthority());
-    }
-
-    public static function provideAuthorityRemovesDefaultPorts(): iterable
-    {
-        return [
-            'http' => [
-                'http',
-                80,
+            'rtsp-with-port' => [
+                'rtsp://localhost:1234/stream',
+                'localhost:1234',
             ],
-            'https' => [
-                'https',
-                443,
+            'rtsp-no-port' => [
+                'rtsp://localhost/stream',
+                'localhost',
+            ],
+            'custom-scheme-with-port' => [
+                'myscheme://server:9999/resource',
+                'server:9999',
+            ],
+            'custom-scheme-no-port' => [
+                'myscheme://server/resource',
+                'server',
             ],
         ];
     }
@@ -665,6 +667,20 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
+    public static function provideAuthorityRemovesDefaultPorts(): iterable
+    {
+        return [
+            'http' => [
+                'http',
+                80,
+            ],
+            'https' => [
+                'https',
+                443,
+            ],
+        ];
+    }
+
     public function testSetAuthorityReconstitutes(): void
     {
         $authority = 'me@foo.com:3000';
@@ -673,6 +689,16 @@ final class URITest extends CIUnitTestCase
         $uri->setAuthority($authority);
 
         $this->assertSame($authority, $uri->getAuthority());
+    }
+
+    /**
+     * @param string $path
+     * @param string $expected
+     */
+    #[DataProvider('provideRemoveDotSegments')]
+    public function testRemoveDotSegments($path, $expected): void
+    {
+        $this->assertSame($expected, URI::removeDotSegments($path));
     }
 
     public static function provideRemoveDotSegments(): iterable
@@ -774,13 +800,35 @@ final class URITest extends CIUnitTestCase
     }
 
     /**
-     * @param string $path
+     * @param string $rel
      * @param string $expected
      */
-    #[DataProvider('provideRemoveDotSegments')]
-    public function testRemoveDotSegments($path, $expected): void
+    #[DataProvider('defaultResolutions')]
+    public function testResolveRelativeURI($rel, $expected): void
     {
-        $this->assertSame($expected, URI::removeDotSegments($path));
+        $base = 'http://a/b/c/d';
+        $uri  = new URI($base);
+
+        $new = $uri->resolveRelativeURI($rel);
+
+        $this->assertSame($expected, (string) $new);
+    }
+
+    /**
+     * @param string $rel
+     * @param string $expected
+     */
+    #[DataProvider('defaultResolutions')]
+    public function testResolveRelativeURIHTTPS($rel, $expected): void
+    {
+        $base     = 'https://a/b/c/d';
+        $expected = str_replace('http:', 'https:', $expected);
+
+        $uri = new URI($base);
+
+        $new = $uri->resolveRelativeURI($rel);
+
+        $this->assertSame($expected, (string) $new);
     }
 
     public static function defaultResolutions(): iterable
@@ -811,38 +859,6 @@ final class URITest extends CIUnitTestCase
                 'http://a/b/c/d?fruit=banana',
             ],
         ];
-    }
-
-    /**
-     * @param string $rel
-     * @param string $expected
-     */
-    #[DataProvider('defaultResolutions')]
-    public function testResolveRelativeURI($rel, $expected): void
-    {
-        $base = 'http://a/b/c/d';
-        $uri  = new URI($base);
-
-        $new = $uri->resolveRelativeURI($rel);
-
-        $this->assertSame($expected, (string) $new);
-    }
-
-    /**
-     * @param string $rel
-     * @param string $expected
-     */
-    #[DataProvider('defaultResolutions')]
-    public function testResolveRelativeURIHTTPS($rel, $expected): void
-    {
-        $base     = 'https://a/b/c/d';
-        $expected = str_replace('http:', 'https:', $expected);
-
-        $uri = new URI($base);
-
-        $new = $uri->resolveRelativeURI($rel);
-
-        $this->assertSame($expected, (string) $new);
     }
 
     public function testResolveRelativeURIWithNoBase(): void
@@ -1225,5 +1241,18 @@ final class URITest extends CIUnitTestCase
         $uri      = new URI($expected);
 
         $this->assertSame($expected, (string) $uri);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9604
+     */
+    public function testAuthorityIncludesPortForCustomSchemes(): void
+    {
+        $url = 'rtsp://localhost:1234/stream';
+        $uri = new URI($url);
+
+        $this->assertSame('rtsp://localhost:1234/stream', (string) $uri);
+        $this->assertSame('localhost:1234', $uri->getAuthority());
+        $this->assertSame(1234, $uri->getPort());
     }
 }

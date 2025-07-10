@@ -425,6 +425,19 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame($result, $this->parser->renderString($template));
     }
 
+    /**
+     * @param mixed      $value
+     * @param mixed|null $expected
+     */
+    #[DataProvider('provideEscHandling')]
+    public function testEscHandling($value, $expected = null): void
+    {
+        if ($expected === null) {
+            $expected = $value;
+        }
+        $this->assertSame($expected, \esc($value));
+    }
+
     public static function provideEscHandling(): iterable
     {
         return [
@@ -477,19 +490,6 @@ final class ParserTest extends CIUnitTestCase
                 ],
             ],
         ];
-    }
-
-    /**
-     * @param mixed      $value
-     * @param mixed|null $expected
-     */
-    #[DataProvider('provideEscHandling')]
-    public function testEscHandling($value, $expected = null): void
-    {
-        if ($expected === null) {
-            $expected = $value;
-        }
-        $this->assertSame($expected, \esc($value));
     }
 
     /**

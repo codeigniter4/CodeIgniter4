@@ -394,7 +394,7 @@ final class AutoloaderTest extends CIUnitTestCase
 
         $this->assertTrue(function_exists('autoload_foo'));
         $this->assertSame('I am autoloaded by Autoloader through $files!', autoload_foo());
-        $this->assertTrue(defined('AUTOLOAD_CONSTANT'));
+        $this->assertTrue(defined('AUTOLOAD_CONSTANT')); // @phpstan-ignore method.alreadyNarrowedType
         $this->assertSame('foo', AUTOLOAD_CONSTANT);
 
         $loader->unregister();

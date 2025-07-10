@@ -39,14 +39,6 @@ final class EmailTest extends CIUnitTestCase
         $this->assertStringContainsString('Invalid email address: "invalid"', $email->printDebugger());
     }
 
-    public static function provideEmailSendWithClearance(): iterable
-    {
-        return [
-            'autoclear'     => [true],
-            'not autoclear' => [false],
-        ];
-    }
-
     /**
      * @param bool $autoClear
      */
@@ -62,6 +54,14 @@ final class EmailTest extends CIUnitTestCase
         if (! $autoClear) {
             $this->assertSame('foo@foo.com', $email->archive['recipients'][0]);
         }
+    }
+
+    public static function provideEmailSendWithClearance(): iterable
+    {
+        return [
+            'autoclear'     => [true],
+            'not autoclear' => [false],
+        ];
     }
 
     public function testEmailSendStoresArchive(): void

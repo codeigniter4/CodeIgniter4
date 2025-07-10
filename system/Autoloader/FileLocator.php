@@ -44,7 +44,7 @@ class FileLocator implements FileLocatorInterface
      * Attempts to locate a file by examining the name for a namespace
      * and looking through the PSR-4 namespaced files that we know about.
      *
-     * @param string                $file   The relative file path or namespaced file to
+     * @param non-empty-string      $file   The relative file path or namespaced file to
      *                                      locate. If not namespaced, search in the app
      *                                      folder.
      * @param non-empty-string|null $folder The folder within the namespace that we should
@@ -53,7 +53,7 @@ class FileLocator implements FileLocatorInterface
      *                                      folder.
      * @param string                $ext    The file extension the file should have.
      *
-     * @return false|string The path to the file, or false if not found.
+     * @return false|non-empty-string The path to the file, or false if not found.
      */
     public function locateFile(string $file, ?string $folder = null, string $ext = 'php')
     {
@@ -156,9 +156,11 @@ class FileLocator implements FileLocatorInterface
                 $dlm = false;
             }
 
-            if (($tokens[$i - 2][0] === T_CLASS || (isset($tokens[$i - 2][1]) && $tokens[$i - 2][1] === 'phpclass'))
+            if (
+                ($tokens[$i - 2][0] === T_CLASS || (isset($tokens[$i - 2][1]) && $tokens[$i - 2][1] === 'phpclass'))
                 && $tokens[$i - 1][0] === T_WHITESPACE
-                && $token[0] === T_STRING) {
+                && $token[0] === T_STRING
+            ) {
                 $className = $token[1];
                 break;
             }
@@ -184,7 +186,7 @@ class FileLocator implements FileLocatorInterface
      *      'app/Modules/bar/Config/Routes.php',
      *  ]
      *
-     * @return list<string>
+     * @return list<non-empty-string>
      */
     public function search(string $path, string $ext = 'php', bool $prioritizeApp = true): array
     {
@@ -213,7 +215,6 @@ class FileLocator implements FileLocatorInterface
             $foundPaths = [...$foundPaths, ...$appPaths];
         }
 
-        // Remove any duplicates
         return array_values(array_unique($foundPaths));
     }
 
@@ -236,13 +237,12 @@ class FileLocator implements FileLocatorInterface
     /**
      * Return the namespace mappings we know about.
      *
-     * @return array<int, array<string, string>>
+     * @return list<array{prefix: non-empty-string, path: non-empty-string}>
      */
     protected function getNamespaces()
     {
         $namespaces = [];
 
-        // Save system for last
         $system = [];
 
         foreach ($this->autoloader->getNamespace() as $prefix => $paths) {
@@ -263,6 +263,7 @@ class FileLocator implements FileLocatorInterface
             }
         }
 
+        // Save system for last
         return array_merge($namespaces, $system);
     }
 
@@ -295,19 +296,17 @@ class FileLocator implements FileLocatorInterface
                     );
 
                 // Remove the file extension (.php)
-                /** @var class-string */
+                /** @var class-string $className */
                 $className = mb_substr($className, 0, -4);
 
                 if (in_array($className, $this->invalidClassnames, true)) {
                     continue;
                 }
 
-                // Check if this exists
                 if (class_exists($className)) {
                     return $className;
                 }
 
-                // If the class does not exist, it is an invalid classname.
                 $this->invalidClassnames[] = $className;
             }
         }
@@ -353,11 +352,11 @@ class FileLocator implements FileLocatorInterface
      * Scans the provided namespace, returning a list of all files
      * that are contained within the sub path specified by $path.
      *
-     * @return list<string> List of file paths
+     * @return list<non-empty-string> List of file paths
      */
     public function listNamespaceFiles(string $prefix, string $path): array
     {
-        if ($path === '' || ($prefix === '')) {
+        if ($path === '' || $prefix === '') {
             return [];
         }
 
