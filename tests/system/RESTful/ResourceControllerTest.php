@@ -107,7 +107,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
-        $this->assertStringContainsString(lang('RESTful.notImplemented', ['index']), $error);
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['index']), (string) $error);
     }
 
     public function testResourceGetNew(): void
@@ -129,7 +129,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
-        $this->assertStringContainsString(lang('RESTful.notImplemented', ['new']), $error);
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['new']), (string) $error);
     }
 
     public function testResourceGetEdit(): void
@@ -152,7 +152,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
-        $this->assertStringContainsString(lang('RESTful.notImplemented', ['edit']), $error);
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['edit']), (string) $error);
     }
 
     public function testResourceGetOne(): void
@@ -174,7 +174,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
-        $this->assertStringContainsString(lang('RESTful.notImplemented', ['show']), $error);
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['show']), (string) $error);
     }
 
     public function testResourcePost(): void
@@ -195,7 +195,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
-        $this->assertStringContainsString(lang('RESTful.notImplemented', ['create']), $error);
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['create']), (string) $error);
     }
 
     public function testResourcePatch(): void
@@ -217,7 +217,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
-        $this->assertStringContainsString(lang('RESTful.notImplemented', ['update']), $error);
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['update']), (string) $error);
     }
 
     public function testResourcePut(): void
@@ -239,7 +239,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
-        $this->assertStringContainsString(lang('RESTful.notImplemented', ['update']), $error);
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['update']), (string) $error);
     }
 
     public function testResourceDelete(): void
@@ -261,7 +261,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
-        $this->assertStringContainsString(lang('RESTful.notImplemented', ['delete']), $error);
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['delete']), (string) $error);
     }
 
     public function testModel(): void

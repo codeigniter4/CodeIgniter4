@@ -116,7 +116,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
         $expected = <<<'EOL'
             | Field Name | Type | Max Length | Nullable | Default | Primary Key |
             EOL;
-        $this->assertStringContainsString($expected, $result);
+        $this->assertStringContainsString($expected, (string) $result);
     }
 
     public function testDbTableDesc(): void

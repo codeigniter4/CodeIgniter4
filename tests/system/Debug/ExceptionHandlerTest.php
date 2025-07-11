@@ -135,7 +135,7 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         $this->handler->handle($exception, $request, $response, 404, EXIT_ERROR);
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('<title>404 - Page Not Found</title>', $output);
+        $this->assertStringContainsString('<title>404 - Page Not Found</title>', (string) $output);
     }
 
     public function testHandleCLIPageNotFoundException(): void

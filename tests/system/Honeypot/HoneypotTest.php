@@ -63,10 +63,10 @@ final class HoneypotTest extends CIUnitTestCase
         $this->response->setBody('<form></form>');
 
         $this->honeypot->attachHoneypot($this->response);
-        $this->assertStringContainsString($this->config->name, $this->response->getBody());
+        $this->assertStringContainsString($this->config->name, (string) $this->response->getBody());
 
         $this->response->setBody('<div></div>');
-        $this->assertStringNotContainsString($this->config->name, $this->response->getBody());
+        $this->assertStringNotContainsString($this->config->name, (string) $this->response->getBody());
     }
 
     public function testAttachHoneypotBodyNull(): void
@@ -188,7 +188,7 @@ final class HoneypotTest extends CIUnitTestCase
 
         $this->response->setBody('<form></form>');
         $this->response = $filters->run($uri, 'after');
-        $this->assertStringContainsString($this->config->name, $this->response->getBody());
+        $this->assertStringContainsString($this->config->name, (string) $this->response->getBody());
     }
 
     public function testEmptyConfigContainer(): void
