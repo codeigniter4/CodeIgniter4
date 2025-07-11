@@ -76,7 +76,7 @@ final class FileHandlerTest extends CIUnitTestCase
 
         // did the log file get created?
         $expectedResult = 'This is a test log';
-        $this->assertStringContainsString($expectedResult, $line);
+        $this->assertStringContainsString($expectedResult, (string) $line);
     }
 
     public function testHandleDateTimeCorrectly(): void
@@ -94,6 +94,6 @@ final class FileHandlerTest extends CIUnitTestCase
         fclose($fp);
 
         $expectedResult = 'Test message';
-        $this->assertStringContainsString($expectedResult, $line);
+        $this->assertStringContainsString($expectedResult, (string) $line);
     }
 }

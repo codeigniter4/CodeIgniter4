@@ -92,18 +92,18 @@ final class GenerateKeyTest extends CIUnitTestCase
     {
         command('key:generate');
         $this->assertStringContainsString('successfully set.', $this->getBuffer());
-        $this->assertStringContainsString(env('encryption.key'), file_get_contents($this->envPath));
-        $this->assertStringContainsString('hex2bin:', file_get_contents($this->envPath));
+        $this->assertStringContainsString(env('encryption.key'), (string) file_get_contents($this->envPath));
+        $this->assertStringContainsString('hex2bin:', (string) file_get_contents($this->envPath));
 
         command('key:generate --prefix base64 --force');
         $this->assertStringContainsString('successfully set.', $this->getBuffer());
-        $this->assertStringContainsString(env('encryption.key'), file_get_contents($this->envPath));
-        $this->assertStringContainsString('base64:', file_get_contents($this->envPath));
+        $this->assertStringContainsString(env('encryption.key'), (string) file_get_contents($this->envPath));
+        $this->assertStringContainsString('base64:', (string) file_get_contents($this->envPath));
 
         command('key:generate --prefix hex2bin --force');
         $this->assertStringContainsString('successfully set.', $this->getBuffer());
-        $this->assertStringContainsString(env('encryption.key'), file_get_contents($this->envPath));
-        $this->assertStringContainsString('hex2bin:', file_get_contents($this->envPath));
+        $this->assertStringContainsString(env('encryption.key'), (string) file_get_contents($this->envPath));
+        $this->assertStringContainsString('hex2bin:', (string) file_get_contents($this->envPath));
     }
 
     public function testDefaultShippedEnvIsMissing(): void

@@ -612,7 +612,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         trace();
         $content = ob_get_clean();
 
-        $this->assertStringContainsString('Debug Backtrace', $content);
+        $this->assertStringContainsString('Debug Backtrace', (string) $content);
     }
 
     public function testViewNotSaveData(): void

@@ -94,6 +94,6 @@ final class EnvironmentCommandTest extends CIUnitTestCase
         command('env development');
 
         $this->assertStringContainsString('Environment is successfully changed to', $this->getStreamFilterBuffer());
-        $this->assertStringContainsString('CI_ENVIRONMENT = development', file_get_contents($this->envPath));
+        $this->assertStringContainsString('CI_ENVIRONMENT = development', (string) file_get_contents($this->envPath));
     }
 }
