@@ -66,12 +66,7 @@ jobs:
           restore-keys: ${{ runner.os }}-psalm-
 
       - name: Install dependencies
-        run: |
-          if [ -f composer.lock ]; then
-            composer install --no-progress
-          else
-            composer update --no-progress
-          fi
+        run: composer update --ansi --no-interaction
 
       - name: Run Psalm analysis
         run: utils/vendor/bin/psalm
