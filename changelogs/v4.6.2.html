@@ -326,6 +326,7 @@
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Cache:</strong> Fixed a bug where a corrupted or unreadable cache file could cause an unhandled exception in <code class="docutils literal notranslate"><span class="pre">FileHandler::getItem()</span></code>.</p></li>
+<li><p><strong>Commands:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">make:test</span></code> where it would always error on Windows.</p></li>
 <li><p><strong>CURLRequest:</strong> Fixed a bug where intermediate HTTP responses were not properly removed from the response chain in certain scenarios, causing incorrect status codes and headers to be returned instead of the final response.</p></li>
 <li><p><strong>Database:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">when()</span></code> and <code class="docutils literal notranslate"><span class="pre">whenNot()</span></code> in <code class="docutils literal notranslate"><span class="pre">ConditionalTrait</span></code> incorrectly evaluated certain falsy values (such as <code class="docutils literal notranslate"><span class="pre">[]</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">0.0</span></code>, and <code class="docutils literal notranslate"><span class="pre">'0'</span></code>) as truthy, causing callbacks to be executed unexpectedly. These methods now cast the condition to a boolean using <code class="docutils literal notranslate"><span class="pre">(bool)</span></code> to ensure consistent behavior with PHP’s native truthiness.</p></li>
 <li><p><strong>Database:</strong> Fixed encapsulation violation in <code class="docutils literal notranslate"><span class="pre">BasePreparedQuery</span></code> when accessing <code class="docutils literal notranslate"><span class="pre">BaseConnection::transStatus</span></code> protected property.</p></li>
@@ -354,7 +355,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 10, 2025.
+      <span class="lastupdated">Last updated on Jul 15, 2025.
       </span></p>
   </div>
 
