@@ -97,3 +97,26 @@ of those:
 .. literalinclude:: managing_apps/004.php
 
 Only when you change the Application Directory, see :ref:`renaming-app-directory` and modify the paths in the **index.php** and **spark**.
+
+Changing the Location of the .env File
+======================================
+
+If necessary, you can change the location of the ``.env`` file by adjusting the ``$envDirectory``
+property in ``app/Config/Paths.php``.
+
+By default, the framework loads environment settings from a ``.env`` file located one level above
+the ``app/`` directory (in the ``ROOTPATH``). This is a safe location when your domain is correctly
+pointed to the ``public/`` directory, as recommended.
+
+In practice, however, some applications are served from a subdirectory (e.g., ``http://example.com/myapp``)
+rather than from the main domain. In such cases, placing the ``.env`` file within the ``ROOTPATH`` may expose
+sensitive configuration if ``.htaccess`` or other protections are misconfigured.
+
+To avoid this risk in such setups, it is recommended to ensure the ``.env`` file is located outside any
+web-accessible directories.
+
+.. warning::
+
+   If you change the location of the ``.env`` file, make absolutely sure it is not publicly accessible.
+   Exposure of this file could lead to compromised credentials and access to critical services, such as your
+   database, mail server, or third-party APIs.
