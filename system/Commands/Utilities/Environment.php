@@ -135,7 +135,7 @@ final class Environment extends BaseCommand
     private function writeNewEnvironmentToEnvFile(string $newEnv): bool
     {
         $baseEnv = ROOTPATH . 'env';
-        $envFile = (new Paths())->envDirectory ?? ROOTPATH . '.env';
+        $envFile = ((new Paths())->envDirectory ?? ROOTPATH) . '.env';
 
         if (! is_file($envFile)) {
             if (! is_file($baseEnv)) {
