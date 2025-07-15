@@ -84,5 +84,5 @@ class Paths
      * This variable must contain the name of the directory for
      * environment files.
      */
-    public string $environmentDirectory = __DIR__ . '/../../';
+    public string $envDirectory = __DIR__ . '/../../';
 }
