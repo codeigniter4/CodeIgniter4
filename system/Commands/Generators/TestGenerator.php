@@ -76,6 +76,9 @@ class TestGenerator extends BaseCommand
      */
     public function run(array $params)
     {
+        // Ensure tests are always suffixed with 'Test'
+        $params['suffix'] = null;
+
         $this->component = 'Test';
         $this->template  = 'test.tpl.php';
 
