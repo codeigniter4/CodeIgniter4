@@ -332,6 +332,7 @@
 <li><p><strong>CURLRequest:</strong> Fixed a bug where intermediate HTTP responses were not properly removed from the response chain in certain scenarios, causing incorrect status codes and headers to be returned instead of the final response.</p></li>
 <li><p><strong>Database:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">when()</span></code> and <code class="docutils literal notranslate"><span class="pre">whenNot()</span></code> in <code class="docutils literal notranslate"><span class="pre">ConditionalTrait</span></code> incorrectly evaluated certain falsy values (such as <code class="docutils literal notranslate"><span class="pre">[]</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">0.0</span></code>, and <code class="docutils literal notranslate"><span class="pre">'0'</span></code>) as truthy, causing callbacks to be executed unexpectedly. These methods now cast the condition to a boolean using <code class="docutils literal notranslate"><span class="pre">(bool)</span></code> to ensure consistent behavior with PHP’s native truthiness.</p></li>
 <li><p><strong>Database:</strong> Fixed encapsulation violation in <code class="docutils literal notranslate"><span class="pre">BasePreparedQuery</span></code> when accessing <code class="docutils literal notranslate"><span class="pre">BaseConnection::transStatus</span></code> protected property.</p></li>
+<li><p><strong>DownloadResponse:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">filename</span></code> parameters were missing from <code class="docutils literal notranslate"><span class="pre">Content-Disposition</span></code> headers when using inline disposition, causing browsers to use the last URL segment for filenames instead of the intended filename.</p></li>
 <li><p><strong>Email:</strong> Fixed a bug where <code class="docutils literal notranslate"><span class="pre">Email::getHostname()</span></code> failed to use <code class="docutils literal notranslate"><span class="pre">$_SERVER['SERVER_ADDR']</span></code> when <code class="docutils literal notranslate"><span class="pre">$_SERVER['SERVER_NAME']</span></code> was not set.</p></li>
 <li><p><strong>Security:</strong> Fixed a bug where the <code class="docutils literal notranslate"><span class="pre">sanitize_filename()</span></code> function from the Security helper would throw an error when used in CLI requests.</p></li>
 <li><p><strong>Session:</strong> Fixed a bug where using the <code class="docutils literal notranslate"><span class="pre">DatabaseHandler</span></code> with an unsupported database driver (such as <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code>, <code class="docutils literal notranslate"><span class="pre">OCI8</span></code>, or <code class="docutils literal notranslate"><span class="pre">SQLite3</span></code>) did not throw an appropriate error.</p></li>
@@ -357,7 +358,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 15, 2025.
+      <span class="lastupdated">Last updated on Jul 18, 2025.
       </span></p>
   </div>
 
