@@ -81,8 +81,10 @@ class Paths
      * ENVIRONMENT DIRECTORY NAME
      * ---------------------------------------------------------------
      *
-     * This variable must contain the name of the directory for
-     * environment files.
+     * This variable must contain the name of the directory where
+     * the .env file is located.
+     * Please consider security implications when changing this
+     * value - the directory should not be publicly accessible.
      */
     public string $envDirectory = __DIR__ . '/../../';
 }

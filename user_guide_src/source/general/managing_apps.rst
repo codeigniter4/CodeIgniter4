@@ -110,10 +110,9 @@ pointed to the ``public/`` directory, as recommended.
 
 In practice, however, some applications are served from a subdirectory (e.g., ``http://example.com/myapp``)
 rather than from the main domain. In such cases, placing the ``.env`` file within the ``ROOTPATH`` may expose
-sensitive configuration if ``.htaccess`` or other protections are misconfigured.
+sensitive configuration data if ``.htaccess`` or other protections are misconfigured.
 
-To avoid this risk in such setups, it is recommended to ensure the ``.env`` file is located outside any
-web-accessible directories.
+To avoid this risk in such setups, it is recommended that you ensure the ``.env`` file is located outside any web-accessible directories.
 
 .. warning::
 
