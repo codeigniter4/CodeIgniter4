@@ -76,6 +76,9 @@ class TestGenerator extends BaseCommand
      */
     public function run(array $params)
     {
+        // Ensure tests are always suffixed with 'Test'
+        $params['suffix'] = null;
+
         $this->component = 'Test';
         $this->template  = 'test.tpl.php';
 
@@ -173,20 +176,17 @@ class TestGenerator extends BaseCommand
     /**
      * Returns test file path for the namespace.
      */
-    private function searchTestFilePath(string $namespace): ?string
+    private function searchTestFilePath(string $testNamespace): ?string
     {
-        $bases = service('autoloader')->getNamespace($namespace);
+        /** @var list<non-empty-string> $testPaths */
+        $testPaths = service('autoloader')->getNamespace($testNamespace);
 
-        $base = null;
-
-        foreach ($bases as $candidate) {
-            if (str_contains($candidate, '/tests/')) {
-                $base = $candidate;
-
-                break;
+        foreach ($testPaths as $candidate) {
+            if (str_contains($candidate, DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR)) {
+                return $candidate;
             }
         }
 
-        return $base;
+        return null;
     }
 }

@@ -71,6 +71,6 @@ final class CheckPhpIniTest extends CIUnitTestCase
     {
         $output = CheckPhpIni::run(false);
 
-        $this->assertStringContainsString('display_errors', $output);
+        $this->assertStringContainsString('display_errors', (string) $output);
     }
 }

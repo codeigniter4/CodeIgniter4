@@ -109,7 +109,7 @@ final class HoneypotTest extends CIUnitTestCase
 
         $this->response->setBody('<form></form>');
         $this->response = $filters->run($uri, 'after');
-        $this->assertStringContainsString($this->honey->name, $this->response->getBody());
+        $this->assertStringContainsString($this->honey->name, (string) $this->response->getBody());
     }
 
     #[PreserveGlobalState(false)]
@@ -129,6 +129,6 @@ final class HoneypotTest extends CIUnitTestCase
 
         $this->response->setBody('<div></div>');
         $this->response = $filters->run($uri, 'after');
-        $this->assertStringNotContainsString($this->honey->name, $this->response->getBody());
+        $this->assertStringNotContainsString($this->honey->name, (string) $this->response->getBody());
     }
 }

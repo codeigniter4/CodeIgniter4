@@ -54,7 +54,7 @@ final class PublisherContentReplaceTest extends CIUnitTestCase
         $this->assertStringContainsString(
             '    public bool $CSPEnabled = false;
     public int $myOwnConfig = 1000;',
-            file_get_contents($this->file),
+            (string) file_get_contents($this->file),
         );
     }
 
@@ -70,7 +70,7 @@ final class PublisherContentReplaceTest extends CIUnitTestCase
         $this->assertStringContainsString(
             '    public int $myOwnConfig = 1000;
     public bool $CSPEnabled = false;',
-            file_get_contents($this->file),
+            (string) file_get_contents($this->file),
         );
     }
 
@@ -87,15 +87,15 @@ final class PublisherContentReplaceTest extends CIUnitTestCase
         $this->assertTrue($result);
         $this->assertStringNotContainsString(
             'use CodeIgniter\Config\BaseConfig;',
-            file_get_contents($this->file),
+            (string) file_get_contents($this->file),
         );
         $this->assertStringContainsString(
             'class App extends \Some\Package\SomeConfig',
-            file_get_contents($this->file),
+            (string) file_get_contents($this->file),
         );
         $this->assertStringNotContainsString(
             'class App extends BaseConfig',
-            file_get_contents($this->file),
+            (string) file_get_contents($this->file),
         );
     }
 }

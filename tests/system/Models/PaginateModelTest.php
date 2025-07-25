@@ -100,13 +100,13 @@ final class PaginateModelTest extends LiveModelTestCase
         $this->assertSame(4, $validModel->countAllResults());
         $this->assertSame(4, $userModel->countAllResults());
 
-        $this->assertStringContainsString('?page_valid=1"', $pager->links('valid'));
-        $this->assertStringContainsString('?page_valid=2"', $pager->links('valid'));
-        $this->assertStringContainsString('?page_valid=3"', $pager->links('valid'));
-        $this->assertStringContainsString('?page_valid=4"', $pager->links('valid'));
-        $this->assertStringContainsString('?page_user=1"', $pager->links('user'));
-        $this->assertStringContainsString('?page_user=2"', $pager->links('user'));
-        $this->assertStringContainsString('?page_user=3"', $pager->links('user'));
-        $this->assertStringContainsString('?page_user=4"', $pager->links('user'));
+        $this->assertStringContainsString('?page_valid=1"', (string) $pager->links('valid'));
+        $this->assertStringContainsString('?page_valid=2"', (string) $pager->links('valid'));
+        $this->assertStringContainsString('?page_valid=3"', (string) $pager->links('valid'));
+        $this->assertStringContainsString('?page_valid=4"', (string) $pager->links('valid'));
+        $this->assertStringContainsString('?page_user=1"', (string) $pager->links('user'));
+        $this->assertStringContainsString('?page_user=2"', (string) $pager->links('user'));
+        $this->assertStringContainsString('?page_user=3"', (string) $pager->links('user'));
+        $this->assertStringContainsString('?page_user=4"', (string) $pager->links('user'));
     }
 }
