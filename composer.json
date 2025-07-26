@@ -13,7 +13,7 @@
         "php": "^8.1",
         "ext-intl": "*",
         "ext-mbstring": "*",
-        "laminas/laminas-escaper": "^2.14",
+        "laminas/laminas-escaper": "^2.17",
         "psr/log": "^3.0"
     },
     "require-dev": {
@@ -27,8 +27,8 @@
         "phpstan/phpstan-strict-rules": "^2.0",
         "phpunit/phpcov": "^9.0.2 || ^10.0",
         "phpunit/phpunit": "^10.5.16 || ^11.2",
-        "predis/predis": "^1.1 || ^2.3",
-        "rector/rector": "2.0.14",
+        "predis/predis": "^3.0",
+        "rector/rector": "2.1.2",
         "shipmonk/phpstan-baseline-per-identifier": "^2.0"
     },
     "replace": {
@@ -89,7 +89,7 @@
             "CodeIgniter\\ComposerScripts::postUpdate"
         ],
         "post-autoload-dump": [
-            "@composer update --working-dir=utils --ignore-platform-req=php"
+            "@composer update --ansi --working-dir=utils"
         ],
         "analyze": [
             "Composer\\Config::disableProcessTimeout",

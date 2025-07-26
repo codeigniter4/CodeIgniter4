@@ -383,22 +383,8 @@ class CURLRequest extends OutgoingRequest
         // Set the string we want to break our response from
         $breakString = "\r\n\r\n";
 
-        if (isset($this->config['allow_redirects']) && $this->config['allow_redirects'] !== false) {
-            $output = $this->handleRedirectHeaders($output, $breakString);
-        }
-
-        while (str_starts_with($output, 'HTTP/1.1 100 Continue')) {
-            $output = substr($output, strpos($output, $breakString) + 4);
-        }
-
-        if (preg_match('/HTTP\/\d\.\d 200 Connection established/i', $output)) {
-            $output = substr($output, strpos($output, $breakString) + 4);
-        }
-
-        // If request and response have Digest
-        if (isset($this->config['auth'][2]) && $this->config['auth'][2] === 'digest' && str_contains($output, 'WWW-Authenticate: Digest')) {
-            $output = substr($output, strpos($output, $breakString) + 4);
-        }
+        // Remove all intermediate responses
+        $output = $this->removeIntermediateResponses($output, $breakString);
 
         // Split out our headers and body
         $break = strpos($output, $breakString);
@@ -696,6 +682,8 @@ class CURLRequest extends OutgoingRequest
      * Does the actual work of initializing cURL, setting the options,
      * and grabbing the output.
      *
+     * @param array<int, mixed> $curlOptions
+     *
      * @codeCoverageIgnore
      */
     protected function sendRequest(array $curlOptions = []): string
@@ -716,29 +704,71 @@ class CURLRequest extends OutgoingRequest
         return $output;
     }
 
-    private function handleRedirectHeaders(string $output, string $breakString): string
+    private function removeIntermediateResponses(string $output, string $breakString): string
     {
-        // Strip out multiple redirect header sections
-        while (preg_match('/^HTTP\/\d(?:\.\d)? 3\d\d/', $output)) {
-            $breakStringPos        = strpos($output, $breakString);
-            $redirectHeaderSection = substr($output, 0, $breakStringPos);
-            $redirectHeaders       = explode("\n", $redirectHeaderSection);
-            $locationHeaderFound   = false;
+        while (true) {
+            // Check if we should remove the current response
+            if ($this->shouldRemoveCurrentResponse($output, $breakString)) {
+                $breakStringPos = strpos($output, $breakString);
+                if ($breakStringPos !== false) {
+                    $output = substr($output, $breakStringPos + 4);
 
-            foreach ($redirectHeaders as $header) {
-                if (str_starts_with(strtolower($header), 'location:')) {
-                    $locationHeaderFound = true;
-                    break;
+                    continue;
                 }
             }
 
-            if ($locationHeaderFound) {
-                $output = substr($output, $breakStringPos + 4);
-            } else {
-                break;
-            }
+            // No more intermediate responses to remove
+            break;
         }
 
         return $output;
+    }
+
+    /**
+     * Check if the current response (at the beginning of output) should be removed.
+     */
+    private function shouldRemoveCurrentResponse(string $output, string $breakString): bool
+    {
+        // HTTP/x.x 1xx responses (Continue, Processing, etc.)
+        if (preg_match('/^HTTP\/\d+(?:\.\d+)?\s+1\d\d\s/', $output)) {
+            return true;
+        }
+
+        // HTTP/x.x 200 Connection established (proxy responses)
+        if (preg_match('/^HTTP\/\d+(?:\.\d+)?\s+200\s+Connection\s+established/i', $output)) {
+            return true;
+        }
+
+        // HTTP/x.x 3xx responses (redirects) - only if redirects are allowed
+        $allowRedirects = isset($this->config['allow_redirects']) && $this->config['allow_redirects'] !== false;
+        if ($allowRedirects && preg_match('/^HTTP\/\d+(?:\.\d+)?\s+3\d\d\s/', $output)) {
+            // Check if there's a Location header
+            $breakStringPos = strpos($output, $breakString);
+            if ($breakStringPos !== false) {
+                $headerSection = substr($output, 0, $breakStringPos);
+                $headers       = explode("\n", $headerSection);
+
+                foreach ($headers as $header) {
+                    if (str_starts_with(strtolower($header), 'location:')) {
+                        return true; // Found location header, this is a redirect to remove
+                    }
+                }
+            }
+        }
+
+        // Digest auth challenges - only remove if there's another response after
+        if (isset($this->config['auth'][2]) && $this->config['auth'][2] === 'digest') {
+            $breakStringPos = strpos($output, $breakString);
+            if ($breakStringPos !== false) {
+                $headerSection = substr($output, 0, $breakStringPos);
+                if (str_contains($headerSection, 'WWW-Authenticate: Digest')) {
+                    $nextBreakPos = strpos($output, $breakString, $breakStringPos + 4);
+
+                    return $nextBreakPos !== false; // Only remove if there's another response
+                }
+            }
+        }
+
+        return false;
     }
 }

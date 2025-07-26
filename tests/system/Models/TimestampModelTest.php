@@ -40,7 +40,7 @@ final class TimestampModelTest extends LiveModelTestCase
     /**
      * @return int|string Insert ID
      */
-    private function allowDatesPrepareOneRecord(array $data)
+    private function allowDatesPrepareOneRecord(array $data): int|string
     {
         $this->createModel(UserTimestampModel::class);
         $this->db->table('user')->truncate();
@@ -60,7 +60,7 @@ final class TimestampModelTest extends LiveModelTestCase
     /**
      * @return int|string Insert ID
      */
-    private function doNotAllowDatesPrepareOneRecord(array $data)
+    private function doNotAllowDatesPrepareOneRecord(array $data): int|string
     {
         $this->createModel(UserTimestampModel::class);
         $this->db->table('user')->truncate();

@@ -31,10 +31,8 @@ class Services extends BaseServices
      * The URI class provides a way to model and manipulate URIs.
      *
      * @param string|null $uri The URI string
-     *
-     * @return URI
      */
-    public static function uri(?string $uri = null, bool $getShared = true)
+    public static function uri(?string $uri = null, bool $getShared = true): URI
     {
         // Intercept our test case
         if ($uri === 'testCanReplaceFrameworkServices') {

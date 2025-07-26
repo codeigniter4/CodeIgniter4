@@ -13,8 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Format;
 
-use CodeIgniter\Exceptions\RuntimeException;
+use CodeIgniter\Format\Exceptions\FormatException;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -31,51 +32,34 @@ final class JSONFormatterTest extends CIUnitTestCase
         $this->jsonFormatter = new JSONFormatter();
     }
 
-    public function testBasicJSON(): void
+    /**
+     * @param array<string, string> $data
+     */
+    #[DataProvider('provideFormattingToJson')]
+    public function testFormattingToJson(array $data, string $expected): void
     {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $expected = '{
-    "foo": "bar"
-}';
-
         $this->assertSame($expected, $this->jsonFormatter->format($data));
     }
 
-    public function testUnicodeOutput(): void
+    /**
+     * @return iterable<string, array{0: array<string, string>, 1: string}>
+     */
+    public static function provideFormattingToJson(): iterable
     {
-        $data = [
-            'foo' => 'База данни грешка',
-        ];
+        yield 'empty array' => [[], '[]'];
 
-        $expected = '{
-    "foo": "База данни грешка"
-}';
+        yield 'simple array' => [['foo' => 'bar'], "{\n    \"foo\": \"bar\"\n}"];
 
-        $this->assertSame($expected, $this->jsonFormatter->format($data));
+        yield 'unicode array' => [['foo' => 'База данни грешка'], "{\n    \"foo\": \"База данни грешка\"\n}"];
+
+        yield 'url array' => [['foo' => 'https://www.example.com/foo/bar'], "{\n    \"foo\": \"https://www.example.com/foo/bar\"\n}"];
     }
 
-    public function testKeepsURLs(): void
+    public function testJSONFormatterThrowsError(): void
     {
-        $data = [
-            'foo' => 'https://www.example.com/foo/bar',
-        ];
+        $this->expectException(FormatException::class);
+        $this->expectExceptionMessage('Malformed UTF-8 characters, possibly incorrectly encoded');
 
-        $expected = '{
-    "foo": "https://www.example.com/foo/bar"
-}';
-
-        $this->assertSame($expected, $this->jsonFormatter->format($data));
-    }
-
-    public function testJSONError(): void
-    {
-        $this->expectException(RuntimeException::class);
-
-        $data     = ["\xB1\x31"];
-        $expected = 'Boom';
-        $this->assertSame($expected, $this->jsonFormatter->format($data));
+        $this->assertSame('Boom', $this->jsonFormatter->format(["\xB1\x31"]));
     }
 }

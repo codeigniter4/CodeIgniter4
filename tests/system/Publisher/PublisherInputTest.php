@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Publisher;
 
+use CodeIgniter\HTTP\CURLRequest;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -136,16 +139,37 @@ final class PublisherInputTest extends CIUnitTestCase
 
     public function testAddUri(): void
     {
+        $mockCurl = $this->getMockBuilder(CURLRequest::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['get'])
+            ->getMock();
+        $mockResponse = $this->createStub(ResponseInterface::class);
+
+        $mockResponse->method('getBody')->willReturn('');
+        $mockCurl->method('get')->willReturn($mockResponse);
+        Services::injectMock('curlrequest', $mockCurl);
+
         $publisher = new Publisher();
         $publisher->addUri('https://raw.githubusercontent.com/codeigniter4/CodeIgniter4/develop/composer.json');
 
         $scratch = $this->getPrivateProperty($publisher, 'scratch');
 
         $this->assertSame([$scratch . 'composer.json'], $publisher->get());
+        Services::resetSingle('curlrequest');
     }
 
     public function testAddUris(): void
     {
+        $mockCurl = $this->getMockBuilder(CURLRequest::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['get'])
+            ->getMock();
+        $mockResponse = $this->createStub(ResponseInterface::class);
+
+        $mockResponse->method('getBody')->willReturn('');
+        $mockCurl->method('get')->willReturn($mockResponse);
+        Services::injectMock('curlrequest', $mockCurl);
+
         $publisher = new Publisher();
         $publisher->addUris([
             'https://raw.githubusercontent.com/codeigniter4/CodeIgniter4/develop/LICENSE',
@@ -155,5 +179,6 @@ final class PublisherInputTest extends CIUnitTestCase
         $scratch = $this->getPrivateProperty($publisher, 'scratch');
 
         $this->assertSame([$scratch . 'LICENSE', $scratch . 'composer.json'], $publisher->get());
+        Services::resetSingle('curlrequest');
     }
 }

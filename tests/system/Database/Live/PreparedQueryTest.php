@@ -304,4 +304,44 @@ final class PreparedQueryTest extends CIUnitTestCase
 
         $this->assertSame(strlen($fileContent), strlen($file));
     }
+
+    public function testHandleTransStatusMarksTransactionFailedDuringTransaction(): void
+    {
+        $this->db->transStart();
+
+        // Verify we're in a transaction
+        $this->assertSame(1, $this->db->transDepth);
+
+        // Prepare a query that will fail (duplicate key)
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('without_auto_increment')->insert([
+            'key'   => 'a',
+            'value' => 'b',
+        ]));
+
+        $this->disableDBDebug();
+
+        $this->assertTrue($this->query->execute('test_key', 'test_value'));
+        $this->assertTrue($this->db->transStatus());
+
+        $this->seeInDatabase($this->db->DBPrefix . 'without_auto_increment', [
+            'key'   => 'test_key',
+            'value' => 'test_value'
+        ]);
+
+        $this->assertFalse($this->query->execute('test_key', 'different_value'));
+        $this->assertFalse($this->db->transStatus());
+
+        $this->enableDBDebug();
+
+        // Complete the transaction - should rollback due to failed status
+        $this->assertFalse($this->db->transComplete());
+
+        // Verify the first insert was rolled back
+        $this->dontSeeInDatabase($this->db->DBPrefix . 'without_auto_increment', [
+            'key'   => 'test_key',
+            'value' => 'test_value'
+        ]);
+
+        $this->db->resetTransStatus();
+    }
 }

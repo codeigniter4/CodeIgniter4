@@ -113,10 +113,9 @@ final class DataCaster
      * Add ? at the beginning of the type (i.e. ?string) to get `null`
      * instead of casting $value when $value is null.
      *
-     * @param         mixed       $value  The value to convert
-     * @param         string      $field  The field name
-     * @param         string      $method Allowed to "get" and "set"
-     * @phpstan-param 'get'|'set' $method
+     * @param mixed       $value  The value to convert
+     * @param string      $field  The field name
+     * @param 'get'|'set' $method Allowed to "get" and "set"
      */
     public function castAs(mixed $value, string $field, string $method = 'get'): mixed
     {

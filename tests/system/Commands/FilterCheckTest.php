@@ -48,14 +48,14 @@ final class FilterCheckTest extends CIUnitTestCase
 
         $this->assertStringContainsString(
             '| GET    | /     | forcehttps pagecache | pagecache performance toolbar |',
-            preg_replace('/\033\[.+?m/u', '', $this->getBuffer()),
+            (string) preg_replace('/\033\[.+?m/u', '', $this->getBuffer()),
         );
         $this->assertStringContainsString(
             'Before Filter Classes:
 CodeIgniter\Filters\ForceHTTPS → CodeIgniter\Filters\PageCache
 After Filter Classes:
 CodeIgniter\Filters\PageCache → CodeIgniter\Filters\PerformanceMetrics → CodeIgniter\Filters\DebugToolbar',
-            preg_replace('/\033\[.+?m/u', '', $this->getBuffer()),
+            (string) preg_replace('/\033\[.+?m/u', '', $this->getBuffer()),
         );
     }
 

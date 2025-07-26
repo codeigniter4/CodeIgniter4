@@ -40,12 +40,10 @@ final class ResponseCache
      *
      * @var bool|list<string>
      */
-    private $cacheQueryString = false;
+    private array|bool $cacheQueryString = false;
 
     /**
-     * Cache time to live.
-     *
-     * @var int seconds
+     * Cache time to live (TTL) in seconds.
      */
     private int $ttl = 0;
 
@@ -54,10 +52,7 @@ final class ResponseCache
         $this->cacheQueryString = $config->cacheQueryString;
     }
 
-    /**
-     * @return $this
-     */
-    public function setTtl(int $ttl)
+    public function setTtl(int $ttl): self
     {
         $this->ttl = $ttl;
 
@@ -67,11 +62,9 @@ final class ResponseCache
     /**
      * Generates the cache key to use from the current request.
      *
-     * @param CLIRequest|IncomingRequest $request
-     *
      * @internal for testing purposes only
      */
-    public function generateCacheKey($request): string
+    public function generateCacheKey(CLIRequest|IncomingRequest $request): string
     {
         if ($request instanceof CLIRequest) {
             return md5($request->getPath());
@@ -79,7 +72,7 @@ final class ResponseCache
 
         $uri = clone $request->getUri();
 
-        $query = $this->cacheQueryString
+        $query = (bool) $this->cacheQueryString
             ? $uri->getQuery(is_array($this->cacheQueryString) ? ['only' => $this->cacheQueryString] : [])
             : '';
 
@@ -88,10 +81,8 @@ final class ResponseCache
 
     /**
      * Caches the response.
-     *
-     * @param CLIRequest|IncomingRequest $request
      */
-    public function make($request, ResponseInterface $response): bool
+    public function make(CLIRequest|IncomingRequest $request, ResponseInterface $response): bool
     {
         if ($this->ttl === 0) {
             return true;
@@ -118,12 +109,12 @@ final class ResponseCache
 
     /**
      * Gets the cached response for the request.
-     *
-     * @param CLIRequest|IncomingRequest $request
      */
-    public function get($request, ResponseInterface $response): ?ResponseInterface
+    public function get(CLIRequest|IncomingRequest $request, ResponseInterface $response): ?ResponseInterface
     {
-        if ($cachedResponse = $this->cache->get($this->generateCacheKey($request))) {
+        $cachedResponse = $this->cache->get($this->generateCacheKey($request));
+
+        if (is_string($cachedResponse) && $cachedResponse !== '') {
             $cachedResponse = unserialize($cachedResponse);
 
             if (

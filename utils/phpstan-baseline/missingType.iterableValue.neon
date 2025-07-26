@@ -1,4 +1,4 @@
-# total 1576 errors
+# total 1435 errors
 
 parameters:
     ignoreErrors:
@@ -24,11 +24,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\BaseModel\:\:convertToReturnType\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:delete\(\) has parameter \$id with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/BaseModel.php
 
@@ -243,196 +238,6 @@ parameters:
             path: ../../system/CLI/Console.php
 
         -
-            message: '#^Method CodeIgniter\\Cache\\CacheInterface\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/CacheInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\CacheInterface\:\:getCacheInfo\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/CacheInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\CacheInterface\:\:getMetaData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/CacheInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\CacheInterface\:\:save\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/CacheInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\FactoriesCache\\FileVarExportHandler\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/FactoriesCache/FileVarExportHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\FactoriesCache\\FileVarExportHandler\:\:save\(\) has parameter \$val with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/FactoriesCache/FileVarExportHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\BaseHandler\:\:remember\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/BaseHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\DummyHandler\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/DummyHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\DummyHandler\:\:getCacheInfo\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/DummyHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\DummyHandler\:\:getMetaData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/DummyHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\DummyHandler\:\:remember\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/DummyHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\DummyHandler\:\:save\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/DummyHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\FileHandler\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/FileHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\FileHandler\:\:getCacheInfo\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/FileHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\FileHandler\:\:getDirFileInfo\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/FileHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\FileHandler\:\:getFileInfo\(\) has parameter \$returnedValues with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/FileHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\FileHandler\:\:getFileInfo\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/FileHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\FileHandler\:\:getMetaData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/FileHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\FileHandler\:\:save\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/FileHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\MemcachedHandler\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/MemcachedHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\MemcachedHandler\:\:getCacheInfo\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/MemcachedHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\MemcachedHandler\:\:getMetaData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/MemcachedHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\MemcachedHandler\:\:save\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/MemcachedHandler.php
-
-        -
-            message: '#^Property CodeIgniter\\Cache\\Handlers\\MemcachedHandler\:\:\$config type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/MemcachedHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\PredisHandler\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/PredisHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\PredisHandler\:\:getCacheInfo\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/PredisHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\PredisHandler\:\:getMetaData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/PredisHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\PredisHandler\:\:save\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/PredisHandler.php
-
-        -
-            message: '#^Property CodeIgniter\\Cache\\Handlers\\PredisHandler\:\:\$config type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/PredisHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\RedisHandler\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/RedisHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\RedisHandler\:\:getCacheInfo\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/RedisHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\RedisHandler\:\:getMetaData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/RedisHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\RedisHandler\:\:save\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/RedisHandler.php
-
-        -
-            message: '#^Property CodeIgniter\\Cache\\Handlers\\RedisHandler\:\:\$config type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/RedisHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\WincacheHandler\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/WincacheHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\WincacheHandler\:\:getCacheInfo\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/WincacheHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\WincacheHandler\:\:getMetaData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/WincacheHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\WincacheHandler\:\:save\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Cache/Handlers/WincacheHandler.php
-
-        -
             message: '#^Method CodeIgniter\\CodeIgniter\:\:getPerformanceStats\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/CodeIgniter.php
@@ -533,11 +338,6 @@ parameters:
             path: ../../system/Commands/Utilities/Routes/FilterFinder.php
 
         -
-            message: '#^Function cache\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Common.php
-
-        -
             message: '#^Function class_uses_recursive\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Common.php
@@ -584,11 +384,6 @@ parameters:
 
         -
             message: '#^Function service\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Common.php
-
-        -
-            message: '#^Function session\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Common.php
 
@@ -1168,11 +963,6 @@ parameters:
             path: ../../system/Database/BaseBuilder.php
 
         -
-            message: '#^Property CodeIgniter\\Database\\BaseBuilder\:\:\$supportedIgnoreStatements type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseBuilder.php
-
-        -
             message: '#^Class CodeIgniter\\Database\\BaseConnection has PHPDoc tag @property\-read for property \$aliasedTables with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/BaseConnection.php
@@ -1673,11 +1463,6 @@ parameters:
             path: ../../system/Database/MigrationRunner.php
 
         -
-            message: '#^Property CodeIgniter\\Database\\MySQLi\\Builder\:\:\$supportedIgnoreStatements type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/MySQLi/Builder.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\MySQLi\\Forge\:\:_alterTable\(\) has parameter \$processedFields with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/MySQLi/Forge.php
@@ -1834,11 +1619,6 @@ parameters:
 
         -
             message: '#^Property CodeIgniter\\Database\\Postgre\\Builder\:\:\$randomKeyword type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/Postgre/Builder.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\Postgre\\Builder\:\:\$supportedIgnoreStatements type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/Postgre/Builder.php
 
@@ -2128,11 +1908,6 @@ parameters:
             path: ../../system/Database/SQLite3/Builder.php
 
         -
-            message: '#^Property CodeIgniter\\Database\\SQLite3\\Builder\:\:\$supportedIgnoreStatements type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/SQLite3/Builder.php
-
-        -
             message: '#^Method CodeIgniter\\Database\\SQLite3\\Forge\:\:_alterTable\(\) has parameter \$processedFields with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/SQLite3/Forge.php
@@ -2263,52 +2038,12 @@ parameters:
             path: ../../system/Debug/BaseExceptionHandler.php
 
         -
-            message: '#^Method CodeIgniter\\Debug\\ExceptionHandler\:\:fail\(\) has parameter \$messages with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/ExceptionHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\ExceptionHandler\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/ExceptionHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\ExceptionHandler\:\:respond\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/ExceptionHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\ExceptionHandler\:\:respondCreated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/ExceptionHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\ExceptionHandler\:\:respondDeleted\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/ExceptionHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\ExceptionHandler\:\:respondUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/ExceptionHandler.php
-
-        -
             message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:collectVars\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Debug/Exceptions.php
 
         -
             message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:determineCodes\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Exceptions.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:fail\(\) has parameter \$messages with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Exceptions.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Debug/Exceptions.php
 
@@ -2344,26 +2079,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:renderBacktrace\(\) has parameter \$backtrace with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Exceptions.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:respond\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Exceptions.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:respondCreated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Exceptions.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:respondDeleted\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Exceptions.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\Exceptions\:\:respondUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Debug/Exceptions.php
 
@@ -2508,21 +2223,6 @@ parameters:
             path: ../../system/Debug/Toolbar/Collectors/History.php
 
         -
-            message: '#^Method CodeIgniter\\Debug\\Toolbar\\Collectors\\Logs\:\:collectLogs\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Toolbar/Collectors/Logs.php
-
-        -
-            message: '#^Method CodeIgniter\\Debug\\Toolbar\\Collectors\\Logs\:\:display\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Toolbar/Collectors/Logs.php
-
-        -
-            message: '#^Property CodeIgniter\\Debug\\Toolbar\\Collectors\\Logs\:\:\$data type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Debug/Toolbar/Collectors/Logs.php
-
-        -
             message: '#^Method CodeIgniter\\Debug\\Toolbar\\Collectors\\Timers\:\:formatTimelineData\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Debug/Toolbar/Collectors/Timers.php
@@ -2578,16 +2278,6 @@ parameters:
             path: ../../system/Email/Email.php
 
         -
-            message: '#^Method CodeIgniter\\Email\\Email\:\:stringToArray\(\) has parameter \$email with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Method CodeIgniter\\Email\\Email\:\:stringToArray\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
             message: '#^Method CodeIgniter\\Email\\Email\:\:validateEmail\(\) has parameter \$email with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Email/Email.php
@@ -2613,27 +2303,12 @@ parameters:
             path: ../../system/Email/Email.php
 
         -
-            message: '#^Property CodeIgniter\\Email\\Email\:\:\$bitDepths type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
             message: '#^Property CodeIgniter\\Email\\Email\:\:\$debugMessage type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Email/Email.php
 
         -
             message: '#^Property CodeIgniter\\Email\\Email\:\:\$headers type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Property CodeIgniter\\Email\\Email\:\:\$priorities type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Property CodeIgniter\\Email\\Email\:\:\$protocols type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Email/Email.php
 
@@ -2983,21 +2658,6 @@ parameters:
             path: ../../system/Entity/Entity.php
 
         -
-            message: '#^Method CodeIgniter\\Events\\Events\:\:listeners\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Events/Events.php
-
-        -
-            message: '#^Method CodeIgniter\\Events\\Events\:\:setFiles\(\) has parameter \$files with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Events/Events.php
-
-        -
-            message: '#^Property CodeIgniter\\Events\\Events\:\:\$listeners type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Events/Events.php
-
-        -
             message: '#^Method CodeIgniter\\Exceptions\\PageNotFoundException\:\:lang\(\) has parameter \$args with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Exceptions/PageNotFoundException.php
@@ -3076,26 +2736,6 @@ parameters:
             message: '#^Method CodeIgniter\\Filters\\PerformanceMetrics\:\:before\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Filters/PerformanceMetrics.php
-
-        -
-            message: '#^Method CodeIgniter\\Format\\FormatterInterface\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Format/FormatterInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Format\\JSONFormatter\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Format/JSONFormatter.php
-
-        -
-            message: '#^Method CodeIgniter\\Format\\XMLFormatter\:\:arrayToXML\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Format/XMLFormatter.php
-
-        -
-            message: '#^Method CodeIgniter\\Format\\XMLFormatter\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Format/XMLFormatter.php
 
         -
             message: '#^Method CodeIgniter\\HTTP\\CLIRequest\:\:getArgs\(\) return type has no value type specified in iterable type array\.$#'
@@ -3279,11 +2919,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\HTTP\\CURLRequest\:\:request\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/HTTP/CURLRequest.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\CURLRequest\:\:sendRequest\(\) has parameter \$curlOptions with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/HTTP/CURLRequest.php
 
@@ -4118,21 +3753,6 @@ parameters:
             path: ../../system/Helpers/filesystem_helper.php
 
         -
-            message: '#^Function get_dir_file_info\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/filesystem_helper.php
-
-        -
-            message: '#^Function get_file_info\(\) has parameter \$returnedValues with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/filesystem_helper.php
-
-        -
-            message: '#^Function get_file_info\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/filesystem_helper.php
-
-        -
             message: '#^Function get_filenames\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Helpers/filesystem_helper.php
@@ -4578,71 +4198,6 @@ parameters:
             path: ../../system/Language/Language.php
 
         -
-            message: '#^Method CodeIgniter\\Log\\Handlers\\BaseHandler\:\:__construct\(\) has parameter \$config with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/BaseHandler.php
-
-        -
-            message: '#^Property CodeIgniter\\Log\\Handlers\\BaseHandler\:\:\$handles type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/BaseHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:__construct\(\) has parameter \$config with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/ChromeLoggerHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:format\(\) has parameter \$object with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/ChromeLoggerHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:format\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/ChromeLoggerHandler.php
-
-        -
-            message: '#^Property CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:\$json type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/ChromeLoggerHandler.php
-
-        -
-            message: '#^Property CodeIgniter\\Log\\Handlers\\ChromeLoggerHandler\:\:\$levels type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/ChromeLoggerHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Log\\Handlers\\FileHandler\:\:__construct\(\) has parameter \$config with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/FileHandler.php
-
-        -
-            message: '#^Method CodeIgniter\\Log\\Logger\:\:determineFile\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Logger.php
-
-        -
-            message: '#^Method CodeIgniter\\Log\\Logger\:\:interpolate\(\) has parameter \$context with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Logger.php
-
-        -
-            message: '#^Property CodeIgniter\\Log\\Logger\:\:\$handlers type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Logger.php
-
-        -
-            message: '#^Property CodeIgniter\\Log\\Logger\:\:\$logCache type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Logger.php
-
-        -
-            message: '#^Property CodeIgniter\\Log\\Logger\:\:\$loggableLevels type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Log/Logger.php
-
-        -
             message: '#^Method CodeIgniter\\Model\:\:__call\(\) has parameter \$params with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Model.php
@@ -4756,36 +4311,6 @@ parameters:
             message: '#^Method CodeIgniter\\Publisher\\Publisher\:\:replace\(\) has parameter \$replaces with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Publisher/Publisher.php
-
-        -
-            message: '#^Method CodeIgniter\\RESTful\\ResourceController\:\:fail\(\) has parameter \$messages with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/RESTful/ResourceController.php
-
-        -
-            message: '#^Method CodeIgniter\\RESTful\\ResourceController\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/RESTful/ResourceController.php
-
-        -
-            message: '#^Method CodeIgniter\\RESTful\\ResourceController\:\:respond\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/RESTful/ResourceController.php
-
-        -
-            message: '#^Method CodeIgniter\\RESTful\\ResourceController\:\:respondCreated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/RESTful/ResourceController.php
-
-        -
-            message: '#^Method CodeIgniter\\RESTful\\ResourceController\:\:respondDeleted\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/RESTful/ResourceController.php
-
-        -
-            message: '#^Method CodeIgniter\\RESTful\\ResourceController\:\:respondUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/RESTful/ResourceController.php
 
         -
             message: '#^Method CodeIgniter\\Router\\AutoRouter\:\:getRoute\(\) return type has no value type specified in iterable type array\.$#'
@@ -5288,36 +4813,6 @@ parameters:
             path: ../../system/Test/Fabricator.php
 
         -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockBuilder\:\:\$supportedIgnoreStatements type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockBuilder.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockCURLRequest\:\:sendRequest\(\) has parameter \$curlOptions with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockCURLRequest.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockCache\:\:getMetaData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockCache.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockEvents\:\:getListeners\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockEvents.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockFileLogger\:\:__construct\(\) has parameter \$config with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockFileLogger.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockInputOutput\:\:getOutputs\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockInputOutput.php
-
-        -
             message: '#^Method CodeIgniter\\Test\\Mock\\MockLanguage\:\:requireFile\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Test/Mock/MockLanguage.php
@@ -5326,46 +4821,6 @@ parameters:
             message: '#^Method CodeIgniter\\Test\\Mock\\MockLanguage\:\:setData\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Test/Mock/MockLanguage.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockResourcePresenter\:\:fail\(\) has parameter \$messages with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockResourcePresenter.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockResourcePresenter\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockResourcePresenter.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockResourcePresenter\:\:respond\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockResourcePresenter.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockResourcePresenter\:\:respondCreated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockResourcePresenter.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockResourcePresenter\:\:respondDeleted\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockResourcePresenter.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockResourcePresenter\:\:respondUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockResourcePresenter.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockResult\:\:getFieldData\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockResult.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\Mock\\MockResult\:\:getFieldNames\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockResult.php
 
         -
             message: '#^Method CodeIgniter\\Test\\TestResponse\:\:assertJSONExact\(\) has parameter \$test with no value type specified in iterable type array\.$#'
@@ -6008,141 +5463,6 @@ parameters:
             path: ../../system/View/Parser.php
 
         -
-            message: '#^Method CodeIgniter\\API\\ResponseTraitTest\:\:createRequestAndResponse\(\) has parameter \$userHeaders with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method CodeIgniter\\API\\ResponseTraitTest\:\:invoke\(\) has parameter \$args with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method CodeIgniter\\API\\ResponseTraitTest\:\:makeController\(\) has parameter \$userHeaders with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:fail\(\) has parameter \$messages with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:respond\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:respondCreated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:respondDeleted\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:respondUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:fail\(\) has parameter \$messages with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:respond\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:respondCreated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:respondDeleted\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:respondUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:fail\(\) has parameter \$messages with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:respond\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:respondCreated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:respondDeleted\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:respondUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:609\:\:fail\(\) has parameter \$messages with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:609\:\:format\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:609\:\:respond\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:609\:\:respondCreated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:609\:\:respondDeleted\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Method class@anonymous/tests/system/API/ResponseTraitTest\.php\:609\:\:respondUpdated\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
             message: '#^Method CodeIgniter\\AutoReview\\ComposerJsonTest\:\:checkConfig\(\) has parameter \$fromComponent with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/AutoReview/ComposerJsonTest.php
@@ -6211,16 +5531,6 @@ parameters:
             message: '#^Method CodeIgniter\\CLI\\CLITest\:\:testTable\(\) has parameter \$thead with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/CLI/CLITest.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\Handlers\\BaseHandlerTest\:\:provideValidateKeyInvalidType\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Cache/Handlers/BaseHandlerTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Cache\\ResponseCacheTest\:\:createIncomingRequest\(\) has parameter \$query with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Cache/ResponseCacheTest.php
 
         -
             message: '#^Method CodeIgniter\\CodeIgniterTest\:\:providePageCacheWithCacheQueryString\(\) return type has no value type specified in iterable type iterable\.$#'
@@ -6541,16 +5851,6 @@ parameters:
             message: '#^Method CodeIgniter\\Filters\\InvalidCharsTest\:\:provideCheckControlStringWithLineBreakAndTabReturnsTheString\(\) return type has no value type specified in iterable type iterable\.$#'
             count: 1
             path: ../../tests/system/Filters/InvalidCharsTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Format\\XMLFormatterTest\:\:provideValidatingInvalidTags\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Format/XMLFormatterTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Format\\XMLFormatterTest\:\:testValidatingInvalidTags\(\) has parameter \$input with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Format/XMLFormatterTest.php
 
         -
             message: '#^Method CodeIgniter\\HTTP\\IncomingRequestTest\:\:provideCanGrabGetRawInputVar\(\) return type has no value type specified in iterable type iterable\.$#'
@@ -6986,11 +6286,6 @@ parameters:
             message: '#^Method CodeIgniter\\Language\\LanguageTest\:\:provideBundleUniqueKeys\(\) return type has no value type specified in iterable type iterable\.$#'
             count: 1
             path: ../../tests/system/Language/LanguageTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Log\\Handlers\\ErrorlogHandlerTest\:\:getMockedHandler\(\) has parameter \$config with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Log/Handlers/ErrorlogHandlerTest.php
 
         -
             message: '#^Method CodeIgniter\\Models\\DeleteModelTest\:\:emptyPkValues\(\) return type has no value type specified in iterable type iterable\.$#'

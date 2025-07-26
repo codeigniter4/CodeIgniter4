@@ -108,8 +108,7 @@ class Table
     /**
      * Set the template
      *
-     * @param         array<string, string>        $template
-     * @phpstan-param array<string, string>|string $template
+     * @param array<string, string>|string $template
      *
      * @return bool
      */

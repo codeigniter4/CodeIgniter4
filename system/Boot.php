@@ -16,6 +16,7 @@ namespace CodeIgniter;
 use CodeIgniter\Cache\FactoriesCache;
 use CodeIgniter\CLI\Console;
 use CodeIgniter\Config\DotEnv;
+use Config\App;
 use Config\Autoload;
 use Config\Modules;
 use Config\Optimize;
@@ -73,6 +74,34 @@ class Boot
         // Exits the application, setting the exit code for CLI-based
         // applications that might be watching.
         return EXIT_SUCCESS;
+    }
+
+    /**
+     * Used by command line scripts other than
+     * * `spark`
+     * * `php-cli`
+     * * `phpunit`
+     *
+     * @used-by `system/util_bootstrap.php`
+     */
+    public static function bootConsole(Paths $paths): void
+    {
+        static::definePathConstants($paths);
+        static::loadConstants();
+        static::checkMissingExtensions();
+
+        static::loadDotEnv($paths);
+        static::loadEnvironmentBootstrap($paths);
+
+        static::loadCommonFunctions();
+        static::loadAutoloader();
+        static::setExceptionHandler();
+        static::initializeKint();
+        static::autoloadHelpers();
+
+        // We need to force the request to be a CLIRequest since we're in console
+        Services::createRequest(new App(), true);
+        service('routes')->loadRoutes();
     }
 
     /**
@@ -344,9 +373,8 @@ class Boot
         $console = new Console();
 
         // Show basic information before we do anything else.
-        // @phpstan-ignore-next-line
         if (is_int($suppress = array_search('--no-header', $_SERVER['argv'], true))) {
-            unset($_SERVER['argv'][$suppress]); // @phpstan-ignore-line
+            unset($_SERVER['argv'][$suppress]);
             $suppress = true;
         }
 

@@ -28,6 +28,6 @@ final class SparkTest extends CIUnitTestCase
         passthru('php spark list --simple');
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('cache:clear', $output);
+        $this->assertStringContainsString('cache:clear', (string) $output);
     }
 }

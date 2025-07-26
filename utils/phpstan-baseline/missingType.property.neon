@@ -1,4 +1,4 @@
-# total 119 errors
+# total 103 errors
 
 parameters:
     ignoreErrors:
@@ -36,71 +36,6 @@ parameters:
             message: '#^Property CodeIgniter\\Session\\Handlers\\ArrayHandler\:\:\$cache has no type specified\.$#'
             count: 1
             path: ../../system/Session/Handlers/ArrayHandler.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockCLIConfig\:\:\$CSRFExcludeURIs has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockCLIConfig.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockCURLRequest\:\:\$curl_options has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockCURLRequest.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockCURLRequest\:\:\$output has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockCURLRequest.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockFileLogger\:\:\$destination has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockFileLogger.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockLogger\:\:\$dateFormat has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockLogger.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockLogger\:\:\$handlers has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockLogger.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockLogger\:\:\$threshold has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockLogger.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockServices\:\:\$classmap has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockServices.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockServices\:\:\$psr4 has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockServices.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\Mock\\MockSession\:\:\$didRegenerate has no type specified\.$#'
-            count: 1
-            path: ../../system/Test/Mock/MockSession.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:116\:\:\$formatter has no type specified\.$#'
-            count: 2
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:173\:\:\$formatter has no type specified\.$#'
-            count: 2
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Property class@anonymous/tests/system/API/ResponseTraitTest\.php\:291\:\:\$formatter has no type specified\.$#'
-            count: 2
-            path: ../../tests/system/API/ResponseTraitTest.php
 
         -
             message: '#^Property CodeIgniter\\Config\\Factory@anonymous/tests/system/Config/FactoriesTest\.php\:89\:\:\$widgets has no type specified\.$#'

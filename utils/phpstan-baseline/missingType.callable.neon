@@ -1,17 +1,7 @@
-# total 14 errors
+# total 12 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Method CodeIgniter\\Events\\Events\:\:on\(\) has parameter \$callback with no signature specified for callable\.$#'
-            count: 1
-            path: ../../system/Events/Events.php
-
-        -
-            message: '#^Method CodeIgniter\\Events\\Events\:\:removeListener\(\) has parameter \$listener with no signature specified for callable\.$#'
-            count: 1
-            path: ../../system/Events/Events.php
-
         -
             message: '#^Class CodeIgniter\\Model has PHPDoc tag @method for method when\(\) parameter \#2 \$callback with no signature specified for callable\.$#'
             count: 1

@@ -139,6 +139,27 @@ final class FileTest extends CIUnitTestCase
         $this->assertSame($size, $file->getSizeByMetricUnit($unit));
     }
 
+    /**
+     * @return array<string, array<int, FileSizeUnit>>
+     */
+    public static function provideGetSizeData(): iterable
+    {
+        return [
+            'returns KB binary' => [
+                FileSizeUnit::KB,
+            ],
+            'returns MB binary' => [
+                FileSizeUnit::MB,
+            ],
+            'returns GB binary' => [
+                FileSizeUnit::GB,
+            ],
+            'returns TB binary' => [
+                FileSizeUnit::TB,
+            ],
+        ];
+    }
+
     public function testGetSizeMetricBytes(): void
     {
         $file = new File(SYSTEMPATH . 'Common.php');
@@ -167,26 +188,5 @@ final class FileTest extends CIUnitTestCase
 
         unlink(SYSTEMPATH . 'Common_Copy.php');
         unlink(SYSTEMPATH . 'Common_Copy_5.php');
-    }
-
-    /**
-     * @return array<string, array<int, FileSizeUnit>>
-     */
-    public static function provideGetSizeData()
-    {
-        return [
-            'returns KB binary' => [
-                FileSizeUnit::KB,
-            ],
-            'returns MB binary' => [
-                FileSizeUnit::MB,
-            ],
-            'returns GB binary' => [
-                FileSizeUnit::GB,
-            ],
-            'returns TB binary' => [
-                FileSizeUnit::TB,
-            ],
-        ];
     }
 }

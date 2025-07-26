@@ -1,4 +1,4 @@
-# total 54 errors
+# total 36 errors
 
 parameters:
     ignoreErrors:
@@ -29,23 +29,8 @@ parameters:
 
         -
             message: '#^Cannot access property \$id on array\.$#'
-            count: 8
+            count: 2
             path: ../../tests/system/Models/FindModelTest.php
-
-        -
-            message: '#^Cannot access property \$name on array\.$#'
-            count: 5
-            path: ../../tests/system/Models/FindModelTest.php
-
-        -
-            message: '#^Cannot access property \$total on array\.$#'
-            count: 1
-            path: ../../tests/system/Models/FindModelTest.php
-
-        -
-            message: '#^Cannot access property \$country on array\.$#'
-            count: 1
-            path: ../../tests/system/Models/InsertModelTest.php
 
         -
             message: '#^Cannot access property \$created_at on array\.$#'
@@ -59,16 +44,6 @@ parameters:
 
         -
             message: '#^Cannot access property \$description on array\.$#'
-            count: 3
-            path: ../../tests/system/Models/SaveModelTest.php
-
-        -
-            message: '#^Cannot access property \$id on array\.$#'
-            count: 1
-            path: ../../tests/system/Models/SaveModelTest.php
-
-        -
-            message: '#^Cannot access property \$name on array\.$#'
             count: 1
             path: ../../tests/system/Models/SaveModelTest.php
 
@@ -94,7 +69,7 @@ parameters:
 
         -
             message: '#^Cannot access property \$value on list\<array\>\.$#'
-            count: 2
+            count: 1
             path: ../../tests/system/Models/UpdateModelTest.php
 
         -

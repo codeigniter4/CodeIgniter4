@@ -50,16 +50,6 @@ final class DataConverterTest extends CIUnitTestCase
         $this->assertSame($expected, $data);
     }
 
-    #[DataProvider('provideConvertDataToDB')]
-    public function testConvertDataToDB(array $types, array $phpData, array $expected): void
-    {
-        $converter = $this->createDataConverter($types);
-
-        $data = $converter->toDataSource($phpData);
-
-        $this->assertSame($expected, $data);
-    }
-
     public static function provideConvertDataFromDB(): iterable
     {
         yield from [
@@ -204,6 +194,16 @@ final class DataConverterTest extends CIUnitTestCase
                 ],
             ],
         ];
+    }
+
+    #[DataProvider('provideConvertDataToDB')]
+    public function testConvertDataToDB(array $types, array $phpData, array $expected): void
+    {
+        $converter = $this->createDataConverter($types);
+
+        $data = $converter->toDataSource($phpData);
+
+        $this->assertSame($expected, $data);
     }
 
     public static function provideConvertDataToDB(): iterable

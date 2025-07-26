@@ -1,4 +1,4 @@
-# total 83 errors
+# total 77 errors
 
 parameters:
     ignoreErrors:
@@ -9,11 +9,6 @@ parameters:
 
         -
             message: '#^Accessing offset ''NO_COLOR'' directly on \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
-            message: '#^Accessing offset ''argv'' directly on \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../system/CLI/CLI.php
 
@@ -66,16 +61,6 @@ parameters:
             message: '#^Accessing offset ''SERVER_PROTOCOL'' directly on \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../system/Config/Services.php
-
-        -
-            message: '#^Accessing offset ''SERVER_ADDR'' directly on \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../system/Email/Email.php
-
-        -
-            message: '#^Accessing offset ''SERVER_NAME'' directly on \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../system/Email/Email.php
 
         -
             message: '#^Accessing offset ''HTTP_USER_AGENT'' directly on \$_SERVER is discouraged\.$#'
@@ -159,11 +144,6 @@ parameters:
 
         -
             message: '#^Accessing offset ''app\.baseURL'' directly on \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/CLI/ConsoleTest.php
-
-        -
-            message: '#^Accessing offset ''argv'' directly on \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../tests/system/CLI/ConsoleTest.php
 

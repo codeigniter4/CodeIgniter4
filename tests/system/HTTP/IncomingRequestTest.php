@@ -579,6 +579,24 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $request->getRawInput());
     }
 
+    /**
+     * @param string $rawstring
+     * @param mixed  $var
+     * @param mixed  $expected
+     * @param mixed  $filter
+     * @param mixed  $flag
+     */
+    #[DataProvider('provideCanGrabGetRawInputVar')]
+    public function testCanGrabGetRawInputVar($rawstring, $var, $expected, $filter, $flag): void
+    {
+        $config          = new App();
+        $config->baseURL = 'http://example.com/';
+
+        $request = $this->createRequest($config, $rawstring);
+
+        $this->assertSame($expected, $request->getRawInputVar($var, $filter, $flag));
+    }
+
     public static function provideCanGrabGetRawInputVar(): iterable
     {
         return [
@@ -656,24 +674,6 @@ final class IncomingRequestTest extends CIUnitTestCase
                 FILTER_FLAG_ALLOW_FRACTION,
             ],
         ];
-    }
-
-    /**
-     * @param string $rawstring
-     * @param mixed  $var
-     * @param mixed  $expected
-     * @param mixed  $filter
-     * @param mixed  $flag
-     */
-    #[DataProvider('provideCanGrabGetRawInputVar')]
-    public function testCanGrabGetRawInputVar($rawstring, $var, $expected, $filter, $flag): void
-    {
-        $config          = new App();
-        $config->baseURL = 'http://example.com/';
-
-        $request = $this->createRequest($config, $rawstring);
-
-        $this->assertSame($expected, $request->getRawInputVar($var, $filter, $flag));
     }
 
     #[DataProvider('provideIsHTTPMethods')]
@@ -902,20 +902,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertNull($this->request->getGetPost('gc'));
     }
 
-    public static function provideExtensionPHP(): iterable
-    {
-        return [
-            'not /index.php' => [
-                '/test.php',
-                '/',
-            ],
-            '/index.php' => [
-                '/index.php',
-                '/',
-            ],
-        ];
-    }
-
     /**
      * @param mixed $path
      * @param mixed $detectPath
@@ -930,6 +916,20 @@ final class IncomingRequestTest extends CIUnitTestCase
         $_SERVER['SCRIPT_NAME'] = $path;
         $request                = new IncomingRequest($config, new SiteURI($config, $path), null, new UserAgent());
         $this->assertSame($detectPath, $request->detectPath());
+    }
+
+    public static function provideExtensionPHP(): iterable
+    {
+        return [
+            'not /index.php' => [
+                '/test.php',
+                '/',
+            ],
+            '/index.php' => [
+                '/index.php',
+                '/',
+            ],
+        ];
     }
 
     public function testGetPath(): void

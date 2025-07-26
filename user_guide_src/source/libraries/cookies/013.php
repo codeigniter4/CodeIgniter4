@@ -1,9 +1,6 @@
 <?php
 
-cookies()->get(); // array of Cookie objects
-
-// alternatively, you can use the display method
-cookies()->display();
+cookies()->display(); // array of Cookie objects
 
 // or even from the Response
 service('response')->getCookies();

@@ -20,15 +20,15 @@ Available Functions
 
 The following functions are available:
 
-.. php:function:: sanitize_filename($filename)
+.. php:function:: sanitize_filename($filename[, $relativePath = false])
 
     :param    string    $filename: Filename
+    :param    bool      $relativePath: Whether the relative path is acceptable (available since v4.6.2)
     :returns:    Sanitized file name
     :rtype:    string
 
     Provides protection against directory traversal.
 
-    This function is an alias for ``\CodeIgniter\Security::sanitizeFilename()``.
     For more info, please see the :doc:`Security Library <../libraries/security>`
     documentation.
 

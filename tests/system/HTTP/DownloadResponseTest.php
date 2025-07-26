@@ -136,7 +136,16 @@ final class DownloadResponseTest extends CIUnitTestCase
         $response = new DownloadResponse('unit-test.txt', true);
         $response->inline();
         $response->buildHeaders();
-        $this->assertSame('inline', $response->getHeaderLine('Content-Disposition'));
+        $this->assertSame('inline; filename="unit-test.txt"; filename*=UTF-8\'\'unit-test.txt', $response->getHeaderLine('Content-Disposition'));
+    }
+
+    public function testDispositionInlineWithSetFileName(): void
+    {
+        $response = new DownloadResponse('unit-test.txt', true);
+        $response->setFileName('my"quoted"File.txt');
+        $response->inline();
+        $response->buildHeaders();
+        $this->assertSame('inline; filename="my\"quoted\"File.txt"; filename*=UTF-8\'\'my%22quoted%22File.txt', $response->getHeaderLine('Content-Disposition'));
     }
 
     public function testNoCache(): void

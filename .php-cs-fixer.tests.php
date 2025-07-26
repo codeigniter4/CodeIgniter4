@@ -31,7 +31,8 @@ $finder = Finder::create()
     ->notName('#Foobar.php$#');
 
 $overrides = [
-    'void_return' => true,
+    'phpdoc_to_return_type' => true,
+    'void_return'           => true,
 ];
 
 return $config

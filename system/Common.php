@@ -69,8 +69,7 @@ if (! function_exists('cache')) {
      *    cache()->save('foo', 'bar');
      *    $foo = cache('bar');
      *
-     * @return         array|bool|CacheInterface|float|int|object|string|null
-     * @phpstan-return ($key is null ? CacheInterface : array|bool|float|int|object|string|null)
+     * @return ($key is null ? CacheInterface : mixed)
      */
     function cache(?string $key = null)
     {
@@ -201,8 +200,7 @@ if (! function_exists('config')) {
      *
      * @param class-string<ConfigTemplate>|string $name
      *
-     * @return         ConfigTemplate|null
-     * @phpstan-return ($name is class-string<ConfigTemplate> ? ConfigTemplate : object|null)
+     * @return ($name is class-string<ConfigTemplate> ? ConfigTemplate : object|null)
      */
     function config(string $name, bool $getShared = true)
     {
@@ -404,11 +402,11 @@ if (! function_exists('esc')) {
      * If $data is an array, then it loops over it, escaping each
      * 'value' of the key/value pairs.
      *
-     * @param         array|string                         $data
-     * @phpstan-param 'html'|'js'|'css'|'url'|'attr'|'raw' $context
-     * @param         string|null                          $encoding Current encoding for escaping.
-     *                                                               If not UTF-8, we convert strings from this encoding
-     *                                                               pre-escaping and back to this encoding post-escaping.
+     * @param array|string                         $data
+     * @param 'attr'|'css'|'html'|'js'|'raw'|'url' $context
+     * @param string|null                          $encoding Current encoding for escaping.
+     *                                                       If not UTF-8, we convert strings from this encoding
+     *                                                       pre-escaping and back to this encoding post-escaping.
      *
      * @return array|string
      *
@@ -796,8 +794,7 @@ if (! function_exists('model')) {
      *
      * @param class-string<ModelTemplate>|string $name
      *
-     * @return         ModelTemplate|null
-     * @phpstan-return ($name is class-string<ModelTemplate> ? ModelTemplate : object|null)
+     * @return ($name is class-string<ModelTemplate> ? ModelTemplate : object|null)
      */
     function model(string $name, bool $getShared = true, ?ConnectionInterface &$conn = null)
     {
@@ -810,9 +807,8 @@ if (! function_exists('old')) {
      * Provides access to "old input" that was set in the session
      * during a redirect()->withInput().
      *
-     * @param         string|null                                $default
-     * @param         false|string                               $escape
-     * @phpstan-param false|'attr'|'css'|'html'|'js'|'raw'|'url' $escape
+     * @param string|null                                $default
+     * @param 'attr'|'css'|'html'|'js'|'raw'|'url'|false $escape
      *
      * @return array|string|null
      */
@@ -965,8 +961,7 @@ if (! function_exists('session')) {
      *    session()->set('foo', 'bar');
      *    $foo = session('bar');
      *
-     * @return         array|bool|float|int|object|Session|string|null
-     * @phpstan-return ($val is null ? Session : array|bool|float|int|object|string|null)
+     * @return ($val is null ? Session : mixed)
      */
     function session(?string $val = null)
     {
@@ -1123,8 +1118,7 @@ if (! function_exists('timer')) {
      * @param non-empty-string|null    $name
      * @param (callable(): mixed)|null $callable
      *
-     * @return         mixed|Timer
-     * @phpstan-return ($name is null ? Timer : ($callable is (callable(): mixed) ? mixed : Timer))
+     * @return ($name is null ? Timer : ($callable is (callable(): mixed) ? mixed : Timer))
      */
     function timer(?string $name = null, ?callable $callable = null)
     {

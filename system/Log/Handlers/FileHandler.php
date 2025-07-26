@@ -45,18 +45,22 @@ class FileHandler extends BaseHandler
     protected $filePermissions;
 
     /**
-     * Constructor
+     * @param array{handles?: list<string>, path?: string, fileExtension?: string, filePermissions?: int} $config
      */
     public function __construct(array $config = [])
     {
         parent::__construct($config);
 
-        $this->path = empty($config['path']) ? WRITEPATH . 'logs/' : $config['path'];
+        $defaults = ['path' => WRITEPATH . 'logs/', 'fileExtension' => 'log', 'filePermissions' => 0644];
+        $config   = [...$defaults, ...$config];
 
-        $this->fileExtension = empty($config['fileExtension']) ? 'log' : $config['fileExtension'];
-        $this->fileExtension = ltrim($this->fileExtension, '.');
+        $this->path = $config['path'] === '' ? $defaults['path'] : $config['path'];
 
-        $this->filePermissions = $config['filePermissions'] ?? 0644;
+        $this->fileExtension = $config['fileExtension'] === ''
+            ? $defaults['fileExtension']
+            : ltrim($config['fileExtension'], '.');
+
+        $this->filePermissions = $config['filePermissions'];
     }
 
     /**
@@ -108,10 +112,8 @@ class FileHandler extends BaseHandler
 
         for ($written = 0, $length = strlen($msg); $written < $length; $written += $result) {
             if (($result = fwrite($fp, substr($msg, $written))) === false) {
-                // if we get this far, we'll never see this during travis-ci
-                // @codeCoverageIgnoreStart
-                break;
-                // @codeCoverageIgnoreEnd
+                // if we get this far, we'll never see this during unit testing
+                break; // @codeCoverageIgnore
             }
         }
 

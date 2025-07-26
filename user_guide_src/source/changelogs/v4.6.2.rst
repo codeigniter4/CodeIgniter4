@@ -1,0 +1,55 @@
+#############
+Version 4.6.2
+#############
+
+Release Date: July 26, 2025
+
+**4.6.2 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+********
+SECURITY
+********
+
+- **ImageMagick Handler:** *Command Injection Vulnerability in ImageMagick Handler* was fixed.
+  See the `Security advisory GHSA-9952-gv64-x94c <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9952-gv64-x94c>`_
+  for more information.
+
+*******
+Changes
+*******
+
+- **Security:** The ``sanitize_filename()`` function from the Security helper now supports a second parameter to control whether relative paths are allowed.
+
+************
+Deprecations
+************
+
+- **Security:** The ``Security::sanitizeFilename()`` method is deprecated. Use ``sanitize_filename()`` instead.
+- **Security:** The ``SecurityInterface::sanitizeFilename()`` method is deprecated.
+
+**********
+Bugs Fixed
+**********
+
+- **Cache:** Fixed a bug where a corrupted or unreadable cache file could cause an unhandled exception in ``FileHandler::getItem()``.
+- **Commands:** Fixed a bug in ``make:test`` where it would always error on Windows.
+- **Commands:** Fixed a bug in ``make:test`` where the generated test file would not end with ``Test.php``.
+- **Commands:** Fixed a bug in ``make:test`` where input prompt would display for three times after not entering a class name.
+- **CURLRequest:** Fixed a bug where intermediate HTTP responses were not properly removed from the response chain in certain scenarios, causing incorrect status codes and headers to be returned instead of the final response.
+- **Database:** Fixed a bug where ``when()`` and ``whenNot()`` in ``ConditionalTrait`` incorrectly evaluated certain falsy values (such as ``[]``, ``0``, ``0.0``, and ``'0'``) as truthy, causing callbacks to be executed unexpectedly. These methods now cast the condition to a boolean using ``(bool)`` to ensure consistent behavior with PHP's native truthiness.
+- **Database:** Fixed encapsulation violation in ``BasePreparedQuery`` when accessing ``BaseConnection::transStatus`` protected property.
+- **DownloadResponse:** Fixed a bug where ``filename`` parameters were missing from ``Content-Disposition`` headers when using inline disposition, causing browsers to use the last URL segment for filenames instead of the intended filename.
+- **Email:** Fixed a bug where ``Email::getHostname()`` failed to use ``$_SERVER['SERVER_ADDR']`` when ``$_SERVER['SERVER_NAME']`` was not set.
+- **Security:** Fixed a bug where the ``sanitize_filename()`` function from the Security helper would throw an error when used in CLI requests.
+- **Session:** Fixed a bug where using the ``DatabaseHandler`` with an unsupported database driver (such as ``SQLSRV``, ``OCI8``, or ``SQLite3``) did not throw an appropriate error.
+- **SiteURI:** Fixed a bug in ``SiteURIFactory::parseRequestURI()`` where serving the app from a subfolder using ``mod_rewrite`` while preserving the ``index.php`` file would cause incorrect route path detection.
+- **SiteURI:** Fixed a bug in ``SiteURIFactory::parseRequestURI()`` where folder names containing multibyte (non-ASCII) characters were not correctly resolved when the application was served from a subfolder.
+- **URI:** Fixed a bug in ``URI::getAuthority()`` where schemes without defined default ports (like ``rtsp://``) would cause issues due to missing array key handling.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

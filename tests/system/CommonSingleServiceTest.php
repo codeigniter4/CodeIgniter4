@@ -75,29 +75,6 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         }
     }
 
-    public function testSingleServiceWithAllParamsSupplied(): void
-    {
-        $cache1 = single_service('cache', null, true);
-        $cache2 = single_service('cache', null, true);
-
-        assert($cache1 !== null);
-        assert($cache2 !== null);
-
-        // Assert that even passing true as last param this will
-        // not create a shared instance.
-        $this->assertInstanceOf($cache1::class, $cache2);
-        $this->assertNotSame($cache1, $cache2);
-    }
-
-    public function testSingleServiceWithGibberishGiven(): void
-    {
-        $this->assertNull(single_service('foo')); // @phpstan-ignore codeigniter.unknownServiceMethod
-        $this->assertNull(single_service('bar')); // @phpstan-ignore codeigniter.unknownServiceMethod
-        $this->assertNull(single_service('baz')); // @phpstan-ignore codeigniter.unknownServiceMethod
-        $this->assertNull(single_service('caches')); // @phpstan-ignore codeigniter.unknownServiceMethod
-        $this->assertNull(single_service('timers')); // @phpstan-ignore codeigniter.unknownServiceMethod
-    }
-
     /**
      * @return iterable<string, array{string}>
      */
@@ -136,5 +113,28 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         }
 
         yield from $services;
+    }
+
+    public function testSingleServiceWithAllParamsSupplied(): void
+    {
+        $cache1 = single_service('cache', null, true);
+        $cache2 = single_service('cache', null, true);
+
+        assert($cache1 !== null);
+        assert($cache2 !== null);
+
+        // Assert that even passing true as last param this will
+        // not create a shared instance.
+        $this->assertInstanceOf($cache1::class, $cache2);
+        $this->assertNotSame($cache1, $cache2);
+    }
+
+    public function testSingleServiceWithGibberishGiven(): void
+    {
+        $this->assertNull(single_service('foo')); // @phpstan-ignore codeigniter.unknownServiceMethod
+        $this->assertNull(single_service('bar')); // @phpstan-ignore codeigniter.unknownServiceMethod
+        $this->assertNull(single_service('baz')); // @phpstan-ignore codeigniter.unknownServiceMethod
+        $this->assertNull(single_service('caches')); // @phpstan-ignore codeigniter.unknownServiceMethod
+        $this->assertNull(single_service('timers')); // @phpstan-ignore codeigniter.unknownServiceMethod
     }
 }

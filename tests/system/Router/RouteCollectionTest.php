@@ -1817,14 +1817,6 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expects, $router->handle('/0'));
     }
 
-    public static function provideRouteDefaultNamespace(): iterable
-    {
-        return [
-            'with \\ prefix'    => ['\App\Controllers'],
-            'without \\ prefix' => ['App\Controllers'],
-        ];
-    }
-
     #[DataProvider('provideRouteDefaultNamespace')]
     public function testAutoRoutesControllerNameReturnsFQCN(string $namespace): void
     {
@@ -1862,6 +1854,14 @@ final class RouteCollectionTest extends CIUnitTestCase
         unlink(APPPATH . 'Controllers/Product.php');
 
         $this->assertSame('\\' . Product::class, $router->controllerName());
+    }
+
+    public static function provideRouteDefaultNamespace(): iterable
+    {
+        return [
+            'with \\ prefix'    => ['\App\Controllers'],
+            'without \\ prefix' => ['App\Controllers'],
+        ];
     }
 
     public function testRoutePriorityDetected(): void

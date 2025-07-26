@@ -348,9 +348,6 @@ class IncomingRequest extends Request
 
     /**
      * Checks this request type.
-     *
-     * @param         string                                                                    $type HTTP verb or 'json' or 'ajax'
-     * @phpstan-param string|'get'|'post'|'put'|'delete'|'head'|'patch'|'options'|'json'|'ajax' $type
      */
     public function is(string $type): bool
     {

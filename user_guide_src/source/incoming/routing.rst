@@ -177,7 +177,7 @@ Placeholders Description
 ============ ===========================================================================================================
 (:any)       will match all characters from that point to the end of the URI. This may include multiple URI segments.
 (:segment)   will match any character except for a forward slash (``/``) restricting the result to a single segment.
-(:num)       will match any integer.
+(:num)       will match any positive integer.
 (:alpha)     will match any string of alphabetic characters
 (:alphanum)  will match any string of alphabetic characters or integers, or any combination of the two.
 (:hash)      is the same as ``(:segment)``, but can be used to easily see which routes use hashed ids.

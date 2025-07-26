@@ -20,9 +20,9 @@ use CodeIgniter\Entity\Entity;
 /**
  * PHP data <==> DataSource data converter
  *
- * @see \CodeIgniter\DataConverter\DataConverterTest
- *
  * @template TEntity of object
+ *
+ * @see \CodeIgniter\DataConverter\DataConverterTest
  */
 final class DataConverter
 {
@@ -52,14 +52,14 @@ final class DataConverter
          * Static reconstruct method name or closure to reconstruct an object.
          * Used by reconstruct().
          *
-         * @phpstan-var (Closure(array<string, mixed>): TEntity)|string|null
+         * @var (Closure(array<string, mixed>): TEntity)|string|null
          */
         private readonly Closure|string|null $reconstructor = 'reconstruct',
         /**
          * Extract method name or closure to extract data from an object.
          * Used by extract().
          *
-         * @phpstan-var (Closure(TEntity, bool, bool): array<string, mixed>)|string|null
+         * @var (Closure(TEntity, bool, bool): array<string, mixed>)|string|null
          */
         private readonly Closure|string|null $extractor = null,
     ) {
@@ -105,11 +105,10 @@ final class DataConverter
     /**
      * Takes database data array and creates a specified type object.
      *
-     * @param         class-string          $classname
-     * @phpstan-param class-string<TEntity> $classname
-     * @param         array<string, mixed>  $row       Raw data from database
+     * @param class-string<TEntity> $classname
+     * @param array<string, mixed>  $row       Raw data from database
      *
-     * @phpstan-return TEntity
+     * @return TEntity
      *
      * @internal
      */

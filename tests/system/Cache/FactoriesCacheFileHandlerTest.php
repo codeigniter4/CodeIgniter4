@@ -13,24 +13,18 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache;
 
-use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
-use Config\Cache as CacheConfig;
+use Config\Cache;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
  */
 #[Group('Others')]
-final class FactoriesCacheFileHandlerTest extends FactoriesCacheFileVarExportHandlerTest
+final class FactoriesCacheFileHandlerTest extends AbstractFactoriesCacheHandlerTestCase
 {
-    /**
-     * @var CacheInterface|FileVarExportHandler
-     */
-    protected $handler;
-
     protected function createFactoriesCache(): void
     {
-        $this->handler = CacheFactory::getHandler(new CacheConfig(), 'file');
+        $this->handler = CacheFactory::getHandler(new Cache(), 'file');
         $this->cache   = new FactoriesCache($this->handler);
     }
 }

@@ -15,7 +15,9 @@ namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use stdClass;
 
 /**
  * @internal
@@ -101,6 +103,23 @@ final class WhenTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
+    #[DataProvider('provideConditionValues')]
+    public function testWhenRunsDefaultCallbackBasedOnCondition(mixed $condition, bool $expectDefault): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder = $builder->when($condition, static function ($query): void {
+            $query->select('id');
+        }, static function ($query): void {
+            $query->select('name');
+        });
+
+        $expected    = $expectDefault ? 'name' : 'id';
+        $expectedSQL = 'SELECT "' . $expected . '" FROM "jobs"';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
     public function testWhenNotFalse(): void
     {
         $builder = $this->db->table('jobs');
@@ -165,5 +184,44 @@ final class WhenTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" WHERE "name" = \'0\'';
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    #[DataProvider('provideConditionValues')]
+    public function testWhenNotRunsDefaultCallbackBasedOnCondition(mixed $condition, bool $expectDefault): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $builder = $builder->whenNot($condition, static function ($query): void {
+            $query->select('id');
+        }, static function ($query): void {
+            $query->select('name');
+        });
+
+        $expected    = $expectDefault ? 'id' : 'name';
+        $expectedSQL = 'SELECT "' . $expected . '" FROM "jobs"';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * @return array<string, array{0: mixed, 1: bool}>
+     */
+    public static function provideConditionValues(): iterable
+    {
+        return [
+            'false'            => [false, true], // [condition, expectedDefaultCallbackRuns]
+            'int 0'            => [0, true],
+            'float 0.0'        => [0.0, true],
+            'empty string'     => ['', true],
+            'string 0'         => ['0', true],
+            'empty array'      => [[], true],
+            'null'             => [null, true],
+            'true'             => [true, false],
+            'int 1'            => [1, false],
+            'float 1.1'        => [1.1, false],
+            'non-empty string' => ['foo', false],
+            'non-empty array'  => [[1], false],
+            'object'           => [new stdClass(), false],
+        ];
     }
 }

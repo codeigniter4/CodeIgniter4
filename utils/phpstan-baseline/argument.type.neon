@@ -1,4 +1,4 @@
-# total 138 errors
+# total 90 errors
 
 parameters:
     ignoreErrors:
@@ -26,11 +26,6 @@ parameters:
             message: '#^Parameter \#3 \.\.\.\$arrays of function array_map expects array, int\|string given\.$#'
             count: 1
             path: ../../system/Database/SQLite3/Builder.php
-
-        -
-            message: '#^Parameter \#2 \$message_type of function error_log expects 0\|1\|3\|4, int given\.$#'
-            count: 1
-            path: ../../system/Log/Handlers/ErrorlogHandler.php
 
         -
             message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: \(CodeIgniter\\HTTP\\DownloadResponse\|null\) given\.$#'
@@ -81,16 +76,6 @@ parameters:
             message: '#^Parameter \#3 \$classname of static method CodeIgniter\\Config\\Factories\:\:define\(\) expects class\-string, string given\.$#'
             count: 2
             path: ../../tests/system/Config/FactoriesTest.php
-
-        -
-            message: '#^Parameter \#1 \$cookies of class CodeIgniter\\Cookie\\CookieStore constructor expects array\<CodeIgniter\\Cookie\\Cookie\>, array\<int, DateTimeImmutable\> given\.$#'
-            count: 1
-            path: ../../tests/system/Cookie/CookieStoreTest.php
-
-        -
-            message: '#^Parameter \#3 \$options of class CodeIgniter\\Cookie\\Cookie constructor expects array\<string, bool\|int\|string\>, array\<string, DateTimeImmutable\> given\.$#'
-            count: 1
-            path: ../../tests/system/Cookie/CookieTest.php
 
         -
             message: '#^Parameter \#1 \$from of method CodeIgniter\\Database\\BaseBuilder\:\:from\(\) expects array\|string, null given\.$#'
@@ -151,11 +136,6 @@ parameters:
             message: '#^Parameter \#2 \$value of class CodeIgniter\\HTTP\\Header constructor expects array\<int\|string, array\<string, string\>\|string\>\|string\|null, stdClass given\.$#'
             count: 1
             path: ../../tests/system/HTTP/HeaderTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Log\\Logger constructor expects Config\\Logger, CodeIgniter\\Test\\Mock\\MockLogger given\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/RedirectExceptionTest.php
 
         -
             message: '#^Parameter \#3 \$expire of method CodeIgniter\\HTTP\\Response\:\:setCookie\(\) expects int, string given\.$#'
@@ -223,21 +203,6 @@ parameters:
             path: ../../tests/system/Log/Handlers/ChromeLoggerHandlerTest.php
 
         -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Log\\Logger constructor expects Config\\Logger, CodeIgniter\\Test\\Mock\\MockLogger given\.$#'
-            count: 25
-            path: ../../tests/system/Log/LoggerTest.php
-
-        -
-            message: '#^Parameter \#1 \$level of method CodeIgniter\\Log\\Logger\:\:log\(\) expects string, int given\.$#'
-            count: 2
-            path: ../../tests/system/Log/LoggerTest.php
-
-        -
-            message: '#^Parameter \#2 \$message of method CodeIgniter\\Log\\Logger\:\:log\(\) expects string\|Stringable, CodeIgniter\\Test\\Mock\\MockLogger given\.$#'
-            count: 1
-            path: ../../tests/system/Log/LoggerTest.php
-
-        -
             message: '#^Parameter \#1 \$row of method CodeIgniter\\BaseModel\:\:save\(\) expects array\<int\|string, bool\|float\|int\|object\|string\|null\>\|object, array\<string, array\<int, string\>\> given\.$#'
             count: 1
             path: ../../tests/system/Models/DataConverterModelTest.php
@@ -258,11 +223,6 @@ parameters:
             path: ../../tests/system/Models/UpdateModelTest.php
 
         -
-            message: '#^Parameter \#1 \$row of method CodeIgniter\\BaseModel\:\:save\(\) expects array\<int\|string, bool\|float\|int\|object\|string\|null\>\|object, list\<array\>\|null given\.$#'
-            count: 1
-            path: ../../tests/system/Models/UpdateModelTest.php
-
-        -
             message: '#^Parameter \#1 \$format of method CodeIgniter\\RESTful\\ResourceController\:\:setFormat\(\) expects ''json''\|''xml'', ''Nonsense'' given\.$#'
             count: 1
             path: ../../tests/system/RESTful/ResourceControllerTest.php
@@ -271,11 +231,6 @@ parameters:
             message: '#^Parameter \#1 \$config of class CodeIgniter\\Test\\Mock\\MockSecurity constructor expects Config\\Security, CodeIgniter\\Config\\BaseConfig\|null given\.$#'
             count: 1
             path: ../../tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Log\\Logger constructor expects Config\\Logger, CodeIgniter\\Test\\Mock\\MockLogger given\.$#'
-            count: 15
-            path: ../../tests/system/Test/ControllerTestTraitTest.php
 
         -
             message: '#^Parameter \#1 \$request of method CodeIgniter\\CodeIgniter\:\:setRequest\(\) expects CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest, CodeIgniter\\HTTP\\Request given\.$#'

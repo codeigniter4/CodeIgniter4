@@ -77,7 +77,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('Welcome to CodeIgniter', $output);
+        $this->assertStringContainsString('Welcome to CodeIgniter', (string) $output);
     }
 
     public function testOutputBufferingControl(): void
@@ -98,7 +98,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $response = $this->codeigniter->run(null, true);
         $this->assertInstanceOf(ResponseInterface::class, $response);
 
-        $this->assertStringContainsString('Welcome to CodeIgniter', $response->getBody());
+        $this->assertStringContainsString('Welcome to CodeIgniter', (string) $response->getBody());
     }
 
     public function testRunClosureRoute(): void
@@ -121,7 +121,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('You want to see "about" page.', $output);
+        $this->assertStringContainsString('You want to see "about" page.', (string) $output);
     }
 
     /**
@@ -144,7 +144,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run($routes);
         $output = ob_get_clean();
 
-        $this->assertStringContainsString("Can't find a route for 'GET: pages/about'.", $output);
+        $this->assertStringContainsString("Can't find a route for 'GET: pages/about'.", (string) $output);
         $this->assertSame(404, response()->getStatusCode());
     }
 
@@ -163,7 +163,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $response = $this->codeigniter->run($routes, true);
         $this->assertInstanceOf(ResponseInterface::class, $response);
 
-        $this->assertStringContainsString('Oops', $response->getBody());
+        $this->assertStringContainsString('Oops', (string) $response->getBody());
         $this->assertSame(567, $response->getStatusCode());
     }
 
@@ -182,7 +182,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $response = $this->codeigniter->run($routes, true);
         $this->assertInstanceOf(ResponseInterface::class, $response);
 
-        $this->assertStringContainsString('Oops', $response->getBody());
+        $this->assertStringContainsString('Oops', (string) $response->getBody());
     }
 
     public function testRun404OverrideByClosure(): void
@@ -203,7 +203,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run($routes);
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('404 Override by Closure.', $output);
+        $this->assertStringContainsString('404 Override by Closure.', (string) $output);
         $this->assertSame(404, response()->getStatusCode());
     }
 
@@ -228,7 +228,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('You want to see "about" page.', $output);
+        $this->assertStringContainsString('You want to see "about" page.', (string) $output);
     }
 
     public function testControllersCanReturnResponseObject(): void
@@ -254,7 +254,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         $output = ob_get_clean();
 
-        $this->assertStringContainsString("You want to see 'about' page.", $output);
+        $this->assertStringContainsString("You want to see 'about' page.", (string) $output);
     }
 
     /**
@@ -308,7 +308,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('http://hellowworld.com', $output);
+        $this->assertStringContainsString('http://hellowworld.com', (string) $output);
 
         $this->resetServices();
     }
@@ -346,7 +346,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('http://hellowworld.comhttp://hellowworld.com', $output);
+        $this->assertStringContainsString('http://hellowworld.comhttp://hellowworld.com', (string) $output);
 
         $this->resetServices();
     }
@@ -374,7 +374,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('', $output);
+        $this->assertStringContainsString('', (string) $output);
 
         $this->resetServices();
     }
@@ -402,7 +402,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('Welcome to CodeIgniter', $output);
+        $this->assertStringContainsString('Welcome to CodeIgniter', (string) $output);
     }
 
     public function testTransfersCorrectHTTPVersion(): void
@@ -447,7 +447,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('Welcome to CodeIgniter', $output);
+        $this->assertStringContainsString('Welcome to CodeIgniter', (string) $output);
     }
 
     public function testRunForceSecure(): void
@@ -684,7 +684,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('Welcome to CodeIgniter', $output);
+        $this->assertStringContainsString('Welcome to CodeIgniter', (string) $output);
     }
 
     public function testRunCLIRoute(): void
@@ -704,7 +704,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('Method Not Allowed', $output);
+        $this->assertStringContainsString('Method Not Allowed', (string) $output);
     }
 
     public function testSpoofRequestMethodCanUsePUT(): void
@@ -795,7 +795,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('This is a test page', $output);
+        $this->assertStringContainsString('This is a test page', (string) $output);
         $response = service('response');
         $headers  = $response->headers();
         $this->assertArrayHasKey('X-Frame-Options', $headers);
@@ -805,7 +805,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('This is a test page', $output);
+        $this->assertStringContainsString('This is a test page', (string) $output);
         $response = service('response');
         $headers  = $response->headers();
         $this->assertArrayHasKey('X-Frame-Options', $headers);

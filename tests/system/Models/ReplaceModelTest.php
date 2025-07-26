@@ -38,11 +38,11 @@ final class ReplaceModelTest extends LiveModelTestCase
         $data['country'] = 'UK';
 
         $sql = $this->model->replace($data, true);
-        $this->assertStringNotContainsString('updated_at', $sql);
+        $this->assertStringNotContainsString('updated_at', (string) $sql);
 
         $this->model = $this->createModel(UserModel::class);
         $this->setPrivateProperty($this->model, 'useTimestamps', true);
         $sql = $this->model->replace($data, true);
-        $this->assertStringContainsString('updated_at', $sql);
+        $this->assertStringContainsString('updated_at', (string) $sql);
     }
 }

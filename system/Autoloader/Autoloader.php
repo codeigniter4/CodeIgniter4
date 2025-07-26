@@ -21,7 +21,7 @@ use Composer\InstalledVersions;
 use Config\Autoload;
 use Config\Kint as KintConfig;
 use Config\Modules;
-use Kint;
+use Kint\Kint;
 use Kint\Renderer\CliRenderer;
 use Kint\Renderer\RichRenderer;
 
@@ -67,21 +67,21 @@ class Autoloader
     /**
      * Stores namespaces as key, and path as values.
      *
-     * @var array<string, list<string>>
+     * @var array<non-empty-string, list<non-empty-string>>
      */
     protected $prefixes = [];
 
     /**
      * Stores class name as key, and path as values.
      *
-     * @var array<class-string, string>
+     * @var array<class-string, non-empty-string>
      */
     protected $classmap = [];
 
     /**
      * Stores files as a list.
      *
-     * @var list<string>
+     * @var list<non-empty-string>
      */
     protected $files = [];
 
@@ -89,7 +89,7 @@ class Autoloader
      * Stores helper list.
      * Always load the URL helper, it should be used in most apps.
      *
-     * @var list<string>
+     * @var list<non-empty-string>
      */
     protected $helpers = ['url'];
 
@@ -147,36 +147,35 @@ class Autoloader
 
         // Should we load through Composer's namespaces, also?
         if ($modules->discoverInComposer) {
-            // @phpstan-ignore-next-line
-            $this->loadComposerNamespaces($composer, $modules->composerPackages ?? []);
+            $composerPackages = $modules->composerPackages;
+            $this->loadComposerNamespaces($composer, $composerPackages ?? []);
         }
 
         unset($composer);
     }
 
     /**
-     * Register the loader with the SPL autoloader stack.
+     * Register the loader with the SPL autoloader stack
+     * in the following order:
+     *
+     * 1. Classmap loader
+     * 2. PSR-4 autoloader
+     * 3. Non-class files
      *
      * @return void
      */
     public function register()
     {
-        // Register classmap loader for the files in our class map.
         spl_autoload_register($this->loadClassmap(...), true);
-
-        // Register the PSR-4 autoloader.
         spl_autoload_register($this->loadClass(...), true);
 
-        // Load our non-class files
         foreach ($this->files as $file) {
             $this->includeFile($file);
         }
     }
 
     /**
-     * Unregister autoloader.
-     *
-     * This method is for testing.
+     * Unregisters the autoloader from the SPL autoload stack.
      */
     public function unregister(): void
     {
@@ -187,7 +186,7 @@ class Autoloader
     /**
      * Registers namespaces with the autoloader.
      *
-     * @param array<string, list<string>|string>|string $namespace
+     * @param array<non-empty-string, list<non-empty-string>|non-empty-string>|non-empty-string $namespace
      *
      * @return $this
      */
@@ -219,8 +218,7 @@ class Autoloader
      *
      * If a prefix param is set, returns only paths to the given prefix.
      *
-     * @return         array<string, list<string>>|list<string>
-     * @phpstan-return ($prefix is null ? array<string, list<string>> : list<string>)
+     * @return ($prefix is null ? array<non-empty-string, list<non-empty-string>> : list<non-empty-string>)
      */
     public function getNamespace(?string $prefix = null)
     {
@@ -248,6 +246,8 @@ class Autoloader
     /**
      * Load a class using available class mapping.
      *
+     * @param class-string $class The fully qualified class name.
+     *
      * @internal For `spl_autoload_register` use.
      */
     public function loadClassmap(string $class): void
@@ -262,9 +262,9 @@ class Autoloader
     /**
      * Loads the class file for a given class name.
      *
-     * @internal For `spl_autoload_register` use.
+     * @param class-string $class The fully qualified class name.
      *
-     * @param string $class The fully qualified class name.
+     * @internal For `spl_autoload_register` use.
      */
     public function loadClass(string $class): void
     {
@@ -274,9 +274,9 @@ class Autoloader
     /**
      * Loads the class file for a given class name.
      *
-     * @param string $class The fully-qualified class name
+     * @param class-string $class The fully qualified class name.
      *
-     * @return false|string The mapped file name on success, or boolean false on fail
+     * @return false|non-empty-string The mapped file name on success, or boolean false on fail
      */
     protected function loadInNamespace(string $class)
     {
@@ -294,21 +294,20 @@ class Autoloader
                     $filePath = $directory . $relativeClassPath . '.php';
                     $filename = $this->includeFile($filePath);
 
-                    if ($filename) {
+                    if ($filename !== false) {
                         return $filename;
                     }
                 }
             }
         }
 
-        // never found a mapped file
         return false;
     }
 
     /**
      * A central way to include a file. Split out primarily for testing purposes.
      *
-     * @return false|string The filename on success, false if the file is not loaded
+     * @return false|non-empty-string The filename on success, false if the file is not loaded
      */
     protected function includeFile(string $file)
     {

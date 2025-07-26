@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Utils;
 
-require __DIR__ . '/../system/Test/bootstrap.php';
+require __DIR__ . '/../system/util_bootstrap.php';
 
 use CodeIgniter\CLI\CLI;
 

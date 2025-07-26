@@ -1,4 +1,4 @@
-# total 37 errors
+# total 30 errors
 
 parameters:
     ignoreErrors:
@@ -151,33 +151,3 @@ parameters:
             message: '#^Return type \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Model\:\:__call\(\) should be covariant with return type \(\$this\(CodeIgniter\\BaseModel\)\|null\) of method CodeIgniter\\BaseModel\:\:__call\(\)$#'
             count: 1
             path: ../../system/Model.php
-
-        -
-            message: '#^Return type \(array\{code\: int\|string\|null, message\: string\|null\}\) of method CodeIgniter\\Test\\Mock\\MockConnection\:\:error\(\) should be covariant with return type \(array\<string, int\|string\>\) of method CodeIgniter\\Database\\ConnectionInterface\<object\|resource,object\|resource\>\:\:error\(\)$#'
-            count: 1
-            path: ../../system/Test/Mock/MockConnection.php
-
-        -
-            message: '#^Return type \(bool\|CodeIgniter\\Database\\BaseResult\|CodeIgniter\\Database\\Query\) of method CodeIgniter\\Test\\Mock\\MockConnection\:\:query\(\) should be covariant with return type \(bool\|CodeIgniter\\Database\\BaseResult\<object\|resource, object\|resource\>\|CodeIgniter\\Database\\Query\) of method CodeIgniter\\Database\\BaseConnection\<object\|resource,object\|resource\>\:\:query\(\)$#'
-            count: 1
-            path: ../../system/Test/Mock/MockConnection.php
-
-        -
-            message: '#^Return type \(bool\|CodeIgniter\\Database\\BaseResult\|CodeIgniter\\Database\\Query\) of method CodeIgniter\\Test\\Mock\\MockConnection\:\:query\(\) should be covariant with return type \(bool\|CodeIgniter\\Database\\BaseResult\<object\|resource, object\|resource\>\|CodeIgniter\\Database\\Query\) of method CodeIgniter\\Database\\ConnectionInterface\<object\|resource,object\|resource\>\:\:query\(\)$#'
-            count: 1
-            path: ../../system/Test/Mock/MockConnection.php
-
-        -
-            message: '#^Return type \(bool\|object\) of method CodeIgniter\\Test\\Mock\\MockConnection\:\:execute\(\) should be covariant with return type \(object\|resource\|false\) of method CodeIgniter\\Database\\BaseConnection\<object\|resource,object\|resource\>\:\:execute\(\)$#'
-            count: 1
-            path: ../../system/Test/Mock/MockConnection.php
-
-        -
-            message: '#^Return type \(mixed\) of method CodeIgniter\\Test\\Mock\\MockConnection\:\:connect\(\) should be covariant with return type \(object\|resource\|false\) of method CodeIgniter\\Database\\ConnectionInterface\<object\|resource,object\|resource\>\:\:connect\(\)$#'
-            count: 2
-            path: ../../system/Test/Mock/MockConnection.php
-
-        -
-            message: '#^Return type \(mixed\) of method CodeIgniter\\Test\\Mock\\MockResult\:\:fetchAssoc\(\) should be covariant with return type \(array\|false\|null\) of method CodeIgniter\\Database\\BaseResult\<object\|resource,object\|resource\>\:\:fetchAssoc\(\)$#'
-            count: 1
-            path: ../../system/Test/Mock/MockResult.php

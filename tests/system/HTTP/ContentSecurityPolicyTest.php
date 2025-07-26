@@ -100,12 +100,12 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("base-uri 'self';", $result);
-        $this->assertStringContainsString("connect-src 'self';", $result);
-        $this->assertStringContainsString("default-src 'self';", $result);
-        $this->assertStringContainsString("img-src 'self';", $result);
-        $this->assertStringContainsString("script-src 'self';", $result);
-        $this->assertStringContainsString("style-src 'self';", $result);
+        $this->assertStringContainsString("base-uri 'self';", (string) $result);
+        $this->assertStringContainsString("connect-src 'self';", (string) $result);
+        $this->assertStringContainsString("default-src 'self';", (string) $result);
+        $this->assertStringContainsString("img-src 'self';", (string) $result);
+        $this->assertStringContainsString("script-src 'self';", (string) $result);
+        $this->assertStringContainsString("style-src 'self';", (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -118,9 +118,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('child-src evil.com;', $result);
+        $this->assertStringContainsString('child-src evil.com;', (string) $result);
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("child-src 'self' good.com;", $result);
+        $this->assertStringContainsString("child-src 'self' good.com;", (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -134,7 +134,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString("connect-src 'self' iffy.com maybe.com;", $result);
+        $this->assertStringContainsString("connect-src 'self' iffy.com maybe.com;", (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -148,9 +148,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('font-src iffy.com;', $result);
+        $this->assertStringContainsString('font-src iffy.com;', (string) $result);
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('font-src fontsrus.com;', $result);
+        $this->assertStringContainsString('font-src fontsrus.com;', (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -163,10 +163,10 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString("form-action 'self' surveysrus.com;", $result);
+        $this->assertStringContainsString("form-action 'self' surveysrus.com;", (string) $result);
 
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringNotContainsString("form-action 'self';", $result);
+        $this->assertStringNotContainsString("form-action 'self';", (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -179,9 +179,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('frame-ancestors them.com;', $result);
+        $this->assertStringContainsString('frame-ancestors them.com;', (string) $result);
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("frame-ancestors 'self';", $result);
+        $this->assertStringContainsString("frame-ancestors 'self';", (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -194,9 +194,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('frame-src them.com;', $result);
+        $this->assertStringContainsString('frame-src them.com;', (string) $result);
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("frame-src 'self';", $result);
+        $this->assertStringContainsString("frame-src 'self';", (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -209,9 +209,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('img-src them.com;', $result);
+        $this->assertStringContainsString('img-src them.com;', (string) $result);
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("img-src 'self' cdn.cloudy.com;", $result);
+        $this->assertStringContainsString("img-src 'self' cdn.cloudy.com;", (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -224,9 +224,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('media-src them.com;', $result);
+        $this->assertStringContainsString('media-src them.com;', (string) $result);
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("media-src 'self';", $result);
+        $this->assertStringContainsString("media-src 'self';", (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -239,9 +239,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('manifest-src them.com;', $result);
+        $this->assertStringContainsString('manifest-src them.com;', (string) $result);
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('manifest-src cdn.cloudy.com;', $result);
+        $this->assertStringContainsString('manifest-src cdn.cloudy.com;', (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -254,9 +254,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('plugin-types application/x-shockwave-flash;', $result);
+        $this->assertStringContainsString('plugin-types application/x-shockwave-flash;', (string) $result);
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("plugin-types 'self';", $result);
+        $this->assertStringContainsString("plugin-types 'self';", (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -269,7 +269,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('plugin-types application/x-shockwave-flash application/wacky-hacky;', $result);
+        $this->assertStringContainsString('plugin-types application/x-shockwave-flash application/wacky-hacky;', (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -282,9 +282,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('object-src them.com;', $result);
+        $this->assertStringContainsString('object-src them.com;', (string) $result);
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("object-src 'self' cdn.cloudy.com;", $result);
+        $this->assertStringContainsString("object-src 'self' cdn.cloudy.com;", (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -297,9 +297,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('script-src them.com;', $result);
+        $this->assertStringContainsString('script-src them.com;', (string) $result);
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("script-src 'self' cdn.cloudy.com;", $result);
+        $this->assertStringContainsString("script-src 'self' cdn.cloudy.com;", (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -312,9 +312,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('style-src them.com;', $result);
+        $this->assertStringContainsString('style-src them.com;', (string) $result);
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("style-src 'self' cdn.cloudy.com;", $result);
+        $this->assertStringContainsString("style-src 'self' cdn.cloudy.com;", (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -325,7 +325,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("base-uri 'self';", $result);
+        $this->assertStringContainsString("base-uri 'self';", (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -337,7 +337,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('base-uri example.com;', $result);
+        $this->assertStringContainsString('base-uri example.com;', (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -349,7 +349,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("base-uri 'self' example.com;", $result);
+        $this->assertStringContainsString("base-uri 'self' example.com;", (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -363,7 +363,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('default-src iffy.com;', $result);
+        $this->assertStringContainsString('default-src iffy.com;', (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -376,7 +376,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('report-uri http://example.com/csptracker;', $result);
+        $this->assertStringContainsString('report-uri http://example.com/csptracker;', (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -389,7 +389,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringNotContainsString('report-uri ', $result);
+        $this->assertStringNotContainsString('report-uri ', (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -403,7 +403,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('sandbox allow-popups allow-top-navigation;', $result);
+        $this->assertStringContainsString('sandbox allow-popups allow-top-navigation;', (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -415,7 +415,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('upgrade-insecure-requests;', $result);
+        $this->assertStringContainsString('upgrade-insecure-requests;', (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -444,9 +444,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
             static fn ($value): bool => str_starts_with($value, 'nonce-'),
         );
 
-        $this->assertStringContainsString('nonce=', $this->response->getBody());
+        $this->assertStringContainsString('nonce=', (string) $this->response->getBody());
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('nonce-', $result);
+        $this->assertStringContainsString('nonce-', (string) $result);
         $this->assertSame([], $nonceStyle);
     }
 
@@ -463,7 +463,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $csp->finalize($response);
 
-        $this->assertStringContainsString('nonce=', $response->getBody());
+        $this->assertStringContainsString('nonce=', (string) $response->getBody());
     }
 
     public function testBodyScriptNonceDisableAutoNonce(): void
@@ -479,7 +479,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $csp->finalize($response);
 
-        $this->assertStringContainsString('{csp-script-nonce}', $response->getBody());
+        $this->assertStringContainsString('{csp-script-nonce}', (string) $response->getBody());
 
         $result = new TestResponse($response);
         $result->assertHeader('Content-Security-Policy');
@@ -498,7 +498,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $csp->finalize($response);
 
-        $this->assertStringContainsString('{csp-style-nonce}', $response->getBody());
+        $this->assertStringContainsString('{csp-style-nonce}', (string) $response->getBody());
 
         $result = new TestResponse($response);
         $result->assertHeader('Content-Security-Policy');
@@ -519,9 +519,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
             static fn ($value): bool => str_starts_with($value, 'nonce-'),
         );
 
-        $this->assertStringContainsString('nonce=', $this->response->getBody());
+        $this->assertStringContainsString('nonce=', (string) $this->response->getBody());
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString('nonce-', $result);
+        $this->assertStringContainsString('nonce-', (string) $result);
         $this->assertSame([], $nonceScript);
     }
 
@@ -538,7 +538,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $csp->finalize($response);
 
-        $this->assertStringContainsString('nonce=', $response->getBody());
+        $this->assertStringContainsString('nonce=', (string) $response->getBody());
     }
 
     #[PreserveGlobalState(false)]
@@ -560,7 +560,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('content-security-policy', true);
-        $this->assertStringContainsString("base-uri 'self';", $result);
+        $this->assertStringContainsString("base-uri 'self';", (string) $result);
     }
 
     #[PreserveGlobalState(false)]
@@ -602,7 +602,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("script-src 'self' 'nonce-", $result);
+        $this->assertStringContainsString("script-src 'self' 'nonce-", (string) $result);
     }
 
     public function testClearDirective(): void

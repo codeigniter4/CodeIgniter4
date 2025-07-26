@@ -1,8 +1,7 @@
-# total 3273 errors
+# total 2865 errors
 includes:
     - argument.type.neon
     - assign.propertyType.neon
-    - codeigniter.cacheHandlerInstance.neon
     - codeigniter.getReassignArray.neon
     - codeigniter.modelArgumentType.neon
     - codeigniter.superglobalAccess.neon
@@ -17,7 +16,6 @@ includes:
     - missingType.iterableValue.neon
     - missingType.parameter.neon
     - missingType.property.neon
-    - notIdentical.alwaysTrue.neon
     - nullCoalesce.property.neon
     - offsetAccess.notFound.neon
     - property.defaultValue.neon
@@ -26,4 +24,3 @@ includes:
     - property.phpDocType.neon
     - staticMethod.notFound.neon
     - ternary.shortNotAllowed.neon
-    - varTag.type.neon

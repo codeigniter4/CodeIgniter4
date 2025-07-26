@@ -66,6 +66,8 @@ interface SecurityInterface
      * e.g. file/in/some/approved/folder.txt, you can set the second optional
      * parameter, $relativePath to TRUE.
      *
+     * @deprecated 4.6.2 Use `sanitize_filename()` instead
+     *
      * @param string $str          Input file name
      * @param bool   $relativePath Whether to preserve paths
      */

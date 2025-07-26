@@ -77,8 +77,8 @@ class Filters
     /**
      * Escapes the given value with our `esc()` helper function.
      *
-     * @param         string                               $value
-     * @phpstan-param 'html'|'js'|'css'|'url'|'attr'|'raw' $context
+     * @param string                               $value
+     * @param 'attr'|'css'|'html'|'js'|'raw'|'url' $context
      */
     public static function esc($value, string $context = 'html'): string
     {

@@ -36,6 +36,7 @@ use CodeIgniter\Pager\Pager;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Router\Router;
 use CodeIgniter\Security\Security;
+use CodeIgniter\Session\Handlers\DatabaseHandler;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
@@ -46,6 +47,7 @@ use CodeIgniter\Validation\Validation;
 use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
 use Config\App;
+use Config\Database as DatabaseConfig;
 use Config\Exceptions;
 use Config\Security as SecurityConfig;
 use Config\Session as ConfigSession;
@@ -261,7 +263,7 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertInstanceOf(Session::class, $actual);
     }
 
-    #[DataProvider('provideNewSessionInvalid')]
+    #[DataProvider('provideNewSessionWithInvalidHandler')]
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
     public function testNewSessionWithInvalidHandler(string $driver): void
@@ -278,13 +280,32 @@ final class ServicesTest extends CIUnitTestCase
     /**
      * @return iterable<string, array{0: string}>
      */
-    public static function provideNewSessionInvalid(): iterable
+    public static function provideNewSessionWithInvalidHandler(): iterable
     {
         yield 'just a string' => ['file'];
 
         yield 'inexistent class' => ['Foo'];
 
         yield 'other class' => [self::class];
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testNewSessionWithInvalidDatabaseHandler(): void
+    {
+        $driver = config(DatabaseConfig::class)->tests['DBDriver'];
+
+        if (in_array($driver, ['MySQLi', 'Postgre'], true)) {
+            $this->markTestSkipped('This test case does not work with MySQLi and Postgre');
+        }
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf('Invalid session database handler "%s" provided. Only "MySQLi" and "Postgre" are supported.', $driver));
+
+        $config = new ConfigSession();
+
+        $config->driver = DatabaseHandler::class;
+        Services::session($config, false);
     }
 
     #[PreserveGlobalState(false)]

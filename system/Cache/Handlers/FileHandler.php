@@ -54,14 +54,19 @@ class FileHandler extends BaseHandler
      */
     public function __construct(Cache $config)
     {
-        $this->path = ! empty($config->file['storePath']) ? $config->file['storePath'] : WRITEPATH . 'cache';
-        $this->path = rtrim($this->path, '/') . '/';
+        $options = [
+            ...['storePath' => WRITEPATH . 'cache', 'mode' => 0640],
+            ...$config->file,
+        ];
+
+        $this->path = $options['storePath'] !== '' ? $options['storePath'] : WRITEPATH . 'cache';
+        $this->path = rtrim($this->path, '\\/') . '/';
 
         if (! is_really_writable($this->path)) {
             throw CacheException::forUnableToWrite($this->path);
         }
 
-        $this->mode   = $config->file['mode'] ?? 0640;
+        $this->mode   = $options['mode'];
         $this->prefix = $config->prefix;
 
         helper('filesystem');
@@ -217,7 +222,7 @@ class FileHandler extends BaseHandler
 
     /**
      * Does the heavy lifting of actually retrieving the file and
-     * verifying it's age.
+     * verifying its age.
      *
      * @return array{data: mixed, ttl: int, time: int}|false
      */
@@ -227,7 +232,17 @@ class FileHandler extends BaseHandler
             return false;
         }
 
-        $data = @unserialize(file_get_contents($this->path . $filename));
+        $content = @file_get_contents($this->path . $filename);
+
+        if ($content === false) {
+            return false;
+        }
+
+        try {
+            $data = unserialize($content);
+        } catch (Throwable) {
+            return false;
+        }
 
         if (! is_array($data)) {
             return false;
@@ -332,33 +347,46 @@ class FileHandler extends BaseHandler
      * @param bool   $topLevelOnly Look only at the top level directory specified?
      * @param bool   $_recursion   Internal variable to determine recursion status - do not use in calls
      *
-     * @return array|false
+     * @return array<string, array{
+     *  name: string,
+     *  server_path: string,
+     *  size: int,
+     *  date: int,
+     *  relative_path: string,
+     * }>|false
      */
     protected function getDirFileInfo(string $sourceDir, bool $topLevelOnly = true, bool $_recursion = false)
     {
-        static $_filedata = [];
-        $relativePath     = $sourceDir;
+        static $filedata = [];
 
-        if ($fp = @opendir($sourceDir)) {
+        $relativePath = $sourceDir;
+        $filePointer  = @opendir($sourceDir);
+
+        if (! is_bool($filePointer)) {
             // reset the array and make sure $sourceDir has a trailing slash on the initial call
             if ($_recursion === false) {
-                $_filedata = [];
-                $sourceDir = rtrim(realpath($sourceDir) ?: $sourceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+                $filedata = [];
+
+                $resolvedSrc = realpath($sourceDir);
+                $resolvedSrc = $resolvedSrc === false ? $sourceDir : $resolvedSrc;
+
+                $sourceDir = rtrim($resolvedSrc, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             }
 
             // Used to be foreach (scandir($sourceDir, 1) as $file), but scandir() is simply not as fast
-            while (false !== ($file = readdir($fp))) {
+            while (false !== $file = readdir($filePointer)) {
                 if (is_dir($sourceDir . $file) && $file[0] !== '.' && $topLevelOnly === false) {
                     $this->getDirFileInfo($sourceDir . $file . DIRECTORY_SEPARATOR, $topLevelOnly, true);
                 } elseif (! is_dir($sourceDir . $file) && $file[0] !== '.') {
-                    $_filedata[$file]                  = $this->getFileInfo($sourceDir . $file);
-                    $_filedata[$file]['relative_path'] = $relativePath;
+                    $filedata[$file] = $this->getFileInfo($sourceDir . $file);
+
+                    $filedata[$file]['relative_path'] = $relativePath;
                 }
             }
 
-            closedir($fp);
+            closedir($filePointer);
 
-            return $_filedata;
+            return $filedata;
         }
 
         return false;
@@ -372,10 +400,19 @@ class FileHandler extends BaseHandler
      *
      * @deprecated 4.6.1 Use `get_file_info()` instead.
      *
-     * @param string       $file           Path to file
-     * @param array|string $returnedValues Array or comma separated string of information returned
+     * @param string              $file           Path to file
+     * @param list<string>|string $returnedValues Array or comma separated string of information returned
      *
-     * @return array|false
+     * @return array{
+     *  name?: string,
+     *  server_path?: string,
+     *  size?: int,
+     *  date?: int,
+     *  readable?: bool,
+     *  writable?: bool,
+     *  executable?: bool,
+     *  fileperms?: int
+     * }|false
      */
     protected function getFileInfo(string $file, $returnedValues = ['name', 'server_path', 'size', 'date'])
     {

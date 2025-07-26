@@ -241,3 +241,5 @@ If it is acceptable for the user input to include relative paths, e.g., **file/i
 the second optional parameter, ``$relativePath`` to ``true``.
 
 .. literalinclude:: security/010.php
+
+This method is an alias for the ``sanitize_filename()`` function from the Security helper.

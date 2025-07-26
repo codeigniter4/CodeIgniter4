@@ -1381,4 +1381,34 @@ vary: Origin\r\n\r\n" . $testBody;
 
         $this->assertSame($testBody, $response->getBody());
     }
+
+    public function testProxyAndContinueResponses(): void
+    {
+        $testBody = '{"Id":"83589c7e-bd86-4101-8d93-3f2e7954e48e"}';
+
+        $output = "HTTP/1.1 200 Connection established\r\n\r\nHTTP/1.1 100 Continue
+Connection: keep-alive\r\n\r\nHTTP/1.1 202 Accepted
+Vary: Origin,Access-Control-Request-Method,Access-Control-Request-Headers, Accept-Encoding
+x-content-type-options: nosniff
+x-xss-protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+strict-transport-security: max-age=31536000 ; includeSubDomains
+x-frame-options: DENY
+Content-Type: application/json
+Content-Length: 56
+Date: Wed, 02 Jul 2025 18:37:21 GMT
+Connection: keep-alive\r\n\r\n" . $testBody;
+
+        $this->request->setOutput($output);
+
+        $response = $this->request->request('GET', 'http://example.com', [
+            'allow_redirects' => false,
+        ]);
+
+        $this->assertSame(202, $response->getStatusCode());
+
+        $this->assertSame($testBody, $response->getBody());
+    }
 }

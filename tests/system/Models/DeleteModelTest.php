@@ -198,15 +198,6 @@ final class DeleteModelTest extends LiveModelTestCase
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
     }
 
-    public static function emptyPkValues(): iterable
-    {
-        return [
-            [0],
-            [null],
-            ['0'],
-        ];
-    }
-
     public function testThrowsWithNoDateFormat(): void
     {
         $this->expectException(ModelException::class);
@@ -274,5 +265,14 @@ final class DeleteModelTest extends LiveModelTestCase
         $this->createModel(UserModel::class);
 
         $this->model->delete($id);
+    }
+
+    public static function emptyPkValues(): iterable
+    {
+        return [
+            [0],
+            [null],
+            ['0'],
+        ];
     }
 }

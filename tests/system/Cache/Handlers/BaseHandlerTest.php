@@ -25,11 +25,8 @@ use Tests\Support\Cache\RestrictiveHandler;
 #[Group('Others')]
 final class BaseHandlerTest extends CIUnitTestCase
 {
-    /**
-     * @param mixed $input
-     */
     #[DataProvider('provideValidateKeyInvalidType')]
-    public function testValidateKeyInvalidType($input): void
+    public function testValidateKeyInvalidType(mixed $input): void
     {
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Cache key must be a string');
@@ -37,14 +34,17 @@ final class BaseHandlerTest extends CIUnitTestCase
         BaseHandler::validateKey($input);
     }
 
+    /**
+     * @return iterable<string, array{0: mixed}>
+     */
     public static function provideValidateKeyInvalidType(): iterable
     {
-        return [
-            [true],
-            [false],
-            [null],
-            [42],
-            [new stdClass()],
+        yield from [
+            'true'   => [true],
+            'false'  => [false],
+            'null'   => [null],
+            'int'    => [42],
+            'object' => [new stdClass()],
         ];
     }
 

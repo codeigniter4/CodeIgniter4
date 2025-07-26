@@ -376,8 +376,7 @@ class Table
      *
      * @param array|bool $fields
      *
-     * @return         mixed
-     * @phpstan-return ($fields is array ? array : mixed)
+     * @return ($fields is array ? array : mixed)
      */
     protected function formatFields($fields)
     {

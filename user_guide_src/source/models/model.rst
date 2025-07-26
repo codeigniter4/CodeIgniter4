@@ -1032,6 +1032,15 @@ afterUpdateBatch  **data** = the key/value pairs being updated.
                   **result** = the results of the ``updateBatch()`` method used through the Query Builder.
 ================= =========================================================================================================
 
+.. note:: When using the ``paginate()`` method in combination with the ``beforeFind`` event to modify the query,
+   the results may not behave as expected.
+
+   This is because the ``beforeFind`` event only affects the actual retrieval of the results (``findAll()``),
+   but **not** the query used to count the total number of rows for pagination.
+
+   As a result, the total row count used for generating pagination links may not reflect the modified query conditions,
+   leading to inconsistencies in pagination.
+
 Modifying Find* Data
 ====================
 

@@ -376,7 +376,7 @@ class URI implements Stringable
         }
 
         // Don't add port if it's a standard port for this scheme
-        if ((int) $this->port !== 0 && ! $ignorePort && $this->port !== $this->defaultPorts[$this->scheme]) {
+        if ((int) $this->port !== 0 && ! $ignorePort && $this->port !== ($this->defaultPorts[$this->scheme] ?? null)) {
             $authority .= ':' . $this->port;
         }
 

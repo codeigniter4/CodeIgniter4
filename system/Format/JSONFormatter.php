@@ -26,9 +26,9 @@ class JSONFormatter implements FormatterInterface
     /**
      * Takes the given data and formats it.
      *
-     * @param array|bool|float|int|object|string|null $data
+     * @param array<array-key, mixed>|object|string $data
      *
-     * @return false|string (JSON string | false)
+     * @return false|non-empty-string
      */
     public function format($data)
     {
@@ -37,7 +37,9 @@ class JSONFormatter implements FormatterInterface
         $options = $config->formatterOptions['application/json'] ?? JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
         $options |= JSON_PARTIAL_OUTPUT_ON_ERROR;
 
-        $options = ENVIRONMENT === 'production' ? $options : $options | JSON_PRETTY_PRINT;
+        if (ENVIRONMENT !== 'production') {
+            $options |= JSON_PRETTY_PRINT;
+        }
 
         $result = json_encode($data, $options, 512);
 

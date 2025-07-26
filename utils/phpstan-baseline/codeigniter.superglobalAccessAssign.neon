@@ -1,4 +1,4 @@
-# total 582 errors
+# total 463 errors
 
 parameters:
     ignoreErrors:
@@ -18,69 +18,9 @@ parameters:
             path: ../../system/HTTP/IncomingRequest.php
 
         -
-            message: '#^Assigning string directly on offset ''CONTENT_TYPE'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/API/ResponseTraitTest.php
-
-        -
-            message: '#^Assigning 3 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/CLI/CLITest.php
-
-        -
-            message: '#^Assigning array\{''ignored'', ''b'', ''c'', ''\-\-parm'', ''pvalue'', ''d'', ''\-\-p2'', ''\-\-p3'', ''value 3''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/CLI/CLITest.php
-
-        -
-            message: '#^Assigning array\{''ignored'', ''b'', ''c'', ''\-\-parm'', ''pvalue'', ''d''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/CLI/CLITest.php
-
-        -
-            message: '#^Assigning array\{''ignored'', ''b'', ''c'', ''d'', ''\-\-parm'', ''pvalue'', ''d2'', ''da\-sh'', ''\-\-fix'', ''\-\-opt\-in'', ''sure''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/CLI/CLITest.php
-
-        -
-            message: '#^Assigning array\{''ignored'', ''b'', ''c''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/CLI/CLITest.php
-
-        -
             message: '#^Assigning ''http\://example\.com/'' directly on offset ''app\.baseURL'' of \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../tests/system/CLI/ConsoleTest.php
-
-        -
-            message: '#^Assigning int\<1, max\> directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/CLI/ConsoleTest.php
-
-        -
-            message: '#^Assigning non\-empty\-array\<int\|string, string\> directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/CLI/ConsoleTest.php
-
-        -
-            message: '#^Assigning ''/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/Cache/ResponseCacheTest.php
-
-        -
-            message: '#^Assigning ''public/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/Cache/ResponseCacheTest.php
-
-        -
-            message: '#^Assigning non\-empty\-list\<string\> directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/Cache/ResponseCacheTest.php
-
-        -
-            message: '#^Assigning non\-falsy\-string directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/Cache/ResponseCacheTest.php
 
         -
             message: '#^Assigning ''/'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
@@ -158,46 +98,6 @@ parameters:
             path: ../../tests/system/CodeIgniterTest.php
 
         -
-            message: '#^Assigning 1 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
-            count: 5
-            path: ../../tests/system/CodeIgniterTest.php
-
-        -
-            message: '#^Assigning 2 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
-            count: 26
-            path: ../../tests/system/CodeIgniterTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''/''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 11
-            path: ../../tests/system/CodeIgniterTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''cli''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/CodeIgniterTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''example''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 6
-            path: ../../tests/system/CodeIgniterTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''image''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/CodeIgniterTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''pages/about''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 7
-            path: ../../tests/system/CodeIgniterTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 5
-            path: ../../tests/system/CodeIgniterTest.php
-
-        -
             message: '#^Assigning non\-falsy\-string directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../tests/system/CodeIgniterTest.php
@@ -248,16 +148,6 @@ parameters:
             path: ../../tests/system/Filters/FiltersTest.php
 
         -
-            message: '#^Assigning 2 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/Filters/FiltersTest.php
-
-        -
-            message: '#^Assigning array\{''spark'', ''list''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/Filters/FiltersTest.php
-
-        -
             message: '#^Assigning ''POST'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../tests/system/Filters/HoneypotTest.php
@@ -269,56 +159,6 @@ parameters:
 
         -
             message: '#^Assigning ''baz'' directly on offset ''bar'' of \$_GET is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/CLIRequestTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''abc \< def'', ''McDonald\\''s'', ''\<s\>aaa\</s\>''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/CLIRequestTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''pro\-file'', ''\-\-foo'', ''bar'', ''\-\-baz'', ''queue some stuff''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/CLIRequestTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''profile'', ''\-\-foo'', ''bar'', ''\-\-baz'', ''queue some stuff''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/CLIRequestTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''profile'', ''\-\-foo'', ''bar'', ''\-\-foo\-bar'', ''yes''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/CLIRequestTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''profile'', ''\-\-foo'', ''bar''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../tests/system/HTTP/CLIRequestTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''profile'', ''\-\-foo'', ''oops'', ''bar'', ''\-\-baz'', ''queue some stuff''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/CLIRequestTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''profile'', ''\-\-foo'', ''oops\-bar'', ''\-\-baz'', ''queue some stuff''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/CLIRequestTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''profile'', ''\-foo'', ''bar''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/CLIRequestTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''users'', ''21'', ''profile''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/CLIRequestTest.php
-
-        -
-            message: '#^Assigning array\{''spark'', ''command'', ''param1'', ''param2'', ''\-\-opt1'', ''opt1val'', ''\-\-opt\-2'', ''opt 2 val'', ''param3''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../tests/system/HTTP/CLIRequestTest.php
 
@@ -1058,46 +898,6 @@ parameters:
             path: ../../tests/system/RESTful/ResourceControllerTest.php
 
         -
-            message: '#^Assigning 2 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
-            message: '#^Assigning 3 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
-            count: 5
-            path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
-            message: '#^Assigning 4 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''work'', ''1'', ''edit''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''work'', ''1''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''work'', ''123''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 3
-            path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''work'', ''new''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''work''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
             message: '#^Assigning ''/work'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../tests/system/RESTful/ResourcePresenterTest.php
@@ -1150,61 +950,6 @@ parameters:
         -
             message: '#^Assigning ''POST'' directly on offset ''REQUEST_METHOD'' of \$_SERVER is discouraged\.$#'
             count: 3
-            path: ../../tests/system/RESTful/ResourcePresenterTest.php
-
-        -
-            message: '#^Assigning 2 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/RESTful/ResourcePresenterTest.php
-
-        -
-            message: '#^Assigning 3 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
-            count: 4
-            path: ../../tests/system/RESTful/ResourcePresenterTest.php
-
-        -
-            message: '#^Assigning 4 directly on offset ''argc'' of \$_SERVER is discouraged\.$#'
-            count: 3
-            path: ../../tests/system/RESTful/ResourcePresenterTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''work'', ''create''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/RESTful/ResourcePresenterTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''work'', ''delete'', ''123''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/RESTful/ResourcePresenterTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''work'', ''edit'', ''1'', ''edit''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/RESTful/ResourcePresenterTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''work'', ''new''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/RESTful/ResourcePresenterTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''work'', ''remove'', ''123''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/RESTful/ResourcePresenterTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''work'', ''show'', ''1''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/RESTful/ResourcePresenterTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''work'', ''update'', ''123''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/RESTful/ResourcePresenterTest.php
-
-        -
-            message: '#^Assigning array\{''index\.php'', ''work''\} directly on offset ''argv'' of \$_SERVER is discouraged\.$#'
-            count: 1
             path: ../../tests/system/RESTful/ResourcePresenterTest.php
 
         -

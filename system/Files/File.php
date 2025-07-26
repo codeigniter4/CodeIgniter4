@@ -73,7 +73,7 @@ class File extends SplFileInfo
     /**
      * Retrieve the file size by unit, calculated in IEC standards with 1024 as base value.
      *
-     * @phpstan-param positive-int $precision
+     * @param positive-int $precision
      */
     public function getSizeByBinaryUnit(FileSizeUnit $unit = FileSizeUnit::B, int $precision = 3): int|string
     {
@@ -83,7 +83,7 @@ class File extends SplFileInfo
     /**
      * Retrieve the file size by unit, calculated in metric standards with 1000 as base value.
      *
-     * @phpstan-param positive-int $precision
+     * @param positive-int $precision
      */
     public function getSizeByMetricUnit(FileSizeUnit $unit = FileSizeUnit::B, int $precision = 3): int|string
     {
