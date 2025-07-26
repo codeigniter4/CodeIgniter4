@@ -12,18 +12,6 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-**********************
-Mandatory File Changes
-**********************
-
-****************
-Breaking Changes
-****************
-
-*********************
-Breaking Enhancements
-*********************
-
 *************
 Project Files
 *************
@@ -44,7 +32,15 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- @TODO
+- app/Config/Autoload.php
+- app/Config/Cache.php
+- app/Config/Cookie.php
+- app/Config/DocTypes.php
+- app/Config/Logger.php
+- app/Config/Mimes.php
+- app/Config/Modules.php
+- app/Config/Optimize.php
+- app/Config/Paths.php
 
 All Changes
 ===========
@@ -52,4 +48,17 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- app/Config/Autoload.php
+- app/Config/Cache.php
+- app/Config/Cookie.php
+- app/Config/DocTypes.php
+- app/Config/Logger.php
+- app/Config/Mimes.php
+- app/Config/Modules.php
+- app/Config/Optimize.php
+- app/Config/Paths.php
+- app/Views/errors/html/debug.css
+- app/Views/errors/html/error_exception.php
+- preload.php
+- public/index.php
+- spark

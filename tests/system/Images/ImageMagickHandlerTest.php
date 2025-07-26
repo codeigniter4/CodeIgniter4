@@ -444,6 +444,67 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         }
     }
 
+    public function testCommandInjectionPrevention(): void
+    {
+        $injectionFile     = 'ci4_security_test.txt';
+        $maliciousFilename = 'image.png`echo 123456 | tee ' . $injectionFile . '`';
+        $tempPath          = $this->root . $maliciousFilename;
+
+        $source = $this->origin . 'rocket.png';
+
+        if (file_exists($injectionFile)) {
+            unlink($injectionFile);
+        }
+
+        file_put_contents($tempPath, file_get_contents($source));
+
+        try {
+            $this->handler->withFile($tempPath);
+            $this->handler->resize(50, 50);
+        } catch (ImageException) {
+            $this->fail('Command injection succeeded. Fix is incomplete.');
+        } finally {
+            // Check that the command injection file was NOT created
+            $this->assertFileDoesNotExist($injectionFile);
+
+            // Verify the image processing still works normally
+            $this->assertSame(50, $this->handler->getWidth());
+            $this->assertSame(50, $this->handler->getHeight());
+
+            if (file_exists($tempPath)) {
+                unlink($tempPath);
+            }
+        }
+    }
+
+    public function testCommandInjectionPreventionWithText(): void
+    {
+        $injectionFile = 'ci4_security_test.txt';
+        $tempFilename  = 'image.png';
+        $tempPath      = $this->root . $tempFilename;
+
+        $source = $this->origin . 'rocket.png';
+
+        if (file_exists($injectionFile)) {
+            unlink($injectionFile);
+        }
+
+        file_put_contents($tempPath, file_get_contents($source));
+
+        try {
+            $this->handler->withFile($tempPath);
+            $text = "Hello'; echo 123456 > {$injectionFile}; echo 'World";
+            $this->handler->text($text);
+        } finally {
+            // Check that the command injection file was NOT created
+            $this->assertFileDoesNotExist($injectionFile);
+
+            if (file_exists($tempPath)) {
+                unlink($tempPath);
+            }
+        }
+    }
+
     public function testClearMetadataEnsuresResource(): void
     {
         $this->expectException(ImageException::class);

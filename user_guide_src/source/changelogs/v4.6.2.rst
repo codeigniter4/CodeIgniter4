@@ -2,7 +2,7 @@
 Version 4.6.2
 #############
 
-Release Date: Unreleased
+Release Date: July 26, 2025
 
 **4.6.2 release of CodeIgniter4**
 
@@ -11,12 +11,12 @@ Release Date: Unreleased
     :depth: 3
 
 ********
-BREAKING
+SECURITY
 ********
 
-***************
-Message Changes
-***************
+- **ImageMagick Handler:** *Command Injection Vulnerability in ImageMagick Handler* was fixed.
+  See the `Security advisory GHSA-9952-gv64-x94c <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9952-gv64-x94c>`_
+  for more information.
 
 *******
 Changes
