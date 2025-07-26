@@ -11,6 +11,14 @@ Release Date: Unreleased
     :depth: 3
 
 ********
+SECURITY
+********
+
+- **ImageMagick Handler:** *Command Injection Vulnerability in ImageMagick Handler* was fixed.
+  See the `Security advisory GHSA-9952-gv64-x94c <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-9952-gv64-x94c>`_
+  for more information.
+
+********
 BREAKING
 ********
 
