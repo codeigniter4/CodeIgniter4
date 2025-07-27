@@ -101,6 +101,7 @@ Changes
 
 - **Cookie:** The ``CookieInterface::EXPIRES_FORMAT`` has been changed to ``D, d M Y H:i:s \G\M\T`` to follow the recommended format in RFC 7231.
 - **Format:** Added support for configuring ``json_encode()`` maximum depth via ``Config\Format::$jsonEncodeDepth``.
+- **Paths:** Added support for changing the location of the ``.env`` file via the ``Paths::$envDirectory`` property.
 
 ************
 Deprecations
