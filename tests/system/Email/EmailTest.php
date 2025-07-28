@@ -21,6 +21,7 @@ use ErrorException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionException;
+use ReflectionMethod;
 
 /**
  * @internal
@@ -218,6 +219,41 @@ final class EmailTest extends CIUnitTestCase
             '/<img src="cid:image001.png@(.+?)" alt="CI Logo">/u',
             $email->archive['body'],
         );
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9644
+     *
+     * @throws ReflectionException
+     */
+    public function testAppendAttachmentsWithoutCID(): void
+    {
+        $email = $this->createMockEmail();
+
+        // Manually inject an attachment without 'cid'
+        $this->setPrivateProperty($email, 'attachments', [
+            [
+                'multipart'   => 'mixed',
+                'content'     => 'VGhpcyBpcyBhIHRlc3QgZmlsZSBjb250ZW50Lg==', // base64 for "This is a test file content."
+                'filename'    => '',
+                'type'        => 'application/pdf',
+                'name'        => ['testfile.pdf'],
+                'disposition' => 'attachment',
+            ],
+        ]);
+
+        $body     = '';
+        $boundary = 'test-boundary';
+
+        // Use ReflectionMethod to call protected method with pass-by-reference
+        $refMethod = new ReflectionMethod($email, 'appendAttachments');
+        $refMethod->invokeArgs($email, [&$body, $boundary, 'mixed']);
+
+        // Assertion: Should not include a Content-ID header
+        $this->assertStringContainsString('Content-Type: application/pdf; name="testfile.pdf"', $body);
+        $this->assertStringContainsString('Content-Disposition: attachment;', $body);
+        $this->assertStringNotContainsString('Content-ID:', $body);
+        $this->assertStringContainsString('--' . $boundary . '--', $body);
     }
 
     /**

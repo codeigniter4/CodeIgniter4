@@ -1308,7 +1308,7 @@ class Email
                 . 'Content-Type: ' . $attachment['type'] . '; name="' . $name . '"' . $this->newline
                 . 'Content-Disposition: ' . $attachment['disposition'] . ';' . $this->newline
                 . 'Content-Transfer-Encoding: base64' . $this->newline
-                . ($attachment['cid'] === '' ? '' : 'Content-ID: <' . $attachment['cid'] . '>' . $this->newline)
+                . (isset($attachment['cid']) && $attachment['cid'] !== '' ? 'Content-ID: <' . $attachment['cid'] . '>' . $this->newline : '')
                 . $this->newline
                 . $attachment['content'] . $this->newline;
         }
