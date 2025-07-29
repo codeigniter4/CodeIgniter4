@@ -2292,6 +2292,8 @@ class Email
      */
     protected function isSMTPConnected(): bool
     {
-        return $this->SMTPConnect !== null && get_debug_type($this->SMTPConnect) !== 'resource (closed)';
+        return $this->SMTPConnect !== null
+            && $this->SMTPConnect !== false
+            && get_debug_type($this->SMTPConnect) !== 'resource (closed)';
     }
 }
