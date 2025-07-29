@@ -2227,7 +2227,7 @@ class Email
 
     public function __destruct()
     {
-        if ($this->SMTPConnect !== null) {
+        if (is_resource($this->SMTPConnect)) {
             try {
                 $this->sendCommand('quit');
             } catch (ErrorException $e) {
