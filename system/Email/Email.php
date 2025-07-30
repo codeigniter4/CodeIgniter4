@@ -263,7 +263,7 @@ class Email
     /**
      * SMTP Connection socket placeholder
      *
-     * @var resource|null
+     * @var false|resource|null
      */
     protected $SMTPConnect;
 
