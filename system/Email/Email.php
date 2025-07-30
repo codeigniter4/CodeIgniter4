@@ -263,7 +263,7 @@ class Email
     /**
      * SMTP Connection socket placeholder
      *
-     * @var resource|null
+     * @var false|resource|null
      */
     protected $SMTPConnect;
 
@@ -1886,7 +1886,7 @@ class Email
      */
     protected function SMTPConnect()
     {
-        if (is_resource($this->SMTPConnect)) {
+        if ($this->isSMTPConnected()) {
             return true;
         }
 
@@ -1910,7 +1910,7 @@ class Email
             $this->SMTPTimeout,
         );
 
-        if (! is_resource($this->SMTPConnect)) {
+        if (! $this->isSMTPConnected()) {
             $this->setErrorMessage(lang('Email.SMTPError', [$errno . ' ' . $errstr]));
 
             return false;
@@ -2227,7 +2227,7 @@ class Email
 
     public function __destruct()
     {
-        if ($this->SMTPConnect !== null) {
+        if ($this->isSMTPConnected()) {
             try {
                 $this->sendCommand('quit');
             } catch (ErrorException $e) {
@@ -2283,5 +2283,17 @@ class Email
         $this->tmpArchive = [];
 
         return $this->archive;
+    }
+
+    /**
+     * Checks if there is an active SMTP connection.
+     *
+     * @return bool True if SMTP connection is established and open, false otherwise
+     */
+    protected function isSMTPConnected(): bool
+    {
+        return $this->SMTPConnect !== null
+            && $this->SMTPConnect !== false
+            && get_debug_type($this->SMTPConnect) !== 'resource (closed)';
     }
 }
