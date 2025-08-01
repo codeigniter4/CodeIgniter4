@@ -78,7 +78,10 @@ class Filters extends BaseConfig
      * List of filter aliases that are always
      * applied before and after every request.
      *
-     * @var array<string, array<int|string, array<string, list<string>|string>|string>>
+     * @var array{
+     *    before: array<string, array{except: list<string>|string}>|list<string>,
+     *    after: array<string, array{except: list<string>|string}>|list<string>
+     * }
      */
     public array $globals = [
         'before' => [
