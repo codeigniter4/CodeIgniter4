@@ -15,8 +15,8 @@ namespace CodeIgniter\API;
 
 use CodeIgniter\Format\Format;
 use CodeIgniter\Format\FormatterInterface;
+use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
 /**
@@ -24,10 +24,10 @@ use CodeIgniter\HTTP\ResponseInterface;
  * consistent HTTP responses under a variety of common
  * situations when working as an API.
  *
- * @property RequestInterface  $request
- * @property ResponseInterface $response
- * @property bool              $stringAsHtml Whether to treat string data as HTML in JSON response.
- *                                           Setting `true` is only for backward compatibility.
+ * @property CLIRequest|IncomingRequest $request
+ * @property ResponseInterface          $response
+ * @property bool                       $stringAsHtml Whether to treat string data as HTML in JSON response.
+ *                                                    Setting `true` is only for backward compatibility.
  */
 trait ResponseTrait
 {
