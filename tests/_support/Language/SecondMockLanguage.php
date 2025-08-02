@@ -15,20 +15,27 @@ namespace Tests\Support\Language;
 
 use CodeIgniter\Language\Language;
 
+/**
+ * @phpstan-import-type LoadedStrings from Language
+ */
 class SecondMockLanguage extends Language
 {
     /**
      * Expose the protected *load* method
+     *
+     * @return ($return is true ? LoadedStrings : null)
      */
-    public function loadem(string $file, string $locale = 'en', bool $return = false)
+    public function loadem(string $file, string $locale = 'en', bool $return = false): ?array
     {
         return $this->load($file, $locale, $return);
     }
 
     /**
      * Expose the loaded language files
+     *
+     * @return list<non-empty-string>
      */
-    public function loaded(string $locale = 'en')
+    public function loaded(string $locale = 'en'): array
     {
         return $this->loadedFiles[$locale];
     }

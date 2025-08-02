@@ -21,6 +21,8 @@ use MessageFormatter;
  *
  * Locale-based, built on top of PHP internationalization.
  *
+ * @phpstan-type LoadedStrings array<string, array<string, array<string, string>|string>|string|list<string>>
+ *
  * @see \CodeIgniter\Language\LanguageTest
  */
 class Language
@@ -30,20 +32,19 @@ class Language
      * from files for faster retrieval on
      * second use.
      *
-     * @var array
+     * @var array<non-empty-string, array<non-empty-string, LoadedStrings>>
      */
     protected $language = [];
 
     /**
-     * The current language/locale to work with.
+     * The current locale to work with.
      *
-     * @var string
+     * @var non-empty-string
      */
     protected $locale;
 
     /**
-     * Boolean value whether the intl
-     * libraries exist on the system.
+     * Boolean value whether the `intl` extension exists on the system.
      *
      * @var bool
      */
@@ -53,10 +54,13 @@ class Language
      * Stores filenames that have been
      * loaded so that we don't load them again.
      *
-     * @var array
+     * @var array<non-empty-string, list<non-empty-string>>
      */
     protected $loadedFiles = [];
 
+    /**
+     * @param non-empty-string $locale
+     */
     public function __construct(string $locale)
     {
         $this->locale = $locale;
@@ -68,6 +72,8 @@ class Language
 
     /**
      * Sets the current locale to use when performing string lookups.
+     *
+     * @param non-empty-string|null $locale
      *
      * @return $this
      */
@@ -89,22 +95,24 @@ class Language
      * Parses the language string for a file, loads the file, if necessary,
      * getting the line.
      *
+     * @param array<array-key, float|int|string> $args
+     *
      * @return list<string>|string
      */
     public function getLine(string $line, array $args = [])
     {
-        // if no file is given, just parse the line
+        // 1. Format the line as-is if it does not have a file.
         if (! str_contains($line, '.')) {
             return $this->formatMessage($line, $args);
         }
 
-        // Parse out the file name and the actual alias.
-        // Will load the language file and strings.
+        // 2. Get the formatted line using the file and line extracted from $line and the current locale.
         [$file, $parsedLine] = $this->parseLine($line, $this->locale);
 
         $output = $this->getTranslationOutput($this->locale, $file, $parsedLine);
 
-        if ($output === null && strpos($this->locale, '-')) {
+        // 3. If not found, try the locale without region (e.g., 'en-US' -> 'en').
+        if ($output === null && str_contains($this->locale, '-')) {
             [$locale] = explode('-', $this->locale, 2);
 
             [$file, $parsedLine] = $this->parseLine($line, $locale);
@@ -112,57 +120,66 @@ class Language
             $output = $this->getTranslationOutput($locale, $file, $parsedLine);
         }
 
-        // if still not found, try English
+        // 4. If still not found, try English.
         if ($output === null) {
             [$file, $parsedLine] = $this->parseLine($line, 'en');
 
             $output = $this->getTranslationOutput('en', $file, $parsedLine);
         }
 
+        // 5. Fallback to the original line if no translation was found.
         $output ??= $line;
 
         return $this->formatMessage($output, $args);
     }
 
     /**
-     * @return array|string|null
+     * @return list<string>|string|null
      */
     protected function getTranslationOutput(string $locale, string $file, string $parsedLine)
     {
         $output = $this->language[$locale][$file][$parsedLine] ?? null;
-        if ($output !== null) {
-            return $output;
-        }
-
-        foreach (explode('.', $parsedLine) as $row) {
-            if (! isset($current)) {
-                $current = $this->language[$locale][$file] ?? null;
-            }
-
-            $output = $current[$row] ?? null;
-            if (is_array($output)) {
-                $current = $output;
-            }
-        }
 
         if ($output !== null) {
             return $output;
         }
 
-        $row = current(explode('.', $parsedLine));
-        $key = substr($parsedLine, strlen($row) + 1);
+        // Fallback: try to traverse dot notation
+        $current = $this->language[$locale][$file] ?? null;
 
-        return $this->language[$locale][$file][$row][$key] ?? null;
+        if (is_array($current)) {
+            foreach (explode('.', $parsedLine) as $segment) {
+                $output = $current[$segment] ?? null;
+
+                if ($output === null) {
+                    break;
+                }
+
+                if (is_array($output)) {
+                    $current = $output;
+                }
+            }
+
+            if ($output !== null && ! is_array($output)) {
+                return $output;
+            }
+        }
+
+        // Final fallback: try two-level access manually
+        [$first, $rest] = explode('.', $parsedLine, 2) + ['', ''];
+
+        return $this->language[$locale][$file][$first][$rest] ?? null;
     }
 
     /**
      * Parses the language string which should include the
      * filename as the first segment (separated by period).
+     *
+     * @return array{non-empty-string, non-empty-string}
      */
     protected function parseLine(string $line, string $locale): array
     {
-        $file = substr($line, 0, strpos($line, '.'));
-        $line = substr($line, strlen($file) + 1);
+        [$file, $line] = explode('.', $line, 2);
 
         if (! isset($this->language[$locale][$file]) || ! array_key_exists($line, $this->language[$locale][$file])) {
             $this->load($file, $locale);
@@ -174,10 +191,10 @@ class Language
     /**
      * Advanced message formatting.
      *
-     * @param array|string $message
-     * @param list<string> $args
+     * @param list<string>|string                $message
+     * @param array<array-key, float|int|string> $args
      *
-     * @return array|string
+     * @return ($message is list<string> ? list<string> : string)
      */
     protected function formatMessage($message, array $args = [])
     {
@@ -194,32 +211,27 @@ class Language
         }
 
         $formatted = MessageFormatter::formatMessage($this->locale, $message, $args);
+
         if ($formatted === false) {
             // Format again to get the error message.
             try {
-                $fmt       = new MessageFormatter($this->locale, $message);
-                $formatted = $fmt->format($args);
-                $fmtError  = '"' . $fmt->getErrorMessage() . '" (' . $fmt->getErrorCode() . ')';
+                $formatter = new MessageFormatter($this->locale, $message);
+                $formatted = $formatter->format($args);
+                $fmtError  = sprintf('"%s" (%d)', $formatter->getErrorMessage(), $formatter->getErrorCode());
             } catch (IntlException $e) {
-                $fmtError = '"' . $e->getMessage() . '" (' . $e->getCode() . ')';
+                $fmtError = sprintf('"%s" (%d)', $e->getMessage(), $e->getCode());
             }
 
-            $argsString = implode(
-                ', ',
-                array_map(static fn ($element): string => '"' . $element . '"', $args),
-            );
-            $argsUrlEncoded = implode(
-                ', ',
-                array_map(static fn ($element): string => '"' . rawurlencode($element) . '"', $args),
-            );
+            $argsAsString   = sprintf('"%s"', implode('", "', $args));
+            $urlEncodedArgs = sprintf('"%s"', implode('", "', array_map(rawurlencode(...), $args)));
 
-            log_message(
-                'error',
-                'Language.invalidMessageFormat: $message: "' . $message
-                . '", $args: ' . $argsString
-                . ' (urlencoded: ' . $argsUrlEncoded . '),'
-                . ' MessageFormatter Error: ' . $fmtError,
-            );
+            log_message('error', sprintf(
+                'Invalid message format: $message: "%s", $args: %s (urlencoded: %s), MessageFormatter Error: %s',
+                $message,
+                $argsAsString,
+                $urlEncodedArgs,
+                $fmtError,
+            ));
 
             return $message . "\n【Warning】Also, invalid string(s) was passed to the Language class. See log file for details.";
         }
@@ -232,7 +244,7 @@ class Language
      * will return the file's contents, otherwise will merge with
      * the existing language lines.
      *
-     * @return list<mixed>|null
+     * @return ($return is true ? LoadedStrings : null)
      */
     protected function load(string $file, string $locale, bool $return = false)
     {
@@ -270,8 +282,9 @@ class Language
     }
 
     /**
-     * A simple method for including files that can be
-     * overridden during testing.
+     * A simple method for including files that can be overridden during testing.
+     *
+     * @return LoadedStrings
      */
     protected function requireFile(string $path): array
     {
@@ -279,20 +292,25 @@ class Language
         $strings = [];
 
         foreach ($files as $file) {
-            // On some OS's we were seeing failures
-            // on this command returning boolean instead
-            // of array during testing, so we've removed
-            // the require_once for now.
             if (is_file($file)) {
-                $strings[] = require $file;
+                // On some OS, we were seeing failures on this command returning boolean instead
+                // of array during testing, so we've removed the require_once for now.
+                $loadedStrings = require $file;
+
+                if (is_array($loadedStrings)) {
+                    /** @var LoadedStrings $loadedStrings */
+                    $strings[] = $loadedStrings;
+                }
             }
         }
 
-        if (isset($strings[1])) {
-            $string = array_shift($strings);
+        $count = count($strings);
 
-            $strings = array_replace_recursive($string, ...$strings);
-        } elseif (isset($strings[0])) {
+        if ($count > 1) {
+            $base = array_shift($strings);
+
+            $strings = array_replace_recursive($base, ...$strings);
+        } elseif ($count === 1) {
             $strings = $strings[0];
         }
 
