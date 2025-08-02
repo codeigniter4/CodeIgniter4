@@ -1,5 +1,18 @@
 # Changelog
 
+## [v4.6.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.6.3) (2025-08-02)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.6.2...v4.6.3)
+
+### Fixed Bugs
+
+* fix: CID check in Email class by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9645
+* fix: SMTP connection resource validation in `Email` class destructor by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9648
+
+### Refactoring
+
+* refactor: update preload script to exclude `util_bootstrap` by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/9649
+* refactor: phpdoc for `Config\Filters::$globals` by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9652
+
 ## [v4.6.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.6.2) (2025-07-26)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.6.1...v4.6.2)
 
