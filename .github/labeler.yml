@@ -1,0 +1,11 @@
+# Github Action
+"github_actions":
+  - changed-files:
+      - any-glob-to-any-file:
+        - .github/*
+
+# Documentation
+"documentation":
+  - changed-files:
+      - any-glob-to-any-file:
+        - user_guide_src/*
