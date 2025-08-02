@@ -1724,7 +1724,7 @@ class RouteCollection implements RouteCollectionInterface
      * @return array<
      *     string,
      *     array{
-     *         filter?: string|list<string>, namespace?: string, hostname?: string,
+     *         filter?: list<string>|string, namespace?: string, hostname?: string,
      *         subdomain?: string, offset?: int, priority?: int, as?: string,
      *         redirect?: int
      *     }
