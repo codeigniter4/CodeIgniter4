@@ -1,0 +1,38 @@
+#############
+Version 4.6.3
+#############
+
+Release Date: Unreleased
+
+**4.6.3 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+********
+BREAKING
+********
+
+***************
+Message Changes
+***************
+
+*******
+Changes
+*******
+
+************
+Deprecations
+************
+
+**********
+Bugs Fixed
+**********
+
+- **Email:** Fixed a bug with CID check when building email attachments.
+- **Email:** Fixed a bug with SMTP connection resource validation in the class destructor.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.
