@@ -15,6 +15,7 @@ namespace CodeIgniter\Debug;
 
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
@@ -41,6 +42,8 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
 
     /**
      * Determines the correct way to display the error.
+     *
+     * @param CLIRequest|IncomingRequest $request
      */
     public function handle(
         Throwable $exception,
