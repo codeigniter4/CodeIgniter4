@@ -502,7 +502,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertTrue($runner->latest());
         $this->assertTrue($this->db->tableExists('foo'));
 
-        $this->dontSeeInDatabase('migrations_lock', ['lock_name'   => 'migration_process']);
+        $this->dontSeeInDatabase('migrations_lock', ['lock_name' => 'migration_process']);
     }
 
     public function testRegressWithLockingEnabled(): void
@@ -534,11 +534,11 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
         // Should acquire lock successfully
         $this->assertTrue($acquireLock());
-        $this->seeInDatabase('migrations_lock', ['lock_name'   => 'migration_process']);
+        $this->seeInDatabase('migrations_lock', ['lock_name' => 'migration_process']);
 
         // Should release successfully
         $this->assertTrue($releaseLock());
-        $this->dontSeeInDatabase('migrations_lock', ['lock_name'   => 'migration_process']);
+        $this->dontSeeInDatabase('migrations_lock', ['lock_name' => 'migration_process']);
     }
 
     public function testLockPreventsConcurrentAccess(): void
