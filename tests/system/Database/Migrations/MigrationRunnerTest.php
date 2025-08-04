@@ -490,4 +490,87 @@ final class MigrationRunnerTest extends CIUnitTestCase
             $forge->dropTable($table, true);
         }
     }
+
+    public function testLatestWithLockingEnabledSucceeds(): void
+    {
+        $this->config->lock = true;
+
+        $runner = new MigrationRunner($this->config);
+        $runner->setNamespace('Tests\Support\MigrationTestMigrations')
+            ->clearHistory();
+
+        $this->assertTrue($runner->latest());
+        $this->assertTrue($this->db->tableExists('foo'));
+
+        $this->dontSeeInDatabase('migrations_lock', ['lock_name'   => 'migration_process']);
+    }
+
+    public function testRegressWithLockingEnabled(): void
+    {
+        $this->config->lock = true;
+
+        $runner = new MigrationRunner($this->config);
+        $runner->setNamespace('Tests\Support\MigrationTestMigrations')
+            ->clearHistory();
+
+        // First run migrations
+        $runner->latest();
+        $this->assertTrue($this->db->tableExists('foo'));
+
+        // Then regress them
+        $result = $runner->regress(0);
+        $this->assertTrue($result);
+        $this->assertFalse($this->db->tableExists('foo'));
+    }
+
+    public function testLockAcquisitionAndReleaseBasic(): void
+    {
+        $this->config->lock = true;
+
+        $runner = new MigrationRunner($this->config);
+
+        $acquireLock = $this->getPrivateMethodInvoker($runner, 'acquireMigrationLock');
+        $releaseLock = $this->getPrivateMethodInvoker($runner, 'releaseMigrationLock');
+
+        // Should acquire lock successfully
+        $this->assertTrue($acquireLock());
+        $this->seeInDatabase('migrations_lock', ['lock_name'   => 'migration_process']);
+
+        // Should release successfully
+        $this->assertTrue($releaseLock());
+        $this->dontSeeInDatabase('migrations_lock', ['lock_name'   => 'migration_process']);
+    }
+
+    public function testLockPreventsConcurrentAccess(): void
+    {
+        if ($this->db->DBDriver === 'SQLite3' && $this->db->database === ':memory:') {
+            $this->markTestSkipped('SQLite3 :memory: is not shared between connections.');
+        }
+
+        $this->config->lock = true;
+
+        // Create two runners with separate database connections
+        $runner1 = new MigrationRunner($this->config, $this->db);
+        $runner2 = new MigrationRunner($this->config, db_connect(null, false));
+
+        $acquireLock1 = $this->getPrivateMethodInvoker($runner1, 'acquireMigrationLock');
+        $releaseLock1 = $this->getPrivateMethodInvoker($runner1, 'releaseMigrationLock');
+        $acquireLock2 = $this->getPrivateMethodInvoker($runner2, 'acquireMigrationLock');
+        $releaseLock2 = $this->getPrivateMethodInvoker($runner2, 'releaseMigrationLock');
+
+        // Runner1 should acquire lock successfully
+        $this->assertTrue($acquireLock1());
+
+        // Runner2 should fail to acquire lock while runner1 holds it
+        $this->assertFalse($acquireLock2());
+
+        // Release lock with runner1
+        $this->assertTrue($releaseLock1());
+
+        // Now runner2 should be able to acquire lock
+        $this->assertTrue($acquireLock2());
+
+        // Clean up
+        $this->assertTrue($releaseLock2());
+    }
 }
