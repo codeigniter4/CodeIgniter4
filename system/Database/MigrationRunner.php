@@ -883,6 +883,8 @@ class MigrationRunner
         $lockTable = $this->table . '_lock';
 
         if ($this->lockTableChecked || $this->db->tableExists($lockTable)) {
+            $this->lockTableChecked = true;
+
             return $lockTable;
         }
 
