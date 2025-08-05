@@ -225,9 +225,19 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * Construct a new Cookie instance.
      *
-     * @param string                                                                                                                                                                                      $name    The cookie's name
-     * @param string                                                                                                                                                                                      $value   The cookie's value
-     * @param array{prefix?: string, max-age?: int|numeric-string, expires?: DateTimeInterface|int|string, path?: string, domain?: string, secure?: bool, httponly?: bool, samesite?: string, raw?: bool} $options The cookie's options
+     * @param string $name  The cookie's name
+     * @param string $value The cookie's value
+     * @param array{
+     *   prefix?: string,
+     *   max-age?: int|numeric-string,
+     *   expires?: DateTimeInterface|int|string,
+     *   path?: string,
+     *   domain?: string,
+     *   secure?: bool,
+     *   httponly?: bool,
+     *   samesite?: string,
+     *   raw?: bool,
+     * } $options The cookie's options
      *
      * @throws CookieException
      */
