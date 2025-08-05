@@ -76,6 +76,11 @@ Query Builder
 Forge
 -----
 
+Migrations
+----------
+
+- **MigrationRunner:** Added distributed locking support to prevent concurrent migrations in multi-process environments. Enable with ``Config\Migrations::$lock = true``.
+
 Others
 ------
 
