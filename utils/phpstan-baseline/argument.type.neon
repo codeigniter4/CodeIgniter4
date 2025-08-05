@@ -1,4 +1,4 @@
-# total 90 errors
+# total 88 errors
 
 parameters:
     ignoreErrors:
@@ -51,16 +51,6 @@ parameters:
             message: '#^Parameter \#2 \$mock of static method CodeIgniter\\Config\\BaseService\:\:injectMock\(\) expects object, null given\.$#'
             count: 4
             path: ../../tests/system/Commands/RoutesTest.php
-
-        -
-            message: '#^Parameter \#2 \$context of function esc expects ''attr''\|''css''\|''html''\|''js''\|''raw''\|''url'', ''0'' given\.$#'
-            count: 1
-            path: ../../tests/system/CommonFunctionsTest.php
-
-        -
-            message: '#^Parameter \#2 \$context of function esc expects ''attr''\|''css''\|''html''\|''js''\|''raw''\|''url'', ''bogus'' given\.$#'
-            count: 1
-            path: ../../tests/system/CommonFunctionsTest.php
 
         -
             message: '#^Parameter \#2 \$file of class CodeIgniter\\Config\\DotEnv constructor expects string, int given\.$#'
