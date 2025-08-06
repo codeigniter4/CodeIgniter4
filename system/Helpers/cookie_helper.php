@@ -36,7 +36,7 @@ if (! function_exists('set_cookie')) {
      *   domain?: string,
      *   secure?: bool,
      *   httponly?: bool,
-     *   samesite?: 'Lax'|'None'|'Strict'|string,
+     *   samesite?: string,
      *   raw?: bool
      *  }|Cookie|string $name     Cookie name / array containing binds / Cookie object
      * @param string      $value    The value of the cookie

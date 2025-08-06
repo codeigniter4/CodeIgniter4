@@ -226,7 +226,7 @@ if (! function_exists('cookie')) {
      *     domain?: string,
      *     secure?: bool,
      *     httponly?: bool,
-     *     samesite?: 'Lax'|'None'|'Strict'|string,
+     *     samesite?: string,
      *     raw?: bool
      * } $options Cookie configuration options
      *
