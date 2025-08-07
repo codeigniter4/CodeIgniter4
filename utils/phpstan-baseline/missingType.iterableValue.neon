@@ -1,4 +1,4 @@
-# total 1423 errors
+# total 1416 errors
 
 parameters:
     ignoreErrors:
@@ -339,31 +339,6 @@ parameters:
 
         -
             message: '#^Function class_uses_recursive\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Common.php
-
-        -
-            message: '#^Function cookie\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Common.php
-
-        -
-            message: '#^Function db_connect\(\) has parameter \$db with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Common.php
-
-        -
-            message: '#^Function esc\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Common.php
-
-        -
-            message: '#^Function esc\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Common.php
-
-        -
-            message: '#^Function helper\(\) has parameter \$filenames with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Common.php
 
@@ -3731,16 +3706,6 @@ parameters:
             message: '#^Function dot_array_search\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Helpers/array_helper.php
-
-        -
-            message: '#^Function get_cookie\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/cookie_helper.php
-
-        -
-            message: '#^Function set_cookie\(\) has parameter \$name with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Helpers/cookie_helper.php
 
         -
             message: '#^Function directory_map\(\) return type has no value type specified in iterable type array\.$#'

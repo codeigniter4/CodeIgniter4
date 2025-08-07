@@ -243,13 +243,13 @@ final class CommonFunctionsTest extends CIUnitTestCase
     public function testEscapeBadContext(): void
     {
         $this->expectException('InvalidArgumentException');
-        esc(['width' => '800', 'height' => '600'], 'bogus');
+        esc(['width' => '800', 'height' => '600'], 'bogus'); // @phpstan-ignore argument.type
     }
 
     public function testEscapeBadContextZero(): void
     {
         $this->expectException('InvalidArgumentException');
-        esc('<script>', '0');
+        esc('<script>', '0'); // @phpstan-ignore argument.type
     }
 
     public function testEscapeArray(): void
