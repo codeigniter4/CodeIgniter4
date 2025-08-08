@@ -29,7 +29,7 @@ jobs:
       matrix:
         php-version:
           - '8.1'
-          - '8.4'
+          - '8.5'
 
     steps:
       - name: Checkout base branch for PR
@@ -64,4 +64,9 @@ jobs:
         run: composer update --ansi --no-interaction
 
       - name: Run lint
-        run: composer cs
+        run: |
+          if [ "${{ matrix.php-version }}" = "8.5" ]; then
+            composer cs -- --allow-unsupported-php-version=yes
+          else
+            composer cs
+          fi
