@@ -16,7 +16,7 @@ mergeable:
                   regex: '### CodeIgniter4 Version'
           - do: author
             must_include:
-              regex: ^kenjis|lonnieezell|MGatner|michalsn|paulbalandan|samsonasik$
+              regex: ^kenjis|lonnieezell|MGatner|michalsn|paulbalandan|samsonasik|ddevsr$
     fail:
       - do: comment
         payload:
