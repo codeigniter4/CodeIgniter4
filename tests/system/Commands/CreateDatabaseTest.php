@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Database\BaseConnection;
-use CodeIgniter\Database\Database as DatabaseFactory;
 use CodeIgniter\Database\OCI8\Connection as OCI8Connection;
 use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -51,16 +50,13 @@ final class CreateDatabaseTest extends CIUnitTestCase
     private function dropDatabase(): void
     {
         if ($this->connection instanceof SQLite3Connection) {
-            $file = WRITEPATH . 'foobar.db';
+            $file = WRITEPATH . 'database.db';
+
             if (is_file($file)) {
                 unlink($file);
             }
-        } else {
-            $util = (new DatabaseFactory())->loadUtils($this->connection);
-
-            if ($util->databaseExists('foobar')) {
-                Database::forge()->dropDatabase('foobar');
-            }
+        } elseif (Database::utils('tests')->databaseExists('database')) {
+            Database::forge()->dropDatabase('database');
         }
     }
 
@@ -75,7 +71,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
             $this->markTestSkipped('Needs to run on non-OCI8 drivers.');
         }
 
-        command('db:create foobar');
+        command('db:create database');
         $this->assertStringContainsString('successfully created.', $this->getBuffer());
     }
 
@@ -85,10 +81,10 @@ final class CreateDatabaseTest extends CIUnitTestCase
             $this->markTestSkipped('Needs to run on SQLite3.');
         }
 
-        command('db:create foobar');
+        command('db:create database');
         $this->resetStreamFilterBuffer();
 
-        command('db:create foobar --ext db');
+        command('db:create database --ext db');
         $this->assertStringContainsString('already exists.', $this->getBuffer());
     }
 
@@ -98,10 +94,10 @@ final class CreateDatabaseTest extends CIUnitTestCase
             $this->markTestSkipped('Needs to run on non-SQLite3 and non-OCI8 drivers.');
         }
 
-        command('db:create foobar');
+        command('db:create database');
         $this->resetStreamFilterBuffer();
 
-        command('db:create foobar');
+        command('db:create database');
         $this->assertStringContainsString('Unable to create the specified database.', $this->getBuffer());
     }
 }
