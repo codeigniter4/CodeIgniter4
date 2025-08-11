@@ -206,7 +206,7 @@ jobs:
       - name: Run tests
         run: script -e -c "vendor/bin/phpunit --color=always ${{ env.EXTRA_PHPUNIT_OPTIONS }}"
         env:
-          DB: ${{ inputs.db-platform }}
+          # DB: ${{ inputs.db-platform }}
           TACHYCARDIA_MONITOR_GA: ${{ inputs.enable-profiling && 'enabled' || '' }}
           TERM: xterm-256color
 
