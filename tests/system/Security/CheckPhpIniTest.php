@@ -13,9 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Security;
 
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Mock\MockInputOutput;
+use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -24,53 +23,64 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class CheckPhpIniTest extends CIUnitTestCase
 {
+    use StreamFilterTrait;
+
     public function testCheckIni(): void
     {
-        $output = CheckPhpIni::checkIni();
+        $output = self::getPrivateMethodInvoker(CheckPhpIni::class, 'checkIni')();
 
         $expected = [
-            'global'      => '',
-            'current'     => '1',
-            'recommended' => '0',
+            'global'      => 'UTF-8',
+            'current'     => 'UTF-8',
+            'recommended' => 'UTF-8',
             'remark'      => '',
         ];
-        $this->assertSame($expected, $output['display_errors']);
+        $this->assertSame($expected, $output['default_charset']);
     }
 
     public function testCheckIniOpcache(): void
     {
-        $output = CheckPhpIni::checkIni('opcache');
+        $output = self::getPrivateMethodInvoker(CheckPhpIni::class, 'checkIni')('opcache');
 
         $expected = [
             'global'      => '1',
             'current'     => '1',
             'recommended' => '0',
-            'remark'      => 'Enable when you using package require docblock annotation',
+            'remark'      => 'Enable when your code requires to read docblock annotations at runtime',
         ];
         $this->assertSame($expected, $output['opcache.save_comments']);
     }
 
     public function testRunCli(): void
     {
-        // Set MockInputOutput to CLI.
-        $io = new MockInputOutput();
-        CLI::setInputOutput($io);
-
         CheckPhpIni::run(true);
 
-        // Get the whole output string.
-        $output = $io->getOutput();
-
-        $this->assertStringContainsString('display_errors', $output);
-
-        // Remove MockInputOutput.
-        CLI::resetInputOutput();
+        $this->assertMatchesRegularExpression(
+            '/\| Directive\s+\| Global\s+\| Current\s+\| Recommended\s+\| Remark\s+\|/',
+            $this->getStreamFilterBuffer(),
+        );
+        $this->assertMatchesRegularExpression(
+            '/\| default_charset\s+\| UTF-8\s+\| UTF-8\s+\| UTF-8\s+\| \s+\|/',
+            $this->getStreamFilterBuffer(),
+        );
     }
 
     public function testRunWeb(): void
     {
         $output = CheckPhpIni::run(false);
 
-        $this->assertStringContainsString('display_errors', (string) $output);
+        $this->assertIsString($output);
+        $this->assertMatchesRegularExpression(
+            '/<table border="1" cellpadding="4" cellspacing="0">/',
+            $output,
+        );
+        $this->assertMatchesRegularExpression(
+            '/<th>Directive<\/th><th>Global<\/th><th>Current<\/th><th>Recommended<\/th><th>Remark<\/th>/',
+            $output,
+        );
+        $this->assertMatchesRegularExpression(
+            '/<td>default_charset<\/td><td>UTF-8<\/td><td>UTF-8<\/td><td>UTF-8<\/td><td><\/td>/',
+            $output,
+        );
     }
 }

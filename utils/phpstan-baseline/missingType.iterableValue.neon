@@ -1,4 +1,4 @@
-# total 1416 errors
+# total 1409 errors
 
 parameters:
     ignoreErrors:
@@ -4551,41 +4551,6 @@ parameters:
             message: '#^Method CodeIgniter\\Router\\RouterInterface\:\:params\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Router/RouterInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Security\\CheckPhpIni\:\:checkIni\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Security/CheckPhpIni.php
-
-        -
-            message: '#^Method CodeIgniter\\Security\\CheckPhpIni\:\:outputForCli\(\) has parameter \$output with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Security/CheckPhpIni.php
-
-        -
-            message: '#^Method CodeIgniter\\Security\\CheckPhpIni\:\:outputForCli\(\) has parameter \$tbody with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Security/CheckPhpIni.php
-
-        -
-            message: '#^Method CodeIgniter\\Security\\CheckPhpIni\:\:outputForCli\(\) has parameter \$thead with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Security/CheckPhpIni.php
-
-        -
-            message: '#^Method CodeIgniter\\Security\\CheckPhpIni\:\:outputForWeb\(\) has parameter \$output with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Security/CheckPhpIni.php
-
-        -
-            message: '#^Method CodeIgniter\\Security\\CheckPhpIni\:\:outputForWeb\(\) has parameter \$tbody with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Security/CheckPhpIni.php
-
-        -
-            message: '#^Method CodeIgniter\\Security\\CheckPhpIni\:\:outputForWeb\(\) has parameter \$thead with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Security/CheckPhpIni.php
 
         -
             message: '#^Property CodeIgniter\\Session\\Handlers\\BaseHandler\:\:\$savePath type has no value type specified in iterable type array\.$#'
