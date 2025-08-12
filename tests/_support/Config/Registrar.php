@@ -134,9 +134,9 @@ class Registrar
 
         // Under GitHub Actions, we can set an ENV var named 'DB'
         // so that we can test against multiple databases.
-        if (($group = getenv('DB')) && isset(self::$dbConfig[$group])) {
-            $config['tests'] = self::$dbConfig[$group];
-        }
+        $group = env('DB', 'SQLite3');
+
+        $config['tests'] = self::$dbConfig[$group] ?? [];
 
         return $config;
     }

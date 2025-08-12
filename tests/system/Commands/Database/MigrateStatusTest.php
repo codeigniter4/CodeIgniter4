@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Database;
 use PHPUnit\Framework\Attributes\Group;
@@ -26,16 +27,17 @@ use PHPUnit\Framework\Attributes\Group;
 final class MigrateStatusTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
+    use DatabaseTestTrait;
 
     private string $migrationFileFrom = SUPPORTPATH . 'MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php';
     private string $migrationFileTo   = APPPATH . 'Database/Migrations/2018-01-24-102301_Some_migration.php';
 
     protected function setUp(): void
     {
-        $forge = Database::forge();
-        $forge->dropTable('foo', true);
-
         parent::setUp();
+
+        Database::connect()->table('migrations')->emptyTable();
+        Database::forge()->dropTable('foo', true);
 
         if (! is_file($this->migrationFileFrom)) {
             $this->fail(clean_path($this->migrationFileFrom) . ' is not found.');
@@ -63,8 +65,7 @@ final class MigrateStatusTest extends CIUnitTestCase
     {
         parent::tearDown();
 
-        $db = db_connect();
-        $db->table('migrations')->emptyTable();
+        Database::connect()->table('migrations')->emptyTable();
 
         if (is_file($this->migrationFileTo)) {
             @unlink($this->migrationFileTo);
