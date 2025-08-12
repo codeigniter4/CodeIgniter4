@@ -109,7 +109,7 @@ class Forge extends BaseForge
 
             if (! empty($field['default'])) {
                 $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field['name'])
-                    . " SET DEFAULT {$field['default']}";
+                    . " SET {$field['default']}";
             }
 
             $nullable = true; // Nullable by default.
