@@ -216,9 +216,19 @@ if (! function_exists('cookie')) {
     /**
      * Simpler way to create a new Cookie instance.
      *
-     * @param string $name    Name of the cookie
-     * @param string $value   Value of the cookie
-     * @param array  $options Array of options to be passed to the cookie
+     * @param string $name  Name of the cookie
+     * @param string $value Value of the cookie
+     * @param array{
+     *     prefix?: string,
+     *     max-age?: int|numeric-string,
+     *     expires?: DateTimeInterface|int|string,
+     *     path?: string,
+     *     domain?: string,
+     *     secure?: bool,
+     *     httponly?: bool,
+     *     samesite?: string,
+     *     raw?: bool
+     * } $options Cookie configuration options
      *
      * @throws CookieException
      */
@@ -352,7 +362,27 @@ if (! function_exists('db_connect')) {
      * If $getShared === false then a new connection instance will be provided,
      * otherwise it will all calls will return the same instance.
      *
-     * @param array|ConnectionInterface|string|null $db
+     * @param array{
+     *     DSN?: string,
+     *     hostname?: string,
+     *     username?: string,
+     *     password?: string,
+     *     database?: string,
+     *     DBDriver?: 'MySQLi'|'OCI8'|'Postgre'|'SQLite3'|'SQLSRV',
+     *     DBPrefix?: string,
+     *     pConnect?: bool,
+     *     DBDebug?: bool,
+     *     charset?: string,
+     *     DBCollat?: string,
+     *     swapPre?: string,
+     *     encrypt?: bool,
+     *     compress?: bool,
+     *     strictOn?: bool,
+     *     failover?: array<string, mixed>,
+     *     port?: int,
+     *     dateFormat?: array<string, string>,
+     *     foreignKeys?: bool
+     * }|ConnectionInterface|string|null $db
      *
      * @return BaseConnection
      */
@@ -402,13 +432,13 @@ if (! function_exists('esc')) {
      * If $data is an array, then it loops over it, escaping each
      * 'value' of the key/value pairs.
      *
-     * @param array|string                         $data
-     * @param 'attr'|'css'|'html'|'js'|'raw'|'url' $context
-     * @param string|null                          $encoding Current encoding for escaping.
-     *                                                       If not UTF-8, we convert strings from this encoding
-     *                                                       pre-escaping and back to this encoding post-escaping.
+     * @param array<int|string, array<int|string, mixed>|string>|string $data
+     * @param 'attr'|'css'|'html'|'js'|'raw'|'url'                      $context
+     * @param string|null                                               $encoding Current encoding for escaping.
+     *                                                                            If not UTF-8, we convert strings from this encoding
+     *                                                                            pre-escaping and back to this encoding post-escaping.
      *
-     * @return array|string
+     * @return ($data is string ? string : array<int|string, array<int|string, mixed>|string>)
      *
      * @throws InvalidArgumentException
      */
@@ -560,7 +590,7 @@ if (! function_exists('helper')) {
      *   2. {namespace}/Helpers
      *   3. system/Helpers
      *
-     * @param array|string $filenames
+     * @param list<string>|string $filenames
      *
      * @throws FileNotFoundException
      */
@@ -728,6 +758,8 @@ if (! function_exists('lang')) {
     /**
      * A convenience method to translate a string or array of them and format
      * the result with the intl extension's MessageFormatter.
+     *
+     * @param array<array-key, float|int|string> $args
      *
      * @return list<string>|string
      */

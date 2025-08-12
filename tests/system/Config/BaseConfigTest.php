@@ -197,6 +197,9 @@ final class BaseConfigTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testSetsDefaultValuesEncryptionUsingHex2Bin(): void
     {
+        putenv('encryption.key');
+        unset($_ENV['encryption.key'], $_SERVER['encryption.key']); // @phpstan-ignore codeigniter.superglobalAccess
+
         $dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
         $dotenv->load();
         $config = new Encryption();
@@ -210,6 +213,9 @@ final class BaseConfigTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testSetDefaultValuesEncryptionUsingBase64(): void
     {
+        putenv('encryption.key');
+        unset($_ENV['encryption.key'], $_SERVER['encryption.key']); // @phpstan-ignore codeigniter.superglobalAccess
+
         $dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');
         $dotenv->load();
         $config = new Encryption('base64');

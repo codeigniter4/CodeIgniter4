@@ -13,5 +13,6 @@ declare(strict_types=1);
 
 // "Language" language settings
 return [
+    // @deprecated v4.6.3 - never used
     'invalidMessageFormat' => 'Invalid message format: "{0}", args: "{1}"',
 ];
