@@ -30,6 +30,8 @@ Deprecations
 Bugs Fixed
 **********
 
+- **Database:** Fixed a bug in ``Database::connect()`` which was causing storing non-shared connection instances in shared cache.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.
