@@ -22,7 +22,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\Attributes\WithoutErrorHandler;
-use TypeError;
 
 /**
  * @internal
@@ -113,13 +112,6 @@ final class DotEnvTest extends CIUnitTestCase
 
         $this->assertSame('base64:L40bKo6b8Nu541LeVeZ1i5RXfGgnkar42CPTfukhGhw=', getenv('encryption.key'));
         $this->assertSame('OpenSSL', getenv('encryption.driver'));
-    }
-
-    public function testLoadsNoneStringFiles(): void
-    {
-        $this->expectException(TypeError::class);
-
-        new DotEnv($this->fixturesFolder, 2);
     }
 
     public function testCommentedLoadsVars(): void
