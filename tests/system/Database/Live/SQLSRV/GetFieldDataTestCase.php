@@ -15,7 +15,9 @@ namespace CodeIgniter\Database\Live\SQLSRV;
 
 use CodeIgniter\Database\Live\AbstractGetFieldDataTestCase;
 use Config\Database;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use ReflectionClass;
 
 /**
  * @internal
@@ -68,7 +70,7 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
                 'type'       => 'int',
                 'max_length' => 10,
                 'nullable'   => false,
-                'default'    => '((0))', // int 0
+                'default'    => '0',
                 // 'primary_key' => 0,
             ],
             (object) [
@@ -76,7 +78,7 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
                 'type'       => 'varchar',
                 'max_length' => 64,
                 'nullable'   => true,
-                'default'    => '(NULL)', // NULL value
+                'default'    => null,
                 // 'primary_key' => 0,
             ],
             (object) [
@@ -84,7 +86,7 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
                 'type'       => 'varchar',
                 'max_length' => 64,
                 'nullable'   => false,
-                'default'    => "('null')", // string "null"
+                'default'    => 'null', // string "null"
                 // 'primary_key' => 0,
             ],
             (object) [
@@ -92,7 +94,7 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
                 'type'       => 'varchar',
                 'max_length' => 64,
                 'nullable'   => false,
-                'default'    => "('abc')", // string "abc"
+                'default'    => 'abc',
                 // 'primary_key' => 0,
             ],
         ];
@@ -234,5 +236,60 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
             ],
         ];
         $this->assertSameFieldData($expected, $fields);
+    }
+
+    #[DataProvider('provideNormalizeDefault')]
+    public function testNormalizeDefault(?string $input, ?string $expected, string $description): void
+    {
+        $reflection = new ReflectionClass($this->db);
+        $method     = $reflection->getMethod('normalizeDefault');
+
+        $result = $method->invoke($this->db, $input);
+
+        $this->assertSame($expected, $result, "Failed test: {$description}");
+    }
+
+    /**
+     * @return iterable<array{string|null, string|null, string}>
+     */
+    public static function provideNormalizeDefault(): iterable
+    {
+        return [
+            // [input, expected_output, description]
+
+            // Null cases
+            [null, null, 'null input'],
+            ['(NULL)', null, 'NULL literal wrapped in parentheses'],
+            ['(null)', null, 'null literal lowercase'],
+            ['(Null)', null, 'null literal mixed case'],
+            ['(nULL)', null, 'null literal random case'],
+
+            // String literal cases
+            ["('hello')", 'hello', 'simple string'],
+            ["('hello world')", 'hello world', 'string with space'],
+            ["('')", '', 'empty string literal'],
+            ["('can''t')", "can't", 'string with escaped quote'],
+            ["('it''s a ''test''')", "it's a 'test'", 'string with multiple escaped quotes'],
+            ["('line1'+char(10)+'line2')", "line1'+char(10)+'line2", 'concatenated multiline expression'],
+
+            // Numeric cases
+            ['((0))', '0', 'zero with double parentheses'],
+            ['((123))', '123', 'positive integer with double parentheses'],
+            ['((-456))', '-456', 'negative integer with double parentheses'],
+            ['((3.14))', '3.14', 'float with double parentheses'],
+
+            // Function/expression cases
+            ['(getdate())', 'getdate()', 'function call'],
+            ['(newid())', 'newid()', 'newid function'],
+            ['(user_name())', 'user_name()', 'user_name function'],
+            ['(current_timestamp)', 'current_timestamp', 'current_timestamp'],
+            ['((1+1))', '1+1', 'mathematical expression'],
+            ['((100*2))', '100*2', 'multiplication expression'],
+
+            // Edge cases
+            ["((('nested')))", 'nested', 'multiple nested parentheses'],
+            ['plain_value', 'plain_value', 'value without parentheses'],
+            ['(complex_func(1, 2))', 'complex_func(1, 2)', 'function with parameters'],
+        ];
     }
 }

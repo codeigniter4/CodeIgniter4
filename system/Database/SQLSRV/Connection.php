@@ -384,10 +384,40 @@ class Connection extends BaseConnection
                 );
 
             $retVal[$i]->nullable = $query[$i]->IS_NULLABLE !== 'NO';
-            $retVal[$i]->default  = $query[$i]->COLUMN_DEFAULT;
+            $retVal[$i]->default  = $this->normalizeDefault($query[$i]->COLUMN_DEFAULT);
         }
 
         return $retVal;
+    }
+
+    /**
+     * Normalizes SQL Server COLUMN_DEFAULT values.
+     * Removes wrapping parentheses and handles basic conversions.
+     */
+    private function normalizeDefault(?string $default): ?string
+    {
+        if ($default === null) {
+            return null;
+        }
+
+        $default = trim($default);
+
+        // Remove outer parentheses (handles both single and double wrapping)
+        while (preg_match('/^\((.*)\)$/', $default, $matches)) {
+            $default = trim($matches[1]);
+        }
+
+        // Handle NULL literal
+        if (strcasecmp($default, 'NULL') === 0) {
+            return null;
+        }
+
+        // Handle string literals - remove quotes and unescape
+        if (preg_match("/^'(.*)'$/s", $default, $matches)) {
+            return str_replace("''", "'", $matches[1]);
+        }
+
+        return $default;
     }
 
     /**

@@ -349,7 +349,7 @@ class Connection extends BaseConnection
             $retval[$i]->max_length = $length;
 
             $retval[$i]->nullable = $query[$i]->NULLABLE === 'Y';
-            $retval[$i]->default  = $query[$i]->DATA_DEFAULT;
+            $retval[$i]->default  = rtrim($query[$i]->DATA_DEFAULT);
         }
 
         return $retval;
