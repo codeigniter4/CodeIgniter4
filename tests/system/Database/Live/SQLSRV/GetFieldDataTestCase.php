@@ -17,7 +17,6 @@ use CodeIgniter\Database\Live\AbstractGetFieldDataTestCase;
 use Config\Database;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
-use ReflectionClass;
 
 /**
  * @internal
@@ -239,57 +238,53 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
     }
 
     #[DataProvider('provideNormalizeDefault')]
-    public function testNormalizeDefault(?string $input, ?string $expected, string $description): void
+    public function testNormalizeDefault(?string $input, ?string $expected): void
     {
-        $reflection = new ReflectionClass($this->db);
-        $method     = $reflection->getMethod('normalizeDefault');
-
-        $result = $method->invoke($this->db, $input);
-
-        $this->assertSame($expected, $result, "Failed test: {$description}");
+        $normalizeDefault = self::getPrivateMethodInvoker($this->db, 'normalizeDefault');
+        $this->assertSame($expected, $normalizeDefault($input));
     }
 
     /**
-     * @return iterable<array{string|null, string|null, string}>
+     * @return iterable<string, array{string|null, string|null}>
      */
     public static function provideNormalizeDefault(): iterable
     {
         return [
-            // [input, expected_output, description]
-
             // Null cases
-            [null, null, 'null input'],
-            ['(NULL)', null, 'NULL literal wrapped in parentheses'],
-            ['(null)', null, 'null literal lowercase'],
-            ['(Null)', null, 'null literal mixed case'],
-            ['(nULL)', null, 'null literal random case'],
+            'null input'                          => [null, null],
+            'NULL literal wrapped in parentheses' => ['(NULL)', null],
+            'null literal lowercase'              => ['(null)', null],
+            'null literal mixed case'             => ['(Null)', null],
+            'null literal random case'            => ['(nULL)', null],
+            'null string'                         => ["('null')", 'null'],
 
             // String literal cases
-            ["('hello')", 'hello', 'simple string'],
-            ["('hello world')", 'hello world', 'string with space'],
-            ["('')", '', 'empty string literal'],
-            ["('can''t')", "can't", 'string with escaped quote'],
-            ["('it''s a ''test''')", "it's a 'test'", 'string with multiple escaped quotes'],
-            ["('line1'+char(10)+'line2')", "line1'+char(10)+'line2", 'concatenated multiline expression'],
+            'simple string'                       => ["('hello')", 'hello'],
+            'empty string'                        => ['(())', ''],
+            'string with space'                   => ["('hello world')", 'hello world'],
+            'empty string literal'                => ["('')", ''],
+            'string with escaped quote'           => ["('can''t')", "can't"],
+            'string with multiple escaped quotes' => ["('it''s a ''test''')", "it's a 'test'"],
+            'concatenated multiline expression'   => ["('line1'+char(10)+'line2')", "line1'+char(10)+'line2"],
 
             // Numeric cases
-            ['((0))', '0', 'zero with double parentheses'],
-            ['((123))', '123', 'positive integer with double parentheses'],
-            ['((-456))', '-456', 'negative integer with double parentheses'],
-            ['((3.14))', '3.14', 'float with double parentheses'],
+            'zero with double parentheses'             => ['((0))', '0'],
+            'positive integer with double parentheses' => ['((123))', '123'],
+            'negative integer with double parentheses' => ['((-456))', '-456'],
+            'float with double parentheses'            => ['((3.14))', '3.14'],
 
             // Function/expression cases
-            ['(getdate())', 'getdate()', 'function call'],
-            ['(newid())', 'newid()', 'newid function'],
-            ['(user_name())', 'user_name()', 'user_name function'],
-            ['(current_timestamp)', 'current_timestamp', 'current_timestamp'],
-            ['((1+1))', '1+1', 'mathematical expression'],
-            ['((100*2))', '100*2', 'multiplication expression'],
+            'function call'             => ['(getdate())', 'getdate()'],
+            'newid function'            => ['(newid())', 'newid()'],
+            'user_name function'        => ['(user_name())', 'user_name()'],
+            'current_timestamp'         => ['(current_timestamp)', 'current_timestamp'],
+            'mathematical expression'   => ['((1+1))', '1+1'],
+            'multiplication expression' => ['((100*2))', '100*2'],
 
             // Edge cases
-            ["((('nested')))", 'nested', 'multiple nested parentheses'],
-            ['plain_value', 'plain_value', 'value without parentheses'],
-            ['(complex_func(1, 2))', 'complex_func(1, 2)', 'function with parameters'],
+            'multiple nested parentheses' => ["((('nested')))", 'nested'],
+            'value without parentheses'   => ['plain_value', 'plain_value'],
+            'function with parameters'    => ['(complex_func(1, 2))', 'complex_func(1, 2)'],
         ];
     }
 }

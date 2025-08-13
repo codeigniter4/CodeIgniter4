@@ -1,7 +1,12 @@
-# total 1 error
+# total 2 errors
 
 parameters:
     ignoreErrors:
+        -
+            message: '#^Unreachable statement \- code above always terminates\.$#'
+            count: 1
+            path: ../../tests/system/Database/Live/SQLSRV/GetFieldDataTestCase.php
+
         -
             message: '#^Unreachable statement \- code above always terminates\.$#'
             count: 1
