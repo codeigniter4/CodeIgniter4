@@ -115,4 +115,22 @@ final class ConnectTest extends CIUnitTestCase
 
         $this->assertGreaterThanOrEqual(0, count($db1->listTables()));
     }
+
+    public function testNonSharedInstanceDoesNotAffectSharedInstances(): void
+    {
+        $firstSharedDb      = Database::connect('tests');
+        $originalDebugValue = (bool) self::getPrivateProperty($firstSharedDb, 'DBDebug');
+
+        $nonSharedDb = Database::connect('tests', false);
+        self::setPrivateProperty($nonSharedDb, 'DBDebug', ! $originalDebugValue);
+
+        $secondSharedDb = Database::connect('tests');
+
+        $this->assertSame($firstSharedDb, $secondSharedDb);
+        $this->assertNotSame($firstSharedDb, $nonSharedDb);
+
+        $this->assertSame($originalDebugValue, self::getPrivateProperty($firstSharedDb, 'DBDebug'));
+        $this->assertSame($originalDebugValue, self::getPrivateProperty($secondSharedDb, 'DBDebug'));
+        $this->assertSame(! $originalDebugValue, self::getPrivateProperty($nonSharedDb, 'DBDebug'));
+    }
 }
