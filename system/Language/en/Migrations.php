@@ -22,6 +22,7 @@ return [
     'gap'           => 'There is a gap in the migration sequence near version number: ',
     'classNotFound' => 'The migration class "%s" could not be found.',
     'missingMethod' => 'The migration class is missing an "%s" method.',
+    'locked'        => 'Migrations already running in another process. Skipping.',
 
     // Migration Command
     'migHelpLatest'   => "\t\tMigrates database to latest available migration.",
