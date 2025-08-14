@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Live\SQLSRV;
 
 use CodeIgniter\Database\Live\AbstractGetFieldDataTestCase;
+use CodeIgniter\Database\SQLSRV\Connection;
 use Config\Database;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -240,6 +241,8 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
     #[DataProvider('provideNormalizeDefault')]
     public function testNormalizeDefault(?string $input, ?string $expected): void
     {
+        $this->assertInstanceOf(Connection::class, $this->db);
+
         $normalizeDefault = self::getPrivateMethodInvoker($this->db, 'normalizeDefault');
         $this->assertSame($expected, $normalizeDefault($input));
     }
@@ -284,6 +287,7 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
             // Edge cases
             'multiple nested parentheses' => ["((('nested')))", 'nested'],
             'value without parentheses'   => ['plain_value', 'plain_value'],
+            'value with parentheses'      => ['(  plain_value  )', 'plain_value'],
             'function with parameters'    => ['(complex_func(1, 2))', 'complex_func(1, 2)'],
         ];
     }
