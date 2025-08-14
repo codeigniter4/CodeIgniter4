@@ -733,8 +733,6 @@ class CURLRequest extends OutgoingRequest
             throw HTTPException::forCurlError((string) curl_errno($ch), curl_error($ch));
         }
 
-        curl_close($ch);
-
         return $output;
     }
 
