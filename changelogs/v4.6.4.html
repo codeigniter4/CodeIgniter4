@@ -319,6 +319,7 @@
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Database:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Database::connect()</span></code> which was causing to store non-shared connection instances in shared cache.</p></li>
+<li><p><strong>Database:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Connection::getFieldData()</span></code> for <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> and <code class="docutils literal notranslate"><span class="pre">OCI8</span></code> where extra characters were returned in column default values (specific to those handlers), instead of following the convention used by other drivers.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
@@ -338,7 +339,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 13, 2025.
+      <span class="lastupdated">Last updated on Aug 14, 2025.
       </span></p>
   </div>
 
