@@ -1093,7 +1093,7 @@ final class ForgeTest extends CIUnitTestCase
                     'type'       => 'int',
                     'max_length' => 10,
                     'nullable'   => false,
-                    'default'    => '((0))', // Why?
+                    'default'    => '0',
                 ],
             ];
         } elseif ($this->db->DBDriver === 'OCI8') {
@@ -1124,7 +1124,7 @@ final class ForgeTest extends CIUnitTestCase
                     'type'       => 'NUMBER',
                     'max_length' => '11',
                     'nullable'   => false,
-                    'default'    => '0 ', // Why?
+                    'default'    => '0',
                 ],
             ];
 

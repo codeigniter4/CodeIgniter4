@@ -31,6 +31,7 @@ Bugs Fixed
 **********
 
 - **Database:** Fixed a bug in ``Database::connect()`` which was causing to store non-shared connection instances in shared cache.
+- **Database:** Fixed a bug in ``Connection::getFieldData()`` for ``SQLSRV`` and ``OCI8`` where extra characters were returned in column default values (specific to those handlers), instead of following the convention used by other drivers.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
