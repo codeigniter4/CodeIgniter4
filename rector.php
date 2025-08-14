@@ -35,6 +35,7 @@ use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
+use Rector\Php81\Rector\MethodCall\RemoveReflectionSetAccessibleCallsRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\RemoveDataProviderParamKeysRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
@@ -173,6 +174,7 @@ return RectorConfig::configure()
     // auto import fully qualified class names
     ->withImportNames(removeUnusedImports: true)
     ->withRules([
+        RemoveReflectionSetAccessibleCallsRector::class,
         DeclareStrictTypesRector::class,
         UnderscoreToCamelCaseVariableNameRector::class,
         SimplifyUselessVariableRector::class,
