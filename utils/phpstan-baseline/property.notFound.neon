@@ -1,4 +1,4 @@
-# total 58 errors
+# total 59 errors
 
 parameters:
     ignoreErrors:
@@ -14,7 +14,7 @@ parameters:
 
         -
             message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$schema\.$#'
-            count: 13
+            count: 14
             path: ../../system/Database/SQLSRV/Forge.php
 
         -
