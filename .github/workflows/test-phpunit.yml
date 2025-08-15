@@ -60,6 +60,9 @@ jobs:
           - '8.2'
           - '8.3'
           - '8.4'
+        include:
+          - php-version: '8.5'
+            composer-option: '--ignore-platform-req=php'
 
     uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
     with:
@@ -99,6 +102,8 @@ jobs:
           - php-version: '8.1'
             db-platform: MySQLi
             mysql-version: '5.7'
+          - php-version: '8.5'
+            composer-option: '--ignore-platform-req=php'
 
     uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
     with:
@@ -127,6 +132,9 @@ jobs:
           - '8.2'
           - '8.3'
           - '8.4'
+        include:
+          - php-version: '8.5'
+            composer-option: '--ignore-platform-req=php'
 
     uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
     with:
@@ -153,6 +161,9 @@ jobs:
           - '8.2'
           - '8.3'
           - '8.4'
+        include:
+          - php-version: '8.5'
+            composer-option: '--ignore-platform-req=php'
 
     uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
     with:
