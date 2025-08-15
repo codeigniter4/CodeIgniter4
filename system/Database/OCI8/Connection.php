@@ -231,7 +231,14 @@ class Connection extends BaseConnection
 
             return $result;
         } catch (ErrorException $e) {
-            log_message('error', (string) $e);
+            $trace = array_slice($e->getTrace(), 2); // remove call to error handler
+
+            log_message('error', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
+                'message' => $e->getMessage(),
+                'exFile'  => clean_path($e->getFile()),
+                'exLine'  => $e->getLine(),
+                'trace'   => render_backtrace($trace),
+            ]);
 
             if ($this->DBDebug) {
                 throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
