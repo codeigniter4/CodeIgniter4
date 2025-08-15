@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\Seeder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
@@ -30,7 +31,7 @@ final class MetadataTest extends CIUnitTestCase
     /**
      * The seed file used for all tests within this test case.
      *
-     * @var string
+     * @var ''|class-string<Seeder>|list<class-string<Seeder>>
      */
     protected $seed = CITestSeeder::class;
 
