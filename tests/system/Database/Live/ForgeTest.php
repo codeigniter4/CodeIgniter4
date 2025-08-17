@@ -1093,7 +1093,7 @@ final class ForgeTest extends CIUnitTestCase
                     'type'       => 'int',
                     'max_length' => 10,
                     'nullable'   => false,
-                    'default'    => '((0))', // Why?
+                    'default'    => '0',
                 ],
             ];
         } elseif ($this->db->DBDriver === 'OCI8') {
@@ -1124,7 +1124,7 @@ final class ForgeTest extends CIUnitTestCase
                     'type'       => 'NUMBER',
                     'max_length' => '11',
                     'nullable'   => false,
-                    'default'    => '0 ', // Why?
+                    'default'    => '0',
                 ],
             ];
 
@@ -1816,6 +1816,28 @@ final class ForgeTest extends CIUnitTestCase
         // drop tables to avoid any future conflicts
         $this->forge->dropTable('actions', true);
         $this->forge->dropTable('user2', true);
+    }
+
+    public function testChangeDefaultFieldValueWithModifyColumn(): void
+    {
+        $this->forge->addField([
+            'delivery_sum'      => ['type' => 'int', 'constraint' => 6, 'default' => 10],
+            'delivery_free_sum' => ['type' => 'int', 'constraint' => 6, 'default' => 10],
+        ])->addKey('id', true)->createTable('test_stores', true);
+
+        $this->forge->modifyColumn('test_stores', [
+            'delivery_sum'      => ['type' => 'int', 'constraint' => 6, 'default' => 100],
+            'delivery_free_sum' => ['type' => 'int', 'constraint' => 6, 'default' => 1000],
+        ]);
+
+        $expected = ['delivery_sum' => '100', 'delivery_free_sum' => '1000'];
+
+        $fields  = $this->db->getFieldData('test_stores');
+        $results = array_column($fields, 'default', 'name');
+
+        $this->assertSame($expected, $results);
+
+        $this->forge->dropTable('test_stores', true);
     }
 
     private function createUser2TableWithKeys(): void
