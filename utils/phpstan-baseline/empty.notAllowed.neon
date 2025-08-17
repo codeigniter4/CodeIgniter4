@@ -1,4 +1,4 @@
-# total 231 errors
+# total 230 errors
 
 parameters:
     ignoreErrors:
@@ -69,7 +69,7 @@ parameters:
 
         -
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 5
+            count: 4
             path: ../../system/Database/MigrationRunner.php
 
         -
