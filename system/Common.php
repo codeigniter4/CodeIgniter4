@@ -941,6 +941,57 @@ if (! function_exists('remove_invisible_characters')) {
     }
 }
 
+if (! function_exists('render_backtrace')) {
+    /**
+     * Renders a backtrace in a nice string format.
+     *
+     * @param list<array{
+     *  file?: string,
+     *  line?: int,
+     *  class?: string,
+     *  type?: string,
+     *  function: string,
+     *  args?: list<mixed>
+     * }> $backtrace
+     */
+    function render_backtrace(array $backtrace): string
+    {
+        $backtraces = [];
+
+        foreach ($backtrace as $index => $trace) {
+            $frame = $trace + ['file' => '[internal function]', 'line' => 0, 'class' => '', 'type' => '', 'args' => []];
+
+            if ($frame['file'] !== '[internal function]') {
+                $frame['file'] = sprintf('%s(%s)', $frame['file'], $frame['line']);
+            }
+
+            unset($frame['line']);
+            $idx = $index;
+            $idx = str_pad((string) ++$idx, 2, ' ', STR_PAD_LEFT);
+
+            $args = implode(', ', array_map(static fn ($value): string => match (true) {
+                is_object($value)   => sprintf('Object(%s)', $value::class),
+                is_array($value)    => $value !== [] ? '[...]' : '[]',
+                $value === null     => 'null',
+                is_resource($value) => sprintf('resource (%s)', get_resource_type($value)),
+                default             => var_export($value, true),
+            }, $frame['args']));
+
+            $backtraces[] = sprintf(
+                '%s %s: %s%s%s(%s)',
+                $idx,
+                clean_path($frame['file']),
+                $frame['class'],
+                $frame['type'],
+                $frame['function'],
+                $args,
+            );
+        }
+
+        return implode("\n", $backtraces);
+    }
+}
+
 if (! function_exists('request')) {
     /**
      * Returns the shared Request.

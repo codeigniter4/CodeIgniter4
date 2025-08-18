@@ -70,6 +70,8 @@ Testing
 Database
 ========
 
+- **Exception Logging:** All DB drivers now log database exceptions uniformly. Previously, each driver has its own log format.
+
 Query Builder
 -------------
 
