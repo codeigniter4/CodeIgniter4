@@ -8,7 +8,7 @@
 #   - Exception
 #   - Service
 #   - Validation\FormatRules
-parameters:
+deptrac:
   paths:
     - ./app
     - ./system
@@ -17,147 +17,147 @@ parameters:
   layers:
     - name: API
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\API\\.*
     - name: Cache
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Cache\\.*
     - name: Controller
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^CodeIgniter\\Controller$
     - name: Cookie
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Cookie\\.*
     - name: Database
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Database\\.*
     - name: DataCaster
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\DataCaster\\.*
     - name: DataConverter
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\DataConverter\\.*
     - name: Email
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Email\\.*
     - name: Encryption
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Encryption\\.*
     - name: Entity
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Entity\\.*
     - name: Events
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Events\\.*
     - name: Files
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Files\\.*
     - name: Filters
       collectors:
         - type: bool
           must:
-          - type: className
+          - type: classNameRegex
             regex: ^Codeigniter\\Filters\\Filter.*
     - name: Format
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Format\\.*
     - name: Honeypot
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\.*Honeypot.* # includes the Filter
     - name: HTTP
       collectors:
         - type: bool
           must:
-          - type: className
+          - type: classNameRegex
             regex: ^Codeigniter\\HTTP\\.*
           must_not:
-          - type: className
+          - type: classNameRegex
             regex: (Exception|URI)
     - name: I18n
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\I18n\\.*
     - name: Images
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Images\\.*
     - name: Language
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Language\\.*
     - name: Log
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Log\\.*
     - name: Model
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\.*Model$
     - name: Modules
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Modules\\.*
     - name: Pager
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Pager\\.*
     - name: Publisher
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Publisher\\.*
     - name: RESTful
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\RESTful\\.*
     - name: Router
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Router\\.*
     - name: Security
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Security\\.*
     - name: Session
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Session\\.*
     - name: Throttle
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Throttle\\.*
     - name: Typography
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\Typography\\.*
     - name: URI
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^CodeIgniter\\HTTP\\URI$
     - name: Validation
       collectors:
         - type: bool
           must:
-          - type: className
+          - type: classNameRegex
             regex: ^Codeigniter\\Validation\\.*
           must_not:
-          - type: className
+          - type: classNameRegex
             regex: ^Codeigniter\\Validation\\FormatRules$
     - name: View
       collectors:
-        - type: className
+        - type: classNameRegex
           regex: ^Codeigniter\\View\\.*
   ruleset:
     API:
