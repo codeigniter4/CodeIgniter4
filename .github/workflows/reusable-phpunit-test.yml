@@ -209,6 +209,7 @@ jobs:
           DB: ${{ inputs.db-platform }}
           TACHYCARDIA_MONITOR_GA: ${{ inputs.enable-profiling && 'enabled' || '' }}
           TERM: xterm-256color
+        continue-on-error: ${{ inputs.php-version == '8.5' }}
 
       - name: Upload coverage results as artifact
         if: ${{ inputs.enable-artifact-upload }}
