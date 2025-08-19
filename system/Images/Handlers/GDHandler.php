@@ -274,6 +274,8 @@ class GDHandler extends BaseHandler
                 throw ImageException::forInvalidImageCreate();
         }
 
+        $this->resource = null;
+
         chmod($target, $this->filePermissions);
 
         return true;
