@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\SignalTrait;
 use Throwable;
 
 /**
@@ -22,6 +23,8 @@ use Throwable;
  */
 class Migrate extends BaseCommand
 {
+    use SignalTrait;
+
     /**
      * The group the command is lumped under
      * when listing commands.
@@ -82,9 +85,11 @@ class Migrate extends BaseCommand
                 $runner->setNamespace($namespace);
             }
 
-            if (! $runner->latest($group)) {
-                CLI::error(lang('Migrations.generalFault'), 'light_gray', 'red'); // @codeCoverageIgnore
-            }
+            $this->withSignalsBlocked(static function () use ($runner, $group): void {
+                if (! $runner->latest($group)) {
+                    CLI::error(lang('Migrations.generalFault'), 'light_gray', 'red'); // @codeCoverageIgnore
+                }
+            });
 
             $messages = $runner->getCliMessages();
 
