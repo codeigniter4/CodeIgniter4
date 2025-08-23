@@ -24,41 +24,41 @@ use Closure;
 trait SignalTrait
 {
     /**
-     * Whether the process should continue running (false = termination requested)
+     * Whether the process should continue running (false = termination requested).
      */
     private bool $running = true;
 
     /**
-     * Whether signals are currently blocked
+     * Whether signals are currently blocked.
      */
     private bool $signalsBlocked = false;
 
     /**
-     * Array of registered signals
+     * Array of registered signals.
      *
      * @var list<int>
      */
     private array $registeredSignals = [];
 
     /**
-     * Signal-to-method mapping
+     * Signal-to-method mapping.
      *
      * @var array<int, string>
      */
     private array $signalMethodMap = [];
 
     /**
-     * Cached result of PCNTL extension availability
+     * Cached result of PCNTL extension availability.
      */
     private static ?bool $isPcntlAvailable = null;
 
     /**
-     * Cached result of POSIX extension availability
+     * Cached result of POSIX extension availability.
      */
     private static ?bool $isPosixAvailable = null;
 
     /**
-     * Check if PCNTL extension is available (cached)
+     * Check if PCNTL extension is available (cached).
      */
     protected function isPcntlAvailable(): bool
     {
@@ -77,7 +77,7 @@ trait SignalTrait
     }
 
     /**
-     * Check if POSIX extension is available (cached)
+     * Check if POSIX extension is available (cached).
      */
     protected function isPosixAvailable(): bool
     {
@@ -89,7 +89,7 @@ trait SignalTrait
     }
 
     /**
-     * Register signal handlers
+     * Register signal handlers.
      *
      * @param list<int>          $signals   List of signals to handle
      * @param array<int, string> $methodMap Optional signal-to-method mapping
@@ -129,7 +129,7 @@ trait SignalTrait
     }
 
     /**
-     * Handle incoming signals
+     * Handle incoming signals.
      */
     protected function handleSignal(int $signal): void
     {
@@ -158,8 +158,8 @@ trait SignalTrait
     }
 
     /**
-     * Call custom signal handler if one is mapped for this signal
-     * Falls back to generic onInterruption() method if no explicit mapping exists
+     * Call custom signal handler if one is mapped for this signal.
+     * Falls back to generic onInterruption() method if no explicit mapping exists.
      */
     private function callCustomHandler(int $signal): void
     {
@@ -179,7 +179,7 @@ trait SignalTrait
     }
 
     /**
-     * Check if command should terminate
+     * Check if command should terminate.
      */
     protected function shouldTerminate(): bool
     {
@@ -187,7 +187,7 @@ trait SignalTrait
     }
 
     /**
-     * Check if the process is currently running (not terminated)
+     * Check if the process is currently running (not terminated).
      */
     protected function isRunning(): bool
     {
@@ -195,7 +195,7 @@ trait SignalTrait
     }
 
     /**
-     * Request immediate termination
+     * Request immediate termination.
      */
     protected function requestTermination(): void
     {
@@ -203,7 +203,7 @@ trait SignalTrait
     }
 
     /**
-     * Reset all states (for testing or restart scenarios)
+     * Reset all states (for testing or restart scenarios).
      */
     protected function resetState(): void
     {
@@ -216,7 +216,7 @@ trait SignalTrait
     }
 
     /**
-     * Execute a callable with ALL signals blocked to prevent ANY interruption during critical operations
+     * Execute a callable with ALL signals blocked to prevent ANY interruption during critical operations.
      *
      * This blocks ALL interruptible signals including:
      * - Termination signals (SIGTERM, SIGINT, etc.)
@@ -244,8 +244,8 @@ trait SignalTrait
     }
 
     /**
-     * Block ALL interruptible signals during critical sections
-     * Only SIGKILL (unblockable) can terminate the process
+     * Block ALL interruptible signals during critical sections.
+     * Only SIGKILL (unblockable) can terminate the process.
      */
     protected function blockSignals(): void
     {
@@ -262,7 +262,7 @@ trait SignalTrait
     }
 
     /**
-     * Unblock previously blocked signals
+     * Unblock previously blocked signals.
      */
     protected function unblockSignals(): void
     {
@@ -279,7 +279,7 @@ trait SignalTrait
     }
 
     /**
-     * Check if signals are currently blocked
+     * Check if signals are currently blocked.
      */
     protected function signalsBlocked(): bool
     {
@@ -287,7 +287,7 @@ trait SignalTrait
     }
 
     /**
-     * Add or update signal-to-method mapping at runtime
+     * Add or update signal-to-method mapping at runtime.
      */
     protected function mapSignal(int $signal, string $method): void
     {
@@ -295,7 +295,7 @@ trait SignalTrait
     }
 
     /**
-     * Get human-readable signal name
+     * Get human-readable signal name.
      */
     protected function getSignalName(int $signal): string
     {
@@ -315,7 +315,7 @@ trait SignalTrait
     }
 
     /**
-     * Unregister all signals (cleanup)
+     * Unregister all signals (cleanup).
      */
     protected function unregisterSignals(): void
     {
@@ -332,7 +332,7 @@ trait SignalTrait
     }
 
     /**
-     * Check if signals are registered
+     * Check if signals are registered.
      */
     protected function hasSignals(): bool
     {
@@ -340,7 +340,7 @@ trait SignalTrait
     }
 
     /**
-     * Get list of registered signals
+     * Get list of registered signals.
      *
      * @return list<int>
      */
@@ -350,7 +350,7 @@ trait SignalTrait
     }
 
     /**
-     * Get comprehensive process state information
+     * Get comprehensive process state information.
      *
      * @return array<string, mixed>
      */
