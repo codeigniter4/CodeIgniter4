@@ -352,7 +352,20 @@ trait SignalTrait
     /**
      * Get comprehensive process state information.
      *
-     * @return array<string, mixed>
+     * @return array{
+     *      pid: int,
+     *      running: bool,
+     *      pcntl_available: bool,
+     *      registered_signals: int,
+     *      registered_signals_names: array<int, string>,
+     *      signals_blocked: bool,
+     *      explicit_mappings: int,
+     *      memory_usage_mb: float,
+     *      memory_peak_mb: float,
+     *      session_id?: false|int,
+     *      process_group?: false|int,
+     *      has_controlling_terminal?: bool
+     *  }
      */
     protected function getProcessState(): array
     {
