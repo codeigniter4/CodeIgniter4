@@ -144,16 +144,16 @@ final class SignalTest extends CIUnitTestCase
 
     public function testSignalBlocking(): void
     {
-        $this->assertFalse($this->command->testAreSignalsBlocked());
+        $this->assertFalse($this->command->testSignalsBlocked());
 
         $result = $this->command->testWithSignalsBlocked(function (): string {
-            $this->assertTrue($this->command->testAreSignalsBlocked());
+            $this->assertTrue($this->command->testSignalsBlocked());
 
             return 'test_result';
         });
 
         $this->assertSame('test_result', $result);
-        $this->assertFalse($this->command->testAreSignalsBlocked());
+        $this->assertFalse($this->command->testSignalsBlocked());
     }
 
     public function testSignalMethodMapping(): void
@@ -174,7 +174,7 @@ final class SignalTest extends CIUnitTestCase
         $this->command->testResetState();
 
         $this->assertFalse($this->command->testShouldTerminate());
-        $this->assertFalse($this->command->testAreSignalsBlocked());
+        $this->assertFalse($this->command->testSignalsBlocked());
     }
 
     public function testSignalNameGeneration(): void

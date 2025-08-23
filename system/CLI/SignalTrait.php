@@ -281,7 +281,7 @@ trait SignalTrait
     /**
      * Check if signals are currently blocked
      */
-    protected function areSignalsBlocked(): bool
+    protected function signalsBlocked(): bool
     {
         return $this->signalsBlocked;
     }

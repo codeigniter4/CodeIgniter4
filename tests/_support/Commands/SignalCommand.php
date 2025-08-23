@@ -84,9 +84,9 @@ class SignalCommand extends BaseCommand
         return $this->withSignalsBlocked($operation);
     }
 
-    public function testAreSignalsBlocked(): bool
+    public function testSignalsBlocked(): bool
     {
-        return $this->areSignalsBlocked();
+        return $this->signalsBlocked();
     }
 
     public function testMapSignal(int $signal, string $method): void
