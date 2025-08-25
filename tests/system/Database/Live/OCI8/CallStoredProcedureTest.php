@@ -38,7 +38,7 @@ final class CallStoredProcedureTest extends CIUnitTestCase
 
     public function testCallPackageProcedure(): void
     {
-        $result = 0;
+        $result = '0';
 
         $this->db->storedProcedure('calculator.plus', [
             [
@@ -60,7 +60,7 @@ final class CallStoredProcedureTest extends CIUnitTestCase
 
     public function testCallStoredProcedure(): void
     {
-        $result = 0;
+        $result = '0';
 
         $this->db->storedProcedure('plus', [
             [

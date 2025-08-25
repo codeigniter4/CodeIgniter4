@@ -99,7 +99,7 @@ final class AutoRouteCollector
      *
      * @return list<array<string, array|string>>
      */
-    private function addFilters($routes)
+    private function addFilters(array $routes): array
     {
         $filterCollector = new FilterCollector(true);
 
