@@ -123,6 +123,7 @@ trait SignalTrait
             if (pcntl_signal($signal, [$this, 'handleSignal'])) {
                 $this->registeredSignals[] = $signal;
             } else {
+                $signal = $this->getSignalName($signal);
                 CLI::write("Failed to register handler for signal: {$signal}", 'red');
             }
         }
