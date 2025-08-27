@@ -1220,7 +1220,9 @@ abstract class BaseModel
             return false;
         }
 
-        $row = $this->setUpdatedField((array) $row, $this->setDate());
+        $row = (array) $row;
+        $row = $this->setCreatedField($row, $this->setDate());
+        $row = $this->setUpdatedField($row, $this->setDate());
 
         return $this->doReplace($row, $returnSQL);
     }
