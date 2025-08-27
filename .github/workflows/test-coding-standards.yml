@@ -29,7 +29,9 @@ jobs:
       matrix:
         php-version:
           - '8.1'
-          - '8.5'
+        include:
+          - php-version: '8.5'
+            composer-option: '--ignore-platform-req=php'
 
     steps:
       - name: Checkout base branch for PR
@@ -61,7 +63,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install dependencies
-        run: composer update --ansi --no-interaction
+        run: composer update --ansi --no-interaction ${{ matrix.composer-option }}
 
       - name: Run lint
         run: composer cs
