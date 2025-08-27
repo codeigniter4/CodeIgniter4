@@ -68,7 +68,7 @@ trait SignalTrait
             } else {
                 self::$isPcntlAvailable = extension_loaded('pcntl');
                 if (! self::$isPcntlAvailable) {
-                    CLI::write('PCNTL extension not available. Signal handling disabled.', 'yellow');
+                    CLI::write(lang('CLI.signals.noPcntlExtension'), 'yellow');
                 }
             }
         }
@@ -103,7 +103,7 @@ trait SignalTrait
         }
 
         if (! $this->isPosixAvailable() && (in_array(SIGTSTP, $signals, true) || in_array(SIGCONT, $signals, true))) {
-            CLI::write('SIGTSTP/SIGCONT handling requires POSIX extension. These signals will be removed from registration.', 'yellow');
+            CLI::write(lang('CLI.signals.noPosixExtension'), 'yellow');
             $signals = array_diff($signals, [SIGTSTP, SIGCONT]);
 
             // Remove from method map as well
@@ -124,7 +124,7 @@ trait SignalTrait
                 $this->registeredSignals[] = $signal;
             } else {
                 $signal = $this->getSignalName($signal);
-                CLI::write("Failed to register handler for signal: {$signal}", 'red');
+                CLI::write(lang('CLI.signals.failedSignal', [$signal]), 'red');
             }
         }
     }
