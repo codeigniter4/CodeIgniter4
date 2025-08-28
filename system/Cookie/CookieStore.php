@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cookie;
 
-use ArrayIterator;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use Countable;
 use IteratorAggregate;
@@ -192,7 +191,9 @@ class CookieStore implements Countable, IteratorAggregate
      */
     public function getIterator(): Traversable
     {
-        return new ArrayIterator($this->cookies);
+        foreach ($this->cookies as $key => $value) {
+            yield $key => $value;
+        }
     }
 
     /**
