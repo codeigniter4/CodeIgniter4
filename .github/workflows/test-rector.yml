@@ -40,12 +40,17 @@ permissions:
 
 jobs:
   build:
-    name: PHP ${{ matrix.php-versions }} Analyze code (Rector)
+    name: PHP ${{ matrix.php-version }} Analyze code (Rector)
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['8.1', '8.4']
+        php-version:
+          - '8.1'
+        include:
+          - php-version: '8.5'
+            composer-option: '--ignore-platform-req=php'
+
     steps:
       - name: Checkout base branch for PR
         if: github.event_name == 'pull_request'
@@ -59,7 +64,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.php-version }}
           extensions: intl
 
       - name: Use latest Composer
@@ -79,7 +84,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer update --ansi --no-interaction
+        run: composer update --ansi --no-interaction ${{ matrix.composer-option }}
 
       - name: Rector Cache
         uses: actions/cache@v4
