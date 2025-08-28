@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\SignalTrait;
 use CodeIgniter\Database\MigrationRunner;
 use Throwable;
 
@@ -24,6 +25,8 @@ use Throwable;
  */
 class MigrateRollback extends BaseCommand
 {
+    use SignalTrait;
+
     /**
      * The group the command is lumped under
      * when listing commands.
@@ -98,9 +101,11 @@ class MigrateRollback extends BaseCommand
 
             CLI::write(lang('Migrations.rollingBack') . ' ' . $batch, 'yellow');
 
-            if (! $runner->regress($batch)) {
-                CLI::error(lang('Migrations.generalFault'), 'light_gray', 'red'); // @codeCoverageIgnore
-            }
+            $this->withSignalsBlocked(static function () use ($runner, $batch): void {
+                if (! $runner->regress($batch)) {
+                    CLI::error(lang('Migrations.generalFault'), 'light_gray', 'red'); // @codeCoverageIgnore
+                }
+            });
 
             $messages = $runner->getCliMessages();
 

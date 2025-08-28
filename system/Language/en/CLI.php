@@ -52,4 +52,9 @@ return [
     'helpUsage'           => 'Usage:',
     'invalidColor'        => 'Invalid "{0}" color: "{1}".',
     'namespaceNotDefined' => 'Namespace "{0}" is not defined.',
+    'signals'             => [
+        'noPcntlExtension' => 'PCNTL extension not available. Signal handling disabled.',
+        'noPosixExtension' => 'SIGTSTP/SIGCONT handling requires POSIX extension. These signals will be removed from registration.',
+        'failedSignal'     => 'Failed to register handler for signal: "{0}"',
+    ],
 ];
