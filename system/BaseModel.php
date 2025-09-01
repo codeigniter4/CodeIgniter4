@@ -909,6 +909,19 @@ abstract class BaseModel
 
         if (is_array($set)) {
             foreach ($set as &$row) {
+                // If casts are used, convert the data first
+                if ($this->useCasts()) {
+                    if (is_array($row)) {
+                        $row = $this->converter->toDataSource($row);
+                    } elseif ($row instanceof stdClass) {
+                        $row = (array) $row;
+                        $row = $this->converter->toDataSource($row);
+                    } elseif ($row instanceof Entity) {
+                        $row = $this->converter->extract($row);
+                    } elseif (is_object($row)) {
+                        $row = $this->converter->extract($row);
+                    }
+                }
                 // If $row is using a custom class with public or protected
                 // properties representing the collection elements, we need to grab
                 // them as an array.
@@ -1051,6 +1064,19 @@ abstract class BaseModel
     {
         if (is_array($set)) {
             foreach ($set as &$row) {
+                // If casts are used, convert the data first
+                if ($this->useCasts()) {
+                    if (is_array($row)) {
+                        $row = $this->converter->toDataSource($row);
+                    } elseif ($row instanceof stdClass) {
+                        $row = (array) $row;
+                        $row = $this->converter->toDataSource($row);
+                    } elseif ($row instanceof Entity) {
+                        $row = $this->converter->extract($row);
+                    } elseif (is_object($row)) {
+                        $row = $this->converter->extract($row);
+                    }
+                }
                 // If $row is using a custom class with public or protected
                 // properties representing the collection elements, we need to grab
                 // them as an array.

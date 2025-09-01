@@ -26,6 +26,7 @@ use Tests\Support\Entity\UUID;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
+use Tests\Support\Models\UserCastsTimestampModel;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\UserTimestampModel;
 use Tests\Support\Models\UUIDPkeyModel;
@@ -601,5 +602,87 @@ final class UpdateModelTest extends LiveModelTestCase
 
         $this->assertTrue($result);
         $this->assertNotSame($updateAtBefore, $updateAtAfter);
+    }
+
+    public function testUpdateBatchWithCasts(): void
+    {
+        $this->createModel(UserCastsTimestampModel::class);
+
+        // Step 1: Insert initial users
+        $initialData = [
+            [
+                'name' => 'Smriti',
+                'email' => [
+                    'personal' => 'smriti@india.com',
+                    'work' => 'smriti@company.com',
+                ],
+                'country' => 'India',
+            ],
+            [
+                'name' => 'Rahul',
+                'email' => [
+                    'personal' => 'rahul123@india.com',
+                    'work' => 'rahul@company123.com',
+                ],
+                'country' => 'India',
+            ],
+        ];
+
+        $this->model->insertBatch($initialData);
+
+        $rows = $this->model->where('country', 'India')->findAll();
+
+        $this->assertNotEmpty($rows);
+        $this->assertCount(2, $rows);
+
+        $smriti = $rows[0];
+        $rahul = $rows[1];
+
+        $this->assertNotNull($smriti);
+        $this->assertNotNull($rahul);
+
+        // Step 3: Prepare update data (must include 'id' key)
+        $updateData = [
+            [
+                'id' => $smriti['id'],
+                'name' => 'Smriti Updated',
+                'email' => [
+                    'personal' => 'smriti.new@india.com',
+                    'work' => 'smriti.new@company.com',
+                ],
+            ],
+            [
+                'id' => $rahul['id'],
+                'name' => 'Rahul Updated',
+                'email' => [
+                    'personal' => 'rahul.new@india.com',
+                    'work' => 'rahul.new@company.com',
+                ],
+            ],
+        ];
+
+        // Step 4: Perform batch update
+        $numRows = $this->model->updateBatch($updateData, 'id');
+        $this->assertSame(2, $numRows);
+
+        $rows = $this->model->where('country', 'India')->findAll();
+
+        $this->assertNotEmpty($rows);
+        $this->assertCount(2, $rows);
+
+        $smritiUpdated = $rows[0];
+        $rahulUpdated = $rows[1];
+
+        // Smriti assertions
+        $this->assertSame('Smriti Updated', $smritiUpdated['name']);
+        $this->assertIsArray($smritiUpdated['email']);
+        $this->assertSame('smriti.new@india.com', $smritiUpdated['email']['personal']);
+        $this->assertSame('smriti.new@company.com', $smritiUpdated['email']['work']);
+
+        // Rahul assertions
+        $this->assertSame('Rahul Updated', $rahulUpdated['name']);
+        $this->assertIsArray($rahulUpdated['email']);
+        $this->assertSame('rahul.new@india.com', $rahulUpdated['email']['personal']);
+        $this->assertSame('rahul.new@company.com', $rahulUpdated['email']['work']);
     }
 }
