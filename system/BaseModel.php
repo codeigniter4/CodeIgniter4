@@ -921,11 +921,10 @@ abstract class BaseModel
                     } elseif (is_object($row)) {
                         $row = $this->converter->extract($row);
                     }
-                }
-                // If $row is using a custom class with public or protected
-                // properties representing the collection elements, we need to grab
-                // them as an array.
-                if (is_object($row) && ! $row instanceof stdClass) {
+                } elseif (is_object($row) && ! $row instanceof stdClass) {
+                    // If $row is using a custom class with public or protected
+                    // properties representing the collection elements, we need to grab
+                    // them as an array.
                     $row = $this->objectToArray($row, false, true);
                 }
 
@@ -1076,11 +1075,11 @@ abstract class BaseModel
                     } elseif (is_object($row)) {
                         $row = $this->converter->extract($row);
                     }
-                }
-                // If $row is using a custom class with public or protected
-                // properties representing the collection elements, we need to grab
-                // them as an array.
-                if (is_object($row) && ! $row instanceof stdClass) {
+                } elseif (is_object($row) && ! $row instanceof stdClass) {
+                    // If $row is using a custom class with public or protected
+                    // properties representing the collection elements, we need to grab
+                    // them as an array.
+
                     // For updates the index field is needed even if it is not changed.
                     // So set $onlyChanged to false.
                     $row = $this->objectToArray($row, false, true);

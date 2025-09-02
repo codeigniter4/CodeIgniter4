@@ -382,21 +382,21 @@ final class InsertModelTest extends LiveModelTestCase
     {
         $userData = [
             [
-                'name' => 'Smriti',
+                'name'  => 'Smriti',
                 'email' => [
                     'personal' => 'smriti@india.com',
-                    'work' => 'smriti@company.com'
+                    'work'     => 'smriti@company.com',
                 ],
                 'country' => 'India',
             ],
             [
-                'name' => 'Rahul',
+                'name'  => 'Rahul',
                 'email' => [
                     'personal' => 'rahul123@india.com',
-                    'work' => 'rahul@company123.com'
+                    'work'     => 'rahul@company123.com',
                 ],
                 'country' => 'India',
-            ]
+            ],
         ];
         $this->createModel(UserCastsTimestampModel::class);
 
@@ -410,7 +410,7 @@ final class InsertModelTest extends LiveModelTestCase
         $this->assertCount(2, $rows);
 
         $smriti = $rows[0];
-        $rahul = $rows[1];
+        $rahul  = $rows[1];
 
         $this->assertNotNull($smriti);
         $this->assertNotNull($rahul);
@@ -427,5 +427,4 @@ final class InsertModelTest extends LiveModelTestCase
         $this->assertSame('rahul123@india.com', $rahul['email']['personal']);
         $this->assertSame('rahul@company123.com', $rahul['email']['work']);
     }
-
 }

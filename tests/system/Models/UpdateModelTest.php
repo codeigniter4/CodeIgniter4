@@ -611,18 +611,18 @@ final class UpdateModelTest extends LiveModelTestCase
         // Step 1: Insert initial users
         $initialData = [
             [
-                'name' => 'Smriti',
+                'name'  => 'Smriti',
                 'email' => [
                     'personal' => 'smriti@india.com',
-                    'work' => 'smriti@company.com',
+                    'work'     => 'smriti@company.com',
                 ],
                 'country' => 'India',
             ],
             [
-                'name' => 'Rahul',
+                'name'  => 'Rahul',
                 'email' => [
                     'personal' => 'rahul123@india.com',
-                    'work' => 'rahul@company123.com',
+                    'work'     => 'rahul@company123.com',
                 ],
                 'country' => 'India',
             ],
@@ -636,7 +636,7 @@ final class UpdateModelTest extends LiveModelTestCase
         $this->assertCount(2, $rows);
 
         $smriti = $rows[0];
-        $rahul = $rows[1];
+        $rahul  = $rows[1];
 
         $this->assertNotNull($smriti);
         $this->assertNotNull($rahul);
@@ -644,19 +644,19 @@ final class UpdateModelTest extends LiveModelTestCase
         // Step 3: Prepare update data (must include 'id' key)
         $updateData = [
             [
-                'id' => $smriti['id'],
-                'name' => 'Smriti Updated',
+                'id'    => $smriti['id'],
+                'name'  => 'Smriti Updated',
                 'email' => [
                     'personal' => 'smriti.new@india.com',
-                    'work' => 'smriti.new@company.com',
+                    'work'     => 'smriti.new@company.com',
                 ],
             ],
             [
-                'id' => $rahul['id'],
-                'name' => 'Rahul Updated',
+                'id'    => $rahul['id'],
+                'name'  => 'Rahul Updated',
                 'email' => [
                     'personal' => 'rahul.new@india.com',
-                    'work' => 'rahul.new@company.com',
+                    'work'     => 'rahul.new@company.com',
                 ],
             ],
         ];
@@ -671,7 +671,7 @@ final class UpdateModelTest extends LiveModelTestCase
         $this->assertCount(2, $rows);
 
         $smritiUpdated = $rows[0];
-        $rahulUpdated = $rows[1];
+        $rahulUpdated  = $rows[1];
 
         // Smriti assertions
         $this->assertSame('Smriti Updated', $smritiUpdated['name']);
