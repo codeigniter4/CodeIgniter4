@@ -636,7 +636,7 @@ final class UpdateModelTest extends LiveModelTestCase
             ],
         ];
 
-        $numRows = $this->model->updateBatch($updateData, 'id');
+        $numRows = $this->model->updateBatch($updateData, 'id'); // @phpstan-ignore argument.type
         $this->assertSame(2, $numRows);
 
         $this->seeInDatabase('user', ['email' => json_encode($updateData[0]['email'])]);

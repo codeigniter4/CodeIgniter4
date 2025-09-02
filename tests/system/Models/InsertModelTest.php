@@ -400,7 +400,7 @@ final class InsertModelTest extends LiveModelTestCase
         ];
         $this->createModel(UserCastsTimestampModel::class);
 
-        $numRows = $this->model->insertBatch($userData);
+        $numRows = $this->model->insertBatch($userData); // @phpstan-ignore argument.type
 
         $this->assertSame(2, $numRows);
 
