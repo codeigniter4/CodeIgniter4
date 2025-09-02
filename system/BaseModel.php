@@ -909,25 +909,7 @@ abstract class BaseModel
 
         if (is_array($set)) {
             foreach ($set as &$row) {
-                // If casts are used, convert the data first
-                if ($this->useCasts()) {
-                    $row = $this->performCasting($row);
-                } elseif (is_object($row) && ! $row instanceof stdClass) {
-                    // If $row is using a custom class with public or protected
-                    // properties representing the collection elements, we need to grab
-                    // them as an array.
-                    $row = $this->objectToArray($row, false, true);
-                }
-
-                // If it's still a stdClass, go ahead and convert to
-                // an array so doProtectFields and other model methods
-                // don't have to do special checks.
-                if (is_object($row)) {
-                    $row = (array) $row;
-                }
-
-                // Convert any Time instances to appropriate $dateFormat
-                $row = $this->timeToString($row);
+                $row = $this->transformDataRowToArray($row);
 
                 // Validate every row.
                 if (! $this->skipValidation && ! $this->validate($row)) {
@@ -1054,25 +1036,7 @@ abstract class BaseModel
     {
         if (is_array($set)) {
             foreach ($set as &$row) {
-                // If casts are used, convert the data first
-                if ($this->useCasts()) {
-                    $row = $this->performCasting($row);
-                } elseif (is_object($row) && ! $row instanceof stdClass) {
-                    // If $row is using a custom class with public or protected
-                    // properties representing the collection elements, we need to grab
-                    // them as an array.
-
-                    // For updates the index field is needed even if it is not changed.
-                    // So set $onlyChanged to false.
-                    $row = $this->objectToArray($row, false, true);
-                }
-
-                // If it's still a stdClass, go ahead and convert to
-                // an array so doProtectFields and other model methods
-                // don't have to do special checks.
-                if (is_object($row)) {
-                    $row = (array) $row;
-                }
+                $row = $this->transformDataRowToArray($row);
 
                 // Validate data before saving.
                 if (! $this->skipValidation && ! $this->validate($row)) {
@@ -1714,26 +1678,39 @@ abstract class BaseModel
      * @used-by insertBatch()
      * @used-by updateBatch()
      *
+     * @throws ReflectionException
      * @deprecated Since 4.6.4, temporary solution - will be removed in 4.7
      */
-    protected function performCasting(array|object|null $row = null): array|object|null
+    protected function transformDataRowToArray(array|object|null $row): array|object|null
     {
-        if (! $this->useCasts()) {
-            return $row;
+        // If casts are used, convert the data first
+        if ($this->useCasts()) {
+            if (is_array($row)) {
+                $row = $this->converter->toDataSource($row);
+            } elseif ($row instanceof stdClass) {
+                $row = (array) $row;
+                $row = $this->converter->toDataSource($row);
+            } elseif ($row instanceof Entity) {
+                $row = $this->converter->extract($row);
+            } elseif (is_object($row)) {
+                $row = $this->converter->extract($row);
+            }
+        } elseif (is_object($row) && ! $row instanceof stdClass) {
+            // If $row is using a custom class with public or protected
+            // properties representing the collection elements, we need to grab
+            // them as an array.
+            $row = $this->objectToArray($row, false, true);
         }
 
-        if (is_array($row)) {
-            $row = $this->converter->toDataSource($row);
-        } elseif ($row instanceof stdClass) {
+        // If it's still a stdClass, go ahead and convert to
+        // an array so doProtectFields and other model methods
+        // don't have to do special checks.
+        if (is_object($row)) {
             $row = (array) $row;
-            $row = $this->converter->toDataSource($row);
-        } elseif ($row instanceof Entity) {
-            $row = $this->converter->extract($row);
-        } elseif (is_object($row)) {
-            $row = $this->converter->extract($row);
         }
 
-        return $row;
+        // Convert any Time instances to appropriate $dateFormat
+        return $this->timeToString($row);
     }
 
     /**
