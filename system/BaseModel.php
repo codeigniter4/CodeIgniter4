@@ -911,16 +911,7 @@ abstract class BaseModel
             foreach ($set as &$row) {
                 // If casts are used, convert the data first
                 if ($this->useCasts()) {
-                    if (is_array($row)) {
-                        $row = $this->converter->toDataSource($row);
-                    } elseif ($row instanceof stdClass) {
-                        $row = (array) $row;
-                        $row = $this->converter->toDataSource($row);
-                    } elseif ($row instanceof Entity) {
-                        $row = $this->converter->extract($row);
-                    } elseif (is_object($row)) {
-                        $row = $this->converter->extract($row);
-                    }
+                    $row = $this->performCasting($row);
                 } elseif (is_object($row) && ! $row instanceof stdClass) {
                     // If $row is using a custom class with public or protected
                     // properties representing the collection elements, we need to grab
@@ -1065,16 +1056,7 @@ abstract class BaseModel
             foreach ($set as &$row) {
                 // If casts are used, convert the data first
                 if ($this->useCasts()) {
-                    if (is_array($row)) {
-                        $row = $this->converter->toDataSource($row);
-                    } elseif ($row instanceof stdClass) {
-                        $row = (array) $row;
-                        $row = $this->converter->toDataSource($row);
-                    } elseif ($row instanceof Entity) {
-                        $row = $this->converter->extract($row);
-                    } elseif (is_object($row)) {
-                        $row = $this->converter->extract($row);
-                    }
+                    $row = $this->performCasting($row);
                 } elseif (is_object($row) && ! $row instanceof stdClass) {
                     // If $row is using a custom class with public or protected
                     // properties representing the collection elements, we need to grab
@@ -1719,6 +1701,39 @@ abstract class BaseModel
         }
 
         return $eventData;
+    }
+
+    /**
+     * If the model is using casts, this will convert the data
+     * in $row according to the rules defined in `$casts`.
+     *
+     * @param object|row_array|null $row Row data
+     *
+     * @return object|row_array|null Converted row data
+     *
+     * @used-by insertBatch()
+     * @used-by updateBatch()
+     *
+     * @deprecated Since 4.6.4, temporary solution - will be removed in 4.7
+     */
+    protected function performCasting(array|object|null $row = null): array|object|null
+    {
+        if (! $this->useCasts()) {
+            return $row;
+        }
+
+        if (is_array($row)) {
+            $row = $this->converter->toDataSource($row);
+        } elseif ($row instanceof stdClass) {
+            $row = (array) $row;
+            $row = $this->converter->toDataSource($row);
+        } elseif ($row instanceof Entity) {
+            $row = $this->converter->extract($row);
+        } elseif (is_object($row)) {
+            $row = $this->converter->extract($row);
+        }
+
+        return $row;
     }
 
     /**
