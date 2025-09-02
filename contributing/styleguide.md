@@ -241,6 +241,7 @@ of the classes they declare.
 - */
   public function analyse(string $data): void {};
 ```
+- SHOULD NOT duplicate comments from the parent class or interface.
 
 ### PHPUnit Assertions
 
