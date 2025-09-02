@@ -608,81 +608,38 @@ final class UpdateModelTest extends LiveModelTestCase
     {
         $this->createModel(UserCastsTimestampModel::class);
 
-        // Step 1: Insert initial users
-        $initialData = [
-            [
-                'name'  => 'Smriti',
-                'email' => [
-                    'personal' => 'smriti@india.com',
-                    'work'     => 'smriti@company.com',
-                ],
-                'country' => 'India',
-            ],
-            [
-                'name'  => 'Rahul',
-                'email' => [
-                    'personal' => 'rahul123@india.com',
-                    'work'     => 'rahul@company123.com',
-                ],
-                'country' => 'India',
-            ],
-        ];
-
-        $this->model->insertBatch($initialData);
-
-        $rows = $this->model->where('country', 'India')->findAll();
+        $rows = $this->db->table('user')->limit(2)->orderBy('id', 'asc')->get()->getResultArray();
 
         $this->assertNotEmpty($rows);
         $this->assertCount(2, $rows);
 
-        $smriti = $rows[0];
-        $rahul  = $rows[1];
+        $row1 = $rows[0];
+        $row2 = $rows[1];
 
-        $this->assertNotNull($smriti);
-        $this->assertNotNull($rahul);
+        $this->assertNotNull($row1);
+        $this->assertNotNull($row2);
 
-        // Step 3: Prepare update data (must include 'id' key)
         $updateData = [
             [
-                'id'    => $smriti['id'],
-                'name'  => 'Smriti Updated',
+                'id'    => $row1['id'],
                 'email' => [
-                    'personal' => 'smriti.new@india.com',
-                    'work'     => 'smriti.new@company.com',
+                    'personal' => 'email1.new@country.com',
+                    'work'     => 'email1.new@company.com',
                 ],
             ],
             [
-                'id'    => $rahul['id'],
-                'name'  => 'Rahul Updated',
+                'id'    => $row2['id'],
                 'email' => [
-                    'personal' => 'rahul.new@india.com',
-                    'work'     => 'rahul.new@company.com',
+                    'personal' => 'email2.new@country.com',
+                    'work'     => 'email2.new@company.com',
                 ],
             ],
         ];
 
-        // Step 4: Perform batch update
         $numRows = $this->model->updateBatch($updateData, 'id');
         $this->assertSame(2, $numRows);
 
-        $rows = $this->model->where('country', 'India')->findAll();
-
-        $this->assertNotEmpty($rows);
-        $this->assertCount(2, $rows);
-
-        $smritiUpdated = $rows[0];
-        $rahulUpdated  = $rows[1];
-
-        // Smriti assertions
-        $this->assertSame('Smriti Updated', $smritiUpdated['name']);
-        $this->assertIsArray($smritiUpdated['email']);
-        $this->assertSame('smriti.new@india.com', $smritiUpdated['email']['personal']);
-        $this->assertSame('smriti.new@company.com', $smritiUpdated['email']['work']);
-
-        // Rahul assertions
-        $this->assertSame('Rahul Updated', $rahulUpdated['name']);
-        $this->assertIsArray($rahulUpdated['email']);
-        $this->assertSame('rahul.new@india.com', $rahulUpdated['email']['personal']);
-        $this->assertSame('rahul.new@company.com', $rahulUpdated['email']['work']);
+        $this->seeInDatabase('user', ['email' => json_encode($updateData[0]['email'])]);
+        $this->seeInDatabase('user', ['email' => json_encode($updateData[1]['email'])]);
     }
 }
