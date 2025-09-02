@@ -572,10 +572,10 @@ class IncomingRequest extends Request
             return null;
         }
 
-        $filter ??= FILTER_DEFAULT;
+        $filter ??= FILTER_UNSAFE_RAW;
         $flags = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
 
-        if ($filter !== FILTER_DEFAULT
+        if ($filter !== FILTER_UNSAFE_RAW
             || (
                 (is_numeric($flags) && $flags !== 0)
                 || is_array($flags) && $flags !== []
@@ -656,12 +656,12 @@ class IncomingRequest extends Request
             [$output, $data] = [$data, null];
         }
 
-        $filter ??= FILTER_DEFAULT;
+        $filter ??= FILTER_UNSAFE_RAW;
         $flags = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
 
         if (is_array($output)
             && (
-                $filter !== FILTER_DEFAULT
+                $filter !== FILTER_UNSAFE_RAW
                 || (
                     (is_numeric($flags) && $flags !== 0)
                     || is_array($flags) && $flags !== []
