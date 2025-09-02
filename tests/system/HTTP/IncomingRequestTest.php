@@ -609,6 +609,13 @@ final class IncomingRequestTest extends CIUnitTestCase
             ],
             [
                 'username=admin001&role=administrator&usepass=0',
+                'username',
+                'admin001',
+                null,
+                FILTER_UNSAFE_RAW,
+            ],
+            [
+                'username=admin001&role=administrator&usepass=0',
                 ['role', 'usepass'],
                 [
                     'role'    => 'administrator',
