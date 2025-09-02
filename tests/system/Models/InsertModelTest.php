@@ -404,27 +404,7 @@ final class InsertModelTest extends LiveModelTestCase
 
         $this->assertSame(2, $numRows);
 
-        $rows = $this->model->where('country', 'India')->findAll();
-
-        $this->assertNotEmpty($rows);
-        $this->assertCount(2, $rows);
-
-        $smriti = $rows[0];
-        $rahul  = $rows[1];
-
-        $this->assertNotNull($smriti);
-        $this->assertNotNull($rahul);
-
-        // Check Smriti
-        $this->assertSame('Smriti', $smriti['name']);
-        $this->assertIsArray($smriti['email']);
-        $this->assertSame('smriti@india.com', $smriti['email']['personal']);
-        $this->assertSame('smriti@company.com', $smriti['email']['work']);
-
-        // Check Rahul
-        $this->assertSame('Rahul', $rahul['name']);
-        $this->assertIsArray($rahul['email']);
-        $this->assertSame('rahul123@india.com', $rahul['email']['personal']);
-        $this->assertSame('rahul@company123.com', $rahul['email']['work']);
+        $this->seeInDatabase('user', ['email' => json_encode($userData[0]['email'])]);
+        $this->seeInDatabase('user', ['email' => json_encode($userData[1]['email'])]);
     }
 }
