@@ -114,7 +114,7 @@ interface UploadedFileInterface
     public function getTempName(): string;
 
     /**
-     * (PHP 8.1+)
+     * (PHP 8.2+)
      * Returns the webkit relative path of the uploaded file on directory uploads.
      */
     public function getClientPath(): ?string;
