@@ -273,7 +273,7 @@ class UploadedFile extends File implements UploadedFileInterface
     }
 
     /**
-     * (PHP 8.2+)
+     * (PHP 8.1+)
      * Returns the webkit relative path of the uploaded file on directory uploads.
      */
     public function getClientPath(): ?string
