@@ -26,8 +26,6 @@ use CodeIgniter\HTTP\ResponseInterface;
  *
  * @property CLIRequest|IncomingRequest $request
  * @property ResponseInterface          $response
- * @property bool                       $stringAsHtml Whether to treat string data as HTML in JSON response.
- *                                                    Setting `true` is only for backward compatibility.
  */
 trait ResponseTrait
 {
@@ -83,6 +81,12 @@ trait ResponseTrait
      * @var FormatterInterface|null
      */
     protected $formatter;
+
+    /**
+     * Whether to treat string data as HTML in JSON response.
+     * Setting `true` is only for backward compatibility.
+     */
+    protected bool $stringAsHtml = false;
 
     /**
      * Provides a single, simple method to return an API response, formatted
