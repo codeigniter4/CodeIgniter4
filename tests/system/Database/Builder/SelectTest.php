@@ -407,4 +407,24 @@ final class SelectTest extends CIUnitTestCase
             str_replace("\n", ' ', $sql),
         );
     }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9696
+     */
+    public function testGetCompiledSelect(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->select('name, role')->orderBy('name', 'desc');
+
+        $expected = 'SELECT "name", "role" FROM "users" ORDER BY "name" DESC';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect(false)));
+
+        $builder->orderBy('role', 'desc');
+
+        $expected = 'SELECT "name", "role" FROM "users" ORDER BY "name" DESC, "role" DESC';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 }

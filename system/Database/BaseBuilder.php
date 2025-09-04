@@ -3257,6 +3257,9 @@ class BaseBuilder
     {
         if (is_array($this->QBOrderBy) && $this->QBOrderBy !== []) {
             foreach ($this->QBOrderBy as &$orderBy) {
+                if (is_string($orderBy)) {
+                    continue;
+                }
                 if ($orderBy['escape'] !== false && ! $this->isLiteral($orderBy['field'])) {
                     $orderBy['field'] = $this->db->protectIdentifiers($orderBy['field']);
                 }
@@ -3264,11 +3267,7 @@ class BaseBuilder
                 $orderBy = $orderBy['field'] . $orderBy['direction'];
             }
 
-            return $this->QBOrderBy = "\nORDER BY " . implode(', ', $this->QBOrderBy);
-        }
-
-        if (is_string($this->QBOrderBy)) {
-            return $this->QBOrderBy;
+            return "\nORDER BY " . implode(', ', $this->QBOrderBy);
         }
 
         return '';
