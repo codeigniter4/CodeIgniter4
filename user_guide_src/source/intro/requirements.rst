@@ -19,8 +19,9 @@ PHP and Required Extensions
 .. warning::
     - The end of life date for PHP 7.4 was November 28, 2022.
     - The end of life date for PHP 8.0 was November 26, 2023.
-    - **If you are still using PHP 7.4 or 8.0, you should upgrade immediately.**
-    - The end of life date for PHP 8.1 will be December 31, 2025.
+    - The end of life date for PHP 8.1 was December 31, 2025.
+    - **If you are still using below PHP 8.2, you should upgrade immediately.**
+    - The end of life date for PHP 8.2 will be December 31, 2026.
 
 .. note::
     - PHP 8.5 requires CodeIgniter 4.7.0 or later.
