@@ -404,7 +404,7 @@ given the arguments in the same order as defined:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Events\Events</span><span class="p">;</span>
 
-<span class="nx">Events</span><span class="o">::</span><span class="na">trigger</span><span class="p">(</span><span class="s1">&#39;some_events&#39;</span><span class="p">,</span> <span class="nv">$foo</span><span class="p">,</span> <span class="nv">$bar</span><span class="p">,</span> <span class="nv">$baz</span><span class="p">);</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">trigger</span><span class="p">(</span><span class="s1">&#39;some_event&#39;</span><span class="p">,</span> <span class="nv">$foo</span><span class="p">,</span> <span class="nv">$bar</span><span class="p">,</span> <span class="nv">$baz</span><span class="p">);</span>
 
 <span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;some_event&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$foo</span><span class="p">,</span> <span class="nv">$bar</span><span class="p">,</span> <span class="nv">$baz</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// ...</span>
