@@ -26,6 +26,7 @@ use Tests\Support\Entity\UUID;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
+use Tests\Support\Models\UserCastsTimestampModel;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\UserTimestampModel;
 use Tests\Support\Models\UUIDPkeyModel;
@@ -601,5 +602,44 @@ final class UpdateModelTest extends LiveModelTestCase
 
         $this->assertTrue($result);
         $this->assertNotSame($updateAtBefore, $updateAtAfter);
+    }
+
+    public function testUpdateBatchWithCasts(): void
+    {
+        $this->createModel(UserCastsTimestampModel::class);
+
+        $rows = $this->db->table('user')->limit(2)->orderBy('id', 'asc')->get()->getResultArray();
+
+        $this->assertNotEmpty($rows);
+        $this->assertCount(2, $rows);
+
+        $row1 = $rows[0];
+        $row2 = $rows[1];
+
+        $this->assertNotNull($row1);
+        $this->assertNotNull($row2);
+
+        $updateData = [
+            [
+                'id'    => $row1['id'],
+                'email' => [
+                    'personal' => 'email1.new@country.com',
+                    'work'     => 'email1.new@company.com',
+                ],
+            ],
+            [
+                'id'    => $row2['id'],
+                'email' => [
+                    'personal' => 'email2.new@country.com',
+                    'work'     => 'email2.new@company.com',
+                ],
+            ],
+        ];
+
+        $numRows = $this->model->updateBatch($updateData, 'id'); // @phpstan-ignore argument.type
+        $this->assertSame(2, $numRows);
+
+        $this->seeInDatabase('user', ['email' => json_encode($updateData[0]['email'])]);
+        $this->seeInDatabase('user', ['email' => json_encode($updateData[1]['email'])]);
     }
 }

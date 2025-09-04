@@ -22,6 +22,7 @@ use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 use Tests\Support\Entity\User;
 use Tests\Support\Models\JobModel;
+use Tests\Support\Models\UserCastsTimestampModel;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\UserObjModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
@@ -375,5 +376,35 @@ final class InsertModelTest extends LiveModelTestCase
 
         $id = $this->model->getInsertID();
         $this->assertSame($entity->country, $this->model->find($id)->country);
+    }
+
+    public function testInsertBatchWithCasts(): void
+    {
+        $userData = [
+            [
+                'name'  => 'Smriti',
+                'email' => [
+                    'personal' => 'smriti@india.com',
+                    'work'     => 'smriti@company.com',
+                ],
+                'country' => 'India',
+            ],
+            [
+                'name'  => 'Rahul',
+                'email' => [
+                    'personal' => 'rahul123@india.com',
+                    'work'     => 'rahul@company123.com',
+                ],
+                'country' => 'India',
+            ],
+        ];
+        $this->createModel(UserCastsTimestampModel::class);
+
+        $numRows = $this->model->insertBatch($userData); // @phpstan-ignore argument.type
+
+        $this->assertSame(2, $numRows);
+
+        $this->seeInDatabase('user', ['email' => json_encode($userData[0]['email'])]);
+        $this->seeInDatabase('user', ['email' => json_encode($userData[1]['email'])]);
     }
 }
