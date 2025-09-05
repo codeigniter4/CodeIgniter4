@@ -100,7 +100,7 @@ Others
 Message Changes
 ***************
 
-- Added ``Email.invalidSMTPAuthMethod`` and ``Email.failureSMTPAuthMethod``
+- Added ``Email.invalidSMTPAuthMethod``, ``Email.failureSMTPAuthMethod``, ``CLI.signals.noPcntlExtension``, ``CLI.signals.noPosixExtension`` and ``CLI.signals.failedSignal``.
 - Deprecated ``Email.failedSMTPLogin`` and ``Image.libPathInvalid``
 
 *******
