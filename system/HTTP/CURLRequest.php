@@ -18,6 +18,7 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 use Config\CURLRequest as ConfigCURLRequest;
 use CurlShareHandle;
+use SensitiveParameter;
 
 /**
  * A lightweight HTTP client for sending synchronous HTTP requests via cURL.
@@ -260,13 +261,9 @@ class CURLRequest extends OutgoingRequest
      *
      * @return $this
      */
-    public function setAuth(string $username, string $password, string $type = 'basic')
+    public function setAuth(string $username, #[SensitiveParameter] string $password, string $type = 'basic')
     {
-        $this->config['auth'] = [
-            $username,
-            $password,
-            $type,
-        ];
+        $this->config['auth'] = [$username, $password, $type];
 
         return $this;
     }
