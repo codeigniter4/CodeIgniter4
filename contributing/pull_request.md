@@ -96,11 +96,7 @@ implementation comments to explain potentially confusing sections of
 code, and documentation comments before each public or protected
 class/interface/trait, method, and variable.
 
-Do not add PHPDoc comments that are superficial, duplicated, or stating the obvious.
-
-It is not recommended to reuse comments if the parent class or interface already contains a description of the child element.
-
-You can re-add a comment in a child element if it has a more precise type - i.e change `int|string` to `string`.
+Do not add PHPDoc comments that are superficial, duplicated, or stating the obvious. It is not recommended to reuse comments if the parent class or interface already contains a description of the child element.
 
 See the following for more information.
 
