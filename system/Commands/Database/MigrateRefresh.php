@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\SignalTrait;
 
 /**
  * Does a rollback followed by a latest to refresh the current state
@@ -22,6 +23,8 @@ use CodeIgniter\CLI\CLI;
  */
 class MigrateRefresh extends BaseCommand
 {
+    use SignalTrait;
+
     /**
      * The group the command is lumped under
      * when listing commands.
@@ -83,7 +86,9 @@ class MigrateRefresh extends BaseCommand
             // @codeCoverageIgnoreEnd
         }
 
-        $this->call('migrate:rollback', $params);
-        $this->call('migrate', $params);
+        $this->withSignalsBlocked(function () use ($params): void {
+            $this->call('migrate:rollback', $params);
+            $this->call('migrate', $params);
+        });
     }
 }

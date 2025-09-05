@@ -13,4 +13,5 @@ CodeIgniter 4 can also be used with command line programs.
     cli_commands
     cli_generators
     cli_library
+    cli_signals
     cli_request

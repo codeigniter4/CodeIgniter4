@@ -19,6 +19,8 @@ $excludeFiles = [
 ];
 
 foreach ($directories as $directory) {
+    $filesToLoad = [];
+    
     $iterator = new RecursiveIteratorIterator(
         new RecursiveDirectoryIterator(
             $directory,
@@ -45,6 +47,13 @@ foreach ($directories as $directory) {
             continue;
         }
 
-        require_once $file->getPathname();
+        $filesToLoad[] = $file->getPathname();
+    }
+    
+    // Sort files to ensure consistent loading order across operating systems
+    sort($filesToLoad);
+    
+    foreach ($filesToLoad as $file) {
+        require_once $file;
     }
 }
