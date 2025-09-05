@@ -460,7 +460,7 @@ final class FactoriesTest extends CIUnitTestCase
      * }
      */
     #[Depends('testGetComponentInstances')]
-    public function testSetComponentInstances(array $data)
+    public function testSetComponentInstances(array $data): array
     {
         $before = Factories::getComponentInstances('config');
         $this->assertSame(['options' => [], 'aliases' => [], 'instances' => []], $before);
