@@ -28,33 +28,11 @@ final class DatabaseTestCaseTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    /**
-     * Should the db be refreshed before
-     * each test?
-     *
-     * @var bool
-     */
     protected $refresh = true;
-
-    /**
-     * The seed file(s) used for all tests within this test case.
-     * Should be fully-namespaced or relative to $basePath
-     *
-     * @var ''|class-string<Seeder>|list<class-string<Seeder>>
-     */
-    protected $seed = [
+    protected $seed    = [
         CITestSeeder::class,
         AnotherSeeder::class,
     ];
-
-    /**
-     * The namespace(s) to help us find the migration classes.
-     * Empty is equivalent to running `spark migrate -all`.
-     * Note that running "all" runs migrations in date order,
-     * but specifying namespaces runs them in namespace order (then date)
-     *
-     * @var list<string>|string|null
-     */
     protected $namespace = [
         'Tests\Support',
         'Tests\Support\MigrationTestMigrations',
