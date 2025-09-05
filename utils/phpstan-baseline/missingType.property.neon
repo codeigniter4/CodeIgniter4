@@ -473,42 +473,42 @@ parameters:
             path: ../../tests/system/Models/UpdateModelTest.php
 
         -
-            message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:351\:\:\$_options has no type specified\.$#'
+            message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:353\:\:\$_options has no type specified\.$#'
             count: 1
             path: ../../tests/system/Models/UpdateModelTest.php
 
         -
-            message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:351\:\:\$country has no type specified\.$#'
+            message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:353\:\:\$country has no type specified\.$#'
             count: 1
             path: ../../tests/system/Models/UpdateModelTest.php
 
         -
-            message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:351\:\:\$created_at has no type specified\.$#'
+            message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:353\:\:\$created_at has no type specified\.$#'
             count: 1
             path: ../../tests/system/Models/UpdateModelTest.php
 
         -
-            message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:351\:\:\$deleted has no type specified\.$#'
+            message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:353\:\:\$deleted has no type specified\.$#'
             count: 1
             path: ../../tests/system/Models/UpdateModelTest.php
 
         -
-            message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:351\:\:\$email has no type specified\.$#'
+            message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:353\:\:\$email has no type specified\.$#'
             count: 1
             path: ../../tests/system/Models/UpdateModelTest.php
 
         -
-            message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:351\:\:\$id has no type specified\.$#'
+            message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:353\:\:\$id has no type specified\.$#'
             count: 1
             path: ../../tests/system/Models/UpdateModelTest.php
 
         -
-            message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:351\:\:\$name has no type specified\.$#'
+            message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:353\:\:\$name has no type specified\.$#'
             count: 1
             path: ../../tests/system/Models/UpdateModelTest.php
 
         -
-            message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:351\:\:\$updated_at has no type specified\.$#'
+            message: '#^Property CodeIgniter\\Entity\\Entity@anonymous/tests/system/Models/UpdateModelTest\.php\:353\:\:\$updated_at has no type specified\.$#'
             count: 1
             path: ../../tests/system/Models/UpdateModelTest.php
 
