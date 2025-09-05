@@ -55,6 +55,6 @@ return [
     'signals'             => [
         'noPcntlExtension' => 'PCNTL extension not available. Signal handling disabled.',
         'noPosixExtension' => 'SIGTSTP/SIGCONT handling requires POSIX extension. These signals will be removed from registration.',
-        'failedSignal'     => 'Failed to register handler for signal: "{0}"',
+        'failedSignal'     => 'Failed to register handler for signal: "{0}".',
     ],
 ];
