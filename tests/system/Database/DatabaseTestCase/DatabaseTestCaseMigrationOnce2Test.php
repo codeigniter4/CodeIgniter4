@@ -29,29 +29,9 @@ final class DatabaseTestCaseMigrationOnce2Test extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    /**
-     * Should run db migration only once?
-     *
-     * @var bool
-     */
     protected $migrateOnce = true;
-
-    /**
-     * Should the db be refreshed before test?
-     *
-     * @var bool
-     */
-    protected $refresh = true;
-
-    /**
-     * The namespace(s) to help us find the migration classes.
-     * Empty is equivalent to running `spark migrate -all`.
-     * Note that running "all" runs migrations in date order,
-     * but specifying namespaces runs them in namespace order (then date)
-     *
-     * @var array|string|null
-     */
-    protected $namespace = [
+    protected $refresh     = true;
+    protected $namespace   = [
         'Tests\Support\MigrationTestMigrations',
     ];
 
