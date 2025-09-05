@@ -1,4 +1,4 @@
-# total 59 errors
+# total 65 errors
 
 parameters:
     ignoreErrors:
@@ -18,6 +18,21 @@ parameters:
             path: ../../system/Database/SQLSRV/Forge.php
 
         -
+            message: '#^Access to an undefined property CodeIgniter\\Debug\\ExceptionHandler\:\:\$stringAsHtml\.$#'
+            count: 1
+            path: ../../system/Debug/ExceptionHandler.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Debug\\Exceptions\:\:\$stringAsHtml\.$#'
+            count: 1
+            path: ../../system/Debug/Exceptions.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\RESTful\\ResourceController\:\:\$stringAsHtml\.$#'
+            count: 1
+            path: ../../system/RESTful/ResourceController.php
+
+        -
             message: '#^Access to an undefined property Config\\Session\:\:\$lockAttempts\.$#'
             count: 1
             path: ../../system/Session/Handlers/RedisHandler.php
@@ -26,6 +41,21 @@ parameters:
             message: '#^Access to an undefined property Config\\Session\:\:\$lockWait\.$#'
             count: 1
             path: ../../system/Session/Handlers/RedisHandler.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Test\\Mock\\MockResourcePresenter\:\:\$stringAsHtml\.$#'
+            count: 1
+            path: ../../system/Test/Mock/MockResourcePresenter.php
+
+        -
+            message: '#^Access to an undefined property class@anonymous/tests/system/API/ResponseTraitTest\.php\:123\:\:\$stringAsHtml\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
+
+        -
+            message: '#^Access to an undefined property class@anonymous/tests/system/API/ResponseTraitTest\.php\:621\:\:\$stringAsHtml\.$#'
+            count: 1
+            path: ../../tests/system/API/ResponseTraitTest.php
 
         -
             message: '#^Access to an undefined property Tests\\Support\\Commands\\AppInfo\:\:\$foobar\.$#'

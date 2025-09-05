@@ -54,7 +54,7 @@ use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return RectorConfig::configure()
-    ->withPhpSets(php81: true)
+    ->withPhpSets(php82: true)
     ->withPreparedSets(deadCode: true, instanceOf: true, strictBooleans: true, phpunitCodeQuality: true)
     ->withComposerBased(phpunit: true)
     ->withParallel(120, 8, 10)

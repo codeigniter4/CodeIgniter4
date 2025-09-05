@@ -65,6 +65,8 @@ class Database
 
     /**
      * Creates a Forge instance for the current database type.
+     *
+     * @param BaseConnection $db
      */
     public function loadForge(ConnectionInterface $db): Forge
     {
@@ -77,6 +79,8 @@ class Database
 
     /**
      * Creates an instance of Utils for the current database type.
+     *
+     * @param BaseConnection $db
      */
     public function loadUtils(ConnectionInterface $db): BaseUtils
     {

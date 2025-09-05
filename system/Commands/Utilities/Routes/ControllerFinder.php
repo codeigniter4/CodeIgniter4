@@ -20,15 +20,15 @@ use CodeIgniter\Autoloader\FileLocatorInterface;
  *
  * @see \CodeIgniter\Commands\Utilities\Routes\ControllerFinderTest
  */
-final class ControllerFinder
+final readonly class ControllerFinder
 {
-    private readonly FileLocatorInterface $locator;
+    private FileLocatorInterface $locator;
 
     /**
      * @param string $namespace namespace to search
      */
     public function __construct(
-        private readonly string $namespace,
+        private string $namespace,
     ) {
         $this->locator = service('locator');
     }

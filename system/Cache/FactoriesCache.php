@@ -16,9 +16,9 @@ namespace CodeIgniter\Cache;
 use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
 use CodeIgniter\Config\Factories;
 
-final class FactoriesCache
+final readonly class FactoriesCache
 {
-    private readonly CacheInterface|FileVarExportHandler $cache;
+    private CacheInterface|FileVarExportHandler $cache;
 
     public function __construct(CacheInterface|FileVarExportHandler|null $cache = null)
     {

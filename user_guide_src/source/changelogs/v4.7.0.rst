@@ -14,7 +14,7 @@ Release Date: Unreleased
 Highlights
 **********
 
-- TBD
+- Update minimal PHP requirement to ``8.2``.
 
 ********
 BREAKING

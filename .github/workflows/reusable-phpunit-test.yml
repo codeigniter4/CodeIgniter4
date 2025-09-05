@@ -170,7 +170,7 @@ jobs:
       - name: Setup global environment variables
         run: |
           echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
-          echo "ARTIFACT_NAME=${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-db-${{ inputs.db-platform || 'none' }}" >> $GITHUB_ENV
+          echo "ARTIFACT_NAME=${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-db-${{ inputs.db-platform || 'none' }}${{ inputs.mysql-version || '' }}" >> $GITHUB_ENV
 
       - name: Cache dependencies
         uses: actions/cache@v4
