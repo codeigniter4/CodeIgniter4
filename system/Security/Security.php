@@ -26,6 +26,7 @@ use CodeIgniter\Session\Session;
 use Config\Cookie as CookieConfig;
 use Config\Security as SecurityConfig;
 use ErrorException;
+use SensitiveParameter;
 
 /**
  * Class Security
@@ -371,13 +372,13 @@ class Security implements SecurityInterface
      *
      * @throws InvalidArgumentException "hex2bin(): Hexadecimal input string must have an even length"
      */
-    protected function derandomize(string $token): string
+    protected function derandomize(#[SensitiveParameter] string $token): string
     {
         $key   = substr($token, -static::CSRF_HASH_BYTES * 2);
         $value = substr($token, 0, static::CSRF_HASH_BYTES * 2);
 
         try {
-            return bin2hex(hex2bin($value) ^ hex2bin($key));
+            return bin2hex((string) hex2bin($value) ^ (string) hex2bin($key));
         } catch (ErrorException $e) {
             // "hex2bin(): Hexadecimal input string must have an even length"
             throw new InvalidArgumentException($e->getMessage(), $e->getCode(), $e);

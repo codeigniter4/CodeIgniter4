@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
+use SensitiveParameter;
 
 /**
  * SodiumHandler uses libsodium in encryption.
@@ -40,7 +41,7 @@ class SodiumHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
-    public function encrypt($data, $params = null)
+    public function encrypt(#[SensitiveParameter] $data, #[SensitiveParameter] $params = null)
     {
         $this->parseParams($params);
 
@@ -71,7 +72,7 @@ class SodiumHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
-    public function decrypt($data, $params = null)
+    public function decrypt($data, #[SensitiveParameter] $params = null)
     {
         $this->parseParams($params);
 

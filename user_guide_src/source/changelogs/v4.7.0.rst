@@ -48,6 +48,17 @@ Interface Changes
 Method Signature Changes
 ========================
 
+- Added the ``SensitiveParameter`` attribute to various methods to conceal sensitive information from stack traces. Affected methods are:
+    - ``CodeIgniter\Encryption\EncrypterInterface::encrypt()``
+    - ``CodeIgniter\Encryption\EncrypterInterface::decrypt()``
+    - ``CodeIgniter\Encryption\Handlers\OpenSSLHandler::encrypt()``
+    - ``CodeIgniter\Encryption\Handlers\OpenSSLHandler::decrypt()``
+    - ``CodeIgniter\Encryption\Handlers\SodiumHandler::encrypt()``
+    - ``CodeIgniter\Encryption\Handlers\SodiumHandler::decrypt()``
+    - ``CodeIgniter\HTTP\CURLRequest::setAuth()``
+    - ``CodeIgniter\HTTP\URI::setUserInfo()``
+    - ``CodeIgniter\Security\Security::derandomize()``
+
 Removed Deprecated Items
 ========================
 
