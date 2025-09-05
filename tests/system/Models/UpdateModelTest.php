@@ -249,7 +249,9 @@ final class UpdateModelTest extends LiveModelTestCase
         $entity2->deleted = 0;
         $entity2->syncOriginal();
 
-        $this->assertSame(2, $this->createModel(UserModel::class)->updateBatch([$entity1, $entity2], 'id'));
+        $model = $this->createModel(UserModel::class);
+        $this->setPrivateProperty($model, 'updateOnlyChanged', false);
+        $this->assertSame(2, $model->updateBatch([$entity1, $entity2], 'id'));
     }
 
     public function testUpdateNoPrimaryKey(): void

@@ -33,6 +33,13 @@ update it to use double braces: ``regex_match[/^{{placeholder}}$/]``.
 This change was introduced to avoid ambiguity with regular expression syntax,
 where single curly braces (e.g., ``{1,3}``) are used for quantifiers.
 
+BaseModel
+---------
+
+The ``insertBatch()`` and ``updateBatch()`` methods now honor model settings like
+``updateOnlyChanged`` and ``allowEmptyInserts``. This change ensures consistent handling
+across all insert/update operations.
+
 Interface Changes
 =================
 
@@ -45,6 +52,7 @@ Removed Deprecated Items
 ========================
 
 - **Text Helper:** The deprecated types in ``random_string()`` function: ``basic``, ``md5``, and ``sha1`` has been removed.
+- **BaseModel:** The deprecated method ``transformDataRowToArray()`` has been removed.
 
 ************
 Enhancements
@@ -56,7 +64,7 @@ Libraries
 - **CLI:** Added ``SignalTrait`` to provide unified handling of operating system signals in CLI commands.
 - **CURLRequest:** Added ``shareConnection`` config item to change default share connection.
 - **CURLRequest:** Added ``dns_cache_timeout`` option to change default DNS cache timeout.
-- **CURLRequest:** Added ``fresh_connect`` options to enable/disabled request fresh connection.
+- **CURLRequest:** Added ``fresh_connect`` options to enable/disable request fresh connection.
 - **Email:** Added support for choosing the SMTP authorization method. You can change it via ``Config\Email::$SMTPAuthMethod`` option.
 - **Image:** The ``ImageMagickHandler`` has been rewritten to rely solely on the PHP ``imagick`` extension.
 - **Image:** Added ``ImageMagickHandler::clearMetadata()`` method to remove image metadata for privacy protection.
@@ -71,7 +79,7 @@ Testing
 Database
 ========
 
-- **Exception Logging:** All DB drivers now log database exceptions uniformly. Previously, each driver has its own log format.
+- **Exception Logging:** All DB drivers now log database exceptions uniformly. Previously, each driver had its own log format.
 
 Query Builder
 -------------
