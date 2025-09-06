@@ -1,64 +1,9 @@
-# total 1386 errors
+# total 1344 errors
 
 parameters:
     ignoreErrors:
         -
-            message: '#^Method CodeIgniter\\BaseModel\:\:__call\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:__get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:cleanValidationRules\(\) has parameter \$rules with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:cleanValidationRules\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
             message: '#^Method CodeIgniter\\BaseModel\:\:convertToReturnType\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:doDelete\(\) has parameter \$id with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:doFind\(\) has parameter \$id with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:doFind\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:doFindAll\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:doFindColumn\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:doFirst\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:doInsertBatch\(\) has parameter \$set with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/BaseModel.php
 
@@ -73,66 +18,6 @@ parameters:
             path: ../../system/BaseModel.php
 
         -
-            message: '#^Method CodeIgniter\\BaseModel\:\:doUpdate\(\) has parameter \$id with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:doUpdateBatch\(\) has parameter \$set with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:find\(\) has parameter \$id with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:findAll\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:findColumn\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:first\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:getIdValue\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:getValidationMessages\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:getValidationRules\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:getValidationRules\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:paginate\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:setAllowedFields\(\) has parameter \$allowedFields with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
             message: '#^Method CodeIgniter\\BaseModel\:\:setCreatedField\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/BaseModel.php
@@ -143,37 +28,7 @@ parameters:
             path: ../../system/BaseModel.php
 
         -
-            message: '#^Method CodeIgniter\\BaseModel\:\:setValidationMessage\(\) has parameter \$fieldMessages with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:setValidationMessages\(\) has parameter \$validationMessages with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:setValidationRule\(\) has parameter \$fieldRules with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
             message: '#^Method CodeIgniter\\BaseModel\:\:transformDataToArray\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:trigger\(\) has parameter \$eventData with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:trigger\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:update\(\) has parameter \$id with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/BaseModel.php
 
@@ -579,11 +434,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Database\\BaseBuilder\:\:__construct\(\) has parameter \$tableName with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseBuilder.php
-
-        -
-            message: '#^Method CodeIgniter\\Database\\BaseBuilder\:\:_whereIn\(\) has parameter \$values with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/BaseBuilder.php
 
@@ -4098,67 +3948,7 @@ parameters:
             path: ../../system/Images/Image.php
 
         -
-            message: '#^Method CodeIgniter\\Model\:\:__call\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Model.php
-
-        -
-            message: '#^Method CodeIgniter\\Model\:\:__call\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Model.php
-
-        -
-            message: '#^Method CodeIgniter\\Model\:\:__get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Model.php
-
-        -
-            message: '#^Method CodeIgniter\\Model\:\:doDelete\(\) has parameter \$id with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Model.php
-
-        -
-            message: '#^Method CodeIgniter\\Model\:\:doFind\(\) has parameter \$id with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Model.php
-
-        -
-            message: '#^Method CodeIgniter\\Model\:\:doInsertBatch\(\) has parameter \$set with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Model.php
-
-        -
             message: '#^Method CodeIgniter\\Model\:\:doProtectFieldsForInsert\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Model.php
-
-        -
-            message: '#^Method CodeIgniter\\Model\:\:doUpdate\(\) has parameter \$id with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Model.php
-
-        -
-            message: '#^Method CodeIgniter\\Model\:\:doUpdateBatch\(\) has parameter \$set with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Model.php
-
-        -
-            message: '#^Method CodeIgniter\\Model\:\:getIdValue\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Model.php
-
-        -
-            message: '#^Method CodeIgniter\\Model\:\:set\(\) has parameter \$key with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Model.php
-
-        -
-            message: '#^Method CodeIgniter\\Model\:\:shouldUpdate\(\) has parameter \$row with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Model.php
-
-        -
-            message: '#^Method CodeIgniter\\Model\:\:update\(\) has parameter \$id with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Model.php
 

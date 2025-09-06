@@ -1,4 +1,4 @@
-# total 29 errors
+# total 28 errors
 
 parameters:
     ignoreErrors:
@@ -141,8 +141,3 @@ parameters:
             message: '#^Return type \(CodeIgniter\\Images\\Handlers\\ImageMagickHandler\) of method CodeIgniter\\Images\\Handlers\\ImageMagickHandler\:\:_resize\(\) should be covariant with return type \(\$this\(CodeIgniter\\Images\\Handlers\\BaseHandler\)\) of method CodeIgniter\\Images\\Handlers\\BaseHandler\:\:_resize\(\)$#'
             count: 1
             path: ../../system/Images/Handlers/ImageMagickHandler.php
-
-        -
-            message: '#^Return type \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Model\:\:__call\(\) should be covariant with return type \(\$this\(CodeIgniter\\BaseModel\)\|null\) of method CodeIgniter\\BaseModel\:\:__call\(\)$#'
-            count: 1
-            path: ../../system/Model.php
