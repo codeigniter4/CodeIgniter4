@@ -110,7 +110,7 @@ final class MiscellaneousModelTest extends LiveModelTestCase
 
         $this->createModel(JobModel::class);
         $method = self::getPrivateMethodInvoker($this->model, 'transformDataToArray');
-        $method([], 'whatever');
+        $method([], 'whatever'); // @phpstan-ignore argument.type
     }
 
     public function testEmptyDataInTransformDataToArray(): void
