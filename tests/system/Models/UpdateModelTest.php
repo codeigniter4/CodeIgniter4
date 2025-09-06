@@ -567,7 +567,7 @@ final class UpdateModelTest extends LiveModelTestCase
         // $useSoftDeletes = false
         $this->createModel(JobModel::class);
 
-        $this->model->update($id, ['name' => 'Foo Bar']);
+        $this->model->update($id, ['name' => 'Foo Bar']); // @phpstan-ignore argument.type
     }
 
     public static function provideUpdateThrowDatabaseExceptionWithoutWhereClause(): iterable

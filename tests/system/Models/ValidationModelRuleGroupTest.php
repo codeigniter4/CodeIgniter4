@@ -201,7 +201,7 @@ final class ValidationModelRuleGroupTest extends LiveModelTestCase
             'foo'  => 'bar',
         ];
 
-        $rules = $cleaner($rules, null);
+        $rules = $cleaner($rules, []);
         $this->assertEmpty($rules);
     }
 
