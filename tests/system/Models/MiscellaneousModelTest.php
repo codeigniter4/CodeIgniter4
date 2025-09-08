@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\JobModel;
@@ -121,5 +123,47 @@ final class MiscellaneousModelTest extends LiveModelTestCase
         $this->createModel(JobModel::class);
         $method = self::getPrivateMethodInvoker($this->model, 'transformDataToArray');
         $method([], 'insert');
+    }
+
+    public function testHasRationalPrimaryKeyWithBoolean(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The ID value should not be boolean.');
+
+        $this->createModel(JobModel::class);
+        $method = self::getPrivateMethodInvoker($this->model, 'hasRationalPrimaryKey');
+        $method(true); // @phpstan-ignore argument.type
+    }
+
+    /**
+     * @param float|int|string|null $value
+     */
+    #[DataProvider('provideHasRationalPrimaryKey')]
+    public function testHasRationalPrimaryKey($value, bool $expected): void
+    {
+        $this->createModel(JobModel::class);
+        $method = self::getPrivateMethodInvoker($this->model, 'hasRationalPrimaryKey');
+        $this->assertSame($method($value), $expected);
+    }
+
+    /**
+     * @return list<list<bool|float|int|string|null>>
+     */
+    public static function provideHasRationalPrimaryKey(): iterable
+    {
+        return [
+            [0, false],
+            ['0', false],
+            [0.0, false],
+            ['', false],
+            [null, false],
+            ['001', true],
+            [' ', true],
+            [' 0 ', true],
+            [1, true],
+            ['1', true],
+            ['00000000-0000-0000-0000-000000000000', true],
+            ['codeigniter', true],
+        ];
     }
 }

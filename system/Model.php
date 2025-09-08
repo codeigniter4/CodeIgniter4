@@ -381,7 +381,7 @@ class Model extends BaseModel
 
         $builder = $this->builder();
 
-        if (! in_array($id, [null, '', 0, '0', []], true)) {
+        if ((is_array($id) && $id !== []) || $this->hasRationalPrimaryKey($id)) {
             $builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
         }
 
@@ -409,7 +409,7 @@ class Model extends BaseModel
         $set     = [];
         $builder = $this->builder();
 
-        if (! in_array($id, [null, '', 0, '0', []], true)) {
+        if ((is_array($id) && $id !== []) || $this->hasRationalPrimaryKey($id)) {
             $builder = $builder->whereIn($this->primaryKey, $id);
         }
 

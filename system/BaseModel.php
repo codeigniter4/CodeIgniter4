@@ -759,7 +759,7 @@ abstract class BaseModel
 
     /**
      * This method is called on save to determine if entry have to be updated.
-     * If this method returns false insert operation will be executed
+     * If this method returns `false` insert operation will be executed.
      *
      * @param object|row_array $row
      */
@@ -966,11 +966,7 @@ abstract class BaseModel
      */
     public function update($id = null, $row = null): bool
     {
-        if (is_bool($id)) {
-            throw new InvalidArgumentException('update(): argument #1 ($id) should not be boolean.');
-        }
-
-        if (is_numeric($id) || is_string($id)) {
+        if ($this->hasRationalPrimaryKey($id)) {
             $id = [$id];
         }
 
@@ -1097,11 +1093,7 @@ abstract class BaseModel
      */
     public function delete($id = null, bool $purge = false)
     {
-        if (is_bool($id)) {
-            throw new InvalidArgumentException('delete(): argument #1 ($id) should not be boolean.');
-        }
-
-        if (! in_array($id, [null, 0, '0'], true) && (is_numeric($id) || is_string($id))) {
+        if ($this->hasRationalPrimaryKey($id)) {
             $id = [$id];
         }
 
@@ -1895,5 +1887,25 @@ abstract class BaseModel
         }
 
         return $this->converter->reconstruct($returnType, $row);
+    }
+
+    /**
+     * Checking that the ID has a rational value.
+     *
+     * Standard type checks in PHP do not fully verify the validity of ID as a primary key.
+     * Especially the values 0, '0', '' are rarely used or are invalid.
+     * Example, if you add an entry with ID=0, it will be an error for `$this->insertID`.
+     *
+     * @param array<int|string, int|string>|float|int|string|null $id
+     *
+     * @throws InvalidArgumentException
+     */
+    protected function hasRationalPrimaryKey($id): bool
+    {
+        if (is_bool($id)) {
+            throw new InvalidArgumentException('The ID value should not be boolean.');
+        }
+
+        return ! in_array($id, [0, '0', '', 0.0], true) && (is_numeric($id) || is_string($id));
     }
 }
