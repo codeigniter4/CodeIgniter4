@@ -22,6 +22,8 @@ Message Changes
 Changes
 *******
 
+- **Config:** Added the ``synchronous`` key for ``Config\Database::$tests``. For SQLite3 driver only.
+
 ************
 Deprecations
 ************
