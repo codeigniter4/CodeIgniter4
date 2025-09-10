@@ -787,7 +787,7 @@ final class ParserTest extends CIUnitTestCase
 
     public function testParserPluginNoParams(): void
     {
-        $this->parser->addPlugin('hit:it', static fn ($str) => str_replace('here', 'Hip to the Hop', $str), true);
+        $this->parser->addPlugin('hit:it', static fn (string $str): string => str_replace('here', 'Hip to the Hop', $str), true);
 
         $template = '{+ hit:it +} stuff here {+ /hit:it +}';
 
