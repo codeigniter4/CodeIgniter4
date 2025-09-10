@@ -313,7 +313,7 @@ final class BaseConnectionTest extends CIUnitTestCase
     }
 
     /**
-     * @return array<string, list<string>>
+     * @return iterable<string, list<string>>
      */
     public static function provideEscapeIdentifiers(): iterable
     {
@@ -335,7 +335,7 @@ final class BaseConnectionTest extends CIUnitTestCase
     }
 
     /**
-     * @return array<string, list<string>>
+     * @return iterable<string, list<string>>
      */
     public static function provideEscapeIdentifier(): iterable
     {

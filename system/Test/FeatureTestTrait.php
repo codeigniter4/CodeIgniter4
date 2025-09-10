@@ -400,7 +400,7 @@ trait FeatureTestTrait
             $request->setGlobal($name, $params);
             $request->setGlobal(
                 'request',
-                $request->fetchGlobal('post') + $request->fetchGlobal('get'),
+                (array) $request->fetchGlobal('post') + (array) $request->fetchGlobal('get'),
             );
         }
 
