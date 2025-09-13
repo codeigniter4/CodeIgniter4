@@ -64,6 +64,7 @@ Removed Deprecated Items
 
 - **Text Helper:** The deprecated types in ``random_string()`` function: ``basic``, ``md5``, and ``sha1`` has been removed.
 - **BaseModel:** The deprecated method ``transformDataRowToArray()`` has been removed.
+- **CodeIgniter:** The deprecated ``CodeIgniter\CodeIgniter::resolvePlatformExtensions()`` has been removed.
 
 ************
 Enhancements
@@ -126,7 +127,6 @@ Message Changes
 Changes
 *******
 
-- **CodeIgniter:** The deprecated ``CodeIgniter\CodeIgniter::resolvePlatformExtensions()`` has been removed.
 - **Cookie:** The ``CookieInterface::EXPIRES_FORMAT`` has been changed to ``D, d M Y H:i:s T`` to follow the recommended format in RFC 7231.
 - **Format:** Added support for configuring ``json_encode()`` maximum depth via ``Config\Format::$jsonEncodeDepth``.
 - **Paths:** Added support for changing the location of the ``.env`` file via the ``Paths::$envDirectory`` property.
