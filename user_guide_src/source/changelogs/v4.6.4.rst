@@ -18,6 +18,11 @@ BREAKING
 Message Changes
 ***************
 
+- Added ``Honeypot.noTemplate``, ``Honeypot.noNameField``, ``Honeypot.noHiddenValue``, ``Honeypot.theClientIsABot``.
+- Added ``Time.invalidHour``.
+- Changed ``Router.invalidParameter`` to ``Router.invalidParameterType``.
+- Added deprecated ``Security.invalidSameSiteSetting``.
+
 *******
 Changes
 *******
