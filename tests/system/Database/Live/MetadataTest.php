@@ -27,13 +27,7 @@ final class MetadataTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    /**
-     * The seed file used for all tests within this test case.
-     *
-     * @var string
-     */
-    protected $seed = CITestSeeder::class;
-
+    protected $seed               = CITestSeeder::class;
     private array $expectedTables = [];
 
     protected function setUp(): void

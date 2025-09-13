@@ -53,7 +53,7 @@ final class ConnectionTest extends CIUnitTestCase
     }
 
     /**
-     * @return array<string, list<string>>
+     * @return iterable<string, list<string>>
      */
     public static function provideIsValidDSN(): iterable
     {

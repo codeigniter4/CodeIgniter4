@@ -1,4 +1,4 @@
-# total 1407 errors
+# total 1386 errors
 
 parameters:
     ignoreErrors:
@@ -338,11 +338,6 @@ parameters:
             path: ../../system/Commands/Utilities/Routes/FilterFinder.php
 
         -
-            message: '#^Function class_uses_recursive\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Common.php
-
-        -
             message: '#^Function log_message\(\) has parameter \$context with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Common.php
@@ -364,11 +359,6 @@ parameters:
 
         -
             message: '#^Function stringify_attributes\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Common.php
-
-        -
-            message: '#^Function trait_uses_recursive\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Common.php
 
@@ -4578,31 +4568,6 @@ parameters:
             path: ../../system/Superglobals.php
 
         -
-            message: '#^Property CodeIgniter\\Test\\CIUnitTestCase\:\:\$headers type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/CIUnitTestCase.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\CIUnitTestCase\:\:\$insertCache type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/CIUnitTestCase.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\CIUnitTestCase\:\:\$namespace type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/CIUnitTestCase.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\CIUnitTestCase\:\:\$session type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/CIUnitTestCase.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\CIUnitTestCase\:\:\$traits type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Test/CIUnitTestCase.php
-
-        -
             message: '#^Method CodeIgniter\\Test\\Constraints\\SeeInDatabase\:\:__construct\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Test/Constraints/SeeInDatabase.php
@@ -5623,26 +5588,6 @@ parameters:
             path: ../../tests/system/Database/ConfigTest.php
 
         -
-            message: '#^Property CodeIgniter\\Database\\DatabaseTestCase\\DatabaseTestCaseMigrationOnce1Test\:\:\$namespace type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce1Test.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\DatabaseTestCase\\DatabaseTestCaseMigrationOnce2Test\:\:\$namespace type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Database/DatabaseTestCase/DatabaseTestCaseMigrationOnce2Test.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\DatabaseTestCaseTest\:\:\$namespace type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Database/DatabaseTestCaseTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\DatabaseTestCaseTest\:\:\$seed type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Database/DatabaseTestCaseTest.php
-
-        -
             message: '#^Property CodeIgniter\\Database\\Live\\MetadataTest\:\:\$expectedTables type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Database/Live/MetadataTest.php
@@ -5661,11 +5606,6 @@ parameters:
             message: '#^Method CodeIgniter\\Database\\Live\\UpdateTest\:\:testUpdateBatch\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Database/Live/UpdateTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\Migrations\\MigrationRunnerTest\:\:\$namespace type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Database/Migrations/MigrationRunnerTest.php
 
         -
             message: '#^Method CodeIgniter\\Debug\\ExceptionHandlerTest\:\:backupIniValues\(\) has parameter \$keys with no value type specified in iterable type array\.$#'
@@ -6123,21 +6063,6 @@ parameters:
             path: ../../tests/system/HomeTest.php
 
         -
-            message: '#^Method CodeIgniter\\HomeTest\:\:withHeaders\(\) has parameter \$headers with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/HomeTest.php
-
-        -
-            message: '#^Method CodeIgniter\\HomeTest\:\:withRoutes\(\) has parameter \$routes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/HomeTest.php
-
-        -
-            message: '#^Method CodeIgniter\\HomeTest\:\:withSession\(\) has parameter \$values with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/HomeTest.php
-
-        -
             message: '#^Method CodeIgniter\\I18n\\TimeLegacyTest\:\:provideToStringDoesNotDependOnLocale\(\) return type has no value type specified in iterable type iterable\.$#'
             count: 1
             path: ../../tests/system/I18n/TimeLegacyTest.php
@@ -6338,21 +6263,6 @@ parameters:
             path: ../../tests/system/Test/FeatureTestAutoRoutingImprovedTest.php
 
         -
-            message: '#^Method CodeIgniter\\Test\\FeatureTestAutoRoutingImprovedTest\:\:withHeaders\(\) has parameter \$headers with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Test/FeatureTestAutoRoutingImprovedTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\FeatureTestAutoRoutingImprovedTest\:\:withRoutes\(\) has parameter \$routes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Test/FeatureTestAutoRoutingImprovedTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\FeatureTestAutoRoutingImprovedTest\:\:withSession\(\) has parameter \$values with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Test/FeatureTestAutoRoutingImprovedTest.php
-
-        -
             message: '#^Method CodeIgniter\\Test\\FeatureTestTraitTest\:\:call\(\) has parameter \$params with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Test/FeatureTestTraitTest.php
@@ -6399,21 +6309,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Test\\FeatureTestTraitTest\:\:setRequestBody\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Test/FeatureTestTraitTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\FeatureTestTraitTest\:\:withHeaders\(\) has parameter \$headers with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Test/FeatureTestTraitTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\FeatureTestTraitTest\:\:withRoutes\(\) has parameter \$routes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Test/FeatureTestTraitTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Test\\FeatureTestTraitTest\:\:withSession\(\) has parameter \$values with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Test/FeatureTestTraitTest.php
 

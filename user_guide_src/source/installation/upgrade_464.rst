@@ -44,7 +44,8 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- @TODO
+- app/Config/Database.php
+    - Added the ``synchronous`` key for ``Config\Database::$tests``.
 
 All Changes
 ===========
