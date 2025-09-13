@@ -304,7 +304,6 @@ class Boot
 
         foreach ([
             'intl',
-            'json',
             'mbstring',
         ] as $extension) {
             if (! extension_loaded($extension)) {

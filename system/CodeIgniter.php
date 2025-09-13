@@ -15,7 +15,6 @@ use Closure;
 use CodeIgniter\Cache\ResponseCache;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
-use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Filters\Filters;
@@ -190,38 +189,6 @@ class CodeIgniter
 
         // Set default timezone on the server
         date_default_timezone_set($this->config->appTimezone ?? 'UTC');
-    }
-
-    /**
-     * Checks system for missing required PHP extensions.
-     *
-     * @return void
-     *
-     * @throws FrameworkException
-     *
-     * @codeCoverageIgnore
-     *
-     * @deprecated 4.5.0 Moved to system/bootstrap.php.
-     */
-    protected function resolvePlatformExtensions()
-    {
-        $requiredExtensions = [
-            'intl',
-            'json',
-            'mbstring',
-        ];
-
-        $missingExtensions = [];
-
-        foreach ($requiredExtensions as $extension) {
-            if (! extension_loaded($extension)) {
-                $missingExtensions[] = $extension;
-            }
-        }
-
-        if ($missingExtensions !== []) {
-            throw FrameworkException::forMissingExtension(implode(', ', $missingExtensions));
-        }
     }
 
     /**

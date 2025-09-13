@@ -13,8 +13,7 @@ PHP and Required Extensions
 `PHP <https://www.php.net/>`_ version 8.2 or newer is required, with the following PHP extensions are enabled:
 
   - `intl <https://www.php.net/manual/en/intl.requirements.php>`_
-  - `mbstring <https://www.php.net/manual/en/mbstring.requirements.php>`_
-  - `json <https://www.php.net/manual/en/json.requirements.php>`_
+  - `mbstring <https://www.php.net/manual/en/mbstring.installation.php>`_
 
 .. warning::
     - The end of life date for PHP 7.4 was November 28, 2022.
