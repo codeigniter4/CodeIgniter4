@@ -14,6 +14,6 @@ declare(strict_types=1);
 // Honeypot language settings
 return [
     'noTemplate'      => 'The HTML template for the Honeypot is not configured.',
-    'noNameField'     => 'The name of the Honeypot field has not been set.',
+    'noNameField'     => 'The name of the Honeypot field is not set.',
     'theClientIsABot' => 'The Honeypot client may be a bot.',
 ];
