@@ -26,14 +26,12 @@ Changes
 
 - **Config:** Added the ``synchronous`` key for ``Config\Database::$tests``. For SQLite3 driver only.
 
-Exceptions
-==========
-
-- The unused ``CodeIgniter\Honeypot\Exceptions\HoneypotException::forNoHiddenValue()`` method has been removed.
-
 ************
 Deprecations
 ************
+
+- **Exception:**
+    - The ``CodeIgniter\Honeypot\Exceptions\HoneypotException::forNoHiddenValue()`` method has been deprecated. Never used.
 
 **********
 Bugs Fixed
