@@ -18,6 +18,8 @@ BREAKING
 Message Changes
 ***************
 
+- Added ``Honeypot.noTemplate``, ``Honeypot.noNameField``, ``Honeypot.theClientIsABot``.
+
 *******
 Changes
 *******
@@ -27,6 +29,9 @@ Changes
 ************
 Deprecations
 ************
+
+- **Exception:**
+    - The ``CodeIgniter\Honeypot\Exceptions\HoneypotException::forNoHiddenValue()`` method has been deprecated. Never used.
 
 **********
 Bugs Fixed
