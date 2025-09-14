@@ -18,16 +18,18 @@ BREAKING
 Message Changes
 ***************
 
-- Added ``Honeypot.noTemplate``, ``Honeypot.noNameField``, ``Honeypot.noHiddenValue``, ``Honeypot.theClientIsABot``.
-- Added ``Time.invalidHour``.
-- Changed ``Router.invalidParameter`` to ``Router.invalidParameterType``.
-- Added deprecated ``Security.invalidSameSiteSetting``.
+- Added ``Honeypot.noTemplate``, ``Honeypot.noNameField``, ``Honeypot.theClientIsABot``.
 
 *******
 Changes
 *******
 
 - **Config:** Added the ``synchronous`` key for ``Config\Database::$tests``. For SQLite3 driver only.
+
+Exceptions
+==========
+
+- The unused ``CodeIgniter\Honeypot\Exceptions\HoneypotException::forNoHiddenValue()`` method has been removed.
 
 ************
 Deprecations

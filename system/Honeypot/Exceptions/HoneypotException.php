@@ -38,16 +38,6 @@ class HoneypotException extends ConfigException
     }
 
     /**
-     * Thrown when the hidden value of config is false.
-     *
-     * @return static
-     */
-    public static function forNoHiddenValue()
-    {
-        return new static(lang('Honeypot.noHiddenValue'));
-    }
-
-    /**
      * Thrown when there are no data in the request of honeypot field.
      *
      * @return static

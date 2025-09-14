@@ -15,6 +15,5 @@ declare(strict_types=1);
 return [
     'noTemplate'      => 'The HTML template for the Honeypot is not configured.',
     'noNameField'     => 'The name of the Honeypot field has not been set.',
-    'noHiddenValue'   => 'The Honeypot should be invisible to humans.',
     'theClientIsABot' => 'The Honeypot client may be a bot.',
 ];

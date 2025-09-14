@@ -17,6 +17,5 @@ return [
     'insecureCookie'   => 'Attempted to send a secure cookie over a non-secure connection.',
 
     // @deprecated
-    'invalidSameSite'        => 'The SameSite value must be None, Lax, Strict, or a blank string. Given: "{0}"',
-    'invalidSameSiteSetting' => 'The SameSite setting must be None, Lax, Strict, or a blank string. Given: {0}',
+    'invalidSameSite' => 'The SameSite value must be None, Lax, Strict, or a blank string. Given: "{0}"',
 ];

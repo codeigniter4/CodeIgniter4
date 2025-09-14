@@ -32,5 +32,4 @@ return [
     'yesterday'      => 'Yesterday',
     'tomorrow'       => 'Tomorrow',
     'now'            => 'Just now',
-    'invalidHour'    => 'The supplied hour "{0}" is outside the range of allowed hours (1-24).',
 ];
