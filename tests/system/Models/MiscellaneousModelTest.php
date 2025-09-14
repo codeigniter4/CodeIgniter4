@@ -125,31 +125,31 @@ final class MiscellaneousModelTest extends LiveModelTestCase
         $method([], 'insert');
     }
 
-    public function testHasRationalPrimaryKeyWithBoolean(): void
+    public function testHasAllowedValueIdWithBoolean(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The ID value should not be boolean.');
 
         $this->createModel(JobModel::class);
-        $method = self::getPrivateMethodInvoker($this->model, 'hasRationalPrimaryKey');
+        $method = self::getPrivateMethodInvoker($this->model, 'hasAllowedValueId');
         $method(true); // @phpstan-ignore argument.type
     }
 
     /**
      * @param float|int|string|null $value
      */
-    #[DataProvider('provideHasRationalPrimaryKey')]
-    public function testHasRationalPrimaryKey($value, bool $expected): void
+    #[DataProvider('provideHasAllowedValueId')]
+    public function testHasAllowedValueId($value, bool $expected): void
     {
         $this->createModel(JobModel::class);
-        $method = self::getPrivateMethodInvoker($this->model, 'hasRationalPrimaryKey');
+        $method = self::getPrivateMethodInvoker($this->model, 'hasAllowedValueId');
         $this->assertSame($method($value), $expected);
     }
 
     /**
      * @return list<list<bool|float|int|string|null>>
      */
-    public static function provideHasRationalPrimaryKey(): iterable
+    public static function provideHasAllowedValueId(): iterable
     {
         return [
             [0, false],

@@ -966,7 +966,7 @@ abstract class BaseModel
      */
     public function update($id = null, $row = null): bool
     {
-        if ($this->hasRationalPrimaryKey($id)) {
+        if ($this->hasAllowedValueId($id)) {
             $id = [$id];
         }
 
@@ -1093,7 +1093,7 @@ abstract class BaseModel
      */
     public function delete($id = null, bool $purge = false)
     {
-        if ($this->hasRationalPrimaryKey($id)) {
+        if ($this->hasAllowedValueId($id)) {
             $id = [$id];
         }
 
@@ -1900,7 +1900,7 @@ abstract class BaseModel
      *
      * @throws InvalidArgumentException
      */
-    protected function hasRationalPrimaryKey($id): bool
+    protected function hasAllowedValueId($id): bool
     {
         if (is_bool($id)) {
             throw new InvalidArgumentException('The ID value should not be boolean.');
