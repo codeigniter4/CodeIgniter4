@@ -47,6 +47,7 @@ class ContentSecurityPolicy
         'object-src'      => 'objectSrc',
         'plugin-types'    => 'pluginTypes',
         'script-src'      => 'scriptSrc',
+        'script-src-elem' => 'scriptSrcElem',
         'style-src'       => 'styleSrc',
         'manifest-src'    => 'manifestSrc',
         'sandbox'         => 'sandbox',
@@ -143,6 +144,13 @@ class ContentSecurityPolicy
      * @var array|string
      */
     protected $scriptSrc = [];
+
+    /**
+     * Used for security enforcement
+     *
+     * @var array|string
+     */
+    protected $scriptSrcElem = [];
 
     /**
      * Used for security enforcement
@@ -637,6 +645,23 @@ class ContentSecurityPolicy
     public function addScriptSrc($uri, ?bool $explicitReporting = null)
     {
         $this->addOption($uri, 'scriptSrc', $explicitReporting ?? $this->reportOnly);
+
+        return $this;
+    }
+
+    /**
+     * Adds a new valid endpoint for javascript file sources. Can be either
+     * a URI class or a simple string.
+     *
+     * @see https://www.w3.org/TR/CSP/#directive-script-src-elem
+     *
+     * @param array|string $uri
+     *
+     * @return $this
+     */
+    public function addScriptSrcElem($uri, ?bool $explicitReporting = null)
+    {
+        $this->addOption($uri, 'scriptSrcElem', $explicitReporting ?? $this->reportOnly);
 
         return $this;
     }
