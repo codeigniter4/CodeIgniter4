@@ -4,8 +4,8 @@
       - any-glob-to-any-file:
         - .github/*
 
-# Documentation
-"documentation":
-  - changed-files:
-      - any-glob-to-any-file:
-        - user_guide_src/*
+# Match PRs into or from branch 4.7
+"4.7":
+  - base-branch: '4.7'
+  - head-branch: '4.7'
+  
