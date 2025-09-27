@@ -1,4 +1,4 @@
-# total 59 errors
+# total 51 errors
 
 parameters:
     ignoreErrors:
@@ -26,16 +26,6 @@ parameters:
             message: '#^Access to an undefined property Config\\Session\:\:\$lockWait\.$#'
             count: 1
             path: ../../system/Session/Handlers/RedisHandler.php
-
-        -
-            message: '#^Access to an undefined property Tests\\Support\\Commands\\AppInfo\:\:\$foobar\.$#'
-            count: 2
-            path: ../../tests/system/Commands/BaseCommandTest.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Test\\Mock\\MockConnection\:\:\$foobar\.$#'
-            count: 2
-            path: ../../tests/system/Database/BaseConnectionTest.php
 
         -
             message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$mysqli\.$#'
@@ -101,11 +91,6 @@ parameters:
             message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$key\.$#'
             count: 1
             path: ../../tests/system/Encryption/Handlers/SodiumHandlerTest.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\I18n\\TimeDifference\:\:\$nonsense\.$#'
-            count: 4
-            path: ../../tests/system/I18n/TimeDifferenceTest.php
 
         -
             message: '#^Access to an undefined property CodeIgniter\\I18n\\TimeLegacy\:\:\$foobar\.$#'
