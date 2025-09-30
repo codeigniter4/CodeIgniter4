@@ -23,6 +23,9 @@ use Tests\Support\Validation\TestRules;
 #[Group('Others')]
 final class FormatRulesTest extends TraditionalFormatRulesTest
 {
+    /**
+     * @var array<string, array<int|string, array<string, string>|string>>
+     */
     protected array $config = [
         'ruleSets' => [
             Rules::class,
