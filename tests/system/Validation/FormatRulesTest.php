@@ -1054,6 +1054,10 @@ class FormatRulesTest extends CIUnitTestCase
                 false,
             ],
             [
+                'dGVszdA==',
+                false,
+            ],
+            [
                 null,
                 false,
             ],

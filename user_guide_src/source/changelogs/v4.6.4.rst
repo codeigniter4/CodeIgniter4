@@ -44,6 +44,7 @@ Bugs Fixed
 - **Forge:** Fixed a bug in ``Postgre`` and ``SQLSRV`` where changing a column's default value using ``Forge::modifyColumn()`` method produced incorrect SQL syntax.
 - **Model:** Fixed a bug in ``Model::replace()`` where ``created_at`` field (when available) wasn't set correctly.
 - **Model:** Fixed a bug in ``Model::insertBatch()`` and ``Model::updateBatch()`` where casts were not applied to inserted or updated values.
+- **Validation:** Fixed a bug in the ``FormatRules::valid_base64()`` validation rule that caused a TypeError when checking invalid base64 strings.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
