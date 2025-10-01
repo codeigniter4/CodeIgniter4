@@ -340,6 +340,7 @@
 <li><p><strong>Forge:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Postgre</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> where changing a column’s default value using <code class="docutils literal notranslate"><span class="pre">Forge::modifyColumn()</span></code> method produced incorrect SQL syntax.</p></li>
 <li><p><strong>Model:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Model::replace()</span></code> where <code class="docutils literal notranslate"><span class="pre">created_at</span></code> field (when available) wasn’t set correctly.</p></li>
 <li><p><strong>Model:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Model::insertBatch()</span></code> and <code class="docutils literal notranslate"><span class="pre">Model::updateBatch()</span></code> where casts were not applied to inserted or updated values.</p></li>
+<li><p><strong>Toolbar:</strong> Fixed bugs in <code class="docutils literal notranslate"><span class="pre">Collectors\Logs</span></code> that were preventing the “Logs” tab from appearing on the Debug Toolbar.</p></li>
 <li><p><strong>Validation:</strong> Fixed a bug in the <code class="docutils literal notranslate"><span class="pre">FormatRules::valid_base64()</span></code> validation rule that caused a TypeError when checking invalid base64 strings.</p></li>
 </ul>
 <p>See the repo’s
