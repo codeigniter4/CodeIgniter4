@@ -29,6 +29,10 @@ use Tests\Support\Validation\TestRules;
 class RulesTest extends CIUnitTestCase
 {
     protected Validation $validation;
+
+    /**
+     * @var array<string, array<int|string, array<string, string>|string>>
+     */
     protected array $config = [
         'ruleSets' => [
             Rules::class,

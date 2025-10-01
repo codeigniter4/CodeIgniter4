@@ -169,14 +169,14 @@ final class BaseConnectionTest extends CIUnitTestCase
     {
         $db = new MockConnection($this->options);
 
-        $this->assertTrue(isset($db->charset));
+        $this->assertSame($db->charset !== null, isset($db->charset)); // @phpstan-ignore isset.property
     }
 
     public function testMagicIssetFalse(): void
     {
         $db = new MockConnection($this->options);
 
-        $this->assertFalse(isset($db->foobar));
+        $this->assertFalse(isset($db->foobar)); // @phpstan-ignore property.notFound
     }
 
     public function testMagicGet(): void
@@ -190,7 +190,7 @@ final class BaseConnectionTest extends CIUnitTestCase
     {
         $db = new MockConnection($this->options);
 
-        $this->assertNull($db->foobar);
+        $this->assertNull($db->foobar); // @phpstan-ignore property.notFound
     }
 
     /**

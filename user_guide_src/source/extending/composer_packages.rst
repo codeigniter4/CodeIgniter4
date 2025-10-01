@@ -22,7 +22,7 @@ Here's a typical directory structure for a Composer package::
     ├── README.md
     ├── composer.json
     ├── src/
-    │   └── YourClass.php
+    │   └── YourClass.php
     └── tests/
         └── YourClassTest.php
 

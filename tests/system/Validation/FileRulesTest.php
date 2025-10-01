@@ -24,6 +24,10 @@ use Tests\Support\Validation\TestRules;
 final class FileRulesTest extends StrictFileRulesTest
 {
     protected Validation $validation;
+
+    /**
+     * @var array<string, array<int|string, array<string, string>|string>>
+     */
     protected array $config = [
         'ruleSets' => [
             Rules::class,

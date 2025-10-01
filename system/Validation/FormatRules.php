@@ -284,7 +284,13 @@ class FormatRules
             $str = (string) $str;
         }
 
-        return base64_encode(base64_decode($str, true)) === $str;
+        $decoded = base64_decode($str, true);
+
+        if ($decoded === false) {
+            return false;
+        }
+
+        return base64_encode($decoded) === $str;
     }
 
     /**

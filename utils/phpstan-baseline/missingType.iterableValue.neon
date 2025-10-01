@@ -1,4 +1,4 @@
-# total 1388 errors
+# total 1378 errors
 
 parameters:
     ignoreErrors:
@@ -6363,16 +6363,6 @@ parameters:
             path: ../../tests/system/Throttle/ThrottleTest.php
 
         -
-            message: '#^Property CodeIgniter\\Validation\\CreditCardRulesTest\:\:\$config type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Validation/CreditCardRulesTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Validation\\FileRulesTest\:\:\$config type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Validation/FileRulesTest.php
-
-        -
             message: '#^Method CodeIgniter\\Validation\\FormatRulesTest\:\:alphaNumericProvider\(\) return type has no value type specified in iterable type iterable\.$#'
             count: 1
             path: ../../tests/system/Validation/FormatRulesTest.php
@@ -6474,11 +6464,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Validation\\FormatRulesTest\:\:provideValidUrl\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Validation/FormatRulesTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Validation\\FormatRulesTest\:\:\$config type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Validation/FormatRulesTest.php
 
@@ -6663,11 +6648,6 @@ parameters:
             path: ../../tests/system/Validation/RulesTest.php
 
         -
-            message: '#^Property CodeIgniter\\Validation\\RulesTest\:\:\$config type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Validation/RulesTest.php
-
-        -
             message: '#^Method CodeIgniter\\Validation\\StrictRules\\CreditCardRulesTest\:\:calculateLuhnChecksum\(\) has parameter \$digits with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Validation/StrictRules/CreditCardRulesTest.php
@@ -6678,27 +6658,12 @@ parameters:
             path: ../../tests/system/Validation/StrictRules/CreditCardRulesTest.php
 
         -
-            message: '#^Property CodeIgniter\\Validation\\StrictRules\\CreditCardRulesTest\:\:\$config type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Validation/StrictRules/CreditCardRulesTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Validation\\StrictRules\\FileRulesTest\:\:\$config type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Validation/StrictRules/FileRulesTest.php
-
-        -
             message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRulesTest\:\:provideAlphaSpace\(\) return type has no value type specified in iterable type iterable\.$#'
             count: 1
             path: ../../tests/system/Validation/StrictRules/FormatRulesTest.php
 
         -
             message: '#^Method CodeIgniter\\Validation\\StrictRules\\FormatRulesTest\:\:provideInvalidIntegerType\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Validation/StrictRules/FormatRulesTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Validation\\StrictRules\\FormatRulesTest\:\:\$config type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Validation/StrictRules/FormatRulesTest.php
 
@@ -6756,16 +6721,6 @@ parameters:
             message: '#^Method CodeIgniter\\Validation\\StrictRules\\RulesTest\:\:testPermitEmptyStrict\(\) has parameter \$rules with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Validation/StrictRules/RulesTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Validation\\StrictRules\\RulesTest\:\:\$config type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Validation/StrictRules/RulesTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Validation\\StrictRules\\ValidationTest\:\:\$config type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Validation/StrictRules/ValidationTest.php
 
         -
             message: '#^Method CodeIgniter\\Validation\\ValidationTest\:\:placeholderReplacementResultDetermination\(\) has parameter \$data with no value type specified in iterable type array\.$#'
@@ -6859,11 +6814,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Validation\\ValidationTest\:\:testValidationOfArrayData\(\) has parameter \$rules with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Validation/ValidationTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Validation\\ValidationTest\:\:\$config type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Validation/ValidationTest.php
 
