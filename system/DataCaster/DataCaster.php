@@ -28,6 +28,12 @@ use CodeIgniter\Entity\Cast\CastInterface as EntityCastInterface;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 
+/**
+ * @template TCastHandlers of array<string, CastInterface|class-string|EntityCastInterface>
+ *
+ * @see CodeIgniter\DataCaster\DataCasterTest
+ * @see CodeIgniter\Entity\EntityTest
+ */
 final class DataCaster
 {
     /**
@@ -38,9 +44,9 @@ final class DataCaster
     private array $types = [];
 
     /**
-     * Convert handlers
+     * Convert handlers.
      *
-     * @var array<string, class-string> [type => classname]
+     * @var TCastHandlers [type => classname]
      */
     private array $castHandlers = [
         'array'     => ArrayCast::class,
@@ -59,10 +65,10 @@ final class DataCaster
     ];
 
     /**
-     * @param array<string, class-string>|null $castHandlers Custom convert handlers
-     * @param array<string, string>|null       $types        [field => type]
-     * @param object|null                      $helper       Helper object.
-     * @param bool                             $strict       Strict mode? Set to false for casts for Entity.
+     * @param TCastHandlers|null         $castHandlers Custom convert handlers
+     * @param array<string, string>|null $types        [field => type]
+     * @param object|null                $helper       Helper object.
+     * @param bool                       $strict       Strict mode? Set to false for casts for Entity.
      */
     public function __construct(
         ?array $castHandlers = null,
@@ -70,7 +76,9 @@ final class DataCaster
         private readonly ?object $helper = null,
         private readonly bool $strict = true,
     ) {
-        $this->castHandlers = array_merge($this->castHandlers, $castHandlers);
+        if ($castHandlers !== null && $castHandlers !== []) {
+            $this->castHandlers = array_merge($this->castHandlers, $castHandlers);
+        }
 
         if ($types !== null) {
             $this->setTypes($types);
@@ -119,6 +127,10 @@ final class DataCaster
      */
     public function castAs(mixed $value, string $field, string $method = 'get'): mixed
     {
+        if ($method !== 'get' && $method !== 'set') {
+            throw CastException::forInvalidMethod($method);
+        }
+
         // If the type is not defined, return as it is.
         if (! isset($this->types[$field])) {
             return $value;
