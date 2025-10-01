@@ -1226,6 +1226,9 @@ class CreditCardRulesTest extends CIUnitTestCase
         return implode('', $digits);
     }
 
+    /**
+     * @param array<int, int|string> $digits
+     */
     protected static function calculateLuhnChecksum(array $digits, int $length): int
     {
         $parity = $length % 2;
