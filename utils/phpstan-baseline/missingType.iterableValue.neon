@@ -1,4 +1,4 @@
-# total 1378 errors
+# total 1376 errors
 
 parameters:
     ignoreErrors:
@@ -5613,11 +5613,6 @@ parameters:
             path: ../../tests/system/Database/Live/UpdateTest.php
 
         -
-            message: '#^Method CodeIgniter\\Database\\Live\\UpdateTest\:\:testUpdateBatch\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Database/Live/UpdateTest.php
-
-        -
             message: '#^Method CodeIgniter\\Debug\\ExceptionHandlerTest\:\:backupIniValues\(\) has parameter \$keys with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Debug/ExceptionHandlerTest.php
@@ -6646,11 +6641,6 @@ parameters:
             message: '#^Method CodeIgniter\\Validation\\RulesTest\:\:testRequiredWithoutMultipleWithoutFields\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Validation/RulesTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Validation\\StrictRules\\CreditCardRulesTest\:\:calculateLuhnChecksum\(\) has parameter \$digits with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Validation/StrictRules/CreditCardRulesTest.php
 
         -
             message: '#^Method CodeIgniter\\Validation\\StrictRules\\CreditCardRulesTest\:\:provideValidCCNumber\(\) return type has no value type specified in iterable type iterable\.$#'
