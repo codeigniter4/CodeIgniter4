@@ -318,7 +318,7 @@ class CLI
         if ($opts === []) {
             $extraOutput = $extraOutputDefault;
         } else {
-            $optsKey = array_keys($opts);
+            $optsKey     = array_keys($opts);
             $extraOutput = '[' . $extraOutputDefault . ', ' . implode(', ', $optsKey) . ']';
             $extraOutput = 'You can specify multiple values separated by commas.' . PHP_EOL . $extraOutput;
         }
