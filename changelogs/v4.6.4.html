@@ -341,6 +341,7 @@
 <li><p><strong>Model:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Model::replace()</span></code> where <code class="docutils literal notranslate"><span class="pre">created_at</span></code> field (when available) wasn’t set correctly.</p></li>
 <li><p><strong>Model:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Model::insertBatch()</span></code> and <code class="docutils literal notranslate"><span class="pre">Model::updateBatch()</span></code> where casts were not applied to inserted or updated values.</p></li>
 <li><p><strong>Toolbar:</strong> Fixed bugs in <code class="docutils literal notranslate"><span class="pre">Collectors\Logs</span></code> that were preventing the “Logs” tab from appearing on the Debug Toolbar.</p></li>
+<li><p><strong>Toolbar:</strong> Fixed bugs in <code class="docutils literal notranslate"><span class="pre">toolbar.js</span></code> which caused “Uncaught TypeError” in some scenarios.</p></li>
 <li><p><strong>Validation:</strong> Fixed a bug in the <code class="docutils literal notranslate"><span class="pre">FormatRules::valid_base64()</span></code> validation rule that caused a TypeError when checking invalid base64 strings.</p></li>
 </ul>
 <p>See the repo’s
@@ -361,7 +362,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 01, 2025.
+      <span class="lastupdated">Last updated on Oct 03, 2025.
       </span></p>
   </div>
 
