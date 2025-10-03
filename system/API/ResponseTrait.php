@@ -122,9 +122,9 @@ trait ResponseTrait
     /**
      * Used for generic failures that no custom methods exist for.
      *
-     * @param list<string>|string $messages
-     * @param int                 $status   HTTP status code
-     * @param string|null         $code     Custom, API-specific, error code
+     * @param array<array-key, string>|string $messages
+     * @param int                             $status   HTTP status code
+     * @param string|null                     $code     Custom, API-specific, error code
      *
      * @return ResponseInterface
      */
@@ -230,7 +230,7 @@ trait ResponseTrait
     /**
      * Used when the data provided by the client cannot be validated on one or more fields.
      *
-     * @param list<string>|string $errors
+     * @param array<array-key, string>|string $errors
      *
      * @return ResponseInterface
      */
