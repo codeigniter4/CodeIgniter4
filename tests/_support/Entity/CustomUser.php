@@ -38,6 +38,9 @@ final class CustomUser
     ) {
     }
 
+    /**
+     * @param array<string, int|list<string>|string|Time|null> $data
+     */
     public static function reconstruct(array $data): static
     {
         return new self(

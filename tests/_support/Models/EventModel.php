@@ -129,6 +129,9 @@ class EventModel extends Model
         return $data;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function beforeFindMethod(array $data)
     {
         $this->tokens[]  = 'beforeFind';

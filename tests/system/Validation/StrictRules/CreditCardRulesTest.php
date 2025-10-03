@@ -28,6 +28,10 @@ use Tests\Support\Validation\TestRules;
 class CreditCardRulesTest extends CIUnitTestCase
 {
     protected Validation $validation;
+
+    /**
+     * @var array<string, array<int|string, array<string, string>|string>>
+     */
     protected array $config = [
         'ruleSets' => [
             Rules::class,
@@ -1222,6 +1226,9 @@ class CreditCardRulesTest extends CIUnitTestCase
         return implode('', $digits);
     }
 
+    /**
+     * @param array<int, int|string> $digits
+     */
     protected static function calculateLuhnChecksum(array $digits, int $length): int
     {
         $parity = $length % 2;

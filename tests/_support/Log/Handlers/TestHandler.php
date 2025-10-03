@@ -35,6 +35,8 @@ class TestHandler extends FileHandler
 
     /**
      * Where would the log be written?
+     *
+     * @param array<string, mixed> $config
      */
     public function __construct(array $config)
     {

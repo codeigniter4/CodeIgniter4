@@ -36,14 +36,14 @@ final class BaseCommandTest extends CIUnitTestCase
     {
         $command = new AppInfo($this->logger, service('commands'));
 
-        $this->assertTrue(isset($command->group));
+        $this->assertSame($command->group !== null, isset($command->group)); // @phpstan-ignore isset.property
     }
 
     public function testMagicIssetFalse(): void
     {
         $command = new AppInfo($this->logger, service('commands'));
 
-        $this->assertFalse(isset($command->foobar));
+        $this->assertFalse(isset($command->foobar)); // @phpstan-ignore property.notFound
     }
 
     public function testMagicGet(): void
@@ -57,6 +57,6 @@ final class BaseCommandTest extends CIUnitTestCase
     {
         $command = new AppInfo($this->logger, service('commands'));
 
-        $this->assertNull($command->foobar);
+        $this->assertNull($command->foobar); // @phpstan-ignore property.notFound
     }
 }

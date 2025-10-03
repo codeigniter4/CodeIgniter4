@@ -31,6 +31,10 @@ class FormatRulesTest extends CIUnitTestCase
     public const ALPHANUMERIC = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789';
 
     protected Validation $validation;
+
+    /**
+     * @var array<string, array<int|string, array<string, string>|string>>
+     */
     protected array $config = [
         'ruleSets' => [
             Rules::class,
@@ -1051,6 +1055,10 @@ class FormatRulesTest extends CIUnitTestCase
             ],
             [
                 'FA08GG',
+                false,
+            ],
+            [
+                'dGVszdA==',
                 false,
             ],
             [
