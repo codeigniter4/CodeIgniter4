@@ -440,7 +440,7 @@ var ciDebugBar = {
                 var debugPath = document.createElement("div"); // path
                 var childArray = startElement[0].parentNode.childNodes; // target child array
                 var parent = startElement[0].parentNode;
-                var start, end;
+                let start, end;
 
                 // setup container
                 debugDiv.classList.add("debug-view");
