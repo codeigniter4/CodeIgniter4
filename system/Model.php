@@ -396,7 +396,7 @@ class Model extends BaseModel
 
         // If insertion succeeded then save the insert ID
         if ($result) {
-            $this->insertID = ! $this->useAutoIncrement ? $row[$this->primaryKey] : $this->db->insertID();
+            $this->insertID = $this->useAutoIncrement ? $this->db->insertID() : $row[$this->primaryKey];
         }
 
         return $result;

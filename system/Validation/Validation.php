@@ -918,7 +918,7 @@ class Validation implements ValidationInterface
 
         $args = [
             'field' => ($label === null || $label === '') ? $field : lang($label),
-            'param' => (! isset($this->rules[$param]['label'])) ? $param : lang($this->rules[$param]['label']),
+            'param' => isset($this->rules[$param]['label']) ? lang($this->rules[$param]['label']) : $param,
             'value' => $value ?? '',
         ];
 

@@ -1152,7 +1152,7 @@ class BaseBuilder
             return $this;
         }
 
-        $keyValue = ! is_array($field) ? [$field => $match] : $field;
+        $keyValue = is_array($field) ? $field : [$field => $match];
 
         foreach ($keyValue as $k => $v) {
             if ($insensitiveSearch) {
@@ -3065,7 +3065,7 @@ class BaseBuilder
         if ($selectOverride !== false) {
             $sql = $selectOverride;
         } else {
-            $sql = (! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
+            $sql = $this->QBDistinct ? 'SELECT DISTINCT ' : 'SELECT ';
 
             if (empty($this->QBSelect)) {
                 $sql .= '*';

@@ -584,7 +584,7 @@ class Builder extends BaseBuilder
         if ($selectOverride !== false) {
             $sql = $selectOverride;
         } else {
-            $sql = (! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
+            $sql = $this->QBDistinct ? 'SELECT DISTINCT ' : 'SELECT ';
 
             // SQL Server can't work with select * if group by is specified
             if (empty($this->QBSelect) && $this->QBGroupBy !== [] && is_array($this->QBGroupBy)) {

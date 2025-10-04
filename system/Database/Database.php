@@ -136,9 +136,9 @@ class Database
      */
     protected function initDriver(string $driver, string $class, $argument): object
     {
-        $classname = (! str_contains($driver, '\\'))
-            ? "CodeIgniter\\Database\\{$driver}\\{$class}"
-            : $driver . '\\' . $class;
+        $classname = str_contains($driver, '\\')
+            ? $driver . '\\' . $class
+            : "CodeIgniter\\Database\\{$driver}\\{$class}";
 
         return new $classname($argument);
     }

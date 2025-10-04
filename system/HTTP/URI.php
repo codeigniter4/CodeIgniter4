@@ -181,9 +181,9 @@ class URI implements Stringable
         }
 
         if ((string) $path !== '') {
-            $uri .= ! str_ends_with($uri, '/')
-                ? '/' . ltrim($path, '/')
-                : ltrim($path, '/');
+            $uri .= str_ends_with($uri, '/')
+                ? ltrim($path, '/')
+                : '/' . ltrim($path, '/');
         }
 
         if ((string) $query !== '') {
