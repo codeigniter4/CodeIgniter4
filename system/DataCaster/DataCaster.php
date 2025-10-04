@@ -29,7 +29,7 @@ use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 
 /**
- * @template TCastHandlers of array<string, CastInterface|class-string|EntityCastInterface>
+ * @phpstan-type cast_handlers array<string, CastInterface|class-string|EntityCastInterface>
  *
  * @see CodeIgniter\DataCaster\DataCasterTest
  * @see CodeIgniter\Entity\EntityTest
@@ -46,7 +46,8 @@ final class DataCaster
     /**
      * Convert handlers.
      *
-     * @var TCastHandlers [type => classname]
+     * @var         array<string, class-string> [type => classname]
+     * @phpstan-var cast_handlers
      */
     private array $castHandlers = [
         'array'     => ArrayCast::class,
@@ -65,10 +66,11 @@ final class DataCaster
     ];
 
     /**
-     * @param TCastHandlers|null         $castHandlers Custom convert handlers
-     * @param array<string, string>|null $types        [field => type]
-     * @param object|null                $helper       Helper object.
-     * @param bool                       $strict       Strict mode? Set to false for casts for Entity.
+     * @param         array<string, class-string>|null $castHandlers Custom convert handlers
+     * @param         array<string, string>|null       $types        [field => type]
+     * @param         object|null                      $helper       Helper object.
+     * @param         bool                             $strict       Strict mode? Set to false for casts for Entity.
+     * @phpstan-param cast_handlers|null               $castHandlers
      */
     public function __construct(
         ?array $castHandlers = null,
@@ -76,9 +78,7 @@ final class DataCaster
         private readonly ?object $helper = null,
         private readonly bool $strict = true,
     ) {
-        if ($castHandlers !== null && $castHandlers !== []) {
-            $this->castHandlers = array_merge($this->castHandlers, $castHandlers);
-        }
+        $this->castHandlers = array_merge($this->castHandlers, $castHandlers ?? []);
 
         if ($types !== null) {
             $this->setTypes($types);
@@ -121,9 +121,9 @@ final class DataCaster
      * Add ? at the beginning of the type (i.e. ?string) to get `null`
      * instead of casting $value when $value is null.
      *
-     * @param mixed       $value  The value to convert
-     * @param string      $field  The field name
-     * @param 'get'|'set' $method Allowed to "get" and "set"
+     * @param mixed  $value  The value to convert
+     * @param string $field  The field name
+     * @param string $method Allowed to "get" and "set"
      */
     public function castAs(mixed $value, string $field, string $method = 'get'): mixed
     {

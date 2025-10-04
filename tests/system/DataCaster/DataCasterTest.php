@@ -29,6 +29,6 @@ final class DataCasterTest extends CIUnitTestCase
         $this->expectExceptionMessage('The "add" is invalid cast method, valid methods are: ["get", "set"].');
 
         $dataCaster = new DataCaster();
-        $dataCaster->castAs([], 'name', 'add'); // @phpstan-ignore argument.type
+        $dataCaster->castAs([], 'name', 'add');
     }
 }
