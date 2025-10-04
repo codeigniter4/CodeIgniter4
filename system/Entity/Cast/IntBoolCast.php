@@ -14,8 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Entity\Cast;
 
 /**
- * Int Bool Cast
- *
  * DB column: int (0/1) <--> Class property: bool
  */
 final class IntBoolCast extends BaseCast
