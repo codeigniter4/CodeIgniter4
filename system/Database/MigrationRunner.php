@@ -659,7 +659,7 @@ class MigrationRunner
 
         $query = $builder->orderBy('id', 'ASC')->get();
 
-        return ! empty($query) ? $query->getResultObject() : [];
+        return empty($query) ? [] : $query->getResultObject();
     }
 
     /**
@@ -676,7 +676,7 @@ class MigrationRunner
             ->orderBy('id', $order)
             ->get();
 
-        return ! empty($query) ? $query->getResultObject() : [];
+        return empty($query) ? [] : $query->getResultObject();
     }
 
     /**
