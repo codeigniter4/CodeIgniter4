@@ -504,16 +504,29 @@ parameter. If no value is present, it will be the same as <code class="docutils 
 <p>If a <code class="docutils literal notranslate"><span class="pre">$message</span></code> string is passed, it will be used in place of the standard IANA reason codes for the
 response status. Not every client will respect the custom codes, though, and will use the IANA standards
 that match the status code.</p>
-<p>The response is an array with two elements: <code class="docutils literal notranslate"><span class="pre">error</span></code> and <code class="docutils literal notranslate"><span class="pre">messages</span></code>. The <code class="docutils literal notranslate"><span class="pre">error</span></code> element contains the status
-code of the error. The <code class="docutils literal notranslate"><span class="pre">messages</span></code> element contains an array of error messages. It would look something like:</p>
+<p>The response is an array with three elements: <code class="docutils literal notranslate"><span class="pre">status</span></code>, <code class="docutils literal notranslate"><span class="pre">code</span></code>, and <code class="docutils literal notranslate"><span class="pre">messages</span></code>.
+- The <code class="docutils literal notranslate"><span class="pre">status</span></code> element contains the status code of the error.
+- The <code class="docutils literal notranslate"><span class="pre">code</span></code> element contains a custom, API-specific error code.
+- The <code class="docutils literal notranslate"><span class="pre">messages</span></code> element contains an array of error messages.</p>
+<p>Depending on the number of error messages, the response would look something like:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="c1">// Example response with a single error message</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;status&#39;</span>   <span class="o">=&gt;</span> <span class="mi">400</span><span class="p">,</span>
+    <span class="s1">&#39;code&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;321&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;messages&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;An error occurred&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+
+<span class="c1">// Example response with multiple error messages per field</span>
 <span class="nv">$response</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;status&#39;</span>   <span class="o">=&gt;</span> <span class="mi">400</span><span class="p">,</span>
     <span class="s1">&#39;code&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;321a&#39;</span><span class="p">,</span>
     <span class="s1">&#39;messages&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;Error message 1&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Error message 2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Error message 1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Error message 2&#39;</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
@@ -797,7 +810,7 @@ This might be due to some form of throttling or rate limiting. Status code is ty
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 03, 2025.
+      <span class="lastupdated">Last updated on Oct 05, 2025.
       </span></p>
   </div>
 
