@@ -20,6 +20,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
