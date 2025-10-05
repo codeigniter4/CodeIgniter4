@@ -460,8 +460,12 @@ class CodeIgniter
 
         $returned = $this->startController();
 
+        // If startController returned a Response (from an attribute or Closure), use it
+        if ($returned instanceof ResponseInterface) {
+            $this->gatherOutput($cacheConfig, $returned);
+        }
         // Closure controller has run in startController().
-        if (! is_callable($this->controller)) {
+        elseif (! is_callable($this->controller)) {
             $controller = $this->createController();
 
             if (! method_exists($controller, '_remap') && ! is_callable([$controller, $this->method], false)) {
@@ -496,6 +500,11 @@ class CodeIgniter
                 $this->response = $response;
             }
         }
+
+        // Execute controller attributes' after() methods AFTER framework filters
+        $this->benchmark->start('route_attributes_after');
+        $this->response = $this->router->executeAfterAttributes($this->request, $this->response);
+        $this->benchmark->stop('route_attributes_after');
 
         // Skip unnecessary processing for special Responses.
         if (
@@ -853,6 +862,25 @@ class CodeIgniter
             || ($this->method[0] === '_' && $this->method !== '__invoke')
         ) {
             throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
+        }
+
+        // Execute route attributes' before() methods
+        // This runs after routing/validation but BEFORE expensive controller instantiation
+        $this->benchmark->start('route_attributes_before');
+        $attributeResponse = $this->router->executeBeforeAttributes($this->request);
+        $this->benchmark->stop('route_attributes_before');
+
+        // If attribute returns a Response, short-circuit
+        if ($attributeResponse instanceof ResponseInterface) {
+            $this->benchmark->stop('controller_constructor');
+            $this->benchmark->stop('controller');
+
+            return $attributeResponse;
+        }
+
+        // If attribute returns a modified Request, use it
+        if ($attributeResponse instanceof Request) {
+            $this->request = $attributeResponse;
         }
 
         return null;

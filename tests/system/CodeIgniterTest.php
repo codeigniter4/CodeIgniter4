@@ -36,6 +36,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use Tests\Support\Filters\Customfilter;
 use Tests\Support\Filters\RedirectFilter;
+use Tests\Support\Router\Filters\TestAttributeFilter;
 
 /**
  * @internal
@@ -961,5 +962,220 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // No PageNotFoundException
         $this->assertTrue(true);
+    }
+
+    public function testRouteAttributeCacheIntegration(): void
+    {
+        $_SERVER['argv'] = ['index.php', 'attribute/cached'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI']    = '/attribute/cached';
+        $_SERVER['SCRIPT_NAME']    = '/index.php';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        // Clear cache before test
+        cache()->clean();
+
+        // Inject mock router
+        $routes = service('routes');
+        $routes->get('attribute/cached', '\Tests\Support\Router\Controllers\AttributeController::cached');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        // First request - should cache
+        ob_start();
+        $this->codeigniter->run();
+        $output1 = ob_get_clean();
+
+        $this->assertStringContainsString('Cached content at', (string) $output1);
+
+        // Extract timestamp from first response
+        preg_match('/Cached content at (\d+)/', (string) $output1, $matches1);
+        $time1 = $matches1[1] ?? null;
+
+        // Wait a moment to ensure time would be different if not cached
+        sleep(1);
+
+        // Second request - should return cached version with same timestamp
+        $this->resetServices();
+        $_SERVER['argv']           = ['index.php', 'attribute/cached'];
+        $_SERVER['argc']           = 2;
+        $_SERVER['REQUEST_URI']    = '/attribute/cached';
+        $_SERVER['SCRIPT_NAME']    = '/index.php';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $this->codeigniter         = new MockCodeIgniter(new App());
+
+        $routes = service('routes');
+        $routes->get('attribute/cached', '\Tests\Support\Router\Controllers\AttributeController::cached');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->run();
+        $output2 = ob_get_clean();
+
+        preg_match('/Cached content at (\d+)/', (string) $output2, $matches2);
+        $time2 = $matches2[1] ?? null;
+
+        // Timestamps should be EXACTLY the same (cached response)
+        $this->assertSame($time1, $time2, 'Expected cached response with identical timestamp');
+
+        // Clear cache after test
+        cache()->clean();
+    }
+
+    public function testRouteAttributeFilterIntegration(): void
+    {
+        $_SERVER['argv'] = ['index.php', 'attribute/filtered'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI'] = '/attribute/filtered';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+
+        // Register the test filter
+        $filterConfig                                 = config('Filters');
+        $filterConfig->aliases['testAttributeFilter'] = TestAttributeFilter::class;
+        service('filters', $filterConfig);
+
+        // Inject mock router
+        $routes = service('routes');
+        $routes->get('attribute/filtered', '\Tests\Support\Router\Controllers\AttributeController::filtered');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->run();
+        $output = ob_get_clean();
+
+        // Verify filter ran before (modified request body) and after (appended to response)
+        $this->assertStringContainsString('Filtered: before_filter_ran:', (string) $output);
+        $this->assertStringContainsString(':after_filter_ran', (string) $output);
+    }
+
+    public function testRouteAttributeRestrictIntegration(): void
+    {
+        $_SERVER['argv'] = ['index.php', 'attribute/restricted'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI'] = '/attribute/restricted';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+
+        // Inject mock router
+        $routes = service('routes');
+        $routes->get('attribute/restricted', '\Tests\Support\Router\Controllers\AttributeController::restricted');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->run();
+        $output = ob_get_clean();
+
+        // Should allow access since we're in the current ENVIRONMENT
+        $this->assertStringContainsString('Access granted', (string) $output);
+    }
+
+    public function testRouteAttributeRestrictThrowsException(): void
+    {
+        $_SERVER['argv'] = ['index.php', 'attribute/restricted'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI'] = '/attribute/shouldBeRestricted';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+
+        // Inject mock router
+        $routes = service('routes');
+        $routes->get('attribute/shouldBeRestricted', '\Tests\Support\Router\Controllers\AttributeController::shouldBeRestricted');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        // Should throw PageNotFoundException because we're not in 'production'
+        $this->expectException(PageNotFoundException::class);
+        $this->expectExceptionMessage('Access denied: Current environment is not allowed.');
+
+        $this->codeigniter->run();
+    }
+
+    public function testRouteAttributeMultipleAttributesIntegration(): void
+    {
+        $_SERVER['argv'] = ['index.php', 'attribute/multiple'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI'] = '/attribute/multiple';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+
+        // Register the test filter
+        $filterConfig                                 = config('Filters');
+        $filterConfig->aliases['testAttributeFilter'] = TestAttributeFilter::class;
+        service('filters', $filterConfig);
+
+        // Inject mock router
+        $routes = service('routes');
+        $routes->get('attribute/multiple', '\Tests\Support\Router\Controllers\AttributeController::multipleAttributes');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->run();
+        $output = ob_get_clean();
+
+        // Verify both Restrict and Filter attributes worked
+        $this->assertStringContainsString('Multiple: before_filter_ran:', (string) $output);
+        $this->assertStringContainsString(':after_filter_ran', (string) $output);
+    }
+
+    public function testRouteAttributeNoAttributesIntegration(): void
+    {
+        $_SERVER['argv'] = ['index.php', 'attribute/none'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI'] = '/attribute/none';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+
+        // Inject mock router
+        $routes = service('routes');
+        $routes->get('attribute/none', '\Tests\Support\Router\Controllers\AttributeController::noAttributes');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->run();
+        $output = ob_get_clean();
+
+        // Should work normally with no attribute processing
+        $this->assertStringContainsString('No attributes', (string) $output);
+    }
+
+    public function testRouteAttributeCustomCacheKeyIntegration(): void
+    {
+        $_SERVER['argv'] = ['index.php', 'attribute/customkey'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI']    = '/attribute/customkey';
+        $_SERVER['SCRIPT_NAME']    = '/index.php';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        // Clear cache before test
+        cache()->clean();
+
+        // Inject mock router
+        $routes = service('routes');
+        $routes->get('attribute/customkey', '\Tests\Support\Router\Controllers\AttributeController::customCacheKey');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        // First request
+        ob_start();
+        $this->codeigniter->run();
+        $output1 = ob_get_clean();
+
+        // Verify custom cache key was used
+        $cached = cache('custom_cache_key');
+        $this->assertNotNull($cached);
+        $this->assertIsArray($cached);
+        $this->assertArrayHasKey('body', $cached);
+        $this->assertStringContainsString('Custom key content at', $cached['body']);
+
+        // Clear cache after test
+        cache()->clean();
     }
 }
