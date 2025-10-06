@@ -959,7 +959,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         // Set up the request and router
         $request = service('incomingrequest');
         $this->setPrivateProperty($this->codeigniter, 'request', $request);
-        
+
         $routes = service('routes');
         $router = service('router', $routes, $request);
         $this->setPrivateProperty($this->codeigniter, 'router', $router);
