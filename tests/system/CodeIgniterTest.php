@@ -1004,12 +1004,12 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Second request - should return cached version with same timestamp
         $this->resetServices();
-        $_SERVER['argv']           = ['index.php', 'attribute/cached'];
-        $_SERVER['argc']           = 2;
+        $_SERVER['argv'] = ['index.php', 'attribute/cached'];
+        $_SERVER['argc'] = 2;
         Services::superglobals()->setServer('REQUEST_URI', '/attribute/cached');
         Services::superglobals()->setServer('SCRIPT_NAME', '/index.php');
         Services::superglobals()->setServer('REQUEST_METHOD', 'GET');
-        $this->codeigniter         = new MockCodeIgniter(new App());
+        $this->codeigniter = new MockCodeIgniter(new App());
 
         $routes = service('routes');
         $routes->get('attribute/cached', '\Tests\Support\Router\Controllers\AttributeController::cached');

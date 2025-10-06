@@ -1,8 +1,4 @@
-# total 1 error
+# total 0 errors
 
 parameters:
-    ignoreErrors:
-        -
-            message: '#^Comparison operation "\>\=" between int\<3, max\> and 3 is always true\.$#'
-            count: 1
-            path: ../../system/Router/Attributes/Restrict.php
+    ignoreErrors: []

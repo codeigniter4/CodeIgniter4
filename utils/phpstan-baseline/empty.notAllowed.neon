@@ -1,4 +1,4 @@
-# total 231 errors
+# total 230 errors
 
 parameters:
     ignoreErrors:
@@ -286,11 +286,6 @@ parameters:
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
             count: 4
             path: ../../system/RESTful/BaseResource.php
-
-        -
-            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 1
-            path: ../../system/Router/Attributes/Filter.php
 
         -
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
