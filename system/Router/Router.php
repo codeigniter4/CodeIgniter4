@@ -779,6 +779,11 @@ class Router implements RouterInterface
     {
         $this->routeAttributes = ['class' => [], 'method' => []];
 
+        // Skip if controller attributes are disabled in config
+        if (config('routing')->useControllerAttributes === false) {
+            return;
+        }
+
         // Skip if controller is a Closure
         if ($this->controller instanceof Closure) {
             return;

@@ -25,6 +25,11 @@ You can also apply the ``Filters`` attribute to a specific method within a contr
 
 Class-level and method-level attributes can work together to provide a flexible way to manage your routes at the controller level.
 
+Disabling Attributes
+--------------------
+
+If you know that you will not be using attributes in your application, you can disable the feature by setting the ``$useControllerAttributes`` property in your ``app/Config/Routing.php`` file to ``false``.
+
 Provided Attributes
 *******************
 

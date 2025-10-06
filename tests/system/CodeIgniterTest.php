@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter;
 
 use App\Controllers\Home;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -43,7 +44,7 @@ use Tests\Support\Router\Filters\TestAttributeFilter;
  */
 #[BackupGlobals(true)]
 #[Group('Others')]
-#[RunTestsInSeparateProcesses]
+// #[RunTestsInSeparateProcesses]
 final class CodeIgniterTest extends CIUnitTestCase
 {
     private CodeIgniter $codeigniter;
@@ -1186,5 +1187,48 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Clear cache after test
         cache()->clean();
+    }
+
+    public function testRouteAttributesDisabledInConfig(): void
+    {
+        Services::superglobals()->setServer('REQUEST_URI', '/attribute/filtered');
+        Services::superglobals()->setServer('SCRIPT_NAME', '/index.php');
+        Services::superglobals()->setServer('REQUEST_METHOD', 'GET');
+
+        // Disable route attributes in config BEFORE creating CodeIgniter instance
+        $routing = config('routing');
+        $routing->useControllerAttributes = false;
+        Factories::injectMock('config', 'routing', $routing);
+
+        // Register the test filter (even though attributes are disabled,
+        // we need it registered to avoid FilterException)
+        $filterConfig                                 = config('Filters');
+        $filterConfig->aliases['testAttributeFilter'] = TestAttributeFilter::class;
+        service('filters', $filterConfig);
+
+        $routes = service('routes');
+        $routes->setAutoRoute(false);
+
+        // We're testing that a route defined normally will work,
+        // but the attributes on the controller method won't be processed
+        $routes->get('attribute/filtered', '\Tests\Support\Router\Controllers\AttributeController::filtered');
+
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        $config = new App();
+        $codeigniter = new MockCodeIgniter($config);
+
+        ob_start();
+        $codeigniter->run($routes);
+        $output = ob_get_clean();
+
+
+        // When useRouteAttributes is false, the filter attributes should NOT be processed
+        // So the filter should not have run
+        $this->assertStringNotContainsString('before_filter_ran', (string) $output);
+        $this->assertStringNotContainsString('after_filter_ran', (string) $output);
+        // But the controller method should still execute
+        $this->assertStringContainsString('Filtered', (string) $output);
     }
 }

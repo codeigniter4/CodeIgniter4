@@ -502,9 +502,11 @@ class CodeIgniter
         }
 
         // Execute controller attributes' after() methods AFTER framework filters
-        $this->benchmark->start('route_attributes_after');
-        $this->response = $this->router->executeAfterAttributes($this->request, $this->response);
-        $this->benchmark->stop('route_attributes_after');
+        if (config('routing')->useControllerAttributes === true) {
+            $this->benchmark->start('route_attributes_after');
+            $this->response = $this->router->executeAfterAttributes($this->request, $this->response);
+            $this->benchmark->stop('route_attributes_after');
+        }
 
         // Skip unnecessary processing for special Responses.
         if (
@@ -866,21 +868,23 @@ class CodeIgniter
 
         // Execute route attributes' before() methods
         // This runs after routing/validation but BEFORE expensive controller instantiation
-        $this->benchmark->start('route_attributes_before');
-        $attributeResponse = $this->router->executeBeforeAttributes($this->request);
-        $this->benchmark->stop('route_attributes_before');
+        if (config('routing')->useControllerAttributes === true) {
+            $this->benchmark->start('route_attributes_before');
+            $attributeResponse = $this->router->executeBeforeAttributes($this->request);
+            $this->benchmark->stop('route_attributes_before');
 
-        // If attribute returns a Response, short-circuit
-        if ($attributeResponse instanceof ResponseInterface) {
-            $this->benchmark->stop('controller_constructor');
-            $this->benchmark->stop('controller');
+            // If attribute returns a Response, short-circuit
+            if ($attributeResponse instanceof ResponseInterface) {
+                $this->benchmark->stop('controller_constructor');
+                $this->benchmark->stop('controller');
 
-            return $attributeResponse;
-        }
+                return $attributeResponse;
+            }
 
-        // If attribute returns a modified Request, use it
-        if ($attributeResponse instanceof Request) {
-            $this->request = $attributeResponse;
+            // If attribute returns a modified Request, use it
+            if ($attributeResponse instanceof Request) {
+                $this->request = $attributeResponse;
+            }
         }
 
         return null;
