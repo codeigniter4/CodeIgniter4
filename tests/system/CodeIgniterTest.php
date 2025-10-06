@@ -44,7 +44,7 @@ use Tests\Support\Router\Filters\TestAttributeFilter;
  */
 #[BackupGlobals(true)]
 #[Group('Others')]
-// #[RunTestsInSeparateProcesses]
+#[RunTestsInSeparateProcesses]
 final class CodeIgniterTest extends CIUnitTestCase
 {
     private CodeIgniter $codeigniter;
@@ -1196,7 +1196,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::superglobals()->setServer('REQUEST_METHOD', 'GET');
 
         // Disable route attributes in config BEFORE creating CodeIgniter instance
-        $routing = config('routing');
+        $routing                          = config('routing');
         $routing->useControllerAttributes = false;
         Factories::injectMock('config', 'routing', $routing);
 
@@ -1216,13 +1216,12 @@ final class CodeIgniterTest extends CIUnitTestCase
         $router = service('router', $routes, service('incomingrequest'));
         Services::injectMock('router', $router);
 
-        $config = new App();
+        $config      = new App();
         $codeigniter = new MockCodeIgniter($config);
 
         ob_start();
         $codeigniter->run($routes);
         $output = ob_get_clean();
-
 
         // When useRouteAttributes is false, the filter attributes should NOT be processed
         // So the filter should not have run
