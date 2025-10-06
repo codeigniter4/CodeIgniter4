@@ -956,9 +956,12 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->setPrivateProperty($this->codeigniter, 'benchmark', new Timer());
         $this->setPrivateProperty($this->codeigniter, 'controller', '\\' . Home::class);
 
-        // Set up the router with routes
+        // Set up the request and router
+        $request = service('incomingrequest');
+        $this->setPrivateProperty($this->codeigniter, 'request', $request);
+        
         $routes = service('routes');
-        $router = service('router', $routes, service('incomingrequest'));
+        $router = service('router', $routes, $request);
         $this->setPrivateProperty($this->codeigniter, 'router', $router);
 
         $startController = self::getPrivateMethodInvoker($this->codeigniter, 'startController');

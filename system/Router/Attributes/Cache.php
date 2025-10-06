@@ -69,11 +69,13 @@ class Cache implements RouteAttributeInterface
             $response->setStatusCode($cached['status']);
             // Mark response as served from cache to prevent re-caching
             $response->setHeader('X-Cached-Response', 'true');
+
             // Restore headers from cached array of header name => value strings
             foreach ($cached['headers'] as $name => $value) {
                 $response->setHeader($name, $value);
             }
             $response->setHeader('Age', (string) (time() - ($cached['timestamp'] ?? time())));
+
             return $response;
         }
 
