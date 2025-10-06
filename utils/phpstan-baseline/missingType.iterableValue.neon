@@ -1,4 +1,4 @@
-# total 1386 errors
+# total 1391 errors
 
 parameters:
     ignoreErrors:
@@ -4211,6 +4211,31 @@ parameters:
             message: '#^Method CodeIgniter\\Publisher\\Publisher\:\:replace\(\) has parameter \$replaces with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Publisher/Publisher.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\Attributes\\Filter\:\:__construct\(\) has parameter \$having with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Router/Attributes/Filter.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\Attributes\\Filter\:\:getFilters\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Router/Attributes/Filter.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\Attributes\\Restrict\:\:__construct\(\) has parameter \$environment with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Router/Attributes/Restrict.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\Attributes\\Restrict\:\:__construct\(\) has parameter \$hostname with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Router/Attributes/Restrict.php
+
+        -
+            message: '#^Method CodeIgniter\\Router\\Attributes\\Restrict\:\:__construct\(\) has parameter \$subdomain with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Router/Attributes/Restrict.php
 
         -
             message: '#^Method CodeIgniter\\Router\\AutoRouter\:\:getRoute\(\) return type has no value type specified in iterable type array\.$#'

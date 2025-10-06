@@ -955,6 +955,12 @@ final class CodeIgniterTest extends CIUnitTestCase
     {
         $this->setPrivateProperty($this->codeigniter, 'benchmark', new Timer());
         $this->setPrivateProperty($this->codeigniter, 'controller', '\\' . Home::class);
+
+        // Set up the router with routes
+        $routes = service('routes');
+        $router = service('router', $routes, service('incomingrequest'));
+        $this->setPrivateProperty($this->codeigniter, 'router', $router);
+
         $startController = self::getPrivateMethodInvoker($this->codeigniter, 'startController');
 
         $this->setPrivateProperty($this->codeigniter, 'method', '__invoke');
@@ -969,9 +975,9 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argv'] = ['index.php', 'attribute/cached'];
         $_SERVER['argc'] = 2;
 
-        $_SERVER['REQUEST_URI']    = '/attribute/cached';
-        $_SERVER['SCRIPT_NAME']    = '/index.php';
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        Services::superglobals()->setServer('REQUEST_URI', '/attribute/cached');
+        Services::superglobals()->setServer('SCRIPT_NAME', '/index.php');
+        Services::superglobals()->setServer('REQUEST_METHOD', 'GET');
 
         // Clear cache before test
         cache()->clean();
@@ -1000,9 +1006,9 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->resetServices();
         $_SERVER['argv']           = ['index.php', 'attribute/cached'];
         $_SERVER['argc']           = 2;
-        $_SERVER['REQUEST_URI']    = '/attribute/cached';
-        $_SERVER['SCRIPT_NAME']    = '/index.php';
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        Services::superglobals()->setServer('REQUEST_URI', '/attribute/cached');
+        Services::superglobals()->setServer('SCRIPT_NAME', '/index.php');
+        Services::superglobals()->setServer('REQUEST_METHOD', 'GET');
         $this->codeigniter         = new MockCodeIgniter(new App());
 
         $routes = service('routes');
@@ -1029,8 +1035,8 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argv'] = ['index.php', 'attribute/filtered'];
         $_SERVER['argc'] = 2;
 
-        $_SERVER['REQUEST_URI'] = '/attribute/filtered';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        Services::superglobals()->setServer('REQUEST_URI', '/attribute/filtered');
+        Services::superglobals()->setServer('SCRIPT_NAME', '/index.php');
 
         // Register the test filter
         $filterConfig                                 = config('Filters');
@@ -1057,8 +1063,8 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argv'] = ['index.php', 'attribute/restricted'];
         $_SERVER['argc'] = 2;
 
-        $_SERVER['REQUEST_URI'] = '/attribute/restricted';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        Services::superglobals()->setServer('REQUEST_URI', '/attribute/restricted');
+        Services::superglobals()->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router
         $routes = service('routes');
@@ -1079,8 +1085,8 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argv'] = ['index.php', 'attribute/restricted'];
         $_SERVER['argc'] = 2;
 
-        $_SERVER['REQUEST_URI'] = '/attribute/shouldBeRestricted';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        Services::superglobals()->setServer('REQUEST_URI', '/attribute/shouldBeRestricted');
+        Services::superglobals()->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router
         $routes = service('routes');
@@ -1100,8 +1106,8 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argv'] = ['index.php', 'attribute/multiple'];
         $_SERVER['argc'] = 2;
 
-        $_SERVER['REQUEST_URI'] = '/attribute/multiple';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        Services::superglobals()->setServer('REQUEST_URI', '/attribute/multiple');
+        Services::superglobals()->setServer('SCRIPT_NAME', '/index.php');
 
         // Register the test filter
         $filterConfig                                 = config('Filters');
@@ -1128,8 +1134,8 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argv'] = ['index.php', 'attribute/none'];
         $_SERVER['argc'] = 2;
 
-        $_SERVER['REQUEST_URI'] = '/attribute/none';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        Services::superglobals()->setServer('REQUEST_URI', '/attribute/none');
+        Services::superglobals()->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router
         $routes = service('routes');
@@ -1150,9 +1156,9 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argv'] = ['index.php', 'attribute/customkey'];
         $_SERVER['argc'] = 2;
 
-        $_SERVER['REQUEST_URI']    = '/attribute/customkey';
-        $_SERVER['SCRIPT_NAME']    = '/index.php';
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        Services::superglobals()->setServer('REQUEST_URI', '/attribute/customkey');
+        Services::superglobals()->setServer('SCRIPT_NAME', '/index.php');
+        Services::superglobals()->setServer('REQUEST_METHOD', 'GET');
 
         // Clear cache before test
         cache()->clean();
@@ -1166,14 +1172,14 @@ final class CodeIgniterTest extends CIUnitTestCase
         // First request
         ob_start();
         $this->codeigniter->run();
-        $output1 = ob_get_clean();
+        ob_get_clean();
 
         // Verify custom cache key was used
         $cached = cache('custom_cache_key');
         $this->assertNotNull($cached);
         $this->assertIsArray($cached);
         $this->assertArrayHasKey('body', $cached);
-        $this->assertStringContainsString('Custom key content at', $cached['body']);
+        $this->assertStringContainsString('Custom key content at', (string) $cached['body']);
 
         // Clear cache after test
         cache()->clean();

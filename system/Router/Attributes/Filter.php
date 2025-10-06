@@ -58,7 +58,7 @@ class Filter implements RouteAttributeInterface
 
     public function getFilters(): array
     {
-        if (empty($this->having)) {
+        if ($this->having === []) {
             return [$this->by];
         }
 

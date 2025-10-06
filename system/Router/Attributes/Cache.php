@@ -62,25 +62,19 @@ class Cache implements RouteAttributeInterface
         $cacheKey = $this->key ?? $this->generateCacheKey($request);
 
         $cached = cache($cacheKey);
-        if ($cached !== null) {
-            // Validate cached data structure
-            if (is_array($cached) && isset($cached['body'], $cached['headers'], $cached['status'])) {
-                $response = service('response');
-                $response->setBody($cached['body']);
-                $response->setStatusCode($cached['status']);
-
-                // Mark response as served from cache to prevent re-caching
-                $response->setHeader('X-Cached-Response', 'true');
-
-                // Restore headers from cached array of header name => value strings
-                foreach ($cached['headers'] as $name => $value) {
-                    $response->setHeader($name, $value);
-                }
-
-                $response->setHeader('Age', (string) (time() - ($cached['timestamp'] ?? time())));
-
-                return $response;
+        // Validate cached data structure
+        if ($cached !== null && (is_array($cached) && isset($cached['body'], $cached['headers'], $cached['status']))) {
+            $response = service('response');
+            $response->setBody($cached['body']);
+            $response->setStatusCode($cached['status']);
+            // Mark response as served from cache to prevent re-caching
+            $response->setHeader('X-Cached-Response', 'true');
+            // Restore headers from cached array of header name => value strings
+            foreach ($cached['headers'] as $name => $value) {
+                $response->setHeader($name, $value);
             }
+            $response->setHeader('Age', (string) (time() - ($cached['timestamp'] ?? time())));
+            return $response;
         }
 
         return null; // Continue to controller

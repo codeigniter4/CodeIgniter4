@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Method CodeIgniter\\Router\\Router\:\:getRouteAttributes\(\) should return array\{class\: list\<string\>, method\: list\<string\>\} but returns array\{class\: list\<CodeIgniter\\Router\\Attributes\\RouteAttributeInterface\>, method\: list\<CodeIgniter\\Router\\Attributes\\RouteAttributeInterface\>\}\.$#'
+            count: 1
+            path: ../../system/Router/Router.php

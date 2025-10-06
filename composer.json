@@ -117,10 +117,10 @@
         "phpstan:baseline": [
             "bash -c \"rm -rf utils/phpstan-baseline/*.neon\"",
             "bash -c \"touch utils/phpstan-baseline/loader.neon\"",
-            "phpstan analyse --ansi --generate-baseline=utils/phpstan-baseline/loader.neon",
+            "phpstan analyse --ansi --generate-baseline=utils/phpstan-baseline/loader.neon --memory-limit=512M",
             "split-phpstan-baseline utils/phpstan-baseline/loader.neon"
         ],
-        "phpstan:check": "vendor/bin/phpstan analyse --verbose --ansi",
+        "phpstan:check": "vendor/bin/phpstan analyse --verbose --ansi --memory-limit=512M",
         "sa": "@analyze",
         "style": "@cs-fix",
         "test": "phpunit"

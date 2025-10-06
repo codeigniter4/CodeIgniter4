@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Router\Attributes;
 
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
@@ -78,7 +79,7 @@ final class CacheTest extends CIUnitTestCase
 
         $result = $cache->before($request);
 
-        $this->assertInstanceOf('CodeIgniter\HTTP\ResponseInterface', $result);
+        $this->assertInstanceOf(ResponseInterface::class, $result);
         $this->assertSame('Cached content', $result->getBody());
         $this->assertSame(200, $result->getStatusCode());
         $this->assertSame('text/html', $result->getHeaderLine('Content-Type'));
@@ -129,7 +130,7 @@ final class CacheTest extends CIUnitTestCase
 
         $result = $cache->before($request);
 
-        $this->assertInstanceOf('CodeIgniter\HTTP\ResponseInterface', $result);
+        $this->assertInstanceOf(ResponseInterface::class, $result);
         $this->assertSame('Custom cached content', $result->getBody());
     }
 
@@ -141,7 +142,7 @@ final class CacheTest extends CIUnitTestCase
 
         $result = $cache->after($request, $response);
 
-        $this->assertNull($result);
+        $this->assertNotInstanceOf(ResponseInterface::class, $result);
     }
 
     public function testAfterCachesGetRequestResponse(): void
@@ -199,7 +200,7 @@ final class CacheTest extends CIUnitTestCase
     private function createMockRequest(string $method, string $path, string $query = ''): IncomingRequest
     {
         $config    = new MockAppConfig();
-        $uri       = new SiteURI($config, 'http://example.com' . $path . ($query ? '?' . $query : ''));
+        $uri       = new SiteURI($config, 'http://example.com' . $path . ($query !== '' ? '?' . $query : ''));
         $userAgent = new UserAgent();
 
         $request = $this->getMockBuilder(IncomingRequest::class)

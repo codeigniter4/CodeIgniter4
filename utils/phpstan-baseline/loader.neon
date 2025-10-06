@@ -1,4 +1,4 @@
-# total 2795 errors
+# total 2817 errors
 
 includes:
     - argument.type.neon
@@ -10,6 +10,8 @@ includes:
     - codeigniter.superglobalAccessAssign.neon
     - deadCode.unreachable.neon
     - empty.notAllowed.neon
+    - greaterOrEqual.alwaysTrue.neon
+    - isset.property.neon
     - method.alreadyNarrowedType.neon
     - method.childParameterType.neon
     - method.childReturnType.neon
@@ -24,6 +26,7 @@ includes:
     - property.nonObject.neon
     - property.notFound.neon
     - property.phpDocType.neon
+    - return.type.neon
     - staticMethod.notFound.neon
     - ternary.shortNotAllowed.neon
     - varTag.type.neon

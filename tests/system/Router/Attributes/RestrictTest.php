@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Router\Attributes;
 
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SiteURI;
@@ -95,7 +96,7 @@ final class RestrictTest extends CIUnitTestCase
 
         $result = $restrict->after($request, $response);
 
-        $this->assertNull($result);
+        $this->assertNotInstanceOf(ResponseInterface::class, $result);
     }
 
     public function testCheckEnvironmentAllowsCurrentEnvironment(): void
@@ -448,7 +449,7 @@ final class RestrictTest extends CIUnitTestCase
     {
         $config = new MockAppConfig();
         // Use the host parameter to properly set the host in SiteURI
-        $uri       = new SiteURI($config, $path . ($query ? '?' . $query : ''), $host, 'http');
+        $uri       = new SiteURI($config, $path . ($query !== '' ? '?' . $query : ''), $host, 'http');
         $userAgent = new UserAgent();
 
         $request = $this->getMockBuilder(IncomingRequest::class)

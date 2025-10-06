@@ -1,3 +1,5 @@
+.. _incoming/controller_attributes:
+
 #####################
 Controller Attributes
 #####################
@@ -15,7 +17,7 @@ Controller Attributes can be applied to either the entire class, or to a specifi
 
 .. literalinclude:: controller_attributes/001.php
 
-In this example, the ``Auth`` filter will be applied to all methods in ``AdminController`.
+In this example, the ``Auth`` filter will be applied to all methods in ``AdminController``.
 
 You can also apply the ``Filters`` attribute to a specific method within a controller. This allows you to apply filters only to certain methods, while leaving others unaffected. Here's an example:
 

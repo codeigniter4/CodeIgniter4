@@ -176,22 +176,18 @@ class Restrict implements RouteAttributeInterface
         if ($partCount < 3) {
             return '';
         }
-
         // Check if we have a two-part TLD (e.g., co.uk, com.au)
-        if ($partCount >= 3) {
-            $lastTwoParts = $parts[$partCount - 2] . '.' . $parts[$partCount - 1];
-
-            if (in_array($lastTwoParts, self::TWO_PART_TLDS, true)) {
-                // For two-part TLD, need at least 4 parts for subdomain
-                // e.g., api.example.co.uk (4 parts)
-                if ($partCount < 4) {
-                    return ''; // No subdomain, just domain.co.uk
-                }
-
-                // Remove the two-part TLD and domain name (last 3 parts)
-                // e.g., admin.api.example.co.uk -> admin.api
-                return implode('.', array_slice($parts, 0, $partCount - 3));
+        $lastTwoParts = $parts[$partCount - 2] . '.' . $parts[$partCount - 1];
+        if (in_array($lastTwoParts, self::TWO_PART_TLDS, true)) {
+            // For two-part TLD, need at least 4 parts for subdomain
+            // e.g., api.example.co.uk (4 parts)
+            if ($partCount < 4) {
+                return ''; // No subdomain, just domain.co.uk
             }
+
+            // Remove the two-part TLD and domain name (last 3 parts)
+            // e.g., admin.api.example.co.uk -> admin.api
+            return implode('.', array_slice($parts, 0, $partCount - 3));
         }
 
         // Standard TLD: Remove TLD and domain (last 2 parts)

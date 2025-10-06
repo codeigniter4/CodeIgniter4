@@ -259,7 +259,7 @@ class Router implements RouterInterface
         $filters = $this->filtersInfo;
 
         // Check for attribute-based filters
-        foreach ($this->routeAttributes as $location => $attributes) {
+        foreach ($this->routeAttributes as $attributes) {
             foreach ($attributes as $attribute) {
                 if ($attribute instanceof Filter) {
                     $filters = array_merge($filters, $attribute->getFilters());
