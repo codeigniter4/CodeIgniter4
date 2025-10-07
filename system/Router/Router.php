@@ -171,7 +171,12 @@ class Router implements RouterInterface
 
         $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
 
-        if ($this->collection->shouldAutoRoute()) {
+    /**
+     * Gets the AutoRouter instance
+     */
+    private function getAutoRouter(): AutoRouterInterface
+    {
+        if (!$this->autoRouter instanceof AutoRouterInterface) {
             $autoRoutesImproved = config(Feature::class)->autoRoutesImproved ?? false;
             if ($autoRoutesImproved) {
                 assert($this->collection instanceof RouteCollection);
@@ -221,8 +226,6 @@ class Router implements RouterInterface
         // Restart filterInfo
         $this->filtersInfo = [];
 
-<<<<<<< HEAD
-=======
         $useDefinedRoutes = $this->collection->shouldUseDefinedRoutes();
         $useAutoRoute     = $this->collection->shouldAutoRoute();
 
@@ -258,7 +261,6 @@ class Router implements RouterInterface
         }
 
         // Original path: BOTH enabled (check defined routes first, then auto-route)
->>>>>>> 8f675dc60a (Fixing tests after routing options PR was merged)
         // Checks defined routes
         if ($this->checkRoutes($uri)) {
             if ($this->collection->isFiltered($this->matchedRoute[0])) {
