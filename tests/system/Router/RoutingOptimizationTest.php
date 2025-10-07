@@ -151,7 +151,7 @@ final class RoutingOptimizationTest extends CIUnitTestCase
 
         // Test fallback to auto-routing
         $router->handle('mycontroller');
-        $this->assertSame(Mycontroller::class, $router->controllerName());
+        $this->assertSame('\\' . Mycontroller::class, $router->controllerName());
         $this->assertSame('getIndex', $router->methodName());
     }
 
