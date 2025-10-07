@@ -176,7 +176,7 @@ class Router implements RouterInterface
      */
     private function getAutoRouter(): AutoRouterInterface
     {
-        if (!$this->autoRouter instanceof AutoRouterInterface) {
+        if (! $this->autoRouter instanceof AutoRouterInterface) {
             $autoRoutesImproved = config(Feature::class)->autoRoutesImproved ?? false;
             if ($autoRoutesImproved) {
                 assert($this->collection instanceof RouteCollection);
