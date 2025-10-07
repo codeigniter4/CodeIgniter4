@@ -502,7 +502,7 @@ class CodeIgniter
         }
 
         // Execute controller attributes' after() methods AFTER framework filters
-        if (config('routing')->useControllerAttributes === true) {
+        if ((config('Routing')->useControllerAttributes ?? true) === true) {
             $this->benchmark->start('route_attributes_after');
             $this->response = $this->router->executeAfterAttributes($this->request, $this->response);
             $this->benchmark->stop('route_attributes_after');
@@ -868,7 +868,7 @@ class CodeIgniter
 
         // Execute route attributes' before() methods
         // This runs after routing/validation but BEFORE expensive controller instantiation
-        if (config('routing')->useControllerAttributes === true) {
+        if ((config('Routing')->useControllerAttributes ?? true) === true) {
             $this->benchmark->start('route_attributes_before');
             $attributeResponse = $this->router->executeBeforeAttributes($this->request);
             $this->benchmark->stop('route_attributes_before');
