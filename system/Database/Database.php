@@ -96,7 +96,7 @@ class Database
     {
         $dsn = parse_url($params['DSN']);
 
-        if ($dsn === 0 || $dsn === '' || $dsn === '0' || $dsn === [] || $dsn === false || $dsn === null) {
+        if (in_array($dsn, [0, '', '0', [], false, null], true)) {
             throw new InvalidArgumentException('Your DSN connection string is invalid.');
         }
 

@@ -432,10 +432,7 @@ final class UpdateModelTest extends LiveModelTestCase
     public function testUpdateEntityWithPrimaryKeyCast(): void
     {
         if (
-            $this->db->DBDriver === 'OCI8'
-            || $this->db->DBDriver === 'Postgre'
-            || $this->db->DBDriver === 'SQLSRV'
-            || $this->db->DBDriver === 'SQLite3'
+            in_array($this->db->DBDriver, ['OCI8', 'Postgre', 'SQLSRV', 'SQLite3'], true)
         ) {
             $this->markTestSkipped($this->db->DBDriver . ' does not work with binary data as string data.');
         }
@@ -464,10 +461,7 @@ final class UpdateModelTest extends LiveModelTestCase
     public function testUpdateBatchEntityWithPrimaryKeyCast(): void
     {
         if (
-            $this->db->DBDriver === 'OCI8'
-            || $this->db->DBDriver === 'Postgre'
-            || $this->db->DBDriver === 'SQLSRV'
-            || $this->db->DBDriver === 'SQLite3'
+            in_array($this->db->DBDriver, ['OCI8', 'Postgre', 'SQLSRV', 'SQLite3'], true)
         ) {
             $this->markTestSkipped($this->db->DBDriver . ' does not work with binary data as string data.');
         }
