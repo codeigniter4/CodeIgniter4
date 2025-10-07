@@ -45,14 +45,7 @@ class PageCache implements FilterInterface
         assert($request instanceof CLIRequest || $request instanceof IncomingRequest);
 
         $response = service('response');
-
-        $cachedResponse = $this->pageCache->get($request, $response);
-
-        if ($cachedResponse instanceof ResponseInterface) {
-            return $cachedResponse;
-        }
-
-        return null;
+        return $this->pageCache->get($request, $response);
     }
 
     /**
