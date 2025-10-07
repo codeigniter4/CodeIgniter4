@@ -25,6 +25,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponsableInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
@@ -882,7 +883,7 @@ class CodeIgniter
             }
 
             // If attribute returns a modified Request, use it
-            if ($attributeResponse instanceof Request) {
+            if ($attributeResponse instanceof RequestInterface) {
                 $this->request = $attributeResponse;
             }
         }
