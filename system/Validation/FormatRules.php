@@ -422,7 +422,7 @@ class FormatRules
      */
     public function valid_url_strict($str = null, ?string $validSchemes = null): bool
     {
-        if ($str === null || $str === '' || $str === '0') {
+        if (in_array($str, [null, '', '0'], true)) {
             return false;
         }
 

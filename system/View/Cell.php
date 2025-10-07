@@ -125,7 +125,7 @@ class Cell
     public function prepareParams($params)
     {
         if (
-            ($params === null || $params === '' || $params === [])
+            (in_array($params, [null, '', []], true))
             || (! is_string($params) && ! is_array($params))
         ) {
             return [];

@@ -1121,7 +1121,7 @@ if (! function_exists('stringify_attributes')) {
     {
         $atts = '';
 
-        if ($attributes === '' || $attributes === [] || $attributes === null) {
+        if (in_array($attributes, ['', [], null], true)) {
             return $atts;
         }
 
