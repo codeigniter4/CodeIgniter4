@@ -132,7 +132,8 @@ class Cache implements RouteAttributeInterface
 
     protected function generateCacheKey(RequestInterface $request): string
     {
-        return 'route_cache_' . hash('xxh128',
+        return 'route_cache_' . hash(
+            'xxh128',
             $request->getMethod() .
             $request->getUri()->getPath() .
             $request->getUri()->getQuery() .
