@@ -81,6 +81,7 @@ Libraries
 - **Email:** Added support for choosing the SMTP authorization method. You can change it via ``Config\Email::$SMTPAuthMethod`` option.
 - **Image:** The ``ImageMagickHandler`` has been rewritten to rely solely on the PHP ``imagick`` extension.
 - **Image:** Added ``ImageMagickHandler::clearMetadata()`` method to remove image metadata for privacy protection.
+- **Routing:** Added support for choosing to run only defined routes, only auto-routing, or both. You can change it via ``Config\Routing::$definedRoutes`` and ``Config\Routing::$autoRoute`` options.
 - **Time:** added methods ``Time::addCalendarMonths()`` and ``Time::subCalendarMonths()``
 
 Commands
