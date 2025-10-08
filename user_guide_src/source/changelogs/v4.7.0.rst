@@ -116,6 +116,8 @@ Helpers and Functions
 Others
 ======
 
+- **Controller Attributes:** Added support for PHP Attributes to define filters and other metadata on controller classes and methods. See :ref:`Controller Attributes <incoming/controller_attributes>` for details.
+
 ***************
 Message Changes
 ***************
