@@ -973,6 +973,7 @@ final class MiscUrlTest extends CIUnitTestCase
             $this->createRequest('http://sub.example.com/');
 
             $this->assertSame($expected, parse_subdomain(null));
+
             return;
         }
 
