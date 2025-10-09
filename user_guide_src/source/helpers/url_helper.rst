@@ -361,7 +361,7 @@ The following functions are available:
     This function works the same as :php:func:`url_title()` but it converts all
     accented characters automatically.
 
-.. php:function:: parse_subdomain($hostname])
+.. php:function:: parse_subdomain($hostname)
 
     :param  string|null  $hostname: The hostname to parse. If null, uses the current request's host.
     :returns: The subdomain, or an empty string if none exists.
