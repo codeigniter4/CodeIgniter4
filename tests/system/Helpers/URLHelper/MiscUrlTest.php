@@ -981,6 +981,11 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, parse_subdomain($host));
     }
 
+    /**
+     * Provides test cases for parsing subdomains.
+     *
+     * @return array<string, array{0: string|null, 1: string, 2: bool}>
+     */
     public static function provideParseSubdomain(): iterable
     {
         return [
