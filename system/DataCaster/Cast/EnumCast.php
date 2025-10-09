@@ -28,9 +28,6 @@ use UnitEnum;
  */
 class EnumCast extends BaseCast implements CastInterface
 {
-    /**
-     * @param array<int, string> $params
-     */
     public static function get(
         mixed $value,
         array $params = [],
@@ -83,9 +80,6 @@ class EnumCast extends BaseCast implements CastInterface
         return $enum;
     }
 
-    /**
-     * @param array<int, string> $params
-     */
     public static function set(
         mixed $value,
         array $params = [],

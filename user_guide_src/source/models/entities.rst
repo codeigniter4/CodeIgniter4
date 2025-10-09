@@ -301,7 +301,6 @@ Enum casting supports:
 
 * **Backed enums** (string or int) - The backing value is stored in the database
 * **Unit enums** - The case name is stored in the database as a string
-* **Nullable enums** - Use the ``?`` prefix
 
 For example, if you had a User entity with a ``status`` property using a backed enum:
 

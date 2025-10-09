@@ -18,16 +18,8 @@ use CodeIgniter\Entity\Exceptions\CastException;
 use ReflectionEnum;
 use UnitEnum;
 
-/**
- * Class EnumCast
- *
- * Handles casting for PHP enums (both backed and unit enums)
- */
 class EnumCast extends BaseCast
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function get($value, array $params = [])
     {
         $enumClass = $params[0] ?? null;
@@ -72,10 +64,7 @@ class EnumCast extends BaseCast
         throw CastException::forInvalidEnumCaseName($enumClass, $value);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public static function set($value, array $params = []): int|string|null
+    public static function set($value, array $params = []): int|string
     {
         // Get the expected enum class
         $enumClass = $params[0] ?? null;

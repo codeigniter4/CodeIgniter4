@@ -18,9 +18,9 @@ interface CastInterface
     /**
      * Takes a value from DataSource, returns its value for PHP.
      *
-     * @param mixed        $value  Data from database driver
-     * @param list<string> $params Additional param
-     * @param object|null  $helper Helper object. E.g., database connection
+     * @param mixed              $value  Data from database driver
+     * @param array<int, string> $params Additional param
+     * @param object|null        $helper Helper object. E.g., database connection
      *
      * @return mixed PHP native value
      */
@@ -33,9 +33,9 @@ interface CastInterface
     /**
      * Takes a PHP value, returns its value for DataSource.
      *
-     * @param mixed        $value  PHP native value
-     * @param list<string> $params Additional param
-     * @param object|null  $helper Helper object. E.g., database connection
+     * @param mixed              $value  PHP native value
+     * @param array<int, string> $params Additional param
+     * @param object|null        $helper Helper object. E.g., database connection
      *
      * @return mixed Data to pass to database driver
      */
