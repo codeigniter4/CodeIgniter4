@@ -964,9 +964,7 @@ final class MiscUrlTest extends CIUnitTestCase
         url_to('loginURL');
     }
 
-    /**
-     * @dataProvider provideParseSubdomain
-     */
+    #[DataProvider('provideParseSubdomain')]
     public function testParseSubdomain(?string $host, string $expected, bool $useRequest = false): void
     {
         if ($useRequest) {
@@ -989,15 +987,15 @@ final class MiscUrlTest extends CIUnitTestCase
     public static function provideParseSubdomain(): iterable
     {
         return [
-            'standard subdomain' => ['api.example.com', 'api', false],
-            'multi-level subdomain' => ['admin.api.example.com', 'admin.api', false],
-            'no subdomain (domain only)' => ['example.com', '', false],
-            'localhost' => ['localhost', '', false],
-            'ipv4' => ['127.0.0.1', '', false],
-            'ipv6' => ['::1', '', false],
-            'two-part tld no subdomain' => ['example.co.uk', '', false],
+            'standard subdomain'          => ['api.example.com', 'api', false],
+            'multi-level subdomain'       => ['admin.api.example.com', 'admin.api', false],
+            'no subdomain (domain only)'  => ['example.com', '', false],
+            'localhost'                   => ['localhost', '', false],
+            'ipv4'                        => ['127.0.0.1', '', false],
+            'ipv6'                        => ['::1', '', false],
+            'two-part tld no subdomain'   => ['example.co.uk', '', false],
             'two-part tld with subdomain' => ['api.example.co.uk', 'api', false],
-            'null uses request host' => [null, 'sub', true],
+            'null uses request host'      => [null, 'sub', true],
         ];
     }
 }
