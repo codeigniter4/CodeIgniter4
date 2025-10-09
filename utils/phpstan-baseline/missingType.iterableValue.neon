@@ -1,4 +1,4 @@
-# total 1362 errors
+# total 1361 errors
 
 parameters:
     ignoreErrors:
@@ -2414,11 +2414,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Entity\\Cast\\EnumCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/EnumCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\EnumCast\:\:get\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Entity/Cast/EnumCast.php
 

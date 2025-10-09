@@ -20,7 +20,7 @@ use UnitEnum;
 
 class EnumCast extends BaseCast
 {
-    public static function get($value, array $params = [])
+    public static function get($value, array $params = []): BackedEnum|UnitEnum
     {
         $enumClass = $params[0] ?? null;
 

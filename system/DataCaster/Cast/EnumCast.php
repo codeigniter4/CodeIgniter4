@@ -32,7 +32,7 @@ class EnumCast extends BaseCast implements CastInterface
         mixed $value,
         array $params = [],
         ?object $helper = null,
-    ): mixed {
+    ): BackedEnum|UnitEnum {
         if (! is_string($value) && ! is_int($value)) {
             self::invalidTypeValueError($value);
         }
