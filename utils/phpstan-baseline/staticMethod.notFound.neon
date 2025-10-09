@@ -1,7 +1,17 @@
-# total 20 errors
+# total 23 errors
 
 parameters:
     ignoreErrors:
+        -
+            message: '#^Call to an undefined static method UnitEnum\:\:tryFrom\(\)\.$#'
+            count: 1
+            path: ../../system/DataCaster/Cast/EnumCast.php
+
+        -
+            message: '#^Call to an undefined static method UnitEnum\:\:tryFrom\(\)\.$#'
+            count: 2
+            path: ../../system/Entity/Cast/EnumCast.php
+
         -
             message: '#^Call to an undefined static method CodeIgniter\\Config\\Factories\:\:cells\(\)\.$#'
             count: 1

@@ -377,6 +377,8 @@ of type to mark the field as nullable, i.e., ``?int``, ``?datetime``.
 +---------------+----------------+---------------------------+
 |``uri``        | URI            | string type               |
 +---------------+----------------+---------------------------+
+|``enum``       | Enum           | string/int type           |
++---------------+----------------+---------------------------+
 
 csv
 ---
@@ -412,6 +414,19 @@ timestamp
 
 The timezone of the ``Time`` instance created will be the default timezone
 (app's timezone), not UTC.
+
+enum
+----
+
+.. versionadded:: 4.7.0
+
+You can cast fields to PHP enums. You must specify the enum class name as a parameter,
+like ``enum[App\Enums\StatusEnum]``.
+
+Enum casting supports:
+
+* **Backed enums** (string or int) - The backing value is stored in the database
+* **Unit enums** - The case name is stored in the database as a string
 
 Custom Casting
 ==============

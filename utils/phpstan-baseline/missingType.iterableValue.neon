@@ -1,4 +1,4 @@
-# total 1379 errors
+# total 1362 errors
 
 parameters:
     ignoreErrors:
@@ -2333,11 +2333,6 @@ parameters:
             path: ../../system/Encryption/Handlers/SodiumHandler.php
 
         -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\ArrayCast\:\:get\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/ArrayCast.php
-
-        -
             message: '#^Method CodeIgniter\\Entity\\Cast\\ArrayCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Entity/Cast/ArrayCast.php
@@ -2348,19 +2343,9 @@ parameters:
             path: ../../system/Entity/Cast/ArrayCast.php
 
         -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\ArrayCast\:\:set\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/ArrayCast.php
-
-        -
             message: '#^Method CodeIgniter\\Entity\\Cast\\ArrayCast\:\:set\(\) has parameter \$value with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Entity/Cast/ArrayCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\BaseCast\:\:get\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/BaseCast.php
 
         -
             message: '#^Method CodeIgniter\\Entity\\Cast\\BaseCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
@@ -2369,11 +2354,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Entity\\Cast\\BaseCast\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/BaseCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\BaseCast\:\:set\(\) has parameter \$params with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Entity/Cast/BaseCast.php
 
@@ -2388,19 +2368,9 @@ parameters:
             path: ../../system/Entity/Cast/BaseCast.php
 
         -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\BooleanCast\:\:get\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/BooleanCast.php
-
-        -
             message: '#^Method CodeIgniter\\Entity\\Cast\\BooleanCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Entity/Cast/BooleanCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\CSVCast\:\:get\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/CSVCast.php
 
         -
             message: '#^Method CodeIgniter\\Entity\\Cast\\CSVCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
@@ -2413,19 +2383,9 @@ parameters:
             path: ../../system/Entity/Cast/CSVCast.php
 
         -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\CSVCast\:\:set\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/CSVCast.php
-
-        -
             message: '#^Method CodeIgniter\\Entity\\Cast\\CSVCast\:\:set\(\) has parameter \$value with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Entity/Cast/CSVCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\CastInterface\:\:get\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/CastInterface.php
 
         -
             message: '#^Method CodeIgniter\\Entity\\Cast\\CastInterface\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
@@ -2434,11 +2394,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\Entity\\Cast\\CastInterface\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/CastInterface.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\CastInterface\:\:set\(\) has parameter \$params with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Entity/Cast/CastInterface.php
 
@@ -2453,19 +2408,24 @@ parameters:
             path: ../../system/Entity/Cast/CastInterface.php
 
         -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\DatetimeCast\:\:get\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/DatetimeCast.php
-
-        -
             message: '#^Method CodeIgniter\\Entity\\Cast\\DatetimeCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Entity/Cast/DatetimeCast.php
 
         -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\FloatCast\:\:get\(\) has parameter \$params with no value type specified in iterable type array\.$#'
+            message: '#^Method CodeIgniter\\Entity\\Cast\\EnumCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
             count: 1
-            path: ../../system/Entity/Cast/FloatCast.php
+            path: ../../system/Entity/Cast/EnumCast.php
+
+        -
+            message: '#^Method CodeIgniter\\Entity\\Cast\\EnumCast\:\:get\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Entity/Cast/EnumCast.php
+
+        -
+            message: '#^Method CodeIgniter\\Entity\\Cast\\EnumCast\:\:set\(\) has parameter \$value with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Entity/Cast/EnumCast.php
 
         -
             message: '#^Method CodeIgniter\\Entity\\Cast\\FloatCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
@@ -2473,29 +2433,9 @@ parameters:
             path: ../../system/Entity/Cast/FloatCast.php
 
         -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\IntBoolCast\:\:get\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/IntBoolCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\IntBoolCast\:\:set\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/IntBoolCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\IntegerCast\:\:get\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/IntegerCast.php
-
-        -
             message: '#^Method CodeIgniter\\Entity\\Cast\\IntegerCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Entity/Cast/IntegerCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\JsonCast\:\:get\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/JsonCast.php
 
         -
             message: '#^Method CodeIgniter\\Entity\\Cast\\JsonCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
@@ -2508,19 +2448,9 @@ parameters:
             path: ../../system/Entity/Cast/JsonCast.php
 
         -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\JsonCast\:\:set\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/JsonCast.php
-
-        -
             message: '#^Method CodeIgniter\\Entity\\Cast\\JsonCast\:\:set\(\) has parameter \$value with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Entity/Cast/JsonCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\ObjectCast\:\:get\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/ObjectCast.php
 
         -
             message: '#^Method CodeIgniter\\Entity\\Cast\\ObjectCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
@@ -2528,19 +2458,9 @@ parameters:
             path: ../../system/Entity/Cast/ObjectCast.php
 
         -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\StringCast\:\:get\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/StringCast.php
-
-        -
             message: '#^Method CodeIgniter\\Entity\\Cast\\StringCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Entity/Cast/StringCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\TimestampCast\:\:get\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/TimestampCast.php
 
         -
             message: '#^Method CodeIgniter\\Entity\\Cast\\TimestampCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
@@ -2551,11 +2471,6 @@ parameters:
             message: '#^Method CodeIgniter\\Entity\\Cast\\TimestampCast\:\:get\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Entity/Cast/TimestampCast.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Cast\\URICast\:\:get\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Cast/URICast.php
 
         -
             message: '#^Method CodeIgniter\\Entity\\Cast\\URICast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'

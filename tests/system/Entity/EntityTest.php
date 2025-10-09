@@ -21,11 +21,15 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use DateTime;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionException;
 use Tests\Support\Entity\Cast\CastBase64;
 use Tests\Support\Entity\Cast\CastPassParameters;
 use Tests\Support\Entity\Cast\NotExtendsBaseCast;
+use Tests\Support\Enum\ColorEnum;
+use Tests\Support\Enum\RoleEnum;
+use Tests\Support\Enum\StatusEnum;
 use Tests\Support\SomeEntity;
 
 /**
@@ -809,6 +813,204 @@ final class EntityTest extends CIUnitTestCase
         $entity->fourth = 'test_nullable_type';
 
         $this->assertSame('test_nullable_type:["nullable"]', $entity->fourth);
+    }
+
+    public function testCastEnumStringBacked(): void
+    {
+        $entity = new class () extends Entity {
+            protected $casts = [
+                'status' => 'enum[' . StatusEnum::class . ']',
+            ];
+        };
+
+        $entity->status = 'active';
+
+        $this->assertInstanceOf(StatusEnum::class, $entity->status);
+        $this->assertSame(StatusEnum::ACTIVE, $entity->status);
+        $this->assertSame(['status' => 'active'], $entity->toRawArray());
+    }
+
+    public function testCastEnumIntBacked(): void
+    {
+        $entity = new class () extends Entity {
+            protected $casts = [
+                'role' => 'enum[' . RoleEnum::class . ']',
+            ];
+        };
+
+        $entity->role = 2;
+
+        $this->assertInstanceOf(RoleEnum::class, $entity->role);
+        $this->assertSame(RoleEnum::ADMIN, $entity->role);
+        $this->assertSame(['role' => 2], $entity->toRawArray());
+    }
+
+    public function testCastEnumUnit(): void
+    {
+        $entity = new class () extends Entity {
+            protected $casts = [
+                'color' => 'enum[' . ColorEnum::class . ']',
+            ];
+        };
+
+        $entity->color = 'RED';
+
+        $this->assertInstanceOf(ColorEnum::class, $entity->color);
+        $this->assertSame(ColorEnum::RED, $entity->color);
+        $this->assertSame(['color' => 'RED'], $entity->toRawArray());
+    }
+
+    public function testCastEnumNullable(): void
+    {
+        $entity = new class () extends Entity {
+            protected $casts = [
+                'status' => '?enum[' . StatusEnum::class . ']',
+            ];
+        };
+
+        $entity->status = null;
+
+        $this->assertNull($entity->status);
+
+        $entity->status = 'pending';
+
+        $this->assertInstanceOf(StatusEnum::class, $entity->status);
+        $this->assertSame(StatusEnum::PENDING, $entity->status);
+    }
+
+    #[DataProvider('provideCastEnumExceptions')]
+    public function testCastEnumExceptions(string $castType, mixed $value, string $property, string $message, bool $useInject): void
+    {
+        $this->expectException(CastException::class);
+        $this->expectExceptionMessage($message);
+
+        $entity = new class ($castType, $property) extends Entity {
+            protected $casts = [];
+
+            public function __construct(string $castType, string $property)
+            {
+                $this->casts[$property] = $castType;
+                parent::__construct();
+            }
+        };
+
+        if ($useInject) {
+            // Inject raw data to bypass set() validation and test get() method
+            $entity->injectRawData([$property => $value]);
+            // Trigger get() method by accessing property
+            $entity->{$property}; // @phpstan-ignore expr.resultUnused
+        } else {
+            // Test set() method directly
+            $entity->{$property} = $value;
+        }
+    }
+
+    /**
+     * @return iterable<string, array<string, bool|string>>
+     */
+    public static function provideCastEnumExceptions(): iterable
+    {
+        return [
+            'missing class' => [
+                'castType'  => 'enum',
+                'value'     => 'active',
+                'property'  => 'status',
+                'message'   => 'Enum class must be specified for enum casting',
+                'useInject' => false,
+            ],
+            'not enum' => [
+                'castType'  => 'enum[stdClass]',
+                'value'     => 'active',
+                'property'  => 'status',
+                'message'   => 'The "stdClass" is not a valid enum class',
+                'useInject' => false,
+            ],
+            'invalid backed enum value' => [
+                'castType'  => 'enum[' . StatusEnum::class . ']',
+                'value'     => 'invalid_status',
+                'property'  => 'status',
+                'message'   => 'Invalid value "invalid_status" for enum "Tests\Support\Enum\StatusEnum"',
+                'useInject' => false,
+            ],
+            'invalid unit enum case name' => [
+                'castType'  => 'enum[' . ColorEnum::class . ']',
+                'value'     => 'YELLOW',
+                'property'  => 'color',
+                'message'   => 'Invalid case name "YELLOW" for enum "Tests\Support\Enum\ColorEnum"',
+                'useInject' => false,
+            ],
+            'invalid enum type' => [
+                'castType'  => 'enum[' . StatusEnum::class . ']',
+                'value'     => ColorEnum::RED,
+                'property'  => 'status',
+                'message'   => 'Expected enum of type "Tests\Support\Enum\StatusEnum", but received "Tests\Support\Enum\ColorEnum"',
+                'useInject' => false,
+            ],
+            'get missing class' => [
+                'castType'  => 'enum',
+                'value'     => 'active',
+                'property'  => 'status',
+                'message'   => 'Enum class must be specified for enum casting',
+                'useInject' => true,
+            ],
+            'get not enum' => [
+                'castType'  => 'enum[stdClass]',
+                'value'     => 'active',
+                'property'  => 'status',
+                'message'   => 'The "stdClass" is not a valid enum class',
+                'useInject' => true,
+            ],
+            'get invalid backed enum value' => [
+                'castType'  => 'enum[' . StatusEnum::class . ']',
+                'value'     => 'invalid_status',
+                'property'  => 'status',
+                'message'   => 'Invalid value "invalid_status" for enum "Tests\Support\Enum\StatusEnum"',
+                'useInject' => true,
+            ],
+            'get invalid unit enum case name' => [
+                'castType'  => 'enum[' . ColorEnum::class . ']',
+                'value'     => 'YELLOW',
+                'property'  => 'color',
+                'message'   => 'Invalid case name "YELLOW" for enum "Tests\Support\Enum\ColorEnum"',
+                'useInject' => true,
+            ],
+        ];
+    }
+
+    public function testCastEnumSetWithBackedEnumObject(): void
+    {
+        $entity = new class () extends Entity {
+            protected $casts = [
+                'status' => 'enum[' . StatusEnum::class . ']',
+            ];
+        };
+
+        // Assign an enum object directly
+        $entity->status = StatusEnum::ACTIVE;
+
+        // Should extract the backing value for storage
+        $this->assertSame(['status' => 'active'], $entity->toRawArray());
+        // Should return the enum object when accessed
+        $this->assertInstanceOf(StatusEnum::class, $entity->status);
+        $this->assertSame(StatusEnum::ACTIVE, $entity->status);
+    }
+
+    public function testCastEnumSetWithUnitEnumObject(): void
+    {
+        $entity = new class () extends Entity {
+            protected $casts = [
+                'color' => 'enum[' . ColorEnum::class . ']',
+            ];
+        };
+
+        // Assign a unit enum object directly
+        $entity->color = ColorEnum::RED;
+
+        // Should extract the case name for storage
+        $this->assertSame(['color' => 'RED'], $entity->toRawArray());
+        // Should return the enum object when accessed
+        $this->assertInstanceOf(ColorEnum::class, $entity->color);
+        $this->assertSame(ColorEnum::RED, $entity->color);
     }
 
     public function testAsArray(): void

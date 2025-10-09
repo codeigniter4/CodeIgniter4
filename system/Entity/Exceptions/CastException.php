@@ -72,4 +72,54 @@ class CastException extends FrameworkException implements HasExitCodeInterface
     {
         return new static(lang('Cast.invalidTimestamp'));
     }
+
+    /**
+     * Thrown when the enum class is not specified in cast parameters.
+     *
+     * @return static
+     */
+    public static function forMissingEnumClass()
+    {
+        return new static(lang('Cast.enumMissingClass'));
+    }
+
+    /**
+     * Thrown when the specified class is not an enum.
+     *
+     * @return static
+     */
+    public static function forNotEnum(string $class)
+    {
+        return new static(lang('Cast.enumNotEnum', [$class]));
+    }
+
+    /**
+     * Thrown when an invalid value is provided for an enum.
+     *
+     * @return static
+     */
+    public static function forInvalidEnumValue(string $enumClass, mixed $value)
+    {
+        return new static(lang('Cast.enumInvalidValue', [$enumClass, $value]));
+    }
+
+    /**
+     * Thrown when an invalid case name is provided for a unit enum.
+     *
+     * @return static
+     */
+    public static function forInvalidEnumCaseName(string $enumClass, string $caseName)
+    {
+        return new static(lang('Cast.enumInvalidCaseName', [$caseName, $enumClass]));
+    }
+
+    /**
+     * Thrown when an enum instance of wrong type is provided.
+     *
+     * @return static
+     */
+    public static function forInvalidEnumType(string $expectedClass, string $actualClass)
+    {
+        return new static(lang('Cast.enumInvalidType', [$actualClass, $expectedClass]));
+    }
 }
