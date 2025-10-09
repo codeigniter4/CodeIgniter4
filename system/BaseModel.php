@@ -770,7 +770,7 @@ abstract class BaseModel
     {
         $id = $this->getIdValue($row);
 
-        return ! ($id === null || $id === [] || $id === '');
+        return ! in_array($id, [null, [], ''], true);
     }
 
     /**

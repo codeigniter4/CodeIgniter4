@@ -28,6 +28,10 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class CURLRequestShareOptionsTest extends CURLRequestTest
 {
+    /**
+     * @param array<string, mixed> $options
+     * @param array<int, int>|null $shareConnectionOptions
+     */
     protected function getRequest(array $options = [], ?array $shareConnectionOptions = null): MockCURLRequest
     {
         $uri = isset($options['baseURI']) ? new URI($options['baseURI']) : new URI();

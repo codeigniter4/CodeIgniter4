@@ -302,12 +302,8 @@ class ImageMagickHandler extends BaseHandler
             return;
         }
 
-        switch ($this->image()->imageType) {
-            case IMAGETYPE_WEBP:
-                if (! in_array('WEBP', Imagick::queryFormats(), true)) {
-                    throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
-                }
-                break;
+        if ($this->image()->imageType === IMAGETYPE_WEBP && ! in_array('WEBP', Imagick::queryFormats(), true)) {
+            throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
         }
     }
 

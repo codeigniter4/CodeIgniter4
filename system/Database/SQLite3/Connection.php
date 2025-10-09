@@ -107,7 +107,7 @@ class Connection extends BaseConnection
                 $this->database = WRITEPATH . $this->database;
             }
 
-            $sqlite = (! isset($this->password) || $this->password !== '')
+            $sqlite = ($this->password === null || $this->password === '')
                 ? new SQLite3($this->database)
                 : new SQLite3($this->database, SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE, $this->password);
 

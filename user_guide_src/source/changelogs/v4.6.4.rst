@@ -18,6 +18,8 @@ BREAKING
 Message Changes
 ***************
 
+- Added ``Honeypot.noTemplate``, ``Honeypot.noNameField``, ``Honeypot.theClientIsABot``.
+
 *******
 Changes
 *******
@@ -28,6 +30,9 @@ Changes
 Deprecations
 ************
 
+- **Exception:**
+    - The ``CodeIgniter\Honeypot\Exceptions\HoneypotException::forNoHiddenValue()`` method has been deprecated. Never used.
+
 **********
 Bugs Fixed
 **********
@@ -35,9 +40,13 @@ Bugs Fixed
 - **Database:** Fixed a bug in ``Database::connect()`` which was causing to store non-shared connection instances in shared cache.
 - **Database:** Fixed a bug in ``Connection::getFieldData()`` for ``SQLSRV`` and ``OCI8`` where extra characters were returned in column default values (specific to those handlers), instead of following the convention used by other drivers.
 - **Database:** Fixed a bug in ``BaseBuilder::compileOrderBy()`` where the method could overwrite ``QBOrderBy`` with a string instead of keeping it as an array, causing type errors and preventing additional ``ORDER BY`` clauses from being appended.
+- **Database:** Fixed a bug in ``SQLite3`` where the password parameter was ignored unless it was an empty string.
 - **Forge:** Fixed a bug in ``Postgre`` and ``SQLSRV`` where changing a column's default value using ``Forge::modifyColumn()`` method produced incorrect SQL syntax.
 - **Model:** Fixed a bug in ``Model::replace()`` where ``created_at`` field (when available) wasn't set correctly.
 - **Model:** Fixed a bug in ``Model::insertBatch()`` and ``Model::updateBatch()`` where casts were not applied to inserted or updated values.
+- **Toolbar:** Fixed bugs in ``Collectors\Logs`` that were preventing the "Logs" tab from appearing on the Debug Toolbar.
+- **Toolbar:** Fixed bugs in ``toolbar.js`` which caused "Uncaught TypeError" in some scenarios.
+- **Validation:** Fixed a bug in the ``FormatRules::valid_base64()`` validation rule that caused a TypeError when checking invalid base64 strings.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

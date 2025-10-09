@@ -118,8 +118,12 @@ Class Reference
     response status. Not every client will respect the custom codes, though, and will use the IANA standards
     that match the status code.
 
-    The response is an array with two elements: ``error`` and ``messages``. The ``error`` element contains the status
-    code of the error. The ``messages`` element contains an array of error messages. It would look something like:
+    The response is an array with three elements: ``status``, ``code``, and ``messages``.
+    - The ``status`` element contains the status code of the error.
+    - The ``code`` element contains a custom, API-specific error code.
+    - The ``messages`` element contains an array of error messages.
+
+    Depending on the number of error messages, the response would look something like:
 
     .. literalinclude:: api_responses/006.php
 

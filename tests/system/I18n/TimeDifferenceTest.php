@@ -245,7 +245,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $this->assertSame(8, $diff->getDays());
         $this->assertSame(8, $diff->days);
         $this->assertSame(-8, (int) round($diff->getDays(true)));
-        $this->assertNull($diff->nonsense);
+        $this->assertNull($diff->nonsense); // @phpstan-ignore property.notFound
     }
 
     public function testGetterDST(): void
@@ -259,7 +259,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
 
         // The raw value does not take Daylight Saving Time into account.
         $this->assertSame(-8, (int) round($diff->getDays(true)));
-        $this->assertNull($diff->nonsense);
+        $this->assertNull($diff->nonsense); // @phpstan-ignore property.notFound
     }
 
     public function testMagicIssetTrue(): void
@@ -267,8 +267,8 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017', 'America/Chicago');
         $diff    = $current->difference('March 18, 2017', 'America/Chicago');
 
-        $this->assertTrue(isset($diff->days));
-        $this->assertFalse(isset($diff->nonsense));
+        $this->assertTrue(isset($diff->days)); // @phpstan-ignore isset.property
+        $this->assertFalse(isset($diff->nonsense)); // @phpstan-ignore property.notFound
     }
 
     public function testMagicIssetFalse(): void
@@ -276,6 +276,6 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017', 'America/Chicago');
         $diff    = $current->difference('March 18, 2017', 'America/Chicago');
 
-        $this->assertFalse(isset($diff->nonsense));
+        $this->assertFalse(isset($diff->nonsense)); // @phpstan-ignore property.notFound
     }
 }

@@ -129,7 +129,7 @@ class Commands
 
                 $class = new $className($this->logger, $this);
 
-                if (isset($class->group) && ! isset($this->commands[$class->name])) {
+                if ($class->group !== null && ! isset($this->commands[$class->name])) {
                     $this->commands[$class->name] = [
                         'class'       => $className,
                         'file'        => $file,

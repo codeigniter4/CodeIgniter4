@@ -1,4 +1,4 @@
-# total 11 errors
+# total 8 errors
 
 parameters:
     ignoreErrors:
@@ -26,21 +26,6 @@ parameters:
             message: '#^Property CodeIgniter\\Throttle\\Throttler\:\:\$testTime \(int\) on left side of \?\? is not nullable\.$#'
             count: 1
             path: ../../system/Throttle/Throttler.php
-
-        -
-            message: '#^Property CodeIgniter\\HomeTest\:\:\$session \(array\<int\|string, mixed\>\) on left side of \?\? is not nullable\.$#'
-            count: 1
-            path: ../../tests/system/HomeTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\FeatureTestAutoRoutingImprovedTest\:\:\$session \(array\<int\|string, mixed\>\) on left side of \?\? is not nullable\.$#'
-            count: 1
-            path: ../../tests/system/Test/FeatureTestAutoRoutingImprovedTest.php
-
-        -
-            message: '#^Property CodeIgniter\\Test\\FeatureTestTraitTest\:\:\$session \(array\<int\|string, mixed\>\) on left side of \?\? is not nullable\.$#'
-            count: 1
-            path: ../../tests/system/Test/FeatureTestTraitTest.php
 
         -
             message: '#^Property CodeIgniter\\Test\\FilterTestTraitTest\:\:\$request \(CodeIgniter\\HTTP\\RequestInterface\) on left side of \?\?\= is not nullable\.$#'

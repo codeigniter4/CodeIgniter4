@@ -13,11 +13,9 @@ declare(strict_types=1);
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\Empty_\SimplifyEmptyCheckOnEmptyArrayRector;
-use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
-use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
-use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
 use Rector\CodeQuality\Rector\FuncCall\CompactToVariablesRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
+use Rector\CodeQuality\Rector\Isset_\IssetOnPropertyObjectToPropertyExistsRector;
 use Rector\CodeQuality\Rector\Ternary\TernaryEmptyArrayArrayDimFetchToCoalesceRector;
 use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
@@ -169,6 +167,9 @@ return RectorConfig::configure()
         CompactToVariablesRector::class,
 
         RemoveDataProviderParamKeysRector::class,
+
+        // possibly isset() on purpose, on updated Config classes property accross versions
+        IssetOnPropertyObjectToPropertyExistsRector::class,
     ])
     // auto import fully qualified class names
     ->withImportNames(removeUnusedImports: true)
@@ -181,10 +182,7 @@ return RectorConfig::configure()
         CountArrayToEmptyArrayComparisonRector::class,
         ChangeNestedForeachIfsToEarlyContinueRector::class,
         ChangeIfElseValueAssignToEarlyReturnRector::class,
-        InlineIfToExplicitIfRector::class,
         PreparedValueToEarlyReturnRector::class,
-        UnusedForeachValueToArrayKeysRector::class,
-        ChangeArrayPushToArrayAssignRector::class,
         RemoveErrorSuppressInTryCatchStmtsRector::class,
         FuncGetArgsToVariadicParamRector::class,
         MakeInheritedMethodVisibilitySameAsParentRector::class,
@@ -208,4 +206,4 @@ return RectorConfig::configure()
     ->withConfiguredRule(RenameConstantRector::class, [
         'FILTER_DEFAULT' => 'FILTER_UNSAFE_RAW',
     ])
-    ->withCodeQualityLevel(34);
+    ->withCodeQualityLevel(54);

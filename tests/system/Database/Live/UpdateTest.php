@@ -114,6 +114,9 @@ final class UpdateTest extends CIUnitTestCase
         }
     }
 
+    /**
+     * @param array<int, mixed> $expected
+     */
     #[DataProvider('provideUpdateBatch')]
     public function testUpdateBatch(string $constraints, array $data, array $expected): void
     {

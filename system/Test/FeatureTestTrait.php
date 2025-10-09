@@ -404,7 +404,7 @@ trait FeatureTestTrait
             );
         }
 
-        $_SESSION = $this->session ?? [];
+        $_SESSION = $this->session;
 
         return $request;
     }

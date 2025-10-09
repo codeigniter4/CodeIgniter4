@@ -72,7 +72,7 @@ class I18nException extends FrameworkException
      */
     public static function forInvalidHour(string $hour)
     {
-        return new static(lang('Time.invalidHour', [$hour]));
+        return new static(lang('Time.invalidHours', [$hour]));
     }
 
     /**

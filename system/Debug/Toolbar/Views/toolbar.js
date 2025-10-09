@@ -337,6 +337,11 @@ var ciDebugBar = {
         const OUTER_ELEMENTS = ["HTML", "BODY", "HEAD"];
 
         var getValidElementInner = function (node, reverse) {
+            // handle null node
+            if (node === null) {
+                return null;
+            }
+
             // handle invalid tags
             if (OUTER_ELEMENTS.indexOf(node.nodeName) !== -1) {
                 for (var i = 0; i < document.body.children.length; ++i) {
@@ -440,7 +445,7 @@ var ciDebugBar = {
                 var debugPath = document.createElement("div"); // path
                 var childArray = startElement[0].parentNode.childNodes; // target child array
                 var parent = startElement[0].parentNode;
-                var start, end;
+                let start, end;
 
                 // setup container
                 debugDiv.classList.add("debug-view");
