@@ -1653,7 +1653,6 @@ class RouteCollection implements RouteCollectionInterface
         return in_array($this->currentSubdomain, $subdomains, true);
     }
 
-
     /**
      * Reset the routes, so that a test case can provide the
      * explicit ones needed for it.
