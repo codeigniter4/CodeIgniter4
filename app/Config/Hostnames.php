@@ -35,7 +35,6 @@ class Hostnames
         'com.bd', 'net.bd', 'org.bd', 'ac.bd', 'gov.bd', 'mil.bd',
         'com.ar', 'net.ar', 'org.ar', 'gov.ar', 'edu.ar', 'mil.ar',
         'gob.cl', 'com.pl', 'net.pl', 'org.pl', 'gov.pl', 'edu.pl',
-        'poznan.pl', 'krakow.pl', 'wroclaw.pl', 'gdansk.pl', 'slask.pl', 'warszawa.pl',
         'co.ir', 'ac.ir', 'org.ir', 'id.ir', 'gov.ir', 'sch.ir', 'net.ir',
     ];
 }

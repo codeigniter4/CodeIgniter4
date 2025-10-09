@@ -373,6 +373,9 @@ The following functions are available:
 
     .. literalinclude:: url_helper/027.php
 
+    You can customize the list of known two-part TLDs by adding them to the
+    ``Config\Hostnames::TWO_PART_TLDS`` array.
+
 .. php:function:: prep_url([$str = ''[, $secure = false]])
 
     :param  string   $str: URL string
