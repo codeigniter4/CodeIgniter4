@@ -243,10 +243,11 @@ Scalar Type Casting
 -------------------
 
 Properties can be cast to any of the following data types:
-**integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, **timestamp**, **uri** and **int-bool**.
+**integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, **timestamp**, **uri**, **int-bool** and **enum**.
 Add a question mark at the beginning of type to mark property as nullable, i.e., **?string**, **?integer**.
 
 .. note:: **int-bool** can be used since v4.3.0.
+.. note:: **enum** can be used since v4.7.0.
 
 For example, if you had a User entity with an ``is_banned`` property, you can cast it as a boolean:
 
@@ -288,6 +289,34 @@ Stored in the database as "red,yellow,green":
 .. literalinclude:: entities/016.php
 
 .. note:: Casting as CSV uses PHP's internal ``implode`` and ``explode`` methods and assumes all values are string-safe and free of commas. For more complex data casts try ``array`` or ``json``.
+
+Enum Casting
+------------
+
+.. versionadded:: 4.7.0
+
+You can cast properties to PHP enums. You must specify the enum class name as a parameter.
+
+Enum casting supports:
+
+* **Backed enums** (string or int) - The backing value is stored in the database
+* **Unit enums** - The case name is stored in the database as a string
+
+For example, if you had a User entity with a ``status`` property using a backed enum:
+
+.. literalinclude:: entities/024.php
+
+You can cast it in your Entity:
+
+.. literalinclude:: entities/025.php
+
+Now, when you access the ``status`` property, it will automatically be converted to a ``UserStatus`` enum instance:
+
+.. literalinclude:: entities/026.php
+
+For nullable enums:
+
+.. literalinclude:: entities/027.php
 
 Custom Casting
 --------------

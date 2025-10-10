@@ -18,6 +18,7 @@ use CodeIgniter\Entity\Cast\ArrayCast;
 use CodeIgniter\Entity\Cast\BooleanCast;
 use CodeIgniter\Entity\Cast\CSVCast;
 use CodeIgniter\Entity\Cast\DatetimeCast;
+use CodeIgniter\Entity\Cast\EnumCast;
 use CodeIgniter\Entity\Cast\FloatCast;
 use CodeIgniter\Entity\Cast\IntBoolCast;
 use CodeIgniter\Entity\Cast\IntegerCast;
@@ -92,6 +93,7 @@ class Entity implements JsonSerializable
         'csv'       => CSVCast::class,
         'datetime'  => DatetimeCast::class,
         'double'    => FloatCast::class,
+        'enum'      => EnumCast::class,
         'float'     => FloatCast::class,
         'int'       => IntegerCast::class,
         'integer'   => IntegerCast::class,
