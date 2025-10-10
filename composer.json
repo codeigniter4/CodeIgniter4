@@ -28,7 +28,7 @@
         "phpunit/phpcov": "^9.0.2 || ^10.0",
         "phpunit/phpunit": "^10.5.16 || ^11.2",
         "predis/predis": "^3.0",
-        "rector/rector": "2.2.1",
+        "rector/rector": "2.2.2",
         "shipmonk/phpstan-baseline-per-identifier": "^2.0"
     },
     "replace": {
