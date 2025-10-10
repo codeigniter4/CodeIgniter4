@@ -963,4 +963,40 @@ final class MiscUrlTest extends CIUnitTestCase
 
         url_to('loginURL');
     }
+
+    #[DataProvider('provideParseSubdomain')]
+    public function testParseSubdomain(?string $host, string $expected, bool $useRequest = false): void
+    {
+        if ($useRequest) {
+            // create a request whose host will be used when passing null to parse_subdomain
+            $this->config->baseURL = 'http://sub.example.com/';
+            $this->createRequest('http://sub.example.com/');
+
+            $this->assertSame($expected, parse_subdomain(null));
+
+            return;
+        }
+
+        $this->assertSame($expected, parse_subdomain($host));
+    }
+
+    /**
+     * Provides test cases for parsing subdomains.
+     *
+     * @return array<string, array{0: string|null, 1: string, 2: bool}>
+     */
+    public static function provideParseSubdomain(): iterable
+    {
+        return [
+            'standard subdomain'          => ['api.example.com', 'api', false],
+            'multi-level subdomain'       => ['admin.api.example.com', 'admin.api', false],
+            'no subdomain (domain only)'  => ['example.com', '', false],
+            'localhost'                   => ['localhost', '', false],
+            'ipv4'                        => ['127.0.0.1', '', false],
+            'ipv6'                        => ['::1', '', false],
+            'two-part tld no subdomain'   => ['example.co.uk', '', false],
+            'two-part tld with subdomain' => ['api.example.co.uk', 'api', false],
+            'null uses request host'      => [null, 'sub', true],
+        ];
+    }
 }

@@ -361,6 +361,21 @@ The following functions are available:
     This function works the same as :php:func:`url_title()` but it converts all
     accented characters automatically.
 
+.. php:function:: parse_subdomain($hostname)
+
+    :param  string|null  $hostname: The hostname to parse. If null, uses the current request's host.
+    :returns: The subdomain, or an empty string if none exists.
+    :rtype: string
+
+    Parses the subdomain from the given host name.
+
+    Here are some examples:
+
+    .. literalinclude:: url_helper/027.php
+
+    You can customize the list of known two-part TLDs by adding them to the
+    ``Config\Hostnames::TWO_PART_TLDS`` array.
+
 .. php:function:: prep_url([$str = ''[, $secure = false]])
 
     :param  string   $str: URL string

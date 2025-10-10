@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
+use Config\Hostnames;
 
 // CodeIgniter URL Helpers
 
@@ -532,5 +533,54 @@ if (! function_exists('url_is')) {
         $currentPath = '/' . trim(uri_string(), '/ ');
 
         return (bool) preg_match("|^{$path}$|", $currentPath, $matches);
+    }
+}
+
+if (! function_exists('parse_subdomain')) {
+    /**
+     * Parses the subdomain from the current host name.
+     *
+     * @param string|null $host The hostname to parse. If null, uses the current request's host.
+     *
+     * @return string The subdomain, or an empty string if none exists.
+     */
+    function parse_subdomain(?string $host = null): string
+    {
+        if ($host === null) {
+            $host = service('request')->getUri()->getHost();
+        }
+
+        // Handle localhost and IP addresses - they don't have subdomains
+        if ($host === 'localhost' || filter_var($host, FILTER_VALIDATE_IP)) {
+            return '';
+        }
+
+        $parts     = explode('.', $host);
+        $partCount = count($parts);
+
+        // Need at least 3 parts for a subdomain (subdomain.domain.tld)
+        // e.g., api.example.com
+        if ($partCount < 3) {
+            return '';
+        }
+
+        // Check if we have a two-part TLD (e.g., co.uk, com.au)
+        $lastTwoParts = $parts[$partCount - 2] . '.' . $parts[$partCount - 1];
+
+        if (in_array($lastTwoParts, Hostnames::TWO_PART_TLDS, true)) {
+            // For two-part TLD, need at least 4 parts for subdomain
+            // e.g., api.example.co.uk (4 parts)
+            if ($partCount < 4) {
+                return ''; // No subdomain, just domain.co.uk
+            }
+
+            // Remove the two-part TLD and domain name (last 3 parts)
+            // e.g., admin.api.example.co.uk -> admin.api
+            return implode('.', array_slice($parts, 0, $partCount - 3));
+        }
+
+        // Standard TLD: Remove TLD and domain (last 2 parts)
+        // e.g., admin.api.example.com -> admin.api
+        return implode('.', array_slice($parts, 0, $partCount - 2));
     }
 }
