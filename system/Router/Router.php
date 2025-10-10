@@ -221,6 +221,44 @@ class Router implements RouterInterface
         // Restart filterInfo
         $this->filtersInfo = [];
 
+<<<<<<< HEAD
+=======
+        $useDefinedRoutes = $this->collection->shouldUseDefinedRoutes();
+        $useAutoRoute     = $this->collection->shouldAutoRoute();
+
+        // Let devs know if both are disabled
+        if (! $useDefinedRoutes && ! $useAutoRoute) {
+            throw RouterException::forNoRoutingAvailable();
+        }
+
+        // Fast path 1: Auto-routing ONLY (no defined routes to check)
+        if ($useAutoRoute && ! $useDefinedRoutes) {
+            $this->autoRoute($uri);
+
+            $this->processRouteAttributes();
+
+            return $this->controllerName();
+        }
+
+        // Fast path 2: Defined routes ONLY (no auto-routing fallback)
+        if ($useDefinedRoutes && ! $useAutoRoute) {
+            if ($this->checkRoutes($uri)) {
+                if ($this->collection->isFiltered($this->matchedRoute[0])) {
+                    $this->filtersInfo = $this->collection->getFiltersForRoute($this->matchedRoute[0]);
+                }
+
+                $this->processRouteAttributes();
+
+                return $this->controller;
+            }
+
+            throw new PageNotFoundException(
+                "Can't find a route for '{$this->collection->getHTTPVerb()}: {$uri}'.",
+            );
+        }
+
+        // Original path: BOTH enabled (check defined routes first, then auto-route)
+>>>>>>> 8f675dc60a (Fixing tests after routing options PR was merged)
         // Checks defined routes
         if ($this->checkRoutes($uri)) {
             if ($this->collection->isFiltered($this->matchedRoute[0])) {
