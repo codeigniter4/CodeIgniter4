@@ -1296,6 +1296,52 @@ final class EntityTest extends CIUnitTestCase
         $this->assertSame(json_encode($entity->toArray()), json_encode($entity));
     }
 
+    public function testInjectRawArray(): void
+    {
+        $entity = new class () extends Entity {
+            // The "user" property is not for DB
+            protected $attributes = [
+                'type'    => 'Normal',
+                'limit'   => 10,
+                'user'    => 'John',
+                '_secure' => 'High',
+            ];
+            protected $original = [
+                'type'    => 'None',
+                'limit'   => 0,
+                'user'    => null,
+                '_secure' => 'Low',
+            ];
+        };
+
+        $entity->injectRawData([
+            'type'    => 'High',
+            'limit'   => 15,
+            '_secure' => 'Normal',
+            'extra'   => 'undefined',
+        ]);
+
+        $this->assertSame(
+            [
+                'type'    => 'High',
+                'limit'   => 15,
+                'user'    => 'John',
+                '_secure' => 'Normal',
+                'extra'   => 'undefined',
+            ],
+            $entity->toRawArray(),
+        );
+        $this->assertSame(
+            [
+                'type'  => 'High',
+                'limit' => 15,
+                'user'  => 'John',
+                'extra' => 'undefined',
+            ],
+            $entity->toArray(),
+        );
+    }
+
     private function getEntity(): object
     {
         return new class () extends Entity {

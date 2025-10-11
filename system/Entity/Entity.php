@@ -308,7 +308,7 @@ class Entity implements JsonSerializable
      */
     public function injectRawData(array $data)
     {
-        $this->attributes = $data;
+        $this->attributes = array_merge($this->attributes, $data);
 
         $this->syncOriginal();
 
