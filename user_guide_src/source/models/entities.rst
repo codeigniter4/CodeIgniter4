@@ -40,7 +40,7 @@ Assume you have a database table named ``users`` that has the following schema::
     password    - string
     created_at  - datetime
 
-.. important:: ``attributes`` is a reserved word for internal use. If you use it as a column name, the Entity does not work correctly.
+.. important:: ``attributes`` is a reserved word for internal use. Prior to v4.4.0, if you use it as a column name, the Entity does not work correctly.
 
 Create the Entity Class
 =======================
@@ -117,6 +117,14 @@ The Entity class has two methods to extract all available properties into an arr
 Using the raw version will bypass magic "getter" methods and casts. Both methods can take a boolean first parameter
 to specify whether returned values should be filtered by those that have changed, and a boolean final parameter to
 make the method recursive, in case of nested Entities.
+
+Hidden properties
+=================
+
+It is possible to set properties that are only available in raw form. The property must start with an underscore. Casting cannot be applied to such fields.
+This is created so that we allow our magic methods a chance to do their thing, but you can use it in another way.
+
+.. literalinclude:: entities/028.php
 
 ***********************
 Handling Business Logic
