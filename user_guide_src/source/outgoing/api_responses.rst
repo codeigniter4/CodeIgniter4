@@ -268,35 +268,35 @@ Example Usage
 
 A typical response might look like:
 
-```json
-{
-    "data": [
-        {
-            "id": 1,
-            "username": "admin",
-            "email": "admin@example.com"
+.. code-block:: json
+
+    {
+        "data": [
+            {
+                "id": 1,
+                "username": "admin",
+                "email": "admin@example.com"
+            },
+            {
+                "id": 2,
+                "username": "user",
+                "email": "user@example.com"
+            }
+        ],
+        "meta": {
+            "page": 1,
+            "perPage": 20,
+            "total": 2,
+            "totalPages": 1
         },
-        {
-            "id": 2,
-            "username": "user",
-            "email": "user@example.com"
+        "links": {
+            "self": "http://example.com/users?page=1",
+            "first": "http://example.com/users?page=1",
+            "last": "http://example.com/users?page=1",
+            "next": null,
+            "previous": null
         }
-    ],
-    "meta": {
-        "page": 1,
-        "perPage": 20,
-        "total": 2,
-        "totalPages": 1
-    },
-    "links": {
-        "self": "http://example.com/users?page=1",
-        "first": "http://example.com/users?page=1",
-        "last": "http://example.com/users?page=1",
-        "next": null,
-        "previous": null
     }
-}
-```
 
 The ``paginate()`` method will always wrap the results in a ``data`` element, and will also include ``meta``
 and ``links`` elements to help the client page through the results. If there are no results, the ``data`` element will

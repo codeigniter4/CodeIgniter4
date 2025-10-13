@@ -81,6 +81,7 @@ Libraries
 - **Email:** Added support for choosing the SMTP authorization method. You can change it via ``Config\Email::$SMTPAuthMethod`` option.
 - **Image:** The ``ImageMagickHandler`` has been rewritten to rely solely on the PHP ``imagick`` extension.
 - **Image:** Added ``ImageMagickHandler::clearMetadata()`` method to remove image metadata for privacy protection.
+- **ResponseTrait:** Added ``paginate``` method to simplify paginated API responses. See :ref:`ResponseTrait::paginate() <incoming/api_response_trait_paginate>` for details.
 - **Time:** added methods ``Time::addCalendarMonths()`` and ``Time::subCalendarMonths()``
 
 Commands
