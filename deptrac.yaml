@@ -164,6 +164,10 @@ deptrac:
     API:
       - Format
       - HTTP
+      - Database
+      - Model
+      - Pager
+      - URI
     Cache:
       - I18n
     Controller:
