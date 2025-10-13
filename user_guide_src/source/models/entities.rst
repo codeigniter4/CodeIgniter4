@@ -121,8 +121,15 @@ make the method recursive, in case of nested Entities.
 Hidden properties
 =================
 
-It is possible to set properties that are only available in raw form. The property must start with an underscore. Casting cannot be applied to such fields.
-This is created so that we allow our magic methods a chance to do their thing, but you can use it in another way.
+An Entity may have hidden attributes - their names start with an underscore (``_``). By default, these hidden properties
+are not included when you call ``toArray()``. However, you can still access them directly if needed.
+
+If you want hidden properties to appear in the ``toArray()`` output, you'll need to use the ``datamap`` feature - it makes
+those properties "visible".
+
+Keep in mind that the smart ``__get()`` and ``__set()`` methods (described in the next section)  ignore leading underscores
+in property names. This means that two attributes with the same name (one starting with ``_`` and one without) will both use
+the same getter and setter, so you have to choose which one to handle by default.
 
 .. literalinclude:: entities/028.php
 
