@@ -326,7 +326,6 @@ trait ResponseTrait
         // if we don't have a formatter, make one
         $this->formatter ??= $format->getFormatter($mime);
 
-        // @phpstan-ignore function.impossibleType, function.alreadyNarrowedType (trait used in contexts with/without this property)
         $asHtml = property_exists($this, 'stringAsHtml') ? $this->stringAsHtml : false;
 
         if (
