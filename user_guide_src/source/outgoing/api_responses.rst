@@ -251,6 +251,7 @@ Class Reference
 
     .. literalinclude:: api_responses/017.php
 
+.. _api_response_trait_paginate:
 
 ********************
 Pagination Responses
