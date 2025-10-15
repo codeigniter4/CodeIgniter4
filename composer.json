@@ -13,7 +13,7 @@
         "php": "^8.2",
         "ext-intl": "*",
         "ext-mbstring": "*",
-        "laminas/laminas-escaper": "^2.17",
+        "laminas/laminas-escaper": "^2.18",
         "psr/log": "^3.0"
     },
     "require-dev": {
