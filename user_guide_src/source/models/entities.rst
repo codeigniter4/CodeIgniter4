@@ -40,7 +40,7 @@ Assume you have a database table named ``users`` that has the following schema::
     password    - string
     created_at  - datetime
 
-.. important:: ``attributes`` is a reserved word for internal use. If you use it as a column name, the Entity does not work correctly.
+.. important:: ``attributes`` is a reserved word for internal use. Prior to v4.4.0, if you use it as a column name, the Entity does not work correctly.
 
 Create the Entity Class
 =======================
@@ -117,6 +117,21 @@ The Entity class has two methods to extract all available properties into an arr
 Using the raw version will bypass magic "getter" methods and casts. Both methods can take a boolean first parameter
 to specify whether returned values should be filtered by those that have changed, and a boolean final parameter to
 make the method recursive, in case of nested Entities.
+
+Hidden properties
+=================
+
+An Entity may have hidden attributes - their names start with an underscore (``_``). By default, these hidden properties
+are not included when you call ``toArray()``. However, you can still access them directly if needed.
+
+If you want hidden properties to appear in the ``toArray()`` output, you'll need to use the ``datamap`` feature - it makes
+those properties "visible".
+
+Keep in mind that the smart ``__get()`` and ``__set()`` methods (described in the next section)  ignore leading underscores
+in property names. This means that two attributes with the same name (one starting with ``_`` and one without) will both use
+the same getter and setter, so you have to choose which one to handle by default.
+
+.. literalinclude:: entities/028.php
 
 ***********************
 Handling Business Logic
