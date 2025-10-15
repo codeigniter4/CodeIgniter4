@@ -73,6 +73,7 @@ Enhancements
 Libraries
 =========
 
+- **API Transformers:** This new feature provides a structured way to transform data for API responses. See :ref:`API Transformers <api_transformers>` for details.
 - **CLI:** Added ``SignalTrait`` to provide unified handling of operating system signals in CLI commands.
 - **CURLRequest:** Added ``shareConnection`` config item to change default share connection.
 - **CURLRequest:** Added ``dns_cache_timeout`` option to change default DNS cache timeout.
