@@ -36,6 +36,8 @@ use Config\Services;
 use Exception;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
+use Tests\Support\API\InvalidTransformer;
+use Tests\Support\API\TestTransformer;
 
 /**
  * @internal
@@ -1065,7 +1067,7 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $controller = $this->makeController('/api/items');
 
-        $this->invoke($controller, 'paginate', [$model, 20, \Tests\Support\API\TestTransformer::class]);
+        $this->invoke($controller, 'paginate', [$model, 20, TestTransformer::class]);
 
         $responseBody = json_decode($this->response->getBody(), true);
 
@@ -1114,7 +1116,7 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $controller = $this->makeController('/api/items');
 
-        $this->invoke($controller, 'paginate', [$builder, 20, \Tests\Support\API\TestTransformer::class]);
+        $this->invoke($controller, 'paginate', [$builder, 20, TestTransformer::class]);
 
         $responseBody = json_decode($this->response->getBody(), true);
 
@@ -1152,9 +1154,9 @@ final class ResponseTraitTest extends CIUnitTestCase
         $controller = $this->makeController('/api/items');
 
         $this->expectException(ApiException::class);
-        $this->expectExceptionMessage(lang('Api.invalidTransformer', [\Tests\Support\API\InvalidTransformer::class]));
+        $this->expectExceptionMessage(lang('Api.invalidTransformer', [InvalidTransformer::class]));
 
-        $this->invoke($controller, 'paginate', [$model, 20, \Tests\Support\API\InvalidTransformer::class]);
+        $this->invoke($controller, 'paginate', [$model, 20, InvalidTransformer::class]);
     }
 
     public function testPaginateWithTransformerPreservesMetaAndLinks(): void
@@ -1169,7 +1171,7 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $controller = $this->makeController('/api/items');
 
-        $this->invoke($controller, 'paginate', [$model, 2, \Tests\Support\API\TestTransformer::class]);
+        $this->invoke($controller, 'paginate', [$model, 2, TestTransformer::class]);
 
         $responseBody = json_decode($this->response->getBody(), true);
 
@@ -1199,7 +1201,7 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $controller = $this->makeController('/api/items');
 
-        $this->invoke($controller, 'paginate', [$model, 20, \Tests\Support\API\TestTransformer::class]);
+        $this->invoke($controller, 'paginate', [$model, 20, TestTransformer::class]);
 
         $responseBody = json_decode($this->response->getBody(), true);
 

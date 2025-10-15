@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace CodeIgniter\API;
 
+use Exception;
+
 /**
  * Custom exception for API-related errors.
  */
-class ApiException extends \Exception
+class ApiException extends Exception
 {
     /**
      * Thrown when the fields requested in a URL are not valid.
-     *
-     * @return ApiException
      */
     public static function forInvalidFields(string $field): self
     {
@@ -30,8 +30,6 @@ class ApiException extends \Exception
 
     /**
      * Thrown when the includes requested in a URL are not valid.
-     *
-     * @return ApiException
      */
     public static function forInvalidIncludes(string $include): self
     {
@@ -41,8 +39,6 @@ class ApiException extends \Exception
     /**
      * Thrown when an include is requested, but the method to handle it
      * does not exist on the model.
-     *
-     * @return ApiException
      */
     public static function forMissingInclude(string $include): self
     {
@@ -51,8 +47,6 @@ class ApiException extends \Exception
 
     /**
      * Thrown when a transformer class cannot be found.
-     *
-     * @return ApiException
      */
     public static function forTransformerNotFound(string $transformerClass): self
     {
@@ -61,8 +55,6 @@ class ApiException extends \Exception
 
     /**
      * Thrown when a transformer class does not implement TransformerInterface.
-     *
-     * @return ApiException
      */
     public static function forInvalidTransformer(string $transformerClass): self
     {

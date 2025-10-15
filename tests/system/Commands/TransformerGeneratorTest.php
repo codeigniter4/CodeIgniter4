@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
-use CodeIgniter\API\ApiException;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -41,7 +40,9 @@ final class TransformerGeneratorTest extends CIUnitTestCase
             return '';
         }
 
-        return file_get_contents($filepath) ?: '';
+        $contents = file_get_contents($filepath);
+
+        return $contents !== false ? $contents : '';
     }
 
     public function testGenerateTransformer(): void

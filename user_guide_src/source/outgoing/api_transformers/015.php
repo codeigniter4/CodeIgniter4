@@ -2,7 +2,7 @@
 
 use App\Transformers\UserTransformer;
 
-$user        = new stdClass();
+$user        = new \stdClass();
 $user->id    = 1;
 $user->name  = 'John Doe';
 $user->email = 'john@example.com';

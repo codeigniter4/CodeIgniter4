@@ -56,22 +56,29 @@ use InvalidArgumentException;
  */
 abstract class BaseTransformer implements TransformerInterface
 {
+    /**
+     * @var list<string>|null
+     */
     private ?array $fields = null;
+
+    /**
+     * @var list<string>|null
+     */
     private ?array $includes = null;
+
     protected mixed $resource = null;
 
     public function __construct(
         private ?IncomingRequest $request = null,
-    )
-    {
+    ) {
         $this->request = $request ?? request();
 
-        $fields = $this->request->getGet('fields');
+        $fields       = $this->request->getGet('fields');
         $this->fields = is_string($fields)
             ? array_map('trim', explode(',', $fields))
             : $fields;
 
-        $includes = $this->request->getGet('include');
+        $includes       = $this->request->getGet('include');
         $this->includes = is_string($includes)
             ? array_map('trim', explode(',', $includes))
             : $includes;
@@ -116,7 +123,7 @@ abstract class BaseTransformer implements TransformerInterface
      */
     public function transformMany(array $resources): array
     {
-        return array_map(fn($resource) => $this->transform($resource), $resources);
+        return array_map(fn ($resource): array => $this->transform($resource), $resources);
     }
 
     /**
@@ -124,6 +131,7 @@ abstract class BaseTransformer implements TransformerInterface
      *
      * @param mixed $value
      * @param mixed $default
+     *
      * @return mixed
      */
     protected function when(bool $condition, $value, $default = null)
@@ -133,16 +141,23 @@ abstract class BaseTransformer implements TransformerInterface
 
     /**
      * Conditionally exclude a value.
+     *
+     * @param mixed      $value
+     * @param mixed|null $default
+     *
+     * @return mixed
      */
     protected function whenNot(bool $condition, $value, $default = null)
     {
-        return ! $condition ? $value : $default;
+        return $condition ? $default : $value;
     }
 
     /**
      * Define which fields can be requested via the 'fields' query parameter.
      * Override in child classes to restrict available fields.
      * Return null to allow all fields from toArray().
+     *
+     * @return list<string>|null
      */
     protected function getAllowedFields(): ?array
     {
@@ -154,6 +169,8 @@ abstract class BaseTransformer implements TransformerInterface
      * Override in child classes to restrict available includes.
      * Return null to allow all includes that have corresponding methods.
      * Return an empty array to disable all includes.
+     *
+     * @return list<string>|null
      */
     protected function getAllowedIncludes(): ?array
     {
@@ -162,6 +179,10 @@ abstract class BaseTransformer implements TransformerInterface
 
     /**
      * Limits the given data array to only the fields specified
+     *
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
      *
      * @throws InvalidArgumentException
      */
@@ -188,6 +209,10 @@ abstract class BaseTransformer implements TransformerInterface
     /**
      * Checks the request for 'include' query variable, and if present,
      * calls the corresponding include{Resource} methods to add related data.
+     *
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
      */
     private function insertIncludes(array $data): array
     {
@@ -201,7 +226,7 @@ abstract class BaseTransformer implements TransformerInterface
             return $data; // No includes allowed
         }
 
-         // If whitelist is defined, filter the requested includes
+        // If whitelist is defined, filter the requested includes
         if ($allowedIncludes !== null) {
             $invalidIncludes = array_diff($this->includes, $allowedIncludes);
 
@@ -213,7 +238,7 @@ abstract class BaseTransformer implements TransformerInterface
         foreach ($this->includes as $include) {
             $method = 'include' . ucfirst($include);
             if (method_exists($this, $method)) {
-                $data[$include] = $this->$method();
+                $data[$include] = $this->{$method}();
             } else {
                 throw ApiException::forMissingInclude($include);
             }

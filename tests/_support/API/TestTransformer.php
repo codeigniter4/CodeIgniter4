@@ -23,17 +23,15 @@ class TestTransformer extends BaseTransformer
     /**
      * Transform the resource into an array.
      *
-     * @param mixed $resource
-     *
      * @return array<string, mixed>
      */
     public function toArray(mixed $resource): array
     {
         return [
-            'id'            => $resource['id'] ?? null,
-            'name'          => $resource['name'] ?? null,
-            'transformed'   => true,
-            'name_upper'    => isset($resource['name']) ? strtoupper($resource['name']) : null,
+            'id'          => $resource['id'] ?? null,
+            'name'        => $resource['name'] ?? null,
+            'transformed' => true,
+            'name_upper'  => isset($resource['name']) ? strtoupper($resource['name']) : null,
         ];
     }
 }

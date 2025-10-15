@@ -2,9 +2,9 @@
 
 namespace App\Transformers;
 
-use CodeIgniter\API\BaseTransformer;
-use App\Transformers\PostTransformer;
 use App\Transformers\CommentTransformer;
+use App\Transformers\PostTransformer;
+use CodeIgniter\API\BaseTransformer;
 
 class UserTransformer extends BaseTransformer
 {

@@ -18,7 +18,7 @@ class UserTransformer extends BaseTransformer
 }
 
 // In your controller
-$user = model('UserModel')->find(1);
+$user        = model('UserModel')->find(1);
 $transformer = new UserTransformer();
 
 return $this->respond($transformer->transform($user));

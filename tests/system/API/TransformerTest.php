@@ -26,7 +26,7 @@ use stdClass;
  * @internal
  */
 #[Group('Others')]
-final class BaseTransformerTest extends CIUnitTestCase
+final class TransformerTest extends CIUnitTestCase
 {
     private function createMockRequest(string $query = ''): IncomingRequest
     {
@@ -60,7 +60,6 @@ final class BaseTransformerTest extends CIUnitTestCase
 
         $result = $transformer->transform(null);
 
-        $this->assertIsArray($result);
         $this->assertSame(['id' => 1, 'name' => 'Test'], $result);
     }
 
@@ -77,7 +76,6 @@ final class BaseTransformerTest extends CIUnitTestCase
 
         $result = $transformer->transform(null);
 
-        $this->assertIsArray($result);
         $this->assertSame(['id' => 1, 'name' => 'Test'], $result);
     }
 
@@ -138,8 +136,8 @@ final class BaseTransformerTest extends CIUnitTestCase
 
     public function testTransformWithObject(): void
     {
-        $request = $this->createMockRequest();
-        $object  = new stdClass();
+        $request      = $this->createMockRequest();
+        $object       = new stdClass();
         $object->id   = 1;
         $object->name = 'Test Object';
 
@@ -388,7 +386,7 @@ final class BaseTransformerTest extends CIUnitTestCase
                 return $resource;
             }
 
-            protected function getAllowedFields(): ?array
+            protected function getAllowedFields(): array
             {
                 return ['id', 'name', 'email'];
             }
@@ -412,7 +410,7 @@ final class BaseTransformerTest extends CIUnitTestCase
                 return $resource;
             }
 
-            protected function getAllowedFields(): ?array
+            protected function getAllowedFields(): array
             {
                 return ['id', 'name', 'email'];
             }
@@ -536,7 +534,7 @@ final class BaseTransformerTest extends CIUnitTestCase
                 return $resource;
             }
 
-            protected function getAllowedIncludes(): ?array
+            protected function getAllowedIncludes(): array
             {
                 return [];
             }
@@ -704,7 +702,7 @@ final class BaseTransformerTest extends CIUnitTestCase
             }
         };
 
-        $data = ['id' => 1, 'name' => 'Test'];
+        $data   = ['id' => 1, 'name' => 'Test'];
         $result = $transformer->transform($data);
 
         $this->assertArrayHasKey('posts', $result);
