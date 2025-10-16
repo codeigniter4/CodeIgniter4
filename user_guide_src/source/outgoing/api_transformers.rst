@@ -323,9 +323,9 @@ Class Reference
 
         .. literalinclude:: api_resources/023.php
 
-***************
+*******************
 Exception Reference
-***************
+*******************
 
 .. php:class:: ApiException
 
