@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\API;
 
-use CodeIgniter\Entity\Entity;
 use CodeIgniter\HTTP\IncomingRequest;
 use InvalidArgumentException;
 
@@ -103,10 +102,10 @@ abstract class BaseTransformer implements TransformerInterface
 
         if ($resource === null) {
             $data = $this->toArray(null);
+        } elseif (is_object($resource) && method_exists($resource, 'toArray')) {
+            $data = $this->toArray($resource->toArray());
         } else {
-            $data = $resource instanceof Entity
-                ? $this->toArray($resource->toArray())
-                : $this->toArray((array) $resource);
+            $data = $this->toArray((array) $resource);
         }
 
         $data = $this->limitFields($data);
