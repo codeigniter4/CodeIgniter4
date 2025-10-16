@@ -34,11 +34,11 @@ interface TransformerInterface
     /**
      * Transforms the given resource into an array.
      *
-     * @param array<string, mixed>|object $resource
+     * @param array<string, mixed>|object|null $resource
      *
      * @return array<string, mixed>
      */
-    public function transform(array|object $resource): array;
+    public function transform(array|object|null $resource): array;
 
     /**
      * Transforms a collection of resources using $this->transform() on each item.

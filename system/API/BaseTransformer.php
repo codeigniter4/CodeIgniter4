@@ -95,7 +95,7 @@ abstract class BaseTransformer implements TransformerInterface
      * Transforms the given resource into an array using
      * the $this->toArray().
      */
-    public function transform(mixed $resource = null): array
+    public function transform(array|object|null $resource = null): array
     {
         // Store the resource so include methods can access it
         $this->resource = $resource;
