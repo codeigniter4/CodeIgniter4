@@ -101,37 +101,6 @@ it to the client.
 .. literalinclude:: api_resources/003.php
 
 ***********************
-Conditional Fields
-***********************
-
-Often you'll want to include certain fields only under specific conditions. The ``when()`` and ``whenNot()``
-methods make this easy.
-
-Using when()
-============
-
-The ``when()`` method includes a value only if the condition is true:
-
-.. literalinclude:: api_resources/004.php
-
-In this example, the ``bio`` field will only be included if it has a non-null value. If the condition is
-false, the field will be set to ``null`` by default.
-
-Providing a Default Value
-==========================
-
-You can provide a default value to use when the condition is false:
-
-.. literalinclude:: api_resources/005.php
-
-Using whenNot()
-===============
-
-The ``whenNot()`` method is the opposite of ``when()`` - it includes a value only if the condition is false:
-
-.. literalinclude:: api_resources/006.php
-
-***********************
 Field Filtering
 ***********************
 
@@ -331,32 +300,6 @@ Class Reference
         includes are applied consistently to all items.
 
         .. literalinclude:: api_resources/019.php
-
-    .. php:method:: when(bool $condition, $value, $default = null)
-
-        :param bool $condition: The condition to evaluate
-        :param mixed $value: The value to return if the condition is true
-        :param mixed $default: The value to return if the condition is false (defaults to ``null``)
-        :returns: The value or default based on the condition
-        :rtype: mixed
-
-        Helper method to conditionally include a value in the transformation. Returns ``$value`` if
-        ``$condition`` is true, otherwise returns ``$default``.
-
-        .. literalinclude:: api_resources/020.php
-
-    .. php:method:: whenNot(bool $condition, $value, $default = null)
-
-        :param bool $condition: The condition to evaluate
-        :param mixed $value: The value to return if the condition is false
-        :param mixed $default: The value to return if the condition is true (defaults to ``null``)
-        :returns: The value or default based on the condition
-        :rtype: mixed
-
-        Helper method to conditionally exclude a value. Returns ``$value`` if ``$condition`` is false,
-        otherwise returns ``$default``.
-
-        .. literalinclude:: api_resources/021.php
 
     .. php:method:: getAllowedFields()
 

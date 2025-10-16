@@ -43,7 +43,6 @@ use InvalidArgumentException;
  *          'email' => $resource['email'],
  *          'created_at' => $resource['created_at'],
  *          'updated_at' => $resource['updated_at'],
- *          'bio' => $this->when(($resource['bio'] ?? null) !== null, $resource['bio'] ?? null),
  *      ];
  *    }
  *
@@ -124,32 +123,6 @@ abstract class BaseTransformer implements TransformerInterface
     public function transformMany(array $resources): array
     {
         return array_map(fn ($resource): array => $this->transform($resource), $resources);
-    }
-
-    /**
-     * Conditionally include a value.
-     *
-     * @param mixed $value
-     * @param mixed $default
-     *
-     * @return mixed
-     */
-    protected function when(bool $condition, $value, $default = null)
-    {
-        return $condition ? $value : $default;
-    }
-
-    /**
-     * Conditionally exclude a value.
-     *
-     * @param mixed      $value
-     * @param mixed|null $default
-     *
-     * @return mixed
-     */
-    protected function whenNot(bool $condition, $value, $default = null)
-    {
-        return $condition ? $default : $value;
     }
 
     /**
