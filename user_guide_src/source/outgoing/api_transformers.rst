@@ -327,8 +327,6 @@ Class Reference
 Exception Reference
 ***************
 
-.. php:namespace:: CodeIgniter\API
-
 .. php:class:: ApiException
 
     .. php:staticmethod:: forInvalidFields(string $field)
