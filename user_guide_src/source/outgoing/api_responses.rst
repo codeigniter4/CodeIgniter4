@@ -1,9 +1,9 @@
-##################
-API Response Trait
-##################
+#############
+API Responses
+#############
 
 Much of modern PHP development requires building APIs, whether simply to provide data for a javascript-heavy
-single page application, or as a standalone product. CodeIgniter provides an API Response trait that can be
+single page application, or as a standalone product. CodeIgniter provides a couple of traits that can be
 used with any controller to make common response types simple, with no need to remember which HTTP status code
 should be returned for which response types.
 
@@ -11,9 +11,9 @@ should be returned for which response types.
     :local:
     :depth: 2
 
-*************
-Example Usage
-*************
+*****************
+Response Examples
+*****************
 
 The following example shows a common usage pattern within your controllers.
 
@@ -250,3 +250,74 @@ Class Reference
     Sets the appropriate status code to use when there is a server error.
 
     .. literalinclude:: api_responses/017.php
+
+.. _api_response_trait_paginate:
+
+********************
+Pagination Responses
+********************
+
+When returning paginated results from an API endpoint, you can use the ``paginate()`` method to return the
+results along with the pagination information. This helps to keep consistent responses across your API, while
+providing all of the information that clients will need to properly page through the results.
+
+-------------
+Example Usage
+-------------
+
+.. literalinclude:: api_responses/018.php
+
+A typical response might look like:
+
+.. code-block:: json
+
+    {
+        "data": [
+            {
+                "id": 1,
+                "username": "admin",
+                "email": "admin@example.com"
+            },
+            {
+                "id": 2,
+                "username": "user",
+                "email": "user@example.com"
+            }
+        ],
+        "meta": {
+            "page": 1,
+            "perPage": 20,
+            "total": 2,
+            "totalPages": 1
+        },
+        "links": {
+            "self": "http://example.com/users?page=1",
+            "first": "http://example.com/users?page=1",
+            "last": "http://example.com/users?page=1",
+            "next": null,
+            "previous": null
+        }
+    }
+
+The ``paginate()`` method will always wrap the results in a ``data`` element, and will also include ``meta``
+and ``links`` elements to help the client page through the results. If there are no results, the ``data`` element will
+be an empty array, and the ``meta`` and ``links`` elements will still be present, but with values that indicate no results.
+
+You can also pass it a Builder instance instead of a Model, as long as the Builder is properly configured with the table
+name and any necessary joins or where clauses.
+
+.. literalinclude:: api_responses/019.php
+
+***************
+Class Reference
+***************
+
+.. php:method:: paginate(Model|BaseBuilder $resource, int $perPage = 20)
+
+    :param Model|BaseBuilder $resource: The resource to paginate, either a Model or a Builder instance.
+    :param int $perPage: The number of items to return per page.
+
+    Generates a paginated response from the given resource. The resource can be either a Model or a Builder
+    instance. The method will automatically determine the current page from the request's query parameters.
+    The response will include the paginated data, along with metadata about the pagination state and links
+    to navigate through the pages.
