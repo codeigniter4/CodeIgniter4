@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\API;
 
 use CodeIgniter\Exceptions\FrameworkException;
-use Exception;
 
 /**
  * Custom exception for API-related errors.
