@@ -393,6 +393,8 @@ trait ResponseTrait
      *       'next' => '/api/items?page=2&perPage=20',
      *   ]
      * ]
+     *
+     * @param class-string<TransformerInterface>|null $transformWith
      */
     protected function paginate(BaseBuilder|Model $resource, int $perPage = 20, ?string $transformWith = null): ResponseInterface
     {

@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\API;
 
+use CodeIgniter\Exceptions\FrameworkException;
 use Exception;
 
 /**
  * Custom exception for API-related errors.
  */
-class ApiException extends Exception
+final class ApiException extends FrameworkException
 {
     /**
      * Thrown when the fields requested in a URL are not valid.
