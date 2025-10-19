@@ -1,4 +1,4 @@
-# total 1361 errors
+# total 1371 errors
 
 parameters:
     ignoreErrors:
@@ -5226,6 +5226,56 @@ parameters:
             message: '#^Method CodeIgniter\\View\\Parser\:\:replaceSingle\(\) has parameter \$pattern with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/View/Parser.php
+
+        -
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:313\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../tests/system/API/TransformerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:336\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../tests/system/API/TransformerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:362\:\:includeComments\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../tests/system/API/TransformerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:362\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../tests/system/API/TransformerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:394\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../tests/system/API/TransformerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:417\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../tests/system/API/TransformerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:445\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../tests/system/API/TransformerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:497\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../tests/system/API/TransformerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:556\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../tests/system/API/TransformerTest.php
+
+        -
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:579\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../tests/system/API/TransformerTest.php
 
         -
             message: '#^Method CodeIgniter\\AutoReview\\ComposerJsonTest\:\:checkConfig\(\) has parameter \$fromComponent with no value type specified in iterable type array\.$#'

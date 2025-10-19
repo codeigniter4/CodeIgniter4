@@ -312,12 +312,22 @@ name and any necessary joins or where clauses.
 Class Reference
 ***************
 
-.. php:method:: paginate(Model|BaseBuilder $resource, int $perPage = 20)
+.. php:method:: paginate(Model|BaseBuilder $resource, int $perPage = 20, ?string $transformWith = null)
 
     :param Model|BaseBuilder $resource: The resource to paginate, either a Model or a Builder instance.
     :param int $perPage: The number of items to return per page.
+    :param string|null $transformWith: Optional transformer class name to transform the results.
 
     Generates a paginated response from the given resource. The resource can be either a Model or a Builder
     instance. The method will automatically determine the current page from the request's query parameters.
     The response will include the paginated data, along with metadata about the pagination state and links
     to navigate through the pages.
+
+    If you provide a ``$transformWith`` parameter with a transformer class name, each item in the paginated
+    results will be transformed using that transformer before being returned. This is useful for controlling
+    the structure and content of your API responses. See :ref:`API Transformers <api_transformers>` for more
+    information on creating and using transformers.
+
+    Example with transformer:
+
+    .. literalinclude:: api_responses/020.php

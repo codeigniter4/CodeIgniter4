@@ -16,6 +16,7 @@ View components are used to build what is returned to the user.
     table
     response
     api_responses
+    api_transformers
     csp
     localization
     alternative_php

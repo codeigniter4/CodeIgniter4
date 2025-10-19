@@ -393,8 +393,10 @@ trait ResponseTrait
      *       'next' => '/api/items?page=2&perPage=20',
      *   ]
      * ]
+     *
+     * @param class-string<TransformerInterface>|null $transformWith
      */
-    protected function paginate(BaseBuilder|Model $resource, int $perPage = 20): ResponseInterface
+    protected function paginate(BaseBuilder|Model $resource, int $perPage = 20, ?string $transformWith = null): ResponseInterface
     {
         try {
             assert($this->request instanceof IncomingRequest);
@@ -426,6 +428,21 @@ trait ResponseTrait
                 ];
             }
 
+            // Transform data if a transformer is provided
+            if ($transformWith !== null) {
+                if (! class_exists($transformWith)) {
+                    throw ApiException::forTransformerNotFound($transformWith);
+                }
+
+                $transformer = new $transformWith($this->request);
+
+                if (! $transformer instanceof TransformerInterface) {
+                    throw ApiException::forInvalidTransformer($transformWith);
+                }
+
+                $data = $transformer->transformMany($data);
+            }
+
             $links = $this->buildLinks($meta);
 
             $this->response->setHeader('Link', $this->linkHeader($links));
@@ -436,6 +453,9 @@ trait ResponseTrait
                 'meta'  => $meta,
                 'links' => $links,
             ]);
+        } catch (ApiException $e) {
+            // Re-throw ApiExceptions so they can be handled by the caller
+            throw $e;
         } catch (DatabaseException $e) {
             log_message('error', lang('RESTful.cannotPaginate') . ' ' . $e->getMessage());
 
