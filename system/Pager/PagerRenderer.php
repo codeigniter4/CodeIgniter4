@@ -105,7 +105,7 @@ class PagerRenderer
      */
     public function __construct(array $details)
     {
-        $this->last  = $details['pageCount'];
+        $this->last = $details['pageCount'];
 
         $this->current      = $details['currentPage'];
         $this->total        = $details['total'];
