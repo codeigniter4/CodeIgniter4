@@ -29,9 +29,12 @@ class PagerRenderer
     /**
      * First page number in the set of links to be displayed.
      *
+     * `first` and `last` will be updated by `setSurroundCount()`.
+     * You must call `setSurroundCount()` after instantiation.
+     *
      * @var int
      */
-    protected $first;
+    protected $first = 1;
 
     /**
      * Last page number in the set of links to be displayed.
@@ -102,10 +105,7 @@ class PagerRenderer
      */
     public function __construct(array $details)
     {
-        // `first` and `last` will be updated by `setSurroundCount()`.
-        // You must call `setSurroundCount()` after instantiation.
-        $this->first = 1;
-        $this->last  = $details['pageCount'];
+        $this->last = $details['pageCount'];
 
         $this->current      = $details['currentPage'];
         $this->total        = $details['total'];
