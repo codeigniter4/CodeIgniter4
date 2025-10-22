@@ -21,6 +21,7 @@ use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\CodingStyle\Rector\FuncCall\VersionCompareFuncCallToConstantRector;
+use Rector\CodingStyle\Rector\FunctionLike\FunctionLikeToFirstClassCallableRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
@@ -37,7 +38,6 @@ use Rector\PHPUnit\CodeQuality\Rector\Class_\RemoveDataProviderParamKeysRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
-use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
 use Rector\TypeDeclaration\Rector\ArrowFunction\AddArrowFunctionReturnTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddMethodCallBasedStrictParamTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
@@ -52,7 +52,7 @@ use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return RectorConfig::configure()
     ->withPhpSets(php81: true)
-    ->withPreparedSets(deadCode: true, instanceOf: true, strictBooleans: true, phpunitCodeQuality: true)
+    ->withPreparedSets(deadCode: true, instanceOf: true, phpunitCodeQuality: true)
     ->withComposerBased(phpunit: true)
     ->withParallel(120, 8, 10)
     ->withCache(
@@ -169,6 +169,9 @@ return RectorConfig::configure()
 
         // possibly isset() on purpose, on updated Config classes property accross versions
         IssetOnPropertyObjectToPropertyExistsRector::class,
+
+        // needs separate PR for activation to allow more depth review
+        FunctionLikeToFirstClassCallableRector::class,
     ])
     // auto import fully qualified class names
     ->withImportNames(removeUnusedImports: true)
@@ -189,7 +192,6 @@ return RectorConfig::configure()
         TernaryEmptyArrayArrayDimFetchToCoalesceRector::class,
         DisallowedEmptyRuleFixerRector::class,
         PrivatizeFinalClassPropertyRector::class,
-        BooleanInIfConditionRuleFixerRector::class,
         VersionCompareFuncCallToConstantRector::class,
         AddClosureVoidReturnTypeWhereNoReturnRector::class,
         AddFunctionVoidReturnTypeWhereNoReturnRector::class,

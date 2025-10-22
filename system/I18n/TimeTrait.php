@@ -73,7 +73,7 @@ trait TimeTrait
      */
     public function __construct(?string $time = null, $timezone = null, ?string $locale = null)
     {
-        $this->locale = $locale !== null && $locale !== '' && $locale !== '0' ? $locale : Locale::getDefault();
+        $this->locale = in_array($locale, [null, '', '0'], true) ? Locale::getDefault() : $locale;
 
         $time ??= '';
 
@@ -940,7 +940,7 @@ trait TimeTrait
         if ($testTime instanceof DateTimeInterface) {
             $testTime = $testTime->format('Y-m-d H:i:s.u O');
         } elseif (is_string($testTime)) {
-            $timezone = $timezone !== null && $timezone !== '' && $timezone !== '0' ? $timezone : $this->timezone;
+            $timezone = in_array($timezone, [null, '', '0'], true) ? $this->timezone : $timezone;
             $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
             $testTime = new DateTime($testTime, $timezone);
             $testTime = $testTime->format('Y-m-d H:i:s.u O');
@@ -1102,7 +1102,7 @@ trait TimeTrait
         if ($time instanceof static) {
             $time = $time->toDateTime();
         } elseif (is_string($time)) {
-            $timezone = $timezone !== null && $timezone !== '' && $timezone !== '0' ? $timezone : $this->timezone;
+            $timezone = in_array($timezone, [null, '', '0'], true) ? $this->timezone : $timezone;
             $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
             $time     = new DateTime($time, $timezone);
         }
