@@ -154,10 +154,6 @@ class Cell
             unset($newParams);
         }
 
-        if ($params === []) {
-            return [];
-        }
-
         return $params;
     }
 
