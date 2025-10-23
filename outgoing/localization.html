@@ -440,7 +440,7 @@ segment will be your locale:</p>
 <p>In this example, if the user tried to visit <strong>http://example.com/fr/books</strong>, then the locale would be
 set to <code class="docutils literal notranslate"><span class="pre">fr</span></code>, assuming it was configured as a valid locale.</p>
 <p>If the value doesn’t match a valid locale as defined in <code class="docutils literal notranslate"><span class="pre">$supportedLocales</span></code> in <strong>app/Config/App.php</strong>, the default
-locale will be used in it’s place, unless you set to use only the supported locales defined in the App configuration
+locale will be used in its place, unless you set to use only the supported locales defined in the App configuration
 file:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">useSupportedLocalesOnly</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
@@ -462,7 +462,7 @@ the <a class="reference internal" href="../incoming/incomingrequest.html"><span 
 </pre></div>
 </div>
 <p>Before setting the locale, you must set valid locales. Because any attempt to
-set a locale that are not valid will result in
+set a locale that is not valid will result in
 the <a class="reference internal" href="#setting-the-default-locale"><span class="std std-ref">default locale</span></a> being set.</p>
 <p>By default, the valid locales are defined in <code class="docutils literal notranslate"><span class="pre">Config\App::$supportedLocales</span></code>
 in <strong>app/Config/App.php</strong>:</p>
@@ -558,7 +558,7 @@ You might name it simply: <strong>Errors.php</strong>.</p>
 <p class="admonition-title">Note</p>
 <p>You cannot use dots (<code class="docutils literal notranslate"><span class="pre">.</span></code>) at the beginning and end of language keys.</p>
 </div>
-<p>It also support nested definition:</p>
+<p>It also supports nested definition:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">return</span> <span class="p">[</span>
@@ -872,7 +872,7 @@ If there were duplicate keys in the target locale, they are saved.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 15, 2025.
+      <span class="lastupdated">Last updated on Oct 23, 2025.
       </span></p>
   </div>
 
