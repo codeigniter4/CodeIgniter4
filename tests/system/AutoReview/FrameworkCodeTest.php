@@ -62,7 +62,7 @@ final class FrameworkCodeTest extends TestCase
         $unrecognizedGroups = array_diff(
             array_map(static function (ReflectionAttribute $attribute): string {
                 $groupAttribute = $attribute->newInstance();
-                $this->assertInstanceOf(Group::class, $groupAttribute);
+                assert($groupAttribute instanceof Group);
 
                 return $groupAttribute->name();
             }, $attributes),

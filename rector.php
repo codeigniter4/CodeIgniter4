@@ -36,6 +36,7 @@ use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\RemoveDataProviderParamKeysRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
+use Rector\PHPUnit\CodeQuality\Rector\FuncCall\AssertFuncCallToPHPUnitAssertRector;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\TypeDeclaration\Rector\ArrowFunction\AddArrowFunctionReturnTypeRector;
@@ -172,6 +173,11 @@ return RectorConfig::configure()
 
         // needs separate PR for activation to allow more depth review
         FunctionLikeToFirstClassCallableRector::class,
+
+        AssertFuncCallToPHPUnitAssertRector::class => [
+            // use $this inside static closure
+            __DIR__ . '/tests/system/AutoReview/FrameworkCodeTest.php',
+        ],
     ])
     // auto import fully qualified class names
     ->withImportNames(removeUnusedImports: true)
