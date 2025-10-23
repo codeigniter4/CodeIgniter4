@@ -21,17 +21,23 @@ class TestAttributeFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
+        if ($arguments !== null) {
+            $arguments = '(' . implode(',', $arguments) . ')';
+        }
         // Modify request body to indicate filter ran
-        $request->setBody('before_filter_ran:');
+        $request->setBody('before_filter_ran' . $arguments . ':');
 
         return $request;
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
+        if ($arguments !== null) {
+            $arguments = '(' . implode(',', $arguments) . ')';
+        }
         // Append to response body to indicate filter ran
         $body = $response->getBody();
-        $response->setBody($body . ':after_filter_ran');
+        $response->setBody($body . ':after_filter_ran' . $arguments);
 
         return $response;
     }
