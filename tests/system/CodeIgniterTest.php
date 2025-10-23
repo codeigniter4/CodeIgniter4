@@ -1062,7 +1062,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString(':after_filter_ran', (string) $output);
     }
 
-    public function testRouteAttributeFilterWithArgsIntegration(): void
+    public function testRouteAttributeFilterWithParamsIntegration(): void
     {
         $_SERVER['argv'] = ['index.php', 'attribute/filteredWithParams'];
         $_SERVER['argc'] = 2;
@@ -1087,7 +1087,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Verify filter ran before (modified request body) and after (appended to response)
         $this->assertStringContainsString('Filtered: before_filter_ran(arg1,arg2):', (string) $output);
-        $this->assertStringContainsString(':(arg1,arg2)after_filter_ran', (string) $output);
+        $this->assertStringContainsString(':after_filter_ran(arg1,arg2)', (string) $output);
     }
 
     public function testRouteAttributeRestrictIntegration(): void
