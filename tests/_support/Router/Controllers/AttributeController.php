@@ -42,6 +42,17 @@ class AttributeController extends Controller
     }
 
     /**
+     * Test method with Filter attribute with parameters
+     */
+    #[Filter(by: 'testAttributeFilter', having: ['arg1', 'arg2'])]
+    public function filteredWithParams(): ResponseInterface
+    {
+        $body = $this->request->getBody();
+
+        return $this->response->setBody('Filtered: ' . $body);
+    }
+
+    /**
      * Test method with Restrict attribute (environment)
      */
     #[Restrict(environment: ENVIRONMENT)]

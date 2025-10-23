@@ -62,6 +62,6 @@ class Filter implements RouteAttributeInterface
             return [$this->by];
         }
 
-        return [$this->by => $this->having];
+        return [$this->by . ':' . implode(',', $this->having)];
     }
 }

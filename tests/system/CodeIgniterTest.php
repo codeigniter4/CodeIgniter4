@@ -1062,6 +1062,34 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString(':after_filter_ran', (string) $output);
     }
 
+    public function testRouteAttributeFilterWithArgsIntegration(): void
+    {
+        $_SERVER['argv'] = ['index.php', 'attribute/filteredWithParams'];
+        $_SERVER['argc'] = 2;
+
+        Services::superglobals()->setServer('REQUEST_URI', '/attribute/filteredWithParams');
+        Services::superglobals()->setServer('SCRIPT_NAME', '/index.php');
+
+        // Register the test filter
+        $filterConfig                                 = config('Filters');
+        $filterConfig->aliases['testAttributeFilter'] = TestAttributeFilter::class;
+        service('filters', $filterConfig);
+
+        // Inject mock router
+        $routes = service('routes');
+        $routes->get('attribute/filteredWithParams', '\Tests\Support\Router\Controllers\AttributeController::filteredWithParams');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->run();
+        $output = ob_get_clean();
+
+        // Verify filter ran before (modified request body) and after (appended to response)
+        $this->assertStringContainsString('Filtered: before_filter_ran(arg1,arg2):', (string) $output);
+        $this->assertStringContainsString(':(arg1,arg2)after_filter_ran', (string) $output);
+    }
+
     public function testRouteAttributeRestrictIntegration(): void
     {
         $_SERVER['argv'] = ['index.php', 'attribute/restricted'];

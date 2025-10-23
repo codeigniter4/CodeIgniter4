@@ -44,11 +44,15 @@ The ``Filters`` attribute allows you to specify one or more filters to be applie
 
     When filters are applied both by an attribute and in the filter configuration file, they will both be applied, but that could lead to unexpected results.
 
+.. note::
+
+    Please remember that every parameter applied to the filter will be converted to a string. This behavior affects only filters.
+
 Restrict
 --------
 
 The ``Restrict`` attribute allows you to restrict access to the class or method based on the domain, the sub-domain, or
-the environment the application is running in. Here's an exmaple of how to use the ``Restrict`` attribute:
+the environment the application is running in. Here's an example of how to use the ``Restrict`` attribute:
 
 .. literalinclude:: controller_attributes/004.php
 

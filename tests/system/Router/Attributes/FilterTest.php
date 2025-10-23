@@ -90,8 +90,7 @@ final class FilterTest extends CIUnitTestCase
         $filters = $filter->getFilters();
 
         $this->assertCount(1, $filters);
-        $this->assertArrayHasKey('auth', $filters);
-        $this->assertSame(['admin'], $filters['auth']);
+        $this->assertSame('auth:admin', $filters[0]);
     }
 
     public function testGetFiltersReturnsArrayWithMultipleArguments(): void
@@ -101,8 +100,7 @@ final class FilterTest extends CIUnitTestCase
         $filters = $filter->getFilters();
 
         $this->assertCount(1, $filters);
-        $this->assertArrayHasKey('permission', $filters);
-        $this->assertSame(['posts.edit', 'posts.delete'], $filters['permission']);
+        $this->assertSame('permission:posts.edit,posts.delete', $filters[0]);
     }
 
     public function testGetFiltersWithEmptyHavingReturnsSimpleArray(): void
@@ -135,13 +133,13 @@ final class FilterTest extends CIUnitTestCase
         $filters1 = $filterWithoutArgs->getFilters();
         $filters2 = $filterWithArgs->getFilters();
 
-        // Without args: simple array
-        $this->assertArrayNotHasKey('filter1', $filters1);
-        $this->assertContains('filter1', $filters1);
+        // Without args:
+        $this->assertCount(1, $filters1);
+        $this->assertSame('filter1', $filters1[0]);
 
-        // With args: associative array
-        $this->assertArrayHasKey('filter2', $filters2);
-        $this->assertIsArray($filters2['filter2']);
+        // With args:
+        $this->assertCount(1, $filters2);
+        $this->assertSame('filter2:arg1', $filters2[0]);
     }
 
     public function testFilterWithNumericArguments(): void
@@ -150,8 +148,8 @@ final class FilterTest extends CIUnitTestCase
 
         $filters = $filter->getFilters();
 
-        $this->assertArrayHasKey('rate_limit', $filters);
-        $this->assertSame([100, 60], $filters['rate_limit']);
+        $this->assertCount(1, $filters);
+        $this->assertSame('rate_limit:100,60', $filters[0]);
     }
 
     public function testFilterWithMixedTypeArguments(): void
@@ -160,8 +158,8 @@ final class FilterTest extends CIUnitTestCase
 
         $filters = $filter->getFilters();
 
-        $this->assertArrayHasKey('custom', $filters);
-        $this->assertSame(['string', 123, true], $filters['custom']);
+        $this->assertCount(1, $filters);
+        $this->assertSame('custom:string,123,1', $filters[0]);
     }
 
     public function testFilterWithAssociativeArrayArguments(): void
@@ -170,8 +168,8 @@ final class FilterTest extends CIUnitTestCase
 
         $filters = $filter->getFilters();
 
-        $this->assertArrayHasKey('configured', $filters);
-        $this->assertSame(['option1' => 'value1', 'option2' => 'value2'], $filters['configured']);
+        $this->assertCount(1, $filters);
+        $this->assertSame('configured:value1,value2', $filters[0]);
     }
 
     public function testBeforeDoesNotModifyRequest(): void
