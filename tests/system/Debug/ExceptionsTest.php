@@ -22,7 +22,6 @@ use CodeIgniter\Test\ReflectionHelper;
 use Config\Exceptions as ExceptionsConfig;
 use ErrorException;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\RequiresPhp;
 
 /**
  * @internal
@@ -55,7 +54,6 @@ final class ExceptionsTest extends CIUnitTestCase
         $this->exception = new Exceptions(new ExceptionsConfig());
     }
 
-    #[RequiresPhp('>= 8.1')]
     public function testDeprecationsOnPhp81DoNotThrow(): void
     {
         $config = new ExceptionsConfig();
