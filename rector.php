@@ -37,6 +37,7 @@ use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\RemoveDataProviderParamKeysRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\PHPUnit\CodeQuality\Rector\FuncCall\AssertFuncCallToPHPUnitAssertRector;
+use Rector\PHPUnit\CodeQuality\Rector\StmtsAwareInterface\DeclareStrictTypesTestsRector;
 use Rector\Privatization\Rector\Class_\FinalizeTestCaseClassRector;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
@@ -180,8 +181,11 @@ return RectorConfig::configure()
             __DIR__ . '/tests/system/AutoReview/FrameworkCodeTest.php',
         ],
 
-        FinalizeTestCaseClassRector::class => [
-            __DIR__ . '/tests/system/Validation/FormatRulesTest.php',
+        // some tests extended by other tests
+        FinalizeTestCaseClassRector::class,
+
+        DeclareStrictTypesTestsRector::class => [
+            __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
         ],
     ])
     // auto import fully qualified class names

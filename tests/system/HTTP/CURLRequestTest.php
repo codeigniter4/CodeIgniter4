@@ -30,9 +30,9 @@ use PHPUnit\Framework\Attributes\Group;
  * @no-final
  */
 #[Group('Others')]
-final class CURLRequestTest extends CIUnitTestCase
+class CURLRequestTest extends CIUnitTestCase
 {
-    private MockCURLRequest $request;
+    protected MockCURLRequest $request;
 
     protected function setUp(): void
     {

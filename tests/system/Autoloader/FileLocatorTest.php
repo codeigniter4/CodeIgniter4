@@ -25,12 +25,12 @@ use PHPUnit\Framework\Attributes\Group;
  * @no-final
  */
 #[Group('Others')]
-final class FileLocatorTest extends CIUnitTestCase
+class FileLocatorTest extends CIUnitTestCase
 {
     /**
      * @var FileLocator|FileLocatorCached
      */
-    private FileLocatorInterface $locator;
+    protected FileLocatorInterface $locator;
 
     protected function setUp(): void
     {

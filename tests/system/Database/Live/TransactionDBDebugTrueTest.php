@@ -26,7 +26,7 @@ use Tests\Support\Database\Seeds\CITestSeeder;
  * @no-final
  */
 #[Group('DatabaseLive')]
-final class TransactionDBDebugTrueTest extends CIUnitTestCase
+class TransactionDBDebugTrueTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

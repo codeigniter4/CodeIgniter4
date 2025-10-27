@@ -33,14 +33,14 @@ use Throwable;
  * @no-final
  */
 #[Group('Others')]
-final class ValidationTest extends CIUnitTestCase
+class ValidationTest extends CIUnitTestCase
 {
-    private Validation $validation;
+    protected Validation $validation;
 
     /**
      * @var array<string, array<int|string, array<string, array<string, string>|string>|string>|string>
      */
-    private static array $config = [
+    protected static array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
@@ -82,7 +82,7 @@ final class ValidationTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->validation = new Validation((object) self::$config, service('renderer'));
+        $this->validation = new Validation((object) static::$config, service('renderer'));
         $this->validation->reset();
     }
 
@@ -227,7 +227,7 @@ final class ValidationTest extends CIUnitTestCase
 
         yield 'fail-deep-object' => [
             false,
-            new Validation((object) self::$config, service('renderer')),
+            new Validation((object) static::$config, service('renderer')),
         ];
 
         yield 'pass-multiple-string' => [
@@ -1007,10 +1007,10 @@ final class ValidationTest extends CIUnitTestCase
     public function testNoRuleSetsSetup(): void
     {
         try {
-            $rulesets = self::$config['ruleSets'];
+            $rulesets = static::$config['ruleSets'];
 
-            self::$config['ruleSets'] = null;
-            (new Validation((object) self::$config, service('renderer')))
+            static::$config['ruleSets'] = null;
+            (new Validation((object) static::$config, service('renderer')))
                 ->reset()
                 ->run(['foo' => '']);
 
@@ -1018,7 +1018,7 @@ final class ValidationTest extends CIUnitTestCase
         } catch (Throwable $e) {
             $this->assertInstanceOf(ValidationException::class, $e);
         } finally {
-            self::$config['ruleSets'] = $rulesets;
+            static::$config['ruleSets'] = $rulesets;
         }
     }
 

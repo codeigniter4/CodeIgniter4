@@ -26,14 +26,14 @@ use Tests\Support\Validation\TestRules;
  * @no-final
  */
 #[Group('Others')]
-final class RulesTest extends CIUnitTestCase
+class RulesTest extends CIUnitTestCase
 {
-    private Validation $validation;
+    protected Validation $validation;
 
     /**
      * @var array<string, array<int|string, array<string, string>|string>>
      */
-    private array $config = [
+    protected array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
