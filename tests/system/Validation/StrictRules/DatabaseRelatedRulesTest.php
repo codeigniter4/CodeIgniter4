@@ -28,11 +28,11 @@ use Tests\Support\Validation\TestRules;
  * @no-final
  */
 #[Group('DatabaseLive')]
-class DatabaseRelatedRulesTest extends CIUnitTestCase
+final class DatabaseRelatedRulesTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    protected Validation $validation;
+    private Validation $validation;
 
     /**
      * @var array{
@@ -41,7 +41,7 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
      *   groupA_errors: array<string, array<string, string>>,
      * }
      */
-    protected array $config = [
+    private array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,

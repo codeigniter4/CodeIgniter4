@@ -25,14 +25,14 @@ use Tests\Support\Validation\TestRules;
  * @no-final
  */
 #[Group('Others')]
-class CreditCardRulesTest extends CIUnitTestCase
+final class CreditCardRulesTest extends CIUnitTestCase
 {
-    protected Validation $validation;
+    private Validation $validation;
 
     /**
      * @var array<string, array<int|string, array<string, string>|string>>
      */
-    protected array $config = [
+    private array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
