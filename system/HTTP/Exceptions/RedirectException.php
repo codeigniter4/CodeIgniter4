@@ -80,7 +80,7 @@ class RedirectException extends RuntimeException implements ExceptionInterface, 
 
         $location = $this->response->getHeaderLine('Location');
 
-        service(('logger'))->info(sprintf(
+        service('logger')->info(sprintf(
             'REDIRECTED ROUTE at %s',
             $location !== '' ? $location : substr($this->response->getHeaderLine('Refresh'), 6),
         ));
