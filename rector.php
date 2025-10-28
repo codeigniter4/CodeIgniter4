@@ -21,7 +21,6 @@ use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\CodingStyle\Rector\FuncCall\VersionCompareFuncCallToConstantRector;
-use Rector\CodingStyle\Rector\FunctionLike\FunctionLikeToFirstClassCallableRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
@@ -172,9 +171,6 @@ return RectorConfig::configure()
 
         // possibly isset() on purpose, on updated Config classes property accross versions
         IssetOnPropertyObjectToPropertyExistsRector::class,
-
-        // needs separate PR for activation to allow more depth review
-        FunctionLikeToFirstClassCallableRector::class,
 
         AssertFuncCallToPHPUnitAssertRector::class => [
             // use $this inside static closure

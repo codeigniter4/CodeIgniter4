@@ -398,7 +398,7 @@ class Forge extends BaseForge
                 // https://learn.microsoft.com/en-us/sql/t-sql/data-types/char-and-varchar-transact-sql?view=sql-server-ver16#remarks
                 $maxLength = max(
                     array_map(
-                        static fn ($value): int => strlen($value),
+                        strlen(...),
                         $attributes['CONSTRAINT'],
                     ),
                 );

@@ -266,7 +266,7 @@ class Connection extends BaseConnection
             $obj->name = $row->index_name;
 
             $_fields     = explode(',', trim($row->index_keys));
-            $obj->fields = array_map(static fn ($v): string => trim($v), $_fields);
+            $obj->fields = array_map(trim(...), $_fields);
 
             if (str_contains($row->index_description, 'primary key located on')) {
                 $obj->type = 'PRIMARY';
