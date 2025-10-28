@@ -85,7 +85,7 @@ class Events
         }
 
         $files = array_filter(array_map(
-            static fn (string $file): false|string => realpath($file),
+            realpath(...),
             $files,
         ));
 

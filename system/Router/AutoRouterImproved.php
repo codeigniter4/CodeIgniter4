@@ -209,7 +209,7 @@ final class AutoRouterImproved implements AutoRouterInterface
             }
 
             $namespaces = array_map(
-                fn ($segment): string => $this->translateURI($segment),
+                $this->translateURI(...),
                 $segments,
             );
 
