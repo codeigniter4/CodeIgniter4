@@ -27,8 +27,10 @@ final class TransformerGeneratorTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
-        $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
+        $result = str_replace(["\033[0;33m", "\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
+        preg_match('/APPPATH(\/[^\s"]+\.php)/', $result, $matches);
+        $file = isset($matches[0]) ? str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $matches[0]) : '';
+
         if (is_file($file)) {
             unlink($file);
         }
