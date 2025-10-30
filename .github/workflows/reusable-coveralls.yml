@@ -30,7 +30,7 @@ jobs:
           coverage: xdebug
 
       - name: Download coverage files
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           path: build/cov
 
