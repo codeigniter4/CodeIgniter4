@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity;
 
+use BackedEnum;
 use CodeIgniter\DataCaster\DataCaster;
 use CodeIgniter\Entity\Cast\ArrayCast;
 use CodeIgniter\Entity\Cast\BooleanCast;
@@ -33,6 +34,7 @@ use DateTime;
 use Exception;
 use JsonSerializable;
 use ReturnTypeWillChange;
+use UnitEnum;
 
 /**
  * Entity encapsulation, for use with CodeIgniter\Model
@@ -130,6 +132,11 @@ class Entity implements JsonSerializable
      * Holds info whenever properties have to be casted
      */
     private bool $_cast = true;
+
+    /**
+     * Indicates whether all attributes are scalars (for optimization)
+     */
+    private bool $_onlyScalars = true;
 
     /**
      * Allows filling in Entity parameters during construction.
@@ -263,11 +270,24 @@ class Entity implements JsonSerializable
     /**
      * Ensures our "original" values match the current values.
      *
+     * Objects and arrays are normalized and JSON-encoded for reliable change detection,
+     * while scalars are stored as-is for performance.
+     *
      * @return $this
      */
     public function syncOriginal()
     {
-        $this->original = $this->attributes;
+        $this->original     = [];
+        $this->_onlyScalars = true;
+
+        foreach ($this->attributes as $key => $value) {
+            if (is_object($value) || is_array($value)) {
+                $this->original[$key] = json_encode($this->normalizeValue($value));
+                $this->_onlyScalars   = false;
+            } else {
+                $this->original[$key] = $value;
+            }
+        }
 
         return $this;
     }
@@ -283,7 +303,17 @@ class Entity implements JsonSerializable
     {
         // If no parameter was given then check all attributes
         if ($key === null) {
-            return $this->original !== $this->attributes;
+            if ($this->_onlyScalars) {
+                return $this->original !== $this->attributes;
+            }
+
+            foreach (array_keys($this->attributes) as $attributeKey) {
+                if ($this->hasChanged($attributeKey)) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         $dbColumn = $this->mapProperty($key);
@@ -298,7 +328,64 @@ class Entity implements JsonSerializable
             return true;
         }
 
-        return $this->original[$dbColumn] !== $this->attributes[$dbColumn];
+        // It was removed
+        if (array_key_exists($dbColumn, $this->original) && ! array_key_exists($dbColumn, $this->attributes)) {
+            return true;
+        }
+
+        $originalValue = $this->original[$dbColumn];
+        $currentValue  = $this->attributes[$dbColumn];
+
+        // If original is a string, it was JSON-encoded (object or array)
+        if (is_string($originalValue) && (is_object($currentValue) || is_array($currentValue))) {
+            return $originalValue !== json_encode($this->normalizeValue($currentValue));
+        }
+
+        // For scalars, use direct comparison
+        return $originalValue !== $currentValue;
+    }
+
+    /**
+     * Recursively normalize a value for comparison.
+     * Converts objects and arrays to a JSON-encodable format.
+     */
+    private function normalizeValue(mixed $data): mixed
+    {
+        if (is_array($data)) {
+            $normalized = [];
+
+            foreach ($data as $key => $value) {
+                $normalized[$key] = $this->normalizeValue($value);
+            }
+
+            return $normalized;
+        }
+
+        if (is_object($data)) {
+            // Check for Entity instance (use raw values, recursive)
+            if ($data instanceof Entity) {
+                $objectData = $data->toRawArray(false, true);
+            } elseif ($data instanceof JsonSerializable) {
+                $objectData = $data->jsonSerialize();
+            } elseif (method_exists($data, 'toArray')) {
+                $objectData = $data->toArray();
+            } elseif ($data instanceof UnitEnum) {
+                return [
+                    '__class' => $data::class,
+                    '__enum'  => $data instanceof BackedEnum ? $data->value : $data->name,
+                ];
+            } else {
+                $objectData = get_object_vars($data);
+            }
+
+            return [
+                '__class' => $data::class,
+                '__data'  => $this->normalizeValue($objectData),
+            ];
+        }
+
+        // Return scalars and null as-is
+        return $data;
     }
 
     /**
