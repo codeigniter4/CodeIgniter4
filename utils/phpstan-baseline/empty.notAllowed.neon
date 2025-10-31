@@ -1,4 +1,4 @@
-# total 239 errors
+# total 237 errors
 
 parameters:
     ignoreErrors:
@@ -241,11 +241,6 @@ parameters:
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
             count: 2
             path: ../../system/HTTP/Response.php
-
-        -
-            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 2
-            path: ../../system/HTTP/UserAgent.php
 
         -
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'

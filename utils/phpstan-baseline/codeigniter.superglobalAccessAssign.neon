@@ -1,4 +1,4 @@
-# total 463 errors
+# total 460 errors
 
 parameters:
     ignoreErrors:
@@ -661,16 +661,6 @@ parameters:
             message: '#^Assigning ''example\.com'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
             count: 3
             path: ../../tests/system/HTTP/URITest.php
-
-        -
-            message: '#^Assigning ''http\://codeigniter\.com/user_guide/'' directly on offset ''HTTP_REFERER'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/UserAgentTest.php
-
-        -
-            message: '#^Assigning string directly on offset ''HTTP_USER_AGENT'' of \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../tests/system/HTTP/UserAgentTest.php
 
         -
             message: '#^Assigning ''/'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
