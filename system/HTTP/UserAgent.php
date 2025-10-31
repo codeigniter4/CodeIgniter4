@@ -245,6 +245,7 @@ class UserAgent implements Stringable
     public function getReferrer(): string
     {
         $referrer = service('superglobals')->server('HTTP_REFERER');
+
         return $referrer === null ? '' : trim($referrer);
     }
 
