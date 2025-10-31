@@ -1,4 +1,4 @@
-# total 460 errors
+# total 459 errors
 
 parameters:
     ignoreErrors:
@@ -335,11 +335,6 @@ parameters:
         -
             message: '#^Assigning ''3'' directly on offset ''get'' of \$_GET is discouraged\.$#'
             count: 2
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Assigning ''Mozilla'' directly on offset ''HTTP_USER_AGENT'' of \$_SERVER is discouraged\.$#'
-            count: 1
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
