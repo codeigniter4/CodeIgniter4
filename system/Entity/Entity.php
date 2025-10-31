@@ -31,6 +31,7 @@ use CodeIgniter\Entity\Cast\URICast;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use DateTime;
+use DateTimeInterface;
 use Exception;
 use JsonSerializable;
 use ReturnTypeWillChange;
@@ -373,6 +374,11 @@ class Entity implements JsonSerializable
                 return [
                     '__class' => $data::class,
                     '__enum'  => $data instanceof BackedEnum ? $data->value : $data->name,
+                ];
+            } elseif ($data instanceof DateTimeInterface) {
+                return [
+                    '__class'    => $data::class,
+                    '__datetime' => $data->format(DATE_ATOM),
                 ];
             } else {
                 $objectData = get_object_vars($data);

@@ -21,6 +21,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use DateTime;
 use DateTimeInterface;
+use DateTimeZone;
 use JsonSerializable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -2168,5 +2169,33 @@ final class EntityTest extends CIUnitTestCase
         $colorData = json_decode($original['color'], true);
         $this->assertSame(ColorEnum::class, $colorData['__class']);
         $this->assertSame('GREEN', $colorData['__enum']);
+    }
+
+    public function testHasChangedWithDateTimeInterface(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'created_at' => null,
+            ];
+        };
+
+        // Test with Time object
+        $entity->created_at = Time::parse('2024-01-01 12:00:00', 'UTC');
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('created_at'));
+
+        $entity->created_at = Time::parse('2024-12-31 23:59:59', 'UTC');
+        $this->assertTrue($entity->hasChanged('created_at'));
+
+        $entity->syncOriginal();
+        $entity->created_at = Time::parse('2024-12-31 23:59:59', 'UTC');
+        $this->assertFalse($entity->hasChanged('created_at'));
+
+        // Test timezone difference detection
+        $entity->created_at = new DateTime('2024-01-01 12:00:00', new DateTimeZone('UTC'));
+        $entity->syncOriginal();
+        $entity->created_at = new DateTime('2024-01-01 12:00:00', new DateTimeZone('America/New_York'));
+        $this->assertTrue($entity->hasChanged('created_at'));
     }
 }
