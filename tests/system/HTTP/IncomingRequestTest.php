@@ -760,7 +760,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testUserAgent(): void
     {
-        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla';
+        service('superglobals')->setServer('HTTP_USER_AGENT', 'Mozilla');
 
         $config  = new App();
         $request = $this->createRequest($config);
