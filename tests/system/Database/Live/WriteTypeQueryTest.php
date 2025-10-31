@@ -142,7 +142,7 @@ final class WriteTypeQueryTest extends CIUnitTestCase
     public function testUpdateBuilder(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
-        $builder->testMode()->where('id', 1)->update(['name' => 'Programmer'], null, null);
+        $builder->testMode()->where('id', 1)->update(['name' => 'Programmer']);
         $sql = $builder->getCompiledInsert();
 
         $this->assertTrue($this->db->isWriteType($sql));

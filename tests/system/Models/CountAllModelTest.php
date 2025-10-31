@@ -63,7 +63,7 @@ final class CountAllModelTest extends LiveModelTestCase
     public function testcountAllResultsFalseWithDeletedFalse(): void
     {
         $builder     = $this->loadBuilder('user');
-        $expectedSQL = $builder->testMode()->where('user.deleted_at', null)->countAllResults();
+        $expectedSQL = $builder->testMode()->where('user.deleted_at')->countAllResults();
 
         $this->createModel(UserModel::class);
         $this->model->delete(1);
@@ -96,7 +96,7 @@ final class CountAllModelTest extends LiveModelTestCase
     public function testcountAllResultsFalseWithDeletedFalseUseSoftDeletesFalse(): void
     {
         $builder     = $this->loadBuilder('user');
-        $expectedSQL = $builder->testMode()->where('user.deleted_at', null)->countAllResults();
+        $expectedSQL = $builder->testMode()->where('user.deleted_at')->countAllResults();
 
         $this->createModel(UserModel::class);
         $this->model->delete(1);

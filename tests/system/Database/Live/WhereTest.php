@@ -178,7 +178,7 @@ final class WhereTest extends CIUnitTestCase
             ]);
 
         $jobs = $this->db->table('job')
-            ->where('description', null)
+            ->where('description')
             ->get()
             ->getResult();
 

@@ -195,7 +195,7 @@ class Model extends BaseModel
         }
 
         if ($this->tempUseSoftDeletes) {
-            $builder->where($this->table . '.' . $this->deletedField, null);
+            $builder->where($this->table . '.' . $this->deletedField);
         }
 
         $row  = null;
@@ -279,7 +279,7 @@ class Model extends BaseModel
         }
 
         if ($this->tempUseSoftDeletes) {
-            $builder->where($this->table . '.' . $this->deletedField, null);
+            $builder->where($this->table . '.' . $this->deletedField);
         }
 
         $results = $builder->limit($limit, $offset)
@@ -316,7 +316,7 @@ class Model extends BaseModel
         }
 
         if ($this->tempUseSoftDeletes) {
-            $builder->where($this->table . '.' . $this->deletedField, null);
+            $builder->where($this->table . '.' . $this->deletedField);
         } elseif ($this->useSoftDeletes && ($builder->QBGroupBy === []) && $this->primaryKey !== '') {
             $builder->groupBy($this->table . '.' . $this->primaryKey);
         }
@@ -662,7 +662,7 @@ class Model extends BaseModel
     public function countAllResults(bool $reset = true, bool $test = false)
     {
         if ($this->tempUseSoftDeletes) {
-            $this->builder()->where($this->table . '.' . $this->deletedField, null);
+            $this->builder()->where($this->table . '.' . $this->deletedField);
         }
 
         // When $reset === false, the $tempUseSoftDeletes will be
