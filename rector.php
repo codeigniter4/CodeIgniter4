@@ -25,6 +25,7 @@ use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
+use Rector\DeadCode\Rector\MethodCall\RemoveNullArgOnNullDefaultParamRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
@@ -183,6 +184,8 @@ return RectorConfig::configure()
         DeclareStrictTypesTestsRector::class => [
             __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
         ],
+
+        RemoveNullArgOnNullDefaultParamRector::class,
     ])
     // auto import fully qualified class names
     ->withImportNames(removeUnusedImports: true)
