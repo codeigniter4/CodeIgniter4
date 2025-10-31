@@ -397,4 +397,5 @@ Objects and Arrays
 
 For objects and arrays, the Entity JSON-encodes and normalizes the values for comparison. This means that modifications
 to nested structures, object properties, array elements, nested entities (using ``toRawArray()``), enums (``BackedEnum``
-and ``UnitEnum``), and objects implementing ``JsonSerializable`` or ``toArray()`` will be properly detected.
+and ``UnitEnum``), datetime objects (``DateTimeInterface``), collections (``Traversable``), and objects implementing
+``JsonSerializable`` or ``toArray()`` will be properly detected.

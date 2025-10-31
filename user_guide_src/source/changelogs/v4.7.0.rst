@@ -50,6 +50,10 @@ for objects and arrays instead of shallow comparison. This means:
   in nested structures, object properties, and array elements.
 - **Enums** (both ``BackedEnum`` and ``UnitEnum``) are properly tracked by their backing value
   or case name.
+- **DateTime objects** (``DateTimeInterface``) are compared using their ISO 8601 representation
+  including timezone information.
+- **Collections** (``Traversable``) such as ``ArrayObject`` and ``ArrayIterator`` are converted
+  to arrays for comparison.
 - **Nested entities** (using ``toRawArray()``), ``JsonSerializable`` objects, and objects with
   ``toArray()`` methods are recursively normalized for accurate change detection.
 - **Scalar values** (strings, integers, floats, booleans, null) continue to use direct comparison
