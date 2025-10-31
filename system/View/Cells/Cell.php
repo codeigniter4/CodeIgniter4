@@ -85,7 +85,7 @@ class Cell implements Stringable
             $viewName  = decamelize(class_basename(static::class));
             $directory = dirname((new ReflectionClass($this))->getFileName()) . DIRECTORY_SEPARATOR;
 
-            $possibleView1 = $directory . substr($viewName, 0, strrpos($viewName, '_cell')) . '.php';
+            $possibleView1 = $directory . substr($viewName, 0, (int) strrpos($viewName, '_cell')) . '.php';
             $possibleView2 = $directory . $viewName . '.php';
         }
 
