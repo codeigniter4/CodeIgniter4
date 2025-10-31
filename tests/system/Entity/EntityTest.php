@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity;
 
+use ArrayIterator;
+use ArrayObject;
 use Closure;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\HTTP\URI;
@@ -2197,5 +2199,49 @@ final class EntityTest extends CIUnitTestCase
         $entity->syncOriginal();
         $entity->created_at = new DateTime('2024-01-01 12:00:00', new DateTimeZone('America/New_York'));
         $this->assertTrue($entity->hasChanged('created_at'));
+    }
+
+    public function testHasChangedWithTraversable(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'items' => null,
+            ];
+        };
+
+        // Test with ArrayObject
+        $entity->items = new ArrayObject(['a', 'b', 'c']);
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('items'));
+
+        $entity->items = new ArrayObject(['a', 'b', 'd']);
+        $this->assertTrue($entity->hasChanged('items'));
+
+        $entity->syncOriginal();
+        $entity->items = new ArrayObject(['a', 'b', 'd']);
+        $this->assertFalse($entity->hasChanged('items'));
+
+        // Test with ArrayIterator
+        $entity->items = new ArrayIterator(['x', 'y', 'z']);
+        $entity->syncOriginal();
+        $entity->items = new ArrayIterator(['x', 'y', 'modified']);
+        $this->assertTrue($entity->hasChanged('items'));
+
+        // Test with nested objects inside collection (verifies recursive normalization)
+        $obj1       = new stdClass();
+        $obj1->name = 'first';
+
+        $obj2       = new stdClass();
+        $obj2->name = 'second';
+
+        $entity->items = new ArrayObject([$obj1, $obj2]);
+        $entity->syncOriginal();
+
+        $obj3       = new stdClass();
+        $obj3->name = 'modified';
+
+        $entity->items = new ArrayObject([$obj3, $obj2]);
+        $this->assertTrue($entity->hasChanged('items'));
     }
 }

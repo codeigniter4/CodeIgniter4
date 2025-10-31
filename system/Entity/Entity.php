@@ -35,6 +35,7 @@ use DateTimeInterface;
 use Exception;
 use JsonSerializable;
 use ReturnTypeWillChange;
+use Traversable;
 use UnitEnum;
 
 /**
@@ -370,15 +371,17 @@ class Entity implements JsonSerializable
                 $objectData = $data->jsonSerialize();
             } elseif (method_exists($data, 'toArray')) {
                 $objectData = $data->toArray();
+            } elseif ($data instanceof Traversable) {
+                $objectData = iterator_to_array($data);
+            } elseif ($data instanceof DateTimeInterface) {
+                return [
+                    '__class'    => $data::class,
+                    '__datetime' => $data->format(DATE_RFC3339_EXTENDED),
+                ];
             } elseif ($data instanceof UnitEnum) {
                 return [
                     '__class' => $data::class,
                     '__enum'  => $data instanceof BackedEnum ? $data->value : $data->name,
-                ];
-            } elseif ($data instanceof DateTimeInterface) {
-                return [
-                    '__class'    => $data::class,
-                    '__datetime' => $data->format(DATE_ATOM),
                 ];
             } else {
                 $objectData = get_object_vars($data);
