@@ -54,7 +54,7 @@ final class DateHelperTest extends CIUnitTestCase
 
     public function testTimezoneSelectDefault(): void
     {
-        $timezones = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
+        $timezones = DateTimeZone::listIdentifiers(DateTimeZone::ALL, null);
 
         $expected = "<select name='timezone' class='custom-select'>\n";
 
@@ -71,7 +71,7 @@ final class DateHelperTest extends CIUnitTestCase
     public function testTimezoneSelectSpecific(): void
     {
         $spesificRegion = DateTimeZone::ASIA;
-        $timezones      = DateTimeZone::listIdentifiers($spesificRegion);
+        $timezones      = DateTimeZone::listIdentifiers($spesificRegion, null);
 
         $expected = "<select name='timezone' class='custom-select'>\n";
 

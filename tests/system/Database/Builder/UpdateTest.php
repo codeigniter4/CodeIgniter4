@@ -43,7 +43,7 @@ final class UpdateTest extends CIUnitTestCase
         $builder = new BaseBuilder('jobs', $this->db);
 
         $data = ['name' => 'Programmer'];
-        $builder->testMode()->where('id', 1)->update($data);
+        $builder->testMode()->where('id', 1)->update($data, null, null);
 
         $expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
         $expectedBinds = [
@@ -66,7 +66,7 @@ final class UpdateTest extends CIUnitTestCase
         $builder = new BaseBuilder('jobs', $this->db);
 
         $data = (object) ['name' => 'Programmer'];
-        $builder->testMode()->where('id', 1)->update($data);
+        $builder->testMode()->where('id', 1)->update($data, null, null);
 
         $expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
         $expectedBinds = [
@@ -110,7 +110,7 @@ final class UpdateTest extends CIUnitTestCase
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
-        $builder->testMode()->set('name', 'Programmer')->where('id', 1)->update();
+        $builder->testMode()->set('name', 'Programmer')->where('id', 1)->update(null, null, null);
 
         $expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
         $expectedBinds = [
@@ -132,7 +132,7 @@ final class UpdateTest extends CIUnitTestCase
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
-        $builder->testMode()->set('age', 22)->where('id', 1)->update();
+        $builder->testMode()->set('age', 22)->where('id', 1)->update(null, null, null);
 
         $expectedSQL   = 'UPDATE "jobs" SET "age" = 22 WHERE "id" = 1';
         $expectedBinds = [
@@ -154,7 +154,7 @@ final class UpdateTest extends CIUnitTestCase
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
-        $builder->testMode()->set('manager', true)->where('id', 1)->update();
+        $builder->testMode()->set('manager', true)->where('id', 1)->update(null, null, null);
 
         $expectedSQL   = 'UPDATE "jobs" SET "manager" = 1 WHERE "id" = 1';
         $expectedBinds = [
@@ -176,7 +176,7 @@ final class UpdateTest extends CIUnitTestCase
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
-        $builder->testMode()->set(['name' => 'Programmer', 'age' => 22, 'manager' => true])->where('id', 1)->update();
+        $builder->testMode()->set(['name' => 'Programmer', 'age' => 22, 'manager' => true])->where('id', 1)->update(null, null, null);
 
         $expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\', "age" = 22, "manager" = 1 WHERE "id" = 1';
         $expectedBinds = [
@@ -209,7 +209,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('You must use the "set" method to update an entry.');
 
-        $builder->update();
+        $builder->update(null, null, null);
     }
 
     public function testUpdateBatch(): void
@@ -319,7 +319,7 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $builder->updateBatch($set);
+        $builder->updateBatch($set, null);
     }
 
     public function testUpdateBatchThrowsExceptionWithEmptySetArray(): void
@@ -336,7 +336,7 @@ final class UpdateTest extends CIUnitTestCase
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
-        $builder->testMode()->update(['name' => 'foobar'], ['name' => 'Programmer']);
+        $builder->testMode()->update(['name' => 'foobar'], ['name' => 'Programmer'], null);
 
         $expectedSQL   = 'UPDATE "jobs" SET "name" = \'foobar\' WHERE "name" = \'Programmer\'';
         $expectedBinds = [
@@ -361,7 +361,8 @@ final class UpdateTest extends CIUnitTestCase
 
         $builder->testMode()
             ->set('name', 'foobar')
-            ->where('name', 'Programmer')->update();
+            ->where('name', 'Programmer')
+            ->update(null, null, null);
 
         $expectedSQL   = 'UPDATE "jobs" SET "name" = \'foobar\' WHERE "name" = \'Programmer\'';
         $expectedBinds = [
@@ -386,7 +387,7 @@ final class UpdateTest extends CIUnitTestCase
 
         $builder->testMode()
             ->where('name', 'Programmer')
-            ->update(['name' => 'foobar']);
+            ->update(['name' => 'foobar'], null, null);
 
         $expectedSQL   = 'UPDATE "jobs" SET "name" = \'foobar\' WHERE "name" = \'Programmer\'';
         $expectedBinds = [
@@ -413,7 +414,8 @@ final class UpdateTest extends CIUnitTestCase
 
         $builder->testMode()
             ->set('field', 'field+1', false)
-            ->where('id', 2)->update();
+            ->where('id', 2)
+            ->update(null, null, null);
 
         $expectedSQL   = 'UPDATE "mytable" SET "field" = field+1 WHERE "id" = 2';
         $expectedBinds = [
@@ -434,7 +436,8 @@ final class UpdateTest extends CIUnitTestCase
         $builder->testMode()
             ->set('foo', 'bar')
             ->set('field', 'field+1', false)
-            ->where('id', 2)->update();
+            ->where('id', 2)
+            ->update(null, null, null);
 
         $expectedSQL   = 'UPDATE "mytable" SET "foo" = \'bar\', "field" = field+1 WHERE "id" = 2';
         $expectedBinds = [

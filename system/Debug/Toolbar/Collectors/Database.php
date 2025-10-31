@@ -104,7 +104,7 @@ class Database extends BaseCollector
             static::$queries[] = [
                 'query'     => $query,
                 'string'    => $queryString,
-                'duplicate' => in_array($queryString, array_column(static::$queries, 'string'), true),
+                'duplicate' => in_array($queryString, array_column(static::$queries, 'string', null), true),
                 'trace'     => $backtrace,
             ];
         }

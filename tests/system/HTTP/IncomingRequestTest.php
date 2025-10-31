@@ -491,7 +491,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $_REQUEST['foo']  = 'bar';
         $_REQUEST['fizz'] = 'buzz';
 
-        $request = $this->createRequest($config);
+        $request = $this->createRequest($config, null);
         $request = $request->withMethod('GET');
 
         // JSON type

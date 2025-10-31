@@ -163,13 +163,13 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testNewNegotiatorWithNullConfig(): void
     {
-        $actual = Services::negotiator();
+        $actual = Services::negotiator(null);
         $this->assertInstanceOf(Negotiate::class, $actual);
     }
 
     public function testNewClirequest(): void
     {
-        $actual = Services::clirequest();
+        $actual = Services::clirequest(null);
         $this->assertInstanceOf(CLIRequest::class, $actual);
     }
 
@@ -201,7 +201,7 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testNewPager(): void
     {
-        $actual = Services::pager();
+        $actual = Services::pager(null);
         $this->assertInstanceOf(Pager::class, $actual);
     }
 
@@ -225,13 +225,13 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testNewUri(): void
     {
-        $actual = Services::uri();
+        $actual = Services::uri(null);
         $this->assertInstanceOf(URI::class, $actual);
     }
 
     public function testNewValidation(): void
     {
-        $actual = Services::validation();
+        $actual = Services::validation(null);
         $this->assertInstanceOf(Validation::class, $actual);
     }
 

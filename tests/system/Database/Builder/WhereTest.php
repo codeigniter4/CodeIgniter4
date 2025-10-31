@@ -512,7 +512,7 @@ final class WhereTest extends CIUnitTestCase
         // Closure
         $builder = $this->db->table('jobs');
 
-        $builder->where('deleted_at')->orWhereIn('id', static fn (BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
+        $builder->where('deleted_at', null)->orWhereIn('id', static fn (BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
@@ -523,7 +523,7 @@ final class WhereTest extends CIUnitTestCase
             ->select('job_id')
             ->where('user_id', 3);
 
-        $builder->where('deleted_at')->orWhereIn('id', $subQuery);
+        $builder->where('deleted_at', null)->orWhereIn('id', $subQuery);
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
@@ -560,7 +560,7 @@ final class WhereTest extends CIUnitTestCase
         // Closure
         $builder = $this->db->table('jobs');
 
-        $builder->where('deleted_at')->orWhereNotIn('id', static fn (BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
+        $builder->where('deleted_at', null)->orWhereNotIn('id', static fn (BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
@@ -571,7 +571,7 @@ final class WhereTest extends CIUnitTestCase
             ->select('job_id')
             ->where('user_id', 3);
 
-        $builder->where('deleted_at')->orWhereNotIn('id', $subQuery);
+        $builder->where('deleted_at', null)->orWhereNotIn('id', $subQuery);
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
@@ -692,7 +692,7 @@ final class WhereTest extends CIUnitTestCase
     {
         $builder = $this->db->table('users');
 
-        $builder->where('id');
+        $builder->where('id', null);
 
         $expectedSQL = 'SELECT * FROM "users" WHERE "id" IS NULL';
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
