@@ -110,6 +110,8 @@ Migrations
 Others
 ------
 
+- **UserAgents:** Expanded the list of recognized ``robots`` with new search engine and service crawlers.
+
 Model
 =====
 
