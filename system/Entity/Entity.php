@@ -282,7 +282,7 @@ class Entity implements JsonSerializable
 
         foreach ($this->attributes as $key => $value) {
             if (is_object($value) || is_array($value)) {
-                $this->original[$key] = json_encode($this->normalizeValue($value));
+                $this->original[$key] = json_encode($this->normalizeValue($value), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
                 $this->_onlyScalars   = false;
             } else {
                 $this->original[$key] = $value;
@@ -338,7 +338,7 @@ class Entity implements JsonSerializable
 
         // If original is a string, it was JSON-encoded (object or array)
         if (is_string($originalValue) && (is_object($currentValue) || is_array($currentValue))) {
-            return $originalValue !== json_encode($this->normalizeValue($currentValue));
+            return $originalValue !== json_encode($this->normalizeValue($currentValue), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         }
 
         // For scalars, use direct comparison
