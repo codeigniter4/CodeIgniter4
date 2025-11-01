@@ -54,6 +54,8 @@ for objects and arrays instead of shallow comparison. This means:
   including timezone information.
 - **Collections** (``Traversable``) such as ``ArrayObject`` and ``ArrayIterator`` are converted
   to arrays for comparison.
+- **Value objects** with ``__toString()`` method are compared by their string representation when
+  properties are not accessible (fallback for objects with private properties).
 - **Nested entities** (using ``toRawArray()``), ``JsonSerializable`` objects, and objects with
   ``toArray()`` methods are recursively normalized for accurate change detection.
 - **Scalar values** (strings, integers, floats, booleans, null) continue to use direct comparison

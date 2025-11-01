@@ -2244,4 +2244,42 @@ final class EntityTest extends CIUnitTestCase
         $entity->items = new ArrayObject([$obj3, $obj2]);
         $this->assertTrue($entity->hasChanged('items'));
     }
+
+    public function testHasChangedWithValueObjectsUsingToString(): void
+    {
+        // Define a value object class
+        $emailClass = new class () {
+            public static function create(string $email): object
+            {
+                return new class ($email) {
+                    public function __construct(private readonly string $email)
+                    {
+                    }
+
+                    public function __toString(): string
+                    {
+                        return $this->email;
+                    }
+                };
+            }
+        };
+
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'email' => null,
+            ];
+        };
+
+        $entity->email = $emailClass::create('old@example.com');
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('email'));
+
+        $entity->email = $emailClass::create('new@example.com');
+        $this->assertTrue($entity->hasChanged('email'));
+
+        $entity->syncOriginal();
+        $entity->email = $emailClass::create('new@example.com');
+        $this->assertFalse($entity->hasChanged('email'));
+    }
 }

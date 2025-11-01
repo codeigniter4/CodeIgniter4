@@ -385,6 +385,15 @@ class Entity implements JsonSerializable
                 ];
             } else {
                 $objectData = get_object_vars($data);
+
+                // Fallback for value objects with __toString()
+                // when properties are not accessible
+                if ($objectData === [] && method_exists($data, '__toString')) {
+                    return [
+                        '__class'  => $data::class,
+                        '__string' => (string) $data,
+                    ];
+                }
             }
 
             return [
