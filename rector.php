@@ -185,7 +185,12 @@ return RectorConfig::configure()
             __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
         ],
 
-        RemoveNullArgOnNullDefaultParamRector::class,
+        RemoveNullArgOnNullDefaultParamRector::class => [
+            // skip form query usage, easier to read
+            __DIR__ . '/system/Model.php',
+            __DIR__ . '/tests/system/Database',
+            __DIR__ . '/tests/system/Models',
+        ],
     ])
     // auto import fully qualified class names
     ->withImportNames(removeUnusedImports: true)
