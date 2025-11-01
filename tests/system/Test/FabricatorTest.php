@@ -78,7 +78,7 @@ final class FabricatorTest extends CIUnitTestCase
 
     public function testConstructorGuessesFormatters(): void
     {
-        $fabricator = new Fabricator(UserModel::class, null);
+        $fabricator = new Fabricator(UserModel::class);
 
         $this->assertSame($this->formatters, $fabricator->getFormatters());
     }

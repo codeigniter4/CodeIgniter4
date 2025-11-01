@@ -228,7 +228,7 @@ trait FeatureTestTrait
             ->run($routes, true);
 
         // Reset directory if it has been set
-        service('router')->setDirectory(null);
+        service('router')->setDirectory();
 
         return new TestResponse($response);
     }
