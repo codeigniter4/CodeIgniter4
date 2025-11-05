@@ -281,10 +281,11 @@ class Security implements SecurityInterface
     {
         assert($request instanceof Request);
 
-        if (isset($_POST[$this->config->tokenName])) {
+        $superglobals = service('superglobals');
+        if ($superglobals->post($this->config->tokenName) !== null) {
             // We kill this since we're done and we don't want to pollute the POST array.
-            unset($_POST[$this->config->tokenName]);
-            $request->setGlobal('post', $_POST);
+            $superglobals->unsetPost($this->config->tokenName);
+            $request->setGlobal('post', $superglobals->getPostArray());
         } else {
             $body = $request->getBody() ?? '';
             $json = json_decode($body);

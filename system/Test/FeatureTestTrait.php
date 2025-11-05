@@ -397,7 +397,7 @@ trait FeatureTestTrait
         }
 
         if ($name === 'post') {
-            $request->setGlobal($name, $params);
+            $request->setGlobal($name, $params ?? []);
             $request->setGlobal(
                 'request',
                 (array) $request->fetchGlobal('post') + (array) $request->fetchGlobal('get'),

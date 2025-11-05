@@ -22,6 +22,7 @@ use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Session\Handlers\ArrayHandler;
 use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\Session\Session;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
@@ -64,6 +65,8 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
 
         $_SESSION = [];
         Factories::reset();
+
+        Services::injectMock('superglobals', new Superglobals([], [], [], [], []));
 
         $this->config                 = new SecurityConfig();
         $this->config->csrfProtection = Security::CSRF_PROTECTION_SESSION;
@@ -138,8 +141,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('The action you requested is not allowed.');
 
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        unset($_POST['csrf_test_name']);
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
 
         $request  = $this->createIncomingRequest();
         $security = $this->createSecurity();
@@ -159,8 +161,8 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('The action you requested is not allowed.');
 
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_POST['csrf_test_name']   = '8b9218a55906f9dcc1dc263dce7f005b';
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
+        service('superglobals')->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005b');
 
         $request  = $this->createIncomingRequest();
         $security = $this->createSecurity();
@@ -176,8 +178,8 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('The action you requested is not allowed.');
 
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_POST['csrf_test_name']   = '!';
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
+        service('superglobals')->setPost('csrf_test_name', '!');
 
         $request  = $this->createIncomingRequest();
         $security = $this->createSecurity();
@@ -187,21 +189,21 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
 
     public function testCSRFVerifyPostReturnsSelfOnMatch(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_POST['foo']              = 'bar';
-        $_POST['csrf_test_name']   = $this->randomizedToken;
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
+        service('superglobals')->setPost('foo', 'bar');
+        service('superglobals')->setPost('csrf_test_name', $this->randomizedToken);
 
         $request  = $this->createIncomingRequest();
         $security = $this->createSecurity();
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
         $this->assertLogged('info', 'CSRF token verified.');
-        $this->assertCount(1, $_POST);
+        $this->assertCount(1, service('superglobals')->getPostArray());
     }
 
     public function testCSRFVerifyPOSTHeaderThrowsExceptionOnNoMatch(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'POST';
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
 
         $request = $this->createIncomingRequest();
         $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005b');
@@ -215,8 +217,8 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
 
     public function testCSRFVerifyPOSTHeaderReturnsSelfOnMatch(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_POST['foo']              = 'bar';
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
+        service('superglobals')->setPost('foo', 'bar');
 
         $request = $this->createIncomingRequest();
         $request->setHeader('X-CSRF-TOKEN', $this->randomizedToken);
@@ -224,12 +226,12 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
         $this->assertLogged('info', 'CSRF token verified.');
-        $this->assertCount(1, $_POST);
+        $this->assertCount(1, service('superglobals')->getPostArray());
     }
 
     public function testCSRFVerifyPUTHeaderThrowsExceptionOnNoMatch(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'PUT';
+        service('superglobals')->setServer('REQUEST_METHOD', 'PUT');
 
         $request = $this->createIncomingRequest();
         $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005b');
@@ -243,7 +245,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
 
     public function testCSRFVerifyPUTHeaderReturnsSelfOnMatch(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'PUT';
+        service('superglobals')->setServer('REQUEST_METHOD', 'PUT');
 
         $request = $this->createIncomingRequest();
         $request->setHeader('X-CSRF-TOKEN', $this->randomizedToken);
@@ -255,7 +257,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
 
     public function testCSRFVerifyPUTBodyReturnsSelfOnMatch(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'PUT';
+        service('superglobals')->setServer('REQUEST_METHOD', 'PUT');
 
         $request = $this->createIncomingRequest();
         $request->setBody("csrf_test_name={$this->randomizedToken}&foo=bar");
@@ -270,7 +272,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('The action you requested is not allowed.');
 
-        $_SERVER['REQUEST_METHOD'] = 'POST';
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
 
         $request = $this->createIncomingRequest();
         $request->setBody('{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005b"}');
@@ -281,7 +283,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
 
     public function testCSRFVerifyJsonReturnsSelfOnMatch(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'POST';
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
 
         $request = $this->createIncomingRequest();
         $request->setBody('{"csrf_test_name":"' . $this->randomizedToken . '","foo":"bar"}');
@@ -294,8 +296,8 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
 
     public function testRegenerateWithFalseSecurityRegenerateProperty(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_POST['csrf_test_name']   = $this->randomizedToken;
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
+        service('superglobals')->setPost('csrf_test_name', $this->randomizedToken);
 
         /**
          * @var SecurityConfig
@@ -317,8 +319,8 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
 
     public function testRegenerateWithTrueSecurityRegenerateProperty(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_POST['csrf_test_name']   = $this->randomizedToken;
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
+        service('superglobals')->setPost('csrf_test_name', $this->randomizedToken);
 
         /**
          * @var SecurityConfig

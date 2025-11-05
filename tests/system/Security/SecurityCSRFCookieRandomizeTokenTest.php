@@ -14,10 +14,12 @@ declare(strict_types=1);
 namespace CodeIgniter\Security;
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Config\Services;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
@@ -46,7 +48,7 @@ final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $_COOKIE = [];
+        Services::injectMock('superglobals', new Superglobals([], [], [], [], []));
 
         $this->config                 = new SecurityConfig();
         $this->config->csrfProtection = Security::CSRF_PROTECTION_COOKIE;
@@ -54,8 +56,8 @@ final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
         Factories::injectMock('config', 'Security', $this->config);
 
         // Set Cookie value
-        $security                            = new MockSecurity($this->config);
-        $_COOKIE[$security->getCookieName()] = $this->hash;
+        $security = new MockSecurity($this->config);
+        service('superglobals')->setCookie($security->getCookieName(), $this->hash);
 
         $this->resetServices();
     }
@@ -72,9 +74,9 @@ final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
 
     public function testCSRFVerifySetNewCookie(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_POST['foo']              = 'bar';
-        $_POST['csrf_test_name']   = $this->randomizedToken;
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
+        service('superglobals')->setPost('foo', 'bar');
+        service('superglobals')->setPost('csrf_test_name', $this->randomizedToken);
 
         $config  = new MockAppConfig();
         $request = new IncomingRequest($config, new SiteURI($config), null, new UserAgent());
@@ -83,7 +85,7 @@ final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
         $this->assertLogged('info', 'CSRF token verified.');
-        $this->assertCount(1, $_POST);
+        $this->assertCount(1, service('superglobals')->getPostArray());
 
         /** @var Cookie $cookie */
         $cookie  = $this->getPrivateProperty($security, 'cookie');

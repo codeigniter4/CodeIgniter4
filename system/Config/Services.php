@@ -746,13 +746,16 @@ class Services extends BaseService
     public static function superglobals(
         ?array $server = null,
         ?array $get = null,
+        ?array $post = null,
+        ?array $cookie = null,
+        ?array $request = null,
         bool $getShared = true,
     ) {
         if ($getShared) {
-            return static::getSharedInstance('superglobals', $server, $get);
+            return static::getSharedInstance('superglobals', $server, $get, $post, $cookie, $request);
         }
 
-        return new Superglobals($server, $get);
+        return new Superglobals($server, $get, $post, $cookie, $request);
     }
 
     /**

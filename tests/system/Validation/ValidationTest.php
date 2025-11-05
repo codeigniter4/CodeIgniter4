@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation;
 
+use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
@@ -82,6 +84,9 @@ class ValidationTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        Services::injectMock('superglobals', new Superglobals([], [], [], [], []));
+
         $this->validation = new Validation((object) static::$config, service('renderer'));
         $this->validation->reset();
     }
@@ -1214,7 +1219,7 @@ class ValidationTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        $_REQUEST = [
+        service('superglobals')->setRequestArray([
             'id_user' => [
                 1,
                 3,
@@ -1223,7 +1228,7 @@ class ValidationTest extends CIUnitTestCase
                 'abc123',
                 'xyz098',
             ],
-        ];
+        ]);
 
         $request = new IncomingRequest($config, new SiteURI($config), 'php://input', new UserAgent());
 
@@ -1241,7 +1246,7 @@ class ValidationTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        $_REQUEST = [
+        service('superglobals')->setRequestArray([
             'id_user' => [
                 '1dfd',
                 3,
@@ -1257,7 +1262,7 @@ class ValidationTest extends CIUnitTestCase
                     ['name' => 'John'],
                 ],
             ],
-        ];
+        ]);
 
         $request = new IncomingRequest($config, new SiteURI($config), 'php://input', new UserAgent());
 
@@ -1291,9 +1296,9 @@ class ValidationTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        $_REQUEST = [
+        service('superglobals')->setRequestArray([
             'id_user' => 'gh',
-        ];
+        ]);
 
         $request = new IncomingRequest($config, new SiteURI($config), 'php://input', new UserAgent());
 

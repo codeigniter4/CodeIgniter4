@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Exceptions\ConfigException;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Validation\FormatRules;
 use Config\App;
 
@@ -44,11 +45,32 @@ trait RequestTrait
     protected $ipAddress = '';
 
     /**
+     * Superglobals access wrapper.
+     *
+     * @var Superglobals|null
+     */
+    protected $superglobals;
+
+    /**
      * Stores values we've retrieved from PHP globals.
      *
      * @var array{get?: array, post?: array, request?: array, cookie?: array, server?: array}
+     *
+     * @deprecated 4.7.0 Use $superglobals instead
      */
     protected $globals = [];
+
+    /**
+     * Get the Superglobals service instance.
+     */
+    protected function getSuperglobals(): Superglobals
+    {
+        if ($this->superglobals === null) {
+            $this->superglobals = service('superglobals');
+        }
+
+        return $this->superglobals;
+    }
 
     /**
      * Gets the user's IP address.
@@ -231,7 +253,11 @@ trait RequestTrait
      */
     public function setGlobal(string $name, $value)
     {
+        // Keep BC with $globals array
         $this->globals[$name] = $value;
+
+        // Also update Superglobals via service
+        $this->getSuperglobals()->setGlobalArray($name, $value);
 
         return $this;
     }
@@ -342,6 +368,8 @@ trait RequestTrait
      * @param 'cookie'|'get'|'post'|'request'|'server' $name Superglobal name (lowercase)
      *
      * @return void
+     *
+     * @deprecated 4.7.0 No longer needs to be called explicitly. Used internally to maintain BC with $globals.
      */
     protected function populateGlobals(string $name)
     {
@@ -349,28 +377,7 @@ trait RequestTrait
             $this->globals[$name] = [];
         }
 
-        // Don't populate ENV as it might contain
-        // sensitive data that we don't want to get logged.
-        switch ($name) {
-            case 'get':
-                $this->globals['get'] = $_GET;
-                break;
-
-            case 'post':
-                $this->globals['post'] = $_POST;
-                break;
-
-            case 'request':
-                $this->globals['request'] = $_REQUEST;
-                break;
-
-            case 'cookie':
-                $this->globals['cookie'] = $_COOKIE;
-                break;
-
-            case 'server':
-                $this->globals['server'] = $_SERVER;
-                break;
-        }
+        // Get data from Superglobals service instead of direct access
+        $this->globals[$name] = $this->getSuperglobals()->getGlobalArray($name);
     }
 }
