@@ -22,6 +22,7 @@ use CodeIgniter\Test\StreamFilterTrait;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Services;
 use PHPUnit\Framework\Attributes\Group;
+use stdClass;
 
 /**
  * @internal
@@ -261,5 +262,128 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
 
         $this->restoreIniValues();
+    }
+
+    public function testSanitizeDataWithResource(): void
+    {
+        $sanitizeData = self::getPrivateMethodInvoker($this->handler, 'sanitizeData');
+
+        // Create a resource (file handle)
+        $resource = fopen('php://memory', 'rb');
+        $result   = $sanitizeData($resource);
+
+        $this->assertIsString($result);
+        $this->assertStringStartsWith('[Resource #', $result);
+        $this->assertStringEndsWith(']', $result);
+
+        fclose($resource);
+    }
+
+    public function testSanitizeDataWithClosure(): void
+    {
+        $sanitizeData = self::getPrivateMethodInvoker($this->handler, 'sanitizeData');
+
+        $closure = static fn (): string => 'test';
+        $result  = $sanitizeData($closure);
+
+        $this->assertSame('[Closure]', $result);
+    }
+
+    public function testSanitizeDataWithCircularReference(): void
+    {
+        $sanitizeData = self::getPrivateMethodInvoker($this->handler, 'sanitizeData');
+
+        // Create an object with circular reference
+        $obj       = new stdClass();
+        $obj->self = $obj;
+
+        $result = $sanitizeData($obj);
+
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('self', $result);
+        $this->assertStringContainsString('*RECURSION*', (string) $result['self']);
+        $this->assertStringContainsString('stdClass', (string) $result['self']);
+    }
+
+    public function testSanitizeDataWithArrayContainingResource(): void
+    {
+        $sanitizeData = self::getPrivateMethodInvoker($this->handler, 'sanitizeData');
+
+        $resource = fopen('php://memory', 'rb');
+        $data     = [
+            'string'   => 'test',
+            'number'   => 123,
+            'resource' => $resource,
+        ];
+
+        $result = $sanitizeData($data);
+
+        $this->assertIsArray($result);
+        $this->assertSame('test', $result['string']);
+        $this->assertSame(123, $result['number']);
+        $this->assertIsString($result['resource']);
+        $this->assertStringStartsWith('[Resource #', $result['resource']);
+
+        fclose($resource);
+    }
+
+    public function testSanitizeDataWithObjectContainingResource(): void
+    {
+        $sanitizeData = self::getPrivateMethodInvoker($this->handler, 'sanitizeData');
+
+        $resource = fopen('php://memory', 'rb');
+
+        $obj           = new stdClass();
+        $obj->name     = 'test';
+        $obj->connID   = $resource;
+        $obj->database = 'mydb';
+
+        $result = $sanitizeData($obj);
+
+        $this->assertIsArray($result);
+        $this->assertSame('test', $result['name']);
+        $this->assertSame('mydb', $result['database']);
+        $this->assertIsString($result['connID']);
+        $this->assertStringStartsWith('[Resource #', $result['connID']);
+
+        fclose($resource);
+    }
+
+    public function testSanitizeDataWithNestedObjects(): void
+    {
+        $sanitizeData = self::getPrivateMethodInvoker($this->handler, 'sanitizeData');
+
+        $resource = fopen('php://memory', 'rb');
+
+        $inner         = new stdClass();
+        $inner->connID = $resource;
+        $inner->host   = 'localhost';
+
+        $outer        = new stdClass();
+        $outer->db    = $inner;
+        $outer->cache = 'file';
+
+        $result = $sanitizeData($outer);
+
+        $this->assertIsArray($result);
+        $this->assertSame('file', $result['cache']);
+        $this->assertIsArray($result['db']);
+        $this->assertSame('localhost', $result['db']['host']);
+        $this->assertIsString($result['db']['connID']);
+        $this->assertStringStartsWith('[Resource #', $result['db']['connID']);
+
+        fclose($resource);
+    }
+
+    public function testSanitizeDataWithScalars(): void
+    {
+        $sanitizeData = self::getPrivateMethodInvoker($this->handler, 'sanitizeData');
+
+        $this->assertSame('string', $sanitizeData('string'));
+        $this->assertSame(123, $sanitizeData(123));
+        $this->assertEqualsWithDelta(45.67, $sanitizeData(45.67), PHP_FLOAT_EPSILON);
+        $this->assertTrue($sanitizeData(true));
+        $this->assertFalse($sanitizeData(false));
+        $this->assertNull($sanitizeData(null));
     }
 }
