@@ -36,15 +36,19 @@ class PredisHandler extends BaseHandler
      *   host: string,
      *   password: string|null,
      *   port: int,
+     *   async: bool
+     *   persistent: bool
      *   timeout: int
      * }
      */
     protected $config = [
-        'scheme'   => 'tcp',
-        'host'     => '127.0.0.1',
-        'password' => null,
-        'port'     => 6379,
-        'timeout'  => 0,
+        'scheme'     => 'tcp',
+        'host'       => '127.0.0.1',
+        'password'   => null,
+        'port'       => 6379,
+        'async'      => false,
+        'persistent' => false,
+        'timeout'    => 0,
     ];
 
     /**
