@@ -142,7 +142,7 @@ class RedisHandler extends BaseHandler
             }
         }
 
-        $persistent = $query['persistent'] ?? null;
+        $persistent = isset($query['persistent']) ? (bool) $query['persistent'] : null;
         $password   = $query['auth'] ?? null;
         $database   = isset($query['database']) ? (int) $query['database'] : 0;
         $timeout    = isset($query['timeout']) ? (float) $query['timeout'] : 0.0;
