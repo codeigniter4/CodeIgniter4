@@ -85,6 +85,7 @@ Libraries
 - **Image:** The ``ImageMagickHandler`` has been rewritten to rely solely on the PHP ``imagick`` extension.
 - **Image:** Added ``ImageMagickHandler::clearMetadata()`` method to remove image metadata for privacy protection.
 - **ResponseTrait:** Added ``paginate``` method to simplify paginated API responses. See :ref:`ResponseTrait::paginate() <api_response_trait_paginate>` for details.
+- **Session:** Added ``persistent`` config item to redis handler.
 - **Time:** added methods ``Time::addCalendarMonths()`` and ``Time::subCalendarMonths()``
 
 Commands
