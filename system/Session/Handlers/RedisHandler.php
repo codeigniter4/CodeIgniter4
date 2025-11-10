@@ -142,17 +142,19 @@ class RedisHandler extends BaseHandler
             }
         }
 
-        $password = $query['auth'] ?? null;
-        $database = isset($query['database']) ? (int) $query['database'] : 0;
-        $timeout  = isset($query['timeout']) ? (float) $query['timeout'] : 0.0;
-        $prefix   = $query['prefix'] ?? null;
+        $persistent = $query['persistent'] ?? null;
+        $password   = $query['auth'] ?? null;
+        $database   = isset($query['database']) ? (int) $query['database'] : 0;
+        $timeout    = isset($query['timeout']) ? (float) $query['timeout'] : 0.0;
+        $prefix     = $query['prefix'] ?? null;
 
         $this->savePath = [
-            'host'     => $host,
-            'port'     => $port,
-            'password' => $password,
-            'database' => $database,
-            'timeout'  => $timeout,
+            'host'       => $host,
+            'port'       => $port,
+            'password'   => $password,
+            'database'   => $database,
+            'timeout'    => $timeout,
+            'persistent' => $persistent,
         ];
 
         if ($prefix !== null) {
@@ -176,8 +178,10 @@ class RedisHandler extends BaseHandler
 
         $redis = new Redis();
 
+        $funcConnection = isset($this->savePath['persistent']) && $this->savePath['persistent'] ? 'pconnect' : 'connect';
+
         if (
-            ! $redis->connect(
+            ! $redis->{$funcConnection}(
                 $this->savePath['host'],
                 $this->savePath['port'],
                 $this->savePath['timeout'],
