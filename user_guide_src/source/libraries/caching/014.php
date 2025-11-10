@@ -9,11 +9,14 @@ class Cache extends BaseConfig
     // ...
 
     public $redis = [
-        'host'     => '127.0.0.1',
-        'password' => null,
-        'port'     => 6379,
-        'timeout'  => 0,
-        'database' => 0,
+        'scheme'     => 'tcp',
+        'host'       => '127.0.0.1',
+        'password'   => null,
+        'port'       => 6379,
+        'async'      => false,
+        'persistent' => false,
+        'timeout'    => 0,
+        'database'   => 0,
     ];
 
     // ...

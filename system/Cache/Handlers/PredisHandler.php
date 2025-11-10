@@ -36,8 +36,8 @@ class PredisHandler extends BaseHandler
      *   host: string,
      *   password: string|null,
      *   port: int,
-     *   async: bool
-     *   persistent: bool
+     *   async: bool,
+     *   persistent: bool,
      *   timeout: int
      * }
      */
