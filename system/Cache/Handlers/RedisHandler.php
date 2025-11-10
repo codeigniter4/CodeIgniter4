@@ -39,12 +39,12 @@ class RedisHandler extends BaseHandler
      * }
      */
     protected $config = [
-        'host'     => '127.0.0.1',
-        'password' => null,
-        'port'     => 6379,
-        'timeout'  => 0,
+        'host'       => '127.0.0.1',
+        'password'   => null,
+        'port'       => 6379,
+        'timeout'    => 0,
         'persistent' => false,
-        'database' => 0,
+        'database'   => 0,
     ];
 
     /**
@@ -88,7 +88,7 @@ class RedisHandler extends BaseHandler
 
             // Note:: If Redis is your primary cache choice, and it is "offline", every page load will end up been delayed by the timeout duration.
             // I feel like some sort of temporary flag should be set, to indicate that we think Redis is "offline", allowing us to bypass the timeout for a set period of time.
-            if (! $this->redis->$funcConnection($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout'])) {
+            if (! $this->redis->{$funcConnection}($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout'])) {
                 // Note:: I'm unsure if log_message() is necessary, however I'm not 100% comfortable removing it.
                 log_message('error', 'Cache: Redis connection failed. Check your configuration.');
 
