@@ -1,4 +1,4 @@
-# total 1376 errors
+# total 1375 errors
 
 parameters:
     ignoreErrors:
@@ -889,11 +889,6 @@ parameters:
 
         -
             message: '#^Property CodeIgniter\\Database\\BaseBuilder\:\:\$QBOrderBy type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Database/BaseBuilder.php
-
-        -
-            message: '#^Property CodeIgniter\\Database\\BaseBuilder\:\:\$QBSelect type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Database/BaseBuilder.php
 
