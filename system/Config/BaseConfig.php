@@ -291,7 +291,7 @@ class BaseConfig
 
             foreach ($properties as $property => $value) {
                 if (isset($this->{$property}) && is_array($this->{$property}) && is_array($value)) {
-                    $this->{$property} = array_merge($this->{$property}, $value);
+                    $this->{$property} = array_replace_recursive($this->{$property}, $value);
                 } else {
                     $this->{$property} = $value;
                 }
