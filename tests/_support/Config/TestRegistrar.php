@@ -28,8 +28,8 @@ class TestRegistrar
                 'second',
             ],
             'baz' => [
-                'bar' => 'ber'
-            ]
+                'bar' => 'ber',
+            ],
         ];
     }
 }

@@ -23,7 +23,7 @@ class RegistrarConfig extends BaseConfig
         'foo',
         'bar' => [
             'bir',
-            'bur'
-        ]
+            'bur',
+        ],
     ];
 }
