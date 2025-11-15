@@ -19,7 +19,7 @@ class RegistrarConfig extends BaseConfig
     public $bar = [
         'baz',
     ];
-    public $baz = [
+    public array $baz = [
         'foo',
         'bar' => [
             'bir',
