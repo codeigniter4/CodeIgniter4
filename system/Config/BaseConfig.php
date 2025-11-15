@@ -246,8 +246,8 @@ class BaseConfig
             if (static::$discovering) {
                 throw new ConfigException(
                     'During Auto-Discovery of Registrars,'
-                    . ' "' . static::class . '" executes Auto-Discovery again.'
-                    . ' "' . clean_path(static::$registrarFile) . '" seems to have bad code.',
+                        . ' "' . static::class . '" executes Auto-Discovery again.'
+                        . ' "' . clean_path(static::$registrarFile) . '" seems to have bad code.',
                 );
             }
 
@@ -291,7 +291,7 @@ class BaseConfig
 
             foreach ($properties as $property => $value) {
                 if (isset($this->{$property}) && is_array($this->{$property}) && is_array($value)) {
-                    $this->{$property} = array_replace_recursive($this->{$property}, $value);
+                    $this->{$property} = array_merge_recursive($this->{$property}, $value);
                 } else {
                     $this->{$property} = $value;
                 }

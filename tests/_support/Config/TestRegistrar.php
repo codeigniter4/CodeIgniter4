@@ -27,6 +27,9 @@ class TestRegistrar
                 'first',
                 'second',
             ],
+            'baz' => [
+                'bar' => 'ber'
+            ]
         ];
     }
 }

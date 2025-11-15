@@ -270,6 +270,9 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->foo);
         // add to an existing array property
         $this->assertSame(['baz', 'first', 'second'], $config->bar);
+
+        // add to an existing nested array property
+        $this->assertSame(['foo', 'bar' => ['bir', 'bur', 'ber']], $config->baz);
     }
 
     public function testBadRegistrar(): void
