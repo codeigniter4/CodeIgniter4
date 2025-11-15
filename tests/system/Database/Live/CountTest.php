@@ -1,51 +1,59 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+declare(strict_types=1);
 
 /**
- * @group DatabaseLive
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
-class CountTest extends CIDatabaseTestCase
+
+namespace CodeIgniter\Database\Live;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
+use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Database\Seeds\CITestSeeder;
+
+/**
+ * @internal
+ */
+#[Group('DatabaseLive')]
+final class CountTest extends CIUnitTestCase
 {
-	protected $refresh = true;
+    use DatabaseTestTrait;
 
-	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $refresh = true;
+    protected $seed    = CITestSeeder::class;
 
-	public function testCountReturnsZeroWithNoResults()
-	{
-		$this->assertSame(0, $this->db->table('empty')->countAll());
-	}
+    public function testCountReturnsZeroWithNoResults(): void
+    {
+        $this->assertSame(0, $this->db->table('empty')->countAll());
+    }
 
-	//--------------------------------------------------------------------
+    public function testCountAllReturnsCorrectInteger(): void
+    {
+        $this->assertSame(4, $this->db->table('job')->countAll());
+    }
 
-	public function testCountAllReturnsCorrectInteger()
-	{
-		$this->assertSame(4, $this->db->table('job')->countAll());
-	}
+    public function testCountAllResultsReturnsZeroWithNoResults(): void
+    {
+        $this->assertSame(0, $this->db->table('job')->where('name', 'Superstar')->countAllResults());
+    }
 
-	//--------------------------------------------------------------------
+    public function testCountAllResultsReturnsCorrectValue(): void
+    {
+        $this->assertSame(1, $this->db->table('job')->where('name', 'Developer')->countAllResults());
+    }
 
-	public function testCountAllResultsReturnsZeroWithNoResults()
-	{
-		$this->assertSame(0, $this->db->table('job')->where('name', 'Superstar')->countAllResults());
-	}
+    public function testCountAllResultsHonorsReset(): void
+    {
+        $builder = $this->db->table('job');
 
-	//--------------------------------------------------------------------
-
-	public function testCountAllResultsReturnsCorrectValue()
-	{
-		$this->assertSame(1, $this->db->table('job')->where('name', 'Developer')->countAllResults());
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testCountAllResultsHonorsReset()
-	{
-		$builder = $this->db->table('job');
-
-		$this->assertSame(1, $builder->where('name', 'Developer')->countAllResults(false));
-		$this->assertSame(1, $builder->countAllResults());
-	}
-
-	//--------------------------------------------------------------------
+        $this->assertSame(1, $builder->where('name', 'Developer')->countAllResults(false));
+        $this->assertSame(1, $builder->countAllResults());
+    }
 }

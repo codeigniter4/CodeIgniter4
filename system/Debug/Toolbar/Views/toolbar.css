@@ -1,403 +1,887 @@
+/**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 #debug-icon {
-	position: fixed;
-	bottom: 0;
-	right: 0;
-	width: 36px;
-	height: 36px;
-	background: #fff;
-	border: 1px solid #ddd;
-	margin: 0px;
-	z-index: 10000;
-	box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
-	clear: both;
-	text-align: center;
+  bottom: 0;
+  position: fixed;
+  right: 0;
+  z-index: 10000;
+  height: 36px;
+  width: 36px;
+  margin: 0;
+  padding: 0;
+  clear: both;
+  text-align: center;
+  cursor: pointer;
 }
-
 #debug-icon a svg {
-	margin: 4px;
-	max-width: 26px;
-	max-height: 26px;
+  margin: 8px;
+  max-width: 20px;
+  max-height: 20px;
+}
+#debug-icon.fixed-top {
+  bottom: auto;
+  top: 0;
+}
+#debug-icon .debug-bar-ndisplay {
+  display: none;
 }
 
-#debug-bar a:active, #debug-bar a:link, #debug-bar a:visited {
-	color: #dd4814;
+.debug-bar-vars {
+  cursor: pointer;
 }
 
 #debug-bar {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 16px;
-	font-weight: 400;
-	line-height: 36px;
-	background: #fff;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	height: 36px;
-	z-index: 10000;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: 10000;
+  height: 36px;
+  line-height: 36px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 16px;
+  font-weight: 400;
 }
-
-#debug-bar h1,
-#debug-bar h2,
-#debug-bar h3 {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	color: #666;
-	line-height: 1.5;
-}
-
-#debug-bar p {
-	font-size: 12px;
-	margin: 0 0 10px 20px;
-	padding: 0;
-}
-
-#debug-bar a {
-	text-decoration: none;
-}
-
-#debug-bar a:hover {
-	text-decoration: underline;
-	text-decoration-color: #4e4a4a;
-}
-
-#debug-bar .muted,
-#debug-bar .muted td {
-	color: #bbb;
-}
-
-#debug-bar .toolbar {
-	display: block;
-	background: inherit;
-	overflow: hidden;
-	overflow-y: auto;
-	white-space: nowrap;
-	box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
-	padding: 0 12px 0 12px;	/* give room for OS X scrollbar */
-	z-index: 10000;
-}
-
-#debug-bar #toolbar-position > a {
-	padding: 0 6px;
-}
-
-#debug-icon.fixed-top,
-#debug-bar.fixed-top {
-	top: 0;
-	bottom: auto;
-}
-
-#debug-icon.fixed-top,
-#debug-bar.fixed-top .toolbar {
-	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-}
-
 #debug-bar h1 {
-	font-size: 16px;
-	line-height: 36px;
-	font-weight: 500;
-	margin: 0 16px 0 0;
-	padding: 0;
-	text-align: left;
-	display: inline-block;
-	position: absolute;
-	right: 30px;
-	top: 0;
-	bottom: 0;
+  display: flex;
+  font-weight: normal;
+  margin: 0 0 0 auto;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 }
-
-#debug-bar-link {
-	padding: 6px;
-	position: absolute;
-	display: inline-block;
-	top: 0;
-	bottom: 0;
-	right: 10px;
-	font-size: 16px;
-	line-height: 36px;
-	width: 24px;
+#debug-bar h1 svg {
+  width: 16px;
+  margin-right: 5px;
 }
-
 #debug-bar h2 {
-	font-size: 16px;
-	font-weight: 500;
-	margin: 0;
-	padding: 0;
+  font-weight: bold;
+  font-size: 16px;
+  margin: 0;
+  padding: 5px 0 10px 0;
 }
-
 #debug-bar h2 span {
-	font-size: 13px;
+  font-size: 13px;
 }
-
 #debug-bar h3 {
-	text-transform: uppercase;
-	font-size: 11px;
-	font-weight: 200;
-	margin-left: 10pt;
+  font-size: 12px;
+  font-weight: 200;
+  margin: 0 0 0 10px;
+  padding: 0;
+  text-transform: uppercase;
 }
-
-#debug-bar span.ci-label {
-	display: inline-block;
-	font-size: 14px;
-	line-height: 36px;
-	vertical-align: baseline;
+#debug-bar p {
+  font-size: 12px;
+  margin: 0 0 0 15px;
+  padding: 0;
 }
-
-#debug-bar span.ci-label img {
-	display: inline-block;
-	margin: 6px 3px 6px 0;
-	float: left;
-	clear: left;
+#debug-bar a {
+  text-decoration: none;
 }
-
-#debug-bar span.ci-label .badge {
-	display: inline-block;
-	padding: 3px 6px;
-	font-size: 75%;
-	font-weight: 500;
-	line-height: 1;
-	color: #fff;
-	text-align: center;
-	white-space: nowrap;
-	vertical-align: baseline;
-	border-radius: 10rem;
-	background-color: #5bc0de;
-	margin-left: 0.5em;
+#debug-bar a:hover {
+  text-decoration: underline;
 }
-
-#debug-bar span.ci-label .badge.active {
-	background-color: red;
-}
-
 #debug-bar button {
-	border: 1px solid #ddd;
-	background-color: #fff;
-	cursor: pointer;
-	border-radius: 4px;
-	color: #333;
+  border: 1px solid;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  cursor: pointer;
+  line-height: 15px;
 }
-
 #debug-bar button:hover {
-	background-color: #eaeaea;
+  text-decoration: underline;
 }
-
-#debug-bar tr[data-active="1"] {
-	background-color: #dff0d8;
-}
-
-#debug-bar tr[data-active="1"]:hover {
-	background-color: #a7d499;
-}
-
-#debug-bar tr.current {
-	background-color: #FDC894;
-}
-
-#debug-bar tr.current:hover {
-	background-color: #DD4814;
-}
-
-#debug-bar table strong {
-	font-weight: 500;
-	color: rgba(0, 0, 0, 0.3);
-}
-
-#debug-bar .ci-label {
-	text-shadow: none;
-}
-
-#debug-bar .ci-label:hover {
-	background-color: #eaeaea;
-	cursor: pointer;
-}
-
-#debug-bar .ci-label a {
-	display: block;
-	padding: 0 10px;
-	color: inherit;
-	text-decoration: none;
-	letter-spacing: normal;
-}
-
-#debug-bar .ci-label.active {
-	background-color: #eaeaea;
-	border-color: #bbb;
-}
-
-#debug-bar .tab {
-	display: none;
-	background: inherit;
-	padding: 1em 2em;
-	border: solid #ddd;
-	border-width: 1px 0;
-	position: fixed;
-	bottom: 35px;
-	left: 0;
-	right: 0;
-	z-index: 9999;
-	box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
-	overflow: hidden;
-	overflow-y: auto;
-	max-height: 62%;
-}
-
-#debug-bar.fixed-top .tab {
-	top: 36px;
-	bottom: auto;
-	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-}
-
 #debug-bar table {
-	margin: 0 0 10px 20px;
-	font-size: 0.9rem;
-	border-collapse: collapse;
-	width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: normal;
+  margin: 5px 10px 15px 10px;
+  width: calc(100% - 10px);
 }
-
-#debug-bar td,
-#debug-bar th {
-	display: table-cell;
-	text-align: left;
+#debug-bar table strong {
+  font-weight: 500;
 }
-
-#debug-bar tr {
-	border: none;
+#debug-bar table th {
+  display: table-cell;
+  font-weight: 600;
+  padding-bottom: 0.7em;
+  text-align: left;
 }
-
-#debug-bar td {
-	border: none;
-	padding: 0 10px 0 5px;
-	margin: 0;
+#debug-bar table tr {
+  border: none;
 }
-
-#debug-bar th {
-	padding-bottom: 0.7em;
+#debug-bar table td {
+  border: none;
+  display: table-cell;
+  margin: 0;
+  text-align: left;
 }
-
-#debug-bar tr td:first-child {
-	max-width: 20%;
+#debug-bar table td:first-child {
+  max-width: 20%;
 }
-
-#debug-bar tr td:first-child.narrow {
-	width: 7em;
+#debug-bar table td:first-child.narrow {
+  width: 7em;
 }
-
-#debug-bar tr:hover {
-	background-color: #f3f3f3;
+#debug-bar td[data-debugbar-route] form {
+  display: none;
 }
-
-#debug-bar table.timeline {
-	width: 100%;
-	margin-left: 0;
+#debug-bar td[data-debugbar-route]:hover form {
+  display: block;
 }
-
-#debug-bar table.timeline th {
-	font-size: 0.7em;
-	font-weight: 200;
-	text-align: left;
-	padding-bottom: 1em;
+#debug-bar td[data-debugbar-route]:hover > div {
+  display: none;
 }
-
-#debug-bar table.timeline td,
-#debug-bar table.timeline th {
-	border-left: 1px solid #ddd;
-	padding: 0 1em;
-	position: relative;
+#debug-bar td[data-debugbar-route] input[type=text] {
+  padding: 2px;
 }
-
-#debug-bar table.timeline tr td:first-child,
-#debug-bar table.timeline tr th:first-child {
-	border-left: 0;
-	padding-left: 0;
+#debug-bar .toolbar {
+  display: flex;
+  overflow: hidden;
+  overflow-y: auto;
+  padding: 0 12px 0 12px;
+  white-space: nowrap;
+  z-index: 10000;
 }
-
-#debug-bar table.timeline td {
-	padding: 5px;
+#debug-bar .toolbar .rotate {
+  animation: toolbar-rotate 9s linear infinite;
 }
-
-#debug-bar table.timeline .timer {
-	position: absolute;
-	display: inline-block;
-	padding: 5px;
-	top: 40%;
-	border-radius: 4px;
-	background-color: #999;
+@keyframes toolbar-rotate {
+  to {
+    transform: rotate(360deg);
+  }
 }
-
+#debug-bar.fixed-top {
+  bottom: auto;
+  top: 0;
+}
+#debug-bar.fixed-top .tab {
+  bottom: auto;
+  top: 36px;
+}
+#debug-bar #toolbar-position,
+#debug-bar #toolbar-theme {
+  padding: 0 6px;
+  display: inline-flex;
+  vertical-align: top;
+  cursor: pointer;
+}
+#debug-bar #toolbar-position:hover,
+#debug-bar #toolbar-theme:hover {
+  text-decoration: none;
+}
+#debug-bar #debug-bar-link {
+  display: flex;
+  padding: 6px;
+  cursor: pointer;
+}
+#debug-bar .ci-label {
+  display: inline-flex;
+  font-size: 14px;
+}
+#debug-bar .ci-label:hover {
+  cursor: pointer;
+}
+#debug-bar .ci-label a {
+  color: inherit;
+  display: flex;
+  letter-spacing: normal;
+  padding: 0 10px;
+  text-decoration: none;
+  align-items: center;
+}
+#debug-bar .ci-label img {
+  margin: 6px 3px 6px 0;
+  width: 16px !important;
+}
+#debug-bar .ci-label .badge {
+  border-radius: 12px;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  display: inline-block;
+  font-size: 75%;
+  font-weight: bold;
+  line-height: 12px;
+  margin-left: 5px;
+  padding: 2px 5px;
+  text-align: center;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+#debug-bar .tab {
+  height: fit-content;
+  text-align: left;
+  bottom: 35px;
+  display: none;
+  left: 0;
+  max-height: 62%;
+  overflow: hidden;
+  overflow-y: auto;
+  padding: 1em 2em;
+  position: fixed;
+  right: 0;
+  z-index: 9999;
+}
+#debug-bar .timeline {
+  position: static;
+  display: table;
+  margin-left: 0;
+  width: 100%;
+}
+#debug-bar .timeline th {
+  border-left: 1px solid;
+  font-size: 12px;
+  font-weight: 200;
+  padding: 5px 5px 10px 5px;
+  position: relative;
+  text-align: left;
+}
+#debug-bar .timeline th:first-child {
+  border-left: 0;
+}
+#debug-bar .timeline td {
+  border-left: 1px solid;
+  padding: 5px;
+  position: relative;
+}
+#debug-bar .timeline td:first-child {
+  border-left: 0;
+  max-width: none;
+}
+#debug-bar .timeline td.child-container {
+  padding: 0px;
+}
+#debug-bar .timeline td.child-container .timeline {
+  margin: 0px;
+}
+#debug-bar .timeline td.child-container .timeline td:first-child:not(.child-container) {
+  padding-left: calc(5px + 10px * var(--level));
+}
+#debug-bar .timeline .timer {
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  display: inline-block;
+  padding: 5px;
+  position: absolute;
+  top: 30%;
+}
+#debug-bar .timeline .timeline-parent {
+  cursor: pointer;
+}
+#debug-bar .timeline .timeline-parent td:first-child nav {
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAxNTAiPjxwYXRoIGQ9Ik02IDdoMThsLTkgMTV6bTAgMzBoMThsLTkgMTV6bTAgNDVoMThsLTktMTV6bTAgMzBoMThsLTktMTV6bTAgMTJsMTggMThtLTE4IDBsMTgtMTgiIGZpbGw9IiM1NTUiLz48cGF0aCBkPSJNNiAxMjZsMTggMThtLTE4IDBsMTgtMTgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlPSIjNTU1Ii8+PC9zdmc+") no-repeat scroll 0 0/15px 75px transparent;
+  background-position: 0 25%;
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  margin-right: 3px;
+  vertical-align: middle;
+}
+#debug-bar .timeline .timeline-parent-open {
+  background-color: #DFDFDF;
+}
+#debug-bar .timeline .timeline-parent-open td:first-child nav {
+  background-position: 0 75%;
+}
+#debug-bar .timeline .child-row:hover {
+  background: transparent;
+}
 #debug-bar .route-params,
 #debug-bar .route-params-item {
-	vertical-align: top;
+  vertical-align: top;
 }
-
+#debug-bar .route-params td:first-child,
 #debug-bar .route-params-item td:first-child {
-	padding-left: 1em;
-	text-align: right;
-	font-style: italic;
+  font-style: italic;
+  padding-left: 1em;
+  text-align: right;
+}
+#debug-bar > .debug-bar-dblock {
+  display: block;
 }
 
 .debug-view.show-view {
-	border: 1px solid #dd4814;
-	margin: 4px;
+  border: 1px solid;
+  margin: 4px;
 }
 
 .debug-view-path {
-	background-color: #fdc894;
-	color: #000;
-	padding: 2px;
-	font-family: monospace;
-	font-size: 11px;
-	min-height: 16px;
-	text-align: left;
+  font-family: monospace;
+  font-size: 12px;
+  letter-spacing: normal;
+  min-height: 16px;
+  padding: 2px;
+  text-align: left;
 }
 
 .show-view .debug-view-path {
-	display: block !important;
+  display: block !important;
 }
 
-@media screen and (max-width: 748px) {
-	.hide-sm {
-		display: none !important;
-	}
+@media screen and (max-width: 1024px) {
+  #debug-bar .ci-label img {
+    margin: unset;
+  }
+  .hide-sm {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  #debug-bar table {
+    display: block;
+    overflow-x: auto;
+    font-size: 12px;
+    margin: 5px 5px 10px 5px;
+  }
+  #debug-bar table td,
+  #debug-bar table th {
+    padding: 4px 6px;
+  }
+  #debug-bar .timeline {
+    display: block;
+    white-space: nowrap;
+    font-size: 12px;
+  }
+  #debug-bar .toolbar {
+    overflow-x: auto;
+  }
+}
+#debug-icon {
+  background-color: #FFFFFF;
+  box-shadow: 0 0 4px #DFDFDF;
+  -moz-box-shadow: 0 0 4px #DFDFDF;
+  -webkit-box-shadow: 0 0 4px #DFDFDF;
+}
+#debug-icon a:active,
+#debug-icon a:link,
+#debug-icon a:visited {
+  color: #DD8615;
 }
 
-/**
-simple styles to replace inline styles
- */
+#debug-bar {
+  background-color: #FFFFFF;
+  color: #434343;
+}
+#debug-bar h1,
+#debug-bar h2,
+#debug-bar h3,
+#debug-bar p,
+#debug-bar a,
+#debug-bar button,
+#debug-bar table,
+#debug-bar thead,
+#debug-bar tr,
+#debug-bar td,
+#debug-bar button,
+#debug-bar .toolbar {
+  background-color: transparent;
+  color: #434343;
+}
+#debug-bar button {
+  background-color: #FFFFFF;
+}
+#debug-bar table strong {
+  color: #DD8615;
+}
+#debug-bar table tbody tr:hover {
+  background-color: #DFDFDF;
+}
+#debug-bar table tbody tr.current {
+  background-color: #FDC894;
+}
+#debug-bar table tbody tr.current:hover td {
+  background-color: #DD4814;
+  color: #FFFFFF;
+}
+#debug-bar .toolbar {
+  background-color: #FFFFFF;
+  box-shadow: 0 0 4px #DFDFDF;
+  -moz-box-shadow: 0 0 4px #DFDFDF;
+  -webkit-box-shadow: 0 0 4px #DFDFDF;
+}
+#debug-bar .toolbar img {
+  filter: brightness(0) invert(0.4);
+}
+#debug-bar.fixed-top .toolbar {
+  box-shadow: 0 0 4px #DFDFDF;
+  -moz-box-shadow: 0 0 4px #DFDFDF;
+  -webkit-box-shadow: 0 0 4px #DFDFDF;
+}
+#debug-bar.fixed-top .tab {
+  box-shadow: 0 1px 4px #DFDFDF;
+  -moz-box-shadow: 0 1px 4px #DFDFDF;
+  -webkit-box-shadow: 0 1px 4px #DFDFDF;
+}
+#debug-bar .muted {
+  color: #434343;
+}
+#debug-bar .muted td {
+  color: #DFDFDF;
+}
+#debug-bar .muted:hover td {
+  color: #434343;
+}
+#debug-bar #toolbar-position,
+#debug-bar #toolbar-theme {
+  filter: brightness(0) invert(0.6);
+}
+#debug-bar .ci-label.active {
+  background-color: #DFDFDF;
+}
+#debug-bar .ci-label:hover {
+  background-color: #DFDFDF;
+}
+#debug-bar .ci-label .badge {
+  background-color: #DD4814;
+  color: #FFFFFF;
+}
+#debug-bar .tab {
+  background-color: #FFFFFF;
+  box-shadow: 0 -1px 4px #DFDFDF;
+  -moz-box-shadow: 0 -1px 4px #DFDFDF;
+  -webkit-box-shadow: 0 -1px 4px #DFDFDF;
+}
+#debug-bar .timeline th,
+#debug-bar .timeline td {
+  border-color: #DFDFDF;
+}
+#debug-bar .timeline .timer {
+  background-color: #DD8615;
+}
+
+.debug-view.show-view {
+  border-color: #DD8615;
+}
+
+.debug-view-path {
+  background-color: #FDC894;
+  color: #434343;
+}
+
+@media (prefers-color-scheme: dark) {
+  #debug-icon {
+    background-color: #252525;
+    box-shadow: 0 0 4px #DFDFDF;
+    -moz-box-shadow: 0 0 4px #DFDFDF;
+    -webkit-box-shadow: 0 0 4px #DFDFDF;
+  }
+  #debug-icon a:active,
+  #debug-icon a:link,
+  #debug-icon a:visited {
+    color: #DD8615;
+  }
+  #debug-bar {
+    background-color: #252525;
+    color: #DFDFDF;
+  }
+  #debug-bar h1,
+  #debug-bar h2,
+  #debug-bar h3,
+  #debug-bar p,
+  #debug-bar a,
+  #debug-bar button,
+  #debug-bar table,
+  #debug-bar thead,
+  #debug-bar tr,
+  #debug-bar td,
+  #debug-bar button,
+  #debug-bar .toolbar {
+    background-color: transparent;
+    color: #DFDFDF;
+  }
+  #debug-bar button {
+    background-color: #252525;
+  }
+  #debug-bar table strong {
+    color: #DD8615;
+  }
+  #debug-bar table tbody tr:hover {
+    background-color: #434343;
+  }
+  #debug-bar table tbody tr.current {
+    background-color: #FDC894;
+  }
+  #debug-bar table tbody tr.current td {
+    color: #252525;
+  }
+  #debug-bar table tbody tr.current:hover td {
+    background-color: #DD4814;
+    color: #FFFFFF;
+  }
+  #debug-bar .toolbar {
+    background-color: #434343;
+    box-shadow: 0 0 4px #434343;
+    -moz-box-shadow: 0 0 4px #434343;
+    -webkit-box-shadow: 0 0 4px #434343;
+  }
+  #debug-bar .toolbar img {
+    filter: brightness(0) invert(1);
+  }
+  #debug-bar.fixed-top .toolbar {
+    box-shadow: 0 0 4px #434343;
+    -moz-box-shadow: 0 0 4px #434343;
+    -webkit-box-shadow: 0 0 4px #434343;
+  }
+  #debug-bar.fixed-top .tab {
+    box-shadow: 0 1px 4px #434343;
+    -moz-box-shadow: 0 1px 4px #434343;
+    -webkit-box-shadow: 0 1px 4px #434343;
+  }
+  #debug-bar .muted {
+    color: #DFDFDF;
+  }
+  #debug-bar .muted td {
+    color: #434343;
+  }
+  #debug-bar .muted:hover td {
+    color: #DFDFDF;
+  }
+  #debug-bar #toolbar-position,
+  #debug-bar #toolbar-theme {
+    filter: brightness(0) invert(0.6);
+  }
+  #debug-bar .ci-label.active {
+    background-color: #252525;
+  }
+  #debug-bar .ci-label:hover {
+    background-color: #252525;
+  }
+  #debug-bar .ci-label .badge {
+    background-color: #DD4814;
+    color: #FFFFFF;
+  }
+  #debug-bar .tab {
+    background-color: #252525;
+    box-shadow: 0 -1px 4px #434343;
+    -moz-box-shadow: 0 -1px 4px #434343;
+    -webkit-box-shadow: 0 -1px 4px #434343;
+  }
+  #debug-bar .timeline th,
+  #debug-bar .timeline td {
+    border-color: #434343;
+  }
+  #debug-bar .timeline .timer {
+    background-color: #DD8615;
+  }
+  .debug-view.show-view {
+    border-color: #DD8615;
+  }
+  .debug-view-path {
+    background-color: #FDC894;
+    color: #434343;
+  }
+}
+#toolbarContainer.dark #debug-icon {
+  background-color: #252525;
+  box-shadow: 0 0 4px #DFDFDF;
+  -moz-box-shadow: 0 0 4px #DFDFDF;
+  -webkit-box-shadow: 0 0 4px #DFDFDF;
+}
+#toolbarContainer.dark #debug-icon a:active,
+#toolbarContainer.dark #debug-icon a:link,
+#toolbarContainer.dark #debug-icon a:visited {
+  color: #DD8615;
+}
+#toolbarContainer.dark #debug-bar {
+  background-color: #252525;
+  color: #DFDFDF;
+}
+#toolbarContainer.dark #debug-bar h1,
+#toolbarContainer.dark #debug-bar h2,
+#toolbarContainer.dark #debug-bar h3,
+#toolbarContainer.dark #debug-bar p,
+#toolbarContainer.dark #debug-bar a,
+#toolbarContainer.dark #debug-bar button,
+#toolbarContainer.dark #debug-bar table,
+#toolbarContainer.dark #debug-bar thead,
+#toolbarContainer.dark #debug-bar tr,
+#toolbarContainer.dark #debug-bar td,
+#toolbarContainer.dark #debug-bar button,
+#toolbarContainer.dark #debug-bar .toolbar {
+  background-color: transparent;
+  color: #DFDFDF;
+}
+#toolbarContainer.dark #debug-bar button {
+  background-color: #252525;
+}
+#toolbarContainer.dark #debug-bar table strong {
+  color: #DD8615;
+}
+#toolbarContainer.dark #debug-bar table tbody tr:hover {
+  background-color: #434343;
+}
+#toolbarContainer.dark #debug-bar table tbody tr.current {
+  background-color: #FDC894;
+}
+#toolbarContainer.dark #debug-bar table tbody tr.current td {
+  color: #252525;
+}
+#toolbarContainer.dark #debug-bar table tbody tr.current:hover td {
+  background-color: #DD4814;
+  color: #FFFFFF;
+}
+#toolbarContainer.dark #debug-bar .toolbar {
+  background-color: #434343;
+  box-shadow: 0 0 4px #434343;
+  -moz-box-shadow: 0 0 4px #434343;
+  -webkit-box-shadow: 0 0 4px #434343;
+}
+#toolbarContainer.dark #debug-bar .toolbar img {
+  filter: brightness(0) invert(1);
+}
+#toolbarContainer.dark #debug-bar.fixed-top .toolbar {
+  box-shadow: 0 0 4px #434343;
+  -moz-box-shadow: 0 0 4px #434343;
+  -webkit-box-shadow: 0 0 4px #434343;
+}
+#toolbarContainer.dark #debug-bar.fixed-top .tab {
+  box-shadow: 0 1px 4px #434343;
+  -moz-box-shadow: 0 1px 4px #434343;
+  -webkit-box-shadow: 0 1px 4px #434343;
+}
+#toolbarContainer.dark #debug-bar .muted {
+  color: #DFDFDF;
+}
+#toolbarContainer.dark #debug-bar .muted td {
+  color: #434343;
+}
+#toolbarContainer.dark #debug-bar .muted:hover td {
+  color: #DFDFDF;
+}
+#toolbarContainer.dark #debug-bar #toolbar-position,
+#toolbarContainer.dark #debug-bar #toolbar-theme {
+  filter: brightness(0) invert(0.6);
+}
+#toolbarContainer.dark #debug-bar .ci-label.active {
+  background-color: #252525;
+}
+#toolbarContainer.dark #debug-bar .ci-label:hover {
+  background-color: #252525;
+}
+#toolbarContainer.dark #debug-bar .ci-label .badge {
+  background-color: #DD4814;
+  color: #FFFFFF;
+}
+#toolbarContainer.dark #debug-bar .tab {
+  background-color: #252525;
+  box-shadow: 0 -1px 4px #434343;
+  -moz-box-shadow: 0 -1px 4px #434343;
+  -webkit-box-shadow: 0 -1px 4px #434343;
+}
+#toolbarContainer.dark #debug-bar .timeline th,
+#toolbarContainer.dark #debug-bar .timeline td {
+  border-color: #434343;
+}
+#toolbarContainer.dark #debug-bar .timeline .timer {
+  background-color: #DD8615;
+}
+#toolbarContainer.dark .debug-view.show-view {
+  border-color: #DD8615;
+}
+#toolbarContainer.dark .debug-view-path {
+  background-color: #FDC894;
+  color: #434343;
+}
+#toolbarContainer.dark td[data-debugbar-route] input[type=text] {
+  background: #000;
+  color: #fff;
+}
+
+#toolbarContainer.light #debug-icon {
+  background-color: #FFFFFF;
+  box-shadow: 0 0 4px #DFDFDF;
+  -moz-box-shadow: 0 0 4px #DFDFDF;
+  -webkit-box-shadow: 0 0 4px #DFDFDF;
+}
+#toolbarContainer.light #debug-icon a:active,
+#toolbarContainer.light #debug-icon a:link,
+#toolbarContainer.light #debug-icon a:visited {
+  color: #DD8615;
+}
+#toolbarContainer.light #debug-bar {
+  background-color: #FFFFFF;
+  color: #434343;
+}
+#toolbarContainer.light #debug-bar h1,
+#toolbarContainer.light #debug-bar h2,
+#toolbarContainer.light #debug-bar h3,
+#toolbarContainer.light #debug-bar p,
+#toolbarContainer.light #debug-bar a,
+#toolbarContainer.light #debug-bar button,
+#toolbarContainer.light #debug-bar table,
+#toolbarContainer.light #debug-bar thead,
+#toolbarContainer.light #debug-bar tr,
+#toolbarContainer.light #debug-bar td,
+#toolbarContainer.light #debug-bar button,
+#toolbarContainer.light #debug-bar .toolbar {
+  background-color: transparent;
+  color: #434343;
+}
+#toolbarContainer.light #debug-bar button {
+  background-color: #FFFFFF;
+}
+#toolbarContainer.light #debug-bar table strong {
+  color: #DD8615;
+}
+#toolbarContainer.light #debug-bar table tbody tr:hover {
+  background-color: #DFDFDF;
+}
+#toolbarContainer.light #debug-bar table tbody tr.current {
+  background-color: #FDC894;
+}
+#toolbarContainer.light #debug-bar table tbody tr.current:hover td {
+  background-color: #DD4814;
+  color: #FFFFFF;
+}
+#toolbarContainer.light #debug-bar .toolbar {
+  background-color: #FFFFFF;
+  box-shadow: 0 0 4px #DFDFDF;
+  -moz-box-shadow: 0 0 4px #DFDFDF;
+  -webkit-box-shadow: 0 0 4px #DFDFDF;
+}
+#toolbarContainer.light #debug-bar .toolbar img {
+  filter: brightness(0) invert(0.4);
+}
+#toolbarContainer.light #debug-bar.fixed-top .toolbar {
+  box-shadow: 0 0 4px #DFDFDF;
+  -moz-box-shadow: 0 0 4px #DFDFDF;
+  -webkit-box-shadow: 0 0 4px #DFDFDF;
+}
+#toolbarContainer.light #debug-bar.fixed-top .tab {
+  box-shadow: 0 1px 4px #DFDFDF;
+  -moz-box-shadow: 0 1px 4px #DFDFDF;
+  -webkit-box-shadow: 0 1px 4px #DFDFDF;
+}
+#toolbarContainer.light #debug-bar .muted {
+  color: #434343;
+}
+#toolbarContainer.light #debug-bar .muted td {
+  color: #DFDFDF;
+}
+#toolbarContainer.light #debug-bar .muted:hover td {
+  color: #434343;
+}
+#toolbarContainer.light #debug-bar #toolbar-position,
+#toolbarContainer.light #debug-bar #toolbar-theme {
+  filter: brightness(0) invert(0.6);
+}
+#toolbarContainer.light #debug-bar .ci-label.active {
+  background-color: #DFDFDF;
+}
+#toolbarContainer.light #debug-bar .ci-label:hover {
+  background-color: #DFDFDF;
+}
+#toolbarContainer.light #debug-bar .ci-label .badge {
+  background-color: #DD4814;
+  color: #FFFFFF;
+}
+#toolbarContainer.light #debug-bar .tab {
+  background-color: #FFFFFF;
+  box-shadow: 0 -1px 4px #DFDFDF;
+  -moz-box-shadow: 0 -1px 4px #DFDFDF;
+  -webkit-box-shadow: 0 -1px 4px #DFDFDF;
+}
+#toolbarContainer.light #debug-bar .timeline th,
+#toolbarContainer.light #debug-bar .timeline td {
+  border-color: #DFDFDF;
+}
+#toolbarContainer.light #debug-bar .timeline .timer {
+  background-color: #DD8615;
+}
+#toolbarContainer.light .debug-view.show-view {
+  border-color: #DD8615;
+}
+#toolbarContainer.light .debug-view-path {
+  background-color: #FDC894;
+  color: #434343;
+}
+
 .debug-bar-width30 {
-	width: 30%;
+  width: 30%;
 }
 
 .debug-bar-width10 {
-	width: 10%;
+  width: 10%;
 }
 
 .debug-bar-width70p {
-	width: 70px;
+  width: 70px;
 }
 
-.debug-bar-width140p {
-	width: 140px;
+.debug-bar-width190p {
+  width: 190px;
 }
 
 .debug-bar-width20e {
-	width: 20em;
+  width: 20em;
 }
 
 .debug-bar-width6r {
-	width: 6rem;
+  width: 6rem;
 }
 
 .debug-bar-ndisplay {
-	display: none;
+  display: none;
 }
 
 .debug-bar-alignRight {
-	text-align: right;
+  text-align: right;
 }
 
 .debug-bar-alignLeft {
-	text-align: left;
+  text-align: left;
 }
 
 .debug-bar-noverflow {
-	overflow: hidden;
+  overflow: hidden;
+}
+
+.debug-bar-dtableRow {
+  display: table-row;
+}
+
+.debug-bar-dinlineBlock {
+  display: inline-block;
+}
+
+.debug-bar-pointer {
+  cursor: pointer;
+}
+
+.debug-bar-mleft4 {
+  margin-left: 4px;
+}
+
+.debug-bar-level-0 {
+  --level: 0;
+}
+
+.debug-bar-level-1 {
+  --level: 1;
+}
+
+.debug-bar-level-2 {
+  --level: 2;
+}
+
+.debug-bar-level-3 {
+  --level: 3;
+}
+
+.debug-bar-level-4 {
+  --level: 4;
+}
+
+.debug-bar-level-5 {
+  --level: 5;
+}
+
+.debug-bar-level-6 {
+  --level: 6;
 }

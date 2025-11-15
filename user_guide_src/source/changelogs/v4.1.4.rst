@@ -1,0 +1,63 @@
+Version 4.1.4
+=============
+
+Release Date: September 6, 2021
+
+**4.1.4 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+This release focuses on code style. All changes (except those noted below) are cosmetic to bring the code in line with the new
+`CodeIgniter Coding Standard <https://github.com/CodeIgniter/coding-standard>`_ (based on PSR-12).
+
+BREAKING
+--------
+
+- The following methods were changed from "public" to "protected" to match their parent class methods and better align with their uses:
+
+    * ``CodeIgniter\Database\MySQLi\Connection::execute()``
+    * ``CodeIgniter\Database\MySQLi\Connection::_fieldData()``
+    * ``CodeIgniter\Database\MySQLi\Connection::_indexData()``
+    * ``CodeIgniter\Database\MySQLi\Connection::_foreignKeyData()``
+    * ``CodeIgniter\Database\Postgre\Builder::_like_statement()``
+    * ``CodeIgniter\Database\Postgre\Connection::execute()``
+    * ``CodeIgniter\Database\Postgre\Connection::_fieldData()``
+    * ``CodeIgniter\Database\Postgre\Connection::_indexData()``
+    * ``CodeIgniter\Database\Postgre\Connection::_foreignKeyData()``
+    * ``CodeIgniter\Database\SQLSRV\Connection::execute()``
+    * ``CodeIgniter\Database\SQLSRV\Connection::_fieldData()``
+    * ``CodeIgniter\Database\SQLSRV\Connection::_indexData()``
+    * ``CodeIgniter\Database\SQLSRV\Connection::_foreignKeyData()``
+    * ``CodeIgniter\Database\SQLite3\Connection::execute()``
+    * ``CodeIgniter\Database\SQLite3\Connection::_fieldData()``
+    * ``CodeIgniter\Database\SQLite3\Connection::_indexData()``
+    * ``CodeIgniter\Database\SQLite3\Connection::_foreignKeyData()``
+    * ``CodeIgniter\Images\Handlers\GDHandler::_flatten()``
+    * ``CodeIgniter\Images\Handlers\GDHandler::_flip()``
+    * ``CodeIgniter\Images\Handlers\ImageMagickHandler::_flatten()``
+    * ``CodeIgniter\Images\Handlers\ImageMagickHandler::_flip()``
+    * ``CodeIgniter\Test\Mock\MockIncomingRequest::detectURI()``
+    * ``CodeIgniter\Test\Mock\MockSecurity.php::sendCookie()``
+
+- To be compatible with the strict inheritance checks of PHP 8.1, the following method signatures were added return types to match their parents' signatures whenever possible:
+
+    * ``CodeIgniter\Cookie\Cookie::offsetExists()``
+    * ``CodeIgniter\Cookie\Cookie::offsetSet()``
+    * ``CodeIgniter\Cookie\Cookie::offsetUnset()``
+    * ``CodeIgniter\Cookie\CookieStore::getIterator()``
+    * ``CodeIgniter\I18n\Time::__wakeup()``
+    * ``CodeIgniter\Test\Filters\CITestStreamFilter::filter()``
+
+- Related to the strict inheritance checks of PHP 8.1, the following session handlers implementing ``SessionHandlerInterface`` have their public methods modified to match the interface:
+
+    * ``CodeIgniter\Session\Handlers\ArrayHandler``
+    * ``CodeIgniter\Session\Handlers\DatabaseHandler``
+    * ``CodeIgniter\Session\Handlers\FileHandler``
+    * ``CodeIgniter\Session\Handlers\MemcachedHandler``
+    * ``CodeIgniter\Session\Handlers\RedisHandler``
+
+See the repo's
+`CHANGELOG_4.1.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.1.md>`_
+for a complete list of changes.

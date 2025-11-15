@@ -1,144 +1,318 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
 
-class HeaderTest extends \CIUnitTestCase
+declare(strict_types=1);
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\HTTP;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use Error;
+use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use stdClass;
+
+/**
+ * @internal
+ */
+#[Group('Others')]
+final class HeaderTest extends CIUnitTestCase
 {
-	public function testHeaderStoresBasics()
-	{
-		$name  = 'foo';
-		$value = 'bar';
+    public function testHeaderStoresBasics(): void
+    {
+        $name  = 'foo';
+        $value = 'bar';
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+        $header = new Header($name, $value);
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($value, $header->getValue());
-	}
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($value, $header->getValue());
+    }
 
-	//--------------------------------------------------------------------
+    public function testHeaderStoresBasicsWithNull(): void
+    {
+        $name  = 'foo';
+        $value = null;
 
-	public function testHeaderStoresArrayValues()
-	{
-		$name  = 'foo';
-		$value = [
-			'bar',
-			'baz',
-		];
+        $header = new Header($name, $value);
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+        $this->assertSame($name, $header->getName());
+        $this->assertSame('', $header->getValue());
+    }
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($value, $header->getValue());
-	}
+    public function testHeaderStoresBasicWithInt(): void
+    {
+        $name  = 'foo';
+        $value = 123;
 
-	//--------------------------------------------------------------------
+        $header = new Header($name, $value);
 
-	public function testHeaderSetters()
-	{
-		$name  = 'foo';
-		$value = [
-			'bar',
-			'baz',
-		];
+        $this->assertSame($name, $header->getName());
+        $this->assertSame((string) $value, $header->getValue());
+    }
 
-				$header = new \CodeIgniter\HTTP\Header($name);
-				$this->assertEquals($name, $header->getName());
-				$this->assertEquals(null, $header->getValue());
-				$this->assertEquals($name . ': ', (string) $header);
+    public function testHeaderStoresBasicWithObject(): void
+    {
+        $this->expectException(Error::class);
+        $this->expectExceptionMessage('Object of class stdClass could not be converted to string');
 
-				$name = 'foo2';
-		$header->setName($name)->setValue($value);
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($value, $header->getValue());
-				$this->assertEquals($name . ': bar, baz', (string) $header);
-	}
+        $name  = 'foo';
+        $value = new stdClass();
 
-	//--------------------------------------------------------------------
+        new Header($name, $value);
+    }
 
-	public function testHeaderConvertsSingleToArray()
-	{
-		$name  = 'foo';
-		$value = 'bar';
+    public function testHeaderStoresArrayValues(): void
+    {
+        $name  = 'foo';
+        $value = [
+            'bar',
+            'baz',
+        ];
 
-		$expected = [
-			'bar',
-			'baz',
-		];
+        $header = new Header($name, $value);
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($value, $header->getValue());
+    }
 
-		$header->appendValue('baz');
+    public function testHeaderStoresArrayKeyValue(): void
+    {
+        $name  = 'foo';
+        $value = [
+            'key' => 'val',
+        ];
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValue());
-	}
+        $header = new Header($name, $value);
 
-	//--------------------------------------------------------------------
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($value, $header->getValue());
+        $this->assertSame('key=val', $header->getValueLine());
+    }
 
-	public function testHeaderPrependsValue()
-	{
-		$name  = 'foo';
-		$value = 'bar';
+    public function testHeaderSetters(): void
+    {
+        $name  = 'foo';
+        $value = [
+            'bar',
+            123,
+        ];
 
-		$expected = [
-			'baz',
-			'bar',
-		];
+        $header = new Header($name);
+        $this->assertSame($name, $header->getName());
+        $this->assertEmpty($header->getValue());
+        $this->assertSame($name . ': ', (string) $header);
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+        $name = 'foo2';
+        $header->setName($name)->setValue($value);
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($value, $header->getValue());
+        $this->assertSame($name . ': bar, 123', (string) $header);
+    }
 
-		$header->prependValue('baz');
+    public function testHeaderAppendsValueSkippedForNull(): void
+    {
+        $name     = 'foo';
+        $value    = 'bar';
+        $expected = 'bar';
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValue());
-	}
+        $header = new Header($name, $value);
 
-	//--------------------------------------------------------------------
+        $header->appendValue();
 
-	public function testHeaderLineSimple()
-	{
-		$name  = 'foo';
-		$value = [
-			'bar',
-			'baz',
-		];
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValue());
+    }
 
-		$expected = 'bar, baz';
+    public function testHeaderConvertsSingleToArray(): void
+    {
+        $name  = 'foo';
+        $value = 'bar';
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+        $expected = [
+            'bar',
+            'baz',
+        ];
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValueLine());
-	}
+        $header = new Header($name, $value);
 
-	//--------------------------------------------------------------------
+        $header->appendValue('baz');
 
-	public function testHeaderLineWithArrayValues()
-	{
-		$name = 'foo';
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValue());
+    }
 
-		$expected = 'bar, baz=fuzz';
+    public function testHeaderPrependsValueSkippedForNull(): void
+    {
+        $name     = 'foo';
+        $value    = 'bar';
+        $expected = 'bar';
 
-		$header = new \CodeIgniter\HTTP\Header($name);
+        $header = new Header($name, $value);
 
-		$header->setValue('bar')
-			   ->appendValue(['baz' => 'fuzz']);
+        $header->prependValue();
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValueLine());
-	}
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValue());
+    }
 
-	//--------------------------------------------------------------------
+    public function testHeaderPrependsValue(): void
+    {
+        $name  = 'foo';
+        $value = 'bar';
 
-	public function testHeaderToStringShowsEntireHeader()
-	{
-		$name = 'foo';
+        $expected = [
+            'baz',
+            'bar',
+        ];
 
-		$expected = 'foo: bar, baz=fuzz';
+        $header = new Header($name, $value);
 
-		$header = new \CodeIgniter\HTTP\Header($name);
+        $header->prependValue('baz');
 
-		$header->setValue('bar')
-			   ->appendValue(['baz' => 'fuzz']);
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValue());
+    }
 
-		$this->assertEquals($expected, (string)$header);
-	}
+    public function testHeaderLineSimple(): void
+    {
+        $name  = 'foo';
+        $value = [
+            'bar',
+            'baz',
+        ];
+
+        $expected = 'bar, baz';
+
+        $header = new Header($name, $value);
+
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValueLine());
+    }
+
+    public function testHeaderSetValueWithNullWillMarkAsEmptyString(): void
+    {
+        $name     = 'foo';
+        $expected = '';
+
+        $header = new Header($name);
+        $header->setValue('bar')->setValue();
+
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValueLine());
+    }
+
+    public function testHeaderLineWithArrayValues(): void
+    {
+        $name = 'foo';
+
+        $expected = 'bar, baz=fuzz';
+
+        $header = new Header($name);
+
+        $header->setValue('bar')->appendValue(['baz' => 'fuzz']);
+
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValueLine());
+    }
+
+    public function testHeaderToStringShowsEntireHeader(): void
+    {
+        $name = 'foo';
+
+        $expected = 'foo: bar, baz=fuzz';
+
+        $header = new Header($name);
+
+        $header->setValue('bar')->appendValue(['baz' => 'fuzz']);
+
+        $this->assertSame($expected, (string) $header);
+    }
+
+    /**
+     * @param string $name
+     */
+    #[DataProvider('provideInvalidHeaderNames')]
+    public function testInvalidHeaderNames($name): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        new Header($name, 'text/html');
+    }
+
+    /**
+     * @return list<list<string>>
+     */
+    public static function provideInvalidHeaderNames(): iterable
+    {
+        return [
+            ["Content-Type\r\n\r\n"],
+            ["Content-Type\r\n"],
+            ["Content-Type\n"],
+            ["\tContent-Type\t"],
+            ["\n\nContent-Type\n\n"],
+            ["\r\nContent-Type"],
+            ["\nContent-Type"],
+            ["Content\r\n-Type"],
+            ["\n"],
+            ["\r\n"],
+            ["\t"],
+            ['   Content-Type   '],
+            ['Content - Type'],
+            ["Content\x00Type"],
+            [':Content-Type'],
+            ['Content-Type:'],
+            [''],
+        ];
+    }
+
+    /**
+     * @param array<int|string, array<string, string>|string>|string|null $value
+     */
+    #[DataProvider('provideInvalidHeaderValues')]
+    public function testInvalidHeaderValues($value): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        new Header('X-Test-Header', $value);
+    }
+
+    /**
+     * @return list<list<array<(int|string), string>|string>>
+     */
+    public static function provideInvalidHeaderValues(): iterable
+    {
+        return [
+            ["Header\n Value"],
+            ["Header\r\n Value"],
+            ["Header\r Value"],
+            ["Header Value\n"],
+            ["\nHeader Value"],
+            ["Header Value\r\n"],
+            ["\n\rHeader Value"],
+            ["\n\nHeader Value\n\n"],
+            [
+                ["Header\n Value"],
+                ["Header\r\n Value"],
+            ],
+            [
+                [
+                    "Header\n" => 'Value',
+                ],
+            ],
+            [
+                [
+                    'Header' => "Value\r\n",
+                ],
+            ],
+        ];
+    }
 }

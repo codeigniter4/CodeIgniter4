@@ -1,224 +1,162 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * CodeIgniter
+ * This file is part of CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Database;
 
 /**
- * Interface ConnectionInterface
+ * @template TConnection
+ * @template TResult
  *
- * @package CodeIgniter\Database
+ * @property      false|object|resource $connID
+ * @property-read string                $DBDriver
  */
 interface ConnectionInterface
 {
+    /**
+     * Initializes the database connection/settings.
+     *
+     * @return void
+     */
+    public function initialize();
 
-	/**
-	 * Initializes the database connection/settings.
-	 *
-	 * @return mixed
-	 */
-	public function initialize();
+    /**
+     * Connect to the database.
+     *
+     * @return false|TConnection
+     */
+    public function connect(bool $persistent = false);
 
-	//--------------------------------------------------------------------
+    /**
+     * Create a persistent database connection.
+     *
+     * @return false|TConnection
+     */
+    public function persistentConnect();
 
-	/**
-	 * Connect to the database.
-	 *
-	 * @param  boolean $persistent
-	 * @return mixed
-	 */
-	public function connect(bool $persistent = false);
+    /**
+     * Keep or establish the connection if no queries have been sent for
+     * a length of time exceeding the server's idle timeout.
+     *
+     * @return void
+     */
+    public function reconnect();
 
-	//--------------------------------------------------------------------
+    /**
+     * Returns the actual connection object. If both a 'read' and 'write'
+     * connection has been specified, you can pass either term in to
+     * get that connection. If you pass either alias in and only a single
+     * connection is present, it must return the sole connection.
+     *
+     * @return false|TConnection
+     */
+    public function getConnection(?string $alias = null);
 
-	/**
-	 * Create a persistent database connection.
-	 *
-	 * @return mixed
-	 */
-	public function persistentConnect();
+    /**
+     * Select a specific database table to use.
+     *
+     * @return bool
+     */
+    public function setDatabase(string $databaseName);
 
-	//--------------------------------------------------------------------
+    /**
+     * Returns the name of the current database being used.
+     */
+    public function getDatabase(): string;
 
-	/**
-	 * Keep or establish the connection if no queries have been sent for
-	 * a length of time exceeding the server's idle timeout.
-	 *
-	 * @return mixed
-	 */
-	public function reconnect();
+    /**
+     * Returns the last error encountered by this connection.
+     * Must return this format: ['code' => string|int, 'message' => string]
+     * intval(code) === 0 means "no error".
+     *
+     * @return array<string, int|string>
+     */
+    public function error(): array;
 
-	//--------------------------------------------------------------------
+    /**
+     * The name of the platform in use (MySQLi, mssql, etc)
+     */
+    public function getPlatform(): string;
 
-	/**
-	 * Returns the actual connection object. If both a 'read' and 'write'
-	 * connection has been specified, you can pass either term in to
-	 * get that connection. If you pass either alias in and only a single
-	 * connection is present, it must return the sole connection.
-	 *
-	 * @param string|null $alias
-	 *
-	 * @return mixed
-	 */
-	public function getConnection(string $alias = null);
+    /**
+     * Returns a string containing the version of the database being used.
+     */
+    public function getVersion(): string;
 
-	//--------------------------------------------------------------------
+    /**
+     * Orchestrates a query against the database. Queries must use
+     * Database\Statement objects to store the query and build it.
+     * This method works with the cache.
+     *
+     * Should automatically handle different connections for read/write
+     * queries if needed.
+     *
+     * @param array|string|null $binds
+     *
+     * @return BaseResult<TConnection, TResult>|bool|Query
+     */
+    public function query(string $sql, $binds = null);
 
-	/**
-	 * Select a specific database table to use.
-	 *
-	 * @param string $databaseName
-	 *
-	 * @return mixed
-	 */
-	public function setDatabase(string $databaseName);
+    /**
+     * Performs a basic query against the database. No binding or caching
+     * is performed, nor are transactions handled. Simply takes a raw
+     * query string and returns the database-specific result id.
+     *
+     * @return false|TResult
+     */
+    public function simpleQuery(string $sql);
 
-	//--------------------------------------------------------------------
+    /**
+     * Returns an instance of the query builder for this connection.
+     *
+     * @param array|string $tableName Table name.
+     *
+     * @return BaseBuilder Builder.
+     */
+    public function table($tableName);
 
-	/**
-	 * Returns the name of the current database being used.
-	 *
-	 * @return string
-	 */
-	public function getDatabase(): string;
+    /**
+     * Returns the last query's statement object.
+     *
+     * @return Query
+     */
+    public function getLastQuery();
 
-	//--------------------------------------------------------------------
+    /**
+     * "Smart" Escaping
+     *
+     * Escapes data based on type.
+     * Sets boolean and null types.
+     *
+     * @param array|bool|float|int|object|string|null $str
+     *
+     * @return ($str is array ? array : float|int|string)
+     */
+    public function escape($str);
 
-	/**
-	 * Returns the last error encountered by this connection.
-	 *
-	 * @return mixed
-	 */
-	public function getError();
+    /**
+     * Allows for custom calls to the database engine that are not
+     * supported through our database layer.
+     *
+     * @param array ...$params
+     *
+     * @return array|bool|float|int|object|resource|string|null
+     */
+    public function callFunction(string $functionName, ...$params);
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * The name of the platform in use (MySQLi, mssql, etc)
-	 *
-	 * @return string
-	 */
-	public function getPlatform(): string;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns a string containing the version of the database being used.
-	 *
-	 * @return string
-	 */
-	public function getVersion(): string;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Orchestrates a query against the database. Queries must use
-	 * Database\Statement objects to store the query and build it.
-	 * This method works with the cache.
-	 *
-	 * Should automatically handle different connections for read/write
-	 * queries if needed.
-	 *
-	 * @param string $sql
-	 * @param mixed  ...$binds
-	 *
-	 * @return mixed
-	 */
-	public function query(string $sql, $binds = null);
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Performs a basic query against the database. No binding or caching
-	 * is performed, nor are transactions handled. Simply takes a raw
-	 * query string and returns the database-specific result id.
-	 *
-	 * @param string $sql
-	 *
-	 * @return mixed
-	 */
-	public function simpleQuery(string $sql);
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns an instance of the query builder for this connection.
-	 *
-	 * @param string|array $tableName Table name.
-	 *
-	 * @return BaseBuilder Builder.
-	 */
-	public function table($tableName);
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the last query's statement object.
-	 *
-	 * @return mixed
-	 */
-	public function getLastQuery();
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * "Smart" Escaping
-	 *
-	 * Escapes data based on type.
-	 * Sets boolean and null types.
-	 *
-	 * @param mixed $str
-	 *
-	 * @return mixed
-	 */
-	public function escape($str);
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Allows for custom calls to the database engine that are not
-	 * supported through our database layer.
-	 *
-	 * @param string $functionName
-	 * @param array  ...$params
-	 *
-	 * @return mixed
-	 */
-	public function callFunction(string $functionName, ...$params);
-
-	//--------------------------------------------------------------------
+    /**
+     * Determines if the statement is a write-type query or not.
+     *
+     * @param string $sql
+     */
+    public function isWriteType($sql): bool;
 }

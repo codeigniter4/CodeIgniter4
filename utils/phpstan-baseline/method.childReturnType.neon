@@ -1,0 +1,153 @@
+# total 30 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Return type \(array\{code\: int\|string\|null, message\: string\|null\}\) of method CodeIgniter\\Database\\BaseConnection\:\:error\(\) should be covariant with return type \(array\<string, int\|string\>\) of method CodeIgniter\\Database\\ConnectionInterface\<TConnection,TResult\>\:\:error\(\)$#'
+            count: 1
+            path: ../../system/Database/BaseConnection.php
+
+        -
+            message: '#^Return type \(array\<string, int\|string\>\) of method CodeIgniter\\Database\\MySQLi\\Connection\:\:error\(\) should be covariant with return type \(array\{code\: int\|string\|null, message\: string\|null\}\) of method CodeIgniter\\Database\\BaseConnection\<mysqli,mysqli_result\>\:\:error\(\)$#'
+            count: 1
+            path: ../../system/Database/MySQLi/Connection.php
+
+        -
+            message: '#^Return type \(mysqli_result\|false\) of method CodeIgniter\\Database\\MySQLi\\PreparedQuery\:\:_getResult\(\) should be covariant with return type \(object\|resource\|null\) of method CodeIgniter\\Database\\BasePreparedQuery\<mysqli,mysqli_stmt,mysqli_result\>\:\:_getResult\(\)$#'
+            count: 1
+            path: ../../system/Database/MySQLi/PreparedQuery.php
+
+        -
+            message: '#^Return type \(mixed\) of method CodeIgniter\\Database\\OCI8\\Builder\:\:delete\(\) should be covariant with return type \(bool\|string\) of method CodeIgniter\\Database\\BaseBuilder\:\:delete\(\)$#'
+            count: 1
+            path: ../../system/Database/OCI8/Builder.php
+
+        -
+            message: '#^Return type \(array\{code\: int\|string\|null, message\: string\|null\}\) of method CodeIgniter\\Database\\OCI8\\Connection\:\:error\(\) should be covariant with return type \(array\<string, int\|string\>\) of method CodeIgniter\\Database\\ConnectionInterface\<resource,resource\>\:\:error\(\)$#'
+            count: 1
+            path: ../../system/Database/OCI8/Connection.php
+
+        -
+            message: '#^Return type \(CodeIgniter\\Database\\BaseBuilder\) of method CodeIgniter\\Database\\Postgre\\Builder\:\:join\(\) should be covariant with return type \(\$this\(CodeIgniter\\Database\\BaseBuilder\)\) of method CodeIgniter\\Database\\BaseBuilder\:\:join\(\)$#'
+            count: 1
+            path: ../../system/Database/Postgre/Builder.php
+
+        -
+            message: '#^Return type \(CodeIgniter\\Database\\BaseBuilder\) of method CodeIgniter\\Database\\Postgre\\Builder\:\:orderBy\(\) should be covariant with return type \(\$this\(CodeIgniter\\Database\\BaseBuilder\)\) of method CodeIgniter\\Database\\BaseBuilder\:\:orderBy\(\)$#'
+            count: 1
+            path: ../../system/Database/Postgre/Builder.php
+
+        -
+            message: '#^Return type \(mixed\) of method CodeIgniter\\Database\\Postgre\\Builder\:\:decrement\(\) should be covariant with return type \(bool\) of method CodeIgniter\\Database\\BaseBuilder\:\:decrement\(\)$#'
+            count: 1
+            path: ../../system/Database/Postgre/Builder.php
+
+        -
+            message: '#^Return type \(mixed\) of method CodeIgniter\\Database\\Postgre\\Builder\:\:delete\(\) should be covariant with return type \(bool\|string\) of method CodeIgniter\\Database\\BaseBuilder\:\:delete\(\)$#'
+            count: 1
+            path: ../../system/Database/Postgre/Builder.php
+
+        -
+            message: '#^Return type \(mixed\) of method CodeIgniter\\Database\\Postgre\\Builder\:\:increment\(\) should be covariant with return type \(bool\) of method CodeIgniter\\Database\\BaseBuilder\:\:increment\(\)$#'
+            count: 1
+            path: ../../system/Database/Postgre/Builder.php
+
+        -
+            message: '#^Return type \(mixed\) of method CodeIgniter\\Database\\Postgre\\Builder\:\:replace\(\) should be covariant with return type \(CodeIgniter\\Database\\BaseResult\|CodeIgniter\\Database\\Query\|string\|false\) of method CodeIgniter\\Database\\BaseBuilder\:\:replace\(\)$#'
+            count: 1
+            path: ../../system/Database/Postgre/Builder.php
+
+        -
+            message: '#^Return type \(array\<string, int\|string\>\) of method CodeIgniter\\Database\\Postgre\\Connection\:\:error\(\) should be covariant with return type \(array\{code\: int\|string\|null, message\: string\|null\}\) of method CodeIgniter\\Database\\BaseConnection\<PgSql\\Connection,PgSql\\Result\>\:\:error\(\)$#'
+            count: 1
+            path: ../../system/Database/Postgre/Connection.php
+
+        -
+            message: '#^Return type \(CodeIgniter\\Database\\BaseBuilder\) of method CodeIgniter\\Database\\SQLSRV\\Builder\:\:maxMinAvgSum\(\) should be covariant with return type \(\$this\(CodeIgniter\\Database\\BaseBuilder\)\) of method CodeIgniter\\Database\\BaseBuilder\:\:maxMinAvgSum\(\)$#'
+            count: 1
+            path: ../../system/Database/SQLSRV/Builder.php
+
+        -
+            message: '#^Return type \(mixed\) of method CodeIgniter\\Database\\SQLSRV\\Builder\:\:delete\(\) should be covariant with return type \(bool\|string\) of method CodeIgniter\\Database\\BaseBuilder\:\:delete\(\)$#'
+            count: 1
+            path: ../../system/Database/SQLSRV/Builder.php
+
+        -
+            message: '#^Return type \(mixed\) of method CodeIgniter\\Database\\SQLSRV\\Builder\:\:replace\(\) should be covariant with return type \(CodeIgniter\\Database\\BaseResult\|CodeIgniter\\Database\\Query\|string\|false\) of method CodeIgniter\\Database\\BaseBuilder\:\:replace\(\)$#'
+            count: 1
+            path: ../../system/Database/SQLSRV/Builder.php
+
+        -
+            message: '#^Return type \(array\<string, int\|string\>\) of method CodeIgniter\\Database\\SQLSRV\\Connection\:\:error\(\) should be covariant with return type \(array\{code\: int\|string\|null, message\: string\|null\}\) of method CodeIgniter\\Database\\BaseConnection\<resource,resource\>\:\:error\(\)$#'
+            count: 1
+            path: ../../system/Database/SQLSRV/Connection.php
+
+        -
+            message: '#^Return type \(array\<string, int\|string\>\) of method CodeIgniter\\Database\\SQLite3\\Connection\:\:error\(\) should be covariant with return type \(array\{code\: int\|string\|null, message\: string\|null\}\) of method CodeIgniter\\Database\\BaseConnection\<SQLite3,SQLite3Result\>\:\:error\(\)$#'
+            count: 1
+            path: ../../system/Database/SQLite3/Connection.php
+
+        -
+            message: '#^Return type \(SQLite3Result\|false\) of method CodeIgniter\\Database\\SQLite3\\PreparedQuery\:\:_getResult\(\) should be covariant with return type \(object\|resource\|null\) of method CodeIgniter\\Database\\BasePreparedQuery\<SQLite3,SQLite3Stmt,SQLite3Result\>\:\:_getResult\(\)$#'
+            count: 1
+            path: ../../system/Database/SQLite3/PreparedQuery.php
+
+        -
+            message: '#^Return type \(CodeIgniter\\HTTP\\DownloadResponse\) of method CodeIgniter\\HTTP\\DownloadResponse\:\:sendBody\(\) should be covariant with return type \(\$this\(CodeIgniter\\HTTP\\Response\)\) of method CodeIgniter\\HTTP\\Response\:\:sendBody\(\)$#'
+            count: 1
+            path: ../../system/HTTP/DownloadResponse.php
+
+        -
+            message: '#^Return type \(CodeIgniter\\HTTP\\DownloadResponse\) of method CodeIgniter\\HTTP\\DownloadResponse\:\:sendBody\(\) should be covariant with return type \(\$this\(CodeIgniter\\HTTP\\ResponseInterface\)\) of method CodeIgniter\\HTTP\\ResponseInterface\:\:sendBody\(\)$#'
+            count: 1
+            path: ../../system/HTTP/DownloadResponse.php
+
+        -
+            message: '#^Return type \(CodeIgniter\\HTTP\\ResponseInterface\) of method CodeIgniter\\HTTP\\DownloadResponse\:\:setContentType\(\) should be covariant with return type \(\$this\(CodeIgniter\\HTTP\\Response\)\) of method CodeIgniter\\HTTP\\Response\:\:setContentType\(\)$#'
+            count: 1
+            path: ../../system/HTTP/DownloadResponse.php
+
+        -
+            message: '#^Return type \(CodeIgniter\\HTTP\\ResponseInterface\) of method CodeIgniter\\HTTP\\DownloadResponse\:\:setContentType\(\) should be covariant with return type \(\$this\(CodeIgniter\\HTTP\\ResponseInterface\)\) of method CodeIgniter\\HTTP\\ResponseInterface\:\:setContentType\(\)$#'
+            count: 1
+            path: ../../system/HTTP/DownloadResponse.php
+
+        -
+            message: '#^Return type \(CodeIgniter\\HTTP\\Exceptions\\HTTPException\) of method CodeIgniter\\HTTP\\Exceptions\\HTTPException\:\:forInvalidFile\(\) should be covariant with return type \(static\(CodeIgniter\\Exceptions\\FrameworkException\)\) of method CodeIgniter\\Exceptions\\FrameworkException\:\:forInvalidFile\(\)$#'
+            count: 1
+            path: ../../system/HTTP/Exceptions/HTTPException.php
+
+        -
+            message: '#^Return type \(bool\) of method CodeIgniter\\HTTP\\Files\\UploadedFile\:\:move\(\) should be compatible with return type \(CodeIgniter\\Files\\File\) of method CodeIgniter\\Files\\File\:\:move\(\)$#'
+            count: 1
+            path: ../../system/HTTP/Files/UploadedFile.php
+
+        -
+            message: '#^Return type \(CodeIgniter\\HTTP\\URI\|null\) of method CodeIgniter\\HTTP\\OutgoingRequest\:\:getUri\(\) should be covariant with return type \(CodeIgniter\\HTTP\\URI\) of method CodeIgniter\\HTTP\\OutgoingRequestInterface\:\:getUri\(\)$#'
+            count: 1
+            path: ../../system/HTTP/OutgoingRequest.php
+
+        -
+            message: '#^Return type \(CodeIgniter\\Images\\Handlers\\BaseHandler\) of method CodeIgniter\\Images\\Handlers\\BaseHandler\:\:fit\(\) should be covariant with return type \(\$this\(CodeIgniter\\Images\\ImageHandlerInterface\)\) of method CodeIgniter\\Images\\ImageHandlerInterface\:\:fit\(\)$#'
+            count: 1
+            path: ../../system/Images/Handlers/BaseHandler.php
+
+        -
+            message: '#^Return type \(CodeIgniter\\Images\\Handlers\\BaseHandler\) of method CodeIgniter\\Images\\Handlers\\BaseHandler\:\:resize\(\) should be covariant with return type \(\$this\(CodeIgniter\\Images\\ImageHandlerInterface\)\) of method CodeIgniter\\Images\\ImageHandlerInterface\:\:resize\(\)$#'
+            count: 1
+            path: ../../system/Images/Handlers/BaseHandler.php
+
+        -
+            message: '#^Return type \(CodeIgniter\\Images\\Handlers\\ImageMagickHandler\) of method CodeIgniter\\Images\\Handlers\\ImageMagickHandler\:\:_resize\(\) should be covariant with return type \(\$this\(CodeIgniter\\Images\\Handlers\\BaseHandler\)\) of method CodeIgniter\\Images\\Handlers\\BaseHandler\:\:_resize\(\)$#'
+            count: 1
+            path: ../../system/Images/Handlers/ImageMagickHandler.php
+
+        -
+            message: '#^Return type \(bool\|CodeIgniter\\Images\\Handlers\\ImageMagickHandler\) of method CodeIgniter\\Images\\Handlers\\ImageMagickHandler\:\:_crop\(\) should be covariant with return type \(\$this\(CodeIgniter\\Images\\Handlers\\BaseHandler\)\) of method CodeIgniter\\Images\\Handlers\\BaseHandler\:\:_crop\(\)$#'
+            count: 1
+            path: ../../system/Images/Handlers/ImageMagickHandler.php
+
+        -
+            message: '#^Return type \(array\|bool\|float\|int\|object\|string\|null\) of method CodeIgniter\\Model\:\:__call\(\) should be covariant with return type \(\$this\(CodeIgniter\\BaseModel\)\|null\) of method CodeIgniter\\BaseModel\:\:__call\(\)$#'
+            count: 1
+            path: ../../system/Model.php

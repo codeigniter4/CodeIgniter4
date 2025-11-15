@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Parameter \#1 \$name of function model expects a valid class string, ''CodeIgniter\\\\Shield\\\\Models\\\\UserModel'' given\.$#'
+            count: 1
+            path: ../../tests/system/Config/FactoriesTest.php

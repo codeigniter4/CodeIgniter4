@@ -1,0 +1,39 @@
+Version 4.2.11
+##############
+
+Release Date: December 21, 2022
+
+**4.2.11 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+SECURITY
+********
+
+- *Attackers may spoof IP address when using proxy* was fixed. See the `Security advisory GHSA-ghw3-5qvm-3mqc <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-ghw3-5qvm-3mqc>`_ for more information.
+- *Potential Session Handlers Vulnerability* was fixed. See the `Security advisory GHSA-6cq5-8cj7-g558 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-6cq5-8cj7-g558>`_ for more information.
+
+BREAKING
+********
+
+- The ``Config\App::$proxyIPs`` value format has been changed. See :ref:`Upgrading Guide <upgrade-4211-proxyips>`.
+- The key of the session data record for :ref:`sessions-databasehandler-driver`,
+  :ref:`sessions-memcachedhandler-driver` and :ref:`sessions-redishandler-driver`
+  has changed. See :ref:`Upgrading Guide <upgrade-4211-session-key>`.
+
+Enhancements
+************
+
+- Full support for PHP 8.2.
+
+Bugs Fixed
+**********
+
+- Fixed a ``FileLocator::locateFile()`` bug where a similar namespace name could be replaced by another, causing a failure to find a file that exists.
+- Fixed a ``RedisHandler`` session class to use the correct config when used with a socket connection.
+
+See the repo's
+`CHANGELOG_4.2.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.2.md>`_
+for a complete list of bugs fixed.

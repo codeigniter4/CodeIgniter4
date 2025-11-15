@@ -1,82 +1,118 @@
-<?php namespace Builder;
+<?php
 
-use Tests\Support\Database\MockConnection;
+declare(strict_types=1);
 
-class AliasTest extends \CIUnitTestCase
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database\Builder;
+
+use CodeIgniter\Database\TableName;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\Group;
+
+/**
+ * @internal
+ */
+#[Group('Others')]
+final class AliasTest extends CIUnitTestCase
 {
-	protected $db;
+    protected $db;
 
-	//--------------------------------------------------------------------
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-	protected function setUp()
-	{
-		parent::setUp();
+        $this->db = new MockConnection([]);
+    }
 
-		$this->db = new MockConnection([]);
-	}
+    public function testAlias(): void
+    {
+        $builder = $this->db->table('jobs j');
 
-	//--------------------------------------------------------------------
+        $expectedSQL = 'SELECT * FROM "jobs" "j"';
 
-	public function testAlias()
-	{
-		$builder = $this->db->table('jobs j');
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$expectedSQL = 'SELECT * FROM "jobs" "j"';
+    public function testTableName(): void
+    {
+        $tableName = TableName::create($this->db->DBPrefix, 'jobs', 'j');
+        $builder   = $this->db->table($tableName);
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $expectedSQL = 'SELECT * FROM "jobs" "j"';
 
-	//--------------------------------------------------------------------
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	public function testAliasSupportsArrayOfNames()
-	{
-		$builder = $this->db->table(['jobs j', 'users u']);
+    public function testAliasSupportsArrayOfNames(): void
+    {
+        $builder = $this->db->table(['jobs j', 'users u']);
 
-		$expectedSQL = 'SELECT * FROM "jobs" "j", "users" "u"';
+        $expectedSQL = 'SELECT * FROM "jobs" "j", "users" "u"';
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	//--------------------------------------------------------------------
+    public function testAliasSupportsStringOfNames(): void
+    {
+        $builder = $this->db->table('jobs j, users u');
 
-	public function testAliasSupportsStringOfNames()
-	{
-		$builder = $this->db->table('jobs j, users u');
+        $expectedSQL = 'SELECT * FROM "jobs" "j", "users" "u"';
 
-		$expectedSQL = 'SELECT * FROM "jobs" "j", "users" "u"';
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1599
+     */
+    public function testAliasLeftJoinWithShortTableName(): void
+    {
+        $this->setPrivateProperty($this->db, 'DBPrefix', 'db_');
+        $builder = $this->db->table('jobs');
 
-	//--------------------------------------------------------------------
+        $builder->join('users as u', 'u.id = jobs.id', 'left');
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1599
-	 */
-	public function testAliasLeftJoinWithShortTableName()
-	{
-		$this->setPrivateProperty($this->db, 'DBPrefix', 'db_');
-		$builder = $this->db->table('jobs');
+        $expectedSQL = 'SELECT * FROM "db_jobs" LEFT JOIN "db_users" as "u" ON "u"."id" = "db_jobs"."id"';
 
-		$builder->join('users as u', 'u.id = jobs.id', 'left');
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$expectedSQL = 'SELECT * FROM "db_jobs" LEFT JOIN "db_users" as "u" ON "u"."id" = "db_jobs"."id"';
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1599
+     */
+    public function testAliasLeftJoinWithLongTableName(): void
+    {
+        $this->setPrivateProperty($this->db, 'DBPrefix', 'db_');
+        $builder = $this->db->table('jobs');
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $builder->join('users as u', 'users.id = jobs.id', 'left');
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1599
-	 */
-	public function testAliasLeftJoinWithLongTableName()
-	{
-		$this->setPrivateProperty($this->db, 'DBPrefix', 'db_');
-		$builder = $this->db->table('jobs');
+        $expectedSQL = 'SELECT * FROM "db_jobs" LEFT JOIN "db_users" as "u" ON "db_users"."id" = "db_jobs"."id"';
 
-		$builder->join('users as u', 'users.id = jobs.id', 'left');
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$expectedSQL = 'SELECT * FROM "db_jobs" LEFT JOIN "db_users" as "u" ON "db_users"."id" = "db_jobs"."id"';
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5360
+     */
+    public function testAliasSimpleLikeWithDBPrefix(): void
+    {
+        $this->setPrivateProperty($this->db, 'DBPrefix', 'db_');
+        $builder = $this->db->table('jobs j');
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $builder->like('j.name', 'veloper');
+
+        $expectedSQL = <<<'SQL'
+            SELECT * FROM "db_jobs" "j" WHERE "j"."name" LIKE '%veloper%' ESCAPE '!'
+            SQL;
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 }

@@ -1,0 +1,71 @@
+#############
+Version 4.4.4
+#############
+
+Release Date: December 28, 2023
+
+**4.4.4 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+********
+BREAKING
+********
+
+Validation with Dot Array Syntax
+================================
+
+A validation rule with the wildcard ``*`` now validates only data in correct
+dimensions as "dot array syntax".
+See :ref:`Upgrading <upgrade-444-validation-with-dot-array-syntax>` for details.
+
+Validation rules matches and differs
+====================================
+
+Bugs have been fixed in the case where ``matches`` and ``differs`` in the Strict
+and Traditional rules validate data of non-string types.
+
+The use of the `ssl_key` option in CURLRequest was removed
+==========================================================
+
+Due to a bug, we were using the undocumented `ssl_key` config option to define the CA bundle in CURLRequest.
+This was fixed and is now working according to documentation. You can define your CA bundle via the `verify` option.
+
+Filesystem Helper
+=================
+
+:php:func:`get_filenames()` now follows symlink folders, which it previously just returned
+without following.
+
+************
+Enhancements
+************
+
+- Full support for PHP 8.3.
+
+***************
+Message Changes
+***************
+
+- Added ``HTTP.invalidJSON`` error message.
+- Added ``HTTP.unsupportedJSONFormat`` error message.
+
+************
+Deprecations
+************
+
+- **Request:** The :php:meth:`CodeIgniter\\HTTP\\Request::getEnv()` method is
+  deprecated. This method does not work from the beginning. Use :php:func:`env()`
+  instead.
+
+**********
+Bugs Fixed
+**********
+
+- **CURLRequest:** Fixed a bug where the hostname was checked even if options 'verify' was set to *false*.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

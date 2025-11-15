@@ -1,217 +1,324 @@
 Composer Installation
-###############################################################################
+#####################
 
 .. contents::
     :local:
-    :depth: 1
+    :depth: 2
 
-Composer can be used in several ways to install CodeIgniter4 on your system.
+Composer can be used in two ways to install CodeIgniter4 on your system.
 
-The first two techniques describe creating a skeleton project
+.. important:: CodeIgniter4 requires Composer 2.0.14 or later.
+
+.. note:: If you are not familiar with Composer, we recommend you read
+    `Basic usage <https://getcomposer.org/doc/01-basic-usage.md>`_ first.
+
+The first technique describes creating a skeleton project (app starter)
 using CodeIgniter4, that you would then use as the base for a new webapp.
-The third technique described below lets you add CodeIgniter4 to an existing
-webapp, 
+The second technique described below lets you add CodeIgniter4 to an existing
+webapp,
 
-**Note**: if you are using a Git repository to store your code, or for
-collaboration with others, then the ``vendor`` folder would normally
-be "git ignored". In such a case, you will need to do a ``composer update``
-when you clone the repository to a new system.
+.. note:: If you are using a Git repository to store your code, or for
+    collaboration with others, then the **vendor** folder would normally
+    be "git ignored". In such a case, you will need to do a ``composer install``
+    (or ``composer update`` if you want to update all Composer dependencies) when
+    you clone the repository to a new system.
 
 App Starter
-============================================================
+===========
 
-The `CodeIgniter 4 app starter <https://github.com/codeigniter4/appstarter>`_ 
+The `CodeIgniter 4 app starter <https://github.com/codeigniter4/appstarter>`_
 repository holds a skeleton application, with a composer dependency on
 the latest released version of the framework.
 
 This installation technique would suit a developer who wishes to start
 a new CodeIgniter4 based project.
 
-Installation & Setup
--------------------------------------------------------
+Installation
+------------
 
-In the folder above your project root::
+In the folder above your project root:
 
-    composer create-project codeigniter4/appstarter project-root -s beta
+.. code-block:: console
 
-The command above will create a "project-root" folder.
+    composer create-project codeigniter4/appstarter project-root
+
+The command above will create a **project-root** folder.
 
 If you omit the "project-root" argument, the command will create an
 "appstarter" folder, which can be renamed as appropriate.
 
-If you don't need or want phpunit installed, and all of its composer
-dependencies, then add the "--no-dev" option to the end of the above
-command line. That will result in only the framework, and the three
-trusted dependencies that we bundle, being composer-installed.
+.. note:: Before v4.4.0, CodeIgniter autoloader did not allow special
+    characters that are illegal in filenames on certain operating systems.
+    The symbols that can be used are ``/``, ``_``, ``.``, ``:``, ``\`` and space.
+    So if you installed CodeIgniter under the folder that contains the special
+    characters like ``(``, ``)``, etc., CodeIgniter didn't work. Since v4.4.0,
+    this restriction has been removed.
 
-A sample such installation command, using the default project-root "appstarter"::
+.. important:: When you deploy to your production server, don't forget to run the
+    following command:
 
-    composer create-project codeigniter4/appstarter -s beta --no-dev
+    .. code-block:: console
 
-After installation you should follow the steps in the "Upgrading" section.
+        composer install --no-dev
+
+    The above command will remove the Composer packages only for development
+    that are not needed in the production environment. This will greatly reduce
+    the vendor folder size.
+
+Installing Previous Versions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For example, you may want to install v4.4.8 after v4.5.0 has been released.
+
+In that case, specify the version in the command:
+
+.. code-block:: console
+
+    composer create-project codeigniter4/appstarter:4.4.8 project-root
+
+Then, open **composer.json** in your project root folder, and specify
+the framework version:
+
+.. code-block:: text
+
+    "require": {
+        ...
+        "codeigniter4/framework": "4.4.8"
+    },
+
+Then, run the ``composer update`` command.
+
+.. note:: When you use a fixed version number like ``"codeigniter4/framework": "4.4.8"``
+    in your **composer.json**, ``composer update`` command will not update the
+    framework to the latest version. See `Writing Version Constraints`_ for how to specify the version.
+
+.. _Writing Version Constraints: https://getcomposer.org/doc/articles/versions.md#writing-version-constraints
+
+Initial Configuration
+---------------------
+
+After installation, a few initial configurations are required.
+See :ref:`initial-configuration` for the details.
+
+.. _app-starter-upgrading:
 
 Upgrading
--------------------------------------------------------
+---------
 
-Whenever there is a new release, then from the command line in your project root::
+Whenever there is a new release, then from the command line in your project root:
 
-    composer update 
+.. code-block:: console
 
-If you used the "--no-dev" option when you created the project, it
-would be appropriate to do so here too, i.e. ``composer update --no-dev``.
+    composer update
 
-Read the upgrade instructions, and check designated  ``app/Config`` folders for affected changes.
+Read the :doc:`upgrade instructions <upgrading>` and :doc:`change log <../changelogs/index>`,
+and check Breaking Changes and Enhancements.
+
+Upgrading to a Specified Version
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For example, you may want to upgrade from v4.4.7 to v4.4.8 after v4.5.0 has been released.
+
+In that case, open **composer.json** in your project root folder, and specify
+the framework version:
+
+.. code-block:: text
+
+    "require": {
+        ...
+        "codeigniter4/framework": "4.4.8"
+    },
+
+Then, run the ``composer update`` command.
+
+.. note:: When you use a fixed version number like ``"codeigniter4/framework": "4.4.8"``
+    in your **composer.json**, ``composer update`` command will not update the
+    framework to the latest version. See `Writing Version Constraints`_ for how to specify the version.
 
 Pros
--------------------------------------------------------
+----
 
-Simple installation; easy to update
+Simple installation; easy to update.
 
 Cons
--------------------------------------------------------
+----
 
-You still need to check for ``app/Config`` changes after updating
+You still need to check for file changes in the **project space**
+(root, app, public, writable) and merge them after updating.
+
+.. note:: There are some third-party CodeIgniter modules available to assist
+    with merging changes to the project space:
+    `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
 
 Structure
--------------------------------------------------------
+---------
 
-Folders in your project after setup:
+Folders in your project after set up:
 
-- app, public, tests, writable 
+- app, public, tests, writable
 - vendor/codeigniter4/framework/system
-- vendor/codeigniter4/framework/app & public (compare with yours after updating)
 
-Dev Starter
-============================================================
+Latest Dev
+----------
 
-Installation & Setup
--------------------------------------------------------
-
-The `CodeIgniter 4 dev starter <https://github.com/codeigniter4/devstarter>`_ 
-repository holds a skeleton application, just like the appstarter above,
-but with a composer dependency on
-the develop branch (unreleased) of the framework.
-It can be composer-installed as described here.
-
-This installation technique would suit a developer who wishes to start
-a new CodeIgniter4 based project, and who is willing to live with the
-latest unreleased changes, which may be unstable.
+The App Starter repo comes with a ``builds`` scripts to switch Composer sources between the
+current stable release and the latest development branch of the framework. Use this script
+for a developer who is willing to live with the latest unreleased changes, which may be unstable.
 
 The `development user guide <https://codeigniter4.github.io/CodeIgniter4/>`_ is accessible online.
 Note that this differs from the released user guide, and will pertain to the
 develop branch explicitly.
 
-In the folder above your project root::
+Update for Latest Dev
+^^^^^^^^^^^^^^^^^^^^^
 
-    composer create-project codeigniter4/devstarter -s dev
+In your project root:
 
-The command above will create a "devstarter" folder.
-Feel free to rename that for your project.
+.. code-block:: console
 
-Just like the appstarter, you can provide your own project
-name as the third composer argument, and you can add
-the "--no-dev" argument if your don't want phpunit and its dependencies included.
-An example::
+    php builds development
 
-    composer create-project codeigniter4/devstarter my-awesome-project -s dev --no-dev
+The command above will update **composer.json** to point to the ``develop`` branch of the
+working repository, and update the corresponding paths in config and XML files.
 
+After using the ``builds`` command be sure to run ``composer update`` to sync your vendor
+folder with the latest target build. Then, check the :doc:`upgrading` and update project
+files if necessary.
 
-Upgrading
--------------------------------------------------------
+Next Minor Version
+^^^^^^^^^^^^^^^^^^
 
-``composer update`` whenever you are ready for the latest changes,
-or ``composer update --no-dev`` if you used that argument when creating your project.
+If you want to use the next minor version branch, after using the ``builds`` command
+edit **composer.json** manually.
 
-Check the changelog to see if any recent changes affect your app,
-bearing in mind that the most recent changes may not have made it
-into the changelog!
+If you try the ``4.6`` branch, change the version to ``4.6.x-dev``::
 
-Pros
--------------------------------------------------------
+    "require": {
+        "php": "^8.1",
+        "codeigniter4/codeigniter4": "4.6.x-dev"
+    },
 
-Simple installation; easy to update; bleeding edge version
+And run ``composer update`` to sync your vendor
+folder with the latest target build. Then, check the Upgrading Guide
+(**user_guide_src/source/installation/upgrade_{version}.rst**) and
+update project files if necessary.
 
-Cons
--------------------------------------------------------
+Revert to Stable Release
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-This is not guaranteed to be stable; the onus is on you to upgrade.
-You still need to check for ``app/Config`` changes after updating.
+To revert the changes run:
 
-Structure
--------------------------------------------------------
+.. code-block:: console
 
-Folders in your project after setup:
-
-- app, public, tests, writable 
-- vendor/codeigniter4/codeigniter4/system
-- vendor/codeigniter4/codeigniter4/app & public (compare with yours after updating)
+    php builds release
 
 Adding CodeIgniter4 to an Existing Project
-============================================================
+==========================================
 
-The same `CodeIgniter 4 framework <https://github.com/codeigniter4/framework>`_ 
+The same `CodeIgniter 4 framework <https://github.com/codeigniter4/framework>`_
 repository described in "Manual Installation" can also be added to an
 existing project using Composer.
 
-Develop your app inside the ``app`` folder, and the ``public`` folder 
-will be your document root. 
+Installation
+------------
 
-In your project root::
+Develop your app inside the ``app`` folder, and the ``public`` folder
+will be your document root.
 
-    composer require codeigniter4/framework @beta
+In your project root:
 
-As with the earlier two composer install methods, you can omit installing
-phpunit and its dependencies by adding the "--no-dev" argument to the "composer require" command.
+.. code-block:: console
 
-Setup
--------------------------------------------------------
+    composer require codeigniter4/framework
 
-Copy the app, public, tests and writable folders from ``vendor/codeigniter4/framework`` 
-to your project root
+.. important:: When you deploy to your production server, don't forget to run the
+    following command:
 
-Copy the ``env``, ``phpunit.xml.dist`` and ``spark`` files, from
-``vendor/codeigniter4/framework`` to your project root
+    .. code-block:: console
 
-You will have to adjust paths to refer to vendor/codeigniter/framework``, 
-- the $systemDirectory variable in ``app/Config/Paths.php``
+        composer install --no-dev
+
+    The above command will remove the Composer packages only for development
+    that are not needed in the production environment. This will greatly reduce
+    the vendor folder size.
+
+Setting Up
+----------
+
+    1. Copy the **app**, **public**, **tests** and **writable** folders from **vendor/codeigniter4/framework** to your project root
+    2. Copy the **env**, **phpunit.xml.dist** and **spark** files, from **vendor/codeigniter4/framework** to your project root
+    3. You will have to adjust the ``$systemDirectory`` property in **app/Config/Paths.php** to refer to the vendor one, e.g., ``__DIR__ . '/../../vendor/codeigniter4/framework/system'``.
+
+Initial Configuration
+---------------------
+
+A few initial configurations are required.
+See :ref:`initial-configuration` for the details.
+
+.. _adding-codeigniter4-upgrading:
 
 Upgrading
--------------------------------------------------------
+---------
 
-Whenever there is a new release, then from the command line in your project root::
+Whenever there is a new release, then from the command line in your project root:
 
-    composer update 
+.. code-block:: console
 
-Read the upgrade instructions, and check designated 
-``app/Config`` folders for affected changes.
+    composer update
+
+Read the :doc:`upgrade instructions <upgrading>` and :doc:`change log <../changelogs/index>`,
+and check Breaking Changes and Enhancements.
+
+Upgrading to a Specified Version
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For example, you may want to upgrade from v4.4.7 to v4.4.8 after v4.5.0 has been released.
+
+In that case, open **composer.json** in your project root folder, and specify
+the framework version:
+
+.. code-block:: text
+
+    "require": {
+        ...
+        "codeigniter4/framework": "4.4.8"
+    },
+
+Then, run the ``composer update`` command.
 
 Pros
--------------------------------------------------------
+----
 
-Relatively simple installation; easy to update
+Relatively simple installation; easy to update.
 
 Cons
--------------------------------------------------------
+----
 
-You still need to check for ``app/Config`` changes after updating
+You still need to check for file changes in the **project space**
+(root, app, public, writable) after updating.
+
+.. note:: There are some third-party CodeIgniter modules available to assist
+    with merging changes to the project space:
+    `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
 
 Structure
--------------------------------------------------------
+---------
 
-Folders in your project after setup:
+Folders in your project after set up:
 
-- app, public, tests, writable 
+- app, public, tests, writable
 - vendor/codeigniter4/framework/system
 
-
 Translations Installation
-============================================================
+=========================
 
 If you want to take advantage of the system message translations,
-they can be added to your project in a similar fashion. 
+they can be added to your project in a similar fashion.
 
-From the command line inside your project root::
+From the command line inside your project root:
 
-    composer require codeigniter4/translations @beta
+.. code-block:: console
+
+    composer require codeigniter4/translations
 
 These will be updated along with the framework whenever you do a ``composer update``.

@@ -1,29 +1,35 @@
 Version 4.0.0-alpha.1
-=================================
+=====================
 
 Release Date: September 28, 2018
 
 **Rewrite of the CodeIgniter framework**
 
-New packages list:
-    - API 
+.. contents::
+    :local:
+    :depth: 2
+
+New Packages List
+-----------------
+
+    - API
         - \\ ResponseTrait
-    - Autoloader 
+    - Autoloader
         - \\ AutoLoader, FileLocator
-    - CLI 
+    - CLI
         - \\ BaseCommand, CLI, CommandRunner, Console
-    - Cache 
+    - Cache
         - \\ CacheFactory, CacheInterface
         - \\ Handlers ... Dummy, File, Memcached, Predis, Redis, Wincache
-    - Commands 
+    - Commands
         - \\ Help, ListCommands
         - \\ Database \\ CreateMigration, MigrateCurrent, MigrateLatest, MigrateRefresh,
           MigrateRollback, MigrateStatus, MigrateVersion, Seed
         - \\ Server \\ Serve
         - \\ Sessions \\ CreateMigration
         - \\ Utilities \\ Namespaces, Routes
-    - Config 
-        -   \\ AutoloadConfig, BaseConfig, BaseService, Config, DotEnv, ForeignCharacters, 
+    - Config
+        -   \\ AutoloadConfig, BaseConfig, BaseService, Config, DotEnv, ForeignCharacters,
             Routes, Services, View
     - Database
         -   \\ BaseBuilder, BaseConnection, BasePreparedQuery, BaseResult, BaseUtils, Config,
@@ -42,7 +48,7 @@ New packages list:
     - Files
         - \\ File
     - Filters
-        - \\ FilterInterface, Filters  
+        - \\ FilterInterface, Filters
     - Format
         - \\ FormatterInterface, JSONFormatter, XMLFormatter
     - HTTP
@@ -50,10 +56,10 @@ New packages list:
             IncomingRequest, Message, Negotiate, Request, RequestInterface,
             Response, ResponseInterface, URI, UserAgent
         -   \\ Files \\ FileCollection, UploadedFile, UploadedFileInterface
-    - Helpers 
+    - Helpers
         -   ... array, cookie, date, filesystem, form, html, inflector, number,
             security, text, url
-    - Honeypot 
+    - Honeypot
         - \\ Honeypot
     - I18n
         - \\ Time, TimeDifference
@@ -63,18 +69,18 @@ New packages list:
     - Language
         - \\ Language
     - Log
-        -   Logger, LoggerAwareTrait
-        -   \\ Handlers ...  Base, ChromeLogger, File, HandlerInterface
+        - Logger, LoggerAwareTrait
+        - \\ Handlers ...  Base, ChromeLogger, File, HandlerInterface
     - Pager
         - \\ Pager, PagerInterface, PagerRenderer
-    - Router 
+    - Router
         - \\ RouteCollection, RouteCollectionInterface, Router, RouterInterface
-    - Security 
+    - Security
         - \\ Security
     - Session
-        -   \\ Session, SessionInterface
-        -   \\ Handlers ... Base, File, Memcached, Redis
-    - Test 
+        - \\ Session, SessionInterface
+        - \\ Handlers ... Base, File, Memcached, Redis
+    - Test
         - \\ CIDatabaseTestCase, CIUnitTestCase, FeatureResponse, FeatureTestCase, ReflectionHelper
         - \\ Filters \\ CITestStreamFilter
     - ThirdParty (bundled)
@@ -88,4 +94,4 @@ New packages list:
     - Validation
         - \\ CreditCardRules, FileRules, FormatRules, Rules, Validation, ValidationInterface
     - View
-        -   \\ Cell, Filters, Parser, Plugins, RendererInterface, View
+        - \\ Cell, Filters, Parser, Plugins, RendererInterface, View

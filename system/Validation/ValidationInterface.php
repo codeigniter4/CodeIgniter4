@@ -1,43 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * CodeIgniter
+ * This file is part of CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Validation;
 
+use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\HTTP\RequestInterface;
 
 /**
@@ -45,121 +21,145 @@ use CodeIgniter\HTTP\RequestInterface;
  */
 interface ValidationInterface
 {
+    /**
+     * Runs the validation process, returning true/false determining whether
+     * validation was successful or not.
+     *
+     * @param array|null                                 $data    The array of data to validate.
+     * @param string|null                                $group   The predefined group of rules to apply.
+     * @param array|BaseConnection|non-empty-string|null $dbGroup The database group to use.
+     */
+    public function run(?array $data = null, ?string $group = null, $dbGroup = null): bool;
 
-	/**
-	 * Runs the validation process, returning true/false determining whether
-	 * or not validation was successful.
-	 *
-	 * @param array  $data  The array of data to validate.
-	 * @param string $group The pre-defined group of rules to apply.
-	 *
-	 * @return boolean
-	 */
-	public function run(array $data = null, string $group = null): bool;
+    /**
+     * Check; runs the validation process, returning true or false
+     * determining whether or not validation was successful.
+     *
+     * @param array|bool|float|int|object|string|null $value   Value to validate.
+     * @param array|string                            $rules
+     * @param list<string>                            $errors
+     * @param string|null                             $dbGroup The database group to use.
+     *
+     * @return bool True if valid, else false.
+     */
+    public function check($value, $rules, array $errors = [], $dbGroup = null): bool;
 
-	//--------------------------------------------------------------------
+    /**
+     * Takes a Request object and grabs the input data to use from its
+     * array values.
+     */
+    public function withRequest(RequestInterface $request): ValidationInterface;
 
-	/**
-	 * Check; runs the validation process, returning true or false
-	 * determining whether or not validation was successful.
-	 *
-	 * @param mixed    $value  Value to validation.
-	 * @param string   $rule   Rule.
-	 * @param string[] $errors Errors.
-	 *
-	 * @return boolean True if valid, else false.
-	 */
-	public function check($value, string $rule, array $errors = []): bool;
+    /**
+     * Sets an individual rule and custom error messages for a single field.
+     *
+     * The custom error message should be just the messages that apply to
+     * this field, like so:
+     *
+     *    [
+     *        'rule' => 'message',
+     *        'rule' => 'message',
+     *    ]
+     *
+     * @param array|string $rules
+     *
+     * @return $this
+     */
+    public function setRule(string $field, ?string $label, $rules, array $errors = []);
 
-	//--------------------------------------------------------------------
+    /**
+     * Stores the rules that should be used to validate the items.
+     */
+    public function setRules(array $rules, array $messages = []): ValidationInterface;
 
-	/**
-	 * Takes a Request object and grabs the input data to use from its
-	 * array values.
-	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface $request
-	 *
-	 * @return \CodeIgniter\Validation\ValidationInterface
-	 */
-	public function withRequest(RequestInterface $request): ValidationInterface;
+    /**
+     * Returns all of the rules currently defined.
+     */
+    public function getRules(): array;
 
-	//--------------------------------------------------------------------
-	// Rules
-	//--------------------------------------------------------------------
+    /**
+     * Checks to see if the rule for key $field has been set or not.
+     */
+    public function hasRule(string $field): bool;
 
-	/**
-	 * Stores the rules that should be used to validate the items.
-	 *
-	 * @param array $rules
-	 * @param array $messages
-	 *
-	 * @return \CodeIgniter\Validation\ValidationInterface
-	 */
-	public function setRules(array $rules, array $messages = []): ValidationInterface;
+    /**
+     * Get rule group.
+     *
+     * @param string $group Group.
+     *
+     * @return list<string> Rule group.
+     */
+    public function getRuleGroup(string $group): array;
 
-	//--------------------------------------------------------------------
+    /**
+     * Set rule group.
+     *
+     * @param string $group Group.
+     *
+     * @return void
+     */
+    public function setRuleGroup(string $group);
 
-	/**
-	 * Checks to see if the rule for key $field has been set or not.
-	 *
-	 * @param string $field
-	 *
-	 * @return boolean
-	 */
-	public function hasRule(string $field): bool;
+    /**
+     * Returns the error for a specified $field (or empty string if not set).
+     */
+    public function getError(string $field): string;
 
-	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
-	// Errors
-	//--------------------------------------------------------------------
+    /**
+     * Returns the array of errors that were encountered during
+     * a run() call. The array should be in the following format:
+     *
+     *    [
+     *        'field1' => 'error message',
+     *        'field2' => 'error message',
+     *    ]
+     *
+     * @return array<string,string>
+     */
+    public function getErrors(): array;
 
-	/**
-	 * Returns the error for a specified $field (or empty string if not set).
-	 *
-	 * @param string $field
-	 *
-	 * @return string
-	 */
-	public function getError(string $field): string;
+    /**
+     * Sets the error for a specific field. Used by custom validation methods.
+     */
+    public function setError(string $alias, string $error): ValidationInterface;
 
-	//--------------------------------------------------------------------
+    /**
+     * Resets the class to a blank slate. Should be called whenever
+     * you need to process more than one array.
+     */
+    public function reset(): ValidationInterface;
 
-	/**
-	 * Returns the array of errors that were encountered during
-	 * a run() call. The array should be in the following format:
-	 *
-	 *    [
-	 *        'field1' => 'error message',
-	 *        'field2' => 'error message',
-	 *    ]
-	 *
-	 * @return array
-	 */
-	public function getErrors(): array;
+    /**
+     * Loads custom rule groups (if set) into the current rules.
+     *
+     * Rules can be pre-defined in Config\Validation and can
+     * be any name, but must all still be an array of the
+     * same format used with setRules(). Additionally, check
+     * for {group}_errors for an array of custom error messages.
+     *
+     * @param non-empty-string|null $group
+     *
+     * @return array
+     */
+    public function loadRuleGroup(?string $group = null);
 
-	//--------------------------------------------------------------------
+    /**
+     * Checks to see if an error exists for the given field.
+     */
+    public function hasError(string $field): bool;
 
-	/**
-	 * Sets the error for a specific field. Used by custom validation methods.
-	 *
-	 * @param string $alias
-	 * @param string $error
-	 *
-	 * @return \CodeIgniter\Validation\ValidationInterface
-	 */
-	public function setError(string $alias, string $error): ValidationInterface;
+    /**
+     * Returns the rendered HTML of the errors as defined in $template.
+     */
+    public function listErrors(string $template = 'list'): string;
 
-	//--------------------------------------------------------------------
-	// Misc
-	//--------------------------------------------------------------------
+    /**
+     * Displays a single error in formatted HTML as defined in the $template view.
+     */
+    public function showError(string $field, string $template = 'single'): string;
 
-	/**
-	 * Resets the class to a blank slate. Should be called whenever
-	 * you need to process more than one array.
-	 *
-	 * @return \CodeIgniter\Validation\ValidationInterface
-	 */
-	public function reset(): ValidationInterface;
-
-	//--------------------------------------------------------------------
+    /**
+     * Returns the actual validated data.
+     */
+    public function getValidated(): array;
 }

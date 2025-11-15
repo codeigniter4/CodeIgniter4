@@ -1,49 +1,60 @@
-<?php namespace Builder;
+<?php
 
-use Tests\Support\Database\MockConnection;
+declare(strict_types=1);
 
-class ReplaceTest extends \CIUnitTestCase
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database\Builder;
+
+use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\Group;
+
+/**
+ * @internal
+ */
+#[Group('Others')]
+final class ReplaceTest extends CIUnitTestCase
 {
-	protected $db;
+    protected $db;
 
-	//--------------------------------------------------------------------
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-	protected function setUp()
-	{
-		parent::setUp();
+        $this->db = new MockConnection([]);
+    }
 
-		$this->db = new MockConnection([]);
-	}
+    public function testSimpleReplace(): void
+    {
+        $builder = $this->db->table('jobs');
 
-	//--------------------------------------------------------------------
+        $expected = 'REPLACE INTO "jobs" ("title", "name", "date") VALUES (:title:, :name:, :date:)';
 
-	public function testSimpleReplace()
-	{
-		$builder = $this->db->table('jobs');
+        $data = [
+            'title' => 'My title',
+            'name'  => 'My Name',
+            'date'  => 'My date',
+        ];
 
-		$expected = 'REPLACE INTO "jobs" ("title", "name", "date") VALUES (:title:, :name:, :date:)';
+        $this->assertSame($expected, $builder->testMode()->replace($data));
+    }
 
-		$data = [
-			'title' => 'My title',
-			'name'  => 'My Name',
-			'date'  => 'My date',
-		];
+    public function testReplaceThrowsExceptionWithNoData(): void
+    {
+        $builder = $this->db->table('jobs');
 
-		$this->assertSame($expected, $builder->replace($data, true));
-	}
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('You must use the "set" method to update an entry.');
 
-	//--------------------------------------------------------------------
-
-	public function testReplaceThrowsExceptionWithNoData()
-	{
-		$builder = $this->db->table('jobs');
-
-		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
-		$this->expectExceptionMessage('You must use the "set" method to update an entry.');
-
-		$builder->replace();
-	}
-
-	//--------------------------------------------------------------------
-
+        $builder->replace();
+    }
 }

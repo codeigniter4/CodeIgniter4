@@ -2,6 +2,10 @@
 Autoloading Files
 #################
 
+.. contents::
+    :local:
+    :depth: 2
+
 Every application consists of a large number of classes in many different locations.
 The framework provides classes for core functionality. Your application will have a
 number of libraries, models, and other entities to make it work. You might have third-party
@@ -9,88 +13,202 @@ classes that your project is using. Keeping track of where every single file is,
 hard-coding that location into your files in a series of ``requires()`` is a massive
 headache and very error-prone. That's where autoloaders come in.
 
-CodeIgniter provides a very flexible autoloader that can be used with very little configuration.
-It can locate individual non-namespaced classes, namespaced classes that adhere to
-`PSR4 <http://www.php-fig.org/psr/psr-4/>`_ autoloading
-directory structures, and will even attempt to locate classes in common directories (like Controllers,
-Models, etc).
+***********************
+CodeIgniter4 Autoloader
+***********************
 
-For performance improvement, the core CodeIgniter components have been added to the classmap.
+CodeIgniter provides a very flexible autoloader that can be used with very little configuration.
+It can locate individual namespaced classes that adhere to
+`PSR-4`_ autoloading directory structures.
+
+.. _PSR-4: https://www.php-fig.org/psr/psr-4/
 
 The autoloader works great by itself, but can also work with other autoloaders, like
 `Composer <https://getcomposer.org>`_, or even your own custom autoloaders, if needed.
 Because they're all registered through
-`spl_autoload_register <http://php.net/manual/en/function.spl-autoload-register.php>`_,
+`spl_autoload_register <https://www.php.net/manual/en/function.spl-autoload-register.php>`_,
 they work in sequence and don't get in each other's way.
 
 The autoloader is always active, being registered with ``spl_autoload_register()`` at the
 beginning of the framework's execution.
 
-Configuration
-=============
+.. important:: You should always be careful about the case of filenames. Many
+    developers develop on case-insensitive file systems on Windows or macOS.
+    However, most server environments use case-sensitive file systems. If the
+    file name case is incorrect, the autoloader cannot find the file on the
+    server.
 
-Initial configuration is done in **/app/Config/Autoload.php**. This file contains two primary
-arrays: one for the classmap, and one for PSR4-compatible namespaces.
+*************
+Configuration
+*************
+
+Initial configuration is done in **app/Config/Autoload.php**. This file contains two primary
+arrays: one for the classmap, and one for PSR-4 compatible namespaces.
+
+.. _autoloader-namespaces:
 
 Namespaces
 ==========
 
-The recommended method for organizing your classes is to create one or more namespaces for your
-application's files. This is most important for any business-logic related classes, entity classes,
-etc. The ``psr4`` array in the configuration file allows you to map the namespace to the directory
-those classes can be found in::
+The recommended method for organizing your classes is to create one or more namespaces
+for your application's files.
 
-	$psr4 = [
-		'App'         => APPPATH,
-		'CodeIgniter' => SYSTEMPATH,
-	];
+The ``$psr4`` array in the configuration file allows you to map the namespace to the directory
+those classes can be found in:
 
-The key of each row is the namespace itself. This does not need a trailing slash. If you use double-quotes
-to define the array, be sure to escape the backward slash. That means that it would be ``My\\App``,
-not ``My\App``. The value is the location to the directory the classes can be found in. They should
-have a trailing slash.
+.. literalinclude:: autoloader/001.php
 
-By default, the application folder is namespace to the ``App`` namespace. While you are not forced to namespace the controllers,
-libraries, or models in the application directory, if you do, they will be found under the ``App`` namespace.
-You may change this namespace by editing the **/app/Config/Constants.php** file and setting the
-new namespace value under the ``APP_NAMESPACE`` setting::
+The key of each row is the namespace itself. This does not need a trailing back slash.
+The value is the location to the directory the classes can be found in.
 
-	define('APP_NAMESPACE', 'App');
+By default, the namespace ``App`` is located in the **app** directory, and the
+namespace ``Config`` is located in the **app/Config** directory.
+
+If you create class files in the locations and according to `PSR-4`_, the autoloader
+will autoload them.
+
+.. _confirming-namespaces:
+
+Confirming Namespaces
+=====================
+
+You can check the namespace configuration by ``spark namespaces`` command:
+
+.. code-block:: console
+
+    php spark namespaces
+
+.. _autoloader-application-namespace:
+
+Application Namespace
+=====================
+
+By default, the application directory is namespace to the ``App`` namespace. You must namespace the controllers,
+libraries, or models in the application directory, and they will be found under the ``App`` namespace.
+
+Config Namespace
+----------------
+
+Config files are namespaced in the ``Config`` namespace, not in ``App\Config`` as you might
+expect. This allows the core system files to always be able to locate them, even when the application
+namespace has changed.
+
+.. note:: Since v4.5.3 appstarter, the ``Config\\`` namespace has been added to
+    **composer.json**'s ``autoload.psr-4``.
+
+Changing App Namespace
+----------------------
+
+You may change this namespace by editing the **app/Config/Constants.php** file and setting the
+new namespace value under the ``APP_NAMESPACE`` setting:
+
+.. literalinclude:: autoloader/002.php
+   :lines: 2-
+
+And if you use Composer autoloader, you also need to change the ``App`` namespace
+in your **composer.json**, and run ``composer dump-autoload``.
+
+.. code-block:: text
+
+    {
+        ...
+        "autoload": {
+            "psr-4": {
+                "App\\": "app/"    <-- Change
+            },
+            ...
+        },
+        ...
+    }
+
+.. note:: Since v4.5.0 appstarter, the ``App\\`` namespace has been added to
+    **composer.json**'s ``autoload.psr-4``. If your **composer.json** does not
+    have it, adding it may improve your app's autoloading performance.
 
 You will need to modify any existing files that are referencing the current namespace.
-
-.. important:: Config files are namespaced in the ``Config`` namespace, not in ``App\Config`` as you might
-	expect. This allows the core system files to always be able to locate them, even when the application
-	namespace has changed.
 
 Classmap
 ========
 
-The classmap is used extensively by CodeIgniter to eke the last ounces of performance out of the system
-by not hitting the file-system with extra ``is_file()`` calls. You can use the classmap to link to
-third-party libraries that are not namespaced::
+If you use third-party libraries that are not Composer packages and are not namespaced,
+you can load those classes using the classmap:
 
-	$classmap = [
-		'Markdown' => APPPATH .'third_party/markdown.php'
-	];
+.. literalinclude:: autoloader/003.php
 
 The key of each row is the name of the class that you want to locate. The value is the path to locate it at.
 
-Legacy Support
-==============
-
-If neither of the above methods finds the class, and the class is not namespaced, the autoloader will look in the
-**/app/Libraries** and **/app/Models** directories to attempt to locate the files. This provides
-a measure to help ease the transition from previous versions.
-
-There are no configuration options for legacy support.
-
+****************
 Composer Support
-================
+****************
 
-Composer support is automatically initialized by default. By default, it looks for Composer's autoload file at
-ROOTPATH.'vendor/autoload.php'. If you need to change the location of that file for any reason, you can modify
-the value defined in ``Config\Constants.php``.
+Composer support is automatically initialized by default.
 
-.. note:: If the same namespace is defined in both CodeIgniter and Composer, CodeIgniter's autoloader will be
+By default, it looks for Composer's autoload file at
+``ROOTPATH . 'vendor/autoload.php'``. If you need to change the location of that file for any reason, you can modify
+the value defined in **app/Config/Constants.php**.
+
+Priority of Autoloaders
+=======================
+
+If the same namespace is defined in both CodeIgniter and Composer, Composer's
+autoloader will be the first one to get a chance to locate the file.
+
+.. note:: Prior to v4.5.0, if the same namespace was defined in both CodeIgniter and Composer, CodeIgniter's autoloader was
     the first one to get a chance to locate the file.
+
+.. _file-locator-caching:
+
+*******************
+FileLocator Caching
+*******************
+
+.. versionadded:: 4.5.0
+
+**FileLocator** is responsible for finding files or getting a classname from a file,
+which cannot be achieved with PHP autoloading.
+
+To improve its performance, FileLocator Caching has been implemented.
+
+How It Works
+============
+
+- Save the all found data by FileLocator into a cache file when destructing,
+  if the cache data is updated.
+- Restore cached data when instantiating if cached data is available.
+
+The cached data are used permanently.
+
+How to Delete Cached Data
+=========================
+
+Once stored, the cached data never expire.
+
+So if you add or remove files or change existing file paths, or namespaces, old
+cached data will be returned and your app may not work properly.
+
+In that case, you must manually delete the cache file. If you add a CodeIgniter
+package via Composer, you also need to delete the cache file.
+
+You can use the ``spark cache:clear`` command:
+
+.. code-block:: console
+
+    php spark cache:clear
+
+Or simply delete the **writable/cache/FileLocatorCache** file.
+
+.. note::
+    The ``spark optimize`` command clears the cache.
+
+How to Enable FileLocator Caching
+=================================
+
+Set the following property to ``true`` in **app/Config/Optimize.php**::
+
+    public bool $locatorCacheEnabled = true;
+
+Or you can enable it with the ``spark optimize`` command.
+
+.. note::
+    This property cannot be overridden by
+    :ref:`environment variables <configuration-classes-and-environment-variables>`.

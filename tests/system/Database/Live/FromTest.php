@@ -1,41 +1,52 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+declare(strict_types=1);
 
 /**
- * @group DatabaseLive
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
-class FromTest extends CIDatabaseTestCase
+
+namespace CodeIgniter\Database\Live;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
+use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Database\Seeds\CITestSeeder;
+
+/**
+ * @internal
+ */
+#[Group('DatabaseLive')]
+final class FromTest extends CIUnitTestCase
 {
-	protected $refresh = true;
+    use DatabaseTestTrait;
 
-	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $refresh = true;
+    protected $seed    = CITestSeeder::class;
 
-	public function testFromCanAddTables()
-	{
-		$result = $this->db->table('job')->from('misc')->get()->getResult();
+    public function testFromCanAddTables(): void
+    {
+        $result = $this->db->table('job')->from('misc')->get()->getResult();
 
-		$this->assertCount(12, $result);
-	}
+        $this->assertCount(12, $result);
+    }
 
-	//--------------------------------------------------------------------
+    public function testFromCanOverride(): void
+    {
+        $result = $this->db->table('job')->from('misc', true)->get()->getResult();
 
-	public function testFromCanOverride()
-	{
-		$result = $this->db->table('job')->from('misc', true)->get()->getResult();
+        $this->assertCount(3, $result);
+    }
 
-		$this->assertCount(3, $result);
-	}
+    public function testFromWithWhere(): void
+    {
+        $result = $this->db->table('job')->from('user')->where('user.id', 1)->get()->getResult();
 
-	//--------------------------------------------------------------------
-
-	public function testFromWithWhere()
-	{
-		$result = $this->db->table('job')->from('user')->where('user.id', 1)->get()->getResult();
-
-		$this->assertCount(4, $result);
-	}
-
-	//--------------------------------------------------------------------
-
+        $this->assertCount(4, $result);
+    }
 }

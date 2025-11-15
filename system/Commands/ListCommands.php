@@ -1,39 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * CodeIgniter
+ * This file is part of CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Commands;
@@ -46,151 +21,126 @@ use CodeIgniter\CLI\CLI;
  *
  * Lists the basic usage information for the spark script,
  * and provides a way to list help for other commands.
- *
- * @package CodeIgniter\Commands
  */
 class ListCommands extends BaseCommand
 {
+    /**
+     * The group the command is lumped under
+     * when listing commands.
+     *
+     * @var string
+     */
+    protected $group = 'CodeIgniter';
 
-	/**
-	 * The group the command is lumped under
-	 * when listing commands.
-	 *
-	 * @var string
-	 */
-	protected $group = 'CodeIgniter';
+    /**
+     * The Command's name
+     *
+     * @var string
+     */
+    protected $name = 'list';
 
-	/**
-	 * The Command's name
-	 *
-	 * @var string
-	 */
-	protected $name = 'list';
+    /**
+     * the Command's short description
+     *
+     * @var string
+     */
+    protected $description = 'Lists the available commands.';
 
-	/**
-	 * the Command's short description
-	 *
-	 * @var string
-	 */
-	protected $description = 'Lists the available commands.';
+    /**
+     * the Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'list';
 
-	/**
-	 * the Command's usage
-	 *
-	 * @var string
-	 */
-	protected $usage = 'list';
+    /**
+     * the Command's Arguments
+     *
+     * @var array<string, string>
+     */
+    protected $arguments = [];
 
-	/**
-	 * the Command's Arguments
-	 *
-	 * @var array
-	 */
-	protected $arguments = [];
+    /**
+     * the Command's Options
+     *
+     * @var array<string, string>
+     */
+    protected $options = [
+        '--simple' => 'Prints a list of the commands with no other info',
+    ];
 
-	/**
-	 * the Command's Options
-	 *
-	 * @var array
-	 */
-	protected $options = [];
+    /**
+     * Displays the help for the spark cli script itself.
+     *
+     * @return int
+     */
+    public function run(array $params)
+    {
+        $commands = $this->commands->getCommands();
+        ksort($commands);
 
-	/**
-	 * The length of the longest command name.
-	 * Used during display in columns.
-	 *
-	 * @var integer
-	 */
-	protected $maxFirstLength = 0;
+        // Check for 'simple' format
+        return array_key_exists('simple', $params) || CLI::getOption('simple') === true
+            ? $this->listSimple($commands)
+            : $this->listFull($commands);
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * Lists the commands with accompanying info.
+     *
+     * @return int
+     */
+    protected function listFull(array $commands)
+    {
+        // Sort into buckets by group
+        $groups = [];
 
-	/**
-	 * Displays the help for the spark cli script itself.
-	 *
-	 * @param array $params
-	 */
-	public function run(array $params)
-	{
-		$commands = $this->commands->getCommands();
+        foreach ($commands as $title => $command) {
+            if (! isset($groups[$command['group']])) {
+                $groups[$command['group']] = [];
+            }
 
-		$this->describeCommands($commands);
+            $groups[$command['group']][$title] = $command;
+        }
 
-		CLI::newLine();
-	}
+        $length = max(array_map(strlen(...), array_keys($commands)));
 
-	//--------------------------------------------------------------------
+        ksort($groups);
 
-	/**
-	 * Displays the commands on the CLI.
-	 *
-	 * @param array $commands
-	 */
-	protected function describeCommands(array $commands = [])
-	{
-		ksort($commands);
+        // Display it all...
+        foreach ($groups as $group => $commands) {
+            CLI::write($group, 'yellow');
 
-		// Sort into buckets by group
-		$sorted         = [];
-		$maxTitleLength = 0;
+            foreach ($commands as $name => $command) {
+                $name   = $this->setPad($name, $length, 2, 2);
+                $output = CLI::color($name, 'green');
 
-		foreach ($commands as $title => $command)
-		{
-			if (! isset($sorted[$command['group']]))
-			{
-				$sorted[$command['group']] = [];
-			}
+                if (isset($command['description'])) {
+                    $output .= CLI::wrap($command['description'], 125, strlen($name));
+                }
 
-			$sorted[$command['group']][$title] = $command;
+                CLI::write($output);
+            }
 
-			$maxTitleLength = max($maxTitleLength, strlen($title));
-		}
+            if ($group !== array_key_last($groups)) {
+                CLI::newLine();
+            }
+        }
 
-		ksort($sorted);
+        return EXIT_SUCCESS;
+    }
 
-		// Display it all...
-		foreach ($sorted as $group => $items)
-		{
-			CLI::newLine();
-			CLI::write($group);
+    /**
+     * Lists the commands only.
+     *
+     * @return int
+     */
+    protected function listSimple(array $commands)
+    {
+        foreach (array_keys($commands) as $title) {
+            CLI::write($title);
+        }
 
-			foreach ($items as $title => $item)
-			{
-				$title = $this->padTitle($title, $maxTitleLength, 2, 2);
-
-				$out = CLI::color($title, 'yellow');
-
-				if (isset($item['description']))
-				{
-					$out .= CLI::wrap($item['description'], 125, strlen($title));
-				}
-
-				CLI::write($out);
-			}
-		}
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Pads our string out so that all titles are the same length to nicely line up descriptions.
-	 *
-	 * @param string  $item
-	 * @param integer $max
-	 * @param integer $extra  // How many extra spaces to add at the end
-	 * @param integer $indent
-	 *
-	 * @return string
-	 */
-	protected function padTitle(string $item, int $max, int $extra = 2, int $indent = 0): string
-	{
-		$max += $extra + $indent;
-
-		$item = str_repeat(' ', $indent) . $item;
-		$item = str_pad($item, $max);
-
-		return $item;
-	}
-
-	//--------------------------------------------------------------------
+        return EXIT_SUCCESS;
+    }
 }

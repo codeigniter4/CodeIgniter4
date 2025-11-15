@@ -1,0 +1,3 @@
+<?php
+
+$message->removeHeader('Host');

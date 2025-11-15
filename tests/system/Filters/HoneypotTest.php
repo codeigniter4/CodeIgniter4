@@ -1,119 +1,134 @@
 <?php
-namespace CodeIgniter\Filters;
 
-use Config\Filters as FilterConfig;
-use CodeIgniter\Config\Services;
-use CodeIgniter\Filters\Exceptions\FilterException;
-use CodeIgniter\Honeypot\Exceptions\HoneypotException;
-use CodeIgniter\HTTP\ResponseInterface;
+declare(strict_types=1);
 
 /**
- * @backupGlobals enabled
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
-class HoneypotTest extends \CIUnitTestCase
+
+namespace CodeIgniter\Filters;
+
+use CodeIgniter\Honeypot\Exceptions\HoneypotException;
+use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\Response;
+use CodeIgniter\Test\CIUnitTestCase;
+use Config\Honeypot;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
+
+/**
+ * @internal
+ */
+#[BackupGlobals(true)]
+#[Group('SeparateProcess')]
+final class HoneypotTest extends CIUnitTestCase
 {
+    private \Config\Filters $config;
+    private Honeypot $honey;
 
-	protected $config;
-	protected $honey;
-	protected $request;
-	protected $response;
+    /**
+     * @var CLIRequest|IncomingRequest
+     */
+    private RequestInterface $request;
 
-	protected function setUp()
-	{
-		parent::setUp();
-		$this->config = new \Config\Filters();
-		$this->honey  = new \Config\Honeypot();
+    private ?Response $response = null;
 
-		unset($_POST[$this->honey->name]);
-		$_SERVER['REQUEST_METHOD'] = 'POST';
-		$_POST[$this->honey->name] = 'hey';
-	}
+    #[WithoutErrorHandler]
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->config = new \Config\Filters();
+        $this->honey  = new Honeypot();
 
-	//--------------------------------------------------------------------
-	public function testBeforeTriggered()
-	{
-		$this->config->globals = [
-			'before' => ['honeypot'],
-			'after'  => [],
-		];
+        unset($_POST[$this->honey->name]);
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_POST[$this->honey->name] = 'hey';
+    }
 
-		$this->request  = Services::request(null, false);
-		$this->response = Services::response();
+    public function testBeforeTriggered(): void
+    {
+        $this->config->globals = [
+            'before' => ['honeypot'],
+            'after'  => [],
+        ];
 
-		$filters = new Filters($this->config, $this->request, $this->response);
-		$uri     = 'admin/foo/bar';
+        $this->request  = service('request', null, false);
+        $this->response = service('response');
 
-		$this->expectException(HoneypotException::class);
-		$request = $filters->run($uri, 'before');
-	}
+        $filters = new Filters($this->config, $this->request, $this->response);
+        $uri     = 'admin/foo/bar';
 
-	//--------------------------------------------------------------------
-	public function testBeforeClean()
-	{
-		$this->config->globals = [
-			'before' => ['honeypot'],
-			'after'  => [],
-		];
+        $this->expectException(HoneypotException::class);
+        $filters->run($uri, 'before');
+    }
 
-		unset($_POST[$this->honey->name]);
-		$this->request  = Services::request(null, false);
-		$this->response = Services::response();
+    public function testBeforeClean(): void
+    {
+        $this->config->globals = [
+            'before' => ['honeypot'],
+            'after'  => [],
+        ];
 
-		$expected = $this->request;
+        unset($_POST[$this->honey->name]);
+        $this->request  = service('request', null, false);
+        $this->response = service('response');
 
-		$filters = new Filters($this->config, $this->request, $this->response);
-		$uri     = 'admin/foo/bar';
+        $expected = $this->request;
 
-		$request = $filters->run($uri, 'before');
-		$this->assertEquals($expected, $request);
-	}
+        $filters = new Filters($this->config, $this->request, $this->response);
+        $uri     = 'admin/foo/bar';
 
-	//--------------------------------------------------------------------
+        $request = $filters->run($uri, 'before');
+        $this->assertSame($expected, $request);
+    }
 
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
-	public function testAfter()
-	{
-		$this->config->globals = [
-			'before' => [],
-			'after'  => ['honeypot'],
-		];
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testAfter(): void
+    {
+        $this->config->globals = [
+            'before' => [],
+            'after'  => ['honeypot'],
+        ];
 
-		$this->request  = Services::request(null, false);
-		$this->response = Services::response();
+        $this->request  = service('request', null, false);
+        $this->response = service('response');
 
-		$filters = new Filters($this->config, $this->request, $this->response);
-		$uri     = 'admin/foo/bar';
+        $filters = new Filters($this->config, $this->request, $this->response);
+        $uri     = 'admin/foo/bar';
 
-		$this->response->setBody('<form></form>');
-		$this->response = $filters->run($uri, 'after');
-		$this->assertContains($this->honey->name, $this->response->getBody());
-	}
+        $this->response->setBody('<form></form>');
+        $this->response = $filters->run($uri, 'after');
+        $this->assertStringContainsString($this->honey->name, (string) $this->response->getBody());
+    }
 
-	//--------------------------------------------------------------------
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testAfterNotApplicable(): void
+    {
+        $this->config->globals = [
+            'before' => [],
+            'after'  => ['honeypot'],
+        ];
 
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
-	public function testAfterNotApplicable()
-	{
-		$this->config->globals = [
-			'before' => [],
-			'after'  => ['honeypot'],
-		];
+        $this->request  = service('request', null, false);
+        $this->response = service('response');
 
-		$this->request  = Services::request(null, false);
-		$this->response = Services::response();
+        $filters = new Filters($this->config, $this->request, $this->response);
+        $uri     = 'admin/foo/bar';
 
-		$filters = new Filters($this->config, $this->request, $this->response);
-		$uri     = 'admin/foo/bar';
-
-		$this->response->setBody('<div></div>');
-		$this->response = $filters->run($uri, 'after');
-		$this->assertNotContains($this->honey->name, $this->response->getBody());
-	}
-
+        $this->response->setBody('<div></div>');
+        $this->response = $filters->run($uri, 'after');
+        $this->assertStringNotContainsString($this->honey->name, (string) $this->response->getBody());
+    }
 }

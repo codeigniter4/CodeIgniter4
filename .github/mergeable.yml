@@ -1,0 +1,69 @@
+# https://mergeable.readthedocs.io/en/latest/configuration.html
+
+version: 2
+mergeable:
+  - when: issues.opened, issues.reopened
+    validate:
+      - do: or
+        validate:
+          - do: and
+            validate:
+              - do: description
+                must_include:
+                  regex: '### PHP Version'
+              - do: description
+                must_include:
+                  regex: '### CodeIgniter4 Version'
+          - do: author
+            must_include:
+              regex: ^kenjis|lonnieezell|MGatner|michalsn|paulbalandan|samsonasik|ddevsr$
+    fail:
+      - do: comment
+        payload:
+          body: |
+            Hi there, @@author! :wave:
+
+            It looks like you opened an issue without following the bug report template:
+
+            * Bug report ([open an issue](https://github.com/codeigniter4/CodeIgniter4/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml&title=Bug%3A+))
+            * For feature request or support question, please use the [forums](https://forum.codeigniter.com/forum-30.html).
+
+            The current issue will be closed. This is a precaution to save maintainers' time, I hope you'll understand.
+
+            Sincerely, the mergeable bot 🤖
+      - do: close
+
+  - when: pull_request.opened, pull_request.ready_for_review
+    filter:
+      - do: payload
+        pull_request:
+          author_association:
+            must_include:
+              regex: ^NONE|FIRST_TIME_CONTRIBUTOR|FIRST_TIMER$
+    validate: []
+    pass:
+      - do: comment
+        payload:
+          body: |
+            Hi there, @@author! :wave:
+
+            Thank you for sending this PR!
+
+            We expect the following in all Pull Requests (PRs).
+            - PRs must be sent to the [appropriate branch](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#branching)
+            - All git commits must be [GPG-signed](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#signing)
+            - Must follow our [style guide](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#php-style)
+            - Be [commented](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#comments) in the PHP source file
+            - Be documented in the [user guide](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#user-guide)
+            - Be [unit tested](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#unit-testing)
+            - Pass all checks in GitHub Actions
+
+            > [!IMPORTANT]
+            > We expect all code changes or bug-fixes to be accompanied by one or more tests added to our test suite to prove the code works.
+
+            If pull requests do not comply with the above, they will likely be closed. Since we are a team of volunteers, we don't have any more time to work
+            on the framework than you do. Please make it as painless for your contributions to be included as possible.
+
+            See https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md
+
+            Sincerely, the mergeable bot 🤖

@@ -1,31 +1,45 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+declare(strict_types=1);
 
 /**
- * @group DatabaseLive
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
-class EmptyTest extends CIDatabaseTestCase
+
+namespace CodeIgniter\Database\Live;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
+use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Database\Seeds\CITestSeeder;
+
+/**
+ * @internal
+ */
+#[Group('DatabaseLive')]
+final class EmptyTest extends CIUnitTestCase
 {
-	protected $refresh = true;
+    use DatabaseTestTrait;
 
-	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $refresh = true;
+    protected $seed    = CITestSeeder::class;
 
-	public function testEmpty()
-	{
-		$this->db->table('misc')->emptyTable();
+    public function testEmpty(): void
+    {
+        $this->db->table('misc')->emptyTable();
 
-		$this->assertEquals(0, $this->db->table('misc')->countAll());
-	}
+        $this->assertSame(0, $this->db->table('misc')->countAll());
+    }
 
-	//--------------------------------------------------------------------
+    public function testTruncate(): void
+    {
+        $this->db->table('misc')->truncate();
 
-	public function testTruncate()
-	{
-		$this->db->table('misc')->truncate();
-
-		$this->assertEquals(0, $this->db->table('misc')->countAll());
-	}
-
-	//--------------------------------------------------------------------
+        $this->assertSame(0, $this->db->table('misc')->countAll());
+    }
 }

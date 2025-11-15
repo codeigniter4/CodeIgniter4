@@ -12,8 +12,11 @@ a server responding to the client that called it.
 Working with the Response
 =========================
 
-A Response class is instantiated for you and passed into your controllers. It can be accessed through
-``$this->response``. Many times you will not need to touch the class directly, since CodeIgniter takes care of
+A Response class is instantiated for you and passed into your controllers. It can
+be accessed through ``$this->response``. It is the same instance that
+``Services::response()`` returns. We call it the global response instance.
+
+Many times you will not need to touch the class directly, since CodeIgniter takes care of
 sending the headers and the body for you. This is great if the page successfully created the content it was asked to.
 When things go wrong, or you need to send very specific status codes back, or even take advantage of the
 powerful HTTP caching, it's there for you.
@@ -23,54 +26,168 @@ Setting the Output
 
 When you need to set the output of the script directly, and not rely on CodeIgniter to automatically get it, you
 do it manually with the ``setBody`` method. This is usually used in conjunction with setting the status code of
-the response::
+the response:
 
-	$this->response->setStatusCode(404)
-	               ->setBody($body);
+.. literalinclude:: response/001.php
 
 The reason phrase ('OK', 'Created', 'Moved Permanently') will be automatically added, but you can add custom reasons
-as the second parameter of the ``setStatusCode()`` method::
+as the second parameter of the ``setStatusCode()`` method:
 
-	$this->response->setStatusCode(404, 'Nope. Not here.');
+.. literalinclude:: response/002.php
 
 You can set format an array into either JSON or XML and set the content type header to the appropriate mime with the
-``setJSON`` and ``setXML`` methods. Typically, you will send an array of data to be converted::
+``setJSON()`` and ``setXML()`` methods. Typically, you will send an array of data to be converted:
 
-	$data = [
-		'success' => true,
-		'id' => 123
-	];
-
-	return $this->response->setJSON($data);
-		or
-	return $this->response->setXML($data);
+.. literalinclude:: response/003.php
 
 Setting Headers
 ---------------
 
+setHeader()
+^^^^^^^^^^^
+
 Often, you will need to set headers to be set for the response. The Response class makes this very simple to do,
-with the ``setHeader()`` method. The first parameter is the name of the header. The second parameter is the value,
+with the ``setHeader()`` method.
+
+The first parameter is the name of the header. The second parameter is the value,
 which can be either a string or an array of values that will be combined correctly when sent to the client.
+
+.. literalinclude:: response/004.php
+
 Using these functions instead of using the native PHP functions allows you to ensure that no headers are sent
 prematurely, causing errors, and makes testing possible.
-::
 
-	$response->setHeader('Location', 'http://example.com')
-	         ->setHeader('WWW-Authenticate', 'Negotiate');
+.. important:: Since v4.6.0, if you set a header using PHP's native ``header()``
+    function and then use the ``Response`` class to set the same header, the
+    previous one will be overwritten.
+
+.. note:: This method just sets headers to the response instance. So, if you create
+    and return another response instance (e.g., if you call :php:func:`redirect()`),
+    the headers set here will not be sent automatically.
+
+appendHeader()
+^^^^^^^^^^^^^^
 
 If the header exists and can have more than one value, you may use the ``appendHeader()`` and ``prependHeader()``
 methods to add the value to the end or beginning of the values list, respectively. The first parameter is the name
 of the header, while the second is the value to append or prepend.
-::
 
-	$response->setHeader('Cache-Control', 'no-cache')
-	         ->appendHeader('Cache-Control', 'must-revalidate');
+.. literalinclude:: response/005.php
+
+removeHeader()
+^^^^^^^^^^^^^^
 
 Headers can be removed from the response with the ``removeHeader()`` method, which takes the header name as the only
 parameter. This is not case-sensitive.
-::
 
-	$response->removeHeader('Location');
+.. literalinclude:: response/006.php
+
+.. _response-redirect:
+
+Redirect
+========
+
+If you want to create a redirect, use the :php:func:`redirect()` function.
+
+It returns a ``RedirectResponse`` instance. It is a different instance from the
+global response instance that ``Services::response()`` returns.
+
+.. warning:: If you set Cookies or Response Headers before you call ``redirect()``,
+    they are set to the global response instance, and they are not automatically
+    copied to the ``RedirectResponse`` instance. To send them, you need to call
+    the ``withCookies()`` or ``withHeaders()`` method manually.
+
+.. important:: If you want to redirect, an instance of ``RedirectResponse`` must
+    be returned in a method of the :doc:`Controller <../incoming/controllers>` or
+    the :doc:`Controller Filter <../incoming/filters>`. Note that the ``__construct()``
+    or the ``initController()`` method cannot return any value.
+    If you forget to return ``RedirectResponse``, no redirection will occur.
+
+Redirect to a URI path
+----------------------
+
+When you want to pass a URI path (relative to baseURL), use ``redirect()->to()``:
+
+.. literalinclude:: ./response/028.php
+    :lines: 2-
+
+.. note:: If there is a fragment in your URL that you want to remove, you can
+    use the refresh parameter in the method.
+    Like ``return redirect()->to('admin/home', null, 'refresh');``.
+
+Redirect to a Defined Route
+---------------------------
+
+When you want to pass a :ref:`route name <using-named-routes>` or Controller::method
+for :ref:`reverse routing <reverse-routing>`, use ``redirect()->route()``:
+
+.. literalinclude:: ./response/029.php
+    :lines: 2-
+
+When passing an argument into the function, it is treated as a route name or
+Controller::method for reverse routing, not a relative/full URI,
+treating it the same as using ``redirect()->route()``:
+
+.. literalinclude:: ./response/030.php
+    :lines: 2-
+
+Redirect Back
+-------------
+
+When you want to redirect back, use ``redirect()->back()``:
+
+.. literalinclude:: ./response/031.php
+    :lines: 2-
+
+.. note:: ``redirect()->back()`` is not the same as browser "back" button.
+    It takes a visitor to "the last page viewed during the Session" when the Session is available.
+    If the Session hasn't been loaded, or is otherwise unavailable, then a sanitized version of HTTP_REFERER will be used.
+
+Redirect with Cookies
+---------------------
+
+If you set Cookies before you call ``redirect()``, they are set to the global
+response instance, and they are not automatically copied to the ``RedirectResponse``
+instance.
+
+To send the Cookies, you need to call the ``withCookies()`` method manually.
+
+.. literalinclude:: ./response/034.php
+    :lines: 2-
+
+Redirect with Headers
+---------------------
+
+If you set Response Headers before you call ``redirect()``, they are set to the
+global response instance, and they are not automatically copied to the
+``RedirectResponse`` instance.
+
+To send the Headers, you need to call the ``withHeaders()`` method manually.
+
+.. literalinclude:: ./response/035.php
+    :lines: 2-
+
+.. _response-redirect-status-code:
+
+Redirect Status Code
+--------------------
+
+The default HTTP status code for GET requests is 302. However, when using HTTP/1.1
+or later, 303 is used for POST/PUT/DELETE requests and 307 for all other requests.
+
+You can specify the status code:
+
+.. literalinclude:: ./response/032.php
+    :lines: 2-
+
+.. note:: Due to a bug, in v4.3.3 or previous versions, the status code of the
+    actual redirect response might be changed even if a status code was specified.
+    See :ref:`ChangeLog v4.3.4 <v434-redirect-status-code>`.
+
+If you don't know HTTP status code for redirection, it is recommended to read
+`Redirections in HTTP <https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections>`_.
+
+.. _force-file-download:
 
 Force File Download
 ===================
@@ -81,179 +198,68 @@ to your computer. This sets the appropriate headers to make it happen.
 The first parameter is the **name you want the downloaded file to be named**, the second parameter is the
 file data.
 
-If you set the second parameter to NULL and ``$filename`` is an existing, readable
+If you set the second parameter to null and ``$filename`` is an existing, readable
 file path, then its content will be read instead.
 
-If you set the third parameter to boolean TRUE, then the actual file MIME type
+If you set the third parameter to boolean true, then the actual file MIME type
 (based on the filename extension) will be sent, so that if your browser has a
 handler for that type - it can use it.
 
-Example::
+Example:
 
-	$data = 'Here is some text!';
-	$name = 'mytext.txt';
-	return $response->download($name, $data);
+.. literalinclude:: response/007.php
 
 If you want to download an existing file from your server you'll need to
-do the following::
+pass ``null`` explicitly for the second parameter:
 
-	// Contents of photo.jpg will be automatically read
-	return $response->download('/path/to/photo.jpg', NULL);
+.. literalinclude:: response/008.php
+
+Use the optional ``setFileName()`` method to change the filename as it is sent to the client's browser:
+
+.. literalinclude:: response/009.php
 
 .. note:: The response object MUST be returned for the download to be sent to the client. This allows the response
     to be passed through all **after** filters before being sent to the client.
+
+.. _open-file-in-browser:
+
+Open File in Browser
+--------------------
+
+Some browsers can display files such as PDF. To tell the browser to display the file instead of saving it, call the
+``DownloadResponse::inline()`` method.
+
+.. literalinclude:: response/033.php
 
 HTTP Caching
 ============
 
 Built into the HTTP specification are tools help the client (often the web browser) cache the results. Used correctly,
-this can lend a huge performance boost to your application because it will tell the client that they don't need
-to contact the getServer at all since nothing has changed. And you can't get faster than that.
+this can lead to a huge performance boost to your application because it will tell the client that they don't need
+to contact the server at all since nothing has changed. And you can't get faster than that.
 
-This are handled through the ``Cache-Control`` and ``ETag`` headers. This guide is not the proper place for a thorough
+This is handled through the ``Cache-Control`` and ``ETag`` headers. This guide is not the proper place for a thorough
 introduction to all of the cache headers power, but you can get a good understanding over at
-`Google Developers <https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching>`_
-and the `Mobify Blog <https://www.mobify.com/blog/beginners-guide-to-http-cache-headers/>`_.
+`Google Developers <https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching>`_.
 
 By default, all response objects sent through CodeIgniter have HTTP caching turned off. The options and exact
 circumstances are too varied for us to be able to create a good default other than turning it off. It's simple
-to set the Cache values to what you need, though, through the ``setCache()`` method::
+to set the Cache values to what you need, through the ``setCache()`` method:
 
-	$options = [
-		'max-age'  => 300,
-		's-maxage' => 900
-		'etag'     => 'abcde',
-	];
-	$this->response->setCache($options);
+.. literalinclude:: response/010.php
 
 The ``$options`` array simply takes an array of key/value pairs that are, with a couple of exceptions, assigned
 to the ``Cache-Control`` header. You are free to set all of the options exactly as you need for your specific
 situation. While most of the options are applied to the ``Cache-Control`` header, it intelligently handles
 the ``etag`` and ``last-modified`` options to their appropriate header.
 
-Content Security Policy
-=======================
-
-One of the best protections you have against XSS attacks is to implement a Content Security Policy on the site.
-This forces you to whitelist every single source of content that is pulled in from your site's HTML,
-including images, stylesheets, javascript files, etc. The browser will refuse content from sources that don't meet
-the whitelist. This whitelist is created within the response's ``Content-Security-Policy`` header and has many
-different ways it can be configured.
-
-This sounds complex, and on some sites, can definitely be challenging. For many simple sites, though, where all content
-is served by the same domain (http://example.com), it is very simple to integrate.
-
-As this is a complex subject, this user guide will not go over all of the details. For more information, you should
-visit the following sites:
-
-* `Content Security Policy main site <http://content-security-policy.com/>`_
-* `W3C Specification <https://www.w3.org/TR/CSP>`_
-* `Introduction at HTML5Rocks <http://www.html5rocks.com/en/tutorials/security/content-security-policy/>`_
-* `Article at SitePoint <https://www.sitepoint.com/improving-web-security-with-the-content-security-policy/>`_
-
-Turning CSP On
---------------
-
-By default, support for this is off. To enable support in your application, edit the ``CSPEnabled`` value in
-**app/Config/App.php**::
-
-	public $CSPEnabled = true;
-
-When enabled, the response object will contain an instance of ``CodeIgniter\HTTP\ContentSecurityPolicy``. The
-values set in **app/Config/ContentSecurityPolicy.php** are applied to that instance, and if no changes are
-needed during runtime, then the correctly formatted header is sent and you're all done.
-
-With CSP enabled, two header lines are added to the HTTP response: a Content-Security-Policy header, with
-policies identifying content types or origins that are explicitly allowed for different
-contexts, and a Content-Security-Policy-Report-Only header, which identifies content types 
-or origins that will be allowed but which will also be reported to the destination
-of your choice.
-
-Our implementation provides for a default treatment, changeable through the ``reportOnly()`` method.
-When an additional entry is added to a CSP directive, as shown below, it will be added
-to the CSP header appropriate for blocking or preventing. That can be overridden on a per
-call basis, by providing an optional second parameter to the adding method call.
-
-Runtime Configuration
----------------------
-
-If your application needs to make changes at run-time, you can access the instance at ``$response->CSP``. The
-class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
-Examples are shown below, with different combinations of parameters, though all accept either a directive
-name or anarray of them.::
-
-        // specify the default directive treatment 
-	$response->CSP->reportOnly(false); 
-        
-        // specify the origin to use if none provided for a directive
-	$response->CSP->setDefaultSrc('cdn.example.com'); 
-        // specify the URL that "report-only" reports get sent to
-	$response->CSP->setReportURI('http://example.com/csp/reports');
-        // specify that HTTP requests be upgraded to HTTPS
-	$response->CSP->upgradeInsecureRequests(true);
-
-        // add types or origins to CSP directives
-        // assuming that the default treatment is to block rather than just report
-	$response->CSP->addBaseURI('example.com', true); // report only
-	$response->CSP->addChildSrc('https://youtube.com'); // blocked
-	$response->CSP->addConnectSrc('https://*.facebook.com', false); // blocked
-	$response->CSP->addFontSrc('fonts.example.com');
-	$response->CSP->addFormAction('self');
-	$response->CSP->addFrameAncestor('none', true); // report this one
-	$response->CSP->addImageSrc('cdn.example.com');
-	$response->CSP->addMediaSrc('cdn.example.com');
-	$response->CSP->addManifestSrc('cdn.example.com');
-	$response->CSP->addObjectSrc('cdn.example.com', false); // reject from here
-	$response->CSP->addPluginType('application/pdf', false); // reject this media type
-	$response->CSP->addScriptSrc('scripts.example.com', true); // allow but report requests from here
-	$response->CSP->addStyleSrc('css.example.com');
-	$response->CSP->addSandbox(['allow-forms', 'allow-scripts']);
-
-
-The first parameter to each of the "add" methods is an appropriate string value,
-or an array of them.
-
-The ``reportOnly`` method allows you to specify the default reporting treatment
-for subsequent sources, unless over-ridden. For instance, you could specify
-that youtube.com was allowed, and then provide several allowed but reported sources::
-
-    $response->addChildSrc('https://youtube.com'); // allowed
-    $response->reportOnly(true);
-    $response->addChildSrc('https://metube.com'); // allowed but reported
-    $response->addChildSrc('https://ourtube.com',false); // allowed
-
-Inline Content
---------------
-
-It is possible to set a website to not protect even inline scripts and styles on its own pages, since this might have
-been the result of user-generated content. To protect against this, CSP allows you to specify a nonce within the
-``<style>`` and ``<script>`` tags, and to add those values to the response's header. This is a pain to handle in real
-life, and is most secure when generated on the fly. To make this simple, you can include a ``{csp-style-nonce}`` or
-``{csp-script-nonce}`` placeholder in the tag and it will be handled for you automatically::
-
-	// Original
-	<script {csp-script-nonce}>
-	    console.log("Script won't run as it doesn't contain a nonce attribute");
-	</script>
-
-	// Becomes
-	<script nonce="Eskdikejidojdk978Ad8jf">
-	    console.log("Script won't run as it doesn't contain a nonce attribute");
-	</script>
-
-	// OR
-	<style {csp-style-nonce}>
-		. . .
-	</style>
-
-***************
 Class Reference
-***************
+===============
 
 .. note:: In addition to the methods listed here, this class inherits the methods from the
-	:doc:`Message Class </incoming/message>`.
+    :doc:`Message Class </incoming/message>`.
 
-The methods provided by the parent class that are available are:
+The methods inherited from the Message Class are:
 
 * :meth:`CodeIgniter\\HTTP\\Message::body`
 * :meth:`CodeIgniter\\HTTP\\Message::setBody`
@@ -272,253 +278,248 @@ The methods provided by the parent class that are available are:
 * :meth:`CodeIgniter\\HTTP\\Message::negotiateLanguage`
 * :meth:`CodeIgniter\\HTTP\\Message::negotiateLanguage`
 
-.. php:class:: CodeIgniter\\HTTP\\Response
+.. php:namespace:: CodeIgniter\HTTP
 
-	.. php:method:: getStatusCode()
+.. php:class:: Response
 
-		:returns: The current HTTP status code for this response
-		:rtype: int
+    .. php:method:: getStatusCode()
 
-		Returns the currently status code for this response. If no status code has been set, a BadMethodCallException
-		will be thrown::
+        :returns: The current HTTP status code for this response
+        :rtype: int
 
-			echo $response->getStatusCode();
+        Returns the currently status code for this response. If no status code has been set, a BadMethodCallException
+        will be thrown:
 
-	.. php:method:: setStatusCode($code[, $reason=''])
+        .. literalinclude:: response/014.php
 
-		:param int $code: The HTTP status code
-		:param string $reason: An optional reason phrase.
-		:returns: The current Response instance
-		:rtype: CodeIgniter\\HTTP\\Response
+    .. php:method:: setStatusCode($code[, $reason=''])
 
-		Sets the HTTP status code that should be sent with this response::
+        :param int $code: The HTTP status code
+        :param string $reason: An optional reason phrase.
+        :returns: The current Response instance
+        :rtype: ``CodeIgniter\HTTP\Response``
 
-		    $response->setStatusCode(404);
+        Sets the HTTP status code that should be sent with this response:
 
-		The reason phrase will be automatically generated based upon the official lists. If you need to set your own
-		for a custom status code, you can pass the reason phrase as the second parameter::
+        .. literalinclude:: response/015.php
 
-			$response->setStatusCode(230, "Tardis initiated");
+        The reason phrase will be automatically generated based upon the official lists. If you need to set your own
+        for a custom status code, you can pass the reason phrase as the second parameter:
 
-	.. php:method:: getReason()
+        .. literalinclude:: response/016.php
 
-		:returns: The current reason phrase.
-		:rtype: string
+    .. php:method:: getReasonPhrase()
 
-		Returns the current status code for this response. If not status has been set, will return an empty string::
+        :returns: The current reason phrase.
+        :rtype: string
 
-			echo $response->getReason();
+        Returns the current status code for this response. If not status has been set, will return an empty string:
 
-	.. php:method:: setDate($date)
+        .. literalinclude:: response/017.php
 
-		:param DateTime $date: A DateTime instance with the time to set for this response.
-		:returns: The current response instance.
-		:rtype: CodeIgniter\HTTP\Response
+    .. php:method:: setDate($date)
 
-		Sets the date used for this response. The ``$date`` argument must be an instance of ``DateTime``::
+        :param DateTime $date: A DateTime instance with the time to set for this response.
+        :returns: The current response instance.
+        :rtype: ``CodeIgniter\HTTP\Response``
 
-			$date = DateTime::createFromFormat('j-M-Y', '15-Feb-2016');
-			$response->setDate($date);
+        Sets the date used for this response. The ``$date`` argument must be an instance of ``DateTime``.
 
-	.. php:method:: setContentType($mime[, $charset='UTF-8'])
+    .. php:method:: setContentType($mime[, $charset='UTF-8'])
 
-		:param string $mime: The content type this response represents.
-		:param string $charset: The character set this response uses.
-		:returns: The current response instance.
-		:rtype: CodeIgniter\HTTP\Response
+        :param string $mime: The content type this response represents.
+        :param string $charset: The character set this response uses.
+        :returns: The current response instance.
+        :rtype: ``CodeIgniter\HTTP\Response``
 
-		Sets the content type this response represents::
+        Sets the content type this response represents:
 
-			$response->setContentType('text/plain');
-			$response->setContentType('text/html');
-			$response->setContentType('application/json');
+        .. literalinclude:: response/019.php
 
-		By default, the method sets the character set to ``UTF-8``. If you need to change this, you can
-		pass the character set as the second parameter::
+        By default, the method sets the character set to ``UTF-8``. If you need to change this, you can
+        pass the character set as the second parameter:
 
-			$response->setContentType('text/plain', 'x-pig-latin');
+        .. literalinclude:: response/020.php
 
-	.. php:method:: noCache()
+    .. php:method:: noCache()
 
-		:returns: The current response instance.
-		:rtype: CodeIgniter\HTTP\Response
+        :returns: The current response instance.
+        :rtype: ``CodeIgniter\HTTP\Response``
 
-		Sets the ``Cache-Control`` header to turn off all HTTP caching. This is the default setting
-		of all response messages::
+        Sets the ``Cache-Control`` header to turn off all HTTP caching. This is the default setting
+        of all response messages:
 
-		    $response->noCache();
+        .. literalinclude:: response/021.php
 
-		    // Sets the following header:
-		    Cache-Control: no-store, max-age=0, no-cache
+    .. php:method:: setCache($options)
 
-	.. php:method:: setCache($options)
+        :param array $options: An array of key/value cache control settings
+        :returns: The current response instance.
+        :rtype: ``CodeIgniter\HTTP\Response``
 
-		:param array $options: An array of key/value cache control settings
-		:returns: The current response instance.
-		:rtype: CodeIgniter\HTTP\Response
+        Sets the ``Cache-Control`` headers, including ``ETags`` and ``Last-Modified``. Typical keys are:
 
-		Sets the ``Cache-Control`` headers, including ``ETags`` and ``Last-Modified``. Typical keys are:
+        * etag
+        * last-modified
+        * max-age
+        * s-maxage
+        * private
+        * public
+        * must-revalidate
+        * proxy-revalidate
+        * no-transform
 
-		* etag
-		* last-modified
-		* max-age
-		* s-maxage
-		* private
-		* public
-		* must-revalidate
-		* proxy-revalidate
-		* no-transform
+        When passing the last-modified option, it can be either a date string, or a DateTime object.
 
-		When passing the last-modified option, it can be either a date string, or a DateTime object.
+    .. php:method:: setLastModified($date)
 
-	.. php:method:: setLastModified($date)
+        :param string|DateTime $date: The date to set the Last-Modified header to
+        :returns: The current response instance.
+        :rtype: ``CodeIgniter\HTTP\Response``
 
-		:param string|DateTime $date: The date to set the Last-Modified header to
-		:returns: The current response instance.
-		:rtype: CodeIgniter\HTTP\Response
+        Sets the ``Last-Modified`` header. The ``$date`` object can be either a string or a ``DateTime``
+        instance:
 
-		Sets the ``Last-Modified`` header. The ``$date`` object can be either a string or a ``DateTime``
-		instance::
+        .. literalinclude:: response/022.php
 
-			$response->setLastModified(date('D, d M Y H:i:s'));
-			$response->setLastModified(DateTime::createFromFormat('u', $time));
+    .. php:method:: send(): Response
 
-	.. php:method:: send()
-                :noindex:
+        :returns: The current response instance.
+        :rtype: ``CodeIgniter\HTTP\Response``
 
-		:returns: The current response instance.
-		:rtype: CodeIgniter\HTTP\Response
+        Tells the response to send everything back to the client. This will first send the headers,
+        followed by the response body. For the main application response, you do not need to call
+        this as it is handled automatically by CodeIgniter.
 
-		Tells the response to send everything back to the client. This will first send the headers,
-		followed by the response body. For the main application response, you do not need to call
-		this as it is handled automatically by CodeIgniter.
+    .. php:method:: setCookie($name = ''[, $value = ''[, $expire = 0[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = false[, $httponly = false[, $samesite = null]]]]]]]])
 
-	.. php:method:: setCookie($name = ''[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = FALSE[, $httponly = FALSE]]]]]]])
+        :param array|Cookie|string $name: Cookie name *or* associative array of all of the parameters available to this method *or* an instance of ``CodeIgniter\Cookie\Cookie``
+        :param string $value: Cookie value
+        :param int $expire: Cookie expiration time in seconds. If set to ``0`` the cookie will only last as long as the browser is open
+        :param string $domain: Cookie domain
+        :param string $path: Cookie path
+        :param string $prefix: Cookie name prefix. If set to ``''``, the default value from **app/Config/Cookie.php** will be used
+        :param bool $secure: Whether to only transfer the cookie through HTTPS. If set to ``null``, the default value from **app/Config/Cookie.php** will be used
+        :param bool $httponly: Whether to only make the cookie accessible for HTTP requests (no JavaScript). If set to ``null``, the default value from **app/Config/Cookie.php** will be used
+        :param string $samesite: The value for the SameSite cookie parameter. If set to ``''``, no SameSite attribute will be set on the cookie. If set to ``null``, the default value from **app/Config/Cookie.php** will be used
+        :rtype: void
 
-		:param	mixed	$name: Cookie name or an array of parameters
-		:param	string	$value: Cookie value
-		:param	int	$expire: Cookie expiration time in seconds
-		:param	string	$domain: Cookie domain
-		:param	string	$path: Cookie path
-		:param	string	$prefix: Cookie name prefix
-		:param	bool	$secure: Whether to only transfer the cookie through HTTPS
-		:param	bool	$httponly: Whether to only make the cookie accessible for HTTP requests (no JavaScript)
-		:rtype:	void
+        .. note:: Prior to v4.2.7, the default values of ``$secure`` and ``$httponly`` were ``false``
+            due to a bug, and these values from **app/Config/Cookie.php** were never used.
 
-		Sets a cookie containing the values you specify. There are two ways to
-		pass information to this method so that a cookie can be set: Array
-		Method, and Discrete Parameters:
+        Sets a cookie containing the values you specify to the Response instance.
 
-		**Array Method**
+        There are two ways to
+        pass information to this method so that a cookie can be set: Array
+        Method, and Discrete Parameters:
 
-		Using this method, an associative array is passed as the first
-		parameter::
+        **Array Method**
 
-			$cookie = [
-				'name'   => 'The Cookie Name',
-				'value'  => 'The Value',
-				'expire' => '86500',
-				'domain' => '.some-domain.com',
-				'path'   => '/',
-				'prefix' => 'myprefix_',
-				'secure' => TRUE,
-                                'httponly' => FALSE
-			];
+        Using this method, an associative array is passed as the first
+        parameter:
 
-			$response->setCookie($cookie);
+        .. literalinclude:: response/023.php
 
-		**Notes**
+        Only the ``name`` and ``value`` are required. To delete a cookie set it with the
+        ``value`` blank.
 
-		Only the name and value are required. To delete a cookie set it with the
-		expiration blank.
+        The ``expire`` is set in **seconds**, which will be added to the current
+        time. Do not include the time, but rather only the number of seconds
+        from *now* that you wish the cookie to be valid. If the ``expire`` is
+        set to zero the cookie will only last as long as the browser is open.
 
-		The expiration is set in **seconds**, which will be added to the current
-		time. Do not include the time, but rather only the number of seconds
-		from *now* that you wish the cookie to be valid. If the expiration is
-		set to zero the cookie will only last as long as the browser is open.
+        .. note:: But if the ``value`` is set to empty string and the ``expire`` is set to ``0``,
+            the cookie will be deleted.
 
-		For site-wide cookies regardless of how your site is requested, add your
-		URL to the **domain** starting with a period, like this:
-		.your-domain.com
+        For site-wide cookies regardless of how your site is requested, add your
+        URL to the ``domain`` starting with a period, like this:
+        .your-domain.com
 
-		The path is usually not needed since the method sets a root path.
+        The ``path`` is usually not needed since the method sets a root path.
 
-		The prefix is only needed if you need to avoid name collisions with
-		other identically named cookies for your server.
+        The ``prefix`` is only needed if you need to avoid name collisions with
+        other identically named cookies for your server.
 
-		The secure boolean is only needed if you want to make it a secure cookie
-		by setting it to TRUE.
+        The ``secure`` flag is only needed if you want to make it a secure cookie
+        by setting it to ``true``.
 
-		**Discrete Parameters**
+        The ``samesite`` value controls how cookies are shared between domains and sub-domains.
+        Allowed values are ``'None'``, ``'Lax'``, ``'Strict'`` or a blank string ``''``.
+        If set to blank string, default SameSite attribute will be set.
 
-		If you prefer, you can set the cookie by passing data using individual
-		parameters::
+        **Discrete Parameters**
 
-			$response->setCookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httponly);
+        If you prefer, you can set the cookie by passing data using individual
+        parameters:
 
-	.. php:method:: deleteCookie($name = ''[, $domain = ''[, $path = '/'[, $prefix = '']]])
+        .. literalinclude:: response/024.php
 
-		:param	mixed	$name: Cookie name or an array of parameters
-		:param	string	$domain: Cookie domain
-		:param	string	$path: Cookie path
-		:param	string	$prefix: Cookie name prefix
-		:rtype:	void
+    .. php:method:: deleteCookie($name = ''[, $domain = ''[, $path = '/'[, $prefix = '']]])
 
-		Delete an existing cookie by setting its expiry to blank.
+        :param mixed $name: Cookie name or an array of parameters
+        :param string $domain: Cookie domain
+        :param string $path: Cookie path
+        :param string $prefix: Cookie name prefix
+        :rtype: void
 
-		**Notes**
+        Delete an existing cookie.
 
-		Only the name is required.
+        .. note:: This also just sets browser cookie for deleting the cookie.
 
-		The prefix is only needed if you need to avoid name collisions with
-		other identically named cookies for your server.
+        Only the ``name`` is required.
 
-		Provide a prefix if cookies should only be deleted for that subset.
-                Provide a domain name if cookies should only be deleted for that domain.
-                Provide a path name if cookies should only be deleted for that path.
+        The ``prefix`` is only needed if you need to avoid name collisions with
+        other identically named cookies for your server.
 
-                If any of the optional parameters are empty, then the same-named
-                cookie will be deleted across all that apply.
+        Provide a ``prefix`` if cookies should only be deleted for that subset.
+        Provide a ``domain`` name if cookies should only be deleted for that domain.
+        Provide a ``path`` name if cookies should only be deleted for that path.
 
-		Example::
+        If any of the optional parameters are empty, then the same-named
+        cookie will be deleted across all that apply.
 
-			$response->deleteCookie($name);
+        Example:
 
-	.. php:method:: hasCookie($name = ''[, $value = null[, $prefix = '']])
+        .. literalinclude:: response/025.php
 
-		:param	mixed	$name: Cookie name or an array of parameters
-		:param	string	$value: cookie value
-		:param	string	$prefix: Cookie name prefix
-		:rtype:	boolean
+    .. php:method:: hasCookie($name = ''[, $value = null[, $prefix = '']])
 
-		Checks to see if the Response has a specified cookie or not.
+        :param mixed $name: Cookie name or an array of parameters
+        :param string $value: cookie value
+        :param string $prefix: Cookie name prefix
+        :rtype: bool
 
-		**Notes**
+        Checks to see if the Response has a specified cookie or not.
 
-		Only the name is required. If a prefix is specified, it will be
-                pre-pended to the cookie name.
+        **Notes**
 
-                If no value is given, the method just checks for the existence
-                of the named cookie. If a value is given, then the method checks
-                that the cookie exists, and that it has the prescribed value.
+        Only the ``name`` is required. If a ``prefix`` is specified, it will be prepended to the cookie name.
 
-		Example::
+        If no ``value`` is given, the method just checks for the existence of the named cookie.
+        If a ``value`` is given, then the method checks that the cookie exists, and that it
+        has the prescribed value.
 
-			if ($response->hasCookie($name)) ...
+        Example:
 
-	.. php:method:: getCookie($name = ''[, $prefix = ''])
-                :noindex:
+        .. literalinclude:: response/026.php
 
-		:param	mixed	$name: Cookie name
-		:param	string	$prefix: Cookie name prefix
-		:rtype:	boolean
+    .. php:method:: getCookie($name = ''[, $prefix = ''])
 
-		Returns the named cookie, if found, or null.
+        :param string $name: Cookie name
+        :param string $prefix: Cookie name prefix
+        :rtype: ``Cookie|Cookie[]|null``
 
-                If no name is given, returns the array of cookies.
+        Returns the named cookie, if found, or ``null``.
+        If no ``name`` is given, returns the array of ``Cookie`` objects.
 
-                Each cookie is returned as an associative array.
+        Example:
 
-		Example::
+        .. literalinclude:: response/027.php
 
-			$cookie = $response->getCookie($name);
+    .. php:method:: getCookies()
+
+        :rtype: ``Cookie[]``
+
+        Returns all cookies currently set within the Response instance.
+        These are any cookies that you have specifically specified to set during the current
+        request only.

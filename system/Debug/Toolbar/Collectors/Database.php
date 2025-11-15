@@ -1,275 +1,257 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * CodeIgniter
+ * This file is part of CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\Database\Query;
+use CodeIgniter\I18n\Time;
+use Config\Toolbar;
 
 /**
  * Collector for the Database tab of the Debug Toolbar.
+ *
+ * @see \CodeIgniter\Debug\Toolbar\Collectors\DatabaseTest
  */
 class Database extends BaseCollector
 {
+    /**
+     * Whether this collector has timeline data.
+     *
+     * @var bool
+     */
+    protected $hasTimeline = true;
 
-	/**
-	 * Whether this collector has timeline data.
-	 *
-	 * @var boolean
-	 */
-	protected $hasTimeline = true;
+    /**
+     * Whether this collector should display its own tab.
+     *
+     * @var bool
+     */
+    protected $hasTabContent = true;
 
-	/**
-	 * Whether this collector should display its own tab.
-	 *
-	 * @var boolean
-	 */
-	protected $hasTabContent = true;
+    /**
+     * Whether this collector has data for the Vars tab.
+     *
+     * @var bool
+     */
+    protected $hasVarData = false;
 
-	/**
-	 * Whether this collector has data for the Vars tab.
-	 *
-	 * @var boolean
-	 */
-	protected $hasVarData = false;
+    /**
+     * The name used to reference this collector in the toolbar.
+     *
+     * @var string
+     */
+    protected $title = 'Database';
 
-	/**
-	 * The name used to reference this collector in the toolbar.
-	 *
-	 * @var string
-	 */
-	protected $title = 'Database';
+    /**
+     * Array of database connections.
+     *
+     * @var array
+     */
+    protected $connections;
 
-	/**
-	 * Array of database connections.
-	 *
-	 * @var array
-	 */
-	protected $connections;
+    /**
+     * The query instances that have been collected
+     * through the DBQuery Event.
+     *
+     * @var array
+     */
+    protected static $queries = [];
 
-	/**
-	 * The query instances that have been collected
-	 * through the DBQuery Event.
-	 *
-	 * @var array
-	 */
-	protected static $queries = [];
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->getConnections();
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * The static method used during Events to collect
+     * data.
+     *
+     * @internal
+     *
+     * @return void
+     */
+    public static function collect(Query $query)
+    {
+        $config = config(Toolbar::class);
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->connections = \Config\Database::getConnections();
-	}
+        // Provide default in case it's not set
+        $max = $config->maxQueries ?: 100;
 
-	//--------------------------------------------------------------------
+        if (count(static::$queries) < $max) {
+            $queryString = $query->getQuery();
 
-	/**
-	 * The static method used during Events to collect
-	 * data.
-	 *
-	 * @param \CodeIgniter\Database\Query $query
-	 *
-	 * @internal param $ array \CodeIgniter\Database\Query
-	 */
-	public static function collect(Query $query)
-	{
-		$config = config('Toolbar');
+            $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
 
-		// Provide default in case it's not set
-		$max = $config->maxQueries ?: 100;
+            if (! is_cli()) {
+                // when called in the browser, the first two trace arrays
+                // are from the DB event trigger, which are unneeded
+                $backtrace = array_slice($backtrace, 2);
+            }
 
-		if (count(static::$queries) < $max)
-		{
-			static::$queries[] = $query;
-		}
-	}
+            static::$queries[] = [
+                'query'     => $query,
+                'string'    => $queryString,
+                'duplicate' => in_array($queryString, array_column(static::$queries, 'string'), true),
+                'trace'     => $backtrace,
+            ];
+        }
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * Returns timeline data formatted for the toolbar.
+     *
+     * @return array The formatted data or an empty array.
+     */
+    protected function formatTimelineData(): array
+    {
+        $data = [];
 
-	/**
-	 * Returns timeline data formatted for the toolbar.
-	 *
-	 * @return array The formatted data or an empty array.
-	 */
-	protected function formatTimelineData(): array
-	{
-		$data = [];
+        foreach ($this->connections as $alias => $connection) {
+            // Connection Time
+            $data[] = [
+                'name'      => 'Connecting to Database: "' . $alias . '"',
+                'component' => 'Database',
+                'start'     => $connection->getConnectStart(),
+                'duration'  => $connection->getConnectDuration(),
+            ];
+        }
 
-		foreach ($this->connections as $alias => $connection)
-		{
-			// Connection Time
-			$data[] = [
-				'name'      => 'Connecting to Database: "' . $alias . '"',
-				'component' => 'Database',
-				'start'     => $connection->getConnectStart(),
-				'duration'  => $connection->getConnectDuration(),
-			];
-		}
+        foreach (static::$queries as $query) {
+            $data[] = [
+                'name'      => 'Query',
+                'component' => 'Database',
+                'start'     => $query['query']->getStartTime(true),
+                'duration'  => $query['query']->getDuration(),
+                'query'     => $query['query']->debugToolbarDisplay(),
+            ];
+        }
 
-		foreach (static::$queries as $query)
-		{
-			$data[] = [
-				'name'      => 'Query',
-				'component' => 'Database',
-				'start'     => $query->getStartTime(true),
-				'duration'  => $query->getDuration(),
-			];
-		}
+        return $data;
+    }
 
-		return $data;
-	}
+    /**
+     * Returns the data of this collector to be formatted in the toolbar
+     */
+    public function display(): array
+    {
+        return ['queries' => array_map(static function (array $query): array {
+            $isDuplicate = $query['duplicate'] === true;
 
-	//--------------------------------------------------------------------
+            $firstNonSystemLine = '';
 
-	/**
-	 * Returns the data of this collector to be formatted in the toolbar
-	 *
-	 * @return array
-	 */
-	public function display(): array
-	{
-		// Key words we want bolded
-		$highlight = [
-			'SELECT',
-			'DISTINCT',
-			'FROM',
-			'WHERE',
-			'AND',
-			'LEFT&nbsp;JOIN',
-			'ORDER&nbsp;BY',
-			'GROUP&nbsp;BY',
-			'LIMIT',
-			'INSERT',
-			'INTO',
-			'VALUES',
-			'UPDATE',
-			'OR&nbsp;',
-			'HAVING',
-			'OFFSET',
-			'NOT&nbsp;IN',
-			'IN',
-			'LIKE',
-			'NOT&nbsp;LIKE',
-			'COUNT',
-			'MAX',
-			'MIN',
-			'ON',
-			'AS',
-			'AVG',
-			'SUM',
-			'(',
-			')',
-		];
+            foreach ($query['trace'] as $index => &$line) {
+                // simplify file and line
+                if (isset($line['file'])) {
+                    $line['file'] = clean_path($line['file']) . ':' . $line['line'];
+                    unset($line['line']);
+                } else {
+                    $line['file'] = '[internal function]';
+                }
 
-		$data = [
-			'queries' => [],
-		];
+                // find the first trace line that does not originate from `system/`
+                if ($firstNonSystemLine === '' && ! str_contains($line['file'], 'SYSTEMPATH')) {
+                    $firstNonSystemLine = $line['file'];
+                }
 
-		foreach (static::$queries as $query)
-		{
-			$sql = $query->getQuery();
+                // simplify function call
+                if (isset($line['class'])) {
+                    $line['function'] = $line['class'] . $line['type'] . $line['function'];
+                    unset($line['class'], $line['type']);
+                }
 
-			foreach ($highlight as $term)
-			{
-				$sql = str_replace($term, "<strong>{$term}</strong>", $sql);
-			}
+                if (strrpos($line['function'], '{closure}') === false) {
+                    $line['function'] .= '()';
+                }
 
-			$data['queries'][] = [
-				'duration' => ($query->getDuration(5) * 1000) . ' ms',
-				'sql'      => $sql,
-			];
-		}
+                $line['function'] = str_repeat(chr(0xC2) . chr(0xA0), 8) . $line['function'];
 
-		return $data;
-	}
+                // add index numbering padded with nonbreaking space
+                $indexPadded = str_pad(sprintf('%d', $index + 1), 3, ' ', STR_PAD_LEFT);
+                $indexPadded = preg_replace('/\s/', chr(0xC2) . chr(0xA0), $indexPadded);
 
-	//--------------------------------------------------------------------
+                $line['index'] = $indexPadded . str_repeat(chr(0xC2) . chr(0xA0), 4);
+            }
 
-	/**
-	 * Gets the "badge" value for the button.
-	 *
-	 * @return integer
-	 */
-	public function getBadgeValue(): int
-	{
-		return count(static::$queries);
-	}
+            return [
+                'hover'      => $isDuplicate ? 'This query was called more than once.' : '',
+                'class'      => $isDuplicate ? 'duplicate' : '',
+                'duration'   => ((float) $query['query']->getDuration(5) * 1000) . ' ms',
+                'sql'        => $query['query']->debugToolbarDisplay(),
+                'trace'      => $query['trace'],
+                'trace-file' => $firstNonSystemLine,
+                'qid'        => md5($query['query'] . Time::now()->format('0.u00 U')),
+            ];
+        }, static::$queries)];
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * Gets the "badge" value for the button.
+     */
+    public function getBadgeValue(): int
+    {
+        return count(static::$queries);
+    }
 
-	/**
-	 * Information to be displayed next to the title.
-	 *
-	 * @return string The number of queries (in parentheses) or an empty string.
-	 */
-	public function getTitleDetails(): string
-	{
-		return '(' . count(static::$queries) . ' Queries across ' . ($countConnection = count($this->connections)) . ' Connection' .
-				($countConnection > 1 ? 's' : '') . ')';
-	}
+    /**
+     * Information to be displayed next to the title.
+     *
+     * @return string The number of queries (in parentheses) or an empty string.
+     */
+    public function getTitleDetails(): string
+    {
+        $this->getConnections();
 
-	//--------------------------------------------------------------------
+        $queryCount      = count(static::$queries);
+        $uniqueCount     = count(array_filter(static::$queries, static fn ($query): bool => $query['duplicate'] === false));
+        $connectionCount = count($this->connections);
 
-	/**
-	 * Does this collector have any data collected?
-	 *
-	 * @return boolean
-	 */
-	public function isEmpty(): bool
-	{
-		return empty(static::$queries);
-	}
+        return sprintf(
+            '(%d total Quer%s, %d %s unique across %d Connection%s)',
+            $queryCount,
+            $queryCount > 1 ? 'ies' : 'y',
+            $uniqueCount,
+            $uniqueCount > 1 ? 'of them' : '',
+            $connectionCount,
+            $connectionCount > 1 ? 's' : '',
+        );
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * Does this collector have any data collected?
+     */
+    public function isEmpty(): bool
+    {
+        return static::$queries === [];
+    }
 
-	/**
-	 * Display the icon.
-	 *
-	 * Icon from https://icons8.com - 1em package
-	 *
-	 * @return string
-	 */
-	public function icon(): string
-	{
-		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADMSURBVEhLY6A3YExLSwsA4nIycQDIDIhRWEBqamo/UNF/SjDQjF6ocZgAKPkRiFeEhoYyQ4WIBiA9QAuWAPEHqBAmgLqgHcolGQD1V4DMgHIxwbCxYD+QBqcKINseKo6eWrBioPrtQBq/BcgY5ht0cUIYbBg2AJKkRxCNWkDQgtFUNJwtABr+F6igE8olGQD114HMgHIxAVDyAhA/AlpSA8RYUwoeXAPVex5qHCbIyMgwBCkAuQJIY00huDBUz/mUlBQDqHGjgBjAwAAACexpph6oHSQAAAAASUVORK5CYII=';
-	}
+    /**
+     * Display the icon.
+     *
+     * Icon from https://icons8.com - 1em package
+     */
+    public function icon(): string
+    {
+        return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADMSURBVEhLY6A3YExLSwsA4nIycQDIDIhRWEBqamo/UNF/SjDQjF6ocZgAKPkRiFeEhoYyQ4WIBiA9QAuWAPEHqBAmgLqgHcolGQD1V4DMgHIxwbCxYD+QBqcKINseKo6eWrBioPrtQBq/BcgY5ht0cUIYbBg2AJKkRxCNWkDQgtFUNJwtABr+F6igE8olGQD114HMgHIxAVDyAhA/AlpSA8RYUwoeXAPVex5qHCbIyMgwBCkAuQJIY00huDBUz/mUlBQDqHGjgBjAwAAACexpph6oHSQAAAAASUVORK5CYII=';
+    }
 
+    /**
+     * Gets the connections from the database config
+     */
+    private function getConnections(): void
+    {
+        $this->connections = \Config\Database::getConnections();
+    }
 }

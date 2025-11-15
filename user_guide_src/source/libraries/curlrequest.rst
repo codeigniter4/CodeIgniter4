@@ -15,9 +15,34 @@ it is one of the more widely used libraries. Where possible, the syntax has been
 your application needs something a little more powerful than what this library provides, you will have
 to change very little to move over to use Guzzle.
 
-.. note:: This class requires the `cURL Library <http://php.net/manual/en/book.curl.php>`_ to be installed
+.. note:: This class requires the `cURL Library <https://www.php.net/manual/en/book.curl.php>`_ to be installed
     in your version of PHP. This is a very common library that is typically available but not all hosts
     will provide it, so please check with your host to verify if you run into problems.
+
+**********************
+Config for CURLRequest
+**********************
+
+.. _curlrequest-sharing-options:
+
+Sharing Options
+===============
+
+.. important:: This setting exists only for backward compatibility. Do not use it
+    in new projects. Even if you are already using it, we recommend that you disable
+    it.
+
+.. note:: Since v4.4.0, the default value has been changed to ``false``.
+
+If you want to share all the options between requests, set ``$shareOptions`` to
+``true`` in **app/Config/CURLRequest.php**:
+
+.. literalinclude:: curlrequest/001.php
+
+If you send more than one request with an instance of the class, this behavior
+may cause an error request with unnecessary headers and body.
+
+.. note:: Before v4.2.0, the request body is not reset even if ``$shareOptions`` is false due to a bug.
 
 *******************
 Loading the Library
@@ -25,29 +50,22 @@ Loading the Library
 
 The library can be loaded either manually or through the :doc:`Services class </concepts/services>`.
 
-To load with the Services class call the ``curlrequest()`` method::
+To load with the Services class call the ``curlrequest()`` method or global function ``service()``:
 
-	$client = \Config\Services::curlrequest();
+.. literalinclude:: curlrequest/002.php
 
 You can pass in an array of default options as the first parameter to modify how cURL will handle the request.
-The options are described later in this document::
+The options are described later in this document:
 
-	$options = [
-		'base_uri' => 'http://example.com/api/v1/',
-		'timeout'  => 3
-	];
-	$client = \Config\Services::curlrequest($options);
+.. literalinclude:: curlrequest/003.php
+
+.. note:: When ``$shareOptions`` is false, the default options passed to the class constructor will be used for all requests. Other options will be reset after sending a request.
 
 When creating the class manually, you need to pass a few dependencies in. The first parameter is an
 instance of the ``Config\App`` class. The second parameter is a URI instance. The third
-parameter is a Response object. The fourth parameter is the optional ``$options`` array::
+parameter is a Response object. The fourth parameter is the optional default ``$options`` array:
 
-	$client = new \CodeIgniter\HTTP\CURLRequest(
-		new \Config\App(),
-		new \CodeIgniter\HTTP\URI(),
-		new \CodeIgniter\HTTP\Response(new \Config\App()),
-		$options
-	);
+.. literalinclude:: curlrequest/004.php
 
 ************************
 Working with the Library
@@ -62,65 +80,49 @@ Making Requests
 
 Most communication is done through the ``request()`` method, which fires off the request, and then returns
 a Response instance to you. This takes the HTTP method, the url and an array of options as the parameters.
-::
 
-	$client = \Config\Services::curlrequest();
+.. literalinclude:: curlrequest/005.php
 
-	$response = $client->request('GET', 'https://api.github.com/user', [
-		'auth' => ['user', 'pass']
-	]);
+.. important:: By default, CURLRequest will throw ``HTTPException`` if the HTTP
+    code returned is greater than or equal to 400. If you want to get the response,
+    see the `http_errors`_ option.
+
+.. note:: When ``$shareOptions`` is false, the options passed to the method will be used for the request. After sending the request, they will be cleared. If you want to use the options to all requests, pass the options in the constructor.
 
 Since the response is an instance of ``CodeIgniter\HTTP\Response`` you have all of the normal information
-available to you::
+available to you:
 
-	echo $response->getStatusCode();
-	echo $response->getBody();
-	echo $response->getHeader('Content-Type');
-	$language = $response->negotiateLanguage(['en', 'fr']);
+.. literalinclude:: curlrequest/006.php
 
 While the ``request()`` method is the most flexible, you can also use the following shortcut methods. They
-each take the URL as the first parameter and an array of options as the second::
+each take the URL as the first parameter and an array of options as the second:
 
-* $client->get('http://example.com');
-* $client->delete('http://example.com');
-* $client->head('http://example.com');
-* $client->options('http://example.com');
-* $client->patch('http://example.com');
-* $client->put('http://example.com');
-* $client->post('http://example.com');
+.. literalinclude:: curlrequest/007.php
 
 Base URI
 --------
 
-A ``base_uri`` can be set as one of the options during the instantiation of the class. This allows you to
+A ``baseURI`` can be set as one of the options during the instantiation of the class. This allows you to
 set a base URI, and then make all requests with that client using relative URLs. This is especially handy
-when working with APIs::
+when working with APIs:
 
-	$client = \Config\Services::curlrequest([
-		'base_uri' => 'https://example.com/api/v1/'
-	]);
-
-	// GET http:example.com/api/v1/photos
-	$client->get('photos');
-
-	// GET http:example.com/api/v1/photos/13
-	$client->delete('photos/13');
+.. literalinclude:: curlrequest/008.php
 
 When a relative URI is provided to the ``request()`` method or any of the shortcut methods, it will be combined
-with the base_uri according to the rules described by
-`RFC 2986, section 2 <http://tools.ietf.org/html/rfc3986#section-5.2>`_. To save you some time, here are some
+with the baseURI according to the rules described by
+`RFC 2986, section 2 <https://tools.ietf.org/html/rfc3986#section-5.2>`_. To save you some time, here are some
 examples of how the combinations are resolved.
 
-	===================   ==============   ======================
-	base_uri              URI              Result
-	===================   ==============   ======================
-	http://foo.com        /bar             http://foo.com/bar
-	http://foo.com/foo    /bar             http://foo.com/bar
-	http://foo.com/foo    bar              http://foo.com/bar
-	http://foo.com/foo/   bar              http://foo.com/foo/bar
-	http://foo.com        http://baz.com   http://baz.com
-	http://foo.com/?bar   bar              http://foo.com/bar
-	===================   ==============   ======================
+    =====================   ================   ========================
+    baseURI                 URI                Result
+    =====================   ================   ========================
+    \http://foo.com         /bar               \http://foo.com/bar
+    \http://foo.com/foo     /bar               \http://foo.com/bar
+    \http://foo.com/foo     bar                \http://foo.com/bar
+    \http://foo.com/foo/    bar                \http://foo.com/foo/bar
+    \http://foo.com         \http://baz.com    \http://baz.com
+    \http://foo.com/?bar    bar                \http://foo.com/bar
+    =====================   ================   ========================
 
 Using Responses
 ===============
@@ -128,33 +130,22 @@ Using Responses
 Each ``request()`` call returns a Response object that contains a lot of useful information and some helpful
 methods. The most commonly used methods let you determine the response itself.
 
-You can get the status code and reason phrase of the response::
+You can get the status code and reason phrase of the response:
 
-	$code   = $response->getStatusCode();    // 200
-	$reason = $response->getReason();      // OK
+.. literalinclude:: curlrequest/009.php
 
-You can retrieve headers from the response::
+You can retrieve headers from the response:
 
-	// Get a header line
-	echo $response->getHeaderLine('Content-Type');
+.. literalinclude:: curlrequest/010.php
 
-	// Get all headers
-	foreach ($response->getHeaders() as $name => $value)
-	{
-		echo $name .': '. $response->getHeaderLine($name) ."\n";
-	}
+The body can be retrieved using the ``getBody()`` method:
 
-The body can be retrieved using the ``getBody()`` method::
+.. literalinclude:: curlrequest/011.php
 
-	$body = $response->getBody();
+The body is the raw body provided by the remote server. If the content type requires formatting, you will need
+to ensure that your script handles that:
 
-The body is the raw body provided by the remote getServer. If the content type requires formatting, you will need
-to ensure that your script handles that::
-
-	if (strpos($response->getHeader('content-type'), 'application/json') !== false)
-	{
-		$body = json_decode($body);
-	}
+.. literalinclude:: curlrequest/012.php
 
 ***************
 Request Options
@@ -166,135 +157,123 @@ or any of the shortcut methods.
 allow_redirects
 ===============
 
-By default, cURL will follow all "Location:" headers the remote servers send back. The ``allow_redirects`` option
-allows you to modify how that works.
+By default, cURL will not follow any "Location:" headers the remote servers send
+back. The ``allow_redirects`` option allows you to modify how that works.
 
-If you set the value to ``false``, then it will not follow any redirects at all::
+If you set the value to ``true``, then it will follow redirects:
 
-	$client->request('GET', 'http://example.com', ['allow_redirects' => false]);
+.. literalinclude:: curlrequest/014.php
 
-Setting it to ``true`` will apply the default settings to the request::
+.. warning:: Please note that enabling redirects may redirect to a URL that you
+    do not expect and may enable SSRF attacks.
 
-	$client->request('GET', 'http://example.com', ['allow_redirects' => true]);
+Setting it to ``false`` will apply the default settings to the request:
 
-	// Sets the following defaults:
-	'max'       => 5, // Maximum number of redirects to follow before stopping
-	'strict'    => true, // Ensure POST requests stay POST requests through redirects
-	'protocols' => ['http', 'https'] // Restrict redirects to one or more protocols
+.. literalinclude:: curlrequest/013.php
 
-You can pass in array as the value of the ``allow_redirects`` option to specify new settings in place of the defaults::
+You can pass in array as the value of the ``allow_redirects`` option to specify new settings in place of the defaults:
 
-	$client->request('GET', 'http://example.com', ['allow_redirects' => [
-		'max'       => 10,
-		'protocols' => ['https'] // Force HTTPS domains only.
-	]]);
+.. literalinclude:: curlrequest/015.php
 
 .. note:: Following redirects does not work when PHP is in safe_mode or open_basedir is enabled.
 
 auth
 ====
 
-Allows you to provide Authentication details for `HTTP Basic <http://www.ietf.org/rfc/rfc2069.txt>`_ and
-`Digest <http://www.ietf.org/rfc/rfc2069.txt>`_ and authentication. Your script may have to do extra to support
+Allows you to provide Authentication details for `HTTP Basic <https://www.ietf.org/rfc/rfc2069.txt>`_ and
+`Digest <https://www.ietf.org/rfc/rfc2069.txt>`_ and authentication. Your script may have to do extra to support
 Digest authentication - this simply passes the username and password along for you. The value must be an
 array where the first element is the username, and the second is the password. The third parameter should be
-the type of authentication to use, either ``basic`` or ``digest``::
+the type of authentication to use, either ``basic`` or ``digest``:
 
-	$client->request('GET', 'http://example.com', ['auth' => ['username', 'password', 'digest']]);
+.. literalinclude:: curlrequest/016.php
 
 body
 ====
 
 There are two ways to set the body of the request for request types that support them, like PUT, OR POST.
-The first way is to use the ``setBody()`` method::
+The first way is to use the ``setBody()`` method:
 
-	$client->setBody($body)
-	       ->request('put', 'http://example.com');
+.. literalinclude:: curlrequest/017.php
 
 The second method is by passing a ``body`` option in. This is provided to maintain Guzzle API compatibility,
-and functions the exact same way as the previous example. The value must be a string::
+and functions the exact same way as the previous example. The value must be a string:
 
-	$client->request('put', 'http://example.com', ['body' => $body]);
+.. literalinclude:: curlrequest/018.php
 
 cert
 ====
 
 To specify the location of a PEM formatted client-side certificate, pass a string with the full path to the
 file as the ``cert`` option. If a password is required, set the value to an array with the first element
-as the path to the certificate, and the second as the password::
+as the path to the certificate, and the second as the password:
 
-    $client->request('get', '/', ['cert' => ['/path/getServer.pem', 'password']);
+.. literalinclude:: curlrequest/019.php
 
 connect_timeout
 ===============
 
 By default, CodeIgniter does not impose a limit for cURL to attempt to connect to a website. If you need to
 modify this value, you can do so by passing the amount of time in seconds with the ``connect_timeout`` option.
-You can pass 0 to wait indefinitely::
+You can pass 0 to wait indefinitely:
 
-	$response->request('GET', 'http://example.com', ['connect_timeout' => 0]);
+.. literalinclude:: curlrequest/020.php
 
 cookie
 ======
 
 This specifies the filename that CURL should use to read cookie values from, and
-to save cookie values to. This is done using the CURL_COOKIEJAR and CURL_COOKIEFILE options.
-An example::
+to save cookie values to. This is done using the ``CURL_COOKIEJAR`` and ``CURL_COOKIEFILE`` options.
+An example:
 
-	$response->request('GET', 'http://example.com', ['cookie' => WRITEPATH . 'CookieSaver.txt']);
+.. literalinclude:: curlrequest/021.php
 
 debug
 =====
 
-When ``debug`` is passed and set to ``true``, this will enable additional debugging to echo to STDOUT during the
-script execution. This is done by passing CURLOPT_VERBOSE and echoing the output::
+When ``debug`` is passed and set to ``true``, this will enable additional debugging to echo to STDERR during the
+script execution.
 
-	$response->request('GET', 'http://example.com', ['debug' => true]);
+This is done by passing ``CURLOPT_VERBOSE`` and echoing the output. So, when you're running a built-in
+server via ``spark serve``, you will see the output in the console. Otherwise, the output will be written to
+the server's error log.
 
-You can pass a filename as the value for debug to have the output written to a file::
+.. literalinclude:: curlrequest/034.php
 
-	$response->request('GET', 'http://example.com', ['debug' => '/usr/local/curl_log.txt']);
+You can pass a filename as the value for debug to have the output written to a file:
+
+.. literalinclude:: curlrequest/022.php
 
 delay
 =====
 
-Allows you to pause a number of milliseconds before sending the request::
+Allows you to pause a number of milliseconds before sending the request:
 
-	// Delay for 2 seconds
-	$response->request('GET', 'http://example.com', ['delay' => 2000]);
+.. literalinclude:: curlrequest/023.php
 
 form_params
 ===========
 
 You can send form data in an application/x-www-form-urlencoded POST request by passing an associative array in
 the ``form_params`` option. This will set the ``Content-Type`` header to ``application/x-www-form-urlencoded``
-if it's not already set::
+if it's not already set:
 
-	$client->request('POST', '/post', [
-		'form_params' => [
-			'foo' => 'bar',
-			'baz' => ['hi', 'there']
-		]
-	]);
+.. literalinclude:: curlrequest/024.php
 
-.. note:: ``form_params`` cannot be used with the ``multipart`` option. You will need to use one or the other.
+.. note:: ``form_params`` cannot be used with the `multipart`_ option. You will need to use one or the other.
         Use ``form_params`` for ``application/x-www-form-urlencoded`` request, and ``multipart`` for ``multipart/form-data``
         requests.
+
+.. _curlrequest-request-options-headers:
 
 headers
 =======
 
 While you can set any headers this request needs by using the ``setHeader()`` method, you can also pass an associative
 array of headers in as an option. Each key is the name of a header, and each value is a string or array of strings
-representing the header field values::
+representing the header field values:
 
-	$client->request('get', '/', [
-		'headers' => [
-			'User-Agent' => 'testing/1.0',
-			'Accept'     => 'application/json',
-			'X-Foo'      => ['Bar', 'Baz']
-		]
-	]);
+.. literalinclude:: curlrequest/025.php
 
 If headers are passed into the constructor they are treated as default values that will be overridden later by any
 further headers arrays or calls to ``setHeader()``.
@@ -302,24 +281,22 @@ further headers arrays or calls to ``setHeader()``.
 http_errors
 ===========
 
-By default, CURLRequest will fail if the HTTP code returned is greater than or equal to 400. You can set
-``http_errors`` to ``false`` to return the content instead::
+By default, CURLRequest will throw ``HTTPException`` if the HTTP code returned is
+greater than or equal to 400.
 
-    $client->request('GET', '/status/500');
-    // Will fail verbosely
+If you want to see the response body, you can set ``http_errors`` to ``false`` to
+return the content instead:
 
-    $res = $client->request('GET', '/status/500', ['http_errors' => false]);
-    echo $res->getStatusCode();
-    // 500
+.. literalinclude:: curlrequest/026.php
 
 json
 ====
 
 The ``json`` option is used to easily upload JSON encoded data as the body of a request. A Content-Type header
 of ``application/json`` is added, overwriting any Content-Type that might be already set. The data provided to
-this option can be any value that ``json_encode()`` accepts::
+this option can be any value that ``json_encode()`` accepts:
 
-	$response = $client->request('PUT', '/put', ['json' => ['foo' => 'bar']]);
+.. literalinclude:: curlrequest/027.php
 
 .. note:: This option does not allow for any customization of the ``json_encode()`` function, or the Content-Type
         header. If you need that ability, you will need to encode the data manually, passing it through the ``setBody()``
@@ -329,34 +306,50 @@ multipart
 =========
 
 When you need to send files and other data via a POST request, you can use the ``multipart`` option, along with
-the `CURLFile Class <http://php.net/manual/en/class.curlfile.php>`_. The values should be an associative array
-of POST data to send. For safer usage, the legacy method of uploading files by prefixing their name with an `@`
-has been disabled. Any files that you want to send must be passed as instances of CURLFile::
+the `CURLFile Class <https://www.php.net/manual/en/class.curlfile.php>`_.
 
-	$post_data = [
-		'foo'      => 'bar',
-		'userfile' => new \CURLFile('/path/to/file.txt')
-	];
+The values should be an associative array
+of POST data to send. For safer usage, the legacy method of uploading files by prefixing their name with an ``@``
+has been disabled. Any files that you want to send must be passed as instances of CURLFile:
 
-.. note:: ``multipart`` cannot be used with the ``form_params`` option. You can only use one or the other. Use
+.. literalinclude:: curlrequest/028.php
+
+.. note:: ``multipart`` cannot be used with the `form_params`_ option. You can only use one or the other. Use
         ``form_params`` for ``application/x-www-form-urlencoded`` requests, and ``multipart`` for ``multipart/form-data``
         requests.
+
+.. _curlrequest-request-options-proxy:
+
+proxy
+=====
+
+.. versionadded:: 4.4.0
+
+You can set a proxy by passing an associative array as the ``proxy`` option:
+
+.. literalinclude:: curlrequest/035.php
 
 query
 =====
 
-You can pass along data to send as query string variables by passing an associative array as the ``query`` option::
+You can pass along data to send as query string variables by passing an associative array as the ``query`` option:
 
-	// Send a GET request to /get?foo=bar
-	$client->request('GET', '/get', ['query' => ['foo' => 'bar']]);
+.. literalinclude:: curlrequest/029.php
 
 timeout
 =======
 
 By default, cURL functions are allowed to run as long as they take, with no time limit. You can modify this with the ``timeout``
-option. The value should be the number of seconds you want the functions to execute for. Use 0 to wait indefinitely::
+option. The value should be the number of seconds you want the functions to execute for. Use 0 to wait indefinitely:
 
-	$response->request('GET', 'http://example.com', ['timeout' => 5]);
+.. literalinclude:: curlrequest/030.php
+
+user_agent
+==========
+
+Allows specifying the User Agent for requests:
+
+.. literalinclude:: curlrequest/031.php
 
 verify
 ======
@@ -365,23 +358,25 @@ This option describes the SSL certificate verification behavior. If the ``verify
 SSL certificate verification and uses the default CA bundle provided by the operating system. If set to ``false`` it
 will disable the certificate verification (this is insecure, and allows man-in-the-middle attacks!). You can set it
 to a string that contains the path to a CA bundle to enable verification with a custom certificate. The default value
-is true::
+is true:
 
-	// Use the system's CA bundle (this is the default setting)
-	$client->request('GET', '/', ['verify' => true]);
+.. literalinclude:: curlrequest/032.php
 
-	// Use a custom SSL certificate on disk.
-	$client->request('GET', '/', ['verify' => '/path/to/cert.pem']);
+.. _curlrequest-version:
 
-	// Disable validation entirely. (Insecure!)
-	$client->request('GET', '/', ['verify' => false]);
+force_ip_resolve
+================
+
+.. versionadded:: 4.6.0
+
+To set the HTTP handlers to use ``v4`` only ipv4 protocol or ``v6`` for ipv6 protocol:
+
+.. literalinclude:: curlrequest/036.php
 
 version
 =======
 
-To set the HTTP protocol to use, you can pass a string or float with the version number (typically either 1.0
-or 1.1, 2.0 is currently unsupported.)::
+To set the HTTP protocol to use, you can pass a string or float with the version number (typically either ``1.0``
+or ``1.1``, ``2.0`` is supported since v4.3.0.):
 
-	// Force HTTP/1.0
-	$client->request('GET', '/', ['version' => 1.0]);
-
+.. literalinclude:: curlrequest/033.php

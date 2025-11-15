@@ -12,6 +12,8 @@ any view being rendered. You could create different layouts to support one-colum
 blog archive pages, and more. Layouts are never directly rendered. Instead, you render a view, which
 specifies the layout that it wants to extend.
 
+.. _creating-a-layout:
+
 *****************
 Creating A Layout
 *****************
@@ -19,7 +21,7 @@ Creating A Layout
 Layouts are views like any other. The only difference is their intended usage. Layouts are the only view
 files that would make use of the ``renderSection()`` method. This method acts as a placeholder for content.
 
-::
+E.g. **app/Views/default.php**::
 
     <!doctype html>
     <html>
@@ -31,18 +33,34 @@ files that would make use of the ``renderSection()`` method. This method acts as
     </body>
     </html>
 
-The renderSection() method only has one argument - the name of the section. That way any child views know
-what to name the content section.
+The ``renderSection()`` method has two arguments: ``$sectionName`` and ``$saveData``. ``$sectionName`` is the name of
+the section used by any child view to name the content section. If the boolean argument ``$saveData`` is set to true,
+the method saves data for subsequent calls. Otherwise, the method cleans the data after displaying the contents.
+
+E.g. **app/Views/welcome_message.php**::
+
+    <!doctype html>
+    <html>
+    <head>
+        <title><?= $this->renderSection('page_title', true) ?></title>
+    </head>
+    <body>
+        <h1><?= $this->renderSection('page_title') ?><h1>
+        <p><?= $this->renderSection('content') ?></p>
+    </body>
+    </html>
+
+.. note:: ``$saveData`` can be used since v4.4.0.
 
 **********************
 Using Layouts in Views
 **********************
 
-Whenveer a view wants to be inserted into a layout, it must use the ``extend()`` method at the top of the file::
+Whenever a view wants to be inserted into a layout, it must use the ``extend()`` method at the top of the file::
 
     <?= $this->extend('default') ?>
 
-The extend method takes the name of any view file that you wish to use. Since they are standard views, they will
+The ``extend()`` method takes the name of any view file that you wish to use. Since they are standard views, they will
 be located just like a view. By default, it will look in the application's View directory, but will also scan
 other PSR-4 defined namespaces. You can include a namespace to locate the view in particular namespace View directory::
 
@@ -50,7 +68,9 @@ other PSR-4 defined namespaces. You can include a namespace to locate the view i
 
 All content within a view that extends a layout must be included within ``section($name)`` and ``endSection()`` method calls.
 Any content between these calls will be inserted into the layout wherever the ``renderSection($name)`` call that
-matches the section name exists.::
+matches the section name exists.
+
+E.g. **app/Views/some_view.php**::
 
     <?= $this->extend('default') ?>
 
@@ -60,17 +80,27 @@ matches the section name exists.::
 
 The ``endSection()`` does not need the section name. It automatically knows which one to close.
 
+Sections can contain nested sections::
+
+    <?= $this->extend('default') ?>
+
+    <?= $this->section('content') ?>
+        <h1>Hello World!</h1>
+        <?= $this->section('javascript') ?>
+           let a = 'a';
+        <?= $this->endSection() ?>
+    <?= $this->endSection() ?>
+
 ******************
 Rendering the View
 ******************
 
-Rendering the view and it's layout is done exactly as any other view would be displayed within a controller::
+Rendering the view and it's layout is done exactly as any other view would be displayed within a controller:
 
-    public function index()
-    {
-        echo view('some_view');
-    }
+.. literalinclude:: view_layouts/001.php
 
+It renders the View **app/Views/some_view.php** and if it extends ``default``,
+the Layout **app/Views/default.php** is also used automatically.
 The renderer is smart enough to detect whether the view should be rendered on its own, or if it needs a layout.
 
 ***********************
@@ -90,5 +120,5 @@ view to view. When using view layouts you must use ``$this->include()`` to inclu
         <?= $this->include('sidebar') ?>
     <?= $this->endSection() ?>
 
-When calling the include() method, you can pass it all of the same options that can when rendering a normal view, including
+When calling the ``include()`` method, you can pass it all of the same options that can when rendering a normal view, including
 cache directives, etc.

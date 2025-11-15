@@ -1,0 +1,198 @@
+# total 81 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Call to an undefined method CodeIgniter\\Database\\QueryInterface\:\:getOriginalQuery\(\)\.$#'
+            count: 1
+            path: ../../system/Database/BaseConnection.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\View\\RendererInterface\:\:getData\(\)\.$#'
+            count: 1
+            path: ../../system/Debug/Toolbar/Collectors/Views.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\View\\RendererInterface\:\:getPerformanceData\(\)\.$#'
+            count: 2
+            path: ../../system/Debug/Toolbar/Collectors/Views.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\ResponseInterface\:\:pretend\(\)\.$#'
+            count: 1
+            path: ../../tests/system/CodeIgniterTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface\:\:get\(\)\.$#'
+            count: 2
+            path: ../../tests/system/Commands/Utilities/Routes/FilterFinderTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\Database\\BaseConnection\:\:escapeLikeStringDirect\(\)\.$#'
+            count: 1
+            path: ../../tests/system/Database/Live/EscapeTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\Database\\BaseConnection\:\:getCursor\(\)\.$#'
+            count: 1
+            path: ../../tests/system/Database/Live/OCI8/CallStoredProcedureTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\Database\\BaseConnection\:\:storedProcedure\(\)\.$#'
+            count: 3
+            path: ../../tests/system/Database/Live/OCI8/CallStoredProcedureTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\ResponseInterface\:\:pretend\(\)\.$#'
+            count: 3
+            path: ../../tests/system/Debug/ExceptionHandlerTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getCookie\(\)\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getDefaultLocale\(\)\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getFile\(\)\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getFileMultiple\(\)\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getFiles\(\)\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getGet\(\)\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getGetPost\(\)\.$#'
+            count: 5
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getLocale\(\)\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getOldInput\(\)\.$#'
+            count: 9
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getPost\(\)\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getPostGet\(\)\.$#'
+            count: 5
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getVar\(\)\.$#'
+            count: 2
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:is\(\)\.$#'
+            count: 5
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:isAJAX\(\)\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:isCLI\(\)\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:isSecure\(\)\.$#'
+            count: 3
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:negotiate\(\)\.$#'
+            count: 5
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\URI\:\:getRoutePath\(\)\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/URITest.php
+
+        -
+            message: '#^Call to an undefined method org\\bovigo\\vfs\\visitor\\vfsStreamVisitor\:\:getStructure\(\)\.$#'
+            count: 2
+            path: ../../tests/system/Helpers/FilesystemHelperTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\Images\\Handlers\\BaseHandler\:\:getPathname\(\)\.$#'
+            count: 1
+            path: ../../tests/system/Images/BaseHandlerTest.php
+
+        -
+            message: '#^Call to an undefined method org\\bovigo\\vfs\\vfsStreamContent\:\:getContent\(\)\.$#'
+            count: 3
+            path: ../../tests/system/Images/GDHandlerTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\Model\:\:getLastQuery\(\)\.$#'
+            count: 1
+            path: ../../tests/system/Models/FindModelTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\Model\:\:undefinedMethodCall\(\)\.$#'
+            count: 1
+            path: ../../tests/system/Models/GeneralModelTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\ResponseInterface\:\:pretend\(\)\.$#'
+            count: 1
+            path: ../../tests/system/RESTful/ResourceControllerTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\Test\\TestResponse\:\:ohno\(\)\.$#'
+            count: 1
+            path: ../../tests/system/Test/ControllerTestTraitTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\View\\Table\:\:compileTemplate\(\)\.$#'
+            count: 2
+            path: ../../tests/system/View/TableTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\View\\Table\:\:defaultTemplate\(\)\.$#'
+            count: 1
+            path: ../../tests/system/View/TableTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\View\\Table\:\:prepArgs\(\)\.$#'
+            count: 2
+            path: ../../tests/system/View/TableTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\View\\Table\:\:setFromArray\(\)\.$#'
+            count: 2
+            path: ../../tests/system/View/TableTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\View\\Table\:\:setFromDBResult\(\)\.$#'
+            count: 1
+            path: ../../tests/system/View/TableTest.php

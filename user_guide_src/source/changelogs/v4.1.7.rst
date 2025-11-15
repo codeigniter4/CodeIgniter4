@@ -1,0 +1,37 @@
+Version 4.1.7
+#############
+
+Release Date: January 9, 2022
+
+**4.1.7 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+BREAKING
+********
+
+- Because ``FILTER_SANITIZE_STRING`` is deprecated since PHP 8.1, ``get_cookie()`` that uses it when ``$xssClean`` is true changed the output. Now it uses ``FILTER_SANITIZE_FULL_SPECIAL_CHARS``. Note that using XSS filtering is a bad practice. It does not prevent XSS attacks perfectly. Using ``esc()`` with the correct ``$context`` in the views is recommended.
+
+Enhancements
+************
+
+none.
+
+Changes
+*******
+
+none.
+
+Deprecations
+************
+
+none.
+
+Bugs Fixed
+**********
+
+See the repo's
+`CHANGELOG_4.1.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.1.md>`_
+for a complete list of bugs fixed.

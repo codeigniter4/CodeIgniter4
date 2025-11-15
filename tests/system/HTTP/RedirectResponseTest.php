@@ -1,189 +1,295 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\HTTP;
 
-use Config\App;
-use CodeIgniter\Config\Services;
-use CodeIgniter\Validation\Validation;
+use CodeIgniter\Config\Factories;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Router\RouteCollection;
-use Tests\Support\HTTP\MockIncomingRequest;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockIncomingRequest;
+use CodeIgniter\Validation\Validation;
+use Config\App;
+use Config\Modules;
+use Config\Routing;
+use Config\Services;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 
-class RedirectResponseTest extends \CIUnitTestCase
+/**
+ * @internal
+ */
+#[Group('SeparateProcess')]
+final class RedirectResponseTest extends CIUnitTestCase
 {
+    /**
+     * @var RouteCollection
+     */
+    protected $routes;
 
-	/**
-	 * @var RouteCollection
-	 */
-	protected $routes;
-	protected $request;
-	protected $config;
+    private MockIncomingRequest $request;
+    private App $config;
 
-	protected function setUp()
-	{
-		parent::setUp();
+    #[WithoutErrorHandler]
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$_SERVER['REQUEST_METHOD'] = 'GET';
+        $this->resetServices();
 
-		$this->config          = new App();
-		$this->config->baseURL = 'http://example.com';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$this->routes = new RouteCollection(Services::locator(), new \Config\Modules());
-		Services::injectMock('routes', $this->routes);
+        $this->config          = new App();
+        $this->config->baseURL = 'http://example.com/';
 
-		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
-		Services::injectMock('request', $this->request);
-	}
+        $this->routes = new RouteCollection(service('locator'), new Modules(), new Routing());
+        Services::injectMock('routes', $this->routes);
 
-	//--------------------------------------------------------------------
+        $this->request = new MockIncomingRequest(
+            $this->config,
+            new SiteURI($this->config),
+            null,
+            new UserAgent(),
+        );
+        Services::injectMock('request', $this->request);
+    }
 
-	public function testRedirectToFullURI()
-	{
-		$response = new RedirectResponse(new App());
+    public function testRedirectToFullURI(): void
+    {
+        $response = new RedirectResponse(new App());
 
-		$response = $response->to('http://example.com/foo');
+        $response = $response->to('http://example.com/foo');
 
-		$this->assertTrue($response->hasHeader('Location'));
-		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
-	}
+        $this->assertTrue($response->hasHeader('Location'));
+        $this->assertSame('http://example.com/foo', $response->getHeaderLine('Location'));
+    }
 
-	//--------------------------------------------------------------------
+    public function testRedirectRoute(): void
+    {
+        $response = new RedirectResponse(new App());
 
-	public function testRedirectRoute()
-	{
-		$response = new RedirectResponse(new App());
+        $this->routes->add('exampleRoute', 'Home::index');
 
-		$this->routes->add('exampleRoute', 'Home::index');
+        $response->route('exampleRoute');
 
-		$response->route('exampleRoute');
+        $this->assertTrue($response->hasHeader('Location'));
+        $this->assertSame('http://example.com/index.php/exampleRoute', $response->getHeaderLine('Location'));
 
-		$this->assertTrue($response->hasHeader('Location'));
-		$this->assertEquals('http://example.com/exampleRoute', $response->getHeaderLine('Location'));
+        $this->routes->add('exampleRoute2', 'Home::index', ['as' => 'home']);
 
-		$this->routes->add('exampleRoute', 'Home::index', ['as' => 'home']);
+        $response->route('home');
 
-		$response->route('home');
+        $this->assertTrue($response->hasHeader('Location'));
+        $this->assertSame('http://example.com/index.php/exampleRoute2', $response->getHeaderLine('Location'));
+    }
 
-		$this->assertTrue($response->hasHeader('Location'));
-		$this->assertEquals('http://example.com/exampleRoute', $response->getHeaderLine('Location'));
-	}
+    public function testRedirectRouteBadNamedRoute(): void
+    {
+        $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage('The route for "differentRoute" cannot be found.');
 
-	public function testRedirectRouteBad()
-	{
-		$this->expectException(Exceptions\HTTPException::class);
+        $response = new RedirectResponse(new App());
 
-		$response = new RedirectResponse(new App());
+        $this->routes->add('exampleRoute', 'Home::index');
 
-		$this->routes->add('exampleRoute', 'Home::index');
+        $response->route('differentRoute');
+    }
 
-		$response->route('differentRoute');
-	}
+    public function testRedirectRouteBadControllerMethod(): void
+    {
+        $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage('The route for "Bad::badMethod" cannot be found.');
 
-	//--------------------------------------------------------------------
+        $response = new RedirectResponse(new App());
 
-	public function testRedirectRelativeConvertsToFullURI()
-	{
-		$response = new RedirectResponse($this->config);
+        $this->routes->add('exampleRoute', 'Home::index');
 
-		$response = $response->to('/foo');
+        $response->route('Bad::badMethod');
+    }
 
-		$this->assertTrue($response->hasHeader('Location'));
-		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
-	}
+    public function testRedirectRelativeConvertsToFullURI(): void
+    {
+        $response = new RedirectResponse($this->config);
 
-	//--------------------------------------------------------------------
+        $response = $response->to('/foo');
 
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
-	public function testWithInput()
-	{
-		$_SESSION = [];
-		$_GET     = ['foo' => 'bar'];
-		$_POST    = ['bar' => 'baz'];
+        $this->assertTrue($response->hasHeader('Location'));
+        $this->assertSame('http://example.com/index.php/foo', $response->getHeaderLine('Location'));
+    }
 
-		$response = new RedirectResponse(new App());
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testWithInput(): void
+    {
+        $_SESSION = [];
+        $_GET     = ['foo' => 'bar'];
+        $_POST    = ['bar' => 'baz'];
 
-		$returned = $response->withInput();
+        $response = new RedirectResponse(new App());
 
-		$this->assertSame($response, $returned);
-		$this->assertArrayHasKey('_ci_old_input', $_SESSION);
-		$this->assertEquals('bar', $_SESSION['_ci_old_input']['get']['foo']);
-		$this->assertEquals('baz', $_SESSION['_ci_old_input']['post']['bar']);
-	}
+        $returned = $response->withInput();
 
-	//--------------------------------------------------------------------
+        $this->assertSame($response, $returned);
+        $this->assertArrayHasKey('_ci_old_input', $_SESSION);
+        $this->assertSame('bar', $_SESSION['_ci_old_input']['get']['foo']);
+        $this->assertSame('baz', $_SESSION['_ci_old_input']['post']['bar']);
+    }
 
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
-	public function testWithValidationErrors()
-	{
-		$_SESSION = [];
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testWithValidationErrors(): void
+    {
+        $_SESSION = [];
 
-		$response = new RedirectResponse(new App());
+        $response = new RedirectResponse(new App());
 
-		$validation = $this->createMock(Validation::class);
-		$validation->method('getErrors')
-				->willReturn(['foo' => 'bar']);
+        $validation = $this->createMock(Validation::class);
+        $validation->method('getErrors')->willReturn(['foo' => 'bar']);
 
-		Services::injectMock('validation', $validation);
+        Services::injectMock('validation', $validation);
 
-		$response->withInput();
+        $response->withInput();
 
-		$this->assertArrayHasKey('_ci_validation_errors', $_SESSION);
-	}
+        $this->assertArrayHasKey('_ci_validation_errors', $_SESSION);
+    }
 
-	//--------------------------------------------------------------------
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testWith(): void
+    {
+        $_SESSION = [];
 
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
-	public function testWith()
-	{
-		$_SESSION = [];
+        $response = new RedirectResponse(new App());
 
-		$response = new RedirectResponse(new App());
+        $returned = $response->with('foo', 'bar');
 
-		$returned = $response->with('foo', 'bar');
+        $this->assertSame($response, $returned);
+        $this->assertArrayHasKey('foo', $_SESSION);
+    }
 
-		$this->assertSame($response, $returned);
-		$this->assertArrayHasKey('foo', $_SESSION);
-	}
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testRedirectBack(): void
+    {
+        $_SERVER['HTTP_REFERER'] = 'http://somewhere.com';
 
-	//--------------------------------------------------------------------
+        $this->request = new MockIncomingRequest($this->config, new SiteURI($this->config), null, new UserAgent());
+        Services::injectMock('request', $this->request);
 
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
-	public function testRedirectBack()
-	{
-		$_SERVER['HTTP_REFERER'] = 'http://somewhere.com';
-		$this->request           = new MockIncomingRequest($this->config, new URI('http://somewhere.com'), null, new UserAgent());
-		Services::injectMock('request', $this->request);
+        $response = new RedirectResponse(new App());
 
-		$response = new RedirectResponse(new App());
+        $returned = $response->back();
+        $this->assertSame('http://somewhere.com', $returned->header('location')->getValue());
+    }
 
-		$returned = $response->back();
-		$this->assertEquals('http://somewhere.com', $returned->getHeader('location')->getValue());
-	}
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testRedirectBackMissing(): void
+    {
+        $_SESSION = [];
 
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
-	public function testRedirectBackMissing()
-	{
-		$_SESSION = [];
+        $response = new RedirectResponse(new App());
 
-		$response = new RedirectResponse(new App());
+        $returned = $response->back();
 
-		$returned = $response->back();
+        $this->assertSame($response, $returned);
+    }
 
-		$this->assertSame($response, $returned);
-	}
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/2119
+     */
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testRedirectRouteBaseUrl(): void
+    {
+        $config          = new App();
+        $config->baseURL = 'http://example.com/test/';
+        Factories::injectMock('config', 'App', $config);
 
+        $request = new MockIncomingRequest($config, new SiteURI($config), null, new UserAgent());
+        Services::injectMock('request', $request);
+
+        $response = new RedirectResponse(new App());
+
+        $this->routes->add('exampleRoute', 'Home::index');
+
+        $response->route('exampleRoute');
+
+        $this->assertTrue($response->hasHeader('Location'));
+        $this->assertSame('http://example.com/test/index.php/exampleRoute', $response->getHeaderLine('Location'));
+
+        Factories::reset('config');
+    }
+
+    public function testWithCookies(): void
+    {
+        $_SESSION = [];
+
+        $baseResponse = service('response');
+        $baseResponse->setCookie('foo', 'bar');
+
+        $response = new RedirectResponse(new App());
+        $this->assertFalse($response->hasCookie('foo', 'bar'));
+
+        $response = $response->withCookies();
+        $this->assertTrue($response->hasCookie('foo', 'bar'));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testWithCookiesWithEmptyCookies(): void
+    {
+        $_SESSION = [];
+
+        $response = new RedirectResponse(new App());
+        $response = $response->withCookies();
+
+        $this->assertEmpty($response->getCookies());
+    }
+
+    public function testWithHeaders(): void
+    {
+        $_SESSION = [];
+
+        $baseResponse = service('response');
+        $baseResponse->setHeader('foo', 'bar');
+
+        $response = new RedirectResponse(new App());
+        $this->assertFalse($response->hasHeader('foo'));
+
+        $response = $response->withHeaders();
+
+        foreach ($baseResponse->headers() as $name => $header) {
+            $this->assertTrue($response->hasHeader($name));
+            $this->assertSame($header->getValue(), $response->header($name)->getValue());
+        }
+    }
+
+    public function testWithHeadersWithEmptyHeaders(): void
+    {
+        $_SESSION = [];
+
+        $baseResponse = service('response');
+
+        foreach (array_keys($baseResponse->headers()) as $key) {
+            $baseResponse->removeHeader($key);
+        }
+
+        $response = new RedirectResponse(new App());
+        $response->withHeaders();
+
+        $this->assertEmpty($baseResponse->headers());
+    }
 }

@@ -1,0 +1,94 @@
+# When a PR is opened or a push is made, perform
+# a static analysis check on the code using Rector.
+name: Rector
+
+on:
+  pull_request:
+    branches:
+      - 'develop'
+      - '4.*'
+    paths:
+      - 'app/**.php'
+      - 'system/**.php'
+      - 'tests/**.php'
+      - 'utils/**.php'
+      - '.github/workflows/test-rector.yml'
+      - composer.json
+      - rector.php
+      - '**.neon.dist'
+
+  push:
+    branches:
+      - 'develop'
+      - '4.*'
+    paths:
+      - 'app/**.php'
+      - 'system/**.php'
+      - 'tests/**.php'
+      - 'utils/**.php'
+      - '.github/workflows/test-rector.yml'
+      - composer.json
+      - rector.php
+      - '**.neon.dist'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: PHP ${{ matrix.php-versions }} Analyze code (Rector)
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: ['8.1', '8.4']
+    steps:
+      - name: Checkout base branch for PR
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.base_ref }}
+
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: intl
+
+      - name: Use latest Composer
+        run: composer self-update
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Get composer cache directory
+        run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer update --ansi --no-interaction
+
+      - name: Rector Cache
+        uses: actions/cache@v4
+        with:
+          path: /tmp/rector
+          key: ${{ runner.os }}-rector-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-rector-
+
+      - run: mkdir -p /tmp/rector
+
+      - name: Run static analysis
+        run: vendor/bin/rector process --dry-run --no-progress-bar

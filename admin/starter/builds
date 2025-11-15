@@ -1,0 +1,125 @@
+#!/usr/bin/env php
+<?php
+
+define('LATEST_RELEASE', '^4.0');
+define('GITHUB_URL', 'https://github.com/codeigniter4/codeigniter4');
+
+/*
+ * --------------------------------------------------------------------
+ * Stability Toggle
+ * --------------------------------------------------------------------
+ * Use this script to toggle the CodeIgniter dependency between the
+ * latest stable release and the most recent development update.
+ *
+ * Usage: php builds [release|development]
+ */
+
+// Determine the requested stability
+if (empty($argv[1]) || ! in_array($argv[1], ['release', 'development'], true)) {
+    echo 'Usage: php builds [release|development]' . PHP_EOL;
+
+    exit;
+}
+
+$dev = $argv[1] === 'development';
+
+$modified = [];
+
+// Locate each file and update it for the requested stability
+
+$file = __DIR__ . DIRECTORY_SEPARATOR . 'composer.json';
+
+if (is_file($file)) {
+    $contents = file_get_contents($file);
+
+    if ((string) $contents !== '') {
+        $array = json_decode($contents, true);
+
+        if (is_array($array)) {
+            if ($dev) {
+                $array['minimum-stability'] = 'dev';
+                $array['prefer-stable']     = true;
+                $array['repositories'] ??= [];
+
+                $found = false;
+
+                foreach ($array['repositories'] as $repository) {
+                    if ($repository['url'] === GITHUB_URL) {
+                        $found = true;
+                        break;
+                    }
+                }
+
+                if (! $found) {
+                    $array['repositories'][] = [
+                        'type' => 'vcs',
+                        'url'  => GITHUB_URL,
+                    ];
+                }
+
+                $array['require']['codeigniter4/codeigniter4'] = 'dev-develop';
+                unset($array['require']['codeigniter4/framework']);
+            } else {
+                unset($array['minimum-stability']);
+
+                if (isset($array['repositories'])) {
+                    foreach ($array['repositories'] as $i => $repository) {
+                        if ($repository['url'] === GITHUB_URL) {
+                            unset($array['repositories'][$i]);
+                            break;
+                        }
+                    }
+
+                    if (empty($array['repositories'])) {
+                        unset($array['repositories']);
+                    }
+                }
+
+                $array['require']['codeigniter4/framework'] = LATEST_RELEASE;
+                unset($array['require']['codeigniter4/codeigniter4']);
+            }
+
+            file_put_contents($file, json_encode($array, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL);
+
+            $modified[] = $file;
+        } else {
+            echo 'Warning: Unable to decode composer.json! Skipping...' . PHP_EOL;
+        }
+    } else {
+        echo 'Warning: Unable to read composer.json! Skipping...' . PHP_EOL;
+    }
+}
+
+$files = [
+    __DIR__ . DIRECTORY_SEPARATOR . 'app/Config/Paths.php',
+    __DIR__ . DIRECTORY_SEPARATOR . 'phpunit.xml.dist',
+    __DIR__ . DIRECTORY_SEPARATOR . 'phpunit.xml',
+];
+
+foreach ($files as $file) {
+    if (is_file($file)) {
+        $contents = file_get_contents($file);
+
+        if ($dev) {
+            $contents = str_replace('vendor/codeigniter4/framework', 'vendor/codeigniter4/codeigniter4', $contents);
+        } else {
+            $contents = str_replace('vendor/codeigniter4/codeigniter4', 'vendor/codeigniter4/framework', $contents);
+        }
+
+        file_put_contents($file, $contents);
+
+        $modified[] = $file;
+    }
+}
+
+if ($modified === []) {
+    echo 'No files modified.' . PHP_EOL;
+} else {
+    echo 'The following files were modified:' . PHP_EOL;
+
+    foreach ($modified as $file) {
+        echo " * {$file}" . PHP_EOL;
+    }
+
+    echo 'Run `composer update` to sync changes with your vendor folder.' . PHP_EOL;
+}

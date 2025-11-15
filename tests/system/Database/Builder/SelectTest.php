@@ -1,239 +1,430 @@
-<?php namespace CodeIgniter\Database\Builder;
+<?php
+
+declare(strict_types=1);
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DataException;
-use Tests\Support\Database\MockConnection;
+use CodeIgniter\Database\RawSql;
+use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
-class SelectTest extends \CIUnitTestCase
+/**
+ * @internal
+ */
+#[Group('Others')]
+final class SelectTest extends CIUnitTestCase
 {
-	protected $db;
+    protected $db;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->db = new MockConnection([]);
+    }
+
+    public function testSimpleSelect(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $expected = 'SELECT * FROM "users"';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testSelectOnlyOneColumn(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->select('name');
+
+        $expected = 'SELECT "name" FROM "users"';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testSelectAcceptsArray(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->select(['name', 'role']);
+
+        $expected = 'SELECT "name", "role" FROM "users"';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * @param list<RawSql|string> $select
+     */
+    #[DataProvider('provideSelectAcceptsArrayWithRawSql')]
+    public function testSelectAcceptsArrayWithRawSql(array $select, string $expected): void
+    {
+        $builder = new BaseBuilder('employees', $this->db);
+
+        $builder->select($select);
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * @return iterable<array{0: list<RawSql|string>, 1: string}>
+     */
+    public static function provideSelectAcceptsArrayWithRawSql(): iterable
+    {
+        yield from [
+            [
+                [
+                    new RawSql("IF(salary > 5000, 'High', 'Low') AS salary_level"),
+                    'employee_id',
+                ],
+                <<<'SQL'
+                    SELECT IF(salary > 5000, 'High', 'Low') AS salary_level, "employee_id" FROM "employees"
+                    SQL,
+            ],
+            [
+                [
+                    'employee_id',
+                    new RawSql("IF(salary > 5000, 'High', 'Low') AS salary_level"),
+                ],
+                <<<'SQL'
+                    SELECT "employee_id", IF(salary > 5000, 'High', 'Low') AS salary_level FROM "employees"
+                    SQL,
+            ],
+            [
+                [
+                    new RawSql("CONCAT(first_name, ' ', last_name) AS full_name"),
+                    new RawSql("IF(salary > 5000, 'High', 'Low') AS salary_level"),
+                ],
+                <<<'SQL'
+                    SELECT CONCAT(first_name, ' ', last_name) AS full_name, IF(salary > 5000, 'High', 'Low') AS salary_level FROM "employees"
+                    SQL,
+            ],
+            [
+                [
+                    new RawSql("CONCAT(first_name, ' ', last_name) AS full_name"),
+                    'employee_id',
+                    new RawSql("IF(salary > 5000, 'High', 'Low') AS salary_level"),
+                ],
+                <<<'SQL'
+                    SELECT CONCAT(first_name, ' ', last_name) AS full_name, "employee_id", IF(salary > 5000, 'High', 'Low') AS salary_level FROM "employees"
+                    SQL,
+            ],
+        ];
+    }
+
+    public function testSelectAcceptsMultipleColumns(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
 
-	//--------------------------------------------------------------------
+        $builder->select('name, role');
 
-	protected function setUp()
-	{
-		parent::setUp();
+        $expected = 'SELECT "name", "role" FROM "users"';
 
-		$this->db = new MockConnection([]);
-	}
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	//--------------------------------------------------------------------
+    public function testSelectKeepsAliases(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
 
-	public function testSimpleSelect()
-	{
-		$builder = new BaseBuilder('users', $this->db);
+        $builder->select('name, role as myRole');
 
-		$expected = 'SELECT * FROM "users"';
+        $expected = 'SELECT "name", "role" as "myRole" FROM "users"';
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	//--------------------------------------------------------------------
+    public function testSelectWorksWithComplexSelects(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
 
-	public function testSelectOnlyOneColumn()
-	{
-		$builder = new BaseBuilder('users', $this->db);
+        $builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid');
 
-		$builder->select('name');
+        $expected = 'SELECT (SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid FROM "users"';
 
-		$expected = 'SELECT "name" FROM "users"';
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+    public function testSelectNullAsInString(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
 
-	//--------------------------------------------------------------------
+        $builder->select('NULL as field_alias, name');
 
-	public function testSelectAcceptsArray()
-	{
-		$builder = new BaseBuilder('users', $this->db);
+        $expected = 'SELECT NULL as field_alias, "name" FROM "users"';
 
-		$builder->select(['name', 'role']);
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$expected = 'SELECT "name", "role" FROM "users"';
+    public function testSelectNullAsInArray(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $builder->select(['NULL as field_alias', 'name']);
 
-	//--------------------------------------------------------------------
+        $expected = 'SELECT NULL as field_alias, "name" FROM "users"';
 
-	public function testSelectAcceptsMultipleColumns()
-	{
-		$builder = new BaseBuilder('users', $this->db);
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$builder->select('name, role');
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4355
+     */
+    public function testSelectWorksWithRawSql(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
 
-		$expected = 'SELECT "name", "role" FROM "users"';
+        $sql = 'REGEXP_SUBSTR(ral_anno,"[0-9]{1,2}([,.][0-9]{1,3})([,.][0-9]{1,3})") AS ral';
+        $builder->select(new RawSql($sql));
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $expected = 'SELECT ' . $sql . ' FROM "users"';
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4311
+     */
+    public function testSelectWorksWithEscpaeFalse(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
 
-	public function testSelectKeepsAliases()
-	{
-		$builder = new BaseBuilder('users', $this->db);
+        $builder->select('"numericValue1" + "numericValue2" AS "numericResult"', false);
 
-		$builder->select('name, role as myRole');
+        $expected = 'SELECT "numericValue1" + "numericValue2" AS "numericResult" FROM "users"';
 
-		$expected = 'SELECT "name", "role" as "myRole" FROM "users"';
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4355
+     */
+    public function testSelectRegularExpressionWorksWithEscpaeFalse(): void
+    {
+        $builder = new BaseBuilder('ob_human_resources', $this->db);
 
-	//--------------------------------------------------------------------
+        $builder->select(
+            'REGEXP_SUBSTR(ral_anno,"[0-9]{1,2}([,.][0-9]{1,3})([,.][0-9]{1,3})") AS ral',
+            false,
+        );
 
-	public function testSelectWorksWithComplexSelects()
-	{
-		$builder = new BaseBuilder('users', $this->db);
+        $expected = <<<'SQL'
+            SELECT REGEXP_SUBSTR(ral_anno,"[0-9]{1,2}([,.][0-9]{1,3})([,.][0-9]{1,3})") AS ral
+            FROM "ob_human_resources"
+            SQL;
+        $this->assertSame($expected, $builder->getCompiledSelect());
+    }
 
-		$builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid');
+    public function testSelectMinWithNoAlias(): void
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-		$expected = 'SELECT (SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid FROM "users"';
+        $builder->selectMin('payments');
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $expected = 'SELECT MIN("payments") AS "payments" FROM "invoices"';
 
-	//--------------------------------------------------------------------
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	public function testSelectMinWithNoAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+    public function testSelectMinWithAlias(): void
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-		$builder->selectMin('payments');
+        $builder->selectMin('payments', 'myAlias');
 
-		$expected = 'SELECT MIN("payments") AS "payments" FROM "invoices"';
+        $expected = 'SELECT MIN("payments") AS "myAlias" FROM "invoices"';
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	//--------------------------------------------------------------------
+    public function testSelectMaxWithNoAlias(): void
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-	public function testSelectMinWithAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+        $builder->selectMax('payments');
 
-		$builder->selectMin('payments', 'myAlias');
+        $expected = 'SELECT MAX("payments") AS "payments" FROM "invoices"';
 
-		$expected = 'SELECT MIN("payments") AS "myAlias" FROM "invoices"';
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+    public function testSelectMaxWithAlias(): void
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-	//--------------------------------------------------------------------
+        $builder->selectMax('payments', 'myAlias');
 
-	public function testSelectMaxWithNoAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+        $expected = 'SELECT MAX("payments") AS "myAlias" FROM "invoices"';
 
-		$builder->selectMax('payments');
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$expected = 'SELECT MAX("payments") AS "payments" FROM "invoices"';
+    public function testSelectAvgWithNoAlias(): void
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $builder->selectAvg('payments');
 
-	//--------------------------------------------------------------------
+        $expected = 'SELECT AVG("payments") AS "payments" FROM "invoices"';
 
-	public function testSelectMaxWithAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$builder->selectMax('payments', 'myAlias');
+    public function testSelectAvgWithAlias(): void
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-		$expected = 'SELECT MAX("payments") AS "myAlias" FROM "invoices"';
+        $builder->selectAvg('payments', 'myAlias');
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $expected = 'SELECT AVG("payments") AS "myAlias" FROM "invoices"';
 
-	//--------------------------------------------------------------------
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	public function testSelectAvgWithNoAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+    public function testSelectSumWithNoAlias(): void
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-		$builder->selectAvg('payments');
+        $builder->selectSum('payments');
 
-		$expected = 'SELECT AVG("payments") AS "payments" FROM "invoices"';
+        $expected = 'SELECT SUM("payments") AS "payments" FROM "invoices"';
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	//--------------------------------------------------------------------
+    public function testSelectSumWithAlias(): void
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-	public function testSelectAvgWithAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+        $builder->selectSum('payments', 'myAlias');
 
-		$builder->selectAvg('payments', 'myAlias');
+        $expected = 'SELECT SUM("payments") AS "myAlias" FROM "invoices"';
 
-		$expected = 'SELECT AVG("payments") AS "myAlias" FROM "invoices"';
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+    public function testSelectCountWithNoAlias(): void
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-	//--------------------------------------------------------------------
+        $builder->selectCount('payments');
 
-	public function testSelectSumWithNoAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+        $expected = 'SELECT COUNT("payments") AS "payments" FROM "invoices"';
 
-		$builder->selectSum('payments');
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$expected = 'SELECT SUM("payments") AS "payments" FROM "invoices"';
+    public function testSelectCountWithAlias(): void
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $builder->selectCount('payments', 'myAlias');
 
-	//--------------------------------------------------------------------
+        $expected = 'SELECT COUNT("payments") AS "myAlias" FROM "invoices"';
 
-	public function testSelectSumWithAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$builder->selectSum('payments', 'myAlias');
+    public function testSelectMinThrowsExceptionOnEmptyValue(): void
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-		$expected = 'SELECT SUM("payments") AS "myAlias" FROM "invoices"';
+        $this->expectException(DataException::class);
+        $this->expectExceptionMessage('Empty statement is given for the field "Select"');
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $builder->selectSum('');
+    }
 
-	//--------------------------------------------------------------------
+    public function testSelectMaxWithDotNameAndNoAlias(): void
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-	public function testSelectMinThrowsExceptionOnEmptyValue()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+        $builder->selectMax('db.payments');
 
-		$this->expectException(DataException::class);
-		$this->expectExceptionMessage('Empty statement is given for the field `Select`');
+        $expected = 'SELECT MAX("db"."payments") AS "payments" FROM "invoices"';
 
-		$builder->selectSum('');
-	}
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	//--------------------------------------------------------------------
+    public function testSelectMinThrowsExceptionOnMultipleColumn(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
 
-	public function testSelectMaxWithDotNameAndNoAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+        $this->expectException(DataException::class);
+        $this->expectExceptionMessage('You must provide a valid "column name not separated by comma".');
 
-		$builder->selectMax('db.payments');
+        $builder->selectSum('name,role');
+    }
 
-		$expected = 'SELECT MAX("db"."payments") AS "payments" FROM "invoices"';
+    public function testSimpleSelectWithSQLSRV(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $builder = new SQLSRVBuilder('users', $this->db);
 
-	//--------------------------------------------------------------------
+        $expected = 'SELECT * FROM "test"."dbo"."users"';
 
-	public function testSelectMinThrowsExceptionOnMultipleColumn()
-	{
-		$builder = new BaseBuilder('users', $this->db);
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$this->expectException(DataException::class);
-		$this->expectExceptionMessage('You must provide a valid column name not separated by comma.');
+    public function testSelectSubquery(): void
+    {
+        $builder  = new BaseBuilder('users', $this->db);
+        $subquery = new BaseBuilder('countries', $this->db);
 
-		$builder->selectSum('name,role');
-	}
+        $subquery->select('name')->where('id', 1);
+        $builder->select('name')->selectSubquery($subquery, 'country');
 
-	//--------------------------------------------------------------------
+        $expected = 'SELECT "name", (SELECT "name" FROM "countries" WHERE "id" = 1) "country" FROM "users"';
 
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testSelectResetQuery(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+        $builder->select('name, role');
+
+        $builder->resetQuery();
+
+        $sql = $builder->getCompiledSelect();
+        $this->assertSame(
+            'SELECT * FROM "users"',
+            str_replace("\n", ' ', $sql),
+        );
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/9696
+     */
+    public function testGetCompiledSelect(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->select('name, role')->orderBy('name', 'desc');
+
+        $expected = 'SELECT "name", "role" FROM "users" ORDER BY "name" DESC';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect(false)));
+
+        $builder->orderBy('role', 'desc');
+
+        $expected = 'SELECT "name", "role" FROM "users" ORDER BY "name" DESC, "role" DESC';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 }

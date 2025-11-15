@@ -1,11 +1,30 @@
-<?php namespace CodeIgniter\Files\Exceptions;
+<?php
 
-use CodeIgniter\Exceptions\ExceptionInterface;
+declare(strict_types=1);
 
-class FileNotFoundException extends \RuntimeException implements ExceptionInterface
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Files\Exceptions;
+
+use CodeIgniter\Exceptions\DebugTraceableTrait;
+use CodeIgniter\Exceptions\RuntimeException;
+
+class FileNotFoundException extends RuntimeException implements ExceptionInterface
 {
-	public static function forFileNotFound(string $path)
-	{
-		return new static(lang('Files.fileNotFound', [$path]));
-	}
+    use DebugTraceableTrait;
+
+    /**
+     * @return static
+     */
+    public static function forFileNotFound(string $path)
+    {
+        return new static(lang('Files.fileNotFound', [$path]));
+    }
 }

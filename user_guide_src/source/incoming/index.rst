@@ -7,11 +7,13 @@ Controllers handle incoming requests.
 .. toctree::
     :titlesonly:
 
-    controllers
     routing
+    controllers
     filters
+    auto_routing_improved
     message
     request
     incomingrequest
     content_negotiation
     methodspoofing
+    restful

@@ -1,8 +1,8 @@
-******************
+##################
 Working with Files
-******************
+##################
 
-CodeIgniter provides a File class that wraps the `SplFileInfo <http://php.net/manual/en/class.splfileinfo.php>`_ class
+CodeIgniter provides a File class that wraps the `SplFileInfo <https://www.php.net/manual/en/class.splfileinfo.php>`_ class
 and provides some additional convenience methods. This class is the base class for :doc:`uploaded files </libraries/uploaded_files>`
 and :doc:`images </libraries/images>`.
 
@@ -11,95 +11,130 @@ and :doc:`images </libraries/images>`.
     :depth: 2
 
 Getting a File instance
-=======================
+***********************
 
 You create a new File instance by passing in the path to the file in the constructor.
-By default, the file does not need to exist. However, you can pass an additional argument of "true"
+
+.. literalinclude:: files/001.php
+    :lines: 2-
+
+By default, the file does not need to exist. However, you can pass an additional argument of ``true``
 to check that the file exists and throw ``FileNotFoundException()`` if it does not.
 
-::
-
-    $file = new \CodeIgniter\Files\File($path);
-
 Taking Advantage of Spl
-=======================
+***********************
 
-Once you have an instance, you have the full power of the SplFileInfo class at the ready, including::
+Once you have an instance, you have the full power of the SplFileInfo class at the ready, including:
 
-    // Get the file's basename
-    echo $file->getBasename();
-    // Get last modified time
-    echo $file->getMTime();
-    // Get the true real path
-    echo $file->getRealPath();
-    // Get the file permissions
-    echo $file->getPerms();
-
-    // Write CSV rows to it.
-    if ($file->isWritable())
-    {
-        $csv = $file->openFile('w');
-
-        foreach ($rows as $row)
-        {
-            $csv->fputcsv($row);
-        }
-    }
+.. literalinclude:: files/002.php
+    :lines: 2-
 
 New Features
-============
+************
 
 In addition to all of the methods in the SplFileInfo class, you get some new tools.
 
-**getRandomName()**
+getRandomName()
+===============
 
 You can generate a cryptographically secure random filename, with the current timestamp prepended, with the ``getRandomName()``
-method. This is especially useful to rename files when moving it so that the filename is unguessable::
+method. This is especially useful to rename files when moving it so that the filename is unguessable:
 
-	// Generates something like: 1465965676_385e33f741.jpg
-	$newName = $file->getRandomName();
+.. literalinclude:: files/003.php
+    :lines: 2-
 
-**getSize()**
+getSize()
+=========
 
-Returns the size of the uploaded file in bytes. You can pass in either 'kb' or 'mb' as the first parameter to get
-the results in kilobytes or megabytes, respectively::
+Returns the size of the file in bytes:
 
-	$bytes     = $file->getSize();      // 256901
-	$kilobytes = $file->getSize('kb');  // 250.880
-	$megabytes = $file->getSize('mb');  // 0.245
+.. literalinclude:: files/004.php
+    :lines: 2-
 
-**getMimeType()**
+A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
+
+getSizeByUnit()
+===============
+
+.. deprecated:: 4.6.0
+
+Returns the size of the file default in bytes. You can pass in either ``'kb'`` or ``'mb'`` as the first parameter to get
+the results in kibibytes or mebibytes, respectively:
+
+.. literalinclude:: files/005.php
+    :lines: 2-
+
+A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
+
+
+.. _file-get-size-by-binary-unit:
+
+getSizeByBinaryUnit()
+=====================
+
+.. versionadded:: 4.6.0
+
+Returns the size of the file default in bytes. You can pass in different FileSizeUnit values as the first parameter to get
+the results in kibibytes, mebibytes etc. respectively. You can pass in a precision value as the second parameter to define
+the amount of decimal places.
+
+.. literalinclude:: files/017.php
+    :lines: 4-
+
+A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
+
+
+.. _file-get-size-by-metric-unit:
+
+getSizeByMetricUnit()
+=====================
+
+.. versionadded:: 4.6.0
+
+Returns the size of the file default in bytes. You can pass in different FileSizeUnit values as the first parameter to get
+the results in kilobytes, megabytes etc. respectively. You can pass in a precision value as the second parameter to define
+the amount of decimal places.
+
+.. literalinclude:: files/018.php
+    :lines: 4-
+
+A ``RuntimeException`` will be thrown if the file does not exist or an error occurs.
+
+getMimeType()
+=============
 
 Retrieve the media type (mime type) of the file. Uses methods that are considered as secure as possible when determining
-the type of file::
+the type of file:
 
-	$type = $file->getMimeType();
+.. literalinclude:: files/006.php
+    :lines: 2-
 
-	echo $type; // image/png
-
-**guessExtension()**
+guessExtension()
+================
 
 Attempts to determine the file extension based on the trusted ``getMimeType()`` method. If the mime type is unknown,
 will return null. This is often a more trusted source than simply using the extension provided by the filename. Uses
-the values in **app/Config/Mimes.php** to determine extension::
+the values in **app/Config/Mimes.php** to determine extension:
 
-	// Returns 'jpg' (WITHOUT the period)
-	$ext = $file->guessExtension();
+.. literalinclude:: files/007.php
+    :lines: 2-
 
 Moving Files
-------------
+============
 
 Each file can be moved to its new location with the aptly named ``move()`` method. This takes the directory to move
-the file to as the first parameter::
+the file to as the first parameter:
 
-	$file->move(WRITEPATH.'uploads');
+.. literalinclude:: files/008.php
+    :lines: 2-
 
-By default, the original filename was used. You can specify a new filename by passing it as the second parameter::
+By default, the original filename was used. You can specify a new filename by passing it as the second parameter:
 
-	$newName = $file->getRandomName();
-	$file->move(WRITEPATH.'uploads', $newName);
+.. literalinclude:: files/009.php
+    :lines: 2-
 
-The move() method returns a new File instance that for the relocated file, so you must capture the result if the
-resulting location is needed::
+The ``move()`` method returns a new File instance that for the relocated file, so you must capture the result if the
+resulting location is needed:
 
-    $file = $file->move(WRITEPATH.'uploads');
+.. literalinclude:: files/010.php
+    :lines: 2-

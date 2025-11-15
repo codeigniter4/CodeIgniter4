@@ -1,0 +1,279 @@
+# Defines the layers for each framework
+# component and their allowed interactions.
+# The following components are exempt
+# due to their global nature:
+#   - CLI & Commands
+#   - Config
+#   - Debug
+#   - Exception
+#   - Service
+#   - Validation\FormatRules
+deptrac:
+  paths:
+    - ./app
+    - ./system
+  exclude_files:
+    - '#.*test.*#i'
+  layers:
+    - name: API
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\API\\.*$/'
+    - name: Cache
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Cache\\.*$/'
+    - name: Controller
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Controller$/'
+    - name: Cookie
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Cookie\\.*$/'
+    - name: Database
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Database\\.*$/'
+    - name: DataCaster
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\DataCaster\\.*$/'
+    - name: DataConverter
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\DataConverter\\.*$/'
+    - name: Email
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Email\\.*$/'
+    - name: Encryption
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Encryption\\.*$/'
+    - name: Entity
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Entity\\.*$/'
+    - name: Events
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Events\\.*$/'
+    - name: Files
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Files\\.*$/'
+    - name: Filters
+      collectors:
+        - type: bool
+          must:
+          - type: classNameRegex
+            value: '/^CodeIgniter\\Filters\\Filter.*$/'
+    - name: Format
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Format\\.*$/'
+    - name: Honeypot
+      collectors:
+        - type: classNameRegex
+          # includes the Filter
+          value: '/^CodeIgniter\\.*Honeypot.*$/'
+    - name: HTTP
+      collectors:
+        - type: bool
+          must:
+          - type: classNameRegex
+            value: '/^CodeIgniter\\HTTP\\.*$/'
+          must_not:
+          - type: classNameRegex
+            value: '(Exception|URI)'
+    - name: I18n
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\I18n\\.*$/'
+    - name: Images
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Images\\.*$/'
+    - name: Language
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Language\\.*$/'
+    - name: Log
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Log\\.*$/'
+    - name: Model
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\.*Model$/'
+    - name: Modules
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Modules\\.*$/'
+    - name: Pager
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Pager\\.*$/'
+    - name: Publisher
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Publisher\\.*$/'
+    - name: RESTful
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\RESTful\\.*$/'
+    - name: Router
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Router\\.*$/'
+    - name: Security
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Security\\.*$/'
+    - name: Session
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Session\\.*$/'
+    - name: Throttle
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Throttle\\.*$/'
+    - name: Typography
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\Typography\\.*$/'
+    - name: URI
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\HTTP\\URI$/'
+    - name: Validation
+      collectors:
+        - type: bool
+          must:
+          - type: classNameRegex
+            value: '/^CodeIgniter\\Validation\\.*$/'
+          must_not:
+          - type: classNameRegex
+            value: '/^CodeIgniter\\Validation\\FormatRules$/'
+    - name: View
+      collectors:
+        - type: classNameRegex
+          value: '/^CodeIgniter\\View\\.*$/'
+  ruleset:
+    API:
+      - Format
+      - HTTP
+    Cache:
+      - I18n
+    Controller:
+      - HTTP
+      - Validation
+    Cookie:
+      - I18n
+    Database:
+      - Entity
+      - Events
+      - I18n
+    DataCaster:
+      - I18n
+      - URI
+      - Database
+    DataConverter:
+      - DataCaster
+    Email:
+      - I18n
+      - Events
+    Entity:
+      - DataCaster
+      - I18n
+    Files:
+      - I18n
+    Filters:
+      - HTTP
+    Honeypot:
+      - Filters
+      - HTTP
+    HTTP:
+      - Cookie
+      - Files
+      - I18n
+      - Security
+      - URI
+    Images:
+      - Files
+      - I18n
+    Model:
+      - Database
+      - DataConverter
+      - Entity
+      - I18n
+      - Pager
+      - Validation
+    Pager:
+      - URI
+      - View
+    Publisher:
+      - Files
+      - URI
+    RESTful:
+      - +API
+      - +Controller
+    Router:
+      - HTTP
+    Security:
+      - Cookie
+      - I18n
+      - Session
+      - HTTP
+    Session:
+      - Cookie
+      - HTTP
+      - Database
+      - I18n
+    Throttle:
+      - Cache
+      - I18n
+    Validation:
+      - HTTP
+      - Database
+    View:
+      - Cache
+  skip_violations:
+    # Individual class exemptions
+    CodeIgniter\Cache\ResponseCache:
+      - CodeIgniter\HTTP\CLIRequest
+      - CodeIgniter\HTTP\Header
+      - CodeIgniter\HTTP\IncomingRequest
+      - CodeIgniter\HTTP\ResponseInterface
+    CodeIgniter\DataCaster\DataCaster:
+      - CodeIgniter\Entity\Cast\CastInterface
+      - CodeIgniter\Entity\Exceptions\CastException
+    CodeIgniter\DataCaster\Exceptions\CastException:
+      - CodeIgniter\Entity\Exceptions\CastException
+    CodeIgniter\DataConverter\DataConverter:
+      - CodeIgniter\Entity\Entity
+    CodeIgniter\Entity\Cast\URICast:
+      - CodeIgniter\HTTP\URI
+    CodeIgniter\Log\Handlers\ChromeLoggerHandler:
+      - CodeIgniter\HTTP\ResponseInterface
+    CodeIgniter\Security\CheckPhpIni:
+      - CodeIgniter\View\Table
+    CodeIgniter\View\Table:
+      - CodeIgniter\Database\BaseResult
+    CodeIgniter\View\Plugins:
+      - CodeIgniter\HTTP\URI
+
+    # BC changes that should be fixed
+    CodeIgniter\HTTP\ResponseTrait:
+      - CodeIgniter\Pager\PagerInterface
+    CodeIgniter\HTTP\ResponseInterface:
+      - CodeIgniter\Pager\PagerInterface
+    CodeIgniter\HTTP\Response:
+      - CodeIgniter\Pager\PagerInterface
+    CodeIgniter\HTTP\RedirectResponse:
+      - CodeIgniter\Pager\PagerInterface
+    CodeIgniter\HTTP\DownloadResponse:
+      - CodeIgniter\Pager\PagerInterface
+    CodeIgniter\Validation\Validation:
+      - CodeIgniter\View\RendererInterface

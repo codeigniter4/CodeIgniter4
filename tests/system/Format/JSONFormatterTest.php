@@ -1,62 +1,65 @@
-<?php namespace CodeIgniter\Format;
+<?php
 
-class JSONFormatterTest extends \CIUnitTestCase
+declare(strict_types=1);
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Format;
+
+use CodeIgniter\Format\Exceptions\FormatException;
+use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+
+/**
+ * @internal
+ */
+#[Group('Others')]
+final class JSONFormatterTest extends CIUnitTestCase
 {
-	protected $jsonFormatter;
+    private JSONFormatter $jsonFormatter;
 
-	protected function setUp()
-	{
-		parent::setUp();
-		$this->jsonFormatter = new JSONFormatter();
-	}
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->jsonFormatter = new JSONFormatter();
+    }
 
-	public function testBasicJSON()
-	{
-		$data = [
-			'foo' => 'bar',
-		];
+    /**
+     * @param array<string, string> $data
+     */
+    #[DataProvider('provideFormattingToJson')]
+    public function testFormattingToJson(array $data, string $expected): void
+    {
+        $this->assertSame($expected, $this->jsonFormatter->format($data));
+    }
 
-		$expected = '{
-    "foo": "bar"
-}';
+    /**
+     * @return iterable<string, array{0: array<string, string>, 1: string}>
+     */
+    public static function provideFormattingToJson(): iterable
+    {
+        yield 'empty array' => [[], '[]'];
 
-		$this->assertEquals($expected, $this->jsonFormatter->format($data));
-	}
+        yield 'simple array' => [['foo' => 'bar'], "{\n    \"foo\": \"bar\"\n}"];
 
-	public function testUnicodeOutput()
-	{
-		$data = [
-			'foo' => 'База данни грешка',
-		];
+        yield 'unicode array' => [['foo' => 'База данни грешка'], "{\n    \"foo\": \"База данни грешка\"\n}"];
 
-		$expected = '{
-    "foo": "База данни грешка"
-}';
+        yield 'url array' => [['foo' => 'https://www.example.com/foo/bar'], "{\n    \"foo\": \"https://www.example.com/foo/bar\"\n}"];
+    }
 
-		$this->assertEquals($expected, $this->jsonFormatter->format($data));
-	}
+    public function testJSONFormatterThrowsError(): void
+    {
+        $this->expectException(FormatException::class);
+        $this->expectExceptionMessage('Malformed UTF-8 characters, possibly incorrectly encoded');
 
-	public function testKeepsURLs()
-	{
-		$data = [
-			'foo' => 'https://www.example.com/foo/bar',
-		];
-
-		$expected = '{
-    "foo": "https://www.example.com/foo/bar"
-}';
-
-		$this->assertEquals($expected, $this->jsonFormatter->format($data));
-	}
-
-	/**
-	 * @expectedException RuntimeException
-	 */
-	public function testJSONError()
-	{
-		$data     = ["\xB1\x31"];
-		$expected = 'Boom';
-		$this->assertEquals($expected, $this->jsonFormatter->format($data));
-	}
-
+        $this->assertSame('Boom', $this->jsonFormatter->format(["\xB1\x31"]));
+    }
 }

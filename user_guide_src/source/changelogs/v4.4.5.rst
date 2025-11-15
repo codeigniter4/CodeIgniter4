@@ -1,0 +1,22 @@
+#############
+Version 4.4.5
+#############
+
+Release Date: January 27, 2024
+
+**4.4.5 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+**********
+Bugs Fixed
+**********
+
+- **QueryBuilder:** Fixed a bug that the ``updateBatch()`` method does not work
+  due to type errors on PostgreSQL.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

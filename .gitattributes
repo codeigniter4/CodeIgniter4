@@ -5,19 +5,35 @@
 
 # git files
 .gitattributes export-ignore
-# .gitignore
+.gitignore     export-ignore
 
-# helper config files
-.travis.yml export-ignore
+# admin files
+.github/           export-ignore
+admin/             export-ignore
+contributing/      export-ignore
+.editorconfig      export-ignore
+CODE_OF_CONDUCT.md export-ignore
+CONTRIBUTING.md    export-ignore
+
+# contributor/development files
+tests/                       export-ignore
+utils/                       export-ignore
+.php-cs-fixer.dist.php       export-ignore
+.php-cs-fixer.no-header.php  export-ignore
+.php-cs-fixer.tests.php      export-ignore
+.php-cs-fixer.user-guide.php export-ignore
+deptrac.yaml                 export-ignore
+phpmetrics.json              export-ignore
+phpstan-baseline.php         export-ignore
+phpstan-bootstrap.php        export-ignore
+phpstan.neon.dist            export-ignore
+phpunit.xml.dist             export-ignore
+psalm-baseline.xml           export-ignore
+psalm.xml                    export-ignore
+psalm_autoload.php           export-ignore
+rector.php                   export-ignore
+
+# source user guide
+user_guide_src/ export-ignore
+.nojekyll       export-ignore
 phpdoc.dist.xml export-ignore
-
-# Misc other files
-readme.rst
-
-# They don't want all of our tests...
-tests/bin/ export-ignore
-tests/codeigniter/ export-ignore
-tests/travis/ export-ignore
-
-# User Guide Source Files
-user_guide_src

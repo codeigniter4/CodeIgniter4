@@ -1,73 +1,52 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * CodeIgniter
+ * This file is part of CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Format;
 
 use CodeIgniter\Format\Exceptions\FormatException;
+use Config\Format;
 
 /**
  * JSON data formatter
+ *
+ * @see \CodeIgniter\Format\JSONFormatterTest
  */
 class JSONFormatter implements FormatterInterface
 {
+    /**
+     * Takes the given data and formats it.
+     *
+     * @param array<array-key, mixed>|object|string $data
+     *
+     * @return false|non-empty-string
+     */
+    public function format($data)
+    {
+        $config = new Format();
 
-	/**
-	 * Takes the given data and formats it.
-	 *
-	 * @param $data
-	 *
-	 * @return string|boolean (JSON string | false)
-	 */
-	public function format($data)
-	{
-		$options = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
+        $options = $config->formatterOptions['application/json'] ?? JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
+        $options |= JSON_PARTIAL_OUTPUT_ON_ERROR;
 
-		$options = ENVIRONMENT === 'production' ? $options : $options | JSON_PRETTY_PRINT;
+        if (ENVIRONMENT !== 'production') {
+            $options |= JSON_PRETTY_PRINT;
+        }
 
-		$result = json_encode($data, $options, 512);
+        $result = json_encode($data, $options, 512);
 
-		if (json_last_error() !== JSON_ERROR_NONE)
-		{
-			throw FormatException::forInvalidJSON(json_last_error_msg());
-		}
+        if (! in_array(json_last_error(), [JSON_ERROR_NONE, JSON_ERROR_RECURSION], true)) {
+            throw FormatException::forInvalidJSON(json_last_error_msg());
+        }
 
-		return $result;
-	}
-
-	//--------------------------------------------------------------------
+        return $result;
+    }
 }

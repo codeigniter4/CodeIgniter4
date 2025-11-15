@@ -1,236 +1,420 @@
-<?php namespace CodeIgniter\Autoloader;
+<?php
 
+declare(strict_types=1);
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Autoloader;
+
+use App\Controllers\Home;
+use Closure;
+use CodeIgniter\Exceptions\ConfigException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
+use CodeIgniter\Exceptions\RuntimeException;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\ReflectionHelper;
 use Config\Autoload;
 use Config\Modules;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
+use UnnamespacedClass;
 
-class AutoloaderTest extends \CIUnitTestCase
+/**
+ * @internal
+ */
+#[Group('Others')]
+final class AutoloaderTest extends CIUnitTestCase
 {
-	/**
-	 * @var \CodeIgniter\Autoloader\Autoloader
-	 */
-	protected $loader;
+    use ReflectionHelper;
 
-	protected $filesPath = SUPPORTPATH . 'Autoloader/';
+    private Autoloader $loader;
 
-	//--------------------------------------------------------------------
+    /**
+     * @var Closure(string): (false|string)
+     */
+    private Closure $classLoader;
 
-	protected function setUp()
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$config                           = new Autoload();
-		$moduleConfig                     = new Modules();
-		$moduleConfig->discoverInComposer = false;
+        $config                      = new Autoload();
+        $modules                     = new Modules();
+        $modules->discoverInComposer = false;
 
-		$config->classmap = [
-			'UnnamespacedClass' => SUPPORTPATH . 'Autoloader/UnnamespacedClass.php',
-			'OtherClass'        => APPPATH . 'Controllers/Home.php',
-			'Name\Spaced\Class' => APPPATH . 'Controllers/Home.php',
-		];
-		$config->psr4     = [
-			'App'         => APPPATH,
-			'CodeIgniter' => SYSTEMPATH,
-		];
+        $config->classmap = [
+            'UnnamespacedClass' => SUPPORTPATH . 'Autoloader/UnnamespacedClass.php',
+            'OtherClass'        => APPPATH . 'Controllers/Home.php',
+            'Name\Spaced\Class' => APPPATH . 'Controllers/Home.php',
+        ];
+        $config->psr4 = [
+            'App'         => APPPATH,
+            'CodeIgniter' => SYSTEMPATH,
+        ];
 
-		$this->loader = new Autoloader();
-		$this->loader->initialize($config, $moduleConfig)->register();
-	}
+        $this->loader = new Autoloader();
+        $this->loader->initialize($config, $modules)->register();
 
-	public function testLoadStoredClass()
-	{
-		$this->assertInstanceOf('UnnamespacedClass', new \UnnamespacedClass());
-	}
+        $this->classLoader = self::getPrivateMethodInvoker($this->loader, 'loadInNamespace');
+    }
 
-	public function testInitializeWithInvalidArguments()
-	{
-		$this->expectException(\InvalidArgumentException::class);
+    protected function tearDown(): void
+    {
+        parent::tearDown();
 
-		$config                           = new Autoload();
-		$config->classmap                 = [];
-		$config->psr4                     = [];
-		$moduleConfig                     = new Modules();
-		$moduleConfig->discoverInComposer = false;
+        $this->loader->unregister();
+    }
 
-		(new Autoloader())->initialize($config, $moduleConfig);
-	}
+    public function testLoadStoredClass(): void
+    {
+        $this->assertInstanceOf('UnnamespacedClass', new UnnamespacedClass());
+    }
 
-	//--------------------------------------------------------------------
-	// PSR4 Namespacing
-	//--------------------------------------------------------------------
+    public function testInitializeWithInvalidArguments(): void
+    {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage("Config array must contain either the 'psr4' key or the 'classmap' key.");
 
-	public function testServiceAutoLoaderFromShareInstances()
-	{
-		$auto_loader = \CodeIgniter\Config\Services::autoloader();
-		// $auto_loader->register();
-		// look for Home controller, as that should be in base repo
-		$actual   = $auto_loader->loadClass('App\Controllers\Home');
-		$expected = APPPATH . 'Controllers/Home.php';
-		$this->assertSame($expected, $actual);
-	}
+        $config                      = new Autoload();
+        $config->classmap            = [];
+        $config->psr4                = [];
+        $modules                     = new Modules();
+        $modules->discoverInComposer = false;
 
-	//--------------------------------------------------------------------
+        (new Autoloader())->initialize($config, $modules);
+    }
 
-	public function testServiceAutoLoader()
-	{
-		$getShared   = false;
-		$auto_loader = \CodeIgniter\Config\Services::autoloader($getShared);
-		$auto_loader->initialize(new Autoload(), new Modules());
-		$auto_loader->register();
-		// look for Home controller, as that should be in base repo
-		$actual   = $auto_loader->loadClass('App\Controllers\Home');
-		$expected = APPPATH . 'Controllers/Home.php';
-		$this->assertSame($expected, $actual);
-	}
+    public function testInitializeTwice(): void
+    {
+        $loader = new Autoloader();
+        $loader->initialize(new Autoload(), new Modules());
 
-	//--------------------------------------------------------------------
+        $ns = $loader->getNamespace();
+        $this->assertCount(1, $ns['App']);
+        $this->assertSame('ROOTPATH/app', clean_path($ns['App'][0]));
 
-	public function testExistingFile()
-	{
-		$actual   = $this->loader->loadClass('App\Controllers\Home');
-		$expected = APPPATH . 'Controllers/Home.php';
-		$this->assertSame($expected, $actual);
+        $loader->initialize(new Autoload(), new Modules());
 
-		$actual   = $this->loader->loadClass('CodeIgniter\Helpers\array_helper');
-		$expected = SYSTEMPATH . 'Helpers/array_helper.php';
-		$this->assertSame($expected, $actual);
-	}
+        $ns = $loader->getNamespace();
+        $this->assertCount(1, $ns['App']);
+        $this->assertSame('ROOTPATH/app', clean_path($ns['App'][0]));
+    }
 
-	//--------------------------------------------------------------------
+    public function testServiceAutoLoaderFromShareInstances(): void
+    {
+        $classLoader = self::getPrivateMethodInvoker(service('autoloader'), 'loadInNamespace');
 
-	public function testMatchesWithPreceedingSlash()
-	{
-		$actual   = $this->loader->loadClass('\App\Controllers\Home');
-		$expected = APPPATH . 'Controllers/Home.php';
-		$this->assertSame($expected, $actual);
-	}
+        // look for Home controller, as that should be in base repo
+        $actual   = $classLoader(Home::class);
+        $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
 
-	//--------------------------------------------------------------------
+        $resolvedPath = realpath($actual);
+        $actual       = $resolvedPath !== false ? $resolvedPath : $actual;
 
-	public function testMatchesWithFileExtension()
-	{
-		$actual   = $this->loader->loadClass('\App\Controllers\Home.php');
-		$expected = APPPATH . 'Controllers/Home.php';
-		$this->assertSame($expected, $actual);
-	}
+        $this->assertSame($expected, $actual);
+    }
 
-	//--------------------------------------------------------------------
+    public function testServiceAutoLoader(): void
+    {
+        $autoloader = service('autoloader', false);
+        $autoloader->initialize(new Autoload(), new Modules());
+        $autoloader->register();
 
-	public function testMissingFile()
-	{
-		$this->assertFalse($this->loader->loadClass('\App\Missing\Classname'));
-	}
+        $classLoader = self::getPrivateMethodInvoker($autoloader, 'loadInNamespace');
 
-	//--------------------------------------------------------------------
+        // look for Home controller, as that should be in base repo
+        $actual   = $classLoader(Home::class);
+        $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
 
-	/**
-	 * @expectedException        \InvalidArgumentException
-	 * @expectedExceptionMessage Config array must contain either the 'psr4' key or the 'classmap' key.
-	 */
-	public function testInitializeException()
-	{
-		$config                           = new Autoload();
-		$config->classmap                 = [];
-		$config->psr4                     = [];
-		$moduleConfig                     = new Modules();
-		$moduleConfig->discoverInComposer = false;
+        $resolvedPath = realpath($actual);
+        $actual       = $resolvedPath !== false ? $resolvedPath : $actual;
 
-		$this->loader = new Autoloader();
-		$this->loader->initialize($config, $moduleConfig);
-	}
+        $this->assertSame($expected, $actual);
 
-	public function testAddNamespaceWorks()
-	{
-		$this->assertFalse($this->loader->loadClass('My\App\Class'));
+        $autoloader->unregister();
+    }
 
-		$this->loader->addNamespace('My\App', __DIR__);
+    public function testExistingFile(): void
+    {
+        $actual   = ($this->classLoader)(Home::class);
+        $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
+        $this->assertSame($expected, $actual);
 
-		$actual   = $this->loader->loadClass('My\App\AutoloaderTest');
-		$expected = __FILE__;
+        $actual   = ($this->classLoader)('CodeIgniter\Helpers\array_helper');
+        $expected = SYSTEMPATH . 'Helpers' . DIRECTORY_SEPARATOR . 'array_helper.php';
+        $this->assertSame($expected, $actual);
+    }
 
-		$this->assertSame($expected, $actual);
-	}
+    public function testMatchesWithPrecedingSlash(): void
+    {
+        $actual   = ($this->classLoader)(Home::class);
+        $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
+        $this->assertSame($expected, $actual);
+    }
 
-	public function testAddNamespaceMultiplePathsWorks()
-	{
-		$this->loader->addNamespace('My\App', APPPATH . 'Config');
-		$this->loader->addNamespace('My\App', __DIR__);
+    public function testMissingFile(): void
+    {
+        $this->assertFalse(($this->classLoader)('\App\Missing\Classname'));
+    }
 
-		$actual   = $this->loader->loadClass('My\App\App');
-		$expected = APPPATH . 'Config/App.php';
-		$this->assertSame($expected, $actual);
+    public function testAddNamespaceWorks(): void
+    {
+        $this->assertFalse(($this->classLoader)('My\App\Class'));
 
-		$actual   = $this->loader->loadClass('My\App\AutoloaderTest');
-		$expected = __FILE__;
-		$this->assertSame($expected, $actual);
-	}
+        $this->loader->addNamespace('My\App', __DIR__);
 
-	public function testAddNamespaceStringToArray()
-	{
-		$this->loader->addNamespace('App\Controllers', __DIR__);
+        $actual   = ($this->classLoader)('My\App\AutoloaderTest');
+        $expected = __FILE__;
 
-		$this->assertSame(
-			__FILE__,
-			$this->loader->loadClass('App\Controllers\AutoloaderTest')
-		);
-	}
+        $this->assertSame($expected, $actual);
+    }
 
-	//--------------------------------------------------------------------
+    public function testAddNamespaceMultiplePathsWorks(): void
+    {
+        $this->loader->addNamespace([
+            'My\App' => [
+                APPPATH . 'Config',
+                __DIR__,
+            ],
+        ]);
 
-	public function testRemoveNamespace()
-	{
-		$this->loader->addNamespace('My\App', __DIR__);
-		$this->assertSame(__FILE__, $this->loader->loadClass('My\App\AutoloaderTest'));
+        $actual   = ($this->classLoader)('My\App\App');
+        $expected = APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'App.php';
+        $this->assertSame($expected, $actual);
 
-		$this->loader->removeNamespace('My\App');
-		$this->assertFalse((bool) $this->loader->loadClass('My\App\AutoloaderTest'));
-	}
+        $actual   = ($this->classLoader)('My\App\AutoloaderTest');
+        $expected = __FILE__;
+        $this->assertSame($expected, $actual);
+    }
 
-	//--------------------------------------------------------------------
+    public function testAddNamespaceStringToArray(): void
+    {
+        $this->loader->addNamespace('App\Controllers', __DIR__);
 
-	public function testLoadLegacy()
-	{
-		// should not be able to find a folder
-		$this->assertFalse((bool) $this->loader->loadClass(__DIR__));
-		// should be able to find these because we said so in the Autoloader
-		$this->assertTrue((bool) $this->loader->loadClass('Home'));
-		// should not be able to find these - don't exist
-		$this->assertFalse((bool) $this->loader->loadClass('anotherLibrary'));
-		$this->assertFalse((bool) $this->loader->loadClass('\nester\anotherLibrary'));
-		// should not be able to find these legacy classes - namespaced
-		$this->assertFalse($this->loader->loadClass('Controllers\Home'));
-	}
+        $this->assertSame(
+            __FILE__,
+            ($this->classLoader)('App\Controllers\AutoloaderTest'),
+        );
+    }
 
-	//--------------------------------------------------------------------
+    public function testGetNamespaceGivesArray(): void
+    {
+        $this->assertSame([
+            'App'         => [APPPATH],
+            'CodeIgniter' => [SYSTEMPATH],
+        ], $this->loader->getNamespace());
 
-	public function testSanitizationSimply()
-	{
-		$test     = '${../path}!#/to/some/file.php_';
-		$expected = '/path/to/some/file.php';
+        $this->assertSame([SYSTEMPATH], $this->loader->getNamespace('CodeIgniter'));
+        $this->assertSame([], $this->loader->getNamespace('Foo'));
+    }
 
-		$this->assertEquals($expected, $this->loader->sanitizeFilename($test));
-	}
+    public function testRemoveNamespace(): void
+    {
+        $this->loader->addNamespace('My\App', __DIR__);
+        $this->assertSame(__FILE__, ($this->classLoader)('My\App\AutoloaderTest'));
 
-	//--------------------------------------------------------------------
+        $this->loader->removeNamespace('My\App');
+        $this->assertFalse(($this->classLoader)('My\App\AutoloaderTest'));
+    }
 
-	public function testSanitizationAllowsWindowsFilepaths()
-	{
-		$test = 'C:\path\to\some/file.php';
+    public function testloadClassNonNamespaced(): void
+    {
+        $this->assertFalse(($this->classLoader)('Modules'));
+    }
 
-		$this->assertEquals($test, $this->loader->sanitizeFilename($test));
-	}
+    public function testSanitizationContailsSpecialChars(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The file path contains special characters "${}!#" that are not allowed: "${../path}!#/to/some/file.php_"',
+        );
 
-	//--------------------------------------------------------------------
+        $test = '${../path}!#/to/some/file.php_';
 
-	public function testFindsComposerRoutes()
-	{
-		$config                           = new Autoload();
-		$moduleConfig                     = new Modules();
-		$moduleConfig->discoverInComposer = true;
+        $this->loader->sanitizeFilename($test);
+    }
 
-		$this->loader = new Autoloader();
-		$this->loader->initialize($config, $moduleConfig);
+    public function testSanitizationFilenameEdges(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The characters ".-_" are not allowed in filename edges: "/path/to/some/file.php_"',
+        );
 
-		$namespaces = $this->loader->getNamespace();
-		$this->assertArrayHasKey('Zend\\Escaper', $namespaces);
-	}
+        $test = '/path/to/some/file.php_';
+
+        $this->loader->sanitizeFilename($test);
+    }
+
+    public function testSanitizationRegexError(): void
+    {
+        $this->expectException(RuntimeException::class);
+
+        $test = mb_convert_encoding('クラスファイル.php', 'EUC-JP', 'UTF-8');
+
+        $this->loader->sanitizeFilename($test);
+    }
+
+    public function testSanitizationAllowUnicodeChars(): void
+    {
+        $test = 'Ä/path/to/some/file.php';
+
+        $this->assertSame($test, $this->loader->sanitizeFilename($test));
+    }
+
+    public function testSanitizationAllowsWindowsFilepaths(): void
+    {
+        $test = 'C:\path\to\some/file.php';
+
+        $this->assertSame($test, $this->loader->sanitizeFilename($test));
+    }
+
+    public function testFindsComposerRoutes(): void
+    {
+        $config                      = new Autoload();
+        $modules                     = new Modules();
+        $modules->discoverInComposer = true;
+
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
+
+        $namespaces = $loader->getNamespace();
+        $this->assertArrayHasKey('Laminas\\Escaper', $namespaces);
+    }
+
+    public function testComposerNamespaceDoesNotOverwriteConfigAutoloadPsr4(): void
+    {
+        $config       = new Autoload();
+        $config->psr4 = [
+            'Psr\Log' => '/Config/Autoload/Psr/Log/',
+        ];
+        $modules                     = new Modules();
+        $modules->discoverInComposer = true;
+
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
+
+        $namespaces = $loader->getNamespace();
+        $this->assertSame('/Config/Autoload/Psr/Log/', $namespaces['Psr\Log'][0]);
+        $this->assertStringContainsString(VENDORPATH, $namespaces['Psr\Log'][1]);
+    }
+
+    public function testComposerPackagesOnly(): void
+    {
+        $config                      = new Autoload();
+        $config->psr4                = [];
+        $modules                     = new Modules();
+        $modules->discoverInComposer = true;
+        $modules->composerPackages   = ['only' => ['laminas/laminas-escaper']];
+
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
+
+        $namespaces = $loader->getNamespace();
+
+        $this->assertCount(1, $namespaces);
+        $this->assertStringContainsString(VENDORPATH, $namespaces['Laminas\Escaper'][0]);
+    }
+
+    public function testComposerPackagesExclude(): void
+    {
+        $config                      = new Autoload();
+        $config->psr4                = [];
+        $modules                     = new Modules();
+        $modules->discoverInComposer = true;
+        $modules->composerPackages   = [
+            'exclude' => [
+                'psr/log',
+                'laminas/laminas-escaper',
+            ],
+        ];
+
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
+
+        $namespaces = $loader->getNamespace();
+
+        $this->assertArrayNotHasKey('Psr\Log', $namespaces);
+        $this->assertArrayNotHasKey('Laminas\\Escaper', $namespaces);
+    }
+
+    public function testComposerPackagesOnlyAndExclude(): void
+    {
+        $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage('Cannot use "only" and "exclude" at the same time in "Config\Modules::$composerPackages".');
+
+        $config                      = new Autoload();
+        $config->psr4                = [];
+        $modules                     = new Modules();
+        $modules->discoverInComposer = true;
+        $modules->composerPackages   = [
+            'only'    => ['laminas/laminas-escaper'],
+            'exclude' => ['psr/log'],
+        ];
+
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
+    }
+
+    public function testFindsComposerRoutesWithComposerPathNotFound(): void
+    {
+        $composerPath = COMPOSER_PATH;
+
+        $config                      = new Autoload();
+        $modules                     = new Modules();
+        $modules->discoverInComposer = true;
+
+        $loader = new Autoloader();
+
+        rename(COMPOSER_PATH, COMPOSER_PATH . '.backup');
+        $loader->initialize($config, $modules);
+        rename(COMPOSER_PATH . '.backup', $composerPath);
+
+        $namespaces = $loader->getNamespace();
+        $this->assertArrayNotHasKey('Laminas\\Escaper', $namespaces);
+    }
+
+    public function testAutoloaderLoadsNonClassFiles(): void
+    {
+        $config          = new Autoload();
+        $config->files[] = SUPPORTPATH . 'Autoloader/functions.php';
+
+        $loader = new Autoloader();
+        $loader->initialize($config, new Modules());
+        $loader->register();
+
+        $this->assertTrue(function_exists('autoload_foo'));
+        $this->assertSame('I am autoloaded by Autoloader through $files!', autoload_foo());
+        $this->assertTrue(defined('AUTOLOAD_CONSTANT')); // @phpstan-ignore method.alreadyNarrowedType
+        $this->assertSame('foo', AUTOLOAD_CONSTANT);
+
+        $loader->unregister();
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[WithoutErrorHandler]
+    public function testLoadHelpers(): void
+    {
+        $config            = new Autoload();
+        $config->helpers[] = 'form';
+
+        $loader = new Autoloader();
+        $loader->initialize($config, new Modules());
+
+        $loader->loadHelpers();
+
+        $this->assertTrue(function_exists('form_open'));
+
+        $loader->unregister();
+    }
 }

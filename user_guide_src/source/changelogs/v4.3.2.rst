@@ -1,0 +1,49 @@
+Version 4.3.2
+#############
+
+Release Date: February 18, 2023
+
+**4.3.2 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+BREAKING
+********
+
+Behavior Changes
+================
+
+base_url()
+----------
+
+- Due to a bug, in previous versions :php:func:`base_url()` without argument
+  returned baseURL without a trailing slash (``/``) like ``http://localhost:8080``.
+- Now it returns baseURL with a trailing slash. This is the same behavior as
+  ``base_url()`` in CodeIgniter 3.
+
+.. _v432-uri-string:
+
+uri_string()
+------------
+
+- The parameter ``$relative`` in :php:func:`uri_string()` was removed. Due to a bug,
+  the function always returned a path relative to baseURL.
+- When baseURL is accessed, it will now return an empty string (``''``). This is
+  the same behavior as ``uri_string()`` in CodeIgniter 3. In previous versions
+  it returned ``/``.
+
+Bugs Fixed
+**********
+
+- **QueryBuilder:** ``where()`` generates incorrect SQL when using ``RawSql``
+- **QueryBuilder:** ``RawSql`` passed to ``set()`` disappears without error
+- **Session:** Can't connect to Redis with ``RedisHandler`` over TLS
+- **Autoloader:** May not add Composer package's namespaces
+- **Parser:** ``!`` does not work if delimiters are changed
+- **UserGuide:** Added missing items in ChangeLog and Upgrading Guide v4.3.0
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

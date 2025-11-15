@@ -1,112 +1,299 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+declare(strict_types=1);
 
 /**
- * @group DatabaseLive
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
-class InsertTest extends CIDatabaseTestCase
+
+namespace CodeIgniter\Database\Live;
+
+use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Forge;
+use CodeIgniter\Database\RawSql;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
+use Config\Database;
+use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Database\Seeds\CITestSeeder;
+
+/**
+ * @internal
+ */
+#[Group('DatabaseLive')]
+final class InsertTest extends CIUnitTestCase
 {
-	protected $refresh = true;
+    use DatabaseTestTrait;
 
-	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    /**
+     * @var Forge
+     */
+    public $forge;
 
-	public function testInsert()
-	{
-		$job_data = [
-			'name'        => 'Grocery Sales',
-			'description' => 'Discount!',
-		];
+    protected $refresh = true;
+    protected $seed    = CITestSeeder::class;
 
-		$this->db->table('job')->insert($job_data);
+    public function testInsert(): void
+    {
+        $jobData = [
+            'name'        => 'Grocery Sales',
+            'description' => 'Discount!',
+        ];
 
-		$this->seeInDatabase('job', ['name' => 'Grocery Sales']);
-	}
+        $this->db->table('job')->insert($jobData);
 
-	//--------------------------------------------------------------------
+        $this->seeInDatabase('job', ['name' => 'Grocery Sales']);
+    }
 
-	public function testInsertBatch()
-	{
-		$job_data = [
-			[
-				'name'        => 'Comedian',
-				'description' => 'Theres something in your teeth',
-			],
-			[
-				'name'        => 'Cab Driver',
-				'description' => 'Iam yellow',
-			],
-		];
+    public function testInsertBatch(): void
+    {
+        $table = 'type_test';
 
-		$this->db->table('job')->insertBatch($job_data);
+        $builder = $this->db->table($table);
+        $builder->truncate();
 
-		$this->seeInDatabase('job', ['name' => 'Comedian']);
-		$this->seeInDatabase('job', ['name' => 'Cab Driver']);
-	}
+        $data = [
+            [
+                'type_varchar'  => 'test1',
+                'type_char'     => 'char',
+                'type_smallint' => 32767,
+                'type_integer'  => 2_147_483_647,
+                'type_bigint'   => 9_223_372_036_854_775_807,
+                'type_numeric'  => 123.23,
+                'type_date'     => '2023-12-01',
+                'type_datetime' => '2023-12-21 12:00:00',
+            ],
+            [
+                'type_varchar'  => 'test2',
+                'type_char'     => 'char',
+                'type_smallint' => 32767,
+                'type_integer'  => 2_147_483_647,
+                'type_bigint'   => 9_223_372_036_854_775_807,
+                'type_numeric'  => 123.23,
+                'type_date'     => '2023-12-02',
+                'type_datetime' => '2023-12-21 12:00:00',
+            ],
+        ];
 
-	//--------------------------------------------------------------------
+        $count = $this->db->table($table)->insertBatch($data);
 
-	public function testReplaceWithNoMatchingData()
-	{
-		$data = [
-			'id'          => 5,
-			'name'        => 'Cab Driver',
-			'description' => 'Iam yellow',
-		];
+        $this->assertSame(2, $count);
 
-		$this->db->table('job')->replace($data);
+        $expected = $data;
+        $this->seeInDatabase($table, $expected[0]);
+        $this->seeInDatabase($table, $expected[1]);
+    }
 
-		$row = $this->db->table('job')
-						->getwhere(['id' => 5])
-						->getRow();
+    public function testInsertBatchFailed(): void
+    {
+        $this->expectException(DatabaseException::class);
 
-		$this->assertEquals('Cab Driver', $row->name);
-	}
+        $data = [
+            [
+                'name' => 'Grocery Sales',
+            ],
+            [
+                'name' => null,
+            ],
+        ];
 
-	//--------------------------------------------------------------------
+        $db = $this->db;
 
-	public function testReplaceWithMatchingData()
-	{
-		$data = [
-			'id'          => 1,
-			'name'        => 'Cab Driver',
-			'description' => 'Iam yellow',
-		];
+        if ($this->db->DBDriver === 'MySQLi') {
+            // strict mode is required for MySQLi to throw an exception here
+            $config                    = config('Database');
+            $config->tests['strictOn'] = true;
 
-		$this->db->table('job')->replace($data);
+            $db = Database::connect($config->tests);
+        }
 
-		$row = $this->db->table('job')
-						->getwhere(['id' => 1])
-						->getRow();
+        $db->table('job')->insertBatch($data);
+    }
 
-		$this->assertEquals('Cab Driver', $row->name);
-	}
+    public function testReplaceWithNoMatchingData(): void
+    {
+        $data = [
+            'id'          => 5,
+            'name'        => 'Cab Driver',
+            'description' => 'Iam yellow',
+        ];
 
-	//--------------------------------------------------------------------
+        $this->db->table('job')->replace($data);
 
-	public function testBug302()
-	{
-		$code = "my code \'CodeIgniter\Autoloader\'";
+        $row = $this->db->table('job')
+            ->getWhere(['id' => 5])
+            ->getRow();
 
-		$this->db->table('misc')->insert([
-			'key'   => 'test',
-			'value' => $code,
-		]);
+        $this->assertSame('Cab Driver', $row->name);
+    }
 
-		$this->seeInDatabase('misc', ['key' => 'test']);
-		$this->seeInDatabase('misc', ['value' => $code]);
-	}
+    public function testReplaceWithMatchingData(): void
+    {
+        $data = [
+            'id'          => 1,
+            'name'        => 'Cab Driver',
+            'description' => 'Iam yellow',
+        ];
 
-	public function testInsertPasswordHash()
-	{
-		$hash = '$2y$10$tNevVVMwW52V2neE3H79a.wp8ZoItrwosk54.Siz5Fbw55X9YIBsW';
+        $this->db->table('job')->replace($data);
 
-		$this->db->table('misc')->insert([
-			'key'   => 'password',
-			'value' => $hash,
-		]);
+        $row = $this->db->table('job')
+            ->getWhere(['id' => 1])
+            ->getRow();
 
-		$this->seeInDatabase('misc', ['value' => $hash]);
-	}
+        $this->assertSame('Cab Driver', $row->name);
+    }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/6726
+     */
+    public function testReplaceTwice(): void
+    {
+        $builder = $this->db->table('job');
+
+        $data = [
+            'id'          => 1,
+            'name'        => 'John Smith',
+            'description' => 'American',
+        ];
+        $builder->replace($data);
+
+        $row = $this->db->table('job')
+            ->getWhere(['id' => 1])
+            ->getRow();
+        $this->assertSame('John Smith', $row->name);
+
+        $data = [
+            'id'          => 2,
+            'name'        => 'Hans Schmidt',
+            'description' => 'German',
+        ];
+        $builder->replace($data);
+
+        $row = $this->db->table('job')
+            ->getWhere(['id' => 2])
+            ->getRow();
+        $this->assertSame('Hans Schmidt', $row->name);
+    }
+
+    public function testBug302(): void
+    {
+        $code = "my code \\'CodeIgniter\\Autoloader\\'";
+
+        $this->db->table('misc')->insert([
+            'key'   => 'test',
+            'value' => $code,
+        ]);
+
+        $this->seeInDatabase('misc', ['key' => 'test']);
+        $this->seeInDatabase('misc', ['value' => $code]);
+    }
+
+    public function testInsertPasswordHash(): void
+    {
+        $hash = '$2y$10$tNevVVMwW52V2neE3H79a.wp8ZoItrwosk54.Siz5Fbw55X9YIBsW';
+
+        $this->db->table('misc')->insert([
+            'key'   => 'password',
+            'value' => $hash,
+        ]);
+
+        $this->seeInDatabase('misc', ['value' => $hash]);
+    }
+
+    public function setupUser2(): void
+    {
+        $this->forge->dropTable('user2', true);
+
+        $this->forge->addField([
+            'id'          => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
+            'name'        => ['type' => 'VARCHAR', 'constraint' => 80],
+            'email'       => ['type' => 'VARCHAR', 'constraint' => 100],
+            'country'     => ['type' => 'VARCHAR', 'constraint' => 40],
+            'created_at'  => ['type' => 'DATETIME', 'null' => true],
+            'updated_at'  => ['type' => 'DATETIME', 'null' => true],
+            'deleted_at'  => ['type' => 'DATETIME', 'null' => true],
+            'last_loggin' => ['type' => 'DATETIME', 'null' => true],
+        ])->addKey('id', true)->addUniqueKey('email')->addKey('country')->createTable('user2', true);
+
+        $data = [
+            [
+                'name'    => 'Derek Jones user2',
+                'email'   => 'derek@world.com',
+                'country' => 'France',
+            ],
+            [
+                'name'    => 'Ahmadinejad user2',
+                'email'   => 'ahmadinejad@world.com',
+                'country' => 'Greece',
+            ],
+            [
+                'name'    => 'Richard A Causey user2',
+                'email'   => 'richard@world.com',
+                'country' => 'France',
+            ],
+            [
+                'name'    => 'Chris Martin user2',
+                'email'   => 'chris@world.com',
+                'country' => 'Greece',
+            ],
+            [
+                'name'    => 'New User user2',
+                'email'   => 'newuser@example.com',
+                'country' => 'US',
+            ],
+            [
+                'name'    => 'New User2 user2',
+                'email'   => 'newuser2@example.com',
+                'country' => 'US',
+            ],
+        ];
+        $this->db->table('user2')->insertBatch($data);
+    }
+
+    public function testInsertBatchWithQuery(): void
+    {
+        $this->forge = Database::forge($this->DBGroup);
+
+        $this->setupUser2();
+
+        $subQuery = $this->db->table('user2')
+            ->select('user2.name, user2.email, user2.country')
+            ->join('user', 'user.email = user2.email', 'left')
+            ->where('user.email IS NULL');
+
+        $this->db->table('user')->setQueryAsData($subQuery)->insertBatch();
+
+        $this->seeInDatabase('user', ['name' => 'New User user2']);
+        $this->seeInDatabase('user', ['name' => 'New User2 user2']);
+
+        $this->forge->dropTable('user2', true);
+    }
+
+    public function testInsertBatchWithQueryAndRawSqlAndManualColumns(): void
+    {
+        $this->forge = Database::forge($this->DBGroup);
+
+        $this->setupUser2();
+
+        $sql = $this->db->table('user2')
+            ->select('user2.name, user2.email, user2.country')
+            ->join('user', 'user.email = user2.email', 'left')
+            ->where('user.email IS NULL')
+            ->getCompiledSelect();
+
+        $this->db->table('user')
+            ->setQueryAsData(new RawSql($sql), null, 'name, email, country')
+            ->insertBatch();
+
+        $this->seeInDatabase('user', ['name' => 'New User user2']);
+        $this->seeInDatabase('user', ['name' => 'New User2 user2']);
+
+        $this->forge->dropTable('user2', true);
+    }
 }

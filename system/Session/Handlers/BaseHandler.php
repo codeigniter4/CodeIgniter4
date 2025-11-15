@@ -1,217 +1,177 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * CodeIgniter
+ * This file is part of CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Session\Handlers;
 
-use CodeIgniter\Config\BaseConfig;
+use Config\Cookie as CookieConfig;
+use Config\Session as SessionConfig;
 use Psr\Log\LoggerAwareTrait;
+use SessionHandlerInterface;
 
 /**
  * Base class for session handling
  */
-abstract class BaseHandler implements \SessionHandlerInterface
+abstract class BaseHandler implements SessionHandlerInterface
 {
+    use LoggerAwareTrait;
 
-	use LoggerAwareTrait;
+    /**
+     * The Data fingerprint.
+     *
+     * @var string
+     */
+    protected $fingerprint;
 
-	/**
-	 * The Data fingerprint.
-	 *
-	 * @var boolean
-	 */
-	protected $fingerprint;
+    /**
+     * Lock placeholder.
+     *
+     * @var bool|string
+     */
+    protected $lock = false;
 
-	/**
-	 * Lock placeholder.
-	 *
-	 * @var mixed
-	 */
-	protected $lock = false;
+    /**
+     * Cookie prefix
+     *
+     * The Config\Cookie::$prefix setting is completely ignored.
+     * See https://codeigniter.com/user_guide/libraries/sessions.html#session-preferences
+     *
+     * @var string
+     */
+    protected $cookiePrefix = '';
 
-	/**
-	 * Cookie prefix
-	 *
-	 * @var string
-	 */
-	protected $cookiePrefix = '';
+    /**
+     * Cookie domain
+     *
+     * @var string
+     */
+    protected $cookieDomain = '';
 
-	/**
-	 * Cookie domain
-	 *
-	 * @var string
-	 */
-	protected $cookieDomain = '';
+    /**
+     * Cookie path
+     *
+     * @var string
+     */
+    protected $cookiePath = '/';
 
-	/**
-	 * Cookie path
-	 *
-	 * @var string
-	 */
-	protected $cookiePath = '/';
+    /**
+     * Cookie secure?
+     *
+     * @var bool
+     */
+    protected $cookieSecure = false;
 
-	/**
-	 * Cookie secure?
-	 *
-	 * @var boolean
-	 */
-	protected $cookieSecure = false;
+    /**
+     * Cookie name to use
+     *
+     * @var string
+     */
+    protected $cookieName;
 
-	/**
-	 * Cookie name to use
-	 *
-	 * @var string
-	 */
-	protected $cookieName;
+    /**
+     * Match IP addresses for cookies?
+     *
+     * @var bool
+     */
+    protected $matchIP = false;
 
-	/**
-	 * Match IP addresses for cookies?
-	 *
-	 * @var boolean
-	 */
-	protected $matchIP = false;
+    /**
+     * Current session ID
+     *
+     * @var string|null
+     */
+    protected $sessionID;
 
-	/**
-	 * Current session ID
-	 *
-	 * @var string
-	 */
-	protected $sessionID;
+    /**
+     * The 'save path' for the session
+     * varies between
+     *
+     * @var array|string
+     */
+    protected $savePath;
 
-	/**
-	 * The 'save path' for the session
-	 * varies between
-	 *
-	 * @var string
-	 */
-	protected $savePath;
+    /**
+     * User's IP address.
+     *
+     * @var string
+     */
+    protected $ipAddress;
 
-	/**
-	 * User's IP address.
-	 *
-	 * @var string
-	 */
-	protected $ipAddress;
+    public function __construct(SessionConfig $config, string $ipAddress)
+    {
+        // Store Session configurations
+        $this->cookieName = $config->cookieName;
+        $this->matchIP    = $config->matchIP;
+        $this->savePath   = $config->savePath;
 
-	//--------------------------------------------------------------------
+        $cookie = config(CookieConfig::class);
 
-	/**
-	 * Constructor
-	 *
-	 * @param BaseConfig $config
-	 * @param string     $ipAddress
-	 */
-	public function __construct($config, string $ipAddress)
-	{
-		$this->cookiePrefix = $config->cookiePrefix;
-		$this->cookieDomain = $config->cookieDomain;
-		$this->cookiePath   = $config->cookiePath;
-		$this->cookieSecure = $config->cookieSecure;
-		$this->cookieName   = $config->sessionCookieName;
-		$this->matchIP      = $config->sessionMatchIP;
-		$this->savePath     = $config->sessionSavePath;
-		$this->ipAddress    = $ipAddress;
-	}
+        // Session cookies have no prefix.
+        $this->cookieDomain = $cookie->domain;
+        $this->cookiePath   = $cookie->path;
+        $this->cookieSecure = $cookie->secure;
 
-	//--------------------------------------------------------------------
+        $this->ipAddress = $ipAddress;
+    }
 
-	/**
-	 * Internal method to force removal of a cookie by the client
-	 * when session_destroy() is called.
-	 *
-	 * @return boolean
-	 */
-	protected function destroyCookie(): bool
-	{
-		return setcookie(
-				$this->cookieName, null, 1, $this->cookiePath, $this->cookieDomain, $this->cookieSecure, true
-		);
-	}
+    /**
+     * Internal method to force removal of a cookie by the client
+     * when session_destroy() is called.
+     */
+    protected function destroyCookie(): bool
+    {
+        return setcookie(
+            $this->cookieName,
+            '',
+            ['expires' => 1, 'path' => $this->cookiePath, 'domain' => $this->cookieDomain, 'secure' => $this->cookieSecure, 'httponly' => true],
+        );
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * A dummy method allowing drivers with no locking functionality
+     * (databases other than PostgreSQL and MySQL) to act as if they
+     * do acquire a lock.
+     */
+    protected function lockSession(string $sessionID): bool
+    {
+        $this->lock = true;
 
-	/**
-	 * A dummy method allowing drivers with no locking functionality
-	 * (databases other than PostgreSQL and MySQL) to act as if they
-	 * do acquire a lock.
-	 *
-	 * @param string $sessionID
-	 *
-	 * @return boolean
-	 */
-	protected function lockSession(string $sessionID): bool
-	{
-		$this->lock = true;
-		return true;
-	}
+        return true;
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * Releases the lock, if any.
+     */
+    protected function releaseLock(): bool
+    {
+        $this->lock = false;
 
-	/**
-	 * Releases the lock, if any.
-	 *
-	 * @return boolean
-	 */
-	protected function releaseLock(): bool
-	{
-		$this->lock = false;
+        return true;
+    }
 
-		return true;
-	}
+    /**
+     * Drivers other than the 'files' one don't (need to) use the
+     * session.save_path INI setting, but that leads to confusing
+     * error messages emitted by PHP when open() or write() fail,
+     * as the message contains session.save_path ...
+     *
+     * To work around the problem, the drivers will call this method
+     * so that the INI is set just in time for the error message to
+     * be properly generated.
+     */
+    protected function fail(): bool
+    {
+        ini_set('session.save_path', $this->savePath);
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * Fail
-	 *
-	 * Drivers other than the 'files' one don't (need to) use the
-	 * session.save_path INI setting, but that leads to confusing
-	 * error messages emitted by PHP when open() or write() fail,
-	 * as the message contains session.save_path ...
-	 * To work around the problem, the drivers will call this method
-	 * so that the INI is set just in time for the error message to
-	 * be properly generated.
-	 *
-	 * @return boolean
-	 */
-	protected function fail(): bool
-	{
-		ini_set('session.save_path', $this->savePath);
-
-		return false;
-	}
+        return false;
+    }
 }

@@ -1,0 +1,3 @@
+<?php
+
+$postManager = service('postManager');

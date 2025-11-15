@@ -21,28 +21,9 @@
 #--------------------------------------------------------------------
 
 # app.baseURL = ''
+# If you have trouble with `.`, you could also use `_`.
+# app_baseURL = ''
 # app.forceGlobalSecureRequests = false
-
-# app.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'
-# app.sessionCookieName = 'ci_session'
-# app.sessionSavePath = NULL
-# app.sessionMatchIP = false
-# app.sessionTimeToUpdate = 300
-# app.sessionRegenerateDestroy = false
-
-# app.cookiePrefix = ''
-# app.cookieDomain = ''
-# app.cookiePath = '/'
-# app.cookieSecure = false
-# app.cookieHTTPOnly = false
-
-# app.CSRFProtection  = false
-# app.CSRFTokenName   = 'csrf_test_name'
-# app.CSRFCookieName  = 'csrf_cookie_name'
-# app.CSRFExpire      = 7200
-# app.CSRFRegenerate  = true
-# app.CSRFExcludeURIs = []
-
 # app.CSPEnabled = false
 
 #--------------------------------------------------------------------
@@ -54,40 +35,35 @@
 # database.default.username = root
 # database.default.password = root
 # database.default.DBDriver = MySQLi
+# database.default.DBPrefix =
+# database.default.port = 3306
 
+# If you use MySQLi as tests, first update the values of Config\Database::$tests.
 # database.tests.hostname = localhost
-# database.tests.database = ci4
+# database.tests.database = ci4_test
 # database.tests.username = root
 # database.tests.password = root
 # database.tests.DBDriver = MySQLi
+# database.tests.DBPrefix =
+# database.tests.charset = utf8mb4
+# database.tests.DBCollat = utf8mb4_general_ci
+# database.tests.port = 3306
 
 #--------------------------------------------------------------------
-# CONTENT SECURITY POLICY
+# ENCRYPTION
 #--------------------------------------------------------------------
 
-# contentsecuritypolicy.reportOnly = false
-# contentsecuritypolicy.defaultSrc = 'none'
-# contentsecuritypolicy.scriptSrc = 'self'
-# contentsecuritypolicy.styleSrc = 'self'
-# contentsecuritypolicy.imageSrc = 'self'
-# contentsecuritypolicy.base_uri = null
-# contentsecuritypolicy.childSrc = null
-# contentsecuritypolicy.connectSrc = 'self'
-# contentsecuritypolicy.fontSrc = null
-# contentsecuritypolicy.formAction = null
-# contentsecuritypolicy.frameAncestors = null
-# contentsecuritypolicy.mediaSrc = null
-# contentsecuritypolicy.objectSrc = null
-# contentsecuritypolicy.pluginTypes = null
-# contentsecuritypolicy.reportURI = null
-# contentsecuritypolicy.sandbox = false
-# contentsecuritypolicy.upgradeInsecureRequests = false
+# encryption.key =
 
 #--------------------------------------------------------------------
-# HONEYPOT
+# SESSION
 #--------------------------------------------------------------------
 
-#  honeypot.hidden = 'true'
-#  honeypot.label = 'Fill This Field'
-#  honeypot.name = 'honeypot'
-#  honeypot.template = '<label>{label}</label><input type="text" name="{name}" value=""/>'
+# session.driver = 'CodeIgniter\Session\Handlers\FileHandler'
+# session.savePath = null
+
+#--------------------------------------------------------------------
+# LOGGER
+#--------------------------------------------------------------------
+
+# logger.threshold = 4

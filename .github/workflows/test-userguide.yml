@@ -1,0 +1,44 @@
+# When a Pull Request is opened that modifies
+# the User Guide source, build the User Guide
+# with Sphinx and let the contributor know of
+# any errors.
+name: Test User Guide
+
+on:
+  pull_request:
+    paths:
+      - 'user_guide_src/**'
+      - '.github/workflows/test-userguide.yml'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  syntax_check:
+    name: Check User Guide syntax
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install Sphinx
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r user_guide_src/requirements.txt
+
+      - name: Detect usage of tabs in RST files
+        run: php utils/check_tabs_in_rst.php
+
+      - name: Build Docs with Sphinx
+        run: make html SPHINXOPTS="-W --keep-going -w /tmp/sphinx-log"
+        working-directory: user_guide_src

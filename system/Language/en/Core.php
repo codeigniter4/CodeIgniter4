@@ -1,22 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Core language strings.
+ * This file is part of CodeIgniter 4 framework.
  *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * @codeCoverageIgnore
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
+// Core language settings
 return [
-   'invalidFile'      => 'Invalid file: {0}',
-   'copyError'        => 'An error was encountered while attempting to replace the file({0}). Please make sure your file directory is writable.',
-   'missingExtension' => '{0} extension is not loaded.',
-   'noHandlers'       => '{0} must provide at least one Handler.',
+    'copyError'                    => 'An error was encountered while attempting to replace the file "{0}". Please make sure your file directory is writable.',
+    'enabledZlibOutputCompression' => 'Your zlib.output_compression ini directive is turned on. This will not work well with output buffers.',
+    'invalidFile'                  => 'Invalid file: "{0}"',
+    'invalidDirectory'             => 'Directory does not exist: "{0}"',
+    'invalidPhpVersion'            => 'Your PHP version must be {0} or higher to run CodeIgniter. Current version: {1}',
+    'missingExtension'             => 'The framework needs the following extension(s) installed and loaded: "{0}".',
+    'noHandlers'                   => '"{0}" must provide at least one Handler.',
 ];

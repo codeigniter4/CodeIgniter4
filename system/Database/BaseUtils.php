@@ -1,39 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * CodeIgniter
+ * This file is part of CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Database;
@@ -45,413 +20,309 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
  */
 abstract class BaseUtils
 {
+    /**
+     * Database object
+     *
+     * @var object
+     */
+    protected $db;
 
-	/**
-	 * Database object
-	 *
-	 * @var object
-	 */
-	protected $db;
+    /**
+     * List databases statement
+     *
+     * @var bool|string
+     */
+    protected $listDatabases = false;
 
-	//--------------------------------------------------------------------
+    /**
+     * OPTIMIZE TABLE statement
+     *
+     * @var bool|string
+     */
+    protected $optimizeTable = false;
 
-	/**
-	 * List databases statement
-	 *
-	 * @var string
-	 */
-	protected $listDatabases = false;
+    /**
+     * REPAIR TABLE statement
+     *
+     * @var bool|string
+     */
+    protected $repairTable = false;
 
-	/**
-	 * OPTIMIZE TABLE statement
-	 *
-	 * @var string
-	 */
-	protected $optimizeTable = false;
+    /**
+     * Class constructor
+     */
+    public function __construct(ConnectionInterface $db)
+    {
+        $this->db = $db;
+    }
 
-	/**
-	 * REPAIR TABLE statement
-	 *
-	 * @var string
-	 */
-	protected $repairTable = false;
+    /**
+     * List databases
+     *
+     * @return array|bool
+     *
+     * @throws DatabaseException
+     */
+    public function listDatabases()
+    {
+        // Is there a cached result?
+        if (isset($this->db->dataCache['db_names'])) {
+            return $this->db->dataCache['db_names'];
+        }
 
-	//--------------------------------------------------------------------
+        if ($this->listDatabases === false) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('Unsupported feature of the database platform you are using.');
+            }
 
-	/**
-	 * Class constructor
-	 *
-	 * @param ConnectionInterface|object $db
-	 */
-	public function __construct(ConnectionInterface &$db)
-	{
-		$this->db = & $db;
-	}
+            return false;
+        }
 
-	//--------------------------------------------------------------------
+        $this->db->dataCache['db_names'] = [];
 
-	/**
-	 * List databases
-	 *
-	 * @return array|boolean
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
-	 */
-	public function listDatabases()
-	{
-		// Is there a cached result?
-		if (isset($this->db->dataCache['db_names']))
-		{
-			return $this->db->dataCache['db_names'];
-		}
-		elseif ($this->listDatabases === false)
-		{
-			if ($this->db->DBDebug)
-			{
-				throw new DatabaseException('Unsupported feature of the database platform you are using.');
-			}
-			return false;
-		}
+        $query = $this->db->query($this->listDatabases);
+        if ($query === false) {
+            return $this->db->dataCache['db_names'];
+        }
 
-		$this->db->dataCache['db_names'] = [];
+        for ($i = 0, $query = $query->getResultArray(), $c = count($query); $i < $c; $i++) {
+            $this->db->dataCache['db_names'][] = current($query[$i]);
+        }
 
-		$query = $this->db->query($this->listDatabases);
-		if ($query === false)
-		{
-			return $this->db->dataCache['db_names'];
-		}
+        return $this->db->dataCache['db_names'];
+    }
 
-		for ($i = 0, $query = $query->getResultArray(), $c = count($query); $i < $c; $i ++)
-		{
-			$this->db->dataCache['db_names'][] = current($query[$i]);
-		}
+    /**
+     * Determine if a particular database exists
+     */
+    public function databaseExists(string $databaseName): bool
+    {
+        return in_array($databaseName, $this->listDatabases(), true);
+    }
 
-		return $this->db->dataCache['db_names'];
-	}
+    /**
+     * Optimize Table
+     *
+     * @return bool
+     *
+     * @throws DatabaseException
+     */
+    public function optimizeTable(string $tableName)
+    {
+        if ($this->optimizeTable === false) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('Unsupported feature of the database platform you are using.');
+            }
 
-	//--------------------------------------------------------------------
+            return false;
+        }
 
-	/**
-	 * Determine if a particular database exists
-	 *
-	 * @param  string $database_name
-	 * @return boolean
-	 */
-	public function databaseExists(string $database_name): bool
-	{
-		return in_array($database_name, $this->listDatabases());
-	}
+        $query = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($tableName)));
 
-	//--------------------------------------------------------------------
+        return $query !== false;
+    }
 
-	/**
-	 * Optimize Table
-	 *
-	 * @param  string $table_name
-	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
-	 */
-	public function optimizeTable(string $table_name)
-	{
-		if ($this->optimizeTable === false)
-		{
-			if ($this->db->DBDebug)
-			{
-				throw new DatabaseException('Unsupported feature of the database platform you are using.');
-			}
-			return false;
-		}
+    /**
+     * Optimize Database
+     *
+     * @return mixed
+     *
+     * @throws DatabaseException
+     */
+    public function optimizeDatabase()
+    {
+        if ($this->optimizeTable === false) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('Unsupported feature of the database platform you are using.');
+            }
 
-		$query = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($table_name)));
-		if ($query !== false)
-		{
-			$query = $query->getResultArray();
-			return current($query);
-		}
+            return false;
+        }
 
-		return false;
-	}
+        $result = [];
 
-	//--------------------------------------------------------------------
+        foreach ($this->db->listTables() as $tableName) {
+            $res = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($tableName)));
+            if (is_bool($res)) {
+                return $res;
+            }
 
-	/**
-	 * Optimize Database
-	 *
-	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
-	 */
-	public function optimizeDatabase()
-	{
-		if ($this->optimizeTable === false)
-		{
-			if ($this->db->DBDebug)
-			{
-				throw new DatabaseException('Unsupported feature of the database platform you are using.');
-			}
-			return false;
-		}
+            // Build the result array...
 
-		$result = [];
-		foreach ($this->db->listTables() as $table_name)
-		{
-			$res = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($table_name)));
-			if (is_bool($res))
-			{
-				return $res;
-			}
+            $res = $res->getResultArray();
 
-			// Build the result array...
+            // Postgre & SQLite3 returns empty array
+            if (empty($res)) {
+                $key = $tableName;
+            } else {
+                $res  = current($res);
+                $key  = str_replace($this->db->database . '.', '', current($res));
+                $keys = array_keys($res);
+                unset($res[$keys[0]]);
+            }
 
-			$res = $res->getResultArray();
+            $result[$key] = $res;
+        }
 
-			// Postgre & SQLite3 returns empty array
-			if (empty($res))
-			{
-				$key = $table_name;
-			}
-			else
-			{
-				$res  = current($res);
-				$key  = str_replace($this->db->database . '.', '', current($res));
-				$keys = array_keys($res);
-				unset($res[$keys[0]]);
-			}
+        return $result;
+    }
 
-			$result[$key] = $res;
-		}
+    /**
+     * Repair Table
+     *
+     * @return mixed
+     *
+     * @throws DatabaseException
+     */
+    public function repairTable(string $tableName)
+    {
+        if ($this->repairTable === false) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('Unsupported feature of the database platform you are using.');
+            }
 
-		return $result;
-	}
+            return false;
+        }
 
-	//--------------------------------------------------------------------
+        $query = $this->db->query(sprintf($this->repairTable, $this->db->escapeIdentifiers($tableName)));
+        if (is_bool($query)) {
+            return $query;
+        }
 
-	/**
-	 * Repair Table
-	 *
-	 * @param  string $table_name
-	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
-	 */
-	public function repairTable(string $table_name)
-	{
-		if ($this->repairTable === false)
-		{
-			if ($this->db->DBDebug)
-			{
-				throw new DatabaseException('Unsupported feature of the database platform you are using.');
-			}
-			return false;
-		}
+        $query = $query->getResultArray();
 
-		$query = $this->db->query(sprintf($this->repairTable, $this->db->escapeIdentifiers($table_name)));
-		if (is_bool($query))
-		{
-			return $query;
-		}
+        return current($query);
+    }
 
-		$query = $query->getResultArray();
-		return current($query);
-	}
+    /**
+     * Generate CSV from a query result object
+     *
+     * @return string
+     */
+    public function getCSVFromResult(ResultInterface $query, string $delim = ',', string $newline = "\n", string $enclosure = '"')
+    {
+        $out = '';
 
-	//--------------------------------------------------------------------
+        foreach ($query->getFieldNames() as $name) {
+            $out .= $enclosure . str_replace($enclosure, $enclosure . $enclosure, $name) . $enclosure . $delim;
+        }
 
-	/**
-	 * Generate CSV from a query result object
-	 *
-	 * @param ResultInterface $query     Query result object
-	 * @param string          $delim     Delimiter (default: ,)
-	 * @param string          $newline   Newline character (default: \n)
-	 * @param string          $enclosure Enclosure (default: ")
-	 *
-	 * @return string
-	 */
-	public function getCSVFromResult(ResultInterface $query, string $delim = ',', string $newline = "\n", string $enclosure = '"')
-	{
-		$out = '';
-		// First generate the headings from the table column names
-		foreach ($query->getFieldNames() as $name)
-		{
-			$out .= $enclosure . str_replace($enclosure, $enclosure . $enclosure, $name) . $enclosure . $delim;
-		}
+        $out = substr($out, 0, -strlen($delim)) . $newline;
 
-		$out = substr($out, 0, -strlen($delim)) . $newline;
+        // Next blast through the result array and build out the rows
+        while ($row = $query->getUnbufferedRow('array')) {
+            $line = [];
 
-		// Next blast through the result array and build out the rows
-		while ($row = $query->getUnbufferedRow('array'))
-		{
-			$line = [];
-			foreach ($row as $item)
-			{
-				$line[] = $enclosure . str_replace($enclosure, $enclosure . $enclosure, $item) . $enclosure;
-			}
-			$out .= implode($delim, $line) . $newline;
-		}
+            foreach ($row as $item) {
+                $line[] = $enclosure . str_replace(
+                    $enclosure,
+                    $enclosure . $enclosure,
+                    (string) $item,
+                ) . $enclosure;
+            }
 
-		return $out;
-	}
+            $out .= implode($delim, $line) . $newline;
+        }
 
-	//--------------------------------------------------------------------
+        return $out;
+    }
 
-	/**
-	 * Generate XML data from a query result object
-	 *
-	 * @param ResultInterface $query  Query result object
-	 * @param array           $params Any preferences
-	 *
-	 * @return string
-	 */
-	public function getXMLFromResult(ResultInterface $query, array $params = []): string
-	{
-		// Set our default values
-		foreach (['root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t"] as $key => $val)
-		{
-			if (! isset($params[$key]))
-			{
-				$params[$key] = $val;
-			}
-		}
+    /**
+     * Generate XML data from a query result object
+     */
+    public function getXMLFromResult(ResultInterface $query, array $params = []): string
+    {
+        foreach (['root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t"] as $key => $val) {
+            if (! isset($params[$key])) {
+                $params[$key] = $val;
+            }
+        }
 
-		// Create variables for convenience
-		extract($params);
+        $root    = $params['root'];
+        $newline = $params['newline'];
+        $tab     = $params['tab'];
+        $element = $params['element'];
 
-		// Load the xml helper
-		helper('xml');
-		// Generate the result
-		$xml = '<' . $root . '>' . $newline;
-		while ($row = $query->getUnbufferedRow())
-		{
-			$xml .= $tab . '<' . $element . '>' . $newline;
-			foreach ($row as $key => $val)
-			{
-				$val  = (! empty($val)) ? xml_convert($val) : '';
-				$xml .= $tab . $tab . '<' . $key . '>' . $val . '</' . $key . '>' . $newline;
-			}
-			$xml .= $tab . '</' . $element . '>' . $newline;
-		}
+        helper('xml');
+        $xml = '<' . $root . '>' . $newline;
 
-		return $xml . '</' . $root . '>' . $newline;
-	}
+        while ($row = $query->getUnbufferedRow()) {
+            $xml .= $tab . '<' . $element . '>' . $newline;
 
-	//--------------------------------------------------------------------
+            foreach ($row as $key => $val) {
+                $val = empty($val) ? '' : xml_convert((string) $val);
 
-	/**
-	 * Database Backup
-	 *
-	 * @param  array|string $params
-	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
-	 */
-	public function backup($params = [])
-	{
-		// If the parameters have not been submitted as an
-		// array then we know that it is simply the table
-		// name, which is a valid short cut.
-		if (is_string($params))
-		{
-			$params = ['tables' => $params];
-		}
+                $xml .= $tab . $tab . '<' . $key . '>' . $val . '</' . $key . '>' . $newline;
+            }
 
-		// Set up our default preferences
-		$prefs = [
-			'tables'             => [],
-			'ignore'             => [],
-			'filename'           => '',
-			'format'             => 'gzip', // gzip, zip, txt
-			'add_drop'           => true,
-			'add_insert'         => true,
-			'newline'            => "\n",
-			'foreign_key_checks' => true,
-		];
+            $xml .= $tab . '</' . $element . '>' . $newline;
+        }
 
-		// Did the user submit any preferences? If so set them....
-		if (! empty($params))
-		{
-			foreach ($prefs as $key => $val)
-			{
-				if (isset($params[$key]))
-				{
-					$prefs[$key] = $params[$key];
-				}
-			}
-		}
+        return $xml . '</' . $root . '>' . $newline;
+    }
 
-		// Are we backing up a complete database or individual tables?
-		// If no table names were submitted we'll fetch the entire table list
-		if (empty($prefs['tables']))
-		{
-			$prefs['tables'] = $this->db->listTables();
-		}
+    /**
+     * Database Backup
+     *
+     * @param array|string $params
+     *
+     * @return false|never|string
+     *
+     * @throws DatabaseException
+     */
+    public function backup($params = [])
+    {
+        if (is_string($params)) {
+            $params = ['tables' => $params];
+        }
 
-		// Validate the format
-		if (! in_array($prefs['format'], ['gzip', 'zip', 'txt'], true))
-		{
-			$prefs['format'] = 'txt';
-		}
+        $prefs = [
+            'tables'             => [],
+            'ignore'             => [],
+            'filename'           => '',
+            'format'             => 'gzip', // gzip, txt
+            'add_drop'           => true,
+            'add_insert'         => true,
+            'newline'            => "\n",
+            'foreign_key_checks' => true,
+        ];
 
-		// Is the encoder supported? If not, we'll either issue an
-		// error or use plain text depending on the debug settings
-		if (($prefs['format'] === 'gzip' && ! function_exists('gzencode'))
-			|| ( $prefs['format'] === 'zip' && ! function_exists('gzcompress')))
-		{
-			if ($this->db->DBDebug)
-			{
-				throw new DatabaseException('The file compression format you chose is not supported by your server.');
-			}
+        if (! empty($params)) {
+            foreach (array_keys($prefs) as $key) {
+                if (isset($params[$key])) {
+                    $prefs[$key] = $params[$key];
+                }
+            }
+        }
 
-			$prefs['format'] = 'txt';
-		}
+        if (empty($prefs['tables'])) {
+            $prefs['tables'] = $this->db->listTables();
+        }
 
-		// Was a Zip file requested?
-		if ($prefs['format'] === 'zip')
-		{
-			// Set the filename if not provided (only needed with Zip files)
-			if ($prefs['filename'] === '')
-			{
-				$prefs['filename'] = (count($prefs['tables']) === 1 ? $prefs['tables'] : $this->db->database)
-					. date('Y-m-d_H-i', time()) . '.sql';
-			}
-			else
-			{
-				// If they included the .zip file extension we'll remove it
-				if (preg_match('|.+?\.zip$|', $prefs['filename']))
-				{
-					$prefs['filename'] = str_replace('.zip', '', $prefs['filename']);
-				}
+        if (! in_array($prefs['format'], ['gzip', 'txt'], true)) {
+            $prefs['format'] = 'txt';
+        }
 
-				// Tack on the ".sql" file extension if needed
-				if (! preg_match('|.+?\.sql$|', $prefs['filename']))
-				{
-					$prefs['filename'] .= '.sql';
-				}
-			}
+        if ($prefs['format'] === 'gzip' && ! function_exists('gzencode')) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('The file compression format you chose is not supported by your server.');
+            }
 
-			// Load the Zip class and output it
-			//          $CI =& get_instance();
-			//          $CI->load->library('zip');
-			//          $CI->zip->add_data($prefs['filename'], $this->_backup($prefs));
-			//          return $CI->zip->get_zip();
-		}
-		elseif ($prefs['format'] === 'txt') // Was a text file requested?
-		{
-			return $this->_backup($prefs);
-		}
-		elseif ($prefs['format'] === 'gzip') // Was a Gzip file requested?
-		{
-			return gzencode($this->_backup($prefs));
-		}
+            $prefs['format'] = 'txt';
+        }
 
-		return;
-	}
+        if ($prefs['format'] === 'txt') {
+            return $this->_backup($prefs);
+        }
 
-	//--------------------------------------------------------------------
+        // @TODO gzencode() requires `ext-zlib`, but _backup() is not implemented in all databases.
+        return gzencode($this->_backup($prefs));
+    }
 
-	/**
-	 * Platform dependent version of the backup function.
-	 *
-	 * @param array|null $prefs
-	 *
-	 * @return mixed
-	 */
-	abstract public function _backup(array $prefs = null);
-
-	//--------------------------------------------------------------------
+    /**
+     * Platform dependent version of the backup function.
+     *
+     * @return false|never|string
+     */
+    abstract public function _backup(?array $prefs = null);
 }

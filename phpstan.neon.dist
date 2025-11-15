@@ -1,0 +1,50 @@
+includes:
+    - utils/phpstan-baseline/loader.neon
+
+parameters:
+    phpVersion: 80100
+    tmpDir: build/phpstan
+    level: 6
+    bootstrapFiles:
+        - phpstan-bootstrap.php
+    paths:
+        - admin/starter/tests
+        - app
+        - system
+        - tests
+    excludePaths:
+        analyseAndScan:
+            - app/Views/errors/cli/*
+            - app/Views/errors/html/*
+            - system/Commands/Generators/Views/*
+            - system/Debug/Toolbar/Views/toolbar.tpl.php
+            - system/Images/Handlers/GDHandler.php
+            - system/ThirdParty/*
+            - system/Validation/Views/single.php
+            - tests/system/View/Views/*
+        analyse:
+            - tests/_support/*
+    scanDirectories:
+        - system/Helpers
+    ignoreErrors:
+        -
+            identifier: missingType.generics
+    checkMissingCallableSignature: true
+    treatPhpDocTypesAsCertain: false
+    strictRules:
+        allRules: false
+        disallowedLooseComparison: true
+        booleansInConditions: true
+        disallowedBacktick: true
+        disallowedEmpty: true
+        disallowedImplicitArrayCreation: true
+        disallowedShortTernary: true
+        matchingInheritedMethodNames: true
+    codeigniter:
+        additionalServices:
+            - AfterAutoloadModule\Config\Services
+        additionalModelNamespaces:
+            - Tests\Support\Models
+        checkArgumentTypeOfModel: false
+    shipmonkBaselinePerIdentifier:
+        directory: %currentWorkingDirectory%

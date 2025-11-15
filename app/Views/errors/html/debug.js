@@ -1,13 +1,8 @@
-//--------------------------------------------------------------------
-// Tabs
-//--------------------------------------------------------------------
-
-var tabLinks = new Array();
+var tabLinks    = new Array();
 var contentDivs = new Array();
 
-function init ()
+function init()
 {
-
     // Grab the tab links and content divs from the page
     var tabListItems = document.getElementById('tabs').childNodes;
     console.log(tabListItems);
@@ -15,9 +10,9 @@ function init ()
     {
         if (tabListItems[i].nodeName == "LI")
         {
-            var tabLink = getFirstChildWithTagName(tabListItems[i], 'A');
-            var id = getHash(tabLink.getAttribute('href'));
-            tabLinks[id] = tabLink;
+            var tabLink     = getFirstChildWithTagName(tabListItems[i], 'A');
+            var id          = getHash(tabLink.getAttribute('href'));
+            tabLinks[id]    = tabLink;
             contentDivs[id] = document.getElementById(id);
         }
     }
@@ -29,7 +24,9 @@ function init ()
     for (var id in tabLinks)
     {
         tabLinks[id].onclick = showTab;
-        tabLinks[id].onfocus = function () { this.blur() };
+        tabLinks[id].onfocus = function () {
+            this.blur()
+        };
         if (i == 0)
         {
             tabLinks[id].className = 'active';
@@ -51,9 +48,7 @@ function init ()
     }
 }
 
-//--------------------------------------------------------------------
-
-function showTab ()
+function showTab()
 {
     var selectedId = getHash(this.getAttribute('href'));
 
@@ -63,12 +58,12 @@ function showTab ()
     {
         if (id == selectedId)
         {
-            tabLinks[id].className = 'active';
+            tabLinks[id].className    = 'active';
             contentDivs[id].className = 'content';
         }
         else
         {
-            tabLinks[id].className = '';
+            tabLinks[id].className    = '';
             contentDivs[id].className = 'content hide';
         }
     }
@@ -77,9 +72,7 @@ function showTab ()
     return false;
 }
 
-//--------------------------------------------------------------------
-
-function getFirstChildWithTagName (element, tagName)
+function getFirstChildWithTagName(element, tagName)
 {
     for (var i = 0; i < element.childNodes.length; i ++)
     {
@@ -90,17 +83,13 @@ function getFirstChildWithTagName (element, tagName)
     }
 }
 
-//--------------------------------------------------------------------
-
-function getHash (url)
+function getHash(url)
 {
     var hashPos = url.lastIndexOf('#');
     return url.substring(hashPos + 1);
 }
 
-//--------------------------------------------------------------------
-
-function toggle (elem)
+function toggle(elem)
 {
     elem = document.getElementById(elem);
 

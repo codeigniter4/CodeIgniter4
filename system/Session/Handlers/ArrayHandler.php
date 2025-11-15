@@ -1,152 +1,93 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * CodeIgniter
+ * This file is part of CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Session\Handlers;
 
-use CodeIgniter\Session\Exceptions\SessionException;
-use CodeIgniter\Config\BaseConfig;
-use CodeIgniter\Database\BaseConnection;
-use Config\Database;
+use ReturnTypeWillChange;
 
 /**
  * Session handler using static array for storage.
  * Intended only for use during testing.
  */
-class ArrayHandler extends BaseHandler implements \SessionHandlerInterface
+class ArrayHandler extends BaseHandler
 {
-	protected static $cache = [];
+    protected static $cache = [];
 
-	//--------------------------------------------------------------------
+    /**
+     * Re-initialize existing session, or creates a new one.
+     *
+     * @param string $path The path where to store/retrieve the session
+     * @param string $name The session name
+     */
+    public function open($path, $name): bool
+    {
+        return true;
+    }
 
-	/**
-	 * Open
-	 *
-	 * Ensures we have an initialized database connection.
-	 *
-	 * @param string $savePath Path to session files' directory
-	 * @param string $name     Session cookie name
-	 *
-	 * @return boolean
-	 * @throws \Exception
-	 */
-	public function open($savePath, $name): bool
-	{
-		return true;
-	}
+    /**
+     * Reads the session data from the session storage, and returns the results.
+     *
+     * @param string $id The session ID
+     *
+     * @return false|string Returns an encoded string of the read data.
+     *                      If nothing was read, it must return false.
+     */
+    #[ReturnTypeWillChange]
+    public function read($id)
+    {
+        return '';
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * Writes the session data to the session storage.
+     *
+     * @param string $id   The session ID
+     * @param string $data The encoded session data
+     */
+    public function write($id, $data): bool
+    {
+        return true;
+    }
 
-	/**
-	 * Read
-	 *
-	 * Reads session data and acquires a lock
-	 *
-	 * @param string $sessionID Session ID
-	 *
-	 * @return string    Serialized session data
-	 */
-	public function read($sessionID): string
-	{
-		return '';
-	}
+    /**
+     * Closes the current session.
+     */
+    public function close(): bool
+    {
+        return true;
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * Destroys a session
+     *
+     * @param string $id The session ID being destroyed
+     */
+    public function destroy($id): bool
+    {
+        return true;
+    }
 
-	/**
-	 * Write
-	 *
-	 * Writes (create / update) session data
-	 *
-	 * @param string $sessionID   Session ID
-	 * @param string $sessionData Serialized session data
-	 *
-	 * @return boolean
-	 */
-	public function write($sessionID, $sessionData): bool
-	{
-		return true;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Close
-	 *
-	 * Releases locks and closes file descriptor.
-	 *
-	 * @return boolean
-	 */
-	public function close(): bool
-	{
-		return true;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Destroy
-	 *
-	 * Destroys the current session.
-	 *
-	 * @param string $sessionID
-	 *
-	 * @return boolean
-	 */
-	public function destroy($sessionID): bool
-	{
-		return true;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Garbage Collector
-	 *
-	 * Deletes expired sessions
-	 *
-	 * @param integer $maxlifetime Maximum lifetime of sessions
-	 *
-	 * @return boolean
-	 */
-	public function gc($maxlifetime): bool
-	{
-		return true;
-	}
-
-	//--------------------------------------------------------------------
+    /**
+     * Cleans up expired sessions.
+     *
+     * @param int $max_lifetime Sessions that have not updated
+     *                          for the last max_lifetime seconds will be removed.
+     *
+     * @return false|int Returns the number of deleted sessions on success, or false on failure.
+     */
+    #[ReturnTypeWillChange]
+    public function gc($max_lifetime)
+    {
+        return 1;
+    }
 }

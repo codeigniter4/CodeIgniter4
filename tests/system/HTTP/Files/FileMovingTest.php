@@ -1,288 +1,331 @@
 <?php
+
+declare(strict_types=1);
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\HTTP\Files;
 
-use org\bovigo\vfs\vfsStream;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
+use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
+use PHPUnit\Framework\Attributes\Group;
 
-class FileMovingTest extends \CIUnitTestCase
+/**
+ * @internal
+ */
+#[Group('Others')]
+final class FileMovingTest extends CIUnitTestCase
 {
+    private ?vfsStreamDirectory $root;
+    private string $destination;
 
-	protected function setUp()
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->root = vfsStream::setup();
-		$this->path = '_support/Files/';
-		vfsStream::copyFromFileSystem(TESTPATH . $this->path, $this->root);
-		$this->start = $this->root->url() . '/';
+        $this->root = vfsStream::setup();
+        $path       = '_support/Files/';
+        vfsStream::copyFromFileSystem(TESTPATH . $path, $this->root);
+        $start = $this->root->url() . '/';
 
-		$this->destination = $this->start . 'destination';
-		if (is_dir($this->destination))
-		{
-			rmdir($this->destination);
-		}
+        $this->destination = $start . 'destination';
+        if (is_dir($this->destination)) {
+            rmdir($this->destination);
+        }
 
-		$_FILES = [];
-	}
+        $_FILES = [];
 
-	public function tearDown()
-	{
-		parent::tearDown();
-		$this->root = null;
+        // Set the mock's return value to true
+        move_uploaded_file('', '', true);
+    }
 
-		// cleanup folder being left behind (why?)
-		$leftover = WRITEPATH . 'uploads/vfs:';
-		if (is_dir($leftover))
-		{
-			rrmdir($leftover);
-		}
-	}
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->root = null;
 
-	//--------------------------------------------------------------------
+        // cleanup folder being left behind (why?)
+        $leftover = WRITEPATH . 'uploads/vfs:';
+        if (is_dir($leftover)) {
+            rrmdir($leftover);
+        }
+    }
 
-	public function testMove()
-	{
-		$finalFilename = 'fileA';
+    public function testMove(): void
+    {
+        $finalFilename = 'fileA';
+        $_FILES        = [
+            'userfile1' => [
+                'name'     => $finalFilename . '.txt',
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => '/tmp/fileA.txt',
+                'error'    => 0,
+            ],
+            'userfile2' => [
+                'name'     => 'fileA.txt',
+                'type'     => 'text/csv',
+                'size'     => 248,
+                'tmp_name' => '/tmp/fileB.txt',
+                'error'    => 0,
+            ],
+        ];
 
-		$_FILES = [
-			'userfile1' => [
-				'name'     => $finalFilename . '.txt',
-				'type'     => 'text/plain',
-				'size'     => 124,
-				'tmp_name' => '/tmp/fileA.txt',
-				'error'    => 0,
-			],
-			'userfile2' => [
-				'name'     => 'fileA.txt',
-				'type'     => 'text/csv',
-				'size'     => 248,
-				'tmp_name' => '/tmp/fileB.txt',
-				'error'    => 0,
-			],
-		];
+        $collection = new FileCollection();
 
-		$collection = new FileCollection();
+        $this->assertTrue($collection->hasFile('userfile1'));
+        $this->assertTrue($collection->hasFile('userfile2'));
 
-		$this->assertTrue($collection->hasFile('userfile1'));
-		$this->assertTrue($collection->hasFile('userfile2'));
+        $destination = $this->destination;
+        // Create the destination if not exists
+        if (! is_dir($destination)) {
+            mkdir($destination, 0777, true);
+        }
 
-		$destination = $this->destination;
+        foreach ($collection->all() as $file) {
+            $this->assertInstanceOf(UploadedFile::class, $file);
+            $file->move($destination, $file->getName(), false);
+        }
 
-		// Create the destination if not exists
-		is_dir($destination) || mkdir($destination, 0777, true);
+        $this->assertTrue($this->root->hasChild('destination/' . $finalFilename . '.txt'));
+        $this->assertTrue($this->root->hasChild('destination/' . $finalFilename . '_1.txt'));
+    }
 
-		foreach ($collection->all() as $file)
-		{
-			$this->assertInstanceOf(UploadedFile::class, $file);
-			$file->move($destination, $file->getName(), false);
-		}
+    public function testMoveOverwriting(): void
+    {
+        $finalFilename = 'file_with_delimiters_underscore';
+        $_FILES        = [
+            'userfile1' => [
+                'name'     => $finalFilename . '.txt',
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => '/tmp/fileA.txt',
+                'error'    => 0,
+            ],
+            'userfile2' => [
+                'name'     => $finalFilename . '.txt',
+                'type'     => 'text/csv',
+                'size'     => 248,
+                'tmp_name' => '/tmp/fileB.txt',
+                'error'    => 0,
+            ],
+            'userfile3' => [
+                'name'     => $finalFilename . '.txt',
+                'type'     => 'text/csv',
+                'size'     => 248,
+                'tmp_name' => '/tmp/fileC.txt',
+                'error'    => 0,
+            ],
+        ];
 
-		$this->assertTrue($this->root->hasChild('destination/' . $finalFilename . '.txt'));
-		$this->assertTrue($this->root->hasChild('destination/' . $finalFilename . '_1.txt'));
-	}
+        $collection = new FileCollection();
 
-	//--------------------------------------------------------------------
+        $this->assertTrue($collection->hasFile('userfile1'));
+        $this->assertTrue($collection->hasFile('userfile2'));
+        $this->assertTrue($collection->hasFile('userfile3'));
 
-	public function testMoveOverwriting()
-	{
-		$finalFilename = 'file_with_delimiters_underscore';
+        $destination = $this->destination;
+        // Create the destination if not exists
+        if (! is_dir($destination)) {
+            mkdir($destination, 0777, true);
+        }
 
-		$_FILES = [
-			'userfile1' => [
-				'name'     => $finalFilename . '.txt',
-				'type'     => 'text/plain',
-				'size'     => 124,
-				'tmp_name' => '/tmp/fileA.txt',
-				'error'    => 0,
-			],
-			'userfile2' => [
-				'name'     => $finalFilename . '.txt',
-				'type'     => 'text/csv',
-				'size'     => 248,
-				'tmp_name' => '/tmp/fileB.txt',
-				'error'    => 0,
-			],
-			'userfile3' => [
-				'name'     => $finalFilename . '.txt',
-				'type'     => 'text/csv',
-				'size'     => 248,
-				'tmp_name' => '/tmp/fileC.txt',
-				'error'    => 0,
-			],
-		];
+        foreach ($collection->all() as $file) {
+            $this->assertInstanceOf(UploadedFile::class, $file);
+            $file->move($destination, $file->getName(), true);
+        }
 
-		$collection = new FileCollection();
+        $this->assertTrue($this->root->hasChild('destination/' . $finalFilename . '.txt'));
+        $this->assertFalse($this->root->hasChild('destination/' . $finalFilename . '_1.txt'));
+        $this->assertFalse($this->root->hasChild('destination/' . $finalFilename . '_2.txt'));
+        $this->assertFileExists($destination . '/' . $finalFilename . '.txt');
+    }
 
-		$this->assertTrue($collection->hasFile('userfile1'));
-		$this->assertTrue($collection->hasFile('userfile2'));
-		$this->assertTrue($collection->hasFile('userfile3'));
+    public function testMoved(): void
+    {
+        $finalFilename = 'fileA';
+        $_FILES        = [
+            'userfile1' => [
+                'name'     => $finalFilename . '.txt',
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => '/tmp/fileA.txt',
+                'error'    => 0,
+            ],
+        ];
 
-		$destination = $this->destination;
+        $collection = new FileCollection();
 
-		// Create the destination if not exists
-		is_dir($destination) || mkdir($destination, 0777, true);
+        $this->assertTrue($collection->hasFile('userfile1'));
 
-		foreach ($collection->all() as $file)
-		{
-			$this->assertInstanceOf(UploadedFile::class, $file);
-			$file->move($destination, $file->getName(), true);
-		}
+        $destination = $this->destination;
+        // Create the destination if not exists
+        if (! is_dir($destination)) {
+            mkdir($destination, 0777, true);
+        }
 
-		$this->assertTrue($this->root->hasChild('destination/' . $finalFilename . '.txt'));
-		$this->assertFalse($this->root->hasChild('destination/' . $finalFilename . '_1.txt'));
-		$this->assertFalse($this->root->hasChild('destination/' . $finalFilename . '_2.txt'));
-		$this->assertFileExists($destination . '/' . $finalFilename . '.txt');
-	}
+        $file = $collection->getFile('userfile1');
 
-	//--------------------------------------------------------------------
+        $this->assertInstanceOf(UploadedFile::class, $file);
+        $this->assertFalse($file->hasMoved());
 
-	public function testMoved()
-	{
-		$finalFilename = 'fileA';
+        $file->move($destination, $file->getName(), false);
 
-		$_FILES = [
-			'userfile1' => [
-				'name'     => $finalFilename . '.txt',
-				'type'     => 'text/plain',
-				'size'     => 124,
-				'tmp_name' => '/tmp/fileA.txt',
-				'error'    => 0,
-			],
-		];
+        $this->assertTrue($file->hasMoved());
+    }
 
-		$collection = new FileCollection();
+    public function testStore(): void
+    {
+        $finalFilename = 'fileA';
+        $_FILES        = [
+            'userfile1' => [
+                'name'     => $finalFilename . '.txt',
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => '/tmp/fileA.txt',
+                'error'    => 0,
+            ],
+        ];
 
-		$this->assertTrue($collection->hasFile('userfile1'));
+        $collection = new FileCollection();
 
-		$destination = $this->destination;
+        $this->assertTrue($collection->hasFile('userfile1'));
 
-		// Create the destination if not exists
-		is_dir($destination) || mkdir($destination, 0777, true);
+        $destination = $this->destination;
+        // Create the destination if not exists
+        if (! is_dir($destination)) {
+            mkdir($destination, 0777, true);
+        }
 
-		$file = $collection->getFile('userfile1');
+        $file = $collection->getFile('userfile1');
 
-		$this->assertInstanceOf(UploadedFile::class, $file);
-		$this->assertFalse($file->hasMoved());
-		$file->move($destination, $file->getName(), false);
-		$this->assertTrue($file->hasMoved());
-	}
+        $this->assertInstanceOf(UploadedFile::class, $file);
 
-	//--------------------------------------------------------------------
+        $path = $file->store($destination, $file->getName());
 
-	public function testStore()
-	{
-		$finalFilename = 'fileA';
+        $this->assertSame($destination . '/fileA.txt', $path);
+    }
 
-		$_FILES = [
-			'userfile1' => [
-				'name'     => $finalFilename . '.txt',
-				'type'     => 'text/plain',
-				'size'     => 124,
-				'tmp_name' => '/tmp/fileA.txt',
-				'error'    => 0,
-			],
-		];
+    public function testAlreadyMoved(): void
+    {
+        $finalFilename = 'fileA';
+        $_FILES        = [
+            'userfile1' => [
+                'name'     => $finalFilename . '.txt',
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => '/tmp/fileA.txt',
+                'error'    => 0,
+            ],
+        ];
 
-		$collection = new FileCollection();
+        $collection = new FileCollection();
 
-		$this->assertTrue($collection->hasFile('userfile1'));
+        $this->assertTrue($collection->hasFile('userfile1'));
 
-		$destination = $this->destination;
+        $destination = $this->destination;
+        // Create the destination if not exists
+        if (! is_dir($destination)) {
+            mkdir($destination, 0777, true);
+        }
 
-		// Create the destination if not exists
-		is_dir($destination) || mkdir($destination, 0777, true);
+        $this->expectException(HTTPException::class);
 
-		$file = $collection->getFile('userfile1');
+        foreach ($collection->all() as $file) {
+            $file->move($destination, $file->getName(), false);
+            $file->move($destination, $file->getName(), false);
+        }
+    }
 
-		$this->assertInstanceOf(UploadedFile::class, $file);
-		$path = $file->store($destination, $file->getName());
-		$this->assertEquals($destination . '/fileA.txt', $path);
-	}
+    public function testInvalidFile(): void
+    {
+        $_FILES = [
+            'userfile' => [
+                'name'     => 'someFile.txt',
+                'type'     => 'text/plain',
+                'size'     => '124',
+                'tmp_name' => '/tmp/myTempFile.txt',
+                'error'    => UPLOAD_ERR_INI_SIZE,
+            ],
+        ];
 
-	//--------------------------------------------------------------------
+        $destination = $this->destination;
+        $collection  = new FileCollection();
 
-	public function testAlreadyMoved()
-	{
-		$finalFilename = 'fileA';
+        $this->expectException(HTTPException::class);
 
-		$_FILES = [
-			'userfile1' => [
-				'name'     => $finalFilename . '.txt',
-				'type'     => 'text/plain',
-				'size'     => 124,
-				'tmp_name' => '/tmp/fileA.txt',
-				'error'    => 0,
-			],
-		];
+        $file = $collection->getFile('userfile');
+        $this->assertInstanceOf(UploadedFile::class, $file);
+        $file->move($destination, $file->getName(), false);
+    }
 
-		$collection = new FileCollection();
+    public function testFailedMoveBecauseOfWarning(): void
+    {
+        $_FILES = [
+            'userfile' => [
+                'name'     => 'someFile.txt',
+                'type'     => 'text/plain',
+                'size'     => '124',
+                'tmp_name' => '/tmp/myTempFile.txt',
+                'error'    => 0,
+            ],
+        ];
 
-		$this->assertTrue($collection->hasFile('userfile1'));
+        $destination = $this->destination;
+        // Create the destination and make it read only
+        if (! is_dir($destination)) {
+            mkdir($destination, 0400, true);
+        }
 
-		$destination = $this->destination;
+        $collection = new FileCollection();
 
-		// Create the destination if not exists
-		is_dir($destination) || mkdir($destination, 0777, true);
+        $this->expectException(HTTPException::class);
 
-		$this->expectException(HTTPException::class);
+        $file = $collection->getFile('userfile');
+        $this->assertInstanceOf(UploadedFile::class, $file);
+        $file->move($destination, $file->getName(), false);
+    }
 
-		foreach ($collection->all() as $file)
-		{
-			$file->move($destination, $file->getName(), false);
-			$file->move($destination, $file->getName(), false);
-		}
-	}
+    public function testFailedMoveBecauseOfFalseReturned(): void
+    {
+        $_FILES = [
+            'userfile1' => [
+                'name'     => 'fileA.txt',
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => '/tmp/fileA.txt',
+                'error'    => 0,
+            ],
+        ];
 
-	//--------------------------------------------------------------------
+        $collection = new FileCollection();
 
-	public function testInvalidFile()
-	{
-		$_FILES = [
-			'userfile' => [
-				'name'     => 'someFile.txt',
-				'type'     => 'text/plain',
-				'size'     => '124',
-				'tmp_name' => '/tmp/myTempFile.txt',
-				'error'    => UPLOAD_ERR_INI_SIZE,
-			],
-		];
+        $this->assertTrue($collection->hasFile('userfile1'));
 
-		$destination = $this->destination;
+        $destination = $this->destination;
+        // Create the destination if not exists
+        if (! is_dir($destination)) {
+            mkdir($destination, 0777, true);
+        }
+        // Set the mock's return value to false
+        move_uploaded_file('', '', false);
 
-		$collection = new FileCollection();
-		$file       = $collection->getFile('userfile');
+        $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage('move_uploaded_file() returned false');
 
-		$this->expectException(HTTPException::class);
-		$file->move($destination, $file->getName(), false);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testFailedMove()
-	{
-		$_FILES = [
-			'userfile' => [
-				'name'     => 'someFile.txt',
-				'type'     => 'text/plain',
-				'size'     => '124',
-				'tmp_name' => '/tmp/myTempFile.txt',
-				'error'    => 0,
-			],
-		];
-
-		$destination = $this->destination;
-
-		// Create the destination and make it read only
-		is_dir($destination) || mkdir($destination, 0400, true);
-
-		$collection = new FileCollection();
-		$file       = $collection->getFile('userfile');
-
-		$this->expectException(HTTPException::class);
-		$file->move($destination, $file->getName(), false);
-	}
-
-	//--------------------------------------------------------------------
+        $file = $collection->getFile('userfile1');
+        $this->assertInstanceOf(UploadedFile::class, $file);
+        $file->move($destination, $file->getName(), false);
+    }
 }
 
 /*
@@ -291,14 +334,13 @@ class FileMovingTest extends \CIUnitTestCase
  *
  * This overwrite is for testing the move operation.
  */
-
-function is_uploaded_file($filename)
+function is_uploaded_file($filename): bool
 {
-	if (! file_exists($filename))
-	{
-		file_put_contents($filename, 'data');
-	}
-	return file_exists($filename);
+    if (! is_file($filename)) {
+        file_put_contents($filename, 'data');
+    }
+
+    return is_file($filename);
 }
 
 /*
@@ -306,31 +348,38 @@ function is_uploaded_file($filename)
  *
  * This overwrite is for testing the move operation.
  */
-
-function move_uploaded_file($filename, $destination)
+function move_uploaded_file($filename, $destination, ?bool $setReturnValue = null): bool
 {
-	copy($filename, $destination);
-	unlink($filename);
+    static $return = true;
+
+    if ($setReturnValue !== null) {
+        $return = $setReturnValue;
+
+        return true;
+    }
+
+    copy($filename, $destination);
+    unlink($filename);
+
+    return $return;
 }
 
-function rrmdir($src)
+function rrmdir($src): void
 {
-	$dir = opendir($src);
-	while (false !== ( $file = readdir($dir)))
-	{
-		if (( $file !== '.' ) && ( $file !== '..' ))
-		{
-			$full = $src . '/' . $file;
-			if (is_dir($full))
-			{
-				rrmdir($full);
-			}
-			else
-			{
-				unlink($full);
-			}
-		}
-	}
-	closedir($dir);
-	rmdir($src);
+    $dir = opendir($src);
+
+    while (false !== $file = readdir($dir)) {
+        if (($file !== '.') && ($file !== '..')) {
+            $full = $src . '/' . $file;
+
+            if (is_dir($full)) {
+                rrmdir($full);
+            } else {
+                unlink($full);
+            }
+        }
+    }
+
+    closedir($dir);
+    rmdir($src);
 }

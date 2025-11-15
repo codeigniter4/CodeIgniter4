@@ -1,0 +1,98 @@
+# total 28 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Property CodeIgniter\\Controller\:\:\$request \(CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest\) does not accept CodeIgniter\\HTTP\\RequestInterface\.$#'
+            count: 1
+            path: ../../system/Controller.php
+
+        -
+            message: '#^Property CodeIgniter\\Commands\\Utilities\\Routes\\FilterFinderTest\:\:\$response \(CodeIgniter\\HTTP\\Response\) does not accept CodeIgniter\\HTTP\\ResponseInterface\.$#'
+            count: 1
+            path: ../../tests/system/Commands/Utilities/Routes/FilterFinderTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Database\\Live\\SQLite3\\AlterTableTest\:\:\$forge \(CodeIgniter\\Database\\SQLite3\\Forge\) does not accept CodeIgniter\\Database\\Forge\.$#'
+            count: 1
+            path: ../../tests/system/Database/Live/SQLite3/AlterTableTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Database\\Live\\SQLite3\\GetIndexDataTest\:\:\$db \(CodeIgniter\\Database\\SQLite3\\Connection\) does not accept CodeIgniter\\Database\\BaseConnection\.$#'
+            count: 2
+            path: ../../tests/system/Database/Live/SQLite3/GetIndexDataTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Database\\Live\\SQLite3\\GetIndexDataTest\:\:\$forge \(CodeIgniter\\Database\\SQLite3\\Forge\) does not accept CodeIgniter\\Database\\Forge\.$#'
+            count: 1
+            path: ../../tests/system/Database/Live/SQLite3/GetIndexDataTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Filters\\CSRFTest\:\:\$response \(CodeIgniter\\HTTP\\Response\|null\) does not accept CodeIgniter\\HTTP\\ResponseInterface\.$#'
+            count: 2
+            path: ../../tests/system/Filters/CSRFTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Filters\\DebugToolbarTest\:\:\$response \(CodeIgniter\\HTTP\\Response\) does not accept CodeIgniter\\HTTP\\ResponseInterface\.$#'
+            count: 1
+            path: ../../tests/system/Filters/DebugToolbarTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Filters\\FiltersTest\:\:\$response \(CodeIgniter\\HTTP\\Response\) does not accept CodeIgniter\\HTTP\\ResponseInterface\.$#'
+            count: 1
+            path: ../../tests/system/Filters/FiltersTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Filters\\HoneypotTest\:\:\$response \(CodeIgniter\\HTTP\\Response\|null\) does not accept CodeIgniter\\HTTP\\RequestInterface\|CodeIgniter\\HTTP\\ResponseInterface\|string\|null\.$#'
+            count: 2
+            path: ../../tests/system/Filters/HoneypotTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Filters\\HoneypotTest\:\:\$response \(CodeIgniter\\HTTP\\Response\|null\) does not accept CodeIgniter\\HTTP\\ResponseInterface\.$#'
+            count: 4
+            path: ../../tests/system/Filters/HoneypotTest.php
+
+        -
+            message: '#^Property Config\\App\:\:\$proxyIPs \(array\<string, string\>\) does not accept array\<int, string\>\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Property Config\\App\:\:\$proxyIPs \(array\<string, string\>\) does not accept string\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Helpers\\CookieHelperTest\:\:\$response \(CodeIgniter\\HTTP\\Response\) does not accept CodeIgniter\\HTTP\\ResponseInterface\.$#'
+            count: 1
+            path: ../../tests/system/Helpers/CookieHelperTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Honeypot\\HoneypotTest\:\:\$response \(CodeIgniter\\HTTP\\Response\) does not accept CodeIgniter\\HTTP\\RequestInterface\|CodeIgniter\\HTTP\\ResponseInterface\|string\|null\.$#'
+            count: 1
+            path: ../../tests/system/Honeypot/HoneypotTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Honeypot\\HoneypotTest\:\:\$response \(CodeIgniter\\HTTP\\Response\) does not accept CodeIgniter\\HTTP\\ResponseInterface\.$#'
+            count: 3
+            path: ../../tests/system/Honeypot/HoneypotTest.php
+
+        -
+            message: '#^Property Config\\Cookie\:\:\$samesite \(''''\|''Lax''\|''None''\|''Strict''\) does not accept ''Invalid''\.$#'
+            count: 1
+            path: ../../tests/system/Session/SessionTest.php
+
+        -
+            message: '#^Property CodeIgniter\\Test\\ControllerTestTraitTest\:\:\$uri \(string\) does not accept CodeIgniter\\HTTP\\SiteURI\.$#'
+            count: 2
+            path: ../../tests/system/Test/ControllerTestTraitTest.php
+
+        -
+            message: '#^Property CodeIgniter\\View\\ParserPluginTest\:\:\$validator \(CodeIgniter\\Validation\\Validation\) does not accept CodeIgniter\\Validation\\ValidationInterface\.$#'
+            count: 1
+            path: ../../tests/system/View/ParserPluginTest.php
+
+        -
+            message: '#^Property CodeIgniter\\View\\Table\:\:\$function \(\(callable\(\)\: mixed\)\|null\) does not accept ''ticklemyfancy''\.$#'
+            count: 1
+            path: ../../tests/system/View/TableTest.php

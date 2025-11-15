@@ -1,116 +1,91 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * CodeIgniter
+ * This file is part of CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Cache;
 
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\Exceptions\CriticalError;
+use CodeIgniter\Test\Mock\MockCache;
+use Config\Cache;
 
 /**
- * Class Cache
- *
  * A factory for loading the desired
  *
- * @package CodeIgniter\Cache
+ * @see \CodeIgniter\Cache\CacheFactoryTest
  */
 class CacheFactory
 {
-	/**
-	 * Attempts to create the desired cache handler, based upon the
-	 *
-	 * @param $config
-	 * @param string $handler
-	 * @param string $backup
-	 *
-	 * @return \CodeIgniter\Cache\CacheInterface
-	 */
-	public static function getHandler($config, string $handler = null, string $backup = null)
-	{
-		if (! isset($config->validHandlers) || ! is_array($config->validHandlers))
-		{
-			throw CacheException::forInvalidHandlers();
-		}
+    /**
+     * The class to use when mocking
+     *
+     * @var string
+     */
+    public static $mockClass = MockCache::class;
 
-		if (! isset($config->handler) || ! isset($config->backupHandler))
-		{
-			throw CacheException::forNoBackup();
-		}
+    /**
+     * The service to inject the mock as
+     *
+     * @var string
+     */
+    public static $mockServiceName = 'cache';
 
-		$handler = ! empty($handler) ? $handler : $config->handler;
-		$backup  = ! empty($backup) ? $backup : $config->backupHandler;
+    /**
+     * Attempts to create the desired cache handler, based upon the
+     *
+     * @param non-empty-string|null $handler
+     * @param non-empty-string|null $backup
+     *
+     * @return CacheInterface
+     */
+    public static function getHandler(Cache $config, ?string $handler = null, ?string $backup = null)
+    {
+        if (! isset($config->validHandlers) || $config->validHandlers === []) {
+            throw CacheException::forInvalidHandlers();
+        }
 
-		if (! array_key_exists($handler, $config->validHandlers) || ! array_key_exists($backup, $config->validHandlers))
-		{
-			throw CacheException::forHandlerNotFound();
-		}
+        if (! isset($config->handler) || ! isset($config->backupHandler)) {
+            throw CacheException::forNoBackup();
+        }
 
-		// Get an instance of our handler.
-		$adapter = new $config->validHandlers[$handler]($config);
+        $handler ??= $config->handler;
+        $backup ??= $config->backupHandler;
 
-		if (! $adapter->isSupported())
-		{
-			$adapter = new $config->validHandlers[$backup]($config);
+        if (! array_key_exists($handler, $config->validHandlers) || ! array_key_exists($backup, $config->validHandlers)) {
+            throw CacheException::forHandlerNotFound();
+        }
 
-			if (! $adapter->isSupported())
-			{
-				// Log stuff here, don't throw exception. No need to raise a fuss.
-				// Fall back to the dummy adapter.
-				$adapter = new $config->validHandlers['dummy']();
-			}
-		}
+        $adapter = new $config->validHandlers[$handler]($config);
 
-		// If $adapter->initialization throws a CriticalError exception, we will attempt to
-		// use the $backup handler, if that also fails, we resort to the dummy handler.
-		try
-		{
-			$adapter->initialize();
-		}
-		catch (CriticalError $e)
-		{
-			// log the fact that an exception occurred as well what handler we are resorting to
-			log_message('critical', $e->getMessage() . ' Resorting to using ' . $backup . ' handler.');
+        if (! $adapter->isSupported()) {
+            $adapter = new $config->validHandlers[$backup]($config);
 
-			// get the next best cache handler (or dummy if the $backup also fails)
-			$adapter = self::getHandler($config, $backup, 'dummy');
-		}
+            if (! $adapter->isSupported()) {
+                // Fall back to the dummy adapter.
+                $adapter = new $config->validHandlers['dummy']();
+            }
+        }
 
-		return $adapter;
-	}
+        // If $adapter->initialize() throws a CriticalError exception, we will attempt to
+        // use the $backup handler, if that also fails, we resort to the dummy handler.
+        try {
+            $adapter->initialize();
+        } catch (CriticalError $e) {
+            log_message('critical', $e . ' Resorting to using ' . $backup . ' handler.');
 
-	//--------------------------------------------------------------------
+            // get the next best cache handler (or dummy if the $backup also fails)
+            $adapter = self::getHandler($config, $backup, 'dummy');
+        }
+
+        return $adapter;
+    }
 }

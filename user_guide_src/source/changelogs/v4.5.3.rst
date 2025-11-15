@@ -1,0 +1,19 @@
+#############
+Version 4.5.3
+#############
+
+Release Date: June 25, 2024
+
+**4.5.3 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+**********
+Bugs Fixed
+**********
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

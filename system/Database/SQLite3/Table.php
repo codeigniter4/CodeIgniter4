@@ -1,425 +1,491 @@
 <?php
+
+declare(strict_types=1);
+
 /**
- * CodeIgniter
+ * This file is part of CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\Exceptions\DataException;
+use stdClass;
 
 /**
- * Class Table
- *
  * Provides missing features for altering tables that are common
  * in other supported databases, but are missing from SQLite.
  * These are needed in order to support migrations during testing
  * when another database is used as the primary engine, but
  * SQLite in memory databases are used for faster test execution.
- *
- * @package CodeIgniter\Database\SQLite3
  */
 class Table
 {
-	/**
-	 * All of the fields this table represents.
-	 *
-	 * @var array
-	 */
-	protected $fields = [];
+    /**
+     * All of the fields this table represents.
+     *
+     * @var array<string, array<string, bool|int|string|null>> [name => attributes]
+     */
+    protected $fields = [];
 
-	/**
-	 * All of the unique/primary keys in the table.
-	 *
-	 * @var array
-	 */
-	protected $keys = [];
+    /**
+     * All of the unique/primary keys in the table.
+     *
+     * @var array
+     */
+    protected $keys = [];
 
-	/**
-	 * All of the foreign keys in the table.
-	 *
-	 * @var array
-	 */
-	protected $foreignKeys = [];
+    /**
+     * All of the foreign keys in the table.
+     *
+     * @var array
+     */
+    protected $foreignKeys = [];
 
-	/**
-	 * The name of the table we're working with.
-	 *
-	 * @var string
-	 */
-	protected $tableName;
+    /**
+     * The name of the table we're working with.
+     *
+     * @var string
+     */
+    protected $tableName;
 
-	/**
-	 * The name of the table, with database prefix
-	 *
-	 * @var string
-	 */
-	protected $prefixedTableName;
+    /**
+     * The name of the table, with database prefix
+     *
+     * @var string
+     */
+    protected $prefixedTableName;
 
-	/**
-	 * Database connection.
-	 *
-	 * @var Connection
-	 */
-	protected $db;
+    /**
+     * Database connection.
+     *
+     * @var Connection
+     */
+    protected $db;
 
-	/**
-	 * Handle to our forge.
-	 *
-	 * @var Forge
-	 */
-	protected $forge;
+    /**
+     * Handle to our forge.
+     *
+     * @var Forge
+     */
+    protected $forge;
 
-	/**
-	 * Table constructor.
-	 *
-	 * @param Connection $db
-	 * @param Forge      $forge
-	 */
-	public function __construct(Connection $db, Forge $forge)
-	{
-		$this->db    = $db;
-		$this->forge = $forge;
-	}
+    /**
+     * Table constructor.
+     */
+    public function __construct(Connection $db, Forge $forge)
+    {
+        $this->db    = $db;
+        $this->forge = $forge;
+    }
 
-	/**
-	 * Reads an existing database table and
-	 * collects all of the information needed to
-	 * recreate this table.
-	 *
-	 * @param string $table
-	 *
-	 * @return \CodeIgniter\Database\SQLite3\Table
-	 */
-	public function fromTable(string $table)
-	{
-		$this->prefixedTableName = $table;
+    /**
+     * Reads an existing database table and
+     * collects all of the information needed to
+     * recreate this table.
+     *
+     * @return Table
+     */
+    public function fromTable(string $table)
+    {
+        $this->prefixedTableName = $table;
 
-		// Remove the prefix, if any, since it's
-		// already been added by the time we get here...
-		$prefix = $this->db->DBPrefix;
-		if (! empty($prefix))
-		{
-			if (strpos($table, $prefix) === 0)
-			{
-				$table = substr($table, strlen($prefix));
-			}
-		}
+        $prefix = $this->db->DBPrefix;
 
-		if (! $this->db->tableExists($this->prefixedTableName))
-		{
-			throw DataException::forTableNotFound($this->prefixedTableName);
-		}
+        if (! empty($prefix) && str_starts_with($table, $prefix)) {
+            $table = substr($table, strlen($prefix));
+        }
 
-		$this->tableName = $table;
+        if (! $this->db->tableExists($this->prefixedTableName)) {
+            throw DataException::forTableNotFound($this->prefixedTableName);
+        }
 
-		$this->fields = $this->formatFields($this->db->getFieldData($table));
+        $this->tableName = $table;
 
-		$this->keys = array_merge($this->keys, $this->formatKeys($this->db->getIndexData($table)));
+        $this->fields = $this->formatFields($this->db->getFieldData($table));
 
-		$this->foreignKeys = $this->db->getForeignKeyData($table);
+        $this->keys = array_merge($this->keys, $this->formatKeys($this->db->getIndexData($table)));
 
-		return $this;
-	}
+        // if primary key index exists twice then remove psuedo index name 'primary'.
+        $primaryIndexes = array_filter($this->keys, static fn ($index): bool => $index['type'] === 'primary');
 
-	/**
-	 * Called after `fromTable` and any actions, like `dropColumn`, etc,
-	 * to finalize the action. It creates a temp table, creates the new
-	 * table with modifications, and copies the data over to the new table.
-	 *
-	 * @return boolean
-	 */
-	public function run(): bool
-	{
-		$this->db->query('PRAGMA foreign_keys = OFF');
+        if ($primaryIndexes !== [] && count($primaryIndexes) > 1 && array_key_exists('primary', $this->keys)) {
+            unset($this->keys['primary']);
+        }
 
-		$this->db->transStart();
+        $this->foreignKeys = $this->db->getForeignKeyData($table);
 
-		$this->forge->renameTable($this->tableName, "temp_{$this->tableName}");
+        return $this;
+    }
 
-		$this->forge->reset();
+    /**
+     * Called after `fromTable` and any actions, like `dropColumn`, etc,
+     * to finalize the action. It creates a temp table, creates the new
+     * table with modifications, and copies the data over to the new table.
+     * Resets the connection dataCache to be sure changes are collected.
+     */
+    public function run(): bool
+    {
+        $this->db->query('PRAGMA foreign_keys = OFF');
 
-		$this->createTable();
+        $this->db->transStart();
 
-		$this->copyData();
+        $this->forge->renameTable($this->tableName, "temp_{$this->tableName}");
 
-		$this->forge->dropTable("temp_{$this->tableName}");
+        $this->forge->reset();
 
-		$success = $this->db->transComplete();
+        $this->createTable();
 
-		$this->db->query('PRAGMA foreign_keys = ON');
+        $this->copyData();
 
-		return $success;
-	}
+        $this->forge->dropTable("temp_{$this->tableName}");
 
-	/**
-	 * Drops a column from the table.
-	 *
-	 * @param string $column
-	 *
-	 * @return \CodeIgniter\Database\SQLite3\Table
-	 */
-	public function dropColumn(string $column)
-	{
-		unset($this->fields[$column]);
+        $success = $this->db->transComplete();
 
-		return $this;
-	}
+        $this->db->query('PRAGMA foreign_keys = ON');
 
-	/**
-	 * Modifies a field, including changing data type,
-	 * renaming, etc.
-	 *
-	 * @param array $field
-	 *
-	 * @return \CodeIgniter\Database\SQLite3\Table
-	 */
-	public function modifyColumn(array $field)
-	{
-		$field = $field[0];
+        $this->db->resetDataCache();
 
-		$oldName = $field['name'];
-		unset($field['name']);
+        return $success;
+    }
 
-		$this->fields[$oldName] = $field;
+    /**
+     * Drops columns from the table.
+     *
+     * @param list<string>|string $columns Column names to drop.
+     *
+     * @return Table
+     */
+    public function dropColumn($columns)
+    {
+        if (is_string($columns)) {
+            $columns = explode(',', $columns);
+        }
 
-		return $this;
-	}
+        foreach ($columns as $column) {
+            $column = trim($column);
+            if (isset($this->fields[$column])) {
+                unset($this->fields[$column]);
+            }
+        }
 
-	/**
-	 * Drops a foreign key from this table so that
-	 * it won't be recreated in the future.
-	 *
-	 * @param string $column
-	 *
-	 * @return \CodeIgniter\Database\SQLite3\Table
-	 */
-	public function dropForeignKey(string $column)
-	{
-		if (empty($this->foreignKeys))
-		{
-			return $this;
-		}
+        return $this;
+    }
 
-		for ($i = 0; $i < count($this->foreignKeys); $i++)
-		{
-			if ($this->foreignKeys[$i]->table_name !== $this->tableName)
-			{
-				continue;
-			}
+    /**
+     * Modifies a field, including changing data type, renaming, etc.
+     *
+     * @param list<array<string, bool|int|string|null>> $fieldsToModify
+     *
+     * @return Table
+     */
+    public function modifyColumn(array $fieldsToModify)
+    {
+        foreach ($fieldsToModify as $field) {
+            $oldName = $field['name'];
+            unset($field['name']);
 
-			// The column name should be the first thing in the constraint name
-			if (strpos($this->foreignKeys[$i]->constraint_name, $column) !== 0)
-			{
-				continue;
-			}
+            $this->fields[$oldName] = $field;
+        }
 
-			unset($this->foreignKeys[$i]);
-		}
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Drops the primary key
+     */
+    public function dropPrimaryKey(): Table
+    {
+        $primaryIndexes = array_filter($this->keys, static fn ($index): bool => strtolower($index['type']) === 'primary');
 
-	/**
-	 * Creates the new table based on our current fields.
-	 *
-	 * @return mixed
-	 */
-	protected function createTable()
-	{
-		$this->dropIndexes();
-		$this->db->resetDataCache();
+        foreach (array_keys($primaryIndexes) as $key) {
+            unset($this->keys[$key]);
+        }
 
-		// Handle any modified columns.
-		$fields = [];
-		foreach ($this->fields as $name => $field)
-		{
-			if (isset($field['new_name']))
-			{
-				$fields[$field['new_name']] = $field;
-				continue;
-			}
+        return $this;
+    }
 
-			$fields[$name] = $field;
-		}
+    /**
+     * Drops a foreign key from this table so that
+     * it won't be recreated in the future.
+     *
+     * @return Table
+     */
+    public function dropForeignKey(string $foreignName)
+    {
+        if (empty($this->foreignKeys)) {
+            return $this;
+        }
 
-		$this->forge->addField($fields);
+        if (isset($this->foreignKeys[$foreignName])) {
+            unset($this->foreignKeys[$foreignName]);
+        }
 
-		// Unique/Index keys
-		if (is_array($this->keys))
-		{
-			foreach ($this->keys as $key)
-			{
-				switch ($key['type'])
-				{
-					case 'primary':
-						$this->forge->addPrimaryKey($key['fields']);
-						break;
-					case 'unique':
-						$this->forge->addUniqueKey($key['fields']);
-						break;
-					case 'index':
-						$this->forge->addKey($key['fields']);
-						break;
-				}
-			}
-		}
+        return $this;
+    }
 
-		// Foreign Keys
+    /**
+     * Adds primary key
+     */
+    public function addPrimaryKey(array $fields): Table
+    {
+        $primaryIndexes = array_filter($this->keys, static fn ($index): bool => strtolower($index['type']) === 'primary');
 
-		return $this->forge->createTable($this->tableName);
-	}
+        // if primary key already exists we can't add another one
+        if ($primaryIndexes !== []) {
+            return $this;
+        }
 
-	/**
-	 * Copies data from our old table to the new one,
-	 * taking care map data correctly based on any columns
-	 * that have been renamed.
-	 *
-	 * @return void
-	 */
-	protected function copyData()
-	{
-		$exFields  = [];
-		$newFields = [];
+        // add array to keys of fields
+        $pk = [
+            'fields' => $fields['fields'],
+            'type'   => 'primary',
+        ];
 
-		foreach ($this->fields as $name => $details)
-		{
-			// Are we modifying the column?
-			if (isset($details['new_name']))
-			{
-				$newFields[] = $details['new_name'];
-			}
-			else
-			{
-				$newFields[] = $name;
-			}
+        $this->keys['primary'] = $pk;
 
-			$exFields[] = $name;
-		}
+        return $this;
+    }
 
-		$exFields  = implode(', ', $exFields);
-		$newFields = implode(', ', $newFields);
+    /**
+     * Add a foreign key
+     *
+     * @return $this
+     */
+    public function addForeignKey(array $foreignKeys)
+    {
+        $fk = [];
 
-		$this->db->query("INSERT INTO {$this->prefixedTableName}({$newFields}) SELECT {$exFields} FROM {$this->db->DBPrefix}temp_{$this->tableName}");
-	}
+        // convert to object
+        foreach ($foreignKeys as $row) {
+            $obj                      = new stdClass();
+            $obj->column_name         = $row['field'];
+            $obj->foreign_table_name  = $row['referenceTable'];
+            $obj->foreign_column_name = $row['referenceField'];
+            $obj->on_delete           = $row['onDelete'];
+            $obj->on_update           = $row['onUpdate'];
 
-	/**
-	 * Converts fields retrieved from the database to
-	 * the format needed for creating fields with Forge.
-	 *
-	 * @param array|boolean $fields
-	 *
-	 * @return mixed
-	 */
-	protected function formatFields($fields)
-	{
-		if (! is_array($fields))
-		{
-			return $fields;
-		}
+            $fk[] = $obj;
+        }
 
-		$return = [];
+        $this->foreignKeys = array_merge($this->foreignKeys, $fk);
 
-		foreach ($fields as $field)
-		{
-			$return[$field->name] = [
-				'type'     => $field->type,
-				'default'  => $field->default,
-				'nullable' => $field->nullable,
-			];
+        return $this;
+    }
 
-			if ($field->primary_key)
-			{
-				$this->keys[$field->name] = [
-					'fields' => [$field->name],
-					'type'   => 'primary',
-				];
-			}
-		}
+    /**
+     * Creates the new table based on our current fields.
+     *
+     * @return bool
+     */
+    protected function createTable()
+    {
+        $this->dropIndexes();
+        $this->db->resetDataCache();
 
-		return $return;
-	}
+        // Handle any modified columns.
+        $fields = [];
 
-	/**
-	 * Converts keys retrieved from the database to
-	 * the format needed to create later.
-	 *
-	 * @param mixed $keys
-	 *
-	 * @return mixed
-	 */
-	protected function formatKeys($keys)
-	{
-		if (! is_array($keys))
-		{
-			return $keys;
-		}
+        foreach ($this->fields as $name => $field) {
+            if (isset($field['new_name'])) {
+                $fields[$field['new_name']] = $field;
 
-		$return = [];
+                continue;
+            }
 
-		foreach ($keys as $name => $key)
-		{
-			$return[$name] = [
-				'fields' => $key->fields,
-				'type'   => 'index',
-			];
-		}
+            $fields[$name] = $field;
+        }
 
-		return $return;
-	}
+        $this->forge->addField($fields);
 
-	/**
-	 * Attempts to drop all indexes and constraints
-	 * from the database for this table.
-	 *
-	 * @return null|void
-	 */
-	protected function dropIndexes()
-	{
-		if (! is_array($this->keys) || ! count($this->keys))
-		{
-			return;
-		}
+        $fieldNames = array_keys($fields);
 
-		foreach ($this->keys as $name => $key)
-		{
-			if ($key['type'] === 'primary' || $key['type'] === 'unique')
-			{
-				continue;
-			}
+        $this->keys = array_filter(
+            $this->keys,
+            static fn ($index): bool => count(array_intersect($index['fields'], $fieldNames)) === count($index['fields']),
+        );
 
-			$this->db->query("DROP INDEX IF EXISTS '{$name}'");
-		}
-	}
+        // Unique/Index keys
+        if (is_array($this->keys)) {
+            foreach ($this->keys as $keyName => $key) {
+                switch ($key['type']) {
+                    case 'primary':
+                        $this->forge->addPrimaryKey($key['fields']);
+                        break;
+
+                    case 'unique':
+                        $this->forge->addUniqueKey($key['fields'], $keyName);
+                        break;
+
+                    case 'index':
+                        $this->forge->addKey($key['fields'], false, false, $keyName);
+                        break;
+                }
+            }
+        }
+
+        foreach ($this->foreignKeys as $foreignKey) {
+            $this->forge->addForeignKey(
+                $foreignKey->column_name,
+                trim($foreignKey->foreign_table_name, $this->db->DBPrefix),
+                $foreignKey->foreign_column_name,
+            );
+        }
+
+        return $this->forge->createTable($this->tableName);
+    }
+
+    /**
+     * Copies data from our old table to the new one,
+     * taking care map data correctly based on any columns
+     * that have been renamed.
+     *
+     * @return void
+     */
+    protected function copyData()
+    {
+        $exFields  = [];
+        $newFields = [];
+
+        foreach ($this->fields as $name => $details) {
+            $newFields[] = $details['new_name'] ?? $name;
+            $exFields[]  = $name;
+        }
+
+        $exFields = implode(
+            ', ',
+            array_map(fn ($item) => $this->db->protectIdentifiers($item), $exFields),
+        );
+        $newFields = implode(
+            ', ',
+            array_map(fn ($item) => $this->db->protectIdentifiers($item), $newFields),
+        );
+
+        $this->db->query(
+            "INSERT INTO {$this->prefixedTableName}({$newFields}) SELECT {$exFields} FROM {$this->db->DBPrefix}temp_{$this->tableName}",
+        );
+    }
+
+    /**
+     * Converts fields retrieved from the database to
+     * the format needed for creating fields with Forge.
+     *
+     * @param array|bool $fields
+     *
+     * @return ($fields is array ? array : mixed)
+     */
+    protected function formatFields($fields)
+    {
+        if (! is_array($fields)) {
+            return $fields;
+        }
+
+        $return = [];
+
+        foreach ($fields as $field) {
+            $return[$field->name] = [
+                'type'    => $field->type,
+                'default' => $field->default,
+                'null'    => $field->nullable,
+            ];
+
+            if ($field->default === null) {
+                // `null` means that the default value is not defined.
+                unset($return[$field->name]['default']);
+            } elseif ($field->default === 'NULL') {
+                // 'NULL' means that the default value is NULL.
+                $return[$field->name]['default'] = null;
+            } else {
+                $default = trim($field->default, "'");
+
+                if ($this->isIntegerType($field->type)) {
+                    $default = (int) $default;
+                } elseif ($this->isNumericType($field->type)) {
+                    $default = (float) $default;
+                }
+
+                $return[$field->name]['default'] = $default;
+            }
+
+            if ($field->primary_key) {
+                $this->keys['primary'] = [
+                    'fields' => [$field->name],
+                    'type'   => 'primary',
+                ];
+            }
+        }
+
+        return $return;
+    }
+
+    /**
+     * Is INTEGER type?
+     *
+     * @param string $type SQLite data type (case-insensitive)
+     *
+     * @see https://www.sqlite.org/datatype3.html
+     */
+    private function isIntegerType(string $type): bool
+    {
+        return str_contains(strtoupper($type), 'INT');
+    }
+
+    /**
+     * Is NUMERIC type?
+     *
+     * @param string $type SQLite data type (case-insensitive)
+     *
+     * @see https://www.sqlite.org/datatype3.html
+     */
+    private function isNumericType(string $type): bool
+    {
+        return in_array(strtoupper($type), ['NUMERIC', 'DECIMAL'], true);
+    }
+
+    /**
+     * Converts keys retrieved from the database to
+     * the format needed to create later.
+     *
+     * @param array<string, stdClass> $keys
+     *
+     * @return array<string, array{fields: string, type: string}>
+     */
+    protected function formatKeys($keys)
+    {
+        $return = [];
+
+        foreach ($keys as $name => $key) {
+            $return[strtolower($name)] = [
+                'fields' => $key->fields,
+                'type'   => strtolower($key->type),
+            ];
+        }
+
+        return $return;
+    }
+
+    /**
+     * Attempts to drop all indexes and constraints
+     * from the database for this table.
+     *
+     * @return void
+     */
+    protected function dropIndexes()
+    {
+        if (! is_array($this->keys) || $this->keys === []) {
+            return;
+        }
+
+        foreach (array_keys($this->keys) as $name) {
+            if ($name === 'primary') {
+                continue;
+            }
+
+            $this->db->query("DROP INDEX IF EXISTS '{$name}'");
+        }
+    }
 }

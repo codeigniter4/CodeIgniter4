@@ -1,0 +1,62 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Commands;
+
+use CodeIgniter\Log\Logger;
+use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Commands\AppInfo;
+
+/**
+ * @internal
+ */
+#[Group('Others')]
+final class BaseCommandTest extends CIUnitTestCase
+{
+    private Logger $logger;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->logger = service('logger');
+    }
+
+    public function testMagicIssetTrue(): void
+    {
+        $command = new AppInfo($this->logger, service('commands'));
+
+        $this->assertSame($command->group !== null, isset($command->group)); // @phpstan-ignore isset.property
+    }
+
+    public function testMagicIssetFalse(): void
+    {
+        $command = new AppInfo($this->logger, service('commands'));
+
+        $this->assertFalse(isset($command->foobar)); // @phpstan-ignore property.notFound
+    }
+
+    public function testMagicGet(): void
+    {
+        $command = new AppInfo($this->logger, service('commands'));
+
+        $this->assertSame('demo', $command->group);
+    }
+
+    public function testMagicGetMissing(): void
+    {
+        $command = new AppInfo($this->logger, service('commands'));
+
+        $this->assertNull($command->foobar); // @phpstan-ignore property.notFound
+    }
+}

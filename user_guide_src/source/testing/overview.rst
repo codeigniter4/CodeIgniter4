@@ -3,22 +3,22 @@ Testing
 #######
 
 CodeIgniter has been built to make testing both the framework and your application as simple as possible.
-Support for ``PHPUnit`` is built in, and the framework provides a number of convenient
+Support for `PHPUnit <https://phpunit.de/>`__ is built in, and the framework provides a number of convenient
 helper methods to make testing every aspect of your application as painless as possible.
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
-************
-System Setup
-************
+*************
+System Set Up
+*************
 
-Installing phpUnit
+Installing PHPUnit
 ==================
 
-CodeIgniter uses `phpUnit <https://phpunit.de/>`__ as the basis for all of its testing. There are two ways to install
-phpUnit to use within your system.
+CodeIgniter uses `PHPUnit <https://phpunit.de/>`__ as the basis for all of its testing. There are two ways to install
+PHPUnit to use within your system.
 
 Composer
 --------
@@ -28,21 +28,30 @@ to install it globally we do not recommend it, since it can cause compatibility 
 system as time goes on.
 
 Ensure that you have Composer installed on your system. From the project root (the directory that contains the
-application and system directories) type the following from the command line::
+application and system directories) type the following from the command line:
 
-    > composer require --dev phpunit/phpunit
+.. code-block:: console
+
+    composer require --dev phpunit/phpunit
 
 This will install the correct version for your current PHP version. Once that is done, you can run all of the
-tests for this project by typing::
+tests for this project by typing:
 
-    > ./vendor/bin/phpunit
+.. code-block:: console
+
+    vendor/bin/phpunit
+
+If you are using Windows, use the following command:
+
+.. code-block:: console
+
+    vendor\bin\phpunit
 
 Phar
 ----
 
-The other option is to download the .phar file from the `phpUnit <https://phpunit.de/getting-started/phpunit-7.html>`__ site.
+The other option is to download the .phar file from the `PHPUnit <https://phpunit.de/getting-started/phpunit-9.html>`__ site.
 This is a standalone file that should be placed within your project root.
-
 
 ************************
 Testing Your Application
@@ -51,43 +60,33 @@ Testing Your Application
 PHPUnit Configuration
 =====================
 
-The framework has a ``phpunit.xml.dist`` file in the project root. This controls unit
-testing of the framework itself. If you provide your own ``phpunit.xml``, it will
-over-ride this.
+In your CodeIgniter project root, there is the ``phpunit.xml.dist`` file. This
+controls unit testing of your application. If you provide your own ``phpunit.xml``,
+it will over-ride this.
 
-Your ``phpunit.xml`` should exclude the ``system`` folder, as well as any ``vendor`` or
-``ThirdParty`` folders, if you are unit testing your application.
+By default, test files are placed under the **tests** directory in the project root.
 
 The Test Class
 ==============
 
-In order to take advantage of the additional tools provided, your tests must extend ``\CIUnitTestCase``. All tests
-are expected to be located in the **tests/app** directory by default.
+In order to take advantage of the additional tools provided, your tests must extend
+``CodeIgniter\Test\CIUnitTestCase``.
 
-To test a new library, **Foo**, you would create a new file at **tests/app/Libraries/FooTest.php**::
+There are no rules for how test files must be placed. However, we recommend that
+you establish placement rules in advance so that you can quickly understand where
+the test files are located.
 
-    <?php namespace App\Libraries;
+In this document, the test files corresponding to the classes in the **app** directory
+will be placed in the **tests/app** directory. To test a new library,
+**app/Libraries/Foo.php**, you would create a new file at
+**tests/app/Libraries/FooTest.php**:
 
-    class FooTest extends \CIUnitTestCase
-    {
-        public function testFooNotBar()
-        {
-            . . .
-        }
-    }
+.. literalinclude:: overview/001.php
 
-To test one of your models, you might end up with something like this in ``tests/app/Models/OneOfMyModelsTest.php``::
+To test one of your models, **app/Models/UserModel.php**, you might end up with
+something like this in **tests/app/Models/UserModelTest.php**:
 
-    <?php namespace App\Models;
-
-    class OneOfMyModelsTest extends \CIUnitTestCase
-    {
-        public function testFooNotBar()
-        {
-            . . .
-        }
-    }
-
+.. literalinclude:: overview/002.php
 
 You can create any directory structure that fits your testing style/needs. When namespacing the test classes,
 remember that the **app** directory is the root of the ``App`` namespace, so any classes you use must
@@ -95,89 +94,113 @@ have the correct namespace relative to ``App``.
 
 .. note:: Namespaces are not strictly required for test classes, but they are helpful to ensure no class names collide.
 
-When testing database results, you must use the `CIDatabaseTestClass </testing/database>`_ class.
+When testing database results, you must use the :doc:`DatabaseTestTrait <database>` in your class.
+
+Staging
+-------
+
+Most tests require some preparation in order to run correctly. PHPUnit's ``TestCase`` provides four methods
+to help with staging and clean up::
+
+    public static function setUpBeforeClass(): void
+    public static function tearDownAfterClass(): void
+
+    protected function setUp(): void
+    protected function tearDown(): void
+
+The static methods ``setUpBeforeClass()`` and ``tearDownAfterClass()`` run before and after the entire test case, whereas the protected methods ``setUp()`` and ``tearDown()`` run
+between each test.
+
+If you implement any of these special functions, make sure you run their
+parent as well so extended test cases do not interfere with staging:
+
+.. literalinclude:: overview/003.php
+
+.. _testing-overview-traits:
+
+Traits
+------
+
+A common way to enhance your tests is using traits to consolidate staging across different
+test cases. ``CIUnitTestCase`` will detect any class traits and look for staging methods
+to run named for the trait itself (i.e. `setUp{NameOfTrait}()` and `tearDown{NameOfTrait}()`).
+
+For example, if you needed to add authentication to some
+of your test cases you could create an authentication trait with a set up method to fake a
+logged in user:
+
+.. literalinclude:: overview/006.php
+
+.. literalinclude:: overview/022.php
 
 Additional Assertions
 ---------------------
 
 ``CIUnitTestCase`` provides additional unit testing assertions that you might find useful.
 
-**assertLogged($level, $expectedMessage)**
+assertLogged($level, $expectedMessage)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Ensure that something you expected to be logged actually was::
+Ensure that something you expected to be logged was actually logged:
 
-        $config = new LoggerConfig();
-        $logger = new Logger($config);
+assertLogContains($level, $logMessage)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-        ... do something that you expect a log entry from
-        $logger->log('error', "That's no moon");
+Ensure that there's a record in the logs which contains a message part.
 
-        $this->assertLogged('error', "That's no moon");
+.. literalinclude:: overview/007.php
 
-**assertEventTriggered($eventName)**
+assertEventTriggered($eventName)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Ensure that an event you expected to be triggered actually was::
+Ensure that an event you expected to be triggered actually was:
 
-    Events::on('foo', function($arg) use(&$result) {
-        $result = $arg;
-    });
+.. literalinclude:: overview/008.php
 
-    Events::trigger('foo', 'bar');
+assertHeaderEmitted($header, $ignoreCase = false)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    $this->assertEventTriggered('foo');
+Ensure that a header or cookie was actually emitted:
 
-**assertHeaderEmitted($header, $ignoreCase=false)**
+.. literalinclude:: overview/009.php
 
-Ensure that a header or cookie was actually emitted::
+.. note:: The test case with this should be run as a separate process
+    (with `@runInSeparateProcess annotation`_ or `RunInSeparateProcess attribute`_)
+    in PHPUnit.
 
-    $response->setCookie('foo', 'bar');
+.. _@runInSeparateProcess annotation: https://docs.phpunit.de/en/10.5/annotations.html#runinseparateprocess
+.. _RunInSeparateProcess attribute: https://docs.phpunit.de/en/10.5/attributes.html#runinseparateprocess
 
-    ob_start();
-    $this->response->send();
-    $output = ob_get_clean(); // in case you want to check the adtual body
+assertHeaderNotEmitted($header, $ignoreCase = false)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    $this->assertHeaderEmitted("Set-Cookie: foo=bar");
+Ensure that a header or cookie was not emitted:
 
-Note: the test case with this should be `run as a separate process
-in PHPunit <https://phpunit.readthedocs.io/en/7.4/annotations.html#runinseparateprocess>`_.
+.. literalinclude:: overview/010.php
 
-**assertHeaderNotEmitted($header, $ignoreCase=false)**
+.. note:: The test case with this should be run as a separate process
+    (with `@runInSeparateProcess annotation`_ or `RunInSeparateProcess attribute`_)
+    in PHPUnit.
 
-Ensure that a header or cookie was actually emitted::
-
-    $response->setCookie('foo', 'bar');
-
-    ob_start();
-    $this->response->send();
-    $output = ob_get_clean(); // in case you want to check the adtual body
-
-    $this->assertHeaderNotEmitted("Set-Cookie: banana");
-
-Note: the test case with this should be `run as a separate process
-in PHPunit <https://phpunit.readthedocs.io/en/7.4/annotations.html#runinseparateprocess>`_.
-
-**assertCloseEnough($expected, $actual, $message='', $tolerance=1)**
+assertCloseEnough($expected, $actual, $message = '', $tolerance = 1)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For extended execution time testing, tests that the absolute difference
-between expected and actual time is within the prescribed tolerance.::
+between expected and actual time is within the prescribed tolerance:
 
-    $timer = new Timer();
-    $timer->start('longjohn', strtotime('-11 minutes'));
-    $this->assertCloseEnough(11 * 60, $timer->getElapsedTime('longjohn'));
+.. literalinclude:: overview/011.php
 
 The above test will allow the actual time to be either 660 or 661 seconds.
 
-**assertCloseEnoughString($expected, $actual, $message='', $tolerance=1)**
+assertCloseEnoughString($expected, $actual, $message = '', $tolerance = 1)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For extended execution time testing, tests that the absolute difference
-between expected and actual time, formatted as strings, is within the prescribed tolerance.::
+between expected and actual time, formatted as strings, is within the prescribed tolerance:
 
-    $timer = new Timer();
-    $timer->start('longjohn', strtotime('-11 minutes'));
-    $this->assertCloseEnoughString(11 * 60, $timer->getElapsedTime('longjohn'));
+.. literalinclude:: overview/012.php
 
 The above test will allow the actual time to be either 660 or 661 seconds.
-
 
 Accessing Protected/Private Properties
 --------------------------------------
@@ -185,105 +208,92 @@ Accessing Protected/Private Properties
 When testing, you can use the following setter and getter methods to access protected and private methods and
 properties in the classes that you are testing.
 
-**getPrivateMethodInvoker($instance, $method)**
+getPrivateMethodInvoker($instance, $method)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Enables you to call private methods from outside the class. This returns a function that can be called. The first
 parameter is an instance of the class to test. The second parameter is the name of the method you want to call.
 
-::
+.. literalinclude:: overview/013.php
 
-    // Create an instance of the class to test
-    $obj = new Foo();
-
-    // Get the invoker for the 'privateMethod' method.
-	$method = $this->getPrivateMethodInvoker($obj, 'privateMethod');
-
-    // Test the results
-	$this->assertEquals('bar', $method('param1', 'param2'));
-
-**getPrivateProperty($instance, $property)**
+getPrivateProperty($instance, $property)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Retrieves the value of a private/protected class property from an instance of a class. The first parameter is an
 instance of the class to test. The second parameter is the name of the property.
 
-::
+.. literalinclude:: overview/014.php
 
-    // Create an instance of the class to test
-    $obj = new Foo();
-
-    // Test the value
-    $this->assertEquals('bar', $this->getPrivateProperty($obj, 'baz'));
-
-**setPrivateProperty($instance, $property, $value)**
+setPrivateProperty($instance, $property, $value)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Set a protected value within a class instance. The first parameter is an instance of the class to test. The second
-parameter is the name of the property to set the value of. The third parameter is the value to set it to::
+parameter is the name of the property to set the value of. The third parameter is the value to set it to:
 
-    // Create an instance of the class to test
-    $obj = new Foo();
-
-    // Set the value
-    $this->setPrivateProperty($obj, 'baz', 'oops!');
-
-    // Do normal testing...
+.. literalinclude:: overview/015.php
 
 Mocking Services
 ================
 
 You will often find that you need to mock one of the services defined in **app/Config/Services.php** to limit
 your tests to only the code in question, while simulating various responses from the services. This is especially
-true when testing controllers and other integration testing. The **Services** class provides two methods to make this
-simple: ``injectMock()``, and ``reset()``.
+true when testing controllers and other integration testing. The **Services** class provides the following methods
+to simplify this.
 
-**injectMock()**
+Services::injectMock()
+----------------------
 
 This method allows you to define the exact instance that will be returned by the Services class. You can use this to
 set properties of a service so that it behaves in a certain way, or replace a service with a mocked class.
-::
 
-    public function testSomething()
-    {
-        $curlrequest = $this->getMockBuilder('CodeIgniter\HTTP\CURLRequest')
-                            ->setMethods(['request'])
-                            ->getMock();
-        Services::injectMock('curlrequest', $curlrequest);
-
-        // Do normal testing here....
-    }
+.. literalinclude:: overview/016.php
 
 The first parameter is the service that you are replacing. The name must match the function name in the Services
 class exactly. The second parameter is the instance to replace it with.
 
-**reset()**
+Services::reset()
+-----------------
 
 Removes all mocked classes from the Services class, bringing it back to its original state.
 
+You can also use the ``$this->resetServices()`` method that ``CIUnitTestCase`` provides.
 
+.. note:: This method resets the all states of Services, and the ``RouteCollection``
+    will have no routes. If you want to use your routes to be loaded, you need to
+    call the ``loadRoutes()`` method like ``Services::routes()->loadRoutes()``.
 
-Stream Filters
-==============
+Services::resetSingle(string $name)
+-----------------------------------
 
-**CITestStreamFilter** provides an alternate to these helper methods.
+Removes any mock and shared instances for a single service, by its name.
 
-You may need to test things that are difficult to test. Sometimes, capturing a stream, like PHP's own STDOUT, or STDERR,
-might be helpful. The ``CITestStreamFilter`` helps you capture the output from the stream of your choice.
+.. note:: The ``Cache``, ``Email`` and ``Session`` services are mocked by default to prevent intrusive testing behavior. To prevent these from mocking remove their method callback from the class property: ``$setUpMethods = ['mockEmail', 'mockSession'];``
 
-An example demonstrating this inside one of your test cases::
+Mocking Factory Instances
+=========================
 
-    public function setUp()
-    {
-        CITestStreamFilter::$buffer = '';
-        $this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-    }
+Similar to Services, you may find yourself needing to supply a pre-configured class instance
+during testing that will be used with ``Factories``. Use the same ``Factories::injectMock()`` and ``Factories::reset()``
+static methods like **Services**, but they take an additional preceding parameter for the
+component name:
 
-    public function tearDown()
-    {
-        stream_filter_remove($this->stream_filter);
-    }
+.. literalinclude:: overview/017.php
 
-    public function testSomeOutput()
-    {
-        CLI::write('first.');
-        $expected = "first.\n";
-        $this->assertEquals($expected, CITestStreamFilter::$buffer);
-    }
+.. note:: All component Factories are reset by default between each test. Modify your test case's ``$setUpMethods`` if you need instances to persist.
+
+Testing and Time
+================
+
+Testing time-dependent code can be challenging. However, when using the
+:doc:`Time <../libraries/time>` class, the current time can be fixed or changed
+at will during testing.
+
+Below is a sample test code that fixes the current time:
+
+.. literalinclude:: overview/021.php
+
+You can fix the current time with the ``Time::setTestNow()`` method.
+Optionally, you can specify a locale as the second parameter.
+
+Don't forget to reset the current time after the test with calling it without
+parameters.

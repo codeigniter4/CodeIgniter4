@@ -1,425 +1,441 @@
 <?php
 
-use CodeIgniter\Log\Logger;
+declare(strict_types=1);
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Log;
+
 use CodeIgniter\Exceptions\FrameworkException;
+use CodeIgniter\Exceptions\RuntimeException;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Log\Exceptions\LogException;
-use Tests\Support\Config\MockLogger as LoggerConfig;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
+use PHPUnit\Framework\Attributes\Group;
+use ReflectionMethod;
+use ReflectionNamedType;
 use Tests\Support\Log\Handlers\TestHandler;
 
-class LoggerTest extends \CIUnitTestCase
+/**
+ * @internal
+ */
+#[Group('Others')]
+final class LoggerTest extends CIUnitTestCase
 {
+    protected function tearDown(): void
+    {
+        parent::tearDown();
 
-	public function testThrowsExceptionWithBadHandlerSettings()
-	{
-		$config           = new LoggerConfig();
-		$config->handlers = null;
+        // Reset the current time.
+        Time::setTestNow();
+    }
 
-		$this->expectException(FrameworkException::class);
-		$this->expectExceptionMessage(lang('Core.noHandlers', ['LoggerConfig']));
+    public function testThrowsExceptionWithBadHandlerSettings(): void
+    {
+        $config           = new LoggerConfig();
+        $config->handlers = [];
 
-		$logger = new Logger($config);
-	}
+        $this->expectException(FrameworkException::class);
+        $this->expectExceptionMessage(lang('Core.noHandlers', ['LoggerConfig']));
 
-	//--------------------------------------------------------------------
+        new Logger($config);
+    }
 
-	public function testLogThrowsExceptionOnInvalidLevel()
-	{
-		$config = new LoggerConfig();
+    public function testLogThrowsExceptionOnInvalidLevel(): void
+    {
+        $config = new LoggerConfig();
 
-		$this->expectException(LogException::class);
-		$this->expectExceptionMessage(lang('Log.invalidLogLevel', ['foo']));
+        $this->expectException(LogException::class);
+        $this->expectExceptionMessage(lang('Log.invalidLogLevel', ['foo']));
 
-		$logger = new Logger($config);
+        $logger = new Logger($config);
 
-		$logger->log('foo', '');
-	}
+        $logger->log('foo', '');
+    }
 
-	//--------------------------------------------------------------------
+    public function testLogAlwaysReturnsVoid(): void
+    {
+        $config            = new LoggerConfig();
+        $config->threshold = 3;
 
-	public function testLogReturnsFalseWhenLogNotHandled()
-	{
-		$config            = new LoggerConfig();
-		$config->threshold = 3;
+        $logger = new Logger($config);
 
-		$logger = new Logger($config);
+        $refMethod = new ReflectionMethod($logger, 'log');
+        $this->assertTrue($refMethod->hasReturnType());
+        $this->assertInstanceOf(ReflectionNamedType::class, $refMethod->getReturnType());
+        $this->assertSame('void', $refMethod->getReturnType()->getName());
+    }
 
-		$this->assertFalse($logger->log('debug', ''));
-	}
+    public function testLogActuallyLogs(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
 
-	//--------------------------------------------------------------------
+        Time::setTestNow('2023-11-25 12:00:00');
 
-	public function testLogActuallyLogs()
-	{
-		$config = new LoggerConfig();
-		//      $Config->handlers['TestHandler']['handles'] =  [LogLevel::CRITICAL];
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message';
+        $logger->log('debug', 'Test message');
 
-		$logger = new Logger($config);
+        $logs = TestHandler::getLogs();
 
-		$expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message';
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 
-		$logger->log('debug', 'Test message');
+    public function testLogDoesnotLogUnhandledLevels(): void
+    {
+        $config = new LoggerConfig();
 
-		$logs = TestHandler::getLogs();
+        $config->handlers[TestHandler::class]['handles'] = ['critical'];
 
-		$this->assertCount(1, $logs);
-		$this->assertEquals($expected, $logs[0]);
-	}
+        $logger = new Logger($config);
 
-	//--------------------------------------------------------------------
+        $logger->log('debug', 'Test message');
 
-	public function testLogDoesnotLogUnhandledLevels()
-	{
-		$config                                                                = new LoggerConfig();
-		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
+        $logs = TestHandler::getLogs();
 
-		$logger = new Logger($config);
+        $this->assertCount(0, $logs);
+    }
 
-		$logger->log('debug', 'Test message');
+    public function testLogInterpolatesMessage(): void
+    {
+        $config = new LoggerConfig();
 
-		$logs = TestHandler::getLogs();
+        $logger = new Logger($config);
 
-		$this->assertCount(0, $logs);
-	}
+        Time::setTestNow('2023-11-25 12:00:00');
 
-	//--------------------------------------------------------------------
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message bar baz';
 
-	public function testLogInterpolatesMessage()
-	{
-		$config = new LoggerConfig();
+        $logger->log('debug', 'Test message {foo} {bar}', ['foo' => 'bar', 'bar' => 'baz']);
 
-		$logger = new Logger($config);
+        $logs = TestHandler::getLogs();
 
-		$expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message bar baz';
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 
-		$logger->log('debug', 'Test message {foo} {bar}', ['foo' => 'bar', 'bar' => 'baz']);
+    public function testLogInterpolatesPost(): void
+    {
+        $config = new LoggerConfig();
 
-		$logs = TestHandler::getLogs();
+        $logger = new Logger($config);
 
-		$this->assertCount(1, $logs);
-		$this->assertEquals($expected, $logs[0]);
-	}
+        Time::setTestNow('2023-11-25 12:00:00');
 
-	//--------------------------------------------------------------------
+        $_POST    = ['foo' => 'bar'];
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message $_POST: ' . print_r($_POST, true);
 
-	public function testLogInterpolatesPost()
-	{
-		$config = new LoggerConfig();
+        $logger->log('debug', 'Test message {post_vars}');
 
-		$logger = new Logger($config);
+        $logs = TestHandler::getLogs();
 
-		$_POST    = ['foo' => 'bar'];
-		$expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message $_POST: ' . print_r($_POST, true);
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 
-		$logger->log('debug', 'Test message {post_vars}');
+    public function testLogInterpolatesGet(): void
+    {
+        $config = new LoggerConfig();
 
-		$logs = TestHandler::getLogs();
+        $logger = new Logger($config);
 
-		$this->assertCount(1, $logs);
-		$this->assertEquals($expected, $logs[0]);
-	}
+        Time::setTestNow('2023-11-25 12:00:00');
 
-	//--------------------------------------------------------------------
+        $_GET     = ['bar' => 'baz'];
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message $_GET: ' . print_r($_GET, true);
 
-	public function testLogInterpolatesGet()
-	{
-		$config = new LoggerConfig();
+        $logger->log('debug', 'Test message {get_vars}');
 
-		$logger = new Logger($config);
+        $logs = TestHandler::getLogs();
 
-		$_GET     = ['bar' => 'baz'];
-		$expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message $_GET: ' . print_r($_GET, true);
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 
-		$logger->log('debug', 'Test message {get_vars}');
+    public function testLogInterpolatesSession(): void
+    {
+        $config = new LoggerConfig();
 
-		$logs = TestHandler::getLogs();
+        $logger = new Logger($config);
 
-		$this->assertCount(1, $logs);
-		$this->assertEquals($expected, $logs[0]);
-	}
+        Time::setTestNow('2023-11-25 12:00:00');
 
-	//--------------------------------------------------------------------
+        $_SESSION = ['xxx' => 'yyy'];
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message $_SESSION: ' . print_r($_SESSION, true);
 
-	public function testLogInterpolatesSession()
-	{
-		$config = new LoggerConfig();
+        $logger->log('debug', 'Test message {session_vars}');
 
-		$logger = new Logger($config);
+        $logs = TestHandler::getLogs();
 
-		$_SESSION = ['xxx' => 'yyy'];
-		$expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message $_SESSION: ' . print_r($_SESSION, true);
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 
-		$logger->log('debug', 'Test message {session_vars}');
+    public function testLogInterpolatesCurrentEnvironment(): void
+    {
+        $config = new LoggerConfig();
 
-		$logs = TestHandler::getLogs();
+        $logger = new Logger($config);
 
-		$this->assertCount(1, $logs);
-		$this->assertEquals($expected, $logs[0]);
-	}
+        Time::setTestNow('2023-11-25 12:00:00');
 
-	//--------------------------------------------------------------------
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message ' . ENVIRONMENT;
 
-	public function testLogInterpolatesCurrentEnvironment()
-	{
-		$config = new LoggerConfig();
+        $logger->log('debug', 'Test message {env}');
 
-		$logger = new Logger($config);
+        $logs = TestHandler::getLogs();
 
-		$expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message ' . ENVIRONMENT;
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 
-		$logger->log('debug', 'Test message {env}');
+    public function testLogInterpolatesEnvironmentVars(): void
+    {
+        $config = new LoggerConfig();
 
-		$logs = TestHandler::getLogs();
+        $logger = new Logger($config);
 
-		$this->assertCount(1, $logs);
-		$this->assertEquals($expected, $logs[0]);
-	}
+        Time::setTestNow('2023-11-25 12:00:00');
 
-	//--------------------------------------------------------------------
+        $_ENV['foo'] = 'bar';
 
-	public function testLogInterpolatesEnvironmentVars()
-	{
-		$config = new LoggerConfig();
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message bar';
 
-		$logger = new Logger($config);
+        $logger->log('debug', 'Test message {env:foo}');
 
-		$_ENV['foo'] = 'bar';
+        $logs = TestHandler::getLogs();
 
-		$expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message bar';
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 
-		$logger->log('debug', 'Test message {env:foo}');
+    public function testLogInterpolatesFileAndLine(): void
+    {
+        $config = new LoggerConfig();
 
-		$logs = TestHandler::getLogs();
+        $logger = new Logger($config);
 
-		$this->assertCount(1, $logs);
-		$this->assertEquals($expected, $logs[0]);
-	}
+        $_ENV['foo'] = 'bar';
 
-	//--------------------------------------------------------------------
+        $logger->log('debug', 'Test message {file} {line}');
+        $line     = __LINE__ - 1;
+        $expected = "LoggerTest.php {$line}";
 
-	public function testLogInterpolatesFileAndLine()
-	{
-		$config = new LoggerConfig();
+        $logs = TestHandler::getLogs();
 
-		$logger = new Logger($config);
+        $this->assertGreaterThan(1, strpos($logs[0], $expected));
+    }
 
-		$_ENV['foo'] = 'bar';
+    public function testLogInterpolatesLineOnly(): void
+    {
+        $config = new LoggerConfig();
 
-		// For whatever reason, this will often be the class/function instead of file and line.
-		// Other times it actually returns the line number, so don't look for either
-		$expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message LoggerTest';
+        $logger = new Logger($config);
 
-		$logger->log('debug', 'Test message {file} {line}');
+        $_ENV['foo'] = 'bar';
 
-		$logs = TestHandler::getLogs();
+        $logger->log('debug', 'Test message Sample {line}');
+        $line     = __LINE__ - 1;
+        $expected = "Sample {$line}";
 
-		$this->assertCount(1, $logs);
-		$this->assertTrue(strpos($logs[0], $expected) === 0);
-	}
+        $logs = TestHandler::getLogs();
 
-	//--------------------------------------------------------------------
+        $this->assertGreaterThan(1, strpos($logs[0], $expected));
+    }
 
-	public function testLogInterpolatesExceptions()
-	{
-		$config = new LoggerConfig();
-		$logger = new Logger($config);
+    public function testLogInterpolatesExceptions(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
 
-		$expected = 'ERROR - ' . date('Y-m-d') . ' --> [ERROR] These are not the droids you are looking for';
+        Time::setTestNow('2023-11-25 12:00:00');
 
-		try
-		{
-			throw new Exception('These are not the droids you are looking for');
-		}
-		catch (\Exception $e)
-		{
-			$logger->log('error', '[ERROR] {exception}', ['exception' => $e]);
-		}
+        $expected = 'ERROR - ' . Time::now()->format('Y-m-d') . ' --> [ERROR] These are not the droids you are looking for';
 
-		$logs = TestHandler::getLogs();
+        try {
+            throw new RuntimeException('These are not the droids you are looking for');
+        } catch (RuntimeException $e) {
+            $logger->log('error', '[ERROR] {exception}', ['exception' => $e]);
+        }
 
-		$this->assertCount(1, $logs);
-		$this->assertTrue(strpos($logs[0], $expected) === 0);
-	}
+        $logs = TestHandler::getLogs();
 
-	//--------------------------------------------------------------------
+        $this->assertCount(1, $logs);
+        $this->assertSame(0, strpos($logs[0], $expected));
+    }
 
-	public function testEmergencyLogsCorrectly()
-	{
-		$config = new LoggerConfig();
-		$logger = new Logger($config);
+    public function testEmergencyLogsCorrectly(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
 
-		$expected = 'EMERGENCY - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
 
-		$logger->emergency('Test message');
+        $expected = 'EMERGENCY - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
-		$logs = TestHandler::getLogs();
+        $logger->emergency('Test message');
 
-		$this->assertCount(1, $logs);
-		$this->assertEquals($expected, $logs[0]);
-	}
+        $logs = TestHandler::getLogs();
 
-	//--------------------------------------------------------------------
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 
-	public function testAlertLogsCorrectly()
-	{
-		$config = new LoggerConfig();
-		$logger = new Logger($config);
+    public function testAlertLogsCorrectly(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
 
-		$expected = 'ALERT - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
 
-		$logger->alert('Test message');
+        $expected = 'ALERT - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
-		$logs = TestHandler::getLogs();
+        $logger->alert('Test message');
 
-		$this->assertCount(1, $logs);
-		$this->assertEquals($expected, $logs[0]);
-	}
+        $logs = TestHandler::getLogs();
 
-	//--------------------------------------------------------------------
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 
-	public function testCriticalLogsCorrectly()
-	{
-		$config = new LoggerConfig();
-		$logger = new Logger($config);
+    public function testCriticalLogsCorrectly(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
 
-		$expected = 'CRITICAL - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
 
-		$logger->critical('Test message');
+        $expected = 'CRITICAL - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
-		$logs = TestHandler::getLogs();
+        $logger->critical('Test message');
 
-		$this->assertCount(1, $logs);
-		$this->assertEquals($expected, $logs[0]);
-	}
+        $logs = TestHandler::getLogs();
 
-	//--------------------------------------------------------------------
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 
-	public function testErrorLogsCorrectly()
-	{
-		$config = new LoggerConfig();
-		$logger = new Logger($config);
+    public function testErrorLogsCorrectly(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
 
-		$expected = 'ERROR - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
 
-		$logger->error('Test message');
+        $expected = 'ERROR - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
-		$logs = TestHandler::getLogs();
+        $logger->error('Test message');
 
-		$this->assertCount(1, $logs);
-		$this->assertEquals($expected, $logs[0]);
-	}
+        $logs = TestHandler::getLogs();
 
-	//--------------------------------------------------------------------
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 
-	public function testWarningLogsCorrectly()
-	{
-		$config = new LoggerConfig();
-		$logger = new Logger($config);
+    public function testWarningLogsCorrectly(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
 
-		$expected = 'WARNING - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
 
-		$logger->warning('Test message');
+        $expected = 'WARNING - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
-		$logs = TestHandler::getLogs();
+        $logger->warning('Test message');
 
-		$this->assertCount(1, $logs);
-		$this->assertEquals($expected, $logs[0]);
-	}
+        $logs = TestHandler::getLogs();
 
-	//--------------------------------------------------------------------
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 
-	public function testNoticeLogsCorrectly()
-	{
-		$config = new LoggerConfig();
-		$logger = new Logger($config);
+    public function testNoticeLogsCorrectly(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
 
-		$expected = 'NOTICE - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
 
-		$logger->notice('Test message');
+        $expected = 'NOTICE - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
-		$logs = TestHandler::getLogs();
+        $logger->notice('Test message');
 
-		$this->assertCount(1, $logs);
-		$this->assertEquals($expected, $logs[0]);
-	}
+        $logs = TestHandler::getLogs();
 
-	//--------------------------------------------------------------------
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 
-	public function testInfoLogsCorrectly()
-	{
-		$config = new LoggerConfig();
-		$logger = new Logger($config);
+    public function testInfoLogsCorrectly(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
 
-		$expected = 'INFO - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
 
-		$logger->info('Test message');
+        $expected = 'INFO - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
-		$logs = TestHandler::getLogs();
+        $logger->info('Test message');
 
-		$this->assertCount(1, $logs);
-		$this->assertEquals($expected, $logs[0]);
-	}
+        $logs = TestHandler::getLogs();
 
-	//--------------------------------------------------------------------
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 
-	public function testDebugLogsCorrectly()
-	{
-		$config = new LoggerConfig();
-		$logger = new Logger($config);
+    public function testDebugLogsCorrectly(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
 
-		$expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
 
-		$logger->debug('Test message');
+        $expected = 'DEBUG - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
-		$logs = TestHandler::getLogs();
+        $logger->debug('Test message');
 
-		$this->assertCount(1, $logs);
-		$this->assertEquals($expected, $logs[0]);
-	}
+        $logs = TestHandler::getLogs();
 
-	//--------------------------------------------------------------------
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 
-	public function testLogLevels()
-	{
-		$config = new LoggerConfig();
-		$logger = new Logger($config);
+    public function testLogLevels(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
 
-		$expected = 'WARNING - ' . date('Y-m-d') . ' --> Test message';
+        Time::setTestNow('2023-11-25 12:00:00');
 
-		$logger->log(5, 'Test message');
+        $expected = 'WARNING - ' . Time::now()->format('Y-m-d') . ' --> Test message';
 
-		$logs = TestHandler::getLogs();
+        $logger->log(5, 'Test message');
 
-		$this->assertCount(1, $logs);
-		$this->assertEquals($expected, $logs[0]);
-	}
+        $logs = TestHandler::getLogs();
 
-	//--------------------------------------------------------------------
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
 
-	public function testNonStringMessage()
-	{
-		$config = new LoggerConfig();
-		$logger = new Logger($config);
+    public function testDetermineFileNoStackTrace(): void
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
 
-		$expected = '[Tests\Support\Log\Handlers\TestHandler]';
-		$logger->log(5, $config);
+        $expected = [
+            'unknown',
+            'unknown',
+        ];
 
-		$logs = TestHandler::getLogs();
-
-		$this->assertCount(1, $logs);
-		$this->assertContains($expected, $logs[0]);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testFilenameCleaning()
-	{
-		$config = new LoggerConfig();
-		$logger = new \Tests\Support\Log\TestLogger($config);
-
-		$ohoh     = APPPATH . 'LoggerTest';
-		$expected = 'APPPATH/LoggerTest';
-
-		$this->assertEquals($expected, $logger->cleanup($ohoh));
-	}
-
+        $this->assertSame($expected, $logger->determineFile());
+    }
 }

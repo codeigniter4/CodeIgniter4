@@ -1,0 +1,38 @@
+#############
+Version 4.4.6
+#############
+
+Release Date: February 24, 2024
+
+**4.4.6 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+********
+BREAKING
+********
+
+Time::createFromTimestamp()
+===========================
+
+A bug that caused :ref:`Time::createFromTimestamp() <time-createfromtimestamp>`
+to return a Time instance with a timezone of UTC has been fixed.
+
+Starting with this version, when you do not specify a timezone, a Time instance
+with the app's timezone is returned by default.
+
+**********
+Bugs Fixed
+**********
+
+- **Session:** Fixed a bug in Redis session handler that caused locking to fail
+  and the session data to be cleared.
+- **DB Forge:** Fixed a bug in SQLite3 Forge that caused ``Forge::modifyColumn()``
+  to incorrectly modify table definitions.
+- **CSP:** Fixed a bug that CSP blocked some elements in the Debug Toolbar.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

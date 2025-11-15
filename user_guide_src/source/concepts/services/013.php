@@ -1,0 +1,3 @@
+<?php
+
+$timer = service('timer');

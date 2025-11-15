@@ -1,13 +1,13 @@
-#################
-Database Metadata
-#################
+################
+Getting Metadata
+################
 
 .. contents::
     :local:
     :depth: 2
 
 **************
-Table MetaData
+Table Metadata
 **************
 
 These functions let you fetch table information.
@@ -15,138 +15,135 @@ These functions let you fetch table information.
 List the Tables in Your Database
 ================================
 
-**$db->listTables();**
+$db->listTables()
+-----------------
 
 Returns an array containing the names of all the tables in the database
-you are currently connected to. Example::
+you are currently connected to. Example:
 
-	$tables = $db->listTables();
+.. literalinclude:: metadata/001.php
 
-	foreach ($tables as $table)
-	{
-		echo $table;
-	}
+.. note:: Some drivers have additional system tables that are excluded from this return.
 
 Determine If a Table Exists
 ===========================
 
-**$db->tableExists();**
+$db->tableExists()
+------------------
 
 Sometimes it's helpful to know whether a particular table exists before
-running an operation on it. Returns a boolean TRUE/FALSE. Usage example::
+running an operation on it. Returns a boolean true/false. Usage example:
 
-	if ($db->tableExists('table_name'))
-	{
-		// some code...
-	}
+.. literalinclude:: metadata/002.php
 
 .. note:: Replace *table_name* with the name of the table you are looking for.
 
 **************
-Field MetaData
+Field Metadata
 **************
 
 List the Fields in a Table
 ==========================
 
-**$db->getFieldNames()**
+$db->getFieldNames()
+--------------------
 
 Returns an array containing the field names. This query can be called
 two ways:
 
-1. You can supply the table name and call it from the $db->
-object::
+1. You can supply the table name and call it from the ``$db`` object:
 
-	$fields = $db->getFieldNames('table_name');
-
-	foreach ($fields as $field)
-	{
-		echo $field;
-	}
+    .. literalinclude:: metadata/003.php
 
 2. You can gather the field names associated with any query you run by
-calling the function from your query result object::
+   calling the function from your query result object:
 
-	$query = $db->query('SELECT * FROM some_table');
-
-	foreach ($query->getFieldNames() as $field)
-	{
-		echo $field;
-	}
+    .. literalinclude:: metadata/004.php
 
 Determine If a Field is Present in a Table
 ==========================================
 
-**$db->fieldExists()**
+$db->fieldExists()
+------------------
 
 Sometimes it's helpful to know whether a particular field exists before
-performing an action. Returns a boolean TRUE/FALSE. Usage example::
+performing an action. Returns a boolean true/false. Usage example:
 
-	if ($db->fieldExists('field_name', 'table_name'))
-	{
-		// some code...
-	}
+.. literalinclude:: metadata/005.php
 
-.. note:: Replace *field_name* with the name of the column you are looking
-	for, and replace *table_name* with the name of the table you are
-	looking for.
+.. note:: Replace *field_name* and *table_name* with the column name and the table name you are looking for.
 
 Retrieve Field Metadata
 =======================
 
-**$db->getFieldData()**
+.. _db-metadata-getfielddata:
+
+$db->getFieldData()
+-------------------
 
 Returns an array of objects containing field information.
 
 Sometimes it's helpful to gather the field names or other metadata, like
 the column type, max length, etc.
 
-.. note:: Not all databases provide meta-data.
+.. note:: Not all databases provide metadata.
 
-Usage example::
+Usage example:
 
-	$fields = $db->getFieldData('table_name');
-
-	foreach ($fields as $field)
-	{
-		echo $field->name;
-		echo $field->type;
-		echo $field->max_length;
-		echo $field->primary_key;
-	}
-
-If you have run a query already you can use the result object instead of
-supplying the table name::
-
-	$query  = $db->query("YOUR QUERY");
-	$fields = $query->fieldData();
+.. literalinclude:: metadata/006.php
 
 The following data is available from this function if supported by your
 database:
 
--  name - column name
--  max_length - maximum length of the column
--  primary_key - 1 if the column is a primary key
--  type - the type of the column
+- ``name`` - column name
+- ``type`` - the type of the column
+- ``max_length`` - maximum length of the column
+- ``nullable`` - boolean ``true`` if the column is nullable, otherwise boolean ``false``
+- ``default`` - the default value
+- ``primary_key`` - integer ``1`` if the column is a primary key (all integer ``1``, even if there are multiple primary keys), otherwise integer ``0`` (This field is currently only available for ``MySQLi`` and ``SQLite3``)
+
+.. note:: Since v4.4.0, SQLSRV supported ``nullable``.
+
+$query->getFieldData()
+----------------------
+
+If you have run a query already you can use the result object instead of
+supplying the table name:
+
+.. literalinclude:: metadata/007.php
+
+.. note:: The data returned is different from the data from ``$db->getFieldData()``.
+    If you cannot get the data you need, use ``$db->getFieldData()``.
 
 List the Indexes in a Table
 ===========================
 
-**$db->getIndexData()**
+.. _db-metadata-getindexdata:
+
+$db->getIndexData()
+-------------------
 
 Returns an array of objects containing index information.
 
-Usage example::
+Usage example:
 
-	$keys = $db->getIndexData('table_name');
-
-	foreach ($keys as $key)
-	{
-		echo $key->name;
-		echo $key->type;
-		echo $key->fields;  // array of field names
-	}
+.. literalinclude:: metadata/008.php
 
 The key types may be unique to the database you are using.
 For instance, MySQL will return one of primary, fulltext, spatial, index or unique
 for each key associated with a table.
+
+SQLite3 returns a pseudo index named ``PRIMARY``. But it is a special index, and you can't use it in your SQL commands.
+
+.. _metadata-getforeignkeydata:
+
+$db->getForeignKeyData()
+------------------------
+
+Returns an array of objects containing foreign key information.
+
+Usage example:
+
+.. literalinclude:: metadata/009.php
+
+Foreign keys use the naming convention ``tableprefix_table_column1_column2_foreign``. Oracle uses a slightly different suffix of ``_fk``.

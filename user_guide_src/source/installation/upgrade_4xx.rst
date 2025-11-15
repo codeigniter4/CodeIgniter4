@@ -1,6 +1,6 @@
-#############################
+#########################
 Upgrading from 3.x to 4.x
-#############################
+#########################
 
 CodeIgniter 4 is a rewrite of the framework and is not backwards compatible.
 It is more appropriate to think of converting your app, rather than upgrading it.
@@ -16,97 +16,248 @@ of CodeIgniter 4 in a new project folder,
 and then convert and integrate your app components.
 We'll try to point out the most important considerations here.
 
-Not all of the CI3 libraries have been ported or rewritten for CI4!
-See the threads in the `CodeIgniter 4 Roadmap <https://forum.codeigniter.com/forum-33.html>`_
-subforum for an up-to-date list!
+To upgrade your project, we figured out two major tasks you have to work on.
+First of all, there are some general adjustments which are significant to every
+project and have to be handled. The second one are the libraries in which
+CodeIgniter is built up and contain some of the most important functions.
+These libraries operate separately from each other, so you have to look at
+them one by one.
 
 **Do read the user guide** before embarking on a project conversion!
 
-**Downloads**
+.. contents::
+    :local:
+    :depth: 2
 
-- CI4 is still available as a ready-to-run zip or tarball, which
-  includes the user guide (though in the `docs` subfolder
-- It can also be installed using Composer
+General Adjustments
+*******************
 
-**Namespaces**
+Downloads
+=========
 
-- CI4 is built for PHP7.2+, and everything in the framework is namespaced, except for the helpers.
+- CI4 is still available as a :doc:`ready-to-run zip or tarball <../installation/installing_manual>`.
+- It can also be installed using :doc:`Composer <../installation/installing_composer>`.
 
-**Application Structure**
+Namespaces
+==========
 
-- The framework still has ``app`` and ``system`` folders, with the same
-  interpretation as before
-- The framework now provides for a ``public`` folder, intended as the document
-  root for your app
-- There is also a ``writable`` folder, to hold cache data, logs, and session data
-- The ``application`` folder looks very similar to that for CI3, with some
-  name changes, and some subfolders
-  moved to the ``writable`` folder
-- There is no longer a nested ``application/core`` folder, as we have
-  a different mechanism for extending framework components (see below)
+- CI4 is built for PHP 8.1+, and everything in the framework is namespaced,
+  except for the helper and lang files.
 
-**Class loading**
+Application Structure
+=====================
+
+.. important::
+    **index.php** is no longer in the root of the project! It has been moved inside
+    the **public** folder, for better security and separation of components.
+
+    This means that you should configure your web server to "point" to your project's
+    **public** folder, and not to the project root.
+
+    If you would use Shared Hosting, see :ref:`deployment-to-shared-hosting-services`.
+
+- The **application** folder is renamed as **app** and the framework still has **system** folders,
+  with the same interpretation as before.
+- The framework now provides for a **public** folder, intended as the document root for your app.
+- The ``defined('BASEPATH') OR exit('No direct script access allowed');`` line is not necessary
+  because files outside the **public** folder are not accessible in the standard configuration.
+  And CI4 no longer defines the constant ``BASEPATH``, so remove the line in all files.
+- There is also a **writable** folder, to hold cache data, logs, and session data.
+- The **app** folder looks very similar to **application** for CI3, with some
+  name changes, and some subfolders moved to the **writable** folder.
+- There is no longer a nested **application/core** folder, as we have
+  a different mechanism for extending framework components (see below).
+
+Routing
+=======
+
+- The Auto Routing is disabled by default. You need to :ref:`define all routes
+  <defined-route-routing>` by default.
+- If you want to use the Auto Routing in the same way as CI3, you need to enable
+  :ref:`auto-routing-legacy`.
+- CI4 also has an optional new more secure :ref:`auto-routing-improved`.
+
+Model, View and Controller
+==========================
+
+- CodeIgniter is based on the MVC concept. Thus, the changes on the Model, View and Controller
+  are one of the most important things you have to handle.
+- In CodeIgniter 4, models are now located in **app/Models** and you have to add the lines
+  ``namespace App\Models;`` along with ``use CodeIgniter\Model;`` right after the opening php tag.
+  The last step is to replace ``extends CI_Model`` with ``extends Model``.
+- The views of CodeIgniter 4 have been moved to **app/Views**. Furthermore, you have to change
+  the syntax of loading views from ``$this->load->view('directory_name/file_name')`` to
+  ``echo view('directory_name/file_name');``.
+- Controllers of CodeIgniter 4 have to be moved to **app/Controllers**. After that,
+  add ``namespace App\Controllers;`` after the opening php tag.
+  Lastly, replace ``extends CI_Controller`` with ``extends BaseController``.
+- For more information we recommend you the following upgrade guides, which will give
+  you some step-by-step instructions to convert the MVC classes in CodeIgniter4:
+
+.. toctree::
+    :titlesonly:
+
+    upgrade_models
+    upgrade_views
+    upgrade_controllers
+
+Core Class Changes
+==================
+
+- Input
+    - CI3's `Input <http://codeigniter.com/userguide3/libraries/input.html>`_
+      corresponds to CI4's :doc:`IncomingRequest </incoming/incomingrequest>`.
+    - For historical reasons, CI3 and CI4 used incorrect HTTP method names like
+      "get", "post". Since v4.5.0, CI4 uses the correct HTTP method names like
+      "GET", "POST".
+- Output
+    - CI3's `Output <http://codeigniter.com/userguide3/libraries/output.html>`_
+      corresponds to CI4's :doc:`Responses </outgoing/response>`.
+
+Class Loading
+=============
 
 - There is no longer a CodeIgniter "superobject", with framework component
-  references magically injected as properties of your controller
-- Classes are instantiated where needed, and components are managed
-  by ``Services``
-- The class loader automatically handles PSR4 style class locating,
-  within the ``App`` (application) and ``CodeIgniter`` (i.e. system) top level
-  namespaces; with composer autoloading support, and even using educated
-  guessing to find your models and libraries if they are in the right
-  folder even though not namespaced
+  references magically injected as properties of your controller.
+- Classes are instantiated where needed, and framework components are managed
+  by :doc:`../concepts/services`.
+- The :doc:`Autoloader <../concepts/autoloader>` automatically handles PSR-4 style class locating,
+  within the ``App`` (**app** folder) and ``CodeIgniter`` (i.e., **system** folder) top level
+  namespaces; with Composer autoloading support.
 - You can configure the class loading to support whatever application structure
-  you are most comfortable with, including the "HMVC" style
+  you are most comfortable with, including the "HMVC" style.
+- CI4 provides :doc:`../concepts/factories` that can load a class and share the
+  instance like ``$this->load`` in CI3.
 
-**Controllers**
+Libraries
+=========
 
-- Controllers extend \\CodeIgniter\\Controller instead of CI_Controller
-- They don't use a constructor any more (to invoke CI "magic") unless
-  that is part of a base controller you make
-- CI provides ``Request`` and ``Response`` objects for you to work with -
-  more powerful than the CI3-way
-- If you want a base controller (MY_Controller in CI3), make it
-  where you like, e.g. BaseController extends Controller, and then
-  have your controllers extend it
+- Your app classes can still go inside **app/Libraries**, but they don't have to.
+- Instead of CI3's ``$this->load->library('x');`` you can now use
+  ``$this->x = new \App\Libraries\X();``, following namespaced conventions for
+  your component. Alternatively, you can use :doc:`../concepts/factories`:
+  ``$this->x = \CodeIgniter\Config\Factories::libraries('X');``.
 
-**Models**
+Helpers
+=======
 
-- Models extend \\CodeIgniter\\Model instead of CI_Model
-- The CI4 model has much more functionality, including automatic
-  database connection, basic CRUD, in-model validation, and
-  automatic pagination
-- CI4 also has the ``Entity`` class you can build on, for
-  richer data mapping to your database tables
-- Instead of CI3's ``$this->load->model(x);``, you would now use
-  ``$this->x = new X();``, following namespaced conventions for your component
+- :doc:`Helpers <../general/helpers>` are pretty much the same as before, though some have been simplified.
+- Since v4.3.0, you can autoload helpers by **app/Config/Autoload.php** as well as CI3.
+- Some helpers from CodeIgniter 3 no longer exists in Version 4. For all these
+  helpers, you have to find a new way to implement your functions. These
+  helpers are `CAPTCHA Helper <https://www.codeigniter.com/userguide3/helpers/captcha_helper.html>`_,
+  `Email Helper <https://www.codeigniter.com/userguide3/helpers/email_helper.html>`_.
+  `Path Helper <https://www.codeigniter.com/userguide3/helpers/path_helper.html>`_.
+  and `Smiley Helper <https://www.codeigniter.com/userguide3/helpers/smiley_helper.html>`_.
+- `Download Helper <https://www.codeigniter.com/userguide3/helpers/download_helper.html>`_
+  in CI3 was removed. You need to use Response object where you are using ``force_download()``.
+  See :ref:`force-file-download`.
+- `Language Helper <https://www.codeigniter.com/userguide3/helpers/language_helper.html>`_
+  in CI3 was removed. But ``lang()`` is always available in CI4. See :php:func:`lang()`.
+- `Typography Helper <https://www.codeigniter.com/userguide3/helpers/typography_helper.html>`_
+  in CI3 wll be :doc:`Typography Library <../libraries/typography>` in CI4.
+- `Directory Helper <https://www.codeigniter.com/userguide3/helpers/directory_helper.html>`_
+  and `File Helper <https://www.codeigniter.com/userguide3/helpers/file_helper.html>`_ in CI3
+  will be :doc:`../helpers/filesystem_helper` in CI4.
+- `String Helper <https://www.codeigniter.com/userguide3/helpers/string_helper.html>`_ functions
+  in CI3 are included in :doc:`../helpers/text_helper` in CI4.
+- In CI4, ``redirect()`` is completely changed from CI3's.
+    - `redirect() Documentation CodeIgniter 3.x <https://codeigniter.com/userguide3/helpers/url_helper.html#redirect>`_
+    - `redirect() Documentation CodeIgniter 4.x <../general/common_functions.html#redirect>`_
+    - In CI4, :php:func:`redirect()` returns a ``RedirectResponse`` instance instead of
+      redirecting and terminating script execution. You must return it from Controllers
+      or Controller Filters.
+    - Cookies and Headers you set before calling ``redirect()`` are not automatically
+      carried over to a ``RedirectResponse``. You need to call ``withCookies()``
+      or ``withHeaders()`` manually if you want to send them.
+    - You need to change CI3's ``redirect('login/form')`` to ``return redirect()->to('login/form')``.
 
-**Views**
+Hooks
+=====
 
-- Your views look much like before, but they are invoked differently ...
-  instead of CI3's ``$this->load->view(x);`` you can use ``echo view(x);``
-- CI4 supports view "cells", to build your response in pieces
-- The template parser is still there, but substantially
-  enhanced
+- `Hooks <https://www.codeigniter.com/userguide3/general/hooks.html>`_ have been
+  replaced by :doc:`../extending/events`.
+- Instead of CI3's ``$hook['post_controller_constructor']`` you now use
+  ``Events::on('post_controller_constructor', ['MyClass', 'MyFunction']);``, with the namespace ``CodeIgniter\Events\Events;``.
+- Events are always enabled, and are available globally.
+- The hook point ``pre_controller`` and ``post_controller`` have been removed.
+  Use :doc:`../incoming/filters` instead.
+- The hook point ``display_override`` and ``cache_override`` have been removed.
+  Because the base methods have been removed.
+- The hook point ``post_system`` has moved just before sending the final rendered
+  page.
 
-**Libraries**
+Error Handling
+==============
 
-- Your app classes can still go inside ``app/Libraries``, but they
-  don't have to
-- Instead of CI3's ``$this->load->library(x);`` you can now use
-  ``$this->x = new X();``, following namespaced conventions for your
-  component
+- The behavior in CI4 has been slightly changed.
 
-**Helpers**
+  - In CI3 the behavior is set in the **index.php** file:
 
-- Helpers are pretty much the same as before, though some have been simplified
+      - errors with the error level set by ``error_reporting()`` are logged (but
+        depending on the ``log_threshold`` setting, they may not be written to
+        the log file).
+      - errors with an error level of
+        ``E_ERROR | E_PARSE | E_COMPILE_ERROR | E_CORE_ERROR | E_USER_ERROR``
+        stopped framework processing, regardless of the error level set in
+        ``error_reporting()``.
+  - In CI4, the behavior is set in the **app/Config/Boot/{environment}.php** file:
 
-**Extending the framework**
+      - errors with the error level set by ``error_reporting()`` are logged (but
+        depending on the ``Config\Logger::$threshold`` setting, they may not be
+        written to the log file).
+      - all errors that are not ignored by ``error_reporting()`` will stop the
+        framework processing.
 
-- You don't need a ``core`` folder to hold ``MY_...`` framework
-  component extensions or replacements
-- You don't need ``MY_x`` classes inside your libraries folder
-  to extend or replace CI4 pieces
+Extending the Framework
+=======================
+
+- You don't need a **core** folder to hold ``MY_...`` framework
+  component extensions or replacements.
+- You don't need ``MY_X`` classes inside your libraries folder
+  to extend or replace CI4 pieces.
 - Make any such classes where you like, and add appropriate
-  service methods in ``app/Config/Services.php`` to load
-  your components instead of the default ones
+  service methods in **app/Config/Services.php** to load
+  your components instead of the default ones.
+- See :doc:`../extending/core_classes` for details.
+
+Upgrading Libraries
+*******************
+
+- Your app classes can still go inside **app/Libraries**, but they don't have to.
+- Instead of CI3's ``$this->load->library('x');`` you can now use
+  ``$this->x = new \App\Libraries\X();``, following namespaced conventions for
+  your component. Alternatively, you can use :doc:`../concepts/factories`:
+  ``$this->x = \CodeIgniter\Config\Factories::libraries('X');``.
+- Some libraries from CodeIgniter 3 no longer exists in Version 4. For all these
+  libraries, you have to find a new way to implement your functions. These
+  libraries are `Calendaring <http://codeigniter.com/userguide3/libraries/calendar.html>`_,
+  `FTP <http://codeigniter.com/userguide3/libraries/ftp.html>`_,
+  `Javascript <http://codeigniter.com/userguide3/libraries/javascript.html>`_,
+  `Shopping Cart <http://codeigniter.com/userguide3/libraries/cart.html>`_,
+  `Trackback <http://codeigniter.com/userguide3/libraries/trackback.html>`_,
+  `XML-RPC /-Server <http://codeigniter.com/userguide3/libraries/xmlrpc.html>`_,
+  and `Zip Encoding <http://codeigniter.com/userguide3/libraries/zip.html>`_.
+- All the other libraries, which exist in both CodeIgniter versions, can be upgraded with some adjustments.
+  The most important and mostly used libraries received an Upgrade Guide, which will help you with simple
+  steps and examples to adjust your code.
+
+.. toctree::
+    :titlesonly:
+
+    upgrade_configuration
+    upgrade_database
+    upgrade_emails
+    upgrade_encryption
+    upgrade_file_upload
+    upgrade_html_tables
+    upgrade_images
+    upgrade_localization
+    upgrade_migrations
+    upgrade_responses
+    upgrade_pagination
+    upgrade_routing
+    upgrade_security
+    upgrade_sessions
+    upgrade_validations
+    upgrade_view_parser

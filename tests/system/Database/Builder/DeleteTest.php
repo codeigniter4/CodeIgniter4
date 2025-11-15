@@ -1,39 +1,93 @@
-<?php namespace Builder;
+<?php
 
-use Tests\Support\Database\MockConnection;
+declare(strict_types=1);
 
-class DeleteTest extends \CIUnitTestCase
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database\Builder;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\Group;
+
+/**
+ * @internal
+ */
+#[Group('Others')]
+final class DeleteTest extends CIUnitTestCase
 {
-	protected $db;
+    protected $db;
 
-	//--------------------------------------------------------------------
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-	protected function setUp()
-	{
-		parent::setUp();
+        $this->db = new MockConnection([]);
+    }
 
-		$this->db = new MockConnection([]);
-	}
+    public function testDelete(): void
+    {
+        $builder = $this->db->table('jobs');
 
-	//--------------------------------------------------------------------
+        $answer = $builder->testMode()->delete(['id' => 1], null, true);
 
-	public function testDelete()
-	{
-		$builder = $this->db->table('jobs');
+        $expectedSQL   = 'DELETE FROM "jobs" WHERE "id" = :id:';
+        $expectedBinds = [
+            'id' => [
+                1,
+                true,
+            ],
+        ];
 
-		$answer = $builder->delete(['id' => 1], null, true, true);
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
 
-		$expectedSQL   = 'DELETE FROM "jobs" WHERE "id" = :id:';
-		$expectedBinds = [
-			'id' => [
-				1,
-				true,
-			],
-		];
+    public function testGetCompiledDelete(): void
+    {
+        $builder = $this->db->table('jobs');
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
-		$this->assertEquals($expectedBinds, $builder->getBinds());
-	}
+        $builder->where('id', 1);
+        $sql = $builder->getCompiledDelete();
 
-	//--------------------------------------------------------------------
+        $expectedSQL = <<<'EOL'
+            DELETE FROM "jobs"
+            WHERE "id" = 1
+            EOL;
+        $this->assertSame($expectedSQL, $sql);
+    }
+
+    public function testGetCompiledDeleteWithTableAlias(): void
+    {
+        $builder = $this->db->table('jobs j');
+
+        $builder->where('id', 1);
+        $sql = $builder->getCompiledDelete();
+
+        $expectedSQL = <<<'EOL'
+            DELETE FROM "jobs"
+            WHERE "id" = 1
+            EOL;
+        $this->assertSame($expectedSQL, $sql);
+    }
+
+    public function testGetCompiledDeleteWithLimit(): void
+    {
+        $builder = $this->db->table('jobs');
+
+        $sql = $builder->where('id', 1)->limit(10)->getCompiledDelete();
+
+        $expectedSQL = <<<'EOL'
+            DELETE FROM "jobs"
+            WHERE "id" = 1 LIMIT 10
+            EOL;
+        $this->assertSame($expectedSQL, $sql);
+    }
 }

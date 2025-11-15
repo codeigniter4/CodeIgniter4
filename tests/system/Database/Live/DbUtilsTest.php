@@ -1,215 +1,208 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+declare(strict_types=1);
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
+use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
- * @group DatabaseLive
+ * @internal
  */
-class DbUtilsTest extends CIDatabaseTestCase
+#[Group('DatabaseLive')]
+final class DbUtilsTest extends CIUnitTestCase
 {
-	protected $refresh = true;
+    use DatabaseTestTrait;
 
-	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $refresh = true;
+    protected $seed    = CITestSeeder::class;
 
-	//--------------------------------------------------------------------
+    public function testUtilsBackup(): void
+    {
+        $util = (new Database())->loadUtils($this->db);
 
-	public function testUtilsBackup()
-	{
-		$util = (new Database())->loadUtils($this->db);
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
 
-		$this->expectException(DatabaseException::class);
-		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+        $util->backup();
+    }
 
-		$util->backup();
-	}
+    public function testUtilsBackupWithParamsArray(): void
+    {
+        $util = (new Database())->loadUtils($this->db);
 
-	//--------------------------------------------------------------------
+        $params = [
+            'format' => 'json',
+        ];
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
 
-	public function testUtilsBackupWithParamsArray()
-	{
-		$util = (new Database())->loadUtils($this->db);
+        $util->backup($params);
+    }
 
-		$params = [
-			'format' => 'json',
-		];
-		$this->expectException(DatabaseException::class);
-		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+    public function testUtilsBackupWithParamsString(): void
+    {
+        $util = (new Database())->loadUtils($this->db);
 
-		$util->backup($params);
-	}
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
 
-	//--------------------------------------------------------------------
+        $util->backup('db_jobs');
+    }
 
-	public function testUtilsBackupWithParamsString()
-	{
-		$util = (new Database())->loadUtils($this->db);
+    public function testUtilsListDatabases(): void
+    {
+        $util = (new Database())->loadUtils($this->db);
 
-		$this->expectException(DatabaseException::class);
-		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV', 'OCI8'], true)) {
+            $databases = $util->listDatabases();
 
-		$util->backup('db_jobs');
-	}
+            $this->assertContains($this->db->getDatabase(), $databases);
+        } elseif ($this->db->DBDriver === 'SQLite3') {
+            $this->expectException(DatabaseException::class);
+            $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
 
-	//--------------------------------------------------------------------
+            $util->listDatabases();
+        }
+    }
 
-	public function testUtilsListDatabases()
-	{
-		$util = (new Database())->loadUtils($this->db);
+    public function testUtilsDatabaseExist(): void
+    {
+        $util = (new Database())->loadUtils($this->db);
 
-		if ($this->db->DBDriver === 'MySQLi')
-		{
-			$databases = $util->listDatabases();
+        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV', 'OCI8'], true)) {
+            $exist = $util->databaseExists($this->db->getDatabase());
 
-			$this->assertTrue(in_array('test', $databases));
-		}
-		elseif ($this->db->DBDriver === 'Postgre')
-		{
-			$databases = $util->listDatabases();
+            $this->assertTrue($exist);
+        } elseif ($this->db->DBDriver === 'SQLite3') {
+            $this->expectException(DatabaseException::class);
+            $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
 
-			$this->assertTrue(in_array('test', $databases));
-		}
-		elseif ($this->db->DBDriver === 'SQLite3')
-		{
-			$this->expectException(DatabaseException::class);
-			$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+            $util->databaseExists($this->db->getDatabase());
+        }
+    }
 
-			$util->listDatabases();
-		}
-	}
+    public function testUtilsOptimizeDatabase(): void
+    {
+        $util = (new Database())->loadUtils($this->db);
 
-	//--------------------------------------------------------------------
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->markTestSkipped(
+                'Unsupported feature of the oracle database platform.',
+            );
+        }
 
-	public function testUtilsDatabaseExist()
-	{
-		$util = (new Database())->loadUtils($this->db);
+        $d = $util->optimizeDatabase();
 
-		if ($this->db->DBDriver === 'MySQLi')
-		{
-			$exist = $util->databaseExists('test');
+        $this->assertTrue((bool) $d);
+    }
 
-			$this->assertTrue($exist);
-		}
-		elseif ($this->db->DBDriver === 'Postgre')
-		{
-			$exist = $util->databaseExists('test');
+    public function testUtilsOptimizeTableFalseOptimizeDatabaseDebugTrue(): void
+    {
+        $util = (new Database())->loadUtils($this->db);
+        $this->setPrivateProperty($util, 'optimizeTable', false);
 
-			$this->assertTrue($exist);
-		}
-		elseif ($this->db->DBDriver === 'SQLite3')
-		{
-			$this->expectException(DatabaseException::class);
-			$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+        $this->enableDBDebug();
 
-			$util->databaseExists('test');
-		}
-	}
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
 
-	//--------------------------------------------------------------------
+        $util->optimizeDatabase();
 
-	public function testUtilsOptimizeDatabase()
-	{
-		$util = (new Database())->loadUtils($this->db);
+        // this point in code execution will never be reached
+    }
 
-		$d = $util->optimizeDatabase();
+    public function testUtilsOptimizeTableFalseOptimizeDatabaseDebugFalse(): void
+    {
+        $util = (new Database())->loadUtils($this->db);
+        $this->setPrivateProperty($util, 'optimizeTable', false);
 
-		$this->assertTrue((bool)$d);
-	}
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
 
-	//--------------------------------------------------------------------
+        $result = $util->optimizeDatabase();
+        $this->assertFalse($result);
 
-	public function testUtilsOptimizeTableFalseOptimizeDatabase()
-	{
-		$util = (new Database())->loadUtils($this->db);
+        $this->enableDBDebug();
+    }
 
-		$this->setPrivateProperty($util,'optimizeTable', false);
+    public function testUtilsOptimizeTable(): void
+    {
+        $util = (new Database())->loadUtils($this->db);
 
-		$this->expectException(DatabaseException::class);
-		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->markTestSkipped(
+                'Unsupported feature of the oracle database platform.',
+            );
+        }
 
-		$util->optimizeDatabase();
-	}
+        $d = $util->optimizeTable('db_job');
 
-	//--------------------------------------------------------------------
+        $this->assertTrue($d);
+    }
 
-	public function testUtilsOptimizeTable()
-	{
-		$util = (new Database())->loadUtils($this->db);
+    public function testUtilsOptimizeTableFalseOptimizeTable(): void
+    {
+        $util = (new Database())->loadUtils($this->db);
 
-		$d = $util->optimizeTable('db_job');
+        $this->setPrivateProperty($util, 'optimizeTable', false);
 
-		if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'SQLite3')
-		{
-			$this->assertFalse((bool)$d);
-		}
-		else
-		{
-			$this->assertTrue((bool)$d);
-		}
-	}
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
 
-	//--------------------------------------------------------------------
+        $util->optimizeTable('db_job');
+    }
 
-	public function testUtilsOptimizeTableFalseOptimizeTable()
-	{
-		$util = (new Database())->loadUtils($this->db);
+    public function testUtilsRepairTable(): void
+    {
+        $util = (new Database())->loadUtils($this->db);
 
-		$this->setPrivateProperty($util,'optimizeTable', false);
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
 
-		$this->expectException(DatabaseException::class);
-		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+        $util->repairTable('db_job');
+    }
 
-		$util->optimizeTable('db_job');
-	}
+    public function testUtilsCSVFromResult(): void
+    {
+        $data = $this->db->table('job')->get();
 
-	//--------------------------------------------------------------------
+        $util = (new Database())->loadUtils($this->db);
 
-	public function testUtilsRepairTable()
-	{
-		$util = (new Database())->loadUtils($this->db);
+        $data = $util->getCSVFromResult($data);
 
-		$this->expectException(DatabaseException::class);
-		$this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+        $data = array_filter(preg_split('/(\r\n|\n|\r)/', $data));
 
-		$util->repairTable('db_job');
-	}
+        $this->assertSame('"1","Developer","Awesome job, but sometimes makes you bored","","",""', $data[1]);
+    }
 
-	//--------------------------------------------------------------------
+    public function testUtilsXMLFromResult(): void
+    {
+        $data = $this->db->table('job')->where('id', 4)->get();
 
-	public function testUtilsCSVFromResult()
-	{
-		$data = $this->db->table('job')
-		                 ->get();
+        $util = (new Database())->loadUtils($this->db);
 
-		$util = (new Database())->loadUtils($this->db);
+        $data = $util->getXMLFromResult($data);
 
-		$data = $util->getCSVFromResult($data);
+        $expected = '<root><element><id>4</id><name>Musician</name><description>Only Coldplay can actually called Musician</description><created_at></created_at><updated_at></updated_at><deleted_at></deleted_at></element></root>';
 
-		$data = array_filter(preg_split('/(\r\n|\n|\r)/', $data));
+        $actual = preg_replace('#\R+#', '', $data);
+        $actual = preg_replace('/[ ]{2,}|[\t]/', '', $actual);
 
-		$this->assertEquals('"1","Developer","Awesome job, but sometimes makes you bored","","",""', $data[1]);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testUtilsXMLFromResult()
-	{
-		$data = $this->db->table('job')
-		                 ->where('id', 4)
-		                 ->get();
-
-		$util = (new Database())->loadUtils($this->db);
-
-		$data = $util->getXMLFromResult($data);
-
-		$expected = '<root><element><id>4</id><name>Musician</name><description>Only Coldplay can actually called Musician</description><created_at></created_at><updated_at></updated_at><deleted_at></deleted_at></element></root>';
-
-		$actual = preg_replace('#\R+#', '', $data);
-		$actual = preg_replace('/[ ]{2,}|[\t]/', '', $actual);
-
-		$this->assertEquals($expected, $actual);
-	}
-
-	//--------------------------------------------------------------------
+        $this->assertSame($expected, $actual);
+    }
 }

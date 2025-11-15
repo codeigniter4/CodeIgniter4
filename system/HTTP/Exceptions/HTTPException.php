@@ -1,44 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * CodeIgniter
+ * This file is part of CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\HTTP\Exceptions;
 
-use CodeIgniter\Exceptions\ExceptionInterface;
 use CodeIgniter\Exceptions\FrameworkException;
 
 /**
@@ -46,216 +20,225 @@ use CodeIgniter\Exceptions\FrameworkException;
  */
 class HTTPException extends FrameworkException implements ExceptionInterface
 {
+    /**
+     * For CurlRequest
+     *
+     * @return HTTPException
+     *
+     * @codeCoverageIgnore
+     */
+    public static function forMissingCurl()
+    {
+        return new static(lang('HTTP.missingCurl'));
+    }
 
-	/**
-	 * For CurlRequest
-	 *
-	 * @return             \CodeIgniter\HTTP\Exceptions\HTTPException
-	 *
-	 * Not testable with travis-ci
-	 * @codeCoverageIgnore
-	 */
-	public static function forMissingCurl()
-	{
-		return new static(lang('HTTP.missingCurl'));
-	}
+    /**
+     * For CurlRequest
+     *
+     * @return HTTPException
+     */
+    public static function forSSLCertNotFound(string $cert)
+    {
+        return new static(lang('HTTP.sslCertNotFound', [$cert]));
+    }
 
-	/**
-	 * For CurlRequest
-	 *
-	 * @param string $cert
-	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 */
-	public static function forSSLCertNotFound(string $cert)
-	{
-		return new static(lang('HTTP.sslCertNotFound', [$cert]));
-	}
+    /**
+     * For CurlRequest
+     *
+     * @return HTTPException
+     */
+    public static function forInvalidSSLKey(string $key)
+    {
+        return new static(lang('HTTP.invalidSSLKey', [$key]));
+    }
 
-	/**
-	 * For CurlRequest
-	 *
-	 * @param string $key
-	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 */
-	public static function forInvalidSSLKey(string $key)
-	{
-		return new static(lang('HTTP.invalidSSLKey', [$key]));
-	}
+    /**
+     * For CurlRequest
+     *
+     * @return HTTPException
+     *
+     * @codeCoverageIgnore
+     */
+    public static function forCurlError(string $errorNum, string $error)
+    {
+        return new static(lang('HTTP.curlError', [$errorNum, $error]));
+    }
 
-	/**
-	 * For CurlRequest
-	 *
-	 * @param string $errorNum
-	 * @param string $error
-	 *
-	 * @return             \CodeIgniter\HTTP\Exceptions\HTTPException
-	 *
-	 * Not testable with travis-ci; we over-ride the method which triggers it
-	 * @codeCoverageIgnore
-	 */
-	public static function forCurlError(string $errorNum, string $error)
-	{
-		return new static(lang('HTTP.curlError', [$errorNum, $error]));
-	}
+    /**
+     * For IncomingRequest
+     *
+     * @return HTTPException
+     */
+    public static function forInvalidNegotiationType(string $type)
+    {
+        return new static(lang('HTTP.invalidNegotiationType', [$type]));
+    }
 
-	/**
-	 * For IncomingRequest
-	 *
-	 * @param string $type
-	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 */
-	public static function forInvalidNegotiationType(string $type)
-	{
-		return new static(lang('HTTP.invalidNegotiationType', [$type]));
-	}
+    /**
+     * Thrown in IncomingRequest when the json_decode() produces
+     *  an error code other than JSON_ERROR_NONE.
+     *
+     * @param string $error The error message
+     *
+     * @return static
+     */
+    public static function forInvalidJSON(?string $error = null)
+    {
+        return new static(lang('HTTP.invalidJSON', [$error]));
+    }
 
-	/**
-	 * For Message
-	 *
-	 * @param string $protocols
-	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 */
-	public static function forInvalidHTTPProtocol(string $protocols)
-	{
-		return new static(lang('HTTP.invalidHTTPProtocol', [$protocols]));
-	}
+    /**
+     * For Message
+     *
+     * @return HTTPException
+     */
+    public static function forInvalidHTTPProtocol(string $invalidVersion)
+    {
+        return new static(lang('HTTP.invalidHTTPProtocol', [$invalidVersion]));
+    }
 
-	/**
-	 * For Negotiate
-	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 */
-	public static function forEmptySupportedNegotiations()
-	{
-		return new static(lang('HTTP.emptySupportedNegotiations'));
-	}
+    /**
+     * For Negotiate
+     *
+     * @return HTTPException
+     */
+    public static function forEmptySupportedNegotiations()
+    {
+        return new static(lang('HTTP.emptySupportedNegotiations'));
+    }
 
-	/**
-	 * For RedirectResponse
-	 *
-	 * @param string $route
-	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 */
-	public static function forInvalidRedirectRoute(string $route)
-	{
-		return new static(lang('HTTP.invalidRoute', [$route]));
-	}
+    /**
+     * For RedirectResponse
+     *
+     * @return HTTPException
+     */
+    public static function forInvalidRedirectRoute(string $route)
+    {
+        return new static(lang('HTTP.invalidRoute', [$route]));
+    }
 
-	/**
-	 * For Response
-	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 */
-	public static function forMissingResponseStatus()
-	{
-		return new static(lang('HTTP.missingResponseStatus'));
-	}
+    /**
+     * For Response
+     *
+     * @return HTTPException
+     */
+    public static function forMissingResponseStatus()
+    {
+        return new static(lang('HTTP.missingResponseStatus'));
+    }
 
-	/**
-	 * For Response
-	 *
-	 * @param integer $code
-	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 */
-	public static function forInvalidStatusCode(int $code)
-	{
-		return new static(lang('HTTP.invalidStatusCode', [$code]));
-	}
+    /**
+     * For Response
+     *
+     * @return HTTPException
+     */
+    public static function forInvalidStatusCode(int $code)
+    {
+        return new static(lang('HTTP.invalidStatusCode', [$code]));
+    }
 
-	/**
-	 * For Response
-	 *
-	 * @param integer $code
-	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 */
-	public static function forUnkownStatusCode(int $code)
-	{
-		return new static(lang('HTTP.unknownStatusCode', [$code]));
-	}
+    /**
+     * For Response
+     *
+     * @return HTTPException
+     */
+    public static function forUnkownStatusCode(int $code)
+    {
+        return new static(lang('HTTP.unknownStatusCode', [$code]));
+    }
 
-	/**
-	 * For URI
-	 *
-	 * @param string $uri
-	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 */
-	public static function forUnableToParseURI(string $uri)
-	{
-		return new static(lang('HTTP.cannotParseURI', [$uri]));
-	}
+    /**
+     * For URI
+     *
+     * @return HTTPException
+     */
+    public static function forUnableToParseURI(string $uri)
+    {
+        return new static(lang('HTTP.cannotParseURI', [$uri]));
+    }
 
-	/**
-	 * For URI
-	 *
-	 * @param integer $segment
-	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 */
-	public static function forURISegmentOutOfRange(int $segment)
-	{
-		return new static(lang('HTTP.segmentOutOfRange', [$segment]));
-	}
+    /**
+     * For URI
+     *
+     * @return HTTPException
+     */
+    public static function forURISegmentOutOfRange(int $segment)
+    {
+        return new static(lang('HTTP.segmentOutOfRange', [$segment]));
+    }
 
-	/**
-	 * For URI
-	 *
-	 * @param integer $port
-	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 */
-	public static function forInvalidPort(int $port)
-	{
-		return new static(lang('HTTP.invalidPort', [$port]));
-	}
+    /**
+     * For URI
+     *
+     * @return HTTPException
+     */
+    public static function forInvalidPort(int $port)
+    {
+        return new static(lang('HTTP.invalidPort', [$port]));
+    }
 
-	/**
-	 * For URI
-	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 */
-	public static function forMalformedQueryString()
-	{
-		return new static(lang('HTTP.malformedQueryString'));
-	}
+    /**
+     * For URI
+     *
+     * @return HTTPException
+     */
+    public static function forMalformedQueryString()
+    {
+        return new static(lang('HTTP.malformedQueryString'));
+    }
 
-	/**
-	 * For Uploaded file move
-	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 */
-	public static function forAlreadyMoved()
-	{
-		return new static(lang('HTTP.alreadyMoved'));
-	}
+    /**
+     * For Uploaded file move
+     *
+     * @return HTTPException
+     */
+    public static function forAlreadyMoved()
+    {
+        return new static(lang('HTTP.alreadyMoved'));
+    }
 
-	/**
-	 * For Uploaded file move
-	 *
-	 * @param string|null $path
-	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 */
-	public static function forInvalidFile(string $path = null)
-	{
-		return new static(lang('HTTP.invalidFile'));
-	}
+    /**
+     * For Uploaded file move
+     *
+     * @return HTTPException
+     */
+    public static function forInvalidFile(?string $path = null)
+    {
+        return new static(lang('HTTP.invalidFile'));
+    }
 
-	/**
-	 * For Uploaded file move
-	 *
-	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
-	 */
-	public static function forMoveFailed(string $source, string $target, string $error)
-	{
-		return new static(lang('HTTP.moveFailed', [$source, $target, $error]));
-	}
+    /**
+     * For Uploaded file move
+     *
+     * @return HTTPException
+     */
+    public static function forMoveFailed(string $source, string $target, string $error)
+    {
+        return new static(lang('HTTP.moveFailed', [$source, $target, $error]));
+    }
 
+    /**
+     * For Invalid SameSite attribute setting
+     *
+     * @return HTTPException
+     *
+     * @deprecated Use `CookieException::forInvalidSameSite()` instead.
+     *
+     * @codeCoverageIgnore
+     */
+    public static function forInvalidSameSiteSetting(string $samesite)
+    {
+        return new static(lang('Security.invalidSameSiteSetting', [$samesite]));
+    }
+
+    /**
+     * Thrown when the JSON format is not supported.
+     * This is specifically for cases where data validation is expected to work with key-value structures.
+     *
+     * @return HTTPException
+     */
+    public static function forUnsupportedJSONFormat()
+    {
+        return new static(lang('HTTP.unsupportedJSONFormat'));
+    }
 }

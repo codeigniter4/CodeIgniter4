@@ -1,0 +1,24 @@
+#############
+Version 4.5.4
+#############
+
+Release Date: July 27, 2024
+
+**4.5.4 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+**********
+Bugs Fixed
+**********
+
+- **Routing:** Fixed a bug that filters passed to ``$routes->group()`` were not
+  merged into filters passed to the inner routes.
+- **CURLRequest:** Fixed a bug preventing the use of strings for ``version`` in the config array
+  when making requests.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

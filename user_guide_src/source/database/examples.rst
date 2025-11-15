@@ -1,121 +1,81 @@
-##################################
-Database Quick Start: Example Code
-##################################
+###########################
+Quick Start: Usage Examples
+###########################
 
 The following page contains example code showing how the database class
 is used. For complete details please read the individual pages
 describing each function.
 
+.. note:: CodeIgniter doesn't support dots (``.``) in the table and column names.
+    Since v4.5.0, database names with dots are supported.
+
+.. contents::
+    :local:
+    :depth: 2
+
 Initializing the Database Class
 ===============================
 
 The following code loads and initializes the database class based on
-your :doc:`configuration <configuration>` settings::
+your :doc:`configuration <configuration>` settings:
 
-	$db = \Config\Database::connect();
+.. literalinclude:: examples/001.php
 
 Once loaded the class is ready to be used as described below.
 
-Note: If all your pages require database access you can connect
-automatically. See the :doc:`connecting <connecting>` page for details.
+.. note:: If all your pages require database access you can connect
+    automatically. See the :doc:`Connecting to a Database <connecting>` page for details.
 
 Standard Query With Multiple Results (Object Version)
 =====================================================
 
-::
+.. literalinclude:: examples/002.php
 
-	$query = $db->query('SELECT name, title, email FROM my_table');
-	$results = $query->getResult();
-
-	foreach ($results as $row)
-	{
-		echo $row->title;
-		echo $row->name;
-		echo $row->email;
-	}
-
-	echo 'Total Results: ' . count($results);
-
-The above getResult() function returns an array of **objects**. Example:
-$row->title
+| The above ``getResult()`` function returns an array of **objects**.
+| Example: ``$row->title``
 
 Standard Query With Multiple Results (Array Version)
 ====================================================
 
-::
+.. literalinclude:: examples/003.php
 
-	$query   = $db->query('SELECT name, title, email FROM my_table');
-	$results = $query->getResultArray();
-
-	foreach ($results as $row)
-	{
-		echo $row['title'];
-		echo $row['name'];
-		echo $row['email'];
-	}
-
-The above getResultArray() function returns an array of standard array
-indexes. Example: $row['title']
+| The above ``getResultArray()`` function returns an array of standard array
+  indexes.
+| Example: ``$row['title']``
 
 Standard Query With Single Result
 =================================
 
-::
+.. literalinclude:: examples/004.php
 
-	$query = $db->query('SELECT name FROM my_table LIMIT 1');
-	$row   = $query->getRow();
-	echo $row->name;
-
-The above getRow() function returns an **object**. Example: $row->name
+The above ``getRow()`` function returns an **object**. Example: ``$row->name``
 
 Standard Query With Single Result (Array version)
 =================================================
 
-::
+.. literalinclude:: examples/005.php
 
-	$query = $db->query('SELECT name FROM my_table LIMIT 1');
-	$row   = $query->getRowArray();
-	echo $row['name'];
-
-The above getRowArray() function returns an **array**. Example:
-$row['name']
+The above ``getRowArray()`` function returns an **array**. Example:
+``$row['name']``.
 
 Standard Insert
 ===============
 
-::
-
-	$sql = "INSERT INTO mytable (title, name) VALUES (".$db->escape($title).", ".$db->escape($name).")";
-	$db->query($sql);
-	echo $db->affectedRows();
+.. literalinclude:: examples/006.php
 
 Query Builder Query
 ===================
 
-The :doc:`Query Builder Pattern <query_builder>` gives you a simplified
-means of retrieving data::
+The :doc:`Query Builder <query_builder>` gives you a simplified
+means of retrieving data:
 
-	$query = $db->table('table_name')->get();
+.. literalinclude:: examples/007.php
 
-	foreach ($query->getResult() as $row)
-	{
-		echo $row->title;
-	}
-
-The above get() function retrieves all the results from the supplied
+The above ``get()`` function retrieves all the results from the supplied
 table. The :doc:`Query Builder <query_builder>` class contains a full
 complement of functions for working with data.
 
 Query Builder Insert
 ====================
 
-::
-
-	$data = [
-		'title' => $title,
-		'name'  => $name,
-		'date'  => $date
-	];
-
-	$db->table('mytable')->insert($data);  // Produces: INSERT INTO mytable (title, name, date) VALUES ('{$title}', '{$name}', '{$date}')
-
+.. literalinclude:: examples/008.php

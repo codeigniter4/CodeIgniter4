@@ -1,34 +1,49 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
 
-use CodeIgniter\Database\Query;
-use CodeIgniter\Test\CIDatabaseTestCase;
+declare(strict_types=1);
 
 /**
- * @group DatabaseLive
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
-class PretendTest extends CIDatabaseTestCase
+
+namespace CodeIgniter\Database\Live;
+
+use CodeIgniter\Database\Query;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
+use PHPUnit\Framework\Attributes\Group;
+
+/**
+ * @internal
+ */
+#[Group('DatabaseLive')]
+final class PretendTest extends CIUnitTestCase
 {
-	public function tearDown()
-	{
-		// We share `$this->db` in testing, so we need to restore the state.
-		$this->db->pretend(false);
-	}
+    use DatabaseTestTrait;
 
-	public function testPretendReturnsQueryObject()
-	{
-		$result = $this->db->pretend(false)
-						   ->table('user')
-						   ->get();
+    protected function tearDown(): void
+    {
+        // We share `$this->db` in testing, so we need to restore the state.
+        $this->db->pretend(false);
+    }
 
-		$this->assertFalse($result instanceof Query);
+    public function testPretendReturnsQueryObject(): void
+    {
+        $result = $this->db->pretend(false)
+            ->table('user')
+            ->get();
 
-		$result = $this->db->pretend(true)
-					->table('user')
-					->get();
+        $this->assertNotInstanceOf(Query::class, $result);
 
-		$this->assertInstanceOf(Query::class, $result);
-	}
+        $result = $this->db->pretend(true)
+            ->table('user')
+            ->get();
 
-	//--------------------------------------------------------------------
-
+        $this->assertInstanceOf(Query::class, $result);
+    }
 }

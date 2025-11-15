@@ -1,177 +1,121 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * CodeIgniter
+ * This file is part of CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\Services;
-use Config\Autoload;
+use CodeIgniter\Database\MigrationRunner;
+use Throwable;
 
 /**
  * Runs all of the migrations in reverse order, until they have
- * all been un-applied.
- *
- * @package CodeIgniter\Commands
+ * all been unapplied.
  */
 class MigrateRollback extends BaseCommand
 {
+    /**
+     * The group the command is lumped under
+     * when listing commands.
+     *
+     * @var string
+     */
+    protected $group = 'Database';
 
-	/**
-	 * The group the command is lumped under
-	 * when listing commands.
-	 *
-	 * @var string
-	 */
-	protected $group = 'Database';
+    /**
+     * The Command's name
+     *
+     * @var string
+     */
+    protected $name = 'migrate:rollback';
 
-	/**
-	 * The Command's name
-	 *
-	 * @var string
-	 */
-	protected $name = 'migrate:rollback';
+    /**
+     * the Command's short description
+     *
+     * @var string
+     */
+    protected $description = 'Runs the "down" method for all migrations in the last batch.';
 
-	/**
-	 * the Command's short description
-	 *
-	 * @var string
-	 */
-	protected $description = 'Runs all of the migrations in reverse order, until they have all been un-applied.';
+    /**
+     * the Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'migrate:rollback [options]';
 
-	/**
-	 * the Command's usage
-	 *
-	 * @var string
-	 */
-	protected $usage = 'migrate:rollback [Options]';
+    /**
+     * the Command's Options
+     *
+     * @var array<string, string>
+     */
+    protected $options = [
+        '-b' => 'Specify a batch to roll back to; e.g. "3" to return to batch #3',
+        '-f' => 'Force command - this option allows you to bypass the confirmation question when running this command in a production environment',
+    ];
 
-	/**
-	 * the Command's Arguments
-	 *
-	 * @var array
-	 */
-	protected $arguments = [];
+    /**
+     * Runs all of the migrations in reverse order, until they have
+     * all been unapplied.
+     */
+    public function run(array $params)
+    {
+        if (ENVIRONMENT === 'production') {
+            // @codeCoverageIgnoreStart
+            $force = array_key_exists('f', $params) || CLI::getOption('f');
 
-	/**
-	 * the Command's Options
-	 *
-	 * @var array
-	 */
-	protected $options = [
-		'-n'   => 'Set migration namespace',
-		'-g'   => 'Set database group',
-		'-all' => 'Set latest for all namespace, will ignore (-n) option',
-	];
+            if (! $force && CLI::prompt(lang('Migrations.rollBackConfirm'), ['y', 'n']) === 'n') {
+                return null;
+            }
+            // @codeCoverageIgnoreEnd
+        }
 
-	/**
-	 * Runs all of the migrations in reverse order, until they have
-	 * all been un-applied.
-	 *
-	 * @param array $params
-	 */
-	public function run(array $params = [])
-	{
-		$runner = Services::migrations();
+        /** @var MigrationRunner $runner */
+        $runner = service('migrations');
 
-		CLI::write(lang('Migrations.rollingBack'), 'yellow');
+        try {
+            $batch = $params['b'] ?? CLI::getOption('b') ?? $runner->getLastBatch() - 1;
 
-		$group = $params['-g'] ?? CLI::getOption('g');
+            if (is_string($batch)) {
+                if (! ctype_digit($batch)) {
+                    CLI::error('Invalid batch number: ' . $batch, 'light_gray', 'red');
+                    CLI::newLine();
 
-		if (! is_null($group))
-		{
-			$runner->setGroup($group);
-		}
-		try
-		{
-			if (! $this->isAllNamespace($params))
-			{
-				$namespace = $params['-n'] ?? CLI::getOption('n');
-				$runner->version(0, $namespace);
-			}
-			else
-			{
-				// Get all namespaces from PSR4 paths.
-				$config     = new Autoload();
-				$namespaces = $config->psr4;
-				foreach ($namespaces as $namespace => $path)
-				{
-					$runner->setNamespace($namespace);
-					$migrations = $runner->findMigrations();
-					if (empty($migrations))
-					{
-						continue;
-					}
-					$runner->version(0, $namespace, $group);
-				}
-			}
-			$messages = $runner->getCliMessages();
-			foreach ($messages as $message)
-			{
-				CLI::write($message);
-			}
+                    return EXIT_ERROR;
+                }
 
-			CLI::write('Done');
-		}
-		catch (\Exception $e)
-		{
-			$this->showError($e);
-		}
-	}
+                $batch = (int) $batch;
+            }
 
-	/**
-	 * To migrate all namespaces to the latest migration
-	 *
-	 * Demo:
-	 *  1. command line: php spark migrate:latest -all
-	 *  2. command file: $this->call('migrate:latest', ['-g' => 'test','-all']);
-	 *
-	 * @param  array $params
-	 * @return boolean
-	 */
-	private function isAllNamespace(array $params): bool
-	{
-		if (array_search('-all', $params) !== false)
-		{
-			return true;
-		}
+            CLI::write(lang('Migrations.rollingBack') . ' ' . $batch, 'yellow');
 
-		return ! is_null(CLI::getOption('all'));
-	}
+            if (! $runner->regress($batch)) {
+                CLI::error(lang('Migrations.generalFault'), 'light_gray', 'red'); // @codeCoverageIgnore
+            }
 
+            $messages = $runner->getCliMessages();
+
+            foreach ($messages as $message) {
+                CLI::write($message);
+            }
+
+            CLI::write('Done rolling back migrations.', 'green');
+
+            // @codeCoverageIgnoreStart
+        } catch (Throwable $e) {
+            $this->showError($e);
+            // @codeCoverageIgnoreEnd
+        }
+
+        return null;
+    }
 }

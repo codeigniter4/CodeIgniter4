@@ -1,6 +1,10 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
 
 use CodeIgniter\Events\Events;
+use CodeIgniter\Exceptions\FrameworkException;
+use CodeIgniter\HotReloader\HotReloader;
 
 /*
  * --------------------------------------------------------------------
@@ -19,25 +23,33 @@ use CodeIgniter\Events\Events;
  *      Events::on('create', [$myInstance, 'myMethod']);
  */
 
-Events::on('pre_system', function () {
-	while (\ob_get_level() > 0)
-	{
-		\ob_end_flush();
-	}
+Events::on('pre_system', static function (): void {
+    if (ENVIRONMENT !== 'testing') {
+        if (ini_get('zlib.output_compression')) {
+            throw FrameworkException::forEnabledZlibOutputCompression();
+        }
 
-	\ob_start(function ($buffer) {
-		return $buffer;
-	});
+        while (ob_get_level() > 0) {
+            ob_end_flush();
+        }
 
-	/*
-	 * --------------------------------------------------------------------
-	 * Debug Toolbar Listeners.
-	 * --------------------------------------------------------------------
-	 * If you delete, they will no longer be collected.
-	 */
-	if (ENVIRONMENT !== 'production')
-	{
-		Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
-		Services::toolbar()->respond();
-	}
+        ob_start(static fn ($buffer) => $buffer);
+    }
+
+    /*
+     * --------------------------------------------------------------------
+     * Debug Toolbar Listeners.
+     * --------------------------------------------------------------------
+     * If you delete, they will no longer be collected.
+     */
+    if (CI_DEBUG && ! is_cli()) {
+        Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
+        service('toolbar')->respond();
+        // Hot Reload route - for framework use on the hot reloader.
+        if (ENVIRONMENT === 'development') {
+            service('routes')->get('__hot-reload', static function (): void {
+                (new HotReloader())->run();
+            });
+        }
+    }
 });

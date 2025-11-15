@@ -1,38 +1,14 @@
 <?php
+
+declare(strict_types=1);
+
 /**
- * CodeIgniter
+ * This file is part of CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Database\Postgre;
@@ -45,34 +21,27 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
  */
 class Utils extends BaseUtils
 {
+    /**
+     * List databases statement
+     *
+     * @var string
+     */
+    protected $listDatabases = 'SELECT datname FROM pg_database';
 
-	/**
-	 * List databases statement
-	 *
-	 * @var string
-	 */
-	protected $listDatabases = 'SELECT datname FROM pg_database';
+    /**
+     * OPTIMIZE TABLE statement
+     *
+     * @var string
+     */
+    protected $optimizeTable = 'REINDEX TABLE %s';
 
-	/**
-	 * OPTIMIZE TABLE statement
-	 *
-	 * @var string
-	 */
-	protected $optimizeTable = 'REINDEX TABLE %s';
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Platform dependent version of the backup function.
-	 *
-	 * @param array|null $prefs
-	 *
-	 * @return mixed
-	 */
-	public function _backup(array $prefs = null)
-	{
-		throw new DatabaseException('Unsupported feature of the database platform you are using.');
-	}
-
-	//--------------------------------------------------------------------
+    /**
+     * Platform dependent version of the backup function.
+     *
+     * @return never
+     */
+    public function _backup(?array $prefs = null)
+    {
+        throw new DatabaseException('Unsupported feature of the database platform you are using.');
+    }
 }

@@ -1,0 +1,37 @@
+#!/bin/bash
+
+## Deploy codeigniter4/framework
+
+# Setup variables
+SOURCE=$1
+TARGET=$2
+RELEASE=$3
+
+echo "Preparing for version $3"
+echo "Merging files from $1 to $2"
+
+# Prepare the source
+cd $SOURCE
+git checkout master
+
+# Prepare the target
+cd $TARGET
+git checkout master
+rm -rf *
+
+# Copy common files
+releasable='app public writable env LICENSE spark system preload.php'
+for fff in $releasable;
+do
+    cp -Rf ${SOURCE}/$fff ./
+done
+
+# Copy repo-specific files
+cp -Rf ${SOURCE}/admin/framework/. ./
+# Copy tests files
+cp -Rf ${SOURCE}/admin/starter/tests/. ./tests/
+
+# Commit the changes
+git add .
+git commit -m "Release ${RELEASE}"
+git push

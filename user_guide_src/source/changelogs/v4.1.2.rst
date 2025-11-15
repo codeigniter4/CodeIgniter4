@@ -1,0 +1,71 @@
+Version 4.1.2
+=============
+
+Release Date: May 16, 2021
+
+**4.1.2 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+BREAKING
+--------
+
+Fixed `a bug <https://github.com/codeigniter4/CodeIgniter4/issues/4116>`_ in ``current_url()`` that prevented
+configurations with an ``indexPage`` from including that value in the return value. Any installations
+using ``App::$indexPage`` should expect altered values from ``current_url()`` and all its dependencies
+(including Response Testing, Pager, Form Helper, Pager, and View Parser).
+
+Enhancements
+------------
+
+- New HTTP classes, ``Cookie`` and ``CookieStore``, for abstracting web cookies.
+- New ``assertRedirectTo()`` assertion available for HTTP tests.
+- New logger handler, ``ErrorlogHandler``, that writes to ``error_log()``.
+- Entity. Added custom type casting functionality.
+- New option in routing. The ``priority`` option lower the priority of specific route processing.
+- The ``Autoloader`` class can now load files which do not contain PHP classes. The list of `non-class` files will be listed in the ``$files`` property of ``Config\Autoload`` class.
+
+Changes
+-------
+
+- Layouts in views now support nested sections.
+- ``Response::getCookie`` now returns a ``Cookie`` instance instead of an array of cookie attributes.
+- ``Response::getCookies`` now returns an array of ``Cookie`` instances instead of array of array of attributes.
+- To eliminate warnings from modern browsers' consoles, empty samesite values will be defaulted to ``Lax`` on cookie dispatch.
+- `Model::errors()` and `BaseModel::errors()` now always returns `array`; there was no definition change but the docblock has been updated.
+- ``Entity::castAs`` has changed behavior. Added new parameter ``$method``. Type casting has been moved to separate handlers.
+- Entity. Timestamp casting now throws an exception when an invalid value is passed
+- ``Entity::castAsJson`` uses external cast handler ``JsonCast::get``.
+- ``Entity::mutateDate`` uses external cast handler ``DatetimeCast::get``.
+- In order for ``Config\**`` classes to get their respective properties' values from the ``.env``, it is now necessary to namespace the property with the name of the class. Previously, the property names are enough but now disallowed because it can get system environment variables, like ``PATH``.
+- The array helper ``_array_search_dot`` is now marked for ``@internal`` use. As this is used by ``dot_array_search``, users should not use ``_array_search_dot`` directly in their code.
+- ``CacheInterface::getMetaData()`` returns ``null`` for misses, or an array with at least the "expires" key set to the absolute epoch expiration, or ``null`` for "never expires". The File, Memcached, and Wincache Handlers still return ``false`` which will become ``null`` in a future release.
+
+Deprecations
+------------
+
+- Deprecated ``CodeIgniter\View\View::$currentSection`` property.
+- Language strings and exceptions on invalid cookie samesite are deprecated for the ``CookieException``'s own exception message.
+- Deprecated `CodeIgniter\Entity` in favor of `CodeIgniter\Entity\Entity`
+- Deprecated cookie-related properties of ``Response`` in order to use the ``Cookie`` class.
+- Deprecated cookie-related properties of ``Security`` in order to use the ``Cookie`` class.
+- Deprecated cookie-related properties of ``Session`` in order to use the ``Cookie`` class.
+- Deprecated ``Security::isExpired()`` to use the ``Cookie``'s internal expires status.
+- Deprecated ``CIDatabaseTestCase`` to use the ``DatabaseTestTrait`` instead.
+- Deprecated ``FeatureTestCase`` to use the ``FeatureTestTrait`` instead.
+- Deprecated ``ControllerTester`` to use the ``ControllerTestTrait`` instead.
+- Consolidated and deprecated ``ControllerResponse`` and ``FeatureResponse`` in favor of ``TestResponse``.
+- Deprecated ``Time::instance()``, use ``Time::createFromInstance()`` instead (now accepts ``DateTimeInterface``).
+- Deprecated ``IncomingRequest::removeRelativeDirectory()``, use ``URI::removeDotSegments()`` instead
+- Deprecated ``\API\ResponseTrait::failValidationError()`` to use ``\API\ResponseTrait::failValidationErrors()`` instead
+
+Bugs Fixed
+----------
+
+- ``BaseConnection::query()`` now returns ``false`` for failed queries (unless ``DBDebug==true``, in which case an exception will be thrown) and returns boolean values for write-type queries as specified in the docs.
+
+See the repo's
+`CHANGELOG_4.1.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.1.md>`_
+for a complete list of bugs fixed.

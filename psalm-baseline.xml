@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="6.13.0@70cdf647255a1362b426bb0f522a85817b8c791c">
+  <file src="app/Config/View.php">
+    <UndefinedDocblockClass>
+      <code><![CDATA[array<string, list<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, list<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, parser_callable_string>]]></code>
+      <code><![CDATA[public $filters = [];]]></code>
+      <code><![CDATA[public $plugins = [];]]></code>
+      <code><![CDATA[public $plugins = [];]]></code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="system/Config/View.php">
+    <UndefinedDocblockClass>
+      <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, parser_callable_string>]]></code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="system/Database/OCI8/Connection.php">
+    <UndefinedConstant>
+      <code><![CDATA[OCI_COMMIT_ON_SUCCESS]]></code>
+      <code><![CDATA[OCI_COMMIT_ON_SUCCESS]]></code>
+      <code><![CDATA[OCI_COMMIT_ON_SUCCESS]]></code>
+      <code><![CDATA[OCI_NO_AUTO_COMMIT]]></code>
+      <code><![CDATA[SQLT_CHR]]></code>
+    </UndefinedConstant>
+  </file>
+  <file src="system/Database/OCI8/PreparedQuery.php">
+    <UndefinedClass>
+      <code><![CDATA[$binaryData]]></code>
+      <code><![CDATA[OCILob]]></code>
+    </UndefinedClass>
+    <UndefinedConstant>
+      <code><![CDATA[OCI_B_BLOB]]></code>
+      <code><![CDATA[OCI_D_LOB]]></code>
+      <code><![CDATA[OCI_TEMP_BLOB]]></code>
+    </UndefinedConstant>
+  </file>
+  <file src="system/Debug/Toolbar/Views/toolbar.tpl.php">
+    <InaccessibleMethod>
+      <code><![CDATA[renderTimeline]]></code>
+    </InaccessibleMethod>
+    <UndefinedGlobalVariable>
+      <code><![CDATA[$config]]></code>
+    </UndefinedGlobalVariable>
+  </file>
+  <file src="system/Email/Email.php">
+    <LoopInvalidation>
+      <code><![CDATA[$timestamp]]></code>
+    </LoopInvalidation>
+  </file>
+  <file src="system/HTTP/Files/FileCollection.php">
+    <EmptyArrayAccess>
+      <code><![CDATA[$output[$name]]]></code>
+    </EmptyArrayAccess>
+  </file>
+  <file src="system/Helpers/text_helper.php">
+    <LoopInvalidation>
+      <code><![CDATA[$count]]></code>
+      <code><![CDATA[$count]]></code>
+      <code><![CDATA[$count]]></code>
+    </LoopInvalidation>
+  </file>
+  <file src="system/I18n/TimeTrait.php">
+    <MissingImmutableAnnotation>
+      <code><![CDATA[#[ReturnTypeWillChange]]]></code>
+      <code><![CDATA[#[ReturnTypeWillChange]]]></code>
+    </MissingImmutableAnnotation>
+  </file>
+  <file src="system/Language/Language.php">
+    <NoValue>
+      <code><![CDATA[$message]]></code>
+      <code><![CDATA[$message]]></code>
+    </NoValue>
+  </file>
+  <file src="system/View/Parser.php">
+    <UndefinedDocblockClass>
+      <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[protected $plugins = [];]]></code>
+      <code><![CDATA[protected $plugins = [];]]></code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="tests/_support/Config/Filters.php">
+    <UndefinedGlobalVariable>
+      <code><![CDATA[$filters]]></code>
+    </UndefinedGlobalVariable>
+  </file>
+  <file src="tests/_support/Config/Routes.php">
+    <UndefinedGlobalVariable>
+      <code><![CDATA[$routes]]></code>
+      <code><![CDATA[$routes]]></code>
+      <code><![CDATA[$routes]]></code>
+      <code><![CDATA[$routes]]></code>
+      <code><![CDATA[$routes]]></code>
+    </UndefinedGlobalVariable>
+  </file>
+  <file src="tests/_support/View/Cells/colors.php">
+    <InvalidScope>
+      <code><![CDATA[$this]]></code>
+    </InvalidScope>
+  </file>
+  <file src="tests/system/CommonFunctionsTest.php">
+    <UndefinedClass>
+      <code><![CDATA[UnexsistenceClass]]></code>
+    </UndefinedClass>
+  </file>
+  <file src="tests/system/Config/FactoriesTest.php">
+    <UndefinedClass>
+      <code><![CDATA['App\Models\UserModel']]></code>
+      <code><![CDATA['App\Models\UserModel']]></code>
+      <code><![CDATA['Config\TestRegistrar']]></code>
+    </UndefinedClass>
+  </file>
+  <file src="tests/system/Database/Live/OCI8/CallStoredProcedureTest.php">
+    <UndefinedConstant>
+      <code><![CDATA[OCI_ASSOC]]></code>
+      <code><![CDATA[OCI_B_CURSOR]]></code>
+      <code><![CDATA[OCI_RETURN_NULLS]]></code>
+    </UndefinedConstant>
+  </file>
+  <file src="tests/system/Entity/EntityTest.php">
+    <EmptyArrayAccess>
+      <code><![CDATA[$current[$key]]]></code>
+    </EmptyArrayAccess>
+    <InaccessibleProperty>
+      <code><![CDATA[$entity->attributes]]></code>
+      <code><![CDATA[$entity->casts]]></code>
+      <code><![CDATA[$entity->casts]]></code>
+      <code><![CDATA[$entity->casts]]></code>
+      <code><![CDATA[$entity->casts]]></code>
+    </InaccessibleProperty>
+  </file>
+  <file src="tests/system/HTTP/RedirectResponseTest.php">
+    <EmptyArrayAccess>
+      <code><![CDATA[$_SESSION['_ci_old_input']]]></code>
+    </EmptyArrayAccess>
+  </file>
+  <file src="tests/system/Models/InsertModelTest.php">
+    <InaccessibleProperty>
+      <code><![CDATA[$entity->country]]></code>
+      <code><![CDATA[$entity->created_at]]></code>
+      <code><![CDATA[$entity->deleted]]></code>
+      <code><![CDATA[$entity->email]]></code>
+      <code><![CDATA[$entity->name]]></code>
+      <code><![CDATA[$entityTwo->country]]></code>
+      <code><![CDATA[$entityTwo->created_at]]></code>
+      <code><![CDATA[$entityTwo->deleted]]></code>
+      <code><![CDATA[$entityTwo->email]]></code>
+      <code><![CDATA[$entityTwo->name]]></code>
+    </InaccessibleProperty>
+  </file>
+  <file src="tests/system/Models/SaveModelTest.php">
+    <InaccessibleProperty>
+      <code><![CDATA[$entity->country]]></code>
+      <code><![CDATA[$entity->created_at]]></code>
+      <code><![CDATA[$entity->created_at]]></code>
+      <code><![CDATA[$entity->deleted]]></code>
+      <code><![CDATA[$entity->email]]></code>
+      <code><![CDATA[$entity->name]]></code>
+      <code><![CDATA[$entity->name]]></code>
+      <code><![CDATA[$entity->name]]></code>
+      <code><![CDATA[$entity->name]]></code>
+    </InaccessibleProperty>
+  </file>
+  <file src="tests/system/Models/UpdateModelTest.php">
+    <InaccessibleProperty>
+      <code><![CDATA[$entity->country]]></code>
+      <code><![CDATA[$entity->deleted]]></code>
+      <code><![CDATA[$entity->email]]></code>
+      <code><![CDATA[$entity->id]]></code>
+      <code><![CDATA[$entity->name]]></code>
+      <code><![CDATA[$entity1->country]]></code>
+      <code><![CDATA[$entity1->country]]></code>
+      <code><![CDATA[$entity1->deleted]]></code>
+      <code><![CDATA[$entity1->id]]></code>
+      <code><![CDATA[$entity1->name]]></code>
+      <code><![CDATA[$entity2->country]]></code>
+      <code><![CDATA[$entity2->deleted]]></code>
+      <code><![CDATA[$entity2->id]]></code>
+      <code><![CDATA[$entity2->name]]></code>
+    </InaccessibleProperty>
+  </file>
+  <file src="tests/system/Test/ControllerTestTraitTest.php">
+    <UndefinedClass>
+      <code><![CDATA[NeverHeardOfIt]]></code>
+    </UndefinedClass>
+  </file>
+</files>

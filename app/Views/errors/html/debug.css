@@ -1,17 +1,26 @@
+:root {
+    --main-bg-color: #fff;
+    --main-text-color: #555;
+    --dark-text-color: #222;
+    --light-text-color: #c7c7c7;
+    --brand-primary-color: #DC4814;
+    --light-bg-color: #ededee;
+    --dark-bg-color: #404040;
+}
+
 body {
     height: 100%;
-    background: #fafafa;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #777;
+    background: var(--main-bg-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    color: var(--main-text-color);
     font-weight: 300;
     margin: 0;
     padding: 0;
 }
 h1 {
     font-weight: lighter;
-    letter-spacing: 0.8;
     font-size: 3rem;
-    color: #222;
+    color: var(--dark-text-color);
     margin: 0;
 }
 h1.headline {
@@ -30,11 +39,16 @@ p.lead {
     padding: 1rem;
 }
 .header {
-    background: #85271f;
-    color: #fff;
+    background: var(--light-bg-color);
+    color: var(--dark-text-color);
+    margin-top: 2.17rem;
+}
+.header .container {
+    padding: 1rem;
 }
 .header h1 {
-    color: #fff;
+    font-size: 2.5rem;
+    font-weight: 500;
 }
 .header p {
     font-size: 1.2rem;
@@ -42,7 +56,7 @@ p.lead {
     line-height: 2.5;
 }
 .header a {
-    color: rgba(255,255,255,0.5);
+    color: var(--brand-primary-color);
     margin-left: 2rem;
     display: none;
     text-decoration: none;
@@ -51,19 +65,25 @@ p.lead {
     display: inline;
 }
 
-.footer .container {
-    border-top: 1px solid #e7e7e7;
-    margin-top: 1rem;
+.environment {
+    background: var(--brand-primary-color);
+    color: var(--main-bg-color);
     text-align: center;
+    padding: calc(4px + 0.2083vw);
+    width: 100%;
+    top: 0;
+    position: fixed;
 }
 
 .source {
-    background: #333;
-    color: #c7c7c7;
+    background: #343434;
+    color: var(--light-text-color);
     padding: 0.5em 1em;
     border-radius: 5px;
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 0.85rem;
     margin: 0;
+    overflow-x: scroll;
 }
 .source span.line {
     line-height: 1.4;
@@ -73,8 +93,8 @@ p.lead {
 }
 .source .line .highlight {
     display: block;
-    background: #555;
-    color: #fff;
+    background: var(--dark-text-color);
+    color: var(--light-text-color);
 }
 .source span.highlight .number {
     color: #fff;
@@ -92,27 +112,28 @@ p.lead {
 }
 .tabs a:link,
 .tabs a:visited {
-    padding: 0rem 1rem;
+    padding: 0 1rem;
     line-height: 2.7;
     text-decoration: none;
-    color: #a7a7a7;
-    background: #f1f1f1;
-    border: 1px solid #e7e7e7;
+    color: var(--dark-text-color);
+    background: var(--light-bg-color);
+    border: 1px solid rgba(0,0,0,0.15);
     border-bottom: 0;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     display: inline-block;
 }
 .tabs a:hover {
-    background: #e7e7e7;
-    border-color: #e1e1e1;
+    background: var(--light-bg-color);
+    border-color: rgba(0,0,0,0.15);
 }
 .tabs a.active {
-    background: #fff;
+    background: var(--main-bg-color);
+    color: var(--main-text-color);
 }
 .tab-content {
-    background: #fff;
-    border: 1px solid #efefef;
+    background: var(--main-bg-color);
+    border: 1px solid rgba(0,0,0,0.15);
 }
 .content {
     padding: 1rem;
@@ -130,9 +151,6 @@ p.lead {
     border: 1px solid #bcdff1;
     border-radius: 5px;
     color: #31708f;
-}
-ul, ol {
-    line-height: 1.8;
 }
 
 table {
@@ -165,7 +183,7 @@ td pre {
     font-weight: bold;
 }
 .trace td {
-    background: #e7e7e7;
+    background: var(--light-bg-color);
     padding: 0 1rem;
 }
 .trace td pre {

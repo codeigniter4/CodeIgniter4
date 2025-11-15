@@ -1,148 +1,108 @@
 <?php
+
+declare(strict_types=1);
+
 /**
- * CodeIgniter
+ * This file is part of CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Debug;
+
+use Closure;
 
 /**
  * Iterator for debugging.
  */
 class Iterator
 {
+    /**
+     * Stores the tests that we are to run.
+     *
+     * @var array
+     */
+    protected $tests = [];
 
-	/**
-	 * Stores the tests that we are to run.
-	 *
-	 * @var array
-	 */
-	protected $tests = [];
+    /**
+     * Stores the results of each of the tests.
+     *
+     * @var array
+     */
+    protected $results = [];
 
-	/**
-	 * Stores the results of each of the tests.
-	 *
-	 * @var array
-	 */
-	protected $results = [];
+    /**
+     * Adds a test to run.
+     *
+     * Tests are simply closures that the user can define any sequence of
+     * things to happen during the test.
+     *
+     * @param Closure(): mixed $closure
+     *
+     * @return $this
+     */
+    public function add(string $name, Closure $closure)
+    {
+        $name = strtolower($name);
 
-	//--------------------------------------------------------------------
+        $this->tests[$name] = $closure;
 
-	/**
-	 * Adds a test to run.
-	 *
-	 * Tests are simply closures that the user can define any sequence of
-	 * things to happen during the test.
-	 *
-	 * @param string   $name
-	 * @param \Closure $closure
-	 *
-	 * @return $this
-	 */
-	public function add(string $name, \Closure $closure)
-	{
-		$name = strtolower($name);
+        return $this;
+    }
 
-		$this->tests[$name] = $closure;
+    /**
+     * Runs through all of the tests that have been added, recording
+     * time to execute the desired number of iterations, and the approximate
+     * memory usage used during those iterations.
+     *
+     * @return string|null
+     */
+    public function run(int $iterations = 1000, bool $output = true)
+    {
+        foreach ($this->tests as $name => $test) {
+            // clear memory before start
+            gc_collect_cycles();
 
-		return $this;
-	}
+            $start    = microtime(true);
+            $startMem = $maxMemory = memory_get_usage(true);
 
-	//--------------------------------------------------------------------
+            for ($i = 0; $i < $iterations; $i++) {
+                $result    = $test();
+                $maxMemory = max($maxMemory, memory_get_usage(true));
 
-	/**
-	 * Runs through all of the tests that have been added, recording
-	 * time to execute the desired number of iterations, and the approximate
-	 * memory usage used during those iterations.
-	 *
-	 * @param integer $iterations
-	 * @param boolean $output
-	 *
-	 * @return string|null
-	 */
-	public function run(int $iterations = 1000, bool $output = true)
-	{
-		foreach ($this->tests as $name => $test)
-		{
-			// clear memory before start
-			gc_collect_cycles();
+                unset($result);
+            }
 
-			$start     = microtime(true);
-			$start_mem = $max_memory = memory_get_usage(true);
+            $this->results[$name] = [
+                'time'   => microtime(true) - $start,
+                'memory' => $maxMemory - $startMem,
+                'n'      => $iterations,
+            ];
+        }
 
-			for ($i = 0; $i < $iterations; $i ++)
-			{
-				$result = $test();
+        if ($output) {
+            return $this->getReport();
+        }
 
-				$max_memory = max($max_memory, memory_get_usage(true));
+        return null;
+    }
 
-				unset($result);
-			}
+    /**
+     * Get results.
+     */
+    public function getReport(): string
+    {
+        if ($this->results === []) {
+            return 'No results to display.';
+        }
 
-			$this->results[$name] = [
-				'time'   => microtime(true) - $start,
-				'memory' => $max_memory - $start_mem,
-				'n'      => $iterations,
-			];
-		}
+        helper('number');
 
-		if ($output)
-		{
-			return $this->getReport();
-		}
-
-		return null;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Get results.
-	 *
-	 * @return string
-	 */
-	public function getReport(): string
-	{
-		if (empty($this->results))
-		{
-			return 'No results to display.';
-		}
-
-		helper('number');
-
-		// Template
-		$tpl = '<table>
+        // Template
+        $tpl = '<table>
 			<thead>
 				<tr>
 					<td>Test</td>
@@ -155,24 +115,20 @@ class Iterator
 			</tbody>
 		</table>';
 
-		$rows = '';
+        $rows = '';
 
-		foreach ($this->results as $name => $result)
-		{
-			$memory = number_to_size($result['memory'], 4);
+        foreach ($this->results as $name => $result) {
+            $memory = number_to_size($result['memory'], 4);
 
-			$rows .= "<tr>
+            $rows .= "<tr>
 				<td>{$name}</td>
 				<td>" . number_format($result['time'], 4) . "</td>
 				<td>{$memory}</td>
 			</tr>";
-		}
+        }
 
-		$tpl = str_replace('{rows}', $rows, $tpl);
+        $tpl = str_replace('{rows}', $rows, $tpl);
 
-		return $tpl . '<br/>';
-	}
-
-	//--------------------------------------------------------------------
-
+        return $tpl . '<br/>';
+    }
 }

@@ -1,0 +1,74 @@
+# When changes are pushed to the develop branch,
+# build the current version of the API documentation
+# with phpDocumentor and deploy it to codeigniter4/api.
+name: Deploy API Documentation
+
+on:
+  push:
+    branches:
+      - 'develop'
+    paths:
+      - 'system/**'
+      - '.github/workflows/deploy-apidocs.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Deploy to api
+    permissions:
+      contents: write
+    if: github.repository == 'codeigniter4/CodeIgniter4'
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Setup credentials
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+
+      - name: Checkout source
+        uses: actions/checkout@v5
+        with:
+          path: source
+
+      - name: Checkout target
+        uses: actions/checkout@v5
+        with:
+          repository: codeigniter4/api
+          token: ${{ secrets.ACCESS_TOKEN }}
+          path: api
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: phive
+          coverage: none
+
+      - name: Download latest phpDocumentor
+        working-directory: source
+        run: phive --no-progress install --trust-gpg-keys 6DA3ACC4991FFAE5 phpDocumentor
+
+      - name: Prepare API repo
+        working-directory: api
+        run: |
+          git reset --hard master
+          rm -rfv docs
+          mkdir --parents --verbose docs
+
+      - name: Build API in source repo
+        working-directory: source
+        run: |
+          php tools/phpDocumentor --ansi --verbose
+          cp -R ${GITHUB_WORKSPACE}/source/api/build/* ${GITHUB_WORKSPACE}/api/docs
+
+      - name: Deploy to API repo
+        working-directory: api
+        run: |
+          git add .
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "Updated API for commit ${GITHUB_SHA}"
+            git push origin master
+          fi

@@ -1,35 +1,59 @@
-<?php namespace CodeIgniter\Helpers;
+<?php
 
-class SecurityHelperTest extends \CIUnitTestCase
+declare(strict_types=1);
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Helpers;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockSecurity;
+use Config\Security as SecurityConfig;
+use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Config\Services;
+
+/**
+ * @internal
+ */
+#[Group('Others')]
+final class SecurityHelperTest extends CIUnitTestCase
 {
-	protected function setUp()
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		helper('security');
-	}
+        helper('security');
+    }
 
-	public function testSanitizeFilenameSimpleSuccess()
-	{
-		$this->assertEquals('hello.doc', sanitize_filename('hello.doc'));
-	}
+    public function testSanitizeFilenameSimpleSuccess(): void
+    {
+        Services::injectMock('security', new MockSecurity(new SecurityConfig()));
 
-	public function testSanitizeFilenameStripsExtras()
-	{
-		$filename = './<!--foo -->';
-		$this->assertEquals('foo ', sanitize_filename($filename));
-	}
+        $this->assertSame('hello.doc', sanitize_filename('hello.doc'));
+    }
 
-	public function testStripImageTags()
-	{
-		$this->assertEquals('http://example.com/spacer.gif', strip_image_tags('http://example.com/spacer.gif'));
+    public function testSanitizeFilenameStripsExtras(): void
+    {
+        $filename = './<!--foo -->';
+        $this->assertSame('foo ', sanitize_filename($filename));
+    }
 
-		$this->assertEquals('http://example.com/spacer.gif', strip_image_tags('<img src="http://example.com/spacer.gif" alt="Who needs CSS when you have a spacer.gif?" />'));
-	}
+    public function testStripImageTags(): void
+    {
+        $this->assertSame('http://example.com/spacer.gif', strip_image_tags('http://example.com/spacer.gif'));
 
-	function test_encode_php_tags()
-	{
-		$this->assertEquals('&lt;? echo $foo; ?&gt;', encode_php_tags('<? echo $foo; ?>'));
-	}
+        $this->assertSame('http://example.com/spacer.gif', strip_image_tags('<img src="http://example.com/spacer.gif" alt="Who needs CSS when you have a spacer.gif?" />'));
+    }
 
+    public function testEncodePhpTags(): void
+    {
+        $this->assertSame('&lt;? echo $foo; ?&gt;', encode_php_tags('<? echo $foo; ?>'));
+    }
 }

@@ -12,6 +12,10 @@ online resource to learn about them for your particular database. The
 information below assumes you have a basic understanding of
 transactions.
 
+.. contents::
+    :local:
+    :depth: 3
+
 CodeIgniter's Approach to Transactions
 ======================================
 
@@ -28,64 +32,92 @@ contrast, we've implemented a smart transaction system that does all
 this for you automatically (you can also manage your transactions
 manually if you choose to, but there's really no benefit).
 
+.. note::
+    Since v4.3.0, during transactions, exceptions are not thrown by default
+    even if ``DBDebug`` is true.
+
 Running Transactions
 ====================
 
 To run your queries using transactions you will use the
-$this->db->transStart() and $this->db->transComplete() functions as
-follows::
+``$this->db->transStart()`` and ``$this->db->transComplete()`` methods as
+follows:
 
-	$this->db->transStart();
-	$this->db->query('AN SQL QUERY...');
-	$this->db->query('ANOTHER QUERY...');
-	$this->db->query('AND YET ANOTHER QUERY...');
-	$this->db->transComplete();
+.. literalinclude:: transactions/001.php
 
-You can run as many queries as you want between the start/complete
-functions and they will all be committed or rolled back based on the success
+You can run as many queries as you want between the ``transStart()``/``transComplete()``
+methods and they will all be committed or rolled back based on the success
 or failure of any given query.
 
 Strict Mode
 ===========
 
-By default, CodeIgniter runs all transactions in Strict Mode. When strict
-mode is enabled, if you are running multiple groups of transactions, if
-one group fails all groups will be rolled back. If strict mode is
-disabled, each group is treated independently, meaning a failure of one
-group will not affect any others.
+By default, CodeIgniter runs all transactions in Strict Mode.
 
-Strict Mode can be disabled as follows::
+When strict mode is enabled, if you are running multiple groups of transactions,
+if one group fails all subsequent groups will be rolled back.
 
-	$this->db->transStrict(false);
+If strict mode is disabled, each group is treated independently, meaning a failure
+of one group will not affect any others.
+
+Strict Mode can be disabled as follows:
+
+.. literalinclude:: transactions/002.php
+
+.. _transactions-resetting-transaction-status:
+
+Resetting Transaction Status
+----------------------------
+
+.. versionadded:: 4.6.0
+
+When strict mode is enabled, if one transaction fails, all subsequent transactions
+will be rolled back.
+
+If you wan to restart transactions after a failure, you can reset the transaction
+status:
+
+.. literalinclude:: transactions/009.php
+
+.. _transactions-managing-errors:
 
 Managing Errors
 ===============
 
-If you have error reporting enabled in your Config/Database.php file
-you'll see a standard error message if the commit was unsuccessful. If
-debugging is turned off, you can manage your own errors like this::
+.. note::
+    Since v4.3.0, during transactions, exceptions are not thrown by default
+    even if ``DBDebug`` is true.
 
-	$this->db->transStart();
-	$this->db->query('AN SQL QUERY...');
-	$this->db->query('ANOTHER QUERY...');
-	$this->db->transComplete();
+You can manage your own errors like this:
 
-	if ($this->db->transStatus() === FALSE)
-	{
-		// generate an error... or use the log_message() function to log your error
-	}
+.. literalinclude:: transactions/003.php
+
+.. _transactions-throwing-exceptions:
+
+Throwing Exceptions
+===================
+
+.. versionadded:: 4.3.0
+
+.. note::
+    Since v4.3.0, during transactions, exceptions are not thrown by default
+    even if ``DBDebug`` is true.
+
+If you want an exception to be thrown when a query error occurs, you can use
+``$this->db->transException(true)``:
+
+.. literalinclude:: transactions/008.php
+
+If a query error occurs, all the queries will be rolled backed, and a
+``DatabaseException`` will be thrown.
 
 Disabling Transactions
 ======================
 
 Transactions are enabled by default. If you would like to disable transactions you
-can do so using $this->db->transOff()::
+can do so using ``$this->db->transOff()``:
 
-	$this->db->transOff();
-
-	$this->db->transStart();
-	$this->db->query('AN SQL QUERY...');
-	$this->db->transComplete();
+.. literalinclude:: transactions/004.php
 
 When transactions are disabled, your queries will be auto-committed, just
 as they are when running queries without transactions.
@@ -96,31 +128,36 @@ Test Mode
 You can optionally put the transaction system into "test mode", which
 will cause your queries to be rolled back -- even if the queries produce
 a valid result. To use test mode simply set the first parameter in the
-$this->db->transStart() function to TRUE::
+``$this->db->transStart()`` method to true:
 
-	$this->db->transStart(true); // Query will be rolled back
-	$this->db->query('AN SQL QUERY...');
-	$this->db->transComplete();
+.. literalinclude:: transactions/005.php
+
+.. _transactions-manual-transactions:
 
 Running Transactions Manually
 =============================
 
-If you would like to run transactions manually you can do so as follows::
+When you have ``DBDebug`` false in your **app/Config/Database.php** file, and
+if you would like to run transactions manually you can do so as follows:
 
-	$this->db->transBegin();
+.. literalinclude:: transactions/006.php
 
-	$this->db->query('AN SQL QUERY...');
-	$this->db->query('ANOTHER QUERY...');
-	$this->db->query('AND YET ANOTHER QUERY...');
+.. note:: Make sure to use ``$this->db->transBegin()`` when running manual
+    transactions, **NOT** ``$this->db->transStart()``.
 
-	if ($this->db->transStatus() === FALSE)
-	{
-		$this->db->transRollback();
-	}
-	else
-	{
-		$this->db->transCommit();
-	}
+Nested Transactions
+===================
 
-.. note:: Make sure to use $this->db->transBegin() when running manual
-	transactions, **NOT** $this->db->transStart().
+In CodeIgniter, transactions can be nested in a way such that only the
+outmost or top-level transaction commands are executed. You can include as
+many pairs of ``transStart()``/``transComplete()`` or ``transBegin()``/``transCommit()``/``transRollback()``
+as you want inside a transaction block and so on. CodeIgniter will keep
+track of the transaction "depth" and only take action at the outermost layer
+(zero depth).
+
+.. literalinclude:: transactions/007.php
+
+.. note:: In case the structure is far more complex, it's your responsibility
+    to ensure that the inner transactions can reach the outermost layer again
+    in order to be fully executed by the database, thus prevents unintended
+    commits/rollbacks.

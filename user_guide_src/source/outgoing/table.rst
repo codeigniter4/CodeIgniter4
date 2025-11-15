@@ -6,11 +6,8 @@ The Table Class provides methods that enable you to auto-generate HTML
 tables from arrays or database result sets.
 
 .. contents::
-  :local:
-
-.. raw:: html
-
-  <div class="custom-index container"></div>
+    :local:
+    :depth: 2
 
 *********************
 Using the Table Class
@@ -20,9 +17,9 @@ Initializing the Class
 ======================
 
 The Table class is not provided as a service, and should be instantiated
-"normally", for instance::
+"normally", for instance:
 
-	$table = new \CodeIgniter\View\Table();
+.. literalinclude:: table/001.php
 
 Examples
 ========
@@ -32,297 +29,199 @@ multi-dimensional array. Note that the first array index will become the
 table heading (or you can set your own headings using the ``setHeading()``
 method described in the function reference below).
 
-::
-
-	$table = new \CodeIgniter\View\Table();
-
-	$data = array(
-		array('Name', 'Color', 'Size'),
-		array('Fred', 'Blue', 'Small'),
-		array('Mary', 'Red', 'Large'),
-		array('John', 'Green', 'Medium')	
-	);
-
-	echo $table->generate($data);
+.. literalinclude:: table/002.php
 
 Here is an example of a table created from a database query result. The
 table class will automatically generate the headings based on the table
 names (or you can set your own headings using the ``setHeading()``
 method described in the class reference below).
 
-::
-
-	$table = new \CodeIgniter\View\Table();
-
-	$query = $db->query('SELECT * FROM my_table');
-
-	echo $table->generate($query);
+.. literalinclude:: table/003.php
 
 Here is an example showing how you might create a table using discrete
-parameters::
+parameters:
 
-	$table = new \CodeIgniter\View\Table();
-
-	$table->setHeading('Name', 'Color', 'Size');
-
-	$table->addRow('Fred', 'Blue', 'Small');
-	$table->addRow('Mary', 'Red', 'Large');
-	$table->addRow('John', 'Green', 'Medium');
-
-	echo $table->generate();
+.. literalinclude:: table/004.php
 
 Here is the same example, except instead of individual parameters,
-arrays are used::
+arrays are used:
 
-	$table = new \CodeIgniter\View\Table();
-
-	$table->setHeading(array('Name', 'Color', 'Size'));
-
-	$table->addRow(['Fred', 'Blue', 'Small']);
-	$table->addRow(['Mary', 'Red', 'Large']);
-	$table->addRow(['John', 'Green', 'Medium']);
-
-	echo $table->generate();
+.. literalinclude:: table/005.php
 
 Changing the Look of Your Table
 ===============================
 
 The Table Class permits you to set a table template with which you can
-specify the design of your layout. Here is the template prototype::
+specify the design of your layout. Here is the template prototype:
 
-	$template = [
-		'table_open'		=> '<table border="0" cellpadding="4" cellspacing="0">',
-
-		'thead_open'		=> '<thead>',
-		'thead_close'		=> '</thead>',
-
-		'heading_row_start'	=> '<tr>',
-		'heading_row_end'	=> '</tr>',
-		'heading_cell_start'	=> '<th>',
-		'heading_cell_end'	=> '</th>',
-
-		'tfoot_open'		 => '<tfoot>',
-		'tfoot_close'		 => '</tfoot>',
-
-		'footing_row_start'	 => '<tr>',
-		'footing_row_end'	 => '</tr>',
-		'footing_cell_start'     => '<td>',
-		'footing_cell_end'	 => '</td>',
-
-		'tbody_open'		=> '<tbody>',
-		'tbody_close'		=> '</tbody>',
-
-		'row_start'		=> '<tr>',
-		'row_end'		=> '</tr>',
-		'cell_start'		=> '<td>',
-		'cell_end'		=> '</td>',
-
-		'row_alt_start'		=> '<tr>',
-		'row_alt_end'		=> '</tr>',
-		'cell_alt_start'	=> '<td>',
-		'cell_alt_end'		=> '</td>',
-
-		'table_close'		=> '</table>'
-	];
-
-	$table->setTemplate($template);
+.. literalinclude:: table/006.php
 
 .. note:: You'll notice there are two sets of "row" blocks in the
-	template. These permit you to create alternating row colors or design
-	elements that alternate with each iteration of the row data.
+    template. These permit you to create alternating row colors or design
+    elements that alternate with each iteration of the row data.
 
 You are NOT required to submit a complete template. If you only need to
 change parts of the layout you can simply submit those elements. In this
-example, only the table opening tag is being changed::
+example, only the table opening tag is being changed:
 
-	$template = [
-		'table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable">'
-	];
+.. literalinclude:: table/007.php
 
-	$table->setTemplate($template);
-	
 You can also set defaults for these by passing an array of template settings
-to the Table constructor.::
+to the Table constructor:
 
-	$customSettings = [
-		'table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable">'
-	];
+.. literalinclude:: table/008.php
 
-	$table = new \CodeIgniter\View\Table($customSettings);
+.. _table-sync-rows-with-headings:
+
+Synchronizing Rows with Headings
+================================
+
+.. versionadded:: 4.4.0
+
+The ``setSyncRowsWithHeading(true)`` method enables that each data value
+is placed in the same column as defined in ``setHeading()`` if an
+associative array was used as parameter. This is especially useful
+when dealing with data loaded via REST API where the order is not to
+your liking, or if the API returned too much data.
+
+If a data row contains a key that is not present in the heading, its value is
+filtered. Conversely, if a data row does not have a key listed in the heading,
+an empty cell will be placed in its place.
+
+.. literalinclude:: table/019.php
+
+.. important:: You must call ``setSyncRowsWithHeading(true)`` and
+    ``setHeading([...])`` before adding any rows via ``addRow([...])`` where
+    the rearrangement of columns takes place.
+
+Using an array as input to ``generate()`` produces the same result:
+
+.. literalinclude:: table/020.php
 
 
 ***************
 Class Reference
 ***************
 
+.. php:namespace:: CodeIgniter\View
+
 .. php:class:: Table
 
-	.. attribute:: $function = NULL
+    .. attribute:: $function = null
 
-		Allows you to specify a native PHP function or a valid function array object to be applied to all cell data.
-		::
+        Allows you to specify a native PHP function or a valid function array object to be applied to all cell data.
 
-			$table = new \CodeIgniter\View\Table();
+        .. literalinclude:: table/009.php
 
-			$table->setHeading('Name', 'Color', 'Size');
-			$table->addRow('Fred', '<strong>Blue</strong>', 'Small');
+        In the above example, all cell data would be run through PHP's :php:func:`htmlspecialchars()` function, resulting in::
 
-			$table->function = 'htmlspecialchars';
-			echo $table->generate();
+            <td>Fred</td><td>&lt;strong&gt;Blue&lt;/strong&gt;</td><td>Small</td>
 
-		In the above example, all cell data would be ran through PHP's :php:func:`htmlspecialchars()` function, resulting in::
+    .. php:method:: generate([$tableData = null])
 
-			<td>Fred</td><td>&lt;strong&gt;Blue&lt;/strong&gt;</td><td>Small</td>
+        :param    mixed    $tableData: Data to populate the table rows with
+        :returns:    HTML table
+        :rtype:    string
 
-	.. php:method:: generate([$tableData = NULL])
+        Returns a string containing the generated table. Accepts an optional parameter which can be an array or a database result object.
 
-		:param	mixed	$tableData: Data to populate the table rows with
-		:returns:	HTML table
-		:rtype:	string
+    .. php:method:: setCaption($caption)
 
-		Returns a string containing the generated table. Accepts an optional parameter which can be an array or a database result object.
+        :param    string    $caption: Table caption
+        :returns:    Table instance (method chaining)
+        :rtype:    Table
 
-	.. php:method:: setCaption($caption)
+        Permits you to add a caption to the table.
 
-		:param	string	$caption: Table caption
-		:returns:	Table instance (method chaining)
-		:rtype:	Table
+        .. literalinclude:: table/010.php
 
-		Permits you to add a caption to the table.
-		::
+    .. php:method:: setHeading([$args = [] [, ...]])
 
-			$table->setCaption('Colors');
+        :param    mixed    $args: An array or multiple strings containing the table column titles
+        :returns:    Table instance (method chaining)
+        :rtype:    Table
 
-	.. php:method:: setHeading([$args = [] [, ...]])
+        Permits you to set the table heading. You can submit an array or discrete params:
 
-		:param	mixed	$args: An array or multiple strings containing the table column titles
-		:returns:	Table instance (method chaining)
-		:rtype:	Table
+        .. literalinclude:: table/011.php
 
-		Permits you to set the table heading. You can submit an array or discrete params::
+    .. php:method:: setFooting([$args = [] [, ...]])
 
-			$table->setHeading('Name', 'Color', 'Size'); // or
+        :param    mixed    $args: An array or multiple strings containing the table footing values
+        :returns:    Table instance (method chaining)
+        :rtype:    Table
 
-			$table->setHeading(['Name', 'Color', 'Size']);
+        Permits you to set the table footing. You can submit an array or discrete params:
 
-	.. php:method:: setFooting([$args = [] [, ...]])
+        .. literalinclude:: table/012.php
 
-		:param	mixed	$args: An array or multiple strings containing the table footing values
-		:returns:	Table instance (method chaining)
-		:rtype:	Table
+    .. php:method:: addRow([$args = [] [, ...]])
 
-		Permits you to set the table footing. You can submit an array or discrete params::
+        :param    mixed    $args: An array or multiple strings containing the row values
+        :returns:    Table instance (method chaining)
+        :rtype:    Table
 
-			$table->setFooting('Subtotal', $subtotal, $notes); // or
+        Permits you to add a row to your table. You can submit an array or discrete params:
 
-			$table->setFooting(['Subtotal', $subtotal, $notes]);
+        .. literalinclude:: table/013.php
 
-	.. php:method:: addRow([$args = array()[, ...]])
+        If you would like to set an individual cell's tag attributes, you can use an associative array for that cell.
+        The associative key **data** defines the cell's data. Any other key => val pairs are added as key='val' attributes to the tag:
 
-		:param	mixed	$args: An array or multiple strings containing the row values
-		:returns:	Table instance (method chaining)
-		:rtype:	Table
+        .. literalinclude:: table/014.php
 
-		Permits you to add a row to your table. You can submit an array or discrete params::
+    .. php:method:: makeColumns([$array = [] [, $columnLimit = 0]])
 
-			$table->addRow('Blue', 'Red', 'Green'); // or
+        :param    array    $array: An array containing multiple rows' data
+        :param    int    $columnLimit: Count of columns in the table
+        :returns:    An array of HTML table columns
+        :rtype:    array
 
-			$table->addRow(['Blue', 'Red', 'Green']);
+        This method takes a one-dimensional array as input and creates a multi-dimensional array with a depth equal to the number of columns desired.
+        This allows a single array with many elements to be displayed in a table that has a fixed column count. Consider this example:
 
-		If you would like to set an individual cell's tag attributes, you can use an associative array for that cell.
-		The associative key **data** defines the cell's data. Any other key => val pairs are added as key='val' attributes to the tag::
+        .. literalinclude:: table/015.php
 
-			$cell = ['data' => 'Blue', 'class' => 'highlight', 'colspan' => 2];
-			$table->addRow($cell, 'Red', 'Green');
+    .. php:method:: setTemplate($template)
 
-			// generates
-			// <td class='highlight' colspan='2'>Blue</td><td>Red</td><td>Green</td>
+        :param    array    $template: An associative array containing template values
+        :returns:    true on success, false on failure
+        :rtype:    bool
 
-	.. php:method:: makeColumns([$array = [] [, $columnLimit = 0]])
+        Permits you to set your template. You can submit a full or partial template.
 
-		:param	array	$array: An array containing multiple rows' data
-		:param	int	$columnLimit: Count of columns in the table
-		:returns:	An array of HTML table columns
-		:rtype:	array
+        .. literalinclude:: table/016.php
 
-		This method takes a one-dimensional array as input and creates a multi-dimensional array with a depth equal to the number of columns desired.
-		This allows a single array with many elements to be displayed in a table that has a fixed column count. Consider this example::
+    .. php:method:: setEmpty($value)
 
-			$list = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
+        :param    mixed    $value: Value to put in empty cells
+        :returns:    Table instance (method chaining)
+        :rtype:    Table
 
-			$newList = $table->makeColumns($list, 3);
+        Lets you set a default value for use in any table cells that are empty.
+        You might, for example, set a non-breaking space:
 
-			$table->generate($newList);
+        .. literalinclude:: table/017.php
 
-			// Generates a table with this prototype
+    .. php:method:: clear()
 
-			<table border="0" cellpadding="4" cellspacing="0">
-			<tr>
-			<td>one</td><td>two</td><td>three</td>
-			</tr><tr>
-			<td>four</td><td>five</td><td>six</td>
-			</tr><tr>
-			<td>seven</td><td>eight</td><td>nine</td>
-			</tr><tr>
-			<td>ten</td><td>eleven</td><td>twelve</td></tr>
-			</table>
+        :returns:    Table instance (method chaining)
+        :rtype:    Table
 
+        Lets you clear the table heading, row data and caption. If
+        you need to show multiple tables with different data you
+        should call this method after each table has been
+        generated to clear the previous table information.
 
-	.. php:method:: setTemplate($template)
+        Example
 
-		:param	array	$template: An associative array containing template values
-		:returns:	TRUE on success, FALSE on failure
-		:rtype:	bool
+        .. literalinclude:: table/018.php
+    
+    .. php:method:: setSyncRowsWithHeading(bool $orderByKey)
 
-		Permits you to set your template. You can submit a full or partial template.
-		::
+        :returns:   Table instance (method chaining)
+        :rtype:     Table
 
-			$template = [
-				'table_open'  => '<table border="1" cellpadding="2" cellspacing="1" class="mytable">'
-			];
-		
-			$table->setTemplate($template);
-
-	.. php:method:: setEmpty($value)
-
-		:param	mixed	$value: Value to put in empty cells
-		:returns:	Table instance (method chaining)
-		:rtype:	Table
-
-		Lets you set a default value for use in any table cells that are empty.
-		You might, for example, set a non-breaking space::
-
-			$table->setEmpty("&nbsp;");
-
-	.. php:method:: clear()
-
-		:returns:	Table instance (method chaining)
-		:rtype:	Table
-
-		Lets you clear the table heading, row data and caption. If
-		you need to show multiple tables with different data you
-		should to call this method after each table has been
-		generated to clear the previous table information.
-
-		Example ::
-
-			$table = new \CodeIgniter\View\Table();
-
-
-			$table->setCaption('Preferences')
-                            ->setHeading('Name', 'Color', 'Size')
-                            ->addRow('Fred', 'Blue', 'Small')
-                            ->addRow('Mary', 'Red', 'Large')
-                            ->addRow('John', 'Green', 'Medium');
-
-			echo $table->generate();
-
-			$table->clear();
-
-			$table->setCaption('Shipping')
-                            ->setHeading('Name', 'Day', 'Delivery')
-                            ->addRow('Fred', 'Wednesday', 'Express')
-                            ->addRow('Mary', 'Monday', 'Air')
-                            ->addRow('John', 'Saturday', 'Overnight');
-
-			echo $table->generate();
+        Enables each row data key to be ordered by heading keys. This gives
+        more control of data being displaced in the correct column. Make
+        sure to set this value before calling the first ``addRow()`` method.

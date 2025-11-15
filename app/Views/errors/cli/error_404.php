@@ -1,4 +1,5 @@
 <?php
+
 use CodeIgniter\CLI\CLI;
 
 CLI::error('ERROR: ' . $code);

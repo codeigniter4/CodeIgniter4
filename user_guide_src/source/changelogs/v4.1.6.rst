@@ -1,0 +1,73 @@
+Version 4.1.6
+#############
+
+Release Date: January 3, 2022
+
+**4.1.6 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+SECURITY
+********
+
+- *Deserialization of Untrusted Data* found in the ``old()`` function was fixed. See the `Security advisory <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-w6jr-wj64-mc9x>`_ for more information.
+
+BREAKING
+********
+
+- Multiple table names will no longer be stored in ``BaseBuilder::$tableName`` - an empty string will be used instead.
+
+.. _changelog-v416-validation-changes:
+
+Validation changes
+==================
+
+- The previous version of the Validation can't handle an array item.
+  Because of the bug fix, the validation results may be different,
+  or raise a ``TypeError``.
+  But the previous version's results are probably incorrect.
+- The Validation separated the validation process of multiple field
+  like ``contacts.*.name`` and single field.
+  When a single field has an array data, the previous version validates each element of the array.
+  The validation rule gets an element of the array as the parameter.
+  On the other hand, the current version passes the array to the validation rule as a whole.
+
+Enhancements
+************
+
+- Full support for PHP 8.1.
+- Database pane on debug toolbar now displays location where Query was called from. Also displays full backtrace.
+- :ref:`Subqueries <query-builder-where-subquery>` in QueryBuilder can now be an instance of the BaseBuilder class.
+- Kint was updated from ^3.3 to ^4.0.
+
+Changes
+*******
+
+- The process of sending cookies has been moved to the ``Response`` class. Now the ``Security`` and ``CookieStore`` class don't send cookies, set them to the Response.
+
+Deprecations
+************
+
+- ``Seeder::faker()`` and ``Seeder::$faker`` are deprecated.
+- ``BaseBuilder::cleanClone()`` is deprecated.
+
+Sending Cookies
+===============
+
+The process of sending cookies has been moved to the ``Response`` class.
+And the following methods are deprecated:
+
+- ``CookieStore::dispatch()``
+- ``CookieStore::setRawCookie()``
+- ``CookieStore::setCookie()``
+- ``Security::sendCookie()``
+- ``Security::doSendCookie()``
+
+Bugs Fixed
+**********
+
+See the repo's
+`CHANGELOG_4.1.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.1.md>`_
+for a complete list of bugs fixed.

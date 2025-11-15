@@ -89,9 +89,7 @@ if [ -d dist ]; then
 fi
 mkdir dist
 
-setup_repo framework
 setup_repo userguide
-setup_repo appstarter
 
 #---------------------------------------------------
 # Housekeeping - make sure writable is flushed of test files
@@ -139,9 +137,7 @@ git commit -S -m "Release ${RELEASE}"
 #---------------------------------------------------
 # Build the distributables
 
-. admin/release-framework
 . admin/release-userguide
-. admin/release-appstarter
 
 #---------------------------------------------------
 # Done for now

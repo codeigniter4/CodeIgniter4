@@ -18,7 +18,7 @@ mkdir -p build/api/docs
 cd build/api
 git init
 git remote add origin $UPSTREAM
-git fetch 
+git fetch
 git checkout master
 git reset --hard origin/master
 rm -r docs/*

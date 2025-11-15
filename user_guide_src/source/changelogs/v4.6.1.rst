@@ -1,0 +1,42 @@
+#############
+Version 4.6.1
+#############
+
+Release Date: May 2, 2025
+
+**4.6.1 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+*******
+Changes
+*******
+- **Mimes**: Added the ``model/stl`` and ``application/octet-stream`` mime types for the ``stl`` extension inside the ``Config\Mimes`` class.
+
+************
+Deprecations
+************
+
+- **Cache:** The ``FileHandler::writeFile()`` method is deprecated. Use ``write_file()`` instead.
+- **Cache:** The ``FileHandler::deleteFiles()`` method is deprecated. Use ``delete_files()`` instead.
+- **Cache:** The ``FileHandler::getDirFileInfo()`` method is deprecated. Use ``get_dir_file_info()`` instead.
+- **Cache:** The ``FileHandler::getFileInfo()`` method is deprecated. Use ``get_file_info()`` instead.
+
+**********
+Bugs Fixed
+**********
+
+- **CURLRequest:** Fixed an issue where multiple header sections appeared in the CURL response body during multiple redirects from the target server.
+- **Cors:** Fixed a bug in the Cors filter that caused the appropriate headers to not be added when another filter returned a response object in the ``before`` filter.
+- **Database:** Fixed a bug in ``Postgre`` and ``SQLite3`` handlers where composite unique keys were not fully taken into account for ``upsert`` type of queries.
+- **Database:** Fixed a bug in the ``OCI8`` and ``SQLSRV`` drivers where ``getVersion()`` returned an empty string when the database connection was not yet established.
+- **Logger:** Fixed a bug where the ``{line}`` variable couldn't be used without specifying the ``{file}`` variable when logging the message.
+- **Session:** Fixed a bug where ``Session::markAsTempdata()`` would give the wrong TTL when array data is supplied to ``Session::setTempdata()``.
+- **Toolbar:** Fixed a bug where setting ``maxHistory`` to ``0`` would produce a JavaScript error in the Debug Toolbar.
+- **Toolbar:** Fixed a bug where setting ``maxHistory`` to ``0`` prevented log files from being properly cleared.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

@@ -12,6 +12,7 @@ General Topics
     logging
     errors
     caching
+    ajax
     modules
     managing_apps
     environments

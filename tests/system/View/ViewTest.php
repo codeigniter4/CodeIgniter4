@@ -1,334 +1,416 @@
 <?php
 
-use CodeIgniter\View\View;
+declare(strict_types=1);
 
-class ViewTest extends \CIUnitTestCase
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\View;
+
+use CodeIgniter\Autoloader\FileLocatorInterface;
+use CodeIgniter\Exceptions\RuntimeException;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\View\Exceptions\ViewException;
+use Config;
+use PHPUnit\Framework\Attributes\Group;
+
+/**
+ * @internal
+ */
+#[Group('Others')]
+final class ViewTest extends CIUnitTestCase
 {
+    private FileLocatorInterface $loader;
+    private string $viewsDir;
+    private Config\View $config;
 
-	protected $loader;
-	protected $viewsDir;
-	protected $config;
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-	//--------------------------------------------------------------------
+        $this->loader   = service('locator');
+        $this->viewsDir = __DIR__ . '/Views';
+        $this->config   = new Config\View();
+    }
 
-	protected function setUp()
-	{
-		parent::setUp();
+    public function testSetVarStoresData(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$this->loader   = \CodeIgniter\Config\Services::locator();
-		$this->viewsDir = __DIR__ . '/Views';
-		$this->config   = new Config\View();
-	}
+        $view->setVar('foo', 'bar');
 
-	//--------------------------------------------------------------------
+        $this->assertSame(['foo' => 'bar'], $view->getData());
+    }
 
-	public function testSetVarStoresData()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+    public function testSetVarOverwrites(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$view->setVar('foo', 'bar');
+        $view->setVar('foo', 'bar');
+        $view->setVar('foo', 'baz');
 
-		$this->assertEquals(['foo' => 'bar'], $view->getData());
-	}
+        $this->assertSame(['foo' => 'baz'], $view->getData());
+    }
 
-	public function testSetVarOverwrites()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+    public function testSetDataStoresValue(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$view->setVar('foo', 'bar');
-		$view->setVar('foo', 'baz');
+        $expected = [
+            'foo' => 'bar',
+            'bar' => 'baz',
+        ];
 
-		$this->assertEquals(['foo' => 'baz'], $view->getData());
-	}
+        $view->setData($expected);
 
-	//--------------------------------------------------------------------
+        $this->assertSame($expected, $view->getData());
+    }
 
-	public function testSetDataStoresValue()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+    public function testSetDataMergesData(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$expected = [
-			'foo' => 'bar',
-			'bar' => 'baz',
-		];
+        $expected = [
+            'fee' => 'fi',
+            'foo' => 'bar',
+            'bar' => 'baz',
+        ];
 
-		$view->setData($expected);
+        $view->setVar('fee', 'fi');
+        $view->setData([
+            'foo' => 'bar',
+            'bar' => 'baz',
+        ]);
 
-		$this->assertEquals($expected, $view->getData());
-	}
+        $this->assertSame($expected, $view->getData());
+    }
 
-	public function testSetDataMergesData()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+    public function testSetDataOverwritesData(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$expected = [
-			'fee' => 'fi',
-			'foo' => 'bar',
-			'bar' => 'baz',
-		];
+        $expected = [
+            'foo' => 'bar',
+            'bar' => 'baz',
+        ];
 
-		$view->setVar('fee', 'fi');
-		$view->setData([
-			'foo' => 'bar',
-			'bar' => 'baz',
-		]);
+        $view->setVar('foo', 'fi');
+        $view->setData([
+            'foo' => 'bar',
+            'bar' => 'baz',
+        ]);
 
-		$this->assertEquals($expected, $view->getData());
-	}
+        $this->assertSame($expected, $view->getData());
+    }
 
-	public function testSetDataOverwritesData()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+    public function testSetVarWillEscape(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$expected = [
-			'foo' => 'bar',
-			'bar' => 'baz',
-		];
+        $view->setVar('foo', 'bar&', 'html');
 
-		$view->setVar('foo', 'fi');
-		$view->setData([
-			'foo' => 'bar',
-			'bar' => 'baz',
-		]);
+        $this->assertSame(['foo' => 'bar&amp;'], $view->getData());
+    }
 
-		$this->assertEquals($expected, $view->getData());
-	}
+    public function testSetDataWillEscapeAll(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-	//--------------------------------------------------------------------
+        $expected = [
+            'foo' => 'bar&amp;',
+            'bar' => 'baz&lt;',
+        ];
 
-	public function testSetVarWillEscape()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+        $view->setData([
+            'foo' => 'bar&',
+            'bar' => 'baz<',
+        ], 'html');
 
-		$view->setVar('foo', 'bar&', 'html');
+        $this->assertSame($expected, $view->getData());
+    }
 
-		$this->assertEquals(['foo' => 'bar&amp;'], $view->getData());
-	}
+    public function testRenderFindsView(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-	public function testSetDataWillEscapeAll()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+        $view->setVar('testString', 'Hello World');
+        $expected = '<h1>Hello World</h1>';
 
-		$expected = [
-			'foo' => 'bar&amp;',
-			'bar' => 'baz&lt;',
-		];
+        $this->assertStringContainsString($expected, $view->render('simple'));
+    }
 
-		$view->setData([
-			'foo' => 'bar&',
-			'bar' => 'baz<',
-		], 'html');
+    public function testRenderString(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$this->assertEquals($expected, $view->getData());
-	}
+        $view->setVar('testString', 'Hello World');
+        $expected = '<h1>Hello World</h1>';
 
-	//--------------------------------------------------------------------
+        $this->assertSame($expected, $view->renderString('<h1><?= $testString ?></h1>'));
+    }
 
-	public function testRenderFindsView()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+    public function testRenderStringNullTempdata(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
+        $this->assertSame('test string', $view->renderString('test string'));
+    }
 
-		$view->setVar('testString', 'Hello World');
-		$expected = '<h1>Hello World</h1>';
+    public function testRendersThrowsExceptionIfFileNotFound(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$this->assertContains($expected, $view->render('simple'));
-	}
+        $this->expectException(ViewException::class);
+        $view->setVar('testString', 'Hello World');
 
-	//--------------------------------------------------------------------
+        $view->render('missing');
+    }
 
-	public function testRenderString()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+    public function testRenderScrapsData(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$view->setVar('testString', 'Hello World');
-		$expected = '<h1>Hello World</h1>';
+        $view->setVar('testString', 'Hello World');
+        $view->render('simple', null, false);
 
-		$this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>'));
-	}
+        $this->assertEmpty($view->getData());
+    }
 
-	//--------------------------------------------------------------------
+    public function testRenderCanSaveData(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-	public function testRendersThrowsExceptionIfFileNotFound()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+        $view->setVar('testString', 'Hello World');
+        $view->render('simple', null, true);
 
-		$this->expectException(\CodeIgniter\View\Exceptions\ViewException::class);
-		$view->setVar('testString', 'Hello World');
+        $expected = ['testString' => 'Hello World'];
 
-		$view->render('missing');
-	}
+        $this->assertSame($expected, $view->getData());
+    }
 
-	//--------------------------------------------------------------------
+    public function testRenderCanSaveDataThroughConfigSetting(): void
+    {
+        $this->config->saveData = true;
 
-	public function testRenderScrapsData()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$view->setVar('testString', 'Hello World');
-		$view->render('simple', null, false);
+        $view->setVar('testString', 'Hello World');
+        $view->render('simple');
 
-		$this->assertEmpty($view->getData());
-	}
+        $expected = ['testString' => 'Hello World'];
 
-	//--------------------------------------------------------------------
+        $this->assertSame($expected, $view->getData());
+    }
 
-	public function testRenderCanSaveData()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+    public function testCanDeleteData(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$view->setVar('testString', 'Hello World');
-		$view->render('simple', null, true);
+        $view->setVar('testString', 'Hello World');
+        $view->render('simple', null, true);
 
-		$expected = ['testString' => 'Hello World'];
+        $view->resetData();
 
-		$this->assertEquals($expected, $view->getData());
-	}
+        $this->assertSame([], $view->getData());
+    }
 
-	public function testRenderCanSaveDataThroughConfigSetting()
-	{
-		$this->config->saveData = true;
+    public function testCachedRender(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+        $view->setVar('testString', 'Hello World');
+        $expected = '<h1>Hello World</h1>';
 
-		$view->setVar('testString', 'Hello World');
-		$view->render('simple');
+        $this->assertStringContainsString($expected, $view->render('simple', ['cache' => 10]));
+        // this second renderings should go thru the cache
+        $this->assertStringContainsString($expected, $view->render('simple', ['cache' => 10]));
+    }
 
-		$expected = ['testString' => 'Hello World'];
+    public function testRenderStringSavingData(): void
+    {
+        $view     = new View($this->config, $this->viewsDir, $this->loader);
+        $expected = '<h1>Hello World</h1>';
 
-		$this->assertEquals($expected, $view->getData());
-	}
+        // I think saveData is sava current data, is not clean already set data.
+        $view->setVar('testString', 'Hello World');
+        $this->assertSame($expected, $view->renderString('<h1><?= $testString ?></h1>', [], false));
+        $this->assertArrayNotHasKey('testString', $view->getData());
 
-	//--------------------------------------------------------------------
+        $view->setVar('testString', 'Hello World');
+        $this->assertSame($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
+        $this->assertArrayHasKey('testString', $view->getData());
+    }
 
-	public function testCanDeleteData()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+    public function testPerformanceLogging(): void
+    {
+        // Make sure debugging is on for our view
+        $view = new View($this->config, $this->viewsDir, $this->loader, true);
+        $this->assertCount(0, $view->getPerformanceData());
 
-		$view->setVar('testString', 'Hello World');
-		$view->render('simple', null, true);
+        $view->setVar('testString', 'Hello World');
+        $expected = '<h1>Hello World</h1>';
+        $this->assertSame($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
+        $this->assertCount(1, $view->getPerformanceData());
+    }
 
-		$view->resetData();
+    public function testPerformanceNonLogging(): void
+    {
+        // Make sure debugging is on for our view
+        $view = new View($this->config, $this->viewsDir, $this->loader, false);
+        $this->assertCount(0, $view->getPerformanceData());
 
-		$this->assertEquals([], $view->getData());
-	}
+        $view->setVar('testString', 'Hello World');
+        $expected = '<h1>Hello World</h1>';
+        $this->assertSame($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
+        $this->assertCount(0, $view->getPerformanceData());
+    }
 
-	//--------------------------------------------------------------------
+    public function testRenderLayoutExtendsCorrectly(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-	public function testCachedRender()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+        $view->setVar('testString', 'Hello World');
+        $expected = "<p>Open</p>\n<h1>Hello World</h1>";
 
-		$view->setVar('testString', 'Hello World');
-		$expected = '<h1>Hello World</h1>';
+        $this->assertStringContainsString($expected, $view->render('extend'));
+    }
 
-		$this->assertContains($expected, $view->render('simple', ['cache' => 10]));
-		// this second renderings should go thru the cache
-		$this->assertContains($expected, $view->render('simple', ['cache' => 10]));
-	}
+    public function testRenderLayoutExtendsMultipleCalls(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-	//--------------------------------------------------------------------
+        $view->setVar('testString', 'Hello World');
+        $expected = "<p>Open</p>\n<h1>Hello World</h1>\n<p>Hello World</p>";
 
-	public function testRenderStringSavingData()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+        $view->render('extend');
 
-		$view->setVar('testString', 'Hello World');
-		$expected = '<h1>Hello World</h1>';
-		$this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
-		$this->assertArrayHasKey('testString', $view->getData());
-		$this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>', [], false));
-		$this->assertArrayNotHasKey('testString', $view->getData());
-	}
+        $this->assertStringContainsString($expected, $view->render('extend'));
+    }
 
-	//--------------------------------------------------------------------
+    public function testRenderLayoutMakesDataAvailableToBoth(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-	public function testPerformanceLogging()
-	{
-		// Make sure debugging is on for our view
-		$view = new View($this->config, $this->viewsDir, $this->loader, true);
-		$this->assertEquals(0, count($view->getPerformanceData()));
+        $view->setVar('testString', 'Hello World');
+        $expected = "<p>Open</p>\n<h1>Hello World</h1>\n<p>Hello World</p>";
 
-		$view->setVar('testString', 'Hello World');
-		$expected = '<h1>Hello World</h1>';
-		$this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
-		$this->assertEquals(1, count($view->getPerformanceData()));
-	}
+        $this->assertStringContainsString($expected, $view->render('extend'));
+    }
 
-	public function testPerformanceNonLogging()
-	{
-		// Make sure debugging is on for our view
-		$view = new View($this->config, $this->viewsDir, $this->loader, false);
-		$this->assertEquals(0, count($view->getPerformanceData()));
+    public function testRenderLayoutSupportsMultipleOfSameSection(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$view->setVar('testString', 'Hello World');
-		$expected = '<h1>Hello World</h1>';
-		$this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
-		$this->assertEquals(0, count($view->getPerformanceData()));
-	}
+        $view->setVar('testString', 'Hello World');
+        $expected = "<p>First</p>\n<p>Second</p>";
 
-	public function testRenderLayoutExtendsCorrectly()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+        $this->assertStringContainsString($expected, $view->render('extend_two'));
+    }
 
-		$view->setVar('testString', 'Hello World');
-		$expected = "<p>Open</p>\n<h1>Hello World</h1>";
+    public function testRenderLayoutWithInclude(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$this->assertContains($expected, $view->render('extend'));
-	}
+        $view->setVar('testString', 'Hello World');
 
-	public function testRenderLayoutMakesDataAvailableToBoth()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+        $content = $view->render('extend_include');
 
-		$view->setVar('testString', 'Hello World');
-		$expected = "<p>Open</p>\n<h1>Hello World</h1>\n<p>Hello World</p>";
+        $this->assertStringContainsString('<p>Open</p>', $content);
+        $this->assertStringContainsString('<h1>Hello World</h1>', $content);
+        $this->assertSame(2, substr_count($content, 'Hello World'));
+    }
 
-		$this->assertContains($expected, $view->render('extend'));
-	}
+    public function testRenderLayoutBroken(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-	public function testRenderLayoutSupportsMultipleOfSameSection()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+        $view->setVar('testString', 'Hello World');
+        $expected = '';
 
-		$view->setVar('testString', 'Hello World');
-		$expected = "<p>First</p>\n<p>Second</p>";
+        $this->expectException(RuntimeException::class);
+        $this->assertStringContainsString($expected, $view->render('broken'));
+    }
 
-		$this->assertContains($expected, $view->render('extend_two'));
-	}
+    public function testRenderLayoutNoContentSection(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-	public function testRenderLayoutWithInclude()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+        $view->setVar('testString', 'Hello World');
+        $expected = '';
 
-		$view->setVar('testString', 'Hello World');
-		$expected = "<p>Open</p>\n<h1>Hello World</h1>";
+        $this->assertStringContainsString($expected, $view->render('apples'));
+    }
 
-		$content = $view->render('extend_include');
+    public function testRenderSaveDataCover(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
+        $this->setPrivateProperty($view, 'saveData', true);
+        $view->setVar('testString', 'test');
+        $view->render('simple', null, false);
+        $this->assertTrue($this->getPrivateProperty($view, 'saveData'));
+    }
 
-		$this->assertTrue(strpos($content, '<p>Open</p>') !== false);
-		$this->assertTrue(strpos($content, '<h1>Hello World</h1>') !== false);
-		$this->assertEquals(2, substr_count($content, 'Hello World'));
-	}
+    public function testRenderSaveDataUseAfterSaveDataFalse(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
+        $view->setVar('testString', 'test');
+        $view->render('simple', null, true);
+        $view->render('simple', null, false);
+        $this->assertStringContainsString('<h1>test</h1>', $view->render('simple', null, false));
+    }
 
-	public function testRenderLayoutBroken()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+    public function testCachedAutoDiscoverAndRender(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$view->setVar('testString', 'Hello World');
-		$expected = '';
+        $view->setVar('testString', 'Hello World');
+        $expected = '<h1>Hello World</h1>';
 
-		$this->expectException(\RuntimeException::class);
-		$this->assertContains($expected, $view->render('broken'));
-	}
+        $this->assertStringContainsString($expected, $view->render('Nested/simple', ['cache' => 10]));
+        // this second renderings should go thru the cache
+        $this->assertStringContainsString($expected, $view->render('Nested/simple', ['cache' => 10]));
+    }
 
-	public function testRenderLayoutNoContentSection()
-	{
-		$view = new View($this->config, $this->viewsDir, $this->loader);
+    public function testRenderNestedSections(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$view->setVar('testString', 'Hello World');
-		$expected = '';
+        $view->setVar('testString', 'Hello World');
 
-		$this->assertContains($expected, $view->render('apples'));
-	}
+        $content = $view->render('nested_section');
 
+        $this->assertStringContainsString('<p>First</p>', $content);
+        $this->assertStringContainsString('<p>Second</p>', $content);
+        $this->assertStringContainsString('<p>Third</p>', $content);
+    }
+
+    public function testRenderSectionReturnsEmptyStringToNonExistentSection(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
+
+        $this->assertSame('', $view->renderSection('does_not_exist'));
+    }
+
+    public function testRenderSectionSavingData(): void
+    {
+        $view     = new View($this->config, $this->viewsDir, $this->loader);
+        $expected = "<title>Welcome to CodeIgniter 4!</title>\n<h1>Welcome to CodeIgniter 4!</h1>\n<p>Hello World</p>";
+
+        $view->setVar('pageTitle', 'Welcome to CodeIgniter 4!');
+        $view->setVar('testString', 'Hello World');
+        $this->assertStringContainsString($expected, $view->render('extend_reuse_section'));
+    }
+
+    public function testViewExcerpt(): void
+    {
+        $view = new View($this->config, $this->viewsDir, $this->loader);
+
+        $this->assertSame('CodeIgniter is a PHP full-stack web framework...', $view->excerpt('CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.', 48));
+        $this->assertSame('CodeIgniter - это полнофункциональный веб-фреймворк...', $view->excerpt('CodeIgniter - это полнофункциональный веб-фреймворк на PHP, который является легким, быстрым, гибким и безопасным.', 54));
+    }
 }

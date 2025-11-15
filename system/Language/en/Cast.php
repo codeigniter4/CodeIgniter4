@@ -1,23 +1,25 @@
 <?php
+
+declare(strict_types=1);
+
 /**
- * Cast language strings.
+ * This file is part of CodeIgniter 4 framework.
  *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * @codeCoverageIgnore
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
+// Cast language settings
 return [
-   'jsonErrorDepth'         => 'Maximum stack depth exceeded',
-   'jsonErrorStateMismatch' => 'Underflow or the modes mismatch',
-   'jsonErrorCtrlChar'      => 'Unexpected control character found',
-   'jsonErrorSyntax'        => 'Syntax error, malformed JSON',
-   'jsonErrorUtf8'          => 'Malformed UTF-8 characters, possibly incorrectly encoded',
-   'jsonErrorUnknown'       => 'Unknown error',
+    'baseCastMissing'        => 'The "{0}" class must inherit the "CodeIgniter\Entity\Cast\BaseCast" class.',
+    'invalidCastMethod'      => 'The "{0}" is invalid cast method, valid methods are: ["get", "set"].',
+    'invalidTimestamp'       => 'Type casting "timestamp" expects a correct timestamp.',
+    'jsonErrorCtrlChar'      => 'Unexpected control character found.',
+    'jsonErrorDepth'         => 'Maximum stack depth exceeded.',
+    'jsonErrorStateMismatch' => 'Underflow or the modes mismatch.',
+    'jsonErrorSyntax'        => 'Syntax error, malformed JSON.',
+    'jsonErrorUnknown'       => 'Unknown error.',
+    'jsonErrorUtf8'          => 'Malformed UTF-8 characters, possibly incorrectly encoded.',
 ];

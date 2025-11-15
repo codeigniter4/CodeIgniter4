@@ -1,191 +1,234 @@
-<?php namespace Builder;
+<?php
+
+declare(strict_types=1);
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
-use Tests\Support\Database\MockConnection;
+use CodeIgniter\Database\RawSql;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockConnection;
+use PHPUnit\Framework\Attributes\Group;
 
-class LikeTest extends \CIUnitTestCase
+/**
+ * @internal
+ */
+#[Group('Others')]
+final class LikeTest extends CIUnitTestCase
 {
-	protected $db;
+    protected $db;
 
-	//--------------------------------------------------------------------
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-	protected function setUp()
-	{
-		parent::setUp();
+        $this->db = new MockConnection([]);
+    }
 
-		$this->db = new MockConnection([]);
-	}
+    public function testSimpleLike(): void
+    {
+        $builder = new BaseBuilder('job', $this->db);
 
-	//--------------------------------------------------------------------
+        $builder->like('name', 'veloper');
 
-	public function testSimpleLike()
-	{
-		$builder = new BaseBuilder('job', $this->db);
+        $expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE '%veloper%' ESCAPE '!'";
+        $expectedBinds = [
+            'name' => [
+                '%veloper%',
+                true,
+            ],
+        ];
 
-		$builder->like('name', 'veloper');
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE '%veloper%' ESCAPE '!'";
-		$expectedBinds = [
-			'name' => [
-				'%veloper%',
-				true,
-			],
-		];
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/3970
+     */
+    public function testLikeWithRawSql(): void
+    {
+        $builder = new BaseBuilder('users', $this->db);
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-		$this->assertSame($expectedBinds, $builder->getBinds());
-	}
+        $sql    = "concat(users.name, ' ', IF(users.surname IS NULL or users.surname = '', '', users.surname))";
+        $rawSql = new RawSql($sql);
+        $builder->like($rawSql, 'value', 'both');
 
-	//--------------------------------------------------------------------
+        $expectedSQL   = "SELECT * FROM \"users\" WHERE  {$sql}  LIKE '%value%' ESCAPE '!' ";
+        $expectedBinds = [
+            $rawSql->getBindingKey() => [
+                '%value%',
+                true,
+            ],
+        ];
 
-	public function testLikeNoSide()
-	{
-		$builder = new BaseBuilder('job', $this->db);
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
 
-		$builder->like('name', 'veloper', 'none');
+    public function testLikeNoSide(): void
+    {
+        $builder = new BaseBuilder('job', $this->db);
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE 'veloper' ESCAPE '!'";
-		$expectedBinds = [
-			'name' => [
-				'veloper',
-				true,
-			],
-		];
+        $builder->like('name', 'veloper', 'none');
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-		$this->assertSame($expectedBinds, $builder->getBinds());
-	}
+        $expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE 'veloper' ESCAPE '!'";
+        $expectedBinds = [
+            'name' => [
+                'veloper',
+                true,
+            ],
+        ];
 
-	//--------------------------------------------------------------------
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
 
-	public function testLikeBeforeOnly()
-	{
-		$builder = new BaseBuilder('job', $this->db);
+    public function testLikeBeforeOnly(): void
+    {
+        $builder = new BaseBuilder('job', $this->db);
 
-		$builder->like('name', 'veloper', 'before');
+        $builder->like('name', 'veloper', 'before');
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE '%veloper' ESCAPE '!'";
-		$expectedBinds = [
-			'name' => [
-				'%veloper',
-				true,
-			],
-		];
+        $expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE '%veloper' ESCAPE '!'";
+        $expectedBinds = [
+            'name' => [
+                '%veloper',
+                true,
+            ],
+        ];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-		$this->assertSame($expectedBinds, $builder->getBinds());
-	}
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
 
-	//--------------------------------------------------------------------
+    public function testLikeAfterOnly(): void
+    {
+        $builder = new BaseBuilder('job', $this->db);
 
-	public function testLikeAfterOnly()
-	{
-		$builder = new BaseBuilder('job', $this->db);
+        $builder->like('name', 'veloper', 'after');
 
-		$builder->like('name', 'veloper', 'after');
+        $expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE 'veloper%' ESCAPE '!'";
+        $expectedBinds = [
+            'name' => [
+                'veloper%',
+                true,
+            ],
+        ];
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE 'veloper%' ESCAPE '!'";
-		$expectedBinds = [
-			'name' => [
-				'veloper%',
-				true,
-			],
-		];
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-		$this->assertSame($expectedBinds, $builder->getBinds());
-	}
+    public function testOrLike(): void
+    {
+        $builder = new BaseBuilder('job', $this->db);
 
-	//--------------------------------------------------------------------
+        $builder->like('name', 'veloper')->orLike('name', 'ian');
 
-	public function testOrLike()
-	{
-		$builder = new BaseBuilder('job', $this->db);
+        $expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE '%veloper%' ESCAPE '!' OR  \"name\" LIKE '%ian%' ESCAPE '!'";
+        $expectedBinds = [
+            'name' => [
+                '%veloper%',
+                true,
+            ],
+            'name.1' => [
+                '%ian%',
+                true,
+            ],
+        ];
 
-		$builder->like('name', 'veloper')->orLike('name', 'ian');
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE '%veloper%' ESCAPE '!' OR  \"name\" LIKE '%ian%' ESCAPE '!'";
-		$expectedBinds = [
-			'name'  => [
-				'%veloper%',
-				true,
-			],
-			'name0' => [
-				'%ian%',
-				true,
-			],
-		];
+    public function testNotLike(): void
+    {
+        $builder = new BaseBuilder('job', $this->db);
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-		$this->assertSame($expectedBinds, $builder->getBinds());
-	}
+        $builder->notLike('name', 'veloper');
 
-	//--------------------------------------------------------------------
+        $expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" NOT LIKE '%veloper%' ESCAPE '!'";
+        $expectedBinds = [
+            'name' => [
+                '%veloper%',
+                true,
+            ],
+        ];
 
-	public function testNotLike()
-	{
-		$builder = new BaseBuilder('job', $this->db);
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
 
-		$builder->notLike('name', 'veloper');
+    public function testOrNotLike(): void
+    {
+        $builder = new BaseBuilder('job', $this->db);
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" NOT LIKE '%veloper%' ESCAPE '!'";
-		$expectedBinds = [
-			'name' => [
-				'%veloper%',
-				true,
-			],
-		];
+        $builder->like('name', 'veloper')->orNotLike('name', 'ian');
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-		$this->assertSame($expectedBinds, $builder->getBinds());
-	}
+        $expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE '%veloper%' ESCAPE '!' OR  \"name\" NOT LIKE '%ian%' ESCAPE '!'";
+        $expectedBinds = [
+            'name' => [
+                '%veloper%',
+                true,
+            ],
+            'name.1' => [
+                '%ian%',
+                true,
+            ],
+        ];
 
-	//--------------------------------------------------------------------
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
 
-	public function testOrNotLike()
-	{
-		$builder = new BaseBuilder('job', $this->db);
+    public function testCaseInsensitiveLike(): void
+    {
+        $builder = new BaseBuilder('job', $this->db);
 
-		$builder->like('name', 'veloper')->orNotLike('name', 'ian');
+        $builder->like('name', 'VELOPER', 'both', null, true);
 
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE '%veloper%' ESCAPE '!' OR  \"name\" NOT LIKE '%ian%' ESCAPE '!'";
-		$expectedBinds = [
-			'name'  => [
-				'%veloper%',
-				true,
-			],
-			'name0' => [
-				'%ian%',
-				true,
-			],
-		];
+        $expectedSQL   = "SELECT * FROM \"job\" WHERE LOWER(\"name\") LIKE '%veloper%' ESCAPE '!'";
+        $expectedBinds = [
+            'name' => [
+                '%veloper%',
+                true,
+            ],
+        ];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-		$this->assertSame($expectedBinds, $builder->getBinds());
-	}
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5775
+     */
+    public function testDBPrefixAndCoulmnWithTablename(): void
+    {
+        $this->db = new MockConnection(['DBPrefix' => 'db_']);
+        $builder  = new BaseBuilder('test', $this->db);
 
-	/**
-	 * @group single
-	 */
-	public function testCaseInsensitiveLike()
-	{
-		$builder = new BaseBuilder('job', $this->db);
+        $builder->like('test.field', 'string');
 
-		$builder->like('name', 'VELOPER', 'both', null, true);
-
-		$expectedSQL   = "SELECT * FROM \"job\" WHERE LOWER(name) LIKE '%veloper%' ESCAPE '!'";
-		$expectedBinds = [
-			'name' => [
-				'%veloper%',
-				true,
-			],
-		];
-
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-		$this->assertSame($expectedBinds, $builder->getBinds());
-	}
-
-	//--------------------------------------------------------------------
+        $expectedSQL = <<<'SQL'
+            SELECT * FROM "db_test" WHERE "db_test"."field" LIKE '%string%' ESCAPE '!'
+            SQL;
+        $expectedBinds = [
+            'test.field' => [
+                '%string%',
+                true,
+            ],
+        ];
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
 }

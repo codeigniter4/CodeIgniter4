@@ -1,0 +1,352 @@
+#############
+Version 4.6.0
+#############
+
+Release Date: January 19, 2025
+
+**4.6.0 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+********
+BREAKING
+********
+
+Behavior Changes
+================
+
+.. _v460-behavior-changes-exceptions:
+
+Exceptions
+----------
+
+The exception class has been redesigned. See :ref:`exception-design` for details.
+The following breaking changes have been made accordingly:
+
+- ``Validation::setRule()`` now throws ``CodeIgniter\Exceptions\InvalidArgumentException``
+  instead of ``TypeError``.
+- ``CriticalError`` now extends ``CodeIgniter\Exceptions\RuntimeException``
+  instead of ``Error``.
+- ``DatabaseException`` now extends ``CodeIgniter\Exceptions\RuntimeException``
+  instead of ``Error``.
+- ``ConfigException`` now extends ``CodeIgniter\Exceptions\RuntimeException``
+  instead of ``CodeIgniter\Exceptions\CriticalError``.
+- ``TestException`` now extends ``CodeIgniter\Exceptions\LogicException``
+  instead of ``CodeIgniter\Exceptions\CriticalError``.
+
+Filters Changes
+---------------
+
+The ``Filters`` class has been changed to allow multiple runs of the same filter
+with different arguments in before or after. See
+:ref:`Upgrading Guide <upgrade-460-filters-changes>` for details.
+
+Registrars
+----------
+
+Added check to prevent Auto-Discovery of Registrars from running twice. If it is
+executed twice, an exception will be thrown. See
+:ref:`upgrade-460-registrars-with-dirty-hack`.
+
+Time::createFromTimestamp()
+---------------------------
+
+``Time::createFromTimestamp()`` handles timezones differently. If ``$timezone``
+is not explicitly passed then the instance has timezone set to UTC unlike earlier
+where the currently set default timezone was used.
+See :ref:`Upgrading Guide <upgrade-460-time-create-from-timestamp>` for details.
+
+Time with Microseconds
+----------------------
+
+Fixed bugs that some methods in ``Time`` to lose microseconds have been fixed.
+See :ref:`Upgrading Guide <upgrade-460-time-keeps-microseconds>` for details.
+
+Time::setTimestamp()
+--------------------
+
+``Time::setTimestamp()`` behavior has been fixed.
+See :ref:`Upgrading Guide <upgrade-460-time-set-timestamp>` for details.
+
+Error Reporting to Non-HTML Requests
+------------------------------------
+
+In previous versions, when a request does not accept HTML, CodeIgniter showed
+error details only in the ``development`` and ``testing`` environments.
+
+But because it is not possible to display error details when using a custom
+environment, this behavior has been fixed so that error details are displayed if
+``display_errors`` in PHP ini setting is enabled.
+
+With this fix, the error details are now displayed under the same conditions for
+both HTML requests and non-HTML requests.
+
+Session ID (SID)
+----------------
+
+Now ``Session`` library forces to use the PHP default 32 character SIDs, with 4
+bits of entropy per character.
+See :ref:`Upgrading Guide <upgrade-460-sid-change>` for details.
+
+.. _v460-interface-changes:
+
+Headers
+-------
+
+The headers set by the ``Response`` class replace those that can be set by the PHP
+``header()`` function.
+
+In previous versions, headers set by the ``Response`` class were added to existing
+ones - giving no options to change them. That could lead to unexpected behavior when
+the same headers were set with mutually exclusive directives.
+
+For example, session will automatically set headers with the ``header()`` function:
+
+.. code-block:: none
+
+    Expires: Thu, 19 Nov 1981 08:52:00 GMT
+    Cache-Control: no-store, no-cache, must-revalidate
+    Pragma: no-cache
+
+So if we set **Expires** header one more time we will end up with a duplicated header:
+
+.. code-block:: php
+
+    $response->removeHeader('Expires'); // has no effect
+    return $response->setHeader('Expires', 'Sun, 17 Nov 2024 14:17:37 GMT');
+
+Response headers:
+
+.. code-block:: none
+
+    Expires: Thu, 19 Nov 1981 08:52:00 GMT
+    // ...
+    Expires: Sun, 17 Nov 2024 14:17:37 GMT
+
+Now, we don't know which one will be picked by the browser or which header is the correct one.
+With changes in this version our previous header will be overridden:
+
+.. code-block:: none
+
+    Cache-Control: no-store, no-cache, must-revalidate
+    Pragma: no-cache
+    Expires: Sun, 17 Nov 2024 14:17:37 GMT
+
+Interface Changes
+=================
+
+.. note:: As long as you have not extended the relevant CodeIgniter core classes
+    or implemented these interfaces, all these changes are backward compatible
+    and require no intervention.
+
+- **Router:** The following methods have been added in ``RouteCollectionInterface``:
+
+    - ``getDefaultNamespace()``
+    - ``getRoutesOptions()``
+    - ``setHTTPVerb()``
+    - ``isFiltered()``
+    - ``getFiltersForRoute()``
+
+.. _v460-method-signature-changes:
+
+Method Signature Changes
+========================
+
+- **Router:** The constructor of the ``DefinedRouteCollector`` has been
+  changed. The ``RouteCollection`` typehint has been changed to ``RouteCollectionInterface``.
+- **View:** The return type of the ``renderSection()`` method has been
+  changed to ``string``, and now the method does not call ``echo``.
+- **Time:** The first parameter type of the ``createFromTimestamp()`` has been
+  changed from ``int`` to ``int|float``, and the return type ``static`` has been
+  added.
+- **Helpers:** ``character_limiter()`` parameter names have been updated. If you use named arguments, you need to update the function calls.
+
+Removed Type Definitions
+------------------------
+
+- **Database:**
+    - The type ``string`` of the first parameter in
+      ``BaseConnection::escapeIdentifier()`` has been removed.
+    - The type ``string`` of the first parameter in
+      ``BaseConnection::getFieldNames()`` and ``SQLite3\Connection::getFieldNames()``
+      have been removed.
+    - The type ``string`` of the first parameter in
+      ``BaseConnection::_listColumns()`` and ``MySQLi\Connection::_listColumns()``
+      and ``OCI8\Connection::_listColumns()``
+      and ``Postgre\Connection::_listColumns()``
+      and ``SQLSRV\Connection::_listColumns()``
+      and ``SQLite3\Connection::_listColumns()`` have been removed.
+
+.. _v460-removed-deprecated-items:
+
+Removed Deprecated Items
+========================
+
+- **API:** The deprecated ``failValidationError()`` method in ``CodeIgniter\API\ResponseTrait``
+  has been removed. Use ``failValidationErrors()`` instead.
+- **HTTP:** The deprecated ``getReason()`` method in ``CodeIgniter\HTTP\Response``
+  and ``ResponseInterface`` has been removed. Use ``getReasonPhrase()`` instead.
+- **Logger:** The deprecated ``CodeIgniter\Log\Logger::cleanFilenames()`` and
+  ``CodeIgniter\Test\TestLogger::cleanup()`` have been removed. Use the
+  ``clean_path()`` function instead.
+- **Router:** The deprecated ``CodeIgniter\Router\Exceptions\RedirectException`` has been removed. Use ``CodeIgniter\HTTP\Exceptions\RedirectException`` instead.
+- **Constants:** The deprecated constants ``EVENT_PRIORITY_*`` in has been removed. Use the class constants ``CodeIgniter\Events\Events::PRIORITY_LOW``, ``CodeIgniter\Events\Events::PRIORITY_NORMAL`` and ``CodeIgniter\Events\Events::PRIORITY_HIGH`` instead.
+- **View:** The deprecated property ``CodeIgniter\View\View::$currentSection`` has been removed.
+- **Config:** The deprecated property ``Config\Cache::$storePath`` has been removed. Use ``Config\Cache::$file['storePath']`` instead.
+- **Formatter:** The deprecated ``Config\Format::getFormatter()`` has been removed. Use ``CodeIgniter\Format\Format::getFormatter()`` instead.
+- **Security:** ``Config\Security::$samesite`` has been removed. Use ``Config\Cookie::$samesite`` instead.
+- **Cookie:** Methods ``dispatch()``, ``setRawCookie()``, ``setCookie()`` in ``CodeIgniter\Cookie\CookieStore`` has been removed. They are now part of ``CodeIgniter\HTTP\ResponseTrait``.
+
+************
+Enhancements
+************
+
+Publisher
+=========
+
+- ``Publisher::discover()`` now accepts a second parameter (``namespace``) specifying the namespace in which publishers should be searched. See :ref:`discovery-in-a-specific-namespace` for the details.
+
+Exceptions
+==========
+
+The exception class has been redesigned. See :ref:`exception-design` for details.
+The following new Exception classes have been added accordingly:
+
+- ``CodeIgniter\Exceptions\LogicException``
+- ``CodeIgniter\Exceptions\RuntimeException``
+- ``CodeIgniter\Exceptions\BadFunctionCallException``
+- ``CodeIgniter\Exceptions\BadMethodCallException``
+- ``CodeIgniter\Exceptions\InvalidArgumentException``
+
+The following new Exception interfaces have been added:
+
+- ``CodeIgniter\Files\Exceptions\ExceptionInterface``
+- ``CodeIgniter\HTTP\Exceptions\ExceptionInterface``
+- ``CodeIgniter\Router\Exceptions\ExceptionInterface``
+
+Displaying exceptions for non-HTML responses now rely on the PHP ``display_errors`` setting instead of hardcoded environments.
+
+Commands
+========
+
+- The ``spark routes`` and ``spark filter:check`` commands now display filter
+  arguments.
+- The ``spark filter:check`` command now displays filter classnames.
+- The ``spark lang:sync`` command to synchronize translation files. See :ref:`sync-translations-command`
+- The ``spark phpini:check`` command now has an optional ``opcache`` argument,
+  which when used will display information about opcache settings.
+
+Routing
+=======
+
+- Now you can specify multiple hostnames when restricting routes.
+
+Negotiator
+==========
+
+- Added a feature flag ``Feature::$strictLocaleNegotiation`` to enable strict locale comparision.
+  Previously, response with language headers ``Accept-language: en-US,en-GB;q=0.9`` returned the first allowed language ``en`` could instead of the exact language ``en-US`` or ``en-GB``.
+  Set the value to ``true`` to enable comparison not only by language code ('en' - ISO 639-1) but also by regional code ('en-US' - ISO 639-1 plus ISO 3166-1 alpha).
+
+Pagination
+==========
+
+- Added a new feature to get the total and the range number of items of the current page.
+  See :ref:`Displaying the Number of Items on the Page <displaying-the-number-of-items-on-the-page>` for more details.
+
+Database
+========
+
+Others
+------
+
+- Added a new configuration ``foundRows`` for MySQLi to use ``MYSQLI_CLIENT_FOUND_ROWS``.
+- Added the ``BaseConnection::resetTransStatus()`` method to reset the transaction
+  status. See :ref:`transactions-resetting-transaction-status` for details.
+- SQLite3 has a new Config item ``synchronous`` to adjust how strict SQLite is at flushing
+  to disk during transactions. Modifying this can be useful if we use journal mode set to ``WAL``.
+
+Libraries
+=========
+
+- **File:** Added ``getSizeByBinaryUnit()`` and ``getSizeByMetricUnit()`` to ``File`` class.
+  See :ref:`File::getSizeByBinaryUnit() <file-get-size-by-binary-unit>` and :ref:`File::getSizeByMetricUnit() <file-get-size-by-metric-unit>`.
+- **FileCollection:** Added ``retainMultiplePatterns()`` to ``FileCollection`` class.
+  See :ref:`FileCollection::retainMultiplePatterns() <file-collections-retain-multiple-patterns>`.
+- **Validation:** Added ``min_dims`` validation rule to ``FileRules`` class. See
+  :ref:`Validation <rules-for-file-uploads>`.
+- **Validation:** Rules: ``is_unique`` and ``is_not_unique`` now accept the optional
+  ``dbGroup`` as part of the first parameter. See :ref:`Validation <rules-for-general-use>`.
+
+Others
+======
+
+- **Filters:** Now you can execute a filter more than once with the different
+  arguments in before or after.
+- **Services:** Added ``BaseService::resetServicesCache()`` method to reset
+  the services cache. See :ref:`resetting-services-cache`.
+- **Errors:** Added a default error page for "400 Bad Request".
+
+***************
+Message Changes
+***************
+
+- Added ``Validation.min_dims`` message
+- Added ``Errors.badRequest`` and ``Errors.sorryBadRequest``
+
+*******
+Changes
+*******
+
+Exceptions
+==========
+
+The exception classes have been redesigned. See :ref:`exception-design` for details.
+The following changes have been made accordingly:
+
+- The ``deleteMatching()`` method in Cache Handler classes now throws
+  ``CodeIgniter\Exceptions\BadMethodCallException`` instead of ``Exception``.
+- ``Cache\ResponseCache::get()`` now throws ``CodeIgniter\Exceptions\RuntimeException``
+  instead of ``Exception``.
+- Classes that threw ``RuntimeException`` have been changed to throw
+  ``CodeIgniter\Exceptions\RuntimeException``.
+- Classes that threw ``InvalidArgumentException`` have been changed to throw
+  ``CodeIgniter\Exceptions\InvalidArgumentException``.
+- Classes that threw ``LogicException`` have been changed to throw
+  ``CodeIgniter\Exceptions\LogicException``.
+- Classes that threw ``BadMethodCallException`` have been changed to throw
+  ``CodeIgniter\Exceptions\BadMethodCallException``.
+- Classes that threw ``BadFunctionCallException`` have been changed to throw
+  ``CodeIgniter\Exceptions\BadFunctionCallException``.
+- ``RedirectException`` now extends ``CodeIgniter\Exceptions\RuntimeException``
+  instead of ``Exception``.
+- ``PageNotFoundException`` now extends ``CodeIgniter\Exceptions\RuntimeException``
+  instead of ``OutOfBoundsException``.
+
+************
+Deprecations
+************
+
+- **Filters:**
+    - The properties ``$arguments`` and ``$argumentsClass`` of ``Filters`` have
+      been deprecated. No longer used.
+    - The ``Filters::getArguments()`` method has been deprecated. No longer used.
+- **File:**
+    - The function ``getSizeByUnit()`` of ``File`` has been deprecated.
+      Use either ``getSizeByBinaryUnit()`` or ``getSizeByMetricUnit()`` instead.
+
+**********
+Bugs Fixed
+**********
+
+- **Response:**
+    - Headers set using the ``Response`` class are now prioritized and replace headers
+      that can be set manually using the PHP ``header()`` function.
+- **View:** Added support for multibyte strings for ``View::excerpt()``.
+- **Helpers:** Added support for multibyte strings for ``excerpt()``.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

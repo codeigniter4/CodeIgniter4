@@ -1,278 +1,378 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
-class MessageTest extends \CIUnitTestCase
+/**
+ * @internal
+ */
+#[Group('Others')]
+final class MessageTest extends CIUnitTestCase
 {
+    private Message $message;
 
-	/**
-	 * @var CodeIgniter\HTTP\Message
-	 */
-	protected $message;
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-	protected function setUp()
-	{
-		parent::setUp();
+        $this->message = new Message();
+    }
 
-		$this->message = new Message();
-	}
+    // We can only test the headers retrieved from $_SERVER
+    // This test might fail under apache.
+    public function testHeadersRetrievesHeaders(): void
+    {
+        $this->message->setHeader('Host', 'daisyduke.com');
+        $this->message->setHeader('Referer', 'RoscoePekoTrain.com');
 
-	//--------------------------------------------------------------------
+        $headers = $this->message->headers();
 
-	public function tearDown()
-	{
-		$this->message = null;
-		unset($this->message);
-	}
+        // Content-Type is likely set...
+        $this->assertGreaterThanOrEqual(2, count($headers));
 
-	//--------------------------------------------------------------------
-	// We can only test the headers retrieved from $_SERVER
-	// This test might fail under apache.
-	public function testHeadersRetrievesHeaders()
-	{
-		$this->message->setHeader('Host', 'daisyduke.com');
-		$this->message->setHeader('Referer', 'RoscoePekoTrain.com');
+        $this->assertSame('daisyduke.com', $headers['Host']->getValue());
+        $this->assertSame('RoscoePekoTrain.com', $headers['Referer']->getValue());
+    }
 
-		$headers = $this->message->getHeaders();
+    public function testCanGrabSingleHeader(): void
+    {
+        $this->message->setHeader('Host', 'daisyduke.com');
 
-		// Content-Type is likely set...
-		$this->assertGreaterThanOrEqual(2, count($headers));
+        $header = $this->message->header('Host');
 
-		$this->assertSame('daisyduke.com', $headers['Host']->getValue());
-		$this->assertSame('RoscoePekoTrain.com', $headers['Referer']->getValue());
-	}
+        $this->assertInstanceOf(Header::class, $header);
+        $this->assertSame('daisyduke.com', $header->getValue());
+    }
 
-	//--------------------------------------------------------------------
+    public function testCaseInsensitiveheader(): void
+    {
+        $this->message->setHeader('Host', 'daisyduke.com');
 
-	public function testCanGrabSingleHeader()
-	{
-		$this->message->setHeader('Host', 'daisyduke.com');
+        $this->assertSame('daisyduke.com', $this->message->header('host')->getValue());
+        $this->assertSame('daisyduke.com', $this->message->header('HOST')->getValue());
+    }
 
-		$header = $this->message->getHeader('Host');
+    public function testCanSetHeaders(): void
+    {
+        $this->message->setHeader('first', 'kiss');
+        $this->message->setHeader('second', ['black', 'book']);
 
-		$this->assertInstanceOf(Header::class, $header);
-		$this->assertEquals('daisyduke.com', $header->getValue());
-	}
+        $this->assertSame('kiss', $this->message->header('FIRST')->getValue());
+        $this->assertSame(['black', 'book'], $this->message->header('Second')->getValue());
+    }
 
-	//--------------------------------------------------------------------
+    public function testSetHeaderOverwritesPrevious(): void
+    {
+        $this->message->setHeader('Pragma', 'cache');
+        $this->message->setHeader('Pragma', 'no-cache');
 
-	public function testCaseInsensitiveGetHeader()
-	{
-		$this->message->setHeader('Host', 'daisyduke.com');
+        $this->assertSame('no-cache', $this->message->header('Pragma')->getValue());
+    }
 
-		$this->assertEquals('daisyduke.com', $this->message->getHeader('host')->getValue());
-		$this->assertEquals('daisyduke.com', $this->message->getHeader('HOST')->getValue());
-	}
+    public function testHeaderLineIsReadable(): void
+    {
+        $this->message->setHeader('Accept', ['json', 'html']);
+        $this->message->setHeader('Host', 'daisyduke.com');
 
-	//--------------------------------------------------------------------
+        $this->assertSame('json, html', $this->message->header('Accept')->getValueLine());
+        $this->assertSame('daisyduke.com', $this->message->header('Host')->getValueLine());
+    }
 
-	public function testCanSetHeaders()
-	{
-		$this->message->setHeader('first', 'kiss');
-		$this->message->setHeader('second', ['black', 'book']);
+    public function testCanRemoveHeader(): void
+    {
+        $this->message->setHeader('Host', 'daisyduke.com');
 
-		$this->assertEquals('kiss', $this->message->getHeader('FIRST')->getValue());
-		$this->assertEquals(['black', 'book'], $this->message->getHeader('Second')->getValue());
-	}
+        $this->message->removeHeader('host');
 
-	//--------------------------------------------------------------------
+        $this->assertNull($this->message->header('host'));
+    }
 
-	public function testSetHeaderOverwritesPrevious()
-	{
-		$this->message->setHeader('Pragma', 'cache');
-		$this->message->setHeader('Pragma', 'no-cache');
+    public function testCanAppendHeader(): void
+    {
+        $this->message->setHeader('accept', ['json', 'html']);
 
-		$this->assertEquals('no-cache', $this->message->getHeader('Pragma')->getValue());
-	}
+        $this->message->appendHeader('Accept', 'xml');
 
-	public function testHeaderLineIsReadable()
-	{
-		$this->message->setHeader('Accept', ['json', 'html']);
-		$this->message->setHeader('Host', 'daisyduke.com');
+        $this->assertSame(['json', 'html', 'xml'], $this->message->header('accept')->getValue());
+    }
 
-		$this->assertEquals('json, html', $this->message->getHeader('Accept')->getValueLine());
-		$this->assertEquals('daisyduke.com', $this->message->getHeader('Host')->getValueLine());
-	}
+    public function testCanPrependHeader(): void
+    {
+        $this->message->setHeader('accept', ['json', 'html']);
 
-	//--------------------------------------------------------------------
+        $this->message->prependHeader('Accept', 'xml');
 
-	public function testCanRemoveHeader()
-	{
-		$this->message->setHeader('Host', 'daisyduke.com');
+        $this->assertSame(['xml', 'json', 'html'], $this->message->header('accept')->getValue());
+    }
 
-		$this->message->removeHeader('host');
+    public function testSetProtocolWorks(): void
+    {
+        $this->message->setProtocolVersion('1.1');
 
-		$this->assertEquals('', $this->message->getHeader('host'));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testCanAppendHeader()
-	{
-		$this->message->setHeader('accept', ['json', 'html']);
-
-		$this->message->appendHeader('Accept', 'xml');
-
-		$this->assertEquals(['json', 'html', 'xml'], $this->message->getHeader('accept')->getValue());
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testCanPrependHeader()
-	{
-		$this->message->setHeader('accept', ['json', 'html']);
-
-		$this->message->prependHeader('Accept', 'xml');
-
-		$this->assertEquals(['xml', 'json', 'html'], $this->message->getHeader('accept')->getValue());
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testSetProtocolWorks()
-	{
-		$this->message->setProtocolVersion('1.1');
-
-		$this->assertEquals('1.1', $this->message->getProtocolVersion());
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testSetProtocolWorksWithNonNumericVersion()
-	{
-		$this->message->setProtocolVersion('HTTP/1.1');
-
-		$this->assertEquals('1.1', $this->message->getProtocolVersion());
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testSetProtocolThrowsExceptionWithInvalidProtocol()
-	{
-		$this->expectException(HTTPException::class);
-		$this->message->setProtocolVersion('1.2');
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testBodyBasics()
-	{
-		$body = 'a strange little fellow.';
-
-		$this->message->setBody($body);
-
-		$this->assertEquals($body, $this->message->getBody());
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testAppendBody()
-	{
-		$this->message->setBody('moo');
-
-		$this->message->appendBody('\n');
-
-		$this->assertEquals('moo' . '\n', $this->message->getBody());
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testSetHeaderReplacingHeader()
-	{
-			$this->message->setHeader('Accept', 'json');
-
-				$this->assertEquals('json', $this->message->getHeaderLine('Accept'));
-	}
-
-	public function testSetHeaderDuplicateSettings()
-	{
-		$this->message->setHeader('Accept', 'json');
-		$this->message->setHeader('Accept', 'xml');
-
-			$this->assertEquals('xml', $this->message->getHeaderLine('Accept'));
-	}
-
-	public function testSetHeaderArrayValues()
-	{
-		$this->message->setHeader('Accept', ['json', 'html', 'xml']);
-
-			$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testPopulateHeadersWithoutContentType()
-	{
-		// fail path, if the CONTENT_TYPE doesn't exist
-		$original     = $_SERVER;
-		$_SERVER      = ['HTTP_ACCEPT_LANGUAGE' => 'en-us,en;q=0.50'];
-		$original_env = getenv('CONTENT_TYPE');
-		putenv('CONTENT_TYPE');
-
-		$this->message->populateHeaders();
-
-		$this->assertNull($this->message->getHeader('content-type'));
-		putenv("CONTENT_TYPE=$original_env");
-		$this->message->removeHeader('accept-language');
-		$_SERVER = $original; // restore so code coverage doesn't break
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testPopulateHeadersWithoutHTTP()
-	{
-		// fail path, if arguement does't have the HTTP_*
-		$original = $_SERVER;
-		$_SERVER  = [
-			'USER_AGENT'     => 'Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405',
-			'REQUEST_METHOD' => 'POST',
-		];
-
-		$this->message->populateHeaders();
-
-		$this->assertNull($this->message->getHeader('user-agent'));
-		$this->assertNull($this->message->getHeader('request-method'));
-		$_SERVER = $original; // restore so code coverage doesn't break
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testPopulateHeadersKeyNotExists()
-	{
-		// Success path, if array key is not exists, assign empty string to it's value
-		$original = $_SERVER;
-		$_SERVER  = [
-			'CONTENT_TYPE'        => 'text/html; charset=utf-8',
-			'HTTP_ACCEPT_CHARSET' => null,
-		];
-
-		$this->message->populateHeaders();
-
-		$this->assertEquals('', $this->message->getHeader('accept-charset')->getValue());
-		$this->message->removeHeader('accept-charset');
-		$_SERVER = $original; // restore so code coverage doesn't break
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testPopulateHeaders()
-	{
-		// success path
-		$original = $_SERVER;
-		$_SERVER  = [
-			'CONTENT_TYPE'         => 'text/html; charset=utf-8',
-			'HTTP_ACCEPT_LANGUAGE' => 'en-us,en;q=0.50',
-		];
-
-		$this->message->populateHeaders();
-
-		$this->assertEquals('text/html; charset=utf-8', $this->message->getHeader('content-type')->getValue());
-		$this->assertEquals('en-us,en;q=0.50', $this->message->getHeader('accept-language')->getValue());
-		$this->message->removeHeader('content-type');
-		$this->message->removeHeader('accept-language');
-		$_SERVER = $original; // restore so code coverage doesn't break
-	}
-
+        $this->assertSame('1.1', $this->message->getProtocolVersion());
+    }
+
+    public function testSetProtocolWorksWithNonNumericVersion(): void
+    {
+        $this->message->setProtocolVersion('HTTP/1.1');
+
+        $this->assertSame('1.1', $this->message->getProtocolVersion());
+    }
+
+    public function testSetProtocolThrowsExceptionWithInvalidProtocol(): void
+    {
+        $this->expectException(HTTPException::class);
+        $this->message->setProtocolVersion('1.2');
+    }
+
+    public function testBodyBasics(): void
+    {
+        $body = 'a strange little fellow.';
+
+        $this->message->setBody($body);
+
+        $this->assertSame($body, $this->message->getBody());
+    }
+
+    public function testAppendBody(): void
+    {
+        $this->message->setBody('moo');
+
+        $this->message->appendBody("\n");
+
+        $this->assertSame("moo\n", $this->message->getBody());
+    }
+
+    public function testSetHeaderReplacingHeader(): void
+    {
+        $this->message->setHeader('Accept', 'json');
+
+        $this->assertSame('json', $this->message->getHeaderLine('Accept'));
+    }
+
+    public function testSetHeaderDuplicateSettings(): void
+    {
+        $this->message->setHeader('Accept', 'json');
+        $this->message->setHeader('Accept', 'xml');
+
+        $this->assertSame('xml', $this->message->getHeaderLine('Accept'));
+    }
+
+    public function testSetHeaderDuplicateSettingsInsensitive(): void
+    {
+        $this->message->setHeader('Accept', 'json');
+        $this->message->setHeader('accept', 'xml');
+
+        $this->assertSame('xml', $this->message->getHeaderLine('Accept'));
+    }
+
+    public function testSetHeaderArrayValues(): void
+    {
+        $this->message->setHeader('Accept', ['json', 'html', 'xml']);
+
+        $this->assertSame('json, html, xml', $this->message->getHeaderLine('Accept'));
+    }
+
+    /**
+     * @param array $arrayHeaderValue
+     */
+    #[DataProvider('provideArrayHeaderValue')]
+    public function testSetHeaderWithExistingArrayValuesAppendStringValue($arrayHeaderValue): void
+    {
+        $this->message->setHeader('Accept', $arrayHeaderValue);
+        $this->message->setHeader('Accept', 'xml');
+
+        $this->assertSame('json, html, xml', $this->message->getHeaderLine('Accept'));
+    }
+
+    /**
+     * @param array $arrayHeaderValue
+     */
+    #[DataProvider('provideArrayHeaderValue')]
+    public function testSetHeaderWithExistingArrayValuesAppendArrayValue($arrayHeaderValue): void
+    {
+        $this->message->setHeader('Accept', $arrayHeaderValue);
+        $this->message->setHeader('Accept', ['xml']);
+
+        $this->assertSame('json, html, xml', $this->message->getHeaderLine('Accept'));
+    }
+
+    public static function provideArrayHeaderValue(): iterable
+    {
+        return [
+            'existing for next not append' => [
+                [
+                    'json',
+                    'html',
+                    'xml',
+                ],
+            ],
+            'existing for next append' => [
+                [
+                    'json',
+                    'html',
+                ],
+            ],
+        ];
+    }
+
+    public function testSetHeaderWithExistingArrayValuesAppendNullValue(): void
+    {
+        $this->message->setHeader('Accept', ['json', 'html', 'xml']);
+        $this->message->setHeader('Accept', null);
+
+        $this->assertSame('json, html, xml', $this->message->getHeaderLine('Accept'));
+    }
+
+    public function testPopulateHeadersWithoutContentType(): void
+    {
+        $original    = $_SERVER;
+        $originalEnv = getenv('CONTENT_TYPE');
+
+        // fail path, if the CONTENT_TYPE doesn't exist
+        $_SERVER = ['HTTP_ACCEPT_LANGUAGE' => 'en-us,en;q=0.50'];
+        putenv('CONTENT_TYPE');
+
+        $this->message->populateHeaders();
+
+        $this->assertNull($this->message->header('content-type'));
+
+        putenv("CONTENT_TYPE={$originalEnv}");
+        $_SERVER = $original; // restore so code coverage doesn't break
+    }
+
+    public function testPopulateHeadersWithoutHTTP(): void
+    {
+        // fail path, if argument doesn't have the HTTP_*
+        $original = $_SERVER;
+        $_SERVER  = [
+            'USER_AGENT'     => 'Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405',
+            'REQUEST_METHOD' => 'POST',
+        ];
+
+        $this->message->populateHeaders();
+
+        $this->assertNull($this->message->header('user-agent'));
+        $this->assertNull($this->message->header('request-method'));
+
+        $_SERVER = $original; // restore so code coverage doesn't break
+    }
+
+    public function testPopulateHeadersKeyNotExists(): void
+    {
+        // Success path, if array key is not exists, assign empty string to it's value
+        $original = $_SERVER;
+        $_SERVER  = [
+            'CONTENT_TYPE'        => 'text/html; charset=utf-8',
+            'HTTP_ACCEPT_CHARSET' => null,
+        ];
+
+        $this->message->populateHeaders();
+
+        $this->assertSame('', $this->message->header('accept-charset')->getValue());
+
+        $_SERVER = $original; // restore so code coverage doesn't break
+    }
+
+    public function testPopulateHeaders(): void
+    {
+        // success path
+        $original = $_SERVER;
+        $_SERVER  = [
+            'CONTENT_TYPE'         => 'text/html; charset=utf-8',
+            'HTTP_ACCEPT_LANGUAGE' => 'en-us,en;q=0.50',
+        ];
+
+        $this->message->populateHeaders();
+
+        $this->assertSame('text/html; charset=utf-8', $this->message->header('content-type')->getValue());
+        $this->assertSame('en-us,en;q=0.50', $this->message->header('accept-language')->getValue());
+
+        $_SERVER = $original; // restore so code coverage doesn't break
+    }
+
+    public function testAddHeaderAddsFirstHeader(): void
+    {
+        $this->message->addHeader(
+            'Set-Cookie',
+            'logged_in=no; Path=/',
+        );
+
+        $header = $this->message->header('Set-Cookie');
+
+        $this->assertInstanceOf(Header::class, $header);
+        $this->assertSame('logged_in=no; Path=/', $header->getValue());
+    }
+
+    public function testAddHeaderAddsTwoHeaders(): void
+    {
+        $this->message->addHeader(
+            'Set-Cookie',
+            'logged_in=no; Path=/',
+        );
+        $this->message->addHeader(
+            'Set-Cookie',
+            'sessid=123456; Path=/',
+        );
+
+        $headers = $this->message->header('Set-Cookie');
+
+        $this->assertCount(2, $headers);
+        $this->assertSame('logged_in=no; Path=/', $headers[0]->getValue());
+        $this->assertSame('sessid=123456; Path=/', $headers[1]->getValue());
+    }
+
+    public function testAppendHeaderWithMultipleHeaders(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The header "Set-Cookie" already has multiple headers. You cannot change them. If you really need to change, remove the header first.',
+        );
+
+        $this->message->addHeader(
+            'Set-Cookie',
+            'logged_in=no; Path=/',
+        );
+        $this->message->addHeader(
+            'Set-Cookie',
+            'sessid=123456; Path=/',
+        );
+
+        $this->message->appendHeader('Set-Cookie', 'HttpOnly');
+    }
+
+    public function testGetHeaderLineWithMultipleHeaders(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The header "Set-Cookie" already has multiple headers. You cannot use getHeaderLine().',
+        );
+
+        $this->message->addHeader(
+            'Set-Cookie',
+            'logged_in=no; Path=/',
+        );
+        $this->message->addHeader(
+            'Set-Cookie',
+            'sessid=123456; Path=/',
+        );
+
+        $this->message->getHeaderLine('Set-Cookie');
+    }
 }

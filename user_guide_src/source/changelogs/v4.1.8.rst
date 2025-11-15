@@ -1,0 +1,15 @@
+Version 4.1.8
+#############
+
+Release Date: January 24, 2022
+
+**4.1.8 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+SECURITY
+********
+
+- *XSS Vulnerability* in the ``API\ResponseTrait`` was fixed. See the `Security advisory <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-7528-7jg5-6g62>`_ for more information.

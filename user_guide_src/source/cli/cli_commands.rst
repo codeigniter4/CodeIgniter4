@@ -1,9 +1,9 @@
-###################
-Custom CLI Commands
-###################
+#######################
+Creating Spark Commands
+#######################
 
-While the ability to use cli commands like any other route is convenient, you might find times where you
-need a little something different. That's where CLI Commands come in. They are simple classes that do not
+While the ability to use Controllers via CLI like any other route is convenient, you might find times where you
+need a little something different. That's where Spark commands come in. They are simple classes that do not
 need to have routes defined for, making them perfect for building tools that developers can use to make
 their jobs simpler, whether by handling migrations or database seeding, checking cronjob status, or even
 building out custom code generators for your company.
@@ -11,39 +11,6 @@ building out custom code generators for your company.
 .. contents::
     :local:
     :depth: 2
-
-****************
-Running Commands
-****************
-
-Commands are run from the command line, in the root directory. The same one that holds the **/app**
-and **/system** directories. A custom script, **spark** has been provided that is used to run any of the
-cli commands::
-
-    > php spark
-
-When called without specifying a command, a simple help page is displayed that also provides a list of
-available commands. You should pass the name of the command as the first argument to run that command::
-
-    > php spark migrate
-
-Some commands take additional arguments, which should be provided directly after the command, separated by spaces::
-
-    > php spark db:seed DevUserSeeder
-
-For all of the commands CodeIgniter provides, if you do not provide the required arguments, you will be prompted
-for the information it needs to run correctly::
-
-    > php spark migrate:version
-    > Version?
-
-******************
-Using Help Command
-******************
-
-You can get help about any CLI command using the help command as follows::
-
-    > php spark help db:seed
 
 *********************
 Creating New Commands
@@ -54,50 +21,35 @@ and must extend ``CodeIgniter\CLI\BaseCommand``, and implement the ``run()`` met
 
 The following properties should be used in order to get listed in CLI commands and to add help functionality to your command:
 
-* ($group): a string to describe the group the command is lumped under when listing commands. For example (Database)
-* ($name): a string to describe the command's name. For example (migrate:create)
-* ($description): a string to describe the command. For example (Creates a new migration file.)
-* ($usage): a string to describe the command usage. For example (migrate:create [migration_name] [Options])
-* ($arguments): an array of strings to describe each command argument. For example ('migration_name' => 'The migration file name')
-* ($options): an array of strings to describe each command option. For example ('-n' => 'Set migration namespace')
+* ``$group``: a string to describe the group the command is lumped under when listing commands. For example: ``Database``
+* ``$name``: a string to describe the command's name. For example: ``make:controller``
+* ``$description``: a string to describe the command. For example: ``Generates a new controller file.``
+* ``$usage``: a string to describe the command usage. For example: ``make:controller <name> [options]``
+* ``$arguments``: an array of strings to describe each command argument. For example: ``'name' => 'The controller class name.'``
+* ``$options``: an array of strings to describe each command option. For example: ``'--force' => 'Force overwrite existing file.'``
 
 **Help description will be automatically generated according to the above parameters.**
 
 File Location
 =============
 
-Commands must be stored within a directory named **Commands**. However, that directory can be located anywhere
-that the :doc:`Autoloader </concepts/autoloader>` can locate it. This could be in **/app/Commands**, or
+Commands must be stored within a directory named **Commands**. However, that directory has to be located in the PSR-4 namespaces
+so that the :doc:`Autoloader </concepts/autoloader>` can locate it. This could be in **app/Commands**, or
 a directory that you keep commands in to use in all of your project development, like **Acme/Commands**.
 
-.. note:: When the commands are executed, the full CodeIgniter cli environment has been loaded, making it
+.. note:: When the commands are executed, the full CodeIgniter CLI environment has been loaded, making it
  possible to get environment information, path information, and to use any of the tools you would use when making a Controller.
 
 An Example Command
 ==================
 
 Let's step through an example command whose only function is to report basic information about the application
-itself, for demonstration purposes. Start by creating a new file at **/app/Commands/AppInfo.php**. It
-should contain the following code::
+itself, for demonstration purposes. Start by creating a new file at **app/Commands/AppInfo.php**. It
+should contain the following code:
 
-    <?php namespace App\Commands;
+.. literalinclude:: cli_commands/002.php
 
-    use CodeIgniter\CLI\BaseCommand;
-    use CodeIgniter\CLI\CLI;
-
-    class AppInfo extends BaseCommand
-    {
-        protected $group       = 'demo';
-        protected $name        = 'app:info';
-        protected $description = 'Displays basic application information.';
-
-        public function run(array $params)
-        {
-
-        }
-    }
-
-If you run the **list** command, you will see the new command listed under its own ``demo`` group. If you take
+If you run the **list** command, you will see the new command listed under its own ``Demo`` group. If you take
 a close look, you should see how this works fairly easily. The ``$group`` property simply tells it how to organize
 this command with all of the other commands that exist, telling it what heading to list it under.
 
@@ -113,28 +65,36 @@ run()
 -----
 
 The ``run()`` method is the method that is called when the command is being run. The ``$params`` array is a list of
-any cli arguments after the command name for your use. If the cli string was::
+any CLI arguments after the command name for your use. If the CLI string was:
 
-    > php spark foo bar baz
+.. code-block:: console
 
-Then **foo** is the command name, and the ``$params`` array would be::
+    php spark foo bar baz
 
-    $params = ['bar', 'baz'];
+Then **foo** is the command name, and the ``$params`` array would be:
+
+.. literalinclude:: cli_commands/003.php
 
 This can also be accessed through the :doc:`CLI </cli/cli_library>` library, but this already has your command removed
 from the string. These parameters can be used to customize how your scripts behave.
 
-Our demo command might have a ``run`` method something like::
+Our demo command might have a ``run()`` method something like:
 
-    public function run(array $params)
-    {
-        CLI::write('PHP Version: '. CLI::color(phpversion(), 'yellow'));
-        CLI::write('CI Version: '. CLI::color(CodeIgniter::CI_VERSION, 'yellow'));
-        CLI::write('APPPATH: '. CLI::color(APPPATH, 'yellow'));
-        CLI::write('SYSTEMPATH: '. CLI::color(SYSTEMPATH, 'yellow'));
-        CLI::write('ROOTPATH: '. CLI::color(ROOTPATH, 'yellow'));
-        CLI::write('Included files: '. CLI::color(count(get_included_files()), 'yellow'));
-    }
+.. literalinclude:: cli_commands/004.php
+
+See the :doc:`CLI Library </cli/cli_library>` page for detailed information.
+
+Command Termination
+-------------------
+
+By default, the command exits with a success code of ``0``. If an error is encountered while executing a command,
+you can terminate the command by using the ``return`` language construct with an exit code in the ``run()`` method.
+
+For example, ``return EXIT_ERROR;``
+
+This approach can help with debugging at the system level, if the command, for example, is run via crontab.
+
+You can use the ``EXIT_*`` exit code constants defined in the **app/Config/Constants.php** file.
 
 ***********
 BaseCommand
@@ -142,52 +102,52 @@ BaseCommand
 
 The ``BaseCommand`` class that all commands must extend have a couple of helpful utility methods that you should
 be familiar with when creating your own commands. It also has a :doc:`Logger </general/logging>` available at
-**$this->logger**.
+``$this->logger``.
 
-.. php:class:: CodeIgniter\CLI\BaseCommand
+.. php:namespace:: CodeIgniter\CLI
 
-    .. php:method:: call(string $command[, array $params=[] ])
+.. php:class:: BaseCommand
+
+    .. php:method:: call(string $command[, array $params = []])
 
         :param string $command: The name of another command to call.
-        :param array $params: Additional cli arguments to make available to that command.
+        :param array $params: Additional CLI arguments to make available to that command.
 
-        This method allows you to run other commands during the execution of your current command::
+        This method allows you to run other commands during the execution of your current command:
 
-        $this->call('command_one');
-        $this->call('command_two', $params);
+        .. literalinclude:: cli_commands/005.php
 
-    .. php:method:: showError(\Exception $e)
+    .. php:method:: showError(Throwable $e)
 
-        :param Exception $e: The exception to use for error reporting.
+        :param Throwable $e: The exception to use for error reporting.
 
-        A convenience method to maintain a consistent and clear error output to the cli::
+        A convenience method to maintain a consistent and clear error output to the CLI:
 
-            try
-            {
-                . . .
-            }
-            catch (\Exception $e)
-            {
-                $this->showError($e);
-            }
+        .. literalinclude:: cli_commands/006.php
 
     .. php:method:: showHelp()
 
         A method to show command help: (usage,arguments,description,options)
 
+    .. php:method:: setPad(string $item, int $max, int $extra = 2, int $indent = 0): string
+
+        :param string   $item: The string item.
+        :param integer  $max: The max size.
+        :param integer  $extra: How many extra spaces to add at the end.
+        :param integer  $indent: The indent spaces.
+
+        Pads our string out so that all titles are the same length to nicely line
+        up descriptions:
+
+        .. literalinclude:: cli_commands/007.php
+            :lines: 2-
+
     .. php:method:: getPad($array, $pad)
+
+        .. deprecated:: 4.0.5
+            Use :php:meth:`CodeIgniter\\CLI\\BaseCommand::setPad()` instead.
 
         :param array    $array: The  $key => $value array.
         :param integer  $pad: The pad spaces.
 
-        A method to calculate padding for $key => $value array output. The padding can be used to output a will formatted table in CLI::
-
-            $pad = $this->getPad($this->options, 6);
-            foreach ($this->options as $option => $description)
-            {
-                    CLI::write($tab . CLI::color(str_pad($option, $pad), 'green') . $description, 'yellow');
-            }
-
-            // Output will be
-            -n                  Set migration namespace
-            -r                  override file
+        A method to calculate padding for ``$key => $value`` array output. The padding can be used to output a will formatted table in CLI.

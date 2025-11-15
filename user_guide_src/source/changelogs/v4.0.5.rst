@@ -1,0 +1,61 @@
+Version 4.0.5
+=============
+
+Release Date: January 31, 2021
+
+**4.0.5 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+Enhancements
+------------
+
+- New URL helper function :php:func:`url_to()` which creates absolute URLs based on controllers.
+- New Model option: ``$useAutoIncrement`` which when set to ``false`` allows you to provide your own primary key for each record in the table. Handy when we want to implement 1:1 relation or use UUIDs for our model.
+- New URL helper function :php:func:`url_is()` which allows you to check the current URL to see if matches the given string.
+- Services now have their config parameters strictly typehinted. This will ensure no one will pass a different config instance. If you need to pass a new config with additional properties, you need to extend that particular config.
+- Support for setting SameSite attribute on Session and CSRF cookies has been added. For security and compatibility with latest browser versions, the default setting is ``Lax``.
+- Guessing file extensions from mime type in ``Config\Mimes::guessExtensionFromType()`` now only reverse searches the ``$mimes`` array if no extension is proposed (i.e., usually not for uploaded files).
+- The getter functions for file extensions of uploaded files now have different fallback values (``UploadedFile::getClientExtension()`` for ``UploadedFile::getExtension()`` and ``''`` for ``UploadedFile::guessExtension()``). This is a security fix and makes the process less dependent on the client.
+- The Cache ``FileHandler`` now allows setting the file permissions mode via ``Config\Cache``.
+
+Changes
+-------
+
+- System messages defined in **system/Language/en/** are now strictly for internal framework use and are not covered by backwards compatibility (BC) promise. Users may use these messages in their applications but at their own risks.
+
+Deprecations
+------------
+
+- Deprecated ``BaseCommand::getPad()`` in favor of ``BaseCommand::setPad()``.
+- Deprecated ``CodeIgniter\Controller::loadHelpers()`` in favor of ``helper()`` function.
+- Deprecated ``Config\Format::getFormatter()`` in favor of ``CodeIgniter\Format\Format::getFormatter()``
+- Deprecated ``CodeIgniter\Security\Security::CSRFVerify()`` in favor of ``CodeIgniter\Security\Security::verify()``
+- Deprecated ``CodeIgniter\Security\Security::getCSRFHash()`` in favor of ``CodeIgniter\Security\Security::getHash()``
+- Deprecated ``CodeIgniter\Security\Security::getCSRTokenName()`` in favor of ``CodeIgniter\Security\Security::getTokenName()``
+- Deprecated ``Config\App::$CSRFTokenName`` in favor of ``Config\Security::$tokenName``
+- Deprecated ``Config\App::$CSRFHeaderName`` in favor of ``Config\Security::$headerName``
+- Deprecated ``Config\App::$CSRFCookieName`` in favor of ``Config\Security::$cookieName``
+- Deprecated ``Config\App::$CSRFExpire`` in favor of ``Config\Security::$expire``
+- Deprecated ``Config\App::$CSRFRegenerate`` in favor of ``Config\Security::$regenerate``
+- Deprecated ``Config\App::$CSRFRedirect`` in favor of ``Config\Security::$redirect``
+- Deprecated ``Config\App::$CSRFSameSite`` in favor of ``Config\Security::$samesite``
+- Deprecated ``migrate:create`` command in favor of ``make:migration`` command.
+- Deprecated ``CodeIgniter\Database\ModelFactory`` in favor of ``CodeIgniter\Config\Factories::models()``
+- Deprecated ``CodeIgniter\Config\Config`` in favor of ``CodeIgniter\Config\Factories::config()``
+- Deprecated ``CodeIgniter\HTTP\Message::getHeader()`` in favor of ``header()`` to prepare for PSR-7
+- Deprecated ``CodeIgniter\HTTP\Message::getHeaders()`` in favor of ``headers()`` to prepare for PSR-7
+- Deprecated ``Config\Cache::$storePath`` in favor of ``Config\Cache::$file['storePath']``
+
+Bugs Fixed
+----------
+
+- Fixed a bug in ``Entity`` class where declaring class parameters was preventing data propagation to the ``attributes`` array.
+- Handling for the environment variable ``encryption.key`` has changed. Previously, explicit function calls, like ``getenv('encryption.key')`` or ``env('encryption.key')`` where the value has the special prefix ``hex2bin:`` returns an automatically converted binary string. This is now changed to just return the character string with the prefix. This change was due to incompatibility with handling binary strings in environment variables on Windows platforms. However, accessing ``$key`` using ``Encryption`` class config remains unchanged and still returns a binary string.
+- ``Config\Services`` (in **app/Config/Services.php**) now extends ``CodeIgniter\Config\BaseService`` to allow proper discovery of third-party services.
+
+See the repo's
+`CHANGELOG_4.0.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.0.md>`_
+for a complete list of bugs fixed.

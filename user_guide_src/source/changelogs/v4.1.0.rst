@@ -1,0 +1,32 @@
+Version 4.1.0
+=============
+
+Release Date: January 31, 2021
+
+**4.1.0 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+BREAKING
+********
+
+- ``Autoloader::loadLegacy()`` method was previously used for migration of non-namespaced classes in transition to CodeIgniter v4. Since v4.1.0, this support was removed.
+
+Changes
+*******
+
+- Dropped support for PHP 7.2
+
+Deprecations
+************
+
+- Deprecated ``Model::fillPlaceholders()`` method, use ``Validation::fillPlaceholders()`` instead.
+
+Bugs Fixed
+**********
+
+See the repo's
+`CHANGELOG_4.1.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.1.md>`_
+for a complete list of bugs fixed.

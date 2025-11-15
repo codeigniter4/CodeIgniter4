@@ -1,0 +1,138 @@
+# total 51 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\<mysqli, mysqli_result\>\:\:\$mysqli\.$#'
+            count: 3
+            path: ../../system/Database/MySQLi/PreparedQuery.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$schema\.$#'
+            count: 2
+            path: ../../system/Database/SQLSRV/Builder.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$schema\.$#'
+            count: 14
+            path: ../../system/Database/SQLSRV/Forge.php
+
+        -
+            message: '#^Access to an undefined property Config\\Session\:\:\$lockAttempts\.$#'
+            count: 1
+            path: ../../system/Session/Handlers/RedisHandler.php
+
+        -
+            message: '#^Access to an undefined property Config\\Session\:\:\$lockWait\.$#'
+            count: 1
+            path: ../../system/Session/Handlers/RedisHandler.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$mysqli\.$#'
+            count: 1
+            path: ../../tests/system/Database/Live/GetVersionTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$foundRows\.$#'
+            count: 2
+            path: ../../tests/system/Database/Live/MySQLi/FoundRowsTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$numberNative\.$#'
+            count: 2
+            path: ../../tests/system/Database/Live/MySQLi/NumberNativeTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$schema\.$#'
+            count: 1
+            path: ../../tests/system/Database/Live/OrderTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$schema\.$#'
+            count: 1
+            path: ../../tests/system/Database/Live/PreparedQueryTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Database\\BaseConnection\:\:\$schema\.$#'
+            count: 2
+            path: ../../tests/system/Database/Migrations/MigrationRunnerTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$key\.$#'
+            count: 1
+            path: ../../tests/system/Encryption/EncryptionTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Encryption\\Encryption\:\:\$bogus\.$#'
+            count: 2
+            path: ../../tests/system/Encryption/EncryptionTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$cipher\.$#'
+            count: 1
+            path: ../../tests/system/Encryption/Handlers/OpenSSLHandlerTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$key\.$#'
+            count: 2
+            path: ../../tests/system/Encryption/Handlers/OpenSSLHandlerTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$blockSize\.$#'
+            count: 1
+            path: ../../tests/system/Encryption/Handlers/SodiumHandlerTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$driver\.$#'
+            count: 1
+            path: ../../tests/system/Encryption/Handlers/SodiumHandlerTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$key\.$#'
+            count: 1
+            path: ../../tests/system/Encryption/Handlers/SodiumHandlerTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\I18n\\TimeLegacy\:\:\$foobar\.$#'
+            count: 1
+            path: ../../tests/system/I18n/TimeLegacyTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\I18n\\TimeLegacy\:\:\$timezoneName\.$#'
+            count: 1
+            path: ../../tests/system/I18n/TimeLegacyTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\I18n\\TimeLegacy\:\:\$weekOfWeek\.$#'
+            count: 1
+            path: ../../tests/system/I18n/TimeLegacyTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\I18n\\Time\:\:\$foobar\.$#'
+            count: 1
+            path: ../../tests/system/I18n/TimeTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\I18n\\Time\:\:\$timezoneName\.$#'
+            count: 1
+            path: ../../tests/system/I18n/TimeTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\I18n\\Time\:\:\$weekOfWeek\.$#'
+            count: 1
+            path: ../../tests/system/I18n/TimeTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Config\\BaseConfig\:\:\$regenerate\.$#'
+            count: 2
+            path: ../../tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Config\\BaseConfig\:\:\$tokenRandomize\.$#'
+            count: 2
+            path: ../../tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php
+
+        -
+            message: '#^Access to an undefined property CodeIgniter\\Config\\BaseConfig\:\:\$regenerate\.$#'
+            count: 2
+            path: ../../tests/system/Security/SecurityCSRFSessionTest.php

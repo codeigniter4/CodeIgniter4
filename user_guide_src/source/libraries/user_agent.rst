@@ -18,9 +18,9 @@ Initializing the Class
 
 The User Agent class is always available directly from the current :doc:`IncomingRequest </incoming/incomingrequest>` instance.
 By default, you will have a request instance in your controller that you can retrieve the
-User Agent class from::
+User Agent class from:
 
-	$agent = $this->request->getUserAgent();
+.. literalinclude:: user_agent/001.php
 
 User Agent Definitions
 ======================
@@ -35,160 +35,118 @@ Example
 When the User Agent class is initialized it will attempt to determine
 whether the user agent browsing your site is a web browser, a mobile
 device, or a robot. It will also gather the platform information if it
-is available::
+is available:
 
-	$agent = $this->request->getUserAgent();
-
-	if ($agent->isBrowser())
-	{
-		$currentAgent = $agent->getBrowser().' '.$agent->getVersion();
-	}
-	elseif ($agent->isRobot())
-	{
-		$currentAgent = $this->agent->robot();
-	}
-	elseif ($agent->isMobile())
-	{
-		$currentAgent = $agent->getMobile();
-	}
-	else
-	{
-		$currentAgent = 'Unidentified User Agent';
-	}
-
-	echo $currentAgent;
-
-	echo $agent->getPlatform(); // Platform info (Windows, Linux, Mac, etc.)
+.. literalinclude:: user_agent/002.php
 
 ***************
 Class Reference
 ***************
 
-.. php:class:: CodeIgniter\\HTTP\\UserAgent
+.. php:namespace:: CodeIgniter\HTTP
 
-	.. php:method:: isBrowser([$key = NULL])
+.. php:class:: UserAgent
 
-		:param	string	$key: Optional browser name
-    		:returns:	TRUE if the user agent is a (specified) browser, FALSE if not
-    		:rtype:	bool
+    .. php:method:: isBrowser([$key = null])
 
-    		Returns TRUE/FALSE (boolean) if the user agent is a known web browser.
-    		::
+        :param    string    $key: Optional browser name
+        :returns:    true if the user agent is a (specified) browser, false if not
+        :rtype:    bool
 
-			if ($agent->isBrowser('Safari'))
-			{
-				echo 'You are using Safari.';
-			}
-			elseif ($agent->isBrowser())
-			{
-				echo 'You are using a browser.';
-			}
+        Returns true/false (boolean) if the user agent is a known web browser.
 
-		.. note:: The string "Safari" in this example is an array key in the list of browser definitions.
-				  You can find this list in **app/Config/UserAgents.php** if you want to add new
-				  browsers or change the strings.
+        .. literalinclude:: user_agent/003.php
 
-	.. php:method:: isMobile([$key = NULL])
+        .. note:: The string "Safari" in this example is an array key in the list of browser definitions.
+                  You can find this list in **app/Config/UserAgents.php** if you want to add new
+                  browsers or change the strings.
 
-		:param	string	$key: Optional mobile device name
-    		:returns:	TRUE if the user agent is a (specified) mobile device, FALSE if not
-    		:rtype:	bool
+    .. php:method:: isMobile([$key = null])
 
-    		Returns TRUE/FALSE (boolean) if the user agent is a known mobile device.
-    		::
+        :param    string    $key: Optional mobile device name
+        :returns:    true if the user agent is a (specified) mobile device, false if not
+        :rtype:    bool
 
-			if ($agent->isMobile('iphone'))
-			{
-				echo view('iphone/home');
-			}
-			elseif ($agent->isMobile())
-			{
-				echo view('mobile/home');
-			}
-			else
-			{
-				echo view('web/home');
-			}
+        Returns true/false (boolean) if the user agent is a known mobile device.
 
-	.. php:method:: isRobot([$key = NULL])
+        .. literalinclude:: user_agent/004.php
 
-		:param	string	$key: Optional robot name
-    		:returns:	TRUE if the user agent is a (specified) robot, FALSE if not
-    		:rtype:	bool
+    .. php:method:: isRobot([$key = null])
 
-    		Returns TRUE/FALSE (boolean) if the user agent is a known robot.
+        :param    string    $key: Optional robot name
+        :returns:    true if the user agent is a (specified) robot, false if not
+        :rtype:    bool
 
-    		.. note:: The user agent library only contains the most common robot definitions. It is not a complete list of bots.
-    				  There are hundreds of them so searching for each one would not be very efficient. If you find that some bots
-    				  that commonly visit your site are missing from the list you can add them to your
-    				  **app/Config/UserAgents.php** file.
+        Returns true/false (boolean) if the user agent is a known robot.
 
-	.. php:method:: isReferral()
+        .. note:: The user agent library only contains the most common robot definitions. It is not a complete list of bots.
+                  There are hundreds of them so searching for each one would not be very efficient. If you find that some bots
+                  that commonly visit your site are missing from the list you can add them to your
+                  **app/Config/UserAgents.php** file.
 
-		:returns:	TRUE if the user agent is a referral, FALSE if not
-		:rtype:	bool
+    .. php:method:: isReferral()
 
-		Returns TRUE/FALSE (boolean) if the user agent was referred from another site.
+        :returns:    true if the user agent is a referral, false if not
+        :rtype:    bool
 
-	.. php:method:: getBrowser()
+        Returns true/false (boolean) if the user agent was referred from another site.
 
-		:returns:	Detected browser or an empty string
-		:rtype:	string
+    .. php:method:: getBrowser()
 
-		Returns a string containing the name of the web browser viewing your site.
+        :returns:    Detected browser or an empty string
+        :rtype:    string
 
-	.. php:method:: getVersion()
+        Returns a string containing the name of the web browser viewing your site.
 
-		:returns:	Detected browser version or an empty string
-		:rtype:	string
+    .. php:method:: getVersion()
 
-		Returns a string containing the version number of the web browser viewing your site.
+        :returns:    Detected browser version or an empty string
+        :rtype:    string
 
-	.. php:method:: getMobile()
+        Returns a string containing the version number of the web browser viewing your site.
 
-		:returns:	Detected mobile device brand or an empty string
-		:rtype:	string
+    .. php:method:: getMobile()
 
-		Returns a string containing the name of the mobile device viewing your site.
+        :returns:    Detected mobile device brand or an empty string
+        :rtype:    string
 
-	.. php:method:: getRobot()
+        Returns a string containing the name of the mobile device viewing your site.
 
-		:returns:	Detected robot name or an empty string
-		:rtype:	string
+    .. php:method:: getRobot()
 
-		Returns a string containing the name of the robot viewing your site.
+        :returns:    Detected robot name or an empty string
+        :rtype:    string
 
-	.. php:method:: getPlatform()
+        Returns a string containing the name of the robot viewing your site.
 
-		:returns:	Detected operating system or an empty string
-		:rtype:	string
+    .. php:method:: getPlatform()
 
-		Returns a string containing the platform viewing your site (Linux, Windows, OS X, etc.).
+        :returns:    Detected operating system or an empty string
+        :rtype:    string
 
-	.. php:method:: getReferrer()
+        Returns a string containing the platform viewing your site (Linux, Windows, OS X, etc.).
 
-		:returns:	Detected referrer or an empty string
-		:rtype:	string
+    .. php:method:: getReferrer()
 
-		The referrer, if the user agent was referred from another site. Typically you'll test for this as follows::
+        :returns:    Detected referrer or an empty string
+        :rtype:    string
 
-			if ($agent->isReferral())
-			{
-				echo $agent->referrer();
-			}
+        The referrer, if the user agent was referred from another site. Typically you'll test for this as follows:
 
-	.. php:method:: getAgentString()
+        .. literalinclude:: user_agent/005.php
 
-		:returns:	Full user agent string or an empty string
-		:rtype:	string
+    .. php:method:: getAgentString()
 
-		Returns a string containing the full user agent string. Typically it will be something like this::
+        :returns:    Full user agent string or an empty string
+        :rtype:    string
 
-			Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-US; rv:1.8.0.4) Gecko/20060613 Camino/1.0.2
+        Returns a string containing the full user agent string. Typically it will be something like this::
 
-	.. php:method:: parse($string)
+            Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-US; rv:1.8.0.4) Gecko/20060613 Camino/1.0.2
 
-		:param	string	$string: A custom user-agent string
-    		:rtype:	void
+    .. php:method:: parse($string)
 
-    		Parses a custom user-agent string, different from the one reported by the current visitor.
+        :param    string    $string: A custom user-agent string
+        :rtype:    void
+
+        Parses a custom user-agent string, different from the one reported by the current visitor.

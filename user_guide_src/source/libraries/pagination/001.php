@@ -1,0 +1,3 @@
+<?php
+
+$pager = service('pager');

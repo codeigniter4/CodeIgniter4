@@ -6,11 +6,17 @@ Library Reference
     :titlesonly:
 
     caching
+    cookies
+    cors
     curlrequest
+    email
+    encryption
     files
+    file_collections
     honeypot
     images
     pagination
+    publisher
     security
     sessions
     throttler
