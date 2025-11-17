@@ -113,13 +113,13 @@ class Cache extends BaseConfig
      * the Redis or Predis drivers.
      *
      * @var array{
-     * host?: string,
-     * password?: string|null,
-     * port?: int,
-     * timeout?: int,
-     * async?: bool,
-     * persistent?: bool,
-     * database?: int
+     *     host?: string,
+     *     password?: string|null,
+     *     port?: int,
+     *     timeout?: int,
+     *     async?: bool,
+     *     persistent?: bool,
+     *     database?: int
      * }
      */
     public array $redis = [
