@@ -75,8 +75,8 @@ Libraries
 
 - **API Transformers:** This new feature provides a structured way to transform data for API responses. See :ref:`API Transformers <api_transformers>` for details.
 - **CLI:** Added ``SignalTrait`` to provide unified handling of operating system signals in CLI commands.
-- **Cache:** Added ``async`` and ``persistent`` config item to predis handler.
-- **Cache:** Added ``persistent`` config item to redis handler.
+- **Cache:** Added ``async`` and ``persistent`` config item to Predis handler.
+- **Cache:** Added ``persistent`` config item to Redis handler.
 - **CURLRequest:** Added ``shareConnection`` config item to change default share connection.
 - **CURLRequest:** Added ``dns_cache_timeout`` option to change default DNS cache timeout.
 - **CURLRequest:** Added ``fresh_connect`` options to enable/disable request fresh connection.
