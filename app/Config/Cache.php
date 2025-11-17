@@ -127,7 +127,7 @@ class Cache extends BaseConfig
         'password'   => null,
         'port'       => 6379,
         'timeout'    => 0,
-        'async'      => false, // this option only used by Predis
+        'async'      => false, // specific to Predis and ignored by the native Redis extension
         'persistent' => false,
         'database'   => 0,
     ];
