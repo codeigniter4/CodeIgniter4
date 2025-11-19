@@ -57,7 +57,7 @@ class ColorPlugin extends AbstractPlugin implements PluginCompleteInterface
 
         $trimmed = \strtolower(\trim($var));
 
-        if (!isset(ColorRepresentation::$color_map[$trimmed]) && !\preg_match('/^(?:(?:rgb|hsl)[^\\)]{6,}\\)|#[0-9a-fA-F]{3,8})$/', $trimmed)) {
+        if (!isset(ColorRepresentation::$color_map[$trimmed]) && !\preg_match('/^(?:(?:rgb|hsl)a?[^\\)]{6,}\\)|#[0-9a-f]{3,8})$/', $trimmed)) {
             return $v;
         }
 

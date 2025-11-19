@@ -91,11 +91,11 @@ class TracePlugin extends AbstractPlugin implements PluginCompleteInterface
 
             $index = $frame->getContext()->getName();
 
-            if (!isset($trace[$index]) || Utils::traceFrameIsListed($trace[$index], self::$blacklist)) {
+            if (!isset($trace[$index]['file']) || Utils::traceFrameIsListed($trace[$index], self::$blacklist)) {
                 continue;
             }
 
-            if (isset($trace[$index]['file']) && false !== ($realfile = \realpath($trace[$index]['file']))) {
+            if (false !== ($realfile = \realpath($trace[$index]['file']))) {
                 foreach ($path_blacklist as $path) {
                     if (0 === \strpos($realfile, $path)) {
                         continue 2;
@@ -144,7 +144,7 @@ class TracePlugin extends AbstractPlugin implements PluginCompleteInterface
 
         foreach ($paths as $path) {
             $realpath = \realpath($path);
-            if (\is_dir($realpath)) {
+            if (false !== $realpath && \is_dir($realpath)) {
                 $realpath .= DIRECTORY_SEPARATOR;
             }
 

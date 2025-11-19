@@ -49,7 +49,7 @@ class BinaryPlugin extends AbstractPlugin implements TabPluginInterface
         $lines = \str_split($r->getValue(), self::$line_length);
 
         foreach ($lines as $index => $line) {
-            $out .= \sprintf('%08X', $index * self::$line_length).":\t";
+            $out .= ((string) \sprintf('%08X', $index * self::$line_length)).":\t";
 
             $chunks = \str_split(\str_pad(\bin2hex($line), 2 * self::$line_length, ' '), 2 * self::$chunk_length);
 
