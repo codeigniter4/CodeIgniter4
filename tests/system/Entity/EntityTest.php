@@ -50,7 +50,7 @@ final class EntityTest extends CIUnitTestCase
     }
 
     /**
-     * @see https://github.com/codeigniter4/CodeIgniter4/issues
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5762
      */
     public function testSetArrayToPropertyNamedAttributes(): void
     {

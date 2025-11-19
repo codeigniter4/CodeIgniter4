@@ -1,4 +1,4 @@
-# total 463 errors
+# total 459 errors
 
 parameters:
     ignoreErrors:
@@ -338,11 +338,6 @@ parameters:
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
-            message: '#^Assigning ''Mozilla'' directly on offset ''HTTP_USER_AGENT'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
             message: '#^Assigning ''fr\-FR; q\=1\.0, en; q\=0\.5'' directly on offset ''HTTP_ACCEPT_LANGUAGE'' of \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../tests/system/HTTP/IncomingRequestTest.php
@@ -661,16 +656,6 @@ parameters:
             message: '#^Assigning ''example\.com'' directly on offset ''HTTP_HOST'' of \$_SERVER is discouraged\.$#'
             count: 3
             path: ../../tests/system/HTTP/URITest.php
-
-        -
-            message: '#^Assigning ''http\://codeigniter\.com/user_guide/'' directly on offset ''HTTP_REFERER'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/UserAgentTest.php
-
-        -
-            message: '#^Assigning string directly on offset ''HTTP_USER_AGENT'' of \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../tests/system/HTTP/UserAgentTest.php
 
         -
             message: '#^Assigning ''/'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'

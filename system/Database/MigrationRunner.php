@@ -48,7 +48,7 @@ class MigrationRunner
      *
      * @var string|null
      */
-    protected $namespace;
+    protected $namespace = APP_NAMESPACE;
 
     /**
      * The database Group to migrate.
@@ -148,8 +148,6 @@ class MigrationRunner
         $this->enabled = $config->enabled ?? false;
         $this->table   = $config->table ?? 'migrations';
         $this->lock    = $config->lock ?? false;
-
-        $this->namespace = APP_NAMESPACE;
 
         // Even if a DB connection is passed, since it is a test,
         // it is assumed to use the default group name

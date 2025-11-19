@@ -972,7 +972,7 @@ final class MiscUrlTest extends CIUnitTestCase
             $this->config->baseURL = 'http://sub.example.com/';
             $this->createRequest('http://sub.example.com/');
 
-            $this->assertSame($expected, parse_subdomain(null));
+            $this->assertSame($expected, parse_subdomain());
 
             return;
         }

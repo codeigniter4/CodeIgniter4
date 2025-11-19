@@ -100,7 +100,7 @@ class Restrict implements RouteAttributeInterface
         }
 
         $currentHost  = strtolower($request->getUri()->getHost());
-        $allowedHosts = array_map('strtolower', (array) $this->hostname);
+        $allowedHosts = array_map(strtolower(...), (array) $this->hostname);
 
         if (! in_array($currentHost, $allowedHosts, true)) {
             throw new PageNotFoundException('Access denied: Host is not allowed.');
@@ -114,7 +114,7 @@ class Restrict implements RouteAttributeInterface
         }
 
         $currentSubdomain  = parse_subdomain($request->getUri()->getHost());
-        $allowedSubdomains = array_map('strtolower', (array) $this->subdomain);
+        $allowedSubdomains = array_map(strtolower(...), (array) $this->subdomain);
 
         // If no subdomain exists but one is required
         if ($currentSubdomain === '') {

@@ -73,12 +73,12 @@ abstract class BaseTransformer implements TransformerInterface
 
         $fields       = $this->request->getGet('fields');
         $this->fields = is_string($fields)
-            ? array_map('trim', explode(',', $fields))
+            ? array_map(trim(...), explode(',', $fields))
             : $fields;
 
         $includes       = $this->request->getGet('include');
         $this->includes = is_string($includes)
-            ? array_map('trim', explode(',', $includes))
+            ? array_map(trim(...), explode(',', $includes))
             : $includes;
     }
 
@@ -121,7 +121,7 @@ abstract class BaseTransformer implements TransformerInterface
      */
     public function transformMany(array $resources): array
     {
-        return array_map(fn ($resource): array => $this->transform($resource), $resources);
+        return array_map($this->transform(...), $resources);
     }
 
     /**

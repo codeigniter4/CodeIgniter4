@@ -1574,7 +1574,7 @@ class RouteCollection implements RouteCollectionInterface
 
         // Has multiple hostnames
         if (is_array($hostname)) {
-            $hostnameLower = array_map('strtolower', $hostname);
+            $hostnameLower = array_map(strtolower(...), $hostname);
 
             return in_array(strtolower($this->httpHost), $hostnameLower, true);
         }

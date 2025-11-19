@@ -41,7 +41,7 @@ class BaseBuilder
     /**
      * QB SELECT data
      *
-     * @var array
+     * @var list<string>
      */
     protected $QBSelect = [];
 
@@ -2113,7 +2113,7 @@ class BaseBuilder
             if (is_string($set)) {
                 $set = explode(',', $set);
 
-                $set = array_map(static fn ($key): string => trim($key), $set);
+                $set = array_map(trim(...), $set);
             }
 
             if ($set instanceof RawSql) {
@@ -2157,7 +2157,7 @@ class BaseBuilder
         if (is_string($query)) {
             if ($columns !== null && is_string($columns)) {
                 $columns = explode(',', $columns);
-                $columns = array_map(static fn ($key): string => trim($key), $columns);
+                $columns = array_map(trim(...), $columns);
             }
 
             $columns = (array) $columns;

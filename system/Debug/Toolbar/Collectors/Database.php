@@ -104,7 +104,7 @@ class Database extends BaseCollector
             static::$queries[] = [
                 'query'     => $query,
                 'string'    => $queryString,
-                'duplicate' => in_array($queryString, array_column(static::$queries, 'string', null), true),
+                'duplicate' => in_array($queryString, array_column(static::$queries, 'string'), true),
                 'trace'     => $backtrace,
             ];
         }
@@ -147,8 +147,7 @@ class Database extends BaseCollector
      */
     public function display(): array
     {
-        $data            = [];
-        $data['queries'] = array_map(static function (array $query): array {
+        return ['queries' => array_map(static function (array $query): array {
             $isDuplicate = $query['duplicate'] === true;
 
             $firstNonSystemLine = '';
@@ -195,9 +194,7 @@ class Database extends BaseCollector
                 'trace-file' => $firstNonSystemLine,
                 'qid'        => md5($query['query'] . Time::now()->format('0.u00 U')),
             ];
-        }, static::$queries);
-
-        return $data;
+        }, static::$queries)];
     }
 
     /**

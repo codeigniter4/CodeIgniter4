@@ -384,7 +384,7 @@ final class SiteUrlTest extends CIUnitTestCase
         );
         $this->assertSame(
             'http://example.com/ci/v4/controller/method',
-            base_url('controller/method', null),
+            base_url('controller/method'),
         );
     }
 
@@ -402,7 +402,7 @@ final class SiteUrlTest extends CIUnitTestCase
         );
         $this->assertSame(
             'http://example.com/controller/method',
-            base_url('controller/method', null),
+            base_url('controller/method'),
         );
     }
 
@@ -456,7 +456,7 @@ final class SiteUrlTest extends CIUnitTestCase
 
         $this->assertSame(
             'http://www.example.jp/public/controller/method',
-            base_url('controller/method', null),
+            base_url('controller/method'),
         );
     }
 }

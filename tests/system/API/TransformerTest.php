@@ -58,7 +58,7 @@ final class TransformerTest extends CIUnitTestCase
             }
         };
 
-        $result = $transformer->transform(null);
+        $result = $transformer->transform();
 
         $this->assertSame(['id' => 1, 'name' => 'Test'], $result);
     }
@@ -74,7 +74,7 @@ final class TransformerTest extends CIUnitTestCase
             }
         };
 
-        $result = $transformer->transform(null);
+        $result = $transformer->transform();
 
         $this->assertSame(['id' => 1, 'name' => 'Test'], $result);
     }
