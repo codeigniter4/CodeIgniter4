@@ -55,11 +55,12 @@ use Kint\Value\InstanceValue;
 use Kint\Value\Representation\ContainerRepresentation;
 use Kint\Value\StringValue;
 use LogicException;
+use ReflectionClass;
 
 class DomPlugin extends AbstractPlugin implements PluginBeginInterface
 {
     /**
-     * Reflection doesn't work below 8.1, also it won't show readonly status.
+     * Reflection doesn't show readonly status.
      *
      * In order to ensure this is stable enough we're only going to provide
      * properties for element and node. If subclasses like attr or document
@@ -102,12 +103,9 @@ class DomPlugin extends AbstractPlugin implements PluginBeginInterface
         'previousElementSibling' => true,
         'nextElementSibling' => true,
         'innerHTML' => false,
-        'outerHTML' => false,
+        'outerHTML' => true,
         'substitutedNodeValue' => false,
-    ];
-
-    public const DOM_NS_VERSIONS = [
-        'outerHTML' => KINT_PHP85,
+        'children' => true,
     ];
 
     /**
@@ -208,6 +206,9 @@ class DomPlugin extends AbstractPlugin implements PluginBeginInterface
      */
     public static bool $verbose = false;
 
+    /** @psalm-var array<class-string, array<string, bool>> cache of properties for getKnownProperties */
+    protected static array $property_cache = [];
+
     protected ClassMethodsPlugin $methods_plugin;
     protected ClassStaticsPlugin $statics_plugin;
 
@@ -259,12 +260,14 @@ class DomPlugin extends AbstractPlugin implements PluginBeginInterface
     /** @psalm-param Node|DOMNode $var */
     private function parseProperty(object $var, string $prop, ContextInterface $c): AbstractValue
     {
-        if (!isset($var->{$prop})) {
+        // Suppress deprecation message
+        if (@!isset($var->{$prop})) {
             return new FixedWidthValue($c, null);
         }
 
         $parser = $this->getParser();
-        $value = $var->{$prop};
+        // Suppress deprecation message
+        @$value = $var->{$prop};
 
         if (\is_scalar($value)) {
             return $parser->parse($value, $c);
@@ -450,29 +453,42 @@ class DomPlugin extends AbstractPlugin implements PluginBeginInterface
      */
     public static function getKnownProperties(object $var): array
     {
-        if ($var instanceof Node) {
-            $known_properties = self::NODE_PROPS;
-            if ($var instanceof Element) {
-                $known_properties += self::ELEMENT_PROPS;
-            }
+        if (KINT_PHP81) {
+            $r = new ReflectionClass($var);
+            $classname = $r->getName();
 
-            if ($var instanceof Document) {
-                $known_properties['textContent'] = true;
-            }
+            if (!isset(self::$property_cache[$classname])) {
+                self::$property_cache[$classname] = [];
 
-            if ($var instanceof Attr || $var instanceof CharacterData) {
-                $known_properties['nodeValue'] = false;
-            }
+                foreach ($r->getProperties() as $prop) {
+                    if ($prop->isStatic()) {
+                        continue;
+                    }
 
-            foreach (self::DOM_NS_VERSIONS as $key => $val) {
-                /**
-                 * @psalm-var bool $val
-                 * Psalm bug #4509
-                 */
-                if (false === $val) {
-                    unset($known_properties[$key]); // @codeCoverageIgnore
+                    $declaring = $prop->getDeclaringClass()->getName();
+                    $name = $prop->name;
+
+                    if (\in_array($declaring, [Node::class, Element::class], true)) {
+                        $readonly = self::NODE_PROPS[$name] ?? self::ELEMENT_PROPS[$name];
+                    } elseif (\in_array($declaring, [DOMNode::class, DOMElement::class], true)) {
+                        $readonly = self::DOMNODE_PROPS[$name] ?? self::DOMELEMENT_PROPS[$name];
+                    } else {
+                        continue;
+                    }
+
+                    self::$property_cache[$classname][$prop->name] = $readonly;
+                }
+
+                if ($var instanceof Document) {
+                    self::$property_cache[$classname]['textContent'] = true;
+                }
+
+                if ($var instanceof Attr || $var instanceof CharacterData) {
+                    self::$property_cache[$classname]['nodeValue'] = false;
                 }
             }
+
+            $known_properties = self::$property_cache[$classname];
         } else {
             $known_properties = self::DOMNODE_PROPS;
             if ($var instanceof DOMElement) {
@@ -480,10 +496,6 @@ class DomPlugin extends AbstractPlugin implements PluginBeginInterface
             }
 
             foreach (self::DOM_VERSIONS as $key => $val) {
-                /**
-                 * @psalm-var bool $val
-                 * Psalm bug #4509
-                 */
                 if (false === $val) {
                     unset($known_properties[$key]); // @codeCoverageIgnore
                 }

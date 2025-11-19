@@ -335,7 +335,7 @@ class ColorRepresentation extends AbstractRepresentation
             $this->setValuesFromHex(self::$color_map[$value]);
             $variant = self::COLOR_NAME;
         } elseif ('#' === $value[0]) {
-            $variant = $this->setValuesFromHex(\substr($value, 1));
+            $variant = $this->setValuesFromHex((string) \substr($value, 1));
         } else {
             $variant = $this->setValuesFromFunction($value);
         }
@@ -381,7 +381,7 @@ class ColorRepresentation extends AbstractRepresentation
                 $this->b = \hexdec($hex[2]) * 0x11;
                 break;
             case self::COLOR_HEX_8:
-                $this->a = \hexdec(\substr($hex, 6, 2)) / 0xFF;
+                $this->a = \hexdec((string) \substr($hex, 6, 2)) / 0xFF;
                 // no break
             case self::COLOR_HEX_6:
                 $hex = \str_split($hex, 2);
@@ -397,6 +397,9 @@ class ColorRepresentation extends AbstractRepresentation
     /** @psalm-return self::COLOR_* */
     protected function setValuesFromFunction(string $value): int
     {
+        // We're not even going to attempt to support other color functions or
+        // angle values. If that's ever going to be a thing we'll depend on a
+        // color library and use php scopes for the phar file.
         if (!\preg_match('/^((?:rgb|hsl)a?)\\s*\\(([0-9\\.%,\\s\\/\\-]+)\\)$/i', $value, $match)) {
             throw new InvalidArgumentException('Couldn\'t parse color function string');
         }
@@ -419,13 +422,29 @@ class ColorRepresentation extends AbstractRepresentation
                 throw new InvalidArgumentException('Color functions must be one of rgb/rgba/hsl/hsla'); // @codeCoverageIgnore
         }
 
-        $params = \preg_replace('/[,\\s\\/]+/', ',', \trim($match[2]));
-        $params = \explode(',', $params);
-        $params = \array_map('trim', $params);
+        \preg_match('/^\\s*([^,\\s\\/]+)([,\\s]+)((?1))((?2))((?1))(?:([,\\s\\/]+)((?1)))?\\s*$/', $match[2], $match);
 
-        if (\count($params) < 3 || \count($params) > 4) {
-            throw new InvalidArgumentException('Color functions must have 3 or 4 arguments');
+        if (!$match ||
+            \trim($match[2]) !== \trim($match[4]) ||
+            (isset($match[6]) && (
+                ('' === \trim($match[2]) && '/' !== \trim($match[6])) ||
+                ('' !== \trim($match[2]) && \trim($match[2]) !== \trim($match[6]))
+            ))
+        ) {
+            throw new InvalidArgumentException('Couldn\'t parse color function string');
         }
+
+        $params = [
+            $match[1],
+            $match[3],
+            $match[5],
+        ];
+
+        if (isset($match[7])) {
+            $params[] = $match[7];
+        }
+
+        $params = \array_map('trim', $params);
 
         foreach ($params as $i => &$color) {
             if (false !== \strpos($color, '%')) {

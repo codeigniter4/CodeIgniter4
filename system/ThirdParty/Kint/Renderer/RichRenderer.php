@@ -290,7 +290,7 @@ class RichRenderer extends AbstractRenderer
         }
 
         if (null !== ($s = $v->getDisplayValue())) {
-            $s = \preg_replace('/\\s+/', ' ', $s);
+            $s = (string) \preg_replace('/\\s+/', ' ', $s);
 
             if (self::$strlen_max) {
                 $s = Utils::truncateString($s, self::$strlen_max);
@@ -322,7 +322,7 @@ class RichRenderer extends AbstractRenderer
         $output = '<dd>';
 
         if (1 === \count($tabs) && $tabs[0]->labelIsImplicit()) {
-            $output .= \reset($contents);
+            $output .= (string) \reset($contents);
         } else {
             $output .= '<ul class="kint-tabs">';
 

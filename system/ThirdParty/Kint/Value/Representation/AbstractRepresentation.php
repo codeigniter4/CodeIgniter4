@@ -39,7 +39,9 @@ abstract class AbstractRepresentation implements RepresentationInterface
     public function __construct(string $label, ?string $name = null, bool $implicit_label = false)
     {
         $this->label = $label;
-        $this->name = \preg_replace('/[^a-z0-9]+/', '_', \strtolower($name ?? $label));
+        /** @psalm-var string $name */
+        $name = \preg_replace('/[^a-z0-9]+/', '_', \strtolower($name ?? $label));
+        $this->name = $name;
         $this->implicit_label = $implicit_label;
     }
 

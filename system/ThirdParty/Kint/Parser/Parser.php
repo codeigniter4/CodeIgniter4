@@ -229,7 +229,7 @@ class Parser
         $bt = \debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT | DEBUG_BACKTRACE_IGNORE_ARGS);
 
         \reset($bt);
-        /** @psalm-var class-string $caller_frame['class'] */
+        /** @psalm-var array{class: class-string, function: string, ...} $caller_frame */
         $caller_frame = \next($bt);
 
         foreach ($bt as $frame) {
@@ -401,7 +401,10 @@ class Parser
             $properties = [];
 
             foreach ($props as $rprop) {
-                $rprop->setAccessible(true);
+                if (KINT_PHP81 === false) {
+                    $rprop->setAccessible(true);
+                }
+
                 $name = $rprop->getName();
 
                 // Casting object to array:
@@ -458,6 +461,21 @@ class Parser
                             } elseif ('' === $child->hook_set_type) {
                                 $child->hook_set_type = null;
                             }
+                        }
+                    }
+
+                    if (KINT_PHP8412) {
+                        $proto_prop = $rprop;
+                        while (($parent_class = $proto_prop->getDeclaringClass()->getParentClass()) &&
+                            $parent_class->hasProperty($name) &&
+                            ($parent_prop = $parent_class->getProperty($name)) &&
+                            !$parent_prop->isPrivate()) {
+                            $proto_prop = $parent_prop;
+                        }
+
+                        $proto_class = $proto_prop->getDeclaringClass()->getName();
+                        if ($proto_class !== $child->owner_class) {
+                            $child->proto_class = $proto_prop->getDeclaringClass()->getName();
                         }
                     }
                 } else {
