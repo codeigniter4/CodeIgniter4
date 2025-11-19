@@ -95,9 +95,10 @@ final class AutoRouteCollector
     /**
      * Adding Filters
      *
-     * @param list<array<string, array|string>> $routes
+     * @param array<int,array<string,string|array<string>>>     $routes List of route definitions
+     * 
+     * @return array<int,array<string,string|array<string>>>    $Updated route definitions with filters
      *
-     * @return list<array<string, array|string>>
      */
     private function addFilters(array $routes): array
     {

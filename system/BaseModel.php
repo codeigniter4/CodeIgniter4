@@ -436,7 +436,7 @@ abstract class BaseModel
      * @param int|null $limit  Limit
      * @param int      $offset Offset
      *
-     * @return array
+     * @return array<int,array<int|string,bool|float|int|object|string|null>|object>
      */
     abstract protected function doFindAll(?int $limit = null, int $offset = 0);
 
@@ -629,7 +629,7 @@ abstract class BaseModel
      *
      * @param string $columnName Column Name
      *
-     * @return array|null The resulting row of data, or null if no data found.
+     * @return array<int,mixed>|null The resulting row of data, or null if no data found.
      *
      * @throws DataException
      */
@@ -650,7 +650,7 @@ abstract class BaseModel
      * @param int $limit  Limit
      * @param int $offset Offset
      *
-     * @return array
+     * @return array<mixed>
      */
     public function findAll(?int $limit = null, int $offset = 0)
     {
@@ -695,7 +695,7 @@ abstract class BaseModel
     /**
      * Returns the first row of the result set.
      *
-     * @return array|object|null
+     * @return array<string,mixed>|object|null
      */
     public function first()
     {
@@ -1593,9 +1593,10 @@ abstract class BaseModel
      * currently so that rules don't block updating when only updating
      * a partial row.
      *
-     * @param         array     $rules Array containing field name and rule
-     * @param         array     $row   Row data (@TODO Remove null in param type)
+     * @param array<string,string> $rules
+     * @param array<string,mixed>|null $row
      * @phpstan-param row_array $row
+     * @phpstan-return array<string,string>
      */
     protected function cleanValidationRules(array $rules, ?array $row = null): array
     {
@@ -1889,7 +1890,7 @@ abstract class BaseModel
      *
      * @param string $name Name
      *
-     * @return array|bool|float|int|object|string|null
+     * @return array<mixed>|bool|float|int|object|string|null
      */
     public function __get(string $name)
     {

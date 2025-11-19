@@ -304,6 +304,11 @@ class LocalizationFinder extends BaseCommand
 
     /**
      * Create multidimensional array from another keys
+     * 
+     * @param array<int,string> $fromKeys List of keys to build nested array
+     * @param string            $lastArrayValue Value to assign at the deepest key
+     * 
+     * @return array<string,mixed>   Multidimensional associative array
      */
     private function buildMultiArray(array $fromKeys, string $lastArrayValue = ''): array
     {
@@ -323,6 +328,10 @@ class LocalizationFinder extends BaseCommand
 
     /**
      * Convert multi arrays to specific CLI table rows (flat array)
+     * 
+     * @param array<int,mixed> $array Input translations (nested array or strings)
+     * 
+     * @return array<int,array{0:string,1:string}> Flat list of table rows [langFileNames, value]
      */
     private function arrayToTableRows(string $langFileName, array $array): array
     {
