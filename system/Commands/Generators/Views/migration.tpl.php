@@ -15,7 +15,7 @@ class {class} extends Migration
             'id' => ['type' => 'VARCHAR', 'constraint' => 128, 'null' => false],
 <?php if ($DBDriver === 'MySQLi'): ?>
             'ip_address' => ['type' => 'VARCHAR', 'constraint' => 45, 'null' => false],
-            'timestamp timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL',
+            '`timestamp` timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL',
             'data' => ['type' => 'BLOB', 'null' => false],
  <?php elseif ($DBDriver === 'Postgre'): ?>
             'ip_address inet NOT NULL',
