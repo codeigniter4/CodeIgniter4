@@ -339,6 +339,7 @@
 <li><p><strong>Database:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> where the password parameter was ignored unless it was an empty string.</p></li>
 <li><p><strong>Debug:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">ExceptionHandler</span></code> where JSON encoding would fail when exception traces contained resources (e.g., database connections), closures, or circular references.</p></li>
 <li><p><strong>Forge:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Postgre</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> where changing a column’s default value using <code class="docutils literal notranslate"><span class="pre">Forge::modifyColumn()</span></code> method produced incorrect SQL syntax.</p></li>
+<li><p><strong>Migrations:</strong> Fixed a bug in the session table migration template where the <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> field name conflicted with reserved keywords in MySQL/MariaDB.</p></li>
 <li><p><strong>Model:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Model::replace()</span></code> where <code class="docutils literal notranslate"><span class="pre">created_at</span></code> field (when available) wasn’t set correctly.</p></li>
 <li><p><strong>Model:</strong> Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Model::insertBatch()</span></code> and <code class="docutils literal notranslate"><span class="pre">Model::updateBatch()</span></code> where casts were not applied to inserted or updated values.</p></li>
 <li><p><strong>Toolbar:</strong> Fixed bugs in <code class="docutils literal notranslate"><span class="pre">Collectors\Logs</span></code> that were preventing the “Logs” tab from appearing on the Debug Toolbar.</p></li>
@@ -363,7 +364,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 06, 2025.
+      <span class="lastupdated">Last updated on Nov 21, 2025.
       </span></p>
   </div>
 
