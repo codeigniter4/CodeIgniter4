@@ -43,6 +43,7 @@ Bugs Fixed
 - **Database:** Fixed a bug in ``SQLite3`` where the password parameter was ignored unless it was an empty string.
 - **Debug:** Fixed a bug in ``ExceptionHandler`` where JSON encoding would fail when exception traces contained resources (e.g., database connections), closures, or circular references.
 - **Forge:** Fixed a bug in ``Postgre`` and ``SQLSRV`` where changing a column's default value using ``Forge::modifyColumn()`` method produced incorrect SQL syntax.
+- **Migrations:** Fixed a bug in the session table migration template where the ``timestamp`` field name conflicted with reserved keywords in MySQL/MariaDB.
 - **Model:** Fixed a bug in ``Model::replace()`` where ``created_at`` field (when available) wasn't set correctly.
 - **Model:** Fixed a bug in ``Model::insertBatch()`` and ``Model::updateBatch()`` where casts were not applied to inserted or updated values.
 - **Toolbar:** Fixed bugs in ``Collectors\Logs`` that were preventing the "Logs" tab from appearing on the Debug Toolbar.
