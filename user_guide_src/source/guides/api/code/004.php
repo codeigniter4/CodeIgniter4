@@ -15,9 +15,9 @@ class CreateAuthorsTable extends Migration
                 'auto_increment' => true,
             ],
             'name' => [
-                'type' => 'VARCHAR',
+                'type'       => 'VARCHAR',
                 'constraint' => '255',
-                'null' => false,
+                'null'       => false,
             ],
             'created_at' => [
                 'type' => 'DATETIME',

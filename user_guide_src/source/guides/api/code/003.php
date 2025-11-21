@@ -13,9 +13,9 @@ class Ping extends BaseController
     public function getIndex()
     {
         return $this->respond([
-            'status' => 'ok',
-            'time'   => date('c'),
-            'version'=> CodeIgniter::CI_VERSION,
+            'status'  => 'ok',
+            'time'    => date('c'),
+            'version' => CodeIgniter::CI_VERSION,
         ]);
     }
 }

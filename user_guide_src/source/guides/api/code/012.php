@@ -2,9 +2,9 @@
 
 namespace App\Controllers\Api;
 
-use CodeIgniter\Api\ResponseTrait;
 use App\Controllers\BaseController;
 use App\Transformers\BookTransformer;
+use CodeIgniter\Api\ResponseTrait;
 
 class Books extends BaseController
 {
@@ -20,14 +20,14 @@ class Books extends BaseController
      */
     public function getIndex(?int $id = null)
     {
-        $model = model('BookModel');
+        $model       = model('BookModel');
         $transformer = new BookTransformer();
 
         // If an ID is provided, fetch a single record
         if ($id !== null) {
             $book = $model->withAuthorInfo()->find($id);
 
-            if (!$book) {
+            if (! $book) {
                 return $this->failNotFound('Book not found');
             }
 
@@ -47,7 +47,7 @@ class Books extends BaseController
      */
     public function putIndex(int $id)
     {
-        $data = $this->request->getRawInput();
+        $data  = $this->request->getRawInput();
         $model = model('BookModel');
 
         $rules = [
@@ -56,13 +56,13 @@ class Books extends BaseController
             'year'      => 'required|integer|greater_than_equal_to[2000]|less_than_equal_to[' . date('Y') . ']',
         ];
 
-        if (!$this->validate($rules)) {
+        if (! $this->validate($rules)) {
             return $this->failValidationErrors($this->validator->getErrors());
         }
 
         $model = model('BookModel');
 
-        if (!$model->find($id)) {
+        if (! $model->find($id)) {
             return $this->failNotFound('Book not found');
         }
 
@@ -88,7 +88,7 @@ class Books extends BaseController
             'year'      => 'required|integer|greater_than_equal_to[2000]|less_than_equal_to[' . date('Y') . ']',
         ];
 
-        if (!$this->validate($rules)) {
+        if (! $this->validate($rules)) {
             return $this->failValidationErrors($this->validator->getErrors());
         }
 
@@ -109,7 +109,7 @@ class Books extends BaseController
     {
         $model = model('BookModel');
 
-        if (!$model->find($id)) {
+        if (! $model->find($id)) {
             return $this->failNotFound('Book not found');
         }
 
