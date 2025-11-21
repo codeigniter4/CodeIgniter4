@@ -15,14 +15,14 @@ class CreateBooksTable extends Migration
                 'auto_increment' => true,
             ],
             'title' => [
-                'type' => 'VARCHAR',
+                'type'       => 'VARCHAR',
                 'constraint' => '255',
-                'null' => false,
+                'null'       => false,
             ],
             'author_id' => [
-                'type' => 'INTEGER',
-                'unsigned'       => true,
-                'null' => false,
+                'type'     => 'INTEGER',
+                'unsigned' => true,
+                'null'     => false,
             ],
             'year' => [
                 'type' => 'INTEGER',

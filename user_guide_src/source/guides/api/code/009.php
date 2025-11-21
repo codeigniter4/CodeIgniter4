@@ -2,8 +2,8 @@
 
 namespace App\Controllers\Api;
 
-use CodeIgniter\Api\ResponseTrait;
 use App\Controllers\BaseController;
+use CodeIgniter\Api\ResponseTrait;
 
 class Books extends BaseController
 {
@@ -19,7 +19,6 @@ class Books extends BaseController
      */
     public function getIndex(?int $id = null)
     {
-        //
     }
 
     /**
@@ -29,7 +28,6 @@ class Books extends BaseController
      */
     public function putIndex(int $id)
     {
-        //
     }
 
     /**
@@ -39,7 +37,6 @@ class Books extends BaseController
      */
     public function postIndex()
     {
-        //
     }
 
     /**
@@ -49,6 +46,5 @@ class Books extends BaseController
      */
     public function deleteIndex(int $id)
     {
-        //
     }
 }

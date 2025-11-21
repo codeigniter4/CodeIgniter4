@@ -9,9 +9,9 @@ class BookTransformer extends BaseTransformer
     public function toArray(mixed $resource): array
     {
         return [
-            'id'         => $resource['id'],
-            'title'      => $resource['title'],
-            'year'       => $resource['year'],
+            'id'    => $resource['id'],
+            'title' => $resource['title'],
+            'year'  => $resource['year'],
         ];
     }
 
