@@ -38,12 +38,12 @@ jobs:
     steps:
       - name: Checkout base branch for PR
         if: github.event_name == 'pull_request'
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.base_ref }}
 
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
