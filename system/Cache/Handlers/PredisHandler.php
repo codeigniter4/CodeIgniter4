@@ -155,10 +155,8 @@ class PredisHandler extends BaseHandler
 
     /**
      * {@inheritDoc}
-     *
-     * @return int
      */
-    public function deleteMatching(string $pattern)
+    public function deleteMatching(string $pattern): int
     {
         $matchedKeys = [];
 

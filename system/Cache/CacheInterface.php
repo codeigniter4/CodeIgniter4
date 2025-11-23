@@ -52,6 +52,15 @@ interface CacheInterface
     public function delete(string $key);
 
     /**
+     * Deletes items from the cache store matching a given pattern.
+     *
+     * @param string $pattern Cache items glob-style pattern
+     *
+     * @return int Number of deleted items
+     */
+    public function deleteMatching(string $pattern): int;
+
+    /**
      * Performs atomic incrementation of a raw stored value.
      *
      * @param string $key    Cache ID

@@ -15,10 +15,8 @@ namespace CodeIgniter\Cache\Handlers;
 
 use Closure;
 use CodeIgniter\Cache\CacheInterface;
-use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Cache;
-use Exception;
 
 /**
  * Base class for cache handling
@@ -97,19 +95,5 @@ abstract class BaseHandler implements CacheInterface
         $this->save($key, $value = $callback(), $ttl);
 
         return $value;
-    }
-
-    /**
-     * Deletes items from the cache store matching a given pattern.
-     *
-     * @param string $pattern Cache items glob-style pattern
-     *
-     * @return int
-     *
-     * @throws Exception
-     */
-    public function deleteMatching(string $pattern)
-    {
-        throw new BadMethodCallException('The deleteMatching method is not implemented.');
     }
 }
