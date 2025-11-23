@@ -43,6 +43,7 @@ across all insert/update operations.
 Interface Changes
 =================
 
+- **Cache:** The ``CacheInterface`` now includes the ``deleteMatching()`` method. If you've implemented your own caching driver from scratch, you will need to provide an implementation for this method to ensure compatibility.
 - **Images:** The ``ImageHandlerInterface`` now includes a new method: ``clearMetadata()``. If you've implemented your own handler from scratch, you will need to provide an implementation for this method to ensure compatibility.
 
 Method Signature Changes
