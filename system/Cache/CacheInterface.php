@@ -17,19 +17,15 @@ interface CacheInterface
 {
     /**
      * Takes care of any handler-specific setup that must be done.
-     *
-     * @return void
      */
-    public function initialize();
+    public function initialize(): void;
 
     /**
      * Attempts to fetch an item from the cache store.
      *
      * @param string $key Cache item name
-     *
-     * @return mixed
      */
-    public function get(string $key);
+    public function get(string $key): mixed;
 
     /**
      * Saves an item to the cache store.
@@ -40,7 +36,7 @@ interface CacheInterface
      *
      * @return bool Success or failure
      */
-    public function save(string $key, $value, int $ttl = 60);
+    public function save(string $key, $value, int $ttl = 60): bool;
 
     /**
      * Deletes a specific item from the cache store.
@@ -49,7 +45,7 @@ interface CacheInterface
      *
      * @return bool Success or failure
      */
-    public function delete(string $key);
+    public function delete(string $key): bool;
 
     /**
      * Deletes items from the cache store matching a given pattern.
@@ -65,27 +61,23 @@ interface CacheInterface
      *
      * @param string $key    Cache ID
      * @param int    $offset Step/value to increase by
-     *
-     * @return bool|int
      */
-    public function increment(string $key, int $offset = 1);
+    public function increment(string $key, int $offset = 1): bool|int;
 
     /**
      * Performs atomic decrementation of a raw stored value.
      *
      * @param string $key    Cache ID
      * @param int    $offset Step/value to increase by
-     *
-     * @return bool|int
      */
-    public function decrement(string $key, int $offset = 1);
+    public function decrement(string $key, int $offset = 1): bool|int;
 
     /**
      * Will delete all items in the entire cache.
      *
      * @return bool Success or failure
      */
-    public function clean();
+    public function clean(): bool;
 
     /**
      * Returns information on the entire cache.
@@ -95,18 +87,17 @@ interface CacheInterface
      *
      * @return array<array-key, mixed>|false|object|null
      */
-    public function getCacheInfo();
+    public function getCacheInfo(): array|false|object|null;
 
     /**
      * Returns detailed information about the specific item in the cache.
      *
      * @param string $key Cache item name.
      *
-     * @return array<string, mixed>|false|null Returns null if the item does not exist, otherwise array<string, mixed>
-     *                                         with at least the 'expire' key for absolute epoch expiry (or null).
-     *                                         Some handlers may return false when an item does not exist, which is deprecated.
+     * @return array<string, mixed>|null Returns null if the item does not exist, otherwise array<string, mixed>
+     *                                   with at least the 'expire' key for absolute epoch expiry (or null).
      */
-    public function getMetaData(string $key);
+    public function getMetaData(string $key): ?array;
 
     /**
      * Determines if the driver is supported on this system.

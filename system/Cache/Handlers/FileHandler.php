@@ -72,17 +72,11 @@ class FileHandler extends BaseHandler
         helper('filesystem');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function initialize()
+    public function initialize(): void
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function get(string $key)
+    public function get(string $key): mixed
     {
         $key  = static::validateKey($key, $this->prefix);
         $data = $this->getItem($key);
@@ -91,9 +85,9 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * {@inheritDoc}
+     * @param mixed $value
      */
-    public function save(string $key, $value, int $ttl = 60)
+    public function save(string $key, $value, int $ttl = 60): bool
     {
         $key = static::validateKey($key, $this->prefix);
 
@@ -119,19 +113,13 @@ class FileHandler extends BaseHandler
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function delete(string $key)
+    public function delete(string $key): bool
     {
         $key = static::validateKey($key, $this->prefix);
 
         return is_file($this->path . $key) && unlink($this->path . $key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function deleteMatching(string $pattern): int
     {
         $deleted = 0;
@@ -145,10 +133,7 @@ class FileHandler extends BaseHandler
         return $deleted;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function increment(string $key, int $offset = 1)
+    public function increment(string $key, int $offset = 1): bool|int
     {
         $prefixedKey = static::validateKey($key, $this->prefix);
         $tmp         = $this->getItem($prefixedKey);
@@ -168,39 +153,27 @@ class FileHandler extends BaseHandler
         return $this->save($key, $value, $ttl) ? $value : false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function decrement(string $key, int $offset = 1)
+    public function decrement(string $key, int $offset = 1): bool|int
     {
         return $this->increment($key, -$offset);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function clean()
+    public function clean(): bool
     {
         return delete_files($this->path, false, true);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getCacheInfo()
+    public function getCacheInfo(): array
     {
         return get_dir_file_info($this->path);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getMetaData(string $key)
+    public function getMetaData(string $key): ?array
     {
         $key = static::validateKey($key, $this->prefix);
 
         if (false === $data = $this->getItem($key)) {
-            return false; // @TODO This will return null in a future release
+            return null;
         }
 
         return [
@@ -210,9 +183,6 @@ class FileHandler extends BaseHandler
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isSupported(): bool
     {
         return is_writable($this->path);
@@ -224,7 +194,7 @@ class FileHandler extends BaseHandler
      *
      * @return array{data: mixed, ttl: int, time: int}|false
      */
-    protected function getItem(string $filename)
+    protected function getItem(string $filename): array|false
     {
         if (! is_file($this->path . $filename)) {
             return false;
@@ -271,10 +241,8 @@ class FileHandler extends BaseHandler
      * @param string $path
      * @param string $data
      * @param string $mode
-     *
-     * @return bool
      */
-    protected function writeFile($path, $data, $mode = 'wb')
+    protected function writeFile($path, $data, $mode = 'wb'): bool
     {
         if (($fp = @fopen($path, $mode)) === false) {
             return false;
@@ -353,7 +321,7 @@ class FileHandler extends BaseHandler
      *  relative_path: string,
      * }>|false
      */
-    protected function getDirFileInfo(string $sourceDir, bool $topLevelOnly = true, bool $_recursion = false)
+    protected function getDirFileInfo(string $sourceDir, bool $topLevelOnly = true, bool $_recursion = false): array|false
     {
         static $filedata = [];
 
@@ -412,7 +380,7 @@ class FileHandler extends BaseHandler
      *  fileperms?: int
      * }|false
      */
-    protected function getFileInfo(string $file, $returnedValues = ['name', 'server_path', 'size', 'date'])
+    protected function getFileInfo(string $file, $returnedValues = ['name', 'server_path', 'size', 'date']): array|false
     {
         if (! is_file($file)) {
             return false;

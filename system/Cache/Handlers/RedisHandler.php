@@ -74,10 +74,7 @@ class RedisHandler extends BaseHandler
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function initialize()
+    public function initialize(): void
     {
         $config = $this->config;
 
@@ -111,10 +108,7 @@ class RedisHandler extends BaseHandler
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function get(string $key)
+    public function get(string $key): mixed
     {
         $key  = static::validateKey($key, $this->prefix);
         $data = $this->redis->hMget($key, ['__ci_type', '__ci_value']);
@@ -132,9 +126,9 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * {@inheritDoc}
+     * @param mixed $value
      */
-    public function save(string $key, $value, int $ttl = 60)
+    public function save(string $key, $value, int $ttl = 60): bool
     {
         $key = static::validateKey($key, $this->prefix);
 
@@ -167,19 +161,13 @@ class RedisHandler extends BaseHandler
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function delete(string $key)
+    public function delete(string $key): bool
     {
         $key = static::validateKey($key, $this->prefix);
 
         return $this->redis->del($key) === 1;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function deleteMatching(string $pattern): int
     {
         /** @var list<string> $matchedKeys */
@@ -199,44 +187,29 @@ class RedisHandler extends BaseHandler
         return $this->redis->del($matchedKeys);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function increment(string $key, int $offset = 1)
+    public function increment(string $key, int $offset = 1): int
     {
         $key = static::validateKey($key, $this->prefix);
 
         return $this->redis->hIncrBy($key, '__ci_value', $offset);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function decrement(string $key, int $offset = 1)
+    public function decrement(string $key, int $offset = 1): int
     {
         return $this->increment($key, -$offset);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function clean()
+    public function clean(): bool
     {
         return $this->redis->flushDB();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getCacheInfo()
+    public function getCacheInfo(): array
     {
         return $this->redis->info();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getMetaData(string $key)
+    public function getMetaData(string $key): ?array
     {
         $value = $this->get($key);
 
@@ -255,9 +228,6 @@ class RedisHandler extends BaseHandler
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isSupported(): bool
     {
         return extension_loaded('redis');
