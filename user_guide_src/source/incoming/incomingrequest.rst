@@ -161,7 +161,7 @@ getVar()
     in new projects. Even if you are already using it, we recommend that you use
     another, more appropriate method.
 
-The ``getVar()`` method will pull from ``$_REQUEST``, so will return any data from ``$_GET``, ``$POST``, or ``$_COOKIE`` (depending on php.ini `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_).
+The ``getVar()`` method will pull from ``$_REQUEST``, so will return any data from ``$_GET``, ``$_POST``, or ``$_COOKIE`` (depending on php.ini `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_).
 
 .. warning:: If you want to validate POST data only, don't use ``getVar()``.
     Newer values override older values. POST values may be overridden by the
