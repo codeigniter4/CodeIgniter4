@@ -248,7 +248,7 @@ final class RedisHandlerTest extends CIUnitTestCase
                     'persistent' => null,
                 ],
             ],
-            'persistent connection' => [
+            'persistent connection with numeric one' => [
                 'tcp://127.0.0.1:6379?timeout=10&persistent=1',
                 [
                     'host'       => 'tcp://127.0.0.1',
@@ -259,7 +259,7 @@ final class RedisHandlerTest extends CIUnitTestCase
                     'persistent' => true,
                 ],
             ],
-            'no persistent connection with have parameter' => [
+            'no persistent connection with numeric zero' => [
                 'tcp://127.0.0.1:6379?timeout=10&persistent=0',
                 [
                     'host'       => 'tcp://127.0.0.1',
@@ -270,7 +270,7 @@ final class RedisHandlerTest extends CIUnitTestCase
                     'persistent' => false,
                 ],
             ],
-            'persistent connection with true' => [
+            'persistent connection with boolean true' => [
                 'tcp://127.0.0.1:6379?timeout=10&persistent=true',
                 [
                     'host'       => 'tcp://127.0.0.1',
@@ -281,7 +281,7 @@ final class RedisHandlerTest extends CIUnitTestCase
                     'persistent' => true,
                 ],
             ],
-            'persistent connection with false' => [
+            'persistent connection with boolean false' => [
                 'tcp://127.0.0.1:6379?timeout=10&persistent=false',
                 [
                     'host'       => 'tcp://127.0.0.1',
