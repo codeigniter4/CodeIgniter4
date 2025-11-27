@@ -270,6 +270,28 @@ final class RedisHandlerTest extends CIUnitTestCase
                     'persistent' => false,
                 ],
             ],
+            'persistent connection with true' => [
+                'tcp://127.0.0.1:6379?timeout=10&persistent=true',
+                [
+                    'host'       => 'tcp://127.0.0.1',
+                    'port'       => 6379,
+                    'password'   => null,
+                    'database'   => 0,
+                    'timeout'    => 10.0,
+                    'persistent' => true,
+                ],
+            ],
+            'persistent connection with false' => [
+                'tcp://127.0.0.1:6379?timeout=10&persistent=false',
+                [
+                    'host'       => 'tcp://127.0.0.1',
+                    'port'       => 6379,
+                    'password'   => null,
+                    'database'   => 0,
+                    'timeout'    => 10.0,
+                    'persistent' => false,
+                ],
+            ],
         ];
     }
 }
