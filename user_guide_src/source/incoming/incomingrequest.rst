@@ -368,7 +368,7 @@ The methods provided by the parent classes that are available are:
         :param  int     $filter: The type of filter to apply. A list of filters can be found in
                         `Types of filters <https://www.php.net/manual/en/filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found in
-                        `Filter flags <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+                        `Filter flags <https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic>`__.
         :returns:   ``$_REQUEST`` if no parameters supplied, otherwise the REQUEST value if found, or null if not
         :rtype: array|bool|float|int|object|string|null
 
@@ -384,7 +384,7 @@ The methods provided by the parent classes that are available are:
         :param  int     $filter: The type of filter to apply. A list of filters can be found in
                         `Types of filters <https://www.php.net/manual/en/filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found in
-                        `Filter flags <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+                        `Filter flags <https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic>`__.
         :returns:       ``$_GET`` if no parameters supplied, otherwise the GET value if found, or null if not
         :rtype: array|bool|float|int|object|string|null
 
@@ -423,7 +423,7 @@ The methods provided by the parent classes that are available are:
         :param  int     $filter: The type of filter to apply. A list of filters can be
                         found `here <https://www.php.net/manual/en/filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
-                        `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+                        `here <https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic>`__.
         :returns:       ``$_POST`` if no parameters supplied, otherwise the POST value if found, or null if not
         :rtype: array|bool|float|int|object|string|null
 
@@ -435,7 +435,7 @@ The methods provided by the parent classes that are available are:
         :param  int     $filter: The type of filter to apply. A list of filters can be found in
                         `Types of filters <https://www.php.net/manual/en/filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found in
-                        `Filter flags <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+                        `Filter flags <https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic>`__.
         :returns:       ``$_POST`` and ``$_GET`` combined if no parameters specified (prefer POST value on conflict),
                         otherwise looks for POST value, if nothing found looks for GET value, if no value found returns null
         :rtype: array|bool|float|int|object|string|null
@@ -455,7 +455,7 @@ The methods provided by the parent classes that are available are:
         :param  int     $filter: The type of filter to apply. A list of filters can be found in
                         `Types of filters <https://www.php.net/manual/en/filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found in
-                        `Filter flags <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+                        `Filter flags <https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic>`__.
         :returns:       ``$_GET`` and ``$_POST`` combined if no parameters specified (prefer GET value on conflict),
                         otherwise looks for GET value, if nothing found looks for POST value, if no value found returns null
         :rtype: array|bool|float|int|object|string|null
@@ -475,7 +475,7 @@ The methods provided by the parent classes that are available are:
         :param  int     $filter: The type of filter to apply. A list of filters can be found in
                         `Types of filters <https://www.php.net/manual/en/filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found in
-                        `Filter flags <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+                        `Filter flags <https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic>`__.
         :returns:        ``$_COOKIE`` if no parameters supplied, otherwise the COOKIE value if found or null if not
         :rtype: array|bool|float|int|object|string|null
 
@@ -497,7 +497,7 @@ The methods provided by the parent classes that are available are:
         :param  int     $filter: The type of filter to apply. A list of filters can be found in
                         `Types of filters <https://www.php.net/manual/en/filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found in
-                        `Filter flags <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+                        `Filter flags <https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic>`__.
         :returns:        ``$_SERVER`` item value if found, null if not
         :rtype: array|bool|float|int|object|string|null
 
