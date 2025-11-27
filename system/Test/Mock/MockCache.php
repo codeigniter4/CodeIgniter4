@@ -129,10 +129,8 @@ class MockCache extends BaseHandler implements CacheInterface
 
     /**
      * Deletes items from the cache store matching a given pattern.
-     *
-     * @return int
      */
-    public function deleteMatching(string $pattern)
+    public function deleteMatching(string $pattern): int
     {
         $count = 0;
 

@@ -75,10 +75,8 @@ class WincacheHandler extends BaseHandler
 
     /**
      * {@inheritDoc}
-     *
-     * @return never
      */
-    public function deleteMatching(string $pattern)
+    public function deleteMatching(string $pattern): never
     {
         throw new BadMethodCallException('The deleteMatching method is not implemented for Wincache. You must select File, Redis or Predis handlers to use it.');
     }

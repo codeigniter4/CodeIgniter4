@@ -63,10 +63,8 @@ class DummyHandler extends BaseHandler
 
     /**
      * {@inheritDoc}
-     *
-     * @return int
      */
-    public function deleteMatching(string $pattern)
+    public function deleteMatching(string $pattern): int
     {
         return 0;
     }
