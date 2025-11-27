@@ -101,10 +101,7 @@ class PredisHandler extends BaseHandler
         };
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function save(string $key, $value, int $ttl = 60): bool
+    public function save(string $key, mixed $value, int $ttl = 60): bool
     {
         $key = static::validateKey($key);
 
