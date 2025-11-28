@@ -59,15 +59,15 @@ Method Signature Changes
     - ``CodeIgniter\HTTP\CURLRequest::setAuth()``
     - ``CodeIgniter\HTTP\URI::setUserInfo()``
     - ``CodeIgniter\Security\Security::derandomize()``
-- Added native return types to ``CacheInterface`` methods that were missing them. The following methods were updated:
-    - ``initialize(): void``
-    - ``save(): bool``
-    - ``delete(): bool``
-    - ``increment(): bool|int``
-    - ``decrement(): bool|int``
-    - ``clean(): bool``
-    - ``getCacheInfo(): array|object|false|null``
-    - ``getMetaData(): ?array``
+- Added native types to ``CacheInterface`` methods that were missing them. The following methods were updated:
+    - ``initialize()``
+    - ``save()``
+    - ``delete()``
+    - ``increment()``
+    - ``decrement()``
+    - ``clean()``
+    - ``getCacheInfo()``
+    - ``getMetaData()``
 
 Removed Deprecated Items
 ========================
