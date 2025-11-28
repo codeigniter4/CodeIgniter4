@@ -542,7 +542,7 @@ maintaining the ability to control the order you look for it:</p>
 in new projects. Even if you are already using it, we recommend that you use
 another, more appropriate method.</p>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> method will pull from <code class="docutils literal notranslate"><span class="pre">$_REQUEST</span></code>, so will return any data from <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$POST</span></code>, or <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code> (depending on php.ini <a class="reference external" href="https://www.php.net/manual/en/ini.core.php#ini.request-order">request-order</a>).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> method will pull from <code class="docutils literal notranslate"><span class="pre">$_REQUEST</span></code>, so will return any data from <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, or <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code> (depending on php.ini <a class="reference external" href="https://www.php.net/manual/en/ini.core.php#ini.request-order">request-order</a>).</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>If you want to validate POST data only, don’t use <code class="docutils literal notranslate"><span class="pre">getVar()</span></code>.
@@ -674,7 +674,7 @@ pass true in the second parameter:</p>
 <span id="incomingrequest-filtering-input-data"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">Filtering Input Data</a><a class="headerlink" href="#filtering-input-data" title="Permalink to this heading"></a></h3>
 <p>To maintain security of your application, you will want to filter all input as you access it. You can
 pass the type of filter to use as the second parameter of any of these methods. The native <code class="docutils literal notranslate"><span class="pre">filter_var()</span></code>
-function is used for the filtering. Head over to the PHP manual for a list of <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">valid
+function is used for the filtering. Head over to the PHP manual for a list of <a class="reference external" href="https://www.php.net/manual/en/filters.php">valid
 filter types</a>.</p>
 <p>Filtering a POST variable would look like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -896,9 +896,9 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the variable/key to look for.</p></li>
 <li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found in
-<a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">Types of filters</a>.</p></li>
+<a class="reference external" href="https://www.php.net/manual/en/filters.php">Types of filters</a>.</p></li>
 <li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Flags to apply. A list of flags can be found in
-<a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">Filter flags</a>.</p></li>
+<a class="reference external" href="https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic">Filter flags</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -925,9 +925,9 @@ another, more appropriate method.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the variable/key to look for.</p></li>
 <li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found in
-<a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">Types of filters</a>.</p></li>
+<a class="reference external" href="https://www.php.net/manual/en/filters.php">Types of filters</a>.</p></li>
 <li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Flags to apply. A list of flags can be found in
-<a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">Filter flags</a>.</p></li>
+<a class="reference external" href="https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic">Filter flags</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -985,9 +985,9 @@ the filter type to apply:</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the variable/key to look for.</p></li>
 <li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be
-found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+found <a class="reference external" href="https://www.php.net/manual/en/filters.php">here</a>.</p></li>
 <li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Flags to apply. A list of flags can be found
-<a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
+<a class="reference external" href="https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic">here</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1008,9 +1008,9 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the variable/key to look for.</p></li>
 <li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found in
-<a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">Types of filters</a>.</p></li>
+<a class="reference external" href="https://www.php.net/manual/en/filters.php">Types of filters</a>.</p></li>
 <li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Flags to apply. A list of flags can be found in
-<a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">Filter flags</a>.</p></li>
+<a class="reference external" href="https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic">Filter flags</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1041,9 +1041,9 @@ Although POST data will be preferred in case of name conflict.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the variable/key to look for.</p></li>
 <li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found in
-<a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">Types of filters</a>.</p></li>
+<a class="reference external" href="https://www.php.net/manual/en/filters.php">Types of filters</a>.</p></li>
 <li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Flags to apply. A list of flags can be found in
-<a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">Filter flags</a>.</p></li>
+<a class="reference external" href="https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic">Filter flags</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1074,9 +1074,9 @@ Although GET data will be preferred in case of name conflict.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string|null</span></code></span>) – COOKIE name</p></li>
 <li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found in
-<a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">Types of filters</a>.</p></li>
+<a class="reference external" href="https://www.php.net/manual/en/filters.php">Types of filters</a>.</p></li>
 <li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Flags to apply. A list of flags can be found in
-<a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">Filter flags</a>.</p></li>
+<a class="reference external" href="https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic">Filter flags</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1115,9 +1115,9 @@ your configured <code class="docutils literal notranslate"><span class="pre">Con
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string|null</span></code></span>) – Value name</p></li>
 <li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found in
-<a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">Types of filters</a>.</p></li>
+<a class="reference external" href="https://www.php.net/manual/en/filters.php">Types of filters</a>.</p></li>
 <li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Flags to apply. A list of flags can be found in
-<a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">Filter flags</a>.</p></li>
+<a class="reference external" href="https://www.php.net/manual/en/filter.constants.php#filter.constants.flags.generic">Filter flags</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1227,7 +1227,7 @@ underlying <code class="docutils literal notranslate"><span class="pre">URI</spa
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 21, 2025.
+      <span class="lastupdated">Last updated on Nov 28, 2025.
       </span></p>
   </div>
 
