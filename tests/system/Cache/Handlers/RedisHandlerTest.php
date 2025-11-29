@@ -222,7 +222,6 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
         $metadata = $this->handler->getMetaData(self::$key1);
 
         $this->assertNotNull($metadata);
-        $this->assertIsArray($metadata);
     }
 
     public function testIsSupported(): void

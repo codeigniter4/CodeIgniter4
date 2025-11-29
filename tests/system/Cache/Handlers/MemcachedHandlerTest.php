@@ -186,6 +186,6 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
 
     public function testGetMetaDataMiss(): void
     {
-        $this->assertFalse($this->handler->getMetaData(self::$dummy));
+        $this->assertNull($this->handler->getMetaData(self::$dummy));
     }
 }

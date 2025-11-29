@@ -81,10 +81,8 @@ abstract class BaseHandler implements CacheInterface
      * @param string           $key      Cache item name
      * @param int              $ttl      Time to live
      * @param Closure(): mixed $callback Callback return value
-     *
-     * @return mixed
      */
-    public function remember(string $key, int $ttl, Closure $callback)
+    public function remember(string $key, int $ttl, Closure $callback): mixed
     {
         $value = $this->get($key);
 

@@ -70,10 +70,7 @@ class PredisHandler extends BaseHandler
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function initialize()
+    public function initialize(): void
     {
         try {
             $this->redis = new Client($this->config, ['prefix' => $this->prefix]);
@@ -83,10 +80,7 @@ class PredisHandler extends BaseHandler
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function get(string $key)
+    public function get(string $key): mixed
     {
         $key = static::validateKey($key);
 
@@ -107,10 +101,7 @@ class PredisHandler extends BaseHandler
         };
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function save(string $key, $value, int $ttl = 60)
+    public function save(string $key, mixed $value, int $ttl = 60): bool
     {
         $key = static::validateKey($key);
 
@@ -143,19 +134,13 @@ class PredisHandler extends BaseHandler
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function delete(string $key)
+    public function delete(string $key): bool
     {
         $key = static::validateKey($key);
 
         return $this->redis->del($key) === 1;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function deleteMatching(string $pattern): int
     {
         $matchedKeys = [];
@@ -167,46 +152,31 @@ class PredisHandler extends BaseHandler
         return $this->redis->del($matchedKeys);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function increment(string $key, int $offset = 1)
+    public function increment(string $key, int $offset = 1): int
     {
         $key = static::validateKey($key);
 
         return $this->redis->hincrby($key, 'data', $offset);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function decrement(string $key, int $offset = 1)
+    public function decrement(string $key, int $offset = 1): int
     {
         $key = static::validateKey($key);
 
         return $this->redis->hincrby($key, 'data', -$offset);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function clean()
+    public function clean(): bool
     {
         return $this->redis->flushdb()->getPayload() === 'OK';
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getCacheInfo()
+    public function getCacheInfo(): array
     {
         return $this->redis->info();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getMetaData(string $key)
+    public function getMetaData(string $key): ?array
     {
         $key = static::validateKey($key);
 
@@ -226,9 +196,6 @@ class PredisHandler extends BaseHandler
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isSupported(): bool
     {
         return class_exists(Client::class);

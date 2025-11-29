@@ -59,6 +59,15 @@ Method Signature Changes
     - ``CodeIgniter\HTTP\CURLRequest::setAuth()``
     - ``CodeIgniter\HTTP\URI::setUserInfo()``
     - ``CodeIgniter\Security\Security::derandomize()``
+- Added native types to ``CacheInterface`` methods that were missing them. The following methods were updated:
+    - ``initialize()``
+    - ``save()``
+    - ``delete()``
+    - ``increment()``
+    - ``decrement()``
+    - ``clean()``
+    - ``getCacheInfo()``
+    - ``getMetaData()``
 
 Removed Deprecated Items
 ========================
@@ -66,6 +75,7 @@ Removed Deprecated Items
 - **Text Helper:** The deprecated types in ``random_string()`` function: ``basic``, ``md5``, and ``sha1`` has been removed.
 - **BaseModel:** The deprecated method ``transformDataRowToArray()`` has been removed.
 - **CodeIgniter:** The deprecated ``CodeIgniter\CodeIgniter::resolvePlatformExtensions()`` has been removed.
+- **Cache:** The deprecated return type ``false`` for ``CodeIgniter\Cache\CacheInterface::getMetaData()`` has been replaced with ``null`` type.
 
 ************
 Enhancements
@@ -154,6 +164,7 @@ Bugs Fixed
 **********
 
 - **Cookie:** The ``CookieInterface::SAMESITE_STRICT``, ``CookieInterface::SAMESITE_LAX``, and ``CookieInterface::SAMESITE_NONE`` constants are now written in ucfirst style to be consistent with usage in the rest of the framework.
+- **Cache:** Changed ``WincacheHandler::increment()`` and ``WincacheHandler::decrement()`` to return ``bool`` instead of ``mixed``.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
