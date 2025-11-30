@@ -42,6 +42,42 @@ framework are exposed.
 
 **Please** read the user guide for a better explanation of how CI4 works!
 
+# 🔥 Hot Reload for Views (Development Feature)
+
+CodeIgniter 4 includes a lightweight **Hot Reload** system designed to improve development workflow.  
+It automatically refreshes the browser whenever a file inside `app/Views/` changes — with **no external tools required**.
+
+### ✨ Key Features
+
+- No **Node**, **Webpack**, **Vite**, or external watchers  
+- Runs **entirely in PHP**  
+- Starts **automatically** when you run:
+
+`php spark serve`
+
+When the server starts, CodeIgniter launches:
+
+1. **The PHP development server**  
+2. **A file watcher** that monitors:
+
+app/Views/
+
+Whenever a view file changes, the watcher updates a timestamp.  
+Your browser polls `/hotreload/check`, and when it detects an update, the page reloads instantly.
+
+---
+
+## ⚡ Enabling Hot Reload in Your Views
+
+To activate Hot Reload on any view, include the following partial:
+
+```php
+<?= $this->include('partials/hotreload') ?>
+```
+You may place this partial:
+
+✔ In each view
+
 ## Repository Management
 
 CodeIgniter is developed completely on a volunteer basis. As such, please give up to 7 days
