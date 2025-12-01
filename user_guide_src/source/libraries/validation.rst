@@ -900,14 +900,14 @@ The following is a list of all the native rules that are available to use:
 Rule                    Parameter  Description                                   Example
 ======================= ========== ============================================= ===================================================
 alpha                   No         Fails if field has anything other than
-                                   alphabetic characters in ASCII.
+                                   alphabetic characters in ASCII or is empty.
 alpha_dash              No         Fails if field contains anything other than
                                    alphanumeric characters, underscores or
-                                   dashes in ASCII.
+                                   dashes in ASCII or is empty.
 alpha_numeric           No         Fails if field contains anything other than
-                                   alphanumeric characters in ASCII.
+                                   alphanumeric characters in ASCII or is empty.
 alpha_numeric_punct     No         Fails if field contains anything other than
-                                   alphanumeric, space, or this limited set of
+                                   alphanumeric, space, this limited set of
                                    punctuation characters: ``~`` (tilde),
                                    ``!`` (exclamation), ``#`` (number),
                                    ``$`` (dollar), ``%`` (percent),
@@ -915,11 +915,13 @@ alpha_numeric_punct     No         Fails if field contains anything other than
                                    ``*`` (asterisk), ``-`` (dash),
                                    ``_`` (underscore), ``+`` (plus),
                                    ``=`` (equals), ``|`` (vertical bar),
-                                   ``:`` (colon), ``.`` (period).
+                                   ``:`` (colon), ``.`` (period) or is empty.
 alpha_numeric_space     No         Fails if field contains anything other than
-                                   alphanumeric or space characters in ASCII.
+                                   alphanumeric or space characters in ASCII or
+                                   is empty.
 alpha_space             No         Fails if field contains anything other than
-                                   alphabetic characters or spaces in ASCII.
+                                   alphabetic characters or spaces in ASCII or
+                                   is empty.
 decimal                 No         Fails if field contains anything other than
                                    a decimal number. Also accepts a ``+`` or
                                    ``-`` sign for the number.
@@ -974,7 +976,9 @@ not_in_list             Yes        Fails if field is within a predetermined     
 numeric                 No         Fails if field contains anything other than
                                    numeric characters.
 permit_empty            No         Allows the field to receive an empty array,
-                                   empty string, null or false.
+                                   empty string, null or false. Skips all other
+                                   validation rules except for required_with and
+                                   required_without
 regex_match             Yes        Fails if field does not match the regular     ``regex_match[/regex/]``
                                    expression.
 required                No         Fails if the field is an empty array, empty
