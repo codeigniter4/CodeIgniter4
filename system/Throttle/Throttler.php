@@ -90,8 +90,6 @@ class Throttler implements ThrottlerInterface
      * @param int    $capacity The number of requests the "bucket" can hold
      * @param int    $seconds  The time it takes the "bucket" to completely refill
      * @param int    $cost     The number of tokens this action uses.
-     *
-     * @internal param int $maxRequests
      */
     public function check(string $key, int $capacity, int $seconds, int $cost = 1): bool
     {
