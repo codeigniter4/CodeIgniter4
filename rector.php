@@ -34,7 +34,6 @@ use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
-use Rector\PHPUnit\CodeQuality\Rector\Class_\RemoveDataProviderParamKeysRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\PHPUnit\CodeQuality\Rector\FuncCall\AssertFuncCallToPHPUnitAssertRector;
 use Rector\PHPUnit\CodeQuality\Rector\StmtsAwareInterface\DeclareStrictTypesTestsRector;
@@ -167,8 +166,6 @@ return RectorConfig::configure()
         NullToStrictStringFuncCallArgRector::class,
 
         CompactToVariablesRector::class,
-
-        RemoveDataProviderParamKeysRector::class,
 
         // possibly isset() on purpose, on updated Config classes property accross versions
         IssetOnPropertyObjectToPropertyExistsRector::class,
