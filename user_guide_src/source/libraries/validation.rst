@@ -976,9 +976,9 @@ not_in_list             Yes        Fails if field is within a predetermined     
 numeric                 No         Fails if field contains anything other than
                                    numeric characters.
 permit_empty            No         Allows the field to receive an empty array,
-                                   empty string, null or false. Skips all other
-                                   validation rules except for required_with and
-                                   required_without.
+                                   empty string, null or false. When true, 
+                                   skips all other validation rules except for
+                                   required_with and required_without.
 regex_match             Yes        Fails if field does not match the regular     ``regex_match[/regex/]``
                                    expression.
 required                No         Fails if the field is an empty array, empty
