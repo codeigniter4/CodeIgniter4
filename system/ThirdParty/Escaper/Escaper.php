@@ -247,7 +247,7 @@ class Escaper implements EscaperInterface
     protected function htmlAttrMatcher($matches)
     {
         $chr = $matches[0];
-        $ord = ord($chr);
+        $ord = ord($chr[0]);
 
         /**
          * The following replaces characters undefined in HTML with the
