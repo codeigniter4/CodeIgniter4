@@ -21,7 +21,9 @@ use Config\Paths;
  * How to Use:
  *   0. Copy this file to your project root folder.
  *   1. Set the $paths property of the preload class below.
- *   2. Set opcache.preload in php.ini.
+ *   2. Remove or comment out debug output (the `echo` inside load()),
+ *      preloading script should not produce output.
+ *   3. Set opcache.preload in php.ini.
  *     php.ini:
  *     opcache.preload=/path/to/preload.php
  */
