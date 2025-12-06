@@ -145,7 +145,7 @@ If you need to perform additional logic for one or more properties you can use c
 
 .. important:: You can't set properties that are declared as private during cell
     initialization.
-    Call ``getDataProperty()``, ``getViewProperty()`` methods are not available - they are used for internal processes.
+    Calling ``getDataProperty()`` and ``getViewProperty()`` methods are not available - they are used only for internal processes.
 
 Presentation Methods
 ====================
@@ -156,7 +156,6 @@ You may have noticed that not only method calls are allowed in the template: the
 .. literalinclude:: view_cells/016.php
 
 .. literalinclude:: view_cells/017.php
-
 
 
 Performing Setup Logic
