@@ -413,16 +413,17 @@ When doing so you will need to include the directory name loading the view. Exam
 </section>
 <section id="namespaced-views">
 <span id="id1"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Namespaced Views</a><a class="headerlink" href="#namespaced-views" title="Permalink to this heading"></a></h2>
-<p>You can store views under a <strong>View</strong> directory that is namespaced, and load that view as if it was namespaced. While
+<p>You can store views under a <strong>Views</strong> directory that is namespaced, and load that view as if it was namespaced. While
 PHP does not support loading non-class files from a namespace, CodeIgniter provides this feature to make it possible
 to package your views together in a module-like fashion for easy re-use or distribution.</p>
 <p>If you have <strong>example/blog</strong> directory that has a PSR-4 mapping set up in the <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader</span></a> living
 under the namespace <code class="docutils literal notranslate"><span class="pre">Example\Blog</span></code>, you could retrieve view files as if they were namespaced also.</p>
 <p>Following this
-example, you could load the <strong>blog_view.php</strong> file from <strong>example/blog/Views</strong> by prepending the namespace to the view name:</p>
+example, you could load the <strong>blog_view.php</strong> file from <strong>example/blog/Views</strong> by prepending the namespace to the view name
+(specifying the end directory <code class="docutils literal notranslate"><span class="pre">Views</span></code> as in <code class="docutils literal notranslate"><span class="pre">Example\Blog\Views\</span></code> is not required):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;Example\Blog\Views\blog_view&#39;</span><span class="p">);</span>
+<span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;Example\Blog\blog_view&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -567,7 +568,7 @@ typically be in the form of a multi-dimensional array.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 05, 2025.
+      <span class="lastupdated">Last updated on Dec 06, 2025.
       </span></p>
   </div>
 

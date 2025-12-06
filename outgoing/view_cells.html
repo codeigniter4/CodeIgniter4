@@ -482,7 +482,7 @@ without the <code class="docutils literal notranslate"><span class="pre">_cell</
 </section>
 <section id="using-a-different-view">
 <h3><a class="toc-backref" href="#id11" role="doc-backlink">Using a Different View</a><a class="headerlink" href="#using-a-different-view" title="Permalink to this heading"></a></h3>
-<p>You can specify a custom view name by setting the <code class="docutils literal notranslate"><span class="pre">view</span></code> property in the class. The view will be located like any view would be normally:</p>
+<p>You can specify a custom view filepath by setting the <code class="docutils literal notranslate"><span class="pre">view</span></code> property in the class. The view will be located like any view would be normally:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Cells</span><span class="p">;</span>
@@ -494,7 +494,7 @@ without the <code class="docutils literal notranslate"><span class="pre">_cell</
     <span class="k">public</span> <span class="nv">$type</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$message</span><span class="p">;</span>
 
-    <span class="k">protected</span> <span class="nx">string</span> <span class="nv">$view</span> <span class="o">=</span> <span class="s1">&#39;my/custom/view&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nx">string</span> <span class="nv">$view</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Views/cells/alerts.php&#39;</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -576,12 +576,14 @@ without the <code class="docutils literal notranslate"><span class="pre">_cell</
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>You can’t set properties that are declared as private during cell
-initialization.</p>
+initialization.
+Calling <code class="docutils literal notranslate"><span class="pre">getDataProperty()</span></code> and <code class="docutils literal notranslate"><span class="pre">getViewProperty()</span></code> methods are not available - they are used only for internal processes.</p>
 </div>
 </section>
 <section id="presentation-methods">
 <h3><a class="toc-backref" href="#id14" role="doc-backlink">Presentation Methods</a><a class="headerlink" href="#presentation-methods" title="Permalink to this heading"></a></h3>
-<p>Sometimes you need to perform additional logic for the view, but you don’t want to pass it as a parameter. You can implement a method that will be called from within the cell’s view itself. This can help the readability of your views:</p>
+<p>Sometimes you need to perform additional logic for the view, but you don’t want to pass it as a parameter. You can implement a method that will be called from within the cell’s view itself. This can help the readability of your views:
+You may have noticed that not only method calls are allowed in the template: the entire Сell object with public properties is available.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// app/Cells/RecentPostsCell.php</span>
@@ -691,7 +693,7 @@ as the fourth parameter:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2025 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 05, 2025.
+      <span class="lastupdated">Last updated on Dec 06, 2025.
       </span></p>
   </div>
 
