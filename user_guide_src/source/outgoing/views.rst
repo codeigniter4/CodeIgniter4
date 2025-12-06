@@ -100,7 +100,7 @@ under the namespace ``Example\Blog``, you could retrieve view files as if they w
 
 Following this
 example, you could load the **blog_view.php** file from **example/blog/Views** by prepending the namespace to the view name
-(specifying the end directory ``Views`` as an ``Example\Blog\Views\`` not required):
+(specifying the end directory ``Views`` as in ``Example\Blog\Views\`` is not required):
 
 .. literalinclude:: views/005.php
 
