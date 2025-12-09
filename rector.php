@@ -30,7 +30,6 @@ use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRect
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
-use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
@@ -215,9 +214,5 @@ return RectorConfig::configure()
         TypedPropertyFromAssignsRector::class,
         ClosureReturnTypeRector::class,
         AddArrowFunctionReturnTypeRector::class,
-    ])
-    ->withConfiguredRule(StringClassNameToClassConstantRector::class, [
-        // keep '\\' prefix string on string '\Foo\Bar'
-        StringClassNameToClassConstantRector::SHOULD_KEEP_PRE_SLASH => true,
     ])
     ->withCodeQualityLevel(61);
