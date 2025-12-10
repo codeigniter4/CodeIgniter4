@@ -29,7 +29,7 @@ use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 
 /**
- * @phpstan-type cast_handlers array<string, CastInterface|class-string|EntityCastInterface>
+ * @phpstan-type cast_handlers array<string, class-string<EntityCastInterface|CastInterface>>
  *
  * @see CodeIgniter\DataCaster\DataCasterTest
  * @see CodeIgniter\Entity\EntityTest
@@ -46,8 +46,7 @@ final class DataCaster
     /**
      * Convert handlers.
      *
-     * @var         array<string, class-string> [type => classname]
-     * @phpstan-var cast_handlers
+     * @var cast_handlers [type => classname]
      */
     private array $castHandlers = [
         'array'     => ArrayCast::class,
@@ -66,11 +65,10 @@ final class DataCaster
     ];
 
     /**
-     * @param         array<string, class-string>|null $castHandlers Custom convert handlers
-     * @param         array<string, string>|null       $types        [field => type]
-     * @param         object|null                      $helper       Helper object.
-     * @param         bool                             $strict       Strict mode? Set to false for casts for Entity.
-     * @phpstan-param cast_handlers|null               $castHandlers
+     * @param cast_handlers|null         $castHandlers Custom convert handlers
+     * @param array<string, string>|null $types        [field => type]
+     * @param object|null                $helper       Helper object.
+     * @param bool                       $strict       Strict mode? Set to `false` for casts for Entity.
      */
     public function __construct(
         ?array $castHandlers = null,
