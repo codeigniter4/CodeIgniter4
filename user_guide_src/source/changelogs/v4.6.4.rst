@@ -37,6 +37,8 @@ Deprecations
 Bugs Fixed
 **********
 
+- **Cache:** Fixed a bug in ``PredisHandler::deleteMatching()`` causing Redis error when no keys match the pattern.
+- **Cache:** Fixed a bug in ``RedisHandler::deleteMatching()`` returning ``false`` instead of ``int`` when no keys match the pattern.
 - **Database:** Fixed a bug in ``Database::connect()`` which was causing to store non-shared connection instances in shared cache.
 - **Database:** Fixed a bug in ``Connection::getFieldData()`` for ``SQLSRV`` and ``OCI8`` where extra characters were returned in column default values (specific to those handlers), instead of following the convention used by other drivers.
 - **Database:** Fixed a bug in ``BaseBuilder::compileOrderBy()`` where the method could overwrite ``QBOrderBy`` with a string instead of keeping it as an array, causing type errors and preventing additional ``ORDER BY`` clauses from being appended.
