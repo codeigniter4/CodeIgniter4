@@ -58,12 +58,12 @@ parameters:
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getFile\(\)\.$#'
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getFileMultiple\(\)\.$#'
             count: 1
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getFileMultiple\(\)\.$#'
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getFile\(\)\.$#'
             count: 1
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 
@@ -73,13 +73,13 @@ parameters:
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getGet\(\)\.$#'
-            count: 2
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getGetPost\(\)\.$#'
+            count: 5
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getGetPost\(\)\.$#'
-            count: 5
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getGet\(\)\.$#'
+            count: 2
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
@@ -93,23 +93,18 @@ parameters:
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getPost\(\)\.$#'
-            count: 2
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
             message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getPostGet\(\)\.$#'
             count: 5
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getVar\(\)\.$#'
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getPost\(\)\.$#'
             count: 2
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
-            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:is\(\)\.$#'
-            count: 5
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:getVar\(\)\.$#'
+            count: 2
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
@@ -125,6 +120,11 @@ parameters:
         -
             message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:isSecure\(\)\.$#'
             count: 3
+            path: ../../tests/system/HTTP/IncomingRequestTest.php
+
+        -
+            message: '#^Call to an undefined method CodeIgniter\\HTTP\\Request\:\:is\(\)\.$#'
+            count: 5
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -

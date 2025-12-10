@@ -1,4 +1,4 @@
-# total 85 errors
+# total 84 errors
 
 parameters:
     ignoreErrors:
@@ -28,12 +28,12 @@ parameters:
             path: ../../system/Database/SQLite3/Builder.php
 
         -
-            message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: \(CodeIgniter\\HTTP\\DownloadResponse\|null\) given\.$#'
+            message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: CodeIgniter\\HTTP\\ResponseInterface given\.$#'
             count: 1
             path: ../../tests/system/CodeIgniterTest.php
 
         -
-            message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: CodeIgniter\\HTTP\\ResponseInterface given\.$#'
+            message: '#^Parameter \#2 \$to of method CodeIgniter\\Router\\RouteCollection\:\:add\(\) expects array\|\(Closure\(mixed \.\.\.\)\: \(CodeIgniter\\HTTP\\ResponseInterface\|string\|void\)\)\|string, Closure\(mixed\)\: \(CodeIgniter\\HTTP\\DownloadResponse\|null\) given\.$#'
             count: 1
             path: ../../tests/system/CodeIgniterTest.php
 
@@ -196,11 +196,6 @@ parameters:
             message: '#^Parameter \#2 \$row of method CodeIgniter\\Model\:\:update\(\) expects array\<int\|string, bool\|float\|int\|object\|string\|null\>\|object\|null, array\<string, array\<int, string\>\> given\.$#'
             count: 1
             path: ../../tests/system/Models/DataConverterModelTest.php
-
-        -
-            message: '#^Parameter \#1 \$id of method CodeIgniter\\Model\:\:update\(\) expects array\|int\|string\|null, false\|null given\.$#'
-            count: 1
-            path: ../../tests/system/Models/UpdateModelTest.php
 
         -
             message: '#^Parameter \#1 \$format of method CodeIgniter\\RESTful\\ResourceController\:\:setFormat\(\) expects ''json''\|''xml'', ''Nonsense'' given\.$#'
