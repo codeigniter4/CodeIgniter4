@@ -160,6 +160,11 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
         $this->assertSame('90', $this->handler->getCacheInfo()['Keyspace']['db0']['keys']);
     }
 
+    public function testDeleteMatchingNothing(): void
+    {
+        $this->assertSame(0, $this->handler->deleteMatching('user_1_info*'));
+    }
+
     public function testClean(): void
     {
         $this->handler->save(self::$key1, 1);

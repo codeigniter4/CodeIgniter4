@@ -162,6 +162,10 @@ class PredisHandler extends BaseHandler
             $matchedKeys[] = $key;
         }
 
+        if ($matchedKeys === []) {
+            return 0;
+        }
+
         return $this->redis->del($matchedKeys);
     }
 
