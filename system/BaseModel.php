@@ -973,7 +973,7 @@ abstract class BaseModel
             throw new InvalidArgumentException('update(): argument #1 ($id) should not be boolean.');
         }
 
-        if (! in_array($id, [null, 0, '0'], true) && (is_numeric($id) || is_string($id))) {
+        if (is_numeric($id) || is_string($id)) {
             $id = [$id];
         }
 
