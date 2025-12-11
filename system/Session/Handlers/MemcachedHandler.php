@@ -65,7 +65,7 @@ class MemcachedHandler extends BaseHandler
             throw SessionException::forEmptySavepath();
         }
 
-        // Add sessionCookieName for multiple session cookies.
+        // Add session cookie name for multiple session cookies.
         $this->keyPrefix .= $config->cookieName . ':';
 
         if ($this->matchIP === true) {

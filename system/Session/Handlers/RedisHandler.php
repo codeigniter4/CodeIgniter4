@@ -87,7 +87,7 @@ class RedisHandler extends BaseHandler
             ? (int) ini_get('session.gc_maxlifetime')
             : $config->expiration;
 
-        // Add sessionCookieName for multiple session cookies.
+        // Add session cookie name for multiple session cookies.
         $this->keyPrefix .= $config->cookieName . ':';
 
         $this->setSavePath();
