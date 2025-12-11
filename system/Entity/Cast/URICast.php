@@ -15,14 +15,8 @@ namespace CodeIgniter\Entity\Cast;
 
 use CodeIgniter\HTTP\URI;
 
-/**
- * Class URICast
- */
 class URICast extends BaseCast
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function get($value, array $params = []): URI
     {
         return $value instanceof URI ? $value : new URI($value);
