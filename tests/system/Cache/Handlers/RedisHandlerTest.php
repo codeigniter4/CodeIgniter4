@@ -184,6 +184,11 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
         yield 'cache-prefix' => ['key_1*', 13, 'foo_'];
     }
 
+    public function testDeleteMatchingNothing(): void
+    {
+        $this->assertSame(0, $this->handler->deleteMatching('user_1_info*'));
+    }
+
     public function testIncrementAndDecrement(): void
     {
         $this->handler->save('counter', 100);

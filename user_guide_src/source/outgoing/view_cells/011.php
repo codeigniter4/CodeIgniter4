@@ -9,5 +9,5 @@ class AlertMessageCell extends Cell
     public $type;
     public $message;
 
-    protected string $view = 'my/custom/view';
+    protected string $view = APPPATH . 'Views/cells/alerts.php';
 }

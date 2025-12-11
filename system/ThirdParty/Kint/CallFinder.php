@@ -148,11 +148,11 @@ class CallFinder
     ];
 
     /**
-     * @psalm-param callable-array|callable-string $function
-     *
-     * @psalm-return list<array{parameters: list<CallParameter>, modifiers: list<PhpToken>}>
+     * @psalm-param callable-string|(callable-array&list{class-string, non-empty-string}) $function
      *
      * @return array List of matching calls on the relevant line
+     *
+     * @psalm-return list<array{parameters: list<CallParameter>, modifiers: list<PhpToken>}>
      */
     public static function getFunctionCalls(string $source, int $line, $function): array
     {
@@ -198,6 +198,11 @@ class CallFinder
             self::$operator[T_NEW] = true; // @codeCoverageIgnore
         }
 
+        if (KINT_PHP85) {
+            /** @psalm-suppress UndefinedConstant */
+            self::$operator[T_PIPE] = true;
+        }
+
         /** @psalm-var list<PhpToken> */
         $tokens = \token_get_all($source);
         $function_calls = [];
@@ -212,10 +217,6 @@ class CallFinder
             $function = \strtolower($function[1]);
         } else {
             $class = null;
-            /**
-             * @psalm-suppress RedundantFunctionCallGivenDocblockType
-             * Psalm bug #11075
-             */
             $function = \strtolower($function);
         }
 
@@ -294,6 +295,8 @@ class CallFinder
             $params = []; // All our collected parameters
             $shortparam = []; // The short version of the parameter
             $param_start = $offset; // The distance to the start of the parameter
+            $quote = null; // Buffer to store quote type for shortparam
+            $in_ternary = false;
 
             // Loop through the following tokens until the function call ends
             while (isset($tokens[$offset])) {
@@ -341,6 +344,26 @@ class CallFinder
                     $instring = !$instring;
 
                     $shortparam[] = $token;
+                } elseif (T_START_HEREDOC === $token[0]) {
+                    if (1 === $depth) {
+                        $quote = \ltrim($token[1], " \t<")[0];
+                        if ("'" !== $quote) {
+                            $quote = '"';
+                        }
+                        $shortparam[] = [T_START_HEREDOC, $quote];
+                        $instring = true;
+                    }
+
+                    ++$depth;
+                } elseif (T_END_HEREDOC === $token[0]) {
+                    --$depth;
+
+                    if (1 === $depth) {
+                        if ($realtokens) {
+                            $shortparam[] = '...';
+                        }
+                        $shortparam[] = [T_END_HEREDOC, $quote];
+                    }
                 } elseif (1 === $depth) {
                     if (',' === $token[0]) {
                         $params[] = [
@@ -349,6 +372,7 @@ class CallFinder
                         ];
                         $shortparam = [];
                         $paramrealtokens = false;
+                        $in_ternary = false;
                         $param_start = $offset + 1;
                     } elseif (T_CONSTANT_ENCAPSED_STRING === $token[0]) {
                         $quote = $token[1][0];
@@ -364,6 +388,15 @@ class CallFinder
                         }
                         $shortparam[] = $token;
                     } else {
+                        // We can't tell the order of named parameters or if they're splatting
+                        // without parsing the called function and that's too much work for this
+                        // edge case so we'll just skip parameters altogether.
+                        if ('?' === $token) {
+                            $in_ternary = true;
+                        } elseif (!$in_ternary && ':' === $token) {
+                            $params = [];
+                            break;
+                        }
                         $shortparam[] = $token;
                     }
                 }
@@ -400,11 +433,24 @@ class CallFinder
                 $literal = false;
                 $new_without_parens = false;
 
-                foreach ($name as $token) {
+                foreach ($name as $name_index => $token) {
+                    if (KINT_PHP85 && T_CLONE === $token[0]) {
+                        $nextReal = self::realTokenIndex($name, $name_index + 1);
+
+                        if (null !== $nextReal && '(' === $name[$nextReal]) {
+                            continue;
+                        }
+                    }
+
                     if (self::tokenIsOperator($token)) {
                         $expression = true;
                         break;
                     }
+                }
+
+                if (!$expression && T_START_HEREDOC === $name[0][0]) {
+                    $expression = true;
+                    $literal = true;
                 }
 
                 // As of 8.4 new is only an expression when parentheses are
@@ -593,6 +639,7 @@ class CallFinder
         return \array_reverse($tokens);
     }
 
+    /** @psalm-return list<PhpToken> */
     private static function tokensFormatted(array $tokens): array
     {
         $tokens = self::tokensTrim($tokens);

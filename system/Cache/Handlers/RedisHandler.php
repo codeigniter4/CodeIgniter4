@@ -181,7 +181,7 @@ class RedisHandler extends BaseHandler
             }
         } while ($iterator > 0);
 
-        return $this->redis->del($matchedKeys);
+        return (int) $this->redis->del($matchedKeys);
     }
 
     public function increment(string $key, int $offset = 1): int

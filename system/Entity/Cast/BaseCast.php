@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity\Cast;
 
-/**
- * Class BaseCast
- */
 abstract class BaseCast implements CastInterface
 {
     public static function get($value, array $params = [])

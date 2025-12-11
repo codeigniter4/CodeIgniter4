@@ -108,7 +108,9 @@ class SourceRepresentation extends AbstractRepresentation
             throw new RuntimeException("Couldn't read file");
         }
 
-        $source = \preg_split("/\r\n|\n|\r/", \file_get_contents($filename));
+        /** @psalm-var non-empty-array<string> $source */
+        $source = \preg_split("/\r\n|\n|\r/", (string) \file_get_contents($filename));
+        /** @psalm-var array $source */
         $source = \array_combine(\range(1, \count($source)), $source);
         $source = \array_slice($source, $start_line - 1, $length, true);
 
