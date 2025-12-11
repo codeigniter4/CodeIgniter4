@@ -212,8 +212,8 @@ abstract class BaseModel
     protected bool $updateOnlyChanged = true;
 
     /**
-     * Rules used to validate data
-     * in $this->insert(), $this->update(), $this->save() methods.
+     * Rules used to validate data in insert(), update(), save(),
+     * insertBatch(), and updateBatch() methods.
      *
      * The array must match the format of data passed to the `Validation`
      * library.
@@ -973,7 +973,6 @@ abstract class BaseModel
             throw new InvalidArgumentException('update(): argument #1 ($id) should not be boolean.');
         }
 
-        // if (is_numeric($id) || is_string($id)) {
         if (! in_array($id, [null, 0, '0'], true) && (is_numeric($id) || is_string($id))) {
             $id = [$id];
         }

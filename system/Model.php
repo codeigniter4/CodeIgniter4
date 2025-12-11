@@ -506,6 +506,9 @@ class Model extends BaseModel
             $this->builder()->where($this->table . '.' . $this->deletedField, null);
         }
 
+        // When $reset === false, the $tempUseSoftDeletes will be
+        // dependent on $useSoftDeletes value because we don't
+        // want to add the same "where" condition for the second time.
         $this->tempUseSoftDeletes = $reset
             ? $this->useSoftDeletes
             : ($this->useSoftDeletes ? false : $this->useSoftDeletes);
