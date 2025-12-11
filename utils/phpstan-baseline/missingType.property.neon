@@ -1,4 +1,4 @@
-# total 103 errors
+# total 102 errors
 
 parameters:
     ignoreErrors:
@@ -31,11 +31,6 @@ parameters:
             message: '#^Property CodeIgniter\\Database\\Postgre\\Connection\:\:\$sslmode has no type specified\.$#'
             count: 1
             path: ../../system/Database/Postgre/Connection.php
-
-        -
-            message: '#^Property CodeIgniter\\Session\\Handlers\\ArrayHandler\:\:\$cache has no type specified\.$#'
-            count: 1
-            path: ../../system/Session/Handlers/ArrayHandler.php
 
         -
             message: '#^Property CodeIgniter\\Config\\Factory@anonymous/tests/system/Config/FactoriesTest\.php\:89\:\:\$widgets has no type specified\.$#'

@@ -250,6 +250,9 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['csrf_test_name']   = '8b9218a55906f9dcc1dc263dce7f005a';
 
+        /**
+         * @var SecurityConfig
+         */
         $config             = Factories::config('Security');
         $config->regenerate = false;
         Factories::injectMock('config', 'Security', $config);
@@ -269,6 +272,9 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['csrf_test_name']   = '8b9218a55906f9dcc1dc263dce7f005a';
 
+        /**
+         * @var SecurityConfig
+         */
         $config             = Factories::config('Security');
         $config->regenerate = true;
         Factories::injectMock('config', 'Security', $config);

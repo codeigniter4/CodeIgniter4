@@ -21,7 +21,7 @@ use Config\Session as SessionConfig;
 use ReturnTypeWillChange;
 
 /**
- * Base database session handler
+ * Base database session handler.
  *
  * Do not use this class. Use database specific handler class.
  */
@@ -49,21 +49,21 @@ class DatabaseHandler extends BaseHandler
     protected $db;
 
     /**
-     * The database type
+     * The database type.
      *
      * @var string
      */
     protected $platform;
 
     /**
-     * Row exists flag
+     * Row exists flag.
      *
      * @var bool
      */
     protected $rowExists = false;
 
     /**
-     * ID prefix for multiple session cookies
+     * ID prefix for multiple session cookies.
      */
     protected string $idPrefix;
 
@@ -74,16 +74,16 @@ class DatabaseHandler extends BaseHandler
     {
         parent::__construct($config, $ipAddress);
 
+        $this->table = $this->savePath;
+
+        if ($this->table === '') {
+            throw SessionException::forMissingDatabaseTable();
+        }
+
         // Store Session configurations
         $this->DBGroup = $config->DBGroup ?? config(Database::class)->defaultGroup;
         // Add session cookie name for multiple session cookies.
         $this->idPrefix = $config->cookieName . ':';
-
-        $this->table = $this->savePath;
-        if (empty($this->table)) {
-            throw SessionException::forMissingDatabaseTable();
-        }
-
         $this->db       = Database::connect($this->DBGroup);
         $this->platform = $this->db->getPlatform();
     }
@@ -96,7 +96,7 @@ class DatabaseHandler extends BaseHandler
      */
     public function open($path, $name): bool
     {
-        if (empty($this->db->connID)) {
+        if ($this->db->connID === false) {
             $this->db->initialize();
         }
 
@@ -153,7 +153,7 @@ class DatabaseHandler extends BaseHandler
     }
 
     /**
-     * Sets SELECT clause
+     * Sets SELECT clause.
      *
      * @return void
      */
@@ -163,7 +163,7 @@ class DatabaseHandler extends BaseHandler
     }
 
     /**
-     * Decodes column data
+     * Decodes column data.
      *
      * @param string $data
      *
@@ -177,8 +177,8 @@ class DatabaseHandler extends BaseHandler
     /**
      * Writes the session data to the session storage.
      *
-     * @param string $id   The session ID
-     * @param string $data The encoded session data
+     * @param string $id   The session ID.
+     * @param string $data The encoded session data.
      */
     public function write($id, $data): bool
     {
@@ -230,7 +230,7 @@ class DatabaseHandler extends BaseHandler
     }
 
     /**
-     * Prepare data to insert/update
+     * Prepare data to insert/update.
      */
     protected function prepareData(string $data): string
     {
@@ -246,9 +246,9 @@ class DatabaseHandler extends BaseHandler
     }
 
     /**
-     * Destroys a session
+     * Destroys a session.
      *
-     * @param string $id The session ID being destroyed
+     * @param string $id The session ID being destroyed.
      */
     public function destroy($id): bool
     {

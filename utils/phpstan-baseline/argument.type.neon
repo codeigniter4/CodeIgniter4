@@ -1,4 +1,4 @@
-# total 84 errors
+# total 83 errors
 
 parameters:
     ignoreErrors:
@@ -201,11 +201,6 @@ parameters:
             message: '#^Parameter \#1 \$format of method CodeIgniter\\RESTful\\ResourceController\:\:setFormat\(\) expects ''json''\|''xml'', ''Nonsense'' given\.$#'
             count: 1
             path: ../../tests/system/RESTful/ResourceControllerTest.php
-
-        -
-            message: '#^Parameter \#1 \$config of class CodeIgniter\\Test\\Mock\\MockSecurity constructor expects Config\\Security, CodeIgniter\\Config\\BaseConfig\|null given\.$#'
-            count: 1
-            path: ../../tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php
 
         -
             message: '#^Parameter \#1 \$request of method CodeIgniter\\CodeIgniter\:\:setRequest\(\) expects CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest, CodeIgniter\\HTTP\\Request given\.$#'

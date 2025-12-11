@@ -1,4 +1,4 @@
-# total 44 errors
+# total 43 errors
 
 parameters:
     ignoreErrors:
@@ -166,11 +166,6 @@ parameters:
             message: '#^PHPDoc type Imagick\|null of property CodeIgniter\\Images\\Handlers\\ImageMagickHandler\:\:\$resource is not the same as PHPDoc type resource\|null of overridden property CodeIgniter\\Images\\Handlers\\BaseHandler\:\:\$resource\.$#'
             count: 1
             path: ../../system/Images/Handlers/ImageMagickHandler.php
-
-        -
-            message: '#^PHPDoc type string of property CodeIgniter\\Session\\Handlers\\FileHandler\:\:\$savePath is not the same as PHPDoc type array\|string of overridden property CodeIgniter\\Session\\Handlers\\BaseHandler\:\:\$savePath\.$#'
-            count: 1
-            path: ../../system/Session/Handlers/FileHandler.php
 
         -
             message: '#^PHPDoc type CodeIgniter\\Test\\Mock\\MockConnection of property CodeIgniter\\Database\\Builder\\InsertTest\:\:\$db is not the same as PHPDoc type CodeIgniter\\Database\\BaseConnection of overridden property CodeIgniter\\Test\\CIUnitTestCase\:\:\$db\.$#'

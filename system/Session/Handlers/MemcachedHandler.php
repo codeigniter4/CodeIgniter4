@@ -20,19 +20,19 @@ use Memcached;
 use ReturnTypeWillChange;
 
 /**
- * Session handler using Memcache for persistence
+ * Session handler using Memcached for persistence.
  */
 class MemcachedHandler extends BaseHandler
 {
     /**
-     * Memcached instance
+     * Memcached instance.
      *
      * @var Memcached|null
      */
     protected $memcached;
 
     /**
-     * Key prefix
+     * Key prefix.
      *
      * @var string
      */
@@ -61,7 +61,7 @@ class MemcachedHandler extends BaseHandler
 
         $this->sessionExpiration = $config->expiration;
 
-        if (empty($this->savePath)) {
+        if ($this->savePath !== '') {
             throw SessionException::forEmptySavepath();
         }
 
@@ -78,8 +78,8 @@ class MemcachedHandler extends BaseHandler
     /**
      * Re-initialize existing session, or creates a new one.
      *
-     * @param string $path The path where to store/retrieve the session
-     * @param string $name The session name
+     * @param string $path The path where to store/retrieve the session.
+     * @param string $name The session name.
      */
     public function open($path, $name): bool
     {
@@ -137,7 +137,7 @@ class MemcachedHandler extends BaseHandler
     /**
      * Reads the session data from the session storage, and returns the results.
      *
-     * @param string $id The session ID
+     * @param string $id The session ID.
      *
      * @return false|string Returns an encoded string of the read data.
      *                      If nothing was read, it must return false.
@@ -163,8 +163,8 @@ class MemcachedHandler extends BaseHandler
     /**
      * Writes the session data to the session storage.
      *
-     * @param string $id   The session ID
-     * @param string $data The encoded session data
+     * @param string $id   The session ID.
+     * @param string $data The encoded session data.
      */
     public function write($id, $data): bool
     {
@@ -223,9 +223,9 @@ class MemcachedHandler extends BaseHandler
     }
 
     /**
-     * Destroys a session
+     * Destroys a session.
      *
-     * @param string $id The session ID being destroyed
+     * @param string $id The session ID being destroyed.
      */
     public function destroy($id): bool
     {
@@ -255,7 +255,7 @@ class MemcachedHandler extends BaseHandler
     /**
      * Acquires an emulated lock.
      *
-     * @param string $sessionID Session ID
+     * @param string $sessionID Session ID.
      */
     protected function lockSession(string $sessionID): bool
     {
@@ -299,7 +299,7 @@ class MemcachedHandler extends BaseHandler
     }
 
     /**
-     * Releases a previously acquired lock
+     * Releases a previously acquired lock.
      */
     protected function releaseLock(): bool
     {

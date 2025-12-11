@@ -1,4 +1,4 @@
-# total 1317 errors
+# total 1314 errors
 
 parameters:
     ignoreErrors:
@@ -4213,11 +4213,6 @@ parameters:
             path: ../../system/Router/RouterInterface.php
 
         -
-            message: '#^Property CodeIgniter\\Session\\Handlers\\BaseHandler\:\:\$savePath type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Session/Handlers/BaseHandler.php
-
-        -
             message: '#^Method CodeIgniter\\Superglobals\:\:__construct\(\) has parameter \$get with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Superglobals.php
@@ -5901,16 +5896,6 @@ parameters:
             message: '#^Method CodeIgniter\\Router\\RouterTest\:\:provideRedirectRoute\(\) return type has no value type specified in iterable type iterable\.$#'
             count: 1
             path: ../../tests/system/Router/RouterTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Session\\Handlers\\Database\\RedisHandlerTest\:\:provideSetSavePath\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Session/Handlers/Database/RedisHandlerTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Session\\Handlers\\Database\\RedisHandlerTest\:\:testSetSavePath\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../tests/system/Session/Handlers/Database/RedisHandlerTest.php
 
         -
             message: '#^Method CodeIgniter\\Test\\ControllerTestTraitTest\:\:execute\(\) has parameter \$params with no value type specified in iterable type array\.$#'

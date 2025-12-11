@@ -19,7 +19,7 @@ use Config\Session as SessionConfig;
 use ReturnTypeWillChange;
 
 /**
- * Session handler using file system for storage
+ * Session handler using file system for storage.
  */
 class FileHandler extends BaseHandler
 {
@@ -31,14 +31,14 @@ class FileHandler extends BaseHandler
     protected $savePath;
 
     /**
-     * The file handle
+     * The file handle.
      *
      * @var resource|null
      */
     protected $fileHandle;
 
     /**
-     * File Name
+     * File Name.
      *
      * @var string
      */
@@ -59,7 +59,7 @@ class FileHandler extends BaseHandler
     protected $matchIP = false;
 
     /**
-     * Regex of session ID
+     * Regex of session ID.
      *
      * @var string
      */
@@ -69,7 +69,7 @@ class FileHandler extends BaseHandler
     {
         parent::__construct($config, $ipAddress);
 
-        if (! empty($this->savePath)) {
+        if ($this->savePath !== '') {
             $this->savePath = rtrim($this->savePath, '/\\');
             ini_set('session.save_path', $this->savePath);
         } else {
@@ -88,8 +88,8 @@ class FileHandler extends BaseHandler
     /**
      * Re-initialize existing session, or creates a new one.
      *
-     * @param string $path The path where to store/retrieve the session
-     * @param string $name The session name
+     * @param string $path The path where to store/retrieve the session.
+     * @param string $name The session name.
      *
      * @throws SessionException
      */
@@ -114,7 +114,7 @@ class FileHandler extends BaseHandler
     /**
      * Reads the session data from the session storage, and returns the results.
      *
-     * @param string $id The session ID
+     * @param string $id The session ID.
      *
      * @return false|string Returns an encoded string of the read data.
      *                      If nothing was read, it must return false.
@@ -175,8 +175,8 @@ class FileHandler extends BaseHandler
     /**
      * Writes the session data to the session storage.
      *
-     * @param string $id   The session ID
-     * @param string $data The encoded session data
+     * @param string $id   The session ID.
+     * @param string $data The encoded session data.
      */
     public function write($id, $data): bool
     {
@@ -239,9 +239,9 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Destroys a session
+     * Destroys a session.
      *
-     * @param string $id The session ID being destroyed
+     * @param string $id The session ID being destroyed.
      */
     public function destroy($id): bool
     {
@@ -310,7 +310,7 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Configure Session ID regular expression
+     * Configure Session ID regular expression.
      *
      * To make life easier, we force the PHP defaults. Because PHP9 forces them.
      *

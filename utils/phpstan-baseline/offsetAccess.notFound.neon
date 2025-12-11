@@ -1,7 +1,22 @@
-# total 2 errors
+# total 5 errors
 
 parameters:
     ignoreErrors:
+        -
+            message: '#^Offset ''host'' does not exist on non\-falsy\-string\.$#'
+            count: 1
+            path: ../../system/Session/Handlers/RedisHandler.php
+
+        -
+            message: '#^Offset ''port'' does not exist on non\-falsy\-string\.$#'
+            count: 1
+            path: ../../system/Session/Handlers/RedisHandler.php
+
+        -
+            message: '#^Offset ''timeout'' does not exist on non\-falsy\-string\.$#'
+            count: 1
+            path: ../../system/Session/Handlers/RedisHandler.php
+
         -
             message: '#^Offset ''_ci_old_input'' does not exist on array\{\}\.$#'
             count: 2
