@@ -93,22 +93,22 @@ parameters:
             path: ../../system/Database/SQLite3/PreparedQuery.php
 
         -
-            message: '#^Return type \(CodeIgniter\\HTTP\\DownloadResponse\) of method CodeIgniter\\HTTP\\DownloadResponse\:\:sendBody\(\) should be covariant with return type \(\$this\(CodeIgniter\\HTTP\\Response\)\) of method CodeIgniter\\HTTP\\Response\:\:sendBody\(\)$#'
-            count: 1
-            path: ../../system/HTTP/DownloadResponse.php
-
-        -
             message: '#^Return type \(CodeIgniter\\HTTP\\DownloadResponse\) of method CodeIgniter\\HTTP\\DownloadResponse\:\:sendBody\(\) should be covariant with return type \(\$this\(CodeIgniter\\HTTP\\ResponseInterface\)\) of method CodeIgniter\\HTTP\\ResponseInterface\:\:sendBody\(\)$#'
             count: 1
             path: ../../system/HTTP/DownloadResponse.php
 
         -
-            message: '#^Return type \(CodeIgniter\\HTTP\\ResponseInterface\) of method CodeIgniter\\HTTP\\DownloadResponse\:\:setContentType\(\) should be covariant with return type \(\$this\(CodeIgniter\\HTTP\\Response\)\) of method CodeIgniter\\HTTP\\Response\:\:setContentType\(\)$#'
+            message: '#^Return type \(CodeIgniter\\HTTP\\DownloadResponse\) of method CodeIgniter\\HTTP\\DownloadResponse\:\:sendBody\(\) should be covariant with return type \(\$this\(CodeIgniter\\HTTP\\Response\)\) of method CodeIgniter\\HTTP\\Response\:\:sendBody\(\)$#'
             count: 1
             path: ../../system/HTTP/DownloadResponse.php
 
         -
             message: '#^Return type \(CodeIgniter\\HTTP\\ResponseInterface\) of method CodeIgniter\\HTTP\\DownloadResponse\:\:setContentType\(\) should be covariant with return type \(\$this\(CodeIgniter\\HTTP\\ResponseInterface\)\) of method CodeIgniter\\HTTP\\ResponseInterface\:\:setContentType\(\)$#'
+            count: 1
+            path: ../../system/HTTP/DownloadResponse.php
+
+        -
+            message: '#^Return type \(CodeIgniter\\HTTP\\ResponseInterface\) of method CodeIgniter\\HTTP\\DownloadResponse\:\:setContentType\(\) should be covariant with return type \(\$this\(CodeIgniter\\HTTP\\Response\)\) of method CodeIgniter\\HTTP\\Response\:\:setContentType\(\)$#'
             count: 1
             path: ../../system/HTTP/DownloadResponse.php
 

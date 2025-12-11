@@ -1,4 +1,4 @@
-# total 36 errors
+# total 31 errors
 
 parameters:
     ignoreErrors:
@@ -156,28 +156,3 @@ parameters:
             message: '#^Method CodeIgniter\\Security\\SecurityCSRFSessionTest\:\:createSession\(\) has parameter \$options with no type specified\.$#'
             count: 1
             path: ../../tests/system/Security/SecurityCSRFSessionTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Session\\Handlers\\Database\\AbstractHandlerTestCase\:\:getInstance\(\) has parameter \$options with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Session/Handlers/Database/AbstractHandlerTestCase.php
-
-        -
-            message: '#^Method CodeIgniter\\Session\\Handlers\\Database\\MySQLiHandlerTest\:\:getInstance\(\) has parameter \$options with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Session/Handlers/Database/MySQLiHandlerTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Session\\Handlers\\Database\\PostgreHandlerTest\:\:getInstance\(\) has parameter \$options with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Session/Handlers/Database/PostgreHandlerTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Session\\Handlers\\Database\\RedisHandlerTest\:\:getInstance\(\) has parameter \$options with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Session/Handlers/Database/RedisHandlerTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Session\\SessionTest\:\:getInstance\(\) has parameter \$options with no type specified\.$#'
-            count: 1
-            path: ../../tests/system/Session/SessionTest.php

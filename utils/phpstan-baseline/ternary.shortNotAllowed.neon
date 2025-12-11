@@ -1,4 +1,4 @@
-# total 34 errors
+# total 33 errors
 
 parameters:
     ignoreErrors:
@@ -66,11 +66,6 @@ parameters:
             message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
             count: 1
             path: ../../system/Router/AutoRouter.php
-
-        -
-            message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
-            count: 1
-            path: ../../system/Session/Session.php
 
         -
             message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'

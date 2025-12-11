@@ -21,7 +21,7 @@ use RedisException;
 use ReturnTypeWillChange;
 
 /**
- * Session handler using Redis for persistence
+ * Session handler using Redis for persistence.
  */
 class RedisHandler extends BaseHandler
 {
@@ -29,28 +29,28 @@ class RedisHandler extends BaseHandler
     private const DEFAULT_PROTOCOL = 'tcp';
 
     /**
-     * phpRedis instance
+     * phpRedis instance.
      *
      * @var Redis|null
      */
     protected $redis;
 
     /**
-     * Key prefix
+     * Key prefix.
      *
      * @var string
      */
     protected $keyPrefix = 'ci_session:';
 
     /**
-     * Lock key
+     * Lock key.
      *
      * @var string|null
      */
     protected $lockKey;
 
     /**
-     * Key exists flag
+     * Key exists flag.
      *
      * @var bool
      */
@@ -74,7 +74,7 @@ class RedisHandler extends BaseHandler
     private int $lockMaxRetries = 300;
 
     /**
-     * @param string $ipAddress User's IP address
+     * @param string $ipAddress User's IP address.
      *
      * @throws SessionException
      */
@@ -82,7 +82,7 @@ class RedisHandler extends BaseHandler
     {
         parent::__construct($config, $ipAddress);
 
-        // Store Session configurations
+        // Store Session configurations.
         $this->sessionExpiration = ($config->expiration === 0)
             ? (int) ini_get('session.gc_maxlifetime')
             : $config->expiration;
@@ -102,7 +102,7 @@ class RedisHandler extends BaseHandler
 
     protected function setSavePath(): void
     {
-        if (empty($this->savePath)) {
+        if ($this->savePath === '') {
             throw SessionException::forEmptySavepath();
         }
 
@@ -163,8 +163,8 @@ class RedisHandler extends BaseHandler
     /**
      * Re-initialize existing session, or creates a new one.
      *
-     * @param string $path The path where to store/retrieve the session
-     * @param string $name The session name
+     * @param string $path The path where to store/retrieve the session.
+     * @param string $name The session name.
      *
      * @throws RedisException
      */
@@ -202,7 +202,7 @@ class RedisHandler extends BaseHandler
     /**
      * Reads the session data from the session storage, and returns the results.
      *
-     * @param string $id The session ID
+     * @param string $id The session ID.
      *
      * @return false|string Returns an encoded string of the read data.
      *                      If nothing was read, it must return false.
@@ -236,8 +236,8 @@ class RedisHandler extends BaseHandler
     /**
      * Writes the session data to the session storage.
      *
-     * @param string $id   The session ID
-     * @param string $data The encoded session data
+     * @param string $id   The session ID.
+     * @param string $data The encoded session data.
      *
      * @throws RedisException
      */
@@ -307,9 +307,9 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Destroys a session
+     * Destroys a session.
      *
-     * @param string $id The session ID being destroyed
+     * @param string $id The session ID being destroyed.
      *
      * @throws RedisException
      */
@@ -345,7 +345,7 @@ class RedisHandler extends BaseHandler
     /**
      * Acquires an emulated lock.
      *
-     * @param string $sessionID Session ID
+     * @param string $sessionID Session ID.
      *
      * @throws RedisException
      */
@@ -397,7 +397,7 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Releases a previously acquired lock
+     * Releases a previously acquired lock.
      *
      * @throws RedisException
      */

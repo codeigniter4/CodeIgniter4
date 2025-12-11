@@ -44,6 +44,9 @@ final class SessionTest extends CIUnitTestCase
         $_SESSION = [];
     }
 
+    /**
+     * @param array<string, bool|int|string|null> $options Replace values for `Config\Session`.
+     */
     protected function getInstance($options = []): MockSession
     {
         $defaults = [

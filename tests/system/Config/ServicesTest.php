@@ -313,10 +313,10 @@ final class ServicesTest extends CIUnitTestCase
     public function testCallStatic(): void
     {
         // __callStatic should kick in for this but fail
-        $actual = Services::SeSsIoNs(null, false);
+        $actual = Services::SeSsIoNs(null, false); // @phpstan-ignore staticMethod.notFound
         $this->assertNull($actual);
         // __callStatic should kick in for this
-        $actual = Services::SeSsIoN(null, false);
+        $actual = Services::SeSsIoN(null, false); // @phpstan-ignore staticMethod.notFound
         $this->assertInstanceOf(Session::class, $actual);
     }
 

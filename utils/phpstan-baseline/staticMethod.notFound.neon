@@ -1,4 +1,4 @@
-# total 23 errors
+# total 21 errors
 
 parameters:
     ignoreErrors:
@@ -31,16 +31,6 @@ parameters:
             message: '#^Call to an undefined static method CodeIgniter\\Config\\Factories\:\:widgets\(\)\.$#'
             count: 13
             path: ../../tests/system/Config/FactoriesTest.php
-
-        -
-            message: '#^Call to an undefined static method Tests\\Support\\Config\\Services\:\:SeSsIoN\(\)\.$#'
-            count: 1
-            path: ../../tests/system/Config/ServicesTest.php
-
-        -
-            message: '#^Call to an undefined static method Tests\\Support\\Config\\Services\:\:SeSsIoNs\(\)\.$#'
-            count: 1
-            path: ../../tests/system/Config/ServicesTest.php
 
         -
             message: '#^Call to an undefined static method Tests\\Support\\Config\\Services\:\:redirectResponse\(\)\.$#'
