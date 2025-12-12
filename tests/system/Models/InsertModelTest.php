@@ -15,9 +15,11 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity\Entity;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use Config\Database;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 use Tests\Support\Entity\User;
@@ -406,5 +408,82 @@ final class InsertModelTest extends LiveModelTestCase
 
         $this->seeInDatabase('user', ['email' => json_encode($userData[0]['email'])]);
         $this->seeInDatabase('user', ['email' => json_encode($userData[1]['email'])]);
+    }
+
+    /**
+     * @param mixed        $invalidKey
+     * @param class-string $exception
+     */
+    #[DataProvider('provideInvalidPrimaryKeyValues')]
+    public function testInsertWithInvalidPrimaryKeyWhenAutoIncrementDisabled(
+        $invalidKey,
+        string $exception,
+        string $exceptionMessage
+    ): void {
+        $this->expectException($exception);
+        $this->expectExceptionMessage($exceptionMessage);
+
+        $insert = [
+            'key'   => $invalidKey,
+            'value' => 'some value',
+        ];
+
+        $this->createModel(WithoutAutoIncrementModel::class)->insert($insert);
+    }
+
+    public static function provideInvalidPrimaryKeyValues(): iterable
+    {
+        return [
+            'null' => [
+                null,
+                DataException::class,
+                'There is no primary key defined when trying to make insert',
+            ],
+            '0 integer' => [
+                0,
+                InvalidArgumentException::class,
+                'Invalid primary key: 0 is not allowed.',
+            ],
+            "'0' string" => [
+                '0',
+                InvalidArgumentException::class,
+                "Invalid primary key: '0' is not allowed.",
+            ],
+            'empty string' => [
+                '',
+                InvalidArgumentException::class,
+                "Invalid primary key: '' is not allowed.",
+            ],
+            'true' => [
+                true,
+                InvalidArgumentException::class,
+                'Invalid primary key: boolean true is not allowed.',
+            ],
+            'false' => [
+                false,
+                InvalidArgumentException::class,
+                'Invalid primary key: boolean false is not allowed.',
+            ],
+            'array with null' => [
+                [null],
+                InvalidArgumentException::class,
+                'Invalid primary key: only a single value is allowed, not an array.',
+            ],
+            'array with 0 integer' => [
+                [0],
+                InvalidArgumentException::class,
+                'Invalid primary key: only a single value is allowed, not an array.',
+            ],
+            "array with '0' string" => [
+                ['0'],
+                InvalidArgumentException::class,
+                "Invalid primary key: only a single value is allowed, not an array.",
+            ],
+            'array with empty array' => [
+                [[]],
+                InvalidArgumentException::class,
+                "Invalid primary key: only a single value is allowed, not an array.",
+            ],
+        ];
     }
 }

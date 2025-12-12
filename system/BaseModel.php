@@ -781,6 +781,61 @@ abstract class BaseModel
     }
 
     /**
+     * Validates that the primary key values are valid for update/delete/insert operations.
+     * Throws exception if invalid.
+     *
+     * @param int|list<int|string>|string $id
+     * @param bool                        $allowArray Whether to allow array of IDs (true for update/delete, false for insert)
+     *
+     * @throws InvalidArgumentException
+     */
+    protected function validateID($id, bool $allowArray = true): void
+    {
+        if (is_array($id)) {
+            // Check if arrays are allowed
+            if (! $allowArray) {
+                throw new InvalidArgumentException(
+                    'Invalid primary key: only a single value is allowed, not an array.'
+                );
+            }
+
+            // Check for empty array
+            if ($id === []) {
+                throw new InvalidArgumentException('Invalid primary key: cannot be an empty array.');
+            }
+
+            // Validate each ID in the array recursively
+            foreach ($id as $key => $valueId) {
+                if (is_array($valueId)) {
+                    throw new InvalidArgumentException(
+                        sprintf('Invalid primary key at index %s: nested arrays are not allowed.', $key)
+                    );
+                }
+
+                // Recursive call for each value (single values only in recursion)
+                $this->validateID($valueId, false);
+            }
+
+            return;
+        }
+
+        // Check for invalid single values
+        if (in_array($id, [null, 0, '0', '', true, false], true)) {
+            $type = is_bool($id) ? 'boolean ' . var_export($id, true) : var_export($id, true);
+            throw new InvalidArgumentException(
+                sprintf('Invalid primary key: %s is not allowed.', $type)
+            );
+        }
+
+        // Only allow int and string at this point
+        if (! is_int($id) && ! is_string($id)) {
+            throw new InvalidArgumentException(
+                sprintf('Invalid primary key: must be int or string, %s given.', get_debug_type($id))
+            );
+        }
+    }
+
+    /**
      * Inserts data into the database. If an object is provided,
      * it will attempt to convert it to an array.
      *
@@ -969,12 +1024,12 @@ abstract class BaseModel
      */
     public function update($id = null, $row = null): bool
     {
-        if (is_bool($id)) {
-            throw new InvalidArgumentException('update(): argument #1 ($id) should not be boolean.');
-        }
+        if ($id !== null) {
+            if (! is_array($id)) {
+              $id = [$id];
+            }
 
-        if (is_numeric($id) || is_string($id)) {
-            $id = [$id];
+            $this->validateID($id);
         }
 
         $row = $this->transformDataToArray($row, 'update');
@@ -1100,12 +1155,12 @@ abstract class BaseModel
      */
     public function delete($id = null, bool $purge = false)
     {
-        if (is_bool($id)) {
-            throw new InvalidArgumentException('delete(): argument #1 ($id) should not be boolean.');
-        }
+        if ($id !== null) {
+            if (! is_array($id)) {
+                $id = [$id];
+            }
 
-        if (! in_array($id, [null, 0, '0'], true) && (is_numeric($id) || is_string($id))) {
-            $id = [$id];
+            $this->validateID($id);
         }
 
         $eventData = [

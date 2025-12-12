@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\ModelException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -152,29 +153,37 @@ final class DeleteModelTest extends LiveModelTestCase
 
     /**
      * Given an explicit empty value in the WHERE condition
-     * When executing a soft delete
+     * When executing a soft delete with where() clause
      * Then an exception should not be thrown
+     *
+     * This test uses where() so values go into WHERE clause, not through validateID().
      *
      * @param int|string|null $emptyValue
      */
-    #[DataProvider('emptyPkValues')]
+    #[DataProvider('emptyPkValuesWithWhereClause')]
     public function testDontThrowExceptionWhenSoftDeleteConditionIsSetWithEmptyValue($emptyValue): void
     {
         $this->createModel(UserModel::class);
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
         $this->model->where('id', $emptyValue)->delete();
-        $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+        // Special case: true converted to 1
+        if ($emptyValue === true) {
+            $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL' => null]);
+        } else {
+            $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+        }
     }
 
     /**
      * @param int|string|null $emptyValue
+     * @param class-string    $exception
      */
     #[DataProvider('emptyPkValues')]
-    public function testThrowExceptionWhenSoftDeleteParamIsEmptyValue($emptyValue): void
+    public function testThrowExceptionWhenSoftDeleteParamIsEmptyValue($emptyValue, string $exception, string $exceptionMessage): void
     {
-        $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('Deletes are not allowed unless they contain a "where" or "like" clause.');
+        $this->expectException($exception);
+        $this->expectExceptionMessage($exceptionMessage);
 
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
@@ -183,16 +192,17 @@ final class DeleteModelTest extends LiveModelTestCase
 
     /**
      * @param int|string|null $emptyValue
+     * @param class-string    $exception
      */
     #[DataProvider('emptyPkValues')]
-    public function testDontDeleteRowsWhenSoftDeleteParamIsEmpty($emptyValue): void
+    public function testDontDeleteRowsWhenSoftDeleteParamIsEmpty($emptyValue, string $exception, string $exceptionMessage): void
     {
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
         try {
             $this->createModel(UserModel::class)->delete($emptyValue);
-        } catch (DatabaseException) {
-            // Do nothing.
+        } catch (DatabaseException | InvalidArgumentException) {
+            // Do nothing - both exceptions are expected for different values.
         }
 
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
@@ -233,15 +243,13 @@ final class DeleteModelTest extends LiveModelTestCase
 
     /**
      * @param int|string|null $id
+     * @param class-string    $exception
      */
     #[DataProvider('emptyPkValues')]
-    public function testDeleteThrowDatabaseExceptionWithoutWhereClause($id): void
+    public function testDeleteThrowDatabaseExceptionWithoutWhereClause($id, string $exception, string $exceptionMessage): void
     {
-        // BaseBuilder throws Exception.
-        $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage(
-            'Deletes are not allowed unless they contain a "where" or "like" clause.',
-        );
+        $this->expectException($exception);
+        $this->expectExceptionMessage($exceptionMessage);
 
         // $useSoftDeletes = false
         $this->createModel(JobModel::class);
@@ -251,15 +259,13 @@ final class DeleteModelTest extends LiveModelTestCase
 
     /**
      * @param int|string|null $id
+     * @param class-string    $exception
      */
     #[DataProvider('emptyPkValues')]
-    public function testDeleteWithSoftDeleteThrowDatabaseExceptionWithoutWhereClause($id): void
+    public function testDeleteWithSoftDeleteThrowDatabaseExceptionWithoutWhereClause($id, string $exception, string $exceptionMessage): void
     {
-        // Model throws Exception.
-        $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage(
-            'Deletes are not allowed unless they contain a "where" or "like" clause.',
-        );
+        $this->expectException($exception);
+        $this->expectExceptionMessage($exceptionMessage);
 
         // $useSoftDeletes = true
         $this->createModel(UserModel::class);
@@ -270,9 +276,89 @@ final class DeleteModelTest extends LiveModelTestCase
     public static function emptyPkValues(): iterable
     {
         return [
+            'null' => [
+                null,
+                DatabaseException::class,
+                'Deletes are not allowed unless they contain a "where" or "like" clause.',
+            ],
+            'false' => [
+                false,
+                InvalidArgumentException::class,
+                'Invalid primary key: boolean false is not allowed.',
+            ],
+            '0 integer' => [
+                0,
+                InvalidArgumentException::class,
+                'Invalid primary key: 0 is not allowed.',
+            ],
+            "'0' string" => [
+                '0',
+                InvalidArgumentException::class,
+                "Invalid primary key: '0' is not allowed.",
+            ],
+            'empty string' => [
+                '',
+                InvalidArgumentException::class,
+                "Invalid primary key: '' is not allowed.",
+            ],
+            'true' => [
+                true,
+                InvalidArgumentException::class,
+                'Invalid primary key: boolean true is not allowed.',
+            ],
+            'empty array' => [
+                [],
+                InvalidArgumentException::class,
+                'Invalid primary key: cannot be an empty array.',
+            ],
+            'nested array' => [
+                [[1, 2]],
+                InvalidArgumentException::class,
+                'Invalid primary key at index 0: nested arrays are not allowed.',
+            ],
+            'array with null' => [
+                [1, null, 3],
+                InvalidArgumentException::class,
+                'Invalid primary key: NULL is not allowed.',
+            ],
+            'array with 0' => [
+                [1, 0, 3],
+                InvalidArgumentException::class,
+                'Invalid primary key: 0 is not allowed.',
+            ],
+            "array with '0'" => [
+                [1, '0', 3],
+                InvalidArgumentException::class,
+                "Invalid primary key: '0' is not allowed.",
+            ],
+            'array with empty string' => [
+                [1, '', 3],
+                InvalidArgumentException::class,
+                "Invalid primary key: '' is not allowed.",
+            ],
+            'array with boolean' => [
+                [1, false, 3],
+                InvalidArgumentException::class,
+                'Invalid primary key: boolean false is not allowed.',
+            ],
+        ];
+    }
+
+    /**
+     * Data provider for tests using where() clause.
+     * These values go into WHERE clause, not through validateID().
+     *
+     * @return iterable<array{bool|int|string|null}>
+     */
+    public static function emptyPkValuesWithWhereClause(): iterable
+    {
+        return [
             [0],
             [null],
             ['0'],
+            [''],
+            [true],
+            [false],
         ];
     }
 }
