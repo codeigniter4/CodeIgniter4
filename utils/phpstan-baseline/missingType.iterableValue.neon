@@ -1,4 +1,4 @@
-# total 1319 errors
+# total 1320 errors
 
 parameters:
     ignoreErrors:
@@ -5806,6 +5806,11 @@ parameters:
             message: '#^Method CodeIgniter\\Models\\FindModelTest\:\:provideFirstAggregate\(\) return type has no value type specified in iterable type iterable\.$#'
             count: 1
             path: ../../tests/system/Models/FindModelTest.php
+
+        -
+            message: '#^Method CodeIgniter\\Models\\InsertModelTest\:\:provideInvalidPrimaryKeyValues\(\) return type has no value type specified in iterable type iterable\.$#'
+            count: 1
+            path: ../../tests/system/Models/InsertModelTest.php
 
         -
             message: '#^Method CodeIgniter\\Models\\TimestampModelTest\:\:allowDatesPrepareOneRecord\(\) has parameter \$data with no value type specified in iterable type array\.$#'
