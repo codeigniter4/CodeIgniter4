@@ -395,7 +395,7 @@ All session data (including flashdata and tempdata) will be destroyed permanentl
 stop()
 ------
 
-.. important:: This method was deprecated as of version v4.3.5 and was removed in v4.7.0.
+.. deprecated:: 4.3.5
 
 The session class also has the ``stop()`` method.
 
