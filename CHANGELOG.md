@@ -1,5 +1,38 @@
 # Changelog
 
+## [v4.6.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.6.4) (2025-12-12)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.6.3...v4.6.4)
+
+### Fixed Bugs
+
+* fix: prevent non-shared DB instances from polluting shared cache by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9679
+* fix: `Connection::getFieldData()` default value convention for `SQLSRV` and `OCI8` by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9680
+* fix: `Forge::modifyColumn()` for Postgre handler by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9676
+* fix: setting `created_at` field in `Model::replace()` method by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9693
+* fix: Casting in insertBatch and updateBatch methods. by @patel-vansh in https://github.com/codeigniter4/CodeIgniter4/pull/9698
+* fix: `compileOrderBy()` method by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9697
+* fix: SQLite3 password handling for empty string by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9729
+* fix: TypeError in `valid_base64` rule when checking invalid base64 strings by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9733
+* fix: debug toolbar logs collector behavior on `isEmpty()` by @mjomble in https://github.com/codeigniter4/CodeIgniter4/pull/9724
+* fix: crash in `toggleViewsHints` - `debugDiv.appendChild` (`toolbar.js`) by @mjomble in https://github.com/codeigniter4/CodeIgniter4/pull/9735
+* fix: cannot read properties of null in `toggleViewsHints` (`toolbar.js`) by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9736
+* fix: type error in controlled cell by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9784
+* fix: handle resources and closures in JSON exception responses by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9788
+* fix: quote reserved keyword `timestamp` used as a field name for session table by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9805
+* fix: Add an IDs for toolbar form fields by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/9823
+* fix: disable echo in the preload file by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9825
+* fix(cache): prevent Redis error when `deleteMatching()` finds no keys by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9829
+
+### Refactoring
+
+* refactor: change `$request` to `CLIRequest|IncomingRequest` in `ResponseTrait` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9658
+* refactor: fix phpdoc and improve code in `Language` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9656
+* refactor: remove redundant property declarations in `BaseController` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9659
+* refactor: update `CheckPhpIni` code by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9672
+* refactor: Improve types for phpstan by @neznaika0 in https://github.com/codeigniter4/CodeIgniter4/pull/9685
+* refactor: fix phpstan issues on magic properties by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9728
+* refactor: use `superglobals` service in the `UserAgent` class by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9783
+
 ## [v4.6.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.6.3) (2025-08-02)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.6.2...v4.6.3)
 
