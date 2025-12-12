@@ -273,6 +273,10 @@ final class DeleteModelTest extends LiveModelTestCase
             [0],
             [null],
             ['0'],
+            // @todo Fail only testDontThrowExceptionWhenSoftDeleteConditionIsSetWithEmptyValue()
+            // [''],
+            // [[]],
+            // [[15 => 150, '_id_' => '200', 20 => '0']],
         ];
     }
 }

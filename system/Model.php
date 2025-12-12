@@ -443,7 +443,7 @@ class Model extends BaseModel
 
         $builder = $this->builder();
 
-        if (! in_array($id, [null, '', 0, '0', []], true)) {
+        if ($this->isValidID($id)) {
             $builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
         }
 
@@ -459,6 +459,25 @@ class Model extends BaseModel
         }
 
         return $builder->update();
+    }
+
+    /**
+     * Make sure that the primary keys are set and non-empty
+     * for $this->delete() and $this->update().
+     *
+     * @param int|list<mixed>|string|null $id
+     */
+    protected function isValidID($id): bool
+    {
+        if (is_array($id) && $id !== []) {
+            foreach ($id as $valueId) {
+                if (is_array($valueId) || ! $this->isValidID($valueId)) {
+                    return false;
+                }
+            }
+        }
+
+        return ! in_array($id, [null, '', 0, '0', []], true);
     }
 
     /**
@@ -496,7 +515,7 @@ class Model extends BaseModel
         $set     = [];
         $builder = $this->builder();
 
-        if (! in_array($id, [null, '', 0, '0', []], true)) {
+        if ($this->isValidID($id)) {
             $builder = $builder->whereIn($this->primaryKey, $id);
         }
 

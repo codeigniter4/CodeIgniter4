@@ -553,10 +553,14 @@ final class UpdateModelTest extends LiveModelTestCase
      * @param false|null $id
      */
     #[DataProvider('provideUpdateThrowDatabaseExceptionWithoutWhereClause')]
-    public function testUpdateThrowDatabaseExceptionWithoutWhereClause($id, string $exception, string $exceptionMessage): void
+    public function testUpdateThrowDatabaseExceptionWithoutWhereClause($id, string $exception): void
     {
         $this->expectException($exception);
-        $this->expectExceptionMessage($exceptionMessage);
+        $this->expectExceptionMessage(
+            $exception === DatabaseException::class
+            ? 'Updates are not allowed unless they contain a "where" or "like" clause.'
+            : 'update(): argument #1 ($id) should not be boolean.',
+        );
 
         // $useSoftDeletes = false
         $this->createModel(JobModel::class);
@@ -570,12 +574,34 @@ final class UpdateModelTest extends LiveModelTestCase
             [
                 null,
                 DatabaseException::class,
-                'Updates are not allowed unless they contain a "where" or "like" clause.',
             ],
             [
                 false,
                 InvalidArgumentException::class,
-                'update(): argument #1 ($id) should not be boolean.',
+            ],
+            [
+                '',
+                DatabaseException::class,
+            ],
+            [
+                0,
+                DatabaseException::class,
+            ],
+            [
+                '0',
+                DatabaseException::class,
+            ],
+            [
+                [],
+                DatabaseException::class,
+            ],
+            [
+                [15 => 150, '_id_' => '200', 20 => '0'],
+                DatabaseException::class,
+            ],
+            [
+                [0 => '150', [1 => 200]],
+                DatabaseException::class,
             ],
         ];
     }
