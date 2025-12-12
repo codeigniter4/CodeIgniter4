@@ -62,7 +62,7 @@ class MockCache extends BaseHandler implements CacheInterface
     {
         $key = static::validateKey($key, $this->prefix);
 
-        return array_key_exists($key, $this->cache) ? $this->cache[$key] : null;
+        return $this->cache[$key] ?? null;
     }
 
     /**

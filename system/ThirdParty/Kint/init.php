@@ -44,6 +44,7 @@ if (\version_compare(PHP_VERSION, '7.4') < 0) {
 \define('KINT_PHP82', \version_compare(PHP_VERSION, '8.2') >= 0);
 \define('KINT_PHP83', \version_compare(PHP_VERSION, '8.3') >= 0);
 \define('KINT_PHP84', \version_compare(PHP_VERSION, '8.4') >= 0);
+\define('KINT_PHP8412', \version_compare(PHP_VERSION, '8.4.12') >= 0);
 \define('KINT_PHP85', \version_compare(PHP_VERSION, '8.5') >= 0);
 
 // Dynamic default settings
@@ -58,7 +59,7 @@ if (isset($_SERVER['DOCUMENT_ROOT']) && false === \strpos($_SERVER['DOCUMENT_ROO
 
     // Suppressed for unreadable document roots (related to open_basedir)
     if (false !== @\realpath($_SERVER['DOCUMENT_ROOT'])) {
-        /** @psalm-suppress PropertyTypeCoercion */
+        /** @psalm-suppress InvalidPropertyAssignmentValue */
         Utils::$path_aliases[\realpath($_SERVER['DOCUMENT_ROOT'])] = '<ROOT>';
     }
 }

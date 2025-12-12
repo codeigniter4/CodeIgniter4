@@ -350,7 +350,7 @@ if (! function_exists('form_checkbox')) {
     {
         $defaults = [
             'type'  => 'checkbox',
-            'name'  => (! is_array($data) ? $data : ''),
+            'name'  => is_array($data) ? '' : $data,
             'value' => $value,
         ];
 

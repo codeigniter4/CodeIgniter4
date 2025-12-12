@@ -13,11 +13,9 @@ declare(strict_types=1);
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\Empty_\SimplifyEmptyCheckOnEmptyArrayRector;
-use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
-use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
-use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
 use Rector\CodeQuality\Rector\FuncCall\CompactToVariablesRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
+use Rector\CodeQuality\Rector\Isset_\IssetOnPropertyObjectToPropertyExistsRector;
 use Rector\CodeQuality\Rector\Ternary\TernaryEmptyArrayArrayDimFetchToCoalesceRector;
 use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
@@ -27,19 +25,20 @@ use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
+use Rector\DeadCode\Rector\MethodCall\RemoveNullArgOnNullDefaultParamRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
-use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
-use Rector\PHPUnit\CodeQuality\Rector\Class_\RemoveDataProviderParamKeysRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
+use Rector\PHPUnit\CodeQuality\Rector\FuncCall\AssertFuncCallToPHPUnitAssertRector;
+use Rector\PHPUnit\CodeQuality\Rector\StmtsAwareInterface\DeclareStrictTypesTestsRector;
+use Rector\Privatization\Rector\Class_\FinalizeTestCaseClassRector;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
-use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
 use Rector\TypeDeclaration\Rector\ArrowFunction\AddArrowFunctionReturnTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddMethodCallBasedStrictParamTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
@@ -54,7 +53,7 @@ use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return RectorConfig::configure()
     ->withPhpSets(php81: true)
-    ->withPreparedSets(deadCode: true, instanceOf: true, strictBooleans: true, phpunitCodeQuality: true)
+    ->withPreparedSets(deadCode: true, instanceOf: true, phpunitCodeQuality: true)
     ->withComposerBased(phpunit: true)
     ->withParallel(120, 8, 10)
     ->withCache(
@@ -128,7 +127,6 @@ return RectorConfig::configure()
             __DIR__ . '/system/Validation/Views',
             __DIR__ . '/system/View/Parser.php',
             __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
-            __DIR__ . '/tests/system/View/Views',
         ],
 
         // use mt_rand instead of random_int on purpose on non-cryptographically random
@@ -168,7 +166,27 @@ return RectorConfig::configure()
 
         CompactToVariablesRector::class,
 
-        RemoveDataProviderParamKeysRector::class,
+        // possibly isset() on purpose, on updated Config classes property accross versions
+        IssetOnPropertyObjectToPropertyExistsRector::class,
+
+        AssertFuncCallToPHPUnitAssertRector::class => [
+            // use $this inside static closure
+            __DIR__ . '/tests/system/AutoReview/FrameworkCodeTest.php',
+        ],
+
+        // some tests extended by other tests
+        FinalizeTestCaseClassRector::class,
+
+        DeclareStrictTypesTestsRector::class => [
+            __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
+        ],
+
+        RemoveNullArgOnNullDefaultParamRector::class => [
+            // skip form query usage, easier to read
+            __DIR__ . '/system/Model.php',
+            __DIR__ . '/tests/system/Database',
+            __DIR__ . '/tests/system/Models',
+        ],
     ])
     // auto import fully qualified class names
     ->withImportNames(removeUnusedImports: true)
@@ -181,10 +199,7 @@ return RectorConfig::configure()
         CountArrayToEmptyArrayComparisonRector::class,
         ChangeNestedForeachIfsToEarlyContinueRector::class,
         ChangeIfElseValueAssignToEarlyReturnRector::class,
-        InlineIfToExplicitIfRector::class,
         PreparedValueToEarlyReturnRector::class,
-        UnusedForeachValueToArrayKeysRector::class,
-        ChangeArrayPushToArrayAssignRector::class,
         RemoveErrorSuppressInTryCatchStmtsRector::class,
         FuncGetArgsToVariadicParamRector::class,
         MakeInheritedMethodVisibilitySameAsParentRector::class,
@@ -192,7 +207,6 @@ return RectorConfig::configure()
         TernaryEmptyArrayArrayDimFetchToCoalesceRector::class,
         DisallowedEmptyRuleFixerRector::class,
         PrivatizeFinalClassPropertyRector::class,
-        BooleanInIfConditionRuleFixerRector::class,
         VersionCompareFuncCallToConstantRector::class,
         AddClosureVoidReturnTypeWhereNoReturnRector::class,
         AddFunctionVoidReturnTypeWhereNoReturnRector::class,
@@ -201,8 +215,4 @@ return RectorConfig::configure()
         ClosureReturnTypeRector::class,
         AddArrowFunctionReturnTypeRector::class,
     ])
-    ->withConfiguredRule(StringClassNameToClassConstantRector::class, [
-        // keep '\\' prefix string on string '\Foo\Bar'
-        StringClassNameToClassConstantRector::SHOULD_KEEP_PRE_SLASH => true,
-    ])
-    ->withCodeQualityLevel(34);
+    ->withCodeQualityLevel(61);

@@ -91,7 +91,7 @@ When doing so you will need to include the directory name loading the view. Exam
 Namespaced Views
 ================
 
-You can store views under a **View** directory that is namespaced, and load that view as if it was namespaced. While
+You can store views under a **Views** directory that is namespaced, and load that view as if it was namespaced. While
 PHP does not support loading non-class files from a namespace, CodeIgniter provides this feature to make it possible
 to package your views together in a module-like fashion for easy re-use or distribution.
 
@@ -99,7 +99,8 @@ If you have **example/blog** directory that has a PSR-4 mapping set up in the :d
 under the namespace ``Example\Blog``, you could retrieve view files as if they were namespaced also.
 
 Following this
-example, you could load the **blog_view.php** file from **example/blog/Views** by prepending the namespace to the view name:
+example, you could load the **blog_view.php** file from **example/blog/Views** by prepending the namespace to the view name
+(specifying the end directory ``Views`` as in ``Example\Blog\Views\`` is not required):
 
 .. literalinclude:: views/005.php
 

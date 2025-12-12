@@ -52,7 +52,7 @@ class HtmlPlugin extends AbstractPlugin implements PluginCompleteInterface
 
     public function parseComplete(&$var, AbstractValue $v, int $trigger): AbstractValue
     {
-        if ('<!doctype html>' !== \strtolower(\substr($var, 0, 15))) {
+        if ('<!doctype html>' !== \strtolower((string) \substr($var, 0, 15))) {
             return $v;
         }
 

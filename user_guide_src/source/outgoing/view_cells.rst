@@ -119,7 +119,7 @@ You can also create a controlled cell via a built in command from the CLI. The c
 Using a Different View
 ======================
 
-You can specify a custom view name by setting the ``view`` property in the class. The view will be located like any view would be normally:
+You can specify a custom view filepath by setting the ``view`` property in the class. The view will be located like any view would be normally:
 
 .. literalinclude:: view_cells/011.php
 
@@ -145,15 +145,18 @@ If you need to perform additional logic for one or more properties you can use c
 
 .. important:: You can't set properties that are declared as private during cell
     initialization.
+    Calling ``getDataProperty()`` and ``getViewProperty()`` methods are not available - they are used only for internal processes.
 
 Presentation Methods
 ====================
 
 Sometimes you need to perform additional logic for the view, but you don't want to pass it as a parameter. You can implement a method that will be called from within the cell's view itself. This can help the readability of your views:
+You may have noticed that not only method calls are allowed in the template: the entire Сell object with public properties is available.
 
 .. literalinclude:: view_cells/016.php
 
 .. literalinclude:: view_cells/017.php
+
 
 Performing Setup Logic
 ======================

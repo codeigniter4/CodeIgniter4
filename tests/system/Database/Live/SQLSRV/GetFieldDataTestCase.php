@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Live\SQLSRV;
 
 use CodeIgniter\Database\Live\AbstractGetFieldDataTestCase;
+use CodeIgniter\Database\SQLSRV\Connection;
 use Config\Database;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -68,7 +70,7 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
                 'type'       => 'int',
                 'max_length' => 10,
                 'nullable'   => false,
-                'default'    => '((0))', // int 0
+                'default'    => '0',
                 // 'primary_key' => 0,
             ],
             (object) [
@@ -76,7 +78,7 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
                 'type'       => 'varchar',
                 'max_length' => 64,
                 'nullable'   => true,
-                'default'    => '(NULL)', // NULL value
+                'default'    => null,
                 // 'primary_key' => 0,
             ],
             (object) [
@@ -84,7 +86,7 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
                 'type'       => 'varchar',
                 'max_length' => 64,
                 'nullable'   => false,
-                'default'    => "('null')", // string "null"
+                'default'    => 'null', // string "null"
                 // 'primary_key' => 0,
             ],
             (object) [
@@ -92,7 +94,7 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
                 'type'       => 'varchar',
                 'max_length' => 64,
                 'nullable'   => false,
-                'default'    => "('abc')", // string "abc"
+                'default'    => 'abc',
                 // 'primary_key' => 0,
             ],
         ];
@@ -234,5 +236,59 @@ final class GetFieldDataTestCase extends AbstractGetFieldDataTestCase
             ],
         ];
         $this->assertSameFieldData($expected, $fields);
+    }
+
+    #[DataProvider('provideNormalizeDefault')]
+    public function testNormalizeDefault(?string $input, ?string $expected): void
+    {
+        $this->assertInstanceOf(Connection::class, $this->db);
+
+        $normalizeDefault = self::getPrivateMethodInvoker($this->db, 'normalizeDefault');
+        $this->assertSame($expected, $normalizeDefault($input));
+    }
+
+    /**
+     * @return iterable<string, array{string|null, string|null}>
+     */
+    public static function provideNormalizeDefault(): iterable
+    {
+        return [
+            // Null cases
+            'null input'                          => [null, null],
+            'NULL literal wrapped in parentheses' => ['(NULL)', null],
+            'null literal lowercase'              => ['(null)', null],
+            'null literal mixed case'             => ['(Null)', null],
+            'null literal random case'            => ['(nULL)', null],
+            'null string'                         => ["('null')", 'null'],
+
+            // String literal cases
+            'simple string'                       => ["('hello')", 'hello'],
+            'empty string'                        => ['(())', ''],
+            'string with space'                   => ["('hello world')", 'hello world'],
+            'empty string literal'                => ["('')", ''],
+            'string with escaped quote'           => ["('can''t')", "can't"],
+            'string with multiple escaped quotes' => ["('it''s a ''test''')", "it's a 'test'"],
+            'concatenated multiline expression'   => ["('line1'+char(10)+'line2')", "line1'+char(10)+'line2"],
+
+            // Numeric cases
+            'zero with double parentheses'             => ['((0))', '0'],
+            'positive integer with double parentheses' => ['((123))', '123'],
+            'negative integer with double parentheses' => ['((-456))', '-456'],
+            'float with double parentheses'            => ['((3.14))', '3.14'],
+
+            // Function/expression cases
+            'function call'             => ['(getdate())', 'getdate()'],
+            'newid function'            => ['(newid())', 'newid()'],
+            'user_name function'        => ['(user_name())', 'user_name()'],
+            'current_timestamp'         => ['(current_timestamp)', 'current_timestamp'],
+            'mathematical expression'   => ['((1+1))', '1+1'],
+            'multiplication expression' => ['((100*2))', '100*2'],
+
+            // Edge cases
+            'multiple nested parentheses' => ["((('nested')))", 'nested'],
+            'value without parentheses'   => ['plain_value', 'plain_value'],
+            'value with parentheses'      => ['(  plain_value  )', 'plain_value'],
+            'function with parameters'    => ['(complex_func(1, 2))', 'complex_func(1, 2)'],
+        ];
     }
 }

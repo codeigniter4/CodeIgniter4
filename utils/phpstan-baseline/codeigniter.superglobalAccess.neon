@@ -1,4 +1,4 @@
-# total 77 errors
+# total 68 errors
 
 parameters:
     ignoreErrors:
@@ -118,16 +118,6 @@ parameters:
             path: ../../system/HTTP/Response.php
 
         -
-            message: '#^Accessing offset ''HTTP_REFERER'' directly on \$_SERVER is discouraged\.$#'
-            count: 4
-            path: ../../system/HTTP/UserAgent.php
-
-        -
-            message: '#^Accessing offset ''HTTP_USER_AGENT'' directly on \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../system/HTTP/UserAgent.php
-
-        -
             message: '#^Accessing offset mixed directly on \$_GET is discouraged\.$#'
             count: 1
             path: ../../system/Pager/Pager.php
@@ -211,16 +201,6 @@ parameters:
             message: '#^Accessing offset ''QUERY_STRING'' directly on \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
-
-        -
-            message: '#^Accessing offset ''HTTP_REFERER'' directly on \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/UserAgentTest.php
-
-        -
-            message: '#^Accessing offset ''HTTP_USER_AGENT'' directly on \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../tests/system/HTTP/UserAgentTest.php
 
         -
             message: '#^Accessing offset ''HTTP_HOST'' directly on \$_SERVER is discouraged\.$#'

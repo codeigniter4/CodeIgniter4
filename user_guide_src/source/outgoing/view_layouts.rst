@@ -64,7 +64,7 @@ The ``extend()`` method takes the name of any view file that you wish to use. Si
 be located just like a view. By default, it will look in the application's View directory, but will also scan
 other PSR-4 defined namespaces. You can include a namespace to locate the view in particular namespace View directory::
 
-    <?= $this->extend('Blog\Views\default') ?>
+    <?= $this->extend('Blog\default') ?>
 
 All content within a view that extends a layout must be included within ``section($name)`` and ``endSection()`` method calls.
 Any content between these calls will be inserted into the layout wherever the ``renderSection($name)`` call that
@@ -122,3 +122,15 @@ view to view. When using view layouts you must use ``$this->include()`` to inclu
 
 When calling the ``include()`` method, you can pass it all of the same options that can when rendering a normal view, including
 cache directives, etc.
+
+*********************
+Assign Data to Layers
+*********************
+
+You can pass additional variables to your templates, just like for ``view()``. If you don't use the ``saveData = false`` flag anywhere
+in the templates, then the data will be inherited for each block.
+
+.. note:: When using a loop, passing new variables is required.
+
+.. literalinclude:: view_layouts/002.php
+

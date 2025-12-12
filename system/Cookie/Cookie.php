@@ -225,9 +225,19 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * Construct a new Cookie instance.
      *
-     * @param string                                                                                                                                                                                      $name    The cookie's name
-     * @param string                                                                                                                                                                                      $value   The cookie's value
-     * @param array{prefix?: string, max-age?: int|numeric-string, expires?: DateTimeInterface|int|string, path?: string, domain?: string, secure?: bool, httponly?: bool, samesite?: string, raw?: bool} $options The cookie's options
+     * @param string $name  The cookie's name
+     * @param string $value The cookie's value
+     * @param array{
+     *   prefix?: string,
+     *   max-age?: int|numeric-string,
+     *   expires?: DateTimeInterface|int|string,
+     *   path?: string,
+     *   domain?: string,
+     *   secure?: bool,
+     *   httponly?: bool,
+     *   samesite?: string,
+     *   raw?: bool,
+     * } $options The cookie's options
      *
      * @throws CookieException
      */
@@ -497,7 +507,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      */
     public function withPath(?string $path)
     {
-        $path = $path !== null && $path !== '' && $path !== '0' ? $path : self::$defaults['path'];
+        $path = in_array($path, [null, '', '0'], true) ? self::$defaults['path'] : $path;
         $this->validatePrefix($this->prefix, $this->secure, $path, $this->domain);
 
         $cookie = clone $this;

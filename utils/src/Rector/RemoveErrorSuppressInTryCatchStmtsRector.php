@@ -19,7 +19,7 @@ use PhpParser\Node\Expr\ErrorSuppress;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\TryCatch;
-use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitor;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -63,7 +63,7 @@ final class RemoveErrorSuppressInTryCatchStmtsRector extends AbstractRector
             $node->stmts,
             static function (Node $subNode) use (&$hasChanged): int|Expr|null {
                 if ($subNode instanceof Class_ || $subNode instanceof Function_) {
-                    return NodeTraverser::DONT_TRAVERSE_CURRENT_AND_CHILDREN;
+                    return NodeVisitor::DONT_TRAVERSE_CURRENT_AND_CHILDREN;
                 }
 
                 if ($subNode instanceof ErrorSuppress) {

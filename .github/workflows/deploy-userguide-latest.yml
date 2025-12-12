@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -34,7 +34,7 @@ jobs:
           coverage: none
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
@@ -57,7 +57,7 @@ jobs:
 
       # Create an artifact of the html output
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: HTML Documentation
           path: user_guide_src/build/html/
@@ -75,7 +75,7 @@ jobs:
           git commit -m "Update User Guide" -a || true
 
       - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
+        uses: ad-m/github-push-action@v1.0.0
         with:
           branch: gh-pages
           directory: gh-pages

@@ -31,7 +31,7 @@ final class UserAgentTest extends CIUnitTestCase
         parent::setUp();
 
         // set a baseline user agent
-        $_SERVER['HTTP_USER_AGENT'] = $this->_user_agent;
+        service('superglobals')->setServer('HTTP_USER_AGENT', $this->_user_agent);
 
         $this->agent = new UserAgent();
     }
@@ -39,9 +39,8 @@ final class UserAgentTest extends CIUnitTestCase
     public function testMobile(): void
     {
         // Mobile Not Set
-        $_SERVER['HTTP_USER_AGENT'] = $this->_mobile_ua;
+        service('superglobals')->setServer('HTTP_USER_AGENT', $this->_mobile_ua);
         $this->assertFalse($this->agent->isMobile());
-        unset($_SERVER['HTTP_USER_AGENT']);
     }
 
     public function testIsFunctions(): void
@@ -55,12 +54,13 @@ final class UserAgentTest extends CIUnitTestCase
 
     public function testReferrer(): void
     {
-        $_SERVER['HTTP_REFERER'] = 'http://codeigniter.com/user_guide/';
+        service('superglobals')->setServer('HTTP_REFERER', 'http://codeigniter.com/user_guide/');
+
         $this->assertTrue($this->agent->isReferral());
         $this->assertSame('http://codeigniter.com/user_guide/', $this->agent->getReferrer());
 
         $this->setPrivateProperty($this->agent, 'referrer', null);
-        unset($_SERVER['HTTP_REFERER']);
+        service('superglobals')->setServer('HTTP_REFERER', '');
         $this->assertFalse($this->agent->isReferral());
         $this->assertSame('', $this->agent->getReferrer());
     }
@@ -108,7 +108,7 @@ final class UserAgentTest extends CIUnitTestCase
 
     public function testEmptyUserAgentVariable(): void
     {
-        unset($_SERVER['HTTP_USER_AGENT']);
+        service('superglobals')->setServer('HTTP_USER_AGENT', '');
         $agent = new UserAgent();
         $this->assertEmpty((string) $agent);
     }

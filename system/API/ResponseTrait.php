@@ -15,8 +15,8 @@ namespace CodeIgniter\API;
 
 use CodeIgniter\Format\Format;
 use CodeIgniter\Format\FormatterInterface;
+use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
 /**
@@ -24,10 +24,10 @@ use CodeIgniter\HTTP\ResponseInterface;
  * consistent HTTP responses under a variety of common
  * situations when working as an API.
  *
- * @property RequestInterface  $request
- * @property ResponseInterface $response
- * @property bool              $stringAsHtml Whether to treat string data as HTML in JSON response.
- *                                           Setting `true` is only for backward compatibility.
+ * @property CLIRequest|IncomingRequest $request
+ * @property ResponseInterface          $response
+ * @property bool                       $stringAsHtml Whether to treat string data as HTML in JSON response.
+ *                                                    Setting `true` is only for backward compatibility.
  */
 trait ResponseTrait
 {
@@ -122,9 +122,9 @@ trait ResponseTrait
     /**
      * Used for generic failures that no custom methods exist for.
      *
-     * @param list<string>|string $messages
-     * @param int                 $status   HTTP status code
-     * @param string|null         $code     Custom, API-specific, error code
+     * @param array<array-key, string>|string $messages
+     * @param int                             $status   HTTP status code
+     * @param string|null                     $code     Custom, API-specific, error code
      *
      * @return ResponseInterface
      */
@@ -230,7 +230,7 @@ trait ResponseTrait
     /**
      * Used when the data provided by the client cannot be validated on one or more fields.
      *
-     * @param list<string>|string $errors
+     * @param array<array-key, string>|string $errors
      *
      * @return ResponseInterface
      */

@@ -126,7 +126,7 @@ final class HeaderTest extends CIUnitTestCase
 
         $header = new Header($name, $value);
 
-        $header->appendValue(null);
+        $header->appendValue();
 
         $this->assertSame($name, $header->getName());
         $this->assertSame($expected, $header->getValue());
@@ -158,7 +158,7 @@ final class HeaderTest extends CIUnitTestCase
 
         $header = new Header($name, $value);
 
-        $header->prependValue(null);
+        $header->prependValue();
 
         $this->assertSame($name, $header->getName());
         $this->assertSame($expected, $header->getValue());
@@ -204,7 +204,7 @@ final class HeaderTest extends CIUnitTestCase
         $expected = '';
 
         $header = new Header($name);
-        $header->setValue('bar')->setValue(null);
+        $header->setValue('bar')->setValue();
 
         $this->assertSame($name, $header->getName());
         $this->assertSame($expected, $header->getValueLine());

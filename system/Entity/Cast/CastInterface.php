@@ -14,8 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Entity\Cast;
 
 /**
- * Interface CastInterface
- *
  * The methods work at (1)(4) only.
  *   [App Code] --- (1) --> [Entity] --- (2) --> [Database]
  *   [App Code] <-- (4) --- [Entity] <-- (3) --- [Database]

@@ -23,6 +23,9 @@ use Tests\Support\Validation\TestRules;
 #[Group('Others')]
 final class ValidationTest extends TraditionalValidationTest
 {
+    /**
+     * @var array<string, array<int|string, array<string, array<string, string>|string>|string>|string>
+     */
     protected static array $config = [
         'ruleSets' => [
             Rules::class,

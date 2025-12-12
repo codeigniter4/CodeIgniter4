@@ -839,7 +839,7 @@ class Email
      */
     public function setCRLF($CRLF = "\n")
     {
-        $this->CRLF = ! in_array($CRLF, ["\n", "\r\n", "\r"], true) ? "\n" : $CRLF;
+        $this->CRLF = in_array($CRLF, ["\n", "\r\n", "\r"], true) ? $CRLF : "\n";
 
         return $this;
     }
@@ -2222,7 +2222,7 @@ class Email
     {
         $mime = Mimes::guessTypeFromExtension(strtolower($ext));
 
-        return ! empty($mime) ? $mime : 'application/x-unknown-content-type';
+        return empty($mime) ? 'application/x-unknown-content-type' : $mime;
     }
 
     public function __destruct()

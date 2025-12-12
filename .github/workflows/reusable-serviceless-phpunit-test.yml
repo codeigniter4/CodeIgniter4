@@ -62,12 +62,12 @@ jobs:
 
       - name: Checkout base branch for PR
         if: github.event_name == 'pull_request'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.base_ref }}
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -122,7 +122,7 @@ jobs:
 
       - name: Upload coverage results as artifact
         if: ${{ inputs.enable-artifact-upload }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: build/cov/coverage-${{ env.ARTIFACT_NAME }}.cov

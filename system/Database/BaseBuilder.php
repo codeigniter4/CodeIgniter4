@@ -41,7 +41,7 @@ class BaseBuilder
     /**
      * QB SELECT data
      *
-     * @var array
+     * @var list<string>
      */
     protected $QBSelect = [];
 
@@ -1152,7 +1152,7 @@ class BaseBuilder
             return $this;
         }
 
-        $keyValue = ! is_array($field) ? [$field => $match] : $field;
+        $keyValue = is_array($field) ? $field : [$field => $match];
 
         foreach ($keyValue as $k => $v) {
             if ($insensitiveSearch) {
@@ -2113,7 +2113,7 @@ class BaseBuilder
             if (is_string($set)) {
                 $set = explode(',', $set);
 
-                $set = array_map(static fn ($key): string => trim($key), $set);
+                $set = array_map(trim(...), $set);
             }
 
             if ($set instanceof RawSql) {
@@ -2157,7 +2157,7 @@ class BaseBuilder
         if (is_string($query)) {
             if ($columns !== null && is_string($columns)) {
                 $columns = explode(',', $columns);
-                $columns = array_map(static fn ($key): string => trim($key), $columns);
+                $columns = array_map(trim(...), $columns);
             }
 
             $columns = (array) $columns;
@@ -3065,7 +3065,7 @@ class BaseBuilder
         if ($selectOverride !== false) {
             $sql = $selectOverride;
         } else {
-            $sql = (! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
+            $sql = $this->QBDistinct ? 'SELECT DISTINCT ' : 'SELECT ';
 
             if (empty($this->QBSelect)) {
                 $sql .= '*';
@@ -3257,6 +3257,9 @@ class BaseBuilder
     {
         if (is_array($this->QBOrderBy) && $this->QBOrderBy !== []) {
             foreach ($this->QBOrderBy as &$orderBy) {
+                if (is_string($orderBy)) {
+                    continue;
+                }
                 if ($orderBy['escape'] !== false && ! $this->isLiteral($orderBy['field'])) {
                     $orderBy['field'] = $this->db->protectIdentifiers($orderBy['field']);
                 }
@@ -3264,11 +3267,7 @@ class BaseBuilder
                 $orderBy = $orderBy['field'] . $orderBy['direction'];
             }
 
-            return $this->QBOrderBy = "\nORDER BY " . implode(', ', $this->QBOrderBy);
-        }
-
-        if (is_string($this->QBOrderBy)) {
-            return $this->QBOrderBy;
+            return "\nORDER BY " . implode(', ', $this->QBOrderBy);
         }
 
         return '';

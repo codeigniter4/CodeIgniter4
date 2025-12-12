@@ -36,6 +36,7 @@ use Kint\Renderer\RendererInterface;
 use Kint\Renderer\TextRenderer;
 use Kint\Value\Context\BaseContext;
 use Kint\Value\Context\ContextInterface;
+use Kint\Value\TraceFrameValue;
 use Kint\Value\UninitializedValue;
 
 /**
@@ -43,8 +44,16 @@ use Kint\Value\UninitializedValue;
  * Psalm bug #8523
  *
  * @psalm-import-type CallParameter from CallFinder
+ * @psalm-import-type TraceFrame from TraceFrameValue
  *
- * @psalm-type KintMode = Kint::MODE_*|bool
+ * @psalm-type KintMode = array-key|bool
+ * @psalm-type KintCallInfo = array{
+ *   params: ?list<CallParameter>,
+ *   modifiers: array,
+ *   callee: ?callable,
+ *   caller: ?callable,
+ *   trace: TraceFrame[],
+ * }
  *
  * @psalm-api
  */
@@ -396,9 +405,9 @@ class Kint implements FacadeInterface
      * @param array[] $trace   Backtrace
      * @param array   $args    Arguments
      *
-     * @return array Call info
-     *
      * @psalm-param list<non-empty-array> $trace
+     *
+     * @return KintCallInfo Call info
      */
     public static function getCallInfo(array $aliases, array $trace, array $args): array
     {
@@ -622,8 +631,8 @@ class Kint implements FacadeInterface
 
                             foreach ($keys as $key) {
                                 $call['parameters'][] = [
-                                    'name' => \substr($param['name'], 3).'['.\var_export($key, true).']',
-                                    'path' => \substr($param['path'], 3).'['.\var_export($key, true).']',
+                                    'name' => ((string) \substr($param['name'], 3)).'['.\var_export($key, true).']',
+                                    'path' => ((string) \substr($param['path'], 3)).'['.\var_export($key, true).']',
                                     'expression' => false,
                                     'literal' => false,
                                     'new_without_parens' => false,
@@ -634,8 +643,8 @@ class Kint implements FacadeInterface
                             // through array_values so we can't access them directly at all
                             for ($j = 0; $j + $i < $argc; ++$j) {
                                 $call['parameters'][] = [
-                                    'name' => 'array_values('.\substr($param['name'], 3).')['.$j.']',
-                                    'path' => 'array_values('.\substr($param['path'], 3).')['.$j.']',
+                                    'name' => 'array_values('.((string) \substr($param['name'], 3)).')['.$j.']',
+                                    'path' => 'array_values('.((string) \substr($param['path'], 3)).')['.$j.']',
                                     'expression' => false,
                                     'literal' => false,
                                     'new_without_parens' => false,

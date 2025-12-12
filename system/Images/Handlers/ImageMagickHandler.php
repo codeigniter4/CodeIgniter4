@@ -72,7 +72,7 @@ class ImageMagickHandler extends BaseHandler
      */
     public function _resize(bool $maintainRatio = false)
     {
-        $source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
+        $source      = empty($this->resource) ? $this->image()->getPathname() : $this->resource;
         $destination = $this->getResourcePath();
 
         $escape = '\\';
@@ -99,7 +99,7 @@ class ImageMagickHandler extends BaseHandler
      */
     public function _crop()
     {
-        $source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
+        $source      = empty($this->resource) ? $this->image()->getPathname() : $this->resource;
         $destination = $this->getResourcePath();
 
         $extent = ' ';
@@ -126,7 +126,7 @@ class ImageMagickHandler extends BaseHandler
     {
         $angle = '-rotate ' . $angle;
 
-        $source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
+        $source      = empty($this->resource) ? $this->image()->getPathname() : $this->resource;
         $destination = $this->getResourcePath();
 
         $action = ' ' . $angle . ' ' . escapeshellarg($source) . ' ' . escapeshellarg($destination);
@@ -147,7 +147,7 @@ class ImageMagickHandler extends BaseHandler
     {
         $flatten = "-background 'rgb({$red},{$green},{$blue})' -flatten";
 
-        $source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
+        $source      = empty($this->resource) ? $this->image()->getPathname() : $this->resource;
         $destination = $this->getResourcePath();
 
         $action = ' ' . $flatten . ' ' . escapeshellarg($source) . ' ' . escapeshellarg($destination);
@@ -168,7 +168,7 @@ class ImageMagickHandler extends BaseHandler
     {
         $angle = $direction === 'horizontal' ? '-flop' : '-flip';
 
-        $source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
+        $source      = empty($this->resource) ? $this->image()->getPathname() : $this->resource;
         $destination = $this->getResourcePath();
 
         $action = ' ' . $angle . ' ' . escapeshellarg($source) . ' ' . escapeshellarg($destination);
@@ -317,12 +317,8 @@ class ImageMagickHandler extends BaseHandler
      */
     protected function supportedFormatCheck()
     {
-        switch ($this->image()->imageType) {
-            case IMAGETYPE_WEBP:
-                if (! in_array('WEBP', Imagick::queryFormats(), true)) {
-                    throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
-                }
-                break;
+        if ($this->image()->imageType === IMAGETYPE_WEBP && ! in_array('WEBP', Imagick::queryFormats(), true)) {
+            throw ImageException::forInvalidImageCreate(lang('Images.webpNotSupported'));
         }
     }
 
@@ -411,7 +407,7 @@ class ImageMagickHandler extends BaseHandler
         // Text
         $cmd .= ' -annotate 0 ' . escapeshellarg($text);
 
-        $source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
+        $source      = empty($this->resource) ? $this->image()->getPathname() : $this->resource;
         $destination = $this->getResourcePath();
 
         $cmd = ' ' . escapeshellarg($source) . ' ' . $cmd . ' ' . escapeshellarg($destination);

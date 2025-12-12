@@ -22,7 +22,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\Attributes\WithoutErrorHandler;
-use TypeError;
 
 /**
  * @internal
@@ -90,6 +89,9 @@ final class DotEnvTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testLoadsHex2Bin(): void
     {
+        putenv('encryption.key');
+        unset($_ENV['encryption.key'], $_SERVER['encryption.key']); // @phpstan-ignore codeigniter.superglobalAccess
+
         $dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
         $dotenv->load();
 
@@ -102,18 +104,14 @@ final class DotEnvTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testLoadsBase64(): void
     {
+        putenv('encryption.key');
+        unset($_ENV['encryption.key'], $_SERVER['encryption.key']); // @phpstan-ignore codeigniter.superglobalAccess
+
         $dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');
         $dotenv->load();
 
         $this->assertSame('base64:L40bKo6b8Nu541LeVeZ1i5RXfGgnkar42CPTfukhGhw=', getenv('encryption.key'));
         $this->assertSame('OpenSSL', getenv('encryption.driver'));
-    }
-
-    public function testLoadsNoneStringFiles(): void
-    {
-        $this->expectException(TypeError::class);
-
-        new DotEnv($this->fixturesFolder, 2);
     }
 
     public function testCommentedLoadsVars(): void

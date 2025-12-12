@@ -83,7 +83,7 @@ In this example, if the user tried to visit **http://example.com/fr/books**, the
 set to ``fr``, assuming it was configured as a valid locale.
 
 If the value doesn't match a valid locale as defined in ``$supportedLocales`` in **app/Config/App.php**, the default
-locale will be used in it's place, unless you set to use only the supported locales defined in the App configuration
+locale will be used in its place, unless you set to use only the supported locales defined in the App configuration
 file:
 
 .. literalinclude:: localization/018.php
@@ -104,7 +104,7 @@ the :doc:`../incoming/incomingrequest`:
     :lines: 2-
 
 Before setting the locale, you must set valid locales. Because any attempt to
-set a locale that are not valid will result in
+set a locale that is not valid will result in
 the :ref:`default locale <setting-the-default-locale>` being set.
 
 By default, the valid locales are defined in ``Config\App::$supportedLocales``
@@ -172,7 +172,7 @@ Within the file, you would return an array, where each element in the array has 
 
 .. note:: You cannot use dots (``.``) at the beginning and end of language keys.
 
-It also support nested definition:
+It also supports nested definition:
 
 .. literalinclude:: localization/008.php
 

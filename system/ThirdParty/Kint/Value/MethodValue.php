@@ -127,7 +127,7 @@ class MethodValue extends AbstractValue
         $funcname = \str_replace('_', '-', \strtolower($c->getName()));
 
         if (0 === \strpos($funcname, '--') && 0 !== \strpos($funcname, '-', 2)) {
-            $funcname = \substr($funcname, 2);
+            $funcname = (string) \substr($funcname, 2);
         }
 
         return 'https://www.php.net/'.$class.'.'.$funcname;

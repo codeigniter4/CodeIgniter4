@@ -168,7 +168,7 @@ class Fabricator
      */
     public static function getCount(string $table): int
     {
-        return ! isset(self::$tableCounts[$table]) ? 0 : self::$tableCounts[$table];
+        return self::$tableCounts[$table] ?? 0;
     }
 
     /**

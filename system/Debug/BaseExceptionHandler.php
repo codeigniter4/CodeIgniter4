@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Debug;
 
+use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Exceptions as ExceptionsConfig;
@@ -53,6 +55,8 @@ abstract class BaseExceptionHandler
 
     /**
      * The main entry point into the handler.
+     *
+     * @param CLIRequest|IncomingRequest $request
      *
      * @return void
      */

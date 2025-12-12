@@ -1,3 +1,3 @@
 <?php
 
-return view('Example\Blog\Views\blog_view');
+return view('Example\Blog\blog_view');

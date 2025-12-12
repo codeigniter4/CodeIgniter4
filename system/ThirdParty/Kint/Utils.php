@@ -313,7 +313,7 @@ final class Utils
             return $input;
         }
 
-        return \strtok($input, "\0"); // @codeCoverageIgnore
+        return (string) \strtok($input, "\0"); // @codeCoverageIgnore
     }
 
     /** @psalm-pure */
@@ -435,7 +435,7 @@ final class Utils
             return '';
         }
 
-        return \substr($string, $start, $length ?? PHP_INT_MAX);
+        return (string) \substr($string, $start, $length ?? PHP_INT_MAX);
     }
 
     public static function shortenPath(string $file): string
@@ -512,7 +512,7 @@ final class Utils
             $installed = $folder.'/composer/installed.json';
 
             if (\file_exists($installed) && \is_readable($installed)) {
-                $packages = \json_decode(\file_get_contents($installed), true);
+                $packages = \json_decode((string) \file_get_contents($installed), true);
 
                 if (!\is_array($packages)) {
                     continue;
@@ -529,7 +529,7 @@ final class Utils
                 $folder = \dirname($folder);
 
                 if (\file_exists($folder.'/composer.json') && \is_readable($folder.'/composer.json')) {
-                    $composer = \json_decode(\file_get_contents($folder.'/composer.json'), true);
+                    $composer = \json_decode((string) \file_get_contents($folder.'/composer.json'), true);
 
                     if (\is_array($composer['extra'][$key] ?? null)) {
                         $extras = \array_replace($extras, $composer['extra'][$key]);

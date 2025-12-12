@@ -37,7 +37,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         $service1 = single_service($service); // @phpstan-ignore codeigniter.unknownServiceMethod
         $service2 = single_service($service); // @phpstan-ignore codeigniter.unknownServiceMethod
 
-        assert($service1 !== null);
+        $this->assertNotNull($service1);
 
         $this->assertInstanceOf($service1::class, $service2);
         $this->assertNotSame($service1, $service2);
@@ -65,7 +65,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         $service1 = single_service($service, ...$params); // @phpstan-ignore codeigniter.unknownServiceMethod
         $service2 = single_service($service, ...$params); // @phpstan-ignore codeigniter.unknownServiceMethod
 
-        assert($service1 !== null);
+        $this->assertNotNull($service1);
 
         $this->assertInstanceOf($service1::class, $service2);
         $this->assertNotSame($service1, $service2);
@@ -120,8 +120,8 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         $cache1 = single_service('cache', null, true);
         $cache2 = single_service('cache', null, true);
 
-        assert($cache1 !== null);
-        assert($cache2 !== null);
+        $this->assertNotNull($cache1);
+        $this->assertNotNull($cache2);
 
         // Assert that even passing true as last param this will
         // not create a shared instance.

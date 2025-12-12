@@ -253,8 +253,27 @@ class Forge extends BaseForge
             }
 
             if (! empty($field['default'])) {
-                $sqls[] = $sql . ' ALTER COLUMN ADD CONSTRAINT ' . $this->db->escapeIdentifiers($field['name']) . '_def'
-                    . " DEFAULT {$field['default']} FOR " . $this->db->escapeIdentifiers($field['name']);
+                $fullTable = $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table);
+                $colName   = $field['name']; // bare, for sys.columns lookup
+
+                // find the existing default constraint name for this column
+                $findSql = <<<SQL
+                    SELECT dc.name AS constraint_name
+                    FROM sys.default_constraints dc
+                    JOIN sys.columns c
+                        ON dc.parent_object_id = c.object_id
+                        AND dc.parent_column_id = c.column_id
+                    WHERE dc.parent_object_id = OBJECT_ID(N'{$fullTable}')
+                        AND c.name = N'{$colName}';
+                    SQL;
+
+                $toDrop = $this->db->query($findSql)->getRowArray();
+                if (isset($toDrop['constraint_name']) && $toDrop['constraint_name'] !== '') {
+                    $sqls[] = $sql . ' DROP CONSTRAINT ' . $this->db->escapeIdentifiers($toDrop['constraint_name']);
+                }
+
+                $sqls[] = $sql . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($field['name'] . '_def')
+                    . "{$field['default']} FOR " . $this->db->escapeIdentifiers($field['name']);
             }
 
             $nullable = true; // Nullable by default.
@@ -379,7 +398,7 @@ class Forge extends BaseForge
                 // https://learn.microsoft.com/en-us/sql/t-sql/data-types/char-and-varchar-transact-sql?view=sql-server-ver16#remarks
                 $maxLength = max(
                     array_map(
-                        static fn ($value): int => strlen($value),
+                        strlen(...),
                         $attributes['CONSTRAINT'],
                     ),
                 );

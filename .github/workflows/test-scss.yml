@@ -33,10 +33,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v6.0.0
         with:
           # node version based on dart-sass test workflow
           node-version: 16

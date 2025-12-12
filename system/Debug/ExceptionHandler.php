@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Debug;
 
+use Closure;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
@@ -41,6 +43,8 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
 
     /**
      * Determines the correct way to display the error.
+     *
+     * @param CLIRequest|IncomingRequest $request
      */
     public function handle(
         Throwable $exception,
@@ -81,6 +85,12 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
                 $data = $this->isDisplayErrorsEnabled()
                     ? $this->collectVars($exception, $statusCode)
                     : '';
+
+                // Sanitize data to remove non-JSON-serializable values (resources, closures)
+                // before formatting for API responses (JSON, XML, etc.)
+                if ($data !== '') {
+                    $data = $this->sanitizeData($data);
+                }
 
                 $this->respond($data, $statusCode)->send();
 
@@ -163,5 +173,54 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
             ['1', 'true', 'on', 'yes'],
             true,
         );
+    }
+
+    /**
+     * Sanitizes data to remove non-JSON-serializable values like resources and closures.
+     * This is necessary for API responses that need to be JSON/XML encoded.
+     *
+     * @param array<int, bool> $seen Used internally to prevent infinite recursion
+     */
+    private function sanitizeData(mixed $data, array &$seen = []): mixed
+    {
+        $type = gettype($data);
+
+        switch ($type) {
+            case 'resource':
+            case 'resource (closed)':
+                return '[Resource #' . (int) $data . ']';
+
+            case 'array':
+                $result = [];
+
+                foreach ($data as $key => $value) {
+                    $result[$key] = $this->sanitizeData($value, $seen);
+                }
+
+                return $result;
+
+            case 'object':
+                $oid = spl_object_id($data);
+                if (isset($seen[$oid])) {
+                    return '[' . $data::class . ' Object *RECURSION*]';
+                }
+                $seen[$oid] = true;
+
+                if ($data instanceof Closure) {
+                    return '[Closure]';
+                }
+
+                $result = [];
+
+                foreach ((array) $data as $key => $value) {
+                    $cleanKey          = preg_replace('/^\x00.*\x00/', '', (string) $key);
+                    $result[$cleanKey] = $this->sanitizeData($value, $seen);
+                }
+
+                return $result;
+
+            default:
+                return $data;
+        }
     }
 }
