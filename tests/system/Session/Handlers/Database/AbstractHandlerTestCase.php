@@ -44,6 +44,9 @@ abstract class AbstractHandlerTestCase extends CIUnitTestCase
         }
     }
 
+    /**
+     * @param array<string, bool|int|string|null> $options Replace values for `Config\Session`.
+     */
     abstract protected function getInstance($options = []): DatabaseHandler;
 
     public function testOpen(): void

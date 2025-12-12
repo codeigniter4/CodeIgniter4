@@ -43,8 +43,8 @@ interface SessionInterface
      * If $data is an array, it is expected to be an array of key/value pairs
      * to be set as session properties.
      *
-     * @param array<string, mixed>|list<string>|string $data  Property name or associative array of properties
-     * @param mixed                                    $value Property value if single key provided
+     * @param array<string, mixed>|list<string>|string $data  Property name or associative array of properties.
+     * @param mixed                                    $value Property value if single key provided.
      *
      * @return void
      */
@@ -59,7 +59,7 @@ interface SessionInterface
      *
      * Replaces the legacy method $session->userdata();
      *
-     * @param string|null $key Identifier of the session property to retrieve
+     * @param string|null $key Identifier of the session property to retrieve.
      *
      * @return ($key is string ? mixed : array<string, mixed>)
      */
@@ -106,7 +106,7 @@ interface SessionInterface
      *
      * If the item key is null, return all flashdata.
      *
-     * @param string|null $key Property identifier
+     * @param string|null $key Property identifier.
      *
      * @return ($key is string ? mixed : array<string, mixed>)
      */
@@ -115,7 +115,7 @@ interface SessionInterface
     /**
      * Keeps a single piece of flash data alive for one more request.
      *
-     * @param list<string>|string $key Property identifier or array of them
+     * @param list<string>|string $key Property identifier or array of them.
      *
      * @return void
      */
@@ -125,7 +125,7 @@ interface SessionInterface
      * Mark a session property or properties as flashdata. This returns
      * `false` if any of the properties were not already set.
      *
-     * @param list<string>|string $key Property identifier or array of them
+     * @param list<string>|string $key Property identifier or array of them.
      *
      * @return bool
      */
@@ -134,7 +134,7 @@ interface SessionInterface
     /**
      * Unmark data in the session as flashdata.
      *
-     * @param list<string>|string $key Property identifier or array of them
+     * @param list<string>|string $key Property identifier or array of them.
      *
      * @return void
      */
@@ -151,9 +151,9 @@ interface SessionInterface
      * Sets new data into the session, and marks it as temporary data
      * with a set lifespan.
      *
-     * @param array<string, mixed>|list<string>|string $data  Session data key or associative array of items
-     * @param mixed                                    $value Value to store
-     * @param int                                      $ttl   Time-to-live in seconds
+     * @param array<string, mixed>|list<string>|string $data  Session data key or associative array of items.
+     * @param mixed                                    $value Value to store.
+     * @param int                                      $ttl   Time-to-live in seconds.
      *
      * @return void
      */
@@ -163,7 +163,7 @@ interface SessionInterface
      * Returns either a single piece of tempdata, or all temp data currently
      * in the session.
      *
-     * @param string|null $key Session data key
+     * @param string|null $key Session data key.
      *
      * @return ($key is string ? mixed : array<string, mixed>)
      */
@@ -172,7 +172,7 @@ interface SessionInterface
     /**
      * Removes a single piece of temporary data from the session.
      *
-     * @param string $key Session data key
+     * @param string $key Session data key.
      *
      * @return void
      */
@@ -195,7 +195,7 @@ interface SessionInterface
      * Unmarks temporary data in the session, effectively removing its
      * lifespan and allowing it to live as long as the session does.
      *
-     * @param list<string>|string $key Property identifier or array of them
+     * @param list<string>|string $key Property identifier or array of them.
      *
      * @return void
      */

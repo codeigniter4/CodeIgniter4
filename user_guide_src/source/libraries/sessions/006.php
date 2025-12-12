@@ -1,3 +1,3 @@
 <?php
 
-$item = $session->item;
+$name = $session->name;
