@@ -12,18 +12,6 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-**********************
-Mandatory File Changes
-**********************
-
-****************
-Breaking Changes
-****************
-
-*********************
-Breaking Enhancements
-*********************
-
 *************
 Project Files
 *************
@@ -53,4 +41,6 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- app/Config/Database.php
+- app/Controllers/BaseController.php
+- preload.php

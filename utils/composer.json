@@ -6,7 +6,7 @@
         "friendsofphp/php-cs-fixer": "^3.76",
         "nexusphp/cs-config": "^3.26",
         "phpmetrics/phpmetrics": "^2.8 || ^3.0rc6",
-        "vimeo/psalm": "^6.12"
+        "vimeo/psalm": "^6.14"
     },
     "autoload": {
         "psr-4": {
