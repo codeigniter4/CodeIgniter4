@@ -765,9 +765,9 @@ The other way to set the validation message to fields by functions,
 
     .. literalinclude:: model/030.php
 
-.. php:method:: setValidationMessages($fieldMessages)
+.. php:method:: setValidationMessages($validationMessages)
 
-    :param  array   $fieldMessages:
+    :param  array   $validationMessages:
 
     This function will set the field messages.
 

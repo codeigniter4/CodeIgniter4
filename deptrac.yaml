@@ -209,6 +209,7 @@ deptrac:
       - I18n
     Model:
       - Database
+      - DataCaster
       - DataConverter
       - Entity
       - I18n

@@ -338,12 +338,12 @@ parameters:
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
-            message: '#^Assigning ''fr\-FR; q\=1\.0, en; q\=0\.5'' directly on offset ''HTTP_ACCEPT_LANGUAGE'' of \$_SERVER is discouraged\.$#'
+            message: '#^Assigning ''fr; q\=1\.0, en; q\=0\.5'' directly on offset ''HTTP_ACCEPT_LANGUAGE'' of \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 
         -
-            message: '#^Assigning ''fr; q\=1\.0, en; q\=0\.5'' directly on offset ''HTTP_ACCEPT_LANGUAGE'' of \$_SERVER is discouraged\.$#'
+            message: '#^Assigning ''fr\-FR; q\=1\.0, en; q\=0\.5'' directly on offset ''HTTP_ACCEPT_LANGUAGE'' of \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 

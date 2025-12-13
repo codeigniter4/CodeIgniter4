@@ -49,6 +49,8 @@ Interface Changes
 Method Signature Changes
 ========================
 
+- **BaseModel:** The type of the ``$row`` parameter for the ``cleanValidationRules()`` method has been changed from ``?array $row = null`` to ``array $row``.
+
 - Added the ``SensitiveParameter`` attribute to various methods to conceal sensitive information from stack traces. Affected methods are:
     - ``CodeIgniter\Encryption\EncrypterInterface::encrypt()``
     - ``CodeIgniter\Encryption\EncrypterInterface::decrypt()``
