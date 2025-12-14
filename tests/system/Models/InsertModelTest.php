@@ -418,7 +418,7 @@ final class InsertModelTest extends LiveModelTestCase
     public function testInsertWithInvalidPrimaryKeyWhenAutoIncrementDisabled(
         $invalidKey,
         string $exception,
-        string $exceptionMessage
+        string $exceptionMessage,
     ): void {
         $this->expectException($exception);
         $this->expectExceptionMessage($exceptionMessage);
@@ -501,12 +501,12 @@ final class InsertModelTest extends LiveModelTestCase
             "array with '0' string" => [
                 ['0'],
                 InvalidArgumentException::class,
-                "Invalid primary key: only a single value is allowed, not an array.",
+                'Invalid primary key: only a single value is allowed, not an array.',
             ],
             'array with empty array' => [
                 [[]],
                 InvalidArgumentException::class,
-                "Invalid primary key: only a single value is allowed, not an array.",
+                'Invalid primary key: only a single value is allowed, not an array.',
             ],
         ];
     }

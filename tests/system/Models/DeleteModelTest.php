@@ -160,7 +160,7 @@ final class DeleteModelTest extends LiveModelTestCase
      *
      * @param int|string|null $emptyValue
      */
-    #[DataProvider('emptyPkValuesWithWhereClause')]
+    #[DataProvider('provideDontThrowExceptionWhenSoftDeleteConditionIsSetWithEmptyValue')]
     public function testDontThrowExceptionWhenSoftDeleteConditionIsSetWithEmptyValue($emptyValue): void
     {
         $this->createModel(UserModel::class);
@@ -173,6 +173,24 @@ final class DeleteModelTest extends LiveModelTestCase
         } else {
             $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
         }
+    }
+
+    /**
+     * Data provider for tests using where() clause.
+     * These values go into WHERE clause, not through validateID().
+     *
+     * @return iterable<array{bool|int|string|null}>
+     */
+    public static function provideDontThrowExceptionWhenSoftDeleteConditionIsSetWithEmptyValue(): iterable
+    {
+        return [
+            [0],
+            [null],
+            ['0'],
+            [''],
+            [true],
+            [false],
+        ];
     }
 
     /**
@@ -201,7 +219,7 @@ final class DeleteModelTest extends LiveModelTestCase
 
         try {
             $this->createModel(UserModel::class)->delete($emptyValue);
-        } catch (DatabaseException | InvalidArgumentException) {
+        } catch (DatabaseException|InvalidArgumentException) {
             // Do nothing - both exceptions are expected for different values.
         }
 
@@ -341,24 +359,6 @@ final class DeleteModelTest extends LiveModelTestCase
                 InvalidArgumentException::class,
                 'Invalid primary key: boolean false is not allowed.',
             ],
-        ];
-    }
-
-    /**
-     * Data provider for tests using where() clause.
-     * These values go into WHERE clause, not through validateID().
-     *
-     * @return iterable<array{bool|int|string|null}>
-     */
-    public static function emptyPkValuesWithWhereClause(): iterable
-    {
-        return [
-            [0],
-            [null],
-            ['0'],
-            [''],
-            [true],
-            [false],
         ];
     }
 }

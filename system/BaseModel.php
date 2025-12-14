@@ -795,7 +795,7 @@ abstract class BaseModel
             // Check if arrays are allowed
             if (! $allowArray) {
                 throw new InvalidArgumentException(
-                    'Invalid primary key: only a single value is allowed, not an array.'
+                    'Invalid primary key: only a single value is allowed, not an array.',
                 );
             }
 
@@ -808,7 +808,7 @@ abstract class BaseModel
             foreach ($id as $key => $valueId) {
                 if (is_array($valueId)) {
                     throw new InvalidArgumentException(
-                        sprintf('Invalid primary key at index %s: nested arrays are not allowed.', $key)
+                        sprintf('Invalid primary key at index %s: nested arrays are not allowed.', $key),
                     );
                 }
 
@@ -822,15 +822,16 @@ abstract class BaseModel
         // Check for invalid single values
         if (in_array($id, [null, 0, '0', '', true, false], true)) {
             $type = is_bool($id) ? 'boolean ' . var_export($id, true) : var_export($id, true);
+
             throw new InvalidArgumentException(
-                sprintf('Invalid primary key: %s is not allowed.', $type)
+                sprintf('Invalid primary key: %s is not allowed.', $type),
             );
         }
 
         // Only allow int and string at this point
         if (! is_int($id) && ! is_string($id)) {
             throw new InvalidArgumentException(
-                sprintf('Invalid primary key: must be int or string, %s given.', get_debug_type($id))
+                sprintf('Invalid primary key: must be int or string, %s given.', get_debug_type($id)),
             );
         }
     }
@@ -1026,7 +1027,7 @@ abstract class BaseModel
     {
         if ($id !== null) {
             if (! is_array($id)) {
-              $id = [$id];
+                $id = [$id];
             }
 
             $this->validateID($id);
