@@ -373,6 +373,9 @@ class Model extends BaseModel
                 if (! isset($row[$this->primaryKey])) {
                     throw DataException::forEmptyPrimaryKey('insertBatch');
                 }
+
+                // Validate the primary key value
+                $this->validateID($row[$this->primaryKey], false);
             }
         }
 

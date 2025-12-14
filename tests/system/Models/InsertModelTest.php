@@ -431,6 +431,30 @@ final class InsertModelTest extends LiveModelTestCase
         $this->createModel(WithoutAutoIncrementModel::class)->insert($insert);
     }
 
+    /**
+     * @param mixed        $invalidKey
+     * @param class-string $exception
+     */
+    #[DataProvider('provideInvalidPrimaryKeyValues')]
+    public function testInsertBatchWithInvalidPrimaryKeyWhenAutoIncrementDisabled($invalidKey, string $exception, string $exceptionMessage): void
+    {
+        $this->expectException($exception);
+        $this->expectExceptionMessage($exceptionMessage);
+
+        $insertData = [
+            [
+                'key'   => 'valid_key_1',
+                'value' => 'value1',
+            ],
+            [
+                'key'   => $invalidKey,  // Invalid key in second row
+                'value' => 'value2',
+            ],
+        ];
+
+        $this->createModel(WithoutAutoIncrementModel::class)->insertBatch($insertData);
+    }
+
     public static function provideInvalidPrimaryKeyValues(): iterable
     {
         return [
