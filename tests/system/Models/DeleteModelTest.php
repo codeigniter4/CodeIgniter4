@@ -164,6 +164,11 @@ final class DeleteModelTest extends LiveModelTestCase
     public function testDontThrowExceptionWhenSoftDeleteConditionIsSetWithEmptyValue($emptyValue): void
     {
         $this->createModel(UserModel::class);
+
+        if ($this->db->DBDriver === 'Postgre' && in_array($emptyValue, ['', true, false], true)) {
+            $this->markTestSkipped('PostgreSQL does not allow empty string, true, or false for integer columns');
+        }
+
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
         $this->model->where('id', $emptyValue)->delete();
