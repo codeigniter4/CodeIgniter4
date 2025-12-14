@@ -455,6 +455,9 @@ final class InsertModelTest extends LiveModelTestCase
         $this->createModel(WithoutAutoIncrementModel::class)->insertBatch($insertData);
     }
 
+    /**
+     * @return iterable<string, array{mixed, class-string, string}>
+     */
     public static function provideInvalidPrimaryKeyValues(): iterable
     {
         return [

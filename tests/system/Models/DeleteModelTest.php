@@ -308,6 +308,9 @@ final class DeleteModelTest extends LiveModelTestCase
         $this->model->delete($id);
     }
 
+    /**
+     * @return iterable<string, array{mixed, class-string, string}>
+     */
     public static function emptyPkValues(): iterable
     {
         return [
