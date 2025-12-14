@@ -15,6 +15,7 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Database;
@@ -105,6 +106,16 @@ final class UpdateModelTest extends LiveModelTestCase
         $this->assertTrue($result);
         $this->seeInDatabase('user', ['id' => 1, 'name' => 'Foo Bar']);
         $this->seeInDatabase('user', ['id' => 2, 'name' => 'Foo Bar']);
+    }
+
+    public function testUpdateWithRawSql(): void
+    {
+        $this->createModel(UserModel::class);
+
+        // RawSql objects should be allowed as primary key values
+        $result = $this->model->update(new RawSql('1'), ['name' => 'RawSql User']);
+        $this->assertTrue($result);
+        $this->seeInDatabase('user', ['id' => 1, 'name' => 'RawSql User']);
     }
 
     public function testUpdateResultFail(): void

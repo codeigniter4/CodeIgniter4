@@ -70,6 +70,9 @@ Invalid primary key values will now throw ``InvalidArgumentException`` instead o
     - Nested arrays (e.g., ``[[1, 2]]``)
     - Arrays containing any of the above invalid values
 
+  **Note:** ``RawSql`` objects are allowed as primary key values for complex scenarios
+  where you need to use raw SQL expressions.
+
 This change improves error reporting by providing specific validation messages
 (e.g., "Invalid primary key: 0 is not allowed") instead of generic database errors, and
 prevents invalid queries from reaching the database.

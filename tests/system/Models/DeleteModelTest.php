@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\ModelException;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -34,6 +35,17 @@ final class DeleteModelTest extends LiveModelTestCase
         $this->seeInDatabase('job', ['name' => 'Developer']);
 
         $result = $this->model->delete(1);
+        $this->assertTrue($result);
+        $this->dontSeeInDatabase('job', ['name' => 'Developer']);
+    }
+
+    public function testDeleteWithRawSql(): void
+    {
+        $this->createModel(JobModel::class);
+        $this->seeInDatabase('job', ['name' => 'Developer']);
+
+        // RawSql objects should be allowed as primary key values
+        $result = $this->model->delete(new RawSql('1'));
         $this->assertTrue($result);
         $this->dontSeeInDatabase('job', ['name' => 'Developer']);
     }

@@ -19,6 +19,7 @@ use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\DataCaster\Cast\CastInterface;
 use CodeIgniter\DataConverter\DataConverter;
 use CodeIgniter\Entity\Cast\CastInterface as EntityCastInterface;
@@ -784,8 +785,8 @@ abstract class BaseModel
      * Validates that the primary key values are valid for update/delete/insert operations.
      * Throws exception if invalid.
      *
-     * @param int|list<int|string>|string $id
-     * @param bool                        $allowArray Whether to allow array of IDs (true for update/delete, false for insert)
+     * @param int|list<int|string>|RawSql|string $id
+     * @param bool                               $allowArray Whether to allow array of IDs (true for update/delete, false for insert)
      *
      * @throws InvalidArgumentException
      */
@@ -816,6 +817,11 @@ abstract class BaseModel
                 $this->validateID($valueId, false);
             }
 
+            return;
+        }
+
+        // Allow RawSql objects for complex scenarios
+        if ($id instanceof RawSql) {
             return;
         }
 
@@ -1018,8 +1024,8 @@ abstract class BaseModel
      * Updates a single record in the database. If an object is provided,
      * it will attempt to convert it into an array.
      *
-     * @param int|list<int|string>|string|null $id
-     * @param object|row_array|null            $row
+     * @param int|list<int|string>|RawSql|string|null $id
+     * @param object|row_array|null                   $row
      *
      * @throws ReflectionException
      */
@@ -1147,8 +1153,8 @@ abstract class BaseModel
     /**
      * Deletes a single record from the database where $id matches.
      *
-     * @param int|list<int|string>|string|null $id    The rows primary key(s).
-     * @param bool                             $purge Allows overriding the soft deletes setting.
+     * @param int|list<int|string>|RawSql|string|null $id    The rows primary key(s).
+     * @param bool                                    $purge Allows overriding the soft deletes setting.
      *
      * @return bool|string Returns a SQL string if in test mode.
      *
