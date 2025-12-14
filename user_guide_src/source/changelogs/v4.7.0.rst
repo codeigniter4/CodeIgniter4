@@ -40,6 +40,32 @@ The ``insertBatch()`` and ``updateBatch()`` methods now honor model settings lik
 ``updateOnlyChanged`` and ``allowEmptyInserts``. This change ensures consistent handling
 across all insert/update operations.
 
+Entity
+------
+
+The ``Entity::hasChanged()`` and ``Entity::syncOriginal()`` methods now perform deep comparison
+for objects and arrays instead of shallow comparison. This means:
+
+- **Objects and arrays** are now JSON-encoded and normalized for comparison, detecting changes
+  in nested structures, object properties, and array elements.
+- **Enums** (both ``BackedEnum`` and ``UnitEnum``) are properly tracked by their backing value
+  or case name.
+- **DateTime objects** (``DateTimeInterface``) are compared using their ISO 8601 representation
+  including timezone information.
+- **Collections** (``Traversable``) such as ``ArrayObject`` and ``ArrayIterator`` are converted
+  to arrays for comparison.
+- **Value objects** with ``__toString()`` method are compared by their string representation when
+  properties are not accessible (fallback for objects with private properties).
+- **Nested entities** (using ``toRawArray()``), ``JsonSerializable`` objects, and objects with
+  ``toArray()`` methods are recursively normalized for accurate change detection.
+- **Scalar values** (strings, integers, floats, booleans, null) continue to use direct comparison
+  with an optimization when all entity attributes are scalars.
+
+Previously, changing an object property or an array containing objects would not be detected
+as a change because only reference comparison was performed. Now, any modification to the internal
+state of objects or arrays will be properly detected. If you relied on the old shallow comparison
+behavior, you will need to update your code accordingly.
+
 Interface Changes
 =================
 

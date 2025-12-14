@@ -378,3 +378,24 @@ attribute to check:
 Or to check the whole entity for changed values omit the parameter:
 
 .. literalinclude:: entities/023.php
+
+Deep Change Tracking
+====================
+
+.. versionadded:: 4.7.0
+
+The Entity class performs **deep comparison** for objects and arrays to accurately detect changes in their internal state.
+
+Scalar Values
+-------------
+
+For scalar values (strings, integers, floats, booleans, null), the Entity uses direct comparison. When all attributes
+in an Entity are scalars, an optimized comparison is used for better performance.
+
+Objects and Arrays
+------------------
+
+For objects and arrays, the Entity JSON-encodes and normalizes the values for comparison. This means that modifications
+to nested structures, object properties, array elements, nested entities (using ``toRawArray()``), enums (``BackedEnum``
+and ``UnitEnum``), datetime objects (``DateTimeInterface``), collections (``Traversable``), value objects with
+``__toString()``, and objects implementing ``JsonSerializable`` or ``toArray()`` will be properly detected.

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Entity;
 
+use ArrayIterator;
+use ArrayObject;
 use Closure;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\HTTP\URI;
@@ -21,9 +23,12 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use DateTime;
 use DateTimeInterface;
+use DateTimeZone;
+use JsonSerializable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionException;
+use stdClass;
 use Tests\Support\Entity\Cast\CastBase64;
 use Tests\Support\Entity\Cast\CastPassParameters;
 use Tests\Support\Entity\Cast\NotExtendsBaseCast;
@@ -1563,5 +1568,718 @@ final class EntityTest extends CIUnitTestCase
                 'type'     => CastPassParameters::class,
             ];
         };
+    }
+
+    public function testHasChangedWithScalarsOnlyUsesOptimization(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'id'   => 1,
+                'name' => 'test',
+                'flag' => true,
+            ];
+        };
+
+        // Sync original to set $_onlyScalars = true
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged());
+
+        $entity->id = 2;
+
+        $this->assertTrue($entity->hasChanged());
+    }
+
+    public function testHasChangedWithObjectsDoesNotUseOptimization(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'id'   => 1,
+                'data' => null,
+            ];
+        };
+
+        $entity->data = new stdClass();
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged());
+
+        $newObj       = new stdClass();
+        $newObj->test = 'value';
+        $entity->data = $newObj;
+
+        $this->assertTrue($entity->hasChanged());
+    }
+
+    public function testHasChangedDetectsArrayChanges(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'items' => ['a', 'b', 'c'],
+            ];
+        };
+
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('items'));
+
+        $entity->items = ['a', 'b', 'd'];
+
+        $this->assertTrue($entity->hasChanged('items'));
+    }
+
+    public function testHasChangedDetectsNestedArrayChanges(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'data' => [
+                    'level1' => [
+                        'level2' => 'value',
+                    ],
+                ],
+            ];
+        };
+
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('data'));
+
+        $entity->data = [
+            'level1' => [
+                'level2' => 'different',
+            ],
+        ];
+
+        $this->assertTrue($entity->hasChanged('data'));
+    }
+
+    public function testHasChangedDetectsObjectPropertyChanges(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'obj' => null,
+            ];
+        };
+
+        $obj         = new stdClass();
+        $obj->prop   = 'original';
+        $entity->obj = $obj;
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('obj'));
+
+        $newObj       = new stdClass();
+        $newObj->prop = 'modified';
+        $entity->obj  = $newObj;
+
+        $this->assertTrue($entity->hasChanged('obj'));
+    }
+
+    public function testHasChangedWithNestedEntity(): void
+    {
+        $innerEntity = new SomeEntity(['foo' => 'bar']);
+        $outerEntity = new class () extends Entity {
+            protected $attributes = [
+                'nested' => null,
+            ];
+        };
+        $outerEntity->nested = $innerEntity;
+        $outerEntity->syncOriginal();
+
+        $this->assertFalse($outerEntity->hasChanged('nested'));
+
+        $newInner            = new SomeEntity(['foo' => 'baz']);
+        $outerEntity->nested = $newInner;
+
+        $this->assertTrue($outerEntity->hasChanged('nested'));
+    }
+
+    public function testHasChangedWithJsonSerializable(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'data' => null,
+            ];
+        };
+
+        $obj1 = new class () implements JsonSerializable {
+            public function jsonSerialize(): mixed
+            {
+                return ['value' => 'original'];
+            }
+        };
+
+        $entity->data = $obj1;
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('data'));
+
+        $obj2 = new class () implements JsonSerializable {
+            public function jsonSerialize(): mixed
+            {
+                return ['value' => 'modified'];
+            }
+        };
+
+        $entity->data = $obj2;
+
+        $this->assertTrue($entity->hasChanged('data'));
+    }
+
+    public function testHasChangedDoesNotDetectUnchangedObject(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'obj' => null,
+            ];
+        };
+
+        $obj         = new stdClass();
+        $obj->prop   = 'value';
+        $entity->obj = $obj;
+        $entity->syncOriginal();
+
+        $sameObj       = new stdClass();
+        $sameObj->prop = 'value';
+        $entity->obj   = $sameObj;
+
+        $this->assertFalse($entity->hasChanged('obj'));
+    }
+
+    public function testSyncOriginalWithMixedTypes(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'scalar'  => 'text',
+                'number'  => 42,
+                'array'   => [1, 2, 3],
+                'object'  => null,
+                'null'    => null,
+                'boolean' => true,
+            ];
+        };
+
+        $obj            = new stdClass();
+        $obj->prop      = 'value';
+        $entity->object = $obj;
+
+        $entity->syncOriginal();
+
+        $original = $this->getPrivateProperty($entity, 'original');
+
+        // Scalars should be stored as-is
+        $this->assertSame('text', $original['scalar']);
+        $this->assertSame(42, $original['number']);
+        $this->assertNull($original['null']);
+        $this->assertTrue($original['boolean']);
+
+        // Objects and arrays should be JSON-encoded
+        $this->assertIsString($original['array']);
+        $this->assertIsString($original['object']);
+        $this->assertSame(json_encode([1, 2, 3]), $original['array']);
+    }
+
+    public function testSyncOriginalSetsHasOnlyScalarsFalseWithArrays(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'id'    => 1,
+                'items' => ['a', 'b'],
+            ];
+        };
+
+        $entity->syncOriginal();
+
+        $original = $this->getPrivateProperty($entity, 'original');
+        $this->assertIsString($original['items']);
+        $this->assertSame(json_encode(['a', 'b']), $original['items']);
+    }
+
+    public function testSyncOriginalSetsHasOnlyScalarsTrueWithOnlyScalars(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'id'     => 1,
+                'name'   => 'test',
+                'active' => true,
+                'price'  => 99.99,
+            ];
+        };
+
+        $entity->syncOriginal();
+
+        $original = $this->getPrivateProperty($entity, 'original');
+        $this->assertSame(1, $original['id']);
+        $this->assertSame('test', $original['name']);
+        $this->assertTrue($original['active']);
+        $this->assertEqualsWithDelta(99.99, $original['price'], PHP_FLOAT_EPSILON);
+    }
+
+    public function testHasChangedWithObjectToArray(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'data' => null,
+            ];
+        };
+
+        $entity->data = new stdClass();
+        $entity->syncOriginal();
+
+        $entity->data = [];
+
+        $this->assertTrue($entity->hasChanged('data'));
+    }
+
+    public function testHasChangedWithRemovedKey(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'foo' => 'bar',
+            ];
+        };
+
+        $entity->syncOriginal();
+
+        unset($entity->foo);
+
+        $this->assertTrue($entity->hasChanged('foo'));
+    }
+
+    public function testNormalizeValueWithEntityToArray(): void
+    {
+        $innerEntity = new SomeEntity(['foo' => 'bar', 'bar' => 'baz']);
+        $entity      = new class () extends Entity {
+            protected $attributes = [
+                'nested' => null,
+            ];
+        };
+
+        $entity->nested = $innerEntity;
+        $entity->syncOriginal();
+
+        // Change inner entity property
+        $innerEntity2   = new SomeEntity(['foo' => 'changed', 'bar' => 'baz']);
+        $entity->nested = $innerEntity2;
+
+        $this->assertTrue($entity->hasChanged('nested'));
+    }
+
+    public function testHasChangedWithComplexNestedStructure(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'complex' => null,
+            ];
+        };
+
+        $complex = [
+            'level1' => [
+                'level2' => [
+                    'value' => 'original',
+                ],
+            ],
+        ];
+
+        $entity->complex = $complex;
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('complex'));
+
+        // Deep change
+        $complex['level1']['level2']['value'] = 'modified';
+        $entity->complex                      = $complex;
+
+        $this->assertTrue($entity->hasChanged('complex'));
+    }
+
+    public function testHasChangedWithObjectContainingArray(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'obj' => null,
+            ];
+        };
+
+        $obj         = new stdClass();
+        $obj->items  = ['a', 'b', 'c'];
+        $entity->obj = $obj;
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('obj'));
+
+        // Change array inside object
+        $newObj        = new stdClass();
+        $newObj->items = ['a', 'b', 'd'];
+        $entity->obj   = $newObj;
+
+        $this->assertTrue($entity->hasChanged('obj'));
+    }
+
+    public function testSyncOriginalAfterMultipleChanges(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'value' => 'original',
+            ];
+        };
+
+        $entity->syncOriginal();
+        $this->assertFalse($entity->hasChanged());
+
+        $entity->value = 'changed1';
+        $this->assertTrue($entity->hasChanged());
+
+        $entity->syncOriginal();
+        $this->assertFalse($entity->hasChanged());
+
+        $entity->value = 'changed2';
+        $this->assertTrue($entity->hasChanged());
+    }
+
+    public function testHasChangedWithArrayOfObjects(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'items' => null,
+            ];
+        };
+
+        $obj1       = new stdClass();
+        $obj1->id   = 1;
+        $obj1->name = 'First';
+
+        $obj2       = new stdClass();
+        $obj2->id   = 2;
+        $obj2->name = 'Second';
+
+        $entity->items = [$obj1, $obj2];
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('items'));
+
+        $obj3       = new stdClass();
+        $obj3->id   = 1;
+        $obj3->name = 'Modified';
+
+        $entity->items = [$obj3, $obj2];
+
+        $this->assertTrue($entity->hasChanged('items'));
+    }
+
+    public function testHasChangedWithEmptyArrays(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'tags' => [],
+            ];
+        };
+
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('tags'));
+
+        $entity->tags = ['tag1'];
+
+        $this->assertTrue($entity->hasChanged('tags'));
+
+        $entity->syncOriginal();
+        $entity->tags = [];
+
+        $this->assertTrue($entity->hasChanged('tags'));
+    }
+
+    public function testHasChangedWithObjectWithToArrayMethod(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'custom' => null,
+            ];
+        };
+
+        // Create object with toArray() method
+        $obj1 = new class () {
+            /**
+             * @return array<string, string>
+             */
+            public function toArray(): array
+            {
+                return ['key' => 'value1'];
+            }
+        };
+
+        $entity->custom = $obj1;
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('custom'));
+
+        // Create different object with same class but different toArray() result
+        $obj2 = new class () {
+            /**
+             * @return array<string, string>
+             */
+            public function toArray(): array
+            {
+                return ['key' => 'value2'];
+            }
+        };
+
+        $entity->custom = $obj2;
+
+        $this->assertTrue($entity->hasChanged('custom'));
+    }
+
+    public function testHasChangedScalarOptimizationWithNullValues(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'id'    => 1,
+                'name'  => null,
+                'email' => null,
+            ];
+        };
+
+        $entity->syncOriginal();
+
+        $original = $this->getPrivateProperty($entity, 'original');
+        $this->assertSame(1, $original['id']);
+        $this->assertNull($original['name']);
+        $this->assertNull($original['email']);
+
+        $this->assertFalse($entity->hasChanged());
+
+        // Change null to string
+        $entity->name = 'John';
+
+        $this->assertTrue($entity->hasChanged());
+    }
+
+    public function testHasChangedDetectsNewPropertyAddition(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'existing' => 'value',
+            ];
+        };
+
+        $entity->syncOriginal();
+
+        // Add new property
+        $entity->newProp = 'new value';
+
+        $this->assertTrue($entity->hasChanged());
+        $this->assertTrue($entity->hasChanged('newProp'));
+    }
+
+    public function testHasChangedWithBackedEnumString(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'status' => null,
+            ];
+        };
+
+        $entity->status = StatusEnum::ACTIVE;
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('status'));
+
+        $entity->status = StatusEnum::PENDING;
+
+        $this->assertTrue($entity->hasChanged('status'));
+    }
+
+    public function testHasChangedWithBackedEnumInt(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'role' => null,
+            ];
+        };
+
+        $entity->role = RoleEnum::USER;
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('role'));
+
+        $entity->role = RoleEnum::ADMIN;
+
+        $this->assertTrue($entity->hasChanged('role'));
+    }
+
+    public function testHasChangedWithUnitEnum(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'color' => null,
+            ];
+        };
+
+        $entity->color = ColorEnum::RED;
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('color'));
+
+        $entity->color = ColorEnum::BLUE;
+
+        $this->assertTrue($entity->hasChanged('color'));
+    }
+
+    public function testHasChangedDoesNotDetectSameEnum(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'status' => null,
+            ];
+        };
+
+        $entity->status = StatusEnum::ACTIVE;
+        $entity->syncOriginal();
+
+        $entity->status = StatusEnum::ACTIVE;
+
+        $this->assertFalse($entity->hasChanged('status'));
+    }
+
+    public function testSyncOriginalWithEnumValues(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'status' => StatusEnum::PENDING,
+                'role'   => RoleEnum::USER,
+                'color'  => ColorEnum::GREEN,
+            ];
+        };
+
+        $entity->syncOriginal();
+
+        $original = $this->getPrivateProperty($entity, 'original');
+
+        // Enums should be JSON-encoded as objects
+        $this->assertIsString($original['status']);
+        $this->assertIsString($original['role']);
+        $this->assertIsString($original['color']);
+
+        $statusData = json_decode($original['status'], true);
+        $this->assertSame(StatusEnum::class, $statusData['__class']);
+        $this->assertSame('pending', $statusData['__enum']);
+
+        $roleData = json_decode($original['role'], true);
+        $this->assertSame(RoleEnum::class, $roleData['__class']);
+        $this->assertSame(1, $roleData['__enum']);
+
+        $colorData = json_decode($original['color'], true);
+        $this->assertSame(ColorEnum::class, $colorData['__class']);
+        $this->assertSame('GREEN', $colorData['__enum']);
+    }
+
+    public function testHasChangedWithDateTimeInterface(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'created_at' => null,
+            ];
+        };
+
+        // Test with Time object
+        $entity->created_at = Time::parse('2024-01-01 12:00:00', 'UTC');
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('created_at'));
+
+        $entity->created_at = Time::parse('2024-12-31 23:59:59', 'UTC');
+        $this->assertTrue($entity->hasChanged('created_at'));
+
+        $entity->syncOriginal();
+        $entity->created_at = Time::parse('2024-12-31 23:59:59', 'UTC');
+        $this->assertFalse($entity->hasChanged('created_at'));
+
+        // Test timezone difference detection
+        $entity->created_at = new DateTime('2024-01-01 12:00:00', new DateTimeZone('UTC'));
+        $entity->syncOriginal();
+        $entity->created_at = new DateTime('2024-01-01 12:00:00', new DateTimeZone('America/New_York'));
+        $this->assertTrue($entity->hasChanged('created_at'));
+    }
+
+    public function testHasChangedWithTraversable(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'items' => null,
+            ];
+        };
+
+        // Test with ArrayObject
+        $entity->items = new ArrayObject(['a', 'b', 'c']);
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('items'));
+
+        $entity->items = new ArrayObject(['a', 'b', 'd']);
+        $this->assertTrue($entity->hasChanged('items'));
+
+        $entity->syncOriginal();
+        $entity->items = new ArrayObject(['a', 'b', 'd']);
+        $this->assertFalse($entity->hasChanged('items'));
+
+        // Test with ArrayIterator
+        $entity->items = new ArrayIterator(['x', 'y', 'z']);
+        $entity->syncOriginal();
+        $entity->items = new ArrayIterator(['x', 'y', 'modified']);
+        $this->assertTrue($entity->hasChanged('items'));
+
+        // Test with nested objects inside collection (verifies recursive normalization)
+        $obj1       = new stdClass();
+        $obj1->name = 'first';
+
+        $obj2       = new stdClass();
+        $obj2->name = 'second';
+
+        $entity->items = new ArrayObject([$obj1, $obj2]);
+        $entity->syncOriginal();
+
+        $obj3       = new stdClass();
+        $obj3->name = 'modified';
+
+        $entity->items = new ArrayObject([$obj3, $obj2]);
+        $this->assertTrue($entity->hasChanged('items'));
+    }
+
+    public function testHasChangedWithValueObjectsUsingToString(): void
+    {
+        // Define a value object class
+        $emailClass = new class () {
+            public static function create(string $email): object
+            {
+                return new class ($email) {
+                    public function __construct(private readonly string $email)
+                    {
+                    }
+
+                    public function __toString(): string
+                    {
+                        return $this->email;
+                    }
+                };
+            }
+        };
+
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'email' => null,
+            ];
+        };
+
+        $entity->email = $emailClass::create('old@example.com');
+        $entity->syncOriginal();
+
+        $this->assertFalse($entity->hasChanged('email'));
+
+        $entity->email = $emailClass::create('new@example.com');
+        $this->assertTrue($entity->hasChanged('email'));
+
+        $entity->syncOriginal();
+        $entity->email = $emailClass::create('new@example.com');
+        $this->assertFalse($entity->hasChanged('email'));
     }
 }
