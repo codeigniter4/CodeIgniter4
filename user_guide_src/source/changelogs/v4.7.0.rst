@@ -106,10 +106,10 @@ as a change because only reference comparison was performed. Now, any modificati
 state of objects or arrays will be properly detected. If you relied on the old shallow comparison
 behavior, you will need to update your code accordingly.
 
-The ``Entity::toRawArray()`` method now properly converts arrays (including arrays of entities)
-when the ``$recursive`` parameter is ``true``. Previously, properties containing arrays were not
-recursively processed. If you were relying on the old behavior where arrays remained unconverted,
-you will need to update your code.
+The ``Entity::toRawArray()`` method now properly converts arrays of entities when the ``$recursive``
+parameter is ``true``. Previously, properties containing arrays were not recursively processed.
+If you were relying on the old behavior where arrays remained unconverted, you will need to update
+your code.
 
 Interface Changes
 =================
