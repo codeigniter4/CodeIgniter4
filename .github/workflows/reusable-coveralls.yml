@@ -43,7 +43,7 @@ jobs:
           echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
 
       - name: Cache dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
           key: ${{ github.job }}-php-${{ inputs.php-version }}-${{ hashFiles('**/composer.*') }}
@@ -52,7 +52,7 @@ jobs:
             ${{ github.job }}-
 
       - name: Cache PHPUnit's static analysis cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: build/.phpunit.cache/code-coverage
           key: phpunit-code-coverage-${{ hashFiles('**/phpunit.*') }}
