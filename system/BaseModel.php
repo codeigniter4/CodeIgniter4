@@ -785,9 +785,10 @@ abstract class BaseModel
      * Validates that the primary key values are valid for update/delete/insert operations.
      * Throws exception if invalid.
      *
-     * @param bool                               $allowArray Whether to allow array of IDs (true for update/delete, false for insert)
+     * @param bool $allowArray Whether to allow array of IDs (true for update/delete, false for insert)
+     *
      * @phpstan-assert non-zero-int|non-empty-list<int|string>|RawSql|non-falsy-string $id
-     * @throws InvalidArgumentException
+     * @throws         InvalidArgumentException
      */
     protected function validateID(mixed $id, bool $allowArray = true): void
     {
