@@ -779,7 +779,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     #[DataProvider('provideRequiredWithout')]
-    public function testRequiredWithout(?string $field, ?string $check, bool $expected): void
+    public function testRequiredWithout(string $field, ?string $check, bool $expected): void
     {
         $data = [
             'foo'   => 'bar',
@@ -802,8 +802,8 @@ class RulesTest extends CIUnitTestCase
         yield from [
             ['nope', 'bars', false],
             ['foo', 'nope', true],
-            [null, null, false],
-            [null, 'foo', true],
+            ['', null, false],
+            ['', 'foo', true],
             ['foo', null, true],
             [
                 'array.emptyField1',
