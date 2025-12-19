@@ -161,16 +161,18 @@ final class FileLocatorCached implements FileLocatorInterface
         return $files;
     }
 
-    public function locateFile(string $file, string $folder = '', string $ext = 'php'): false|string
+    public function locateFile(string $file, ?string $folder = null, string $ext = 'php'): false|string
     {
-        if (isset($this->cache['locateFile'][$file][$folder][$ext])) {
-            return $this->cache['locateFile'][$file][$folder][$ext];
+        $folderKey = $folder ?? '';
+
+        if (isset($this->cache['locateFile'][$file][$folderKey][$ext])) {
+            return $this->cache['locateFile'][$file][$folderKey][$ext];
         }
 
-        $files = $this->locator->locateFile($file, $folder, $ext);
+        $files = $this->locator->locateFile($file, $folderKey, $ext);
 
-        $this->cache['locateFile'][$file][$folder][$ext] = $files;
-        $this->cacheUpdated                              = true;
+        $this->cache['locateFile'][$file][$folderKey][$ext] = $files;
+        $this->cacheUpdated                                 = true;
 
         return $files;
     }

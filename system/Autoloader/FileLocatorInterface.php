@@ -23,18 +23,18 @@ interface FileLocatorInterface
      * Attempts to locate a file by examining the name for a namespace
      * and looking through the PSR-4 namespaced files that we know about.
      *
-     * @param non-empty-string $file   The relative file path or namespaced file to
-     *                                 locate. If not namespaced, search in the app
-     *                                 folder.
-     * @param non-empty-string $folder The folder within the namespace that we should
-     *                                 look for the file. If $file does not contain
-     *                                 this value, it will be appended to the namespace
-     *                                 folder.
-     * @param string           $ext    The file extension the file should have.
+     * @param non-empty-string      $file   The relative file path or namespaced file to
+     *                                      locate. If not namespaced, search in the app
+     *                                      folder.
+     * @param non-empty-string|null $folder The folder within the namespace that we should
+     *                                      look for the file. If $file does not contain
+     *                                      this value, it will be appended to the namespace
+     *                                      folder.
+     * @param string                $ext    The file extension the file should have.
      *
      * @return false|non-empty-string The path to the file, or false if not found.
      */
-    public function locateFile(string $file, string $folder = '', string $ext = 'php');
+    public function locateFile(string $file, ?string $folder = null, string $ext = 'php');
 
     /**
      * Examines a file and returns the fully qualified class name.
