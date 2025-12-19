@@ -91,7 +91,6 @@
             "CodeIgniter\\ComposerScripts::postUpdate"
         ],
         "post-autoload-dump": [
-            "@php -r \"if (PHP_VERSION_ID >= 80500) { echo '@todo Remove \"--ignore-platform-req=php\" once deps catch up.', PHP_EOL; }\"",
             "@composer update --ansi --working-dir=utils"
         ],
         "analyze": [
