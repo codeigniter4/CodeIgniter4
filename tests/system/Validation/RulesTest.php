@@ -693,8 +693,8 @@ class RulesTest extends CIUnitTestCase
             ['nope', 'bar', false],
             ['foo', 'bar', true],
             ['nope', 'baz', true],
-            [null, null, true],
-            [null, 'foo', false],
+            ['', null, true],
+            ['', 'foo', false],
             ['foo', null, true],
             [
                 'array.emptyField1',
@@ -802,8 +802,8 @@ class RulesTest extends CIUnitTestCase
         yield from [
             ['nope', 'bars', false],
             ['foo', 'nope', true],
-            [null, null, false],
-            [null, 'foo', true],
+            ['', null, false],
+            ['', 'foo', true],
             ['foo', null, true],
             [
                 'array.emptyField1',
