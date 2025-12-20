@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
@@ -118,5 +127,32 @@ class Toolbar extends BaseConfig
      */
     public array $watchedExtensions = [
         'php', 'css', 'js', 'html', 'svg', 'json', 'env',
+    ];
+
+    /**
+     * --------------------------------------------------------------------------
+     * Ignored HTTP Headers
+     * --------------------------------------------------------------------------
+     *
+     * CodeIgniter Debug Toolbar normally injects HTML and JavaScript into every
+     * HTML response. This is correct for full page loads, but it breaks requests
+     * that expect only a clean HTML fragment.
+     *
+     * Libraries like HTMX, Unpoly, and Hotwire (Turbo) update parts of the page or
+     * manage navigation on the client side. Injecting the Debug Toolbar into their
+     * responses can cause invalid HTML, duplicated scripts, or JavaScript errors
+     * (such as infinite loops or "Maximum call stack size exceeded").
+     *
+     * Any request containing one of the following headers is treated as a
+     * client-managed or partial request, and the Debug Toolbar injection is skipped.s
+     *
+     * @var list<string>
+     */
+    public array $disableOnHeaders = [
+        'HX-Request',        // HTMX partial requests
+        'HX-Boosted',        // HTMX boosted navigation
+        'X-Unpoly-Request',  // Unpoly partial requests
+        'Turbo-Frame',       // Turbo Frames
+        'Turbo-Visit',       // Turbo Drive navigation
     ];
 }

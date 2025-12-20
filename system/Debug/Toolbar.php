@@ -43,6 +43,12 @@ class Toolbar
     protected $config;
 
     /**
+     * Indicates if the current request is a custom AJAX-like request
+     * (HTMX, Unpoly, Turbo, etc.) that expects clean HTML fragments.
+     */
+    protected bool $isCustomAjax = false;
+
+    /**
      * Collectors to be used and displayed.
      *
      * @var list<BaseCollector>
@@ -365,10 +371,8 @@ class Toolbar
 
     /**
      * Prepare for debugging.
-     *
-     * @return void
      */
-    public function prepare(?RequestInterface $request = null, ?ResponseInterface $response = null)
+    public function prepare(?RequestInterface $request = null, ?ResponseInterface $response = null): void
     {
         /**
          * @var IncomingRequest|null $request
@@ -385,7 +389,9 @@ class Toolbar
                 return;
             }
 
-            $toolbar = service('toolbar', config(ToolbarConfig::class));
+            $config = config(ToolbarConfig::class);
+
+            $toolbar = service('toolbar', $config);
             $stats   = $app->getPerformanceStats();
             $data    = $toolbar->run(
                 $stats['startTime'],
@@ -407,10 +413,17 @@ class Toolbar
 
             $format = $response->getHeaderLine('content-type');
 
+            foreach ($config->disableOnHeaders as $header) {
+                if ($request->hasHeader($header)) {
+                    $this->isCustomAjax = true;
+                    break;
+                }
+            }
+
             // Non-HTML formats should not include the debugbar
             // then we send headers saying where to find the debug data
             // for this response
-            if ($request->isAJAX() || ! str_contains($format, 'html')) {
+            if ($request->isAJAX() || ! str_contains($format, 'html') || $this->isCustomAjax) {
                 $response->setHeader('Debugbar-Time', "{$time}")
                     ->setHeader('Debugbar-Link', site_url("?debugbar_time={$time}"));
 
@@ -454,10 +467,8 @@ class Toolbar
      * Inject debug toolbar into the response.
      *
      * @codeCoverageIgnore
-     *
-     * @return void
      */
-    public function respond()
+    public function respond(): void
     {
         if (ENVIRONMENT === 'testing') {
             return;
