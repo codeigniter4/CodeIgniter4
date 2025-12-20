@@ -669,7 +669,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     #[DataProvider('provideRequiredWith')]
-    public function testRequiredWith(?string $field, ?string $check, bool $expected): void
+    public function testRequiredWith(string $field, ?string $check, bool $expected): void
     {
         $data = [
             'foo'   => 'bar',
@@ -779,7 +779,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     #[DataProvider('provideRequiredWithout')]
-    public function testRequiredWithout(?string $field, ?string $check, bool $expected): void
+    public function testRequiredWithout(string $field, ?string $check, bool $expected): void
     {
         $data = [
             'foo'   => 'bar',
