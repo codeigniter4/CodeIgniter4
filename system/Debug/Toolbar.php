@@ -390,6 +390,22 @@ class Toolbar
             }
 
             $config = config(ToolbarConfig::class);
+            
+            try {
+                $stats = $app->getPerformanceStats();
+                if (! isset($stats['startTime']) || ! isset($stats['totalTime'])) {
+                    return;
+                }
+            } catch (\Throwable $e) {
+                return;
+            }
+
+            foreach ($config->disableOnHeaders as $header) {
+                if ($request->hasHeader($header)) {
+                    $this->isCustomAjax = true;
+                    break;
+                }
+            }
 
             $toolbar = service('toolbar', $config);
             $stats   = $app->getPerformanceStats();
@@ -412,13 +428,6 @@ class Toolbar
             write_file(WRITEPATH . 'debugbar/debugbar_' . $time . '.json', $data, 'w+');
 
             $format = $response->getHeaderLine('content-type');
-
-            foreach ($config->disableOnHeaders as $header) {
-                if ($request->hasHeader($header)) {
-                    $this->isCustomAjax = true;
-                    break;
-                }
-            }
 
             // Non-HTML formats should not include the debugbar
             // then we send headers saying where to find the debug data
