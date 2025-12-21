@@ -137,10 +137,12 @@ class BaseConfig
                     // previousKeysFallbackEnabled must be boolean
                     $this->{$property} = (bool) $this->{$property};
                 } elseif ($property === 'previousKeys') {
-                    // previousKeys must be an array
-                    if (is_string($this->{$property})) {
-                        $this->{$property} = array_map(fn ($item): string => $this->parseEncryptionKey($item), explode(',', $this->{$property}));
+                    $keysArray      = array_map('trim', explode(',', $this->{$property}));
+                    $parsedKeys     = [];
+                    foreach ($keysArray as $key) {
+                        $parsedKeys[] = $this->parseEncryptionKey($key);
                     }
+                    $this->{$property} = implode(',', $parsedKeys);
                 }
             }
         }

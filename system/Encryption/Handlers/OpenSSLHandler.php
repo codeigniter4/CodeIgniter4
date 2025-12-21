@@ -63,9 +63,9 @@ class OpenSSLHandler extends BaseHandler
     /**
      * List of previous keys for fallback decryption.
      *
-     * @var list<string>
+     * @var string
      */
-    protected array $previousKeys = [];
+    protected string $previousKeys = '';
 
     /**
      * Whether the cipher-text should be raw. If set to false, then it will be base64 encoded.
@@ -138,15 +138,16 @@ class OpenSSLHandler extends BaseHandler
             throw EncryptionException::forNeedsStarterKey();
         }
 
+        $result = false;
+
         try {
             $result = $this->decryptWithKey($data, $this->key);
         } catch (EncryptionException $e) {
-            $result    = false;
             $exception = $e;
         }
 
-        if ($result === false && $this->previousKeysFallbackEnabled && $this->previousKeys !== []) {
-            foreach ($this->previousKeys as $previousKey) {
+        if ($result === false && $this->previousKeysFallbackEnabled && $this->previousKeys !== '') {
+            foreach (explode(',', $this->previousKeys) as $previousKey) {
                 try {
                     $result = $this->decryptWithKey($data, $previousKey);
                     if ($result !== false) {

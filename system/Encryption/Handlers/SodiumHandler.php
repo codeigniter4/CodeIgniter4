@@ -38,9 +38,9 @@ class SodiumHandler extends BaseHandler
     /**
      * List of previous keys for fallback decryption.
      *
-     * @var list<string>
+     * @var string
      */
-    protected array $previousKeys = [];
+    protected string $previousKeys = '';
 
     /**
      * Block size for padding message.
@@ -91,17 +91,18 @@ class SodiumHandler extends BaseHandler
             throw EncryptionException::forNeedsStarterKey();
         }
 
+        $result = false;
+
         try {
             $result = $this->decryptWithKey($data, $this->key);
             sodium_memzero($this->key);
         } catch (EncryptionException $e) {
-            $result    = false;
             $exception = $e;
             sodium_memzero($this->key);
         }
 
-        if ($result === false && $this->previousKeysFallbackEnabled && $this->previousKeys !== []) {
-            foreach ($this->previousKeys as $previousKey) {
+        if ($result === false && $this->previousKeysFallbackEnabled && $this->previousKeys !== '') {
+            foreach (explode(',', $this->previousKeys) as $previousKey) {
                 try {
                     $result = $this->decryptWithKey($data, $previousKey);
                     if (isset($result)) {
