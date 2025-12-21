@@ -133,13 +133,13 @@ class BaseConfig
             if ($this instanceof Encryption) {
                 if ($property === 'key') {
                     $this->{$property} = $this->parseEncryptionKey($this->{$property});
-                } else if ($property === 'previousKeysFallbackEnabled') {
+                } elseif ($property === 'previousKeysFallbackEnabled') {
                     // previousKeysFallbackEnabled must be boolean
                     $this->{$property} = (bool) $this->{$property};
-                } else if ($property === 'previousKeys') {
+                } elseif ($property === 'previousKeys') {
                     // previousKeys must be an array
                     if (is_string($this->{$property})) {
-                        $this->{$property} = array_map(fn($item) => $this->parseEncryptionKey($item), explode(',', $this->{$property}));
+                        $this->{$property} = array_map(fn ($item) => $this->parseEncryptionKey($item), explode(',', $this->{$property}));
                     }
                 }
             }
@@ -150,7 +150,8 @@ class BaseConfig
     {
         if (str_starts_with($key, 'hex2bin:')) {
             return hex2bin(substr($key, 8));
-        } elseif (str_starts_with($key, 'base64:')) {
+        }
+        if (str_starts_with($key, 'base64:')) {
             return base64_decode(substr($key, 7), true);
         }
 

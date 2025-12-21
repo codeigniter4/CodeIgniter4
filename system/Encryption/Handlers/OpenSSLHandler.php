@@ -57,15 +57,13 @@ class OpenSSLHandler extends BaseHandler
 
     /**
      * Whether to fall back to previous keys when decryption fails.
-     *
-     * @var bool
      */
     protected bool $previousKeysFallbackEnabled = false;
 
     /**
      * List of previous keys for fallback decryption.
      *
-     * @var string[]
+     * @var list<string>
      */
     protected array $previousKeys = [];
 
@@ -174,6 +172,7 @@ class OpenSSLHandler extends BaseHandler
      * @param string $key
      *
      * @return false|string
+     *
      * @throws EncryptionException
      */
     protected function decryptWithKey($data, #[SensitiveParameter] $key)
