@@ -409,7 +409,6 @@ class Toolbar
             }
 
             $toolbar = service('toolbar', $config);
-            $stats   = $app->getPerformanceStats();
             $data    = $toolbar->run(
                 $stats['startTime'],
                 $stats['totalTime'],
