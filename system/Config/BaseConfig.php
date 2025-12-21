@@ -134,8 +134,9 @@ class BaseConfig
                 if ($property === 'key') {
                     $this->{$property} = $this->parseEncryptionKey($this->{$property});
                 } elseif ($property === 'previousKeys') {
-                    $keysArray      = array_map('trim', explode(',', $this->{$property}));
-                    $parsedKeys     = [];
+                    $keysArray  = array_map('trim', explode(',', $this->{$property}));
+                    $parsedKeys = [];
+
                     foreach ($keysArray as $key) {
                         $parsedKeys[] = $this->parseEncryptionKey($key);
                     }

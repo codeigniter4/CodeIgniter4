@@ -32,8 +32,6 @@ class SodiumHandler extends BaseHandler
 
     /**
      * List of previous keys for fallback decryption.
-     *
-     * @var string
      */
     protected string $previousKeys = '';
 

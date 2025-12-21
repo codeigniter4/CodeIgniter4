@@ -55,8 +55,6 @@ class Encryption
 
     /**
      * Comma-separated list of previous keys for fallback decryption.
-     *
-     * @var string
      */
     protected string $previousKeys = '';
 
@@ -98,10 +96,10 @@ class Encryption
     {
         $config ??= new EncryptionConfig();
 
-        $this->key                         = $config->key;
-        $this->previousKeys                = $config->previousKeys;
-        $this->driver                      = $config->driver;
-        $this->digest                      = $config->digest ?? 'SHA512';
+        $this->key          = $config->key;
+        $this->previousKeys = $config->previousKeys;
+        $this->driver       = $config->driver;
+        $this->digest       = $config->digest ?? 'SHA512';
 
         $this->handlers = [
             'OpenSSL' => extension_loaded('openssl'),
@@ -124,10 +122,10 @@ class Encryption
     public function initialize(?EncryptionConfig $config = null)
     {
         if ($config instanceof EncryptionConfig) {
-            $this->key                         = $config->key;
-            $this->previousKeys                = $config->previousKeys ?? '';
-            $this->driver                      = $config->driver;
-            $this->digest                      = $config->digest ?? 'SHA512';
+            $this->key          = $config->key;
+            $this->previousKeys = $config->previousKeys ?? '';
+            $this->driver       = $config->driver;
+            $this->digest       = $config->digest ?? 'SHA512';
         }
 
         if (empty($this->driver)) {
