@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache;
 
+use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -20,6 +21,7 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCache;
 use Config\App;
@@ -35,6 +37,13 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class ResponseCacheTest extends CIUnitTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Services::injectMock('superglobals', new Superglobals());
+    }
+
     /**
      * @param array<string, string> $query
      */
@@ -58,7 +67,7 @@ final class ResponseCacheTest extends CIUnitTestCase
      */
     private function createCLIRequest(array $params = [], App $app = new App()): CLIRequest
     {
-        $_SERVER['argv'] = ['public/index.php', ...$params];
+        service('superglobals')->setServer('argv', ['public/index.php', ...$params]);
 
         $superglobals = service('superglobals');
         $superglobals->setServer('SCRIPT_NAME', 'public/index.php');

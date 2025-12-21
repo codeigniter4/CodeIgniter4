@@ -60,7 +60,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $_SESSION = [];
         Factories::reset();
 
-        Services::injectMock('superglobals', new Superglobals([], [], [], [], []));
+        Services::injectMock('superglobals', new Superglobals());
 
         $this->config                 = new SecurityConfig();
         $this->config->csrfProtection = Security::CSRF_PROTECTION_SESSION;

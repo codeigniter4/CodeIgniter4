@@ -14,8 +14,10 @@ declare(strict_types=1);
 namespace CodeIgniter\Session;
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Config\Services;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Session\Handlers\FileHandler;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
@@ -42,6 +44,8 @@ final class SessionTest extends CIUnitTestCase
 
         $_COOKIE  = [];
         $_SESSION = [];
+
+        Services::injectMock('superglobals', new Superglobals());
     }
 
     /**
@@ -157,8 +161,8 @@ final class SessionTest extends CIUnitTestCase
 
     public function testGetReturnsNullWhenNotFoundWithXmlHttpRequest(): void
     {
-        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';
-        $_SESSION                         = [];
+        service('superglobals')->setServer('HTTP_X_REQUESTED_WITH', 'xmlhttprequest');
+        $_SESSION = [];
 
         $session = $this->getInstance();
         $session->start();
@@ -168,8 +172,8 @@ final class SessionTest extends CIUnitTestCase
 
     public function testGetReturnsEmptyArrayWhenWithXmlHttpRequest(): void
     {
-        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';
-        $_SESSION                         = [];
+        service('superglobals')->setServer('HTTP_X_REQUESTED_WITH', 'xmlhttprequest');
+        $_SESSION = [];
 
         $session = $this->getInstance();
         $session->start();

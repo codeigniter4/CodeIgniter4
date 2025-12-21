@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers;
 
+use CodeIgniter\Config\Services as CodeIgniterServices;
 use CodeIgniter\HTTP\SiteURI;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\DocTypes;
@@ -36,6 +38,8 @@ final class FormHelperTest extends CIUnitTestCase
         $this->resetServices();
 
         parent::setUp();
+
+        CodeIgniterServices::injectMock('superglobals', new Superglobals());
 
         helper('form');
     }
@@ -573,9 +577,9 @@ final class FormHelperTest extends CIUnitTestCase
             </optgroup>
             </select>\n
             EOH;
-        $_POST['cars'] = 'audi';
+        service('superglobals')->setPost('cars', 'audi');
         $this->assertSame($expected, form_dropdown('cars', $options));
-        unset($_POST['cars']);
+        service('superglobals')->unsetPost('cars');
     }
 
     public function testFormDropdownWithSelectedAttribute(): void
@@ -975,7 +979,7 @@ final class FormHelperTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testSetRadioFromPost(): void
     {
-        $_POST['bar'] = 'baz';
+        service('superglobals')->setPost('bar', 'baz');
 
         $this->assertSame(' checked="checked"', set_radio('bar', 'baz'));
         $this->assertSame('', set_radio('bar', 'boop'));
@@ -986,12 +990,12 @@ final class FormHelperTest extends CIUnitTestCase
     #[RunInSeparateProcess]
     public function testSetRadioFromPostWithValueZero(): void
     {
-        $_POST['bar'] = '0';
+        service('superglobals')->setPost('bar', '0');
 
         $this->assertSame(' checked="checked"', set_radio('bar', '0'));
         $this->assertSame('', set_radio('bar', 'boop'));
 
-        $_POST = [];
+        service('superglobals')->setPostArray([]);
 
         $this->assertSame(' checked="checked"', set_radio('bar', '0', true));
     }

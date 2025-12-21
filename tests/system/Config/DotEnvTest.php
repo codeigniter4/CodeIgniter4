@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
@@ -46,6 +47,8 @@ final class DotEnvTest extends CIUnitTestCase
         $file = 'unreadable.env';
         $path = rtrim($this->fixturesFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
         chmod($path, 0644);
+
+        Services::injectMock('superglobals', new Superglobals());
     }
 
     protected function tearDown(): void
@@ -180,8 +183,8 @@ final class DotEnvTest extends CIUnitTestCase
 
     public function testLoadsGetServerVar(): void
     {
-        $_SERVER['SER_VAR'] = 'TT';
-        $dotenv             = new DotEnv($this->fixturesFolder, 'nested.env');
+        service('superglobals')->setServer('SER_VAR', 'TT');
+        $dotenv = new DotEnv($this->fixturesFolder, 'nested.env');
         $dotenv->load();
 
         $this->assertSame('TT', $_ENV['NVAR7']);

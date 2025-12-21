@@ -41,7 +41,7 @@ final class PagerTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        Services::injectMock('superglobals', new Superglobals([], [], [], [], []));
+        Services::injectMock('superglobals', new Superglobals());
 
         $this->createPager('/');
     }

@@ -40,9 +40,11 @@ final class SecurityTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        $_COOKIE = [];
+
         $this->resetServices();
 
-        Services::injectMock('superglobals', new Superglobals([], [], [], [], []));
+        Services::injectMock('superglobals', new Superglobals());
     }
 
     private static function createMockSecurity(SecurityConfig $config = new SecurityConfig()): MockSecurity

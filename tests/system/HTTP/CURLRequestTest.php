@@ -16,6 +16,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCURLRequest;
 use Config\App;
@@ -41,6 +42,7 @@ class CURLRequestTest extends CIUnitTestCase
         parent::setUp();
 
         $this->resetServices();
+        Services::injectMock('superglobals', new Superglobals());
         $this->request = $this->getRequest();
     }
 
@@ -187,9 +189,9 @@ class CURLRequestTest extends CIUnitTestCase
     #[BackupGlobals(true)]
     public function testOptionsHeadersNotUsingPopulate(): void
     {
-        $_SERVER['HTTP_HOST']            = 'site1.com';
-        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
-        $_SERVER['HTTP_ACCEPT_ENCODING'] = 'gzip, deflate, br';
+        service('superglobals')->setServer('HTTP_HOST', 'site1.com');
+        service('superglobals')->setServer('HTTP_ACCEPT_LANGUAGE', 'en-US');
+        service('superglobals')->setServer('HTTP_ACCEPT_ENCODING', 'gzip, deflate, br');
 
         $options = [
             'baseURI' => 'http://www.foo.com/api/v1/',
@@ -247,7 +249,7 @@ class CURLRequestTest extends CIUnitTestCase
     #[BackupGlobals(true)]
     public function testHeaderContentLengthNotSharedBetweenClients(): void
     {
-        $_SERVER['HTTP_CONTENT_LENGTH'] = '10';
+        service('superglobals')->setServer('HTTP_CONTENT_LENGTH', '10');
 
         $options = [
             'baseURI' => 'http://www.foo.com/api/v1/',

@@ -34,7 +34,10 @@ final class RequestTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        Services::injectMock('superglobals', new Superglobals([], [], [], [], []));
+        $_POST = [];
+        $_GET  = [];
+
+        Services::injectMock('superglobals', new Superglobals());
 
         $this->request = new Request(new App());
     }

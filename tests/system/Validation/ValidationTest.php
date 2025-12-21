@@ -85,7 +85,7 @@ class ValidationTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        Services::injectMock('superglobals', new Superglobals([], [], [], [], []));
+        Services::injectMock('superglobals', new Superglobals());
 
         $this->validation = new Validation((object) static::$config, service('renderer'));
         $this->validation->reset();
@@ -874,7 +874,7 @@ class ValidationTest extends CIUnitTestCase
 
     public function testJsonInput(): void
     {
-        $_SERVER['CONTENT_TYPE'] = 'application/json';
+        service('superglobals')->setServer('CONTENT_TYPE', 'application/json');
 
         $data = [
             'username' => 'admin001',
@@ -898,7 +898,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame([], $this->validation->getErrors());
         $this->assertSame(['role' => 'administrator'], $this->validation->getValidated());
 
-        unset($_SERVER['CONTENT_TYPE']);
+        service('superglobals')->unsetServer('CONTENT_TYPE');
     }
 
     public function testJsonInputInvalid(): void
@@ -954,7 +954,7 @@ class ValidationTest extends CIUnitTestCase
             }
             EOL;
 
-        $_SERVER['CONTENT_TYPE'] = 'application/json';
+        service('superglobals')->setServer('CONTENT_TYPE', 'application/json');
 
         $config          = new App();
         $config->baseURL = 'http://example.com/';
@@ -972,7 +972,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertFalse($result);
         $this->assertSame(['p' => 'Validation.array_count'], $this->validation->getErrors());
 
-        unset($_SERVER['CONTENT_TYPE']);
+        service('superglobals')->unsetServer('CONTENT_TYPE');
     }
 
     public function testHasRule(): void

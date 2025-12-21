@@ -50,7 +50,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
         $this->resetServices();
 
-        Services::injectMock('superglobals', new Superglobals([], [], [], [], []));
+        Services::injectMock('superglobals', new Superglobals());
         service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $this->config          = new App();

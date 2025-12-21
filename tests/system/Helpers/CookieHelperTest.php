@@ -41,9 +41,11 @@ final class CookieHelperTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        $_COOKIE = [];
+
         parent::setUp();
 
-        Services::injectMock('superglobals', new Superglobals([], [], [], [], []));
+        Services::injectMock('superglobals', new Superglobals());
 
         $this->name   = 'greetings';
         $this->value  = 'hello world';

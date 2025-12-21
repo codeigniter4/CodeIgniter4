@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Services;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
@@ -32,6 +33,8 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         parent::setUp();
 
         $_GET = $_SERVER = [];
+
+        Services::injectMock('superglobals', new Superglobals());
     }
 
     private function createSiteURIFactory(?App $config = null, ?Superglobals $superglobals = null): SiteURIFactory
@@ -45,13 +48,13 @@ final class SiteURIFactoryTest extends CIUnitTestCase
     public function testCreateFromGlobals(): void
     {
         // http://localhost:8080/index.php/woot?code=good#pos
-        $_SERVER['REQUEST_URI']  = '/index.php/woot?code=good';
-        $_SERVER['SCRIPT_NAME']  = '/index.php';
-        $_SERVER['QUERY_STRING'] = 'code=good';
-        $_SERVER['HTTP_HOST']    = 'localhost:8080';
-        $_SERVER['PATH_INFO']    = '/woot';
+        service('superglobals')->setServer('REQUEST_URI', '/index.php/woot?code=good');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')->setServer('QUERY_STRING', 'code=good');
+        service('superglobals')->setServer('HTTP_HOST', 'localhost:8080');
+        service('superglobals')->setServer('PATH_INFO', '/woot');
 
-        $_GET['code'] = 'good';
+        service('superglobals')->setGet('code', 'good');
 
         $factory = $this->createSiteURIFactory();
 
@@ -66,13 +69,13 @@ final class SiteURIFactoryTest extends CIUnitTestCase
     public function testCreateFromGlobalsAllowedHost(): void
     {
         // http://users.example.jp/index.php/woot?code=good#pos
-        $_SERVER['REQUEST_URI']  = '/index.php/woot?code=good';
-        $_SERVER['SCRIPT_NAME']  = '/index.php';
-        $_SERVER['QUERY_STRING'] = 'code=good';
-        $_SERVER['HTTP_HOST']    = 'users.example.jp';
-        $_SERVER['PATH_INFO']    = '/woot';
+        service('superglobals')->setServer('REQUEST_URI', '/index.php/woot?code=good');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')->setServer('QUERY_STRING', 'code=good');
+        service('superglobals')->setServer('HTTP_HOST', 'users.example.jp');
+        service('superglobals')->setServer('PATH_INFO', '/woot');
 
-        $_GET['code'] = 'good';
+        service('superglobals')->setGet('code', 'good');
 
         $config                   = new App();
         $config->baseURL          = 'http://example.jp/';

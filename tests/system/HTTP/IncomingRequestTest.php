@@ -45,7 +45,8 @@ final class IncomingRequestTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        Services::injectMock('superglobals', new Superglobals([], [], [], [], []));
+        $_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
+        Services::injectMock('superglobals', new Superglobals());
 
         $config        = new App();
         $this->request = $this->createRequest($config);
@@ -245,7 +246,7 @@ final class IncomingRequestTest extends CIUnitTestCase
      */
     public function testNegotiatesLocale(): void
     {
-        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'fr-FR; q=1.0, en; q=0.5';
+        service('superglobals')->setServer('HTTP_ACCEPT_LANGUAGE', 'fr-FR); q=1.0, en; q=0.5');
 
         $config                   = new App();
         $config->negotiateLocale  = true;
@@ -260,7 +261,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testNegotiatesLocaleOnlyBroad(): void
     {
-        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'fr; q=1.0, en; q=0.5';
+        service('superglobals')->setServer('HTTP_ACCEPT_LANGUAGE', 'fr); q=1.0, en; q=0.5');
 
         $config                   = new App();
         $config->negotiateLocale  = true;
@@ -287,7 +288,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testNegotiatesCharset(): void
     {
-        // $_SERVER['HTTP_ACCEPT_CHARSET'] = 'iso-8859-5, unicode-1-1;q=0.8';
+        // service('superglobals')->setServer('HTTP_ACCEPT_CHARSET', 'iso-8859-5, unicode-1-1);q=0.8';
         $this->request->setHeader('Accept-Charset', 'iso-8859-5, unicode-1-1;q=0.8');
 
         $this->assertSame(
@@ -751,7 +752,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testIsSecure(): void
     {
-        $_SERVER['HTTPS'] = 'on';
+        service('superglobals')->setServer('HTTPS', 'on');
         $this->assertTrue($this->request->isSecure());
     }
 

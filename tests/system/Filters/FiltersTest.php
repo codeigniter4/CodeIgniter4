@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
+use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\Filters\fixtures\GoogleCurious;
 use CodeIgniter\Filters\fixtures\GoogleEmpty;
@@ -25,6 +26,7 @@ use CodeIgniter\Filters\fixtures\Role;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ConfigFromArrayTrait;
 use CodeIgniter\Test\Mock\MockAppConfig;
@@ -67,6 +69,7 @@ final class FiltersTest extends CIUnitTestCase
         service('autoloader')->addNamespace($defaults);
 
         $_SERVER = [];
+        Services::injectMock('superglobals', new Superglobals());
 
         $this->response = service('response');
     }
@@ -80,11 +83,11 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testProcessMethodDetectsCLI(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'spark',
             'list',
-        ];
-        $_SERVER['argc'] = 2;
+        ]);
+        service('superglobals')->setServer('argc', 2);
 
         $config = [
             'aliases' => ['foo' => ''],
@@ -108,7 +111,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testProcessMethodDetectsGetRequests(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => ['foo' => ''],
@@ -129,7 +132,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testProcessMethodRespectsMethod(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -154,7 +157,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testProcessMethodIgnoresMethod(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'DELETE';
+        service('superglobals')->setServer('REQUEST_METHOD', 'DELETE');
 
         $config = [
             'aliases' => [
@@ -179,7 +182,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testProcessMethodProcessGlobals(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -216,7 +219,7 @@ final class FiltersTest extends CIUnitTestCase
     #[DataProvider('provideProcessMethodProcessGlobalsWithExcept')]
     public function testProcessMethodProcessGlobalsWithExcept($except): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -267,7 +270,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testProcessMethodProcessesFiltersBefore(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -300,7 +303,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testProcessMethodProcessesFiltersAfter(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -333,7 +336,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testProcessMethodProcessesCombined(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -381,7 +384,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testProcessMethodProcessesCombinedAfterForToolbar(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -422,7 +425,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testRunThrowsWithInvalidAlias(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [],
@@ -442,7 +445,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testCustomFiltersLoad(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [],
@@ -467,7 +470,7 @@ final class FiltersTest extends CIUnitTestCase
      */
     public function testAllCustomFiltersAreDiscoveredInConstructor(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [],
@@ -482,7 +485,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testRunThrowsWithInvalidClassType(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => ['invalid' => InvalidClass::class],
@@ -502,7 +505,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testRunDoesBefore(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => ['google' => GoogleMe::class],
@@ -522,7 +525,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testRunDoesAfter(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => ['google' => GoogleMe::class],
@@ -542,7 +545,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testShortCircuit(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => ['banana' => GoogleYou::class],
@@ -563,7 +566,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testOtherResult(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -593,7 +596,7 @@ final class FiltersTest extends CIUnitTestCase
     #[DataProvider('provideBeforeExcept')]
     public function testBeforeExcept(string $uri, $except, array $expected): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -703,7 +706,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testAfterExceptString(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -736,7 +739,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testAfterExceptInapplicable(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -772,7 +775,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testAddFilter(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => ['google' => GoogleMe::class],
@@ -793,7 +796,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testAddFilterSection(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config        = [];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
@@ -809,7 +812,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testInitializeTwice(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config        = [];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
@@ -826,7 +829,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testEnableFilter(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => ['google' => GoogleMe::class],
@@ -847,7 +850,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testFiltersWithArguments(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => ['role' => Role::class],
@@ -879,7 +882,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testFilterWithDiffernetArguments(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => ['role' => Role::class],
@@ -905,7 +908,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testFilterWithoutArgumentsIsDefined(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => ['role' => Role::class],
@@ -930,7 +933,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testEnableFilterWithArguments(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => ['role' => Role::class],
@@ -959,7 +962,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testEnableFilterWithNoArguments(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => ['role' => Role::class],
@@ -990,7 +993,7 @@ final class FiltersTest extends CIUnitTestCase
     {
         $this->expectException(FilterException::class);
 
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => ['google' => GoogleMe::class],
@@ -1011,7 +1014,7 @@ final class FiltersTest extends CIUnitTestCase
      */
     public function testMatchesURICaseInsensitively(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -1056,7 +1059,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testMatchesURIWithUnicode(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -1105,7 +1108,7 @@ final class FiltersTest extends CIUnitTestCase
      */
     public function testFilterMatching(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -1141,7 +1144,7 @@ final class FiltersTest extends CIUnitTestCase
      */
     public function testGlobalFilterMatching(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -1183,7 +1186,7 @@ final class FiltersTest extends CIUnitTestCase
      */
     public function testCombinedFilterMatching(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -1231,7 +1234,7 @@ final class FiltersTest extends CIUnitTestCase
      */
     public function testSegmentedFilterMatching(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -1329,7 +1332,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testReset(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases' => [
@@ -1352,7 +1355,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testRunRequiredDoesBefore(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases'  => ['google' => GoogleMe::class],
@@ -1371,7 +1374,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testRunRequiredDoesAfter(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $config = [
             'aliases'  => ['google' => GoogleMe::class],
