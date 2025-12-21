@@ -25,6 +25,24 @@ class Encryption extends BaseConfig
 
     /**
      * --------------------------------------------------------------------------
+     * Previous Encryption Keys fallback enabled
+     * --------------------------------------------------------------------------
+     * If you want to enable decryption using previous keys, set this to true.
+     * See the user guide for more info.
+     */
+    public bool $previousKeysFallbackEnabled = false;
+
+    /**
+     * --------------------------------------------------------------------------
+     * Previous Encryption Keys
+     * --------------------------------------------------------------------------
+     * If you want to enable decryption using previous keys, set them here.
+     * See the user guide for more info.
+     */
+    public array $previousKeys = [];
+
+    /**
+     * --------------------------------------------------------------------------
      * Encryption Driver to Use
      * --------------------------------------------------------------------------
      *
