@@ -31,6 +31,18 @@ class SodiumHandler extends BaseHandler
     protected $key = '';
 
     /**
+     * Whether to fall back to previous keys when decryption fails.
+     */
+    protected bool $previousKeysFallbackEnabled = false;
+
+    /**
+     * List of previous keys for fallback decryption.
+     *
+     * @var list<string>
+     */
+    protected array $previousKeys = [];
+
+    /**
      * Block size for padding message.
      *
      * @var int
@@ -115,6 +127,7 @@ class SodiumHandler extends BaseHandler
      * @param string $key
      *
      * @return string
+     *
      * @throws EncryptionException
      */
     protected function decryptWithKey($data, #[SensitiveParameter] $key)
