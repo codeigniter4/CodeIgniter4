@@ -52,8 +52,6 @@ final class Superglobals
 
     /**
      * Get a value from $_SERVER
-     *
-     * @return array|float|int|string|null
      */
     public function server(string $key): array|float|int|string|null
     {
@@ -96,8 +94,6 @@ final class Superglobals
 
     /**
      * Get a value from $_GET
-     *
-     * @return array|string|null
      */
     public function get(string $key): array|string|null
     {
@@ -140,8 +136,6 @@ final class Superglobals
 
     /**
      * Get a value from $_POST
-     *
-     * @return array|string|null
      */
     public function post(string $key): array|string|null
     {
@@ -184,8 +178,6 @@ final class Superglobals
 
     /**
      * Get a value from $_COOKIE
-     *
-     * @return array|string|null
      */
     public function cookie(string $key): array|string|null
     {
@@ -228,8 +220,6 @@ final class Superglobals
 
     /**
      * Get a value from $_REQUEST
-     *
-     * @return array|string|null
      */
     public function request(string $key): array|string|null
     {

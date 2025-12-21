@@ -543,7 +543,7 @@ class Services extends BaseService
             $request = AppServices::incomingrequest($config);
 
             // guess at protocol if needed
-            $request->setProtocolVersion($_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.1');
+            $request->setProtocolVersion(static::superglobals()->server('SERVER_PROTOCOL') ?? 'HTTP/1.1');
         }
 
         // Inject the request object into Services.

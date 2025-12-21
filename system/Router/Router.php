@@ -167,7 +167,7 @@ class Router implements RouterInterface
         $this->controller = $this->collection->getDefaultController();
         $this->method     = $this->collection->getDefaultMethod();
 
-        $this->collection->setHTTPVerb($request->getMethod() === '' ? $_SERVER['REQUEST_METHOD'] : $request->getMethod());
+        $this->collection->setHTTPVerb($request->getMethod() === '' ? service('superglobals')->server('REQUEST_METHOD') : $request->getMethod());
 
         $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
 

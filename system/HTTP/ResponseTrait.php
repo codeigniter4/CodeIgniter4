@@ -451,21 +451,26 @@ trait ResponseTrait
     public function redirect(string $uri, string $method = 'auto', ?int $code = null)
     {
         // IIS environment likely? Use 'refresh' for better compatibility
+        $superglobals   = service('superglobals');
+        $serverSoftware = $superglobals->server('SERVER_SOFTWARE');
         if (
             $method === 'auto'
-            && isset($_SERVER['SERVER_SOFTWARE'])
-            && str_contains($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS')
+            && $serverSoftware !== null
+            && str_contains($serverSoftware, 'Microsoft-IIS')
         ) {
             $method = 'refresh';
         } elseif ($method !== 'refresh' && $code === null) {
             // override status code for HTTP/1.1 & higher
+            $serverProtocol = $superglobals->server('SERVER_PROTOCOL');
+            $requestMethod  = $superglobals->server('REQUEST_METHOD');
             if (
-                isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD'])
+                $serverProtocol !== null
+                && $requestMethod !== null
                 && $this->getProtocolVersion() >= 1.1
             ) {
-                if ($_SERVER['REQUEST_METHOD'] === Method::GET) {
+                if ($requestMethod === Method::GET) {
                     $code = 302;
-                } elseif (in_array($_SERVER['REQUEST_METHOD'], [Method::POST, Method::PUT, Method::DELETE], true)) {
+                } elseif (in_array($requestMethod, [Method::POST, Method::PUT, Method::DELETE], true)) {
                     // reference: https://en.wikipedia.org/wiki/Post/Redirect/Get
                     $code = 303;
                 } else {
