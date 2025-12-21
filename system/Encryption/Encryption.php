@@ -54,6 +54,20 @@ class Encryption
     protected $key;
 
     /**
+     * Whether to fall back to previous keys when decryption fails.
+     *
+     * @var bool
+     */
+    protected bool $previousKeysFallbackEnabled = false;
+
+    /**
+     * List of previous keys for fallback decryption.
+     *
+     * @var string[]
+     */
+    protected array $previousKeys = [];
+
+    /**
      * The derived HMAC key
      *
      * @var string
@@ -92,6 +106,8 @@ class Encryption
         $config ??= new EncryptionConfig();
 
         $this->key    = $config->key;
+        $this->previousKeysFallbackEnabled = $config->previousKeysFallbackEnabled;
+        $this->previousKeys = $config->previousKeys;
         $this->driver = $config->driver;
         $this->digest = $config->digest ?? 'SHA512';
 
@@ -117,6 +133,8 @@ class Encryption
     {
         if ($config instanceof EncryptionConfig) {
             $this->key    = $config->key;
+            $this->previousKeysFallbackEnabled = $config->previousKeysFallbackEnabled ?? false;
+            $this->previousKeys = $config->previousKeys ?? [];
             $this->driver = $config->driver;
             $this->digest = $config->digest ?? 'SHA512';
         }
