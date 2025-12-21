@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
-use SensitiveParameter;
 
 /**
  * Encryption handling for OpenSSL library
@@ -55,6 +54,20 @@ class OpenSSLHandler extends BaseHandler
      * @var string
      */
     protected $key = '';
+
+    /**
+     * Whether to fall back to previous keys when decryption fails.
+     *
+     * @var bool
+     */
+    protected bool $previousKeysFallbackEnabled = false;
+
+    /**
+     * List of previous keys for fallback decryption.
+     *
+     * @var string[]
+     */
+    protected array $previousKeys = [];
 
     /**
      * Whether the cipher-text should be raw. If set to false, then it will be base64 encoded.
@@ -127,8 +140,46 @@ class OpenSSLHandler extends BaseHandler
             throw EncryptionException::forNeedsStarterKey();
         }
 
+        try {
+            $result = $this->decryptWithKey($data, $this->key);
+        } catch (EncryptionException $e) {
+            $result    = false;
+            $exception = $e;
+        }
+
+        if ($result === false && $this->previousKeysFallbackEnabled && ! empty($this->previousKeys)) {
+            foreach ($this->previousKeys as $previousKey) {
+                try {
+                    $result = $this->decryptWithKey($data, $previousKey);
+                    if ($result !== false) {
+                        return $result;
+                    }
+                } catch (EncryptionException) {
+                    // Try next key
+                }
+            }
+        }
+
+        if (isset($exception)) {
+            throw $exception;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Decrypt the data with the provided key
+     *
+     * @param string $data
+     * @param string $key
+     *
+     * @return false|string
+     * @throws EncryptionException
+     */
+    protected function decryptWithKey($data, #[SensitiveParameter] $key)
+    {
         // derive a secret key
-        $authKey = \hash_hkdf($this->digest, $this->key, 0, $this->authKeyInfo);
+        $authKey = \hash_hkdf($this->digest, $key, 0, $this->authKeyInfo);
 
         $hmacLength = $this->rawData
             ? $this->digestSize[$this->digest]
@@ -152,7 +203,7 @@ class OpenSSLHandler extends BaseHandler
         }
 
         // derive a secret key
-        $encryptKey = \hash_hkdf($this->digest, $this->key, 0, $this->encryptKeyInfo);
+        $encryptKey = \hash_hkdf($this->digest, $key, 0, $this->encryptKeyInfo);
 
         return \openssl_decrypt($data, $this->cipher, $encryptKey, OPENSSL_RAW_DATA, $iv);
     }

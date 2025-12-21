@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
-use SensitiveParameter;
 
 /**
  * SodiumHandler uses libsodium in encryption.
@@ -80,6 +79,46 @@ class SodiumHandler extends BaseHandler
             throw EncryptionException::forNeedsStarterKey();
         }
 
+        try {
+            $result = $this->decryptWithKey($data, $this->key);
+            sodium_memzero($this->key);
+        } catch (EncryptionException $e) {
+            $result    = false;
+            $exception = $e;
+            sodium_memzero($this->key);
+        }
+
+        if ($result === false && $this->previousKeysFallbackEnabled && ! empty($this->previousKeys)) {
+            foreach ($this->previousKeys as $previousKey) {
+                try {
+                    $result = $this->decryptWithKey($data, $previousKey);
+                    if (isset($result)) {
+                        return $result;
+                    }
+                } catch (EncryptionException) {
+                    // Try next key
+                }
+            }
+        }
+
+        if (isset($exception)) {
+            throw $exception;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Decrypt the data with the provided key
+     *
+     * @param string $data
+     * @param string $key
+     *
+     * @return string
+     * @throws EncryptionException
+     */
+    protected function decryptWithKey($data, #[SensitiveParameter] $key)
+    {
         if (mb_strlen($data, '8bit') < (SODIUM_CRYPTO_SECRETBOX_NONCEBYTES + SODIUM_CRYPTO_SECRETBOX_MACBYTES)) {
             // message was truncated
             throw EncryptionException::forAuthenticationFailed();
@@ -90,7 +129,7 @@ class SodiumHandler extends BaseHandler
         $ciphertext = self::substr($data, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
 
         // decrypt data
-        $data = sodium_crypto_secretbox_open($ciphertext, $nonce, $this->key);
+        $data = sodium_crypto_secretbox_open($ciphertext, $nonce, $key);
 
         if ($data === false) {
             // message was tampered in transit
@@ -106,7 +145,6 @@ class SodiumHandler extends BaseHandler
 
         // cleanup buffers
         sodium_memzero($ciphertext);
-        sodium_memzero($this->key);
 
         return $data;
     }
