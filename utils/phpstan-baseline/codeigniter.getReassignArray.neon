@@ -1,4 +1,4 @@
-# total 19 errors
+# total 18 errors
 
 parameters:
     ignoreErrors:
@@ -16,11 +16,6 @@ parameters:
             message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
             count: 1
             path: ../../tests/system/HTTP/CLIRequestTest.php
-
-        -
-            message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
 
         -
             message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'

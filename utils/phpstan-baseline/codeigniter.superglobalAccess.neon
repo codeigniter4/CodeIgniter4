@@ -1,4 +1,4 @@
-# total 68 errors
+# total 59 errors
 
 parameters:
     ignoreErrors:
@@ -70,21 +70,6 @@ parameters:
         -
             message: '#^Accessing offset ''HTTPS'' directly on \$_SERVER is discouraged\.$#'
             count: 2
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
-            message: '#^Accessing offset ''QUERY_STRING'' directly on \$_SERVER is discouraged\.$#'
-            count: 3
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
-            message: '#^Accessing offset ''REQUEST_URI'' directly on \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
-            message: '#^Accessing offset ''SCRIPT_NAME'' directly on \$_SERVER is discouraged\.$#'
-            count: 4
             path: ../../system/HTTP/IncomingRequest.php
 
         -

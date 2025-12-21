@@ -1,4 +1,4 @@
-# total 459 errors
+# total 423 errors
 
 parameters:
     ignoreErrors:
@@ -11,11 +11,6 @@ parameters:
             message: '#^Assigning string directly on offset string of \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../system/Config/DotEnv.php
-
-        -
-            message: '#^Assigning string directly on offset ''QUERY_STRING'' of \$_SERVER is discouraged\.$#'
-            count: 3
-            path: ../../system/HTTP/IncomingRequest.php
 
         -
             message: '#^Assigning ''http\://example\.com/'' directly on offset ''app\.baseURL'' of \$_SERVER is discouraged\.$#'
@@ -188,91 +183,6 @@ parameters:
             path: ../../tests/system/HTTP/DownloadResponseTest.php
 
         -
-            message: '#^Assigning '''' directly on offset ''QUERY_STRING'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
-            message: '#^Assigning ''/'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
-            message: '#^Assigning ''/'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
-            message: '#^Assigning ''/\?/ci/woot'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
-            message: '#^Assigning ''/ci/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
-            message: '#^Assigning ''/ci/index\.php/popcorn/woot'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
-            message: '#^Assigning ''/ci/woot'' directly on offset ''QUERY_STRING'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
-            message: '#^Assigning ''/ci/woot\?code\=good'' directly on offset ''QUERY_STRING'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
-            message: '#^Assigning ''/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
-            count: 11
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
-            message: '#^Assigning ''/index\.php/woot'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
-            count: 5
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
-            message: '#^Assigning ''/index\.php/woot\?code\=good'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
-            message: '#^Assigning ''/index\.php\?'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
-            message: '#^Assigning ''/index\.php\?/ci/woot'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
-            message: '#^Assigning ''/index\.php\?/ci/woot\?code\=good'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
-            message: '#^Assigning ''/sub/example'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
-            message: '#^Assigning ''/sub/index\.php'' directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
-            message: '#^Assigning ''/woot'' directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestDetectingTest.php
-
-        -
             message: '#^Assigning ''10\.0\.1\.200'' directly on offset ''REMOTE_ADDR'' of \$_SERVER is discouraged\.$#'
             count: 2
             path: ../../tests/system/HTTP/IncomingRequestTest.php
@@ -359,16 +269,6 @@ parameters:
 
         -
             message: '#^Assigning 5 directly on offset ''TEST'' of \$_GET is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Assigning mixed directly on offset ''REQUEST_URI'' of \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Assigning mixed directly on offset ''SCRIPT_NAME'' of \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 

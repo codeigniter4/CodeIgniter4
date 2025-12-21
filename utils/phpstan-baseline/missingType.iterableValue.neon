@@ -1,4 +1,4 @@
-# total 1320 errors
+# total 1319 errors
 
 parameters:
     ignoreErrors:
@@ -5384,11 +5384,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\HTTP\\IncomingRequestTest\:\:provideCanGrabGetRawInputVar\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/IncomingRequestTest.php
-
-        -
-            message: '#^Method CodeIgniter\\HTTP\\IncomingRequestTest\:\:provideExtensionPHP\(\) return type has no value type specified in iterable type iterable\.$#'
             count: 1
             path: ../../tests/system/HTTP/IncomingRequestTest.php
 

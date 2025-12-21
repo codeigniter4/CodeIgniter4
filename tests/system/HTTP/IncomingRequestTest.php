@@ -909,36 +909,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertNull($this->request->getGetPost('gc'));
     }
 
-    /**
-     * @param mixed $path
-     * @param mixed $detectPath
-     */
-    #[DataProvider('provideExtensionPHP')]
-    public function testExtensionPHP($path, $detectPath): void
-    {
-        $config          = new App();
-        $config->baseURL = 'http://example.com/';
-
-        $_SERVER['REQUEST_URI'] = $path;
-        $_SERVER['SCRIPT_NAME'] = $path;
-        $request                = new IncomingRequest($config, new SiteURI($config, $path), null, new UserAgent());
-        $this->assertSame($detectPath, $request->detectPath());
-    }
-
-    public static function provideExtensionPHP(): iterable
-    {
-        return [
-            'not /index.php' => [
-                '/test.php',
-                '/',
-            ],
-            '/index.php' => [
-                '/index.php',
-                '/',
-            ],
-        ];
-    }
-
     public function testGetPath(): void
     {
         $request = $this->createRequest(null, null, 'fruits/banana');
@@ -952,7 +922,8 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request = new IncomingRequest($config, new SiteURI($config), null, new UserAgent());
         $this->assertSame('', $request->getPath());
 
-        $request->setPath('foobar');
+        $setPath = $this->getPrivateMethodInvoker($request, 'setPath');
+        $setPath('foobar');
         $this->assertSame('foobar', $request->getPath());
     }
 
