@@ -55,6 +55,11 @@
 
 # encryption.key =
 
+# Previous keys fallback is disabled by default.
+# If you want to enable it, uncomment the line below.
+# encryption.previousKeysFallbackEnabled = true
+# encryption.previousKeys =
+
 #--------------------------------------------------------------------
 # SESSION
 #--------------------------------------------------------------------
