@@ -130,16 +130,31 @@ class BaseConfig
         foreach ($properties as $property) {
             $this->initEnvValue($this->{$property}, $property, $prefix, $shortPrefix);
 
-            if ($this instanceof Encryption && $property === 'key') {
-                if (str_starts_with($this->{$property}, 'hex2bin:')) {
-                    // Handle hex2bin prefix
-                    $this->{$property} = hex2bin(substr($this->{$property}, 8));
-                } elseif (str_starts_with($this->{$property}, 'base64:')) {
-                    // Handle base64 prefix
-                    $this->{$property} = base64_decode(substr($this->{$property}, 7), true);
+            if ($this instanceof Encryption) {
+                if ($property === 'key') {
+                    $this->{$property} = $this->parseEncryptionKey($this->{$property});
+                } else if ($property === 'previousKeysFallbackEnabled') {
+                    // previousKeysFallbackEnabled must be boolean
+                    $this->{$property} = (bool) $this->{$property};
+                } else if ($property === 'previousKeys') {
+                    // previousKeys must be an array
+                    if (is_string($this->{$property})) {
+                        $this->{$property} = array_map(fn($item) => $this->parseEncryptionKey($item), explode(',', $this->{$property}));
+                    }
                 }
             }
         }
+    }
+
+    protected function parseEncryptionKey(string $key): string
+    {
+        if (str_starts_with($key, 'hex2bin:')) {
+            return hex2bin(substr($key, 8));
+        } elseif (str_starts_with($key, 'base64:')) {
+            return base64_decode(substr($key, 7), true);
+        }
+
+        return $key;
     }
 
     /**
