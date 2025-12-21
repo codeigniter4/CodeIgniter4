@@ -31,11 +31,6 @@ class SodiumHandler extends BaseHandler
     protected $key = '';
 
     /**
-     * Whether to fall back to previous keys when decryption fails.
-     */
-    protected bool $previousKeysFallbackEnabled = false;
-
-    /**
      * List of previous keys for fallback decryption.
      *
      * @var string
@@ -101,7 +96,7 @@ class SodiumHandler extends BaseHandler
             sodium_memzero($this->key);
         }
 
-        if ($result === false && $this->previousKeysFallbackEnabled && $this->previousKeys !== '') {
+        if ($result === false && $this->previousKeys !== '') {
             foreach (explode(',', $this->previousKeys) as $previousKey) {
                 try {
                     $result = $this->decryptWithKey($data, $previousKey);

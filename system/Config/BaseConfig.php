@@ -133,9 +133,6 @@ class BaseConfig
             if ($this instanceof Encryption) {
                 if ($property === 'key') {
                     $this->{$property} = $this->parseEncryptionKey($this->{$property});
-                } elseif ($property === 'previousKeysFallbackEnabled') {
-                    // previousKeysFallbackEnabled must be boolean
-                    $this->{$property} = (bool) $this->{$property};
                 } elseif ($property === 'previousKeys') {
                     $keysArray      = array_map('trim', explode(',', $this->{$property}));
                     $parsedKeys     = [];
