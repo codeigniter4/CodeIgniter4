@@ -52,7 +52,7 @@ class SodiumHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
-    public function encrypt(#[SensitiveParameter] $data, #[SensitiveParameter] $params = null)
+    public function encrypt($data, $params = null)
     {
         $this->parseParams($params);
 
@@ -83,7 +83,7 @@ class SodiumHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
-    public function decrypt($data, #[SensitiveParameter] $params = null)
+    public function decrypt($data, $params = null)
     {
         $this->parseParams($params);
 
@@ -100,7 +100,7 @@ class SodiumHandler extends BaseHandler
             sodium_memzero($this->key);
         }
 
-        if ($result === false && $this->previousKeysFallbackEnabled && ! empty($this->previousKeys)) {
+        if ($result === false && $this->previousKeysFallbackEnabled && $this->previousKeys !== []) {
             foreach ($this->previousKeys as $previousKey) {
                 try {
                     $result = $this->decryptWithKey($data, $previousKey);
@@ -130,7 +130,7 @@ class SodiumHandler extends BaseHandler
      *
      * @throws EncryptionException
      */
-    protected function decryptWithKey($data, #[SensitiveParameter] $key)
+    protected function decryptWithKey($data, $key)
     {
         if (mb_strlen($data, '8bit') < (SODIUM_CRYPTO_SECRETBOX_NONCEBYTES + SODIUM_CRYPTO_SECRETBOX_MACBYTES)) {
             // message was truncated

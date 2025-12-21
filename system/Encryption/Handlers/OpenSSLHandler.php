@@ -91,7 +91,7 @@ class OpenSSLHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
-    public function encrypt(#[SensitiveParameter] $data, #[SensitiveParameter] $params = null)
+    public function encrypt($data, $params = null)
     {
         // Allow key override
         if ($params !== null) {
@@ -127,7 +127,7 @@ class OpenSSLHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
-    public function decrypt($data, #[SensitiveParameter] $params = null)
+    public function decrypt($data, $params = null)
     {
         // Allow key override
         if ($params !== null) {
@@ -145,7 +145,7 @@ class OpenSSLHandler extends BaseHandler
             $exception = $e;
         }
 
-        if ($result === false && $this->previousKeysFallbackEnabled && ! empty($this->previousKeys)) {
+        if ($result === false && $this->previousKeysFallbackEnabled && $this->previousKeys !== []) {
             foreach ($this->previousKeys as $previousKey) {
                 try {
                     $result = $this->decryptWithKey($data, $previousKey);
@@ -175,7 +175,7 @@ class OpenSSLHandler extends BaseHandler
      *
      * @throws EncryptionException
      */
-    protected function decryptWithKey($data, #[SensitiveParameter] $key)
+    protected function decryptWithKey($data, $key)
     {
         // derive a secret key
         $authKey = \hash_hkdf($this->digest, $key, 0, $this->authKeyInfo);

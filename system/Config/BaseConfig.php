@@ -139,7 +139,7 @@ class BaseConfig
                 } elseif ($property === 'previousKeys') {
                     // previousKeys must be an array
                     if (is_string($this->{$property})) {
-                        $this->{$property} = array_map(fn ($item) => $this->parseEncryptionKey($item), explode(',', $this->{$property}));
+                        $this->{$property} = array_map(fn ($item): string => $this->parseEncryptionKey($item), explode(',', $this->{$property}));
                     }
                 }
             }
