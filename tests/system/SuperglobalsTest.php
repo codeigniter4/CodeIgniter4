@@ -66,7 +66,7 @@ final class SuperglobalsTest extends CIUnitTestCase
     {
         $this->superglobals->setServer('REQUEST_TIME_FLOAT', 1234567890.123);
 
-        $this->assertSame(1234567890.123, $this->superglobals->server('REQUEST_TIME_FLOAT'));
+        $this->assertEqualsWithDelta(1234567890.123, $this->superglobals->server('REQUEST_TIME_FLOAT'), PHP_FLOAT_EPSILON);
     }
 
     public function testServerUnset(): void

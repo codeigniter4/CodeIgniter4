@@ -1,4 +1,4 @@
-# total 1314 errors
+# total 1333 errors
 
 parameters:
     ignoreErrors:
@@ -323,7 +323,22 @@ parameters:
             path: ../../system/Config/Services.php
 
         -
+            message: '#^Method CodeIgniter\\Config\\Services\:\:superglobals\(\) has parameter \$cookie with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Config/Services.php
+
+        -
             message: '#^Method CodeIgniter\\Config\\Services\:\:superglobals\(\) has parameter \$get with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Config/Services.php
+
+        -
+            message: '#^Method CodeIgniter\\Config\\Services\:\:superglobals\(\) has parameter \$post with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Config/Services.php
+
+        -
+            message: '#^Method CodeIgniter\\Config\\Services\:\:superglobals\(\) has parameter \$request with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Config/Services.php
 
@@ -4213,7 +4228,22 @@ parameters:
             path: ../../system/Router/RouterInterface.php
 
         -
+            message: '#^Method CodeIgniter\\Superglobals\:\:__construct\(\) has parameter \$cookie with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Superglobals.php
+
+        -
             message: '#^Method CodeIgniter\\Superglobals\:\:__construct\(\) has parameter \$get with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Superglobals.php
+
+        -
+            message: '#^Method CodeIgniter\\Superglobals\:\:__construct\(\) has parameter \$post with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Superglobals.php
+
+        -
+            message: '#^Method CodeIgniter\\Superglobals\:\:__construct\(\) has parameter \$request with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Superglobals.php
 
@@ -4223,7 +4253,37 @@ parameters:
             path: ../../system/Superglobals.php
 
         -
-            message: '#^Method CodeIgniter\\Superglobals\:\:get\(\) return type has no value type specified in iterable type array\.$#'
+            message: '#^Method CodeIgniter\\Superglobals\:\:getCookieArray\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Superglobals.php
+
+        -
+            message: '#^Method CodeIgniter\\Superglobals\:\:getGetArray\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Superglobals.php
+
+        -
+            message: '#^Method CodeIgniter\\Superglobals\:\:getGlobalArray\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Superglobals.php
+
+        -
+            message: '#^Method CodeIgniter\\Superglobals\:\:getPostArray\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Superglobals.php
+
+        -
+            message: '#^Method CodeIgniter\\Superglobals\:\:getRequestArray\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Superglobals.php
+
+        -
+            message: '#^Method CodeIgniter\\Superglobals\:\:getServerArray\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Superglobals.php
+
+        -
+            message: '#^Method CodeIgniter\\Superglobals\:\:setCookieArray\(\) has parameter \$array with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Superglobals.php
 
@@ -4233,7 +4293,42 @@ parameters:
             path: ../../system/Superglobals.php
 
         -
+            message: '#^Method CodeIgniter\\Superglobals\:\:setGlobalArray\(\) has parameter \$array with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Superglobals.php
+
+        -
+            message: '#^Method CodeIgniter\\Superglobals\:\:setPostArray\(\) has parameter \$array with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Superglobals.php
+
+        -
+            message: '#^Method CodeIgniter\\Superglobals\:\:setRequestArray\(\) has parameter \$array with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Superglobals.php
+
+        -
+            message: '#^Method CodeIgniter\\Superglobals\:\:setServerArray\(\) has parameter \$array with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Superglobals.php
+
+        -
+            message: '#^Property CodeIgniter\\Superglobals\:\:\$cookie type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Superglobals.php
+
+        -
             message: '#^Property CodeIgniter\\Superglobals\:\:\$get type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Superglobals.php
+
+        -
+            message: '#^Property CodeIgniter\\Superglobals\:\:\$post type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Superglobals.php
+
+        -
+            message: '#^Property CodeIgniter\\Superglobals\:\:\$request type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Superglobals.php
 

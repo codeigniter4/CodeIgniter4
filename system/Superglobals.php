@@ -30,12 +30,38 @@ namespace CodeIgniter;
  */
 final class Superglobals
 {
+    /**
+     * @var array<string, array|float|int|string>
+     */
     private array $server;
+
+    /**
+     * @var array<string, array|string>
+     */
     private array $get;
+
+    /**
+     * @var array<string, array|string>
+     */
     private array $post;
+
+    /**
+     * @var array<string, array|string>
+     */
     private array $cookie;
+
+    /**
+     * @var array<string, array|string>
+     */
     private array $request;
 
+    /**
+     * @param array<string, array|float|int|string>|null $server
+     * @param array<string, array|string>|null           $get
+     * @param array<string, array|string>|null           $post
+     * @param array<string, array|string>|null           $cookie
+     * @param array<string, array|string>|null           $request
+     */
     public function __construct(
         ?array $server = null,
         ?array $get = null,
@@ -52,6 +78,8 @@ final class Superglobals
 
     /**
      * Get a value from $_SERVER
+     *
+     * @return array<array-key, mixed>|float|int|string|null
      */
     public function server(string $key): array|float|int|string|null
     {
@@ -60,6 +88,8 @@ final class Superglobals
 
     /**
      * Set a value in $_SERVER
+     *
+     * @param array<array-key, mixed>|float|int|string $value
      */
     public function setServer(string $key, array|float|int|string $value): void
     {
@@ -77,6 +107,8 @@ final class Superglobals
 
     /**
      * Get all $_SERVER values
+     *
+     * @return array<string, array|float|int|string>
      */
     public function getServerArray(): array
     {
@@ -85,6 +117,8 @@ final class Superglobals
 
     /**
      * Set the entire $_SERVER array
+     *
+     * @param array<string, array|float|int|string> $array
      */
     public function setServerArray(array $array): void
     {
@@ -94,6 +128,8 @@ final class Superglobals
 
     /**
      * Get a value from $_GET
+     *
+     * @return array<array-key, mixed>|string|null
      */
     public function get(string $key): array|string|null
     {
@@ -102,6 +138,8 @@ final class Superglobals
 
     /**
      * Set a value in $_GET
+     *
+     * @param array<array-key, mixed>|string $value
      */
     public function setGet(string $key, array|string $value): void
     {
@@ -119,6 +157,8 @@ final class Superglobals
 
     /**
      * Get all $_GET values
+     *
+     * @return array<string, array|string>
      */
     public function getGetArray(): array
     {
@@ -127,6 +167,8 @@ final class Superglobals
 
     /**
      * Set the entire $_GET array
+     *
+     * @param array<string, array|string> $array
      */
     public function setGetArray(array $array): void
     {
@@ -136,6 +178,8 @@ final class Superglobals
 
     /**
      * Get a value from $_POST
+     *
+     * @return array<array-key, mixed>|string|null
      */
     public function post(string $key): array|string|null
     {
@@ -144,6 +188,8 @@ final class Superglobals
 
     /**
      * Set a value in $_POST
+     *
+     * @param array<array-key, mixed>|string $value
      */
     public function setPost(string $key, array|string $value): void
     {
@@ -161,6 +207,8 @@ final class Superglobals
 
     /**
      * Get all $_POST values
+     *
+     * @return array<string, array|string>
      */
     public function getPostArray(): array
     {
@@ -169,6 +217,8 @@ final class Superglobals
 
     /**
      * Set the entire $_POST array
+     *
+     * @param array<string, array|string> $array
      */
     public function setPostArray(array $array): void
     {
@@ -178,6 +228,8 @@ final class Superglobals
 
     /**
      * Get a value from $_COOKIE
+     *
+     * @return array<array-key, mixed>|string|null
      */
     public function cookie(string $key): array|string|null
     {
@@ -186,6 +238,8 @@ final class Superglobals
 
     /**
      * Set a value in $_COOKIE
+     *
+     * @param array<array-key, mixed>|string $value
      */
     public function setCookie(string $key, array|string $value): void
     {
@@ -203,6 +257,8 @@ final class Superglobals
 
     /**
      * Get all $_COOKIE values
+     *
+     * @return array<string, array|string>
      */
     public function getCookieArray(): array
     {
@@ -211,6 +267,8 @@ final class Superglobals
 
     /**
      * Set the entire $_COOKIE array
+     *
+     * @param array<string, array|string> $array
      */
     public function setCookieArray(array $array): void
     {
@@ -220,6 +278,8 @@ final class Superglobals
 
     /**
      * Get a value from $_REQUEST
+     *
+     * @return array<array-key, mixed>|string|null
      */
     public function request(string $key): array|string|null
     {
@@ -228,6 +288,8 @@ final class Superglobals
 
     /**
      * Set a value in $_REQUEST
+     *
+     * @param array<array-key, mixed>|string $value
      */
     public function setRequest(string $key, array|string $value): void
     {
@@ -245,6 +307,8 @@ final class Superglobals
 
     /**
      * Get all $_REQUEST values
+     *
+     * @return array<string, array|string>
      */
     public function getRequestArray(): array
     {
@@ -253,6 +317,8 @@ final class Superglobals
 
     /**
      * Set the entire $_REQUEST array
+     *
+     * @param array<string, array|string> $array
      */
     public function setRequestArray(array $array): void
     {
@@ -264,6 +330,8 @@ final class Superglobals
      * Get a superglobal array by name
      *
      * @param string $name The superglobal name (server, get, post, cookie, request)
+     *
+     * @return array<string, array|float|int|string>
      */
     public function getGlobalArray(string $name): array
     {
@@ -280,8 +348,8 @@ final class Superglobals
     /**
      * Set a superglobal array by name
      *
-     * @param string $name  The superglobal name (server, get, post, cookie, request)
-     * @param array  $array The array to set
+     * @param string                                $name  The superglobal name (server, get, post, cookie, request)
+     * @param array<string, array|float|int|string> $array The array to set
      */
     public function setGlobalArray(string $name, array $array): void
     {

@@ -1,4 +1,4 @@
-# total 223 errors
+# total 222 errors
 
 parameters:
     ignoreErrors:
@@ -224,7 +224,7 @@ parameters:
 
         -
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 2
+            count: 1
             path: ../../system/HTTP/IncomingRequest.php
 
         -

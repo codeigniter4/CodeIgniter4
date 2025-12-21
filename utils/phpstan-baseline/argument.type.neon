@@ -1,4 +1,4 @@
-# total 83 errors
+# total 84 errors
 
 parameters:
     ignoreErrors:
@@ -121,6 +121,11 @@ parameters:
             message: '#^Parameter \#2 \$value of class CodeIgniter\\HTTP\\Header constructor expects array\<int\|string, array\<string, string\>\|string\>\|string\|null, stdClass given\.$#'
             count: 1
             path: ../../tests/system/HTTP/HeaderTest.php
+
+        -
+            message: '#^Parameter \#1 \$array of method CodeIgniter\\Superglobals\:\:setServerArray\(\) expects array\<string, array\|float\|int\|string\>, array\<string, string\|null\> given\.$#'
+            count: 1
+            path: ../../tests/system/HTTP/MessageTest.php
 
         -
             message: '#^Parameter \#3 \$expire of method CodeIgniter\\HTTP\\Response\:\:setCookie\(\) expects int, string given\.$#'

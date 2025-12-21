@@ -1,4 +1,4 @@
-# total 59 errors
+# total 27 errors
 
 parameters:
     ignoreErrors:
@@ -16,16 +16,6 @@ parameters:
             message: '#^Accessing offset ''encryption\.key'' directly on \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../system/Commands/Encryption/GenerateKey.php
-
-        -
-            message: '#^Accessing offset ''CI_ENVIRONMENT'' directly on \$_SERVER is discouraged\.$#'
-            count: 3
-            path: ../../system/Commands/Utilities/Environment.php
-
-        -
-            message: '#^Accessing offset ''HTTP_HOST'' directly on \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../system/Commands/Utilities/Routes.php
 
         -
             message: '#^Accessing offset ''REMOTE_ADDR'' directly on \$_SERVER is discouraged\.$#'
@@ -58,74 +48,14 @@ parameters:
             path: ../../system/Config/DotEnv.php
 
         -
-            message: '#^Accessing offset ''SERVER_PROTOCOL'' directly on \$_SERVER is discouraged\.$#'
+            message: '#^Accessing offset string directly on \$_GET is discouraged\.$#'
             count: 1
-            path: ../../system/Config/Services.php
+            path: ../../system/Superglobals.php
 
         -
-            message: '#^Accessing offset ''HTTP_USER_AGENT'' directly on \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../system/HTTP/DownloadResponse.php
-
-        -
-            message: '#^Accessing offset ''HTTPS'' directly on \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
-            message: '#^Accessing offset array\|string directly on \$_GET is discouraged\.$#'
-            count: 2
-            path: ../../system/HTTP/IncomingRequest.php
-
-        -
-            message: '#^Accessing offset ''CONTENT_TYPE'' directly on \$_SERVER is discouraged\.$#'
+            message: '#^Accessing offset string directly on \$_SERVER is discouraged\.$#'
             count: 1
-            path: ../../system/HTTP/Message.php
-
-        -
-            message: '#^Accessing offset \(int\|string\) directly on \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../system/HTTP/Message.php
-
-        -
-            message: '#^Accessing offset ''REQUEST_METHOD'' directly on \$_SERVER is discouraged\.$#'
-            count: 3
-            path: ../../system/HTTP/Response.php
-
-        -
-            message: '#^Accessing offset ''SERVER_PROTOCOL'' directly on \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../system/HTTP/Response.php
-
-        -
-            message: '#^Accessing offset ''SERVER_SOFTWARE'' directly on \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../system/HTTP/Response.php
-
-        -
-            message: '#^Accessing offset mixed directly on \$_GET is discouraged\.$#'
-            count: 1
-            path: ../../system/Pager/Pager.php
-
-        -
-            message: '#^Accessing offset ''REQUEST_METHOD'' directly on \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../system/Router/Router.php
-
-        -
-            message: '#^Accessing offset ''HTTP_X_REQUESTED_WITH'' directly on \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../system/Session/Session.php
-
-        -
-            message: '#^Accessing offset ''app\.baseURL'' directly on \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/CLI/ConsoleTest.php
-
-        -
-            message: '#^Accessing offset ''encryption\.key'' directly on \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/Commands/GenerateKeyTest.php
+            path: ../../system/Superglobals.php
 
         -
             message: '#^Accessing offset ''foo'' directly on \$_SERVER is discouraged\.$#'
@@ -168,46 +98,16 @@ parameters:
             path: ../../tests/system/Debug/ExceptionsTest.php
 
         -
-            message: '#^Accessing offset ''encryption\.key'' directly on \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/Encryption/EncryptionTest.php
-
-        -
-            message: '#^Accessing offset ''HTTP_USER_AGENT'' directly on \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../tests/system/HTTP/DownloadResponseTest.php
-
-        -
-            message: '#^Accessing offset ''SERVER_SOFTWARE'' directly on \$_SERVER is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/HTTP/ResponseTest.php
-
-        -
             message: '#^Accessing offset ''QUERY_STRING'' directly on \$_SERVER is discouraged\.$#'
             count: 1
             path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
 
         -
-            message: '#^Accessing offset ''HTTP_HOST'' directly on \$_SERVER is discouraged\.$#'
+            message: '#^Accessing offset ''TEST_KEY'' directly on \$_SERVER is discouraged\.$#'
             count: 1
-            path: ../../tests/system/Helpers/URLHelper/SiteUrlTest.php
+            path: ../../tests/system/SuperglobalsTest.php
 
         -
-            message: '#^Accessing offset ''REQUEST_URI'' directly on \$_SERVER is discouraged\.$#'
+            message: '#^Accessing offset ''test'' directly on \$_GET is discouraged\.$#'
             count: 1
-            path: ../../tests/system/Helpers/URLHelper/SiteUrlTest.php
-
-        -
-            message: '#^Accessing offset ''page'' directly on \$_GET is discouraged\.$#'
-            count: 1
-            path: ../../tests/system/Pager/PagerTest.php
-
-        -
-            message: '#^Accessing offset ''page_foo'' directly on \$_GET is discouraged\.$#'
-            count: 2
-            path: ../../tests/system/Pager/PagerTest.php
-
-        -
-            message: '#^Accessing offset ''CONTENT_TYPE'' directly on \$_SERVER is discouraged\.$#'
-            count: 2
-            path: ../../tests/system/Validation/ValidationTest.php
+            path: ../../tests/system/SuperglobalsTest.php
