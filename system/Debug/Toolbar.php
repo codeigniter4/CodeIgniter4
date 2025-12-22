@@ -27,7 +27,6 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\I18n\Time;
 use Config\Toolbar as ToolbarConfig;
 use Kint\Kint;
-use Throwable;
 
 /**
  * Displays a toolbar with bits of stats to aid a developer in debugging.
@@ -400,7 +399,7 @@ class Toolbar
             }
 
             $toolbar = service('toolbar', $config);
-            $stats = $app->getPerformanceStats();
+            $stats   = $app->getPerformanceStats();
             $data    = $toolbar->run(
                 $stats['startTime'],
                 $stats['totalTime'],
