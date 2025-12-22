@@ -149,6 +149,9 @@ class Boot
         static::setExceptionHandler();
         static::initializeKint();
         static::autoloadHelpers();
+
+        // Global test helpers and mocks for all tests
+        require_once ROOTPATH . 'tests/_support/MockCommon.php';
     }
 
     /**
