@@ -392,15 +392,6 @@ class Toolbar
 
             $config = config(ToolbarConfig::class);
 
-            try {
-                $stats = $app->getPerformanceStats();
-                if (! isset($stats['startTime']) || ! isset($stats['totalTime'])) {
-                    return;
-                }
-            } catch (Throwable) {
-                return;
-            }
-
             foreach ($config->disableOnHeaders as $header) {
                 if ($request->hasHeader($header)) {
                     $this->isCustomAjax = true;
@@ -409,6 +400,7 @@ class Toolbar
             }
 
             $toolbar = service('toolbar', $config);
+            $stats = $app->getPerformanceStats();
             $data    = $toolbar->run(
                 $stats['startTime'],
                 $stats['totalTime'],

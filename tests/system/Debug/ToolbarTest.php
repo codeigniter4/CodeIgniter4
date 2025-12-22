@@ -33,11 +33,15 @@ final class ToolbarTest extends CIUnitTestCase
     private ToolbarConfig $config;
     private ?IncomingRequest $request    = null;
     private ?ResponseInterface $response = null;
+    private bool $originalIsCli;
 
     protected function setUp(): void
     {
         parent::setUp();
         Services::reset();
+
+        $this->originalIsCli = is_cli();
+        is_cli(false);
 
         $this->config = new ToolbarConfig();
 
@@ -48,6 +52,14 @@ final class ToolbarTest extends CIUnitTestCase
             'totalTime' => 0.05,
         ]);
         Services::injectMock('codeigniter', $app);
+    }
+
+    protected function tearDown(): void
+    {
+        // Restore original is_cli state
+        is_cli($this->originalIsCli);
+
+        parent::tearDown();
     }
 
     public function testPrepareRespectsDisableOnHeaders(): void
@@ -89,12 +101,4 @@ final class ToolbarTest extends CIUnitTestCase
         // Assertions
         $this->assertStringContainsString('id="debugbar_loader"', (string) $this->response->getBody());
     }
-}
-
-/**
- * Mock is_cli() to return false within this namespace.
- */
-function is_cli(): bool
-{
-    return false;
 }
