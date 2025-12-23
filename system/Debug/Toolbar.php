@@ -416,8 +416,7 @@ class Toolbar
             foreach ($config->disableOnHeaders as $header) {
                 if ($request->hasHeader($header)) {
                     $this->isCustomAjax = true;
-
-                    continue;
+                    break;
                 }
             }
 
