@@ -150,8 +150,6 @@ class Toolbar extends BaseConfig
      */
     public array $disableOnHeaders = [
         'HX-Request',        // HTMX partial requests
-        'X-Unpoly-Request',  // Unpoly partial requests
-        'Turbo-Frame',       // Turbo Frames
-        'Turbo-Visit',       // Turbo Drive navigation
+        'X-Up-Version',  // Unpoly partial requests
     ];
 }

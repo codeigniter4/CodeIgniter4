@@ -144,14 +144,13 @@ class Boot
         static::loadDotEnv($paths);
         static::loadEnvironmentBootstrap($paths, false);
 
+        static::loadCommonFunctionsMock();
+
         static::loadCommonFunctions();
         static::loadAutoloader();
         static::setExceptionHandler();
         static::initializeKint();
         static::autoloadHelpers();
-
-        // Global test helpers and mocks for all tests
-        require_once ROOTPATH . 'tests/_support/MockCommon.php';
     }
 
     /**
@@ -391,5 +390,13 @@ class Boot
         $exit = $console->run();
 
         return is_int($exit) ? $exit : EXIT_SUCCESS;
+    }
+
+    protected static function loadCommonFunctionsMock(): void
+    {
+        // Require system/Test/Mock/MockCommon.php
+        if (is_file(SYSTEMPATH . 'Test/Mock/MockCommon.php')) {
+            require_once SYSTEMPATH . 'Test/Mock/MockCommon.php';
+        }
     }
 }

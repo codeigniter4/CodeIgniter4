@@ -33,12 +33,15 @@ final class ToolbarTest extends CIUnitTestCase
     private ToolbarConfig $config;
     private ?IncomingRequest $request    = null;
     private ?ResponseInterface $response = null;
+    private bool $originalIsCli;
 
     protected function setUp(): void
     {
         parent::setUp();
         Services::reset();
-        is_cli();
+
+        $this->originalIsCli = is_cli();
+        is_cli(false);
 
         $this->config = new ToolbarConfig();
 
@@ -54,7 +57,7 @@ final class ToolbarTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         // Restore original is_cli state
-        is_cli();
+        is_cli($this->originalIsCli);
 
         parent::tearDown();
     }
