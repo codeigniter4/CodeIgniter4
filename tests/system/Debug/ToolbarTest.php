@@ -55,7 +55,7 @@ final class ToolbarTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         // Restore is_cli state
-        is_cli();
+        is_cli(true);
 
         parent::tearDown();
     }
