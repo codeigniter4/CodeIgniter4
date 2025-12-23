@@ -1,14 +1,5 @@
 <?php
 
-/**
- * This file is part of CodeIgniter 4 framework.
- *
- * (c) CodeIgniter Foundation <admin@codeigniter.com>
- *
- * For the full copyright and license information, please view
- * the LICENSE file that was distributed with this source code.
- */
-
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
@@ -144,12 +135,12 @@ class Toolbar extends BaseConfig
      * (such as infinite loops or "Maximum call stack size exceeded").
      *
      * Any request containing one of the following headers is treated as a
-     * client-managed or partial request, and the Debug Toolbar injection is skipped.s
+     * client-managed or partial request, and the Debug Toolbar injection is skipped.
      *
      * @var list<string>
      */
     public array $disableOnHeaders = [
-        'HX-Request',        // HTMX partial requests
-        'X-Up-Version',  // Unpoly partial requests
+        'HX-Request',    // HTMX partial requests
+        'X-Up-Version', // Unpoly partial requests
     ];
 }
