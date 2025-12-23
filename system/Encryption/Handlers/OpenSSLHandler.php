@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
+use SensitiveParameter;
 
 /**
  * Encryption handling for OpenSSL library
@@ -84,7 +85,7 @@ class OpenSSLHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
-    public function encrypt($data, $params = null)
+    public function encrypt(#[SensitiveParameter] $data, #[SensitiveParameter] $params = null)
     {
         // Allow key override
         if ($params !== null) {
@@ -120,7 +121,7 @@ class OpenSSLHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
-    public function decrypt($data, $params = null)
+    public function decrypt($data, #[SensitiveParameter] $params = null)
     {
         // Allow key override
         if ($params !== null) {
@@ -169,7 +170,7 @@ class OpenSSLHandler extends BaseHandler
      *
      * @throws EncryptionException
      */
-    protected function decryptWithKey($data, $key)
+    protected function decryptWithKey($data, #[SensitiveParameter] $key)
     {
         // derive a secret key
         $authKey = \hash_hkdf($this->digest, $key, 0, $this->authKeyInfo);
