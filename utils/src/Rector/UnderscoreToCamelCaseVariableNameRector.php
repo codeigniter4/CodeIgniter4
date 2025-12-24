@@ -81,7 +81,7 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
     }
 
     /**
-     * @param ClassMethod|Closure|FileNode|Function_|Namespace_ $node
+     * @param FileNode|Namespace_ $node
      */
     public function refactor(Node $node): ?Node
     {
