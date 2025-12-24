@@ -23,7 +23,7 @@ use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Namespace_;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
 use Rector\Php\ReservedKeywordAnalyzer;
-use Rector\PhpParser\Node\CustomNode\FileWithoutNamespace;
+use Rector\PhpParser\Node\FileNode;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -77,14 +77,18 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
      */
     public function getNodeTypes(): array
     {
-        return [FileWithoutNamespace::class, Namespace_::class];
+        return [FileNode::class, Namespace_::class];
     }
 
     /**
-     * @param ClassMethod|Closure|FileWithoutNamespace|Function_|Namespace_ $node
+     * @param ClassMethod|Closure|FileNode|Function_|Namespace_ $node
      */
     public function refactor(Node $node): ?Node
     {
+        if ($node instanceof FileNode && $node->isNamespaced()) {
+            return null;
+        }
+
         if ($node->stmts === null) {
             return null;
         }
