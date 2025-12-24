@@ -86,6 +86,7 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
     public function refactor(Node $node): ?Node
     {
         if ($node instanceof FileNode && $node->isNamespaced()) {
+            // handled in Namespace_ node
             return null;
         }
 
