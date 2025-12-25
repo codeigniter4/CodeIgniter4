@@ -59,7 +59,7 @@ class OpenSSLHandler extends BaseHandler
     /**
      * List of previous keys for fallback decryption.
      *
-     * @var array<string>|string
+     * @var list<string>|string
      */
     protected array|string $previousKeys = '';
 
