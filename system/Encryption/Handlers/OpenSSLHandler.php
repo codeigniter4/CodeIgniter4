@@ -59,7 +59,7 @@ class OpenSSLHandler extends BaseHandler
     /**
      * List of previous keys for fallback decryption.
      */
-    protected string $previousKeys = '';
+    protected string|array $previousKeys = '';
 
     /**
      * Whether the cipher-text should be raw. If set to false, then it will be base64 encoded.
@@ -132,32 +132,39 @@ class OpenSSLHandler extends BaseHandler
             throw EncryptionException::forNeedsStarterKey();
         }
 
-        $result = false;
+        // Only use fallback keys if no custom key was provided in params
+        $useFallback = !isset($params['key']);
 
-        try {
-            $result = $this->decryptWithKey($data, $this->key);
-        } catch (EncryptionException $e) {
-            $exception = $e;
+        $attemptDecrypt = function ($key) use ($data) {
+            try {
+                $result = $this->decryptWithKey($data, $key);
+                return ['success' => true, 'data' => $result];
+            } catch (EncryptionException $e) {
+                return ['success' => false, 'exception' => $e];
+            }
+        };
+
+        $result = $attemptDecrypt($this->key);
+
+        if ($result['success']) {
+            return $result['data'];
         }
 
-        if ($result === false && $this->previousKeys !== '') {
-            foreach (explode(',', $this->previousKeys) as $previousKey) {
-                try {
-                    $result = $this->decryptWithKey($data, $previousKey);
-                    if ($result !== false) {
-                        return $result;
-                    }
-                } catch (EncryptionException) {
-                    // Try next key
+        $originalException = $result['exception'];
+
+        // If primary key failed and fallback is allowed, try previous keys
+        if ($useFallback && !empty($this->previousKeys)) {
+            foreach ($this->previousKeys as $previousKey) {
+                $fallbackResult = $attemptDecrypt($previousKey);
+
+                if ($fallbackResult['success']) {
+                    return $fallbackResult['data'];
                 }
             }
         }
 
-        if (isset($exception)) {
-            throw $exception;
-        }
-
-        return $result;
+        // All attempts failed - throw the original exception
+        throw $originalException;
     }
 
     /**

@@ -30,7 +30,7 @@ class Encryption extends BaseConfig
      * If you want to enable decryption using previous keys, set them here.
      * See the user guide for more info.
      */
-    public string $previousKeys = '';
+    public string|array $previousKeys = '';
 
     /**
      * --------------------------------------------------------------------------

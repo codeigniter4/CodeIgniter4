@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
+use phpDocumentor\Reflection\PseudoTypes\NonEmptyString;
 use SensitiveParameter;
 
 /**
@@ -34,7 +35,7 @@ class SodiumHandler extends BaseHandler
     /**
      * List of previous keys for fallback decryption.
      */
-    protected string $previousKeys = '';
+    protected string|array $previousKeys = '';
 
     /**
      * Block size for padding message.
@@ -85,34 +86,40 @@ class SodiumHandler extends BaseHandler
             throw EncryptionException::forNeedsStarterKey();
         }
 
-        $result = false;
+        // Only use fallback keys if no custom key was provided in params
+        $useFallback = !isset($params['key']);
 
-        try {
-            $result = $this->decryptWithKey($data, $this->key);
-            sodium_memzero($this->key);
-        } catch (EncryptionException $e) {
-            $exception = $e;
-            sodium_memzero($this->key);
+        $attemptDecrypt = function ($key) use ($data) {
+            try {
+                $result = $this->decryptWithKey($data, $key);
+                sodium_memzero($key);
+                return ['success' => true, 'data' => $result];
+            } catch (EncryptionException $e) {
+                sodium_memzero($key);
+                return ['success' => false, 'exception' => $e];
+            }
+        };
+
+        $result = $attemptDecrypt($this->key);
+
+        if ($result['success']) {
+            return $result['data'];
         }
 
-        if ($result === false && $this->previousKeys !== '') {
-            foreach (explode(',', $this->previousKeys) as $previousKey) {
-                try {
-                    $result = $this->decryptWithKey($data, $previousKey);
-                    if (isset($result)) {
-                        return $result;
-                    }
-                } catch (EncryptionException) {
-                    // Try next key
+        $originalException = $result['exception'];
+
+        // If primary key failed and fallback is allowed, try previous keys
+        if ($useFallback && !empty($this->previousKeys)) {
+            foreach ($this->previousKeys as $previousKey) {
+                $fallbackResult = $attemptDecrypt($previousKey);
+
+                if ($fallbackResult['success']) {
+                    return $fallbackResult['data'];
                 }
             }
         }
 
-        if (isset($exception)) {
-            throw $exception;
-        }
-
-        return $result;
+        throw $originalException;
     }
 
     /**

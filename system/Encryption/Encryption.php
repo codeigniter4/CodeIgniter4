@@ -54,9 +54,11 @@ class Encryption
     protected $key;
 
     /**
-     * Comma-separated list of previous keys for fallback decryption.
+     * Array or Comma-separated list of previous keys for fallback decryption.
+     *
+     * @var string|array<string>
      */
-    protected string $previousKeys = '';
+    protected string|array $previousKeys = '';
 
     /**
      * The derived HMAC key
