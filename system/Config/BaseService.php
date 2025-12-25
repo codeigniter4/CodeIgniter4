@@ -304,6 +304,7 @@ class BaseService
      * Provides the ability to perform case-insensitive calling of service
      * names.
      *
+     * @param array<int,mixed> $arguments
      * @return object|null
      */
     public static function __callStatic(string $name, array $arguments)

@@ -60,6 +60,13 @@ class Modules
         return in_array(strtolower($alias), $this->aliases, true);
     }
 
+    /**
+     * Restores the state of the object when exported with var_export()
+     * 
+     * @param array<string,mixed>   $array Properties and their values
+     * 
+     * @return static
+     */
     public static function __set_state(array $array)
     {
         $obj = new static();

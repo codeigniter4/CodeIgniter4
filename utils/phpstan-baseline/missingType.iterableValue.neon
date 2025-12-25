@@ -1,24 +1,9 @@
-# total 1375 errors
+# total 1197 errors
 
 parameters:
     ignoreErrors:
         -
             message: '#^Method CodeIgniter\\BaseModel\:\:__call\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:__get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:cleanValidationRules\(\) has parameter \$rules with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:cleanValidationRules\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/BaseModel.php
 
@@ -39,11 +24,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\BaseModel\:\:doFind\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:doFindAll\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/BaseModel.php
 
@@ -84,21 +64,6 @@ parameters:
 
         -
             message: '#^Method CodeIgniter\\BaseModel\:\:find\(\) has parameter \$id with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:findAll\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:findColumn\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/BaseModel.php
-
-        -
-            message: '#^Method CodeIgniter\\BaseModel\:\:first\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/BaseModel.php
 
@@ -178,11 +143,6 @@ parameters:
             path: ../../system/BaseModel.php
 
         -
-            message: '#^Method CodeIgniter\\CLI\\CLI\:\:isZeroOptions\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/CLI/CLI.php
-
-        -
             message: '#^Method CodeIgniter\\CLI\\CLI\:\:printKeysAndValues\(\) has parameter \$options with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/CLI/CLI.php
@@ -243,34 +203,9 @@ parameters:
             path: ../../system/CodeIgniter.php
 
         -
-            message: '#^Method CodeIgniter\\Commands\\ListCommands\:\:listFull\(\) has parameter \$commands with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/ListCommands.php
-
-        -
             message: '#^Method CodeIgniter\\Commands\\ListCommands\:\:listSimple\(\) has parameter \$commands with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Commands/ListCommands.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Translation\\LocalizationFinder\:\:arrayToTableRows\(\) has parameter \$array with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Translation/LocalizationFinder.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Translation\\LocalizationFinder\:\:arrayToTableRows\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Translation/LocalizationFinder.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Translation\\LocalizationFinder\:\:buildMultiArray\(\) has parameter \$fromKeys with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Translation/LocalizationFinder.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Translation\\LocalizationFinder\:\:buildMultiArray\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Translation/LocalizationFinder.php
 
         -
             message: '#^Method CodeIgniter\\Commands\\Translation\\LocalizationFinder\:\:findTranslationsInFile\(\) return type has no value type specified in iterable type array\.$#'
@@ -283,16 +218,6 @@ parameters:
             path: ../../system/Commands/Translation/LocalizationFinder.php
 
         -
-            message: '#^Method CodeIgniter\\Commands\\Utilities\\Namespaces\:\:outputAllNamespaces\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Utilities/Namespaces.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Utilities\\Namespaces\:\:outputAllNamespaces\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Utilities/Namespaces.php
-
-        -
             message: '#^Method CodeIgniter\\Commands\\Utilities\\Namespaces\:\:outputCINamespaces\(\) has parameter \$params with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Commands/Utilities/Namespaces.php
@@ -301,16 +226,6 @@ parameters:
             message: '#^Method CodeIgniter\\Commands\\Utilities\\Namespaces\:\:outputCINamespaces\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Commands/Utilities/Namespaces.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Utilities\\Routes\\AutoRouterImproved\\AutoRouteCollector\:\:addFilters\(\) has parameter \$routes with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php
-
-        -
-            message: '#^Method CodeIgniter\\Commands\\Utilities\\Routes\\AutoRouterImproved\\AutoRouteCollector\:\:addFilters\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php
 
         -
             message: '#^Method CodeIgniter\\Commands\\Utilities\\Routes\\AutoRouterImproved\\AutoRouteCollector\:\:generateSampleUri\(\) has parameter \$route with no value type specified in iterable type array\.$#'
@@ -399,11 +314,6 @@ parameters:
 
         -
             message: '#^Class CodeIgniter\\Config\\BaseService has PHPDoc tag @method for method superglobals\(\) parameter \#2 \$get with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Config/BaseService.php
-
-        -
-            message: '#^Method CodeIgniter\\Config\\BaseService\:\:__callStatic\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Config/BaseService.php
 
@@ -4171,11 +4081,6 @@ parameters:
             message: '#^Property CodeIgniter\\Model\:\:\$escape type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Model.php
-
-        -
-            message: '#^Method CodeIgniter\\Modules\\Modules\:\:__set_state\(\) has parameter \$array with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Modules/Modules.php
 
         -
             message: '#^Method CodeIgniter\\Pager\\Pager\:\:getDetails\(\) return type has no value type specified in iterable type array\.$#'

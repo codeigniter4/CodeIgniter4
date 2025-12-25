@@ -374,6 +374,10 @@ class CLI
 
     /**
      * Validation for $options in promptByKey() and promptByMultipleKeys(). Return an error if $options is an empty array.
+     * 
+     * @param array<int,string> $options List of options
+     * 
+     * @return void
      */
     private static function isZeroOptions(array $options): void
     {

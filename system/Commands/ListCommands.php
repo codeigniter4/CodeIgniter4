@@ -87,6 +87,8 @@ class ListCommands extends BaseCommand
 
     /**
      * Lists the commands with accompanying info.
+     * 
+     * @param array<string,array<string,string>> $commands Array of commands keyed by name, each with metadata
      *
      * @return int
      */

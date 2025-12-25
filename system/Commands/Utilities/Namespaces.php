@@ -91,6 +91,11 @@ class Namespaces extends BaseCommand
         CLI::table($tbody, $thead);
     }
 
+    /**
+     * @param array{m:int,r?:mixed} $params
+     * 
+     * @return array<int,array{0:string,1:string,2:string}>
+     */
     private function outputAllNamespaces(array $params): array
     {
         $maxLength = $params['m'];
