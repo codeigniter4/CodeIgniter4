@@ -58,6 +58,8 @@ class OpenSSLHandler extends BaseHandler
 
     /**
      * List of previous keys for fallback decryption.
+     *
+     * @var array<string>|string
      */
     protected array|string $previousKeys = '';
 
@@ -135,7 +137,7 @@ class OpenSSLHandler extends BaseHandler
         // Only use fallback keys if no custom key was provided in params
         $useFallback = ! isset($params['key']);
 
-        $attemptDecrypt = function ($key) use ($data) {
+        $attemptDecrypt = function ($key) use ($data): array {
             try {
                 $result = $this->decryptWithKey($data, $key);
 
@@ -154,7 +156,7 @@ class OpenSSLHandler extends BaseHandler
         $originalException = $result['exception'];
 
         // If primary key failed and fallback is allowed, try previous keys
-        if ($useFallback && ! empty($this->previousKeys)) {
+        if ($useFallback && ! in_array($this->previousKeys, ['', '0', []], true)) {
             foreach ($this->previousKeys as $previousKey) {
                 $fallbackResult = $attemptDecrypt($previousKey);
 
