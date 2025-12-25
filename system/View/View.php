@@ -446,10 +446,10 @@ class View implements RendererInterface
      * @param bool $saveData If true, saves data for subsequent calls,
      *                       if false, cleans the data after displaying.
      */
-    public function renderSection(string $sectionName, bool $saveData = false): string
+    public function renderSection(string $sectionName, bool $saveData = false, string $defaultContent= ""): string
     {
         if (! isset($this->sections[$sectionName])) {
-            return '';
+            return $defaultContent;
         }
 
         $output = '';
