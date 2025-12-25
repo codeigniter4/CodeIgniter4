@@ -18,6 +18,7 @@ use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Encryption\ConfigWithPreviousKeys;
 
 /**
  * @internal
@@ -78,14 +79,22 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $encrypter->encrypt('Some message.');
     }
 
-    public function testEmptyKeyThrowsErrorOnDecrypt(): void
+    public function testHandlerCanBeReusedAfterEncryption(): void
     {
-        $this->expectException(EncryptionException::class);
+        $encrypter = $this->encryption->initialize($this->config);
+        $message   = 'Some message to encrypt';
 
-        $encrypter  = $this->encryption->initialize($this->config);
-        $ciphertext = $encrypter->encrypt('Some message to encrypt');
-        // After encrypt, the message and key are wiped from buffer
-        $encrypter->decrypt($ciphertext);
+        $ciphertext = $encrypter->encrypt($message);
+        $plaintext  = $encrypter->decrypt($ciphertext);
+
+        $this->assertSame($message, $plaintext);
+
+        // Should also work for another encryption
+        $message2    = 'Another message';
+        $ciphertext2 = $encrypter->encrypt($message2);
+        $plaintext2  = $encrypter->decrypt($ciphertext2);
+
+        $this->assertSame($message2, $plaintext2);
     }
 
     public function testInvalidBlockSizeThrowsErrorOnDecrypt(): void
@@ -120,5 +129,99 @@ final class SodiumHandlerTest extends CIUnitTestCase
 
         $this->assertSame($msg, $encrypter->decrypt($ciphertext, $key));
         $this->assertNotSame('A plain-text message for you.', $encrypter->decrypt($ciphertext, $key));
+    }
+
+    public function testDecryptWithPreviousKeys(): void
+    {
+        $oldKey1 = sodium_crypto_secretbox_keygen();
+        $oldKey2 = sodium_crypto_secretbox_keygen();
+
+        $config               = new ConfigWithPreviousKeys();
+        $config->driver       = 'Sodium';
+        $config->key          = sodium_crypto_secretbox_keygen();
+        $config->previousKeys = [$oldKey1, $oldKey2];
+
+        $encrypter = $this->encryption->initialize($config);
+
+        $message = 'Secret message';
+
+        // Encrypt with old key
+        $encrypted = $encrypter->encrypt($message, $oldKey1);
+
+        // Decrypt without providing key - should use config key and fall back to previousKeys
+        $decrypted = $encrypter->decrypt($encrypted);
+
+        $this->assertSame($message, $decrypted);
+    }
+
+    public function testDecryptWithPreviousKeysOrder(): void
+    {
+        $oldKey1 = sodium_crypto_secretbox_keygen();
+        $oldKey2 = sodium_crypto_secretbox_keygen();
+
+        $config               = new ConfigWithPreviousKeys();
+        $config->driver       = 'Sodium';
+        $config->key          = sodium_crypto_secretbox_keygen();
+        $config->previousKeys = [$oldKey1, $oldKey2];
+
+        $encrypter = $this->encryption->initialize($config);
+
+        $message = 'Secret message';
+
+        // Encrypt with second old key
+        $encrypted = $encrypter->encrypt($message, $oldKey2);
+
+        // Should successfully decrypt using second previousKey
+        $decrypted = $encrypter->decrypt($encrypted);
+
+        $this->assertSame($message, $decrypted);
+    }
+
+    public function testDecryptWithExplicitKeyDoesNotUsePreviousKeys(): void
+    {
+        $this->expectException(EncryptionException::class);
+
+        $oldKey1 = sodium_crypto_secretbox_keygen();
+        $oldKey2 = sodium_crypto_secretbox_keygen();
+
+        $config               = new ConfigWithPreviousKeys();
+        $config->driver       = 'Sodium';
+        $config->key          = sodium_crypto_secretbox_keygen();
+        $config->previousKeys = [$oldKey1, $oldKey2];
+
+        $encrypter = $this->encryption->initialize($config);
+
+        $message = 'Secret message';
+
+        // Encrypt with old key
+        $encrypted = $encrypter->encrypt($message, $oldKey1);
+
+        // Try to decrypt with explicit wrong key - should NOT fall back to previousKeys
+        $wrongKey = sodium_crypto_secretbox_keygen();
+        $encrypter->decrypt($encrypted, $wrongKey);
+    }
+
+    public function testDecryptWithExplicitKeyArrayDoesNotUsePreviousKeys(): void
+    {
+        $this->expectException(EncryptionException::class);
+
+        $oldKey1 = sodium_crypto_secretbox_keygen();
+        $oldKey2 = sodium_crypto_secretbox_keygen();
+
+        $config               = new ConfigWithPreviousKeys();
+        $config->driver       = 'Sodium';
+        $config->key          = sodium_crypto_secretbox_keygen();
+        $config->previousKeys = [$oldKey1, $oldKey2];
+
+        $encrypter = $this->encryption->initialize($config);
+
+        $message = 'Secret message';
+
+        // Encrypt with old key
+        $encrypted = $encrypter->encrypt($message, $oldKey1);
+
+        // Try to decrypt with explicit wrong key in array - should NOT fall back to previousKeys
+        $wrongKey = sodium_crypto_secretbox_keygen();
+        $encrypter->decrypt($encrypted, ['key' => $wrongKey]);
     }
 }

@@ -18,6 +18,7 @@ use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use PHPUnit\Framework\Attributes\Group;
+use Tests\Support\Encryption\ConfigWithPreviousKeys;
 
 /**
  * @internal
@@ -97,6 +98,28 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
         $this->assertSame($message1, $encrypter->decrypt($encoded, $key));
     }
 
+    public function testHandlerCanBeReusedAfterEncryption(): void
+    {
+        $params         = new EncryptionConfig();
+        $params->driver = 'OpenSSL';
+        $params->key    = '\xd0\xc9\x08\xc4\xde\x52\x12\x6e\xf8\xcc\xdb\x03\xea\xa0\x3a\x5c';
+
+        $encrypter = $this->encryption->initialize($params);
+        $message   = 'Some message to encrypt';
+
+        $ciphertext = $encrypter->encrypt($message);
+        $plaintext  = $encrypter->decrypt($ciphertext);
+
+        $this->assertSame($message, $plaintext);
+
+        // Should also work for another encryption
+        $message2    = 'Another message';
+        $ciphertext2 = $encrypter->encrypt($message2);
+        $plaintext2  = $encrypter->decrypt($ciphertext2);
+
+        $this->assertSame($message2, $plaintext2);
+    }
+
     /**
      * Authentication will fail decrypting with the wrong key
      */
@@ -136,5 +159,77 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
         $this->assertNotSame($message1, $encoded);
         $key2 = 'Holy cow, batman!';
         $this->assertNotSame($message1, $encrypter->decrypt($encoded, ['key' => $key2]));
+    }
+
+    public function testDecryptWithPreviousKeys(): void
+    {
+        $config         = new ConfigWithPreviousKeys();
+        $config->driver = 'OpenSSL';
+
+        $encrypter = $this->encryption->initialize($config);
+
+        $message = 'Secret message';
+
+        // Encrypt with old key
+        $encrypted = $encrypter->encrypt($message, 'old-key-1');
+
+        // Decrypt without providing key - should use config key and fall back to previousKeys
+        $decrypted = $encrypter->decrypt($encrypted);
+
+        $this->assertSame($message, $decrypted);
+    }
+
+    public function testDecryptWithPreviousKeysOrder(): void
+    {
+        $config         = new ConfigWithPreviousKeys();
+        $config->driver = 'OpenSSL';
+
+        $encrypter = $this->encryption->initialize($config);
+
+        $message = 'Secret message';
+
+        // Encrypt with second old key
+        $encrypted = $encrypter->encrypt($message, 'old-key-2');
+
+        // Should successfully decrypt using second previousKey
+        $decrypted = $encrypter->decrypt($encrypted);
+
+        $this->assertSame($message, $decrypted);
+    }
+
+    public function testDecryptWithExplicitKeyDoesNotUsePreviousKeys(): void
+    {
+        $this->expectException(EncryptionException::class);
+
+        $config         = new ConfigWithPreviousKeys();
+        $config->driver = 'OpenSSL';
+
+        $encrypter = $this->encryption->initialize($config);
+
+        $message = 'Secret message';
+
+        // Encrypt with old key
+        $encrypted = $encrypter->encrypt($message, 'old-key-1');
+
+        // Try to decrypt with explicit wrong key - should NOT fall back to previousKeys
+        $encrypter->decrypt($encrypted, 'wrong-key');
+    }
+
+    public function testDecryptWithExplicitKeyArrayDoesNotUsePreviousKeys(): void
+    {
+        $this->expectException(EncryptionException::class);
+
+        $config         = new ConfigWithPreviousKeys();
+        $config->driver = 'OpenSSL';
+
+        $encrypter = $this->encryption->initialize($config);
+
+        $message = 'Secret message';
+
+        // Encrypt with old key
+        $encrypted = $encrypter->encrypt($message, 'old-key-1');
+
+        // Try to decrypt with explicit wrong key in array - should NOT fall back to previousKeys
+        $encrypter->decrypt($encrypted, ['key' => 'wrong-key']);
     }
 }

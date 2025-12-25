@@ -111,6 +111,61 @@ parameter is ``true``. Previously, properties containing arrays were not recursi
 If you were relying on the old behavior where arrays remained unconverted, you will need to update
 your code.
 
+Encryption Handlers
+-------------------
+
+The ``OpenSSLHandler`` and ``SodiumHandler`` no longer modify the handler's ``$key`` property
+when encryption/decryption parameters are passed via the ``$params`` argument. Keys passed through
+``$params`` are now used as local variables, ensuring the handler's state remains unchanged.
+
+**What changed:**
+
+- Previously, passing a key via ``$params`` to ``encrypt()`` or ``decrypt()`` would permanently
+  modify the handler's internal ``$key`` property.
+- Now, the handler's ``$key`` property is only set during handler creation via ``Config\Encryption``.
+  Passing keys through ``$params`` uses them as temporary local variables without modifying the handler's state.
+- ``SodiumHandler::encrypt()`` no longer calls ``sodium_memzero($this->key)``, which previously
+  destroyed the encryption key after the first use, preventing handler reuse.
+
+**Impact:**
+
+**You are only affected if** you passed a key via ``$params`` to ``encrypt()`` or ``decrypt()``
+and expected that the ``key`` will persist for subsequent operations. Most users are **not affected**:
+
+- **Not affected:** You always pass the key via ``$params`` for each operation
+- **Not affected:** You never use ``$params`` and always configure keys via ``Config\Encryption``
+- **Affected:** You passed a key via ``$params`` once and expected it to be remembered
+
+If affected, configure the key properly via ``Config\Encryption`` or pass a custom config to the
+service instead of relying on ``$params`` side effects.
+
+**Example of affected code:**
+
+.. code-block:: php
+
+    $config      = config('Encryption');
+    $config->key = 'your-encryption-key';
+    $handler     = service('encrypter', $config);
+    $handler->encrypt($data, 'temporary-key');
+    // Old: $handler->key is now 'temporary-key'
+    // New: $handler->key remains unchanged ('your-encryption-key')
+
+    $handler->encrypt($moreData);
+    // Old: Would use 'temporary-key'
+    // New: Uses default key ('your-encryption-key')
+
+**Migration:**
+
+To use a different encryption key permanently, pass a custom config when creating the service:
+
+.. code-block:: php
+
+    $config      = config('Encryption');
+    $config->key = 'your-custom-encryption-key';
+
+    // Get a new handler instance with the custom config (not shared)
+    $handler = service('encrypter', $config, false);
+
 Interface Changes
 =================
 
@@ -186,6 +241,7 @@ Libraries
 - **CURLRequest:** Added ``fresh_connect`` options to enable/disable request fresh connection.
 - **DataConverter:** Added ``EnumCast`` caster for database and entity.
 - **Email:** Added support for choosing the SMTP authorization method. You can change it via ``Config\Email::$SMTPAuthMethod`` option.
+- **Encryption:** Added ``previousKeys`` configuration option to support encryption key rotation. When decryption with the current key fails, the system automatically falls back to previous keys, allowing you to rotate encryption keys without losing access to old encrypted data. Configure via ``Config\Encryption::$previousKeys``.
 - **Image:** The ``ImageMagickHandler`` has been rewritten to rely solely on the PHP ``imagick`` extension.
 - **Image:** Added ``ImageMagickHandler::clearMetadata()`` method to remove image metadata for privacy protection.
 - **ResponseTrait:** Added ``paginate``` method to simplify paginated API responses. See :ref:`ResponseTrait::paginate() <api_response_trait_paginate>` for details.
@@ -252,6 +308,8 @@ Changes
 Deprecations
 ************
 
+- **Encryption:**
+    - The method ``CodeIgniter\Encryption\Handlers\SodiumHandler::parseParams()`` has been deprecated. Parameters are now handled directly in ``encrypt()`` and ``decrypt()`` methods.
 - **Image:**
     - The config property ``Config\Image::libraryPath`` has been deprecated. No longer used.
     - The exception method ``CodeIgniter\Images\Exceptions\ImageException::forInvalidImageLibraryPath`` has been deprecated. No longer used.
