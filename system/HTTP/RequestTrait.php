@@ -61,18 +61,6 @@ trait RequestTrait
     protected $globals = [];
 
     /**
-     * Get the Superglobals service instance.
-     */
-    protected function getSuperglobals(): Superglobals
-    {
-        if ($this->superglobals === null) {
-            $this->superglobals = service('superglobals');
-        }
-
-        return $this->superglobals;
-    }
-
-    /**
      * Gets the user's IP address.
      *
      * @return string IP address if it can be detected.
@@ -257,7 +245,7 @@ trait RequestTrait
         $this->globals[$name] = $value;
 
         // Also update Superglobals via service
-        $this->getSuperglobals()->setGlobalArray($name, $value);
+        service('superglobals')->setGlobalArray($name, $value);
 
         return $this;
     }
@@ -378,6 +366,6 @@ trait RequestTrait
         }
 
         // Get data from Superglobals service instead of direct access
-        $this->globals[$name] = $this->getSuperglobals()->getGlobalArray($name);
+        $this->globals[$name] = service('superglobals')->getGlobalArray($name);
     }
 }

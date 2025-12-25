@@ -266,7 +266,7 @@ class IncomingRequest extends Request
      */
     public function isSecure(): bool
     {
-        $https = $this->getSuperglobals()->server('HTTPS');
+        $https = service('superglobals')->server('HTTPS');
 
         if ($https !== null && strtolower($https) !== 'off') {
             return true;
