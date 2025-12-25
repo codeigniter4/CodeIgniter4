@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
-use phpDocumentor\Reflection\PseudoTypes\NonEmptyString;
 use SensitiveParameter;
 
 /**
@@ -35,7 +34,7 @@ class SodiumHandler extends BaseHandler
     /**
      * List of previous keys for fallback decryption.
      */
-    protected string|array $previousKeys = '';
+    protected array|string $previousKeys = '';
 
     /**
      * Block size for padding message.
@@ -87,15 +86,17 @@ class SodiumHandler extends BaseHandler
         }
 
         // Only use fallback keys if no custom key was provided in params
-        $useFallback = !isset($params['key']);
+        $useFallback = ! isset($params['key']);
 
         $attemptDecrypt = function ($key) use ($data) {
             try {
                 $result = $this->decryptWithKey($data, $key);
                 sodium_memzero($key);
+
                 return ['success' => true, 'data' => $result];
             } catch (EncryptionException $e) {
                 sodium_memzero($key);
+
                 return ['success' => false, 'exception' => $e];
             }
         };
@@ -109,7 +110,7 @@ class SodiumHandler extends BaseHandler
         $originalException = $result['exception'];
 
         // If primary key failed and fallback is allowed, try previous keys
-        if ($useFallback && !empty($this->previousKeys)) {
+        if ($useFallback && ! empty($this->previousKeys)) {
             foreach ($this->previousKeys as $previousKey) {
                 $fallbackResult = $attemptDecrypt($previousKey);
 
