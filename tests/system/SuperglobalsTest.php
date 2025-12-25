@@ -29,7 +29,7 @@ final class SuperglobalsTest extends CIUnitTestCase
         parent::setUp();
 
         // Clear superglobals before each test
-        $_SERVER = $_GET = $_POST = $_COOKIE = $_REQUEST = [];
+        $_SERVER = $_GET = $_POST = $_COOKIE = $_REQUEST = $_FILES = [];
 
         $this->superglobals = new Superglobals();
     }
@@ -302,12 +302,85 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->assertSame($data, $_REQUEST);
     }
 
-    // Generic array methods
+    // $_FILES tests
+    public function testFilesGetArray(): void
+    {
+        $filesData = [
+            'upload' => [
+                'name'     => 'document.pdf',
+                'type'     => 'application/pdf',
+                'tmp_name' => '/tmp/phpTest',
+                'error'    => UPLOAD_ERR_OK,
+                'size'     => 12345,
+            ],
+        ];
+
+        $this->superglobals->setFilesArray($filesData);
+
+        $this->assertSame($filesData, $this->superglobals->getFilesArray());
+        $this->assertSame($filesData, $_FILES);
+    }
+
+    public function testFilesSetArrayWithMultipleFiles(): void
+    {
+        $filesData = [
+            'photos' => [
+                'name'     => ['photo1.jpg', 'photo2.jpg'],
+                'type'     => ['image/jpeg', 'image/jpeg'],
+                'tmp_name' => ['/tmp/phpA', '/tmp/phpB'],
+                'error'    => [UPLOAD_ERR_OK, UPLOAD_ERR_OK],
+                'size'     => [1234, 5678],
+            ],
+        ];
+
+        $this->superglobals->setFilesArray($filesData);
+
+        $this->assertSame($filesData, $this->superglobals->getFilesArray());
+        $this->assertSame($filesData, $_FILES);
+    }
+
+    public function testFilesSetArrayEmpty(): void
+    {
+        $this->superglobals->setFilesArray([
+            'upload' => [
+                'name'     => 'test.txt',
+                'type'     => 'text/plain',
+                'tmp_name' => '/tmp/test',
+                'error'    => UPLOAD_ERR_OK,
+                'size'     => 100,
+            ],
+        ]);
+
+        // Reset to empty
+        $this->superglobals->setFilesArray([]);
+
+        $this->assertSame([], $this->superglobals->getFilesArray());
+        $this->assertSame([], $_FILES);
+    }
+
+    // Generic methods
     public function testGetGlobalArray(): void
     {
         $this->superglobals->setGet('test', 'value');
 
         $this->assertSame(['test' => 'value'], $this->superglobals->getGlobalArray('get'));
+    }
+
+    public function testGetGlobalArrayForFiles(): void
+    {
+        $filesData = [
+            'upload' => [
+                'name'     => 'test.pdf',
+                'type'     => 'application/pdf',
+                'tmp_name' => '/tmp/phpTest',
+                'error'    => UPLOAD_ERR_OK,
+                'size'     => 999,
+            ],
+        ];
+
+        $this->superglobals->setFilesArray($filesData);
+
+        $this->assertSame($filesData, $this->superglobals->getGlobalArray('files'));
     }
 
     public function testGetGlobalArrayReturnsEmptyForInvalid(): void
@@ -323,6 +396,24 @@ final class SuperglobalsTest extends CIUnitTestCase
 
         $this->assertSame('value', $this->superglobals->post('key'));
         $this->assertSame($data, $_POST);
+    }
+
+    public function testSetGlobalArrayForFiles(): void
+    {
+        $filesData = [
+            'doc' => [
+                'name'     => 'file.txt',
+                'type'     => 'text/plain',
+                'tmp_name' => '/tmp/test',
+                'error'    => UPLOAD_ERR_OK,
+                'size'     => 555,
+            ],
+        ];
+
+        $this->superglobals->setGlobalArray('files', $filesData);
+
+        $this->assertSame($filesData, $this->superglobals->getFilesArray());
+        $this->assertSame($filesData, $_FILES);
     }
 
     public function testSetGlobalArrayWithInvalidNameDoesNothing(): void
@@ -341,13 +432,23 @@ final class SuperglobalsTest extends CIUnitTestCase
         $post    = ['post_key' => 'post_value'];
         $cookie  = ['cookie_key' => 'cookie_value'];
         $request = ['request_key' => 'request_value'];
+        $files   = [
+            'upload' => [
+                'name'     => 'custom.pdf',
+                'type'     => 'application/pdf',
+                'tmp_name' => '/tmp/custom',
+                'error'    => UPLOAD_ERR_OK,
+                'size'     => 7777,
+            ],
+        ];
 
-        $superglobals = new Superglobals($server, $get, $post, $cookie, $request);
+        $superglobals = new Superglobals($server, $get, $post, $cookie, $request, $files);
 
         $this->assertSame('server_value', $superglobals->server('SERVER_KEY'));
         $this->assertSame('get_value', $superglobals->get('get_key'));
         $this->assertSame('post_value', $superglobals->post('post_key'));
         $this->assertSame('cookie_value', $superglobals->cookie('cookie_key'));
         $this->assertSame('request_value', $superglobals->request('request_key'));
+        $this->assertSame($files, $superglobals->getFilesArray());
     }
 }

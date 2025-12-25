@@ -56,11 +56,17 @@ final class Superglobals
     private array $request;
 
     /**
-     * @param array<string, array|float|int|string>|null $server
-     * @param array<string, array|string>|null           $get
-     * @param array<string, array|string>|null           $post
-     * @param array<string, array|string>|null           $cookie
-     * @param array<string, array|string>|null           $request
+     * @var array<string, array{name: list<string>|string, type: list<string>|string, tmp_name: list<string>|string, error: int|list<int>, size: int|list<int>, full_path?: list<string>|string}>
+     */
+    private array $files;
+
+    /**
+     * @param array<string, array|float|int|string>|null                                                                                                                                                 $server
+     * @param array<string, array|string>|null                                                                                                                                                           $get
+     * @param array<string, array|string>|null                                                                                                                                                           $post
+     * @param array<string, array|string>|null                                                                                                                                                           $cookie
+     * @param array<string, array|string>|null                                                                                                                                                           $request
+     * @param array<string, array{name: list<string>|string, type: list<string>|string, tmp_name: list<string>|string, error: int|list<int>, size: int|list<int>, full_path?: list<string>|string}>|null $files
      */
     public function __construct(
         ?array $server = null,
@@ -68,12 +74,14 @@ final class Superglobals
         ?array $post = null,
         ?array $cookie = null,
         ?array $request = null,
+        ?array $files = null,
     ) {
         $this->server  = $server ?? $_SERVER;
         $this->get     = $get ?? $_GET;
         $this->post    = $post ?? $_POST;
         $this->cookie  = $cookie ?? $_COOKIE;
         $this->request = $request ?? $_REQUEST;
+        $this->files   = $files ?? $_FILES;
     }
 
     /**
@@ -327,9 +335,30 @@ final class Superglobals
     }
 
     /**
+     * Get all $_FILES values
+     *
+     * @return array<string, array{name: list<string>|string, type: list<string>|string, tmp_name: list<string>|string, error: int|list<int>, size: int|list<int>, full_path?: list<string>|string}>
+     */
+    public function getFilesArray(): array
+    {
+        return $this->files;
+    }
+
+    /**
+     * Set the entire $_FILES array
+     *
+     * @param array<string, array{name: list<string>|string, type: list<string>|string, tmp_name: list<string>|string, error: int|list<int>, size: int|list<int>, full_path?: list<string>|string}> $array
+     */
+    public function setFilesArray(array $array): void
+    {
+        $this->files = $array;
+        $_FILES      = $array;
+    }
+
+    /**
      * Get a superglobal array by name
      *
-     * @param string $name The superglobal name (server, get, post, cookie, request)
+     * @param string $name The superglobal name (server, get, post, cookie, request, files)
      *
      * @return array<string, array|float|int|string>
      */
@@ -341,6 +370,7 @@ final class Superglobals
             'post'    => $this->post,
             'cookie'  => $this->cookie,
             'request' => $this->request,
+            'files'   => $this->files,
             default   => [],
         };
     }
@@ -348,7 +378,7 @@ final class Superglobals
     /**
      * Set a superglobal array by name
      *
-     * @param string                                $name  The superglobal name (server, get, post, cookie, request)
+     * @param string                                $name  The superglobal name (server, get, post, cookie, request, files)
      * @param array<string, array|float|int|string> $array The array to set
      */
     public function setGlobalArray(string $name, array $array): void
@@ -359,6 +389,7 @@ final class Superglobals
             'post'    => $this->setPostArray($array),
             'cookie'  => $this->setCookieArray($array),
             'request' => $this->setRequestArray($array),
+            'files'   => $this->setFilesArray($array),
             default   => null,
         };
     }
