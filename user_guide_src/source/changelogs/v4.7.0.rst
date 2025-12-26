@@ -162,6 +162,7 @@ Libraries
 - **CLI:** Added ``SignalTrait`` to provide unified handling of operating system signals in CLI commands.
 - **Cache:** Added ``async`` and ``persistent`` config item to Predis handler.
 - **Cache:** Added ``persistent`` config item to Redis handler.
+- **Cache:** Added support for HTTP status in ``ResponseCache``.
 - **CURLRequest:** Added ``shareConnection`` config item to change default share connection.
 - **CURLRequest:** Added ``dns_cache_timeout`` option to change default DNS cache timeout.
 - **CURLRequest:** Added ``fresh_connect`` options to enable/disable request fresh connection.
