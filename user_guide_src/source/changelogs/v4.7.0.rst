@@ -40,6 +40,46 @@ The ``insertBatch()`` and ``updateBatch()`` methods now honor model settings lik
 ``updateOnlyChanged`` and ``allowEmptyInserts``. This change ensures consistent handling
 across all insert/update operations.
 
+Primary Key Validation
+^^^^^^^^^^^^^^^^^^^^^^
+
+The ``insert()`` and ``insertBatch()`` (when ``useAutoIncrement`` is disabled), ``update()``,
+and ``delete()`` methods now validate primary key values **before** executing database queries.
+Invalid primary key values will now throw ``InvalidArgumentException`` instead of
+``DatabaseException``.
+
+**What changed:**
+
+- **Exception type:** Invalid primary keys now throw ``InvalidArgumentException`` with
+  specific error messages instead of generic ``DatabaseException`` from the database layer.
+- **Validation timing:**
+
+    - For ``update()`` and ``delete()``: Validation happens **before** the ``beforeUpdate``/``beforeDelete``
+      events and before any database queries are executed.
+    - For ``insert()`` and ``insertBatch()`` (when auto-increment is disabled): Validation happens
+      **after** the ``beforeInsert`` event but **before** database queries are executed.
+
+- **Invalid values:** The following values are now explicitly rejected as primary keys:
+
+    - ``null`` (for insert when auto-increment is disabled)
+    - ``0`` (integer zero)
+    - ``'0'`` (string zero)
+    - ``''`` (empty string)
+    - ``true`` and ``false`` (booleans)
+    - ``[]`` (empty array)
+    - Nested arrays (e.g., ``[[1, 2]]``)
+    - Arrays containing any of the above invalid values
+
+  **Note:** ``RawSql`` objects are allowed as primary key values for complex scenarios
+  where you need to use raw SQL expressions.
+
+This change improves error reporting by providing specific validation messages
+(e.g., "Invalid primary key: 0 is not allowed") instead of generic database errors, and
+prevents invalid queries from reaching the database.
+
+If you need to allow some of these values for the primary key, you can override the
+``validateID()`` method in your model.
+
 Entity
 ------
 

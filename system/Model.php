@@ -311,8 +311,13 @@ class Model extends BaseModel
 
         // Require non-empty primaryKey when
         // not using auto-increment feature
-        if (! $this->useAutoIncrement && ! isset($row[$this->primaryKey])) {
-            throw DataException::forEmptyPrimaryKey('insert');
+        if (! $this->useAutoIncrement) {
+            if (! isset($row[$this->primaryKey])) {
+                throw DataException::forEmptyPrimaryKey('insert');
+            }
+
+            // Validate the primary key value (arrays not allowed for insert)
+            $this->validateID($row[$this->primaryKey], false);
         }
 
         $builder = $this->builder();
@@ -368,6 +373,9 @@ class Model extends BaseModel
                 if (! isset($row[$this->primaryKey])) {
                     throw DataException::forEmptyPrimaryKey('insertBatch');
                 }
+
+                // Validate the primary key value
+                $this->validateID($row[$this->primaryKey], false);
             }
         }
 
@@ -381,7 +389,7 @@ class Model extends BaseModel
 
         $builder = $this->builder();
 
-        if (! in_array($id, [null, '', 0, '0', []], true)) {
+        if (is_array($id) && $id !== []) {
             $builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
         }
 
@@ -409,7 +417,7 @@ class Model extends BaseModel
         $set     = [];
         $builder = $this->builder();
 
-        if (! in_array($id, [null, '', 0, '0', []], true)) {
+        if (is_array($id) && $id !== []) {
             $builder = $builder->whereIn($this->primaryKey, $id);
         }
 

@@ -648,6 +648,19 @@ converted to strings with the format defined in ``dateFormat['datetime']`` and
 .. note:: Prior to v4.5.0, the date/time formats were hard coded as ``Y-m-d H:i:s``
     and ``Y-m-d`` in the Model class.
 
+Primary Key Validation
+----------------------
+
+.. versionadded:: 4.7.0
+
+The ``insert()``, ``insertBatch()`` (when `$useAutoIncrement`_ is ``false``), ``update()``,
+and ``delete()`` methods validate primary key values before executing database queries.
+Invalid values such as ``null``, ``0``, ``'0'``, empty strings, booleans, empty arrays,
+or nested arrays will throw an ``InvalidArgumentException`` with a specific error message.
+
+If you need to customize this behavior (e.g., to allow ``0`` as a valid primary key for
+legacy systems), you can override the ``validateID()`` method in your model.
+
 Deleting Data
 =============
 

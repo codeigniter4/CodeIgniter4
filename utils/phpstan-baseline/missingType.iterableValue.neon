@@ -1,4 +1,4 @@
-# total 1319 errors
+# total 1317 errors
 
 parameters:
     ignoreErrors:
@@ -5793,11 +5793,6 @@ parameters:
             path: ../../tests/system/I18n/TimeTest.php
 
         -
-            message: '#^Method CodeIgniter\\Models\\DeleteModelTest\:\:emptyPkValues\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Models/DeleteModelTest.php
-
-        -
             message: '#^Method CodeIgniter\\Models\\FindModelTest\:\:provideAggregateAndGroupBy\(\) return type has no value type specified in iterable type iterable\.$#'
             count: 1
             path: ../../tests/system/Models/FindModelTest.php
@@ -5816,11 +5811,6 @@ parameters:
             message: '#^Method CodeIgniter\\Models\\TimestampModelTest\:\:doNotAllowDatesPrepareOneRecord\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/Models/TimestampModelTest.php
-
-        -
-            message: '#^Method CodeIgniter\\Models\\UpdateModelTest\:\:provideUpdateThrowDatabaseExceptionWithoutWhereClause\(\) return type has no value type specified in iterable type iterable\.$#'
-            count: 1
-            path: ../../tests/system/Models/UpdateModelTest.php
 
         -
             message: '#^Method CodeIgniter\\Publisher\\PublisherRestrictionsTest\:\:provideDefaultPublicRestrictions\(\) return type has no value type specified in iterable type iterable\.$#'

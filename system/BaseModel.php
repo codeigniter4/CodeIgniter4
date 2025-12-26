@@ -19,6 +19,7 @@ use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\DataCaster\Cast\CastInterface;
 use CodeIgniter\DataConverter\DataConverter;
 use CodeIgniter\Entity\Cast\CastInterface as EntityCastInterface;
@@ -781,6 +782,67 @@ abstract class BaseModel
     }
 
     /**
+     * Validates that the primary key values are valid for update/delete/insert operations.
+     * Throws exception if invalid.
+     *
+     * @param bool $allowArray Whether to allow array of IDs (true for update/delete, false for insert)
+     *
+     * @phpstan-assert non-zero-int|non-empty-list<int|string>|RawSql|non-falsy-string $id
+     * @throws         InvalidArgumentException
+     */
+    protected function validateID(mixed $id, bool $allowArray = true): void
+    {
+        if (is_array($id)) {
+            // Check if arrays are allowed
+            if (! $allowArray) {
+                throw new InvalidArgumentException(
+                    'Invalid primary key: only a single value is allowed, not an array.',
+                );
+            }
+
+            // Check for empty array
+            if ($id === []) {
+                throw new InvalidArgumentException('Invalid primary key: cannot be an empty array.');
+            }
+
+            // Validate each ID in the array recursively
+            foreach ($id as $key => $valueId) {
+                if (is_array($valueId)) {
+                    throw new InvalidArgumentException(
+                        sprintf('Invalid primary key at index %s: nested arrays are not allowed.', $key),
+                    );
+                }
+
+                // Recursive call for each value (single values only in recursion)
+                $this->validateID($valueId, false);
+            }
+
+            return;
+        }
+
+        // Allow RawSql objects for complex scenarios
+        if ($id instanceof RawSql) {
+            return;
+        }
+
+        // Check for invalid single values
+        if (in_array($id, [null, 0, '0', '', true, false], true)) {
+            $type = is_bool($id) ? 'boolean ' . var_export($id, true) : var_export($id, true);
+
+            throw new InvalidArgumentException(
+                sprintf('Invalid primary key: %s is not allowed.', $type),
+            );
+        }
+
+        // Only allow int and string at this point
+        if (! is_int($id) && ! is_string($id)) {
+            throw new InvalidArgumentException(
+                sprintf('Invalid primary key: must be int or string, %s given.', get_debug_type($id)),
+            );
+        }
+    }
+
+    /**
      * Inserts data into the database. If an object is provided,
      * it will attempt to convert it to an array.
      *
@@ -962,19 +1024,19 @@ abstract class BaseModel
      * Updates a single record in the database. If an object is provided,
      * it will attempt to convert it into an array.
      *
-     * @param int|list<int|string>|string|null $id
-     * @param object|row_array|null            $row
+     * @param int|list<int|string>|RawSql|string|null $id
+     * @param object|row_array|null                   $row
      *
      * @throws ReflectionException
      */
     public function update($id = null, $row = null): bool
     {
-        if (is_bool($id)) {
-            throw new InvalidArgumentException('update(): argument #1 ($id) should not be boolean.');
-        }
+        if ($id !== null) {
+            if (! is_array($id)) {
+                $id = [$id];
+            }
 
-        if (is_numeric($id) || is_string($id)) {
-            $id = [$id];
+            $this->validateID($id);
         }
 
         $row = $this->transformDataToArray($row, 'update');
@@ -1091,8 +1153,8 @@ abstract class BaseModel
     /**
      * Deletes a single record from the database where $id matches.
      *
-     * @param int|list<int|string>|string|null $id    The rows primary key(s).
-     * @param bool                             $purge Allows overriding the soft deletes setting.
+     * @param int|list<int|string>|RawSql|string|null $id    The rows primary key(s).
+     * @param bool                                    $purge Allows overriding the soft deletes setting.
      *
      * @return bool|string Returns a SQL string if in test mode.
      *
@@ -1100,12 +1162,12 @@ abstract class BaseModel
      */
     public function delete($id = null, bool $purge = false)
     {
-        if (is_bool($id)) {
-            throw new InvalidArgumentException('delete(): argument #1 ($id) should not be boolean.');
-        }
+        if ($id !== null) {
+            if (! is_array($id)) {
+                $id = [$id];
+            }
 
-        if (! in_array($id, [null, 0, '0'], true) && (is_numeric($id) || is_string($id))) {
-            $id = [$id];
+            $this->validateID($id);
         }
 
         $eventData = [

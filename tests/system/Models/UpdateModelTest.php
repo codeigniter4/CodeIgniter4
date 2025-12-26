@@ -15,6 +15,7 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Database;
@@ -105,6 +106,16 @@ final class UpdateModelTest extends LiveModelTestCase
         $this->assertTrue($result);
         $this->seeInDatabase('user', ['id' => 1, 'name' => 'Foo Bar']);
         $this->seeInDatabase('user', ['id' => 2, 'name' => 'Foo Bar']);
+    }
+
+    public function testUpdateWithRawSql(): void
+    {
+        $this->createModel(UserModel::class);
+
+        // RawSql objects should be allowed as primary key values
+        $result = $this->model->update(new RawSql('1'), ['name' => 'RawSql User']);
+        $this->assertTrue($result);
+        $this->seeInDatabase('user', ['id' => 1, 'name' => 'RawSql User']);
     }
 
     public function testUpdateResultFail(): void
@@ -550,7 +561,8 @@ final class UpdateModelTest extends LiveModelTestCase
     }
 
     /**
-     * @param false|null $id
+     * @param bool|int|string|null $id
+     * @param class-string         $exception
      */
     #[DataProvider('provideUpdateThrowDatabaseExceptionWithoutWhereClause')]
     public function testUpdateThrowDatabaseExceptionWithoutWhereClause($id, string $exception, string $exceptionMessage): void
@@ -561,21 +573,79 @@ final class UpdateModelTest extends LiveModelTestCase
         // $useSoftDeletes = false
         $this->createModel(JobModel::class);
 
-        $this->model->update($id, ['name' => 'Foo Bar']); // @phpstan-ignore argument.type
+        $this->model->update($id, ['name' => 'Foo Bar']);
     }
 
+    /**
+     * @return iterable<string, array{mixed, class-string, string}>
+     */
     public static function provideUpdateThrowDatabaseExceptionWithoutWhereClause(): iterable
     {
         yield from [
-            [
+            'null' => [
                 null,
                 DatabaseException::class,
                 'Updates are not allowed unless they contain a "where" or "like" clause.',
             ],
-            [
+            'false' => [
                 false,
                 InvalidArgumentException::class,
-                'update(): argument #1 ($id) should not be boolean.',
+                'Invalid primary key: boolean false is not allowed.',
+            ],
+            'true' => [
+                true,
+                InvalidArgumentException::class,
+                'Invalid primary key: boolean true is not allowed.',
+            ],
+            '0 integer' => [
+                0,
+                InvalidArgumentException::class,
+                'Invalid primary key: 0 is not allowed.',
+            ],
+            "'0' string" => [
+                '0',
+                InvalidArgumentException::class,
+                "Invalid primary key: '0' is not allowed.",
+            ],
+            'empty string' => [
+                '',
+                InvalidArgumentException::class,
+                "Invalid primary key: '' is not allowed.",
+            ],
+            'empty array' => [
+                [],
+                InvalidArgumentException::class,
+                'Invalid primary key: cannot be an empty array.',
+            ],
+            'nested array' => [
+                [[1, 2]],
+                InvalidArgumentException::class,
+                'Invalid primary key at index 0: nested arrays are not allowed.',
+            ],
+            'array with null' => [
+                [1, null, 3],
+                InvalidArgumentException::class,
+                'Invalid primary key: NULL is not allowed.',
+            ],
+            'array with 0' => [
+                [1, 0, 3],
+                InvalidArgumentException::class,
+                'Invalid primary key: 0 is not allowed.',
+            ],
+            "array with '0'" => [
+                [1, '0', 3],
+                InvalidArgumentException::class,
+                "Invalid primary key: '0' is not allowed.",
+            ],
+            'array with empty string' => [
+                [1, '', 3],
+                InvalidArgumentException::class,
+                "Invalid primary key: '' is not allowed.",
+            ],
+            'array with boolean' => [
+                [1, false, 3],
+                InvalidArgumentException::class,
+                'Invalid primary key: boolean false is not allowed.',
             ],
         ];
     }
