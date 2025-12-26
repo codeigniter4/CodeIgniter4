@@ -780,15 +780,15 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testFileCollectionFactory(): void
     {
-        $_FILES = [
+        service('superglobals')->setFilesArray([
             'userfile' => [
                 'name'     => 'someFile.txt',
                 'type'     => 'text/plain',
-                'size'     => '124',
+                'size'     => 124,
                 'tmp_name' => '/tmp/myTempFile.txt',
                 'error'    => 0,
             ],
-        ];
+        ]);
 
         $files = $this->request->getFiles();
         $this->assertCount(1, $files);
@@ -802,7 +802,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetFileMultiple(): void
     {
-        $_FILES = [
+        service('superglobals')->setFilesArray([
             'userfile' => [
                 'name' => [
                     'someFile.txt',
@@ -813,8 +813,8 @@ final class IncomingRequestTest extends CIUnitTestCase
                     'text/plain',
                 ],
                 'size' => [
-                    '124',
-                    '125',
+                    124,
+                    125,
                 ],
                 'tmp_name' => [
                     '/tmp/myTempFile.txt',
@@ -825,7 +825,7 @@ final class IncomingRequestTest extends CIUnitTestCase
                     0,
                 ],
             ],
-        ];
+        ]);
 
         $gotit = $this->request->getFileMultiple('userfile');
         $this->assertSame(124, $gotit[0]->getSize());
@@ -834,15 +834,15 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetFile(): void
     {
-        $_FILES = [
+        service('superglobals')->setFilesArray([
             'userfile' => [
                 'name'     => 'someFile.txt',
                 'type'     => 'text/plain',
-                'size'     => '124',
+                'size'     => 124,
                 'tmp_name' => '/tmp/myTempFile.txt',
                 'error'    => 0,
             ],
-        ];
+        ]);
 
         $gotit = $this->request->getFile('userfile');
         $this->assertSame(124, $gotit->getSize());

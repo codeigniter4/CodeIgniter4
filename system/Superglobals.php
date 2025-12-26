@@ -56,17 +56,17 @@ final class Superglobals
     private array $request;
 
     /**
-     * @var array<string, array{name: list<string>|string, type: list<string>|string, tmp_name: list<string>|string, error: int|list<int>, size: int|list<int>, full_path?: list<string>|string}>
+     * @var array<string, array<string, mixed>>
      */
     private array $files;
 
     /**
-     * @param array<string, array|float|int|string>|null                                                                                                                                                 $server
-     * @param array<string, array|string>|null                                                                                                                                                           $get
-     * @param array<string, array|string>|null                                                                                                                                                           $post
-     * @param array<string, array|string>|null                                                                                                                                                           $cookie
-     * @param array<string, array|string>|null                                                                                                                                                           $request
-     * @param array<string, array{name: list<string>|string, type: list<string>|string, tmp_name: list<string>|string, error: int|list<int>, size: int|list<int>, full_path?: list<string>|string}>|null $files
+     * @param array<string, array|float|int|string>|null $server
+     * @param array<string, array|string>|null           $get
+     * @param array<string, array|string>|null           $post
+     * @param array<string, array|string>|null           $cookie
+     * @param array<string, array|string>|null           $request
+     * @param array<string, array<string, mixed>>|null   $files
      */
     public function __construct(
         ?array $server = null,
@@ -337,7 +337,7 @@ final class Superglobals
     /**
      * Get all $_FILES values
      *
-     * @return array<string, array{name: list<string>|string, type: list<string>|string, tmp_name: list<string>|string, error: int|list<int>, size: int|list<int>, full_path?: list<string>|string}>
+     * @return array<string, array<string, mixed>>
      */
     public function getFilesArray(): array
     {
@@ -347,7 +347,7 @@ final class Superglobals
     /**
      * Set the entire $_FILES array
      *
-     * @param array<string, array{name: list<string>|string, type: list<string>|string, tmp_name: list<string>|string, error: int|list<int>, size: int|list<int>, full_path?: list<string>|string}> $array
+     * @param array<string, array<string, mixed>> $array
      */
     public function setFilesArray(array $array): void
     {
