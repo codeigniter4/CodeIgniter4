@@ -65,23 +65,23 @@ final class Superglobals
      * @param array<string, array|string>|null           $get
      * @param array<string, array|string>|null           $post
      * @param array<string, array|string>|null           $cookie
-     * @param array<string, array|string>|null           $request
      * @param array<string, array<string, mixed>>|null   $files
+     * @param array<string, array|string>|null           $request
      */
     public function __construct(
         ?array $server = null,
         ?array $get = null,
         ?array $post = null,
         ?array $cookie = null,
-        ?array $request = null,
         ?array $files = null,
+        ?array $request = null,
     ) {
         $this->server  = $server ?? $_SERVER;
         $this->get     = $get ?? $_GET;
         $this->post    = $post ?? $_POST;
         $this->cookie  = $cookie ?? $_COOKIE;
-        $this->request = $request ?? $_REQUEST;
         $this->files   = $files ?? $_FILES;
+        $this->request = $request ?? $_REQUEST;
     }
 
     /**

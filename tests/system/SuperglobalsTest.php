@@ -29,7 +29,7 @@ final class SuperglobalsTest extends CIUnitTestCase
         parent::setUp();
 
         // Clear superglobals before each test
-        $_SERVER = $_GET = $_POST = $_COOKIE = $_REQUEST = $_FILES = [];
+        $_SERVER = $_GET = $_POST = $_COOKIE = $_FILES = $_REQUEST = [];
 
         $this->superglobals = new Superglobals();
     }
@@ -442,7 +442,7 @@ final class SuperglobalsTest extends CIUnitTestCase
             ],
         ];
 
-        $superglobals = new Superglobals($server, $get, $post, $cookie, $request, $files);
+        $superglobals = new Superglobals($server, $get, $post, $cookie, $files, $request);
 
         $this->assertSame('server_value', $superglobals->server('SERVER_KEY'));
         $this->assertSame('get_value', $superglobals->get('get_key'));
