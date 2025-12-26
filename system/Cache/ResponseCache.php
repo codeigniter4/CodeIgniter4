@@ -102,7 +102,12 @@ final class ResponseCache
 
         return $this->cache->save(
             $this->generateCacheKey($request),
-            serialize(['headers' => $headers, 'output' => $response->getBody()]),
+            serialize([
+                'headers'      => $headers,
+                'output'       => $response->getBody(),
+                'statuscode'   => $response->getStatusCode(),
+                'reasonphrase' => $response->getReasonPhrase(),
+            ]),
             $this->ttl,
         );
     }
@@ -139,6 +144,10 @@ final class ResponseCache
             }
 
             $response->setBody($output);
+
+            if (isset($cachedResponse['statuscode'])) {
+                $response->setStatusCode($cachedResponse['statuscode'], $cachedResponse['reasonphrase'] ?? '');
+            }
 
             return $response;
         }
