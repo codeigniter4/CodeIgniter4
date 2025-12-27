@@ -25,6 +25,17 @@ class Encryption extends BaseConfig
 
     /**
      * --------------------------------------------------------------------------
+     * Previous Encryption Keys
+     * --------------------------------------------------------------------------
+     * If you want to enable decryption using previous keys, set them here.
+     * See the user guide for more info.
+     *
+     * @var list<string>|string
+     */
+    public array|string $previousKeys = '';
+
+    /**
+     * --------------------------------------------------------------------------
      * Encryption Driver to Use
      * --------------------------------------------------------------------------
      *

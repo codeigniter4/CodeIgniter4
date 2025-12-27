@@ -54,6 +54,13 @@ class Encryption
     protected $key;
 
     /**
+     * Array or Comma-separated list of previous keys for fallback decryption.
+     *
+     * @var list<string>|string
+     */
+    protected array|string $previousKeys = '';
+
+    /**
      * The derived HMAC key
      *
      * @var string
@@ -91,9 +98,10 @@ class Encryption
     {
         $config ??= new EncryptionConfig();
 
-        $this->key    = $config->key;
-        $this->driver = $config->driver;
-        $this->digest = $config->digest ?? 'SHA512';
+        $this->key          = $config->key;
+        $this->previousKeys = $config->previousKeys;
+        $this->driver       = $config->driver;
+        $this->digest       = $config->digest ?? 'SHA512';
 
         $this->handlers = [
             'OpenSSL' => extension_loaded('openssl'),
@@ -116,9 +124,10 @@ class Encryption
     public function initialize(?EncryptionConfig $config = null)
     {
         if ($config instanceof EncryptionConfig) {
-            $this->key    = $config->key;
-            $this->driver = $config->driver;
-            $this->digest = $config->digest ?? 'SHA512';
+            $this->key          = $config->key;
+            $this->previousKeys = $config->previousKeys ?? '';
+            $this->driver       = $config->driver;
+            $this->digest       = $config->digest ?? 'SHA512';
         }
 
         if (empty($this->driver)) {

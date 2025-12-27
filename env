@@ -55,6 +55,9 @@
 
 # encryption.key =
 
+# Previous keys fallback; comma-separated list
+# encryption.previousKeys =
+
 #--------------------------------------------------------------------
 # SESSION
 #--------------------------------------------------------------------

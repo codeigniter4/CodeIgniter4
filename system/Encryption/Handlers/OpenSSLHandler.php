@@ -57,6 +57,13 @@ class OpenSSLHandler extends BaseHandler
     protected $key = '';
 
     /**
+     * List of previous keys for fallback decryption.
+     *
+     * @var list<string>|string
+     */
+    protected array|string $previousKeys = '';
+
+    /**
      * Whether the cipher-text should be raw. If set to false, then it will be base64 encoded.
      */
     protected bool $rawData = true;
@@ -127,8 +134,56 @@ class OpenSSLHandler extends BaseHandler
             throw EncryptionException::forNeedsStarterKey();
         }
 
+        // Only use fallback keys if no custom key was provided in params
+        $useFallback = ! isset($params['key']);
+
+        $attemptDecrypt = function ($key) use ($data): array {
+            try {
+                $result = $this->decryptWithKey($data, $key);
+
+                return ['success' => true, 'data' => $result];
+            } catch (EncryptionException $e) {
+                return ['success' => false, 'exception' => $e];
+            }
+        };
+
+        $result = $attemptDecrypt($this->key);
+
+        if ($result['success']) {
+            return $result['data'];
+        }
+
+        $originalException = $result['exception'];
+
+        // If primary key failed and fallback is allowed, try previous keys
+        if ($useFallback && ! in_array($this->previousKeys, ['', '0', []], true)) {
+            foreach ($this->previousKeys as $previousKey) {
+                $fallbackResult = $attemptDecrypt($previousKey);
+
+                if ($fallbackResult['success']) {
+                    return $fallbackResult['data'];
+                }
+            }
+        }
+
+        // All attempts failed - throw the original exception
+        throw $originalException;
+    }
+
+    /**
+     * Decrypt the data with the provided key
+     *
+     * @param string $data
+     * @param string $key
+     *
+     * @return false|string
+     *
+     * @throws EncryptionException
+     */
+    protected function decryptWithKey($data, #[SensitiveParameter] $key)
+    {
         // derive a secret key
-        $authKey = \hash_hkdf($this->digest, $this->key, 0, $this->authKeyInfo);
+        $authKey = \hash_hkdf($this->digest, $key, 0, $this->authKeyInfo);
 
         $hmacLength = $this->rawData
             ? $this->digestSize[$this->digest]
@@ -152,7 +207,7 @@ class OpenSSLHandler extends BaseHandler
         }
 
         // derive a secret key
-        $encryptKey = \hash_hkdf($this->digest, $this->key, 0, $this->encryptKeyInfo);
+        $encryptKey = \hash_hkdf($this->digest, $key, 0, $this->encryptKeyInfo);
 
         return \openssl_decrypt($data, $this->cipher, $encryptKey, OPENSSL_RAW_DATA, $iv);
     }

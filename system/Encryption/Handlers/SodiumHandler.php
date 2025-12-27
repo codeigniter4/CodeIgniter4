@@ -32,6 +32,13 @@ class SodiumHandler extends BaseHandler
     protected $key = '';
 
     /**
+     * List of previous keys for fallback decryption.
+     *
+     * @var list<string>|string
+     */
+    protected array|string $previousKeys = '';
+
+    /**
      * Block size for padding message.
      *
      * @var int
@@ -80,6 +87,56 @@ class SodiumHandler extends BaseHandler
             throw EncryptionException::forNeedsStarterKey();
         }
 
+        // Only use fallback keys if no custom key was provided in params
+        $useFallback = ! isset($params['key']);
+
+        $attemptDecrypt = function ($key) use ($data): array {
+            try {
+                $result = $this->decryptWithKey($data, $key);
+                sodium_memzero($key);
+
+                return ['success' => true, 'data' => $result];
+            } catch (EncryptionException $e) {
+                sodium_memzero($key);
+
+                return ['success' => false, 'exception' => $e];
+            }
+        };
+
+        $result = $attemptDecrypt($this->key);
+
+        if ($result['success']) {
+            return $result['data'];
+        }
+
+        $originalException = $result['exception'];
+
+        // If primary key failed and fallback is allowed, try previous keys
+        if ($useFallback && ! in_array($this->previousKeys, ['', '0', []], true)) {
+            foreach ($this->previousKeys as $previousKey) {
+                $fallbackResult = $attemptDecrypt($previousKey);
+
+                if ($fallbackResult['success']) {
+                    return $fallbackResult['data'];
+                }
+            }
+        }
+
+        throw $originalException;
+    }
+
+    /**
+     * Decrypt the data with the provided key
+     *
+     * @param string $data
+     * @param string $key
+     *
+     * @return string
+     *
+     * @throws EncryptionException
+     */
+    protected function decryptWithKey($data, #[SensitiveParameter] $key)
+    {
         if (mb_strlen($data, '8bit') < (SODIUM_CRYPTO_SECRETBOX_NONCEBYTES + SODIUM_CRYPTO_SECRETBOX_MACBYTES)) {
             // message was truncated
             throw EncryptionException::forAuthenticationFailed();
@@ -90,7 +147,7 @@ class SodiumHandler extends BaseHandler
         $ciphertext = self::substr($data, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
 
         // decrypt data
-        $data = sodium_crypto_secretbox_open($ciphertext, $nonce, $this->key);
+        $data = sodium_crypto_secretbox_open($ciphertext, $nonce, $key);
 
         if ($data === false) {
             // message was tampered in transit
@@ -106,7 +163,6 @@ class SodiumHandler extends BaseHandler
 
         // cleanup buffers
         sodium_memzero($ciphertext);
-        sodium_memzero($this->key);
 
         return $data;
     }
@@ -120,7 +176,7 @@ class SodiumHandler extends BaseHandler
      *
      * @throws EncryptionException If key is empty
      */
-    protected function parseParams($params)
+    protected function parseParams(#[SensitiveParameter] $params)
     {
         if ($params === null) {
             return;
