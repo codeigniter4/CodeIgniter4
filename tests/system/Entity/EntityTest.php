@@ -1181,6 +1181,132 @@ final class EntityTest extends CIUnitTestCase
         ], $result);
     }
 
+    public function testToRawArrayRecursiveWithArray(): void
+    {
+        $entity           = $this->getEntity();
+        $entity->entities = [$this->getEntity(), $this->getEntity()];
+
+        $result = $entity->toRawArray(false, true);
+
+        $this->assertSame([
+            'foo'        => null,
+            'bar'        => null,
+            'default'    => 'sumfin',
+            'created_at' => null,
+            'entities'   => [[
+                'foo'        => null,
+                'bar'        => null,
+                'default'    => 'sumfin',
+                'created_at' => null,
+            ], [
+                'foo'        => null,
+                'bar'        => null,
+                'default'    => 'sumfin',
+                'created_at' => null,
+            ]],
+        ], $result);
+    }
+
+    public function testToRawArrayRecursiveOnlyChangedWithArray(): void
+    {
+        $first  = $this->getEntity();
+        $second = $this->getEntity();
+
+        $entity           = $this->getEntity();
+        $entity->entities = [$first];
+        $entity->syncOriginal();
+
+        $entity->entities = [$first, $second];
+
+        $result = $entity->toRawArray(true, true);
+
+        $this->assertSame([
+            'entities' => [1 => [
+                'foo'        => null,
+                'bar'        => null,
+                'default'    => 'sumfin',
+                'created_at' => null,
+            ]],
+        ], $result);
+    }
+
+    public function testToRawArrayRecursiveOnlyChangedWithArrayEntityModified(): void
+    {
+        $first       = $this->getEntity();
+        $second      = $this->getEntity();
+        $first->foo  = 'original';
+        $second->foo = 'also_original';
+
+        $entity           = $this->getEntity();
+        $entity->entities = [$first, $second];
+        $entity->syncOriginal();
+
+        $second->foo = 'modified';
+
+        $result = $entity->toRawArray(true, true);
+
+        $this->assertSame([
+            'entities' => [1 => [
+                'foo'        => 'modified',
+                'bar'        => null,
+                'default'    => 'sumfin',
+                'created_at' => null,
+            ]],
+        ], $result);
+    }
+
+    public function testToRawArrayRecursiveOnlyChangedWithArrayMultipleEntitiesModified(): void
+    {
+        $first       = $this->getEntity();
+        $second      = $this->getEntity();
+        $third       = $this->getEntity();
+        $first->foo  = 'first';
+        $second->foo = 'second';
+        $third->foo  = 'third';
+
+        $entity           = $this->getEntity();
+        $entity->entities = [$first, $second, $third];
+        $entity->syncOriginal();
+
+        $first->foo = 'first_modified';
+        $third->foo = 'third_modified';
+
+        $result = $entity->toRawArray(true, true);
+
+        $this->assertSame([
+            'entities' => [
+                0 => [
+                    'foo'        => 'first_modified',
+                    'bar'        => null,
+                    'default'    => 'sumfin',
+                    'created_at' => null,
+                ],
+                2 => [
+                    'foo'        => 'third_modified',
+                    'bar'        => null,
+                    'default'    => 'sumfin',
+                    'created_at' => null,
+                ],
+            ],
+        ], $result);
+    }
+
+    public function testToRawArrayRecursiveOnlyChangedWithArrayNoEntitiesModified(): void
+    {
+        $first       = $this->getEntity();
+        $second      = $this->getEntity();
+        $first->foo  = 'unchanged';
+        $second->foo = 'also_unchanged';
+
+        $entity           = $this->getEntity();
+        $entity->entities = [$first, $second];
+        $entity->syncOriginal();
+
+        $result = $entity->toRawArray(true, true);
+
+        $this->assertSame([], $result);
+    }
+
     public function testToRawArrayOnlyChanged(): void
     {
         $entity      = $this->getEntity();

@@ -232,37 +232,109 @@ class Entity implements JsonSerializable
      */
     public function toRawArray(bool $onlyChanged = false, bool $recursive = false): array
     {
-        $return = [];
-
-        if (! $onlyChanged) {
-            if ($recursive) {
-                return array_map(static function ($value) use ($onlyChanged, $recursive) {
-                    if ($value instanceof self) {
-                        $value = $value->toRawArray($onlyChanged, $recursive);
-                    } elseif (is_callable([$value, 'toRawArray'])) {
-                        $value = $value->toRawArray();
-                    }
-
-                    return $value;
-                }, $this->attributes);
+        $convert = static function ($value) use (&$convert, $recursive) {
+            if (! $recursive) {
+                return $value;
             }
 
-            return $this->attributes;
+            if ($value instanceof self) {
+                // Always output full array for nested entities
+                return $value->toRawArray(false, true);
+            }
+
+            if (is_array($value)) {
+                $result = [];
+
+                foreach ($value as $k => $v) {
+                    $result[$k] = $convert($v);
+                }
+
+                return $result;
+            }
+
+            if (is_object($value) && is_callable([$value, 'toRawArray'])) {
+                return $value->toRawArray();
+            }
+
+            return $value;
+        };
+
+        // When returning everything
+        if (! $onlyChanged) {
+            return $recursive
+                ? array_map($convert, $this->attributes)
+                : $this->attributes;
         }
 
+        // When filtering by changed values only
+        $return = [];
+
         foreach ($this->attributes as $key => $value) {
+            // Special handling for arrays of entities in recursive mode
+            // Skip hasChanged() and do per-entity comparison directly
+            if ($recursive && is_array($value) && $this->containsOnlyEntities($value)) {
+                $originalValue = $this->original[$key] ?? null;
+
+                if (! is_string($originalValue)) {
+                    // No original or invalid format, export all entities
+                    $converted = [];
+
+                    foreach ($value as $idx => $item) {
+                        $converted[$idx] = $item->toRawArray(false, true);
+                    }
+                    $return[$key] = $converted;
+
+                    continue;
+                }
+
+                // Decode original array structure for per-entity comparison
+                $originalArray = json_decode($originalValue, true);
+                $converted     = [];
+
+                foreach ($value as $idx => $item) {
+                    // Compare current entity against its original state
+                    $currentNormalized  = $this->normalizeValue($item);
+                    $originalNormalized = $originalArray[$idx] ?? null;
+
+                    // Only include if changed, new, or can't determine
+                    if ($originalNormalized === null || $currentNormalized !== $originalNormalized) {
+                        $converted[$idx] = $item->toRawArray(false, true);
+                    }
+                }
+
+                // Only include this property if at least one entity changed
+                if ($converted !== []) {
+                    $return[$key] = $converted;
+                }
+
+                continue;
+            }
+
+            // For all other cases, use hasChanged()
             if (! $this->hasChanged($key)) {
                 continue;
             }
 
             if ($recursive) {
-                if ($value instanceof self) {
-                    $value = $value->toRawArray($onlyChanged, $recursive);
-                } elseif (is_callable([$value, 'toRawArray'])) {
-                    $value = $value->toRawArray();
+                // Special handling for arrays (mixed or not all entities)
+                if (is_array($value)) {
+                    $converted = [];
+
+                    foreach ($value as $idx => $item) {
+                        $converted[$idx] = $item instanceof self ? $item->toRawArray(false, true) : $convert($item);
+                    }
+                    $return[$key] = $converted;
+
+                    continue;
                 }
+
+                // default recursive conversion
+                $return[$key] = $convert($value);
+
+                continue;
             }
 
+            // non-recursive changed value
             $return[$key] = $value;
         }
 
@@ -348,6 +420,27 @@ class Entity implements JsonSerializable
     }
 
     /**
+     * Checks if an array contains only Entity instances.
+     * This allows optimization for per-entity change tracking.
+     *
+     * @param array<int|string, mixed> $data
+     */
+    private function containsOnlyEntities(array $data): bool
+    {
+        if ($data === []) {
+            return false;
+        }
+
+        foreach ($data as $item) {
+            if (! $item instanceof self) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Recursively normalize a value for comparison.
      * Converts objects and arrays to a JSON-encodable format.
      */
@@ -365,7 +458,7 @@ class Entity implements JsonSerializable
 
         if (is_object($data)) {
             // Check for Entity instance (use raw values, recursive)
-            if ($data instanceof Entity) {
+            if ($data instanceof self) {
                 $objectData = $data->toRawArray(false, true);
             } elseif ($data instanceof JsonSerializable) {
                 $objectData = $data->jsonSerialize();
