@@ -31,13 +31,12 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class PageCacheTest extends CIUnitTestCase
 {
-    private function createRequest(string $uri = 'test/page'): IncomingRequest
+    private function createRequest(): IncomingRequest
     {
         $superglobals = service('superglobals');
-        $superglobals->setServer('REQUEST_URI', '/' . $uri);
-        $superglobals->setServer('SCRIPT_NAME', '/index.php');
+        $superglobals->setServer('REQUEST_URI', '/');
 
-        $siteUri = new SiteURI(new App(), $uri);
+        $siteUri = new SiteURI(new App());
 
         return new IncomingRequest(new App(), $siteUri, null, new UserAgent());
     }
