@@ -169,4 +169,28 @@ class Cache extends BaseConfig
      * @var bool|list<string>
      */
     public $cacheQueryString = false;
+
+    /**
+     * --------------------------------------------------------------------------
+     * Web Page Caching: Cache Status Codes
+     * --------------------------------------------------------------------------
+     *
+     * HTTP status codes that are allowed to be cached. Only responses with
+     * these status codes will be cached by the PageCache filter.
+     *
+     * Default: [] - Cache all status codes (backward compatible)
+     *
+     * Recommended: [200] - Only cache successful responses
+     *
+     * You can also use status codes like:
+     *   [200, 404, 410] - Cache successful responses and specific error codes
+     *   [200, 201, 202, 203, 204] - All 2xx successful responses
+     *
+     * WARNING: Using [] may cache temporary error pages (404, 500, etc).
+     * Consider restricting to [200] for production applications to avoid
+     * caching errors that should be temporary.
+     *
+     * @var list<int>
+     */
+    public array $cacheStatusCodes = [];
 }
