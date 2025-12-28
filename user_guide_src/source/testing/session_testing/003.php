@@ -1,8 +1,8 @@
 <?php
 
-use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Session\Session;
 use CodeIgniter\Session\Handlers\ArrayHandler;
+use CodeIgniter\Session\Session;
+use CodeIgniter\Test\CIUnitTestCase;
 use Config\Session as SessionConfig;
 
 class SessionTest extends CIUnitTestCase
