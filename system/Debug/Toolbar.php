@@ -554,7 +554,10 @@ class Toolbar
      */
     private function shouldDisableToolbar(IncomingRequest $request): bool
     {
-        foreach ($this->config->disableOnHeaders as $headerName => $expectedValue) {
+        // Fallback for older installations where the config option is missing (e.g. after upgrading from a previous version).
+        $headers = $this->config->disableOnHeaders ?? ['X-Requested-With' => 'xmlhttprequest'];
+
+        foreach ($headers as $headerName => $expectedValue) {
             if (! $request->hasHeader($headerName)) {
                 continue; // header not present, skip
             }
