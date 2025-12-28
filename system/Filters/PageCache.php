@@ -39,7 +39,7 @@ class PageCache implements FilterInterface
         $config ??= config('Cache');
 
         $this->pageCache        = service('responsecache');
-        $this->cacheStatusCodes = $config->cacheStatusCodes;
+        $this->cacheStatusCodes = $config->cacheStatusCodes ?? [];
     }
 
     /**
