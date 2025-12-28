@@ -43,12 +43,6 @@ class Toolbar
     protected $config;
 
     /**
-     * Indicates if the current request is a custom AJAX-like request
-     * (HTMX, Unpoly, Turbo, etc.) that expects clean HTML fragments.
-     */
-    protected bool $isDisabled = false;
-
-    /**
      * Collectors to be used and displayed.
      *
      * @var list<BaseCollector>
@@ -389,9 +383,7 @@ class Toolbar
                 return;
             }
 
-            $config = config(ToolbarConfig::class);
-
-            $toolbar = service('toolbar', $config);
+            $toolbar = service('toolbar', $this->config);
             $stats   = $app->getPerformanceStats();
             $data    = $toolbar->run(
                 $stats['startTime'],
@@ -413,14 +405,10 @@ class Toolbar
 
             $format = $response->getHeaderLine('content-type');
 
-            if ($this->shouldDisableToolbar($request, $config->disableOnHeaders)) {
-                $this->isDisabled = true;
-            }
-
             // Non-HTML formats should not include the debugbar
             // then we send headers saying where to find the debug data
             // for this response
-            if ($this->isDisabled || ! str_contains($format, 'html')) {
+            if ($this->shouldDisableToolbar($request) || ! str_contains($format, 'html')) {
                 $response->setHeader('Debugbar-Time', "{$time}")
                     ->setHeader('Debugbar-Link', site_url("?debugbar_time={$time}"));
 
@@ -560,14 +548,13 @@ class Toolbar
      * Determine if the toolbar should be disabled based on the request headers.
      *
      * This method allows checking both the presence of headers and their expected values.
-     *
-     * @param array<string, string|null> $headersToDisableToolbar
+     * Useful for AJAX, HTMX, Unpoly, Turbo, etc., where partial HTML responses are expected.
      *
      * @return bool True if any header condition matches; false otherwise.
      */
-    private function shouldDisableToolbar(IncomingRequest $request, array $headersToDisableToolbar): bool
+    private function shouldDisableToolbar(IncomingRequest $request): bool
     {
-        foreach ($headersToDisableToolbar as $headerName => $expectedValue) {
+        foreach ($this->config->disableOnHeaders as $headerName => $expectedValue) {
             if (! $request->hasHeader($headerName)) {
                 continue; // header not present, skip
             }
