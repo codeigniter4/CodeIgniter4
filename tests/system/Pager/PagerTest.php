@@ -41,6 +41,8 @@ final class PagerTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        $_SERVER = $_GET = $_POST = $_COOKIE = $_FILES = $_REQUEST = [];
+
         Services::injectMock('superglobals', new Superglobals());
 
         $this->createPager('/');

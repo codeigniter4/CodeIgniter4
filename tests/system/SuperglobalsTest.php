@@ -14,11 +14,13 @@ declare(strict_types=1);
 namespace CodeIgniter;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
  */
+#[BackupGlobals(true)]
 #[Group('Others')]
 final class SuperglobalsTest extends CIUnitTestCase
 {
