@@ -63,7 +63,7 @@ final class ToolbarTest extends CIUnitTestCase
     public function testPrepareRespectsDisableOnHeaders(): void
     {
         // Set up the new configuration property
-        $this->config->disableOnHeaders = ['HX-Request'];
+        $this->config->disableOnHeaders = ['HX-Request' => 'true'];
         Factories::injectMock('config', 'Toolbar', $this->config);
 
         // Initialize Request with the custom header
@@ -85,7 +85,7 @@ final class ToolbarTest extends CIUnitTestCase
 
     public function testPrepareInjectsNormallyWithoutIgnoredHeader(): void
     {
-        $this->config->disableOnHeaders = ['HX-Request'];
+        $this->config->disableOnHeaders = ['HX-Request' => 'true'];
         Factories::injectMock('config', 'Toolbar', $this->config);
 
         $this->request  = service('incomingrequest', null, false);
