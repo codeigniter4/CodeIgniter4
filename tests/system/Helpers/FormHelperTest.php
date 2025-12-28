@@ -21,6 +21,7 @@ use Config\App;
 use Config\DocTypes;
 use Config\Filters;
 use Config\Services;
+use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -29,6 +30,7 @@ use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 /**
  * @internal
  */
+#[BackupGlobals(true)]
 #[Group('SeparateProcess')]
 final class FormHelperTest extends CIUnitTestCase
 {
@@ -38,6 +40,8 @@ final class FormHelperTest extends CIUnitTestCase
         $this->resetServices();
 
         parent::setUp();
+
+        $_POST = $_GET = [];
 
         CodeIgniterServices::injectMock('superglobals', new Superglobals());
 
