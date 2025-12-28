@@ -423,7 +423,7 @@ class Toolbar
             // Non-HTML formats should not include the debugbar
             // then we send headers saying where to find the debug data
             // for this response
-            if ($request->isAJAX() || ! str_contains($format, 'html') || $this->isCustomAjax) {
+            if ($this->isDisabled || ! str_contains($format, 'html')) {
                 $response->setHeader('Debugbar-Time', "{$time}")
                     ->setHeader('Debugbar-Link', site_url("?debugbar_time={$time}"));
 
