@@ -1,4 +1,4 @@
-# total 9 errors
+# total 10 errors
 
 parameters:
     ignoreErrors:
@@ -35,12 +35,17 @@ parameters:
         -
             message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
             count: 1
-            path: ../../tests/system/Log/LoggerTest.php
+            path: ../../tests/system/Helpers/FormHelperTest.php
 
         -
             message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
             count: 1
             path: ../../tests/system/Models/PaginateModelTest.php
+
+        -
+            message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/Pager/PagerTest.php
 
         -
             message: '#^Re\-assigning arrays to \$_GET directly is discouraged\.$#'
