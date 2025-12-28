@@ -107,6 +107,23 @@ final class ResponseCacheTest extends CIUnitTestCase
         $this->assertNotInstanceOf(ResponseInterface::class, $cachedResponse);
     }
 
+    public function testCachePageIncomingRequestWithStatus(): void
+    {
+        $pageCache = $this->createResponseCache();
+
+        $response = new Response(new App());
+        $response->setStatusCode(432, 'Foo Bar');
+        $response->setBody('The response body.');
+
+        $this->assertTrue($pageCache->make($this->createIncomingRequest('foo/bar'), $response));
+
+        // Check cached response status
+        $cachedResponse = $pageCache->get($this->createIncomingRequest('foo/bar'), new Response(new App()));
+        $this->assertInstanceOf(ResponseInterface::class, $cachedResponse);
+        $this->assertSame(432, $cachedResponse->getStatusCode());
+        $this->assertSame('Foo Bar', $cachedResponse->getReasonPhrase());
+    }
+
     public function testCachePageIncomingRequestWithCacheQueryString(): void
     {
         $cache = new Cache();
