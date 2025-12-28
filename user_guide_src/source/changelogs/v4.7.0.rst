@@ -96,6 +96,9 @@ Method Signature Changes
     - ``clean()``
     - ``getCacheInfo()``
     - ``getMetaData()``
+- Added native return types to ``CodeIgniter\Debug\Toolbar`` methods:
+    - ``prepare(): void``
+    - ``respond(): void``
 
 Removed Deprecated Items
 ========================
