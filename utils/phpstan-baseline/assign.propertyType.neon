@@ -1,4 +1,4 @@
-# total 30 errors
+# total 29 errors
 
 parameters:
     ignoreErrors:
@@ -11,11 +11,6 @@ parameters:
             message: '#^Property CodeIgniter\\Controller\:\:\$request \(CodeIgniter\\HTTP\\CLIRequest\|CodeIgniter\\HTTP\\IncomingRequest\) does not accept CodeIgniter\\HTTP\\RequestInterface\.$#'
             count: 1
             path: ../../system/Controller.php
-
-        -
-            message: '#^Property CodeIgniter\\Session\\Handlers\\BaseHandler\:\:\$savePath \(string\) does not accept array\<string, array\<mixed\>\|float\|int\|string\|null\>\.$#'
-            count: 1
-            path: ../../system/Session/Handlers/RedisHandler.php
 
         -
             message: '#^Property CodeIgniter\\Commands\\Utilities\\Routes\\FilterFinderTest\:\:\$response \(CodeIgniter\\HTTP\\Response\) does not accept CodeIgniter\\HTTP\\ResponseInterface\.$#'

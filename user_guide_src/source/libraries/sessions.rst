@@ -530,8 +530,8 @@ Instead, you should do something like this, depending on your environment:
     chmod 0700 /<path to your application directory>/writable/sessions/
     chown www-data /<path to your application directory>/writable/sessions/
 
-Since the built-in mechanism does not have automatic cleaning of expired sessions,
-you will notice that the *saveDir* directory may overflow with files.
+The `built-in mechanism <https://www.php.net/manual/ru/session.configuration.php#ini.session.gc-probability>`_ for automatically clearing expired sessions may not run often,
+and you will notice that the *saveDir* directory may be overflowing with files.
 To solve this problem, you will need to configure the **cron** or **Task Scheduler** to delete outdated files.
 
 Bonus Tip
