@@ -137,7 +137,7 @@ class Toolbar extends BaseConfig
      * Any request containing one of the following headers is treated as a
      * client-managed or partial request, and the Debug Toolbar injection is skipped.
      *
-     * @var list<string>
+     * @var array<string, string|null>
      */
     public array $disableOnHeaders = [
         'X-Requested-With' => 'xmlhttprequest', // AJAX requests

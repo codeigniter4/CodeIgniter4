@@ -46,7 +46,7 @@ class Toolbar
      * Indicates if the current request is a custom AJAX-like request
      * (HTMX, Unpoly, Turbo, etc.) that expects clean HTML fragments.
      */
-    protected bool $isCustomAjax = false;
+    protected bool $isDisabled = false;
 
     /**
      * Collectors to be used and displayed.
@@ -413,11 +413,8 @@ class Toolbar
 
             $format = $response->getHeaderLine('content-type');
 
-            foreach ($config->disableOnHeaders as $header) {
-                if ($request->hasHeader($header)) {
-                    $this->isCustomAjax = true;
-                    break;
-                }
+            if ($this->shouldDisableToolbar($request, $config->disableOnHeaders)) {
+                $this->isDisabled = true;
             }
 
             // Non-HTML formats should not include the debugbar
@@ -557,5 +554,36 @@ class Toolbar
         }
 
         return $output;
+    }
+
+    /**
+     * Determine if the toolbar should be disabled based on the request headers.
+     *
+     * This method allows checking both the presence of headers and their expected values.
+     *
+     * @param array<string, string|null> $headersToDisableToolbar
+     *
+     * @return bool True if any header condition matches; false otherwise.
+     */
+    private function shouldDisableToolbar(IncomingRequest $request, array $headersToDisableToolbar): bool
+    {
+        foreach ($headersToDisableToolbar as $headerName => $expectedValue) {
+            if (! $request->hasHeader($headerName)) {
+                continue; // header not present, skip
+            }
+
+            // If expectedValue is null, only presence is enough
+            if ($expectedValue === null) {
+                return true;
+            }
+
+            $headerValue = strtolower($request->getHeaderLine($headerName));
+
+            if ($headerValue === strtolower($expectedValue)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -108,6 +108,7 @@ return RectorConfig::configure()
             __DIR__ . '/system/HTTP/Response.php',
         ],
 
+        // Exclude test file because `is_cli()` is mocked and Rector might remove needed parameters.
         RemoveExtraParametersRector::class => [
             __DIR__ . '/tests/system/Debug/ToolbarTest.php',
         ],
