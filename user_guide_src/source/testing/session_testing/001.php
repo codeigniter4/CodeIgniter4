@@ -2,10 +2,10 @@
 
 use CodeIgniter\Session\Handlers\ArrayHandler;
 use CodeIgniter\Session\Session;
-use Config\Session;
+use Config\Session as SessionConfig;
 
 // Load session config
-$config = new \config(Session::class);
+$config = config(SessionConfig::class);
 
 // Initialize ArrayHandler with config and optional IP
 $arrayHandler = new ArrayHandler($config, '127.0.0.1');
