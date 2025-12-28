@@ -18,3 +18,4 @@ The following sections should get you quickly testing your applications.
     Mocking <mocking>
     benchmark
     debugging
+    Session Testing <session_testing>
