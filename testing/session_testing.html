@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Version 4.0.0-rc.1 &mdash; CodeIgniter 4.6.4 documentation</title>
+  <title>Session Testing &mdash; CodeIgniter 4.6.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -26,8 +26,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Version 4.0.0-beta.4" href="v4.0.0-beta.4.html" />
-    <link rel="prev" title="Version 4.0.0-rc.2" href="v4.0.0-rc.2.html" /> 
+    <link rel="next" title="Command Line Usage" href="../cli/index.html" />
+    <link rel="prev" title="Debugging Your Application" href="debugging.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -60,14 +60,14 @@
 </ul>
 </li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../installation/index.html">Installation</a><ul class="current">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="index.html">Change Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
 </ul>
@@ -220,19 +220,19 @@
 </ul>
 </li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../testing/overview.html">Getting Started</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../testing/database.html">Database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../testing/fabricator.html">Generating Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../testing/session_testing.html">Session Testing</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Testing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fabricator.html">Generating Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controllers.html">Controller Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature.html">HTTP Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli.html">Testing CLI Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mocking.html">Mocking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html">Debugging Your Application</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Session Testing</a></li>
 </ul>
 </li>
 </ul>
@@ -275,14 +275,13 @@
 
       <div class="wy-nav-content">
         <div class="rst-content">
-<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/changelogs/v4.0.0-rc.1.rst">Edit this page</a>
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/testing/session_testing.rst">Edit this page</a>
 
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../installation/index.html">Installation</a></li>
-          <li class="breadcrumb-item"><a href="index.html">Change Logs</a></li>
-      <li class="breadcrumb-item active">Version 4.0.0-rc.1</li>
+          <li class="breadcrumb-item"><a href="index.html">Testing</a></li>
+      <li class="breadcrumb-item active">Session Testing</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -291,506 +290,152 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="version-4-0-0-rc-1">
-<h1>Version 4.0.0-rc.1<a class="headerlink" href="#version-4-0-0-rc-1" title="Permalink to this heading"></a></h1>
-<p>Release Date: Sep 3, 2019</p>
-<p><strong>RC.1 release of CodeIgniter4</strong></p>
+  <section id="session-testing">
+<h1>Session Testing<a class="headerlink" href="#session-testing" title="Permalink to this heading"></a></h1>
+<p>Testing session behavior in your application is made simple with the ArrayHandler session driver.
+Unlike other session drivers, ArrayHandler does not persist data to disk, database, or external storage.
+This allows you to simulate session interactions safely during unit or integration tests, without affecting real session data.</p>
+<p>Using this driver, you can set, retrieve, and assert session data entirely in memory, making your tests faster and more isolated.
+While in most production scenarios you would use file, database, or cache-backed sessions, ArrayHandler exists specifically to support testing workflows and prevent side effects.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#enhancements" id="id1">Enhancements</a></p></li>
-<li><p><a class="reference internal" href="#app-changes" id="id2">App Changes</a></p></li>
-<li><p><a class="reference internal" href="#message-changes" id="id3">Message Changes</a></p></li>
-<li><p><a class="reference internal" href="#changed-files" id="id4">Changed Files</a></p></li>
-<li><p><a class="reference internal" href="#prs-merged" id="id5">PRs merged</a></p></li>
+<li><p><a class="reference internal" href="#initializing-sessions" id="id1">Initializing Sessions</a></p></li>
+<li><p><a class="reference internal" href="#setting-and-retrieving-data" id="id2">Setting and Retrieving Data</a></p></li>
+<li><p><a class="reference internal" href="#example-test-case" id="id3">Example Test Case</a></p></li>
+<li><p><a class="reference internal" href="#session-assertions" id="id4">Session Assertions</a></p>
+<ul>
+<li><p><a class="reference internal" href="#using-phpunit-assertions-with-arrayhandler" id="id5">Using PHPUnit Assertions with ArrayHandler</a></p></li>
+<li><p><a class="reference internal" href="#session-assertions-via-testresponse" id="id6">Session Assertions via TestResponse</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#custom-session-values" id="id7">Custom Session Values</a></p></li>
 </ul>
 </nav>
-<section id="enhancements">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this heading"></a></h2>
-<ul class="simple">
-<li><p>CI3 Email ported to CI4</p></li>
-<li><p>Encryption (basic) added</p></li>
-<li><p>Migrations refactored and streamlined for more wholistic functionality (BC)</p></li>
-<li><p>added convert() to ImageHandlerInterface</p></li>
-<li><p>disabled debug toolbar for downloads</p></li>
-<li><p>CLI commands returns an error code now (“spark” changed)</p></li>
-<li><p>RESTful controllers added to shorten dev time for RESTful APIs</p></li>
-<li><p>added RouteCollection::presenter() as part of the RESTful support</p></li>
-</ul>
+<section id="initializing-sessions">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Initializing Sessions</a><a class="headerlink" href="#initializing-sessions" title="Permalink to this heading"></a></h2>
+<p>You can initialize a session using the ArrayHandler driver for testing. This example shows how to create a session instance with a proper configuration:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Session\Handlers\ArrayHandler</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Session\Session</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Config\Session</span> <span class="k">as</span> <span class="nx">SessionConfig</span><span class="p">;</span>
+
+<span class="c1">// Load session config</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="nx">SessionConfig</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+
+<span class="c1">// Initialize ArrayHandler with config and optional IP</span>
+<span class="nv">$arrayHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayHandler</span><span class="p">(</span><span class="nv">$config</span><span class="p">,</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span>
+
+<span class="c1">// Create session instance for testing</span>
+<span class="nv">$testSession</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Session</span><span class="p">(</span><span class="nv">$arrayHandler</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
+</pre></div>
+</div>
 </section>
-<section id="app-changes">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">App Changes</a><a class="headerlink" href="#app-changes" title="Permalink to this heading"></a></h2>
-<ul class="simple">
-<li><p>added app/Common to make it easier to override common functions</p></li>
-<li><p>Config/Email and Encryption added</p></li>
-<li><p>Config/Migration modified, and has different settings</p></li>
-<li><p>Controllers/Home fixed, removing unnecessary model reference</p></li>
-</ul>
+<section id="setting-and-retrieving-data">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Setting and Retrieving Data</a><a class="headerlink" href="#setting-and-retrieving-data" title="Permalink to this heading"></a></h2>
+<p>Once initialized, you can set session values and retrieve them as usual:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Set session data</span>
+<span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">,</span> <span class="s1">&#39;CodeIgniter4&#39;</span><span class="p">);</span>
+
+<span class="c1">// Retrieve session data</span>
+<span class="k">echo</span> <span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">);</span> <span class="c1">// outputs &#39;CodeIgniter4&#39;</span>
+
+<span class="c1">// Remove session data</span>
+<span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Session data is stored in memory and lasts as long as the ArrayHandler object exists;
+after the object is destroyed (typically at the end of a request or test), the data is lost.</p>
+</div>
 </section>
-<section id="message-changes">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this heading"></a></h2>
-<ul class="simple">
-<li><p>Migration has new &amp; modified messages</p></li>
-<li><p>Messages now has RESTful set</p></li>
-</ul>
+<section id="example-test-case">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Example Test Case</a><a class="headerlink" href="#example-test-case" title="Permalink to this heading"></a></h2>
+<p>Here’s a simple example demonstrating usage of the ArrayHandler in a PHPUnit test:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Session\Handlers\ArrayHandler</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Session\Session</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Config\Session</span> <span class="k">as</span> <span class="nx">SessionConfig</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">SessionTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nx">Session</span> <span class="nv">$testSession</span><span class="p">;</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="k">parent</span><span class="o">::</span><span class="na">setUp</span><span class="p">();</span>
+
+        <span class="c1">// Load session configuration</span>
+        <span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SessionConfig</span><span class="p">();</span>
+
+        <span class="c1">// Initialize ArrayHandler with config</span>
+        <span class="nv">$arrayHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayHandler</span><span class="p">(</span><span class="nv">$config</span><span class="p">,</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span>
+
+        <span class="c1">// Create session instance</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">testSession</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Session</span><span class="p">(</span><span class="nv">$arrayHandler</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">testFrameworkNameInSession</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="c1">// Set a session value</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">testSession</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">,</span> <span class="s1">&#39;CodeIgniter&#39;</span><span class="p">);</span>
+
+        <span class="c1">// Assert the value exists and is correct</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="s1">&#39;CodeIgniter&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">));</span>
+
+        <span class="c1">// Remove the session value</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">testSession</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertNull</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </section>
-<section id="changed-files">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Changed Files</a><a class="headerlink" href="#changed-files" title="Permalink to this heading"></a></h2>
-<p>The list of changed files follows, with PR numbers shown.</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt>admin/</dt><dd><ul>
-<li><p>release-appstarter #2155</p></li>
-<li><p>release-framework #2155</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>app/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Config/</dt><dd><ul>
-<li><p>Email #2092</p></li>
-<li><p>Encryption #2135</p></li>
-<li><p>Migrations #2065</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Controllers/</dt><dd><ul>
-<li><p>BaseController #2046</p></li>
-<li><p>Home #2145</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>Common #2110</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>public/</p></li>
-<li><dl class="simple">
-<dt>system/</dt><dd><ul>
-<li><dl class="simple">
-<dt>API/</dt><dd><ul>
-<li><p>ResponseTrait #2131</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Autoloader/</dt><dd><ul>
-<li><p>Autoloader #2149</p></li>
-<li><p>FileLocator #2149</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Cache/Handlders/</dt><dd><ul>
-<li><p>RedisHandler #2144</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>CLI/</dt><dd><ul>
-<li><p>CommandRunner #2164</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Commands/Database/</dt><dd><ul>
-<li><p>CreateMigration #2065</p></li>
-<li><p>Migrate #2065, 2137</p></li>
-<li><p>MigrateRefresh #2065, 2137</p></li>
-<li><p>MigrateRollback #2065, 2137</p></li>
-<li><p>MigrateStatus #2137</p></li>
-<li><p>MigrateVersion #2137</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Config/</dt><dd><ul>
-<li><p>BaseConfig #2082</p></li>
-<li><p>Services #2135, 2092</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Database/</dt><dd><ul>
-<li><p>BaseBuilder #2127, 2090, 2142, 2153, 2160, 2023, 2001</p></li>
-<li><p>MigrationRunner #2065, 2137</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Debug/</dt><dd><ul>
-<li><p>Toolbar #2118</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Email/</dt><dd><ul>
-<li><p>Email #2092</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Encryption/</dt><dd><ul>
-<li><p>EncrypterInterface #2135</p></li>
-<li><p>Encryption #2135</p></li>
-<li><p>Exceptions/EncryptionException #2135</p></li>
-<li><dl class="simple">
-<dt>Handlers/</dt><dd><ul>
-<li><p>BaseHandler #2135</p></li>
-<li><p>OpenSSLHandler #2135</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Exceptions/</dt><dd><ul>
-<li><p>ConfigException #2065</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Files/</dt><dd><ul>
-<li><p>File #2178</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Filters/</dt><dd><ul>
-<li><p>DebugToolbar #2118</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Helpers/</dt><dd><ul>
-<li><p>inflector_helper #2065</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Honeypot/</dt><dd><ul>
-<li><p>Honeypot #2177</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>HTTP/</dt><dd><ul>
-<li><p>DownloadResponse #2129</p></li>
-<li><p>Files/UploadedFile #2128</p></li>
-<li><p>Message &#64;2171</p></li>
-<li><p>Response #2166</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Images/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Handlers/</dt><dd><p>-BaseHandler #2113, 2150
-- ImageMagickHandler #2151</p>
-</dd>
-</dl>
-</li>
-<li><p>BImageHandlerInterface #2113</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Language/en/</dt><dd><ul>
-<li><p>Email #2092</p></li>
-<li><p>Encryption #2135</p></li>
-<li><p>Migrations #2065, 2137</p></li>
-<li><p>RESTful #2165</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>RESTful/</dt><dd><ul>
-<li><p>ResourceController #2165</p></li>
-<li><p>ResourcePresenter #2165</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Router/</dt><dd><ul>
-<li><p>RouteCollection #2165</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Security/</dt><dd><ul>
-<li><p>Security #2027</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Session/Handlers/</dt><dd><ul>
-<li><p>RedisHandler #2125</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Test/</dt><dd><ul>
-<li><p>CIDatabaseTestCase #2137</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>bootstrap #2110</p></li>
-<li><p>CodeIgniter #2126, 2164</p></li>
-<li><p>Common #2109</p></li>
-<li><p>Entity #2112</p></li>
-<li><p>Model #2090</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>tests/_support/</dt><dd><ul>
-<li><p>RESTful/… #2165</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>tests/system/</dt><dd><ul>
-<li><dl class="simple">
-<dt>API/</dt><dd><ul>
-<li><p>ResponseTraitTest #2131</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Database/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Builder/</dt><dd><ul>
-<li><p>GetTest #2142</p></li>
-<li><p>SelectTest #2160</p></li>
-<li><p>WhereTest #2001</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Live/</dt><dd><ul>
-<li><p>GroupTest #2160</p></li>
-<li><p>ModelTest #2090</p></li>
-<li><p>SelectTest #2160</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>Migrations/MigrationRunnerTest #2065, 2137</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Encryption/</dt><dd><ul>
-<li><p>EncryptionTest #2135</p></li>
-<li><p>OpenSSLHandlerTest #2135</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Helpers/</dt><dd><ul>
-<li><p>InflectorHelperTest #2065</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>HTTP/</dt><dd><ul>
-<li><p>DownloadResponseTest #2129</p></li>
-<li><p>MessageTest #2171</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Images/</dt><dd><ul>
-<li><p>GDHandlerTest #2113</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>RESTful/</dt><dd><ul>
-<li><p>ResourceControllerTest #2165</p></li>
-<li><p>ResourcePresenterTest #2165</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Router/</dt><dd><ul>
-<li><p>RouteCollectionTest #2165</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>ControllerTest #2165</p></li>
-<li><p>EntityTest #2112</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>user_guide_src/</dt><dd><ul>
-<li><dl class="simple">
-<dt>changelogs/</dt><dd><ul>
-<li><p>next #2154</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>database/</dt><dd><ul>
-<li><p>query_builder #2160, 2001</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>dbmgmt/</dt><dd><ul>
-<li><p>migrations #2065, 2132, 2136, 2154, 2137</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>extending/</dt><dd><ul>
-<li><p>common #2162</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>helpers/</dt><dd><ul>
-<li><p>inflector_helper #2065</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>incoming/</dt><dd><ul>
-<li><p>restful #2165</p></li>
-<li><p>routing #2165</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>libraries/</dt><dd><ul>
-<li><p>email #2092, 2154</p></li>
-<li><p>encryption #2135</p></li>
-<li><p>images #2113, 2169</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>outgoing/</dt><dd><ul>
-<li><p>api_responses #2131</p></li>
-<li><p>localization #2134</p></li>
-<li><p>response #2129</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>testing/</dt><dd><ul>
-<li><p>database #2137</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>CONTRIBUTING.md #2010</p></li>
-<li><p>README.md #2010</p></li>
-<li><p>spark</p></li>
-</ul>
+<section id="session-assertions">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Session Assertions</a><a class="headerlink" href="#session-assertions" title="Permalink to this heading"></a></h2>
+<section id="using-phpunit-assertions-with-arrayhandler">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Using PHPUnit Assertions with ArrayHandler</a><a class="headerlink" href="#using-phpunit-assertions-with-arrayhandler" title="Permalink to this heading"></a></h3>
+<p>When testing sessions directly with Session and ArrayHandler in a unit test, use standard PHPUnit assertions.
+<code class="docutils literal notranslate"><span class="pre">assertSessionHas()</span></code> and <code class="docutils literal notranslate"><span class="pre">assertSessionMissing()</span></code> are not available in this context because you are interacting directly with the session object,
+not a response object.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Set a session value</span>
+<span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">,</span> <span class="s1">&#39;CodeIgniter4&#39;</span><span class="p">);</span>
+
+<span class="c1">// Assert the state of the session using PHPUnit assertions</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="s1">&#39;CodeIgniter4&#39;</span><span class="p">,</span> <span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">));</span> <span class="c1">// Value exists</span>
+
+<span class="c1">// Not empty</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertNotEmpty</span><span class="p">(</span><span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">));</span>
+
+<span class="c1">// Remove the value and assert it&#39;s gone</span>
+<span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">);</span>
+
+<span class="c1">// Should be null</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertNull</span><span class="p">(</span><span class="nv">$testSession</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
 </section>
-<section id="prs-merged">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">PRs merged</a><a class="headerlink" href="#prs-merged" title="Permalink to this heading"></a></h2>
-<ul class="simple">
-<li><p>#2178 Add fallback for missing finfo_open</p></li>
-<li><p>#2177 Fix missing form close tag</p></li>
-<li><p>#2171 Setheader dupes</p></li>
-<li><p>#2169 Add $quality usage for Image Library</p></li>
-<li><p>#2166 Cookie error</p></li>
-<li><p>#2165 RESTful help</p></li>
-<li><p>#2164 Exit error code on CLI Command failure</p></li>
-<li><p>#2162 User Guide updates for Common.php</p></li>
-<li><p>#2160 Add BaseBuilder SelectCount</p></li>
-<li><p>#2155 Include .gitignore in starters</p></li>
-<li><p>#2153 Bug fix countAllResults with LIMIT</p></li>
-<li><p>#2154 Fix email &amp; migrations docs; update changelog</p></li>
-<li><p>#2151 ImageMagick-&gt;save() return value</p></li>
-<li><p>#2150 New logic for Image-&gt;fit()</p></li>
-<li><p>#2149 listNamespaceFiles: Ensure trailing slash</p></li>
-<li><p>#2145 Remove UserModel reference from Home controller</p></li>
-<li><p>#2144 Update Redis legacy function</p></li>
-<li><p>#2142 Fixing BuilderBase resetting when getting the SQL</p></li>
-<li><p>#2137 New Migration Logic</p></li>
-<li><p>#2136 Migrations user guide fixes</p></li>
-<li><p>#2135 Encryption</p></li>
-<li><p>#2134 Fix localization writeup</p></li>
-<li><p>#2132 Update migration User Guide</p></li>
-<li><p>#2131 Added No Content response to APIResponseTrait</p></li>
-<li><p>#2129 Add setFileName() to DownloadResponse</p></li>
-<li><p>#2128 guessExtension fallback to clientExtension</p></li>
-<li><p>#2127 Update limit function since $offset is nullable</p></li>
-<li><p>#2126 Limit storePreviousURL to certain requests</p></li>
-<li><p>#2125 Updated redis session handler to support redis 5.0.x</p></li>
-<li><p>#2118 Disabled Toolbar on downloads</p></li>
-<li><p>#2113 Add Image-&gt;convert()</p></li>
-<li><p>#2112 Update <cite>Entity.php</cite> <cite>__isset</cite> method</p></li>
-<li><p>#2110 Added app/Common.php</p></li>
-<li><p>#2109 Fix typo in checking if exists db_connect()</p></li>
-<li><p>#2092 Original email port</p></li>
-<li><p>#2090 Fix prevent soft delete all without conditions set</p></li>
-<li><p>#2082 Update BaseConfig.php</p></li>
-<li><p>#2065 Migration updates for more wholistic functionality</p></li>
-<li><p>#2046 clean base controller code</p></li>
-<li><p>#2027 Fix CSRF hash regeneration</p></li>
-<li><p>#2023 whereIn $value do not have to be an array</p></li>
-<li><p>#2010 Fix CSRF hash regenerationerbiage revisions</p></li>
-<li><p>#2001 Subqueries in BaseBuilder</p></li>
-</ul>
+<section id="session-assertions-via-testresponse">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Session Assertions via TestResponse</a><a class="headerlink" href="#session-assertions-via-testresponse" title="Permalink to this heading"></a></h3>
+<p>When testing controllers or HTTP responses, you can use CodeIgniter 4’s session
+assertion helpers, such as <code class="docutils literal notranslate"><span class="pre">assertSessionHas()</span></code> and <code class="docutils literal notranslate"><span class="pre">assertSessionMissing()</span></code>,
+which are available on the <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code> object. These helpers allow you to
+assert the state of the session during the HTTP request/response lifecycle.
+See more: <a class="reference internal" href="response.html#response-session-assertions"><span class="std std-ref">Session Assertions</span></a></p>
+</section>
+</section>
+<section id="custom-session-values">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Custom Session Values</a><a class="headerlink" href="#custom-session-values" title="Permalink to this heading"></a></h2>
+<p>In Feature Tests, you can provide custom session data for a single test using the <code class="docutils literal notranslate"><span class="pre">withSession()</span></code> method.
+This allows you to simulate session states such as logged-in users or specific roles during the request.
+For full details and examples, see: <a class="reference internal" href="feature.html#feature-setting-session-values"><span class="std std-ref">Setting Session Values</span></a></p>
 </section>
 </section>
 
@@ -798,8 +443,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="v4.0.0-rc.2.html" class="btn btn-neutral float-left" title="Version 4.0.0-rc.2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="v4.0.0-beta.4.html" class="btn btn-neutral float-right" title="Version 4.0.0-beta.4" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="debugging.html" class="btn btn-neutral float-left" title="Debugging Your Application" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../cli/index.html" class="btn btn-neutral float-right" title="Command Line Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
