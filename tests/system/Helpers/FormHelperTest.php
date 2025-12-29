@@ -1041,7 +1041,6 @@ final class FormHelperTest extends CIUnitTestCase
     public function testSetRadioDefault(): void
     {
         $_SESSION = [];
-        $_POST    = [];
 
         $this->assertSame(' checked="checked"', set_radio('code', 'alpha', true));
         $this->assertSame('', set_radio('code', 'beta', false));
