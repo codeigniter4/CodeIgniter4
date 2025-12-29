@@ -64,6 +64,8 @@ final class Superglobals
     /**
      * Get a value from $_SERVER.
      *
+     * @param server_items|null $default
+     *
      * @return server_items|null
      */
     public function server(string $key, mixed $default = null): array|float|int|string|null
@@ -113,6 +115,8 @@ final class Superglobals
 
     /**
      * Get a value from $_GET.
+     *
+     * @param get_items|null $default
      *
      * @return get_items|null
      */
@@ -164,6 +168,8 @@ final class Superglobals
     /**
      * Get a value from $_POST.
      *
+     * @param post_items|null $default
+     *
      * @return post_items|null
      */
     public function post(string $key, mixed $default = null): array|string|null
@@ -214,6 +220,8 @@ final class Superglobals
     /**
      * Get a value from $_COOKIE.
      *
+     * @param cookie_items|null $default
+     *
      * @return cookie_items|null
      */
     public function cookie(string $key, mixed $default = null): array|string|null
@@ -263,6 +271,8 @@ final class Superglobals
 
     /**
      * Get a value from $_REQUEST.
+     *
+     * @param request_items|null $default
      *
      * @return request_items|null
      */
