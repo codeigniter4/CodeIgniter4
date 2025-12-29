@@ -45,18 +45,11 @@ trait RequestTrait
     protected $ipAddress = '';
 
     /**
-     * Superglobals access wrapper.
-     *
-     * @var Superglobals|null
-     */
-    protected $superglobals;
-
-    /**
      * Stores values we've retrieved from PHP globals.
      *
      * @var array{get?: array, post?: array, request?: array, cookie?: array, server?: array}
      *
-     * @deprecated 4.7.0 Use $superglobals instead
+     * @deprecated 4.7.0 Use the Superglobals service instead
      */
     protected $globals = [];
 
