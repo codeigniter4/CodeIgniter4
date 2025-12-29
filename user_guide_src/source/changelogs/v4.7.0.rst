@@ -154,10 +154,15 @@ Removed Deprecated Items
     - ``CodeIgniter\HTTP\IncomingRequest\parseRequestURI()``
     - ``CodeIgniter\HTTP\IncomingRequest\parseQueryString()``
 - **IncomingRequest:** The deprecated ``$config`` parameter has been removed from ``CodeIgniter\HTTP\IncomingRequest::setPath()``, and the method visibility has been changed from ``public`` to ``private``.
-- **Session:** The deprecated properties ``$sessionDriverName``, ``$sessionCookieName``,
-  ``$sessionExpiration``, ``$sessionSavePath``, ``$sessionMatchIP``,
-  ``$sessionTimeToUpdate``, and ``$sessionRegenerateDestroy`` in ``CodeIgniter\Session`` has been removed.
-- **Session:** The deprecated method ``CodeIgniter\Session::stop()`` has been removed.
+- **Session:** The deprecated properties  in ``CodeIgniter\Session\Session`` has been removed:
+    - ``CodeIgniter\Session\Session::$sessionDriverName``
+    - ``CodeIgniter\Session\Session::$sessionCookieName``
+    - ``CodeIgniter\Session\Session::$sessionExpiration``
+    - ``CodeIgniter\Session\Session::$sessionSavePath``
+    - ``CodeIgniter\Session\Session::$sessionMatchIP``
+    - ``CodeIgniter\Session\Session::$sessionTimeToUpdate``
+    - ``CodeIgniter\Session\Session::$sessionRegenerateDestroy``
+- **Session:** The deprecated method ``CodeIgniter\Session\Session::stop()`` has been removed.
 - **Text Helper:** The deprecated types in ``random_string()`` function: ``basic``, ``md5``, and ``sha1`` has been removed.
 
 ************
