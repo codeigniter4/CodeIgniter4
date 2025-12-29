@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Exceptions\ConfigException;
-use CodeIgniter\Superglobals;
 use CodeIgniter\Validation\FormatRules;
 use Config\App;
 
