@@ -26,7 +26,6 @@ $finder = Finder::create()
         'ThirdParty',
         'Validation/Views',
     ])
-    ->notName('#Foobar.php$#')
     ->append([
         __FILE__,
         __DIR__ . '/.php-cs-fixer.no-header.php',
@@ -37,9 +36,7 @@ $finder = Finder::create()
         __DIR__ . '/spark',
     ]);
 
-$overrides = [
-    'modernize_strpos' => ['modernize_stripos' => true],
-];
+$overrides = [];
 
 $options = [
     'cacheFile' => 'build/.php-cs-fixer.cache',
