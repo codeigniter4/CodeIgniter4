@@ -85,7 +85,7 @@ final class Superglobals
     }
 
     /**
-     * Get a value from $_SERVER
+     * Get a value from $_SERVER.
      *
      * @return array<array-key, mixed>|float|int|string|null
      */
@@ -95,7 +95,7 @@ final class Superglobals
     }
 
     /**
-     * Set a value in $_SERVER
+     * Set a value in $_SERVER.
      *
      * @param array<array-key, mixed>|float|int|string $value
      */
@@ -106,7 +106,7 @@ final class Superglobals
     }
 
     /**
-     * Remove a key from $_SERVER
+     * Remove a key from $_SERVER.
      */
     public function unsetServer(string $key): void
     {
@@ -114,7 +114,7 @@ final class Superglobals
     }
 
     /**
-     * Get all $_SERVER values
+     * Get all $_SERVER values.
      *
      * @return array<string, array|float|int|string>
      */
@@ -124,7 +124,7 @@ final class Superglobals
     }
 
     /**
-     * Set the entire $_SERVER array
+     * Set the entire $_SERVER array.
      *
      * @param array<string, array|float|int|string> $array
      */
@@ -135,7 +135,7 @@ final class Superglobals
     }
 
     /**
-     * Get a value from $_GET
+     * Get a value from $_GET.
      *
      * @return array<array-key, mixed>|string|null
      */
@@ -145,7 +145,7 @@ final class Superglobals
     }
 
     /**
-     * Set a value in $_GET
+     * Set a value in $_GET.
      *
      * @param array<array-key, mixed>|string $value
      */
@@ -156,7 +156,7 @@ final class Superglobals
     }
 
     /**
-     * Remove a key from $_GET
+     * Remove a key from $_GET.
      */
     public function unsetGet(string $key): void
     {
@@ -164,7 +164,7 @@ final class Superglobals
     }
 
     /**
-     * Get all $_GET values
+     * Get all $_GET values.
      *
      * @return array<string, array|string>
      */
@@ -174,7 +174,7 @@ final class Superglobals
     }
 
     /**
-     * Set the entire $_GET array
+     * Set the entire $_GET array.
      *
      * @param array<string, array|string> $array
      */
@@ -185,7 +185,7 @@ final class Superglobals
     }
 
     /**
-     * Get a value from $_POST
+     * Get a value from $_POST.
      *
      * @return array<array-key, mixed>|string|null
      */
@@ -195,7 +195,7 @@ final class Superglobals
     }
 
     /**
-     * Set a value in $_POST
+     * Set a value in $_POST.
      *
      * @param array<array-key, mixed>|string $value
      */
@@ -206,7 +206,7 @@ final class Superglobals
     }
 
     /**
-     * Remove a key from $_POST
+     * Remove a key from $_POST.
      */
     public function unsetPost(string $key): void
     {
@@ -214,7 +214,7 @@ final class Superglobals
     }
 
     /**
-     * Get all $_POST values
+     * Get all $_POST values.
      *
      * @return array<string, array|string>
      */
@@ -224,7 +224,7 @@ final class Superglobals
     }
 
     /**
-     * Set the entire $_POST array
+     * Set the entire $_POST array.
      *
      * @param array<string, array|string> $array
      */
@@ -235,7 +235,7 @@ final class Superglobals
     }
 
     /**
-     * Get a value from $_COOKIE
+     * Get a value from $_COOKIE.
      *
      * @return array<array-key, mixed>|string|null
      */
@@ -245,7 +245,7 @@ final class Superglobals
     }
 
     /**
-     * Set a value in $_COOKIE
+     * Set a value in $_COOKIE.
      *
      * @param array<array-key, mixed>|string $value
      */
@@ -256,7 +256,7 @@ final class Superglobals
     }
 
     /**
-     * Remove a key from $_COOKIE
+     * Remove a key from $_COOKIE.
      */
     public function unsetCookie(string $key): void
     {
@@ -264,7 +264,7 @@ final class Superglobals
     }
 
     /**
-     * Get all $_COOKIE values
+     * Get all $_COOKIE values.
      *
      * @return array<string, array|string>
      */
@@ -274,7 +274,7 @@ final class Superglobals
     }
 
     /**
-     * Set the entire $_COOKIE array
+     * Set the entire $_COOKIE array.
      *
      * @param array<string, array|string> $array
      */
@@ -285,7 +285,7 @@ final class Superglobals
     }
 
     /**
-     * Get a value from $_REQUEST
+     * Get a value from $_REQUEST.
      *
      * @return array<array-key, mixed>|string|null
      */
@@ -295,7 +295,7 @@ final class Superglobals
     }
 
     /**
-     * Set a value in $_REQUEST
+     * Set a value in $_REQUEST.
      *
      * @param array<array-key, mixed>|string $value
      */
@@ -306,7 +306,7 @@ final class Superglobals
     }
 
     /**
-     * Remove a key from $_REQUEST
+     * Remove a key from $_REQUEST.
      */
     public function unsetRequest(string $key): void
     {
@@ -314,7 +314,7 @@ final class Superglobals
     }
 
     /**
-     * Get all $_REQUEST values
+     * Get all $_REQUEST values.
      *
      * @return array<string, array|string>
      */
@@ -324,7 +324,7 @@ final class Superglobals
     }
 
     /**
-     * Set the entire $_REQUEST array
+     * Set the entire $_REQUEST array.
      *
      * @param array<string, array|string> $array
      */
@@ -335,7 +335,7 @@ final class Superglobals
     }
 
     /**
-     * Get all $_FILES values
+     * Get all $_FILES values.
      *
      * @return array<string, array<string, mixed>>
      */
@@ -345,7 +345,7 @@ final class Superglobals
     }
 
     /**
-     * Set the entire $_FILES array
+     * Set the entire $_FILES array.
      *
      * @param array<string, array<string, mixed>> $array
      */
@@ -356,9 +356,9 @@ final class Superglobals
     }
 
     /**
-     * Get a superglobal array by name
+     * Get a superglobal array by name.
      *
-     * @param string $name The superglobal name (server, get, post, cookie, request, files)
+     * @param string $name The superglobal name (server, get, post, cookie, files, request)
      *
      * @return array<string, array|float|int|string>
      */
@@ -369,16 +369,16 @@ final class Superglobals
             'get'     => $this->get,
             'post'    => $this->post,
             'cookie'  => $this->cookie,
-            'request' => $this->request,
             'files'   => $this->files,
+            'request' => $this->request,
             default   => [],
         };
     }
 
     /**
-     * Set a superglobal array by name
+     * Set a superglobal array by name.
      *
-     * @param string                                $name  The superglobal name (server, get, post, cookie, request, files)
+     * @param string                                $name  The superglobal name (server, get, post, cookie, files, request)
      * @param array<string, array|float|int|string> $array The array to set
      */
     public function setGlobalArray(string $name, array $array): void
@@ -388,8 +388,8 @@ final class Superglobals
             'get'     => $this->setGetArray($array),
             'post'    => $this->setPostArray($array),
             'cookie'  => $this->setCookieArray($array),
-            'request' => $this->setRequestArray($array),
             'files'   => $this->setFilesArray($array),
+            'request' => $this->setRequestArray($array),
             default   => null,
         };
     }
