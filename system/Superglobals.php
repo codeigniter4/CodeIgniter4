@@ -25,79 +25,56 @@ namespace CodeIgniter;
  * - $_GET, $_POST, $_REQUEST can contain nested arrays from query params like ?foo[bar]=value
  * - $_COOKIE typically contains strings but can have arrays with cookie[key] notation
  *
+ * @phpstan-type server_items  array<array-key, mixed>|float|int|string
+ * @phpstan-type get_items     array<array-key, mixed>|string
+ * @phpstan-type post_items    array<array-key, mixed>|string
+ * @phpstan-type cookie_items  array<array-key, mixed>|string
+ * @phpstan-type files_items   array<array-key, mixed>
+ * @phpstan-type request_items array<array-key, mixed>|string
+ *
  * @internal
  * @see \CodeIgniter\SuperglobalsTest
  */
 final class Superglobals
 {
     /**
-     * @var array<string, array|float|int|string>
-     */
-    private array $server;
-
-    /**
-     * @var array<string, array|string>
-     */
-    private array $get;
-
-    /**
-     * @var array<string, array|string>
-     */
-    private array $post;
-
-    /**
-     * @var array<string, array|string>
-     */
-    private array $cookie;
-
-    /**
-     * @var array<string, array|string>
-     */
-    private array $request;
-
-    /**
-     * @var array<string, array<string, mixed>>
-     */
-    private array $files;
-
-    /**
-     * @param array<string, array|float|int|string>|null $server
-     * @param array<string, array|string>|null           $get
-     * @param array<string, array|string>|null           $post
-     * @param array<string, array|string>|null           $cookie
-     * @param array<string, array<string, mixed>>|null   $files
-     * @param array<string, array|string>|null           $request
+     * @param array<string, server_items>|null  $server
+     * @param array<string, get_items>|null     $get
+     * @param array<string, post_items>|null    $post
+     * @param array<string, cookie_items>|null  $cookie
+     * @param array<string, files_items>|null   $files
+     * @param array<string, request_items>|null $request
      */
     public function __construct(
-        ?array $server = null,
-        ?array $get = null,
-        ?array $post = null,
-        ?array $cookie = null,
-        ?array $files = null,
-        ?array $request = null,
+        private ?array $server = null,
+        private ?array $get = null,
+        private ?array $post = null,
+        private ?array $cookie = null,
+        private ?array $files = null,
+        private ?array $request = null,
     ) {
-        $this->server  = $server ?? $_SERVER;
-        $this->get     = $get ?? $_GET;
-        $this->post    = $post ?? $_POST;
-        $this->cookie  = $cookie ?? $_COOKIE;
-        $this->files   = $files ?? $_FILES;
-        $this->request = $request ?? $_REQUEST;
+        $this->server ??= $_SERVER;
+        $this->get ??= $_GET;
+        $this->post ??= $_POST;
+        $this->cookie ??= $_COOKIE;
+        $this->files ??= $_FILES;
+        $this->request ??= $_REQUEST;
     }
 
     /**
      * Get a value from $_SERVER.
      *
-     * @return array<array-key, mixed>|float|int|string|null
+     * @return server_items|null
      */
-    public function server(string $key): array|float|int|string|null
+    public function server(string $key, mixed $default = null): array|float|int|string|null
     {
-        return $this->server[$key] ?? null;
+        return $this->server[$key] ?? $default;
     }
 
     /**
      * Set a value in $_SERVER.
      *
-     * @param array<array-key, mixed>|float|int|string $value
+     * @param server_items $value
      */
     public function setServer(string $key, array|float|int|string $value): void
     {
@@ -116,7 +93,7 @@ final class Superglobals
     /**
      * Get all $_SERVER values.
      *
-     * @return array<string, array|float|int|string>
+     * @return array<string, server_items>
      */
     public function getServerArray(): array
     {
@@ -126,7 +103,7 @@ final class Superglobals
     /**
      * Set the entire $_SERVER array.
      *
-     * @param array<string, array|float|int|string> $array
+     * @param array<string, server_items> $array
      */
     public function setServerArray(array $array): void
     {
@@ -137,17 +114,17 @@ final class Superglobals
     /**
      * Get a value from $_GET.
      *
-     * @return array<array-key, mixed>|string|null
+     * @return get_items|null
      */
-    public function get(string $key): array|string|null
+    public function get(string $key, mixed $default = null): array|string|null
     {
-        return $this->get[$key] ?? null;
+        return $this->get[$key] ?? $default;
     }
 
     /**
      * Set a value in $_GET.
      *
-     * @param array<array-key, mixed>|string $value
+     * @param get_items $value
      */
     public function setGet(string $key, array|string $value): void
     {
@@ -166,7 +143,7 @@ final class Superglobals
     /**
      * Get all $_GET values.
      *
-     * @return array<string, array|string>
+     * @return array<string, get_items>
      */
     public function getGetArray(): array
     {
@@ -176,7 +153,7 @@ final class Superglobals
     /**
      * Set the entire $_GET array.
      *
-     * @param array<string, array|string> $array
+     * @param array<string, get_items> $array
      */
     public function setGetArray(array $array): void
     {
@@ -187,17 +164,17 @@ final class Superglobals
     /**
      * Get a value from $_POST.
      *
-     * @return array<array-key, mixed>|string|null
+     * @return post_items|null
      */
-    public function post(string $key): array|string|null
+    public function post(string $key, mixed $default = null): array|string|null
     {
-        return $this->post[$key] ?? null;
+        return $this->post[$key] ?? $default;
     }
 
     /**
      * Set a value in $_POST.
      *
-     * @param array<array-key, mixed>|string $value
+     * @param post_items $value
      */
     public function setPost(string $key, array|string $value): void
     {
@@ -216,7 +193,7 @@ final class Superglobals
     /**
      * Get all $_POST values.
      *
-     * @return array<string, array|string>
+     * @return array<string, post_items>
      */
     public function getPostArray(): array
     {
@@ -226,7 +203,7 @@ final class Superglobals
     /**
      * Set the entire $_POST array.
      *
-     * @param array<string, array|string> $array
+     * @param array<string, post_items> $array
      */
     public function setPostArray(array $array): void
     {
@@ -237,17 +214,17 @@ final class Superglobals
     /**
      * Get a value from $_COOKIE.
      *
-     * @return array<array-key, mixed>|string|null
+     * @return cookie_items|null
      */
-    public function cookie(string $key): array|string|null
+    public function cookie(string $key, mixed $default = null): array|string|null
     {
-        return $this->cookie[$key] ?? null;
+        return $this->cookie[$key] ?? $default;
     }
 
     /**
      * Set a value in $_COOKIE.
      *
-     * @param array<array-key, mixed>|string $value
+     * @param cookie_items $value
      */
     public function setCookie(string $key, array|string $value): void
     {
@@ -266,7 +243,7 @@ final class Superglobals
     /**
      * Get all $_COOKIE values.
      *
-     * @return array<string, array|string>
+     * @return array<string, cookie_items>
      */
     public function getCookieArray(): array
     {
@@ -276,7 +253,7 @@ final class Superglobals
     /**
      * Set the entire $_COOKIE array.
      *
-     * @param array<string, array|string> $array
+     * @param array<string, cookie_items> $array
      */
     public function setCookieArray(array $array): void
     {
@@ -287,17 +264,17 @@ final class Superglobals
     /**
      * Get a value from $_REQUEST.
      *
-     * @return array<array-key, mixed>|string|null
+     * @return request_items|null
      */
-    public function request(string $key): array|string|null
+    public function request(string $key, mixed $default = null): array|string|null
     {
-        return $this->request[$key] ?? null;
+        return $this->request[$key] ?? $default;
     }
 
     /**
      * Set a value in $_REQUEST.
      *
-     * @param array<array-key, mixed>|string $value
+     * @param request_items $value
      */
     public function setRequest(string $key, array|string $value): void
     {
@@ -316,7 +293,7 @@ final class Superglobals
     /**
      * Get all $_REQUEST values.
      *
-     * @return array<string, array|string>
+     * @return array<string, request_items>
      */
     public function getRequestArray(): array
     {
@@ -326,7 +303,7 @@ final class Superglobals
     /**
      * Set the entire $_REQUEST array.
      *
-     * @param array<string, array|string> $array
+     * @param array<string, request_items> $array
      */
     public function setRequestArray(array $array): void
     {
@@ -337,7 +314,7 @@ final class Superglobals
     /**
      * Get all $_FILES values.
      *
-     * @return array<string, array<string, mixed>>
+     * @return files_items
      */
     public function getFilesArray(): array
     {
@@ -347,7 +324,7 @@ final class Superglobals
     /**
      * Set the entire $_FILES array.
      *
-     * @param array<string, array<string, mixed>> $array
+     * @param files_items $array
      */
     public function setFilesArray(array $array): void
     {
@@ -360,7 +337,7 @@ final class Superglobals
      *
      * @param string $name The superglobal name (server, get, post, cookie, files, request)
      *
-     * @return array<string, array|float|int|string>
+     * @return array<string, server_items>
      */
     public function getGlobalArray(string $name): array
     {
@@ -378,8 +355,8 @@ final class Superglobals
     /**
      * Set a superglobal array by name.
      *
-     * @param string                                $name  The superglobal name (server, get, post, cookie, files, request)
-     * @param array<string, array|float|int|string> $array The array to set
+     * @param string                      $name  The superglobal name (server, get, post, cookie, files, request)
+     * @param array<string, server_items> $array The array to set
      */
     public function setGlobalArray(string $name, array $array): void
     {
