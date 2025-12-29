@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
@@ -385,9 +386,12 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->assertSame($filesData, $this->superglobals->getGlobalArray('files'));
     }
 
-    public function testGetGlobalArrayReturnsEmptyForInvalid(): void
+    public function testGetGlobalArrayThrowsExceptionForInvalidName(): void
     {
-        $this->assertSame([], $this->superglobals->getGlobalArray('invalid'));
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid superglobal name 'invalid'. Must be one of: server, get, post, cookie, files, request.");
+
+        $this->superglobals->getGlobalArray('invalid');
     }
 
     public function testSetGlobalArray(): void
@@ -418,12 +422,12 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->assertSame($filesData, $_FILES);
     }
 
-    public function testSetGlobalArrayWithInvalidNameDoesNothing(): void
+    public function testSetGlobalArrayThrowsExceptionForInvalidName(): void
     {
-        $this->superglobals->setGlobalArray('invalid', ['key' => 'value']);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid superglobal name 'invalid'. Must be one of: server, get, post, cookie, files, request.");
 
-        // Should not throw exception, just does nothing
-        $this->assertTrue(true);
+        $this->superglobals->setGlobalArray('invalid', ['key' => 'value']);
     }
 
     // Constructor tests

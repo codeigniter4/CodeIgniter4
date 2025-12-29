@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
+
 /**
  * Superglobals manipulation.
  *
@@ -348,6 +350,8 @@ final class Superglobals
      * @param string $name The superglobal name (server, get, post, cookie, files, request)
      *
      * @return array<string, server_items>
+     *
+     * @throws InvalidArgumentException If the superglobal name is invalid
      */
     public function getGlobalArray(string $name): array
     {
@@ -358,7 +362,9 @@ final class Superglobals
             'cookie'  => $this->cookie,
             'files'   => $this->files,
             'request' => $this->request,
-            default   => [],
+            default   => throw new InvalidArgumentException(
+                "Invalid superglobal name '{$name}'. Must be one of: server, get, post, cookie, files, request.",
+            ),
         };
     }
 
@@ -367,6 +373,8 @@ final class Superglobals
      *
      * @param string                      $name  The superglobal name (server, get, post, cookie, files, request)
      * @param array<string, server_items> $array The array to set
+     *
+     * @throws InvalidArgumentException If the superglobal name is invalid
      */
     public function setGlobalArray(string $name, array $array): void
     {
@@ -377,7 +385,9 @@ final class Superglobals
             'cookie'  => $this->setCookieArray($array),
             'files'   => $this->setFilesArray($array),
             'request' => $this->setRequestArray($array),
-            default   => null,
+            default   => throw new InvalidArgumentException(
+                "Invalid superglobal name '{$name}'. Must be one of: server, get, post, cookie, files, request.",
+            ),
         };
     }
 }

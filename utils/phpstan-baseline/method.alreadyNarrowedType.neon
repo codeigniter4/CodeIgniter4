@@ -1,4 +1,4 @@
-# total 23 errors
+# total 22 errors
 
 parameters:
     ignoreErrors:
@@ -76,11 +76,6 @@ parameters:
             message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsString\(\) with string will always evaluate to true\.$#'
             count: 3
             path: ../../tests/system/Security/SecurityTest.php
-
-        -
-            message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
-            count: 1
-            path: ../../tests/system/SuperglobalsTest.php
 
         -
             message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsNumeric\(\) with int will always evaluate to true\.$#'
