@@ -63,6 +63,8 @@ override any existing routes in the system:
 Each of the "routes" is a 3 element array containing the HTTP verb (or "add" for all),
 the URI to match, and the routing destination.
 
+.. _feature-setting-session-values:
+
 Setting Session Values
 ----------------------
 
