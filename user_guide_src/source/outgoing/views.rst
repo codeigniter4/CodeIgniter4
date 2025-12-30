@@ -105,6 +105,7 @@ example, you could load the **blog_view.php** file from **example/blog/Views** b
 .. literalinclude:: views/005.php
 
 .. _views-overriding-namespaced-views:
+
 Overriding Namespaced Views
 ===========================
 
