@@ -64,14 +64,14 @@ abstract class BaseHandler implements EncrypterInterface
      * tries again with any previous keys we may have.
      *
      * @param string                                                     $data            Data to decrypt
-     * @param list<string, string>|string|null                           $params          Decryption parameters
-     * @param callable(string, list<string, string>|string|null): string $decryptCallback Callback that performs decryption
+     * @param array<string, string>|string|null                           $params          Decryption parameters
+     * @param callable(string, array<string, string>|string|null): string $decryptCallback Callback that performs decryption
      *
      * @return string Decrypted data
      *
      * @throws EncryptionException
      */
-    protected function tryDecryptWithFallback($data, #[SensitiveParameter] $params, callable $decryptCallback)
+    protected function tryDecryptWithFallback($data, #[SensitiveParameter] array|string|null $params, callable $decryptCallback)
     {
         try {
             return $decryptCallback($data, $params);
