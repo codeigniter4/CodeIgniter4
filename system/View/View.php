@@ -210,6 +210,12 @@ class View implements RendererInterface
                 $this->renderVars['file'] = $this->viewPath . $path;
             }
         }
+        if (str_contains($this->renderVars['view'], '\\')) {
+            $this->renderVars['file'] = $this->viewPath . ltrim(str_replace('\\', DIRECTORY_SEPARATOR, $this->renderVars['view']), DIRECTORY_SEPARATOR);
+        } else {
+            $this->renderVars['file'] = $this->viewPath . $this->renderVars['view'];
+        }
+
 
         if (! is_file($this->renderVars['file'])) {
             $this->renderVars['file'] = $this->loader->locateFile(
