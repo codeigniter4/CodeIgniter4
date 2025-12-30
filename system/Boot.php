@@ -144,7 +144,9 @@ class Boot
         static::loadDotEnv($paths);
         static::loadEnvironmentBootstrap($paths, false);
 
+        static::loadCommonFunctionsMock();
         static::loadCommonFunctions();
+
         static::loadAutoloader();
         static::setExceptionHandler();
         static::initializeKint();
@@ -258,6 +260,11 @@ class Boot
 
         // Require system/Common.php
         require_once SYSTEMPATH . 'Common.php';
+    }
+
+    protected static function loadCommonFunctionsMock(): void
+    {
+        require_once SYSTEMPATH . 'Test/Mock/MockCommon.php';
     }
 
     /**
