@@ -156,7 +156,7 @@ class OpenSSLHandler extends BaseHandler
             $decryptedData = \openssl_decrypt($data, $this->cipher, $encryptKey, OPENSSL_RAW_DATA, $iv);
 
             if ($decryptedData === false) {
-                throw EncryptionException::forDecryptionFailed();
+                throw EncryptionException::forAuthenticationFailed();
             }
 
             return $decryptedData;

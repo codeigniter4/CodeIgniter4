@@ -82,14 +82,4 @@ class EncryptionException extends RuntimeException
     {
         return new static(lang('Encryption.encryptionFailed'));
     }
-
-    /**
-     * Thrown during data decryption when a problem or error occurred.
-     *
-     * @return static
-     */
-    public static function forDecryptionFailed()
-    {
-        return new static(lang('Encryption.decryptionFailed'));
-    }
 }
