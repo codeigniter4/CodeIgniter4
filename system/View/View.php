@@ -201,6 +201,16 @@ class View implements RendererInterface
 
         $this->renderVars['file'] = $this->viewPath . $this->renderVars['view'];
 
+        // Check for overridden namespaced view in app/Views
+        if (! is_file($this->renderVars['file'])) {
+            // Normalize directory separators
+            $path = str_replace('\\', DIRECTORY_SEPARATOR, $this->renderVars['view']);
+
+            if (is_file($this->viewPath . $path)) {
+                $this->renderVars['file'] = $this->viewPath . $path;
+            }
+        }
+
         if (! is_file($this->renderVars['file'])) {
             $this->renderVars['file'] = $this->loader->locateFile(
                 $this->renderVars['view'],
