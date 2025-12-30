@@ -110,7 +110,6 @@ Overriding Namespaced Views
 ===========================
 
 .. versionadded:: 4.7.0
-    Added the ability to override namespaced views via the **app/Views** directory.
 
 You can override a namespaced view by creating a matching directory structure within your main **app/Views** directory.
 This allows you to customize the output of modules or packages without modifying their source code.
