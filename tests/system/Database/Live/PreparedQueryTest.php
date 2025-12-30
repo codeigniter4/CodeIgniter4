@@ -256,7 +256,7 @@ final class PreparedQueryTest extends CIUnitTestCase
                 'name'    => 'a',
                 'email'   => 'b@example.com',
                 'country' => 'x',
-            ])
+            ]),
         );
 
         $this->query->close();
@@ -264,7 +264,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         // Try to close a non-existing prepared statement
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage(
-            'Cannot call close on a non-existing prepared statement.'
+            'Cannot call close on a non-existing prepared statement.',
         );
 
         $this->query->close();
@@ -325,7 +325,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 
         $this->seeInDatabase($this->db->DBPrefix . 'without_auto_increment', [
             'key'   => 'test_key',
-            'value' => 'test_value'
+            'value' => 'test_value',
         ]);
 
         $this->assertFalse($this->query->execute('test_key', 'different_value'));
@@ -339,7 +339,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         // Verify the first insert was rolled back
         $this->dontSeeInDatabase($this->db->DBPrefix . 'without_auto_increment', [
             'key'   => 'test_key',
-            'value' => 'test_value'
+            'value' => 'test_value',
         ]);
 
         $this->db->resetTransStatus();
