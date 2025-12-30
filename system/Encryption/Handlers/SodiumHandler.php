@@ -32,13 +32,6 @@ class SodiumHandler extends BaseHandler
     protected $key = '';
 
     /**
-     * List of previous keys for fallback decryption.
-     *
-     * @var list<string>|string
-     */
-    protected array|string $previousKeys = '';
-
-    /**
      * Block size for padding message.
      *
      * @var int
@@ -83,88 +76,44 @@ class SodiumHandler extends BaseHandler
     {
         $this->parseParams($params);
 
-        if (empty($this->key)) {
+        $decryptParams = $params ?? $this->key;
+
+        if (empty($decryptParams)) {
             throw EncryptionException::forNeedsStarterKey();
         }
 
-        // Only use fallback keys if no custom key was provided in params
-        $useFallback = ! isset($params['key']);
+        return $this->tryDecryptWithFallback($data, $decryptParams, function ($data, $params): string {
+            $key = is_array($params) && isset($params['key']) ? $params['key'] : $params;
 
-        $attemptDecrypt = function ($key) use ($data): array {
-            try {
-                $result = $this->decryptWithKey($data, $key);
-                sodium_memzero($key);
-
-                return ['success' => true, 'data' => $result];
-            } catch (EncryptionException $e) {
-                sodium_memzero($key);
-
-                return ['success' => false, 'exception' => $e];
+            if (mb_strlen($data, '8bit') < (SODIUM_CRYPTO_SECRETBOX_NONCEBYTES + SODIUM_CRYPTO_SECRETBOX_MACBYTES)) {
+                // message was truncated
+                throw EncryptionException::forAuthenticationFailed();
             }
-        };
 
-        $result = $attemptDecrypt($this->key);
+            // Extract info from encrypted data
+            $nonce      = self::substr($data, 0, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
+            $ciphertext = self::substr($data, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
 
-        if ($result['success']) {
-            return $result['data'];
-        }
+            // decrypt data
+            $data = sodium_crypto_secretbox_open($ciphertext, $nonce, $key);
 
-        $originalException = $result['exception'];
-
-        // If primary key failed and fallback is allowed, try previous keys
-        if ($useFallback && ! in_array($this->previousKeys, ['', '0', []], true)) {
-            foreach ($this->previousKeys as $previousKey) {
-                $fallbackResult = $attemptDecrypt($previousKey);
-
-                if ($fallbackResult['success']) {
-                    return $fallbackResult['data'];
-                }
+            if ($data === false) {
+                // message was tampered in transit
+                throw EncryptionException::forAuthenticationFailed(); // @codeCoverageIgnore
             }
-        }
 
-        throw $originalException;
-    }
+            // remove extra padding during encryption
+            if ($this->blockSize <= 0) {
+                throw EncryptionException::forAuthenticationFailed();
+            }
 
-    /**
-     * Decrypt the data with the provided key
-     *
-     * @param string $data
-     * @param string $key
-     *
-     * @return string
-     *
-     * @throws EncryptionException
-     */
-    protected function decryptWithKey($data, #[SensitiveParameter] $key)
-    {
-        if (mb_strlen($data, '8bit') < (SODIUM_CRYPTO_SECRETBOX_NONCEBYTES + SODIUM_CRYPTO_SECRETBOX_MACBYTES)) {
-            // message was truncated
-            throw EncryptionException::forAuthenticationFailed();
-        }
+            $data = sodium_unpad($data, $this->blockSize);
 
-        // Extract info from encrypted data
-        $nonce      = self::substr($data, 0, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
-        $ciphertext = self::substr($data, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
+            // cleanup buffers
+            sodium_memzero($ciphertext);
 
-        // decrypt data
-        $data = sodium_crypto_secretbox_open($ciphertext, $nonce, $key);
-
-        if ($data === false) {
-            // message was tampered in transit
-            throw EncryptionException::forAuthenticationFailed(); // @codeCoverageIgnore
-        }
-
-        // remove extra padding during encryption
-        if ($this->blockSize <= 0) {
-            throw EncryptionException::forAuthenticationFailed();
-        }
-
-        $data = sodium_unpad($data, $this->blockSize);
-
-        // cleanup buffers
-        sodium_memzero($ciphertext);
-
-        return $data;
+            return $data;
+        });
     }
 
     /**

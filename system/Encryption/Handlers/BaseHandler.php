@@ -14,13 +14,22 @@ declare(strict_types=1);
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\EncrypterInterface;
+use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use Config\Encryption;
+use SensitiveParameter;
 
 /**
  * Base class for encryption handling
  */
 abstract class BaseHandler implements EncrypterInterface
 {
+    /**
+     * List of previous keys for fallback decryption.
+     *
+     * @var list<string>
+     */
+    protected array $previousKeys = [];
+
     /**
      * Constructor
      */
@@ -48,6 +57,47 @@ abstract class BaseHandler implements EncrypterInterface
     protected static function substr($str, $start, $length = null)
     {
         return mb_substr($str, $start, $length, '8bit');
+    }
+
+    /**
+     * Attempts to decrypt using the provided callback, and if it fails,
+     * tries again with any previous keys we may have.
+     *
+     * @param string            $data            Data to decrypt
+     * @param array|string|null $params          Decryption parameters
+     * @param callable          $decryptCallback Callback that performs decryption
+     *
+     * @return string Decrypted data
+     *
+     * @throws EncryptionException
+     */
+    protected function tryDecryptWithFallback($data, #[SensitiveParameter] $params, callable $decryptCallback)
+    {
+        try {
+            return $decryptCallback($data, $params);
+        } catch (EncryptionException $e) {
+            if ($this->previousKeys === []) {
+                throw $e;
+            }
+
+            if (is_string($params) || (is_array($params) && isset($params['key']))) {
+                throw $e;
+            }
+
+            foreach ($this->previousKeys as $previousKey) {
+                try {
+                    $previousParams = is_array($params)
+                        ? array_merge($params, ['key' => $previousKey])
+                        : $previousKey;
+
+                    return $decryptCallback($data, $previousParams);
+                } catch (EncryptionException) {
+                    continue;
+                }
+            }
+
+            throw $e;
+        }
     }
 
     /**

@@ -24,6 +24,22 @@ use SensitiveParameter;
 class OpenSSLHandler extends BaseHandler
 {
     /**
+     * Encryption key info.
+     * This setting is only used by OpenSSLHandler.
+     *
+     * Set to 'encryption' for CI3 Encryption compatibility.
+     */
+    public string $encryptKeyInfo = '';
+
+    /**
+     * Authentication key info.
+     * This setting is only used by OpenSSLHandler.
+     *
+     * Set to 'authentication' for CI3 Encryption compatibility.
+     */
+    public string $authKeyInfo = '';
+
+    /**
      * HMAC digest to use
      *
      * @var string
@@ -57,32 +73,9 @@ class OpenSSLHandler extends BaseHandler
     protected $key = '';
 
     /**
-     * List of previous keys for fallback decryption.
-     *
-     * @var list<string>|string
-     */
-    protected array|string $previousKeys = '';
-
-    /**
      * Whether the cipher-text should be raw. If set to false, then it will be base64 encoded.
      */
     protected bool $rawData = true;
-
-    /**
-     * Encryption key info.
-     * This setting is only used by OpenSSLHandler.
-     *
-     * Set to 'encryption' for CI3 Encryption compatibility.
-     */
-    public string $encryptKeyInfo = '';
-
-    /**
-     * Authentication key info.
-     * This setting is only used by OpenSSLHandler.
-     *
-     * Set to 'authentication' for CI3 Encryption compatibility.
-     */
-    public string $authKeyInfo = '';
 
     /**
      * {@inheritDoc}
@@ -125,90 +118,48 @@ class OpenSSLHandler extends BaseHandler
      */
     public function decrypt($data, #[SensitiveParameter] $params = null)
     {
-        // Allow key override
-        if ($params !== null) {
-            $this->key = is_array($params) && isset($params['key']) ? $params['key'] : $params;
-        }
+        $decryptParams = $params ?? $this->key;
 
-        if (empty($this->key)) {
+        if (empty($decryptParams)) {
             throw EncryptionException::forNeedsStarterKey();
         }
 
-        // Only use fallback keys if no custom key was provided in params
-        $useFallback = ! isset($params['key']);
+        return $this->tryDecryptWithFallback($data, $decryptParams, function ($data, $params): string {
+            $key = is_array($params) && isset($params['key']) ? $params['key'] : $params;
 
-        $attemptDecrypt = function ($key) use ($data): array {
-            try {
-                $result = $this->decryptWithKey($data, $key);
+            $authKey = \hash_hkdf($this->digest, $key, 0, $this->authKeyInfo);
 
-                return ['success' => true, 'data' => $result];
-            } catch (EncryptionException $e) {
-                return ['success' => false, 'exception' => $e];
+            $hmacLength = $this->rawData
+                ? $this->digestSize[$this->digest]
+                : $this->digestSize[$this->digest] * 2;
+
+            $hmacKey  = self::substr($data, 0, $hmacLength);
+            $data     = self::substr($data, $hmacLength);
+            $hmacCalc = \hash_hmac($this->digest, $data, $authKey, $this->rawData);
+
+            if (! hash_equals($hmacKey, $hmacCalc)) {
+                throw EncryptionException::forAuthenticationFailed();
             }
-        };
 
-        $result = $attemptDecrypt($this->key);
+            $data = $this->rawData ? $data : base64_decode($data, true);
 
-        if ($result['success']) {
-            return $result['data'];
-        }
-
-        $originalException = $result['exception'];
-
-        // If primary key failed and fallback is allowed, try previous keys
-        if ($useFallback && ! in_array($this->previousKeys, ['', '0', []], true)) {
-            foreach ($this->previousKeys as $previousKey) {
-                $fallbackResult = $attemptDecrypt($previousKey);
-
-                if ($fallbackResult['success']) {
-                    return $fallbackResult['data'];
-                }
+            if ($ivSize = \openssl_cipher_iv_length($this->cipher)) {
+                $iv   = self::substr($data, 0, $ivSize);
+                $data = self::substr($data, $ivSize);
+            } else {
+                $iv = null;
             }
-        }
 
-        // All attempts failed - throw the original exception
-        throw $originalException;
-    }
+            // derive a secret key
+            $encryptKey = \hash_hkdf($this->digest, $key, 0, $this->encryptKeyInfo);
 
-    /**
-     * Decrypt the data with the provided key
-     *
-     * @param string $data
-     * @param string $key
-     *
-     * @return false|string
-     *
-     * @throws EncryptionException
-     */
-    protected function decryptWithKey($data, #[SensitiveParameter] $key)
-    {
-        // derive a secret key
-        $authKey = \hash_hkdf($this->digest, $key, 0, $this->authKeyInfo);
+            $decryptedData = \openssl_decrypt($data, $this->cipher, $encryptKey, OPENSSL_RAW_DATA, $iv);
 
-        $hmacLength = $this->rawData
-            ? $this->digestSize[$this->digest]
-            : $this->digestSize[$this->digest] * 2;
+            if ($decryptedData === false) {
+                throw EncryptionException::forDecryptionFailed();
+            }
 
-        $hmacKey  = self::substr($data, 0, $hmacLength);
-        $data     = self::substr($data, $hmacLength);
-        $hmacCalc = \hash_hmac($this->digest, $data, $authKey, $this->rawData);
-
-        if (! hash_equals($hmacKey, $hmacCalc)) {
-            throw EncryptionException::forAuthenticationFailed();
-        }
-
-        $data = $this->rawData ? $data : base64_decode($data, true);
-
-        if ($ivSize = \openssl_cipher_iv_length($this->cipher)) {
-            $iv   = self::substr($data, 0, $ivSize);
-            $data = self::substr($data, $ivSize);
-        } else {
-            $iv = null;
-        }
-
-        // derive a secret key
-        $encryptKey = \hash_hkdf($this->digest, $key, 0, $this->encryptKeyInfo);
-
-        return \openssl_decrypt($data, $this->cipher, $encryptKey, OPENSSL_RAW_DATA, $iv);
+            return $decryptedData;
+        });
     }
 }
