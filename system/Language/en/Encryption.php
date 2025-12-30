@@ -19,4 +19,5 @@ return [
     'starterKeyNeeded'     => 'Encrypter needs a starter key.',
     'authenticationFailed' => 'Decrypting: authentication failed.',
     'encryptionFailed'     => 'Encryption failed.',
+    'decryptionFailed'     => 'Decryption failed.',
 ];
