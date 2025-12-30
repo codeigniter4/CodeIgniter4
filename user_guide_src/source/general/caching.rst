@@ -63,6 +63,36 @@ Valid options are:
 - **array**: Enabled, but only take into account the specified list of query
   parameters. E.g., ``['q', 'page']``.
 
+.. _web_page_caching_cache_status_codes:
+
+Setting $cacheStatusCodes
+-------------------------
+
+.. versionadded:: 4.7.0
+
+You can control which HTTP response status codes are allowed to be cached
+with ``Config\Cache::$cacheStatusCodes``.
+
+Valid options are:
+
+- ``[]``: (default) Cache all HTTP status codes. This maintains backward
+  compatibility but may cache temporary error pages.
+- ``[200]``: (Recommended) Only cache successful responses. This prevents
+  caching of error pages (404, 500, etc.) that should be temporary.
+- array of status codes: Cache only specific status codes. For example:
+
+  - ``[200, 404]``: Cache successful responses and not found pages.
+  - ``[200, 404, 410]``: Cache successful responses and specific error codes.
+  - ``[200, 201, 202, 203, 204]``: All 2xx successful responses.
+
+.. warning:: Using an empty array ``[]`` may cache temporary error pages (404, 500, etc).
+    For production applications, consider restricting this to ``[200]`` to avoid
+    caching errors that should be temporary. For example, a cached 404 page would
+    remain cached even after the resource is created, until the cache expires.
+
+.. note:: Regardless of this setting, ``DownloadResponse`` and ``RedirectResponse``
+    instances are never cached by the ``PageCache`` filter.
+
 Enabling Caching
 ================
 
