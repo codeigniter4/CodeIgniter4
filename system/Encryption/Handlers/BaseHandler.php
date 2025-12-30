@@ -63,7 +63,7 @@ abstract class BaseHandler implements EncrypterInterface
      * Attempts to decrypt using the provided callback, and if it fails,
      * tries again with any previous keys we may have.
      *
-     * @param string                                                     $data            Data to decrypt
+     * @param string                                                      $data            Data to decrypt
      * @param array<string, string>|string|null                           $params          Decryption parameters
      * @param callable(string, array<string, string>|string|null): string $decryptCallback Callback that performs decryption
      *
