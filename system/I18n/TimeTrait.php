@@ -1028,6 +1028,26 @@ trait TimeTrait
         return $ourTimestamp > $testTimestamp;
     }
 
+    /**
+     * Determines if the current instance's time is in the past.
+     *
+     * @throws Exception
+     */
+    public function isPast(): bool
+    {
+        return $this->isBefore(static::now($this->timezone));
+    }
+
+    /**
+     * Determines if the current instance's time is in the future.
+     *
+     * @throws Exception
+     */
+    public function isFuture(): bool
+    {
+        return $this->isAfter(static::now($this->timezone));
+    }
+
     // --------------------------------------------------------------------
     // Differences
     // --------------------------------------------------------------------
