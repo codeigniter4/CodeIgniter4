@@ -393,6 +393,30 @@ Works exactly the same as ``isBefore()`` except checks if the time is after the 
 
 .. literalinclude:: time/037.php
 
+.. _time-comparing-two-times-isPast:
+
+isPast()
+--------
+
+.. versionadded:: 4.7.0
+
+Determines if the current instance's time is in the past, relative to "now".
+It returns a boolean true/false::
+
+.. literalinclude:: time/043.php
+
+.. _time-comparing-two-times-isFuture:
+
+isFuture()
+----------
+
+.. versionadded:: 4.7.0
+
+Determines if the current instance's time is in the future, relative to "now".
+It returns a boolean true/false::
+
+.. literalinclude:: time/044.php
+
 .. _time-viewing-differences:
 
 Viewing Differences

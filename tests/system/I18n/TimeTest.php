@@ -1040,6 +1040,34 @@ final class TimeTest extends CIUnitTestCase
         $this->assertFalse($time2->isAfter($time1));
     }
 
+    public function testIsPast(): void
+    {
+        Time::setTestNow('2025-12-30 12:00:00', 'Asia/Tehran');
+
+        $past = Time::parse('2025-12-30 11:59:59', 'Asia/Tehran');
+        $this->assertTrue($past->isPast());
+
+        $future = Time::parse('2025-12-30 12:00:01', 'Asia/Tehran');
+        $this->assertFalse($future->isPast());
+
+        $now = Time::now('Asia/Tehran');
+        $this->assertFalse($now->isPast());
+    }
+
+    public function testIsFuture(): void
+    {
+        Time::setTestNow('2025-12-30 12:00:00', 'Asia/Tehran');
+
+        $future = Time::parse('2025-12-30 12:00:01', 'Asia/Tehran');
+        $this->assertTrue($future->isFuture());
+
+        $past = Time::parse('2025-12-30 11:59:59', 'Asia/Tehran');
+        $this->assertFalse($past->isFuture());
+
+        $now = Time::now('Asia/Tehran');
+        $this->assertFalse($now->isFuture());
+    }
+
     public function testHumanizeYearsSingle(): void
     {
         Time::setTestNow('March 10, 2017', 'America/Chicago');
