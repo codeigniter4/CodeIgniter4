@@ -372,7 +372,6 @@ class Toolbar
          * @var IncomingRequest|null $request
          */
         if (CI_DEBUG && ! is_cli()) {
-
             if ($this->hasNativeHeaderConflict()) {
                 return;
             }
