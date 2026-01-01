@@ -43,8 +43,6 @@ because it is exactly the same as the ``Session::destroy()`` method. So use the
 
 If you have code to depend on the bug, replace it with ``session_regenerate_id(true)``.
 
-See also :ref:`Session Library <session-stop>`.
-
 Project Files
 *************
 

@@ -297,6 +297,9 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['csrf_test_name']   = $this->randomizedToken;
 
+        /**
+         * @var SecurityConfig
+         */
         $config                 = Factories::config('Security');
         $config->tokenRandomize = true;
         $config->regenerate     = false;
@@ -317,6 +320,9 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['csrf_test_name']   = $this->randomizedToken;
 
+        /**
+         * @var SecurityConfig
+         */
         $config                 = Factories::config('Security');
         $config->tokenRandomize = true;
         $config->regenerate     = true;

@@ -1,4 +1,4 @@
-# total 51 errors
+# total 45 errors
 
 parameters:
     ignoreErrors:
@@ -121,18 +121,3 @@ parameters:
             message: '#^Access to an undefined property CodeIgniter\\I18n\\Time\:\:\$weekOfWeek\.$#'
             count: 1
             path: ../../tests/system/I18n/TimeTest.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Config\\BaseConfig\:\:\$regenerate\.$#'
-            count: 2
-            path: ../../tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Config\\BaseConfig\:\:\$tokenRandomize\.$#'
-            count: 2
-            path: ../../tests/system/Security/SecurityCSRFSessionRandomizeTokenTest.php
-
-        -
-            message: '#^Access to an undefined property CodeIgniter\\Config\\BaseConfig\:\:\$regenerate\.$#'
-            count: 2
-            path: ../../tests/system/Security/SecurityCSRFSessionTest.php

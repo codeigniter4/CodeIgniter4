@@ -16,7 +16,6 @@ SECURITY
   See the `Security advisory GHSA-m6m8-6gq8-c9fj <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-m6m8-6gq8-c9fj>`_
   for more information.
 - Fixed that ``Session::stop()`` did not destroy the session.
-  See :ref:`Session Library <session-stop>` for details.
 
 Changes
 *******
@@ -30,7 +29,7 @@ Changes
 Deprecations
 ************
 
-- **Session:** The :ref:`Session::stop() <session-stop>` method is deprecated.
+- **Session:** The ``Session::stop()`` method is deprecated.
   Use the :ref:`Session::destroy() <session-destroy>` instead.
 
 Bugs Fixed

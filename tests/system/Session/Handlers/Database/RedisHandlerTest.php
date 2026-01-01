@@ -32,6 +32,9 @@ final class RedisHandlerTest extends CIUnitTestCase
     private string $sessionSavePath = 'tcp://127.0.0.1:6379';
     private string $userIpAddress   = '127.0.0.1';
 
+    /**
+     * @param array<string, bool|int|string|null> $options Replace values for `Config\Session`.
+     */
     protected function getInstance($options = []): RedisHandler
     {
         $defaults = [
@@ -137,6 +140,9 @@ final class RedisHandlerTest extends CIUnitTestCase
         $handler->close();
     }
 
+    /**
+     * @param array<string, float|int|string|null> $expected
+     */
     #[DataProvider('provideSetSavePath')]
     public function testSetSavePath(string $savePath, array $expected): void
     {
@@ -148,6 +154,9 @@ final class RedisHandlerTest extends CIUnitTestCase
         $this->assertSame($expected, $savePath);
     }
 
+    /**
+     * @return iterable<string, list<array<string, array<string, string>|float|int|string|null>|string>> $expected
+     */
     public static function provideSetSavePath(): iterable
     {
         yield from [

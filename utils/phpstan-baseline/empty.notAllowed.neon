@@ -1,4 +1,4 @@
-# total 228 errors
+# total 223 errors
 
 parameters:
     ignoreErrors:
@@ -294,22 +294,7 @@ parameters:
 
         -
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 2
-            path: ../../system/Session/Handlers/DatabaseHandler.php
-
-        -
-            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
             count: 1
-            path: ../../system/Session/Handlers/FileHandler.php
-
-        -
-            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 1
-            path: ../../system/Session/Handlers/MemcachedHandler.php
-
-        -
-            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 2
             path: ../../system/Session/Handlers/RedisHandler.php
 
         -
