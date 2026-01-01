@@ -39,7 +39,7 @@ final class ToolbarTest extends CIUnitTestCase
         parent::setUp();
         Services::reset();
 
-        is_cli(false); // @phpstan-ignore arguments.count
+        is_cli(false);
 
         $this->config = new ToolbarConfig();
 
@@ -55,7 +55,7 @@ final class ToolbarTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         // Restore is_cli state
-        is_cli(true); // @phpstan-ignore arguments.count
+        is_cli(true);
 
         parent::tearDown();
     }
