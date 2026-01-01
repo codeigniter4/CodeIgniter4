@@ -372,6 +372,11 @@ class Toolbar
          * @var IncomingRequest|null $request
          */
         if (CI_DEBUG && ! is_cli()) {
+
+            if ($this->hasNativeHeaderConflict()) {
+                return;
+            }
+
             $app = service('codeigniter');
 
             $request ??= service('request');
@@ -542,6 +547,32 @@ class Toolbar
         }
 
         return $output;
+    }
+
+    /**
+     * Checks if the native PHP headers indicate a non-HTML response
+     * or if headers are already sent.
+     */
+    protected function hasNativeHeaderConflict(): bool
+    {
+        // If headers are sent, we can't inject HTML.
+        if (headers_sent()) {
+            return true;
+        }
+
+        // Native Header Inspection
+        foreach (headers_list() as $header) {
+            // Content-Type is set but is NOT text/html
+            if (str_starts_with(strtolower($header), strtolower('Content-Type:')) && ! str_contains(strtolower($header), strtolower('text/html'))) {
+                return true;
+            }
+            // File is being downloaded (Attachment)
+            if (str_starts_with(strtolower($header), strtolower('Content-Disposition:')) && str_contains(strtolower($header), strtolower('attachment'))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
