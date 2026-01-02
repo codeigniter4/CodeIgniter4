@@ -27,6 +27,9 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
  * - $_GET, $_POST, $_REQUEST can contain nested arrays from query params like ?foo[bar]=value
  * - $_COOKIE typically contains strings but can have arrays with cookie[key] notation
  *
+ * Note: $_FILES only supports array operations (getFilesArray/setFilesArray).
+ * Individual key operations are not provided as files don't change after request initialization.
+ *
  * @phpstan-type server_items  array<array-key, mixed>|float|int|string
  * @phpstan-type get_items     array<array-key, mixed>|string
  * @phpstan-type post_items    array<array-key, mixed>|string
