@@ -17,7 +17,7 @@ use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
-use Config;
+use Config\View as ViewConfig;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -28,7 +28,7 @@ final class ViewTest extends CIUnitTestCase
 {
     private FileLocatorInterface $loader;
     private string $viewsDir;
-    private Config\View $config;
+    private ViewConfig $config;
 
     protected function setUp(): void
     {
@@ -36,7 +36,7 @@ final class ViewTest extends CIUnitTestCase
 
         $this->loader                     = service('locator');
         $this->viewsDir                   = __DIR__ . '/Views';
-        $this->config                     = new Config\View();
+        $this->config                     = new ViewConfig();
         $this->config->appOverridesFolder = '';
     }
 
