@@ -1,4 +1,4 @@
-# total 27 errors
+# total 29 errors
 
 parameters:
     ignoreErrors:
@@ -103,7 +103,17 @@ parameters:
             path: ../../tests/system/HTTP/SiteURIFactoryDetectRoutePathTest.php
 
         -
+            message: '#^Accessing offset ''CUSTOM_SERVER'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/SuperglobalsTest.php
+
+        -
             message: '#^Accessing offset ''TEST_KEY'' directly on \$_SERVER is discouraged\.$#'
+            count: 1
+            path: ../../tests/system/SuperglobalsTest.php
+
+        -
+            message: '#^Accessing offset ''custom_get'' directly on \$_GET is discouraged\.$#'
             count: 1
             path: ../../tests/system/SuperglobalsTest.php
 

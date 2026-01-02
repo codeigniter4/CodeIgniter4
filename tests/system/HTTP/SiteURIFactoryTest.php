@@ -46,13 +46,13 @@ final class SiteURIFactoryTest extends CIUnitTestCase
     public function testCreateFromGlobals(): void
     {
         // http://localhost:8080/index.php/woot?code=good#pos
-        service('superglobals')->setServer('REQUEST_URI', '/index.php/woot?code=good');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
-        service('superglobals')->setServer('QUERY_STRING', 'code=good');
-        service('superglobals')->setServer('HTTP_HOST', 'localhost:8080');
-        service('superglobals')->setServer('PATH_INFO', '/woot');
-
-        service('superglobals')->setGet('code', 'good');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/index.php/woot?code=good')
+            ->setServer('SCRIPT_NAME', '/index.php')
+            ->setServer('QUERY_STRING', 'code=good')
+            ->setServer('HTTP_HOST', 'localhost:8080')
+            ->setServer('PATH_INFO', '/woot')
+            ->setGet('code', 'good');
 
         $factory = $this->createSiteURIFactory();
 
@@ -67,13 +67,13 @@ final class SiteURIFactoryTest extends CIUnitTestCase
     public function testCreateFromGlobalsAllowedHost(): void
     {
         // http://users.example.jp/index.php/woot?code=good#pos
-        service('superglobals')->setServer('REQUEST_URI', '/index.php/woot?code=good');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
-        service('superglobals')->setServer('QUERY_STRING', 'code=good');
-        service('superglobals')->setServer('HTTP_HOST', 'users.example.jp');
-        service('superglobals')->setServer('PATH_INFO', '/woot');
-
-        service('superglobals')->setGet('code', 'good');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/index.php/woot?code=good')
+            ->setServer('SCRIPT_NAME', '/index.php')
+            ->setServer('QUERY_STRING', 'code=good')
+            ->setServer('HTTP_HOST', 'users.example.jp')
+            ->setServer('PATH_INFO', '/woot')
+            ->setGet('code', 'good');
 
         $config                   = new App();
         $config->baseURL          = 'http://example.jp/';

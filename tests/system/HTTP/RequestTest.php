@@ -41,8 +41,9 @@ final class RequestTest extends CIUnitTestCase
 
     public function testFetchGlobalsSingleValue(): void
     {
-        service('superglobals')->setPost('foo', 'bar');
-        service('superglobals')->setGet('bar', 'baz');
+        service('superglobals')
+            ->setPost('foo', 'bar')
+            ->setGet('bar', 'baz');
 
         $this->assertSame('bar', $this->request->fetchGlobal('post', 'foo'));
         $this->assertSame('baz', $this->request->fetchGlobal('get', 'bar'));
@@ -569,8 +570,9 @@ final class RequestTest extends CIUnitTestCase
     public function testGetIPAddressThruProxy(): void
     {
         $expected = '123.123.123.123';
-        service('superglobals')->setServer('REMOTE_ADDR', '10.0.1.200');
-        service('superglobals')->setServer('HTTP_X_FORWARDED_FOR', $expected);
+        service('superglobals')
+            ->setServer('REMOTE_ADDR', '10.0.1.200')
+            ->setServer('HTTP_X_FORWARDED_FOR', $expected);
 
         $config           = new App();
         $config->proxyIPs = [
@@ -588,8 +590,9 @@ final class RequestTest extends CIUnitTestCase
     public function testGetIPAddressThruProxyInvalid(): void
     {
         $expected = '123.456.23.123';
-        service('superglobals')->setServer('REMOTE_ADDR', '10.0.1.200');
-        service('superglobals')->setServer('HTTP_X_FORWARDED_FOR', $expected);
+        service('superglobals')
+            ->setServer('REMOTE_ADDR', '10.0.1.200')
+            ->setServer('HTTP_X_FORWARDED_FOR', $expected);
         $config           = new App();
         $config->proxyIPs = [
             '10.0.1.200'     => 'X-Forwarded-For',
@@ -606,8 +609,9 @@ final class RequestTest extends CIUnitTestCase
     public function testGetIPAddressThruProxyNotWhitelisted(): void
     {
         $expected = '123.456.23.123';
-        service('superglobals')->setServer('REMOTE_ADDR', '10.10.1.200');
-        service('superglobals')->setServer('HTTP_X_FORWARDED_FOR', $expected);
+        service('superglobals')
+            ->setServer('REMOTE_ADDR', '10.10.1.200')
+            ->setServer('HTTP_X_FORWARDED_FOR', $expected);
 
         $config           = new App();
         $config->proxyIPs = [
@@ -624,8 +628,9 @@ final class RequestTest extends CIUnitTestCase
     public function testGetIPAddressThruProxySubnet(): void
     {
         $expected = '123.123.123.123';
-        service('superglobals')->setServer('REMOTE_ADDR', '192.168.5.21');
-        service('superglobals')->setServer('HTTP_X_FORWARDED_FOR', $expected);
+        service('superglobals')
+            ->setServer('REMOTE_ADDR', '192.168.5.21')
+            ->setServer('HTTP_X_FORWARDED_FOR', $expected);
 
         $config           = new App();
         $config->proxyIPs = ['192.168.5.0/24' => 'X-Forwarded-For'];
@@ -640,8 +645,9 @@ final class RequestTest extends CIUnitTestCase
     public function testGetIPAddressThruProxyOutofSubnet(): void
     {
         $expected = '123.123.123.123';
-        service('superglobals')->setServer('REMOTE_ADDR', '192.168.5.21');
-        service('superglobals')->setServer('HTTP_X_FORWARDED_FOR', $expected);
+        service('superglobals')
+            ->setServer('REMOTE_ADDR', '192.168.5.21')
+            ->setServer('HTTP_X_FORWARDED_FOR', $expected);
 
         $config           = new App();
         $config->proxyIPs = ['192.168.5.0/28' => 'X-Forwarded-For'];

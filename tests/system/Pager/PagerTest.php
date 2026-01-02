@@ -48,8 +48,9 @@ final class PagerTest extends CIUnitTestCase
 
     private function createPager(string $requestUri): void
     {
-        service('superglobals')->setServer('REQUEST_URI', $requestUri);
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')
+            ->setServer('REQUEST_URI', $requestUri)
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         $config            = new App();
         $config->baseURL   = 'http://example.com/';
@@ -157,8 +158,9 @@ final class PagerTest extends CIUnitTestCase
 
     public function testStoreWithQueries(): void
     {
-        service('superglobals')->setGet('page', '3');
-        service('superglobals')->setGet('foo', 'bar');
+        service('superglobals')
+            ->setGet('page', '3')
+            ->setGet('foo', 'bar');
 
         $this->pager->store('default', 3, 25, 100);
 
@@ -177,8 +179,9 @@ final class PagerTest extends CIUnitTestCase
 
     public function testStoreWithSegments(): void
     {
-        service('superglobals')->setGet('page', '3');
-        service('superglobals')->setGet('foo', 'bar');
+        service('superglobals')
+            ->setGet('page', '3')
+            ->setGet('foo', 'bar');
 
         $this->pager->store('default', 3, 25, 100, 1);
 
@@ -326,8 +329,9 @@ final class PagerTest extends CIUnitTestCase
 
     public function testGetNextURIWithQueryStringUsesCurrentURI(): void
     {
-        service('superglobals')->setGet('page_foo', '3');
-        service('superglobals')->setGet('status', '1');
+        service('superglobals')
+            ->setGet('page_foo', '3')
+            ->setGet('status', '1');
 
         $getArray = service('superglobals')->getGetArray();
         $expected = current_url(true);
@@ -340,8 +344,9 @@ final class PagerTest extends CIUnitTestCase
 
     public function testGetPreviousURIWithQueryStringUsesCurrentURI(): void
     {
-        service('superglobals')->setGet('page_foo', '1');
-        service('superglobals')->setGet('status', '1');
+        service('superglobals')
+            ->setGet('page_foo', '1')
+            ->setGet('status', '1');
 
         $getArray = service('superglobals')->getGetArray();
         $expected = current_url(true);
@@ -476,9 +481,10 @@ final class PagerTest extends CIUnitTestCase
 
     public function testBasedURI(): void
     {
-        service('superglobals')->setServer('HTTP_HOST', 'example.com');
-        service('superglobals')->setServer('REQUEST_URI', '/ci/v4/x/y');
-        service('superglobals')->setServer('SCRIPT_NAME', '/ci/v4/index.php');
+        service('superglobals')
+            ->setServer('HTTP_HOST', 'example.com')
+            ->setServer('REQUEST_URI', '/ci/v4/x/y')
+            ->setServer('SCRIPT_NAME', '/ci/v4/index.php');
 
         $config            = new App();
         $config->baseURL   = 'http://example.com/ci/v4/';

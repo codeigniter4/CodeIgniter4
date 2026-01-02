@@ -49,8 +49,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     public function testDefault(): void
     {
         // /index.php/woot?code=good#pos
-        service('superglobals')->setServer('REQUEST_URI', '/index.php/woot');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/index.php/woot')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -61,8 +62,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     public function testDefaultEmpty(): void
     {
         // /
-        service('superglobals')->setServer('REQUEST_URI', '/');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -73,8 +75,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     public function testRequestURI(): void
     {
         // /index.php/woot?code=good#pos
-        service('superglobals')->setServer('REQUEST_URI', '/index.php/woot');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/index.php/woot')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -93,8 +96,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
         // So I don't remove this test case.
 
         // /ci/index.php/woot?code=good#pos
-        service('superglobals')->setServer('REQUEST_URI', '/index.php/woot');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/index.php/woot')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -105,8 +109,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     public function testRequestURISubfolder(): void
     {
         // /ci/index.php/popcorn/woot?code=good#pos
-        service('superglobals')->setServer('REQUEST_URI', '/ci/index.php/popcorn/woot');
-        service('superglobals')->setServer('SCRIPT_NAME', '/ci/index.php');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/ci/index.php/popcorn/woot')
+            ->setServer('SCRIPT_NAME', '/ci/index.php');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -117,8 +122,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     public function testRequestURINoIndex(): void
     {
         // /sub/example
-        service('superglobals')->setServer('REQUEST_URI', '/sub/example');
-        service('superglobals')->setServer('SCRIPT_NAME', '/sub/index.php');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/sub/example')
+            ->setServer('SCRIPT_NAME', '/sub/index.php');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -129,8 +135,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     public function testRequestURINginx(): void
     {
         // /ci/index.php/woot?code=good#pos
-        service('superglobals')->setServer('REQUEST_URI', '/index.php/woot?code=good');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/index.php/woot?code=good')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -141,8 +148,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     public function testRequestURINginxRedirecting(): void
     {
         // /?/ci/index.php/woot
-        service('superglobals')->setServer('REQUEST_URI', '/?/ci/woot');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/?/ci/woot')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -153,8 +161,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     public function testRequestURISuppressed(): void
     {
         // /woot?code=good#pos
-        service('superglobals')->setServer('REQUEST_URI', '/woot');
-        service('superglobals')->setServer('SCRIPT_NAME', '/');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/woot')
+            ->setServer('SCRIPT_NAME', '/');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -165,8 +174,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     public function testRequestURIGetPath(): void
     {
         // /index.php/fruits/banana
-        service('superglobals')->setServer('REQUEST_URI', '/index.php/fruits/banana');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/index.php/fruits/banana')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -176,8 +186,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     public function testRequestURIPathIsRelative(): void
     {
         // /sub/folder/index.php/fruits/banana
-        service('superglobals')->setServer('REQUEST_URI', '/sub/folder/index.php/fruits/banana');
-        service('superglobals')->setServer('SCRIPT_NAME', '/sub/folder/index.php');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/sub/folder/index.php/fruits/banana')
+            ->setServer('SCRIPT_NAME', '/sub/folder/index.php');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -187,8 +198,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     public function testRequestURIStoresDetectedPath(): void
     {
         // /fruits/banana
-        service('superglobals')->setServer('REQUEST_URI', '/fruits/banana');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/fruits/banana')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -199,8 +211,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
 
     public function testRequestURIPathIsNeverRediscovered(): void
     {
-        service('superglobals')->setServer('REQUEST_URI', '/fruits/banana');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/fruits/banana')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -213,11 +226,11 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     public function testQueryString(): void
     {
         // /index.php?/ci/woot
-        service('superglobals')->setServer('REQUEST_URI', '/index.php?/ci/woot');
-        service('superglobals')->setServer('QUERY_STRING', '/ci/woot');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
-
-        service('superglobals')->setGet('/ci/woot', '');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/index.php?/ci/woot')
+            ->setServer('QUERY_STRING', '/ci/woot')
+            ->setServer('SCRIPT_NAME', '/index.php')
+            ->setGet('/ci/woot', '');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -228,11 +241,11 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     public function testQueryStringWithQueryString(): void
     {
         // /index.php?/ci/woot?code=good#pos
-        service('superglobals')->setServer('REQUEST_URI', '/index.php?/ci/woot?code=good');
-        service('superglobals')->setServer('QUERY_STRING', '/ci/woot?code=good');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
-
-        service('superglobals')->setGet('/ci/woot?code', 'good');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/index.php?/ci/woot?code=good')
+            ->setServer('QUERY_STRING', '/ci/woot?code=good')
+            ->setServer('SCRIPT_NAME', '/index.php')
+            ->setGet('/ci/woot?code', 'good');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -245,8 +258,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     public function testQueryStringEmpty(): void
     {
         // /index.php?
-        service('superglobals')->setServer('REQUEST_URI', '/index.php?');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/index.php?')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -257,8 +271,9 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     public function testPathInfoUnset(): void
     {
         // /index.php/woot?code=good#pos
-        service('superglobals')->setServer('REQUEST_URI', '/index.php/woot');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')
+            ->setServer('REQUEST_URI', '/index.php/woot')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray());
 
@@ -272,9 +287,10 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
         $appConfig->baseURL = 'http://localhost:8888/ci431/public/';
 
         // http://localhost:8888/ci431/public/index.php/woot?code=good#pos
-        service('superglobals')->setServer('PATH_INFO', '/woot');
-        service('superglobals')->setServer('REQUEST_URI', '/ci431/public/index.php/woot?code=good');
-        service('superglobals')->setServer('SCRIPT_NAME', '/ci431/public/index.php');
+        service('superglobals')
+            ->setServer('PATH_INFO', '/woot')
+            ->setServer('REQUEST_URI', '/ci431/public/index.php/woot?code=good')
+            ->setServer('SCRIPT_NAME', '/ci431/public/index.php');
 
         $factory = $this->createSiteURIFactory(service('superglobals')->getServerArray(), $appConfig);
 
