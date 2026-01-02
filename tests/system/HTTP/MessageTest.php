@@ -249,7 +249,6 @@ final class MessageTest extends CIUnitTestCase
     public function testPopulateHeadersWithoutContentType(): void
     {
         $superglobals = service('superglobals');
-        $original     = $superglobals->getServerArray();
         $originalEnv  = getenv('CONTENT_TYPE');
 
         // fail path, if the CONTENT_TYPE doesn't exist

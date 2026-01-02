@@ -472,7 +472,7 @@ final class SuperglobalsTest extends CIUnitTestCase
             ],
         ];
 
-        $superglobals = new Superglobals($server, $get, $post, $cookie, $files, $request);
+        new Superglobals($server, $get, $post, $cookie, $files, $request);
 
         // Verify PHP superglobals are synchronized
         $this->assertSame('server_val', $_SERVER['CUSTOM_SERVER']);
