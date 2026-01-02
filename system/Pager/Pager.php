@@ -434,7 +434,7 @@ class Pager implements PagerInterface
         } else {
             $pageSelector = $this->groups[$group]['pageSelector'];
 
-            $page = (int) (service('superglobals')->get($pageSelector) ?? 1);
+            $page = (int) (service('superglobals')->get($pageSelector, 1));
 
             $this->groups[$group]['currentPage'] = $page < 1 ? 1 : $page;
         }

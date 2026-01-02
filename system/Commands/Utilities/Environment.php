@@ -86,7 +86,7 @@ final class Environment extends BaseCommand
     public function run(array $params)
     {
         if ($params === []) {
-            CLI::write(sprintf('Your environment is currently set as %s.', CLI::color(service('superglobals')->server('CI_ENVIRONMENT') ?? ENVIRONMENT, 'green')));
+            CLI::write(sprintf('Your environment is currently set as %s.', CLI::color(service('superglobals')->server('CI_ENVIRONMENT', ENVIRONMENT), 'green')));
             CLI::newLine();
 
             return EXIT_ERROR;
@@ -150,7 +150,7 @@ final class Environment extends BaseCommand
             copy($baseEnv, $envFile);
         }
 
-        $pattern = preg_quote(service('superglobals')->server('CI_ENVIRONMENT') ?? ENVIRONMENT, '/');
+        $pattern = preg_quote(service('superglobals')->server('CI_ENVIRONMENT', ENVIRONMENT), '/');
         $pattern = sprintf('/^[#\s]*CI_ENVIRONMENT[=\s]+%s$/m', $pattern);
 
         return file_put_contents(

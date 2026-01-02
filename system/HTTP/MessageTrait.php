@@ -86,7 +86,7 @@ trait MessageTrait
      */
     public function populateHeaders(): void
     {
-        $contentType = service('superglobals')->server('CONTENT_TYPE') ?? getenv('CONTENT_TYPE');
+        $contentType = service('superglobals')->server('CONTENT_TYPE', (string) getenv('CONTENT_TYPE'));
         if (! empty($contentType)) {
             $this->setHeader('Content-Type', $contentType);
         }
