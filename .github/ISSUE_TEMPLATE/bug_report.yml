@@ -83,6 +83,18 @@ body:
     validations:
       required: true
 
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      description: Which CI_ENVIRONMENT setting are you using?
+      options:
+        - production
+        - development
+        - testing
+    validations:
+      required: true
+
   - type: input
     id: database
     attributes:
