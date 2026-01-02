@@ -88,6 +88,7 @@ body:
     attributes:
       label: Environment
       description: Which CI_ENVIRONMENT setting are you using?
+      multiple: true
       options:
         - production
         - development
