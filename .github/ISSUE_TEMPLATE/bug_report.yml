@@ -93,6 +93,7 @@ body:
         - production
         - development
         - testing
+        - self-env
     validations:
       required: true
 
