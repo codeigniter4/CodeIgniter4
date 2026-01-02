@@ -19,6 +19,7 @@ parameters:
             - system/Commands/Generators/Views/*
             - system/Debug/Toolbar/Views/toolbar.tpl.php
             - system/Images/Handlers/GDHandler.php
+            - system/Test/Mock/MockCommon.php
             - system/ThirdParty/*
             - system/Validation/Views/single.php
             - tests/system/View/Views/*

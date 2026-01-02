@@ -1,0 +1,8 @@
+# total 2 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Function is_cli invoked with 1 parameter, 0 required\.$#'
+            count: 2
+            path: ../../tests/system/Debug/ToolbarTest.php
