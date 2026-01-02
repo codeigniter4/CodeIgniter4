@@ -48,8 +48,7 @@ final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $_COOKIE = [];
-        Services::injectMock('superglobals', new Superglobals());
+        Services::injectMock('superglobals', new Superglobals(null, null, null, []));
 
         $this->config                 = new SecurityConfig();
         $this->config->csrfProtection = Security::CSRF_PROTECTION_COOKIE;

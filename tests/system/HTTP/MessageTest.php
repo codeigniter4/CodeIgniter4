@@ -18,12 +18,14 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
+use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
  */
+#[BackupGlobals(true)]
 #[Group('Others')]
 final class MessageTest extends CIUnitTestCase
 {
@@ -259,7 +261,6 @@ final class MessageTest extends CIUnitTestCase
         $this->assertNull($this->message->header('content-type'));
 
         putenv("CONTENT_TYPE={$originalEnv}");
-        $superglobals->setServerArray($original); // restore so code coverage doesn't break
     }
 
     public function testPopulateHeadersWithoutHTTP(): void

@@ -31,10 +31,7 @@ final class SuperglobalsTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        // Clear superglobals before each test
-        $_SERVER = $_GET = $_POST = $_COOKIE = $_FILES = $_REQUEST = [];
-
-        $this->superglobals = new Superglobals();
+        $this->superglobals = new Superglobals([], [], [], [], [], []);
     }
 
     // $_SERVER tests
@@ -456,5 +453,97 @@ final class SuperglobalsTest extends CIUnitTestCase
         $this->assertSame('cookie_value', $superglobals->cookie('cookie_key'));
         $this->assertSame('request_value', $superglobals->request('request_key'));
         $this->assertSame($files, $superglobals->getFilesArray());
+    }
+
+    public function testConstructorSynchronizesWithPhpSuperglobals(): void
+    {
+        $server  = ['CUSTOM_SERVER' => 'server_val'];
+        $get     = ['custom_get' => 'get_val'];
+        $post    = ['custom_post' => 'post_val'];
+        $cookie  = ['custom_cookie' => 'cookie_val'];
+        $request = ['custom_request' => 'request_val'];
+        $files   = [
+            'doc' => [
+                'name'     => 'test.pdf',
+                'type'     => 'application/pdf',
+                'tmp_name' => '/tmp/test',
+                'error'    => UPLOAD_ERR_OK,
+                'size'     => 999,
+            ],
+        ];
+
+        $superglobals = new Superglobals($server, $get, $post, $cookie, $files, $request);
+
+        // Verify PHP superglobals are synchronized
+        $this->assertSame('server_val', $_SERVER['CUSTOM_SERVER']);
+        $this->assertSame('get_val', $_GET['custom_get']);
+        $this->assertSame('post_val', $_POST['custom_post']);
+        $this->assertSame('cookie_val', $_COOKIE['custom_cookie']);
+        $this->assertSame('request_val', $_REQUEST['custom_request']);
+        $this->assertSame($files, $_FILES);
+    }
+
+    // Fluent API tests
+    public function testFluentApiMethodChaining(): void
+    {
+        $result = $this->superglobals
+            ->setServer('KEY1', 'value1')
+            ->setGet('KEY2', 'value2')
+            ->setPost('KEY3', 'value3')
+            ->setCookie('KEY4', 'value4')
+            ->setRequest('KEY5', 'value5');
+
+        $this->assertInstanceOf(Superglobals::class, $result);
+        $this->assertSame('value1', $this->superglobals->server('KEY1'));
+        $this->assertSame('value2', $this->superglobals->get('KEY2'));
+        $this->assertSame('value3', $this->superglobals->post('KEY3'));
+        $this->assertSame('value4', $this->superglobals->cookie('KEY4'));
+        $this->assertSame('value5', $this->superglobals->request('KEY5'));
+    }
+
+    public function testFluentApiWithUnset(): void
+    {
+        $result = $this->superglobals
+            ->setServer('KEY1', 'value1')
+            ->setServer('KEY2', 'value2')
+            ->setGet('KEY3', 'value3')
+            ->unsetServer('KEY1')
+            ->unsetGet('KEY3');
+
+        $this->assertInstanceOf(Superglobals::class, $result);
+        $this->assertNull($this->superglobals->server('KEY1'));
+        $this->assertSame('value2', $this->superglobals->server('KEY2'));
+        $this->assertNull($this->superglobals->get('KEY3'));
+    }
+
+    public function testFluentApiWithArraySetters(): void
+    {
+        $serverData = ['SERVER1' => 'val1', 'SERVER2' => 'val2'];
+        $getData    = ['get1' => 'val3'];
+
+        $result = $this->superglobals
+            ->setServerArray($serverData)
+            ->setGetArray($getData)
+            ->setPostArray(['post1' => 'val4']);
+
+        $this->assertInstanceOf(Superglobals::class, $result);
+        $this->assertSame('val1', $this->superglobals->server('SERVER1'));
+        $this->assertSame('val2', $this->superglobals->server('SERVER2'));
+        $this->assertSame('val3', $this->superglobals->get('get1'));
+        $this->assertSame('val4', $this->superglobals->post('post1'));
+    }
+
+    public function testFluentApiMixedOperations(): void
+    {
+        $result = $this->superglobals
+            ->setServerArray(['KEY1' => 'value1'])
+            ->setServer('KEY2', 'value2')
+            ->unsetServer('KEY1')
+            ->setGet('test', 'data');
+
+        $this->assertInstanceOf(Superglobals::class, $result);
+        $this->assertNull($this->superglobals->server('KEY1'));
+        $this->assertSame('value2', $this->superglobals->server('KEY2'));
+        $this->assertSame('data', $this->superglobals->get('test'));
     }
 }

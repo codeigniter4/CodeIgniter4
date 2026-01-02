@@ -55,12 +55,12 @@ final class Superglobals
         private ?array $files = null,
         private ?array $request = null,
     ) {
-        $this->server ??= $_SERVER;
-        $this->get ??= $_GET;
-        $this->post ??= $_POST;
-        $this->cookie ??= $_COOKIE;
-        $this->files ??= $_FILES;
-        $this->request ??= $_REQUEST;
+        $this->setServerArray($server ?? $_SERVER);
+        $this->setGetArray($get ?? $_GET);
+        $this->setPostArray($post ?? $_POST);
+        $this->setCookieArray($cookie ?? $_COOKIE);
+        $this->setFilesArray($files ?? $_FILES);
+        $this->setRequestArray($request ?? $_REQUEST);
     }
 
     /**
@@ -80,18 +80,22 @@ final class Superglobals
      *
      * @param server_items $value
      */
-    public function setServer(string $key, array|float|int|string $value): void
+    public function setServer(string $key, array|float|int|string $value): self
     {
         $this->server[$key] = $value;
         $_SERVER[$key]      = $value;
+
+        return $this;
     }
 
     /**
      * Remove a key from $_SERVER.
      */
-    public function unsetServer(string $key): void
+    public function unsetServer(string $key): self
     {
         unset($this->server[$key], $_SERVER[$key]);
+
+        return $this;
     }
 
     /**
@@ -109,10 +113,12 @@ final class Superglobals
      *
      * @param array<string, server_items> $array
      */
-    public function setServerArray(array $array): void
+    public function setServerArray(array $array): self
     {
         $this->server = $array;
         $_SERVER      = $array;
+
+        return $this;
     }
 
     /**
@@ -132,18 +138,22 @@ final class Superglobals
      *
      * @param get_items $value
      */
-    public function setGet(string $key, array|string $value): void
+    public function setGet(string $key, array|string $value): self
     {
         $this->get[$key] = $value;
         $_GET[$key]      = $value;
+
+        return $this;
     }
 
     /**
      * Remove a key from $_GET.
      */
-    public function unsetGet(string $key): void
+    public function unsetGet(string $key): self
     {
         unset($this->get[$key], $_GET[$key]);
+
+        return $this;
     }
 
     /**
@@ -161,10 +171,12 @@ final class Superglobals
      *
      * @param array<string, get_items> $array
      */
-    public function setGetArray(array $array): void
+    public function setGetArray(array $array): self
     {
         $this->get = $array;
         $_GET      = $array;
+
+        return $this;
     }
 
     /**
@@ -184,18 +196,22 @@ final class Superglobals
      *
      * @param post_items $value
      */
-    public function setPost(string $key, array|string $value): void
+    public function setPost(string $key, array|string $value): self
     {
         $this->post[$key] = $value;
         $_POST[$key]      = $value;
+
+        return $this;
     }
 
     /**
      * Remove a key from $_POST.
      */
-    public function unsetPost(string $key): void
+    public function unsetPost(string $key): self
     {
         unset($this->post[$key], $_POST[$key]);
+
+        return $this;
     }
 
     /**
@@ -213,10 +229,12 @@ final class Superglobals
      *
      * @param array<string, post_items> $array
      */
-    public function setPostArray(array $array): void
+    public function setPostArray(array $array): self
     {
         $this->post = $array;
         $_POST      = $array;
+
+        return $this;
     }
 
     /**
@@ -236,18 +254,22 @@ final class Superglobals
      *
      * @param cookie_items $value
      */
-    public function setCookie(string $key, array|string $value): void
+    public function setCookie(string $key, array|string $value): self
     {
         $this->cookie[$key] = $value;
         $_COOKIE[$key]      = $value;
+
+        return $this;
     }
 
     /**
      * Remove a key from $_COOKIE.
      */
-    public function unsetCookie(string $key): void
+    public function unsetCookie(string $key): self
     {
         unset($this->cookie[$key], $_COOKIE[$key]);
+
+        return $this;
     }
 
     /**
@@ -265,10 +287,12 @@ final class Superglobals
      *
      * @param array<string, cookie_items> $array
      */
-    public function setCookieArray(array $array): void
+    public function setCookieArray(array $array): self
     {
         $this->cookie = $array;
         $_COOKIE      = $array;
+
+        return $this;
     }
 
     /**
@@ -288,18 +312,22 @@ final class Superglobals
      *
      * @param request_items $value
      */
-    public function setRequest(string $key, array|string $value): void
+    public function setRequest(string $key, array|string $value): self
     {
         $this->request[$key] = $value;
         $_REQUEST[$key]      = $value;
+
+        return $this;
     }
 
     /**
      * Remove a key from $_REQUEST.
      */
-    public function unsetRequest(string $key): void
+    public function unsetRequest(string $key): self
     {
         unset($this->request[$key], $_REQUEST[$key]);
+
+        return $this;
     }
 
     /**
@@ -317,10 +345,12 @@ final class Superglobals
      *
      * @param array<string, request_items> $array
      */
-    public function setRequestArray(array $array): void
+    public function setRequestArray(array $array): self
     {
         $this->request = $array;
         $_REQUEST      = $array;
+
+        return $this;
     }
 
     /**
@@ -338,10 +368,12 @@ final class Superglobals
      *
      * @param files_items $array
      */
-    public function setFilesArray(array $array): void
+    public function setFilesArray(array $array): self
     {
         $this->files = $array;
         $_FILES      = $array;
+
+        return $this;
     }
 
     /**

@@ -42,10 +42,9 @@ final class SessionTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $_COOKIE  = [];
         $_SESSION = [];
 
-        Services::injectMock('superglobals', new Superglobals());
+        Services::injectMock('superglobals', new Superglobals(null, null, null, []));
     }
 
     /**

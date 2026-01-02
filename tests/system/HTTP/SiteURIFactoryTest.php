@@ -32,9 +32,7 @@ final class SiteURIFactoryTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $_GET = $_SERVER = [];
-
-        Services::injectMock('superglobals', new Superglobals());
+        Services::injectMock('superglobals', new Superglobals([], []));
     }
 
     private function createSiteURIFactory(?App $config = null, ?Superglobals $superglobals = null): SiteURIFactory

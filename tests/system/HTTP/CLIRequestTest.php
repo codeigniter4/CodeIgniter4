@@ -36,9 +36,6 @@ final class CLIRequestTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $_POST = [];
-        $_GET  = [];
-
         Services::injectMock('superglobals', new Superglobals(['argv' => []], [], [], [], []));
 
         $this->request = new CLIRequest(new App());

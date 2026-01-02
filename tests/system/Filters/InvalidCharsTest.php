@@ -39,11 +39,7 @@ final class InvalidCharsTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $_GET    = [];
-        $_POST   = [];
-        $_COOKIE = [];
-
-        Services::injectMock('superglobals', new Superglobals());
+        Services::injectMock('superglobals', new Superglobals(null, [], [], []));
 
         $this->request      = $this->createRequest();
         $this->invalidChars = new InvalidChars();
