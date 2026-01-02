@@ -55,12 +55,13 @@ final class Superglobals
         private ?array $files = null,
         private ?array $request = null,
     ) {
-        $this->setServerArray($server ?? $_SERVER);
-        $this->setGetArray($get ?? $_GET);
-        $this->setPostArray($post ?? $_POST);
-        $this->setCookieArray($cookie ?? $_COOKIE);
-        $this->setFilesArray($files ?? $_FILES);
-        $this->setRequestArray($request ?? $_REQUEST);
+        $this
+            ->setServerArray($server ?? $_SERVER)
+            ->setGetArray($get ?? $_GET)
+            ->setPostArray($post ?? $_POST)
+            ->setCookieArray($cookie ?? $_COOKIE)
+            ->setFilesArray($files ?? $_FILES)
+            ->setRequestArray($request ?? $_REQUEST);
     }
 
     /**

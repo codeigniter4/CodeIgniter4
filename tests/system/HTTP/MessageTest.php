@@ -266,7 +266,6 @@ final class MessageTest extends CIUnitTestCase
     {
         // fail path, if argument doesn't have the HTTP_*
         $superglobals = service('superglobals');
-        $original     = $superglobals->getServerArray();
         $superglobals->setServerArray([
             'USER_AGENT'     => 'Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405',
             'REQUEST_METHOD' => 'POST',
@@ -276,15 +275,12 @@ final class MessageTest extends CIUnitTestCase
 
         $this->assertNull($this->message->header('user-agent'));
         $this->assertNull($this->message->header('request-method'));
-
-        $superglobals->setServerArray($original); // restore so code coverage doesn't break
     }
 
     public function testPopulateHeadersKeyNotExists(): void
     {
         // Success path, if array key is not exists, assign empty string to it's value
         $superglobals = service('superglobals');
-        $original     = $superglobals->getServerArray();
         $superglobals->setServerArray([
             'CONTENT_TYPE'        => 'text/html; charset=utf-8',
             'HTTP_ACCEPT_CHARSET' => null,
@@ -293,15 +289,12 @@ final class MessageTest extends CIUnitTestCase
         $this->message->populateHeaders();
 
         $this->assertSame('', $this->message->header('accept-charset')->getValue());
-
-        $superglobals->setServerArray($original); // restore so code coverage doesn't break
     }
 
     public function testPopulateHeaders(): void
     {
         // success path
         $superglobals = service('superglobals');
-        $original     = $superglobals->getServerArray();
         $superglobals->setServerArray([
             'CONTENT_TYPE'         => 'text/html; charset=utf-8',
             'HTTP_ACCEPT_LANGUAGE' => 'en-us,en;q=0.50',
@@ -311,8 +304,6 @@ final class MessageTest extends CIUnitTestCase
 
         $this->assertSame('text/html; charset=utf-8', $this->message->header('content-type')->getValue());
         $this->assertSame('en-us,en;q=0.50', $this->message->header('accept-language')->getValue());
-
-        $superglobals->setServerArray($original); // restore so code coverage doesn't break
     }
 
     public function testAddHeaderAddsFirstHeader(): void
