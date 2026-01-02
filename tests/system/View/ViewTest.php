@@ -34,9 +34,10 @@ final class ViewTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->loader   = service('locator');
-        $this->viewsDir = __DIR__ . '/Views';
-        $this->config   = new Config\View();
+        $this->loader                     = service('locator');
+        $this->viewsDir                   = __DIR__ . '/Views';
+        $this->config                     = new Config\View();
+        $this->config->appOverridesFolder = '';
     }
 
     public function testSetVarStoresData(): void
@@ -465,5 +466,24 @@ final class ViewTest extends CIUnitTestCase
         $view->setVar('testString', 'Hello World');
 
         $view->render($namespacedView);
+    }
+
+    public function testOverrideWithCustomFolderChecksSubdirectory(): void
+    {
+        $this->config->appOverridesFolder = 'overrides';
+
+        $loader = $this->createMock(FileLocatorInterface::class);
+        $loader->expects($this->once())
+            ->method('locateFile')
+            ->with('Nested\simple.php', 'Views', 'php')
+            ->willReturn($this->viewsDir . '/simple.php');
+
+        $view = new View($this->config, $this->viewsDir, $loader);
+
+        $view->setVar('testString', 'Fallback Content');
+
+        $output = $view->render('Nested\simple');
+
+        $this->assertStringContainsString('<h1>Fallback Content</h1>', $output);
     }
 }
