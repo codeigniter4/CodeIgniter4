@@ -272,11 +272,11 @@ final class CodeIgniterTest extends CIUnitTestCase
      */
     public function testControllersCanReturnDownloadResponseObject(): void
     {
-        service('superglobals')->setServer('argv', ['index.php', 'pages/about']);
-        service('superglobals')->setServer('argc', 2);
-
-        service('superglobals')->setServer('REQUEST_URI', '/pages/about');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')
+            ->setServer('argv', ['index.php', 'pages/about'])
+            ->setServer('argc', 2)
+            ->setServer('REQUEST_URI', '/pages/about')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router.
         $routes = service('routes');
@@ -297,11 +297,11 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunExecuteFilterByClassName(): void
     {
-        service('superglobals')->setServer('argv', ['index.php', 'pages/about']);
-        service('superglobals')->setServer('argc', 2);
-
-        service('superglobals')->setServer('REQUEST_URI', '/pages/about');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')
+            ->setServer('argv', ['index.php', 'pages/about'])
+            ->setServer('argc', 2)
+            ->setServer('REQUEST_URI', '/pages/about')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router.
         $routes = service('routes');
@@ -325,11 +325,11 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRegisterSameFilterTwiceWithDifferentArgument(): void
     {
-        service('superglobals')->setServer('argv', ['index.php', 'pages/about']);
-        service('superglobals')->setServer('argc', 2);
-
-        service('superglobals')->setServer('REQUEST_URI', '/pages/about');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')
+            ->setServer('argv', ['index.php', 'pages/about'])
+            ->setServer('argc', 2)
+            ->setServer('REQUEST_URI', '/pages/about')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         $routes = service('routes');
         $routes->add(
@@ -363,11 +363,11 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testDisableControllerFilters(): void
     {
-        service('superglobals')->setServer('argv', ['index.php', 'pages/about']);
-        service('superglobals')->setServer('argc', 2);
-
-        service('superglobals')->setServer('REQUEST_URI', '/pages/about');
-        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')
+            ->setServer('argv', ['index.php', 'pages/about'])
+            ->setServer('argc', 2)
+            ->setServer('REQUEST_URI', '/pages/about')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router.
         $routes = service('routes');
@@ -391,8 +391,9 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testResponseConfigEmpty(): void
     {
-        service('superglobals')->setServer('argv', ['index.php', '/']);
-        service('superglobals')->setServer('argc', 2);
+        service('superglobals')
+            ->setServer('argv', ['index.php', '/'])
+            ->setServer('argc', 2);
 
         $response = service('response', null, false);
 
@@ -401,8 +402,9 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRoutesIsEmpty(): void
     {
-        service('superglobals')->setServer('argv', ['index.php', '/']);
-        service('superglobals')->setServer('argc', 2);
+        service('superglobals')
+            ->setServer('argv', ['index.php', '/'])
+            ->setServer('argc', 2);
 
         // Inject mock router.
         $router = service('router', null, service('incomingrequest'), false);
@@ -417,10 +419,10 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testTransfersCorrectHTTPVersion(): void
     {
-        service('superglobals')->setServer('argv', ['index.php', '/']);
-        service('superglobals')->setServer('argc', 2);
-
-        service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/2.0');
+        service('superglobals')
+            ->setServer('argv', ['index.php', '/'])
+            ->setServer('argc', 2)
+            ->setServer('SERVER_PROTOCOL', 'HTTP/2.0');
 
         ob_start();
         $this->codeigniter->run();
@@ -433,10 +435,10 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testSupportsHttp3(): void
     {
-        service('superglobals')->setServer('argv', ['index.php', '/']);
-        service('superglobals')->setServer('argc', 2);
-
-        service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/3.0');
+        service('superglobals')
+            ->setServer('argv', ['index.php', '/'])
+            ->setServer('argc', 2)
+            ->setServer('SERVER_PROTOCOL', 'HTTP/3.0');
 
         ob_start();
         $this->codeigniter->run();
@@ -449,8 +451,9 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testIgnoringErrorSuppressedByAt(): void
     {
-        service('superglobals')->setServer('argv', ['index.php', '/']);
-        service('superglobals')->setServer('argc', 2);
+        service('superglobals')
+            ->setServer('argv', ['index.php', '/'])
+            ->setServer('argc', 2);
 
         ob_start();
         @unlink('inexistent-file');
@@ -462,8 +465,9 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunForceSecure(): void
     {
-        service('superglobals')->setServer('argv', ['index.php', '/']);
-        service('superglobals')->setServer('argc', 2);
+        service('superglobals')
+            ->setServer('argv', ['index.php', '/'])
+            ->setServer('argc', 2);
 
         $filterConfig                       = config(FiltersConfig::class);
         $filterConfig->required['before'][] = 'forcehttps';

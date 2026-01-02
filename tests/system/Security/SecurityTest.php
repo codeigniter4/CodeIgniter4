@@ -98,8 +98,9 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testGetHashReturnsCSRFCookieWhenGETWithCSRFCookie(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
-        service('superglobals')->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'GET')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $security = $this->createMockSecurity();
 
@@ -110,9 +111,10 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyPostThrowsExceptionOnNoMatch(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
-        service('superglobals')->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a');
-        service('superglobals')->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005b');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005b');
 
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest();
@@ -123,10 +125,11 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyPostReturnsSelfOnMatch(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
-        service('superglobals')->setPost('foo', 'bar');
-        service('superglobals')->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a');
-        service('superglobals')->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('foo', 'bar')
+            ->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest();
@@ -139,8 +142,9 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyHeaderThrowsExceptionOnNoMatch(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
-        service('superglobals')->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005b');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005b');
 
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest();
@@ -153,9 +157,10 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyHeaderReturnsSelfOnMatch(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
-        service('superglobals')->setPost('foo', 'bar');
-        service('superglobals')->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('foo', 'bar')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest();
@@ -170,8 +175,9 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyJsonThrowsExceptionOnNoMatch(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
-        service('superglobals')->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005b');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005b');
 
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest();
@@ -186,8 +192,9 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyJsonReturnsSelfOnMatch(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
-        service('superglobals')->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest();
@@ -204,8 +211,9 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyPutBodyThrowsExceptionOnNoMatch(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'PUT');
-        service('superglobals')->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005b');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'PUT')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005b');
 
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest();
@@ -220,8 +228,9 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyPutBodyReturnsSelfOnMatch(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'PUT');
-        service('superglobals')->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'PUT')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $security = $this->createMockSecurity();
         $request  = $this->createIncomingRequest();
@@ -247,9 +256,10 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testRegenerateWithFalseSecurityRegenerateProperty(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
-        service('superglobals')->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a');
-        service('superglobals')->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $config             = new SecurityConfig();
         $config->regenerate = false;
@@ -267,9 +277,10 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testRegenerateWithFalseSecurityRegeneratePropertyManually(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
-        service('superglobals')->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a');
-        service('superglobals')->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $config             = new SecurityConfig();
         $config->regenerate = false;
@@ -288,9 +299,10 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testRegenerateWithTrueSecurityRegenerateProperty(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
-        service('superglobals')->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a');
-        service('superglobals')->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a')
+            ->setCookie('csrf_cookie_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $config             = new SecurityConfig();
         $config->regenerate = true;

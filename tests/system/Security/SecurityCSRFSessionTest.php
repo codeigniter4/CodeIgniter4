@@ -130,8 +130,9 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
     {
         $this->expectException(SecurityException::class);
 
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
-        service('superglobals')->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005b');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005b');
 
         $request  = $this->createIncomingRequest();
         $security = $this->createSecurity();
@@ -148,9 +149,10 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
 
     public function testCSRFVerifyPostReturnsSelfOnMatch(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
-        service('superglobals')->setPost('foo', 'bar');
-        service('superglobals')->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('foo', 'bar')
+            ->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         $request  = $this->createIncomingRequest();
         $security = $this->createSecurity();
@@ -174,8 +176,9 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
 
     public function testCSRFVerifyPOSTHeaderReturnsSelfOnMatch(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
-        service('superglobals')->setPost('foo', 'bar');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('foo', 'bar');
 
         $request = $this->createIncomingRequest();
         $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
@@ -250,8 +253,9 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
 
     public function testRegenerateWithFalseSecurityRegenerateProperty(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
-        service('superglobals')->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         /**
          * @var SecurityConfig
@@ -272,8 +276,9 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
 
     public function testRegenerateWithTrueSecurityRegenerateProperty(): void
     {
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
-        service('superglobals')->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a');
+        service('superglobals')
+            ->setServer('REQUEST_METHOD', 'POST')
+            ->setPost('csrf_test_name', '8b9218a55906f9dcc1dc263dce7f005a');
 
         /**
          * @var SecurityConfig

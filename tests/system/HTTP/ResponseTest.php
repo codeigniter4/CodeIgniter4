@@ -281,9 +281,10 @@ final class ResponseTest extends CIUnitTestCase
         ?int $code,
         int $expectedCode,
     ): void {
-        service('superglobals')->setServer('SERVER_SOFTWARE', $server);
-        service('superglobals')->setServer('SERVER_PROTOCOL', $protocol);
-        service('superglobals')->setServer('REQUEST_METHOD', $method);
+        service('superglobals')
+            ->setServer('SERVER_SOFTWARE', $server)
+            ->setServer('SERVER_PROTOCOL', $protocol)
+            ->setServer('REQUEST_METHOD', $method);
 
         $response = new Response(new App());
         $response->redirect('example.com', 'auto', $code);
@@ -324,9 +325,10 @@ final class ResponseTest extends CIUnitTestCase
         ?int $code,
         int $expectedCode,
     ): void {
-        service('superglobals')->setServer('SERVER_SOFTWARE', 'Microsoft-IIS');
-        service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/1.1');
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
+        service('superglobals')
+            ->setServer('SERVER_SOFTWARE', 'Microsoft-IIS')
+            ->setServer('SERVER_PROTOCOL', 'HTTP/1.1')
+            ->setServer('REQUEST_METHOD', 'POST');
 
         $response = new Response(new App());
         $response->redirect('example.com', 'auto', $code);
@@ -521,8 +523,9 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testTemporaryRedirectHTTP11(): void
     {
-        service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/1.1');
-        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
+        service('superglobals')
+            ->setServer('SERVER_PROTOCOL', 'HTTP/1.1')
+            ->setServer('REQUEST_METHOD', 'POST');
         $response = new Response(new App());
 
         $response->setProtocolVersion('HTTP/1.1');
@@ -533,8 +536,9 @@ final class ResponseTest extends CIUnitTestCase
 
     public function testTemporaryRedirectGetHTTP11(): void
     {
-        service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/1.1');
-        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
+        service('superglobals')
+            ->setServer('SERVER_PROTOCOL', 'HTTP/1.1')
+            ->setServer('REQUEST_METHOD', 'GET');
         $response = new Response(new App());
 
         $response->setProtocolVersion('HTTP/1.1');
