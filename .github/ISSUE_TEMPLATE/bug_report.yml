@@ -93,7 +93,7 @@ body:
         - production
         - development
         - testing
-        - Other(custom)
+        - other (custom)
     validations:
       required: true
 
