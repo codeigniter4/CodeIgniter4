@@ -1,7 +1,8 @@
-# total 2635 errors
+# total 2637 errors
 
 includes:
     - argument.type.neon
+    - arguments.count.neon
     - assign.propertyType.neon
     - booleanNot.exprNotBoolean.neon
     - codeigniter.getReassignArray.neon
