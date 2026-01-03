@@ -112,7 +112,6 @@
         ],
         "metrics": "utils/vendor/bin/phpmetrics --config=phpmetrics.json",
         "phpstan:baseline": [
-            "php utils/prepare-baseline.php",
             "phpstan analyse --ansi --generate-baseline=utils/phpstan-baseline/loader.neon",
             "split-phpstan-baseline utils/phpstan-baseline/loader.neon"
         ],
