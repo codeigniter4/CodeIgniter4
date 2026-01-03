@@ -112,8 +112,6 @@
         ],
         "metrics": "utils/vendor/bin/phpmetrics --config=phpmetrics.json",
         "phpstan:baseline": [
-            "bash -c \"rm -rf utils/phpstan-baseline/*.neon\"",
-            "bash -c \"touch utils/phpstan-baseline/loader.neon\"",
             "phpstan analyse --ansi --generate-baseline=utils/phpstan-baseline/loader.neon",
             "split-phpstan-baseline utils/phpstan-baseline/loader.neon"
         ],
