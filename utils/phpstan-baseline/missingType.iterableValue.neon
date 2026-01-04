@@ -1,4 +1,4 @@
-# total 1312 errors
+# total 1315 errors
 
 parameters:
     ignoreErrors:
@@ -2166,6 +2166,21 @@ parameters:
             message: '#^Method CodeIgniter\\Encryption\\Handlers\\SodiumHandler\:\:parseParams\(\) has parameter \$params with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Encryption/Handlers/SodiumHandler.php
+
+        -
+            message: '#^Method CodeIgniter\\Encryption\\KeyRotationDecorator\:\:__get\(\) return type has no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Encryption/KeyRotationDecorator.php
+
+        -
+            message: '#^Method CodeIgniter\\Encryption\\KeyRotationDecorator\:\:decrypt\(\) has parameter \$params with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Encryption/KeyRotationDecorator.php
+
+        -
+            message: '#^Method CodeIgniter\\Encryption\\KeyRotationDecorator\:\:encrypt\(\) has parameter \$params with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Encryption/KeyRotationDecorator.php
 
         -
             message: '#^Method CodeIgniter\\Entity\\Cast\\ArrayCast\:\:get\(\) has parameter \$value with no value type specified in iterable type array\.$#'
