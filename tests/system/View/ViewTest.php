@@ -17,7 +17,7 @@ use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
-use Config;
+use Config\View as ViewConfig;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -28,15 +28,16 @@ final class ViewTest extends CIUnitTestCase
 {
     private FileLocatorInterface $loader;
     private string $viewsDir;
-    private Config\View $config;
+    private ViewConfig $config;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->loader   = service('locator');
-        $this->viewsDir = __DIR__ . '/Views';
-        $this->config   = new Config\View();
+        $this->loader                     = service('locator');
+        $this->viewsDir                   = __DIR__ . '/Views';
+        $this->config                     = new ViewConfig();
+        $this->config->appOverridesFolder = '';
     }
 
     public function testSetVarStoresData(): void
@@ -412,5 +413,77 @@ final class ViewTest extends CIUnitTestCase
 
         $this->assertSame('CodeIgniter is a PHP full-stack web framework...', $view->excerpt('CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.', 48));
         $this->assertSame('CodeIgniter - это полнофункциональный веб-фреймворк...', $view->excerpt('CodeIgniter - это полнофункциональный веб-фреймворк на PHP, который является легким, быстрым, гибким и безопасным.', 54));
+    }
+
+    public function testRenderNamespacedViewPriorityToAppViews(): void
+    {
+        $loader = $this->createMock(FileLocatorInterface::class);
+        $loader->expects($this->never())->method('locateFile');
+
+        $view = new View($this->config, $this->viewsDir, $loader);
+
+        $view->setVar('testString', 'Hello World');
+        $expected = '<h1>Hello World</h1>';
+
+        $output = $view->render('Nested\simple');
+
+        $this->assertStringContainsString($expected, $output);
+    }
+
+    public function testRenderNamespacedViewFallsBackToLoader(): void
+    {
+        $namespacedView = 'Some\Library\View';
+
+        $realFile = $this->viewsDir . '/simple.php';
+
+        $loader = $this->createMock(FileLocatorInterface::class);
+        $loader->expects($this->once())
+            ->method('locateFile')
+            ->with($namespacedView . '.php', 'Views', 'php')
+            ->willReturn($realFile);
+
+        $view = new View($this->config, $this->viewsDir, $loader);
+
+        $view->setVar('testString', 'Hello World');
+        $output = $view->render($namespacedView);
+
+        $this->assertStringContainsString('<h1>Hello World</h1>', $output);
+    }
+
+    public function testRenderNamespacedViewWithExplicitExtension(): void
+    {
+        $namespacedView = 'Some\Library\View.html';
+
+        $realFile = $this->viewsDir . '/simple.php';
+
+        $loader = $this->createMock(FileLocatorInterface::class);
+        $loader->expects($this->once())
+            ->method('locateFile')
+            ->with($namespacedView, 'Views', 'html')
+            ->willReturn($realFile);
+
+        $view = new View($this->config, $this->viewsDir, $loader);
+        $view->setVar('testString', 'Hello World');
+
+        $view->render($namespacedView);
+    }
+
+    public function testOverrideWithCustomFolderChecksSubdirectory(): void
+    {
+        $this->config->appOverridesFolder = 'overrides';
+
+        $loader = $this->createMock(FileLocatorInterface::class);
+        $loader->expects($this->once())
+            ->method('locateFile')
+            ->with('Nested\simple.php', 'Views', 'php')
+            ->willReturn($this->viewsDir . '/simple.php');
+
+        $view = new View($this->config, $this->viewsDir, $loader);
+
+        $view->setVar('testString', 'Fallback Content');
+
+        $output = $view->render('Nested\simple');
+
+        $this->assertStringContainsString('<h1>Fallback Content</h1>', $output);
     }
 }

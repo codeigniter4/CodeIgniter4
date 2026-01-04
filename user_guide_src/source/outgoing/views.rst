@@ -104,6 +104,53 @@ example, you could load the **blog_view.php** file from **example/blog/Views** b
 
 .. literalinclude:: views/005.php
 
+.. _views-overriding-namespaced-views:
+
+Overriding Namespaced Views
+===========================
+
+.. versionadded:: 4.7.0
+
+You can override a namespaced view by creating a matching directory structure within your application's **app/Views** directory.
+This allows you to customize the output of modules or packages without modifying their core source code.
+
+Configuration
+-------------
+
+By default, overrides are looked for in the **app/Views/overrides** directory. You can configure this location via the ``$appOverridesFolder`` property in **app/Config/View.php**:
+
+.. code-block:: php
+
+    public string $appOverridesFolder = 'overrides';
+
+If you prefer to map namespaces directly to the root of **app/Views** (without a subdirectory), you can set this value to an empty string (``''``).
+
+Example
+-------
+
+Assume you have a module named **Blog** with the namespace ``Example\Blog``. The original view file is located at:
+
+.. code-block:: text
+
+    /modules
+    └── Example
+        └── Blog
+            └── Views
+                └── blog_view.php
+
+To override this view (using the default configuration), create a file at the matching path within **app/Views/overrides**:
+
+.. code-block:: text
+
+    /app
+    └── Views
+        └── overrides                 <-- Configured $appOverridesFolder
+            └── Example               <-- Matches the first part of namespace
+                └── Blog              <-- Matches the second part of namespace
+                    └── blog_view.php <-- Your custom view
+
+Now, when you call ``view('Example\Blog\blog_view')``, CodeIgniter will automatically load your custom view from **app/Views/overrides/Example/Blog/blog_view.php** instead of the original module view file.
+
 .. _caching-views:
 
 Caching Views
