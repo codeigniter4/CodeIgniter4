@@ -154,6 +154,12 @@ class OpenSSLHandler extends BaseHandler
         // derive a secret key
         $encryptKey = \hash_hkdf($this->digest, $key, 0, $this->encryptKeyInfo);
 
-        return \openssl_decrypt($data, $this->cipher, $encryptKey, OPENSSL_RAW_DATA, $iv);
+        $result = \openssl_decrypt($data, $this->cipher, $encryptKey, OPENSSL_RAW_DATA, $iv);
+
+        if ($result === false) {
+            throw EncryptionException::forAuthenticationFailed();
+        }
+
+        return $result;
     }
 }

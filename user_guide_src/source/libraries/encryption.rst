@@ -177,6 +177,55 @@ Similarly, you can use these prefixes in your **.env** file, too!
     // or
     encryption.key = base64:<your-base64-encoded-key>
 
+Encryption Key Rotation
+=======================
+
+.. versionadded:: 4.7.0
+
+When you need to rotate your encryption key (for security best practices or compliance requirements),
+you can use the ``previousKeys`` configuration option to maintain the ability to decrypt data encrypted
+with old keys while using a new key for all new encryption operations.
+
+How It Works
+------------
+
+- **Encryption** always uses the current ``key`` value
+- **Decryption** tries the current ``key`` first
+- If decryption fails, it automatically falls back to trying each key in ``previousKeys``
+- This allows seamless key rotation without data loss
+
+Configuration
+-------------
+
+Add your old keys to the ``$previousKeys`` property in **app/Config/Encryption.php**:
+
+.. literalinclude:: encryption/014.php
+
+Using .env File
+---------------
+
+You can also configure previous keys in your **.env** file (recommended) using a comma-separated list:
+
+::
+
+    encryption.key = hex2bin:your_new_key
+    encryption.previousKeys = hex2bin:old_key_1,hex2bin:old_key_2
+
+The framework automatically parses the comma-separated string into an array and processes each key.
+
+Key Rotation Workflow
+---------------------
+
+1. **Before rotation**: Data is encrypted and decrypted with ``key``
+2. **Start rotation**: Move current ``key`` value to ``previousKeys`` array, set new value for ``key``
+3. **During rotation**: New data encrypted with new ``key``, old data still decryptable via ``previousKeys``
+4. **Re-encrypt data** (optional): Decrypt and re-encrypt existing data with the new key
+5. **Complete rotation**: Once all data is re-encrypted, remove old keys from ``previousKeys``
+
+.. important:: The ``previousKeys`` feature is for **decryption fallback only**. All new encryption
+    operations always use the current ``key``. If you pass an explicit key via the ``$params``
+    argument to ``encrypt()`` or ``decrypt()``, the previousKeys fallback will not be used.
+
 Padding
 =======
 
