@@ -14,7 +14,8 @@
         "ext-intl": "*",
         "ext-mbstring": "*",
         "laminas/laminas-escaper": "^2.17",
-        "psr/log": "^3.0"
+        "psr/log": "^3.0",
+        "phpoffice/phpspreadsheet": "^1.29"
     },
     "require-dev": {
         "codeigniter/phpstan-codeigniter": "1.x-dev",
