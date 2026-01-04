@@ -24,8 +24,6 @@ use Config\Toolbar as ToolbarConfig;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
-require_once SUPPORTPATH . 'Mock/MockNativeHeaders.php';
-
 /**
  * @internal
  */
@@ -36,6 +34,14 @@ final class ToolbarTest extends CIUnitTestCase
     private ToolbarConfig $config;
     private ?IncomingRequest $request    = null;
     private ?ResponseInterface $response = null;
+
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        // Load the mock once for the whole test class
+        require_once SUPPORTPATH . 'Mock/MockNativeHeaders.php';
+    }
 
     protected function setUp(): void
     {
