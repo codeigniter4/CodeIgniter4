@@ -1,4 +1,4 @@
-# total 45 errors
+# total 47 errors
 
 parameters:
     ignoreErrors:
@@ -74,7 +74,7 @@ parameters:
 
         -
             message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$key\.$#'
-            count: 2
+            count: 3
             path: ../../tests/system/Encryption/Handlers/OpenSSLHandlerTest.php
 
         -
@@ -89,7 +89,7 @@ parameters:
 
         -
             message: '#^Access to an undefined property CodeIgniter\\Encryption\\EncrypterInterface\:\:\$key\.$#'
-            count: 1
+            count: 2
             path: ../../tests/system/Encryption/Handlers/SodiumHandlerTest.php
 
         -
