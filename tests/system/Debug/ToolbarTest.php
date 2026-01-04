@@ -19,11 +19,12 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Utilities\NativeHeadersStack;
 use Config\Toolbar as ToolbarConfig;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\Group;
 
-require_once SUPPORTPATH . 'Debug/MockNativeHeaders.php';
+require_once SUPPORTPATH . 'Mock/MockNativeHeaders.php';
 
 /**
  * @internal
@@ -40,7 +41,7 @@ final class ToolbarTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        MockNativeHeaders::reset();
+        NativeHeadersStack::reset();
 
         Services::reset();
 
@@ -112,7 +113,7 @@ final class ToolbarTest extends CIUnitTestCase
     public function testPrepareAbortsIfHeadersAlreadySent(): void
     {
         // Headers explicitly sent (e.g., echo before execution)
-        MockNativeHeaders::$headersSent = true;
+        NativeHeadersStack::setHeadersSent(true);
 
         $this->request  = service('incomingrequest', null, false);
         $this->response = service('response', null, false);
@@ -128,7 +129,7 @@ final class ToolbarTest extends CIUnitTestCase
     public function testPrepareAbortsIfNativeContentTypeIsNotHtml(): void
     {
         // A library (like Dompdf) set a PDF header directly
-        MockNativeHeaders::$headers = ['Content-Type: application/pdf'];
+        NativeHeadersStack::set('Content-Type: application/pdf');
 
         $this->request  = service('incomingrequest', null, false);
         $this->response = service('response', null, false);
@@ -145,10 +146,10 @@ final class ToolbarTest extends CIUnitTestCase
     public function testPrepareAbortsIfNativeContentDispositionIsAttachment(): void
     {
         // A file download (even if it is HTML)
-        MockNativeHeaders::$headers = [
+        NativeHeadersStack::pushMany([
             'Content-Type: text/html',
             'Content-Disposition: attachment; filename="report.html"',
-        ];
+        ]);
 
         $this->request  = service('incomingrequest', null, false);
         $this->response = service('response', null, false);
@@ -164,7 +165,7 @@ final class ToolbarTest extends CIUnitTestCase
     public function testPrepareWorksWithNativeHtmlHeader(): void
     {
         // Standard scenario where PHP header is text/html
-        MockNativeHeaders::$headers = ['Content-Type: text/html; charset=UTF-8'];
+        NativeHeadersStack::set('Content-Type: text/html; charset=UTF-8');
 
         $this->request  = service('incomingrequest', null, false);
         $this->response = service('response', null, false);
