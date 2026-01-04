@@ -14,134 +14,51 @@ declare(strict_types=1);
 namespace CodeIgniter\Test\Utilities;
 
 /**
- * Class NativeHeadersStack
- *
  * A utility class for simulating native PHP header handling in unit tests.
- * It allows the inspection, manipulation, and mocking of HTTP headers without
- * affecting the actual HTTP output.
  *
  * @internal This class is for testing purposes only.
  */
 final class NativeHeadersStack
 {
-    private static bool $headersSent = false;
-
     /**
-     * @var array<string, list<string>>
+     * Simulates whether headers have been sent.
      */
-    private static array $headers = [];
-
-    private static ?int $responseCode = null;
+    public static bool $headersSent = false;
 
     /**
-     * Resets the state of the class to its default values.
+     * Stores the list of headers.
+     *
+     * @var list<string>
+     */
+    public static array $headers = [];
+
+    /**
+     * Resets the header stack to defaults.
+     * Call this in setUp() to ensure clean state between tests.
      */
     public static function reset(): void
     {
-        self::$headersSent  = false;
-        self::$headers      = [];
-        self::$responseCode = null;
+        self::$headersSent = false;
+        self::$headers     = [];
     }
 
     /**
-     * Sets the state of whether headers have been sent.
-     */
-    public static function setHeadersSent(bool $sent): void
-    {
-        self::$headersSent = $sent;
-    }
-
-    /**
-     * Simulates PHP's native `headers_sent()` function.
-     */
-    public static function headersSent(): bool
-    {
-        return self::$headersSent;
-    }
-
-    /**
-     * Sets a header by name, replacing or appending it.
-     * This is the main method for header manipulation.
+     * Checks if a specific header exists in the stack.
      *
-     * @param string   $header       The header string (e.g., 'Content-Type: application/json').
-     * @param bool     $replace      Whether to replace a previous similar header.
-     * @param int|null $responseCode Forces the HTTP response code to the specified value.
+     * @param string $header The exact header string (e.g., 'Content-Type: text/html')
      */
-    public static function set(string $header, bool $replace = true, ?int $responseCode = null): void
+    public static function has(string $header): bool
     {
-        if (str_contains($header, ':')) {
-            [$name, $value] = explode(':', $header, 2);
-            $name           = trim($name);
-            $value          = trim($value);
-
-            if ($replace || ! isset(self::$headers[strtolower($name)])) {
-                self::$headers[strtolower($name)] = [];
-            }
-            self::$headers[strtolower($name)][] = "{$name}: {$value}";
-        } else {
-            // Handle non-key-value headers like "HTTP/1.1 404 Not Found"
-            self::$headers['status'][] = $header;
-        }
-
-        if ($responseCode !== null) {
-            self::$responseCode = $responseCode;
-        }
+        return in_array($header, self::$headers, true);
     }
 
     /**
-     * Pushes a header to the stack without replacing existing ones.
+     * Adds a header to the stack.
+     *
+     * @param string $header The header to add (e.g., 'Content-Type: text/html')
      */
     public static function push(string $header): void
     {
-        self::set($header, false);
-    }
-
-    /**
-     * A convenience method to push multiple headers at once.
-     *
-     * @param list<string> $headers An array of headers to push onto the stack.
-     */
-    public static function pushMany(array $headers): void
-    {
-        foreach ($headers as $header) {
-            // Default to not replacing for multiple adds
-            self::set($header, false);
-        }
-    }
-
-    /**
-     * Simulates PHP's `headers_list()` function.
-     *
-     * @return list<string> The list of simulated headers.
-     */
-    public static function listHeaders(): array
-    {
-        $list = [];
-
-        foreach (self::$headers as $values) {
-            $list = array_merge($list, $values);
-        }
-
-        return $list;
-    }
-
-    /**
-     * Checks if a header with the given name exists in the stack (case-insensitive).
-     *
-     * @param string $name The header name to search for (e.g., 'Content-Type').
-     */
-    public static function hasHeader(string $name): bool
-    {
-        return isset(self::$headers[strtolower($name)]);
-    }
-
-    /**
-     * Simulates PHP's `http_response_code()` function.
-     *
-     * @return int|null The stored response code, or null if not set.
-     */
-    public static function getResponseCode(): ?int
-    {
-        return self::$responseCode;
+        self::$headers[] = $header;
     }
 }

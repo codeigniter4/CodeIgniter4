@@ -25,7 +25,7 @@ use CodeIgniter\Test\Utilities\NativeHeadersStack;
  */
 function headers_sent(): bool
 {
-    return NativeHeadersStack::headersSent();
+    return NativeHeadersStack::$headersSent;
 }
 
 /**
@@ -38,5 +38,5 @@ function headers_sent(): bool
  */
 function headers_list(): array
 {
-    return NativeHeadersStack::listHeaders();
+    return NativeHeadersStack::$headers;
 }

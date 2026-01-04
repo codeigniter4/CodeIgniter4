@@ -113,7 +113,7 @@ final class ToolbarTest extends CIUnitTestCase
     public function testPrepareAbortsIfHeadersAlreadySent(): void
     {
         // Headers explicitly sent (e.g., echo before execution)
-        NativeHeadersStack::setHeadersSent(true);
+        NativeHeadersStack::$headersSent = true;
 
         $this->request  = service('incomingrequest', null, false);
         $this->response = service('response', null, false);
@@ -129,7 +129,7 @@ final class ToolbarTest extends CIUnitTestCase
     public function testPrepareAbortsIfNativeContentTypeIsNotHtml(): void
     {
         // A library (like Dompdf) set a PDF header directly
-        NativeHeadersStack::set('Content-Type: application/pdf');
+        NativeHeadersStack::push('Content-Type: application/pdf');
 
         $this->request  = service('incomingrequest', null, false);
         $this->response = service('response', null, false);
@@ -146,10 +146,10 @@ final class ToolbarTest extends CIUnitTestCase
     public function testPrepareAbortsIfNativeContentDispositionIsAttachment(): void
     {
         // A file download (even if it is HTML)
-        NativeHeadersStack::pushMany([
+        NativeHeadersStack::$headers = [
             'Content-Type: text/html',
             'Content-Disposition: attachment; filename="report.html"',
-        ]);
+        ];
 
         $this->request  = service('incomingrequest', null, false);
         $this->response = service('response', null, false);
@@ -165,7 +165,7 @@ final class ToolbarTest extends CIUnitTestCase
     public function testPrepareWorksWithNativeHtmlHeader(): void
     {
         // Standard scenario where PHP header is text/html
-        NativeHeadersStack::set('Content-Type: text/html; charset=UTF-8');
+        NativeHeadersStack::push('Content-Type: text/html; charset=UTF-8');
 
         $this->request  = service('incomingrequest', null, false);
         $this->response = service('response', null, false);
