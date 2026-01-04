@@ -223,10 +223,6 @@ sending secret messages in an end-to-end scenario. To encrypt and/or authenticat
 a shared-key, such as symmetric encryption, Sodium uses the XSalsa20 algorithm to encrypt and
 HMAC-SHA512 for the authentication.
 
-.. note:: CodeIgniter's ``SodiumHandler`` uses ``sodium_memzero`` in every encryption or decryption
-    session. After each session, the message (whether plaintext or ciphertext) and starter key are
-    wiped out from the buffers. You may need to provide again the key before starting a new session.
-
 Message Length
 ==============
 

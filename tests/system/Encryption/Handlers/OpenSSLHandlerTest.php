@@ -137,4 +137,27 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
         $key2 = 'Holy cow, batman!';
         $this->assertNotSame($message1, $encrypter->decrypt($encoded, ['key' => $key2]));
     }
+
+    public function testInternalKeyNotModifiedByParams(): void
+    {
+        $params         = new EncryptionConfig();
+        $params->driver = 'OpenSSL';
+        $params->key    = 'original-key-value';
+
+        $encrypter = $this->encryption->initialize($params);
+
+        $this->assertSame('original-key-value', $encrypter->key);
+
+        $message      = 'This is a plain-text message.';
+        $differentKey = 'temporary-param-key';
+        $encoded      = $encrypter->encrypt($message, ['key' => $differentKey]);
+
+        $this->assertSame('original-key-value', $encrypter->key);
+
+        $message2 = 'Another message.';
+        $encoded2 = $encrypter->encrypt($message2);
+        $this->assertSame($message2, $encrypter->decrypt($encoded2));
+
+        $this->assertSame($message, $encrypter->decrypt($encoded, ['key' => $differentKey]));
+    }
 }

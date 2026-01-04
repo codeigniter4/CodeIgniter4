@@ -78,14 +78,22 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $encrypter->encrypt('Some message.');
     }
 
-    public function testEmptyKeyThrowsErrorOnDecrypt(): void
+    public function testHandlerCanBeReusedAfterEncryption(): void
     {
-        $this->expectException(EncryptionException::class);
+        $encrypter = $this->encryption->initialize($this->config);
+        $message   = 'Some message to encrypt';
 
-        $encrypter  = $this->encryption->initialize($this->config);
-        $ciphertext = $encrypter->encrypt('Some message to encrypt');
-        // After encrypt, the message and key are wiped from buffer
-        $encrypter->decrypt($ciphertext);
+        $ciphertext = $encrypter->encrypt($message);
+        $plaintext  = $encrypter->decrypt($ciphertext);
+
+        $this->assertSame($message, $plaintext);
+
+        // Should also work for another encryption
+        $message2    = 'Another message';
+        $ciphertext2 = $encrypter->encrypt($message2);
+        $plaintext2  = $encrypter->decrypt($ciphertext2);
+
+        $this->assertSame($message2, $plaintext2);
     }
 
     public function testInvalidBlockSizeThrowsErrorOnDecrypt(): void
@@ -120,5 +128,27 @@ final class SodiumHandlerTest extends CIUnitTestCase
 
         $this->assertSame($msg, $encrypter->decrypt($ciphertext, $key));
         $this->assertNotSame('A plain-text message for you.', $encrypter->decrypt($ciphertext, $key));
+    }
+
+    public function testInternalKeyNotModifiedByParams(): void
+    {
+        $originalKey = sodium_crypto_secretbox_keygen();
+
+        $this->config->key = $originalKey;
+        $encrypter         = $this->encryption->initialize($this->config);
+
+        $this->assertSame($originalKey, $encrypter->key);
+
+        $message      = 'This is a plain-text message.';
+        $differentKey = sodium_crypto_secretbox_keygen();
+        $encoded      = $encrypter->encrypt($message, ['key' => $differentKey]);
+
+        $this->assertSame($originalKey, $encrypter->key);
+
+        $message2 = 'Another message.';
+        $encoded2 = $encrypter->encrypt($message2);
+        $this->assertSame($message2, $encrypter->decrypt($encoded2, ['key' => $originalKey]));
+
+        $this->assertSame($message, $encrypter->decrypt($encoded, ['key' => $differentKey]));
     }
 }
