@@ -17,6 +17,7 @@ use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
 /**
  * @internal
@@ -31,10 +32,9 @@ final class KeyRotationDecoratorTest extends CIUnitTestCase
         $this->encryption = new Encryption();
     }
 
+    #[RequiresPhpExtension('openssl')]
     public function testEncryptionUsesCurrentKey(): void
     {
-        $this->ensureOpenSSL();
-
         $currentKey  = 'current-encryption-key';
         $previousKey = 'previous-encryption-key';
 
@@ -54,10 +54,9 @@ final class KeyRotationDecoratorTest extends CIUnitTestCase
         $encrypter->decrypt($encrypted, ['key' => $previousKey]);
     }
 
+    #[RequiresPhpExtension('openssl')]
     public function testKeyRotationDecryptsOldData(): void
     {
-        $this->ensureOpenSSL();
-
         $oldKey = 'old-encryption-key';
         $newKey = 'new-encryption-key';
 
@@ -79,10 +78,9 @@ final class KeyRotationDecoratorTest extends CIUnitTestCase
         $this->assertSame($message, $newEncrypter->decrypt($encrypted));
     }
 
+    #[RequiresPhpExtension('openssl')]
     public function testMultiplePreviousKeysFallback(): void
     {
-        $this->ensureOpenSSL();
-
         $key1 = 'first-key-very-long';
         $key2 = 'second-key-very-long';
         $key3 = 'third-key-very-long';
@@ -112,10 +110,9 @@ final class KeyRotationDecoratorTest extends CIUnitTestCase
         $this->assertSame($message2, $encrypter3->decrypt($encrypted2));
     }
 
+    #[RequiresPhpExtension('openssl')]
     public function testExplicitKeyPreventsRotation(): void
     {
-        $this->ensureOpenSSL();
-
         $currentKey  = 'current-key-very-long';
         $previousKey = 'previous-key-very-long';
         $explicitKey = 'explicit-key-very-long';
@@ -137,10 +134,9 @@ final class KeyRotationDecoratorTest extends CIUnitTestCase
         $encrypter->decrypt($encrypted, ['key' => $explicitKey]);
     }
 
+    #[RequiresPhpExtension('openssl')]
     public function testEmptyPreviousKeysNoFallback(): void
     {
-        $this->ensureOpenSSL();
-
         $key1 = 'first-key-very-long';
         $key2 = 'second-key-very-long';
 
@@ -161,10 +157,9 @@ final class KeyRotationDecoratorTest extends CIUnitTestCase
         $encrypter2->decrypt($encrypted);
     }
 
+    #[RequiresPhpExtension('openssl')]
     public function testAllKeysFailThrowsOriginalException(): void
     {
-        $this->ensureOpenSSL();
-
         $correctKey = 'correct-key-very-long';
         $wrongKey1  = 'wrong-key-1-very-long';
         $wrongKey2  = 'wrong-key-2-very-long';
@@ -188,10 +183,9 @@ final class KeyRotationDecoratorTest extends CIUnitTestCase
         $encrypterWrong->decrypt($encrypted);
     }
 
+    #[RequiresPhpExtension('openssl')]
     public function testPropertyAccessDelegation(): void
     {
-        $this->ensureOpenSSL();
-
         $params               = new EncryptionConfig();
         $params->driver       = 'OpenSSL';
         $params->key          = 'test-key-very-long';
@@ -204,12 +198,9 @@ final class KeyRotationDecoratorTest extends CIUnitTestCase
         $this->assertSame('test-key-very-long', $encrypter->key);
     }
 
+    #[RequiresPhpExtension('sodium')]
     public function testKeyRotationWithSodiumHandler(): void
     {
-        if (! extension_loaded('sodium')) {
-            $this->markTestSkipped('Sodium is not available.');
-        }
-
         $oldKey = sodium_crypto_secretbox_keygen();
         $newKey = sodium_crypto_secretbox_keygen();
 
@@ -233,10 +224,9 @@ final class KeyRotationDecoratorTest extends CIUnitTestCase
         $this->assertSame($newMessage, $newEncrypter->decrypt($newEncrypted));
     }
 
+    #[RequiresPhpExtension('openssl')]
     public function testRealisticKeyRotationScenario(): void
     {
-        $this->ensureOpenSSL();
-
         $q1Key = 'q1-2026-key-very-long';
         $q2Key = 'q2-2026-key-very-long';
         $q3Key = 'q3-2026-key-very-long';
@@ -289,12 +279,5 @@ final class KeyRotationDecoratorTest extends CIUnitTestCase
         // But Q1 data is no longer accessible (as intended)
         $this->expectException(EncryptionException::class);
         $encrypterQ4->decrypt($encryptedQ1);
-    }
-
-    private function ensureOpenSSL(): void
-    {
-        if (! extension_loaded('openssl')) {
-            $this->markTestSkipped('OpenSSL is not available.');
-        }
     }
 }
