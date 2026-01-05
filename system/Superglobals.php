@@ -43,6 +43,36 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 final class Superglobals
 {
     /**
+     * @var array<string, server_items>
+     */
+    private array $server = [];
+
+    /**
+     * @var array<string, get_items>
+     */
+    private array $get = [];
+
+    /**
+     * @var array<string, post_items>
+     */
+    private array $post = [];
+
+    /**
+     * @var array<string, cookie_items>
+     */
+    private array $cookie = [];
+
+    /**
+     * @var array<string, files_items>
+     */
+    private array $files = [];
+
+    /**
+     * @var array<string, request_items>
+     */
+    private array $request = [];
+
+    /**
      * @param array<string, server_items>|null  $server
      * @param array<string, get_items>|null     $get
      * @param array<string, post_items>|null    $post
@@ -51,12 +81,12 @@ final class Superglobals
      * @param array<string, request_items>|null $request
      */
     public function __construct(
-        private ?array $server = null,
-        private ?array $get = null,
-        private ?array $post = null,
-        private ?array $cookie = null,
-        private ?array $files = null,
-        private ?array $request = null,
+        ?array $server = null,
+        ?array $get = null,
+        ?array $post = null,
+        ?array $cookie = null,
+        ?array $files = null,
+        ?array $request = null,
     ) {
         $this
             ->setServerArray($server ?? $_SERVER)
@@ -360,7 +390,7 @@ final class Superglobals
     /**
      * Get all $_FILES values.
      *
-     * @return files_items
+     * @return array<string, files_items>
      */
     public function getFilesArray(): array
     {
@@ -370,7 +400,7 @@ final class Superglobals
     /**
      * Set the entire $_FILES array.
      *
-     * @param files_items $array
+     * @param array<string, files_items> $array
      */
     public function setFilesArray(array $array): self
     {
