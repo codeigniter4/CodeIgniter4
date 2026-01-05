@@ -562,7 +562,9 @@ class Toolbar
         // Native Header Inspection
         foreach (headers_list() as $header) {
             // Content-Type is set but is NOT text/html
-            if (str_starts_with(strtolower($header), strtolower('Content-Type:')) && ! str_contains(strtolower($header), strtolower('text/html'))) {
+            $lowercaseHeader = strtolower($header);
+
+            if (str_starts_with($lowercaseHeader, 'content-type:') && ! str_contains($lowercaseHeader, 'text/html')) {
                 return true;
             }
             // File is being downloaded (Attachment)
