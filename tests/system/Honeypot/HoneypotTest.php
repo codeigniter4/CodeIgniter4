@@ -14,12 +14,14 @@ declare(strict_types=1);
 namespace CodeIgniter\Honeypot;
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Honeypot as HoneypotConfig;
@@ -47,12 +49,14 @@ final class HoneypotTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        Services::injectMock('superglobals', new Superglobals());
+
         $this->config   = new HoneypotConfig();
         $this->honeypot = new Honeypot($this->config);
 
-        unset($_POST[$this->config->name]);
-        $_SERVER['REQUEST_METHOD']  = 'POST';
-        $_POST[$this->config->name] = 'hey';
+        $superglobals = service('superglobals');
+        $superglobals->setServer('REQUEST_METHOD', 'POST');
+        $superglobals->setPost($this->config->name, 'hey');
 
         $this->request  = service('request', null, false);
         $this->response = service('response');
@@ -131,7 +135,7 @@ final class HoneypotTest extends CIUnitTestCase
 
     public function testHasntContent(): void
     {
-        unset($_POST[$this->config->name]);
+        service('superglobals')->unsetPost($this->config->name);
         $this->request = service('request');
 
         $this->assertFalse($this->honeypot->hasContent($this->request));

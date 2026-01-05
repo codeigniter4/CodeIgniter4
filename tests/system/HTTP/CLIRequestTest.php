@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Services;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use PHPUnit\Framework\Attributes\BackupGlobals;
@@ -34,22 +36,21 @@ final class CLIRequestTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->request = new CLIRequest(new App());
+        Services::injectMock('superglobals', new Superglobals(['argv' => []], [], [], [], []));
 
-        $_POST = [];
-        $_GET  = [];
+        $this->request = new CLIRequest(new App());
     }
 
     public function testParsingSegments(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'users',
             '21',
             'profile',
             '-foo',
             'bar',
-        ];
+        ]);
 
         // reinstantiate it to force parsing
         $this->request = new CLIRequest(new App());
@@ -64,14 +65,14 @@ final class CLIRequestTest extends CIUnitTestCase
 
     public function testParsingSegmentsWithHTMLMetaChars(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'users',
             '21',
             'abc < def',
             "McDonald's",
             '<s>aaa</s>',
-        ];
+        ]);
 
         // reinstantiate it to force parsing
         $this->request = new CLIRequest(new App());
@@ -88,7 +89,7 @@ final class CLIRequestTest extends CIUnitTestCase
 
     public function testParsingOptions(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'users',
             '21',
@@ -97,7 +98,7 @@ final class CLIRequestTest extends CIUnitTestCase
             'bar',
             '--foo-bar',
             'yes',
-        ];
+        ]);
 
         // reinstantiate it to force parsing
         $this->request = new CLIRequest(new App());
@@ -111,14 +112,14 @@ final class CLIRequestTest extends CIUnitTestCase
 
     public function testParsingOptionDetails(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'users',
             '21',
             'profile',
             '--foo',
             'bar',
-        ];
+        ]);
 
         // reinstantiate it to force parsing
         $this->request = new CLIRequest(new App());
@@ -129,7 +130,7 @@ final class CLIRequestTest extends CIUnitTestCase
 
     public function testParsingOptionString(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'users',
             '21',
@@ -138,7 +139,7 @@ final class CLIRequestTest extends CIUnitTestCase
             'bar',
             '--baz',
             'queue some stuff',
-        ];
+        ]);
 
         // reinstantiate it to force parsing
         $this->request = new CLIRequest(new App());
@@ -149,12 +150,12 @@ final class CLIRequestTest extends CIUnitTestCase
 
     public function testParsingNoOptions(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'users',
             '21',
             'profile',
-        ];
+        ]);
 
         // reinstantiate it to force parsing
         $this->request = new CLIRequest(new App());
@@ -165,7 +166,7 @@ final class CLIRequestTest extends CIUnitTestCase
 
     public function testParsingArgs(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'spark',
             'command',
             'param1',
@@ -175,7 +176,7 @@ final class CLIRequestTest extends CIUnitTestCase
             '--opt-2',
             'opt 2 val',
             'param3',
-        ];
+        ]);
 
         // reinstantiate it to force parsing
         $this->request = new CLIRequest(new App());
@@ -193,14 +194,14 @@ final class CLIRequestTest extends CIUnitTestCase
 
     public function testParsingPath(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'users',
             '21',
             'profile',
             '--foo',
             'bar',
-        ];
+        ]);
 
         // reinstantiate it to force parsing
         $this->request = new CLIRequest(new App());
@@ -210,7 +211,7 @@ final class CLIRequestTest extends CIUnitTestCase
 
     public function testParsingMalformed(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'users',
             '21',
@@ -219,7 +220,7 @@ final class CLIRequestTest extends CIUnitTestCase
             'bar',
             '--baz',
             'queue some stuff',
-        ];
+        ]);
 
         // reinstantiate it to force parsing
         $this->request = new CLIRequest(new App());
@@ -231,7 +232,7 @@ final class CLIRequestTest extends CIUnitTestCase
 
     public function testParsingMalformed2(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'users',
             '21',
@@ -240,7 +241,7 @@ final class CLIRequestTest extends CIUnitTestCase
             'oops-bar',
             '--baz',
             'queue some stuff',
-        ];
+        ]);
 
         // reinstantiate it to force parsing
         $this->request = new CLIRequest(new App());
@@ -252,7 +253,7 @@ final class CLIRequestTest extends CIUnitTestCase
 
     public function testParsingMalformed3(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'users',
             '21',
@@ -262,7 +263,7 @@ final class CLIRequestTest extends CIUnitTestCase
             'bar',
             '--baz',
             'queue some stuff',
-        ];
+        ]);
 
         // reinstantiate it to force parsing
         $this->request = new CLIRequest(new App());
@@ -274,8 +275,8 @@ final class CLIRequestTest extends CIUnitTestCase
 
     public function testFetchGlobalsSingleValue(): void
     {
-        $_POST['foo'] = 'bar';
-        $_GET['bar']  = 'baz';
+        service('superglobals')->setPost('foo', 'bar');
+        service('superglobals')->setGet('bar', 'baz');
 
         $this->assertSame('bar', $this->request->fetchGlobal('post', 'foo'));
         $this->assertSame('baz', $this->request->fetchGlobal('get', 'bar'));

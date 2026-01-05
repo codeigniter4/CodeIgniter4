@@ -44,6 +44,8 @@ final class TransformerTest extends CIUnitTestCase
         if ($query !== '') {
             parse_str($query, $get);
             $request->setGlobal('get', $get);
+        } else {
+            $request->setGlobal('get', []);
         }
 
         return $request;

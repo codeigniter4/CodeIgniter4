@@ -42,7 +42,7 @@ final class FileMovingTest extends CIUnitTestCase
             rmdir($this->destination);
         }
 
-        $_FILES = [];
+        service('superglobals')->setFilesArray([]);
 
         // Set the mock's return value to true
         move_uploaded_file('', '', true);
@@ -63,7 +63,7 @@ final class FileMovingTest extends CIUnitTestCase
     public function testMove(): void
     {
         $finalFilename = 'fileA';
-        $_FILES        = [
+        service('superglobals')->setFilesArray([
             'userfile1' => [
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/plain',
@@ -78,7 +78,7 @@ final class FileMovingTest extends CIUnitTestCase
                 'tmp_name' => '/tmp/fileB.txt',
                 'error'    => 0,
             ],
-        ];
+        ]);
 
         $collection = new FileCollection();
 
@@ -103,7 +103,7 @@ final class FileMovingTest extends CIUnitTestCase
     public function testMoveOverwriting(): void
     {
         $finalFilename = 'file_with_delimiters_underscore';
-        $_FILES        = [
+        service('superglobals')->setFilesArray([
             'userfile1' => [
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/plain',
@@ -125,7 +125,7 @@ final class FileMovingTest extends CIUnitTestCase
                 'tmp_name' => '/tmp/fileC.txt',
                 'error'    => 0,
             ],
-        ];
+        ]);
 
         $collection = new FileCollection();
 
@@ -153,7 +153,7 @@ final class FileMovingTest extends CIUnitTestCase
     public function testMoved(): void
     {
         $finalFilename = 'fileA';
-        $_FILES        = [
+        service('superglobals')->setFilesArray([
             'userfile1' => [
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/plain',
@@ -161,7 +161,7 @@ final class FileMovingTest extends CIUnitTestCase
                 'tmp_name' => '/tmp/fileA.txt',
                 'error'    => 0,
             ],
-        ];
+        ]);
 
         $collection = new FileCollection();
 
@@ -186,7 +186,7 @@ final class FileMovingTest extends CIUnitTestCase
     public function testStore(): void
     {
         $finalFilename = 'fileA';
-        $_FILES        = [
+        service('superglobals')->setFilesArray([
             'userfile1' => [
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/plain',
@@ -194,7 +194,7 @@ final class FileMovingTest extends CIUnitTestCase
                 'tmp_name' => '/tmp/fileA.txt',
                 'error'    => 0,
             ],
-        ];
+        ]);
 
         $collection = new FileCollection();
 
@@ -218,7 +218,7 @@ final class FileMovingTest extends CIUnitTestCase
     public function testAlreadyMoved(): void
     {
         $finalFilename = 'fileA';
-        $_FILES        = [
+        service('superglobals')->setFilesArray([
             'userfile1' => [
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/plain',
@@ -226,7 +226,7 @@ final class FileMovingTest extends CIUnitTestCase
                 'tmp_name' => '/tmp/fileA.txt',
                 'error'    => 0,
             ],
-        ];
+        ]);
 
         $collection = new FileCollection();
 
@@ -248,15 +248,15 @@ final class FileMovingTest extends CIUnitTestCase
 
     public function testInvalidFile(): void
     {
-        $_FILES = [
+        service('superglobals')->setFilesArray([
             'userfile' => [
                 'name'     => 'someFile.txt',
                 'type'     => 'text/plain',
-                'size'     => '124',
+                'size'     => 124,
                 'tmp_name' => '/tmp/myTempFile.txt',
                 'error'    => UPLOAD_ERR_INI_SIZE,
             ],
-        ];
+        ]);
 
         $destination = $this->destination;
         $collection  = new FileCollection();
@@ -270,15 +270,15 @@ final class FileMovingTest extends CIUnitTestCase
 
     public function testFailedMoveBecauseOfWarning(): void
     {
-        $_FILES = [
+        service('superglobals')->setFilesArray([
             'userfile' => [
                 'name'     => 'someFile.txt',
                 'type'     => 'text/plain',
-                'size'     => '124',
+                'size'     => 124,
                 'tmp_name' => '/tmp/myTempFile.txt',
                 'error'    => 0,
             ],
-        ];
+        ]);
 
         $destination = $this->destination;
         // Create the destination and make it read only
@@ -297,7 +297,7 @@ final class FileMovingTest extends CIUnitTestCase
 
     public function testFailedMoveBecauseOfFalseReturned(): void
     {
-        $_FILES = [
+        service('superglobals')->setFilesArray([
             'userfile1' => [
                 'name'     => 'fileA.txt',
                 'type'     => 'text/plain',
@@ -305,7 +305,7 @@ final class FileMovingTest extends CIUnitTestCase
                 'tmp_name' => '/tmp/fileA.txt',
                 'error'    => 0,
             ],
-        ];
+        ]);
 
         $collection = new FileCollection();
 

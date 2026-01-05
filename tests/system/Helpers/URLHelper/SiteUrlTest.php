@@ -43,6 +43,7 @@ final class SiteUrlTest extends CIUnitTestCase
         parent::setUp();
 
         Services::reset(true);
+        Services::injectMock('superglobals', new Superglobals());
 
         $this->config = new App();
     }
@@ -353,15 +354,15 @@ final class SiteUrlTest extends CIUnitTestCase
     {
         $this->config->baseURL = 'http://example.com/';
 
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/test';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('REQUEST_URI', '/test');
 
         $this->createRequest($this->config);
 
         $this->assertSame('http://example.com/', base_url());
 
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/test/page';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('REQUEST_URI', '/test/page');
 
         $this->createRequest($this->config);
 
@@ -371,8 +372,8 @@ final class SiteUrlTest extends CIUnitTestCase
 
     public function testBaseURLService(): void
     {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/ci/v4/x/y';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('REQUEST_URI', '/ci/v4/x/y');
 
         $this->config->baseURL = 'http://example.com/ci/v4/';
 
@@ -390,7 +391,9 @@ final class SiteUrlTest extends CIUnitTestCase
 
     public function testBaseURLWithCLIRequest(): void
     {
-        unset($_SERVER['HTTP_HOST'], $_SERVER['REQUEST_URI']);
+        $superglobals = service('superglobals');
+        $superglobals->unsetServer('HTTP_HOST');
+        $superglobals->unsetServer('REQUEST_URI');
 
         $this->config->baseURL = 'http://example.com/';
 
@@ -408,9 +411,9 @@ final class SiteUrlTest extends CIUnitTestCase
 
     public function testSiteURLWithAllowedHostname(): void
     {
-        $_SERVER['HTTP_HOST']   = 'www.example.jp';
-        $_SERVER['REQUEST_URI'] = '/public';
-        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+        service('superglobals')->setServer('HTTP_HOST', 'www.example.jp');
+        service('superglobals')->setServer('REQUEST_URI', '/public');
+        service('superglobals')->setServer('SCRIPT_NAME', '/public/index.php');
 
         $this->config->baseURL          = 'http://example.com/public/';
         $this->config->allowedHostnames = ['www.example.jp'];
@@ -425,9 +428,9 @@ final class SiteUrlTest extends CIUnitTestCase
 
     public function testSiteURLWithAltConfig(): void
     {
-        $_SERVER['HTTP_HOST']   = 'www.example.jp';
-        $_SERVER['REQUEST_URI'] = '/public';
-        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+        service('superglobals')->setServer('HTTP_HOST', 'www.example.jp');
+        service('superglobals')->setServer('REQUEST_URI', '/public');
+        service('superglobals')->setServer('SCRIPT_NAME', '/public/index.php');
 
         $this->config->baseURL          = 'http://example.com/public/';
         $this->config->allowedHostnames = ['www.example.jp'];
@@ -445,9 +448,9 @@ final class SiteUrlTest extends CIUnitTestCase
 
     public function testBaseURLWithAllowedHostname(): void
     {
-        $_SERVER['HTTP_HOST']   = 'www.example.jp';
-        $_SERVER['REQUEST_URI'] = '/public';
-        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+        service('superglobals')->setServer('HTTP_HOST', 'www.example.jp');
+        service('superglobals')->setServer('REQUEST_URI', '/public');
+        service('superglobals')->setServer('SCRIPT_NAME', '/public/index.php');
 
         $this->config->baseURL          = 'http://example.com/public/';
         $this->config->allowedHostnames = ['www.example.jp'];

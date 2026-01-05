@@ -50,22 +50,23 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->config->baseURL   = 'http://example.com/';
         $this->config->indexPage = 'index.php';
 
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        Services::injectMock('superglobals', new Superglobals());
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('REQUEST_URI', '/');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
     }
 
     protected function tearDown(): void
     {
         parent::tearDown();
 
-        $_SERVER = [];
+        service('superglobals')->setServerArray([]);
     }
 
     public function testCurrentURLReturnsBasicURL(): void
     {
-        $_SERVER['REQUEST_URI'] = '/public/';
-        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+        service('superglobals')->setServer('REQUEST_URI', '/public/');
+        service('superglobals')->setServer('SCRIPT_NAME', '/public/index.php');
 
         $this->config->baseURL = 'http://example.com/public/';
 
@@ -76,9 +77,9 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     public function testCurrentURLReturnsAllowedHostname(): void
     {
-        $_SERVER['HTTP_HOST']   = 'www.example.jp';
-        $_SERVER['REQUEST_URI'] = '/public/';
-        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+        service('superglobals')->setServer('HTTP_HOST', 'www.example.jp');
+        service('superglobals')->setServer('REQUEST_URI', '/public/');
+        service('superglobals')->setServer('SCRIPT_NAME', '/public/index.php');
 
         $this->config->baseURL          = 'http://example.com/public/';
         $this->config->allowedHostnames = ['www.example.jp'];
@@ -107,9 +108,9 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     public function testCurrentURLReturnsBaseURLIfNotAllowedHostname(): void
     {
-        $_SERVER['HTTP_HOST']   = 'invalid.example.org';
-        $_SERVER['REQUEST_URI'] = '/public/';
-        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+        service('superglobals')->setServer('HTTP_HOST', 'invalid.example.org');
+        service('superglobals')->setServer('REQUEST_URI', '/public/');
+        service('superglobals')->setServer('SCRIPT_NAME', '/public/index.php');
 
         $this->config->baseURL          = 'http://example.com/public/';
         $this->config->allowedHostnames = ['www.example.jp'];
@@ -133,9 +134,9 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     public function testCurrentURLEquivalence(): void
     {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/public/';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('REQUEST_URI', '/public/');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
 
         $this->config->indexPage = '';
 
@@ -146,9 +147,9 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     public function testCurrentURLInSubfolder(): void
     {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/foo/public/bar?baz=quip';
-        $_SERVER['SCRIPT_NAME'] = '/foo/public/index.php';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('REQUEST_URI', '/foo/public/bar?baz=quip');
+        service('superglobals')->setServer('SCRIPT_NAME', '/foo/public/index.php');
 
         $this->config->baseURL = 'http://example.com/foo/public/';
 
@@ -165,10 +166,10 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     public function testCurrentURLWithPortInSubfolder(): void
     {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['SERVER_PORT'] = '8080';
-        $_SERVER['REQUEST_URI'] = '/foo/public/bar?baz=quip';
-        $_SERVER['SCRIPT_NAME'] = '/foo/public/index.php';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('SERVER_PORT', '8080');
+        service('superglobals')->setServer('REQUEST_URI', '/foo/public/bar?baz=quip');
+        service('superglobals')->setServer('SCRIPT_NAME', '/foo/public/index.php');
 
         $this->config->baseURL = 'http://example.com:8080/foo/public/';
 
@@ -187,8 +188,8 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     public function testUriString(): void
     {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('REQUEST_URI', '/assets/image.jpg');
 
         $this->config->indexPage = '';
 
@@ -199,8 +200,8 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     public function testUriStringNoTrailingSlash(): void
     {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('REQUEST_URI', '/assets/image.jpg');
 
         $this->config->baseURL   = 'http://example.com/';
         $this->config->indexPage = '';
@@ -219,8 +220,8 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     public function testUriStringSubfolderAbsolute(): void
     {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/subfolder/assets/image.jpg';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('REQUEST_URI', '/subfolder/assets/image.jpg');
 
         $this->config->baseURL = 'http://example.com/subfolder/';
 
@@ -231,9 +232,9 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     public function testUriStringSubfolderRelative(): void
     {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/subfolder/assets/image.jpg';
-        $_SERVER['SCRIPT_NAME'] = '/subfolder/index.php';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('REQUEST_URI', '/subfolder/assets/image.jpg');
+        service('superglobals')->setServer('SCRIPT_NAME', '/subfolder/index.php');
 
         $this->config->baseURL = 'http://example.com/subfolder/';
 
@@ -245,8 +246,8 @@ final class CurrentUrlTest extends CIUnitTestCase
     #[DataProvider('provideUrlIs')]
     public function testUrlIs(string $currentPath, string $testPath, bool $expected): void
     {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/' . $currentPath;
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('REQUEST_URI', '/' . $currentPath);
 
         $this->createRequest($this->config);
 
@@ -256,8 +257,8 @@ final class CurrentUrlTest extends CIUnitTestCase
     #[DataProvider('provideUrlIs')]
     public function testUrlIsNoIndex(string $currentPath, string $testPath, bool $expected): void
     {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/' . $currentPath;
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('REQUEST_URI', '/' . $currentPath);
 
         $this->config->indexPage = '';
 
@@ -269,9 +270,9 @@ final class CurrentUrlTest extends CIUnitTestCase
     #[DataProvider('provideUrlIs')]
     public function testUrlIsWithSubfolder(string $currentPath, string $testPath, bool $expected): void
     {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/' . $currentPath;
-        $_SERVER['SCRIPT_NAME'] = '/subfolder/index.php';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
+        service('superglobals')->setServer('REQUEST_URI', '/' . $currentPath);
+        service('superglobals')->setServer('SCRIPT_NAME', '/subfolder/index.php');
 
         $this->config->baseURL = 'http://example.com/subfolder/';
 

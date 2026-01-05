@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands;
 
+use CodeIgniter\Config\Services;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use PHPUnit\Framework\Attributes\Group;
@@ -35,6 +37,8 @@ final class EnvironmentCommandTest extends CIUnitTestCase
         if (is_file($this->envPath)) {
             rename($this->envPath, $this->backupEnvPath);
         }
+
+        Services::injectMock('superglobals', new Superglobals());
     }
 
     protected function tearDown(): void
@@ -49,7 +53,8 @@ final class EnvironmentCommandTest extends CIUnitTestCase
             rename($this->backupEnvPath, $this->envPath);
         }
 
-        $_SERVER['CI_ENVIRONMENT'] = $_ENV['CI_ENVIRONMENT'] = ENVIRONMENT;
+        service('superglobals')->setServer('CI_ENVIRONMENT', ENVIRONMENT);
+        $_ENV['CI_ENVIRONMENT'] = ENVIRONMENT;
     }
 
     public function testUsingCommandWithNoArgumentsGivesCurrentEnvironment(): void
@@ -90,7 +95,7 @@ final class EnvironmentCommandTest extends CIUnitTestCase
     public function testSettingNewEnvIsSuccess(): void
     {
         // default env file has `production` env in it
-        $_SERVER['CI_ENVIRONMENT'] = 'production';
+        service('superglobals')->setServer('CI_ENVIRONMENT', 'production');
         command('env development');
 
         $this->assertStringContainsString('Environment is successfully changed to', $this->getStreamFilterBuffer());

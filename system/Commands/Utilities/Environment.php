@@ -86,7 +86,7 @@ final class Environment extends BaseCommand
     public function run(array $params)
     {
         if ($params === []) {
-            CLI::write(sprintf('Your environment is currently set as %s.', CLI::color($_SERVER['CI_ENVIRONMENT'] ?? ENVIRONMENT, 'green')));
+            CLI::write(sprintf('Your environment is currently set as %s.', CLI::color(service('superglobals')->server('CI_ENVIRONMENT', ENVIRONMENT), 'green')));
             CLI::newLine();
 
             return EXIT_ERROR;
@@ -119,7 +119,8 @@ final class Environment extends BaseCommand
         // force DotEnv to reload the new environment
         // however we cannot redefine the ENVIRONMENT constant
         putenv('CI_ENVIRONMENT');
-        unset($_ENV['CI_ENVIRONMENT'], $_SERVER['CI_ENVIRONMENT']);
+        unset($_ENV['CI_ENVIRONMENT']);
+        service('superglobals')->unsetServer('CI_ENVIRONMENT');
         (new DotEnv((new Paths())->envDirectory ?? ROOTPATH))->load();
 
         CLI::write(sprintf('Environment is successfully changed to "%s".', $env), 'green');
@@ -149,7 +150,7 @@ final class Environment extends BaseCommand
             copy($baseEnv, $envFile);
         }
 
-        $pattern = preg_quote($_SERVER['CI_ENVIRONMENT'] ?? ENVIRONMENT, '/');
+        $pattern = preg_quote(service('superglobals')->server('CI_ENVIRONMENT', ENVIRONMENT), '/');
         $pattern = sprintf('/^[#\s]*CI_ENVIRONMENT[=\s]+%s$/m', $pattern);
 
         return file_put_contents(

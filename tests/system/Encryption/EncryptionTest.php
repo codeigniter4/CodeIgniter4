@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Encryption;
 
+use CodeIgniter\Config\Services as CodeIgniterServices;
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use Config\Services;
@@ -31,11 +33,14 @@ final class EncryptionTest extends CIUnitTestCase
     {
         parent::setUpBeforeClass();
 
+        CodeIgniterServices::injectMock('superglobals', new Superglobals());
+
         if (is_file(ROOTPATH . '.env')) {
             rename(ROOTPATH . '.env', ROOTPATH . '.env.bak');
 
             putenv('encryption.key');
-            unset($_ENV['encryption.key'], $_SERVER['encryption.key']);
+            unset($_ENV['encryption.key']);
+            service('superglobals')->unsetServer('encryption.key');
         }
     }
 

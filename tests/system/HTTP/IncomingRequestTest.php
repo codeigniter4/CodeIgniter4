@@ -14,10 +14,12 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use JsonException;
@@ -43,10 +45,11 @@ final class IncomingRequestTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        $_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
+        Services::injectMock('superglobals', new Superglobals());
+
         $config        = new App();
         $this->request = $this->createRequest($config);
-
-        $_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
     }
 
     private function createRequest(?App $config = null, $body = null, ?string $path = null): IncomingRequest
@@ -61,7 +64,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testCanGrabRequestVars(): void
     {
-        $_REQUEST['TEST'] = 5;
+        service('superglobals')->setRequest('TEST', '5');
 
         $this->assertSame('5', $this->request->getVar('TEST'));
         $this->assertNull($this->request->getVar('TESTY'));
@@ -69,7 +72,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testCanGrabGetVars(): void
     {
-        $_GET['TEST'] = 5;
+        service('superglobals')->setGet('TEST', '5');
 
         $this->assertSame('5', $this->request->getGet('TEST'));
         $this->assertNull($this->request->getGet('TESTY'));
@@ -77,7 +80,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testCanGrabPostVars(): void
     {
-        $_POST['TEST'] = 5;
+        service('superglobals')->setPost('TEST', '5');
 
         $this->assertSame('5', $this->request->getPost('TEST'));
         $this->assertNull($this->request->getPost('TESTY'));
@@ -85,8 +88,8 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testCanGrabPostBeforeGet(): void
     {
-        $_POST['TEST'] = 5;
-        $_GET['TEST']  = 3;
+        service('superglobals')->setPost('TEST', '5');
+        service('superglobals')->setGet('TEST', '3');
 
         $this->assertSame('5', $this->request->getPostGet('TEST'));
         $this->assertSame('3', $this->request->getGetPost('TEST'));
@@ -183,7 +186,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testCanGrabCookieVars(): void
     {
-        $_COOKIE['TEST'] = 5;
+        service('superglobals')->setCookie('TEST', '5');
 
         $this->assertSame('5', $this->request->getCookie('TEST'));
         $this->assertNull($this->request->getCookie('TESTY'));
@@ -243,7 +246,7 @@ final class IncomingRequestTest extends CIUnitTestCase
      */
     public function testNegotiatesLocale(): void
     {
-        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'fr-FR; q=1.0, en; q=0.5';
+        service('superglobals')->setServer('HTTP_ACCEPT_LANGUAGE', 'fr-FR); q=1.0, en; q=0.5');
 
         $config                   = new App();
         $config->negotiateLocale  = true;
@@ -258,7 +261,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testNegotiatesLocaleOnlyBroad(): void
     {
-        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'fr; q=1.0, en; q=0.5';
+        service('superglobals')->setServer('HTTP_ACCEPT_LANGUAGE', 'fr); q=1.0, en; q=0.5');
 
         $config                   = new App();
         $config->negotiateLocale  = true;
@@ -285,7 +288,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testNegotiatesCharset(): void
     {
-        // $_SERVER['HTTP_ACCEPT_CHARSET'] = 'iso-8859-5, unicode-1-1;q=0.8';
+        // service('superglobals')->setServer('HTTP_ACCEPT_CHARSET', 'iso-8859-5, unicode-1-1);q=0.8';
         $this->request->setHeader('Accept-Charset', 'iso-8859-5, unicode-1-1;q=0.8');
 
         $this->assertSame(
@@ -488,8 +491,8 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config->baseURL = 'http://example.com/';
 
         // GET method
-        $_REQUEST['foo']  = 'bar';
-        $_REQUEST['fizz'] = 'buzz';
+        service('superglobals')->setRequest('foo', 'bar');
+        service('superglobals')->setRequest('fizz', 'buzz');
 
         $request = $this->createRequest($config);
         $request = $request->withMethod('GET');
@@ -749,7 +752,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testIsSecure(): void
     {
-        $_SERVER['HTTPS'] = 'on';
+        service('superglobals')->setServer('HTTPS', 'on');
         $this->assertTrue($this->request->isSecure());
     }
 
@@ -777,15 +780,15 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testFileCollectionFactory(): void
     {
-        $_FILES = [
+        service('superglobals')->setFilesArray([
             'userfile' => [
                 'name'     => 'someFile.txt',
                 'type'     => 'text/plain',
-                'size'     => '124',
+                'size'     => 124,
                 'tmp_name' => '/tmp/myTempFile.txt',
                 'error'    => 0,
             ],
-        ];
+        ]);
 
         $files = $this->request->getFiles();
         $this->assertCount(1, $files);
@@ -799,7 +802,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetFileMultiple(): void
     {
-        $_FILES = [
+        service('superglobals')->setFilesArray([
             'userfile' => [
                 'name' => [
                     'someFile.txt',
@@ -810,8 +813,8 @@ final class IncomingRequestTest extends CIUnitTestCase
                     'text/plain',
                 ],
                 'size' => [
-                    '124',
-                    '125',
+                    124,
+                    125,
                 ],
                 'tmp_name' => [
                     '/tmp/myTempFile.txt',
@@ -822,7 +825,7 @@ final class IncomingRequestTest extends CIUnitTestCase
                     0,
                 ],
             ],
-        ];
+        ]);
 
         $gotit = $this->request->getFileMultiple('userfile');
         $this->assertSame(124, $gotit[0]->getSize());
@@ -831,15 +834,15 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetFile(): void
     {
-        $_FILES = [
+        service('superglobals')->setFilesArray([
             'userfile' => [
                 'name'     => 'someFile.txt',
                 'type'     => 'text/plain',
-                'size'     => '124',
+                'size'     => 124,
                 'tmp_name' => '/tmp/myTempFile.txt',
                 'error'    => 0,
             ],
-        ];
+        ]);
 
         $gotit = $this->request->getFile('userfile');
         $this->assertSame(124, $gotit->getSize());
@@ -856,30 +859,36 @@ final class IncomingRequestTest extends CIUnitTestCase
      */
     public function testGetPostEmpty(): void
     {
-        $_POST['TEST'] = '5';
-        $_GET['TEST']  = '3';
-        $this->assertSame($_POST, $this->request->getPostGet());
-        $this->assertSame($_GET, $this->request->getGetPost());
+        service('superglobals')
+            ->setPost('TEST', '5')
+            ->setGet('TEST', '3');
+
+        $this->assertSame(['TEST' => '5'], $this->request->getPostGet());
+        $this->assertSame(['TEST' => '3'], $this->request->getGetPost());
     }
 
     public function testPostGetSecondStream(): void
     {
-        $_GET['get'] = '3';
-        $this->assertSame($_GET, $this->request->getPostGet());
+        service('superglobals')->setGet('get', '3');
+
+        $this->assertSame(['get' => '3'], $this->request->getPostGet());
     }
 
     public function testGetPostSecondStream(): void
     {
-        $_POST['post'] = '5';
-        $this->assertSame($_POST, $this->request->getGetPost());
+        service('superglobals')->setPost('post', '5');
+
+        $this->assertSame(['post' => '5'], $this->request->getGetPost());
     }
 
     public function testGetPostSecondStreams(): void
     {
-        $_GET['get']   = '3';
-        $_POST['post'] = '5';
-        $this->assertSame(array_merge($_GET, $_POST), $this->request->getPostGet());
-        $this->assertSame(array_merge($_POST, $_GET), $this->request->getGetPost());
+        service('superglobals')
+            ->setGet('get', '3')
+            ->setPost('post', '5');
+
+        $this->assertSame(['get' => '3', 'post' => '5'], $this->request->getPostGet());
+        $this->assertSame(['post' => '5', 'get' => '3'], $this->request->getGetPost());
     }
 
     public function testGetBodyWithFalseBody(): void
@@ -903,8 +912,9 @@ final class IncomingRequestTest extends CIUnitTestCase
      */
     public function testGetPostIndexNotExists(): void
     {
-        $_POST['TEST'] = 5;
-        $_GET['TEST']  = 3;
+        service('superglobals')
+            ->setPost('TEST', '5')
+            ->setGet('TEST', '3');
         $this->assertNull($this->request->getPostGet('gc'));
         $this->assertNull($this->request->getGetPost('gc'));
     }
@@ -929,8 +939,8 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetIPAddressNormal(): void
     {
-        $expected               = '123.123.123.123';
-        $_SERVER['REMOTE_ADDR'] = $expected;
+        $expected = '123.123.123.123';
+        service('superglobals')->setServer('REMOTE_ADDR', $expected);
 
         $this->request = new Request(new App());
         $this->request->populateHeaders();
@@ -942,9 +952,10 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxy(): void
     {
-        $expected                        = '123.123.123.123';
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
-        $_SERVER['REMOTE_ADDR']          = '10.0.1.200';
+        $expected = '123.123.123.123';
+        service('superglobals')
+            ->setServer('HTTP_X_FORWARDED_FOR', $expected)
+            ->setServer('REMOTE_ADDR', '10.0.1.200');
 
         $config           = new App();
         $config->proxyIPs = [
@@ -961,9 +972,10 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxyIPv6(): void
     {
-        $expected                        = '123.123.123.123';
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
-        $_SERVER['REMOTE_ADDR']          = '2001:db8::2:1';
+        $expected = '123.123.123.123';
+        service('superglobals')
+            ->setServer('HTTP_X_FORWARDED_FOR', $expected)
+            ->setServer('REMOTE_ADDR', '2001:db8::2:1');
 
         $config           = new App();
         $config->proxyIPs = [
@@ -979,9 +991,9 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxyInvalidIPAddress(): void
     {
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.456.23.123';
-        $expected                        = '10.0.1.200';
-        $_SERVER['REMOTE_ADDR']          = $expected;
+        service('superglobals')->setServer('HTTP_X_FORWARDED_FOR', '123.456.23.123');
+        $expected = '10.0.1.200';
+        service('superglobals')->setServer('REMOTE_ADDR', $expected);
 
         $config           = new App();
         $config->proxyIPs = [
@@ -997,9 +1009,9 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxyInvalidIPAddressIPv6(): void
     {
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = '2001:xyz::1';
-        $expected                        = '2001:db8::2:1';
-        $_SERVER['REMOTE_ADDR']          = $expected;
+        service('superglobals')->setServer('HTTP_X_FORWARDED_FOR', '2001:xyz::1');
+        $expected = '2001:db8::2:1';
+        service('superglobals')->setServer('REMOTE_ADDR', $expected);
 
         $config           = new App();
         $config->proxyIPs = [
@@ -1014,9 +1026,9 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxyNotWhitelisted(): void
     {
-        $expected                        = '10.10.1.200';
-        $_SERVER['REMOTE_ADDR']          = $expected;
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.456.23.123';
+        $expected = '10.10.1.200';
+        service('superglobals')->setServer('REMOTE_ADDR', $expected);
+        service('superglobals')->setServer('HTTP_X_FORWARDED_FOR', '123.456.23.123');
 
         $config           = new App();
         $config->proxyIPs = [
@@ -1032,9 +1044,9 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxyNotWhitelistedIPv6(): void
     {
-        $expected                        = '2001:db8::2:2';
-        $_SERVER['REMOTE_ADDR']          = $expected;
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.456.23.123';
+        $expected = '2001:db8::2:2';
+        service('superglobals')->setServer('REMOTE_ADDR', $expected);
+        service('superglobals')->setServer('HTTP_X_FORWARDED_FOR', '123.456.23.123');
 
         $config           = new App();
         $config->proxyIPs = [
@@ -1049,9 +1061,9 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxySubnet(): void
     {
-        $expected                        = '123.123.123.123';
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
-        $_SERVER['REMOTE_ADDR']          = '192.168.5.21';
+        $expected = '123.123.123.123';
+        service('superglobals')->setServer('HTTP_X_FORWARDED_FOR', $expected);
+        service('superglobals')->setServer('REMOTE_ADDR', '192.168.5.21');
 
         $config           = new App();
         $config->proxyIPs = ['192.168.5.0/24' => 'X-Forwarded-For'];
@@ -1065,9 +1077,9 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxySubnetIPv6(): void
     {
-        $expected                        = '123.123.123.123';
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
-        $_SERVER['REMOTE_ADDR']          = '2001:db8:1234:ffff:ffff:ffff:ffff:ffff';
+        $expected = '123.123.123.123';
+        service('superglobals')->setServer('HTTP_X_FORWARDED_FOR', $expected);
+        service('superglobals')->setServer('REMOTE_ADDR', '2001:db8:1234:ffff:ffff:ffff:ffff:ffff');
 
         $config           = new App();
         $config->proxyIPs = ['2001:db8:1234::/48' => 'X-Forwarded-For'];
@@ -1081,9 +1093,9 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxyOutOfSubnet(): void
     {
-        $expected                        = '192.168.5.21';
-        $_SERVER['REMOTE_ADDR']          = $expected;
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.123.123.123';
+        $expected = '192.168.5.21';
+        service('superglobals')->setServer('REMOTE_ADDR', $expected);
+        service('superglobals')->setServer('HTTP_X_FORWARDED_FOR', '123.123.123.123');
 
         $config           = new App();
         $config->proxyIPs = ['192.168.5.0/28' => 'X-Forwarded-For'];
@@ -1096,9 +1108,9 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxyOutOfSubnetIPv6(): void
     {
-        $expected                        = '2001:db8:1235:ffff:ffff:ffff:ffff:ffff';
-        $_SERVER['REMOTE_ADDR']          = $expected;
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.123.123.123';
+        $expected = '2001:db8:1235:ffff:ffff:ffff:ffff:ffff';
+        service('superglobals')->setServer('REMOTE_ADDR', $expected);
+        service('superglobals')->setServer('HTTP_X_FORWARDED_FOR', '123.123.123.123');
 
         $config           = new App();
         $config->proxyIPs = ['2001:db8:1234::/48' => 'X-Forwarded-For'];
@@ -1111,9 +1123,9 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxyBothIPv4AndIPv6(): void
     {
-        $expected                        = '2001:db8:1235:ffff:ffff:ffff:ffff:ffff';
-        $_SERVER['REMOTE_ADDR']          = $expected;
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.123.123.123';
+        $expected = '2001:db8:1235:ffff:ffff:ffff:ffff:ffff';
+        service('superglobals')->setServer('REMOTE_ADDR', $expected);
+        service('superglobals')->setServer('HTTP_X_FORWARDED_FOR', '123.123.123.123');
 
         $config           = new App();
         $config->proxyIPs = [

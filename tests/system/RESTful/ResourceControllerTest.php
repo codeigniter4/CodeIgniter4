@@ -23,6 +23,7 @@ use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Model;
 use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockResourceController;
@@ -62,11 +63,13 @@ final class ResourceControllerTest extends CIUnitTestCase
 
         $this->resetServices(true);
         $this->resetFactories();
+
+        Services::injectMock('superglobals', new Superglobals());
     }
 
     private function createCodeigniter(): void
     {
-        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+        service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/1.1');
 
         // Inject mock router.
         $this->routes = service('routes');
@@ -91,14 +94,14 @@ final class ResourceControllerTest extends CIUnitTestCase
 
     public function testResourceGet(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'work',
-        ];
-        $_SERVER['argc'] = 2;
+        ]);
+        service('superglobals')->setServer('argc', 2);
 
-        $_SERVER['REQUEST_URI']    = '/work';
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_URI', '/work');
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $this->createCodeigniter();
 
@@ -112,15 +115,15 @@ final class ResourceControllerTest extends CIUnitTestCase
 
     public function testResourceGetNew(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'work',
             'new',
-        ];
-        $_SERVER['argc'] = 3;
+        ]);
+        service('superglobals')->setServer('argc', 3);
 
-        $_SERVER['REQUEST_URI']    = '/work/new';
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_URI', '/work/new');
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $this->createCodeigniter();
 
@@ -134,16 +137,16 @@ final class ResourceControllerTest extends CIUnitTestCase
 
     public function testResourceGetEdit(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'work',
             '1',
             'edit',
-        ];
-        $_SERVER['argc'] = 4;
+        ]);
+        service('superglobals')->setServer('argc', 4);
 
-        $_SERVER['REQUEST_URI']    = '/work/1/edit';
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_URI', '/work/1/edit');
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $this->createCodeigniter();
 
@@ -157,15 +160,15 @@ final class ResourceControllerTest extends CIUnitTestCase
 
     public function testResourceGetOne(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'work',
             '1',
-        ];
-        $_SERVER['argc'] = 3;
+        ]);
+        service('superglobals')->setServer('argc', 3);
 
-        $_SERVER['REQUEST_URI']    = '/work/1';
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        service('superglobals')->setServer('REQUEST_URI', '/work/1');
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         $this->createCodeigniter();
 
@@ -179,14 +182,14 @@ final class ResourceControllerTest extends CIUnitTestCase
 
     public function testResourcePost(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'work',
-        ];
-        $_SERVER['argc'] = 2;
+        ]);
+        service('superglobals')->setServer('argc', 2);
 
-        $_SERVER['REQUEST_URI']    = '/work';
-        $_SERVER['REQUEST_METHOD'] = 'POST';
+        service('superglobals')->setServer('REQUEST_URI', '/work');
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
 
         $this->createCodeigniter();
 
@@ -200,15 +203,15 @@ final class ResourceControllerTest extends CIUnitTestCase
 
     public function testResourcePatch(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'work',
             '123',
-        ];
-        $_SERVER['argc'] = 3;
+        ]);
+        service('superglobals')->setServer('argc', 3);
 
-        $_SERVER['REQUEST_URI']    = '/work/123';
-        $_SERVER['REQUEST_METHOD'] = 'PATCH';
+        service('superglobals')->setServer('REQUEST_URI', '/work/123');
+        service('superglobals')->setServer('REQUEST_METHOD', 'PATCH');
 
         $this->createCodeigniter();
 
@@ -222,15 +225,15 @@ final class ResourceControllerTest extends CIUnitTestCase
 
     public function testResourcePut(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'work',
             '123',
-        ];
-        $_SERVER['argc'] = 3;
+        ]);
+        service('superglobals')->setServer('argc', 3);
 
-        $_SERVER['REQUEST_URI']    = '/work/123';
-        $_SERVER['REQUEST_METHOD'] = 'PUT';
+        service('superglobals')->setServer('REQUEST_URI', '/work/123');
+        service('superglobals')->setServer('REQUEST_METHOD', 'PUT');
 
         $this->createCodeigniter();
 
@@ -244,15 +247,15 @@ final class ResourceControllerTest extends CIUnitTestCase
 
     public function testResourceDelete(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'index.php',
             'work',
             '123',
-        ];
-        $_SERVER['argc'] = 3;
+        ]);
+        service('superglobals')->setServer('argc', 3);
 
-        $_SERVER['REQUEST_URI']    = '/work/123';
-        $_SERVER['REQUEST_METHOD'] = 'DELETE';
+        service('superglobals')->setServer('REQUEST_URI', '/work/123');
+        service('superglobals')->setServer('REQUEST_METHOD', 'DELETE');
 
         $this->createCodeigniter();
 

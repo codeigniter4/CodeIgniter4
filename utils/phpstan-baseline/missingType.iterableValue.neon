@@ -1,4 +1,4 @@
-# total 1314 errors
+# total 1312 errors
 
 parameters:
     ignoreErrors:
@@ -323,7 +323,27 @@ parameters:
             path: ../../system/Config/Services.php
 
         -
+            message: '#^Method CodeIgniter\\Config\\Services\:\:superglobals\(\) has parameter \$cookie with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Config/Services.php
+
+        -
+            message: '#^Method CodeIgniter\\Config\\Services\:\:superglobals\(\) has parameter \$files with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Config/Services.php
+
+        -
             message: '#^Method CodeIgniter\\Config\\Services\:\:superglobals\(\) has parameter \$get with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Config/Services.php
+
+        -
+            message: '#^Method CodeIgniter\\Config\\Services\:\:superglobals\(\) has parameter \$post with no value type specified in iterable type array\.$#'
+            count: 1
+            path: ../../system/Config/Services.php
+
+        -
+            message: '#^Method CodeIgniter\\Config\\Services\:\:superglobals\(\) has parameter \$request with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Config/Services.php
 
@@ -4213,36 +4233,6 @@ parameters:
             path: ../../system/Router/RouterInterface.php
 
         -
-            message: '#^Method CodeIgniter\\Superglobals\:\:__construct\(\) has parameter \$get with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Superglobals.php
-
-        -
-            message: '#^Method CodeIgniter\\Superglobals\:\:__construct\(\) has parameter \$server with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Superglobals.php
-
-        -
-            message: '#^Method CodeIgniter\\Superglobals\:\:get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Superglobals.php
-
-        -
-            message: '#^Method CodeIgniter\\Superglobals\:\:setGetArray\(\) has parameter \$array with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Superglobals.php
-
-        -
-            message: '#^Property CodeIgniter\\Superglobals\:\:\$get type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Superglobals.php
-
-        -
-            message: '#^Property CodeIgniter\\Superglobals\:\:\$server type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Superglobals.php
-
-        -
             message: '#^Method CodeIgniter\\Test\\Constraints\\SeeInDatabase\:\:__construct\(\) has parameter \$data with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Test/Constraints/SeeInDatabase.php
@@ -4968,52 +4958,52 @@ parameters:
             path: ../../system/View/Parser.php
 
         -
-            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:313\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:315\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/TransformerTest.php
 
         -
-            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:336\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:338\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/TransformerTest.php
 
         -
-            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:362\:\:includeComments\(\) return type has no value type specified in iterable type array\.$#'
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:364\:\:includeComments\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/TransformerTest.php
 
         -
-            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:362\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:364\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/TransformerTest.php
 
         -
-            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:394\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:396\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/TransformerTest.php
 
         -
-            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:417\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:419\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/TransformerTest.php
 
         -
-            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:445\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:447\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/TransformerTest.php
 
         -
-            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:497\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:499\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/TransformerTest.php
 
         -
-            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:556\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:558\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/TransformerTest.php
 
         -
-            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:579\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
+            message: '#^Method CodeIgniter\\API\\BaseTransformer@anonymous/tests/system/API/TransformerTest\.php\:581\:\:includePosts\(\) return type has no value type specified in iterable type array\.$#'
             count: 1
             path: ../../tests/system/API/TransformerTest.php
 

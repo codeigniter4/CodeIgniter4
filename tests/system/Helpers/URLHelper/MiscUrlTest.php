@@ -44,6 +44,7 @@ final class MiscUrlTest extends CIUnitTestCase
         parent::setUp();
 
         Services::reset(true);
+        Services::injectMock('superglobals', new Superglobals());
         service('routes')->loadRoutes();
 
         // Set a common base configuration (overriden by individual tests)
@@ -56,7 +57,7 @@ final class MiscUrlTest extends CIUnitTestCase
     {
         parent::tearDown();
 
-        $_SERVER = [];
+        service('superglobals')->setServerArray([]);
     }
 
     #[Group('SeparateProcess')]
@@ -68,7 +69,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $uri1 = 'http://example.com/one?two';
         $uri2 = 'http://example.com/two?foo';
 
-        $_SERVER['HTTP_REFERER'] = $uri1;
+        service('superglobals')->setServer('HTTP_REFERER', $uri1);
         session()->set('_ci_previous_url', $uri2);
 
         $this->config->baseURL = 'http://example.com/public';
@@ -98,7 +99,7 @@ final class MiscUrlTest extends CIUnitTestCase
     {
         $uri1 = 'http://example.com/one?two';
 
-        $_SERVER['HTTP_REFERER'] = $uri1;
+        service('superglobals')->setServer('HTTP_REFERER', $uri1);
 
         $this->config->baseURL = 'http://example.com/public';
 
@@ -844,7 +845,7 @@ final class MiscUrlTest extends CIUnitTestCase
     #[DataProvider('provideUrlTo')]
     public function testUrlTo(string $expected, string $input, ...$args): void
     {
-        $_SERVER['HTTP_HOST'] = 'example.com';
+        service('superglobals')->setServer('HTTP_HOST', 'example.com');
 
         $routes = service('routes');
         // @TODO Do not put any placeholder after (:any).
