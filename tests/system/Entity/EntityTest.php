@@ -1078,6 +1078,40 @@ final class EntityTest extends CIUnitTestCase
         ], $result);
     }
 
+    public function testAsArrayRestoringCastStatus(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'first' => null,
+            ];
+            protected $original = [
+                'first' => null,
+            ];
+            protected $casts = [
+                'first' => 'integer',
+            ];
+        };
+        $entity->first = '2026 Year';
+
+        // Disabled casting properties, but we will allow casting in the method.
+        $entity->cast(false);
+        $beforeCast = $this->getPrivateProperty($entity, '_cast');
+        $result = $entity->toArray(true, true);
+        $afterCast = $this->getPrivateProperty($entity, '_cast');
+
+        $this->assertSame($result['first'], 2026);
+        $this->assertSame($beforeCast, $afterCast);
+
+        // Enabled casting properties, but we will disallow casting in the method.
+        $entity->cast(true);
+        $beforeCast = $this->getPrivateProperty($entity, '_cast');
+        $result = $entity->toArray(true, false);
+        $afterCast = $this->getPrivateProperty($entity, '_cast');
+
+        $this->assertSame($result['first'], '2026 Year');
+        $this->assertSame($beforeCast, $afterCast);
+    }
+
     public function testDataMappingIssetSwapped(): void
     {
         $entity = $this->getSimpleSwappedEntity();
