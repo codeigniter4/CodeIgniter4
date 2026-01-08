@@ -90,11 +90,11 @@ class ApcuHandler extends BaseHandler
     public function deleteMatching(string $pattern): int
     {
         $matchedKeys = array_filter(
-            array_keys(iterator_to_array(new APCUIterator())),
-            static fn ($key) => fnmatch($pattern, $key),
+            array_keys(iterator_to_array(new APCUIterator(null, APC_ITER_KEY))),
+            static fn ($key): bool => fnmatch($pattern, $key),
         );
 
-        if ($matchedKeys) {
+        if ($matchedKeys !== []) {
             return count($matchedKeys) - count(apcu_delete($matchedKeys));
         }
 
@@ -142,9 +142,10 @@ class ApcuHandler extends BaseHandler
      */
     public function getMetaData(string $key): ?array
     {
-        $key = static::validateKey($key, $this->prefix);
+        $key      = static::validateKey($key, $this->prefix);
+        $metadata = apcu_key_info($key);
 
-        if ($metadata = apcu_key_info($key)) {
+        if ($metadata !== null) {
             return [
                 'expire' => $metadata['ttl'] > 0 ? Time::now()->getTimestamp() + $metadata['ttl'] : null,
                 'mtime'  => $metadata['mtime'],
