@@ -2323,56 +2323,6 @@ parameters:
             path: ../../system/Entity/Cast/URICast.php
 
         -
-            message: '#^Method CodeIgniter\\Entity\\Entity\:\:__construct\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Entity.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Entity\:\:__get\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Entity.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Entity\:\:__set\(\) has parameter \$value with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Entity.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Entity\:\:castAs\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Entity.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Entity\:\:fill\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Entity.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Entity\:\:injectRawData\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Entity.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Entity\:\:jsonSerialize\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Entity.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Entity\:\:setAttributes\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Entity.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Entity\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Entity.php
-
-        -
-            message: '#^Method CodeIgniter\\Entity\\Entity\:\:toRawArray\(\) return type has no value type specified in iterable type array\.$#'
-            count: 1
-            path: ../../system/Entity/Entity.php
-
-        -
             message: '#^Method CodeIgniter\\Exceptions\\PageNotFoundException\:\:lang\(\) has parameter \$args with no value type specified in iterable type array\.$#'
             count: 1
             path: ../../system/Exceptions/PageNotFoundException.php

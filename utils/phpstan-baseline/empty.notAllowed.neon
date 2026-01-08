@@ -200,11 +200,6 @@ parameters:
         -
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
             count: 1
-            path: ../../system/Entity/Entity.php
-
-        -
-            message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 1
             path: ../../system/Files/File.php
 
         -

@@ -75,6 +75,32 @@ final class EntityTest extends CIUnitTestCase
         $this->assertSame($expected, $entity->toRawArray());
     }
 
+    public function testSetGetAttributesMethod(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'foo'        => null,
+                'attributes' => null,
+            ];
+
+            public function setAttributes(string $value): self
+            {
+                $this->attributes['attributes'] = $value;
+
+                return $this;
+            }
+
+            public function getAttributes(): string
+            {
+                return $this->attributes['attributes'];
+            }
+        };
+
+        $entity->setAttributes('attributes');
+
+        $this->assertSame('attributes', $entity->getAttributes());
+    }
+
     public function testSimpleSetAndGet(): void
     {
         $entity = $this->getEntity();
@@ -358,11 +384,11 @@ final class EntityTest extends CIUnitTestCase
             ];
         };
 
-        $entity->setAttributes(['active' => '1']);
+        $entity->injectRawData(['active' => '1']);
 
         $this->assertTrue($entity->active);
 
-        $entity->setAttributes(['active' => '0']);
+        $entity->injectRawData(['active' => '0']);
 
         $this->assertFalse($entity->active);
 
@@ -1096,19 +1122,19 @@ final class EntityTest extends CIUnitTestCase
         // Disabled casting properties, but we will allow casting in the method.
         $entity->cast(false);
         $beforeCast = $this->getPrivateProperty($entity, '_cast');
-        $result = $entity->toArray(true, true);
-        $afterCast = $this->getPrivateProperty($entity, '_cast');
+        $result     = $entity->toArray(true, true);
+        $afterCast  = $this->getPrivateProperty($entity, '_cast');
 
-        $this->assertSame($result['first'], 2026);
+        $this->assertSame(2026, $result['first']);
         $this->assertSame($beforeCast, $afterCast);
 
         // Enabled casting properties, but we will disallow casting in the method.
         $entity->cast(true);
         $beforeCast = $this->getPrivateProperty($entity, '_cast');
-        $result = $entity->toArray(true, false);
-        $afterCast = $this->getPrivateProperty($entity, '_cast');
+        $result     = $entity->toArray(true, false);
+        $afterCast  = $this->getPrivateProperty($entity, '_cast');
 
-        $this->assertSame($result['first'], '2026 Year');
+        $this->assertSame('2026 Year', $result['first']);
         $this->assertSame($beforeCast, $afterCast);
     }
 

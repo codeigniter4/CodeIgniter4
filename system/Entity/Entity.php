@@ -520,18 +520,6 @@ class Entity implements JsonSerializable
     }
 
     /**
-     * Set raw data array without any mutations.
-     *
-     * @return $this
-     *
-     * @deprecated Use injectRawData() instead.
-     */
-    public function setAttributes(array $data)
-    {
-        return $this->injectRawData($data);
-    }
-
-    /**
      * Checks the datamap to see if this property name is being mapped,
      * and returns the DB column name, if any, or the original property name.
      *
@@ -652,7 +640,7 @@ class Entity implements JsonSerializable
         }
 
         // If a "`set` + $key" method exists, it is also a setter.
-        if (method_exists($this, $method) && $method !== 'setAttributes') {
+        if (method_exists($this, $method)) {
             $this->{$method}($value);
 
             return;
