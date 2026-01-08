@@ -93,4 +93,44 @@ final class ReflectionHelperTest extends CIUnitTestCase
             $method('param1', 'param2'),
         );
     }
+
+    public function testGetPrivatePropertyWithAnonymousObject(): void
+    {
+        $anonClassObject = new class () extends TestForReflectionHelper {
+            private string $hideMe = 'active';
+
+            public function getHideMe(): string
+            {
+                return $this->hideMe;
+            }
+        };
+
+        $hideMe  = $this->getPrivateProperty($anonClassObject, 'hideMe');
+        $private = $this->getPrivateProperty($anonClassObject, 'private');
+
+        $this->assertSame('active', $hideMe);
+        $this->assertSame($anonClassObject->getPrivate(), $private);
+    }
+
+    public function testSetPrivatePropertyWithAnonymousObject(): void
+    {
+        $anonClassObject = new class () extends TestForReflectionHelper {
+            private string $hideMe = 'active';
+
+            public function getHideMe(): string
+            {
+                return $this->hideMe;
+            }
+        };
+
+        $this->setPrivateProperty($anonClassObject, 'hideMe', 'inactive');
+        $this->setPrivateProperty($anonClassObject, 'private', 'new secret');
+
+        $hideMe  = $this->getPrivateProperty($anonClassObject, 'hideMe');
+        $private = $this->getPrivateProperty($anonClassObject, 'private');
+
+        $this->assertSame('inactive', $hideMe);
+        $this->assertSame('new secret', $private);
+        $this->assertSame('new secret', $anonClassObject->getPrivate());
+    }
 }

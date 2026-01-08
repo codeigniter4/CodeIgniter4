@@ -5,5 +5,8 @@ use App\Libraries\Foo;
 // Create an instance of the class to test
 $obj = new Foo();
 
-// Test the value
+// or anonymous class
+// $obj = new class () extends Foo {};
+
+// Test the value from Foo
 $this->assertEquals('bar', $this->getPrivateProperty($obj, 'baz'));

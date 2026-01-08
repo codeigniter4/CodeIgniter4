@@ -55,7 +55,19 @@ trait ReflectionHelper
      */
     private static function getAccessibleRefProperty($obj, $property)
     {
-        $refClass = is_object($obj) ? new ReflectionObject($obj) : new ReflectionClass($obj);
+        if (! is_object($obj)) {
+            return (new ReflectionClass($obj))->getProperty($property);
+        }
+
+        $refClass = new ReflectionObject($obj);
+
+        if (! $refClass->hasProperty($property) && str_contains($obj::class, '@anonymous')) {
+            $parentClass = $refClass->getParentClass();
+
+            if ($parentClass !== false) {
+                return $parentClass->getProperty($property);
+            }
+        }
 
         return $refClass->getProperty($property);
     }

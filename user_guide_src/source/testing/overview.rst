@@ -224,6 +224,10 @@ instance of the class to test. The second parameter is the name of the property.
 
 .. literalinclude:: overview/014.php
 
+.. versionadded:: 4.7.0
+
+You can access private properties for anonymous classes that extend the parent class.
+
 setPrivateProperty($instance, $property, $value)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -231,6 +235,10 @@ Set a protected value within a class instance. The first parameter is an instanc
 parameter is the name of the property to set the value of. The third parameter is the value to set it to:
 
 .. literalinclude:: overview/015.php
+
+.. versionadded:: 4.7.0
+
+You can access private properties for anonymous classes that extend the parent class.
 
 Mocking Services
 ================
