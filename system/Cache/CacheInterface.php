@@ -39,13 +39,13 @@ interface CacheInterface
      * @return bool Success or failure
      */
     public function save(string $key, mixed $value, int $ttl = 60): bool;
-   
+
     /**
      * Attempts to get an item from the cache, or executes the callback
      * and stores the result on cache miss.
      *
-     * @param string           $key Cache item name
-     * @param int              $ttl Time To Live, in seconds
+     * @param string           $key      Cache item name
+     * @param int              $ttl      Time To Live, in seconds
      * @param Closure(): mixed $callback Callback executed on cache miss
      */
     public function remember(string $key, int $ttl, Closure $callback): mixed;
