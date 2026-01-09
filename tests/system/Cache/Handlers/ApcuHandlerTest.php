@@ -43,10 +43,6 @@ final class ApcuHandlerTest extends AbstractHandlerTestCase
     {
         parent::setUp();
 
-        if (! extension_loaded('apcu')) {
-            $this->markTestSkipped('APCu extension not loaded.');
-        }
-
         $this->handler = CacheFactory::getHandler(new Cache(), 'apcu');
     }
 
