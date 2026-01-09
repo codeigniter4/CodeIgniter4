@@ -33,9 +33,6 @@ class ApcuHandler extends BaseHandler
         $this->prefix = $config->prefix;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function initialize(): void
     {
     }
@@ -104,7 +101,7 @@ class ApcuHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
-    public function increment(string $key, int $offset = 1): bool|int
+    public function increment(string $key, int $offset = 1): false|int
     {
         $key = static::validateKey($key, $this->prefix);
 
@@ -114,7 +111,7 @@ class ApcuHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
-    public function decrement(string $key, int $offset = 1): bool|int
+    public function decrement(string $key, int $offset = 1): false|int
     {
         $key = static::validateKey($key, $this->prefix);
 
@@ -132,7 +129,7 @@ class ApcuHandler extends BaseHandler
     /**
      * {@inheritDoc}
      */
-    public function getCacheInfo(): array|false|object|null
+    public function getCacheInfo(): array|false
     {
         return apcu_cache_info(true);
     }

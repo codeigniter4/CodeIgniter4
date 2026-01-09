@@ -18,11 +18,13 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
 /**
  * @internal
  */
 #[Group('CacheLive')]
+#[RequiresPhpExtension('apcu')]
 final class ApcuHandlerTest extends AbstractHandlerTestCase
 {
     /**
