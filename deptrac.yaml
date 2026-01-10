@@ -226,6 +226,7 @@ deptrac:
       - +Controller
     Router:
       - HTTP
+      - I18n
     Security:
       - Cookie
       - I18n

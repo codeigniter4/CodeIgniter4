@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use Config\Services;
@@ -34,6 +35,15 @@ final class CacheTest extends CIUnitTestCase
 
         // Clear cache before each test
         cache()->clean();
+
+        Time::setTestNow('2026-01-10 12:00:00');
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        Time::setTestNow();
     }
 
     public function testConstructorDefaults(): void
@@ -73,7 +83,7 @@ final class CacheTest extends CIUnitTestCase
             'body'      => 'Cached content',
             'status'    => 200,
             'headers'   => ['Content-Type' => 'text/html'],
-            'timestamp' => time() - 10,
+            'timestamp' => Time::now()->getTimestamp() - 10,
         ];
         cache()->save($cacheKey, $cachedData, 3600);
 
@@ -124,7 +134,7 @@ final class CacheTest extends CIUnitTestCase
             'body'      => 'Custom cached content',
             'status'    => 200,
             'headers'   => [],
-            'timestamp' => time(),
+            'timestamp' => Time::now()->getTimestamp(),
         ];
         cache()->save('my_custom_key', $cachedData, 3600);
 
