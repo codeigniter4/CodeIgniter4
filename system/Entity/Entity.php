@@ -534,10 +534,10 @@ class Entity implements JsonSerializable
     }
 
     /**
-     * Converts the given string|timestamp|DateTimeInterface|Time instance
+     * Converts the given string|timestamp|DateTimeInterface instance
      * into the "CodeIgniter\I18n\Time" object.
      *
-     * @param DateTimeInterface|float|int|string|Time $value
+     * @param DateTimeInterface|float|int|string $value
      *
      * @return Time
      *
