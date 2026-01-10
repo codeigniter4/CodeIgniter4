@@ -16,6 +16,7 @@ namespace CodeIgniter\Router\Attributes;
 use Attribute;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\I18n\Time;
 
 /**
  * Cache Attribute
@@ -74,7 +75,8 @@ class Cache implements RouteAttributeInterface
             foreach ($cached['headers'] as $name => $value) {
                 $response->setHeader($name, $value);
             }
-            $response->setHeader('Age', (string) (time() - ($cached['timestamp'] ?? time())));
+            $time = Time::now()->getTimestamp();
+            $response->setHeader('Age', (string) ($time - ($cached['timestamp'] ?? $time)));
 
             return $response;
         }
@@ -122,7 +124,7 @@ class Cache implements RouteAttributeInterface
             'body'      => $response->getBody(),
             'headers'   => $headers,
             'status'    => $response->getStatusCode(),
-            'timestamp' => time(),
+            'timestamp' => Time::now()->getTimestamp(),
         ];
 
         cache()->save($cacheKey, $data, $this->for);
