@@ -127,7 +127,7 @@ class Entity implements JsonSerializable
     /**
      * The data caster.
      */
-    protected DataCaster $dataCaster;
+    protected ?DataCaster $dataCaster = null;
 
     /**
      * Holds info whenever properties have to be casted.
@@ -146,12 +146,7 @@ class Entity implements JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->dataCaster = new DataCaster(
-            array_merge($this->defaultCastHandlers, $this->castHandlers),
-            null,
-            null,
-            false,
-        );
+        $this->dataCaster = $this->dataCaster();
 
         $this->syncOriginal();
 
@@ -568,10 +563,37 @@ class Entity implements JsonSerializable
      */
     protected function castAs($value, string $attribute, string $method = 'get')
     {
-        return $this->dataCaster
-            // @TODO if $casts is readonly, we don't need the setTypes() method.
-            ->setTypes($this->casts)
-            ->castAs($value, $attribute, $method);
+        if ($this->dataCaster() instanceof DataCaster) {
+            return $this->dataCaster
+                // @TODO if $casts is readonly, we don't need the setTypes() method.
+                ->setTypes($this->casts)
+                ->castAs($value, $attribute, $method);
+        }
+
+        return $value;
+    }
+
+    /**
+     * This method allows you to refuse to contain an unnecessary DataCaster if you do not use casting.
+     */
+    protected function dataCaster(): ?DataCaster
+    {
+        if (! $this->_cast) {
+            $this->dataCaster = null;
+
+            return null;
+        }
+
+        if (! $this->dataCaster instanceof DataCaster) {
+            $this->dataCaster = new DataCaster(
+                array_merge($this->defaultCastHandlers, $this->castHandlers),
+                null,
+                null,
+                false,
+            );
+        }
+
+        return $this->dataCaster;
     }
 
     /**
@@ -597,6 +619,9 @@ class Entity implements JsonSerializable
         }
 
         $this->_cast = $cast;
+
+        // Synchronize option with DataCaster initialization
+        $this->dataCaster();
 
         return $this;
     }

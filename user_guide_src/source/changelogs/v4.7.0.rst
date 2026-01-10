@@ -111,6 +111,13 @@ parameter is ``true``. Previously, properties containing arrays were not recursi
 If you were relying on the old behavior where arrays remained unconverted, you will need to update
 your code.
 
+Entity and DataCaster
+---------------------
+
+Previously, the ``DataCaster`` object was always initialized, even if you did not use the ``$_cast = false`` type casting.
+Now, the object is created on-demand and deleted when type casting is disabled.
+In general, the change does not break the existing process, it should be remembered that now in some cases ``$dataCaster`` may be nullable.
+
 Encryption Handlers
 -------------------
 
@@ -302,6 +309,7 @@ Changes
 *******
 
 - **Cookie:** The ``CookieInterface::EXPIRES_FORMAT`` has been changed to ``D, d M Y H:i:s T`` to follow the recommended format in RFC 7231.
+- **Entity:** The protected property ``CodeIgniter\Entity\Entity::$dataCaster`` can be nullable.
 - **Format:** Added support for configuring ``json_encode()`` maximum depth via ``Config\Format::$jsonEncodeDepth``.
 - **Paths:** Added support for changing the location of the ``.env`` file via the ``Paths::$envDirectory`` property.
 - **Toolbar:** Added ``$disableOnHeaders`` property to **app/Config/Toolbar.php**.

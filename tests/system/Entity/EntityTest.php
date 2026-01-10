@@ -16,6 +16,7 @@ namespace CodeIgniter\Entity;
 use ArrayIterator;
 use ArrayObject;
 use Closure;
+use CodeIgniter\DataCaster\DataCaster;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\I18n\Time;
@@ -1483,6 +1484,39 @@ final class EntityTest extends CIUnitTestCase
         $entity->setBar('foo');
 
         $this->assertSame(json_encode($entity->toArray()), json_encode($entity));
+    }
+
+    public function testDataCasterInit(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'first' => '12345',
+            ];
+            protected $casts = [
+                'first' => 'integer',
+            ];
+        };
+
+        $getDataCaster = $this->getPrivateMethodInvoker($entity, 'dataCaster');
+
+        $this->assertInstanceOf(DataCaster::class, $getDataCaster());
+        $this->assertInstanceOf(DataCaster::class, $this->getPrivateProperty($entity, 'dataCaster'));
+        $this->assertSame(12345, $entity->first);
+
+        // Disable casting, do not load DataCaster
+        $entity->cast(false);
+        $this->assertNull($getDataCaster());
+        $this->assertNull($this->getPrivateProperty($entity, 'dataCaster'));
+        $this->assertIsString($entity->first);
+
+        // Method castAs() depends on the $_cast option
+        $this->assertSame('12345', $this->getPrivateMethodInvoker($entity, 'castAs')('12345', 'first'));
+
+        // Restore casting
+        $entity->cast(true);
+        $this->assertInstanceOf(DataCaster::class, $getDataCaster());
+        $this->assertInstanceOf(DataCaster::class, $this->getPrivateProperty($entity, 'dataCaster'));
+        $this->assertSame(12345, $entity->first);
     }
 
     private function getEntity(): object
