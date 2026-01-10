@@ -188,8 +188,8 @@ class Entity implements JsonSerializable
      */
     public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
     {
-        $lastCastStatus = $this->_cast;
-        $this->_cast    = $cast;
+        $originalCast = $this->_cast;
+        $this->_cast  = $cast;
 
         $keys = array_filter(array_keys($this->attributes), static fn ($key): bool => ! str_starts_with($key, '_'));
 
@@ -218,7 +218,7 @@ class Entity implements JsonSerializable
             }
         }
 
-        $this->_cast = $lastCastStatus;
+        $this->_cast = $originalCast;
 
         return $return;
     }
