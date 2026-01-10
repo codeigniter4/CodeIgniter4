@@ -39,6 +39,13 @@ final class CacheTest extends CIUnitTestCase
         Time::setTestNow('2026-01-10 12:00:00');
     }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        Time::setTestNow();
+    }
+
     public function testConstructorDefaults(): void
     {
         $cache = new Cache();
