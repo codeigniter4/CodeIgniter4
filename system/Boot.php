@@ -77,6 +77,39 @@ class Boot
     }
 
     /**
+     * Bootstrap for FrankenPHP worker mode.
+     *
+     * This method performs one-time initialization for worker mode,
+     * loading everything except the CodeIgniter instance, which should
+     * be created fresh for each request.
+     *
+     * @used-by `public/frankenphp-worker.php`
+     */
+    public static function bootWorker(Paths $paths): CodeIgniter
+    {
+        static::definePathConstants($paths);
+        if (! defined('APP_NAMESPACE')) {
+            static::loadConstants();
+        }
+        static::checkMissingExtensions();
+
+        static::loadDotEnv($paths);
+        static::defineEnvironment();
+        static::loadEnvironmentBootstrap($paths);
+
+        static::loadCommonFunctions();
+        static::loadAutoloader();
+        static::setExceptionHandler();
+        static::initializeKint();
+
+        // Note: We skip config caching in worker mode
+        // as it may cause issues with state between requests
+        static::autoloadHelpers();
+
+        return Boot::initializeCodeIgniter();
+    }
+
+    /**
      * Used by command line scripts other than
      * * `spark`
      * * `php-cli`

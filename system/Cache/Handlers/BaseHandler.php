@@ -87,4 +87,26 @@ abstract class BaseHandler implements CacheInterface
 
         return $value;
     }
+
+    /**
+     * Check if connection is alive.
+     *
+     * Default implementation for handlers that don't require connection management.
+     * Handlers with persistent connections (Redis, Predis, Memcached) should override this.
+     */
+    public function ping(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Reconnect to the cache server.
+     *
+     * Default implementation for handlers that don't require connection management.
+     * Handlers with persistent connections (Redis, Predis, Memcached) should override this.
+     */
+    public function reconnect(): bool
+    {
+        return true;
+    }
 }

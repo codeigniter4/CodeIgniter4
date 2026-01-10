@@ -57,18 +57,6 @@ class MemcachedHandler extends BaseHandler
         $this->config = array_merge($this->config, $config->memcached);
     }
 
-    /**
-     * Closes the connection to Memcache(d) if present.
-     */
-    public function __destruct()
-    {
-        if ($this->memcached instanceof Memcached) {
-            $this->memcached->quit();
-        } elseif ($this->memcached instanceof Memcache) {
-            $this->memcached->close();
-        }
-    }
-
     public function initialize(): void
     {
         try {
@@ -229,5 +217,47 @@ class MemcachedHandler extends BaseHandler
     public function isSupported(): bool
     {
         return extension_loaded('memcached') || extension_loaded('memcache');
+    }
+
+    public function ping(): bool
+    {
+        $version = $this->memcached->getVersion();
+
+        if ($this->memcached instanceof Memcached) {
+            // Memcached extension returns array with server:port => version
+            if (! is_array($version)) {
+                return false;
+            }
+
+            $serverKey = $this->config['host'] . ':' . $this->config['port'];
+
+            return isset($version[$serverKey]) && $version[$serverKey] !== false;
+        }
+
+        if ($this->memcached instanceof Memcache) {
+            // Memcache extension returns string version
+            return is_string($version) && $version !== '';
+        }
+
+        return false;
+    }
+
+    public function reconnect(): bool
+    {
+        if ($this->memcached instanceof Memcached) {
+            $this->memcached->quit();
+        } elseif ($this->memcached instanceof Memcache) {
+            $this->memcached->close();
+        }
+
+        try {
+            $this->initialize();
+
+            return true;
+        } catch (CriticalError $e) {
+            log_message('error', 'Cache: Memcached reconnection failed: ' . $e->getMessage());
+
+            return false;
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Session\Exceptions\SessionException;
+use CodeIgniter\Session\PersistsConnection;
 use Config\Session as SessionConfig;
 use Memcached;
 
@@ -23,6 +24,8 @@ use Memcached;
  */
 class MemcachedHandler extends BaseHandler
 {
+    use PersistsConnection;
+
     /**
      * Memcached instance.
      *
@@ -82,6 +85,23 @@ class MemcachedHandler extends BaseHandler
      */
     public function open($path, $name): bool
     {
+        if ($this->hasPersistentConnection()) {
+            $memcached = $this->getPersistentConnection();
+            $version   = $memcached->getVersion();
+
+            if (is_array($version)) {
+                foreach ($version as $serverVersion) {
+                    if ($serverVersion !== false) {
+                        $this->memcached = $memcached;
+
+                        return true;
+                    }
+                }
+            }
+
+            $this->setPersistentConnection(null);
+        }
+
         $this->memcached = new Memcached();
         $this->memcached->setOption(Memcached::OPT_BINARY_PROTOCOL, true); // required for touch() usage
 
@@ -129,6 +149,8 @@ class MemcachedHandler extends BaseHandler
 
             return false;
         }
+
+        $this->setPersistentConnection($this->memcached);
 
         return true;
     }
@@ -204,12 +226,6 @@ class MemcachedHandler extends BaseHandler
             if (isset($this->lockKey)) {
                 $this->memcached->delete($this->lockKey);
             }
-
-            if (! $this->memcached->quit()) {
-                return false;
-            }
-
-            $this->memcached = null;
 
             return true;
         }

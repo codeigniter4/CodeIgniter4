@@ -28,6 +28,7 @@ repository.
     installing_composer
     installing_manual
     running
+    worker_mode
     troubleshooting
     deployment
     ../changelogs/index

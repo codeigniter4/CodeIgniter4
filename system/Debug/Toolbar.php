@@ -606,4 +606,17 @@ class Toolbar
 
         return false;
     }
+
+    /**
+     * Reset all collectors for worker mode.
+     * Calls reset() on collectors that support it.
+     */
+    public function reset(): void
+    {
+        foreach ($this->collectors as $collector) {
+            if (method_exists($collector, 'reset')) {
+                $collector->reset();
+            }
+        }
+    }
 }

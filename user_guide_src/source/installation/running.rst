@@ -158,6 +158,36 @@ The local development server can be customized with three command line options:
 
         php spark serve --php /usr/bin/php7.6.5.4
 
+***************************
+Worker Mode with FrankenPHP
+***************************
+
+.. versionadded:: 4.7.0
+
+FrankenPHP is a modern PHP application server that supports Worker Mode, allowing
+your application to handle multiple requests within the same PHP process for
+improved performance.
+
+Quick Start
+===========
+
+1. Install FrankenPHP using `static binaries <https://github.com/php/frankenphp/releases>`_
+
+2. Generate worker mode files:
+
+.. code-block:: console
+
+    php spark worker:install
+
+3. Start the server:
+
+.. code-block:: console
+
+    frankenphp run
+
+For detailed configuration, performance tuning, and important considerations
+about state management, see :doc:`worker_mode`.
+
 *******************
 Hosting with Apache
 *******************

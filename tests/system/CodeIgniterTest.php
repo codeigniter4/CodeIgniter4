@@ -1270,4 +1270,27 @@ final class CodeIgniterTest extends CIUnitTestCase
         // But the controller method should still execute
         $this->assertStringContainsString('Filtered', (string) $output);
     }
+
+    public function testResetForWorkerMode(): void
+    {
+        $config      = new App();
+        $codeigniter = new MockCodeIgniter($config);
+
+        $this->setPrivateProperty($codeigniter, 'request', service('request'));
+        $this->setPrivateProperty($codeigniter, 'response', service('response'));
+        $this->setPrivateProperty($codeigniter, 'output', 'test output');
+
+        $this->assertNotNull($this->getPrivateProperty($codeigniter, 'request'));
+        $this->assertNotNull($this->getPrivateProperty($codeigniter, 'response'));
+        $this->assertNotNull($this->getPrivateProperty($codeigniter, 'output'));
+
+        $codeigniter->resetForWorkerMode();
+
+        $this->assertNull($this->getPrivateProperty($codeigniter, 'request'));
+        $this->assertNull($this->getPrivateProperty($codeigniter, 'response'));
+        $this->assertNull($this->getPrivateProperty($codeigniter, 'router'));
+        $this->assertNull($this->getPrivateProperty($codeigniter, 'controller'));
+        $this->assertNull($this->getPrivateProperty($codeigniter, 'method'));
+        $this->assertNull($this->getPrivateProperty($codeigniter, 'output'));
+    }
 }

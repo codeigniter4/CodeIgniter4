@@ -204,4 +204,38 @@ class PredisHandler extends BaseHandler
     {
         return class_exists(Client::class);
     }
+
+    public function ping(): bool
+    {
+        try {
+            $result = $this->redis->ping();
+
+            if (is_object($result)) {
+                return $result->getPayload() === 'PONG';
+            }
+
+            return $result === 'PONG';
+        } catch (Exception) {
+            return false;
+        }
+    }
+
+    public function reconnect(): bool
+    {
+        try {
+            $this->redis->disconnect();
+        } catch (Exception $e) {
+            // Connection already dead, that's fine
+        }
+
+        try {
+            $this->initialize();
+
+            return true;
+        } catch (CriticalError $e) {
+            log_message('error', 'Cache: Predis reconnection failed: ' . $e->getMessage());
+
+            return false;
+        }
+    }
 }

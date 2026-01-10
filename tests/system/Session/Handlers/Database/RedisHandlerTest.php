@@ -19,6 +19,7 @@ use Config\Session as SessionConfig;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use Redis;
 
 /**
  * @internal
@@ -54,6 +55,13 @@ final class RedisHandlerTest extends CIUnitTestCase
         }
 
         return new RedisHandler($sessionConfig, $this->userIpAddress);
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        RedisHandler::resetPersistentConnections();
     }
 
     public function testOpen(): void
@@ -293,5 +301,62 @@ final class RedisHandlerTest extends CIUnitTestCase
                 ],
             ],
         ];
+    }
+
+    public function testConnectionReuse(): void
+    {
+        $handler1 = $this->getInstance();
+        $handler1->open($this->sessionSavePath, $this->sessionName);
+
+        $connection1 = $this->getPrivateProperty($handler1, 'redis');
+        $this->assertInstanceOf(Redis::class, $connection1);
+
+        $handler2 = $this->getInstance();
+        $handler2->open($this->sessionSavePath, $this->sessionName);
+
+        $connection2 = $this->getPrivateProperty($handler2, 'redis');
+
+        $this->assertSame($connection1, $connection2);
+
+        $handler1->close();
+        $handler2->close();
+    }
+
+    public function testDifferentConfigurationsGetDifferentConnections(): void
+    {
+        $handler1 = $this->getInstance();
+        $handler1->open($this->sessionSavePath, $this->sessionName);
+
+        $connection1 = $this->getPrivateProperty($handler1, 'redis');
+
+        $handler2 = $this->getInstance(['cookieName' => 'different_session']);
+        $handler2->open($this->sessionSavePath, 'different_session');
+
+        $connection2 = $this->getPrivateProperty($handler2, 'redis');
+
+        $this->assertNotSame($connection1, $connection2);
+
+        $handler1->close();
+        $handler2->close();
+    }
+
+    public function testResetPersistentConnections(): void
+    {
+        $handler1 = $this->getInstance();
+        $handler1->open($this->sessionSavePath, $this->sessionName);
+
+        $connection1 = $this->getPrivateProperty($handler1, 'redis');
+
+        RedisHandler::resetPersistentConnections();
+
+        $handler2 = $this->getInstance();
+        $handler2->open($this->sessionSavePath, $this->sessionName);
+
+        $connection2 = $this->getPrivateProperty($handler2, 'redis');
+
+        $this->assertNotSame($connection1, $connection2);
+
+        $handler1->close();
+        $handler2->close();
     }
 }

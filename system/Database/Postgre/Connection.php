@@ -143,20 +143,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Keep or establish the connection if no queries have been sent for
-     * a length of time exceeding the server's idle timeout.
-     *
-     * @return void
-     */
-    public function reconnect()
-    {
-        if ($this->connID === false || pg_ping($this->connID) === false) {
-            $this->close();
-            $this->initialize();
-        }
-    }
-
-    /**
      * Close the database connection.
      *
      * @return void
@@ -164,6 +150,14 @@ class Connection extends BaseConnection
     protected function _close()
     {
         pg_close($this->connID);
+    }
+
+    /**
+     * Ping the database connection.
+     */
+    protected function _ping(): bool
+    {
+        return pg_ping($this->connID);
     }
 
     /**

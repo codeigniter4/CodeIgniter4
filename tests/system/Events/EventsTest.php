@@ -332,4 +332,18 @@ final class EventsTest extends CIUnitTestCase
 
         return clone $user;
     }
+
+    public function testResetForWorkerMode(): void
+    {
+        Events::on('test', static fn (): null => null);
+        Events::trigger('test');
+
+        $performanceLog = Events::getPerformanceLogs();
+        $this->assertNotEmpty($performanceLog);
+
+        Events::cleanupForWorkerMode();
+
+        $performanceLog = Events::getPerformanceLogs();
+        $this->assertEmpty($performanceLog);
+    }
 }

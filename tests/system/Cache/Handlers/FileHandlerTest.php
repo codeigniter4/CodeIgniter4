@@ -388,6 +388,16 @@ final class FileHandlerTest extends AbstractHandlerTestCase
 
         $this->assertNull($this->handler->get(self::$key1));
     }
+
+    public function testPing(): void
+    {
+        $this->assertTrue($this->handler->ping());
+    }
+
+    public function testReconnect(): void
+    {
+        $this->assertTrue($this->handler->reconnect());
+    }
 }
 
 /**
