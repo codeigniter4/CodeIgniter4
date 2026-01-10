@@ -1121,21 +1121,19 @@ final class EntityTest extends CIUnitTestCase
 
         // Disabled casting properties, but we will allow casting in the method.
         $entity->cast(false);
-        $beforeCast = $this->getPrivateProperty($entity, '_cast');
+        $beforeCast = $entity->cast();
         $result     = $entity->toArray(true, true);
-        $afterCast  = $this->getPrivateProperty($entity, '_cast');
 
         $this->assertSame(2026, $result['first']);
-        $this->assertSame($beforeCast, $afterCast);
+        $this->assertSame($beforeCast, $entity->cast());
 
         // Enabled casting properties, but we will disallow casting in the method.
         $entity->cast(true);
-        $beforeCast = $this->getPrivateProperty($entity, '_cast');
+        $beforeCast = $entity->cast();
         $result     = $entity->toArray(true, false);
-        $afterCast  = $this->getPrivateProperty($entity, '_cast');
 
         $this->assertSame('2026 Year', $result['first']);
-        $this->assertSame($beforeCast, $afterCast);
+        $this->assertSame($beforeCast, $entity->cast());
     }
 
     public function testDataMappingIssetSwapped(): void
