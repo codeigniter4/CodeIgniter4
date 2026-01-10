@@ -397,7 +397,7 @@ class Toolbar
             helper('filesystem');
 
             // Updated to microtime() so we can get history
-            $time = sprintf('%.6f', Time::now()->format('U.u'));
+            $time = sprintf('%.6F', Time::now()->format('U.u'));
 
             if (! is_dir(WRITEPATH . 'debugbar')) {
                 mkdir(WRITEPATH . 'debugbar', 0777);
