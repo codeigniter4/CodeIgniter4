@@ -322,6 +322,7 @@ Bugs Fixed
 
 - **Cookie:** The ``CookieInterface::SAMESITE_STRICT``, ``CookieInterface::SAMESITE_LAX``, and ``CookieInterface::SAMESITE_NONE`` constants are now written in ucfirst style to be consistent with usage in the rest of the framework.
 - **Cache:** Changed ``WincacheHandler::increment()`` and ``WincacheHandler::decrement()`` to return ``bool`` instead of ``mixed``.
+- **Entity:** Calling ``CodeIgniter\Entity\Entity::toArray()`` always changed the value of ``$_cast`` to ``true``, instead of restoring the initial value.
 - **Toolbar:** Fixed **Maximum call stack size exceeded** crash when AJAX-like requests (HTMX, Turbo, Unpoly, etc.) were made on pages with Debug Toolbar enabled.
 
 See the repo's
