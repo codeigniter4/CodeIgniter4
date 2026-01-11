@@ -11,10 +11,11 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-use PhpCsFixer\ConfigInterface;
+use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
+use Utils\PhpCsFixer\CodeIgniterRuleCustomisationPolicy;
 
-/** @var ConfigInterface $config */
+/** @var Config $config */
 $config = require __DIR__ . '/.php-cs-fixer.dist.php';
 
 $finder = Finder::create()
@@ -26,9 +27,7 @@ $finder = Finder::create()
         '_support/View/Cells/multiplier.php',
         '_support/View/Cells/colors.php',
         '_support/View/Cells/addition.php',
-        'system/Database/Live/PreparedQueryTest.php',
-    ])
-    ->notName('#Foobar.php$#');
+    ]);
 
 $overrides = [
     'phpdoc_to_return_type' => true,
@@ -36,6 +35,7 @@ $overrides = [
 ];
 
 return $config
+    ->setRuleCustomisationPolicy(new CodeIgniterRuleCustomisationPolicy())
     ->setFinder($finder)
     ->setCacheFile('build/.php-cs-fixer.tests.cache')
     ->setRules(array_merge($config->getRules(), $overrides));

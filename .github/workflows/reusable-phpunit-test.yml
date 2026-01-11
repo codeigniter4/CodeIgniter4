@@ -43,6 +43,10 @@ on:
         description: Additional PHP extensions that are needed to be enabled
         type: string
         required: false
+      extra-ini-options:
+        description: Additional PHP configuration directives that should be appended to the php.ini
+        type: string
+        required: false
       extra-composer-options:
         description: Additional Composer options that should be appended to the `composer update` call
         type: string
@@ -163,6 +167,7 @@ jobs:
           php-version: ${{ inputs.php-version }}
           tools: composer
           extensions: gd, ${{ inputs.extra-extensions }}
+          ini-values: ${{ inputs.extra-ini-options }}
           coverage: ${{ env.COVERAGE_DRIVER }}
         env:
           COVERAGE_DRIVER: ${{ inputs.enable-coverage && 'xdebug' || 'none' }}
