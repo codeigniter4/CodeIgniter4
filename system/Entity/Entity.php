@@ -578,7 +578,7 @@ class Entity implements JsonSerializable
      */
     protected function dataCaster(): ?DataCaster
     {
-        if (! $this->_cast) {
+        if ($this->casts === [] || ! $this->_cast) {
             $this->dataCaster = null;
 
             return null;
