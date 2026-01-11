@@ -1503,20 +1503,51 @@ final class EntityTest extends CIUnitTestCase
         $this->assertInstanceOf(DataCaster::class, $this->getPrivateProperty($entity, 'dataCaster'));
         $this->assertSame(12345, $entity->first);
 
-        // Disable casting, do not load DataCaster
+        // Disable casting, but the DataCaster is initialized
         $entity->cast(false);
-        $this->assertNull($getDataCaster());
-        $this->assertNull($this->getPrivateProperty($entity, 'dataCaster'));
+        $this->assertInstanceOf(DataCaster::class, $getDataCaster());
+        $this->assertInstanceOf(DataCaster::class, $this->getPrivateProperty($entity, 'dataCaster'));
         $this->assertIsString($entity->first);
 
-        // Method castAs() depends on the $_cast option
-        $this->assertSame('12345', $this->getPrivateMethodInvoker($entity, 'castAs')('12345', 'first'));
+        // Method castAs() ignore on the $_cast option
+        $this->assertSame(12345, $this->getPrivateMethodInvoker($entity, 'castAs')('12345', 'first'));
 
         // Restore casting
         $entity->cast(true);
         $this->assertInstanceOf(DataCaster::class, $getDataCaster());
         $this->assertInstanceOf(DataCaster::class, $this->getPrivateProperty($entity, 'dataCaster'));
         $this->assertSame(12345, $entity->first);
+    }
+
+    public function testDataCasterInitEmptyCasts(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'first' => '12345',
+            ];
+            protected $casts = [];
+        };
+
+        $getDataCaster = $this->getPrivateMethodInvoker($entity, 'dataCaster');
+
+        $this->assertNull($getDataCaster());
+        $this->assertNull($this->getPrivateProperty($entity, 'dataCaster'));
+        $this->assertSame('12345', $entity->first);
+
+        // Disable casting, the DataCaster was not initialized
+        $entity->cast(false);
+        $this->assertNull($getDataCaster());
+        $this->assertNull($this->getPrivateProperty($entity, 'dataCaster'));
+        $this->assertSame('12345', $entity->first);
+
+        // Method castAs() depends on the $_cast option
+        $this->assertSame('12345', $this->getPrivateMethodInvoker($entity, 'castAs')('12345', 'first'));
+
+        // Restore casting
+        $entity->cast(true);
+        $this->assertNull($getDataCaster());
+        $this->assertNull($this->getPrivateProperty($entity, 'dataCaster'));
+        $this->assertSame('12345', $entity->first);
     }
 
     private function getEntity(): object

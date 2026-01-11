@@ -40,8 +40,6 @@ Assume you have a database table named ``users`` that has the following schema::
     password    - string
     created_at  - datetime
 
-.. important:: ``attributes`` is a reserved word for internal use. Prior to v4.4.0, if you use it as a column name, the Entity does not work correctly.
-
 Create the Entity Class
 =======================
 
