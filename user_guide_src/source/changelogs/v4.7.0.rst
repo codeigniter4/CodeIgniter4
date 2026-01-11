@@ -114,10 +114,10 @@ your code.
 Entity and DataCaster
 ---------------------
 
-Previously, the ``DataCaster`` object was always initialized, even if you did not use the type casting (
-configured empty array ``$casts = []``).
-Now, the object is created on-demand and it will be ``null`` when type casting is not configured.
-In general, the change does not break the existing process, it should be remembered that now in some cases ``$dataCaster`` may be nullable.
+Previously, the ``DataCaster`` object was always initialized, even when type casting was not configured (an empty ``$casts = []`` array).
+
+``DataCaster`` is now created on demand and will be ``null`` when type casting is not configured.
+While this change should not affect typical usage, developers should be aware that ``$dataCaster`` may now be nullable in some cases.
 
 Encryption Handlers
 -------------------
