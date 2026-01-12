@@ -574,7 +574,8 @@ class Entity implements JsonSerializable
     }
 
     /**
-     * This method allows you to refuse to contain an unnecessary DataCaster if you do not use casting.
+     * Returns a DataCaster instance when casts are defined.
+     * If no casts are configured, no DataCaster is created and null is returned.
      */
     protected function dataCaster(): ?DataCaster
     {
@@ -619,9 +620,6 @@ class Entity implements JsonSerializable
         }
 
         $this->_cast = $cast;
-
-        // Synchronize option with DataCaster initialization
-        $this->dataCaster();
 
         return $this;
     }
