@@ -278,7 +278,7 @@ APCu Caching
 
 APCu is an in-memory key-value store for PHP. 
 
-To use it, you need `APCu PHP extension <https://www.php.net/apcu>`_.
+To use it, you need the `APCu PHP extension <https://www.php.net/apcu>`_.
 
 File-based Caching
 ==================

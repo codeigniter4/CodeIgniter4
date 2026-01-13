@@ -37,9 +37,6 @@ class ApcuHandler extends BaseHandler
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function get(string $key): mixed
     {
         $key     = static::validateKey($key, $this->prefix);
@@ -51,9 +48,6 @@ class ApcuHandler extends BaseHandler
         return $success ? $data : null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function save(string $key, $value, int $ttl = 60): bool
     {
         $key = static::validateKey($key, $this->prefix);
@@ -61,9 +55,6 @@ class ApcuHandler extends BaseHandler
         return apcu_store($key, $value, $ttl);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function remember(string $key, int $ttl, Closure $callback): mixed
     {
         $key = static::validateKey($key, $this->prefix);
@@ -71,9 +62,6 @@ class ApcuHandler extends BaseHandler
         return apcu_entry($key, $callback, $ttl);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function delete(string $key): bool
     {
         $key = static::validateKey($key, $this->prefix);
@@ -81,9 +69,6 @@ class ApcuHandler extends BaseHandler
         return apcu_delete($key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function deleteMatching(string $pattern): int
     {
         $matchedKeys = array_filter(
@@ -98,9 +83,6 @@ class ApcuHandler extends BaseHandler
         return 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function increment(string $key, int $offset = 1): false|int
     {
         $key = static::validateKey($key, $this->prefix);
@@ -108,9 +90,6 @@ class ApcuHandler extends BaseHandler
         return apcu_inc($key, $offset);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function decrement(string $key, int $offset = 1): false|int
     {
         $key = static::validateKey($key, $this->prefix);
@@ -118,25 +97,16 @@ class ApcuHandler extends BaseHandler
         return apcu_dec($key, $offset);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function clean(): bool
     {
         return apcu_clear_cache();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getCacheInfo(): array|false
     {
         return apcu_cache_info(true);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getMetaData(string $key): ?array
     {
         $key      = static::validateKey($key, $this->prefix);
@@ -153,9 +123,6 @@ class ApcuHandler extends BaseHandler
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isSupported(): bool
     {
         return extension_loaded('apcu') && apcu_enabled();
