@@ -223,6 +223,19 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame('es', $request->getLocale());
     }
 
+    public function testSetBroadLocale(): void
+    {
+        $config                   = new App();
+        $config->supportedLocales = ['en', 'fr'];
+        $config->defaultLocale    = 'en';
+        $config->baseURL          = 'http://example.com/';
+
+        $request = $this->createRequest($config);
+
+        $request->setLocale('fr-FR');
+        $this->assertSame('fr', $request->getLocale());
+    }
+
     public function testSetValidLocales(): void
     {
         $config                   = new App();
