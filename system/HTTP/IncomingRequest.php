@@ -441,10 +441,14 @@ class IncomingRequest extends Request
      */
     public function setLocale(string $locale)
     {
-        // If it's not a valid locale, set it
-        // to the default locale for the site.
+        // Check if valid locale.
         if (! in_array($locale, $this->validLocales, true)) {
-            $locale = $this->defaultLocale;
+            // If not valid, check if language only is valid locale.
+            $locale = strtok($locale, '-');
+            if (! in_array($locale, $this->validLocales, true)) {
+                // If neither valid, use default locale for the site.
+                $locale = $this->defaultLocale;
+            }
         }
 
         $this->locale = $locale;
