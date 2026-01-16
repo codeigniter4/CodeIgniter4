@@ -30,10 +30,6 @@ final class DatabaseSeederTest extends CIUnitTestCase
     {
         parent::tearDown();
 
-        $instances = Database::getConnections();
-        unset($instances['default']);
-        $this->setPrivateProperty(Database::class, 'instances', $instances);
-
         SeederWithDBGroup::reset();
         SeederWithoutDBGroup::reset();
     }
@@ -75,11 +71,10 @@ final class DatabaseSeederTest extends CIUnitTestCase
     public function testSeederWithDBGroupUsesOwnConnection(): void
     {
         $config = new Database();
-        $db     = Database::connect('default');
+        $db     = Database::connect('tests', false);
 
         $seeder = new SeederWithDBGroup($config, $db);
 
-        // Should use 'tests' connection (from DBGroup), not the passed 'default' connection
         $testsDb = Database::connect('tests');
         $this->assertSame($testsDb, $seeder->getDatabase());
         $this->assertNotSame($db, $seeder->getDatabase());
@@ -119,7 +114,7 @@ final class DatabaseSeederTest extends CIUnitTestCase
     public function testCallChildWithDBGroupUsesOwnConnection(): void
     {
         $config = new Database();
-        $db     = Database::connect('default');
+        $db     = Database::connect('tests', false);
 
         $seeder = new Seeder($config, $db);
         $seeder->setSilent(true)->call(SeederWithDBGroup::class);
