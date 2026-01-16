@@ -124,7 +124,7 @@ abstract class CIUnitTestCase extends TestCase
      *
      * @var string
      */
-    protected $basePath = SUPPORTPATH . 'Database';
+    protected $basePath = TESTPATH . '_support/Database';
 
     /**
      * The namespace(s) to help us find the migration classes.
