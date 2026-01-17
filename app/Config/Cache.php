@@ -3,6 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Cache\Handlers\ApcuHandler;
 use CodeIgniter\Cache\Handlers\DummyHandler;
 use CodeIgniter\Cache\Handlers\FileHandler;
 use CodeIgniter\Cache\Handlers\MemcachedHandler;
@@ -143,6 +144,7 @@ class Cache extends BaseConfig
      * @var array<string, class-string<CacheInterface>>
      */
     public array $validHandlers = [
+        'apcu'      => ApcuHandler::class,
         'dummy'     => DummyHandler::class,
         'file'      => FileHandler::class,
         'memcached' => MemcachedHandler::class,

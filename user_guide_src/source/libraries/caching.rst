@@ -36,7 +36,7 @@ $handler
 ========
 
 The is the name of the handler that should be used as the primary handler when starting up the engine.
-Available names are: dummy, file, memcached, redis, predis, wincache.
+Available names are: apcu, dummy, file, memcached, redis, predis, wincache.
 
 $backupHandler
 ==============
@@ -272,6 +272,13 @@ Class Reference
 *******
 Drivers
 *******
+
+APCu Caching
+============
+
+APCu is an in-memory key-value store for PHP. 
+
+To use it, you need the `APCu PHP extension <https://www.php.net/apcu>`_.
 
 File-based Caching
 ==================

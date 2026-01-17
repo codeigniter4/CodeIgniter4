@@ -163,7 +163,8 @@ jobs:
       enable-artifact-upload: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
       enable-coverage: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
       enable-profiling: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
-      extra-extensions: redis, memcached
+      extra-extensions: redis, memcached, apcu
+      extra-ini-options: apc.enable_cli=1
       extra-composer-options: ${{ matrix.composer-option }}
 
   coveralls:

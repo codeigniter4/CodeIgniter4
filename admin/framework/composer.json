@@ -27,6 +27,7 @@
         "predis/predis": "^3.0"
     },
     "suggest": {
+        "ext-apcu": "If you use Cache class ApcuHandler",
         "ext-curl": "If you use CURLRequest class",
         "ext-dom": "If you use TestResponse",
         "ext-exif": "If you run Image class tests",
