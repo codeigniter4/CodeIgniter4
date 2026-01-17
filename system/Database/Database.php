@@ -70,7 +70,7 @@ class Database
      */
     public function loadForge(ConnectionInterface $db): Forge
     {
-        if (! $db->connID) {
+        if ($db->connID === false) {
             $db->initialize();
         }
 
@@ -84,7 +84,7 @@ class Database
      */
     public function loadUtils(ConnectionInterface $db): BaseUtils
     {
-        if (! $db->connID) {
+        if ($db->connID === false) {
             $db->initialize();
         }
 

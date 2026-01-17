@@ -1,10 +1,9 @@
-# total 2168 errors
+# total 2166 errors
 
 includes:
     - argument.type.neon
     - arguments.count.neon
     - assign.propertyType.neon
-    - booleanNot.exprNotBoolean.neon
     - codeigniter.getReassignArray.neon
     - codeigniter.modelArgumentType.neon
     - codeigniter.superglobalAccess.neon
