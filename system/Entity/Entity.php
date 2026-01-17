@@ -30,7 +30,6 @@ use CodeIgniter\Entity\Cast\TimestampCast;
 use CodeIgniter\Entity\Cast\URICast;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
-use DateTime;
 use DateTimeInterface;
 use Exception;
 use JsonSerializable;
@@ -79,14 +78,14 @@ class Entity implements JsonSerializable
     protected $casts = [];
 
     /**
-     * Custom convert handlers
+     * Custom convert handlers.
      *
      * @var array<string, string>
      */
     protected $castHandlers = [];
 
     /**
-     * Default convert handlers
+     * Default convert handlers.
      *
      * @var array<string, string>
      */
@@ -128,29 +127,26 @@ class Entity implements JsonSerializable
     /**
      * The data caster.
      */
-    protected DataCaster $dataCaster;
+    protected ?DataCaster $dataCaster = null;
 
     /**
-     * Holds info whenever properties have to be casted
+     * Holds info whenever properties have to be casted.
      */
     private bool $_cast = true;
 
     /**
-     * Indicates whether all attributes are scalars (for optimization)
+     * Indicates whether all attributes are scalars (for optimization).
      */
     private bool $_onlyScalars = true;
 
     /**
      * Allows filling in Entity parameters during construction.
+     *
+     * @param array<string, mixed> $data
      */
     public function __construct(?array $data = null)
     {
-        $this->dataCaster = new DataCaster(
-            array_merge($this->defaultCastHandlers, $this->castHandlers),
-            null,
-            null,
-            false,
-        );
+        $this->dataCaster = $this->dataCaster();
 
         $this->syncOriginal();
 
@@ -162,7 +158,7 @@ class Entity implements JsonSerializable
      * properties, using any `setCamelCasedProperty()` methods
      * that may or may not exist.
      *
-     * @param array<string, array|bool|float|int|object|string|null> $data
+     * @param array<string, array<int|string, mixed>|bool|float|int|object|string|null> $data
      *
      * @return $this
      */
@@ -184,13 +180,16 @@ class Entity implements JsonSerializable
      * of this entity as an array. All values are accessed through the
      * __get() magic method so will have any casts, etc applied to them.
      *
-     * @param bool $onlyChanged If true, only return values that have changed since object creation
+     * @param bool $onlyChanged If true, only return values that have changed since object creation.
      * @param bool $cast        If true, properties will be cast.
      * @param bool $recursive   If true, inner entities will be cast as array as well.
+     *
+     * @return array<string, mixed>
      */
     public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
     {
-        $this->_cast = $cast;
+        $originalCast = $this->_cast;
+        $this->_cast  = $cast;
 
         $keys = array_filter(array_keys($this->attributes), static fn ($key): bool => ! str_starts_with($key, '_'));
 
@@ -219,7 +218,7 @@ class Entity implements JsonSerializable
             }
         }
 
-        $this->_cast = true;
+        $this->_cast = $originalCast;
 
         return $return;
     }
@@ -227,8 +226,10 @@ class Entity implements JsonSerializable
     /**
      * Returns the raw values of the current attributes.
      *
-     * @param bool $onlyChanged If true, only return values that have changed since object creation
+     * @param bool $onlyChanged If true, only return values that have changed since object creation.
      * @param bool $recursive   If true, inner entities will be cast as array as well.
+     *
+     * @return array<string, mixed>
      */
     public function toRawArray(bool $onlyChanged = false, bool $recursive = false): array
     {
@@ -370,8 +371,6 @@ class Entity implements JsonSerializable
      * Checks a property to see if it has changed since the entity
      * was created. Or, without a parameter, checks if any
      * properties have changed.
-     *
-     * @param string|null $key class property
      */
     public function hasChanged(?string $key = null): bool
     {
@@ -500,7 +499,9 @@ class Entity implements JsonSerializable
     }
 
     /**
-     * Set raw data array without any mutations
+     * Set raw data array without any mutations.
+     *
+     * @param array<string, mixed> $data
      *
      * @return $this
      */
@@ -514,22 +515,10 @@ class Entity implements JsonSerializable
     }
 
     /**
-     * Set raw data array without any mutations
-     *
-     * @return $this
-     *
-     * @deprecated Use injectRawData() instead.
-     */
-    public function setAttributes(array $data)
-    {
-        return $this->injectRawData($data);
-    }
-
-    /**
      * Checks the datamap to see if this property name is being mapped,
-     * and returns the db column name, if any, or the original property name.
+     * and returns the DB column name, if any, or the original property name.
      *
-     * @return string db column name
+     * @return string Database column name.
      */
     protected function mapProperty(string $key)
     {
@@ -537,7 +526,7 @@ class Entity implements JsonSerializable
             return $key;
         }
 
-        if (! empty($this->datamap[$key])) {
+        if (array_key_exists($key, $this->datamap) && $this->datamap[$key] !== '') {
             return $this->datamap[$key];
         }
 
@@ -545,10 +534,10 @@ class Entity implements JsonSerializable
     }
 
     /**
-     * Converts the given string|timestamp|DateTime|Time instance
+     * Converts the given string|timestamp|DateTimeInterface instance
      * into the "CodeIgniter\I18n\Time" object.
      *
-     * @param DateTime|float|int|string|Time $value
+     * @param DateTimeInterface|float|int|string $value
      *
      * @return Time
      *
@@ -568,22 +557,50 @@ class Entity implements JsonSerializable
      * @param string                     $attribute Attribute name
      * @param string                     $method    Allowed to "get" and "set"
      *
-     * @return array|bool|float|int|object|string|null
+     * @return array<int|string, mixed>|bool|float|int|object|string|null
      *
      * @throws CastException
      */
     protected function castAs($value, string $attribute, string $method = 'get')
     {
-        return $this->dataCaster
-            // @TODO if $casts is readonly, we don't need the setTypes() method.
-            ->setTypes($this->casts)
-            ->castAs($value, $attribute, $method);
+        if ($this->dataCaster() instanceof DataCaster) {
+            return $this->dataCaster
+                // @TODO if $casts is readonly, we don't need the setTypes() method.
+                ->setTypes($this->casts)
+                ->castAs($value, $attribute, $method);
+        }
+
+        return $value;
     }
 
     /**
-     * Support for json_encode()
+     * Returns a DataCaster instance when casts are defined.
+     * If no casts are configured, no DataCaster is created and null is returned.
+     */
+    protected function dataCaster(): ?DataCaster
+    {
+        if ($this->casts === []) {
+            $this->dataCaster = null;
+
+            return null;
+        }
+
+        if (! $this->dataCaster instanceof DataCaster) {
+            $this->dataCaster = new DataCaster(
+                array_merge($this->defaultCastHandlers, $this->castHandlers),
+                null,
+                null,
+                false,
+            );
+        }
+
+        return $this->dataCaster;
+    }
+
+    /**
+     * Support for json_encode().
      *
-     * @return array
+     * @return array<string, mixed>
      */
     #[ReturnTypeWillChange]
     public function jsonSerialize()
@@ -592,7 +609,7 @@ class Entity implements JsonSerializable
     }
 
     /**
-     * Change the value of the private $_cast property
+     * Change the value of the private $_cast property.
      *
      * @return bool|Entity
      */
@@ -616,7 +633,7 @@ class Entity implements JsonSerializable
      *  $this->my_property = $p;
      *  $this->setMyProperty() = $p;
      *
-     * @param array|bool|float|int|object|string|null $value
+     * @param array<int|string, mixed>|bool|float|int|object|string|null $value
      *
      * @return void
      *
@@ -646,7 +663,7 @@ class Entity implements JsonSerializable
         }
 
         // If a "`set` + $key" method exists, it is also a setter.
-        if (method_exists($this, $method) && $method !== 'setAttributes') {
+        if (method_exists($this, $method)) {
             $this->{$method}($value);
 
             return;
@@ -667,11 +684,9 @@ class Entity implements JsonSerializable
      *  $p = $this->my_property
      *  $p = $this->getMyProperty()
      *
-     * @return array|bool|float|int|object|string|null
+     * @return array<int|string, mixed>|bool|float|int|object|string|null
      *
      * @throws Exception
-     *
-     * @params string $key class property
      */
     public function __get(string $key)
     {

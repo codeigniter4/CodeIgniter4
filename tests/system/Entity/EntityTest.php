@@ -16,6 +16,7 @@ namespace CodeIgniter\Entity;
 use ArrayIterator;
 use ArrayObject;
 use Closure;
+use CodeIgniter\DataCaster\DataCaster;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\I18n\Time;
@@ -73,6 +74,32 @@ final class EntityTest extends CIUnitTestCase
             ],
         ];
         $this->assertSame($expected, $entity->toRawArray());
+    }
+
+    public function testSetGetAttributesMethod(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'foo'        => null,
+                'attributes' => null,
+            ];
+
+            public function setAttributes(string $value): self
+            {
+                $this->attributes['attributes'] = $value;
+
+                return $this;
+            }
+
+            public function getAttributes(): string
+            {
+                return $this->attributes['attributes'];
+            }
+        };
+
+        $entity->setAttributes('attributes');
+
+        $this->assertSame('attributes', $entity->getAttributes());
     }
 
     public function testSimpleSetAndGet(): void
@@ -358,11 +385,11 @@ final class EntityTest extends CIUnitTestCase
             ];
         };
 
-        $entity->setAttributes(['active' => '1']);
+        $entity->injectRawData(['active' => '1']);
 
         $this->assertTrue($entity->active);
 
-        $entity->setAttributes(['active' => '0']);
+        $entity->injectRawData(['active' => '0']);
 
         $this->assertFalse($entity->active);
 
@@ -1078,6 +1105,38 @@ final class EntityTest extends CIUnitTestCase
         ], $result);
     }
 
+    public function testAsArrayRestoringCastStatus(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'first' => null,
+            ];
+            protected $original = [
+                'first' => null,
+            ];
+            protected $casts = [
+                'first' => 'integer',
+            ];
+        };
+        $entity->first = '2026 Year';
+
+        // Disabled casting properties, but we will allow casting in the method.
+        $entity->cast(false);
+        $beforeCast = $entity->cast();
+        $result     = $entity->toArray(true, true);
+
+        $this->assertSame(2026, $result['first']);
+        $this->assertSame($beforeCast, $entity->cast());
+
+        // Enabled casting properties, but we will disallow casting in the method.
+        $entity->cast(true);
+        $beforeCast = $entity->cast();
+        $result     = $entity->toArray(true, false);
+
+        $this->assertSame('2026 Year', $result['first']);
+        $this->assertSame($beforeCast, $entity->cast());
+    }
+
     public function testDataMappingIssetSwapped(): void
     {
         $entity = $this->getSimpleSwappedEntity();
@@ -1425,6 +1484,70 @@ final class EntityTest extends CIUnitTestCase
         $entity->setBar('foo');
 
         $this->assertSame(json_encode($entity->toArray()), json_encode($entity));
+    }
+
+    public function testDataCasterInit(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'first' => '12345',
+            ];
+            protected $casts = [
+                'first' => 'integer',
+            ];
+        };
+
+        $getDataCaster = $this->getPrivateMethodInvoker($entity, 'dataCaster');
+
+        $this->assertInstanceOf(DataCaster::class, $getDataCaster());
+        $this->assertInstanceOf(DataCaster::class, $this->getPrivateProperty($entity, 'dataCaster'));
+        $this->assertSame(12345, $entity->first);
+
+        // Disable casting, but the DataCaster is initialized
+        $entity->cast(false);
+        $this->assertInstanceOf(DataCaster::class, $getDataCaster());
+        $this->assertInstanceOf(DataCaster::class, $this->getPrivateProperty($entity, 'dataCaster'));
+        $this->assertIsString($entity->first);
+
+        // Method castAs() ignore on the $_cast option
+        $this->assertSame(12345, $this->getPrivateMethodInvoker($entity, 'castAs')('12345', 'first'));
+
+        // Restore casting
+        $entity->cast(true);
+        $this->assertInstanceOf(DataCaster::class, $getDataCaster());
+        $this->assertInstanceOf(DataCaster::class, $this->getPrivateProperty($entity, 'dataCaster'));
+        $this->assertSame(12345, $entity->first);
+    }
+
+    public function testDataCasterInitEmptyCasts(): void
+    {
+        $entity = new class () extends Entity {
+            protected $attributes = [
+                'first' => '12345',
+            ];
+            protected $casts = [];
+        };
+
+        $getDataCaster = $this->getPrivateMethodInvoker($entity, 'dataCaster');
+
+        $this->assertNull($getDataCaster());
+        $this->assertNull($this->getPrivateProperty($entity, 'dataCaster'));
+        $this->assertSame('12345', $entity->first);
+
+        // Disable casting, the DataCaster was not initialized
+        $entity->cast(false);
+        $this->assertNull($getDataCaster());
+        $this->assertNull($this->getPrivateProperty($entity, 'dataCaster'));
+        $this->assertSame('12345', $entity->first);
+
+        // Method castAs() depends on the $_cast option
+        $this->assertSame('12345', $this->getPrivateMethodInvoker($entity, 'castAs')('12345', 'first'));
+
+        // Restore casting
+        $entity->cast(true);
+        $this->assertNull($getDataCaster());
+        $this->assertNull($this->getPrivateProperty($entity, 'dataCaster'));
+        $this->assertSame('12345', $entity->first);
     }
 
     private function getEntity(): object
