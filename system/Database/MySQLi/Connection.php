@@ -610,8 +610,6 @@ class Connection extends BaseConnection
      */
     protected function _transBegin(): bool
     {
-        $this->connID->autocommit(false);
-
         return $this->connID->begin_transaction();
     }
 
@@ -620,13 +618,7 @@ class Connection extends BaseConnection
      */
     protected function _transCommit(): bool
     {
-        if ($this->connID->commit()) {
-            $this->connID->autocommit(true);
-
-            return true;
-        }
-
-        return false;
+        return $this->connID->commit();
     }
 
     /**
@@ -634,12 +626,6 @@ class Connection extends BaseConnection
      */
     protected function _transRollback(): bool
     {
-        if ($this->connID->rollback()) {
-            $this->connID->autocommit(true);
-
-            return true;
-        }
-
-        return false;
+        return $this->connID->rollback();
     }
 }
