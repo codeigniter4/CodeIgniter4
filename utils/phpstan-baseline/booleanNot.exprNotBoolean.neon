@@ -1,8 +1,0 @@
-# total 2 errors
-
-parameters:
-    ignoreErrors:
-        -
-            message: '#^Only booleans are allowed in a negated boolean, mixed given\.$#'
-            count: 2
-            path: ../../system/Database/Database.php
