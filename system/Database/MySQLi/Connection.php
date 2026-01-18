@@ -207,21 +207,6 @@ class Connection extends BaseConnection
                 $socket,
                 $clientFlags,
             )) {
-                // Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
-                if (($clientFlags & MYSQLI_CLIENT_SSL) !== 0 && version_compare($this->mysqli->client_info, 'mysqlnd 5.7.3', '<=')
-                    && empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")->fetch_object()->Value)
-                ) {
-                    $this->mysqli->close();
-                    $message = 'MySQLi was configured for an SSL connection, but got an unencrypted connection instead!';
-                    log_message('error', $message);
-
-                    if ($this->DBDebug) {
-                        throw new DatabaseException($message);
-                    }
-
-                    return false;
-                }
-
                 if (! $this->mysqli->set_charset($this->charset)) {
                     log_message('error', "Database: Unable to set the configured connection charset ('{$this->charset}').");
 

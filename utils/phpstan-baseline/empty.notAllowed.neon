@@ -1,4 +1,4 @@
-# total 237 errors
+# total 236 errors
 
 parameters:
     ignoreErrors:
@@ -74,7 +74,7 @@ parameters:
 
         -
             message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-            count: 11
+            count: 10
             path: ../../system/Database/MySQLi/Connection.php
 
         -
