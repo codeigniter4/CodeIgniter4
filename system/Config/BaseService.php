@@ -375,13 +375,13 @@ class BaseService
     }
 
     /**
-     * Validate cache connections for worker mode at the start of a request.
+     * Reconnect cache connection for worker mode at the start of a request.
      * Checks if cache connection is alive and reconnects if needed.
      *
      * This should be called at the beginning of each request in worker mode,
      * before the application runs.
      */
-    public static function validateForWorkerMode(): void
+    public static function reconnectCacheForWorkerMode(): void
     {
         if (! isset(static::$instances['cache'])) {
             return;

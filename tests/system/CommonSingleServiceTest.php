@@ -96,7 +96,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
             'has',
             'encrypter', // Encrypter needs a starter key
             'session', // Headers already sent
-            'validateForWorkerMode',
+            'reconnectCacheForWorkerMode',
         ];
 
         if ($services === []) {

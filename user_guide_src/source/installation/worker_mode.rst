@@ -179,17 +179,17 @@ All worker mode configuration is managed through the **app/Config/WorkerMode.php
 Configuration Options
 =====================
 
-======================= ======= ==========================================================================
-Option                  Type    Description
-======================= ======= ==========================================================================
-**$persistentServices** array   Services that persist across requests and are not reset. Services not
-                                in this list are destroyed after each request to prevent state leakage.
-                                Default: ``['autoloader', 'locator', 'exceptions', 'commands',
-                                'codeigniter', 'superglobals', 'routes', 'cache']``
-**$garbageCollection**  bool    Whether to force garbage collection after each request.
-                                ``true`` (default, recommended): Prevents memory leaks.
-                                ``false``: Relies on PHP's automatic garbage collection.
-======================= ======= ==========================================================================
+=========================== ======= ======================================================================
+Option                      Type    Description
+=========================== ======= ======================================================================
+**$persistentServices**     array   Services that persist across requests and are not reset. Services not
+                                    in this list are destroyed after each request to prevent state leakage.
+                                    Default: ``['autoloader', 'locator', 'exceptions', 'commands',
+                                    'codeigniter', 'superglobals', 'routes', 'cache']``
+**$forceGarbageCollection** bool    Whether to force garbage collection after each request.
+                                    ``true`` (default, recommended): Prevents memory leaks.
+                                    ``false``: Relies on PHP's automatic garbage collection.
+=========================== ======= ======================================================================
 
 Persistent Services
 ===================
@@ -273,7 +273,7 @@ Monitor memory usage:
 
 If memory grows continuously:
 
-- Verify garbage collection is enabled (``$garbageCollection = true``)
+- Verify garbage collection is enabled (``$forceGarbageCollection = true``)
 - Ensure resources are properly closed after use
 - Unset large objects when no longer needed
 - Check for circular references that prevent garbage collection

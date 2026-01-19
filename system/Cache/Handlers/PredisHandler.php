@@ -224,7 +224,7 @@ class PredisHandler extends BaseHandler
     {
         try {
             $this->redis->disconnect();
-        } catch (Exception $e) {
+        } catch (Exception) {
             // Connection already dead, that's fine
         }
 

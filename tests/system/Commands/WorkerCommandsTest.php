@@ -163,7 +163,7 @@ final class WorkerCommandsTest extends CIUnitTestCase
         $this->assertStringStartsWith('<?php', $content);
 
         $this->assertStringContainsString('frankenphp_handle_request', (string) $content);
-        $this->assertStringContainsString('DatabaseConfig::validateForWorkerMode', (string) $content);
+        $this->assertStringContainsString('DatabaseConfig::reconnectForWorkerMode', (string) $content);
         $this->assertStringContainsString('DatabaseConfig::cleanupForWorkerMode', (string) $content);
     }
 

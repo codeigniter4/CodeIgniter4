@@ -48,13 +48,13 @@ final class WorkerModeTest extends CIUnitTestCase
         $this->assertNotFalse($this->getPrivateProperty($conn, 'connID'));
     }
 
-    public function testValidateForWorkerMode(): void
+    public function testReconnectForWorkerMode(): void
     {
         $conn = Config::connect();
         $this->assertInstanceOf(BaseConnection::class, $conn);
         $this->assertNotFalse($this->getPrivateProperty($conn, 'connID'));
 
-        Config::validateForWorkerMode();
+        Config::reconnectForWorkerMode();
 
         $this->assertNotFalse($this->getPrivateProperty($conn, 'connID'));
     }

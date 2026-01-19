@@ -69,11 +69,11 @@ $workerConfig = config('WorkerMode');
  */
 
 $handler = static function () use ($app, $workerConfig) {
-    // Validate database connections before handling request
-    DatabaseConfig::validateForWorkerMode();
+    // Reconnect database connections before handling request
+    DatabaseConfig::reconnectForWorkerMode();
 
-    // Validate cache connection before handling request
-    Services::validateForWorkerMode();
+    // Reconnect cache connection before handling request
+    Services::reconnectCacheForWorkerMode();
 
     // Reset request-specific state
     $app->resetForWorkerMode();
@@ -93,7 +93,7 @@ $handler = static function () use ($app, $workerConfig) {
         Services::exceptions()->exceptionHandler($e);
     }
 
-    if ($workerConfig->garbageCollection) {
+    if ($workerConfig->forceGarbageCollection) {
         // Force garbage collection
         gc_collect_cycles();
     }

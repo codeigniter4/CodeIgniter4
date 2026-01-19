@@ -540,24 +540,24 @@ final class ServicesTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
-    public function testValidateForWorkerMode(): void
+    public function testReconnectCacheForWorkerMode(): void
     {
         Services::cache();
         $this->assertTrue(Services::has('cache'));
 
-        Services::validateForWorkerMode();
+        Services::reconnectCacheForWorkerMode();
 
         $this->assertTrue(Services::has('cache'));
     }
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
-    public function testValidateForWorkerModeWithNoCache(): void
+    public function testReconnectCacheForWorkerModeWithNoCache(): void
     {
         Services::resetSingle('cache');
         $this->assertFalse(Services::has('cache'));
 
-        Services::validateForWorkerMode();
+        Services::reconnectCacheForWorkerMode();
 
         $this->assertFalse(Services::has('cache'));
     }

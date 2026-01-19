@@ -41,10 +41,10 @@ class WorkerMode
     ];
 
     /**
-     * Garbage Collection
+     * Force Garbage Collection
      *
      * Whether to force garbage collection after each request.
      * Helps prevent memory leaks at a small performance cost.
      */
-    public bool $garbageCollection = true;
+    public bool $forceGarbageCollection = true;
 }

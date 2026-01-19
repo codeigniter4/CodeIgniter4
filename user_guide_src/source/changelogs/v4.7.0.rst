@@ -355,11 +355,11 @@ Changes
 - **CodeIgniter:** Added ``CodeIgniter::resetForWorkerMode()`` method to reset request-specific state between worker requests.
 - **Config:** Added ``app/Config/WorkerMode.php`` for worker mode configuration (persistent services, garbage collection).
 - **Cookie:** The ``CookieInterface::EXPIRES_FORMAT`` has been changed to ``D, d M Y H:i:s T`` to follow the recommended format in RFC 7231.
-- **DatabaseConfig:** Added ``Config::validateForWorkerMode()`` and ``Config::cleanupForWorkerMode()`` methods for database connection management in worker mode.
+- **DatabaseConfig:** Added ``Config::reconnectForWorkerMode()`` and ``Config::cleanupForWorkerMode()`` methods for database connection management in worker mode.
 - **Events:** Added ``Events::cleanupForWorkerMode()`` method.
 - **Format:** Added support for configuring ``json_encode()`` maximum depth via ``Config\Format::$jsonEncodeDepth``.
 - **Paths:** Added support for changing the location of the ``.env`` file via the ``Paths::$envDirectory`` property.
-- **Services:** Added ``Services::resetForWorkerMode()`` and ``Services::validateForWorkerMode()`` methods.
+- **Services:** Added ``Services::resetForWorkerMode()`` and ``Services::reconnectCacheForWorkerMode()`` methods.
 - **Toolbar:** Added ``$disableOnHeaders`` property to **app/Config/Toolbar.php**.
 - **Toolbar:** Added ``Toolbar::reset()`` method to reset debug toolbar collectors.
 
