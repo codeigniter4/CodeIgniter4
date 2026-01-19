@@ -180,9 +180,9 @@ Interface Changes
 **NOTE:** If you've implemented your own classes that implement these interfaces from scratch, you will need to update your implementations to include the new methods to ensure compatibility.
 
 - **Cache:** The ``CacheInterface`` now includes the ``deleteMatching()`` method.
+- **Cache:** The ``CacheInterface`` now includes the ``remember()`` method. All built-in cache handlers inherit this method via ``BaseHandler``, so no changes are required for them.
 - **Database:** The ``QueryInterface`` now includes the ``getOriginalQuery()`` method.
 - **Images:** The ``ImageHandlerInterface`` now includes a new method: ``clearMetadata()``.
-- **Cache:** The ``CacheInterface`` now includes the ``remember()`` method. All built-in cache handlers inherit this method via ``BaseHandler``, so no changes are required for them. If you have implemented your own caching driver directly from ``CacheInterface``, you will need to provide an implementation for ``remember()`` to maintain compatibility.
 
 Method Signature Changes
 ========================
