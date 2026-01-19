@@ -142,7 +142,7 @@ class RedisHandler extends BaseHandler
             }
         }
 
-        $persistent = filter_var($query['persistent'], FILTER_VALIDATE_BOOL) ? (bool) $query['persistent'] : null;
+        $persistent = isset($query['persistent']) ? filter_var($query['persistent'], FILTER_VALIDATE_BOOL) : null;
         $password   = $query['auth'] ?? null;
         $database   = isset($query['database']) ? (int) $query['database'] : 0;
         $timeout    = isset($query['timeout']) ? (float) $query['timeout'] : 0.0;
@@ -180,13 +180,7 @@ class RedisHandler extends BaseHandler
 
         $funcConnection = isset($this->savePath['persistent']) && $this->savePath['persistent'] ? 'pconnect' : 'connect';
 
-        if (
-            ! $redis->{$funcConnection}(
-                $this->savePath['host'],
-                $this->savePath['port'],
-                $this->savePath['timeout'],
-            )
-        ) {
+        if ($redis->{$funcConnection}($this->savePath['host'], $this->savePath['port'], $this->savePath['timeout']) === false) {
             $this->logger->error('Session: Unable to connect to Redis with the configured settings.');
         } elseif (isset($this->savePath['password']) && ! $redis->auth($this->savePath['password'])) {
             $this->logger->error('Session: Unable to authenticate to Redis instance.');
