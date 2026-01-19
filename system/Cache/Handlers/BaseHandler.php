@@ -75,13 +75,6 @@ abstract class BaseHandler implements CacheInterface
         return strlen($prefix . $key) > static::MAX_KEY_LENGTH ? $prefix . md5($key) : $prefix . $key;
     }
 
-    /**
-     * Get an item from the cache, or execute the given Closure and store the result.
-     *
-     * @param string           $key      Cache item name
-     * @param int              $ttl      Time to live
-     * @param Closure(): mixed $callback Callback return value
-     */
     public function remember(string $key, int $ttl, Closure $callback): mixed
     {
         $value = $this->get($key);
