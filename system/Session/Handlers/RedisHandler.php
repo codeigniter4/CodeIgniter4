@@ -178,7 +178,9 @@ class RedisHandler extends BaseHandler
 
         $redis = new Redis();
 
-        $funcConnection = isset($this->savePath['persistent']) && $this->savePath['persistent'] ? 'pconnect' : 'connect';
+        $funcConnection = isset($this->savePath['persistent']) && $this->savePath['persistent'] === true
+            ? 'pconnect'
+            : 'connect';
 
         if ($redis->{$funcConnection}($this->savePath['host'], $this->savePath['port'], $this->savePath['timeout']) === false) {
             $this->logger->error('Session: Unable to connect to Redis with the configured settings.');
