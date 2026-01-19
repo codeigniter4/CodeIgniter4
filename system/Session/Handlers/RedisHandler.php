@@ -142,17 +142,19 @@ class RedisHandler extends BaseHandler
             }
         }
 
-        $password = $query['auth'] ?? null;
-        $database = isset($query['database']) ? (int) $query['database'] : 0;
-        $timeout  = isset($query['timeout']) ? (float) $query['timeout'] : 0.0;
-        $prefix   = $query['prefix'] ?? null;
+        $persistent = isset($query['persistent']) ? filter_var($query['persistent'], FILTER_VALIDATE_BOOL) : null;
+        $password   = $query['auth'] ?? null;
+        $database   = isset($query['database']) ? (int) $query['database'] : 0;
+        $timeout    = isset($query['timeout']) ? (float) $query['timeout'] : 0.0;
+        $prefix     = $query['prefix'] ?? null;
 
         $this->savePath = [
-            'host'     => $host,
-            'port'     => $port,
-            'password' => $password,
-            'database' => $database,
-            'timeout'  => $timeout,
+            'host'       => $host,
+            'port'       => $port,
+            'password'   => $password,
+            'database'   => $database,
+            'timeout'    => $timeout,
+            'persistent' => $persistent,
         ];
 
         if ($prefix !== null) {
@@ -176,13 +178,11 @@ class RedisHandler extends BaseHandler
 
         $redis = new Redis();
 
-        if (
-            ! $redis->connect(
-                $this->savePath['host'],
-                $this->savePath['port'],
-                $this->savePath['timeout'],
-            )
-        ) {
+        $funcConnection = isset($this->savePath['persistent']) && $this->savePath['persistent'] === true
+            ? 'pconnect'
+            : 'connect';
+
+        if ($redis->{$funcConnection}($this->savePath['host'], $this->savePath['port'], $this->savePath['timeout']) === false) {
             $this->logger->error('Session: Unable to connect to Redis with the configured settings.');
         } elseif (isset($this->savePath['password']) && ! $redis->auth($this->savePath['password'])) {
             $this->logger->error('Session: Unable to authenticate to Redis instance.');

@@ -270,6 +270,7 @@ Libraries
 - **Image:** The ``ImageMagickHandler`` has been rewritten to rely solely on the PHP ``imagick`` extension.
 - **Image:** Added ``ImageMagickHandler::clearMetadata()`` method to remove image metadata for privacy protection.
 - **ResponseTrait:** Added ``paginate``` method to simplify paginated API responses. See :ref:`ResponseTrait::paginate() <api_response_trait_paginate>` for details.
+- **Session:** Added ``persistent`` config item to redis handler.
 - **Time:** added methods ``Time::addCalendarMonths()`` and ``Time::subCalendarMonths()``
 - **Time:** Added ``Time::isPast()`` and ``Time::isFuture()`` convenience methods. See :ref:`isPast <time-comparing-two-times-isPast>` and :ref:`isFuture <time-comparing-two-times-isFuture>` for details.
 - **View:** Added the ability to override namespaced views (e.g., from modules/packages) by placing a matching file structure within the **app/Views/overrides** directory. See :ref:`Overriding Namespaced Views <views-overriding-namespaced-views>` for details.
