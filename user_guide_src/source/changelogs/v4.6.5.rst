@@ -30,6 +30,8 @@ Deprecations
 Bugs Fixed
 **********
 
+- **Database:** Fixed a bug where ``Seeder::call()`` did not pass the database connection to child seeders, causing them to use the default connection instead of the one specified via ``Database::seeder('group')``.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.

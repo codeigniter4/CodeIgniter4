@@ -107,11 +107,12 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
     public function testSavePermanent(): void
     {
         $this->assertTrue($this->handler->save(self::$key1, 'value', 0));
-        $metaData = $this->handler->getMetaData(self::$key1);
 
-        $this->assertNull($metaData['expire']);
-        $this->assertLessThanOrEqual(1, $metaData['mtime'] - Time::now()->getTimestamp());
-        $this->assertSame('value', $metaData['data']);
+        $metadata = $this->handler->getMetaData(self::$key1);
+        $this->assertIsArray($metadata);
+        $this->assertNull($metadata['expire']);
+        $this->assertLessThanOrEqual(1, $metadata['mtime'] - Time::now()->getTimestamp());
+        $this->assertSame('value', $metadata['data']);
 
         $this->assertTrue($this->handler->delete(self::$key1));
     }
@@ -131,8 +132,11 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
             $this->handler->save('key_' . $i, 'value' . $i);
         }
 
+        $cacheInfo = $this->handler->getCacheInfo();
+        $this->assertIsArray($cacheInfo);
+
         // check that there are 101 items is cache store
-        $this->assertSame('101', $this->handler->getCacheInfo()['Keyspace']['db0']['keys']);
+        $this->assertSame('101', $cacheInfo['Keyspace']['db0']['keys']);
 
         // Checking that given the prefix "key_1", deleteMatching deletes 13 keys:
         // (key_1, key_10, key_11, key_12, key_13, key_14, key_15, key_16, key_17, key_18, key_19, key_100, key_101)
@@ -149,8 +153,11 @@ final class PredisHandlerTest extends AbstractHandlerTestCase
             $this->handler->save('key_' . $i, 'value' . $i);
         }
 
+        $cacheInfo = $this->handler->getCacheInfo();
+        $this->assertIsArray($cacheInfo);
+
         // check that there are 101 items is cache store
-        $this->assertSame('101', $this->handler->getCacheInfo()['Keyspace']['db0']['keys']);
+        $this->assertSame('101', $cacheInfo['Keyspace']['db0']['keys']);
 
         // Checking that given the suffix "1", deleteMatching deletes 11 keys:
         // (key_1, key_11, key_21, key_31, key_41, key_51, key_61, key_71, key_81, key_91, key_101)
