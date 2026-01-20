@@ -212,3 +212,5 @@ Or you can enable it with the ``spark optimize`` command.
 .. note::
     This property cannot be overridden by
     :ref:`environment variables <configuration-classes-and-environment-variables>`.
+
+.. warning:: Do not use this option when running the app in the :doc:`Worker Mode </installation/worker_mode>`.

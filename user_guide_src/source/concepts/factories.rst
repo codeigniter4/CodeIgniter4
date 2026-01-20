@@ -340,28 +340,4 @@ Or you can enable this with the ``spark optimize`` command.
     This property cannot be overridden by
     :ref:`environment variables <configuration-classes-and-environment-variables>`.
 
-.. note::
-    In v4.4.x, uncomment the following code in **public/index.php**::
-
-        --- a/public/index.php
-        +++ b/public/index.php
-        @@ -49,8 +49,8 @@ if (! defined('ENVIRONMENT')) {
-         }
-
-         // Load Config Cache
-        -// $factoriesCache = new \CodeIgniter\Cache\FactoriesCache();
-        -// $factoriesCache->load('config');
-        +$factoriesCache = new \CodeIgniter\Cache\FactoriesCache();
-        +$factoriesCache->load('config');
-         // ^^^ Uncomment these lines if you want to use Config Caching.
-
-         /*
-        @@ -79,7 +79,7 @@ $app->setContext($context);
-         $app->run();
-
-         // Save Config Cache
-        -// $factoriesCache->save('config');
-        +$factoriesCache->save('config');
-         // ^^^ Uncomment this line if you want to use Config Caching.
-
-         // Exits the application, setting the exit code for CLI-based applications
+.. warning:: Do not use this option when running the app in the :doc:`Worker Mode </installation/worker_mode>`.
