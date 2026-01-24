@@ -18,7 +18,6 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\Database;
 use Config\Session as SessionConfig;
-use ReturnTypeWillChange;
 
 /**
  * Base database session handler.
@@ -107,12 +106,8 @@ class DatabaseHandler extends BaseHandler
      * Reads the session data from the session storage, and returns the results.
      *
      * @param string $id The session ID
-     *
-     * @return false|string Returns an encoded string of the read data.
-     *                      If nothing was read, it must return false.
      */
-    #[ReturnTypeWillChange]
-    public function read($id)
+    public function read($id): false|string
     {
         if ($this->lockSession($id) === false) {
             $this->fingerprint = md5('');
@@ -281,8 +276,7 @@ class DatabaseHandler extends BaseHandler
      *
      * @return false|int Returns the number of deleted sessions on success, or false on failure.
      */
-    #[ReturnTypeWillChange]
-    public function gc($max_lifetime)
+    public function gc($max_lifetime): false|int
     {
         return $this->db->table($this->table)->where(
             'timestamp <',

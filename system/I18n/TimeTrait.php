@@ -23,7 +23,6 @@ use Exception;
 use IntlCalendar;
 use IntlDateFormatter;
 use Locale;
-use ReturnTypeWillChange;
 
 /**
  * This trait has properties and methods for Time and TimeLegacy.
@@ -242,12 +241,9 @@ trait TimeTrait
      * @param string                   $datetime
      * @param DateTimeZone|string|null $timezone
      *
-     * @return static
-     *
      * @throws Exception
      */
-    #[ReturnTypeWillChange]
-    public static function createFromFormat($format, $datetime, $timezone = null)
+    public static function createFromFormat($format, $datetime, $timezone = null): static
     {
         if (! $date = parent::createFromFormat($format, $datetime)) {
             throw I18nException::forInvalidFormat($format);
@@ -673,12 +669,9 @@ trait TimeTrait
      *
      * @param DateTimeZone|string $timezone
      *
-     * @return static
-     *
      * @throws Exception
      */
-    #[ReturnTypeWillChange]
-    public function setTimezone($timezone)
+    public function setTimezone($timezone): static
     {
         $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
 

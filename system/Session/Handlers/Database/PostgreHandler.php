@@ -15,7 +15,6 @@ namespace CodeIgniter\Session\Handlers\Database;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Session\Handlers\DatabaseHandler;
-use ReturnTypeWillChange;
 
 /**
  * Session handler for Postgre
@@ -59,11 +58,8 @@ class PostgreHandler extends DatabaseHandler
      *
      * @param int $max_lifetime Sessions that have not updated
      *                          for the last max_lifetime seconds will be removed.
-     *
-     * @return false|int Returns the number of deleted sessions on success, or false on failure.
      */
-    #[ReturnTypeWillChange]
-    public function gc($max_lifetime)
+    public function gc($max_lifetime): false|int
     {
         $separator = '\'';
         $interval  = implode($separator, ['', "{$max_lifetime} second", '']);

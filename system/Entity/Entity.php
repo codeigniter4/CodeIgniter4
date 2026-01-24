@@ -33,7 +33,6 @@ use CodeIgniter\I18n\Time;
 use DateTimeInterface;
 use Exception;
 use JsonSerializable;
-use ReturnTypeWillChange;
 use Traversable;
 use UnitEnum;
 
@@ -602,8 +601,7 @@ class Entity implements JsonSerializable
      *
      * @return array<string, mixed>
      */
-    #[ReturnTypeWillChange]
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return $this->toArray();
     }

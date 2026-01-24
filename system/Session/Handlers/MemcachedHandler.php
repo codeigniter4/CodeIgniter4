@@ -17,7 +17,6 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\Session as SessionConfig;
 use Memcached;
-use ReturnTypeWillChange;
 
 /**
  * Session handler using Memcached for persistence.
@@ -138,12 +137,8 @@ class MemcachedHandler extends BaseHandler
      * Reads the session data from the session storage, and returns the results.
      *
      * @param string $id The session ID.
-     *
-     * @return false|string Returns an encoded string of the read data.
-     *                      If nothing was read, it must return false.
      */
-    #[ReturnTypeWillChange]
-    public function read($id)
+    public function read($id): false|string
     {
         if (isset($this->memcached) && $this->lockSession($id)) {
             if (! isset($this->sessionID)) {
@@ -243,11 +238,8 @@ class MemcachedHandler extends BaseHandler
      *
      * @param int $max_lifetime Sessions that have not updated
      *                          for the last max_lifetime seconds will be removed.
-     *
-     * @return false|int Returns the number of deleted sessions on success, or false on failure.
      */
-    #[ReturnTypeWillChange]
-    public function gc($max_lifetime)
+    public function gc($max_lifetime): int
     {
         return 1;
     }
