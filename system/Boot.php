@@ -102,8 +102,8 @@ class Boot
         static::setExceptionHandler();
         static::initializeKint();
 
-        // Note: We skip config caching in worker mode
-        // as it may cause issues with state between requests
+        static::checkOptimizationsForWorker();
+
         static::autoloadHelpers();
 
         return Boot::initializeCodeIgniter();
@@ -364,6 +364,20 @@ class Boot
         echo $message;
 
         exit(EXIT_ERROR);
+    }
+
+    protected static function checkOptimizationsForWorker(): void
+    {
+        if (class_exists(Optimize::class)) {
+            $optimize = new Optimize();
+
+            if ($optimize->configCacheEnabled || $optimize->locatorCacheEnabled) {
+                echo 'Optimization settings (configCacheEnabled, locatorCacheEnabled) '
+                    . 'must be disabled in Config\Optimize when running in Worker Mode.';
+
+                exit(EXIT_ERROR);
+            }
+        }
     }
 
     protected static function initializeKint(): void

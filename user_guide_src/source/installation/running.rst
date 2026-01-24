@@ -164,6 +164,9 @@ Worker Mode with FrankenPHP
 
 .. versionadded:: 4.7.0
 
+.. important:: Worker Mode is currently **experimental**. The only officially supported
+    worker implementation is **FrankenPHP**, which is backed by the PHP Foundation.
+
 FrankenPHP is a modern PHP application server that supports Worker Mode, allowing
 your application to handle multiple requests within the same PHP process for
 improved performance.

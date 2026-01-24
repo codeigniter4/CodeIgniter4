@@ -161,10 +161,6 @@ class Config extends BaseConfig
      */
     public static function reconnectForWorkerMode(): void
     {
-        if (static::$instances === []) {
-            return;
-        }
-
         foreach (static::$instances as $connection) {
             $connection->reconnect();
         }

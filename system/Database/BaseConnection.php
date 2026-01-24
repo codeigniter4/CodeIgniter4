@@ -512,7 +512,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function ping(): bool
     {
-        if (! $this->connID) {
+        if ($this->connID === false) {
             return false;
         }
 
