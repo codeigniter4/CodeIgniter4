@@ -16,6 +16,11 @@
             # Number of workers (default: 2x CPU cores)
             # Adjust based on your server capacity
             # num 16
+
+            # Watch for PHP code changes (development only)
+            watch app/**/*.php
+            watch vendor/**/*.php
+            watch .env
         }
     }
 
