@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Session\Handlers;
 
-use ReturnTypeWillChange;
-
 /**
  * Session handler using static array for storage.
  * Intended only for use during testing.
@@ -41,12 +39,8 @@ class ArrayHandler extends BaseHandler
      * Reads the session data from the session storage, and returns the results.
      *
      * @param string $id The session ID.
-     *
-     * @return false|string Returns an encoded string of the read data.
-     *                      If nothing was read, it must return false.
      */
-    #[ReturnTypeWillChange]
-    public function read($id)
+    public function read($id): string
     {
         return '';
     }
@@ -85,11 +79,8 @@ class ArrayHandler extends BaseHandler
      *
      * @param int $max_lifetime Sessions that have not updated
      *                          for the last max_lifetime seconds will be removed.
-     *
-     * @return false|int Returns the number of deleted sessions on success, or false on failure.
      */
-    #[ReturnTypeWillChange]
-    public function gc($max_lifetime)
+    public function gc($max_lifetime): int
     {
         return 1;
     }

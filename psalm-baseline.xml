@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.13.0@70cdf647255a1362b426bb0f522a85817b8c791c">
+<files psalm-version="6.14.3@d0b040a91f280f071c1abcb1b77ce3822058725a">
   <file src="app/Config/View.php">
     <UndefinedDocblockClass>
       <code><![CDATA[array<string, list<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
@@ -64,8 +64,7 @@
   </file>
   <file src="system/I18n/TimeTrait.php">
     <MissingImmutableAnnotation>
-      <code><![CDATA[#[ReturnTypeWillChange]]]></code>
-      <code><![CDATA[#[ReturnTypeWillChange]]]></code>
+      <code><![CDATA[public function setTimezone($timezone): static]]></code>
     </MissingImmutableAnnotation>
   </file>
   <file src="system/Language/Language.php">

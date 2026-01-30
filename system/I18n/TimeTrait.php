@@ -23,7 +23,6 @@ use Exception;
 use IntlCalendar;
 use IntlDateFormatter;
 use Locale;
-use ReturnTypeWillChange;
 
 /**
  * This trait has properties and methods for Time and TimeLegacy.
@@ -238,16 +237,15 @@ trait TimeTrait
      * Provides a replacement for DateTime's own createFromFormat function, that provides
      * more flexible timeZone handling
      *
+     * @psalm-external-mutation-free
+     *
      * @param string                   $format
      * @param string                   $datetime
      * @param DateTimeZone|string|null $timezone
      *
-     * @return static
-     *
      * @throws Exception
      */
-    #[ReturnTypeWillChange]
-    public static function createFromFormat($format, $datetime, $timezone = null)
+    public static function createFromFormat($format, $datetime, $timezone = null): static
     {
         if (! $date = parent::createFromFormat($format, $datetime)) {
             throw I18nException::forInvalidFormat($format);
@@ -673,16 +671,14 @@ trait TimeTrait
      *
      * @param DateTimeZone|string $timezone
      *
-     * @return static
-     *
      * @throws Exception
      */
-    #[ReturnTypeWillChange]
-    public function setTimezone($timezone)
+    public function setTimezone($timezone): static
     {
         $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
+        $dateTime = $this->toDateTime()->setTimezone($timezone);
 
-        return static::createFromInstance($this->toDateTime()->setTimezone($timezone), $this->locale);
+        return static::createFromInstance($dateTime, $this->locale);
     }
 
     // --------------------------------------------------------------------
