@@ -95,14 +95,14 @@ class CodeIgniter
     /**
      * Current response.
      *
-     * @var ResponseInterface
+     * @var ResponseInterface|null
      */
     protected $response;
 
     /**
      * Router to use.
      *
-     * @var Router
+     * @var Router|null
      */
     protected $router;
 
@@ -116,14 +116,14 @@ class CodeIgniter
     /**
      * Controller method to invoke.
      *
-     * @var string
+     * @var string|null
      */
     protected $method;
 
     /**
      * Output handler to use.
      *
-     * @var string
+     * @var string|null
      */
     protected $output;
 
@@ -190,6 +190,24 @@ class CodeIgniter
 
         // Set default timezone on the server
         date_default_timezone_set($this->config->appTimezone ?? 'UTC');
+    }
+
+    /**
+     * Reset request-specific state for worker mode.
+     * Clears all request/response data to prepare for the next request.
+     */
+    public function resetForWorkerMode(): void
+    {
+        $this->request    = null;
+        $this->response   = null;
+        $this->router     = null;
+        $this->controller = null;
+        $this->method     = null;
+        $this->output     = null;
+
+        // Reset timing
+        $this->startTime = null;
+        $this->totalTime = 0;
     }
 
     /**

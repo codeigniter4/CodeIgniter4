@@ -77,6 +77,39 @@ class Boot
     }
 
     /**
+     * Bootstrap for FrankenPHP worker mode.
+     *
+     * This method performs one-time initialization for worker mode,
+     * loading everything except the CodeIgniter instance, which should
+     * be created fresh for each request.
+     *
+     * @used-by `public/frankenphp-worker.php`
+     */
+    public static function bootWorker(Paths $paths): CodeIgniter
+    {
+        static::definePathConstants($paths);
+        if (! defined('APP_NAMESPACE')) {
+            static::loadConstants();
+        }
+        static::checkMissingExtensions();
+
+        static::loadDotEnv($paths);
+        static::defineEnvironment();
+        static::loadEnvironmentBootstrap($paths);
+
+        static::loadCommonFunctions();
+        static::loadAutoloader();
+        static::setExceptionHandler();
+        static::initializeKint();
+
+        static::checkOptimizationsForWorker();
+
+        static::autoloadHelpers();
+
+        return Boot::initializeCodeIgniter();
+    }
+
+    /**
      * Used by command line scripts other than
      * * `spark`
      * * `php-cli`
@@ -331,6 +364,20 @@ class Boot
         echo $message;
 
         exit(EXIT_ERROR);
+    }
+
+    protected static function checkOptimizationsForWorker(): void
+    {
+        if (class_exists(Optimize::class)) {
+            $optimize = new Optimize();
+
+            if ($optimize->configCacheEnabled || $optimize->locatorCacheEnabled) {
+                echo 'Optimization settings (configCacheEnabled, locatorCacheEnabled) '
+                    . 'must be disabled in Config\Optimize when running in Worker Mode.';
+
+                exit(EXIT_ERROR);
+            }
+        }
     }
 
     protected static function initializeKint(): void

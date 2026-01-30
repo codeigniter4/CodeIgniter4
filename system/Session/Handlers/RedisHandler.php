@@ -15,6 +15,7 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Session\Exceptions\SessionException;
+use CodeIgniter\Session\PersistsConnection;
 use Config\Session as SessionConfig;
 use Redis;
 use RedisException;
@@ -24,6 +25,8 @@ use RedisException;
  */
 class RedisHandler extends BaseHandler
 {
+    use PersistsConnection;
+
     private const DEFAULT_PORT     = 6379;
     private const DEFAULT_PROTOCOL = 'tcp';
 
@@ -175,6 +178,22 @@ class RedisHandler extends BaseHandler
             return false;
         }
 
+        if ($this->hasPersistentConnection()) {
+            $redis = $this->getPersistentConnection();
+
+            try {
+                $pingReply = $redis->ping();
+
+                if (in_array($pingReply, [true, '+PONG'], true)) {
+                    $this->redis = $redis;
+
+                    return true;
+                }
+            } catch (RedisException) {
+                $this->setPersistentConnection(null);
+            }
+        }
+
         $redis = new Redis();
 
         $funcConnection = isset($this->savePath['persistent']) && $this->savePath['persistent'] === true
@@ -190,6 +209,7 @@ class RedisHandler extends BaseHandler
                 'Session: Unable to select Redis database with index ' . $this->savePath['database'],
             );
         } else {
+            $this->setPersistentConnection($redis);
             $this->redis = $redis;
 
             return true;
@@ -280,20 +300,12 @@ class RedisHandler extends BaseHandler
             try {
                 $pingReply = $this->redis->ping();
 
-                if (($pingReply === true) || ($pingReply === '+PONG')) {
-                    if (isset($this->lockKey) && ! $this->releaseLock()) {
-                        return false;
-                    }
-
-                    if (! $this->redis->close()) {
-                        return false;
-                    }
+                if (in_array($pingReply, [true, '+PONG'], true) && isset($this->lockKey) && ! $this->releaseLock()) {
+                    return false;
                 }
             } catch (RedisException $e) {
                 $this->logger->error('Session: Got RedisException on close(): ' . $e->getMessage());
             }
-
-            $this->redis = null;
 
             return true;
         }

@@ -28,6 +28,8 @@ The ``spark optimize`` command performs the following optimizations:
 - Enabling `Config Caching`_
 - Enabling `FileLocator Caching`_
 
+.. warning:: Do not use ``spark optimize`` when running the app in the :doc:`worker_mode`.
+
 Composer Optimization
 =====================
 

@@ -64,16 +64,6 @@ class RedisHandler extends BaseHandler
         $this->config = array_merge($this->config, $config->redis);
     }
 
-    /**
-     * Closes the connection to Redis if present.
-     */
-    public function __destruct()
-    {
-        if (isset($this->redis)) {
-            $this->redis->close();
-        }
-    }
-
     public function initialize(): void
     {
         $config = $this->config;
@@ -228,5 +218,41 @@ class RedisHandler extends BaseHandler
     public function isSupported(): bool
     {
         return extension_loaded('redis');
+    }
+
+    public function ping(): bool
+    {
+        if (! isset($this->redis)) {
+            return false;
+        }
+
+        try {
+            $result = $this->redis->ping();
+
+            return in_array($result, [true, '+PONG'], true);
+        } catch (RedisException) {
+            return false;
+        }
+    }
+
+    public function reconnect(): bool
+    {
+        if (isset($this->redis)) {
+            try {
+                $this->redis->close();
+            } catch (RedisException) {
+                // Connection already dead, that's fine
+            }
+        }
+
+        try {
+            $this->initialize();
+
+            return true;
+        } catch (CriticalError $e) {
+            log_message('error', 'Cache: Redis reconnection failed: ' . $e->getMessage());
+
+            return false;
+        }
     }
 }

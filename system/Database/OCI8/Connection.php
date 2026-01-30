@@ -151,16 +151,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Keep or establish the connection if no queries have been sent for
-     * a length of time exceeding the server's idle timeout.
-     *
-     * @return void
-     */
-    public function reconnect()
-    {
-    }
-
-    /**
      * Close the database connection.
      *
      * @return void
@@ -174,6 +164,20 @@ class Connection extends BaseConnection
             oci_free_statement($this->stmtId);
         }
         oci_close($this->connID);
+    }
+
+    /**
+     * Ping the database connection.
+     */
+    protected function _ping(): bool
+    {
+        try {
+            $result = $this->simpleQuery('SELECT 1 FROM DUAL');
+
+            return $result !== false;
+        } catch (DatabaseException) {
+            return false;
+        }
     }
 
     /**
