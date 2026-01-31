@@ -19,7 +19,7 @@ Enable Improved Auto Routing
 
 By default, Auto-Routing is turned off. The first step is to enable it so your controllers automatically handle REST-style methods.
 
-Open ``app/Config/Feature.php`` and ensure this flag is **true** (this should be the default):
+Open **app/Config/Feature.php** and ensure this flag is ``true`` (this should be the default):
 
 .. code-block:: php
 
