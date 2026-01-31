@@ -3,7 +3,7 @@
 Getting Started with REST APIs
 ##############################
 
-.. content::
+.. contents::
     :local:
     :depth: 2
 

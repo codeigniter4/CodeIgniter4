@@ -27,7 +27,7 @@ Open ``app/Config/Feature.php`` and ensure this flag is **true** (this should be
 
 The "Improved" auto router is more secure and reliable than the legacy version, so it's recommended for all new projects.
 
-Then, in ``app/Config/Routing.php`` confirm auto routing is **on**:
+Then, in **app/Config/Routing.php** confirm auto-routing is **enabled**:
 
 .. code-block:: php
 

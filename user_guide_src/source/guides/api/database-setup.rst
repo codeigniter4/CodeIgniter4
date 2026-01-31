@@ -23,7 +23,7 @@ Run the Spark command:
 
 This creates a new file under ``app/Database/Migrations/``.
 
-Edit the CreateAuthorsTable file to look like this:
+Edit the **CreateAuthorsTable.php** file to look like this:
 
 .. literalinclude:: code/004.php
 
