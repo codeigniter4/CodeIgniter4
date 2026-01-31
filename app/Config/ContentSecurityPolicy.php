@@ -38,12 +38,12 @@ class ContentSecurityPolicy extends BaseConfig
     public bool $upgradeInsecureRequests = false;
 
     // -------------------------------------------------------------------------
-    // Sources allowed
+    // CSP DIRECTIVES SETTINGS
     // NOTE: once you set a policy to 'none', it cannot be further restricted
     // -------------------------------------------------------------------------
 
     /**
-     * Will default to self if not overridden
+     * Will default to `'self'` if not overridden
      *
      * @var list<string>|string|null
      */
@@ -160,17 +160,17 @@ class ContentSecurityPolicy extends BaseConfig
     public $sandbox;
 
     /**
-     * Nonce tag for style
+     * Nonce placeholder for style tags.
      */
     public string $styleNonceTag = '{csp-style-nonce}';
 
     /**
-     * Nonce tag for script
+     * Nonce placeholder for script tags.
      */
     public string $scriptNonceTag = '{csp-script-nonce}';
 
     /**
-     * Replace nonce tag automatically
+     * Replace nonce tag automatically?
      */
     public bool $autoNonce = true;
 }
