@@ -115,4 +115,4 @@ The ``respond()`` method can return additional data:
 
 .. literalinclude:: code/003.php
 
-You now have a working endpoint tested in both the browser and cURL. In the next section, we'll create our first real database resource. You'll define a **migration**, **seeder**, and **model** for a simple ``book`` table that powers the API's CRUD endpoints.
+You now have a working endpoint tested in both the browser and cURL. In the next section, we'll create our first real database resource. You'll define a **migration**, **seeder**, and **model** for a simple ``books`` table that powers the API's CRUD endpoints.
