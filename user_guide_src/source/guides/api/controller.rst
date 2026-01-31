@@ -20,7 +20,7 @@ Run the Spark command:
 
     php spark make:controller Api/Books
 
-This creates ``app/Controllers/Api/Books.php``.
+This creates **app/Controllers/Api/Books.php**.
 
 Open it and replace its contents with the following stubbed out class:
 
@@ -30,7 +30,7 @@ Since we're using auto-routing, we need to use the ``index`` method names so it 
 
 .. tip::
 
-   If you prefer a different naming scheme, you would need to define routes explicitly in ``app/Config/Routes.php`` and turn auto-routing off.
+   If you prefer a different naming scheme, you would need to define routes explicitly in **app/Config/Routes.php** and turn auto-routing off.
 
 API Transformers
 =================
@@ -45,7 +45,7 @@ Create the transformers with the generator command:
 
 The transormer requires a single method, ``toArray`` to be present and accept a mixed data type called ``$resource``. This method is responsible for transforming the resource into an array format suitable for API responses. The returned array is what is then encoded as JSON or XML for the API response.
 
-Edit the Book transformer at ``app/Transformers/BookTransformer.php``. This one is a little more complex since it includes related author data:
+Edit the Book transformer at **app/Transformers/BookTransformer.php**. This one is a little more complex since it includes related author data:
 
 .. literalinclude:: code/011.php
 
@@ -133,7 +133,7 @@ If you see JSON data from your seeder, congratulations—your API is live!
 Implement the remaining methods
 ===============================
 
-Edit ``app/Controllers/Api/Book.php`` to include the remaining methods:
+Edit **app/Controllers/Api/Book.php** to include the remaining methods:
 
 .. literalinclude:: code/012.php
 
@@ -142,13 +142,13 @@ Each method uses helpers from :php:trait:`ResponseTrait` to send proper HTTP sta
 And that's it! You now have a fully functional RESTful API for managing books, complete with proper HTTP methods, status codes, and data transformation. You can further enhance this API by adding authentication, validation, and other features as needed.
 
 A More Semantic Name scheme
-============================
+===========================
 
 In the previous examples, we used method names like ``getIndex``, ``putIndex``, etc because we wanted to solely rely on the HTTP verb to determine the action. With auto-routing enabled, we have to use the ``index`` method name to avoid conflicts with URI segments. However, if you prefer more semantic method names, you could change the method names so that they reflect the action being performed, such as ``getList``, ``postCreate``, ``putUpdate``, and ``deleteDelete``. This would then make each method's purpose clearer at a glance. And would just add one new segment to the URI.
 
 ```
-GET    /api/book/list        -> getList()
-POST   /api/book/create      -> postCreate()
-PUT    /api/book/update/(:id) -> putUpdate($id)
-DELETE /api/book/delete/(:id) -> deleteDelete($id)
+GET    /api/books/list        -> getList()
+POST   /api/books/create      -> postCreate()
+PUT    /api/books/update/(:id) -> putUpdate($id)
+DELETE /api/books/delete/(:id) -> deleteDelete($id)
 ```

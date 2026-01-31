@@ -2,7 +2,7 @@
 Guides
 ######
 
-This section contains various guides to help you get started with CodeIgniter 4 in a project-based manner.
+This section contains various guides to help you get started with CodeIgniter4 in a project-based manner.
 
 .. toctree::
    :titlesonly:
@@ -20,4 +20,4 @@ This project walks you through building a basic news application. You will begin
 Build a RESTful API
 *******************
 
-This guide will help you build a simple RESTful API using CodeIgniter 4. You will learn how to use auto-routing, setup controllers, and handle requests and responses in a RESTful manner. By the end of this guide, you will have a functional API that can perform CRUD operations on a resource. This will introduce you to the basic concepts of a RESTful API and the tools that CodeIgniter provides to facilitate its development.
+This guide will help you build a simple RESTful API using CodeIgniter4. You will learn how to use auto-routing, setup controllers, and handle requests and responses in a RESTful manner. By the end of this guide, you will have a functional API that can perform CRUD operations on a resource. This will introduce you to the basic concepts of a RESTful API and the tools that CodeIgniter provides to facilitate its development.

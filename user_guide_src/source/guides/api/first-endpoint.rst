@@ -12,7 +12,7 @@ In this section, we will enable CodeIgniter's *Improved Auto Routing* feature an
 Why Auto-Routing?
 ==================
 
-The previous tutorial introduced you to defined routes manually in ``app/Config/Routes.php``. While this is a powerful and flexible way to define your application's routing, it can be tedious for building RESTful APIs where you may have many endpoints that follow a common pattern. Auto-Routing simplifies this by automatically mapping URL patterns to controller classes and methods based on conventions, and the focus on HTTP verbs works quite well for RESTful APIs.
+The previous tutorial introduced you to defined routes manually in **app/Config/Routes.php**. While this is a powerful and flexible way to define your application's routing, it can be tedious for building RESTful APIs where you may have many endpoints that follow a common pattern. Auto-Routing simplifies this by automatically mapping URL patterns to controller classes and methods based on conventions, and the focus on HTTP verbs works quite well for RESTful APIs.
 
 Enable Improved Auto Routing
 ============================
@@ -36,7 +36,7 @@ Then, in **app/Config/Routing.php** confirm auto-routing is **enabled**:
 That's all you need for CodeIgniter to automatically map your controller classes and to URIs like ``GET /api/ping`` or ``POST /api/ping``.
 
 Create a Ping controller
-=========================
+========================
 
 To understand how a basic API endpoint works, let's generate a controller to serve as our first API endpoint. This will provide a simple "ping" response to confirm our setup is correct.
 
@@ -44,7 +44,7 @@ To understand how a basic API endpoint works, let's generate a controller to ser
 
    php spark make:controller Api/Ping
 
-This creates ``app/Controllers/Api/Ping.php``.
+This creates **app/Controllers/Api/Ping.php**.
 
 Edit the file so it looks like this:
 
@@ -100,7 +100,7 @@ Here's how other verbs would map if you added them later:
 +----------------------+--------------------------------+
 
 Content Negotiation with the Format Class
-==========================================
+=========================================
 
 By default, CodeIgniter uses the :php:class:`CodeIgniter\\Format\\Format` class to automatically negotiate the response format. It can return responses in either JSON or XML depending on what the client requests.
 

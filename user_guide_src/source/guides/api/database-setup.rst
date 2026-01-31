@@ -1,7 +1,7 @@
 .. _ci47-rest-part3:
 
 Creating the Database and Model
-################################
+###############################
 
 .. contents::
     :local:
@@ -21,7 +21,7 @@ Run the Spark command:
     php spark make:migration CreateAuthorsTable
     php spark make:migration CreateBooksTable
 
-This creates a new file under ``app/Database/Migrations/``.
+This creates a new file under **app/Database/Migrations/**.
 
 Edit the **CreateAuthorsTable.php** file to look like this:
 
@@ -29,7 +29,7 @@ Edit the **CreateAuthorsTable.php** file to look like this:
 
 Each author simply has a name for our purposes. We have made the name a uncommented unique key to prevent duplicates.
 
-Now edit the CreateBooksTable file to look like this:
+Now, edit the **CreateBooksTable.php** file to look like this:
 
 .. literalinclude:: code/005.php
 
@@ -44,7 +44,7 @@ Now run the migration:
 Now the database has the necessary structure to hold our books and authors.
 
 Create a seeder
-================
+===============
 
 Seeders let you load sample data for development so you have something to work with right away. In this case, we’ll create a seeder to add some example books and their authors.
 
@@ -54,7 +54,7 @@ Run:
 
     php spark make:seeder BookSeeder
 
-Edit the file at ``app/Database/Seeds/BookSeeder.php``:
+Edit the file at **app/Database/Seeds/BookSeeder.php**:
 
 .. literalinclude:: code/006.php
 

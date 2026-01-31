@@ -7,7 +7,7 @@ Getting Started with REST APIs
     :local:
     :depth: 2
 
-This tutorial will guide you through building a simple RESTful API to manage books using Codeigniter 4. Along the way, you'll leanr the basics of setting up a CodeIgniter project, configuring a database, and creating API endpoints, as well as understand what makes a RESTful API.
+This tutorial will guide you through building a simple RESTful API to manage books using Codeigniter4. Along the way, you'll leanr the basics of setting up a CodeIgniter project, configuring a database, and creating API endpoints, as well as understand what makes a RESTful API.
 
 This tutorial will primarily focus on:
 
@@ -85,7 +85,7 @@ Open ``.env`` and **uncomment** the database section, then set:
     database.default.hostname =
     database.default.port     =
 
-CodeIgniter will automatically create the SQLite database file if it doesn't exist, but you need to ensure that the ``writable/`` directory is writable by the web server.
+CodeIgniter will automatically create the SQLite database file if it doesn't exist, but you need to ensure that the **writable/** directory is writable by the web server.
 
 .. warning::
 
@@ -96,7 +96,7 @@ At this point, you should have a working CodeIgniter 4 project with SQLite confi
 
 - The app starts with ``php spark serve``
 - ``CI_ENVIRONMENT`` is set to ``development`` in ``.env``
-- ``writable/database.db`` exists and is writable
+- **writable/database.db** exists and is writable
 
 What's next
 ===========

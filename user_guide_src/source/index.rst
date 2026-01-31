@@ -18,9 +18,9 @@ Getting Started
 
     installation/index
 
-*******
+******
 Guides
-*******
+******
 
 .. toctree::
     :includehidden:
