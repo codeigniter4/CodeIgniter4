@@ -10,7 +10,7 @@ Auto Routing & Your First Endpoint
 In this section, we enable CodeIgniter's *Improved Auto Routing* feature and create a simple JSON endpoint to confirm everything is wired correctly.
 
 Why Auto-Routing?
-==================
+=================
 
 The previous tutorial showed how to define routes manually in **app/Config/Routes.php**. While powerful and flexible, this can be tedious for RESTful APIs with many endpoints that follow a common pattern. Auto-Routing simplifies this by mapping URL patterns to controller classes and methods based on conventions, and its focus on HTTP verbs works well for RESTful APIs.
 

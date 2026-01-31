@@ -77,7 +77,7 @@ In your BookModel, we add a new method called ``withAuthorInfo()``. This method 
 
 
 Test the list endpoint
---------------------------
+-----------------------
 
 Start the local server:
 
