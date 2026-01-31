@@ -6,7 +6,7 @@ Static Pages
     :depth: 2
 
 .. note:: This tutorial assumes you've downloaded CodeIgniter and
-   :doc:`installed the framework <../installation/index>` in your
+   :doc:`installed the framework <../../installation/index>` in your
    development environment.
 
 The first thing you're going to do is set up routing rules to handle static pages.
@@ -38,7 +38,7 @@ request to the first matching rule. Each rule is a regular expression
 match, and calls the appropriate controller and method, possibly with
 arguments.
 
-More information about routing can be found in the :doc:`../incoming/routing`.
+More information about routing can be found in the :doc:`../../incoming/routing`.
 
 Here, the second rule in the ``$routes`` object matches a GET request
 to the URI path **/pages**, and it maps to the ``index()`` method of the ``Pages`` class.
@@ -119,7 +119,7 @@ includes the following code::
 
 .. note:: If you look closely in **header.php** template we are using an :php:func:`esc()`
     function. It's a global function provided by CodeIgniter to help prevent
-    XSS attacks. You can read more about it in :doc:`../general/common_functions`.
+    XSS attacks. You can read more about it in :doc:`../../general/common_functions`.
 
 Adding Logic to the Controller
 ******************************
@@ -152,7 +152,7 @@ Now, when the requested page does exist, it is loaded, including the header and
 footer, and returned to the user. If a controller returns a string, it is
 displayed to the user.
 
-.. note:: Controllers must return a string or a :doc:`Response <../outgoing/response>` object.
+.. note:: Controllers must return a string or a :doc:`Response <../../outgoing/response>` object.
 
 If the requested page doesn't exist, a "404 Page not found" error is shown.
 
@@ -177,7 +177,7 @@ view.
 .. note:: Any files and directory names passed into the :php:func:`view()` function MUST
     match the case of the actual directory and file itself or the system will
     throw errors on case-sensitive platforms. You can read more about it in
-    :doc:`../outgoing/views`.
+    :doc:`../../outgoing/views`.
 
 Running the App
 ***************
@@ -201,7 +201,7 @@ method in the ``Pages`` controller? Awesome!
 
 You should see something like the following:
 
-.. image:: ../images/tutorial1.png
+.. image:: ../../images/tutorial1.png
     :align: center
 
 You can now try several URLs in the browser location field, to see what the ``Pages``

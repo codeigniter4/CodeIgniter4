@@ -6,8 +6,8 @@ use CodeIgniter\Model;
 
 class BookModel extends Model
 {
-    protected string $table        = 'book';
-    protected array $allowedFields = ['title', 'author_id', 'year'];
+    protected $table         = 'book';
+    protected $allowedFields = ['title', 'author_id', 'year'];
 
     /**
      * Include author_id and author_name
@@ -15,7 +15,8 @@ class BookModel extends Model
      */
     public function withAuthorInfo()
     {
-        return $this->select('books.*, authors.id as author_id, authors.name as author_name')
-            ->join('authors', 'books.author_id = authors.id');
+        return $this
+            ->select('book.*, author.id as author_id, author.name as author_name')
+            ->join('author', 'book.author_id = author.id');
     }
 }

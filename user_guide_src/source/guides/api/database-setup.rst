@@ -7,12 +7,12 @@ Creating the Database and Model
     :local:
     :depth: 2
 
-In this section we will get the data layer setup by creating a SQLite database table for our ``books`` resource, seed it with some sample data, and define a model to access it. By the end, you’ll have a working ``books`` table populated with example rows.
+In this section, we set up the data layer by creating a SQLite database table for our ``books`` resource, seeding it with sample data, and defining a model to access it. By the end, you'll have a working ``book`` table populated with example rows.
 
 Create the Migrations
 =====================
 
-The migrations let you version-control your database schema by telling what changes to make to the database, and what changes to undo if we need to roll it back.  Let’s make one for simple ``authors`` and ``books`` tables.
+Migrations let you version-control your database schema by defining what to apply and how to roll it back. Let's make ones for simple ``author`` and ``book`` tables.
 
 Run the Spark command:
 
@@ -23,17 +23,17 @@ Run the Spark command:
 
 This creates a new file under **app/Database/Migrations/**.
 
-Edit the **CreateAuthorsTable.php** file to look like this:
+Edit **app/Database/Migrations/CreateAuthorsTable.php** to look like this:
 
 .. literalinclude:: code/004.php
 
-Each author simply has a name for our purposes. We have made the name a uncommented unique key to prevent duplicates.
+Each author only needs a name for our purposes. We've made the name a unique key to prevent duplicates.
 
-Now, edit the **CreateBooksTable.php** file to look like this:
+Now, edit **app/Database/Migrations/CreateBooksTable.php** to look like this:
 
 .. literalinclude:: code/005.php
 
-You'll see this contains a foreign key reference to the ``authors`` table. This allows us to safely associate each book with an author and only maintain author names in one place.
+This contains a foreign key reference to the ``author`` table. It lets us associate each book with an author and keep author names in one place.
 
 Now run the migration:
 
@@ -41,12 +41,12 @@ Now run the migration:
 
     php spark migrate
 
-Now the database has the necessary structure to hold our books and authors.
+Now, the database has the structure needed to hold our book and author records.
 
 Create a seeder
 ===============
 
-Seeders let you load sample data for development so you have something to work with right away. In this case, we’ll create a seeder to add some example books and their authors.
+Seeders load sample data for development so you have something to work with right away. Here, we'll add some example books and their authors.
 
 Run:
 
@@ -58,7 +58,7 @@ Edit the file at **app/Database/Seeds/BookSeeder.php**:
 
 .. literalinclude:: code/006.php
 
-This seeder first inserts authors into the ``authors`` table, capturing their IDs, then uses those IDs to insert books into the ``books`` table.
+This seeder first inserts authors into the ``author`` table, captures their IDs, and then uses those IDs to insert books into the ``book`` table.
 
 Then run the seeder:
 
@@ -71,7 +71,7 @@ You should see confirmation messages indicating the rows were inserted.
 Create the Book model
 =====================
 
-Models make database access simple and reusable by providing an object-oriented interface to your tables and a fluent method for querying. Let's create a model for the ``authors`` and ``books`` tables.
+Models make database access simple and reusable by providing an object-oriented interface to your tables and a fluent query API. Let's create models for the ``author`` and ``book`` tables.
 
 Generate one:
 
@@ -80,18 +80,17 @@ Generate one:
    php spark make:model AuthorModel
    php spark make:model BookModel
 
-Both of the models will be simple extensions of CodeIgniter's base Model class.
+Both models will be simple extensions of CodeIgniter's base Model class.
 
-Edit ``app/Models/AuthorModel.php``:
+Edit **app/Models/AuthorModel.php**:
 
 .. literalinclude:: code/007.php
 
-Edit ``app/Models/BookModel.php``:
+Edit **app/Models/BookModel.php**:
 
 .. literalinclude:: code/008.php
 
 This tells CodeIgniter which table to use and which fields can be mass-assigned.
 
-
-In the next section, we’ll use your new model to power a RESTful API controller.
-You’ll build the ``/api/books`` endpoint and see how CodeIgniter’s ``Api\ResponseTrait`` makes CRUD operations easy.
+In the next section, we'll use your new models to power a RESTful API controller.
+You'll build the ``/api/books`` endpoint and see how CodeIgniter's ``Api\ResponseTrait`` makes CRUD operations easy.

@@ -5,12 +5,11 @@ namespace App\Controllers\Api;
 use App\Controllers\BaseController;
 use App\Transformers\BookTransformer;
 use CodeIgniter\Api\ResponseTrait;
+use CodeIgniter\HTTP\ResponseInterface;
 
 class Books extends BaseController
 {
     use ResponseTrait;
-
-    protected $format = 'json';
 
     /**
      * List one or many resources
@@ -18,7 +17,7 @@ class Books extends BaseController
      *    and
      * GET /api/books/{id}
      */
-    public function getIndex(?int $id = null)
+    public function getIndex(?int $id = null): ResponseInterface
     {
         $model       = model('BookModel');
         $transformer = new BookTransformer();
@@ -45,10 +44,9 @@ class Books extends BaseController
      *
      * PUT /api/books/{id}
      */
-    public function putIndex(int $id)
+    public function putIndex(int $id): ResponseInterface
     {
-        $data  = $this->request->getRawInput();
-        $model = model('BookModel');
+        $data = $this->request->getRawInput();
 
         $rules = [
             'title'     => 'required|string|max_length[255]',
@@ -78,7 +76,7 @@ class Books extends BaseController
      *
      * POST /api/books
      */
-    public function postIndex()
+    public function postIndex(): ResponseInterface
     {
         $data = $this->request->getPost();
 
@@ -105,7 +103,7 @@ class Books extends BaseController
      *
      * DELETE /api/books/{id}
      */
-    public function deleteIndex(int $id)
+    public function deleteIndex(int $id): ResponseInterface
     {
         $model = model('BookModel');
 

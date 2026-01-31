@@ -20,7 +20,7 @@ Open the **app/Config/Filters.php** file and update the ``$methods`` property li
 .. literalinclude:: create_news_items/001.php
 
 It configures the CSRF filter to be enabled for all **POST** requests.
-You can read more about the CSRF protection in :doc:`Security <../libraries/security>` library.
+You can read more about the CSRF protection in :doc:`Security <../../libraries/security>` library.
 
 .. Warning:: In general, if you use ``$methods`` filters, you should :ref:`disable Auto Routing (Legacy) <use-defined-routes-only>`
     because :ref:`auto-routing-legacy` permits any HTTP method to access a controller.
@@ -65,12 +65,12 @@ and ``session()->getFlashdata('error')`` is used to display the error related to
 to the user. However, by default, if a CSRF validation check fails, an exception will be thrown,
 so it does not work yet. See :ref:`csrf-redirection-on-failure` for more information.
 
-The :php:func:`validation_list_errors()` function provided by the :doc:`../helpers/form_helper`
+The :php:func:`validation_list_errors()` function provided by the :doc:`../../helpers/form_helper`
 is used to report errors related to form validation.
 
 The :php:func:`csrf_field()` function creates a hidden input with a CSRF token that helps protect against some common attacks.
 
-The :php:func:`set_value()` function provided by the :doc:`../helpers/form_helper` is used to show
+The :php:func:`set_value()` function provided by the :doc:`../../helpers/form_helper` is used to show
 old input data when errors occur.
 
 News Controller
@@ -85,7 +85,7 @@ First, create a method to display the HTML form you have created.
 
 .. literalinclude:: create_news_items/002.php
 
-We load the :doc:`Form helper <../helpers/form_helper>` with the
+We load the :doc:`Form helper <../../helpers/form_helper>` with the
 :php:func:`helper()` function. Most helper functions require the helper to be
 loaded before use.
 
@@ -109,7 +109,7 @@ The code above adds a lot of functionality.
 Retrieve the Data
 ^^^^^^^^^^^^^^^^^
 
-First, we use the :doc:`IncomingRequest <../incoming/incomingrequest>`
+First, we use the :doc:`IncomingRequest <../../incoming/incomingrequest>`
 object ``$this->request``, which is set in the controller by the framework.
 
 We get the necessary items from the **POST** data by the user and set them in the
@@ -123,7 +123,7 @@ Next, you'll use the Controller-provided helper function
 In this case, the title and body fields are required and in the specific length.
 
 CodeIgniter has a powerful validation library as demonstrated
-above. You can read more about the :doc:`Validation library <../libraries/validation>`.
+above. You can read more about the :doc:`Validation library <../../libraries/validation>`.
 
 If the validation fails, we call the ``new()`` method you just created and return
 the HTML form.
@@ -141,7 +141,7 @@ record automatically, based on whether it finds an array key matching the primar
 key.
 
 This contains a new function :php:func:`url_title()`. This function -
-provided by the :doc:`URL helper <../helpers/url_helper>` - strips down
+provided by the :doc:`URL helper <../../helpers/url_helper>` - strips down
 the string you pass it, replacing all spaces by dashes (``-``) and makes
 sure everything is in lowercase characters. This leaves you with a nice
 slug, perfect for creating URIs.
@@ -186,12 +186,12 @@ Now point your browser to your local development environment where you
 installed CodeIgniter and add **/news/new** to the URL.
 Add some news and check out the different pages you made.
 
-.. image:: ../images/tutorial3.png
+.. image:: ../../images/tutorial3.png
     :align: center
     :height: 415px
     :width: 45%
 
-.. image:: ../images/tutorial4.png
+.. image:: ../../images/tutorial4.png
     :align: center
     :height: 415px
     :width: 45%

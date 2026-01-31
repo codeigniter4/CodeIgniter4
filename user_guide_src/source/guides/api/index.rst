@@ -7,7 +7,7 @@ Getting Started with REST APIs
     :local:
     :depth: 2
 
-This tutorial will guide you through building a simple RESTful API to manage books using Codeigniter4. Along the way, you'll leanr the basics of setting up a CodeIgniter project, configuring a database, and creating API endpoints, as well as understand what makes a RESTful API.
+This tutorial walks you through building a simple RESTful API to manage books in CodeIgniter 4. You'll learn to set up a project, configure a database, and create API endpoints, and what makes an API RESTful.
 
 This tutorial will primarily focus on:
 
@@ -56,13 +56,13 @@ Copy the environment file and enable development settings:
 
     cp env .env
 
-Open ``.env`` and make sure this line is **uncommented**:
+Open **.env** and make sure this line is **uncommented**:
 
 .. code-block:: ini
 
     CI_ENVIRONMENT = development
 
-You can also use the spark ``env`` command to set the environment for you:
+You can also use the spark ``env`` command to set the environment:
 
 .. code-block:: console
 
@@ -71,9 +71,9 @@ You can also use the spark ``env`` command to set the environment for you:
 Configure SQLite
 ================
 
-We'll use a single-file SQLite database under ``writable/`` so there's no external setup.
+We'll use a single-file SQLite database under **writable/** so there's no external setup.
 
-Open ``.env`` and **uncomment** the database section, then set:
+Open **.env** and **uncomment** the database section, then set:
 
 .. code-block:: ini
 
@@ -92,13 +92,13 @@ CodeIgniter will automatically create the SQLite database file if it doesn't exi
     On some systems you might need to adjust group/owner or use ``chmod 666`` temporarily during development. Never ship world-writable permissions to production.
 
 
-At this point, you should have a working CodeIgniter 4 project with SQLite configured.
+At this point, you have a working CodeIgniter4 project with SQLite configured.
 
 - The app starts with ``php spark serve``
-- ``CI_ENVIRONMENT`` is set to ``development`` in ``.env``
+- ``CI_ENVIRONMENT`` is set to ``development`` in **.env**
 - **writable/database.db** exists and is writable
 
-What's next
+What's Next
 ===========
 
-In the next section, we'll enable :doc:`../../general/auto-routing` and create a simple JSON endpoint (``/api/ping``) to see how HTTP verbs map to controller methods in CodeIgniter.
+In the next section, we'll enable auto-routing and create a simple JSON endpoint (``/api/pings``) to see how HTTP verbs map to controller methods in CodeIgniter.

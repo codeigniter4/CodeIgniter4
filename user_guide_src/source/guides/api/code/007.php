@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class AuthorModel extends Model
 {
-    protected $table         = 'authors';
+    protected $table         = 'author';
     protected $primaryKey    = 'id';
     protected $allowedFields = ['name'];
     protected $useTimestamps = true;

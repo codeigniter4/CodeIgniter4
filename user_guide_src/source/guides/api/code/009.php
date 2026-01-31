@@ -9,8 +9,6 @@ class Books extends BaseController
 {
     use ResponseTrait;
 
-    protected $format = 'json';
-
     /**
      * List one or many resources
      * GET /api/books
