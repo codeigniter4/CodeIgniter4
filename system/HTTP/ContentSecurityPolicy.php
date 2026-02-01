@@ -208,15 +208,28 @@ class ContentSecurityPolicy
     protected $reportOnly = false;
 
     /**
-     * Set of valid source keywords.
+     * Set of valid keyword-sources.
+     *
+     * @see https://www.w3.org/TR/CSP3/#source-expression
      *
      * @var list<string>
      */
     protected $validSources = [
+        // CSP2 keywords
         'self',
         'none',
         'unsafe-inline',
         'unsafe-eval',
+        // CSP3 keywords
+        'strict-dynamic',
+        'unsafe-hashes',
+        'report-sample',
+        'unsafe-allow-redirects',
+        'wasm-unsafe-eval',
+        'trusted-types-eval',
+        'report-sha256',
+        'report-sha384',
+        'report-sha512',
     ];
 
     /**
