@@ -435,6 +435,23 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    public function testScriptSrcAttr(): void
+    {
+        $this->csp->addScriptSrcAttr('cdn.cloudy.com');
+        $this->csp->addScriptSrcAttr('them.com', true);
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('script-src-attr them.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("script-src-attr 'self' cdn.cloudy.com", $this->getCspDirectives($header));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testStyleSrc(): void
     {
         $this->csp->addStyleSrc('cdn.cloudy.com');
@@ -448,6 +465,52 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $header = $this->getHeaderEmitted('Content-Security-Policy');
         $this->assertIsString($header);
         $this->assertContains("style-src 'self' cdn.cloudy.com", $this->getCspDirectives($header));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testStyleSrcElem(): void
+    {
+        $this->csp->addStyleSrcElem('cdn.cloudy.com');
+        $this->csp->addStyleSrcElem('them.com', true);
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('style-src-elem them.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("style-src-elem 'self' cdn.cloudy.com", $this->getCspDirectives($header));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testStyleSrcAttr(): void
+    {
+        $this->csp->addStyleSrcAttr('cdn.cloudy.com');
+        $this->csp->addStyleSrcAttr('them.com', true);
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
+        $this->assertIsString($header);
+        $this->assertContains('style-src-attr them.com', $this->getCspDirectives($header));
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains("style-src-attr 'self' cdn.cloudy.com", $this->getCspDirectives($header));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testWorkerSrc(): void
+    {
+        $this->csp->addWorkerSrc('workers.com');
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('worker-src workers.com', $this->getCspDirectives($header));
     }
 
     #[PreserveGlobalState(false)]

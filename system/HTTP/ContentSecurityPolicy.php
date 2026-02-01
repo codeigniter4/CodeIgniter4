@@ -46,6 +46,10 @@ class ContentSecurityPolicy
         'sandbox'         => 'sandbox',
         'manifest-src'    => 'manifestSrc',
         'script-src-elem' => 'scriptSrcElem',
+        'script-src-attr' => 'scriptSrcAttr',
+        'style-src-elem'  => 'styleSrcElem',
+        'style-src-attr'  => 'styleSrcAttr',
+        'worker-src'      => 'workerSrc',
     ];
 
     /**
@@ -191,7 +195,38 @@ class ContentSecurityPolicy
      *
      * @var array<string, bool>|string
      */
-    protected $scriptSrcElem = [];
+    protected array|string $scriptSrcElem = [];
+
+    /**
+     * The `script-src-attr` directive applies to event handlers and, if present,
+     * it will override the `script-src` directive for relevant checks.
+     *
+     * @var array<string, bool>|string
+     */
+    protected array|string $scriptSrcAttr = [];
+
+    /**
+     * The `style-src-elem` directive governs the behaviour of styles except
+     * for styles defined in inline attributes.
+     *
+     * @var array<string, bool>|string
+     */
+    protected array|string $styleSrcElem = [];
+
+    /**
+     * The `style-src-attr` directive governs the behaviour of style attributes.
+     *
+     * @var array<string, bool>|string
+     */
+    protected array|string $styleSrcAttr = [];
+
+    /**
+     * The `worker-src` directive restricts the URLs which may be loaded as a `Worker`,
+     * `SharedWorker`, or `ServiceWorker`.
+     *
+     * @var array<string, bool>|string
+     */
+    protected array|string $workerSrc = [];
 
     /**
      * Instructs user agents to rewrite URL schemes by changing HTTP to HTTPS.
@@ -678,12 +713,24 @@ class ContentSecurityPolicy
      * @see https://www.w3.org/TR/CSP/#directive-script-src-elem
      *
      * @param list<string>|string $uri
-     *
-     * @return $this
      */
-    public function addScriptSrcElem($uri, ?bool $explicitReporting = null)
+    public function addScriptSrcElem(array|string $uri, ?bool $explicitReporting = null): static
     {
         $this->addOption($uri, 'scriptSrcElem', $explicitReporting ?? $this->reportOnly);
+
+        return $this;
+    }
+
+    /**
+     * Adds a new value to the `script-src-attr` directive.
+     *
+     * @see https://www.w3.org/TR/CSP/#directive-script-src-attr
+     *
+     * @param list<string>|string $uri
+     */
+    public function addScriptSrcAttr(array|string $uri, ?bool $explicitReporting = null): static
+    {
+        $this->addOption($uri, 'scriptSrcAttr', $explicitReporting ?? $this->reportOnly);
 
         return $this;
     }
@@ -700,6 +747,48 @@ class ContentSecurityPolicy
     public function addStyleSrc($uri, ?bool $explicitReporting = null)
     {
         $this->addOption($uri, 'styleSrc', $explicitReporting ?? $this->reportOnly);
+
+        return $this;
+    }
+
+    /**
+     * Adds a new value to the `style-src-elem` directive.
+     *
+     * @see https://www.w3.org/TR/CSP/#directive-style-src-elem
+     *
+     * @param list<string>|string $uri
+     */
+    public function addStyleSrcElem(array|string $uri, ?bool $explicitReporting = null): static
+    {
+        $this->addOption($uri, 'styleSrcElem', $explicitReporting ?? $this->reportOnly);
+
+        return $this;
+    }
+
+    /**
+     * Adds a new value to the `style-src-attr` directive.
+     *
+     * @see https://www.w3.org/TR/CSP/#directive-style-src-attr
+     *
+     * @param list<string>|string $uri
+     */
+    public function addStyleSrcAttr(array|string $uri, ?bool $explicitReporting = null): static
+    {
+        $this->addOption($uri, 'styleSrcAttr', $explicitReporting ?? $this->reportOnly);
+
+        return $this;
+    }
+
+    /**
+     * Adds a new value to the `worker-src` directive.
+     *
+     * @see https://www.w3.org/TR/CSP/#directive-worker-src
+     *
+     * @param list<string>|string $uri
+     */
+    public function addWorkerSrc($uri, ?bool $explicitReporting = null): static
+    {
+        $this->addOption($uri, 'workerSrc', $explicitReporting ?? $this->reportOnly);
 
         return $this;
     }

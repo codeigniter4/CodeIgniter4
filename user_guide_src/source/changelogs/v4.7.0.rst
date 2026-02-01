@@ -350,8 +350,12 @@ Content Security Policy
 - Hash values for CSP ``script-src`` and ``style-src`` directives can now use SHA-256, SHA-384, and SHA-512 digests.
 - Added support for the following CSP Level 3 directives:
     - ``script-src-elem``
+    - ``script-src-attr``
+    - ``style-src-elem``
+    - ``style-src-attr``
+    - ``worker-src``
 
-  Update your CSP configuration in **app/Config/ContentSecurityPolicy.php** to include these new directives as needed.
+  Update your CSP configuration in **app/Config/ContentSecurityPolicy.php** to include these new directives.
 
 Others
 ======

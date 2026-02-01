@@ -61,7 +61,15 @@ class ContentSecurityPolicy extends BaseConfig
      *
      * @var list<string>|string
      */
-    public $scriptSrcElem = 'self';
+    public array|string $scriptSrcElem = 'self';
+
+    /**
+     * Specifies valid sources for JavaScript inline event
+     * handlers and JavaScript URLs.
+     *
+     * @var list<string>|string
+     */
+    public array|string $scriptSrcAttr = 'self';
 
     /**
      * Lists allowed stylesheets' URLs.
@@ -69,6 +77,21 @@ class ContentSecurityPolicy extends BaseConfig
      * @var list<string>|string
      */
     public $styleSrc = 'self';
+
+    /**
+     * Specifies valid sources for stylesheets <link> elements.
+     *
+     * @var list<string>|string
+     */
+    public array|string $styleSrcElem = 'self';
+
+    /**
+     * Specifies valid sources for stylesheets inline
+     * style attributes and `<style>` elements.
+     *
+     * @var list<string>|string
+     */
+    public array|string $styleSrcAttr = 'self';
 
     /**
      * Defines the origins from which images can be loaded.
@@ -151,6 +174,11 @@ class ContentSecurityPolicy extends BaseConfig
      * @var list<string>|string|null
      */
     public $manifestSrc;
+
+    /**
+     * @var list<string>|string
+     */
+    public array|string $workerSrc = [];
 
     /**
      * Limits the kinds of plugins a page may invoke.
