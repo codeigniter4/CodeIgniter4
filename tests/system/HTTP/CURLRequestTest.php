@@ -16,12 +16,15 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCURLRequest;
 use Config\App;
 use Config\CURLRequest as ConfigCURLRequest;
 use CURLFile;
+use CurlShareHandle;
 use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -39,19 +42,26 @@ class CURLRequestTest extends CIUnitTestCase
         parent::setUp();
 
         $this->resetServices();
+        Services::injectMock('superglobals', new Superglobals());
         $this->request = $this->getRequest();
     }
 
     /**
      * @param array<string, mixed> $options
+     * @param array<int, int>|null $shareConnectionOptions
      */
-    protected function getRequest(array $options = []): MockCURLRequest
+    protected function getRequest(array $options = [], ?array $shareConnectionOptions = null): MockCURLRequest
     {
         $uri = isset($options['baseURI']) ? new URI($options['baseURI']) : new URI();
         $app = new App();
 
         $config               = new ConfigCURLRequest();
         $config->shareOptions = false;
+
+        if ($shareConnectionOptions !== null) {
+            $config->shareConnectionOptions = $shareConnectionOptions;
+        }
+
         Factories::injectMock('config', 'CURLRequest', $config);
 
         return new MockCURLRequest(($app), $uri, new Response($app), $options);
@@ -179,9 +189,9 @@ class CURLRequestTest extends CIUnitTestCase
     #[BackupGlobals(true)]
     public function testOptionsHeadersNotUsingPopulate(): void
     {
-        $_SERVER['HTTP_HOST']            = 'site1.com';
-        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
-        $_SERVER['HTTP_ACCEPT_ENCODING'] = 'gzip, deflate, br';
+        service('superglobals')->setServer('HTTP_HOST', 'site1.com');
+        service('superglobals')->setServer('HTTP_ACCEPT_LANGUAGE', 'en-US');
+        service('superglobals')->setServer('HTTP_ACCEPT_ENCODING', 'gzip, deflate, br');
 
         $options = [
             'baseURI' => 'http://www.foo.com/api/v1/',
@@ -239,7 +249,7 @@ class CURLRequestTest extends CIUnitTestCase
     #[BackupGlobals(true)]
     public function testHeaderContentLengthNotSharedBetweenClients(): void
     {
-        $_SERVER['HTTP_CONTENT_LENGTH'] = '10';
+        service('superglobals')->setServer('HTTP_CONTENT_LENGTH', '10');
 
         $options = [
             'baseURI' => 'http://www.foo.com/api/v1/',
@@ -580,6 +590,28 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame('http://localhost:3128', $options[CURLOPT_PROXY]);
         $this->assertArrayHasKey(CURLOPT_HTTPPROXYTUNNEL, $options);
         $this->assertTrue($options[CURLOPT_HTTPPROXYTUNNEL]);
+    }
+
+    public function testFreshConnectDefault(): void
+    {
+        $this->request->request('get', 'http://example.com');
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_FRESH_CONNECT, $options);
+        $this->assertTrue($options[CURLOPT_FRESH_CONNECT]);
+    }
+
+    public function testFreshConnectFalseOption(): void
+    {
+        $this->request->request('get', 'http://example.com', [
+            'fresh_connect' => false,
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_FRESH_CONNECT, $options);
+        $this->assertFalse($options[CURLOPT_FRESH_CONNECT]);
     }
 
     public function testDebugOptionTrue(): void
@@ -1210,6 +1242,112 @@ accept-ranges: bytes\x0d\x0a\x0d\x0a";
 
         $this->assertArrayHasKey(CURLOPT_IPRESOLVE, $options);
         $this->assertSame(\CURL_IPRESOLVE_WHATEVER, $options[CURLOPT_IPRESOLVE]);
+    }
+
+    public function testShareConnectionDefault(): void
+    {
+        $this->request->request('GET', 'http://example.com');
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_SHARE, $options);
+        $this->assertInstanceOf(CurlShareHandle::class, $options[CURLOPT_SHARE]);
+    }
+
+    public function testShareConnectionEmpty(): void
+    {
+        $request = $this->getRequest(shareConnectionOptions: []);
+        $request->request('GET', 'http://example.com');
+
+        $options = $request->curl_options;
+
+        $this->assertArrayNotHasKey(CURLOPT_SHARE, $options);
+    }
+
+    public function testShareConnectionDuplicate(): void
+    {
+        $request = $this->getRequest(shareConnectionOptions: [
+            CURL_LOCK_DATA_CONNECT,
+            CURL_LOCK_DATA_DNS,
+            CURL_LOCK_DATA_CONNECT,
+            CURL_LOCK_DATA_DNS,
+        ]);
+        $request->request('GET', 'http://example.com');
+
+        $options = $request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_SHARE, $options);
+        $this->assertInstanceOf(CurlShareHandle::class, $options[CURLOPT_SHARE]);
+    }
+
+    #[DataProvider('provideDNSCacheTimeoutOption')]
+    public function testDNSCacheTimeoutOption(int|string|null $input, bool $expectedHasKey, ?int $expectedValue = null): void
+    {
+        $this->request->request('POST', '/post', [
+            'dns_cache_timeout' => $input,
+        ]);
+
+        $options = $this->request->curl_options;
+
+        if ($expectedHasKey) {
+            $this->assertArrayHasKey(CURLOPT_DNS_CACHE_TIMEOUT, $options);
+            $this->assertSame($expectedValue, $options[CURLOPT_DNS_CACHE_TIMEOUT]);
+        } else {
+            $this->assertArrayNotHasKey(CURLOPT_DNS_CACHE_TIMEOUT, $options);
+        }
+    }
+
+    /**
+     * @return iterable<string, array{input: int|string|null, expectedHasKey: bool, expectedValue?: int}>
+     *
+     * @see https://curl.se/libcurl/c/CURLOPT_DNS_CACHE_TIMEOUT.html
+     */
+    public static function provideDNSCacheTimeoutOption(): iterable
+    {
+        yield from [
+            'valid timeout (integer)' => [
+                'input'          => 160,
+                'expectedHasKey' => true,
+                'expectedValue'  => 160,
+            ],
+            'valid timeout (numeric string)' => [
+                'input'          => '180',
+                'expectedHasKey' => true,
+                'expectedValue'  => 180,
+            ],
+            'valid timeout (zero / disabled)' => [
+                'input'          => 0,
+                'expectedHasKey' => true,
+                'expectedValue'  => 0,
+            ],
+            'valid timeout (zero / disabled using string)' => [
+                'input'          => '0',
+                'expectedHasKey' => true,
+                'expectedValue'  => 0,
+            ],
+            'valid timeout (forever)' => [
+                'input'          => -1,
+                'expectedHasKey' => true,
+                'expectedValue'  => -1,
+            ],
+            'valid timeout (forever using string)' => [
+                'input'          => '-1',
+                'expectedHasKey' => true,
+                'expectedValue'  => -1,
+            ],
+            'invalid timeout (null)' => [
+                'input'          => null,
+                'expectedHasKey' => false,
+            ],
+            'invalid timeout (string)' => [
+                'input'          => 'is_wrong',
+                'expectedHasKey' => false,
+            ],
+            'invalid timeout (negative number / below -1)' => [
+                'input'          => -2,
+                'expectedHasKey' => false,
+            ],
+        ];
     }
 
     public function testCookieOption(): void

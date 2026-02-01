@@ -51,6 +51,7 @@ use Config\Database as DatabaseConfig;
 use Config\Exceptions;
 use Config\Security as SecurityConfig;
 use Config\Session as ConfigSession;
+use Config\WorkerMode;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -313,10 +314,10 @@ final class ServicesTest extends CIUnitTestCase
     public function testCallStatic(): void
     {
         // __callStatic should kick in for this but fail
-        $actual = Services::SeSsIoNs(null, false);
+        $actual = Services::SeSsIoNs(null, false); // @phpstan-ignore staticMethod.notFound
         $this->assertNull($actual);
         // __callStatic should kick in for this
-        $actual = Services::SeSsIoN(null, false);
+        $actual = Services::SeSsIoN(null, false); // @phpstan-ignore staticMethod.notFound
         $this->assertInstanceOf(Session::class, $actual);
     }
 
@@ -499,5 +500,65 @@ final class ServicesTest extends CIUnitTestCase
         rename(COMPOSER_PATH, COMPOSER_PATH . '.backup');
         $this->assertInstanceOf(\Config\Services::class, new \Config\Services());
         rename(COMPOSER_PATH . '.backup', COMPOSER_PATH);
+    }
+
+    public function testHas(): void
+    {
+        $this->assertFalse(Services::has('timer'));
+
+        Services::timer();
+
+        $this->assertTrue(Services::has('timer'));
+    }
+
+    public function testHasReturnsFalseForNonExistentService(): void
+    {
+        $this->assertFalse(Services::has('nonexistent'));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testResetForWorkerMode(): void
+    {
+        $config                     = new WorkerMode();
+        $config->persistentServices = ['timer'];
+
+        Services::cache();
+        Services::timer();
+        Services::typography();
+
+        $this->assertTrue(Services::has('cache'));
+        $this->assertTrue(Services::has('timer'));
+        $this->assertTrue(Services::has('typography'));
+
+        Services::resetForWorkerMode($config);
+
+        $this->assertFalse(Services::has('cache'));
+        $this->assertTrue(Services::has('timer'));
+        $this->assertFalse(Services::has('typography'));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testReconnectCacheForWorkerMode(): void
+    {
+        Services::cache();
+        $this->assertTrue(Services::has('cache'));
+
+        Services::reconnectCacheForWorkerMode();
+
+        $this->assertTrue(Services::has('cache'));
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testReconnectCacheForWorkerModeWithNoCache(): void
+    {
+        Services::resetSingle('cache');
+        $this->assertFalse(Services::has('cache'));
+
+        Services::reconnectCacheForWorkerMode();
+
+        $this->assertFalse(Services::has('cache'));
     }
 }

@@ -2,7 +2,7 @@ includes:
     - utils/phpstan-baseline/loader.neon
 
 parameters:
-    phpVersion: 80100
+    phpVersion: 80200
     tmpDir: build/phpstan
     level: 6
     bootstrapFiles:
@@ -19,6 +19,7 @@ parameters:
             - system/Commands/Generators/Views/*
             - system/Debug/Toolbar/Views/toolbar.tpl.php
             - system/Images/Handlers/GDHandler.php
+            - system/Test/Mock/MockCommon.php
             - system/ThirdParty/*
             - system/Validation/Views/single.php
             - tests/system/View/Views/*

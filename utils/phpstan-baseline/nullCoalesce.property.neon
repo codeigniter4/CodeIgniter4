@@ -1,4 +1,4 @@
-# total 16 errors
+# total 8 errors
 
 parameters:
     ignoreErrors:
@@ -21,16 +21,6 @@ parameters:
             message: '#^Property CodeIgniter\\HTTP\\URI\:\:\$fragment \(string\) on left side of \?\? is not nullable\.$#'
             count: 1
             path: ../../system/HTTP/URI.php
-
-        -
-            message: '#^Property CodeIgniter\\Images\\Handlers\\BaseHandler\:\:\$height \(int\) on left side of \?\? is not nullable\.$#'
-            count: 4
-            path: ../../system/Images/Handlers/ImageMagickHandler.php
-
-        -
-            message: '#^Property CodeIgniter\\Images\\Handlers\\BaseHandler\:\:\$width \(int\) on left side of \?\? is not nullable\.$#'
-            count: 4
-            path: ../../system/Images/Handlers/ImageMagickHandler.php
 
         -
             message: '#^Property CodeIgniter\\Throttle\\Throttler\:\:\$testTime \(int\) on left side of \?\? is not nullable\.$#'

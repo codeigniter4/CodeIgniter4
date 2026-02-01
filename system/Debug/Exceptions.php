@@ -84,17 +84,6 @@ class Exceptions
         $this->viewPath = rtrim($config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
 
         $this->config = $config;
-
-        // workaround for upgraded users
-        // This causes "Deprecated: Creation of dynamic property" in PHP 8.2.
-        // @TODO remove this after dropping PHP 8.1 support.
-        if (! isset($this->config->sensitiveDataInTrace)) {
-            $this->config->sensitiveDataInTrace = [];
-        }
-        if (! isset($this->config->logDeprecations, $this->config->deprecationLogLevel)) {
-            $this->config->logDeprecations     = false;
-            $this->config->deprecationLogLevel = LogLevel::WARNING;
-        }
     }
 
     /**
@@ -136,7 +125,7 @@ class Exceptions
                 'routeInfo' => $routeInfo,
                 'exFile'    => clean_path($exception->getFile()), // {file} refers to THIS file
                 'exLine'    => $exception->getLine(), // {line} refers to THIS line
-                'trace'     => self::renderBacktrace($exception->getTrace()),
+                'trace'     => render_backtrace($exception->getTrace()),
             ]);
 
             // Get the first exception.
@@ -149,7 +138,7 @@ class Exceptions
                     'message' => $prevException->getMessage(),
                     'exFile'  => clean_path($prevException->getFile()), // {file} refers to THIS file
                     'exLine'  => $prevException->getLine(), // {line} refers to THIS line
-                    'trace'   => self::renderBacktrace($prevException->getTrace()),
+                    'trace'   => render_backtrace($prevException->getTrace()),
                 ]);
             }
         }
@@ -527,7 +516,7 @@ class Exceptions
                 'message' => $message,
                 'errFile' => clean_path($file ?? ''),
                 'errLine' => $line ?? 0,
-                'trace'   => self::renderBacktrace($trace),
+                'trace'   => render_backtrace($trace),
             ],
         );
 
@@ -645,42 +634,5 @@ class Exceptions
         }
 
         return '<pre><code>' . $out . '</code></pre>';
-    }
-
-    private static function renderBacktrace(array $backtrace): string
-    {
-        $backtraces = [];
-
-        foreach ($backtrace as $index => $trace) {
-            $frame = $trace + ['file' => '[internal function]', 'line' => '', 'class' => '', 'type' => '', 'args' => []];
-
-            if ($frame['file'] !== '[internal function]') {
-                $frame['file'] = sprintf('%s(%s)', $frame['file'], $frame['line']);
-            }
-
-            unset($frame['line']);
-            $idx = $index;
-            $idx = str_pad((string) ++$idx, 2, ' ', STR_PAD_LEFT);
-
-            $args = implode(', ', array_map(static fn ($value): string => match (true) {
-                is_object($value)   => sprintf('Object(%s)', $value::class),
-                is_array($value)    => $value !== [] ? '[...]' : '[]',
-                $value === null     => 'null',
-                is_resource($value) => sprintf('resource (%s)', get_resource_type($value)),
-                default             => var_export($value, true),
-            }, $frame['args']));
-
-            $backtraces[] = sprintf(
-                '%s %s: %s%s%s(%s)',
-                $idx,
-                clean_path($frame['file']),
-                $frame['class'],
-                $frame['type'],
-                $frame['function'],
-                $args,
-            );
-        }
-
-        return implode("\n", $backtraces);
     }
 }

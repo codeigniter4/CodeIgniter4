@@ -31,3 +31,10 @@ $csp->addPluginType('application/pdf', false); // reject this media type
 $csp->addScriptSrc('scripts.example.com', true); // allow but report requests from here
 $csp->addStyleSrc('css.example.com');
 $csp->addSandbox(['allow-forms', 'allow-scripts']);
+
+// the following CSP3 directives are available in v4.7.0 and later
+$csp->addScriptSrcAttr('trusted.com');
+$csp->addScriptSrcElem('trusted.com');
+$csp->addStyleSrcAttr('trusted.com');
+$csp->addStyleSrcElem('trusted.com');
+$csp->addWorkerSrc('workers.example.com');

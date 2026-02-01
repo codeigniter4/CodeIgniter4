@@ -17,8 +17,8 @@ namespace CodeIgniter\Database;
  * @template TConnection
  * @template TResult
  *
- * @property      false|object|resource $connID
  * @property-read string                $DBDriver
+ * @property      false|object|resource $connID
  */
 interface ConnectionInterface
 {

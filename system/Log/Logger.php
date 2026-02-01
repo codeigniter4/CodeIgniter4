@@ -310,8 +310,8 @@ class Logger implements LoggerInterface
             $replace['{' . $key . '}'] = $val;
         }
 
-        $replace['{post_vars}'] = '$_POST: ' . print_r($_POST, true);
-        $replace['{get_vars}']  = '$_GET: ' . print_r($_GET, true);
+        $replace['{post_vars}'] = '$_POST: ' . print_r(service('superglobals')->getPostArray(), true);
+        $replace['{get_vars}']  = '$_GET: ' . print_r(service('superglobals')->getGetArray(), true);
         $replace['{env}']       = ENVIRONMENT;
 
         // Allow us to log the file/line that we are logging from

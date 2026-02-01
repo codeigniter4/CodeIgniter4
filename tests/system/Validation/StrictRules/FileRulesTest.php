@@ -58,7 +58,7 @@ class FileRulesTest extends CIUnitTestCase
         $this->validation = new Validation((object) $this->config, service('renderer'));
         $this->validation->reset();
 
-        $_FILES = [
+        service('superglobals')->setFilesArray([
             'avatar' => [
                 'tmp_name' => TESTPATH . '_support/Validation/uploads/phpUxc0ty',
                 'name'     => 'my-avatar.png',
@@ -146,7 +146,13 @@ class FileRulesTest extends CIUnitTestCase
                     400,
                 ],
             ],
-        ];
+        ]);
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        service('superglobals')->setFilesArray([]);
     }
 
     public function testUploadedTrue(): void

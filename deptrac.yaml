@@ -164,6 +164,10 @@ deptrac:
     API:
       - Format
       - HTTP
+      - Database
+      - Model
+      - Pager
+      - URI
     Cache:
       - I18n
     Controller:
@@ -205,6 +209,7 @@ deptrac:
       - I18n
     Model:
       - Database
+      - DataCaster
       - DataConverter
       - Entity
       - I18n
@@ -221,6 +226,7 @@ deptrac:
       - +Controller
     Router:
       - HTTP
+      - I18n
     Security:
       - Cookie
       - I18n

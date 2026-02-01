@@ -130,12 +130,8 @@ final class TextHelperTest extends CIUnitTestCase
         $this->assertSame(16, strlen(random_string('numeric', 16)));
         $this->assertSame(8, strlen(random_string('numeric')));
 
-        $this->assertIsString(random_string('basic'));
         $this->assertSame(16, strlen($random = random_string('crypto', 16)));
         $this->assertIsString($random);
-
-        $this->assertSame(32, strlen($random = random_string('md5')));
-        $this->assertSame(40, strlen($random = random_string('sha1')));
     }
 
     /**
@@ -149,6 +145,16 @@ final class TextHelperTest extends CIUnitTestCase
         );
 
         random_string('crypto', 9);
+    }
+
+    public function testRandomStringWithUnsupportedType(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Invalid type "basic". Accepted types: alpha, alnum, numeric, nozero, or crypto.',
+        );
+
+        random_string('basic');
     }
 
     public function testIncrementString(): void

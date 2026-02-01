@@ -365,15 +365,17 @@ class Toolbar
 
     /**
      * Prepare for debugging.
-     *
-     * @return void
      */
-    public function prepare(?RequestInterface $request = null, ?ResponseInterface $response = null)
+    public function prepare(?RequestInterface $request = null, ?ResponseInterface $response = null): void
     {
         /**
          * @var IncomingRequest|null $request
          */
         if (CI_DEBUG && ! is_cli()) {
+            if ($this->hasNativeHeaderConflict()) {
+                return;
+            }
+
             $app = service('codeigniter');
 
             $request ??= service('request');
@@ -385,7 +387,7 @@ class Toolbar
                 return;
             }
 
-            $toolbar = service('toolbar', config(ToolbarConfig::class));
+            $toolbar = service('toolbar', $this->config);
             $stats   = $app->getPerformanceStats();
             $data    = $toolbar->run(
                 $stats['startTime'],
@@ -410,7 +412,7 @@ class Toolbar
             // Non-HTML formats should not include the debugbar
             // then we send headers saying where to find the debug data
             // for this response
-            if ($request->isAJAX() || ! str_contains($format, 'html')) {
+            if ($this->shouldDisableToolbar($request) || ! str_contains($format, 'html')) {
                 $response->setHeader('Debugbar-Time', "{$time}")
                     ->setHeader('Debugbar-Link', site_url("?debugbar_time={$time}"));
 
@@ -454,10 +456,8 @@ class Toolbar
      * Inject debug toolbar into the response.
      *
      * @codeCoverageIgnore
-     *
-     * @return void
      */
-    public function respond()
+    public function respond(): void
     {
         if (ENVIRONMENT === 'testing') {
             return;
@@ -546,5 +546,77 @@ class Toolbar
         }
 
         return $output;
+    }
+
+    /**
+     * Checks if the native PHP headers indicate a non-HTML response
+     * or if headers are already sent.
+     */
+    protected function hasNativeHeaderConflict(): bool
+    {
+        // If headers are sent, we can't inject HTML.
+        if (headers_sent()) {
+            return true;
+        }
+
+        // Native Header Inspection
+        foreach (headers_list() as $header) {
+            $lowerHeader = strtolower($header);
+
+            $isNonHtmlContent = str_starts_with($lowerHeader, 'content-type:') && ! str_contains($lowerHeader, 'text/html');
+            $isAttachment     = str_starts_with($lowerHeader, 'content-disposition:') && str_contains($lowerHeader, 'attachment');
+
+            if ($isNonHtmlContent || $isAttachment) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine if the toolbar should be disabled based on the request headers.
+     *
+     * This method allows checking both the presence of headers and their expected values.
+     * Useful for AJAX, HTMX, Unpoly, Turbo, etc., where partial HTML responses are expected.
+     *
+     * @return bool True if any header condition matches; false otherwise.
+     */
+    private function shouldDisableToolbar(IncomingRequest $request): bool
+    {
+        // Fallback for older installations where the config option is missing (e.g. after upgrading from a previous version).
+        $headers = $this->config->disableOnHeaders ?? ['X-Requested-With' => 'xmlhttprequest'];
+
+        foreach ($headers as $headerName => $expectedValue) {
+            if (! $request->hasHeader($headerName)) {
+                continue; // header not present, skip
+            }
+
+            // If expectedValue is null, only presence is enough
+            if ($expectedValue === null) {
+                return true;
+            }
+
+            $headerValue = strtolower($request->getHeaderLine($headerName));
+
+            if ($headerValue === strtolower($expectedValue)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Reset all collectors for worker mode.
+     * Calls reset() on collectors that support it.
+     */
+    public function reset(): void
+    {
+        foreach ($this->collectors as $collector) {
+            if (method_exists($collector, 'reset')) {
+                $collector->reset();
+            }
+        }
     }
 }

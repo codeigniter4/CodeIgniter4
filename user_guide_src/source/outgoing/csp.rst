@@ -89,6 +89,22 @@ that youtube.com was allowed, and then provide several allowed but reported sour
 
 .. literalinclude:: csp/013.php
 
+Reporting Directives
+====================
+
+To specify the URL you want the reports to be sent to, you can use the ``setReportURI()`` method.
+
+.. versionadded:: 4.7.0
+
+CSP Level 3 deprecates the ``report-uri`` directive in favor of ``report-to``. Therefore, you can
+use the ``setReportToEndpoint()`` method to set the reporting endpoint for CSP reports. Before adding
+this directive, make sure the reporting endpoints are already defined using the ``addReportingEndpoints()`` method.
+
+.. literalinclude:: csp/015.php
+
+For backward compatibility with browsers that do not support the ``report-to`` directive, CodeIgniter4 will also
+set the ``report-uri`` directive when you use the ``setReportToEndpoint()`` method.
+
 .. _csp-clear-directives:
 
 Clear Directives

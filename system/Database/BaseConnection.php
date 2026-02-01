@@ -487,11 +487,51 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
+     * Keep or establish the connection if no queries have been sent for
+     * a length of time exceeding the server's idle timeout.
+     *
+     * @return void
+     */
+    public function reconnect()
+    {
+        if ($this->ping() === false) {
+            $this->close();
+            $this->initialize();
+        }
+    }
+
+    /**
      * Platform dependent way method for closing the connection.
      *
      * @return void
      */
     abstract protected function _close();
+
+    /**
+     * Check if the connection is still alive.
+     */
+    public function ping(): bool
+    {
+        if ($this->connID === false) {
+            return false;
+        }
+
+        return $this->_ping();
+    }
+
+    /**
+     * Driver-specific ping implementation.
+     */
+    protected function _ping(): bool
+    {
+        try {
+            $result = $this->simpleQuery('SELECT 1');
+
+            return $result !== false;
+        } catch (DatabaseException) {
+            return false;
+        }
+    }
 
     /**
      * Create a persistent database connection.

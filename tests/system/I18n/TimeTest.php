@@ -812,6 +812,22 @@ final class TimeTest extends CIUnitTestCase
         $this->assertSame('2018-02-10 13:20:33', $newTime->toDateTimeString());
     }
 
+    public function testCanAddCalendarMonths(): void
+    {
+        $time    = Time::parse('January 31, 2017 13:20:33', 'America/Chicago');
+        $newTime = $time->addCalendarMonths(1);
+        $this->assertSame('2017-01-31 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2017-02-28 13:20:33', $newTime->toDateTimeString());
+    }
+
+    public function testCanAddCalendarMonthsOverYearBoundary(): void
+    {
+        $time    = Time::parse('January 31, 2017 13:20:33', 'America/Chicago');
+        $newTime = $time->addCalendarMonths(13);
+        $this->assertSame('2017-01-31 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2018-02-28 13:20:33', $newTime->toDateTimeString());
+    }
+
     public function testCanAddYears(): void
     {
         $time    = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
@@ -858,6 +874,22 @@ final class TimeTest extends CIUnitTestCase
         $newTime = $time->subMonths(3);
         $this->assertSame('2017-01-10 13:20:33', $time->toDateTimeString());
         $this->assertSame('2016-10-10 13:20:33', $newTime->toDateTimeString());
+    }
+
+    public function testCanSubtractCalendarMonths(): void
+    {
+        $time    = Time::parse('March 31, 2017 13:20:33', 'America/Chicago');
+        $newTime = $time->subCalendarMonths(1);
+        $this->assertSame('2017-03-31 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2017-02-28 13:20:33', $newTime->toDateTimeString());
+    }
+
+    public function testCanSubtractCalendarMonthsOverYearBoundary(): void
+    {
+        $time    = Time::parse('March 31, 2017 13:20:33', 'America/Chicago');
+        $newTime = $time->subCalendarMonths(13);
+        $this->assertSame('2017-03-31 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2016-02-29 13:20:33', $newTime->toDateTimeString());
     }
 
     public function testCanSubtractYears(): void
@@ -1006,6 +1038,34 @@ final class TimeTest extends CIUnitTestCase
 
         $this->assertTrue($time1->isAfter($time2));
         $this->assertFalse($time2->isAfter($time1));
+    }
+
+    public function testIsPast(): void
+    {
+        Time::setTestNow('2025-12-30 12:00:00', 'Asia/Tehran');
+
+        $past = Time::parse('2025-12-30 11:59:59', 'Asia/Tehran');
+        $this->assertTrue($past->isPast());
+
+        $future = Time::parse('2025-12-30 12:00:01', 'Asia/Tehran');
+        $this->assertFalse($future->isPast());
+
+        $now = Time::now('Asia/Tehran');
+        $this->assertFalse($now->isPast());
+    }
+
+    public function testIsFuture(): void
+    {
+        Time::setTestNow('2025-12-30 12:00:00', 'Asia/Tehran');
+
+        $future = Time::parse('2025-12-30 12:00:01', 'Asia/Tehran');
+        $this->assertTrue($future->isFuture());
+
+        $past = Time::parse('2025-12-30 11:59:59', 'Asia/Tehran');
+        $this->assertFalse($past->isFuture());
+
+        $now = Time::now('Asia/Tehran');
+        $this->assertFalse($now->isFuture());
     }
 
     public function testHumanizeYearsSingle(): void

@@ -152,4 +152,43 @@ class Config extends BaseConfig
 
         static::$factory = new Database();
     }
+
+    /**
+     * Reconnect database connections for worker mode at the start of a request.
+     *
+     * This should be called at the beginning of each request in worker mode,
+     * before the application runs.
+     */
+    public static function reconnectForWorkerMode(): void
+    {
+        foreach (static::$instances as $connection) {
+            $connection->reconnect();
+        }
+    }
+
+    /**
+     * Cleanup database connections for worker mode.
+     *
+     * Rolls back any uncommitted transactions and resets transaction status
+     * to ensure a clean state for the next request.
+     *
+     * Uncommitted transactions at this point indicate a bug in the
+     * application code (transactions should be completed before request ends).
+     *
+     * Called at the END of each request to clean up state.
+     */
+    public static function cleanupForWorkerMode(): void
+    {
+        foreach (static::$instances as $group => $connection) {
+            if ($connection->transDepth > 0) {
+                log_message('error', "Uncommitted transaction detected in database group '{$group}'. Transactions must be completed before request ends.");
+
+                while ($connection->transDepth > 0) {
+                    $connection->transRollback();
+                }
+            }
+
+            $connection->resetTransStatus();
+        }
+    }
 }

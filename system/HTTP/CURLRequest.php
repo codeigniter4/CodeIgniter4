@@ -17,6 +17,8 @@ use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 use Config\CURLRequest as ConfigCURLRequest;
+use CurlShareHandle;
+use SensitiveParameter;
 
 /**
  * A lightweight HTTP client for sending synchronous HTTP requests via cURL.
@@ -102,6 +104,11 @@ class CURLRequest extends OutgoingRequest
     private readonly bool $shareOptions;
 
     /**
+     * The share connection instance.
+     */
+    protected ?CurlShareHandle $shareConnection = null;
+
+    /**
      * Takes an array of options to set the following possible class properties:
      *
      *  - baseURI
@@ -129,6 +136,20 @@ class CURLRequest extends OutgoingRequest
 
         $this->config = $this->defaultConfig;
         $this->parseOptions($options);
+
+        // Share Connection
+        $optShareConnection = config(ConfigCURLRequest::class)->shareConnectionOptions ?? [
+            CURL_LOCK_DATA_CONNECT,
+            CURL_LOCK_DATA_DNS,
+        ];
+
+        if ($optShareConnection !== []) {
+            $this->shareConnection = curl_share_init();
+
+            foreach (array_unique($optShareConnection) as $opt) {
+                curl_share_setopt($this->shareConnection, CURLSHOPT_SHARE, $opt);
+            }
+        }
     }
 
     /**
@@ -240,13 +261,9 @@ class CURLRequest extends OutgoingRequest
      *
      * @return $this
      */
-    public function setAuth(string $username, string $password, string $type = 'basic')
+    public function setAuth(string $username, #[SensitiveParameter] string $password, string $type = 'basic')
     {
-        $this->config['auth'] = [
-            $username,
-            $password,
-            $type,
-        ];
+        $this->config['auth'] = [$username, $password, $type];
 
         return $this;
     }
@@ -364,8 +381,12 @@ class CURLRequest extends OutgoingRequest
 
         $curlOptions[CURLOPT_URL]            = $url;
         $curlOptions[CURLOPT_RETURNTRANSFER] = true;
-        $curlOptions[CURLOPT_HEADER]         = true;
-        $curlOptions[CURLOPT_FRESH_CONNECT]  = true;
+
+        if ($this->shareConnection instanceof CurlShareHandle) {
+            $curlOptions[CURLOPT_SHARE] = $this->shareConnection;
+        }
+
+        $curlOptions[CURLOPT_HEADER] = true;
         // Disable @file uploads in post data.
         $curlOptions[CURLOPT_SAFE_UPLOAD] = true;
 
@@ -602,6 +623,16 @@ class CURLRequest extends OutgoingRequest
             }
         }
 
+        // DNS Cache Timeout
+        if (isset($config['dns_cache_timeout']) && is_numeric($config['dns_cache_timeout']) && $config['dns_cache_timeout'] >= -1) {
+            $curlOptions[CURLOPT_DNS_CACHE_TIMEOUT] = (int) $config['dns_cache_timeout'];
+        }
+
+        // Fresh Connect (default true)
+        $curlOptions[CURLOPT_FRESH_CONNECT] = isset($config['fresh_connect']) && is_bool($config['fresh_connect'])
+            ? $config['fresh_connect']
+            : true;
+
         // Timeout
         $curlOptions[CURLOPT_TIMEOUT_MS] = (float) $config['timeout'] * 1000;
 
@@ -698,8 +729,6 @@ class CURLRequest extends OutgoingRequest
         if ($output === false) {
             throw HTTPException::forCurlError((string) curl_errno($ch), curl_error($ch));
         }
-
-        curl_close($ch);
 
         return $output;
     }

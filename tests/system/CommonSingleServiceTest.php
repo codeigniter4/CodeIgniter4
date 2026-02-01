@@ -91,9 +91,12 @@ final class CommonSingleServiceTest extends CIUnitTestCase
             'reset',
             'resetSingle',
             'resetServicesCache',
+            'resetForWorkerMode',
             'injectMock',
+            'has',
             'encrypter', // Encrypter needs a starter key
             'session', // Headers already sent
+            'reconnectCacheForWorkerMode',
         ];
 
         if ($services === []) {

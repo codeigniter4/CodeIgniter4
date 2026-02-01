@@ -377,6 +377,8 @@ of type to mark the field as nullable, i.e., ``?int``, ``?datetime``.
 +---------------+----------------+---------------------------+
 |``uri``        | URI            | string type               |
 +---------------+----------------+---------------------------+
+|``enum``       | Enum           | string/int type           |
++---------------+----------------+---------------------------+
 
 csv
 ---
@@ -412,6 +414,19 @@ timestamp
 
 The timezone of the ``Time`` instance created will be the default timezone
 (app's timezone), not UTC.
+
+enum
+----
+
+.. versionadded:: 4.7.0
+
+You can cast fields to PHP enums. You must specify the enum class name as a parameter,
+like ``enum[App\Enums\StatusEnum]``.
+
+Enum casting supports:
+
+* **Backed enums** (string or int) - The backing value is stored in the database
+* **Unit enums** - The case name is stored in the database as a string
 
 Custom Casting
 ==============
@@ -633,6 +648,19 @@ converted to strings with the format defined in ``dateFormat['datetime']`` and
 .. note:: Prior to v4.5.0, the date/time formats were hard coded as ``Y-m-d H:i:s``
     and ``Y-m-d`` in the Model class.
 
+Primary Key Validation
+----------------------
+
+.. versionadded:: 4.7.0
+
+The ``insert()``, ``insertBatch()`` (when `$useAutoIncrement`_ is ``false``), ``update()``,
+and ``delete()`` methods validate primary key values before executing database queries.
+Invalid values such as ``null``, ``0``, ``'0'``, empty strings, booleans, empty arrays,
+or nested arrays will throw an ``InvalidArgumentException`` with a specific error message.
+
+If you need to customize this behavior (e.g., to allow ``0`` as a valid primary key for
+legacy systems), you can override the ``validateID()`` method in your model.
+
 Deleting Data
 =============
 
@@ -750,9 +778,9 @@ The other way to set the validation message to fields by functions,
 
     .. literalinclude:: model/030.php
 
-.. php:method:: setValidationMessages($fieldMessages)
+.. php:method:: setValidationMessages($validationMessages)
 
-    :param  array   $fieldMessages:
+    :param  array   $validationMessages:
 
     This function will set the field messages.
 

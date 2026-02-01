@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter;
 
 use App\Controllers\Home;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -36,6 +37,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use Tests\Support\Filters\Customfilter;
 use Tests\Support\Filters\RedirectFilter;
+use Tests\Support\Router\Filters\TestAttributeFilter;
 
 /**
  * @internal
@@ -53,7 +55,9 @@ final class CodeIgniterTest extends CIUnitTestCase
         parent::setUp();
         $this->resetServices();
 
-        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+        Services::injectMock('superglobals', new Superglobals());
+
+        service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/1.1');
 
         $this->codeigniter = new MockCodeIgniter(new App());
 
@@ -70,8 +74,9 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunEmptyDefaultRoute(): void
     {
-        $_SERVER['argv'] = ['index.php'];
-        $_SERVER['argc'] = 1;
+        $superglobals = service('superglobals');
+        $superglobals->setServer('argv', ['index.php']);
+        $superglobals->setServer('argc', 1);
 
         ob_start();
         $this->codeigniter->run();
@@ -92,8 +97,9 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunEmptyDefaultRouteReturnResponse(): void
     {
-        $_SERVER['argv'] = ['index.php'];
-        $_SERVER['argc'] = 1;
+        $superglobals = service('superglobals');
+        $superglobals->setServer('argv', ['index.php']);
+        $superglobals->setServer('argc', 1);
 
         $response = $this->codeigniter->run(null, true);
         $this->assertInstanceOf(ResponseInterface::class, $response);
@@ -103,11 +109,11 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunClosureRoute(): void
     {
-        $_SERVER['argv'] = ['index.php', 'pages/about'];
-        $_SERVER['argc'] = 2;
-
-        $_SERVER['REQUEST_URI'] = '/pages/about';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        $superglobals = service('superglobals');
+        $superglobals->setServer('argv', ['index.php', 'pages/about']);
+        $superglobals->setServer('argc', 2);
+        $superglobals->setServer('REQUEST_URI', '/pages/about');
+        $superglobals->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router.
         $routes = service('routes');
@@ -129,9 +135,10 @@ final class CodeIgniterTest extends CIUnitTestCase
      */
     public function testRun404Override(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-        $_SERVER['REQUEST_URI']    = '/pages/about';
-        $_SERVER['SCRIPT_NAME']    = '/index.php';
+        $superglobals = service('superglobals');
+        $superglobals->setServer('REQUEST_METHOD', 'GET');
+        $superglobals->setServer('REQUEST_URI', '/pages/about');
+        $superglobals->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router.
         $routes = service('routes');
@@ -150,8 +157,9 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRun404OverrideControllerReturnsResponse(): void
     {
-        $_SERVER['argv'] = ['index.php', '/'];
-        $_SERVER['argc'] = 2;
+        $superglobals = service('superglobals');
+        $superglobals->setServer('argv', ['index.php', '/']);
+        $superglobals->setServer('argc', 2);
 
         // Inject mock router.
         $routes = service('routes');
@@ -169,8 +177,9 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRun404OverrideReturnResponse(): void
     {
-        $_SERVER['argv'] = ['index.php', '/'];
-        $_SERVER['argc'] = 2;
+        $superglobals = service('superglobals');
+        $superglobals->setServer('argv', ['index.php', '/']);
+        $superglobals->setServer('argc', 2);
 
         // Inject mock router.
         $routes = service('routes');
@@ -187,8 +196,9 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRun404OverrideByClosure(): void
     {
-        $_SERVER['argv'] = ['index.php', '/'];
-        $_SERVER['argc'] = 2;
+        $superglobals = service('superglobals');
+        $superglobals->setServer('argv', ['index.php', '/']);
+        $superglobals->setServer('argc', 2);
 
         // Inject mock router.
         $routes = new RouteCollection(service('locator'), new Modules(), new Routing());
@@ -209,11 +219,11 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testControllersCanReturnString(): void
     {
-        $_SERVER['argv'] = ['index.php', 'pages/about'];
-        $_SERVER['argc'] = 2;
-
-        $_SERVER['REQUEST_URI'] = '/pages/about';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        $superglobals = service('superglobals');
+        $superglobals->setServer('argv', ['index.php', 'pages/about']);
+        $superglobals->setServer('argc', 2);
+        $superglobals->setServer('REQUEST_URI', '/pages/about');
+        $superglobals->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router.
         $routes = service('routes');
@@ -233,11 +243,11 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testControllersCanReturnResponseObject(): void
     {
-        $_SERVER['argv'] = ['index.php', 'pages/about'];
-        $_SERVER['argc'] = 2;
-
-        $_SERVER['REQUEST_URI'] = '/pages/about';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        $superglobals = service('superglobals');
+        $superglobals->setServer('argv', ['index.php', 'pages/about']);
+        $superglobals->setServer('argc', 2);
+        $superglobals->setServer('REQUEST_URI', '/pages/about');
+        $superglobals->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router.
         $routes = service('routes');
@@ -262,11 +272,11 @@ final class CodeIgniterTest extends CIUnitTestCase
      */
     public function testControllersCanReturnDownloadResponseObject(): void
     {
-        $_SERVER['argv'] = ['index.php', 'pages/about'];
-        $_SERVER['argc'] = 2;
-
-        $_SERVER['REQUEST_URI'] = '/pages/about';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        service('superglobals')
+            ->setServer('argv', ['index.php', 'pages/about'])
+            ->setServer('argc', 2)
+            ->setServer('REQUEST_URI', '/pages/about')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router.
         $routes = service('routes');
@@ -287,11 +297,11 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunExecuteFilterByClassName(): void
     {
-        $_SERVER['argv'] = ['index.php', 'pages/about'];
-        $_SERVER['argc'] = 2;
-
-        $_SERVER['REQUEST_URI'] = '/pages/about';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        service('superglobals')
+            ->setServer('argv', ['index.php', 'pages/about'])
+            ->setServer('argc', 2)
+            ->setServer('REQUEST_URI', '/pages/about')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router.
         $routes = service('routes');
@@ -315,11 +325,11 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRegisterSameFilterTwiceWithDifferentArgument(): void
     {
-        $_SERVER['argv'] = ['index.php', 'pages/about'];
-        $_SERVER['argc'] = 2;
-
-        $_SERVER['REQUEST_URI'] = '/pages/about';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        service('superglobals')
+            ->setServer('argv', ['index.php', 'pages/about'])
+            ->setServer('argc', 2)
+            ->setServer('REQUEST_URI', '/pages/about')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         $routes = service('routes');
         $routes->add(
@@ -353,11 +363,11 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testDisableControllerFilters(): void
     {
-        $_SERVER['argv'] = ['index.php', 'pages/about'];
-        $_SERVER['argc'] = 2;
-
-        $_SERVER['REQUEST_URI'] = '/pages/about';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        service('superglobals')
+            ->setServer('argv', ['index.php', 'pages/about'])
+            ->setServer('argc', 2)
+            ->setServer('REQUEST_URI', '/pages/about')
+            ->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router.
         $routes = service('routes');
@@ -381,8 +391,9 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testResponseConfigEmpty(): void
     {
-        $_SERVER['argv'] = ['index.php', '/'];
-        $_SERVER['argc'] = 2;
+        service('superglobals')
+            ->setServer('argv', ['index.php', '/'])
+            ->setServer('argc', 2);
 
         $response = service('response', null, false);
 
@@ -391,8 +402,9 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRoutesIsEmpty(): void
     {
-        $_SERVER['argv'] = ['index.php', '/'];
-        $_SERVER['argc'] = 2;
+        service('superglobals')
+            ->setServer('argv', ['index.php', '/'])
+            ->setServer('argc', 2);
 
         // Inject mock router.
         $router = service('router', null, service('incomingrequest'), false);
@@ -407,10 +419,10 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testTransfersCorrectHTTPVersion(): void
     {
-        $_SERVER['argv'] = ['index.php', '/'];
-        $_SERVER['argc'] = 2;
-
-        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/2.0';
+        service('superglobals')
+            ->setServer('argv', ['index.php', '/'])
+            ->setServer('argc', 2)
+            ->setServer('SERVER_PROTOCOL', 'HTTP/2.0');
 
         ob_start();
         $this->codeigniter->run();
@@ -423,10 +435,10 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testSupportsHttp3(): void
     {
-        $_SERVER['argv'] = ['index.php', '/'];
-        $_SERVER['argc'] = 2;
-
-        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/3.0';
+        service('superglobals')
+            ->setServer('argv', ['index.php', '/'])
+            ->setServer('argc', 2)
+            ->setServer('SERVER_PROTOCOL', 'HTTP/3.0');
 
         ob_start();
         $this->codeigniter->run();
@@ -439,8 +451,9 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testIgnoringErrorSuppressedByAt(): void
     {
-        $_SERVER['argv'] = ['index.php', '/'];
-        $_SERVER['argc'] = 2;
+        service('superglobals')
+            ->setServer('argv', ['index.php', '/'])
+            ->setServer('argc', 2);
 
         ob_start();
         @unlink('inexistent-file');
@@ -452,8 +465,9 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunForceSecure(): void
     {
-        $_SERVER['argv'] = ['index.php', '/'];
-        $_SERVER['argc'] = 2;
+        service('superglobals')
+            ->setServer('argv', ['index.php', '/'])
+            ->setServer('argc', 2);
 
         $filterConfig                       = config(FiltersConfig::class);
         $filterConfig->required['before'][] = 'forcehttps';
@@ -478,11 +492,11 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunRedirectionWithNamed(): void
     {
-        $_SERVER['argv'] = ['index.php', 'example'];
-        $_SERVER['argc'] = 2;
+        service('superglobals')->setServer('argv', ['index.php', 'example']);
+        service('superglobals')->setServer('argc', 2);
 
-        $_SERVER['REQUEST_URI'] = '/example';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        service('superglobals')->setServer('REQUEST_URI', '/example');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router.
         $routes = service('routes');
@@ -502,11 +516,11 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunRedirectionWithURI(): void
     {
-        $_SERVER['argv'] = ['index.php', 'example'];
-        $_SERVER['argc'] = 2;
+        service('superglobals')->setServer('argv', ['index.php', 'example']);
+        service('superglobals')->setServer('argc', 2);
 
-        $_SERVER['REQUEST_URI'] = '/example';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        service('superglobals')->setServer('REQUEST_URI', '/example');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router.
         $routes = service('routes');
@@ -529,13 +543,13 @@ final class CodeIgniterTest extends CIUnitTestCase
      */
     public function testRunRedirectionWithGET(): void
     {
-        $_SERVER['argv'] = ['index.php', 'example'];
-        $_SERVER['argc'] = 2;
+        service('superglobals')->setServer('argv', ['index.php', 'example']);
+        service('superglobals')->setServer('argc', 2);
 
-        $_SERVER['REQUEST_URI']     = '/example';
-        $_SERVER['SCRIPT_NAME']     = '/index.php';
-        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
-        $_SERVER['REQUEST_METHOD']  = 'GET';
+        service('superglobals')->setServer('REQUEST_URI', '/example');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/1.1');
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         // Inject mock router.
         $routes = service('routes');
@@ -556,13 +570,13 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunRedirectionWithGETAndHTTPCode301(): void
     {
-        $_SERVER['argv'] = ['index.php', 'example'];
-        $_SERVER['argc'] = 2;
+        service('superglobals')->setServer('argv', ['index.php', 'example']);
+        service('superglobals')->setServer('argc', 2);
 
-        $_SERVER['REQUEST_URI']     = '/example';
-        $_SERVER['SCRIPT_NAME']     = '/index.php';
-        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
-        $_SERVER['REQUEST_METHOD']  = 'GET';
+        service('superglobals')->setServer('REQUEST_URI', '/example');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/1.1');
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         // Inject mock router.
         $routes = service('routes');
@@ -581,13 +595,13 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunRedirectionWithPOSTAndHTTPCode301(): void
     {
-        $_SERVER['argv'] = ['index.php', 'example'];
-        $_SERVER['argc'] = 2;
+        service('superglobals')->setServer('argv', ['index.php', 'example']);
+        service('superglobals')->setServer('argc', 2);
 
-        $_SERVER['REQUEST_URI']     = '/example';
-        $_SERVER['SCRIPT_NAME']     = '/index.php';
-        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
-        $_SERVER['REQUEST_METHOD']  = 'POST';
+        service('superglobals')->setServer('REQUEST_URI', '/example');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/1.1');
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
 
         // Inject mock router.
         $routes = service('routes');
@@ -606,8 +620,8 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testStoresPreviousURL(): void
     {
-        $_SERVER['argv'] = ['index.php', '/'];
-        $_SERVER['argc'] = 2;
+        service('superglobals')->setServer('argv', ['index.php', '/']);
+        service('superglobals')->setServer('argc', 2);
 
         // Inject mock router.
         $router = service('router', null, service('incomingrequest'), false);
@@ -623,13 +637,13 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testNotStoresPreviousURL(): void
     {
-        $_SERVER['argv'] = ['index.php', 'example'];
-        $_SERVER['argc'] = 2;
+        service('superglobals')->setServer('argv', ['index.php', 'example']);
+        service('superglobals')->setServer('argc', 2);
 
-        $_SERVER['REQUEST_URI']     = '/example';
-        $_SERVER['SCRIPT_NAME']     = '/index.php';
-        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
-        $_SERVER['REQUEST_METHOD']  = 'GET';
+        service('superglobals')->setServer('REQUEST_URI', '/example');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/1.1');
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
 
         // Inject mock router.
         $routes = service('routes');
@@ -647,11 +661,11 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testNotStoresPreviousURLByCheckingContentType(): void
     {
-        $_SERVER['argv'] = ['index.php', 'image'];
-        $_SERVER['argc'] = 2;
+        service('superglobals')->setServer('argv', ['index.php', 'image']);
+        service('superglobals')->setServer('argc', 2);
 
-        $_SERVER['REQUEST_URI'] = '/image';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        service('superglobals')->setServer('REQUEST_URI', '/image');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router.
         $routes = service('routes');
@@ -677,8 +691,8 @@ final class CodeIgniterTest extends CIUnitTestCase
      */
     public function testRunDefaultRoute(): void
     {
-        $_SERVER['argv'] = ['index.php', '/'];
-        $_SERVER['argc'] = 2;
+        service('superglobals')->setServer('argv', ['index.php', '/']);
+        service('superglobals')->setServer('argc', 2);
 
         ob_start();
         $this->codeigniter->run();
@@ -689,13 +703,13 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunCLIRoute(): void
     {
-        $_SERVER['argv'] = ['index.php', 'cli'];
-        $_SERVER['argc'] = 2;
+        service('superglobals')->setServer('argv', ['index.php', 'cli']);
+        service('superglobals')->setServer('argc', 2);
 
-        $_SERVER['REQUEST_URI']     = '/cli';
-        $_SERVER['SCRIPT_NAME']     = 'public/index.php';
-        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
-        $_SERVER['REQUEST_METHOD']  = 'CLI';
+        service('superglobals')->setServer('REQUEST_URI', '/cli');
+        service('superglobals')->setServer('SCRIPT_NAME', 'public/index.php');
+        service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/1.1');
+        service('superglobals')->setServer('REQUEST_METHOD', 'CLI');
 
         $routes = service('routes');
         $routes->cli('cli', '\Tests\Support\Controllers\Popcorn::index');
@@ -709,15 +723,15 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testSpoofRequestMethodCanUsePUT(): void
     {
-        $_SERVER['argv'] = ['index.php'];
-        $_SERVER['argc'] = 1;
+        service('superglobals')->setServer('argv', ['index.php']);
+        service('superglobals')->setServer('argc', 1);
 
-        $_SERVER['REQUEST_URI']     = '/';
-        $_SERVER['SCRIPT_NAME']     = '/index.php';
-        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
-        $_SERVER['REQUEST_METHOD']  = 'POST';
+        service('superglobals')->setServer('REQUEST_URI', '/');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/1.1');
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
 
-        $_POST['_method'] = Method::PUT;
+        service('superglobals')->setPost('_method', Method::PUT);
 
         $routes = service('routes');
         $routes->setDefaultNamespace('App\Controllers');
@@ -734,15 +748,15 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testSpoofRequestMethodCannotUseGET(): void
     {
-        $_SERVER['argv'] = ['index.php'];
-        $_SERVER['argc'] = 1;
+        service('superglobals')->setServer('argv', ['index.php']);
+        service('superglobals')->setServer('argc', 1);
 
-        $_SERVER['REQUEST_URI']     = '/';
-        $_SERVER['SCRIPT_NAME']     = '/index.php';
-        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
-        $_SERVER['REQUEST_METHOD']  = 'POST';
+        service('superglobals')->setServer('REQUEST_URI', '/');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')->setServer('SERVER_PROTOCOL', 'HTTP/1.1');
+        service('superglobals')->setServer('REQUEST_METHOD', 'POST');
 
-        $_POST['_method'] = 'GET';
+        service('superglobals')->setPost('_method', 'GET');
 
         $routes = service('routes');
         $routes->setDefaultNamespace('App\Controllers');
@@ -770,8 +784,8 @@ final class CodeIgniterTest extends CIUnitTestCase
         // Clear Page cache
         command('cache:clear');
 
-        $_SERVER['REQUEST_URI'] = '/test';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        service('superglobals')->setServer('REQUEST_URI', '/test');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
 
         $routes = service('routes');
         $routes->add('test', static function () {
@@ -848,9 +862,9 @@ final class CodeIgniterTest extends CIUnitTestCase
         // Generate request to each URL from the testing array
         foreach ($testingUrls as $testingUrl) {
             $this->resetServices();
-            $_SERVER['REQUEST_URI'] = '/' . $testingUrl;
-            $_SERVER['SCRIPT_NAME'] = '/index.php';
-            $this->codeigniter      = new MockCodeIgniter(new App());
+            service('superglobals')->setServer('REQUEST_URI', '/' . $testingUrl);
+            service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+            $this->codeigniter = new MockCodeIgniter(new App());
 
             $routes    = service('routes', true);
             $routePath = explode('?', $testingUrl)[0];
@@ -929,11 +943,11 @@ final class CodeIgniterTest extends CIUnitTestCase
      */
     public function testRunControllerNotFoundBeforeFilter(): void
     {
-        $_SERVER['argv'] = ['index.php'];
-        $_SERVER['argc'] = 1;
+        service('superglobals')->setServer('argv', ['index.php']);
+        service('superglobals')->setServer('argc', 1);
 
-        $_SERVER['REQUEST_URI'] = '/cannotFound';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        service('superglobals')->setServer('REQUEST_URI', '/cannotFound');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
 
         // Inject mock router.
         $routes = service('routes');
@@ -954,6 +968,15 @@ final class CodeIgniterTest extends CIUnitTestCase
     {
         $this->setPrivateProperty($this->codeigniter, 'benchmark', new Timer());
         $this->setPrivateProperty($this->codeigniter, 'controller', '\\' . Home::class);
+
+        // Set up the request and router
+        $request = service('incomingrequest');
+        $this->setPrivateProperty($this->codeigniter, 'request', $request);
+
+        $routes = service('routes');
+        $router = service('router', $routes, $request);
+        $this->setPrivateProperty($this->codeigniter, 'router', $router);
+
         $startController = self::getPrivateMethodInvoker($this->codeigniter, 'startController');
 
         $this->setPrivateProperty($this->codeigniter, 'method', '__invoke');
@@ -961,5 +984,313 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // No PageNotFoundException
         $this->assertTrue(true);
+    }
+
+    public function testRouteAttributeCacheIntegration(): void
+    {
+        service('superglobals')->setServer('argv', ['index.php', 'attribute/cached']);
+        service('superglobals')->setServer('argc', 2);
+
+        service('superglobals')->setServer('REQUEST_URI', '/attribute/cached');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
+
+        // Clear cache before test
+        cache()->clean();
+
+        // Inject mock router
+        $routes = service('routes');
+        $routes->get('attribute/cached', '\Tests\Support\Router\Controllers\AttributeController::cached');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        // First request - should cache
+        ob_start();
+        $this->codeigniter->run();
+        $output1 = ob_get_clean();
+
+        $this->assertStringContainsString('Cached content at', (string) $output1);
+
+        // Extract timestamp from first response
+        preg_match('/Cached content at (\d+)/', (string) $output1, $matches1);
+        $time1 = $matches1[1] ?? null;
+
+        // Wait a moment to ensure time would be different if not cached
+        sleep(1);
+
+        // Second request - should return cached version with same timestamp
+        $this->resetServices();
+        service('superglobals')->setServer('argv', ['index.php', 'attribute/cached']);
+        service('superglobals')->setServer('argc', 2);
+        service('superglobals')->setServer('REQUEST_URI', '/attribute/cached');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
+        $this->codeigniter = new MockCodeIgniter(new App());
+
+        $routes = service('routes');
+        $routes->get('attribute/cached', '\Tests\Support\Router\Controllers\AttributeController::cached');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->run();
+        $output2 = ob_get_clean();
+
+        preg_match('/Cached content at (\d+)/', (string) $output2, $matches2);
+        $time2 = $matches2[1] ?? null;
+
+        // Timestamps should be EXACTLY the same (cached response)
+        $this->assertSame($time1, $time2, 'Expected cached response with identical timestamp');
+
+        // Clear cache after test
+        cache()->clean();
+    }
+
+    public function testRouteAttributeFilterIntegration(): void
+    {
+        service('superglobals')->setServer('argv', ['index.php', 'attribute/filtered']);
+        service('superglobals')->setServer('argc', 2);
+
+        service('superglobals')->setServer('REQUEST_URI', '/attribute/filtered');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+
+        // Register the test filter
+        $filterConfig                                 = config('Filters');
+        $filterConfig->aliases['testAttributeFilter'] = TestAttributeFilter::class;
+        service('filters', $filterConfig);
+
+        // Inject mock router
+        $routes = service('routes');
+        $routes->get('attribute/filtered', '\Tests\Support\Router\Controllers\AttributeController::filtered');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->run();
+        $output = ob_get_clean();
+
+        // Verify filter ran before (modified request body) and after (appended to response)
+        $this->assertStringContainsString('Filtered: before_filter_ran:', (string) $output);
+        $this->assertStringContainsString(':after_filter_ran', (string) $output);
+    }
+
+    public function testRouteAttributeFilterWithParamsIntegration(): void
+    {
+        service('superglobals')->setServer('argv', ['index.php', 'attribute/filteredWithParams']);
+        service('superglobals')->setServer('argc', 2);
+
+        service('superglobals')->setServer('REQUEST_URI', '/attribute/filteredWithParams');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+
+        // Register the test filter
+        $filterConfig                                 = config('Filters');
+        $filterConfig->aliases['testAttributeFilter'] = TestAttributeFilter::class;
+        service('filters', $filterConfig);
+
+        // Inject mock router
+        $routes = service('routes');
+        $routes->get('attribute/filteredWithParams', '\Tests\Support\Router\Controllers\AttributeController::filteredWithParams');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->run();
+        $output = ob_get_clean();
+
+        // Verify filter ran before (modified request body) and after (appended to response)
+        $this->assertStringContainsString('Filtered: before_filter_ran(arg1,arg2):', (string) $output);
+        $this->assertStringContainsString(':after_filter_ran(arg1,arg2)', (string) $output);
+    }
+
+    public function testRouteAttributeRestrictIntegration(): void
+    {
+        service('superglobals')->setServer('argv', ['index.php', 'attribute/restricted']);
+        service('superglobals')->setServer('argc', 2);
+
+        service('superglobals')->setServer('REQUEST_URI', '/attribute/restricted');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+
+        // Inject mock router
+        $routes = service('routes');
+        $routes->get('attribute/restricted', '\Tests\Support\Router\Controllers\AttributeController::restricted');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->run();
+        $output = ob_get_clean();
+
+        // Should allow access since we're in the current ENVIRONMENT
+        $this->assertStringContainsString('Access granted', (string) $output);
+    }
+
+    public function testRouteAttributeRestrictThrowsException(): void
+    {
+        service('superglobals')->setServer('argv', ['index.php', 'attribute/restricted']);
+        service('superglobals')->setServer('argc', 2);
+
+        service('superglobals')->setServer('REQUEST_URI', '/attribute/shouldBeRestricted');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+
+        // Inject mock router
+        $routes = service('routes');
+        $routes->get('attribute/shouldBeRestricted', '\Tests\Support\Router\Controllers\AttributeController::shouldBeRestricted');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        // Should throw PageNotFoundException because we're not in 'production'
+        $this->expectException(PageNotFoundException::class);
+        $this->expectExceptionMessage('Access denied: Current environment is not allowed.');
+
+        $this->codeigniter->run();
+    }
+
+    public function testRouteAttributeMultipleAttributesIntegration(): void
+    {
+        service('superglobals')->setServer('argv', ['index.php', 'attribute/multiple']);
+        service('superglobals')->setServer('argc', 2);
+
+        service('superglobals')->setServer('REQUEST_URI', '/attribute/multiple');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+
+        // Register the test filter
+        $filterConfig                                 = config('Filters');
+        $filterConfig->aliases['testAttributeFilter'] = TestAttributeFilter::class;
+        service('filters', $filterConfig);
+
+        // Inject mock router
+        $routes = service('routes');
+        $routes->get('attribute/multiple', '\Tests\Support\Router\Controllers\AttributeController::multipleAttributes');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->run();
+        $output = ob_get_clean();
+
+        // Verify both Restrict and Filter attributes worked
+        $this->assertStringContainsString('Multiple: before_filter_ran:', (string) $output);
+        $this->assertStringContainsString(':after_filter_ran', (string) $output);
+    }
+
+    public function testRouteAttributeNoAttributesIntegration(): void
+    {
+        service('superglobals')->setServer('argv', ['index.php', 'attribute/none']);
+        service('superglobals')->setServer('argc', 2);
+
+        service('superglobals')->setServer('REQUEST_URI', '/attribute/none');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+
+        // Inject mock router
+        $routes = service('routes');
+        $routes->get('attribute/none', '\Tests\Support\Router\Controllers\AttributeController::noAttributes');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->run();
+        $output = ob_get_clean();
+
+        // Should work normally with no attribute processing
+        $this->assertStringContainsString('No attributes', (string) $output);
+    }
+
+    public function testRouteAttributeCustomCacheKeyIntegration(): void
+    {
+        service('superglobals')->setServer('argv', ['index.php', 'attribute/customkey']);
+        service('superglobals')->setServer('argc', 2);
+
+        service('superglobals')->setServer('REQUEST_URI', '/attribute/customkey');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
+
+        // Clear cache before test
+        cache()->clean();
+
+        // Inject mock router
+        $routes = service('routes');
+        $routes->get('attribute/customkey', '\Tests\Support\Router\Controllers\AttributeController::customCacheKey');
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        // First request
+        ob_start();
+        $this->codeigniter->run();
+        ob_get_clean();
+
+        // Verify custom cache key was used
+        $cached = cache('custom_cache_key');
+        $this->assertNotNull($cached);
+        $this->assertIsArray($cached);
+        $this->assertArrayHasKey('body', $cached);
+        $this->assertStringContainsString('Custom key content at', (string) $cached['body']);
+
+        // Clear cache after test
+        cache()->clean();
+    }
+
+    public function testRouteAttributesDisabledInConfig(): void
+    {
+        service('superglobals')->setServer('REQUEST_URI', '/attribute/filtered');
+        service('superglobals')->setServer('SCRIPT_NAME', '/index.php');
+        service('superglobals')->setServer('REQUEST_METHOD', 'GET');
+
+        // Disable route attributes in config BEFORE creating CodeIgniter instance
+        $routing                          = config('routing');
+        $routing->useControllerAttributes = false;
+        Factories::injectMock('config', 'routing', $routing);
+
+        // Register the test filter (even though attributes are disabled,
+        // we need it registered to avoid FilterException)
+        $filterConfig                                 = config('Filters');
+        $filterConfig->aliases['testAttributeFilter'] = TestAttributeFilter::class;
+        service('filters', $filterConfig);
+
+        $routes = service('routes');
+        $routes->setAutoRoute(false);
+
+        // We're testing that a route defined normally will work,
+        // but the attributes on the controller method won't be processed
+        $routes->get('attribute/filtered', '\Tests\Support\Router\Controllers\AttributeController::filtered');
+
+        $router = service('router', $routes, service('incomingrequest'));
+        Services::injectMock('router', $router);
+
+        $config      = new App();
+        $codeigniter = new MockCodeIgniter($config);
+
+        ob_start();
+        $codeigniter->run($routes);
+        $output = ob_get_clean();
+
+        // When useRouteAttributes is false, the filter attributes should NOT be processed
+        // So the filter should not have run
+        $this->assertStringNotContainsString('before_filter_ran', (string) $output);
+        $this->assertStringNotContainsString('after_filter_ran', (string) $output);
+        // But the controller method should still execute
+        $this->assertStringContainsString('Filtered', (string) $output);
+    }
+
+    public function testResetForWorkerMode(): void
+    {
+        $config      = new App();
+        $codeigniter = new MockCodeIgniter($config);
+
+        $this->setPrivateProperty($codeigniter, 'request', service('request'));
+        $this->setPrivateProperty($codeigniter, 'response', service('response'));
+        $this->setPrivateProperty($codeigniter, 'output', 'test output');
+
+        $this->assertNotNull($this->getPrivateProperty($codeigniter, 'request'));
+        $this->assertNotNull($this->getPrivateProperty($codeigniter, 'response'));
+        $this->assertNotNull($this->getPrivateProperty($codeigniter, 'output'));
+
+        $codeigniter->resetForWorkerMode();
+
+        $this->assertNull($this->getPrivateProperty($codeigniter, 'request'));
+        $this->assertNull($this->getPrivateProperty($codeigniter, 'response'));
+        $this->assertNull($this->getPrivateProperty($codeigniter, 'router'));
+        $this->assertNull($this->getPrivateProperty($codeigniter, 'controller'));
+        $this->assertNull($this->getPrivateProperty($codeigniter, 'method'));
+        $this->assertNull($this->getPrivateProperty($codeigniter, 'output'));
     }
 }

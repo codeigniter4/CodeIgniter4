@@ -21,9 +21,9 @@ use Generator;
  *
  * @see \CodeIgniter\Router\DefinedRouteCollectorTest
  */
-final class DefinedRouteCollector
+final readonly class DefinedRouteCollector
 {
-    public function __construct(private readonly RouteCollectionInterface $routeCollection)
+    public function __construct(private RouteCollectionInterface $routeCollection)
     {
     }
 

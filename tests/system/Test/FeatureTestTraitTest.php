@@ -22,12 +22,14 @@ use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
 use Config\Feature;
 use Config\Routing;
+use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @internal
  */
+#[BackupGlobals(true)]
 #[Group('DatabaseLive')]
 final class FeatureTestTraitTest extends CIUnitTestCase
 {

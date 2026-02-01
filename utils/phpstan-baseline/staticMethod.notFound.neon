@@ -1,7 +1,17 @@
-# total 20 errors
+# total 21 errors
 
 parameters:
     ignoreErrors:
+        -
+            message: '#^Call to an undefined static method UnitEnum\:\:tryFrom\(\)\.$#'
+            count: 1
+            path: ../../system/DataCaster/Cast/EnumCast.php
+
+        -
+            message: '#^Call to an undefined static method UnitEnum\:\:tryFrom\(\)\.$#'
+            count: 2
+            path: ../../system/Entity/Cast/EnumCast.php
+
         -
             message: '#^Call to an undefined static method CodeIgniter\\Config\\Factories\:\:cells\(\)\.$#'
             count: 1
@@ -21,16 +31,6 @@ parameters:
             message: '#^Call to an undefined static method CodeIgniter\\Config\\Factories\:\:widgets\(\)\.$#'
             count: 13
             path: ../../tests/system/Config/FactoriesTest.php
-
-        -
-            message: '#^Call to an undefined static method Tests\\Support\\Config\\Services\:\:SeSsIoN\(\)\.$#'
-            count: 1
-            path: ../../tests/system/Config/ServicesTest.php
-
-        -
-            message: '#^Call to an undefined static method Tests\\Support\\Config\\Services\:\:SeSsIoNs\(\)\.$#'
-            count: 1
-            path: ../../tests/system/Config/ServicesTest.php
 
         -
             message: '#^Call to an undefined static method Tests\\Support\\Config\\Services\:\:redirectResponse\(\)\.$#'

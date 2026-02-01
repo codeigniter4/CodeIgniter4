@@ -15,6 +15,7 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Exceptions\RuntimeException;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
 use Encryption;
@@ -56,6 +57,8 @@ final class BaseConfigTest extends CIUnitTestCase
         }
 
         BaseConfig::reset();
+
+        Services::injectMock('superglobals', new Superglobals());
     }
 
     protected function tearDown(): void
@@ -198,7 +201,8 @@ final class BaseConfigTest extends CIUnitTestCase
     public function testSetsDefaultValuesEncryptionUsingHex2Bin(): void
     {
         putenv('encryption.key');
-        unset($_ENV['encryption.key'], $_SERVER['encryption.key']); // @phpstan-ignore codeigniter.superglobalAccess
+        unset($_ENV['encryption.key']);
+        service('superglobals')->unsetServer('encryption.key');
 
         $dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
         $dotenv->load();
@@ -214,7 +218,8 @@ final class BaseConfigTest extends CIUnitTestCase
     public function testSetDefaultValuesEncryptionUsingBase64(): void
     {
         putenv('encryption.key');
-        unset($_ENV['encryption.key'], $_SERVER['encryption.key']); // @phpstan-ignore codeigniter.superglobalAccess
+        unset($_ENV['encryption.key']);
+        service('superglobals')->unsetServer('encryption.key');
 
         $dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');
         $dotenv->load();

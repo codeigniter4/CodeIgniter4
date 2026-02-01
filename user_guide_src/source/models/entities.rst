@@ -40,8 +40,6 @@ Assume you have a database table named ``users`` that has the following schema::
     password    - string
     created_at  - datetime
 
-.. important:: ``attributes`` is a reserved word for internal use. Prior to v4.4.0, if you use it as a column name, the Entity does not work correctly.
-
 Create the Entity Class
 =======================
 
@@ -258,10 +256,11 @@ Scalar Type Casting
 -------------------
 
 Properties can be cast to any of the following data types:
-**integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, **timestamp**, **uri** and **int-bool**.
+**integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, **timestamp**, **uri**, **int-bool** and **enum**.
 Add a question mark at the beginning of type to mark property as nullable, i.e., **?string**, **?integer**.
 
 .. note:: **int-bool** can be used since v4.3.0.
+.. note:: **enum** can be used since v4.7.0.
 
 For example, if you had a User entity with an ``is_banned`` property, you can cast it as a boolean:
 
@@ -303,6 +302,34 @@ Stored in the database as "red,yellow,green":
 .. literalinclude:: entities/016.php
 
 .. note:: Casting as CSV uses PHP's internal ``implode`` and ``explode`` methods and assumes all values are string-safe and free of commas. For more complex data casts try ``array`` or ``json``.
+
+Enum Casting
+------------
+
+.. versionadded:: 4.7.0
+
+You can cast properties to PHP enums. You must specify the enum class name as a parameter.
+
+Enum casting supports:
+
+* **Backed enums** (string or int) - The backing value is stored in the database
+* **Unit enums** - The case name is stored in the database as a string
+
+For example, if you had a User entity with a ``status`` property using a backed enum:
+
+.. literalinclude:: entities/024.php
+
+You can cast it in your Entity:
+
+.. literalinclude:: entities/025.php
+
+Now, when you access the ``status`` property, it will automatically be converted to a ``UserStatus`` enum instance:
+
+.. literalinclude:: entities/026.php
+
+For nullable enums:
+
+.. literalinclude:: entities/027.php
 
 Custom Casting
 --------------
@@ -349,3 +376,24 @@ attribute to check:
 Or to check the whole entity for changed values omit the parameter:
 
 .. literalinclude:: entities/023.php
+
+Deep Change Tracking
+====================
+
+.. versionadded:: 4.7.0
+
+The Entity class performs **deep comparison** for objects and arrays to accurately detect changes in their internal state.
+
+Scalar Values
+-------------
+
+For scalar values (strings, integers, floats, booleans, null), the Entity uses direct comparison. When all attributes
+in an Entity are scalars, an optimized comparison is used for better performance.
+
+Objects and Arrays
+------------------
+
+For objects and arrays, the Entity JSON-encodes and normalizes the values for comparison. This means that modifications
+to nested structures, object properties, array elements, nested entities (using ``toRawArray()``), enums (``BackedEnum``
+and ``UnitEnum``), datetime objects (``DateTimeInterface``), collections (``Traversable``), value objects with
+``__toString()``, and objects implementing ``JsonSerializable`` or ``toArray()`` will be properly detected.

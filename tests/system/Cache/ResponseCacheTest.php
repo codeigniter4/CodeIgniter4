@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache;
 
+use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -20,6 +21,7 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCache;
 use Config\App;
@@ -35,6 +37,13 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('Others')]
 final class ResponseCacheTest extends CIUnitTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Services::injectMock('superglobals', new Superglobals());
+    }
+
     /**
      * @param array<string, string> $query
      */
@@ -58,7 +67,7 @@ final class ResponseCacheTest extends CIUnitTestCase
      */
     private function createCLIRequest(array $params = [], App $app = new App()): CLIRequest
     {
-        $_SERVER['argv'] = ['public/index.php', ...$params];
+        service('superglobals')->setServer('argv', ['public/index.php', ...$params]);
 
         $superglobals = service('superglobals');
         $superglobals->setServer('SCRIPT_NAME', 'public/index.php');
@@ -105,6 +114,23 @@ final class ResponseCacheTest extends CIUnitTestCase
         // Check cache with another request with the different URI path.
         $cachedResponse = $pageCache->get($this->createIncomingRequest('another'), new Response(new App()));
         $this->assertNotInstanceOf(ResponseInterface::class, $cachedResponse);
+    }
+
+    public function testCachePageIncomingRequestWithStatus(): void
+    {
+        $pageCache = $this->createResponseCache();
+
+        $response = new Response(new App());
+        $response->setStatusCode(432, 'Foo Bar');
+        $response->setBody('The response body.');
+
+        $this->assertTrue($pageCache->make($this->createIncomingRequest('foo/bar'), $response));
+
+        // Check cached response status
+        $cachedResponse = $pageCache->get($this->createIncomingRequest('foo/bar'), new Response(new App()));
+        $this->assertInstanceOf(ResponseInterface::class, $cachedResponse);
+        $this->assertSame(432, $cachedResponse->getStatusCode());
+        $this->assertSame('Foo Bar', $cachedResponse->getReasonPhrase());
     }
 
     public function testCachePageIncomingRequestWithCacheQueryString(): void

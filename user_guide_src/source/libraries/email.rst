@@ -39,7 +39,7 @@ Here is a basic example demonstrating how you might send email:
 Setting Email Preferences
 =========================
 
-There are 21 different preferences available to tailor how your email
+There are 22 different preferences available to tailor how your email
 messages are sent. You can either set them manually as described here,
 or automatically via preferences stored in your config file, described
 in `Email Preferences`_.
@@ -120,6 +120,7 @@ Preference          Default Value       Options                      Description
                                         or ``smtp``
 **mailPath**        /usr/sbin/sendmail                               The server path to Sendmail.
 **SMTPHost**                                                         SMTP Server Hostname.
+**SMTPAuthMethod**  login               ``login``, ``plain``         SMTP Authentication Method. (Available since 4.7.0)
 **SMTPUser**                                                         SMTP Username.
 **SMTPPass**                                                         SMTP Password.
 **SMTPPort**        25                                               SMTP Port. (If set to ``465``, TLS will be used for the connection

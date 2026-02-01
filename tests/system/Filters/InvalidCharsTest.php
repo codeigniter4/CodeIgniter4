@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
+use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Security\Exceptions\SecurityException;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -37,9 +39,7 @@ final class InvalidCharsTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $_GET    = [];
-        $_POST   = [];
-        $_COOKIE = [];
+        Services::injectMock('superglobals', new Superglobals(null, [], [], []));
 
         $this->request      = $this->createRequest();
         $this->invalidChars = new InvalidChars();
@@ -49,9 +49,10 @@ final class InvalidCharsTest extends CIUnitTestCase
     {
         parent::tearDown();
 
-        $_GET    = [];
-        $_POST   = [];
-        $_COOKIE = [];
+        $superglobals = service('superglobals');
+        $superglobals->setGetArray([]);
+        $superglobals->setPostArray([]);
+        $superglobals->setCookieArray([]);
     }
 
     private function createRequest(): IncomingRequest
@@ -79,10 +80,11 @@ final class InvalidCharsTest extends CIUnitTestCase
     #[DoesNotPerformAssertions]
     public function testBeforeValidString(): void
     {
-        $_POST['val'] = [
+        $superglobals = service('superglobals');
+        $superglobals->setPost('val', [
             'valid string',
-        ];
-        $_COOKIE['val'] = 'valid string';
+        ]);
+        $superglobals->setCookie('val', 'valid string');
 
         $this->invalidChars->before($this->request);
     }
@@ -92,11 +94,11 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('Invalid UTF-8 characters in post:');
 
-        $sjisString   = mb_convert_encoding('SJISの文字列です。', 'SJIS');
-        $_POST['val'] = [
+        $sjisString = mb_convert_encoding('SJISの文字列です。', 'SJIS');
+        service('superglobals')->setPost('val', [
             'valid string',
             $sjisString,
-        ];
+        ]);
 
         $this->invalidChars->before($this->request);
     }
@@ -107,7 +109,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->expectExceptionMessage('Invalid Control characters in cookie:');
 
         $stringWithNullChar = "String contains null char and line break.\0\n";
-        $_COOKIE['val']     = $stringWithNullChar;
+        service('superglobals')->setCookie('val', $stringWithNullChar);
 
         $this->invalidChars->before($this->request);
     }
@@ -116,7 +118,7 @@ final class InvalidCharsTest extends CIUnitTestCase
     #[DoesNotPerformAssertions]
     public function testCheckControlStringWithLineBreakAndTabReturnsTheString(string $input): void
     {
-        $_GET['val'] = $input;
+        service('superglobals')->setGet('val', $input);
 
         $this->invalidChars->before($this->request);
     }
@@ -138,7 +140,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('Invalid Control characters in get:');
 
-        $_GET['val'] = $input;
+        service('superglobals')->setGet('val', $input);
 
         $this->invalidChars->before($this->request);
     }

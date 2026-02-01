@@ -98,7 +98,7 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
 
         $this->traverseNodesWithCallable(
             $node->stmts,
-            function (Node $subNode) {
+            function (Node $subNode): null {
                 if ($subNode instanceof Variable || $subNode instanceof ClassMethod || $subNode instanceof Function_ || $subNode instanceof Closure) {
                     $this->processRenameVariable($subNode);
                 }

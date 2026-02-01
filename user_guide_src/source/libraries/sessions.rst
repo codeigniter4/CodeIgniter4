@@ -29,9 +29,7 @@ The ``$config`` parameter is optional - your application configuration.
 If not provided, the services register will instantiate your default
 one.
 
-Once loaded, the Sessions library object will be available using::
-
-    $session
+Once loaded, the Sessions library object will be available using ``$session``.
 
 Alternatively, you can use the helper function that will use the default
 configuration options. This version is a little friendlier to read,
@@ -118,7 +116,8 @@ Retrieving Session Data
 =======================
 
 Any piece of information from the session array is available through the
-``$_SESSION`` superglobal:
+``$_SESSION`` superglobal. For example, to assign a previously stored ``name`` item to the ``$name``
+variable, you will do this:
 
 .. literalinclude:: sessions/004.php
 
@@ -133,12 +132,6 @@ Or through the magic getter:
 Or even through the session helper method:
 
 .. literalinclude:: sessions/007.php
-
-Where ``item`` is the array key corresponding to the item you wish to fetch.
-For example, to assign a previously stored ``name`` item to the ``$name``
-variable, you will do this:
-
-.. literalinclude:: sessions/008.php
 
 .. note:: The ``get()`` method returns null if the item you are trying
     to access does not exist.
@@ -191,7 +184,7 @@ Pushing New Value to Session Data
 =================================
 
 The ``push()`` method is used to push a new value onto a session value that is an array.
-For instance, if the ``hobbies`` key contains an array of hobbies, you can add a new value onto the array like so:
+For instance, if the ``hobbies`` key contains an array of hobbies, you can add a new value or replace the previous value onto the array like so:
 
 .. literalinclude:: sessions/015.php
 
@@ -397,21 +390,6 @@ All session data (including flashdata and tempdata) will be destroyed permanentl
 .. note:: You do not have to call this method from usual code. Cleanup session
     data rather than destroying the session.
 
-.. _session-stop:
-
-stop()
-------
-
-.. deprecated:: 4.3.5
-
-The session class also has the ``stop()`` method.
-
-.. warning:: Prior to v4.3.5, this method did not destroy the session due to a bug.
-
-Starting with v4.3.5, this method has been modified to destroy the session.
-However, it is deprecated because it is exactly the same as the ``destroy()``
-method. Use the ``destroy()`` method instead.
-
 Accessing Session Metadata
 ==========================
 
@@ -453,7 +431,7 @@ Preference                     Default                                      Opti
 **cookieName**          ci_session                                   [A-Za-z\_-] characters only                       The name used for the session cookie.
 **expiration**          7200 (2 hours)                               Time in seconds (integer)                         The number of seconds you would like the session to last.
                                                                                                                        If you would like a non-expiring session (until browser is closed) set the value to zero: 0
-**savePath**            null                                         None                                              Specifies the storage location, depends on the driver being used.
+**savePath**            WRITEPATH . 'session'                        None                                              Specifies the storage location, depends on the driver being used.
 **matchIP**             false                                        true/false (boolean)                              Whether to validate the user's IP address when reading the session cookie.
                                                                                                                        Note that some ISPs dynamically changes the IP, so if you want a non-expiring session you
                                                                                                                        will likely set this to false.
@@ -553,6 +531,10 @@ Instead, you should do something like this, depending on your environment:
     chmod 0700 /<path to your application directory>/writable/sessions/
     chown www-data /<path to your application directory>/writable/sessions/
 
+The `built-in mechanism <https://www.php.net/manual/ru/session.configuration.php#ini.session.gc-probability>`_ for automatically clearing expired sessions may not run often,
+and you will notice that the *saveDir* directory may be overflowing with files.
+To solve this problem, you will need to configure the **cron** or **Task Scheduler** to delete outdated files.
+
 Bonus Tip
 ---------
 
@@ -609,10 +591,10 @@ And then of course, create the database table.
 For MySQL::
 
     CREATE TABLE IF NOT EXISTS `ci_sessions` (
-        `id` varchar(128) NOT null,
-        `ip_address` varchar(45) NOT null,
-        `timestamp` timestamp DEFAULT CURRENT_TIMESTAMP NOT null,
-        `data` blob NOT null,
+        `id` varchar(128) NOT NULL,
+        `ip_address` varchar(45) NOT NULL,
+        `timestamp` timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        `data` blob NOT NULL,
         KEY `ci_sessions_timestamp` (`timestamp`)
     );
 

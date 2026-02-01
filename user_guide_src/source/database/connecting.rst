@@ -94,12 +94,12 @@ Reconnecting / Keeping the Connection Alive
 
 If the database server's idle timeout is exceeded while you're doing
 some heavy PHP lifting (processing an image, for instance), you should
-consider pinging the server by using the ``reconnect()`` method before
-sending further queries, which can gracefully keep the connection alive
-or re-establish it.
+consider calling the ``reconnect()`` method before sending further queries,
+which can gracefully keep the connection alive or re-establish it.
 
-.. important:: If you are using MySQLi database driver, the ``reconnect()`` method
-    does not ping the server but it closes the connection then connects again.
+The ``reconnect()`` method pings the server to check if the connection is still
+alive. If the connection has been lost, it will close and re-establish the
+connection.
 
 .. literalinclude:: connecting/007.php
     :lines: 2-

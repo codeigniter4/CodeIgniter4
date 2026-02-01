@@ -244,6 +244,8 @@ Preference           Default      Options       Description
                                                 table is always created in the default database group
                                                 (``$defaultGroup``).
 **timestampFormat**  Y-m-d-His\_                The format to use for timestamps when creating a migration.
+**lock**             false        true / false  Enable distributed locking to prevent concurrent migrations
+                                                in multi-process environments (e.g., Kubernetes).
 ==================== ============ ============= =============================================================
 
 ***************

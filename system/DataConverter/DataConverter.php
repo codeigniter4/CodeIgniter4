@@ -24,12 +24,12 @@ use CodeIgniter\Entity\Entity;
  *
  * @see \CodeIgniter\DataConverter\DataConverterTest
  */
-final class DataConverter
+final readonly class DataConverter
 {
     /**
      * The data caster.
      */
-    private readonly DataCaster $dataCaster;
+    private DataCaster $dataCaster;
 
     /**
      * @param array<string, class-string> $castHandlers Custom convert handlers
@@ -42,26 +42,26 @@ final class DataConverter
          *
          * @var array<string, string> [column => type]
          */
-        private readonly array $types,
+        private array $types,
         array $castHandlers = [],
         /**
          * Helper object.
          */
-        private readonly ?object $helper = null,
+        private ?object $helper = null,
         /**
          * Static reconstruct method name or closure to reconstruct an object.
          * Used by reconstruct().
          *
          * @var (Closure(array<string, mixed>): TEntity)|string|null
          */
-        private readonly Closure|string|null $reconstructor = 'reconstruct',
+        private Closure|string|null $reconstructor = 'reconstruct',
         /**
          * Extract method name or closure to extract data from an object.
          * Used by extract().
          *
          * @var (Closure(TEntity, bool, bool): array<string, mixed>)|string|null
          */
-        private readonly Closure|string|null $extractor = null,
+        private Closure|string|null $extractor = null,
     ) {
         $this->dataCaster = new DataCaster($castHandlers, $types, $this->helper);
     }

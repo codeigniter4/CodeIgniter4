@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Config\Services;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use PHPUnit\Framework\Attributes\BackupGlobals;
@@ -32,16 +34,16 @@ final class RequestTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->request = new Request(new App());
+        Services::injectMock('superglobals', new Superglobals(null, [], []));
 
-        $_POST = [];
-        $_GET  = [];
+        $this->request = new Request(new App());
     }
 
     public function testFetchGlobalsSingleValue(): void
     {
-        $_POST['foo'] = 'bar';
-        $_GET['bar']  = 'baz';
+        service('superglobals')
+            ->setPost('foo', 'bar')
+            ->setGet('bar', 'baz');
 
         $this->assertSame('bar', $this->request->fetchGlobal('post', 'foo'));
         $this->assertSame('baz', $this->request->fetchGlobal('get', 'bar'));
@@ -557,9 +559,9 @@ final class RequestTest extends CIUnitTestCase
 
     public function testGetIPAddressNormal(): void
     {
-        $expected               = '123.123.123.123';
-        $_SERVER['REMOTE_ADDR'] = $expected;
-        $this->request          = new Request(new App());
+        $expected = '123.123.123.123';
+        service('superglobals')->setServer('REMOTE_ADDR', $expected);
+        $this->request = new Request(new App());
         $this->assertSame($expected, $this->request->getIPAddress());
         // call a second time to exercise the initial conditional block in getIPAddress()
         $this->assertSame($expected, $this->request->getIPAddress());
@@ -567,9 +569,10 @@ final class RequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxy(): void
     {
-        $expected                        = '123.123.123.123';
-        $_SERVER['REMOTE_ADDR']          = '10.0.1.200';
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
+        $expected = '123.123.123.123';
+        service('superglobals')
+            ->setServer('REMOTE_ADDR', '10.0.1.200')
+            ->setServer('HTTP_X_FORWARDED_FOR', $expected);
 
         $config           = new App();
         $config->proxyIPs = [
@@ -586,11 +589,12 @@ final class RequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxyInvalid(): void
     {
-        $expected                        = '123.456.23.123';
-        $_SERVER['REMOTE_ADDR']          = '10.0.1.200';
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
-        $config                          = new App();
-        $config->proxyIPs                = [
+        $expected = '123.456.23.123';
+        service('superglobals')
+            ->setServer('REMOTE_ADDR', '10.0.1.200')
+            ->setServer('HTTP_X_FORWARDED_FOR', $expected);
+        $config           = new App();
+        $config->proxyIPs = [
             '10.0.1.200'     => 'X-Forwarded-For',
             '192.168.5.0/24' => 'X-Forwarded-For',
         ];
@@ -604,9 +608,10 @@ final class RequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxyNotWhitelisted(): void
     {
-        $expected                        = '123.456.23.123';
-        $_SERVER['REMOTE_ADDR']          = '10.10.1.200';
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
+        $expected = '123.456.23.123';
+        service('superglobals')
+            ->setServer('REMOTE_ADDR', '10.10.1.200')
+            ->setServer('HTTP_X_FORWARDED_FOR', $expected);
 
         $config           = new App();
         $config->proxyIPs = [
@@ -622,9 +627,10 @@ final class RequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxySubnet(): void
     {
-        $expected                        = '123.123.123.123';
-        $_SERVER['REMOTE_ADDR']          = '192.168.5.21';
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
+        $expected = '123.123.123.123';
+        service('superglobals')
+            ->setServer('REMOTE_ADDR', '192.168.5.21')
+            ->setServer('HTTP_X_FORWARDED_FOR', $expected);
 
         $config           = new App();
         $config->proxyIPs = ['192.168.5.0/24' => 'X-Forwarded-For'];
@@ -638,9 +644,10 @@ final class RequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxyOutofSubnet(): void
     {
-        $expected                        = '123.123.123.123';
-        $_SERVER['REMOTE_ADDR']          = '192.168.5.21';
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
+        $expected = '123.123.123.123';
+        service('superglobals')
+            ->setServer('REMOTE_ADDR', '192.168.5.21')
+            ->setServer('HTTP_X_FORWARDED_FOR', $expected);
 
         $config           = new App();
         $config->proxyIPs = ['192.168.5.0/28' => 'X-Forwarded-For'];

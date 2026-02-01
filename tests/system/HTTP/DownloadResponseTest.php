@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use DateTime;
 use DateTimeZone;
@@ -33,12 +35,14 @@ final class DownloadResponseTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        Services::injectMock('superglobals', new Superglobals());
     }
 
     protected function tearDown(): void
     {
-        if (isset($_SERVER['HTTP_USER_AGENT'])) {
-            unset($_SERVER['HTTP_USER_AGENT']);
+        if (service('superglobals')->server('HTTP_USER_AGENT') !== null) {
+            service('superglobals')->unsetServer('HTTP_USER_AGENT');
         }
     }
 
@@ -286,8 +290,8 @@ final class DownloadResponseTest extends CIUnitTestCase
 
     public function testFileExtensionIsUpperCaseWhenAndroidOSIs2(): void
     {
-        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Linux; U; Android 2.0.3; ja-jp; SC-02C Build/IML74K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30';
-        $response                   = new DownloadResponse('unit-test.php', false);
+        service('superglobals')->setServer('HTTP_USER_AGENT', 'Mozilla/5.0 (Linux; U; Android 2.0.3; ja-jp; SC-02C Build/IML74K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30');
+        $response = new DownloadResponse('unit-test.php', false);
 
         $response->setFilePath(__FILE__);
         $response->buildHeaders();

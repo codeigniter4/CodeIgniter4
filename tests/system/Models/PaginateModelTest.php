@@ -86,7 +86,7 @@ final class PaginateModelTest extends LiveModelTestCase
 
     public function testMultiplePager(): void
     {
-        $_GET = [];
+        service('superglobals')->setGetArray([]);
 
         $validModel = $this->createModel(ValidModel::class);
         $userModel  = $this->createModel(UserModel::class);

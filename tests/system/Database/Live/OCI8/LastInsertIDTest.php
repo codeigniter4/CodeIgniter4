@@ -79,7 +79,7 @@ final class LastInsertIDTest extends CIUnitTestCase
 
     public function testGetInsertIDWithPreparedQuery(): void
     {
-        $query = $this->db->prepare(static function ($db) {
+        $query = $this->db->prepare(static function ($db): Query {
             $sql = 'INSERT INTO "db_job" ("name", "description") VALUES (?, ?)';
 
             return (new Query($db))->setQuery($sql);

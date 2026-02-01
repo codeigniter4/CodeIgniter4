@@ -31,6 +31,7 @@ use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
+use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
@@ -38,6 +39,7 @@ use Rector\PHPUnit\CodeQuality\Rector\FuncCall\AssertFuncCallToPHPUnitAssertRect
 use Rector\PHPUnit\CodeQuality\Rector\StmtsAwareInterface\DeclareStrictTypesTestsRector;
 use Rector\Privatization\Rector\Class_\FinalizeTestCaseClassRector;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
+use Rector\Renaming\Rector\ConstFetch\RenameConstantRector;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\TypeDeclaration\Rector\ArrowFunction\AddArrowFunctionReturnTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddMethodCallBasedStrictParamTypeRector;
@@ -52,7 +54,7 @@ use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return RectorConfig::configure()
-    ->withPhpSets(php81: true)
+    ->withPhpSets(php82: true)
     ->withPreparedSets(deadCode: true, instanceOf: true, phpunitCodeQuality: true)
     ->withComposerBased(phpunit: true)
     ->withParallel(120, 8, 10)
@@ -104,6 +106,11 @@ return RectorConfig::configure()
             // @TODO remove if deprecated $config is removed
             __DIR__ . '/system/HTTP/Request.php',
             __DIR__ . '/system/HTTP/Response.php',
+        ],
+
+        // Exclude test file because `is_cli()` is mocked and Rector might remove needed parameters.
+        RemoveExtraParametersRector::class => [
+            __DIR__ . '/tests/system/Debug/ToolbarTest.php',
         ],
 
         // check on constant compare
@@ -214,5 +221,8 @@ return RectorConfig::configure()
         TypedPropertyFromAssignsRector::class,
         ClosureReturnTypeRector::class,
         AddArrowFunctionReturnTypeRector::class,
+    ])
+    ->withConfiguredRule(RenameConstantRector::class, [
+        'FILTER_DEFAULT' => 'FILTER_UNSAFE_RAW',
     ])
     ->withCodeQualityLevel(61);

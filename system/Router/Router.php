@@ -19,11 +19,16 @@ use CodeIgniter\HTTP\Exceptions\BadRequestException;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Router\Attributes\Filter;
+use CodeIgniter\Router\Attributes\RouteAttributeInterface;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
 use Config\Feature;
 use Config\Routing;
+use ReflectionClass;
+use Throwable;
 
 /**
  * Request router.
@@ -132,6 +137,13 @@ class Router implements RouterInterface
     protected ?AutoRouterInterface $autoRouter = null;
 
     /**
+     * Route attributes collected during routing for the current route.
+     *
+     * @var array{class: list<RouteAttributeInterface>, method: list<RouteAttributeInterface>}
+     */
+    protected array $routeAttributes = ['class' => [], 'method' => []];
+
+    /**
      * Permitted URI chars
      *
      * The default value is `''` (do not check) for backward compatibility.
@@ -155,7 +167,7 @@ class Router implements RouterInterface
         $this->controller = $this->collection->getDefaultController();
         $this->method     = $this->collection->getDefaultMethod();
 
-        $this->collection->setHTTPVerb($request->getMethod() === '' ? $_SERVER['REQUEST_METHOD'] : $request->getMethod());
+        $this->collection->setHTTPVerb($request->getMethod() === '' ? service('superglobals')->server('REQUEST_METHOD') : $request->getMethod());
 
         $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
 
@@ -215,6 +227,8 @@ class Router implements RouterInterface
                 $this->filtersInfo = $this->collection->getFiltersForRoute($this->matchedRoute[0]);
             }
 
+            $this->processRouteAttributes();
+
             return $this->controller;
         }
 
@@ -230,6 +244,8 @@ class Router implements RouterInterface
         // Checks auto routes
         $this->autoRoute($uri);
 
+        $this->processRouteAttributes();
+
         return $this->controllerName();
     }
 
@@ -240,7 +256,18 @@ class Router implements RouterInterface
      */
     public function getFilters(): array
     {
-        return $this->filtersInfo;
+        $filters = $this->filtersInfo;
+
+        // Check for attribute-based filters
+        foreach ($this->routeAttributes as $attributes) {
+            foreach ($attributes as $attribute) {
+                if ($attribute instanceof Filter) {
+                    $filters = array_merge($filters, $attribute->getFilters());
+                }
+            }
+        }
+
+        return $filters;
     }
 
     /**
@@ -743,5 +770,127 @@ class Router implements RouterInterface
                 );
             }
         }
+    }
+
+    /**
+     * Extracts PHP attributes from the resolved controller and method.
+     */
+    private function processRouteAttributes(): void
+    {
+        $this->routeAttributes = ['class' => [], 'method' => []];
+
+        // Skip if controller attributes are disabled in config
+        if (config('routing')->useControllerAttributes === false) {
+            return;
+        }
+
+        // Skip if controller is a Closure
+        if ($this->controller instanceof Closure) {
+            return;
+        }
+
+        if (! class_exists($this->controller)) {
+            return;
+        }
+
+        $reflectionClass = new ReflectionClass($this->controller);
+
+        // Process class-level attributes
+        foreach ($reflectionClass->getAttributes() as $attribute) {
+            try {
+                $instance = $attribute->newInstance();
+
+                if ($instance instanceof RouteAttributeInterface) {
+                    $this->routeAttributes['class'][] = $instance;
+                }
+            } catch (Throwable) {
+                log_message('error', 'Failed to instantiate attribute: ' . $attribute->getName());
+            }
+        }
+
+        if ($this->method === '' || $this->method === null) {
+            return;
+        }
+
+        // Process method-level attributes
+        if ($reflectionClass->hasMethod($this->method)) {
+            $reflectionMethod = $reflectionClass->getMethod($this->method);
+
+            foreach ($reflectionMethod->getAttributes() as $attribute) {
+                try {
+                    $instance = $attribute->newInstance();
+
+                    if ($instance instanceof RouteAttributeInterface) {
+                        $this->routeAttributes['method'][] = $instance;
+                    }
+                } catch (Throwable) {
+                    // Skip attributes that fail to instantiate
+                    log_message('error', 'Failed to instantiate attribute: ' . $attribute->getName());
+                }
+            }
+        }
+    }
+
+    /**
+     * Execute beforeController() on all route attributes.
+     * Called by CodeIgniter before controller execution.
+     */
+    public function executeBeforeAttributes(RequestInterface $request): RequestInterface|ResponseInterface|null
+    {
+        // Process class-level attributes first, then method-level
+        foreach (['class', 'method'] as $level) {
+            foreach ($this->routeAttributes[$level] as $attribute) {
+                if (! $attribute instanceof RouteAttributeInterface) {
+                    continue;
+                }
+
+                $result = $attribute->before($request);
+
+                // If attribute returns a Response, short-circuit
+                if ($result instanceof ResponseInterface) {
+                    return $result;
+                }
+
+                // If attribute returns a Request, use it
+                if ($result instanceof RequestInterface) {
+                    $request = $result;
+                }
+            }
+        }
+
+        return $request;
+    }
+
+    /**
+     * Execute afterController() on all route attributes.
+     * Called by CodeIgniter after controller execution.
+     */
+    public function executeAfterAttributes(RequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        // Process in reverse order: method-level first, then class-level
+        foreach (array_reverse(['class', 'method']) as $level) {
+            foreach ($this->routeAttributes[$level] as $attribute) {
+                if ($attribute instanceof RouteAttributeInterface) {
+                    $result = $attribute->after($request, $response);
+
+                    if ($result instanceof ResponseInterface) {
+                        $response = $result;
+                    }
+                }
+            }
+        }
+
+        return $response;
+    }
+
+    /**
+     * Returns the route attributes collected during routing
+     * for the current route.
+     *
+     * @return array{class: list<string>, method: list<string>}
+     */
+    public function getRouteAttributes(): array
+    {
+        return $this->routeAttributes;
     }
 }

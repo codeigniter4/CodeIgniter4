@@ -227,11 +227,25 @@ final class RedisHandlerTest extends AbstractHandlerTestCase
         $metadata = $this->handler->getMetaData(self::$key1);
 
         $this->assertNotNull($metadata);
-        $this->assertIsArray($metadata);
     }
 
     public function testIsSupported(): void
     {
         $this->assertTrue($this->handler->isSupported());
+    }
+
+    public function testPing(): void
+    {
+        $this->assertTrue($this->handler->ping());
+    }
+
+    public function testReconnect(): void
+    {
+        $this->handler->save(self::$key1, 'value');
+        $this->assertSame('value', $this->handler->get(self::$key1));
+
+        $this->assertTrue($this->handler->reconnect());
+
+        $this->assertSame('value', $this->handler->get(self::$key1));
     }
 }

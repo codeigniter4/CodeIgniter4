@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands;
 
+use CodeIgniter\Config\Services;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\StreamFilterTrait;
@@ -36,6 +38,8 @@ final class GenerateKeyTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        Services::injectMock('superglobals', new Superglobals());
 
         $this->envPath       = ROOTPATH . '.env';
         $this->backupEnvPath = ROOTPATH . '.env.backup';
@@ -71,7 +75,8 @@ final class GenerateKeyTest extends CIUnitTestCase
     protected function resetEnvironment(): void
     {
         putenv('encryption.key');
-        unset($_ENV['encryption.key'], $_SERVER['encryption.key']);
+        unset($_ENV['encryption.key']);
+        service('superglobals')->unsetServer('encryption.key');
     }
 
     public function testGenerateKeyShowsEncodedKey(): void

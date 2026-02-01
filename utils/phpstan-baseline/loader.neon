@@ -1,7 +1,8 @@
-# total 2771 errors
+# total 2122 errors
 
 includes:
     - argument.type.neon
+    - arguments.count.neon
     - assign.propertyType.neon
     - codeigniter.getReassignArray.neon
     - codeigniter.modelArgumentType.neon
@@ -9,6 +10,8 @@ includes:
     - codeigniter.superglobalAccessAssign.neon
     - deadCode.unreachable.neon
     - empty.notAllowed.neon
+    - function.alreadyNarrowedType.neon
+    - function.impossibleType.neon
     - method.alreadyNarrowedType.neon
     - method.childParameterType.neon
     - method.childReturnType.neon
@@ -23,5 +26,7 @@ includes:
     - property.nonObject.neon
     - property.notFound.neon
     - property.phpDocType.neon
+    - return.type.neon
     - staticMethod.notFound.neon
     - ternary.shortNotAllowed.neon
+    - varTag.type.neon

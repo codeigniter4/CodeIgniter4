@@ -102,7 +102,12 @@ final class ResponseCache
 
         return $this->cache->save(
             $this->generateCacheKey($request),
-            serialize(['headers' => $headers, 'output' => $response->getBody()]),
+            serialize([
+                'headers' => $headers,
+                'output'  => $response->getBody(),
+                'status'  => $response->getStatusCode(),
+                'reason'  => $response->getReasonPhrase(),
+            ]),
             $this->ttl,
         );
     }
@@ -127,6 +132,8 @@ final class ResponseCache
 
             $headers = $cachedResponse['headers'];
             $output  = $cachedResponse['output'];
+            $status  = $cachedResponse['status'] ?? 200;
+            $reason  = $cachedResponse['reason'] ?? '';
 
             // Clear all default headers
             foreach (array_keys($response->headers()) as $key) {
@@ -139,6 +146,8 @@ final class ResponseCache
             }
 
             $response->setBody($output);
+
+            $response->setStatusCode($status, $reason);
 
             return $response;
         }

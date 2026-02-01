@@ -543,7 +543,7 @@ class Services extends BaseService
             $request = AppServices::incomingrequest($config);
 
             // guess at protocol if needed
-            $request->setProtocolVersion($_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.1');
+            $request->setProtocolVersion(static::superglobals()->server('SERVER_PROTOCOL', 'HTTP/1.1'));
         }
 
         // Inject the request object into Services.
@@ -746,13 +746,17 @@ class Services extends BaseService
     public static function superglobals(
         ?array $server = null,
         ?array $get = null,
+        ?array $post = null,
+        ?array $cookie = null,
+        ?array $files = null,
+        ?array $request = null,
         bool $getShared = true,
     ) {
         if ($getShared) {
-            return static::getSharedInstance('superglobals', $server, $get);
+            return static::getSharedInstance('superglobals', $server, $get, $post, $cookie, $files, $request);
         }
 
-        return new Superglobals($server, $get);
+        return new Superglobals($server, $get, $post, $cookie, $files, $request);
     }
 
     /**

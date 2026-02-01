@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
+use CodeIgniter\Config\Services;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Honeypot;
 use PHPUnit\Framework\Attributes\BackupGlobals;
@@ -50,9 +52,10 @@ final class HoneypotTest extends CIUnitTestCase
         $this->config = new \Config\Filters();
         $this->honey  = new Honeypot();
 
-        unset($_POST[$this->honey->name]);
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_POST[$this->honey->name] = 'hey';
+        Services::injectMock('superglobals', new Superglobals());
+        $superglobals = service('superglobals');
+        $superglobals->setServer('REQUEST_METHOD', 'POST');
+        $superglobals->setPost($this->honey->name, 'hey');
     }
 
     public function testBeforeTriggered(): void
@@ -79,7 +82,7 @@ final class HoneypotTest extends CIUnitTestCase
             'after'  => [],
         ];
 
-        unset($_POST[$this->honey->name]);
+        service('superglobals')->unsetPost($this->honey->name);
         $this->request  = service('request', null, false);
         $this->response = service('response');
 

@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
+use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\RuntimeException;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\PhpStreamWrapper;
 use CodeIgniter\Test\StreamFilterTrait;
@@ -28,6 +30,13 @@ use ReflectionProperty;
 final class CLITest extends CIUnitTestCase
 {
     use StreamFilterTrait;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Services::injectMock('superglobals', new Superglobals());
+    }
 
     public function testNew(): void
     {
@@ -454,12 +463,12 @@ final class CLITest extends CIUnitTestCase
 
     public function testParseCommand(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'ignored',
             'b',
             'c',
-        ];
-        $_SERVER['argc'] = 3;
+        ]);
+        service('superglobals')->setServer('argc', 3);
         CLI::init();
 
         $this->assertNull(CLI::getSegment(3));
@@ -473,7 +482,7 @@ final class CLITest extends CIUnitTestCase
 
     public function testParseCommandMixed(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'ignored',
             'b',
             'c',
@@ -485,7 +494,7 @@ final class CLITest extends CIUnitTestCase
             '--fix',
             '--opt-in',
             'sure',
-        ];
+        ]);
         CLI::init();
 
         $this->assertNull(CLI::getSegment(7));
@@ -502,14 +511,14 @@ final class CLITest extends CIUnitTestCase
 
     public function testParseCommandOption(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'ignored',
             'b',
             'c',
             '--parm',
             'pvalue',
             'd',
-        ];
+        ]);
         CLI::init();
 
         $this->assertSame(['parm' => 'pvalue'], CLI::getOptions());
@@ -524,7 +533,7 @@ final class CLITest extends CIUnitTestCase
 
     public function testParseCommandMultipleOptions(): void
     {
-        $_SERVER['argv'] = [
+        service('superglobals')->setServer('argv', [
             'ignored',
             'b',
             'c',
@@ -534,7 +543,7 @@ final class CLITest extends CIUnitTestCase
             '--p2',
             '--p3',
             'value 3',
-        ];
+        ]);
         CLI::init();
 
         $this->assertSame(['parm' => 'pvalue', 'p2' => null, 'p3' => 'value 3'], CLI::getOptions());

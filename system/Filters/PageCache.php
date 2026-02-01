@@ -20,6 +20,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Config\Cache;
 
 /**
  * Page Cache filter
@@ -28,9 +29,17 @@ class PageCache implements FilterInterface
 {
     private readonly ResponseCache $pageCache;
 
-    public function __construct()
+    /**
+     * @var list<int>
+     */
+    private readonly array $cacheStatusCodes;
+
+    public function __construct(?Cache $config = null)
     {
-        $this->pageCache = service('responsecache');
+        $config ??= config('Cache');
+
+        $this->pageCache        = service('responsecache');
+        $this->cacheStatusCodes = $config->cacheStatusCodes ?? [];
     }
 
     /**
@@ -61,6 +70,7 @@ class PageCache implements FilterInterface
         if (
             ! $response instanceof DownloadResponse
             && ! $response instanceof RedirectResponse
+            && ($this->cacheStatusCodes === [] || in_array($response->getStatusCode(), $this->cacheStatusCodes, true))
         ) {
             // Cache it without the performance metrics replaced
             // so that we can have live speed updates along the way.
