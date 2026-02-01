@@ -111,7 +111,7 @@ Try it now by heading to the following URL::
 
 and you should be greeted by the following page:
 
-.. image:: ../images/welcome.png
+.. image:: ../../images/welcome.png
 
 This means that your application works and you can start making changes to it.
 
@@ -129,7 +129,7 @@ brings up additional information. Clicking the X on the right of the toolbar min
 to a small square with the CodeIgniter flame on it. If you click that the toolbar
 will show again.
 
-.. image:: ../images/debugbar.png
+.. image:: ../../images/debugbar.png
 
 Error Pages
 ===========
@@ -139,7 +139,7 @@ other errors in your program. Open up **app/Controllers/Home.php** and change so
 to generate an error (removing a semi-colon or brace should do the trick!). You will be
 greeted by a screen looking something like this:
 
-.. image:: ../images/error.png
+.. image:: ../../images/error.png
 
 There are a couple of things to note here:
 

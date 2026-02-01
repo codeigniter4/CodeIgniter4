@@ -18,15 +18,15 @@ Getting Started
 
     installation/index
 
-****************************
-Build Your First Application
-****************************
+******
+Guides
+******
 
 .. toctree::
     :includehidden:
     :titlesonly:
 
-    tutorial/index
+    guides/index
 
 *************************
 Overview & General Topics

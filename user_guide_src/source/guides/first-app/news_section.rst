@@ -35,8 +35,8 @@ Using your database client, connect to your database and run the SQL command bel
 
 Also, add some seed records. For now, we'll just show you the SQL statements needed
 to create the table, but you should be aware that this can be done programmatically
-once you are more familiar with CodeIgniter; you can read about :doc:`Migrations <../dbmgmt/migration>`
-and :doc:`Seeds <../dbmgmt/seeds>` to create more useful database setups later.
+once you are more familiar with CodeIgniter; you can read about :doc:`Migrations <../../dbmgmt/migration>`
+and :doc:`Seeds <../../dbmgmt/seeds>` to create more useful database setups later.
 
 A note of interest: a "slug", in the context of web publishing, is a
 user- and SEO-friendly short text used in a URL to identify and describe a resource.
@@ -54,7 +54,7 @@ Connect to Your Database
 The local configuration file, **.env**, that you created when you installed
 CodeIgniter, should have the database property settings uncommented and
 set appropriately for the database you want to use. Make sure you've configured
-your database properly as described in :doc:`../database/configuration`::
+your database properly as described in :doc:`../../database/configuration`::
 
     database.default.hostname = localhost
     database.default.database = ci4tutorial
@@ -69,7 +69,7 @@ Instead of writing database operations right in the controller, queries
 should be placed in a model, so they can easily be reused later. Models
 are the place where you retrieve, insert, and update information in your
 database or other data stores. They provide access to your data.
-You can read more about it in :doc:`../models/model`.
+You can read more about it in :doc:`../../models/model`.
 
 Create NewsModel
 ================
@@ -90,9 +90,9 @@ Add NewsModel::getNews() Method
 Now that the database and a model have been set up, you'll need a method
 to get all of our posts from our database. To do this, the database
 abstraction layer that is included with CodeIgniter -
-:doc:`Query Builder <../database/query_builder>` - is used in the ``CodeIgniter\Model``. This makes it
+:doc:`Query Builder <../../database/query_builder>` - is used in the ``CodeIgniter\Model``. This makes it
 possible to write your 'queries' once and make them work on :doc:`all
-supported database systems <../intro/requirements>`. The Model class
+supported database systems <../../intro/requirements>`. The Model class
 also allows you to easily work with the Query Builder and provides
 some additional tools to make working with data simpler. Add the
 following code to your model.
@@ -103,7 +103,7 @@ following code to your model.
 With this code, you can perform two different queries. You can get all
 news records, or get a news item by its slug. You might have
 noticed that the ``$slug`` variable wasn't escaped before running the
-query; :doc:`Query Builder <../database/query_builder>` does this for you.
+query; :doc:`Query Builder <../../database/query_builder>` does this for you.
 
 The two methods used here, ``findAll()`` and ``first()``, are provided
 by the ``CodeIgniter\Model`` class. They already know the table to use based on the ``$table``
@@ -148,7 +148,7 @@ Next, there are two methods, one to view all news items, and one for a specific
 news item.
 
 Next, the :php:func:`model()` function is used to create the ``NewsModel`` instance.
-This is a helper function. You can read more about it in :doc:`../general/common_functions`.
+This is a helper function. You can read more about it in :doc:`../../general/common_functions`.
 You could also write ``$model = new NewsModel();``, if you don't use it.
 
 You can see that the ``$slug`` variable is passed to the model's
@@ -183,7 +183,7 @@ Create **app/Views/news/index.php** and add the next piece of code.
 
 Here, each news item is looped and displayed to the user. You can see we
 wrote our template in PHP mixed with HTML. If you prefer to use a template
-language, you can use CodeIgniter's :doc:`View
+language, you can use CodeIgniter's :doc:`View Parser </outgoing/view_parser>` or a third party parser.
 Parser </outgoing/view_parser>` or a third party parser.
 
 Complete News::show() Method
@@ -215,5 +215,5 @@ Point your browser to your "news" page, i.e., **localhost:8080/news**,
 you should see a list of the news items, each of which has a link
 to display just the one article.
 
-.. image:: ../images/tutorial2.png
+.. image:: ../../images/tutorial2.png
     :align: center
