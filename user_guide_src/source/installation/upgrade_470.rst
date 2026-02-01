@@ -12,18 +12,6 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-**********************
-Mandatory File Changes
-**********************
-
-****************
-Breaking Changes
-****************
-
-*********************
-Breaking Enhancements
-*********************
-
 *************
 Project Files
 *************
@@ -47,10 +35,33 @@ Config
 - app/Config/Migrations.php
     - ``Config\Migrations::$lock`` has been added, with a default value set to ``false``.
 
+These files are new in this release:
+
+- app/Config/Hostnames.php
+- app/Config/WorkerMode.php
+
 All Changes
 ===========
 
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
+- app/Config/CURLRequest.php
+- app/Config/Cache.php
+- app/Config/ContentSecurityPolicy.php
+- app/Config/Email.php
+- app/Config/Encryption.php
+- app/Config/Format.php
+- app/Config/Hostnames.php
+- app/Config/Images.php
 - app/Config/Migrations.php
+- app/Config/Optimize.php
+- app/Config/Paths.php
+- app/Config/Routing.php
+- app/Config/Session.php
+- app/Config/Toolbar.php
+- app/Config/UserAgents.php
+- app/Config/View.php
+- app/Config/WorkerMode.php
+- public/index.php
+- spark
