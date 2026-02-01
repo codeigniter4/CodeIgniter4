@@ -43,6 +43,10 @@ on:
         description: Additional PHP extensions that are needed to be enabled
         type: string
         required: false
+      extra-ini-options:
+        description: Additional PHP configuration directives that should be appended to the php.ini
+        type: string
+        required: false
       extra-composer-options:
         description: Additional Composer options that should be appended to the `composer update` call
         type: string
@@ -163,6 +167,7 @@ jobs:
           php-version: ${{ inputs.php-version }}
           tools: composer
           extensions: gd, ${{ inputs.extra-extensions }}
+          ini-values: ${{ inputs.extra-ini-options }}
           coverage: ${{ env.COVERAGE_DRIVER }}
         env:
           COVERAGE_DRIVER: ${{ inputs.enable-coverage && 'xdebug' || 'none' }}
@@ -173,7 +178,7 @@ jobs:
           echo "ARTIFACT_NAME=${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-db-${{ inputs.db-platform || 'none' }}" >> $GITHUB_ENV
 
       - name: Cache dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
           key: ${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-db-${{ inputs.db-platform || 'none' }}-${{ hashFiles('**/composer.*') }}
@@ -184,7 +189,7 @@ jobs:
 
       - name: Cache PHPUnit's static analysis cache
         if: ${{ inputs.enable-artifact-upload }}
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: build/.phpunit.cache/code-coverage
           key: phpunit-code-coverage-${{ hashFiles('**/phpunit.*') }}
@@ -212,7 +217,7 @@ jobs:
 
       - name: Upload coverage results as artifact
         if: ${{ inputs.enable-artifact-upload }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: build/cov/coverage-${{ env.ARTIFACT_NAME }}.cov

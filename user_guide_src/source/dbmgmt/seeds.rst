@@ -44,6 +44,29 @@ You can grab a copy of the main seeder through the database config class:
 
 .. literalinclude:: seeds/004.php
 
+Using a Different Database Group
+================================
+
+You can specify a different database group when obtaining a seeder instance by passing the group name
+as the first parameter:
+
+.. literalinclude:: seeds/005.php
+
+When using ``call()`` to run child seeders, the database connection is automatically passed to them.
+This means child seeders will use the same connection as the parent seeder, unless they explicitly
+specify their own ``$DBGroup`` property.
+
+If a seeder needs to always use a specific database group regardless of the parent seeder's connection,
+you can set the ``$DBGroup`` property in the seeder class:
+
+.. literalinclude:: seeds/006.php
+
+The connection priority is:
+
+1. If ``$DBGroup`` is set in the seeder class, that connection group is always used
+2. Otherwise, if a connection was passed (from parent seeder via ``call()`` or from ``Database::seeder()``), it is used
+3. Otherwise, the default connection group is used
+
 Command Line Seeding
 ====================
 

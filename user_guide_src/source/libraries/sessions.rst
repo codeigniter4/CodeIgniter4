@@ -514,7 +514,8 @@ Have it in mind though, every driver has different caveats, so be sure to
 get yourself familiar with them (below) before you make that choice.
 
 .. note:: The ArrayHandler is used during testing and stores all data within
-    a PHP array, while preventing the data from being persisted.
+    a PHP array, while preventing the data from being persisted. See
+    :doc:`Testing Sessions </testing/session_testing>`.
 
 FileHandler Driver (the default)
 ================================

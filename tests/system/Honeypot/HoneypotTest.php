@@ -107,7 +107,7 @@ final class HoneypotTest extends CIUnitTestCase
         $this->response->setBody('<head></head><body><form></form></body>');
         $this->honeypot->attachHoneypot($this->response);
 
-        $regex = '!<head><style nonce="[0-9a-f]+">#hpc { display:none }</style></head><body><form><div style="display:none" id="hpc"><label>Fill This Field</label><input type="text" name="honeypot" value=""></div></form></body>!u';
+        $regex = '!<head><style nonce="[a-zA-Z0-9+\/-_]+[=]{0,2}">#hpc { display:none }</style></head><body><form><div style="display:none" id="hpc"><label>Fill This Field</label><input type="text" name="honeypot" value=""></div></form></body>!u';
         $this->assertMatchesRegularExpression($regex, $this->response->getBody());
     }
 

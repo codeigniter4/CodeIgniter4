@@ -337,7 +337,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $html   = script_tag($target);
 
         $this->assertMatchesRegularExpression(
-            '!<script nonce="\w+?" src="http://site.com/js/mystyles.js".*?>!u',
+            '!<script nonce="[a-zA-Z0-9+\/-_]+[=]{0,2}" src="http://site.com/js/mystyles.js".*?>!u',
             $html,
         );
 

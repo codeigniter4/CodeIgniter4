@@ -27,7 +27,7 @@ class Seeder
     /**
      * The name of the database group to use.
      *
-     * @var non-empty-string
+     * @var non-empty-string|null
      */
     protected $DBGroup;
 
@@ -92,10 +92,16 @@ class Seeder
 
         $this->config = &$config;
 
-        $db ??= Database::connect($this->DBGroup);
-
-        $this->db    = $db;
-        $this->forge = Database::forge($this->DBGroup);
+        if (isset($this->DBGroup)) {
+            $this->db    = Database::connect($this->DBGroup);
+            $this->forge = Database::forge($this->DBGroup);
+        } elseif ($db instanceof BaseConnection) {
+            $this->db    = $db;
+            $this->forge = Database::forge($db);
+        } else {
+            $this->db    = Database::connect($config->defaultGroup);
+            $this->forge = Database::forge($config->defaultGroup);
+        }
     }
 
     /**
@@ -145,7 +151,7 @@ class Seeder
         }
 
         /** @var Seeder $seeder */
-        $seeder = new $class($this->config);
+        $seeder = new $class($this->config, $this->db);
         $seeder->setSilent($this->silent)->run();
 
         unset($seeder);

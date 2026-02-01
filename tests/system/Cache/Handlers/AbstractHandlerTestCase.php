@@ -38,6 +38,7 @@ abstract class AbstractHandlerTestCase extends CIUnitTestCase
         $this->handler->save(self::$key1, 'value');
 
         $actual = $this->handler->getMetaData(self::$key1);
+        $this->assertIsArray($actual);
 
         // This test is time-dependent, and depending on the timing,
         // seconds in `$time` (e.g. 12:00:00.9999) and seconds of
@@ -45,7 +46,6 @@ abstract class AbstractHandlerTestCase extends CIUnitTestCase
         // may be off by one second. In that case, the following calculation
         // will result in maximum of (60 + 1).
         $this->assertLessThanOrEqual(60 + 1, $actual['expire'] - $time);
-
         $this->assertLessThanOrEqual(1, $actual['mtime'] - $time);
         $this->assertSame('value', $actual['data']);
     }
