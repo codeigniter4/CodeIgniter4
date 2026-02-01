@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\TestResponse;
 use Config\App;
@@ -590,6 +591,77 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    public function testReportTo(): void
+    {
+        $this->csp->reportOnly(false);
+        $this->csp->addReportingEndpoints(['default' => 'http://example.com/csp-reports']);
+        $this->csp->setReportToEndpoint('default');
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('report-uri http://example.com/csp-reports', $this->getCspDirectives($header));
+        $this->assertContains('report-to default', $this->getCspDirectives($header));
+
+        $this->assertHeaderEmitted('Reporting-Endpoints');
+        $header = $this->getHeaderEmitted('Reporting-Endpoints');
+        $this->assertIsString($header);
+        $this->assertSame('Reporting-Endpoints: default="http://example.com/csp-reports"', $header);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testReportToMultipleEndpoints(): void
+    {
+        $this->csp->reportOnly(false);
+        $this->csp->addReportingEndpoints([
+            'endpoint1' => 'http://example.com/csp-reports-1',
+            'endpoint2' => 'http://example.com/csp-reports-2',
+        ]);
+        $this->csp->setReportToEndpoint('endpoint2');
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains('report-uri http://example.com/csp-reports-2', $this->getCspDirectives($header));
+        $this->assertContains('report-to endpoint2', $this->getCspDirectives($header));
+
+        $this->assertHeaderEmitted('Reporting-Endpoints');
+        $header = $this->getHeaderEmitted('Reporting-Endpoints');
+        $this->assertIsString($header);
+        $this->assertSame(
+            'Reporting-Endpoints: endpoint1="http://example.com/csp-reports-1", endpoint2="http://example.com/csp-reports-2"',
+            $header,
+        );
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testCannotSetReportToWithoutEndpoints(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The reporting endpoint "nonexistent-endpoint" has not been defined.');
+
+        $this->csp->setReportToEndpoint('nonexistent-endpoint');
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testRemoveReportTo(): void
+    {
+        $this->csp->addReportingEndpoints(['default' => 'http://example.com/csp-reports']);
+        $this->csp->setReportToEndpoint('default');
+        $this->csp->setReportToEndpoint('');
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertStringNotContainsString('report-uri', $header);
+        $this->assertStringNotContainsString('report-to', $header);
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testSandboxEmptyFlag(): void
     {
         $this->csp->addSandbox('');
@@ -840,15 +912,20 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("script-src 'self' 'nonce-", $header);
     }
 
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testClearDirective(): void
     {
         $this->csp->addFontSrc('fonts.example.com');
         $this->csp->addStyleSrc('css.example.com');
         $this->csp->setReportURI('http://example.com/csp/reports');
+        $this->csp->addReportingEndpoints(['default' => 'http://example.com/csp/reports']);
+        $this->csp->setReportToEndpoint('default');
 
         $this->csp->clearDirective('fonts-src'); // intentional wrong directive
         $this->csp->clearDirective('style-src');
         $this->csp->clearDirective('report-uri');
+        $this->csp->clearDirective('report-to');
 
         $this->csp->finalize($this->response);
 
@@ -858,5 +935,6 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertContains('font-src fonts.example.com', $directives);
         $this->assertNotContains('style-src css.example.com', $directives);
         $this->assertNotContains('report-uri http://example.com/csp/reports', $directives);
+        $this->assertNotContains('report-to default', $directives);
     }
 }

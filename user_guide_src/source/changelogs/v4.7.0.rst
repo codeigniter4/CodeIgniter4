@@ -337,6 +337,7 @@ HTTP
 Content Security Policy
 -----------------------
 
+- The ``script-src`` and ``style-src`` directives can now use SHA-256, SHA-384, and SHA-512 digests as their source expressions.
 - Added support for the new CSP Level 3 keywords:
     - ``'strict-dynamic'``
     - ``'unsafe-hashes'``
@@ -347,8 +348,8 @@ Content Security Policy
     - ``'report-sha256'``
     - ``'report-sha384'``
     - ``'report-sha512'``
-- Hash values for CSP ``script-src`` and ``style-src`` directives can now use SHA-256, SHA-384, and SHA-512 digests.
 - Added support for the following CSP Level 3 directives:
+    - ``report-to``
     - ``script-src-elem``
     - ``script-src-attr``
     - ``style-src-elem``

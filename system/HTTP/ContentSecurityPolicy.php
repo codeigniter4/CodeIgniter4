@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\App;
 use Config\ContentSecurityPolicy as ContentSecurityPolicyConfig;
 
@@ -60,6 +61,7 @@ class ContentSecurityPolicy
     protected array $directives = [
         ...self::DIRECTIVES_ALLOWING_SOURCE_LISTS,
         'report-uri' => 'reportURI',
+        'report-to'  => 'reportTo',
     ];
 
     /**
@@ -178,6 +180,12 @@ class ContentSecurityPolicy
      * @var string|null
      */
     protected $reportURI;
+
+    /**
+     * The `report-to` directive specifies a named group in a Reporting API
+     * endpoint to which the user agent sends reports about policy violation.
+     */
+    protected ?string $reportTo = null;
 
     // --------------------------------------------------------------
     // CSP Level 3 Directives
@@ -332,6 +340,13 @@ class ContentSecurityPolicy
      * @var bool
      */
     protected $CSPEnabled = false;
+
+    /**
+     * Map of reporting endpoints to their URLs.
+     *
+     * @var array<string, string>
+     */
+    private array $reportingEndpoints = [];
 
     /**
      * Stores our default values from the Config file.
@@ -658,24 +673,6 @@ class ContentSecurityPolicy
     }
 
     /**
-     * Specifies a URL where a browser will send reports when a content
-     * security policy is violated.
-     *
-     * @see http://www.w3.org/TR/CSP/#directive-report-uri
-     *
-     * @param string $uri URL to send reports. Set `''` if you want to remove
-     *                    this directive at runtime.
-     *
-     * @return $this
-     */
-    public function setReportURI(string $uri)
-    {
-        $this->reportURI = $uri;
-
-        return $this;
-    }
-
-    /**
      * Adds a new value to the `sandbox` directive.
      *
      * @see http://www.w3.org/TR/CSP/#directive-sandbox
@@ -806,6 +803,66 @@ class ContentSecurityPolicy
     }
 
     /**
+     * Specifies a URL where a browser will send reports when a content
+     * security policy is violated.
+     *
+     * @see http://www.w3.org/TR/CSP/#directive-report-uri
+     *
+     * @param string $uri URL to send reports. Set `''` if you want to remove
+     *                    this directive at runtime.
+     *
+     * @return $this
+     */
+    public function setReportURI(string $uri)
+    {
+        $this->reportURI = $uri;
+
+        return $this;
+    }
+
+    /**
+     * Specifies a named group in a Reporting API endpoint to which the user
+     * agent sends reports about policy violation.
+     *
+     * @see https://www.w3.org/TR/CSP/#directive-report-to
+     *
+     * @param string $endpoint The name of the reporting endpoint. Set `''` if you
+     *                         want to remove this directive at runtime.
+     */
+    public function setReportToEndpoint(string $endpoint): static
+    {
+        if ($endpoint === '') {
+            $this->reportURI = null;
+            $this->reportTo  = null;
+
+            return $this;
+        }
+
+        if (! array_key_exists($endpoint, $this->reportingEndpoints)) {
+            throw new InvalidArgumentException(sprintf('The reporting endpoint "%s" has not been defined.', $endpoint));
+        }
+
+        $this->reportURI = $this->reportingEndpoints[$endpoint]; // for BC with browsers that do not support `report-to`
+        $this->reportTo  = $endpoint;
+
+        return $this;
+    }
+
+    /**
+     * Adds reporting endpoints to the `Reporting-Endpoints` header.
+     *
+     * @param array<string, string> $endpoint
+     */
+    public function addReportingEndpoints(array $endpoint): static
+    {
+        foreach ($endpoint as $name => $url) {
+            $this->reportingEndpoints[$name] = $url;
+        }
+
+        return $this;
+    }
+
+    /**
      * DRY method to add an string or array to a class property.
      *
      * @param list<string>|string $options
@@ -864,6 +921,7 @@ class ContentSecurityPolicy
     {
         $response->setHeader('Content-Security-Policy', []);
         $response->setHeader('Content-Security-Policy-Report-Only', []);
+        $response->setHeader('Reporting-Endpoints', []);
 
         if (in_array($this->baseURI, ['', null, []], true)) {
             $this->baseURI = 'self';
@@ -878,6 +936,10 @@ class ContentSecurityPolicy
                 continue;
             }
 
+            if ($name === 'report-to' && (string) $this->reportTo === '') {
+                continue;
+            }
+
             if ($this->{$property} !== null) {
                 $this->addToHeader($name, $this->{$property});
             }
@@ -886,6 +948,17 @@ class ContentSecurityPolicy
         // Compile our own header strings here since if we just
         // append it to the response, it will be joined with
         // commas, not semi-colons as we need.
+        if ($this->reportingEndpoints !== []) {
+            $endpoints = [];
+
+            foreach ($this->reportingEndpoints as $name => $url) {
+                $endpoints[] = trim("{$name}=\"{$url}\"");
+            }
+
+            $response->appendHeader('Reporting-Endpoints', implode(', ', $endpoints));
+            $this->reportingEndpoints = [];
+        }
+
         if ($this->tempHeaders !== []) {
             $header = [];
 
@@ -905,7 +978,7 @@ class ContentSecurityPolicy
             $header = [];
 
             foreach ($this->reportOnlyHeaders as $name => $value) {
-                $header[] = "{$name} {$value}";
+                $header[] = trim("{$name} {$value}");
             }
 
             $response->appendHeader('Content-Security-Policy-Report-Only', implode('; ', $header));
@@ -966,6 +1039,13 @@ class ContentSecurityPolicy
 
         if ($directive === 'report-uri') {
             $this->reportURI = null;
+
+            return;
+        }
+
+        if ($directive === 'report-to') {
+            $this->reportURI = null;
+            $this->reportTo  = null;
 
             return;
         }
