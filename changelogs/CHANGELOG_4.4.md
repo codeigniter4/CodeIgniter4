@@ -1,4 +1,5 @@
 # Changelog 4.4
+
 ## [v4.4.8](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.8) (2024-04-07)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.7...v4.4.8)
 
