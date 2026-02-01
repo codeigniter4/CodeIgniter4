@@ -1,5 +1,19 @@
 # Changelog
 
+## [v4.6.5](https://github.com/codeigniter4/CodeIgniter4/tree/v4.6.5) (2026-02-01)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.6.4...v4.6.5)
+
+### Fixed Bugs
+
+* fix: make seeder to respect database group by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9886
+* fix: ensure CSP nonces are Base64 encoded by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/9907
+
+### Refactoring
+
+* refactor: debugbar time header not dependent on locale by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/9880
+* refactor: Remove dead code from MySQLi Connection related to PHP 5 by @kamil-tekiela in https://github.com/codeigniter4/CodeIgniter4/pull/9887
+* refactor: Clean up mysqli transactions by @kamil-tekiela in https://github.com/codeigniter4/CodeIgniter4/pull/9888
+
 ## [v4.6.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.6.4) (2025-12-12)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.6.3...v4.6.4)
 
