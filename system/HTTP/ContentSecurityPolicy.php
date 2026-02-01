@@ -215,6 +215,8 @@ class ContentSecurityPolicy
      * Set of nonces generated.
      *
      * @var list<string>
+     *
+     * @deprecated 4.7.0 Never used.
      */
     protected $nonces = [];
 

@@ -367,6 +367,8 @@ Changes
 Deprecations
 ************
 
+- **ContentSecurityPolicy:**
+    - The ``CodeIgniter\HTTP\ContentSecurityPolicy::$nonces`` property has been deprecated. It was never used.
 - **Encryption:**
     - The method ``CodeIgniter\Encryption\Handlers\SodiumHandler::parseParams()`` has been deprecated. Parameters are now handled directly in ``encrypt()`` and ``decrypt()`` methods.
 - **Image:**
