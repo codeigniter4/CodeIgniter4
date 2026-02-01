@@ -726,14 +726,22 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     public function testGetScriptNonce(): void
     {
-        $nonce = $this->csp->getScriptNonce();
-        $this->assertMatchesRegularExpression('/\A[0-9a-z]{24}\z/', $nonce);
+        $this->prepare();
+
+        $this->assertMatchesRegularExpression(
+            '/\A[a-zA-Z0-9+\/-_]+[=]{0,2}\z/',
+            $this->csp->getScriptNonce(),
+        );
     }
 
     public function testGetStyleNonce(): void
     {
-        $nonce = $this->csp->getStyleNonce();
-        $this->assertMatchesRegularExpression('/\A[0-9a-z]{24}\z/', $nonce);
+        $this->prepare();
+
+        $this->assertMatchesRegularExpression(
+            '/\A[a-zA-Z0-9+\/-_]+[=]{0,2}\z/',
+            $this->csp->getStyleNonce(),
+        );
     }
 
     #[PreserveGlobalState(false)]

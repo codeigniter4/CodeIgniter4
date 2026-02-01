@@ -348,7 +348,7 @@ class ContentSecurityPolicy
     public function getStyleNonce(): string
     {
         if ($this->styleNonce === null) {
-            $this->styleNonce = bin2hex(random_bytes(12));
+            $this->styleNonce = base64_encode(random_bytes(12));
             $this->addStyleSrc('nonce-' . $this->styleNonce);
         }
 
@@ -361,7 +361,7 @@ class ContentSecurityPolicy
     public function getScriptNonce(): string
     {
         if ($this->scriptNonce === null) {
-            $this->scriptNonce = bin2hex(random_bytes(12));
+            $this->scriptNonce = base64_encode(random_bytes(12));
             $this->addScriptSrc('nonce-' . $this->scriptNonce);
         }
 
