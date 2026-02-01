@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Version 4.7.0 &mdash; CodeIgniter 4.6.5 documentation</title>
+  <title>Version 4.7.0 &mdash; CodeIgniter 4.7.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -295,69 +295,64 @@
              
   <section id="version-4-7-0">
 <h1>Version 4.7.0<a class="headerlink" href="#version-4-7-0" title="Permalink to this heading"></a></h1>
-<p>Release Date: Unreleased</p>
+<p>Release Date: February 1, 2026</p>
 <p><strong>4.7.0 release of CodeIgniter4</strong></p>
 <nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#highlights" id="id2">Highlights</a></p></li>
-<li><p><a class="reference internal" href="#breaking" id="id3">BREAKING</a></p>
+<li><p><a class="reference internal" href="#highlights" id="id1">Highlights</a></p></li>
+<li><p><a class="reference internal" href="#breaking" id="id2">BREAKING</a></p>
 <ul>
-<li><p><a class="reference internal" href="#behavior-changes" id="id4">Behavior Changes</a></p>
+<li><p><a class="reference internal" href="#behavior-changes" id="id3">Behavior Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#validation-rules" id="id5">Validation Rules</a></p></li>
-<li><p><a class="reference internal" href="#basemodel" id="id6">BaseModel</a></p></li>
-<li><p><a class="reference internal" href="#entity" id="id7">Entity</a></p></li>
-<li><p><a class="reference internal" href="#entity-and-datacaster" id="id8">Entity and DataCaster</a></p></li>
-<li><p><a class="reference internal" href="#encryption-handlers" id="id9">Encryption Handlers</a></p></li>
+<li><p><a class="reference internal" href="#validation-rules" id="id4">Validation Rules</a></p></li>
+<li><p><a class="reference internal" href="#basemodel" id="id5">BaseModel</a></p></li>
+<li><p><a class="reference internal" href="#entity" id="id6">Entity</a></p></li>
+<li><p><a class="reference internal" href="#entity-and-datacaster" id="id7">Entity and DataCaster</a></p></li>
+<li><p><a class="reference internal" href="#encryption-handlers" id="id8">Encryption Handlers</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#interface-changes" id="id10">Interface Changes</a></p></li>
-<li><p><a class="reference internal" href="#method-signature-changes" id="id11">Method Signature Changes</a></p></li>
-<li><p><a class="reference internal" href="#property-signature-changes" id="id12">Property Signature Changes</a></p></li>
-<li><p><a class="reference internal" href="#removed-deprecated-items" id="id13">Removed Deprecated Items</a></p></li>
+<li><p><a class="reference internal" href="#interface-changes" id="id9">Interface Changes</a></p></li>
+<li><p><a class="reference internal" href="#method-signature-changes" id="id10">Method Signature Changes</a></p></li>
+<li><p><a class="reference internal" href="#property-signature-changes" id="id11">Property Signature Changes</a></p></li>
+<li><p><a class="reference internal" href="#removed-deprecated-items" id="id12">Removed Deprecated Items</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#enhancements" id="id14">Enhancements</a></p>
+<li><p><a class="reference internal" href="#enhancements" id="id13">Enhancements</a></p>
 <ul>
-<li><p><a class="reference internal" href="#libraries" id="id15">Libraries</a></p></li>
-<li><p><a class="reference internal" href="#commands" id="id16">Commands</a></p></li>
-<li><p><a class="reference internal" href="#testing" id="id17">Testing</a></p></li>
-<li><p><a class="reference internal" href="#database" id="id18">Database</a></p>
+<li><p><a class="reference internal" href="#libraries" id="id14">Libraries</a></p></li>
+<li><p><a class="reference internal" href="#commands" id="id15">Commands</a></p></li>
+<li><p><a class="reference internal" href="#database" id="id16">Database</a></p>
 <ul>
-<li><p><a class="reference internal" href="#query-builder" id="id19">Query Builder</a></p></li>
-<li><p><a class="reference internal" href="#forge" id="id20">Forge</a></p></li>
-<li><p><a class="reference internal" href="#migrations" id="id21">Migrations</a></p></li>
-<li><p><a class="reference internal" href="#others" id="id22">Others</a></p></li>
+<li><p><a class="reference internal" href="#migrations" id="id17">Migrations</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#model" id="id23">Model</a></p></li>
-<li><p><a class="reference internal" href="#http" id="id24">HTTP</a></p>
+<li><p><a class="reference internal" href="#http" id="id18">HTTP</a></p>
 <ul>
-<li><p><a class="reference internal" href="#content-security-policy" id="id25">Content Security Policy</a></p></li>
+<li><p><a class="reference internal" href="#content-security-policy" id="id19">Content Security Policy</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id1" id="id26">Others</a></p></li>
+<li><p><a class="reference internal" href="#others" id="id20">Others</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#message-changes" id="id27">Message Changes</a></p></li>
-<li><p><a class="reference internal" href="#changes" id="id28">Changes</a></p></li>
-<li><p><a class="reference internal" href="#deprecations" id="id29">Deprecations</a></p></li>
-<li><p><a class="reference internal" href="#bugs-fixed" id="id30">Bugs Fixed</a></p></li>
+<li><p><a class="reference internal" href="#message-changes" id="id21">Message Changes</a></p></li>
+<li><p><a class="reference internal" href="#changes" id="id22">Changes</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id23">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id24">Bugs Fixed</a></p></li>
 </ul>
 </nav>
 <section id="highlights">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Highlights</a><a class="headerlink" href="#highlights" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Highlights</a><a class="headerlink" href="#highlights" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Update minimal PHP requirement to <code class="docutils literal notranslate"><span class="pre">8.2</span></code>.</p></li>
 <li><p>Added experimental <strong>FrankenPHP Worker Mode</strong> support for improved performance.</p></li>
 </ul>
 </section>
 <section id="breaking">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this heading"></a></h2>
 <section id="behavior-changes">
-<h3><a class="toc-backref" href="#id4" role="doc-backlink">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Permalink to this heading"></a></h3>
 <section id="validation-rules">
-<h4><a class="toc-backref" href="#id5" role="doc-backlink">Validation Rules</a><a class="headerlink" href="#validation-rules" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id4" role="doc-backlink">Validation Rules</a><a class="headerlink" href="#validation-rules" title="Permalink to this heading"></a></h4>
 <p>Placeholders in the <code class="docutils literal notranslate"><span class="pre">regex_match</span></code> validation rule must now use double curly braces.
 If you previously used single braces like <code class="docutils literal notranslate"><span class="pre">regex_match[/^{placeholder}$/]</span></code>, you must
 update it to use double braces: <code class="docutils literal notranslate"><span class="pre">regex_match[/^{{placeholder}}$/]</span></code>.</p>
@@ -365,7 +360,7 @@ update it to use double braces: <code class="docutils literal notranslate"><span
 where single curly braces (e.g., <code class="docutils literal notranslate"><span class="pre">{1,3}</span></code>) are used for quantifiers.</p>
 </section>
 <section id="basemodel">
-<h4><a class="toc-backref" href="#id6" role="doc-backlink">BaseModel</a><a class="headerlink" href="#basemodel" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id5" role="doc-backlink">BaseModel</a><a class="headerlink" href="#basemodel" title="Permalink to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code> and <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> methods now honor model settings like
 <code class="docutils literal notranslate"><span class="pre">updateOnlyChanged</span></code> and <code class="docutils literal notranslate"><span class="pre">allowEmptyInserts</span></code>. This change ensures consistent handling
 across all insert/update operations.</p>
@@ -375,23 +370,22 @@ across all insert/update operations.</p>
 and <code class="docutils literal notranslate"><span class="pre">delete()</span></code> methods now validate primary key values <strong>before</strong> executing database queries.
 Invalid primary key values will now throw <code class="docutils literal notranslate"><span class="pre">InvalidArgumentException</span></code> instead of
 <code class="docutils literal notranslate"><span class="pre">DatabaseException</span></code>.</p>
-<p><strong>What changed:</strong></p>
+<p><strong>What Changed:</strong></p>
 <ul>
 <li><p><strong>Exception type:</strong> Invalid primary keys now throw <code class="docutils literal notranslate"><span class="pre">InvalidArgumentException</span></code> with
 specific error messages instead of generic <code class="docutils literal notranslate"><span class="pre">DatabaseException</span></code> from the database layer.</p></li>
-<li><p><strong>Validation timing:</strong></p>
-<blockquote>
-<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Validation timing:</strong></dt><dd><ul class="simple">
 <li><p>For <code class="docutils literal notranslate"><span class="pre">update()</span></code> and <code class="docutils literal notranslate"><span class="pre">delete()</span></code>: Validation happens <strong>before</strong> the <code class="docutils literal notranslate"><span class="pre">beforeUpdate</span></code>/<code class="docutils literal notranslate"><span class="pre">beforeDelete</span></code>
 events and before any database queries are executed.</p></li>
 <li><p>For <code class="docutils literal notranslate"><span class="pre">insert()</span></code> and <code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code> (when auto-increment is disabled): Validation happens
 <strong>after</strong> the <code class="docutils literal notranslate"><span class="pre">beforeInsert</span></code> event but <strong>before</strong> database queries are executed.</p></li>
 </ul>
-</div></blockquote>
+</dd>
+</dl>
 </li>
-<li><p><strong>Invalid values:</strong> The following values are now explicitly rejected as primary keys:</p>
-<blockquote>
-<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Invalid values:</strong> The following values are now explicitly rejected as primary keys:</dt><dd><ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">null</span></code> (for insert when auto-increment is disabled)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">0</span></code> (integer zero)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">'0'</span></code> (string zero)</p></li>
@@ -401,7 +395,8 @@ events and before any database queries are executed.</p></li>
 <li><p>Nested arrays (e.g., <code class="docutils literal notranslate"><span class="pre">[[1,</span> <span class="pre">2]]</span></code>)</p></li>
 <li><p>Arrays containing any of the above invalid values</p></li>
 </ul>
-</div></blockquote>
+</dd>
+</dl>
 <p><strong>Note:</strong> <code class="docutils literal notranslate"><span class="pre">RawSql</span></code> objects are allowed as primary key values for complex scenarios
 where you need to use raw SQL expressions.</p>
 </li>
@@ -414,7 +409,7 @@ prevents invalid queries from reaching the database.</p>
 </section>
 </section>
 <section id="entity">
-<h4><a class="toc-backref" href="#id7" role="doc-backlink">Entity</a><a class="headerlink" href="#entity" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id6" role="doc-backlink">Entity</a><a class="headerlink" href="#entity" title="Permalink to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">Entity::hasChanged()</span></code> and <code class="docutils literal notranslate"><span class="pre">Entity::syncOriginal()</span></code> methods now perform deep comparison
 for objects and arrays instead of shallow comparison. This means:</p>
 <ul class="simple">
@@ -443,17 +438,17 @@ If you were relying on the old behavior where arrays remained unconverted, you w
 your code.</p>
 </section>
 <section id="entity-and-datacaster">
-<h4><a class="toc-backref" href="#id8" role="doc-backlink">Entity and DataCaster</a><a class="headerlink" href="#entity-and-datacaster" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id7" role="doc-backlink">Entity and DataCaster</a><a class="headerlink" href="#entity-and-datacaster" title="Permalink to this heading"></a></h4>
 <p>Previously, the <code class="docutils literal notranslate"><span class="pre">DataCaster</span></code> object was always initialized, even when type casting was not configured (an empty <code class="docutils literal notranslate"><span class="pre">$casts</span> <span class="pre">=</span> <span class="pre">[]</span></code> array).</p>
 <p><code class="docutils literal notranslate"><span class="pre">DataCaster</span></code> is now created on demand and will be <code class="docutils literal notranslate"><span class="pre">null</span></code> when type casting is not configured.
 While this change should not affect typical usage, developers should be aware that <code class="docutils literal notranslate"><span class="pre">$dataCaster</span></code> may now be nullable in some cases.</p>
 </section>
 <section id="encryption-handlers">
-<h4><a class="toc-backref" href="#id9" role="doc-backlink">Encryption Handlers</a><a class="headerlink" href="#encryption-handlers" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id8" role="doc-backlink">Encryption Handlers</a><a class="headerlink" href="#encryption-handlers" title="Permalink to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">OpenSSLHandler</span></code> and <code class="docutils literal notranslate"><span class="pre">SodiumHandler</span></code> no longer modify the handler’s <code class="docutils literal notranslate"><span class="pre">$key</span></code> property
 when encryption/decryption parameters are passed via the <code class="docutils literal notranslate"><span class="pre">$params</span></code> argument. Keys passed through
 <code class="docutils literal notranslate"><span class="pre">$params</span></code> are now used as local variables, ensuring the handler’s state remains unchanged.</p>
-<p><strong>What changed:</strong></p>
+<p><strong>What Changed:</strong></p>
 <ul class="simple">
 <li><p>Previously, passing a key via <code class="docutils literal notranslate"><span class="pre">$params</span></code> to <code class="docutils literal notranslate"><span class="pre">encrypt()</span></code> or <code class="docutils literal notranslate"><span class="pre">decrypt()</span></code> would permanently
 modify the handler’s internal <code class="docutils literal notranslate"><span class="pre">$key</span></code> property.</p></li>
@@ -497,7 +492,7 @@ service instead of relying on <code class="docutils literal notranslate"><span c
 </section>
 </section>
 <section id="interface-changes">
-<h3><a class="toc-backref" href="#id10" role="doc-backlink">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Permalink to this heading"></a></h3>
 <p><strong>NOTE:</strong> If you’ve implemented your own classes that implement these interfaces from scratch, you will need to update your implementations to include the new methods to ensure compatibility.</p>
 <ul class="simple">
 <li><p><strong>Cache:</strong> The <code class="docutils literal notranslate"><span class="pre">CacheInterface</span></code> now includes the <code class="docutils literal notranslate"><span class="pre">deleteMatching()</span></code> method.</p></li>
@@ -507,7 +502,7 @@ service instead of relying on <code class="docutils literal notranslate"><span c
 </ul>
 </section>
 <section id="method-signature-changes">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>BaseModel:</strong> The type of the <code class="docutils literal notranslate"><span class="pre">$row</span></code> parameter for the <code class="docutils literal notranslate"><span class="pre">cleanValidationRules()</span></code> method has been changed from <code class="docutils literal notranslate"><span class="pre">?array</span> <span class="pre">$row</span> <span class="pre">=</span> <span class="pre">null</span></code> to <code class="docutils literal notranslate"><span class="pre">array</span> <span class="pre">$row</span></code>.</p></li>
 <li><p><strong>PageCache:</strong> The <code class="docutils literal notranslate"><span class="pre">PageCache</span></code> filter constructor now accepts an optional <code class="docutils literal notranslate"><span class="pre">Cache</span></code> configuration parameter: <code class="docutils literal notranslate"><span class="pre">__construct(?Cache</span> <span class="pre">$config</span> <span class="pre">=</span> <span class="pre">null)</span></code>. This allows dependency injection for testing purposes. While this is technically a breaking change if you extend the <code class="docutils literal notranslate"><span class="pre">PageCache</span></code> class with your own constructor, it should not affect most users as the parameter has a default value.</p></li>
@@ -585,13 +580,13 @@ service instead of relying on <code class="docutils literal notranslate"><span c
 </ul>
 </section>
 <section id="property-signature-changes">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">Property Signature Changes</a><a class="headerlink" href="#property-signature-changes" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Property Signature Changes</a><a class="headerlink" href="#property-signature-changes" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Entity:</strong> The protected property <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Entity\Entity::$dataCaster</span></code> type has been changed from <code class="docutils literal notranslate"><span class="pre">DataCaster</span></code> to <code class="docutils literal notranslate"><span class="pre">?DataCaster</span></code> (nullable).</p></li>
 </ul>
 </section>
 <section id="removed-deprecated-items">
-<h3><a class="toc-backref" href="#id13" role="doc-backlink">Removed Deprecated Items</a><a class="headerlink" href="#removed-deprecated-items" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Removed Deprecated Items</a><a class="headerlink" href="#removed-deprecated-items" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>BaseModel:</strong> The deprecated method <code class="docutils literal notranslate"><span class="pre">transformDataRowToArray()</span></code> has been removed.</p></li>
 <li><p><strong>Cache:</strong> The deprecated return type <code class="docutils literal notranslate"><span class="pre">false</span></code> for <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Cache\CacheInterface::getMetaData()</span></code> has been replaced with <code class="docutils literal notranslate"><span class="pre">null</span></code> type.</p></li>
@@ -627,9 +622,9 @@ service instead of relying on <code class="docutils literal notranslate"><span c
 </section>
 </section>
 <section id="enhancements">
-<h2><a class="toc-backref" href="#id14" role="doc-backlink">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this heading"></a></h2>
 <section id="libraries">
-<h3><a class="toc-backref" href="#id15" role="doc-backlink">Libraries</a><a class="headerlink" href="#libraries" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Libraries</a><a class="headerlink" href="#libraries" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>API Transformers:</strong> This new feature provides a structured way to transform data for API responses. See <a class="reference internal" href="../outgoing/api_transformers.html#api-transformers"><span class="std std-ref">API Transformers</span></a> for details.</p></li>
 <li><p><strong>CLI:</strong> Added <code class="docutils literal notranslate"><span class="pre">SignalTrait</span></code> to provide unified handling of operating system signals in CLI commands.</p></li>
@@ -652,52 +647,35 @@ service instead of relying on <code class="docutils literal notranslate"><span c
 <li><p><strong>Time:</strong> added methods <code class="docutils literal notranslate"><span class="pre">Time::addCalendarMonths()</span></code> and <code class="docutils literal notranslate"><span class="pre">Time::subCalendarMonths()</span></code></p></li>
 <li><p><strong>Time:</strong> Added <code class="docutils literal notranslate"><span class="pre">Time::isPast()</span></code> and <code class="docutils literal notranslate"><span class="pre">Time::isFuture()</span></code> convenience methods. See <a class="reference internal" href="../libraries/time.html#time-comparing-two-times-ispast"><span class="std std-ref">isPast</span></a> and <a class="reference internal" href="../libraries/time.html#time-comparing-two-times-isfuture"><span class="std std-ref">isFuture</span></a> for details.</p></li>
 <li><p><strong>Toolbar:</strong> Fixed an issue where the Debug Toolbar was incorrectly injected into responses generated by third-party libraries (e.g., Dompdf) that use native PHP headers instead of the framework’s Response object.</p></li>
+<li><p><strong>UserAgents:</strong> Expanded the list of recognized <code class="docutils literal notranslate"><span class="pre">robots</span></code> with new search engine and service crawlers.</p></li>
 <li><p><strong>View:</strong> Added the ability to override namespaced views (e.g., from modules/packages) by placing a matching file structure within the <strong>app/Views/overrides</strong> directory. See <a class="reference internal" href="../outgoing/views.html#views-overriding-namespaced-views"><span class="std std-ref">Overriding Namespaced Views</span></a> for details.</p></li>
 </ul>
 </section>
 <section id="commands">
-<h3><a class="toc-backref" href="#id16" role="doc-backlink">Commands</a><a class="headerlink" href="#commands" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">Commands</a><a class="headerlink" href="#commands" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">worker:install</span></code> command to generate FrankenPHP worker mode files (Caddyfile and worker entry point).</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">worker:uninstall</span></code> command to remove worker mode files.</p></li>
 </ul>
 </section>
-<section id="testing">
-<h3><a class="toc-backref" href="#id17" role="doc-backlink">Testing</a><a class="headerlink" href="#testing" title="Permalink to this heading"></a></h3>
-</section>
 <section id="database">
-<h3><a class="toc-backref" href="#id18" role="doc-backlink">Database</a><a class="headerlink" href="#database" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">Database</a><a class="headerlink" href="#database" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>BaseConnection:</strong> Added <code class="docutils literal notranslate"><span class="pre">ping()</span></code> method to check if the database connection is still alive. OCI8 uses <code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">1</span> <span class="pre">FROM</span> <span class="pre">DUAL</span></code>, other drivers use <code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">1</span></code>.</p></li>
 <li><p><strong>BaseConnection:</strong> The <code class="docutils literal notranslate"><span class="pre">reconnect()</span></code> method now uses <code class="docutils literal notranslate"><span class="pre">ping()</span></code> to check if the connection is alive before reconnecting. Previously, some drivers would always close and reconnect unconditionally, and OCI8’s <code class="docutils literal notranslate"><span class="pre">reconnect()</span></code> did nothing.</p></li>
 <li><p><strong>Exception Logging:</strong> All DB drivers now log database exceptions uniformly. Previously, each driver had its own log format.</p></li>
 </ul>
-<section id="query-builder">
-<h4><a class="toc-backref" href="#id19" role="doc-backlink">Query Builder</a><a class="headerlink" href="#query-builder" title="Permalink to this heading"></a></h4>
-</section>
-<section id="forge">
-<h4><a class="toc-backref" href="#id20" role="doc-backlink">Forge</a><a class="headerlink" href="#forge" title="Permalink to this heading"></a></h4>
-</section>
 <section id="migrations">
-<h4><a class="toc-backref" href="#id21" role="doc-backlink">Migrations</a><a class="headerlink" href="#migrations" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id17" role="doc-backlink">Migrations</a><a class="headerlink" href="#migrations" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p><strong>MigrationRunner:</strong> Added distributed locking support to prevent concurrent migrations in multi-process environments. Enable with <code class="docutils literal notranslate"><span class="pre">Config\Migrations::$lock</span> <span class="pre">=</span> <span class="pre">true</span></code>.</p></li>
 </ul>
 </section>
-<section id="others">
-<h4><a class="toc-backref" href="#id22" role="doc-backlink">Others</a><a class="headerlink" href="#others" title="Permalink to this heading"></a></h4>
-<ul class="simple">
-<li><p><strong>UserAgents:</strong> Expanded the list of recognized <code class="docutils literal notranslate"><span class="pre">robots</span></code> with new search engine and service crawlers.</p></li>
-</ul>
-</section>
-</section>
-<section id="model">
-<h3><a class="toc-backref" href="#id23" role="doc-backlink">Model</a><a class="headerlink" href="#model" title="Permalink to this heading"></a></h3>
 </section>
 <section id="http">
-<h3><a class="toc-backref" href="#id24" role="doc-backlink">HTTP</a><a class="headerlink" href="#http" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">HTTP</a><a class="headerlink" href="#http" title="Permalink to this heading"></a></h3>
 <section id="content-security-policy">
-<h4><a class="toc-backref" href="#id25" role="doc-backlink">Content Security Policy</a><a class="headerlink" href="#content-security-policy" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id19" role="doc-backlink">Content Security Policy</a><a class="headerlink" href="#content-security-policy" title="Permalink to this heading"></a></h4>
 <ul>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">script-src</span></code> and <code class="docutils literal notranslate"><span class="pre">style-src</span></code> directives can now use SHA-256, SHA-384, and SHA-512 digests as their source expressions.</p></li>
 <li><dl class="simple">
@@ -731,15 +709,15 @@ service instead of relying on <code class="docutils literal notranslate"><span c
 </ul>
 </section>
 </section>
-<section id="id1">
-<h3><a class="toc-backref" href="#id26" role="doc-backlink">Others</a><a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<section id="others">
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">Others</a><a class="headerlink" href="#others" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Controller Attributes:</strong> Added support for PHP Attributes to define filters and other metadata on controller classes and methods. See <a class="reference internal" href="../incoming/controller_attributes.html#incoming-controller-attributes"><span class="std std-ref">Controller Attributes</span></a> for details.</p></li>
 </ul>
 </section>
 </section>
 <section id="message-changes">
-<h2><a class="toc-backref" href="#id27" role="doc-backlink">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id21" role="doc-backlink">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">Email.invalidSMTPAuthMethod</span></code>, <code class="docutils literal notranslate"><span class="pre">Email.failureSMTPAuthMethod</span></code>, <code class="docutils literal notranslate"><span class="pre">CLI.signals.noPcntlExtension</span></code>, <code class="docutils literal notranslate"><span class="pre">CLI.signals.noPosixExtension</span></code> and <code class="docutils literal notranslate"><span class="pre">CLI.signals.failedSignal</span></code>.</p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Email.failedSMTPLogin</span></code> and <code class="docutils literal notranslate"><span class="pre">Image.libPathInvalid</span></code>.</p></li>
@@ -747,7 +725,7 @@ service instead of relying on <code class="docutils literal notranslate"><span c
 </ul>
 </section>
 <section id="changes">
-<h2><a class="toc-backref" href="#id28" role="doc-backlink">Changes</a><a class="headerlink" href="#changes" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id22" role="doc-backlink">Changes</a><a class="headerlink" href="#changes" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Boot:</strong> Added <code class="docutils literal notranslate"><span class="pre">Boot::bootWorker()</span></code> method for one-time worker initialization.</p></li>
 <li><p><strong>CodeIgniter:</strong> Added <code class="docutils literal notranslate"><span class="pre">CodeIgniter::resetForWorkerMode()</span></code> method to reset request-specific state between worker requests.</p></li>
@@ -763,7 +741,7 @@ service instead of relying on <code class="docutils literal notranslate"><span c
 </ul>
 </section>
 <section id="deprecations">
-<h2><a class="toc-backref" href="#id29" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id23" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><dl class="simple">
 <dt><strong>ContentSecurityPolicy:</strong></dt><dd><ul>
@@ -790,7 +768,7 @@ service instead of relying on <code class="docutils literal notranslate"><span c
 </ul>
 </section>
 <section id="bugs-fixed">
-<h2><a class="toc-backref" href="#id30" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id24" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Cookie:</strong> The <code class="docutils literal notranslate"><span class="pre">CookieInterface::SAMESITE_STRICT</span></code>, <code class="docutils literal notranslate"><span class="pre">CookieInterface::SAMESITE_LAX</span></code>, and <code class="docutils literal notranslate"><span class="pre">CookieInterface::SAMESITE_NONE</span></code> constants are now written in ucfirst style to be consistent with usage in the rest of the framework.</p></li>
 <li><p><strong>Cache:</strong> Changed <code class="docutils literal notranslate"><span class="pre">WincacheHandler::increment()</span></code> and <code class="docutils literal notranslate"><span class="pre">WincacheHandler::decrement()</span></code> to return <code class="docutils literal notranslate"><span class="pre">bool</span></code> instead of <code class="docutils literal notranslate"><span class="pre">mixed</span></code>.</p></li>
