@@ -694,6 +694,27 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     #[PreserveGlobalState(false)]
     #[RunInSeparateProcess]
+    public function testHashDigestsInScriptSrc(): void
+    {
+        $sha256 = sprintf('sha256-%s', base64_encode(hash('sha256', 'test-script', true)));
+        $sha384 = sprintf('sha384-%s', base64_encode(hash('sha384', 'test-script', true)));
+        $sha512 = sprintf('sha512-%s', base64_encode(hash('sha512', 'test-script', true)));
+
+        $this->csp->addScriptSrc($sha256);
+        $this->csp->addScriptSrc($sha384);
+        $this->csp->addScriptSrc($sha512);
+        $this->assertTrue($this->work());
+
+        $header = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertIsString($header);
+        $this->assertContains(
+            sprintf("script-src 'self' '%s' '%s' '%s'", $sha256, $sha384, $sha512),
+            $this->getCspDirectives($header),
+        );
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
     public function testHeaderWrongCaseNotFound(): void
     {
         $this->assertTrue($this->work());

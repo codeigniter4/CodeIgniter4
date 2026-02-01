@@ -280,7 +280,6 @@ Libraries
 - **Cache:** Added support for HTTP status in ``ResponseCache``.
 - **Cache:** Added ``Config\Cache::$cacheStatusCodes`` to control which HTTP status codes are allowed to be cached by the ``PageCache`` filter. Defaults to ``[]`` (all status codes for backward compatibility). Recommended value: ``[200]`` to only cache successful responses. See :ref:`Setting $cacheStatusCodes <web_page_caching_cache_status_codes>` for details.
 - **Cache:** Added `APCu <https://www.php.net/apcu>`_ caching driver.
-- **ContentSecurityPolicy:** Added new CSP3 keyword-sources to support the latest CSP3 specification.
 - **CURLRequest:** Added ``shareConnection`` config item to change default share connection.
 - **CURLRequest:** Added ``dns_cache_timeout`` option to change default DNS cache timeout.
 - **CURLRequest:** Added ``fresh_connect`` options to enable/disable request fresh connection.
@@ -338,6 +337,17 @@ HTTP
 Content Security Policy
 -----------------------
 
+- Added support for the new CSP Level 3 keywords:
+    - ``'strict-dynamic'``
+    - ``'unsafe-hashes'``
+    - ``'report-sample'``
+    - ``'unsafe-allow-redirects'``
+    - ``'wasm-unsafe-eval'``
+    - ``'trusted-types-eval'``
+    - ``'report-sha256'``
+    - ``'report-sha384'``
+    - ``'report-sha512'``
+- Hash values for CSP ``script-src`` and ``style-src`` directives can now use SHA-256, SHA-384, and SHA-512 digests.
 - Added support for the following CSP Level 3 directives:
     - ``script-src-elem``
 
