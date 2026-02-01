@@ -493,7 +493,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
         $html = safe_mailto('foo@example.jp', 'Foo');
 
-        $this->assertMatchesRegularExpression('/<script .*?nonce="\w+?".*?>/u', $html);
+        $this->assertMatchesRegularExpression('/<script .*?nonce="[a-zA-Z0-9+\/]+[=]{0,2}".*?>/u', $html);
     }
 
     /**
