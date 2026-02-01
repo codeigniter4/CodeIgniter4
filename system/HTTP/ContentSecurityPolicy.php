@@ -843,7 +843,13 @@ class ContentSecurityPolicy
         $reportSources = [];
 
         foreach ($values as $value => $reportOnly) {
-            if (str_starts_with($value, 'nonce-') || in_array($value, $this->validSources, true)) {
+            if (
+                in_array($value, $this->validSources, true)
+                || str_starts_with($value, 'nonce-')
+                || str_starts_with($value, 'sha256-')
+                || str_starts_with($value, 'sha384-')
+                || str_starts_with($value, 'sha512-')
+            ) {
                 $value = "'{$value}'";
             }
 
