@@ -65,6 +65,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
@@ -74,11 +75,9 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static Pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News Section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create News Items</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
 </ul>
 </li>
 </ul>
@@ -116,6 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controller_attributes.html">Controller Attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
@@ -136,7 +136,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_transformers.html">API Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/csp.html">Content Security Policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
@@ -244,6 +245,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_signals.html">CLI Signals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
 </ul>
 </li>
@@ -457,7 +459,7 @@ behavior but only want to change defaults for a limited time, you can take advan
 <span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getPrefix</span><span class="p">();</span>           <span class="c1">// &#39;__Secure-&#39;</span>
 <span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getPrefixedName</span><span class="p">();</span>     <span class="c1">// &#39;__Secure-remember_token&#39;</span>
 <span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getExpiresTimestamp</span><span class="p">();</span> <span class="c1">// UNIX timestamp</span>
-<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getExpiresString</span><span class="p">();</span>    <span class="c1">// &#39;Fri, 14-Feb-2025 00:00:00 GMT&#39;</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getExpiresString</span><span class="p">();</span>    <span class="c1">// &#39;Fri, 14 Feb 2025 00:00:00 GMT&#39;</span>
 <span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">isExpired</span><span class="p">();</span>           <span class="c1">// false</span>
 <span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getMaxAge</span><span class="p">();</span>           <span class="c1">// the difference from time() to expires</span>
 <span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">isRaw</span><span class="p">();</span>               <span class="c1">// false</span>
@@ -548,9 +550,9 @@ also take advantage of the class’s constants to make it not a hassle.</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
 
-<span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_LAX</span><span class="p">;</span>       <span class="c1">// &#39;lax&#39;</span>
-<span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_STRICT</span><span class="p">;</span>    <span class="c1">// &#39;strict&#39;</span>
-<span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_NONE</span><span class="p">;</span>      <span class="c1">// &#39;none&#39;</span>
+<span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_LAX</span><span class="p">;</span>    <span class="c1">// &#39;Lax&#39;</span>
+<span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_STRICT</span><span class="p">;</span> <span class="c1">// &#39;Strict&#39;</span>
+<span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_NONE</span><span class="p">;</span>   <span class="c1">// &#39;None&#39;</span>
 </pre></div>
 </div>
 </section>

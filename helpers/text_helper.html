@@ -65,6 +65,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
@@ -74,11 +75,9 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static Pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News Section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create News Items</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
 </ul>
 </li>
 </ul>
@@ -116,6 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controller_attributes.html">Controller Attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
@@ -136,7 +136,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_transformers.html">API Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/csp.html">Content Security Policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
@@ -244,6 +245,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_signals.html">CLI Signals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
 </ul>
 </li>
@@ -330,23 +332,13 @@
 </dl>
 <p>Generates a random string based on the type and length you specify.
 Useful for creating passwords or generating random hashes.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>For types: <strong>basic</strong>, <strong>md5</strong>, and <strong>sha1</strong>, generated strings
-are not cryptographically secure. Therefore, these types cannot be used
-for cryptographic purposes or purposes requiring unguessable return values.
-Since v4.3.3, these types are deprecated.</p>
-</div>
 <p>The first parameter specifies the type of string, the second parameter
 specifies the length. The following choices are available:</p>
 <ul class="simple">
 <li><p><strong>alpha</strong>: A string with lower and uppercase letters only.</p></li>
 <li><p><strong>alnum</strong>: Alphanumeric string with lower and uppercase characters.</p></li>
-<li><p><strong>basic</strong>: [deprecated] A random number based on <code class="docutils literal notranslate"><span class="pre">mt_rand()</span></code> (length ignored).</p></li>
 <li><p><strong>numeric</strong>: Numeric string.</p></li>
 <li><p><strong>nozero</strong>: Numeric string with no zeros.</p></li>
-<li><p><strong>md5</strong>: [deprecated] An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">md5()</span></code> (fixed length of 32).</p></li>
-<li><p><strong>sha1</strong>: [deprecated] An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">sha1()</span></code> (fixed length of 40).</p></li>
 <li><p><strong>crypto</strong>: A random string based on <code class="docutils literal notranslate"><span class="pre">random_bytes()</span></code>.</p></li>
 </ul>
 <div class="admonition note">

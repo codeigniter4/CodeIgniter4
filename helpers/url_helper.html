@@ -65,6 +65,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
@@ -74,11 +75,9 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static Pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News Section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create News Items</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
 </ul>
 </li>
 </ul>
@@ -116,6 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controller_attributes.html">Controller Attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
@@ -136,7 +136,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_transformers.html">API Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/csp.html">Content Security Policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
@@ -244,6 +245,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_signals.html">CLI Signals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
 </ul>
 </li>
@@ -873,6 +875,44 @@ forced. By default they are not. Options are boolean true/false.</p>
 </dl>
 <p>This function works the same as <a class="reference internal" href="#url_title" title="url_title"><code class="xref php php-func docutils literal notranslate"><span class="pre">url_title()</span></code></a> but it converts all
 accented characters automatically.</p>
+</dd></dl>
+
+<dl class="php function">
+<dt class="sig sig-object php" id="parse_subdomain">
+<span class="sig-name descname"><span class="pre">parse_subdomain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$hostname</span></em><span class="sig-paren">)</span><a class="headerlink" href="#parse_subdomain" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$hostname</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – The hostname to parse. If null, uses the current request’s host.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The subdomain, or an empty string if none exists.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
+</dd>
+</dl>
+<p>Parses the subdomain from the given host name.</p>
+<p>Here are some examples:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Outputs &quot;blog&quot;</span>
+<span class="k">echo</span> <span class="nx">parse_subdomain</span><span class="p">(</span><span class="s1">&#39;blog.example.com&#39;</span><span class="p">);</span>
+
+<span class="c1">// Outputs an empty string</span>
+<span class="k">echo</span> <span class="nx">parse_subdomain</span><span class="p">(</span><span class="s1">&#39;example.com&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">parse_subdomain</span><span class="p">(</span><span class="s1">&#39;example.co.uk&#39;</span><span class="p">);</span>
+
+<span class="c1">// Outputs &quot;shop&quot; - correctly handles two-part TLDs</span>
+<span class="k">echo</span> <span class="nx">parse_subdomain</span><span class="p">(</span><span class="s1">&#39;shop.example.co.uk&#39;</span><span class="p">);</span>
+
+<span class="c1">// Outputs &quot;shop.old&quot;</span>
+<span class="k">echo</span> <span class="nx">parse_subdomain</span><span class="p">(</span><span class="s1">&#39;shop.old.example.co.uk&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You can customize the list of known two-part TLDs by adding them to the
+<code class="docutils literal notranslate"><span class="pre">Config\Hostnames::TWO_PART_TLDS</span></code> array.</p>
 </dd></dl>
 
 <dl class="php function">

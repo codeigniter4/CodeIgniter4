@@ -65,6 +65,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
@@ -74,11 +75,9 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static Pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News Section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create News Items</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
 </ul>
 </li>
 </ul>
@@ -116,6 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controller_attributes.html">Controller Attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
@@ -136,7 +136,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_transformers.html">API Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/csp.html">Content Security Policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
@@ -244,6 +245,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_signals.html">CLI Signals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
 </ul>
 </li>
@@ -299,38 +301,41 @@ or communicate with an API, among many other things.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#config-for-curlrequest" id="id1">Config for CURLRequest</a></p>
 <ul>
-<li><p><a class="reference internal" href="#sharing-options" id="id2">Sharing Options</a></p></li>
+<li><p><a class="reference internal" href="#sharing-connection" id="id2">Sharing Connection</a></p></li>
+<li><p><a class="reference internal" href="#sharing-options" id="id3">Sharing Options</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#loading-the-library" id="id3">Loading the Library</a></p></li>
-<li><p><a class="reference internal" href="#working-with-the-library" id="id4">Working with the Library</a></p>
+<li><p><a class="reference internal" href="#loading-the-library" id="id4">Loading the Library</a></p></li>
+<li><p><a class="reference internal" href="#working-with-the-library" id="id5">Working with the Library</a></p>
 <ul>
-<li><p><a class="reference internal" href="#making-requests" id="id5">Making Requests</a></p></li>
-<li><p><a class="reference internal" href="#using-responses" id="id6">Using Responses</a></p></li>
+<li><p><a class="reference internal" href="#making-requests" id="id6">Making Requests</a></p></li>
+<li><p><a class="reference internal" href="#using-responses" id="id7">Using Responses</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#request-options" id="id7">Request Options</a></p>
+<li><p><a class="reference internal" href="#request-options" id="id8">Request Options</a></p>
 <ul>
-<li><p><a class="reference internal" href="#allow-redirects" id="id8">allow_redirects</a></p></li>
-<li><p><a class="reference internal" href="#auth" id="id9">auth</a></p></li>
-<li><p><a class="reference internal" href="#body" id="id10">body</a></p></li>
-<li><p><a class="reference internal" href="#cert" id="id11">cert</a></p></li>
-<li><p><a class="reference internal" href="#connect-timeout" id="id12">connect_timeout</a></p></li>
-<li><p><a class="reference internal" href="#cookie" id="id13">cookie</a></p></li>
-<li><p><a class="reference internal" href="#debug" id="id14">debug</a></p></li>
-<li><p><a class="reference internal" href="#delay" id="id15">delay</a></p></li>
-<li><p><a class="reference internal" href="#form-params" id="id16">form_params</a></p></li>
-<li><p><a class="reference internal" href="#headers" id="id17">headers</a></p></li>
-<li><p><a class="reference internal" href="#http-errors" id="id18">http_errors</a></p></li>
-<li><p><a class="reference internal" href="#json" id="id19">json</a></p></li>
-<li><p><a class="reference internal" href="#multipart" id="id20">multipart</a></p></li>
-<li><p><a class="reference internal" href="#proxy" id="id21">proxy</a></p></li>
-<li><p><a class="reference internal" href="#query" id="id22">query</a></p></li>
-<li><p><a class="reference internal" href="#timeout" id="id23">timeout</a></p></li>
-<li><p><a class="reference internal" href="#user-agent" id="id24">user_agent</a></p></li>
-<li><p><a class="reference internal" href="#verify" id="id25">verify</a></p></li>
-<li><p><a class="reference internal" href="#force-ip-resolve" id="id26">force_ip_resolve</a></p></li>
-<li><p><a class="reference internal" href="#version" id="id27">version</a></p></li>
+<li><p><a class="reference internal" href="#allow-redirects" id="id9">allow_redirects</a></p></li>
+<li><p><a class="reference internal" href="#auth" id="id10">auth</a></p></li>
+<li><p><a class="reference internal" href="#body" id="id11">body</a></p></li>
+<li><p><a class="reference internal" href="#cert" id="id12">cert</a></p></li>
+<li><p><a class="reference internal" href="#connect-timeout" id="id13">connect_timeout</a></p></li>
+<li><p><a class="reference internal" href="#cookie" id="id14">cookie</a></p></li>
+<li><p><a class="reference internal" href="#debug" id="id15">debug</a></p></li>
+<li><p><a class="reference internal" href="#delay" id="id16">delay</a></p></li>
+<li><p><a class="reference internal" href="#dns-cache-timeout" id="id17">dns_cache_timeout</a></p></li>
+<li><p><a class="reference internal" href="#form-params" id="id18">form_params</a></p></li>
+<li><p><a class="reference internal" href="#fresh-connect" id="id19">fresh_connect</a></p></li>
+<li><p><a class="reference internal" href="#headers" id="id20">headers</a></p></li>
+<li><p><a class="reference internal" href="#http-errors" id="id21">http_errors</a></p></li>
+<li><p><a class="reference internal" href="#json" id="id22">json</a></p></li>
+<li><p><a class="reference internal" href="#multipart" id="id23">multipart</a></p></li>
+<li><p><a class="reference internal" href="#proxy" id="id24">proxy</a></p></li>
+<li><p><a class="reference internal" href="#query" id="id25">query</a></p></li>
+<li><p><a class="reference internal" href="#timeout" id="id26">timeout</a></p></li>
+<li><p><a class="reference internal" href="#user-agent" id="id27">user_agent</a></p></li>
+<li><p><a class="reference internal" href="#verify" id="id28">verify</a></p></li>
+<li><p><a class="reference internal" href="#force-ip-resolve" id="id29">force_ip_resolve</a></p></li>
+<li><p><a class="reference internal" href="#version" id="id30">version</a></p></li>
 </ul>
 </li>
 </ul>
@@ -347,8 +352,70 @@ will provide it, so please check with your host to verify if you run into proble
 </div>
 <section id="config-for-curlrequest">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Config for CURLRequest</a><a class="headerlink" href="#config-for-curlrequest" title="Permalink to this heading"></a></h2>
+<section id="sharing-connection">
+<span id="curlrequest-sharing-connection"></span><h3><a class="toc-backref" href="#id2" role="doc-backlink">Sharing Connection</a><a class="headerlink" href="#sharing-connection" title="Permalink to this heading"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.7.0.</span></p>
+</div>
+<p>By default, this option is enabled with the constants <code class="docutils literal notranslate"><span class="pre">CURL_LOCK_DATA_CONNECT</span></code> and <code class="docutils literal notranslate"><span class="pre">CURL_LOCK_DATA_DNS</span></code>.</p>
+<p>If you want to share connection between requests, set <code class="docutils literal notranslate"><span class="pre">$shareConnectionOptions</span></code> with array constant <a class="reference external" href="https://www.php.net/manual/en/curl.constants.php#constant.curl-lock-data-connect">CURL_LOCK_DATA_*</a> in <strong>app/Config/CURLRequest.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">CURLRequest</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * --------------------------------------------------------------------------</span>
+<span class="sd">     * CURLRequest Share Connection Options</span>
+<span class="sd">     * --------------------------------------------------------------------------</span>
+<span class="sd">     *</span>
+<span class="sd">     * Share connection options between requests.</span>
+<span class="sd">     *</span>
+<span class="sd">     * @var list&lt;int&gt;</span>
+<span class="sd">     *</span>
+<span class="sd">     * @see https://www.php.net/manual/en/curl.constants.php#constant.curl-lock-data-connect</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">array</span> <span class="nv">$shareConnection</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nx">CURL_LOCK_DATA_CONNECT</span><span class="p">,</span>
+        <span class="nx">CURL_LOCK_DATA_DNS</span><span class="p">,</span>
+    <span class="p">];</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>or when you want to disable it, just change to empty array:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">CURLRequest</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * --------------------------------------------------------------------------</span>
+<span class="sd">     * CURLRequest Share Connection Options</span>
+<span class="sd">     * --------------------------------------------------------------------------</span>
+<span class="sd">     *</span>
+<span class="sd">     * Share connection options between requests.</span>
+<span class="sd">     *</span>
+<span class="sd">     * @var list&lt;int&gt;</span>
+<span class="sd">     *</span>
+<span class="sd">     * @see https://www.php.net/manual/en/curl.constants.php#constant.curl-lock-data-connect</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">array</span> <span class="nv">$shareConnection</span> <span class="o">=</span> <span class="p">[];</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
 <section id="sharing-options">
-<span id="curlrequest-sharing-options"></span><h3><a class="toc-backref" href="#id2" role="doc-backlink">Sharing Options</a><a class="headerlink" href="#sharing-options" title="Permalink to this heading"></a></h3>
+<span id="curlrequest-sharing-options"></span><h3><a class="toc-backref" href="#id3" role="doc-backlink">Sharing Options</a><a class="headerlink" href="#sharing-options" title="Permalink to this heading"></a></h3>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>This setting exists only for backward compatibility. Do not use it
@@ -383,7 +450,7 @@ may cause an error request with unnecessary headers and body.</p>
 </section>
 </section>
 <section id="loading-the-library">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Loading the Library</a><a class="headerlink" href="#loading-the-library" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Loading the Library</a><a class="headerlink" href="#loading-the-library" title="Permalink to this heading"></a></h2>
 <p>The library can be loaded either manually or through the <a class="reference internal" href="../concepts/services.html"><span class="doc">Services class</span></a>.</p>
 <p>To load with the Services class call the <code class="docutils literal notranslate"><span class="pre">curlrequest()</span></code> method or global function <code class="docutils literal notranslate"><span class="pre">service()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -426,12 +493,12 @@ parameter is a Response object. The fourth parameter is the optional default <co
 </div>
 </section>
 <section id="working-with-the-library">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Working with the Library</a><a class="headerlink" href="#working-with-the-library" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Working with the Library</a><a class="headerlink" href="#working-with-the-library" title="Permalink to this heading"></a></h2>
 <p>Working with CURL requests is simply a matter of creating the Request and getting a
 <a class="reference internal" href="../outgoing/response.html"><span class="doc">Response object</span></a> back. It is meant to handle the communications. After that
 you have complete control over how the information is handled.</p>
 <section id="making-requests">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Making Requests</a><a class="headerlink" href="#making-requests" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Making Requests</a><a class="headerlink" href="#making-requests" title="Permalink to this heading"></a></h3>
 <p>Most communication is done through the <code class="docutils literal notranslate"><span class="pre">request()</span></code> method, which fires off the request, and then returns
 a Response instance to you. This takes the HTTP method, the url and an array of options as the parameters.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -537,7 +604,7 @@ examples of how the combinations are resolved.</p>
 </section>
 </section>
 <section id="using-responses">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Using Responses</a><a class="headerlink" href="#using-responses" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Using Responses</a><a class="headerlink" href="#using-responses" title="Permalink to this heading"></a></h3>
 <p>Each <code class="docutils literal notranslate"><span class="pre">request()</span></code> call returns a Response object that contains a lot of useful information and some helpful
 methods. The most commonly used methods let you determine the response itself.</p>
 <p>You can get the status code and reason phrase of the response:</p>
@@ -577,11 +644,11 @@ to ensure that your script handles that:</p>
 </section>
 </section>
 <section id="request-options">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Request Options</a><a class="headerlink" href="#request-options" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Request Options</a><a class="headerlink" href="#request-options" title="Permalink to this heading"></a></h2>
 <p>This section describes all of the available options you may pass into the constructor, the <code class="docutils literal notranslate"><span class="pre">request()</span></code> method,
 or any of the shortcut methods.</p>
 <section id="allow-redirects">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">allow_redirects</a><a class="headerlink" href="#allow-redirects" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">allow_redirects</a><a class="headerlink" href="#allow-redirects" title="Permalink to this heading"></a></h3>
 <p>By default, cURL will not follow any “Location:” headers the remote servers send
 back. The <code class="docutils literal notranslate"><span class="pre">allow_redirects</span></code> option allows you to modify how that works.</p>
 <p>If you set the value to <code class="docutils literal notranslate"><span class="pre">true</span></code>, then it will follow redirects:</p>
@@ -622,7 +689,7 @@ do not expect and may enable SSRF attacks.</p>
 </div>
 </section>
 <section id="auth">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">auth</a><a class="headerlink" href="#auth" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">auth</a><a class="headerlink" href="#auth" title="Permalink to this heading"></a></h3>
 <p>Allows you to provide Authentication details for <a class="reference external" href="https://www.ietf.org/rfc/rfc2069.txt">HTTP Basic</a> and
 <a class="reference external" href="https://www.ietf.org/rfc/rfc2069.txt">Digest</a> and authentication. Your script may have to do extra to support
 Digest authentication - this simply passes the username and password along for you. The value must be an
@@ -635,7 +702,7 @@ the type of authentication to use, either <code class="docutils literal notransl
 </div>
 </section>
 <section id="body">
-<h3><a class="toc-backref" href="#id10" role="doc-backlink">body</a><a class="headerlink" href="#body" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">body</a><a class="headerlink" href="#body" title="Permalink to this heading"></a></h3>
 <p>There are two ways to set the body of the request for request types that support them, like PUT, OR POST.
 The first way is to use the <code class="docutils literal notranslate"><span class="pre">setBody()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -652,7 +719,7 @@ and functions the exact same way as the previous example. The value must be a st
 </div>
 </section>
 <section id="cert">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">cert</a><a class="headerlink" href="#cert" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">cert</a><a class="headerlink" href="#cert" title="Permalink to this heading"></a></h3>
 <p>To specify the location of a PEM formatted client-side certificate, pass a string with the full path to the
 file as the <code class="docutils literal notranslate"><span class="pre">cert</span></code> option. If a password is required, set the value to an array with the first element
 as the path to the certificate, and the second as the password:</p>
@@ -663,7 +730,7 @@ as the path to the certificate, and the second as the password:</p>
 </div>
 </section>
 <section id="connect-timeout">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">connect_timeout</a><a class="headerlink" href="#connect-timeout" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">connect_timeout</a><a class="headerlink" href="#connect-timeout" title="Permalink to this heading"></a></h3>
 <p>By default, CodeIgniter does not impose a limit for cURL to attempt to connect to a website. If you need to
 modify this value, you can do so by passing the amount of time in seconds with the <code class="docutils literal notranslate"><span class="pre">connect_timeout</span></code> option.
 You can pass 0 to wait indefinitely:</p>
@@ -674,7 +741,7 @@ You can pass 0 to wait indefinitely:</p>
 </div>
 </section>
 <section id="cookie">
-<h3><a class="toc-backref" href="#id13" role="doc-backlink">cookie</a><a class="headerlink" href="#cookie" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">cookie</a><a class="headerlink" href="#cookie" title="Permalink to this heading"></a></h3>
 <p>This specifies the filename that CURL should use to read cookie values from, and
 to save cookie values to. This is done using the <code class="docutils literal notranslate"><span class="pre">CURL_COOKIEJAR</span></code> and <code class="docutils literal notranslate"><span class="pre">CURL_COOKIEFILE</span></code> options.
 An example:</p>
@@ -685,7 +752,7 @@ An example:</p>
 </div>
 </section>
 <section id="debug">
-<h3><a class="toc-backref" href="#id14" role="doc-backlink">debug</a><a class="headerlink" href="#debug" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">debug</a><a class="headerlink" href="#debug" title="Permalink to this heading"></a></h3>
 <p>When <code class="docutils literal notranslate"><span class="pre">debug</span></code> is passed and set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, this will enable additional debugging to echo to STDERR during the
 script execution.</p>
 <p>This is done by passing <code class="docutils literal notranslate"><span class="pre">CURLOPT_VERBOSE</span></code> and echoing the output. So, when you’re running a built-in
@@ -704,7 +771,7 @@ the server’s error log.</p>
 </div>
 </section>
 <section id="delay">
-<h3><a class="toc-backref" href="#id15" role="doc-backlink">delay</a><a class="headerlink" href="#delay" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">delay</a><a class="headerlink" href="#delay" title="Permalink to this heading"></a></h3>
 <p>Allows you to pause a number of milliseconds before sending the request:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -713,8 +780,26 @@ the server’s error log.</p>
 </pre></div>
 </div>
 </section>
+<section id="dns-cache-timeout">
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">dns_cache_timeout</a><a class="headerlink" href="#dns-cache-timeout" title="Permalink to this heading"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.7.0.</span></p>
+</div>
+<p>By default, CodeIgniter does not change the DNS Cache Timeout value (<code class="docutils literal notranslate"><span class="pre">120</span></code> seconds). If you need to
+modify this value, you can do so by passing an amount of time in seconds with the <code class="docutils literal notranslate"><span class="pre">dns_cache_timeout</span></code> option.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Modify default DNS Cache Timeout</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;dns_cache_timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">360</span><span class="p">]);</span> <span class="c1">// seconds</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Based on the <a class="reference external" href="https://curl.se/libcurl/c/CURLOPT_DNS_CACHE_TIMEOUT.html">libcurl</a> documentation, you can set to zero (<code class="docutils literal notranslate"><span class="pre">0</span></code>) to completely disable caching, or set to <code class="docutils literal notranslate"><span class="pre">-1</span></code> to make the cached entries remain forever.</p>
+</div>
+</section>
 <section id="form-params">
-<h3><a class="toc-backref" href="#id16" role="doc-backlink">form_params</a><a class="headerlink" href="#form-params" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">form_params</a><a class="headerlink" href="#form-params" title="Permalink to this heading"></a></h3>
 <p>You can send form data in an application/x-www-form-urlencoded POST request by passing an associative array in
 the <code class="docutils literal notranslate"><span class="pre">form_params</span></code> option. This will set the <code class="docutils literal notranslate"><span class="pre">Content-Type</span></code> header to <code class="docutils literal notranslate"><span class="pre">application/x-www-form-urlencoded</span></code>
 if it’s not already set:</p>
@@ -735,8 +820,21 @@ Use <code class="docutils literal notranslate"><span class="pre">form_params</sp
 requests.</p>
 </div>
 </section>
+<section id="fresh-connect">
+<span id="curlrequest-request-options-headers"></span><h3><a class="toc-backref" href="#id19" role="doc-backlink">fresh_connect</a><a class="headerlink" href="#fresh-connect" title="Permalink to this heading"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.7.0.</span></p>
+</div>
+<p>By default, the request is sent using a fresh connection. You can disable this behavior using the <code class="docutils literal notranslate"><span class="pre">fresh_connect</span></code> option:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;fresh_connect&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;fresh_connect&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
+</pre></div>
+</div>
+</section>
 <section id="headers">
-<span id="curlrequest-request-options-headers"></span><h3><a class="toc-backref" href="#id17" role="doc-backlink">headers</a><a class="headerlink" href="#headers" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">headers</a><a class="headerlink" href="#headers" title="Permalink to this heading"></a></h3>
 <p>While you can set any headers this request needs by using the <code class="docutils literal notranslate"><span class="pre">setHeader()</span></code> method, you can also pass an associative
 array of headers in as an option. Each key is the name of a header, and each value is a string or array of strings
 representing the header field values:</p>
@@ -755,7 +853,7 @@ representing the header field values:</p>
 further headers arrays or calls to <code class="docutils literal notranslate"><span class="pre">setHeader()</span></code>.</p>
 </section>
 <section id="http-errors">
-<h3><a class="toc-backref" href="#id18" role="doc-backlink">http_errors</a><a class="headerlink" href="#http-errors" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">http_errors</a><a class="headerlink" href="#http-errors" title="Permalink to this heading"></a></h3>
 <p>By default, CURLRequest will throw <code class="docutils literal notranslate"><span class="pre">HTTPException</span></code> if the HTTP code returned is
 greater than or equal to 400.</p>
 <p>If you want to see the response body, you can set <code class="docutils literal notranslate"><span class="pre">http_errors</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> to
@@ -773,7 +871,7 @@ return the content instead:</p>
 </div>
 </section>
 <section id="json">
-<h3><a class="toc-backref" href="#id19" role="doc-backlink">json</a><a class="headerlink" href="#json" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id22" role="doc-backlink">json</a><a class="headerlink" href="#json" title="Permalink to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">json</span></code> option is used to easily upload JSON encoded data as the body of a request. A Content-Type header
 of <code class="docutils literal notranslate"><span class="pre">application/json</span></code> is added, overwriting any Content-Type that might be already set. The data provided to
 this option can be any value that <code class="docutils literal notranslate"><span class="pre">json_encode()</span></code> accepts:</p>
@@ -790,7 +888,7 @@ method of CURLRequest, and set the Content-Type header with the <code class="doc
 </div>
 </section>
 <section id="multipart">
-<h3><a class="toc-backref" href="#id20" role="doc-backlink">multipart</a><a class="headerlink" href="#multipart" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">multipart</a><a class="headerlink" href="#multipart" title="Permalink to this heading"></a></h3>
 <p>When you need to send files and other data via a POST request, you can use the <code class="docutils literal notranslate"><span class="pre">multipart</span></code> option, along with
 the <a class="reference external" href="https://www.php.net/manual/en/class.curlfile.php">CURLFile Class</a>.</p>
 <p>The values should be an associative array
@@ -814,7 +912,7 @@ requests.</p>
 </div>
 </section>
 <section id="proxy">
-<span id="curlrequest-request-options-proxy"></span><h3><a class="toc-backref" href="#id21" role="doc-backlink">proxy</a><a class="headerlink" href="#proxy" title="Permalink to this heading"></a></h3>
+<span id="curlrequest-request-options-proxy"></span><h3><a class="toc-backref" href="#id24" role="doc-backlink">proxy</a><a class="headerlink" href="#proxy" title="Permalink to this heading"></a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.4.0.</span></p>
 </div>
@@ -830,7 +928,7 @@ requests.</p>
 </div>
 </section>
 <section id="query">
-<h3><a class="toc-backref" href="#id22" role="doc-backlink">query</a><a class="headerlink" href="#query" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">query</a><a class="headerlink" href="#query" title="Permalink to this heading"></a></h3>
 <p>You can pass along data to send as query string variables by passing an associative array as the <code class="docutils literal notranslate"><span class="pre">query</span></code> option:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -840,7 +938,7 @@ requests.</p>
 </div>
 </section>
 <section id="timeout">
-<h3><a class="toc-backref" href="#id23" role="doc-backlink">timeout</a><a class="headerlink" href="#timeout" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id26" role="doc-backlink">timeout</a><a class="headerlink" href="#timeout" title="Permalink to this heading"></a></h3>
 <p>By default, cURL functions are allowed to run as long as they take, with no time limit. You can modify this with the <code class="docutils literal notranslate"><span class="pre">timeout</span></code>
 option. The value should be the number of seconds you want the functions to execute for. Use 0 to wait indefinitely:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -850,7 +948,7 @@ option. The value should be the number of seconds you want the functions to exec
 </div>
 </section>
 <section id="user-agent">
-<h3><a class="toc-backref" href="#id24" role="doc-backlink">user_agent</a><a class="headerlink" href="#user-agent" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id27" role="doc-backlink">user_agent</a><a class="headerlink" href="#user-agent" title="Permalink to this heading"></a></h3>
 <p>Allows specifying the User Agent for requests:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -859,7 +957,7 @@ option. The value should be the number of seconds you want the functions to exec
 </div>
 </section>
 <section id="verify">
-<h3><a class="toc-backref" href="#id25" role="doc-backlink">verify</a><a class="headerlink" href="#verify" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id28" role="doc-backlink">verify</a><a class="headerlink" href="#verify" title="Permalink to this heading"></a></h3>
 <p>This option describes the SSL certificate verification behavior. If the <code class="docutils literal notranslate"><span class="pre">verify</span></code> option is <code class="docutils literal notranslate"><span class="pre">true</span></code>, it enables the
 SSL certificate verification and uses the default CA bundle provided by the operating system. If set to <code class="docutils literal notranslate"><span class="pre">false</span></code> it
 will disable the certificate verification (this is insecure, and allows man-in-the-middle attacks!). You can set it
@@ -879,7 +977,7 @@ is true:</p>
 </div>
 </section>
 <section id="force-ip-resolve">
-<span id="curlrequest-version"></span><h3><a class="toc-backref" href="#id26" role="doc-backlink">force_ip_resolve</a><a class="headerlink" href="#force-ip-resolve" title="Permalink to this heading"></a></h3>
+<span id="curlrequest-version"></span><h3><a class="toc-backref" href="#id29" role="doc-backlink">force_ip_resolve</a><a class="headerlink" href="#force-ip-resolve" title="Permalink to this heading"></a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.6.0.</span></p>
 </div>
@@ -892,7 +990,7 @@ is true:</p>
 </div>
 </section>
 <section id="version">
-<h3><a class="toc-backref" href="#id27" role="doc-backlink">version</a><a class="headerlink" href="#version" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id30" role="doc-backlink">version</a><a class="headerlink" href="#version" title="Permalink to this heading"></a></h3>
 <p>To set the HTTP protocol to use, you can pass a string or float with the version number (typically either <code class="docutils literal notranslate"><span class="pre">1.0</span></code>
 or <code class="docutils literal notranslate"><span class="pre">1.1</span></code>, <code class="docutils literal notranslate"><span class="pre">2.0</span></code> is supported since v4.3.0.):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>

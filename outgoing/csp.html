@@ -27,7 +27,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Localization" href="localization.html" />
-    <link rel="prev" title="API Response Trait" href="api_responses.html" /> 
+    <link rel="prev" title="API Resources" href="api_transformers.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -65,6 +65,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
@@ -74,11 +75,9 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static Pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News Section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create News Items</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
 </ul>
 </li>
 </ul>
@@ -116,6 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controller_attributes.html">Controller Attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
@@ -136,7 +136,8 @@
 <li class="toctree-l2"><a class="reference internal" href="view_decorators.html">View Decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="table.html">HTML Table Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="response.html">HTTP Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_transformers.html">API Resources</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Content Security Policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="localization.html">Localization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="alternative_php.html">Alternate PHP Syntax for View Files</a></li>
@@ -244,6 +245,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_signals.html">CLI Signals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
 </ul>
 </li>
@@ -299,13 +301,14 @@
 <li><p><a class="reference internal" href="#runtime-configuration" id="id4">Runtime Configuration</a></p>
 <ul>
 <li><p><a class="reference internal" href="#report-only" id="id5">Report Only</a></p></li>
-<li><p><a class="reference internal" href="#clear-directives" id="id6">Clear Directives</a></p></li>
+<li><p><a class="reference internal" href="#reporting-directives" id="id6">Reporting Directives</a></p></li>
+<li><p><a class="reference internal" href="#clear-directives" id="id7">Clear Directives</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#inline-content" id="id7">Inline Content</a></p>
+<li><p><a class="reference internal" href="#inline-content" id="id8">Inline Content</a></p>
 <ul>
-<li><p><a class="reference internal" href="#using-placeholders" id="id8">Using Placeholders</a></p></li>
-<li><p><a class="reference internal" href="#using-functions" id="id9">Using Functions</a></p></li>
+<li><p><a class="reference internal" href="#using-placeholders" id="id9">Using Placeholders</a></p></li>
+<li><p><a class="reference internal" href="#using-functions" id="id10">Using Functions</a></p></li>
 </ul>
 </li>
 </ul>
@@ -410,6 +413,13 @@ name or an array of them:</p>
 <span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addScriptSrc</span><span class="p">(</span><span class="s1">&#39;scripts.example.com&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// allow but report requests from here</span>
 <span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addStyleSrc</span><span class="p">(</span><span class="s1">&#39;css.example.com&#39;</span><span class="p">);</span>
 <span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addSandbox</span><span class="p">([</span><span class="s1">&#39;allow-forms&#39;</span><span class="p">,</span> <span class="s1">&#39;allow-scripts&#39;</span><span class="p">]);</span>
+
+<span class="c1">// the following CSP3 directives are available in v4.7.0 and later</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addScriptSrcAttr</span><span class="p">(</span><span class="s1">&#39;trusted.com&#39;</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addScriptSrcElem</span><span class="p">(</span><span class="s1">&#39;trusted.com&#39;</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addStyleSrcAttr</span><span class="p">(</span><span class="s1">&#39;trusted.com&#39;</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addStyleSrcElem</span><span class="p">(</span><span class="s1">&#39;trusted.com&#39;</span><span class="p">);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addWorkerSrc</span><span class="p">(</span><span class="s1">&#39;workers.example.com&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The first parameter to each of the “add” methods is an appropriate string value,
@@ -432,8 +442,36 @@ that youtube.com was allowed, and then provide several allowed but reported sour
 </pre></div>
 </div>
 </section>
+<section id="reporting-directives">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Reporting Directives</a><a class="headerlink" href="#reporting-directives" title="Permalink to this heading"></a></h3>
+<p>To specify the URL you want the reports to be sent to, you can use the <code class="docutils literal notranslate"><span class="pre">setReportURI()</span></code> method.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.7.0.</span></p>
+</div>
+<p>CSP Level 3 deprecates the <code class="docutils literal notranslate"><span class="pre">report-uri</span></code> directive in favor of <code class="docutils literal notranslate"><span class="pre">report-to</span></code>. Therefore, you can
+use the <code class="docutils literal notranslate"><span class="pre">setReportToEndpoint()</span></code> method to set the reporting endpoint for CSP reports. Before adding
+this directive, make sure the reporting endpoints are already defined using the <code class="docutils literal notranslate"><span class="pre">addReportingEndpoints()</span></code> method.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// get the CSP instance</span>
+<span class="nv">$csp</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">getCSP</span><span class="p">();</span>
+
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">setReportURI</span><span class="p">(</span><span class="s1">&#39;https://example.com/csp-reports&#39;</span><span class="p">);</span>
+
+<span class="c1">// Starting in v4.7.0, you can use the setReportToEndpoint() method</span>
+<span class="c1">// to set the reporting endpoint for CSP reports</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addReportingEndpoints</span><span class="p">([</span>
+    <span class="s1">&#39;default&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://example.com/csp-reports&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;reports&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://example.com/other-csp-reports&#39;</span><span class="p">,</span>
+<span class="p">]);</span>
+<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">setReportToEndpoint</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>For backward compatibility with browsers that do not support the <code class="docutils literal notranslate"><span class="pre">report-to</span></code> directive, CodeIgniter4 will also
+set the <code class="docutils literal notranslate"><span class="pre">report-uri</span></code> directive when you use the <code class="docutils literal notranslate"><span class="pre">setReportToEndpoint()</span></code> method.</p>
+</section>
 <section id="clear-directives">
-<span id="csp-clear-directives"></span><h3><a class="toc-backref" href="#id6" role="doc-backlink">Clear Directives</a><a class="headerlink" href="#clear-directives" title="Permalink to this heading"></a></h3>
+<span id="csp-clear-directives"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">Clear Directives</a><a class="headerlink" href="#clear-directives" title="Permalink to this heading"></a></h3>
 <p>If you want to clear existing CSP directives, you can use the <code class="docutils literal notranslate"><span class="pre">clearDirective()</span></code>
 method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -447,12 +485,12 @@ method:</p>
 </section>
 </section>
 <section id="inline-content">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Inline Content</a><a class="headerlink" href="#inline-content" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Inline Content</a><a class="headerlink" href="#inline-content" title="Permalink to this heading"></a></h2>
 <p>It is possible to set a website to not protect even inline scripts and styles on its own pages, since this might have
 been the result of user-generated content. To protect against this, CSP allows you to specify a nonce within the
 <code class="docutils literal notranslate"><span class="pre">&lt;style&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;script&gt;</span></code> tags, and to add those values to the response’s header.</p>
 <section id="using-placeholders">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">Using Placeholders</a><a class="headerlink" href="#using-placeholders" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Using Placeholders</a><a class="headerlink" href="#using-placeholders" title="Permalink to this heading"></a></h3>
 <p>This is a pain to handle in real
 life, and is most secure when generated on the fly. To make this simple, you can include a <code class="docutils literal notranslate"><span class="pre">{csp-style-nonce}</span></code> or
 <code class="docutils literal notranslate"><span class="pre">{csp-script-nonce}</span></code> placeholder in the tag and it will be handled for you automatically:</p>
@@ -478,7 +516,7 @@ life, and is most secure when generated on the fly. To make this simple, you can
 </div>
 </section>
 <section id="using-functions">
-<span id="csp-using-functions"></span><h3><a class="toc-backref" href="#id9" role="doc-backlink">Using Functions</a><a class="headerlink" href="#using-functions" title="Permalink to this heading"></a></h3>
+<span id="csp-using-functions"></span><h3><a class="toc-backref" href="#id10" role="doc-backlink">Using Functions</a><a class="headerlink" href="#using-functions" title="Permalink to this heading"></a></h3>
 <p>If you don’t like the auto replacement functionality above, you can turn it off
 with setting <code class="docutils literal notranslate"><span class="pre">$autoNonce</span> <span class="pre">=</span> <span class="pre">false</span></code> in <strong>app/Config/ContentSecurityPolicy.php</strong>.</p>
 <p>In this case, you can use the functions, <a class="reference internal" href="../general/common_functions.html#csp_script_nonce" title="csp_script_nonce"><code class="xref php php-func docutils literal notranslate"><span class="pre">csp_script_nonce()</span></code></a> and <a class="reference internal" href="../general/common_functions.html#csp_style_nonce" title="csp_style_nonce"><code class="xref php php-func docutils literal notranslate"><span class="pre">csp_style_nonce()</span></code></a>:</p>
@@ -506,7 +544,7 @@ with setting <code class="docutils literal notranslate"><span class="pre">$autoN
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="api_responses.html" class="btn btn-neutral float-left" title="API Response Trait" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api_transformers.html" class="btn btn-neutral float-left" title="API Resources" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="localization.html" class="btn btn-neutral float-right" title="Localization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

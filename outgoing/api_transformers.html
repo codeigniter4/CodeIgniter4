@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Resources &mdash; CodeIgniter 4.6.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Content Security Policy" href="csp.html" />
+    <link rel="prev" title="API Responses" href="api_responses.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/ci-logo-text.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/requirements.html">Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/credits.html">Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/psr.html">PSR Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License Agreement</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/factories.html">Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/http.html">Working with HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/security.html">Security Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/goals.html">Design and Architectural Goals</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../general/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/logging.html">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/ajax.html">AJAX Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controller_attributes.html">Controller Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/methodspoofing.html">HTTP Method Spoofing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/restful.html">RESTful Resource Handling</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Building Responses</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="views.html">Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="view_renderer.html">View Renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="view_layouts.html">View Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="view_cells.html">View Cells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="view_parser.html">View Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="view_decorators.html">View Decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="table.html">HTML Table Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_responses.html">API Responses</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">API Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="csp.html">Content Security Policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alternative_php.html">Alternate PHP Syntax for View Files</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working with Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../database/examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/helpers.html">Query Helper Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/metadata.html">Getting Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/events.html">Database Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/utilities.html">Database Utilities</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../models/model.html">Using CodeIgniter's Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/entities.html">Using Entity Classes</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/forge.html">Database Forge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/migration.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/seeds.html">Database Seeding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/db_commands.html">Database Commands</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/file_collections.html">File Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/honeypot.html">Honeypot Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/images.html">Image Manipulation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/publisher.html">Publisher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/security.html">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/sessions.html">Session Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/throttler.html">Throttler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/time.html">Times and Dates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/typography.html">Typography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uploaded_files.html">Working with Uploaded Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uri.html">Working with URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/user_agent.html">User Agent Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/validation.html">Validation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/array_helper.html">Array Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/cookie_helper.html">Cookie Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/date_helper.html">Date Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/filesystem_helper.html">Filesystem Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/form_helper.html">Form Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/html_helper.html">HTML Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/inflector_helper.html">Inflector Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/number_helper.html">Number Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/security_helper.html">Security Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/test_helper.html">Test Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/text_helper.html">Text Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/url_helper.html">URL Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/xml_helper.html">XML Helper</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../testing/overview.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/fabricator.html">Generating Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/session_testing.html">Session Testing</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_overview.html">CLI Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_controllers.html">Running Controllers via CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/spark_commands.html">Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_signals.html">CLI Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/core_classes.html">Creating Core System Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/common.html">Replacing Common Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/basecontroller.html">Extending the Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/authentication.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/composer_packages.html">Creating Composer Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/contributing.html">Contributing to CodeIgniter</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/official_packages.html">Official Packages</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/outgoing/api_transformers.rst">Edit this page</a>
+
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Building Responses</a></li>
+      <li class="breadcrumb-item active">API Resources</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-resources">
+<span id="api-transformers"></span><h1>API Resources<a class="headerlink" href="#api-resources" title="Permalink to this heading"></a></h1>
+<p>When building APIs, you often need to transform your data models into a consistent format before sending
+them to the client. API Resources, implemented through transformers, provide a clean way to convert your
+entities, arrays, or objects into structured API responses. They help separate your internal data structure
+from what you expose through your API, making it easier to maintain and evolve your API over time.</p>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#quick-example" id="id1">Quick Example</a></p></li>
+<li><p><a class="reference internal" href="#creating-a-transformer" id="id2">Creating a Transformer</a></p>
+<ul>
+<li><p><a class="reference internal" href="#basic-transformer" id="id3">Basic Transformer</a></p></li>
+<li><p><a class="reference internal" href="#generating-transformer-files" id="id4">Generating Transformer Files</a></p></li>
+<li><p><a class="reference internal" href="#using-transformers-in-controllers" id="id5">Using Transformers in Controllers</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#field-filtering" id="id6">Field Filtering</a></p>
+<ul>
+<li><p><a class="reference internal" href="#restricting-available-fields" id="id7">Restricting Available Fields</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#including-related-resources" id="id8">Including Related Resources</a></p>
+<ul>
+<li><p><a class="reference internal" href="#defining-include-methods" id="id9">Defining Include Methods</a></p></li>
+<li><p><a class="reference internal" href="#restricting-available-includes" id="id10">Restricting Available Includes</a></p></li>
+<li><p><a class="reference internal" href="#include-validation" id="id11">Include Validation</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#transforming-collections" id="id12">Transforming Collections</a></p></li>
+<li><p><a class="reference internal" href="#working-with-different-data-types" id="id13">Working with Different Data Types</a></p>
+<ul>
+<li><p><a class="reference internal" href="#transforming-entities" id="id14">Transforming Entities</a></p></li>
+<li><p><a class="reference internal" href="#transforming-arrays" id="id15">Transforming Arrays</a></p></li>
+<li><p><a class="reference internal" href="#transforming-objects" id="id16">Transforming Objects</a></p></li>
+<li><p><a class="reference internal" href="#using-toarray-only" id="id17">Using toArray() Only</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\API" id="id18">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#exception-reference" id="id19">Exception Reference</a></p></li>
+</ul>
+</nav>
+<section id="quick-example">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Quick Example</a><a class="headerlink" href="#quick-example" title="Permalink to this heading"></a></h2>
+<p>The following example shows a common usage pattern for transformers in your application.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\API\BaseTransformer</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserTransformer</span> <span class="k">extends</span> <span class="nx">BaseTransformer</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span>         <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;name&#39;</span>       <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">],</span>
+        <span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// In your controller</span>
+<span class="nv">$user</span>        <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
+
+<span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respond</span><span class="p">(</span><span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="nv">$user</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>In this example, the <code class="docutils literal notranslate"><span class="pre">UserTransformer</span></code> defines which fields from a user entity should be included in the
+API response. The <code class="docutils literal notranslate"><span class="pre">transform()</span></code> method converts a single resource, while <code class="docutils literal notranslate"><span class="pre">transformMany()</span></code> handles
+collections of resources.</p>
+</section>
+<section id="creating-a-transformer">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Creating a Transformer</a><a class="headerlink" href="#creating-a-transformer" title="Permalink to this heading"></a></h2>
+<p>To create a transformer, extend the <code class="docutils literal notranslate"><span class="pre">BaseTransformer</span></code> class and implement the <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method to
+define your API resource structure. The <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method receives the resource being transformed as
+a parameter, allowing you to access and transform its data.</p>
+<section id="basic-transformer">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Basic Transformer</a><a class="headerlink" href="#basic-transformer" title="Permalink to this heading"></a></h3>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\API\BaseTransformer</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserTransformer</span> <span class="k">extends</span> <span class="nx">BaseTransformer</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span>           <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;username&#39;</span>     <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>  <span class="c1">// Renaming the field</span>
+            <span class="s1">&#39;email&#39;</span>        <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;member_since&#39;</span> <span class="o">=&gt;</span> <span class="nb">date</span><span class="p">(</span><span class="s1">&#39;Y-m-d&#39;</span><span class="p">,</span> <span class="nb">strtotime</span><span class="p">(</span><span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">])),</span> <span class="c1">// Formatting</span>
+        <span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method receives the resource (entity, array, or object) as its parameter and defines
+the structure of your API response. You can include any fields you want from the resource, and you can
+also rename or transform values as needed.</p>
+</section>
+<section id="generating-transformer-files">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Generating Transformer Files</a><a class="headerlink" href="#generating-transformer-files" title="Permalink to this heading"></a></h3>
+<p>CodeIgniter provides a CLI command to quickly generate transformer skeleton files:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:transformer User</span>
+</pre></div>
+</div>
+<p>This creates a new transformer file at <strong>app/Transformers/User.php</strong> with the basic structure already in place.</p>
+<section id="command-options">
+<h4>Command Options<a class="headerlink" href="#command-options" title="Permalink to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">make:transformer</span></code> command supports several options:</p>
+<dl>
+<dt><strong>–suffix</strong></dt><dd><p>Appends “Transformer” to the class name:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:transformer User --suffix</span>
+</pre></div>
+</div>
+<p>Creates <strong>app/Transformers/UserTransformer.php</strong></p>
+</dd>
+<dt><strong>–namespace</strong></dt><dd><p>Specifies a custom root namespace:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:transformer User --namespace=&quot;MyCompany\\API&quot;</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>–force</strong></dt><dd><p>Forces overwriting an existing file:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:transformer User --force</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
+<section id="subdirectories">
+<h4>Subdirectories<a class="headerlink" href="#subdirectories" title="Permalink to this heading"></a></h4>
+<p>You can organize transformers into subdirectories by including the path in the name:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:transformer api/v1/User</span>
+</pre></div>
+</div>
+<p>This creates <strong>app/Transformers/Api/V1/User.php</strong> with the appropriate namespace <code class="docutils literal notranslate"><span class="pre">App\Transformers\Api\V1</span></code>.</p>
+</section>
+</section>
+<section id="using-transformers-in-controllers">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Using Transformers in Controllers</a><a class="headerlink" href="#using-transformers-in-controllers" title="Permalink to this heading"></a></h3>
+<p>Once you’ve created a transformer, you can use it in your controllers to transform data before returning
+it to the client.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">App\Transformers\UserTransformer</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\API\ResponseTrait</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Users</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
+    <span class="k">use</span> <span class="nx">ResponseTrait</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">show</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$user</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$user</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="s1">&#39;User not found&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
+
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respond</span><span class="p">(</span><span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="nv">$user</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$users</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+
+        <span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
+
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respond</span><span class="p">(</span><span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$users</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="field-filtering">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Field Filtering</a><a class="headerlink" href="#field-filtering" title="Permalink to this heading"></a></h2>
+<p>The transformer automatically supports field filtering through the <code class="docutils literal notranslate"><span class="pre">fields</span></code> query parameter of the current URL.
+This allows API clients to request only specific fields they need, reducing bandwidth and improving performance.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\API\BaseTransformer</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserTransformer</span> <span class="k">extends</span> <span class="nx">BaseTransformer</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span>         <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;name&#39;</span>       <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;updated_at&#39;</span><span class="p">],</span>
+        <span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Request: GET /users/1?fields=id,name</span>
+<span class="c1">// Response: {&quot;id&quot;: 1, &quot;name&quot;: &quot;John Doe&quot;}</span>
+</pre></div>
+</div>
+<p>A request to <code class="docutils literal notranslate"><span class="pre">/users/1?fields=id,name</span></code> would return only:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="restricting-available-fields">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Restricting Available Fields</a><a class="headerlink" href="#restricting-available-fields" title="Permalink to this heading"></a></h3>
+<p>By default, clients can request any field defined in your <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method. You can restrict which
+fields are allowed by overriding the <code class="docutils literal notranslate"><span class="pre">getAllowedFields()</span></code> method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\API\BaseTransformer</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserTransformer</span> <span class="k">extends</span> <span class="nx">BaseTransformer</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span>         <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;name&#39;</span>       <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;updated_at&#39;</span><span class="p">],</span>
+        <span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">getAllowedFields</span><span class="p">()</span><span class="o">:</span> <span class="o">?</span><span class="k">array</span>
+    <span class="p">{</span>
+        <span class="c1">// Only these fields can be requested</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now, even if a client requests <code class="docutils literal notranslate"><span class="pre">/users/1?fields=email</span></code>, an <code class="docutils literal notranslate"><span class="pre">ApiException</span></code> will be thrown because
+<code class="docutils literal notranslate"><span class="pre">email</span></code> is not in the allowed fields list.</p>
+</section>
+</section>
+<section id="including-related-resources">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Including Related Resources</a><a class="headerlink" href="#including-related-resources" title="Permalink to this heading"></a></h2>
+<p>Transformers support loading of related resources through the <code class="docutils literal notranslate"><span class="pre">include</span></code> query parameter. This
+follows a common API pattern where clients can specify which relationships they want included.
+While relationships are the most frequent use case, you can include any additional data
+you want by defining custom include methods.</p>
+<section id="defining-include-methods">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Defining Include Methods</a><a class="headerlink" href="#defining-include-methods" title="Permalink to this heading"></a></h3>
+<p>To support including related resources, create methods prefixed with <code class="docutils literal notranslate"><span class="pre">include</span></code> followed by the
+resource name. Inside these methods, you can access the current resource being transformed via
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;resource</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\API\BaseTransformer</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserTransformer</span> <span class="k">extends</span> <span class="nx">BaseTransformer</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+        <span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">includePosts</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="c1">// Use $this-&gt;resource to access the current resource being transformed</span>
+        <span class="nv">$posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;PostModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">PostTransformer</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$posts</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">includeComments</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="nv">$comments</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;CommentModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">CommentTransformer</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$comments</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Note how the include methods use <code class="docutils literal notranslate"><span class="pre">$this-&gt;resource['id']</span></code> to access the ID of the user being transformed.
+The <code class="docutils literal notranslate"><span class="pre">$this-&gt;resource</span></code> property is automatically set by the transformer when <code class="docutils literal notranslate"><span class="pre">transform()</span></code> is called.</p>
+<p>Clients can now request: <code class="docutils literal notranslate"><span class="pre">/users/1?include=posts,comments</span></code></p>
+<p>The response would include:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;john@example.com&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;posts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;First Post&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;comments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Great article!&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="restricting-available-includes">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Restricting Available Includes</a><a class="headerlink" href="#restricting-available-includes" title="Permalink to this heading"></a></h3>
+<p>Similar to field filtering, you can restrict which relationships can be included by overriding the
+<code class="docutils literal notranslate"><span class="pre">getAllowedIncludes()</span></code> method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">App\Transformers\CommentTransformer</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">App\Transformers\PostTransformer</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\API\BaseTransformer</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserTransformer</span> <span class="k">extends</span> <span class="nx">BaseTransformer</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+        <span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">getAllowedIncludes</span><span class="p">()</span><span class="o">:</span> <span class="o">?</span><span class="k">array</span>
+    <span class="p">{</span>
+        <span class="c1">// Only these relationships can be included</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;posts&#39;</span><span class="p">,</span> <span class="s1">&#39;comments&#39;</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">includePosts</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="nv">$posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;PostModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">PostTransformer</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$posts</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">includeComments</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="nv">$comments</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;CommentModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">CommentTransformer</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$comments</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">includeOrders</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="c1">// This method exists but won&#39;t be callable from the API</span>
+        <span class="c1">// because &#39;orders&#39; is not in getAllowedIncludes()</span>
+        <span class="nv">$orders</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;OrderModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">OrderTransformer</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$orders</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you want to disable all includes, return an empty array:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\API\BaseTransformer</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserTransformer</span> <span class="k">extends</span> <span class="nx">BaseTransformer</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+        <span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">getAllowedIncludes</span><span class="p">()</span><span class="o">:</span> <span class="o">?</span><span class="k">array</span>
+    <span class="p">{</span>
+        <span class="c1">// Return empty array to disable all includes</span>
+        <span class="k">return</span> <span class="p">[];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="include-validation">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Include Validation</a><a class="headerlink" href="#include-validation" title="Permalink to this heading"></a></h3>
+<p>The transformer automatically validates that any requested includes have corresponding <code class="docutils literal notranslate"><span class="pre">include*()</span></code> methods
+defined in your transformer class. If a client requests an include that doesn’t exist, an <code class="docutils literal notranslate"><span class="pre">ApiException</span></code>
+will be thrown.</p>
+<p>For example, if a client requests:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">GET</span> <span class="o">/</span><span class="nx">api</span><span class="o">/</span><span class="nx">users</span><span class="o">?</span><span class="k">include</span><span class="o">=</span><span class="nx">invalid</span>
+</pre></div>
+</div>
+<p>And your transformer doesn’t have an <code class="docutils literal notranslate"><span class="pre">includeInvalid()</span></code> method, an exception will be thrown with the message:
+“Missing include method for: invalid”.</p>
+<p>This helps catch typos and prevents unexpected behavior.</p>
+</section>
+</section>
+<section id="transforming-collections">
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Transforming Collections</a><a class="headerlink" href="#transforming-collections" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">transformMany()</span></code> method makes it easy to transform arrays of resources:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">App\Transformers\UserTransformer</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\API\ResponseTrait</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Users</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
+    <span class="k">use</span> <span class="nx">ResponseTrait</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$users</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+
+        <span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
+        <span class="nv">$data</span>        <span class="o">=</span> <span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$users</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respond</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">transformMany()</span></code> method applies the same transformation logic to each item in the collection,
+including any field filtering or includes specified in the request.</p>
+</section>
+<section id="working-with-different-data-types">
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">Working with Different Data Types</a><a class="headerlink" href="#working-with-different-data-types" title="Permalink to this heading"></a></h2>
+<p>Transformers can handle various data types, not just entities.</p>
+<section id="transforming-entities">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Transforming Entities</a><a class="headerlink" href="#transforming-entities" title="Permalink to this heading"></a></h3>
+<p>When you pass an <code class="docutils literal notranslate"><span class="pre">Entity</span></code> instance to <code class="docutils literal notranslate"><span class="pre">transform()</span></code>, it automatically calls the entity’s <code class="docutils literal notranslate"><span class="pre">toArray()</span></code>
+method to get the data:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">App\Entities\User</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">App\Transformers\UserTransformer</span><span class="p">;</span>
+
+<span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">([</span>
+    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john@example.com&#39;</span><span class="p">,</span>
+<span class="p">]);</span>
+
+<span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
+<span class="nv">$result</span>      <span class="o">=</span> <span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="transforming-arrays">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">Transforming Arrays</a><a class="headerlink" href="#transforming-arrays" title="Permalink to this heading"></a></h3>
+<p>You can transform plain arrays as well:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">App\Transformers\UserTransformer</span><span class="p">;</span>
+
+<span class="nv">$userData</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john@example.com&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
+<span class="nv">$result</span>      <span class="o">=</span> <span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="nv">$userData</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="transforming-objects">
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">Transforming Objects</a><a class="headerlink" href="#transforming-objects" title="Permalink to this heading"></a></h3>
+<p>Any object can be cast to an array and transformed:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">App\Transformers\UserTransformer</span><span class="p">;</span>
+
+<span class="nv">$user</span>        <span class="o">=</span> <span class="k">new</span> <span class="nx">\stdClass</span><span class="p">();</span>
+<span class="nv">$user</span><span class="o">-&gt;</span><span class="na">id</span>    <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nv">$user</span><span class="o">-&gt;</span><span class="na">name</span>  <span class="o">=</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">;</span>
+<span class="nv">$user</span><span class="o">-&gt;</span><span class="na">email</span> <span class="o">=</span> <span class="s1">&#39;john@example.com&#39;</span><span class="p">;</span>
+
+<span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
+<span class="nv">$result</span>      <span class="o">=</span> <span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="using-toarray-only">
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Using toArray() Only</a><a class="headerlink" href="#using-toarray-only" title="Permalink to this heading"></a></h3>
+<p>If you don’t pass a resource to <code class="docutils literal notranslate"><span class="pre">transform()</span></code>, it will use the data from your <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\API\BaseTransformer</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">StaticDataTransformer</span> <span class="k">extends</span> <span class="nx">BaseTransformer</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;version&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;status&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;active&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;API is running&#39;</span><span class="p">,</span>
+        <span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Usage</span>
+<span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">StaticDataTransformer</span><span class="p">();</span>
+<span class="nv">$result</span>      <span class="o">=</span> <span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="k">null</span><span class="p">);</span> <span class="c1">// No resource passed</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="namespace-CodeIgniter\API">
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id18" role="doc-backlink">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\API" title="Permalink to this heading"></a></h2>
+<dl class="php class">
+<dt class="sig sig-object php" id="CodeIgniter\API\BaseTransformer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\API\</span></span><span class="sig-name descname"><span class="pre">BaseTransformer</span></span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer" title="Permalink to this definition"></a></dt>
+<dd><dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\API\BaseTransformer::__construct">
+<span class="sig-name descname"><span class="pre">__construct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">?IncomingRequest</span> <span class="pre">$request</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::__construct" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$request</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">IncomingRequest|null</span></code></span>) – Optional request instance. If not provided, the global request will be used.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Initializes the transformer and extracts the <code class="docutils literal notranslate"><span class="pre">fields</span></code> and <code class="docutils literal notranslate"><span class="pre">include</span></code> query parameters from the request.</p>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\API\BaseTransformer::toArray">
+<span class="sig-name descname"><span class="pre">toArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">mixed</span> <span class="pre">$resource</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::toArray" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$resource</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – The resource being transformed (Entity, array, object, or null)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The array representation of the resource</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
+</dd>
+</dl>
+<p>This abstract method must be implemented by child classes to define the structure of the API resource.
+The resource parameter contains the data being transformed. Return an array with the fields you want
+to include in the API response, accessing data from the <code class="docutils literal notranslate"><span class="pre">$resource</span></code> parameter.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\API\BaseTransformer</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">ProductTransformer</span> <span class="k">extends</span> <span class="nx">BaseTransformer</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;name&#39;</span>        <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;price&#39;</span>       <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;in_stock&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;stock_quantity&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">],</span>
+        <span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\API\BaseTransformer::transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$resource</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::transform" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$resource</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – The resource to transform (Entity, array, object, or null)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The transformed array</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
+</dd>
+</dl>
+<p>Transforms the given resource into an array by calling <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> with the resource data.
+If <code class="docutils literal notranslate"><span class="pre">$resource</span></code> is <code class="docutils literal notranslate"><span class="pre">null</span></code>, passes <code class="docutils literal notranslate"><span class="pre">null</span></code> to <code class="docutils literal notranslate"><span class="pre">toArray()</span></code>.
+If it’s an Entity, extracts its array representation first. Otherwise, casts it to an array.</p>
+<p>The resource is also stored in <code class="docutils literal notranslate"><span class="pre">$this-&gt;resource</span></code> so include methods can access it.</p>
+<p>The method automatically applies field filtering and includes based on query parameters.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">App\Transformers\UserTransformer</span><span class="p">;</span>
+
+<span class="nv">$user</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
+
+<span class="c1">// Transform an entity</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
+
+<span class="c1">// Transform an array</span>
+<span class="nv">$userData</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">];</span>
+<span class="nv">$result</span>   <span class="o">=</span> <span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="nv">$userData</span><span class="p">);</span>
+
+<span class="c1">// Use toArray() data</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">();</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\API\BaseTransformer::transformMany">
+<span class="sig-name descname"><span class="pre">transformMany</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">array</span> <span class="pre">$resources</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::transformMany" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$resources</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – The array of resources to transform</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array of transformed resources</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
+</dd>
+</dl>
+<p>Transforms a collection of resources by calling <code class="docutils literal notranslate"><span class="pre">transform()</span></code> on each item. Field filtering and
+includes are applied consistently to all items.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">App\Transformers\UserTransformer</span><span class="p">;</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+
+<span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserTransformer</span><span class="p">();</span>
+<span class="nv">$results</span>     <span class="o">=</span> <span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$users</span><span class="p">);</span>
+
+<span class="c1">// $results is an array of transformed user arrays</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$results</span> <span class="k">as</span> <span class="nv">$user</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Each $user is the result of calling transform() on an individual user</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\API\BaseTransformer::getAllowedFields">
+<span class="sig-name descname"><span class="pre">getAllowedFields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::getAllowedFields" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Array of allowed field names, or <code class="docutils literal notranslate"><span class="pre">null</span></code> to allow all fields</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|null</span></code></span></p>
+</dd>
+</dl>
+<p>Override this method to restrict which fields can be requested via the <code class="docutils literal notranslate"><span class="pre">fields</span></code> query parameter.
+Return <code class="docutils literal notranslate"><span class="pre">null</span></code> (the default) to allow all fields from <code class="docutils literal notranslate"><span class="pre">toArray()</span></code>. Return an array of field names
+to create a whitelist of allowed fields.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\API\BaseTransformer</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserTransformer</span> <span class="k">extends</span> <span class="nx">BaseTransformer</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span>         <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;name&#39;</span>       <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">],</span>
+        <span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">getAllowedFields</span><span class="p">()</span><span class="o">:</span> <span class="o">?</span><span class="k">array</span>
+    <span class="p">{</span>
+        <span class="c1">// Clients can only request id, name, and created_at</span>
+        <span class="c1">// Attempting to request &#39;email&#39; will throw an ApiException</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\API\BaseTransformer::getAllowedIncludes">
+<span class="sig-name descname"><span class="pre">getAllowedIncludes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\BaseTransformer::getAllowedIncludes" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Array of allowed include names, or <code class="docutils literal notranslate"><span class="pre">null</span></code> to allow all includes</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|null</span></code></span></p>
+</dd>
+</dl>
+<p>Override this method to restrict which related resources can be included via the <code class="docutils literal notranslate"><span class="pre">include</span></code> query
+parameter. Return <code class="docutils literal notranslate"><span class="pre">null</span></code> (the default) to allow all includes that have corresponding methods.
+Return an array of include names to create a whitelist. Return an empty array to disable all includes.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\API\BaseTransformer</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserTransformer</span> <span class="k">extends</span> <span class="nx">BaseTransformer</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+        <span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">getAllowedIncludes</span><span class="p">()</span><span class="o">:</span> <span class="o">?</span><span class="k">array</span>
+    <span class="p">{</span>
+        <span class="c1">// Only &#39;posts&#39; can be included via ?include=posts</span>
+        <span class="c1">// Attempting to include &#39;orders&#39; will throw an ApiException</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;posts&#39;</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">includePosts</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="nv">$posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;PostModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">PostTransformer</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$posts</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">includeOrders</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="c1">// This method exists but cannot be called via the API</span>
+        <span class="nv">$orders</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;OrderModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">OrderTransformer</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">transformMany</span><span class="p">(</span><span class="nv">$orders</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="exception-reference">
+<h2><a class="toc-backref" href="#id19" role="doc-backlink">Exception Reference</a><a class="headerlink" href="#exception-reference" title="Permalink to this heading"></a></h2>
+<dl class="php class">
+<dt class="sig sig-object php" id="CodeIgniter\API\ApiException">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\API\</span></span><span class="sig-name descname"><span class="pre">ApiException</span></span><a class="headerlink" href="#CodeIgniter\API\ApiException" title="Permalink to this definition"></a></dt>
+<dd><dl class="php staticmethod">
+<dt class="sig sig-object php" id="CodeIgniter\API\ApiException::forInvalidFields">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">forInvalidFields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$field</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\ApiException::forInvalidFields" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$field</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The invalid field name(s)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ApiException instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\API\ApiException" title="CodeIgniter\API\ApiException"><code class="xref php php-obj docutils literal notranslate"><span class="pre">ApiException</span></code></a></span></p>
+</dd>
+</dl>
+<p>Thrown when a client requests a field via the <code class="docutils literal notranslate"><span class="pre">fields</span></code> query parameter that is not in the allowed
+fields list.</p>
+</dd></dl>
+
+<dl class="php staticmethod">
+<dt class="sig sig-object php" id="CodeIgniter\API\ApiException::forInvalidIncludes">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">forInvalidIncludes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$include</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\ApiException::forInvalidIncludes" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$include</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The invalid include name(s)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ApiException instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\API\ApiException" title="CodeIgniter\API\ApiException"><code class="xref php php-obj docutils literal notranslate"><span class="pre">ApiException</span></code></a></span></p>
+</dd>
+</dl>
+<p>Thrown when a client requests an include via the <code class="docutils literal notranslate"><span class="pre">include</span></code> query parameter that is not in the
+allowed includes list.</p>
+</dd></dl>
+
+<dl class="php staticmethod">
+<dt class="sig sig-object php" id="CodeIgniter\API\ApiException::forMissingInclude">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">forMissingInclude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$include</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\API\ApiException::forMissingInclude" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$include</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The missing include method name</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ApiException instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\API\ApiException" title="CodeIgniter\API\ApiException"><code class="xref php php-obj docutils literal notranslate"><span class="pre">ApiException</span></code></a></span></p>
+</dd>
+</dl>
+<p>Thrown when a client requests an include via the <code class="docutils literal notranslate"><span class="pre">include</span></code> query parameter, but the corresponding
+<code class="docutils literal notranslate"><span class="pre">include*()</span></code> method does not exist in the transformer class. This validation ensures that all
+requested includes have proper handler methods defined.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="api_responses.html" class="btn btn-neutral float-left" title="API Responses" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="csp.html" class="btn btn-neutral float-right" title="Content Security Policy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Feb 01, 2026.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

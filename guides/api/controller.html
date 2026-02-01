@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building a RESTful Controller &mdash; CodeIgniter 4.6.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/citheme_dark.css" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/js/citheme.js"></script>
+        <script src="../../_static/js/carbon.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Conclusion" href="conclusion.html" />
+    <link rel="prev" title="Creating the Database and Model" href="database-setup.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/ci-logo-text.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Welcome to CodeIgniter4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/index.html">Welcome to CodeIgniter4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/requirements.html">Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/credits.html">Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../intro/psr.html">PSR Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html">License Agreement</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/worker_mode.html">Worker Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/deployment.html">Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelogs/index.html">Change Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/repositories.html">CodeIgniter Repositories</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Getting Started with REST APIs</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/index.html">CodeIgniter4 Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/factories.html">Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/http.html">Working with HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/security.html">Security Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/goals.html">Design and Architectural Goals</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../general/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/logging.html">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/ajax.html">AJAX Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../general/environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../incoming/index.html">Controllers and Routing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../incoming/routing.html">URI Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../incoming/controllers.html">Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../incoming/controller_attributes.html">Controller Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../incoming/message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../incoming/request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../incoming/incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../incoming/content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../incoming/methodspoofing.html">HTTP Method Spoofing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../incoming/restful.html">RESTful Resource Handling</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../outgoing/index.html">Building Responses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../outgoing/views.html">Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outgoing/view_renderer.html">View Renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outgoing/view_layouts.html">View Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outgoing/view_cells.html">View Cells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outgoing/view_parser.html">View Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outgoing/view_decorators.html">View Decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outgoing/table.html">HTML Table Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outgoing/response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outgoing/api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outgoing/api_transformers.html">API Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outgoing/csp.html">Content Security Policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outgoing/localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../database/index.html">Working with Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../database/examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../database/configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../database/connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../database/queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../database/results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../database/helpers.html">Query Helper Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../database/query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../database/transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../database/metadata.html">Getting Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../database/call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../database/events.html">Database Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../database/utilities.html">Database Utilities</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../models/index.html">Modeling Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../models/model.html">Using CodeIgniter's Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../models/entities.html">Using Entity Classes</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../dbmgmt/index.html">Managing Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../dbmgmt/forge.html">Database Forge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../dbmgmt/migration.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../dbmgmt/seeds.html">Database Seeding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../dbmgmt/db_commands.html">Database Commands</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../libraries/index.html">Library Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/curlrequest.html">CURLRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/email.html">Email Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/encryption.html">Encryption Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/file_collections.html">File Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/honeypot.html">Honeypot Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/images.html">Image Manipulation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/publisher.html">Publisher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/security.html">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/sessions.html">Session Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/throttler.html">Throttler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/time.html">Times and Dates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/typography.html">Typography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/uploaded_files.html">Working with Uploaded Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/uri.html">Working with URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/user_agent.html">User Agent Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../libraries/validation.html">Validation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../helpers/index.html">Helpers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../helpers/array_helper.html">Array Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../helpers/cookie_helper.html">Cookie Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../helpers/date_helper.html">Date Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../helpers/filesystem_helper.html">Filesystem Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../helpers/form_helper.html">Form Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../helpers/html_helper.html">HTML Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../helpers/inflector_helper.html">Inflector Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../helpers/number_helper.html">Number Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../helpers/security_helper.html">Security Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../helpers/test_helper.html">Test Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../helpers/text_helper.html">Text Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../helpers/url_helper.html">URL Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../helpers/xml_helper.html">XML Helper</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../testing/index.html">Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/overview.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/fabricator.html">Generating Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/controllers.html">Controller Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/feature.html">HTTP Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/cli.html">Testing CLI Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/mocking.html">Mocking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/debugging.html">Debugging Your Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/session_testing.html">Session Testing</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">Command Line Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../cli/cli_overview.html">CLI Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cli/cli_controllers.html">Running Controllers via CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cli/spark_commands.html">Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cli/cli_commands.html">Creating Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cli/cli_generators.html">CLI Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cli/cli_signals.html">CLI Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cli/cli_request.html">CLIRequest Class</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../extending/index.html">Extending CodeIgniter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../extending/core_classes.html">Creating Core System Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extending/common.html">Replacing Common Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extending/events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extending/basecontroller.html">Extending the Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extending/authentication.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extending/composer_packages.html">Creating Composer Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extending/contributing.html">Contributing to CodeIgniter</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../libraries/official_packages.html">Official Packages</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CodeIgniter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/guides/api/controller.rst">Edit this page</a>
+
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Guides</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Getting Started with REST APIs</a></li>
+      <li class="breadcrumb-item active">Building a RESTful Controller</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="building-a-restful-controller">
+<span id="ci47-rest-part4"></span><h1>Building a RESTful Controller<a class="headerlink" href="#building-a-restful-controller" title="Permalink to this heading"></a></h1>
+<p>In this chapter, we build the API endpoints to expose your <code class="docutils literal notranslate"><span class="pre">book</span></code> table through a proper RESTful API.
+We’ll use <code class="xref php php-class docutils literal notranslate"><span class="pre">CodeIgniter\RESTful\ResourceController</span></code> to handle CRUD actions with almost no boilerplate.</p>
+<section id="what-is-restful">
+<h2>What is RESTful?<a class="headerlink" href="#what-is-restful" title="Permalink to this heading"></a></h2>
+<p>RESTful APIs use standard HTTP verbs (<code class="docutils literal notranslate"><span class="pre">GET</span></code>, <code class="docutils literal notranslate"><span class="pre">POST</span></code>, <code class="docutils literal notranslate"><span class="pre">PUT</span></code>, <code class="docutils literal notranslate"><span class="pre">DELETE</span></code>) to perform actions on resources identified by URIs. This approach makes APIs predictable and easy to use. There can be much debate on some of the finer points of what makes a REST API, but following these basics can get it close enough for many uses. By using auto-routing and the <code class="xref php php-class docutils literal notranslate"><span class="pre">ApiResponseTrait</span></code>, CodeIgniter makes it simple to create RESTful endpoints.</p>
+</section>
+<section id="generate-the-controller">
+<h2>Generate the controller<a class="headerlink" href="#generate-the-controller" title="Permalink to this heading"></a></h2>
+<p>Run the Spark command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:controller Api/Books</span>
+</pre></div>
+</div>
+<p>This creates <strong>app/Controllers/Api/Books.php</strong>.</p>
+<p>Open it and replace its contents with the following stubbed-out class:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers\Api</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">App\Controllers\BaseController</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Api\ResponseTrait</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Books</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
+    <span class="k">use</span> <span class="nx">ResponseTrait</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * List one or many resources</span>
+<span class="sd">     * GET /api/books</span>
+<span class="sd">     *    and</span>
+<span class="sd">     * GET /api/books/{id}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getIndex</span><span class="p">(</span><span class="o">?</span><span class="nx">int</span> <span class="nv">$id</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Update a book</span>
+<span class="sd">     *</span>
+<span class="sd">     * PUT /api/books/{id}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">putIndex</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$id</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Create a new book</span>
+<span class="sd">     *</span>
+<span class="sd">     * POST /api/books</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">postIndex</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Delete a book</span>
+<span class="sd">     *</span>
+<span class="sd">     * DELETE /api/books/{id}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">deleteIndex</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$id</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Since we’re using auto-routing, we need to use the <code class="docutils literal notranslate"><span class="pre">index</span></code> method names so it doesn’t interfere with mapping to the URI segments. But we can use the HTTP verb prefixes (<code class="docutils literal notranslate"><span class="pre">get</span></code>, <code class="docutils literal notranslate"><span class="pre">post</span></code>, <code class="docutils literal notranslate"><span class="pre">put</span></code>, <code class="docutils literal notranslate"><span class="pre">delete</span></code>) to indicate which method handles which verb. The only one that is slightly odd is <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>, which must be used to map to both listing all resources and listing a single resource by ID.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you prefer a different naming scheme, you would need to define routes explicitly in <strong>app/Config/Routes.php</strong> and turn auto-routing off.</p>
+</div>
+</section>
+<section id="api-transformers">
+<h2>API Transformers<a class="headerlink" href="#api-transformers" title="Permalink to this heading"></a></h2>
+<p>It is considered a best practice to separate your data models from the way they are presented in your API responses. This is often done using transformers or resource classes that format the data consistently. CodeIgniter provides API transformers to help with this.</p>
+<p>Create the transformers with the generator command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:transformer BookTransformer</span>
+</pre></div>
+</div>
+<p>The transformer requires a single method, <code class="docutils literal notranslate"><span class="pre">toArray()</span></code>, to be present and accept a mixed data type called <code class="docutils literal notranslate"><span class="pre">$resource</span></code>. This method transforms the resource into an array format suitable for API responses. The returned array is then encoded as JSON or XML for the API response.</p>
+<p>Edit the Book transformer at <strong>app/Transformers/BookTransformer.php</strong>. This one is a little more complex since it includes related author data:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Transformers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\API\BaseTransformer</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">BookTransformer</span> <span class="k">extends</span> <span class="nx">BaseTransformer</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">toArray</span><span class="p">(</span><span class="nx">mixed</span> <span class="nv">$resource</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;year&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$resource</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span>
+        <span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">includeAuthor</span><span class="p">(</span><span class="k">array</span> <span class="nv">$book</span><span class="p">)</span><span class="o">:</span> <span class="o">?</span><span class="k">array</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$book</span><span class="p">[</span><span class="s1">&#39;author_id&#39;</span><span class="p">])</span> <span class="o">||</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$book</span><span class="p">[</span><span class="s1">&#39;author_name&#39;</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span>   <span class="o">=&gt;</span> <span class="nv">$book</span><span class="p">[</span><span class="s1">&#39;author_id&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$book</span><span class="p">[</span><span class="s1">&#39;author_name&#39;</span><span class="p">],</span>
+        <span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>One feature of transformers is the ability to include related resources conditionally. In this case, we check if the <code class="docutils literal notranslate"><span class="pre">author</span></code> relationship is loaded on the book resource before including it in the response. This allows flexibility in how much data is returned based on the request context. The client calling the API would have to request the related data explicitly through query parameters such as <code class="docutils literal notranslate"><span class="pre">/api/books?include=author</span></code>. The method name must start with <code class="docutils literal notranslate"><span class="pre">include</span></code> followed by the related resource name with the first letter capitalized.</p>
+<p>You may have noticed that we did not use an AuthorTransformer. This is because the author data is simple enough that we can return it directly without additional transformation. However, for more complex related resources, you might want to create separate transformers for them as well. Additionally, we’ll collect the author information at query time so that we don’t hit any N+1 query issues later.</p>
+</section>
+<section id="listing-books">
+<h2>Listing Books<a class="headerlink" href="#listing-books" title="Permalink to this heading"></a></h2>
+<p>We made the <code class="docutils literal notranslate"><span class="pre">$id</span></code> parameter optional so that the same method can handle both listing all books and retrieving a single book by ID. Let’s implement that now.</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">     * List one or many resources</span>
+<span class="x">     * GET /api/books</span>
+<span class="x">     *    and</span>
+<span class="x">     * GET /api/books/{id}</span>
+<span class="x">     */</span>
+<span class="x">    public function getIndex(?int $id = null): ResponseInterface</span>
+<span class="x">    {</span>
+<span class="x">        $model       = model(&#39;BookModel&#39;);</span>
+<span class="x">        $transformer = new BookTransformer();</span>
+
+<span class="x">        // If an ID is provided, fetch a single record</span>
+<span class="x">        if ($id !== null) {</span>
+<span class="x">            $book = $model-&gt;withAuthorInfo()-&gt;find($id);</span>
+
+<span class="x">            if (! $book) {</span>
+<span class="x">                return $this-&gt;failNotFound(&#39;Book not found&#39;);</span>
+<span class="x">            }</span>
+
+<span class="x">            return $this-&gt;respond($transformer-&gt;transform($book));</span>
+<span class="x">        }</span>
+
+<span class="x">        // Otherwise, fetch all records</span>
+<span class="x">        $books = $model-&gt;withAuthorInfo();</span>
+
+<span class="x">        return $this-&gt;paginate($books, 20, transformWith: BookTransformer::class);</span>
+<span class="x">    }</span>
+</pre></div>
+</div>
+<p>In this method, we check if an <code class="docutils literal notranslate"><span class="pre">$id</span></code> is provided. If it is, we attempt to find the specific book. If we could not find the book by that ID, we return a 404 Not Found response using the <a class="reference internal" href="../../outgoing/api_responses.html#failNotFound" title="failNotFound"><code class="xref php php-meth docutils literal notranslate"><span class="pre">failNotFound()</span></code></a> helper from <code class="xref php php-trait docutils literal notranslate"><span class="pre">ResponseTrait</span></code>. If we do find the book, we use our BookTransformer and return the formatted response.</p>
+<p>If no <code class="docutils literal notranslate"><span class="pre">$id</span></code> is provided, we use the model to retrieve all books, stopping short of actually retrieving the records. This allows us to use the <code class="docutils literal notranslate"><span class="pre">ResponseTrait</span></code>’s <a class="reference internal" href="../../outgoing/api_responses.html#paginate" title="paginate"><code class="xref php php-meth docutils literal notranslate"><span class="pre">paginate</span></code></a> method to handle pagination automatically. We pass the name of the transformer to the <code class="docutils literal notranslate"><span class="pre">paginate</span></code> method so that it can format each book in the paginated result set.</p>
+<p>In both of these cases, we use a new method on the model called <code class="docutils literal notranslate"><span class="pre">withAuthorInfo()</span></code>. This is a custom method we will add to the model to join the related author data when retrieving books.</p>
+<section id="add-the-model-helper-method">
+<h3>Add the Model helper method<a class="headerlink" href="#add-the-model-helper-method" title="Permalink to this heading"></a></h3>
+<p>In your BookModel, we add a new method called <code class="docutils literal notranslate"><span class="pre">withAuthorInfo()</span></code>. This method uses the Query Builder to join the <code class="docutils literal notranslate"><span class="pre">author</span></code> table and select the relevant author fields. This way, when we retrieve books, we also get the associated author information without needing to make separate queries for each book.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">BookModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">withAuthorInfo</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span>
+            <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;book.*, author.name as author_name&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="s1">&#39;book.author_id = author.id&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="test-the-list-endpoint">
+<h3>Test the list endpoint<a class="headerlink" href="#test-the-list-endpoint" title="Permalink to this heading"></a></h3>
+<p>Start the local server:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark serve</span>
+</pre></div>
+</div>
+<p>Now visit:</p>
+<ul class="simple">
+<li><p><strong>Browser:</strong> <code class="docutils literal notranslate"><span class="pre">http://localhost:8080/api/books</span></code></p></li>
+<li><p><strong>cURL:</strong> <code class="docutils literal notranslate"><span class="pre">curl</span> <span class="pre">http://localhost:8080/api/books</span></code></p></li>
+</ul>
+<p>You should see a paginated list of books in JSON format:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Dune&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Frank Herbert&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;year&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1965</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-11-08 00:00:00&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;updated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-11-08 00:00:00&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Neuromancer&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;William Gibson&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;year&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1984</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-11-08 00:00:00&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;updated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-11-08 00:00:00&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;page&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;perPage&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;totalPages&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;links&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;self&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:8080/api/books?page=1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;first&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:8080/api/books?page=1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;last&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:8080/api/books?page=1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;prev&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;next&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you see JSON data from your seeder, congratulations—your API is live!</p>
+</section>
+</section>
+<section id="implement-the-remaining-methods">
+<h2>Implement the remaining methods<a class="headerlink" href="#implement-the-remaining-methods" title="Permalink to this heading"></a></h2>
+<p>Edit <strong>app/Controllers/Api/Books.php</strong> to include the remaining methods:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers\Api</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">App\Controllers\BaseController</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">App\Transformers\BookTransformer</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Api\ResponseTrait</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\ResponseInterface</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Books</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
+    <span class="k">use</span> <span class="nx">ResponseTrait</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * List one or many resources</span>
+<span class="sd">     * GET /api/books</span>
+<span class="sd">     *    and</span>
+<span class="sd">     * GET /api/books/{id}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getIndex</span><span class="p">(</span><span class="o">?</span><span class="nx">int</span> <span class="nv">$id</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span><span class="o">:</span> <span class="nx">ResponseInterface</span>
+    <span class="p">{</span>
+        <span class="nv">$model</span>       <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;BookModel&#39;</span><span class="p">);</span>
+        <span class="nv">$transformer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BookTransformer</span><span class="p">();</span>
+
+        <span class="c1">// If an ID is provided, fetch a single record</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$id</span> <span class="o">!==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$book</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">withAuthorInfo</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$book</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="s1">&#39;Book not found&#39;</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respond</span><span class="p">(</span><span class="nv">$transformer</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="nv">$book</span><span class="p">));</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Otherwise, fetch all records</span>
+        <span class="nv">$books</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">withAuthorInfo</span><span class="p">();</span>
+
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="nv">$books</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="nx">transformWith</span><span class="o">:</span> <span class="nx">BookTransformer</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Update a book</span>
+<span class="sd">     *</span>
+<span class="sd">     * PUT /api/books/{id}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">putIndex</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$id</span><span class="p">)</span><span class="o">:</span> <span class="nx">ResponseInterface</span>
+    <span class="p">{</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getRawInput</span><span class="p">();</span>
+
+        <span class="nv">$rules</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;title&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required|string|max_length[255]&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;author_id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|integer|is_not_unique[authors.id]&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;year&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;required|integer|greater_than_equal_to[2000]|less_than_equal_to[&#39;</span> <span class="o">.</span> <span class="nb">date</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;]&#39;</span><span class="p">,</span>
+        <span class="p">];</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">(</span><span class="nv">$rules</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failValidationErrors</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">());</span>
+        <span class="p">}</span>
+
+        <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;BookModel&#39;</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="s1">&#39;Book not found&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$id</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+
+        <span class="nv">$updatedBook</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">withAuthorInfo</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respond</span><span class="p">((</span><span class="k">new</span> <span class="nx">BookTransformer</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="nv">$updatedBook</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Create a new book</span>
+<span class="sd">     *</span>
+<span class="sd">     * POST /api/books</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">postIndex</span><span class="p">()</span><span class="o">:</span> <span class="nx">ResponseInterface</span>
+    <span class="p">{</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">();</span>
+
+        <span class="nv">$rules</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;title&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required|string|max_length[255]&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;author_id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|integer|is_not_unique[authors.id]&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;year&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;required|integer|greater_than_equal_to[2000]|less_than_equal_to[&#39;</span> <span class="o">.</span> <span class="nb">date</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;]&#39;</span><span class="p">,</span>
+        <span class="p">];</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">(</span><span class="nv">$rules</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failValidationErrors</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">());</span>
+        <span class="p">}</span>
+
+        <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;BookModel&#39;</span><span class="p">);</span>
+        <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+
+        <span class="nv">$newBook</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">withAuthorInfo</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$model</span><span class="o">-&gt;</span><span class="na">insertID</span><span class="p">());</span>
+
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondCreated</span><span class="p">((</span><span class="k">new</span> <span class="nx">BookTransformer</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">transform</span><span class="p">(</span><span class="nv">$newBook</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Delete a book</span>
+<span class="sd">     *</span>
+<span class="sd">     * DELETE /api/books/{id}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">deleteIndex</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$id</span><span class="p">)</span><span class="o">:</span> <span class="nx">ResponseInterface</span>
+    <span class="p">{</span>
+        <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;BookModel&#39;</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="s1">&#39;Book not found&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondDeleted</span><span class="p">([</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Each method uses helpers from <code class="xref php php-trait docutils literal notranslate"><span class="pre">ResponseTrait</span></code> to send proper HTTP status codes and JSON payloads.</p>
+<p>And that’s it! You now have a fully functional RESTful API for managing books, complete with proper HTTP methods, status codes, and data transformation. You can further enhance this API by adding authentication, validation, and other features as needed.</p>
+</section>
+<section id="a-more-semantic-naming-scheme">
+<h2>A More Semantic Naming Scheme<a class="headerlink" href="#a-more-semantic-naming-scheme" title="Permalink to this heading"></a></h2>
+<p>In the previous examples, we used method names like <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>, <code class="docutils literal notranslate"><span class="pre">putIndex()</span></code>, etc. because we wanted to rely solely on the HTTP verb to determine the action. With auto-routing enabled, we have to use the <code class="docutils literal notranslate"><span class="pre">index</span></code> method name to avoid conflicts with URI segments. However, if you prefer more semantic method names, you could change the method names so that they reflect the action being performed, such as <code class="docutils literal notranslate"><span class="pre">getList()</span></code>, <code class="docutils literal notranslate"><span class="pre">postCreate()</span></code>, <code class="docutils literal notranslate"><span class="pre">putUpdate()</span></code>, and <code class="docutils literal notranslate"><span class="pre">deleteDelete()</span></code>. This would make each method’s purpose clearer at a glance and would add one new segment to the URI.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>GET    /api/books/list         -&gt; getList()
+POST   /api/books/create       -&gt; postCreate()
+PUT    /api/books/update/(:id) -&gt; putUpdate($id)
+DELETE /api/books/delete/(:id) -&gt; deleteDelete($id)
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="database-setup.html" class="btn btn-neutral float-left" title="Creating the Database and Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="conclusion.html" class="btn btn-neutral float-right" title="Conclusion" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Feb 01, 2026.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

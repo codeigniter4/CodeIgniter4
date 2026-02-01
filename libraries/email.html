@@ -65,6 +65,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
@@ -74,11 +75,9 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static Pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News Section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create News Items</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
 </ul>
 </li>
 </ul>
@@ -116,6 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controller_attributes.html">Controller Attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
@@ -136,7 +136,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_transformers.html">API Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/csp.html">Content Security Policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
@@ -244,6 +245,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_signals.html">CLI Signals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
 </ul>
 </li>
@@ -351,7 +353,7 @@ set your preferences in the <strong>app/Config/Email.php</strong> file.</p>
 </section>
 <section id="setting-email-preferences">
 <span id="id1"></span><h3><a class="toc-backref" href="#id5" role="doc-backlink">Setting Email Preferences</a><a class="headerlink" href="#setting-email-preferences" title="Permalink to this heading"></a></h3>
-<p>There are 21 different preferences available to tailor how your email
+<p>There are 22 different preferences available to tailor how your email
 messages are sent. You can either set them manually as described here,
 or automatically via preferences stored in your config file, described
 in <a class="reference internal" href="#id2">Email Preferences</a>.</p>
@@ -458,33 +460,38 @@ or <code class="docutils literal notranslate"><span class="pre">smtp</span></cod
 <td></td>
 <td><p>SMTP Server Hostname.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>SMTPUser</strong></p></td>
+<tr class="row-even"><td><p><strong>SMTPAuthMethod</strong></p></td>
+<td><p>login</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">login</span></code>, <code class="docutils literal notranslate"><span class="pre">plain</span></code></p></td>
+<td><p>SMTP Authentication Method. (Available since 4.7.0)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>SMTPUser</strong></p></td>
 <td></td>
 <td></td>
 <td><p>SMTP Username.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>SMTPPass</strong></p></td>
+<tr class="row-even"><td><p><strong>SMTPPass</strong></p></td>
 <td></td>
 <td></td>
 <td><p>SMTP Password.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>SMTPPort</strong></p></td>
+<tr class="row-odd"><td><p><strong>SMTPPort</strong></p></td>
 <td><p>25</p></td>
 <td></td>
 <td><p>SMTP Port. (If set to <code class="docutils literal notranslate"><span class="pre">465</span></code>, TLS will be used for the connection
 regardless of <code class="docutils literal notranslate"><span class="pre">SMTPCrypto</span></code> setting.)</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>SMTPTimeout</strong></p></td>
+<tr class="row-even"><td><p><strong>SMTPTimeout</strong></p></td>
 <td><p>5</p></td>
 <td></td>
 <td><p>SMTP Timeout (in seconds).</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>SMTPKeepAlive</strong></p></td>
+<tr class="row-odd"><td><p><strong>SMTPKeepAlive</strong></p></td>
 <td><p>false</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
 <td><p>Enable persistent SMTP connections.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>SMTPCrypto</strong></p></td>
+<tr class="row-even"><td><p><strong>SMTPCrypto</strong></p></td>
 <td><p>tls</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">tls</span></code>, <code class="docutils literal notranslate"><span class="pre">ssl</span></code>, or
 empty string (<code class="docutils literal notranslate"><span class="pre">''</span></code>)</p></td>
@@ -494,59 +501,59 @@ channel to the server using SSL, and <code class="docutils literal notranslate">
 set this to an empty string (<code class="docutils literal notranslate"><span class="pre">''</span></code>). See also
 <a class="reference internal" href="#email-ssl-tls-for-smtp"><span class="std std-ref">SSL versus TLS for SMTP Protocol</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>wordWrap</strong></p></td>
+<tr class="row-odd"><td><p><strong>wordWrap</strong></p></td>
 <td><p>true</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
 <td><p>Enable word-wrap.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>wrapChars</strong></p></td>
+<tr class="row-even"><td><p><strong>wrapChars</strong></p></td>
 <td><p>76</p></td>
 <td></td>
 <td><p>Character count to wrap at.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>mailType</strong></p></td>
+<tr class="row-odd"><td><p><strong>mailType</strong></p></td>
 <td><p>text</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">text</span></code> or <code class="docutils literal notranslate"><span class="pre">html</span></code></p></td>
 <td><p>Type of mail. If you send HTML email you must send it as a complete web
 page. Make sure you don’t have any relative links or relative image
 paths otherwise they will not work.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>charset</strong></p></td>
+<tr class="row-even"><td><p><strong>charset</strong></p></td>
 <td><p>UTF-8</p></td>
 <td></td>
 <td><p>Character set (<code class="docutils literal notranslate"><span class="pre">utf-8</span></code>, <code class="docutils literal notranslate"><span class="pre">iso-8859-1</span></code>, etc.).</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>validate</strong></p></td>
+<tr class="row-odd"><td><p><strong>validate</strong></p></td>
 <td><p>true</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
 <td><p>Whether to validate the email address.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>priority</strong></p></td>
+<tr class="row-even"><td><p><strong>priority</strong></p></td>
 <td><p>3</p></td>
 <td><p>1, 2, 3, 4, 5</p></td>
 <td><p>Email Priority. <code class="docutils literal notranslate"><span class="pre">1</span></code> = highest. <code class="docutils literal notranslate"><span class="pre">5</span></code> = lowest. <code class="docutils literal notranslate"><span class="pre">3</span></code> = normal.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>CRLF</strong></p></td>
+<tr class="row-odd"><td><p><strong>CRLF</strong></p></td>
 <td><p>\r\n</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">\r\n</span></code>, <code class="docutils literal notranslate"><span class="pre">\n</span></code> or <code class="docutils literal notranslate"><span class="pre">\r</span></code></p></td>
 <td><p>Newline character. (Use <code class="docutils literal notranslate"><span class="pre">\r\n</span></code> to comply with RFC 822).</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>newline</strong></p></td>
+<tr class="row-even"><td><p><strong>newline</strong></p></td>
 <td><p>\r\n</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">\r\n</span></code>, <code class="docutils literal notranslate"><span class="pre">\n</span></code> or <code class="docutils literal notranslate"><span class="pre">\r</span></code></p></td>
 <td><p>Newline character. (Use <code class="docutils literal notranslate"><span class="pre">\r\n</span></code> to comply with RFC 822).</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>BCCBatchMode</strong></p></td>
+<tr class="row-odd"><td><p><strong>BCCBatchMode</strong></p></td>
 <td><p>false</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
 <td><p>Enable BCC Batch Mode.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>BCCBatchSize</strong></p></td>
+<tr class="row-even"><td><p><strong>BCCBatchSize</strong></p></td>
 <td><p>200</p></td>
 <td></td>
 <td><p>Number of emails in each BCC batch.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>DSN</strong></p></td>
+<tr class="row-odd"><td><p><strong>DSN</strong></p></td>
 <td><p>false</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
 <td><p>Enable notify message from server.</p></td>

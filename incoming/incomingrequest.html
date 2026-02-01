@@ -65,6 +65,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
@@ -74,11 +75,9 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static Pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News Section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create News Items</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
 </ul>
 </li>
 </ul>
@@ -116,6 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controller_attributes.html">Controller Attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="request.html">Request Class</a></li>
@@ -136,7 +136,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_transformers.html">API Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/csp.html">Content Security Policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
@@ -244,6 +245,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_signals.html">CLI Signals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
 </ul>
 </li>
@@ -508,17 +510,6 @@ like this:</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">getServer()</span></code> method will pull from <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getServer()</span></code></p></li>
-</ul>
-</section>
-<section id="getenv">
-<h4>getEnv()<a class="headerlink" href="#getenv" title="Permalink to this heading"></a></h4>
-<div class="deprecated">
-<p><span class="versionmodified deprecated">Deprecated since version 4.4.4: </span>This method does not work from the beginning. Use
-<a class="reference internal" href="../general/common_functions.html#env" title="env"><code class="xref php php-func docutils literal notranslate"><span class="pre">env()</span></code></a> instead.</p>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">getEnv()</span></code> method will pull from <code class="docutils literal notranslate"><span class="pre">$_ENV</span></code>.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getEnv()</span></code></p></li>
 </ul>
 </section>
 <section id="getpostget">
@@ -829,7 +820,6 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::getMethod()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::setMethod()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::getServer()</span></code></p></li>
-<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::getEnv()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::setGlobal()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::fetchGlobal()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getBody()</span></code></p></li>
@@ -1180,34 +1170,6 @@ as an array.</p>
 <p>Prior to v4.4.0, this was the safest method to determine the
 “current URI”, since <code class="docutils literal notranslate"><span class="pre">IncomingRequest::$uri</span></code> might not be aware of
 the complete App configuration for base URLs.</p>
-</div>
-</dd></dl>
-
-<dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\IncomingRequest::setPath">
-<span class="sig-name descname"><span class="pre">setPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::setPath" title="Permalink to this definition"></a></dt>
-<dd><div class="deprecated">
-<p><span class="versionmodified deprecated">Deprecated since version 4.4.0.</span></p>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>$path</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The relative path to use as the current URI</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>This Incoming Request</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\HTTP\IncomingRequest" title="CodeIgniter\HTTP\IncomingRequest"><code class="xref php php-obj docutils literal notranslate"><span class="pre">IncomingRequest</span></code></a></span></p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Prior to v4.4.0, used mostly just for testing purposes, this
-allowed you to set the relative path value for the current request
-instead of relying on URI detection. This also updated the
-underlying <code class="docutils literal notranslate"><span class="pre">URI</span></code> instance with the new path.</p>
 </div>
 </dd></dl>
 

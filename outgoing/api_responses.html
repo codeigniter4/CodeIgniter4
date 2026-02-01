@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API Response Trait &mdash; CodeIgniter 4.6.5 documentation</title>
+  <title>API Responses &mdash; CodeIgniter 4.6.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -26,7 +26,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Content Security Policy" href="csp.html" />
+    <link rel="next" title="API Resources" href="api_transformers.html" />
     <link rel="prev" title="HTTP Responses" href="response.html" /> 
 </head>
 
@@ -65,6 +65,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
@@ -74,11 +75,9 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static Pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News Section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create News Items</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
 </ul>
 </li>
 </ul>
@@ -116,6 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controller_attributes.html">Controller Attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
@@ -136,7 +136,8 @@
 <li class="toctree-l2"><a class="reference internal" href="view_decorators.html">View Decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="table.html">HTML Table Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="response.html">HTTP Responses</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">API Response Trait</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_transformers.html">API Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="csp.html">Content Security Policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="localization.html">Localization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="alternative_php.html">Alternate PHP Syntax for View Files</a></li>
@@ -244,6 +245,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_signals.html">CLI Signals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
 </ul>
 </li>
@@ -281,7 +283,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Building Responses</a></li>
-      <li class="breadcrumb-item active">API Response Trait</li>
+      <li class="breadcrumb-item active">API Responses</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -290,21 +292,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="api-response-trait">
-<h1>API Response Trait<a class="headerlink" href="#api-response-trait" title="Permalink to this heading"></a></h1>
+  <section id="api-responses">
+<h1>API Responses<a class="headerlink" href="#api-responses" title="Permalink to this heading"></a></h1>
 <p>Much of modern PHP development requires building APIs, whether simply to provide data for a javascript-heavy
-single page application, or as a standalone product. CodeIgniter provides an API Response trait that can be
+single page application, or as a standalone product. CodeIgniter provides a couple of traits that can be
 used with any controller to make common response types simple, with no need to remember which HTTP status code
 should be returned for which response types.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#example-usage" id="id1">Example Usage</a></p></li>
-<li><p><a class="reference internal" href="#handling-response-types" id="id2">Handling Response Types</a></p></li>
-<li><p><a class="reference internal" href="#class-reference" id="id3">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#response-examples" id="id2">Response Examples</a></p></li>
+<li><p><a class="reference internal" href="#handling-response-types" id="id3">Handling Response Types</a></p></li>
+<li><p><a class="reference internal" href="#class-reference" id="id4">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#pagination-responses" id="id5">Pagination Responses</a></p>
+<ul>
+<li><p><a class="reference internal" href="#example-usage" id="id6">Example Usage</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id1" id="id7">Class Reference</a></p></li>
 </ul>
 </nav>
-<section id="example-usage">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Example Usage</a><a class="headerlink" href="#example-usage" title="Permalink to this heading"></a></h2>
+<section id="response-examples">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Response Examples</a><a class="headerlink" href="#response-examples" title="Permalink to this heading"></a></h2>
 <p>The following example shows a common usage pattern within your controllers.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -371,7 +379,7 @@ exist for the most common use cases:</p>
 </div>
 </section>
 <section id="handling-response-types">
-<span id="api-response-trait-handling-response-types"></span><h2><a class="toc-backref" href="#id2" role="doc-backlink">Handling Response Types</a><a class="headerlink" href="#handling-response-types" title="Permalink to this heading"></a></h2>
+<span id="api-response-trait-handling-response-types"></span><h2><a class="toc-backref" href="#id3" role="doc-backlink">Handling Response Types</a><a class="headerlink" href="#handling-response-types" title="Permalink to this heading"></a></h2>
 <p>When you pass your data in any of these methods, they will determine the data type to format the results as based on
 the following criteria:</p>
 <ul class="simple">
@@ -407,6 +415,10 @@ format both XML and JSON responses:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since <code class="docutils literal notranslate"><span class="pre">v4.7.0</span></code>, you can change the default JSON encoding depth by editing <strong>app/Config/Format.php</strong> file. The <code class="docutils literal notranslate"><span class="pre">$jsonEncodeDepth</span></code> value defines the maximum depth, with a default of <code class="docutils literal notranslate"><span class="pre">512</span></code>.</p>
+</div>
 <p>This is the array that is used during <a class="reference internal" href="../incoming/content_negotiation.html"><span class="doc">Content Negotiation</span></a> to determine which
 type of response to return. If no matches are found between what the client requested and what you support, the first
 format in this array is what will be returned.</p>
@@ -435,7 +447,7 @@ support both JSON and XML:</p>
 JSON data will be sent back to the client.</p>
 </section>
 <section id="class-reference">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this heading"></a></h2>
 <dl class="php method">
 <dt class="sig sig-object php" id="setResponseFormat">
 <span class="sig-name descname"><span class="pre">setResponseFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$format</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setResponseFormat" title="Permalink to this definition"></a></dt>
@@ -797,6 +809,136 @@ This might be due to some form of throttling or rate limiting. Status code is ty
 </dd></dl>
 
 </section>
+<section id="pagination-responses">
+<span id="api-response-trait-paginate"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">Pagination Responses</a><a class="headerlink" href="#pagination-responses" title="Permalink to this heading"></a></h2>
+<p>When returning paginated results from an API endpoint, you can use the <code class="docutils literal notranslate"><span class="pre">paginate()</span></code> method to return the
+results along with the pagination information. This helps to keep consistent responses across your API, while
+providing all of the information that clients will need to properly page through the results.</p>
+<section id="example-usage">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Example Usage</a><a class="headerlink" href="#example-usage" title="Permalink to this heading"></a></h3>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">App\Controllers\BaseController</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">App\Models\UserModel</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\API\ResponseTrait</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
+    <span class="k">use</span> <span class="nx">ResponseTrait</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="nv">$model</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A typical response might look like:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;admin@example.com&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user@example.com&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;page&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;perPage&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;totalPages&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;links&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;self&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://example.com/users?page=1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;first&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://example.com/users?page=1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;last&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://example.com/users?page=1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;next&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;previous&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">paginate()</span></code> method will always wrap the results in a <code class="docutils literal notranslate"><span class="pre">data</span></code> element, and will also include <code class="docutils literal notranslate"><span class="pre">meta</span></code>
+and <code class="docutils literal notranslate"><span class="pre">links</span></code> elements to help the client page through the results. If there are no results, the <code class="docutils literal notranslate"><span class="pre">data</span></code> element will
+be an empty array, and the <code class="docutils literal notranslate"><span class="pre">meta</span></code> and <code class="docutils literal notranslate"><span class="pre">links</span></code> elements will still be present, but with values that indicate no results.</p>
+<p>You can also pass it a Builder instance instead of a Model, as long as the Builder is properly configured with the table
+name and any necessary joins or where clauses.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">App\Controllers\BaseController</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\API\ResponseTrait</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
+    <span class="k">use</span> <span class="nx">ResponseTrait</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$builder</span> <span class="o">=</span> <span class="nx">db_connect</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="nx">resource</span><span class="o">:</span> <span class="nv">$builder</span><span class="p">,</span> <span class="nx">perPage</span><span class="o">:</span> <span class="mi">20</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id1">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Class Reference</a><a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<dl class="php method">
+<dt class="sig sig-object php" id="paginate">
+<span class="sig-name descname"><span class="pre">paginate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">Model|BaseBuilder</span> <span class="pre">$resource</span></em>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$perPage</span> <span class="pre">=</span> <span class="pre">20</span></em>, <em class="sig-param"><span class="pre">?string</span> <span class="pre">$transformWith</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="sig-paren">)</span><a class="headerlink" href="#paginate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$resource</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">Model|BaseBuilder</span></code></span>) – The resource to paginate, either a Model or a Builder instance.</p></li>
+<li><p><strong>$perPage</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The number of items to return per page.</p></li>
+<li><p><strong>$transformWith</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – Optional transformer class name to transform the results.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Generates a paginated response from the given resource. The resource can be either a Model or a Builder
+instance. The method will automatically determine the current page from the request’s query parameters.
+The response will include the paginated data, along with metadata about the pagination state and links
+to navigate through the pages.</p>
+<p>If you provide a <code class="docutils literal notranslate"><span class="pre">$transformWith</span></code> parameter with a transformer class name, each item in the paginated
+results will be transformed using that transformer before being returned. This is useful for controlling
+the structure and content of your API responses. See <a class="reference internal" href="api_transformers.html#api-transformers"><span class="std std-ref">API Transformers</span></a> for more
+information on creating and using transformers.</p>
+<p>Example with transformer:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">App\Controllers\BaseController</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">App\Models\UserModel</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">App\Transformers\UserTransformer</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\API\ResponseTrait</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
+    <span class="k">use</span> <span class="nx">ResponseTrait</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="nx">resource</span><span class="o">:</span> <span class="nv">$model</span><span class="p">,</span> <span class="nx">perPage</span><span class="o">:</span> <span class="mi">20</span><span class="p">,</span> <span class="nx">transformWith</span><span class="o">:</span> <span class="nx">UserTransformer</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
 </section>
 
 
@@ -804,7 +946,7 @@ This might be due to some form of throttling or rate limiting. Status code is ty
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="response.html" class="btn btn-neutral float-left" title="HTTP Responses" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="csp.html" class="btn btn-neutral float-right" title="Content Security Policy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="api_transformers.html" class="btn btn-neutral float-right" title="API Resources" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

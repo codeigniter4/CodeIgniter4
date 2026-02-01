@@ -65,6 +65,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
@@ -74,11 +75,9 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static Pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News Section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create News Items</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
 </ul>
 </li>
 </ul>
@@ -116,6 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controller_attributes.html">Controller Attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
@@ -136,7 +136,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_transformers.html">API Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/csp.html">Content Security Policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
@@ -244,6 +245,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_signals.html">CLI Signals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
 </ul>
 </li>
@@ -319,12 +321,13 @@ requirements are not met.</p>
 <li><p><a class="reference internal" href="#namespace-CodeIgniter\Cache" id="id13">Class Reference</a></p></li>
 <li><p><a class="reference internal" href="#drivers" id="id14">Drivers</a></p>
 <ul>
-<li><p><a class="reference internal" href="#file-based-caching" id="id15">File-based Caching</a></p></li>
-<li><p><a class="reference internal" href="#memcached-caching" id="id16">Memcached Caching</a></p></li>
-<li><p><a class="reference internal" href="#wincache-caching" id="id17">WinCache Caching</a></p></li>
-<li><p><a class="reference internal" href="#redis-caching" id="id18">Redis Caching</a></p></li>
-<li><p><a class="reference internal" href="#predis-caching" id="id19">Predis Caching</a></p></li>
-<li><p><a class="reference internal" href="#dummy-cache" id="id20">Dummy Cache</a></p></li>
+<li><p><a class="reference internal" href="#apcu-caching" id="id15">APCu Caching</a></p></li>
+<li><p><a class="reference internal" href="#file-based-caching" id="id16">File-based Caching</a></p></li>
+<li><p><a class="reference internal" href="#memcached-caching" id="id17">Memcached Caching</a></p></li>
+<li><p><a class="reference internal" href="#wincache-caching" id="id18">WinCache Caching</a></p></li>
+<li><p><a class="reference internal" href="#redis-caching" id="id19">Redis Caching</a></p></li>
+<li><p><a class="reference internal" href="#predis-caching" id="id20">Predis Caching</a></p></li>
+<li><p><a class="reference internal" href="#dummy-cache" id="id21">Dummy Cache</a></p></li>
 </ul>
 </li>
 </ul>
@@ -361,7 +364,7 @@ the following items are available.</p>
 <section id="handler">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">$handler</a><a class="headerlink" href="#handler" title="Permalink to this heading"></a></h3>
 <p>The is the name of the handler that should be used as the primary handler when starting up the engine.
-Available names are: dummy, file, memcached, redis, predis, wincache.</p>
+Available names are: apcu, dummy, file, memcached, redis, predis, wincache.</p>
 </section>
 <section id="backuphandler">
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">$backupHandler</a><a class="headerlink" href="#backuphandler" title="Permalink to this heading"></a></h3>
@@ -739,14 +742,19 @@ an <code class="docutils literal notranslate"><span class="pre">InvalidArgumentE
 </section>
 <section id="drivers">
 <h2><a class="toc-backref" href="#id14" role="doc-backlink">Drivers</a><a class="headerlink" href="#drivers" title="Permalink to this heading"></a></h2>
+<section id="apcu-caching">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">APCu Caching</a><a class="headerlink" href="#apcu-caching" title="Permalink to this heading"></a></h3>
+<p>APCu is an in-memory key-value store for PHP.</p>
+<p>To use it, you need the <a class="reference external" href="https://www.php.net/apcu">APCu PHP extension</a>.</p>
+</section>
 <section id="file-based-caching">
-<h3><a class="toc-backref" href="#id15" role="doc-backlink">File-based Caching</a><a class="headerlink" href="#file-based-caching" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">File-based Caching</a><a class="headerlink" href="#file-based-caching" title="Permalink to this heading"></a></h3>
 <p>This requires a cache directory to be really writable by the application.</p>
 <p>Use this with care, and make sure to benchmark your application, as a point can
 come where disk I/O will negate positive gains by caching.</p>
 </section>
 <section id="memcached-caching">
-<h3><a class="toc-backref" href="#id16" role="doc-backlink">Memcached Caching</a><a class="headerlink" href="#memcached-caching" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Memcached Caching</a><a class="headerlink" href="#memcached-caching" title="Permalink to this heading"></a></h3>
 <p>Memcached servers can be specified in the cache configuration file. Available options are:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -773,13 +781,13 @@ come where disk I/O will negate positive gains by caching.</p>
 <a class="reference external" href="https://www.php.net/memcached">https://www.php.net/memcached</a>.</p>
 </section>
 <section id="wincache-caching">
-<h3><a class="toc-backref" href="#id17" role="doc-backlink">WinCache Caching</a><a class="headerlink" href="#wincache-caching" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">WinCache Caching</a><a class="headerlink" href="#wincache-caching" title="Permalink to this heading"></a></h3>
 <p>Under Windows, you can also utilize the WinCache driver.</p>
 <p>For more information on WinCache, please see
 <a class="reference external" href="https://www.php.net/wincache">https://www.php.net/wincache</a>.</p>
 </section>
 <section id="redis-caching">
-<h3><a class="toc-backref" href="#id18" role="doc-backlink">Redis Caching</a><a class="headerlink" href="#redis-caching" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">Redis Caching</a><a class="headerlink" href="#redis-caching" title="Permalink to this heading"></a></h3>
 <p>Redis is an in-memory key-value store which can operate in LRU cache mode.
 To use it, you need <a class="reference external" href="https://github.com/phpredis/phpredis">Redis server and phpredis PHP extension</a>.</p>
 <p>Config options to connect to redis server stored in the cache configuration file. Available options are:</p>
@@ -794,11 +802,13 @@ To use it, you need <a class="reference external" href="https://github.com/phpre
     <span class="c1">// ...</span>
 
     <span class="k">public</span> <span class="nv">$redis</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;host&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-        <span class="s1">&#39;port&#39;</span>     <span class="o">=&gt;</span> <span class="mi">6379</span><span class="p">,</span>
-        <span class="s1">&#39;timeout&#39;</span>  <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="s1">&#39;database&#39;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;host&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;password&#39;</span>   <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;port&#39;</span>       <span class="o">=&gt;</span> <span class="mi">6379</span><span class="p">,</span>
+        <span class="s1">&#39;async&#39;</span>      <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span> <span class="c1">// specific to Predis and ignored by the native Redis extension</span>
+        <span class="s1">&#39;persistent&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+        <span class="s1">&#39;timeout&#39;</span>    <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;database&#39;</span>   <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -809,7 +819,7 @@ To use it, you need <a class="reference external" href="https://github.com/phpre
 <a class="reference external" href="https://redis.io">https://redis.io</a>.</p>
 </section>
 <section id="predis-caching">
-<h3><a class="toc-backref" href="#id19" role="doc-backlink">Predis Caching</a><a class="headerlink" href="#predis-caching" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">Predis Caching</a><a class="headerlink" href="#predis-caching" title="Permalink to this heading"></a></h3>
 <p>Predis is a flexible and feature-complete PHP client library for the Redis key-value store.
 To use it, from the command line inside your project root:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">composer require predis/predis</span>
@@ -819,7 +829,7 @@ To use it, from the command line inside your project root:</p>
 <a class="reference external" href="https://github.com/nrk/predis">https://github.com/nrk/predis</a>.</p>
 </section>
 <section id="dummy-cache">
-<h3><a class="toc-backref" href="#id20" role="doc-backlink">Dummy Cache</a><a class="headerlink" href="#dummy-cache" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">Dummy Cache</a><a class="headerlink" href="#dummy-cache" title="Permalink to this heading"></a></h3>
 <p>This is a caching backend that will always ‘miss.’ It stores no data,
 but lets you keep your caching code in place in environments that don’t
 support your chosen cache.</p>

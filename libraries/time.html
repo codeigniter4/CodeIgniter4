@@ -65,6 +65,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
@@ -74,11 +75,9 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static Pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News Section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create News Items</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
 </ul>
 </li>
 </ul>
@@ -116,6 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controller_attributes.html">Controller Attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
@@ -136,7 +136,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_transformers.html">API Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/csp.html">Content Security Policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
@@ -244,6 +245,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_signals.html">CLI Signals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
 </ul>
 </li>
@@ -879,6 +881,7 @@ modify the existing Time instance, but will return a new instance.</p>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">addHours</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">addDays</span><span class="p">(</span><span class="mi">21</span><span class="p">);</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">addMonths</span><span class="p">(</span><span class="mi">14</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">addCalendarMonths</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">addYears</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
 
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">subSeconds</span><span class="p">(</span><span class="mi">23</span><span class="p">);</span>
@@ -886,9 +889,50 @@ modify the existing Time instance, but will return a new instance.</p>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">subHours</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">subDays</span><span class="p">(</span><span class="mi">21</span><span class="p">);</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">subMonths</span><span class="p">(</span><span class="mi">14</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">subCalendarMonths</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">subYears</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
 </pre></div>
 </div>
+<section id="addcalendarmonths-subcalendarmonths">
+<h4>addCalendarMonths() / subCalendarMonths()<a class="headerlink" href="#addcalendarmonths-subcalendarmonths" title="Permalink to this heading"></a></h4>
+<p>Modifies the current Time by adding or subtracting whole calendar months. These methods can be useful if you
+require no calendar months are skipped in recurring dates. Refer to the table below for a comparison between
+<code class="docutils literal notranslate"><span class="pre">addMonths()</span></code> and <code class="docutils literal notranslate"><span class="pre">addCalendarMonths()</span></code> for an initial date of <code class="docutils literal notranslate"><span class="pre">2025-01-31</span></code>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>$months</p></th>
+<th class="head"><p>addMonths()</p></th>
+<th class="head"><p>addCalendarMonths()</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>2025-03-03</p></td>
+<td><p>2025-02-28</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>2025-03-31</p></td>
+<td><p>2025-03-31</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>2025-05-01</p></td>
+<td><p>2025-04-30</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>2025-05-31</p></td>
+<td><p>2025-05-31</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>2025-07-01</p></td>
+<td><p>2025-06-30</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>2025-07-31</p></td>
+<td><p>2025-07-31</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="comparing-two-times">
 <h3><a class="toc-backref" href="#id25" role="doc-backlink">Comparing Two Times</a><a class="headerlink" href="#comparing-two-times" title="Permalink to this heading"></a></h3>
@@ -970,6 +1014,28 @@ a timezone string in as the second parameter. If no timezone is given, the syste
 
 <span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">isAfter</span><span class="p">(</span><span class="nv">$time2</span><span class="p">);</span> <span class="c1">// false</span>
 <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">isAfter</span><span class="p">(</span><span class="nv">$time1</span><span class="p">);</span> <span class="c1">// true</span>
+</pre></div>
+</div>
+</section>
+<section id="ispast">
+<span id="time-comparing-two-times-ispast"></span><h4>isPast()<a class="headerlink" href="#ispast" title="Permalink to this heading"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.7.0.</span></p>
+</div>
+<p>Determines if the current instance’s time is in the past, relative to “now”.
+It returns a boolean true/false:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="nx">literalinclude</span><span class="o">::</span> <span class="na">time</span><span class="o">/</span><span class="mf">043.</span><span class="nx">php</span>
+</pre></div>
+</div>
+</section>
+<section id="isfuture">
+<span id="time-comparing-two-times-isfuture"></span><h4>isFuture()<a class="headerlink" href="#isfuture" title="Permalink to this heading"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.7.0.</span></p>
+</div>
+<p>Determines if the current instance’s time is in the future, relative to “now”.
+It returns a boolean true/false:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="nx">literalinclude</span><span class="o">::</span> <span class="na">time</span><span class="o">/</span><span class="mf">044.</span><span class="nx">php</span>
 </pre></div>
 </div>
 </section>

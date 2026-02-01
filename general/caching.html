@@ -65,6 +65,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
@@ -74,11 +75,9 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static Pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News Section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create News Items</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
 </ul>
 </li>
 </ul>
@@ -116,6 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controller_attributes.html">Controller Attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
@@ -136,7 +136,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_transformers.html">API Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/csp.html">Content Security Policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
@@ -244,6 +245,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_signals.html">CLI Signals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
 </ul>
 </li>
@@ -307,10 +309,11 @@ static web pages.</p>
 <ul>
 <li><p><a class="reference internal" href="#setting-cache-engine" id="id3">Setting Cache Engine</a></p></li>
 <li><p><a class="reference internal" href="#setting-cachequerystring" id="id4">Setting $cacheQueryString</a></p></li>
+<li><p><a class="reference internal" href="#setting-cachestatuscodes" id="id5">Setting $cacheStatusCodes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#enabling-caching" id="id5">Enabling Caching</a></p></li>
-<li><p><a class="reference internal" href="#deleting-caches" id="id6">Deleting Caches</a></p></li>
+<li><p><a class="reference internal" href="#enabling-caching" id="id6">Enabling Caching</a></p></li>
+<li><p><a class="reference internal" href="#deleting-caches" id="id7">Deleting Caches</a></p></li>
 </ul>
 </nav>
 <section id="how-does-caching-work">
@@ -358,9 +361,43 @@ again.</p></li>
 parameters. E.g., <code class="docutils literal notranslate"><span class="pre">['q',</span> <span class="pre">'page']</span></code>.</p></li>
 </ul>
 </section>
+<section id="setting-cachestatuscodes">
+<span id="web-page-caching-cache-status-codes"></span><h3><a class="toc-backref" href="#id5" role="doc-backlink">Setting $cacheStatusCodes</a><a class="headerlink" href="#setting-cachestatuscodes" title="Permalink to this heading"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.7.0.</span></p>
+</div>
+<p>You can control which HTTP response status codes are allowed to be cached
+with <code class="docutils literal notranslate"><span class="pre">Config\Cache::$cacheStatusCodes</span></code>.</p>
+<p>Valid options are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[]</span></code>: (default) Cache all HTTP status codes. This maintains backward
+compatibility but may cache temporary error pages.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[200]</span></code>: (Recommended) Only cache successful responses. This prevents
+caching of error pages (404, 500, etc.) that should be temporary.</p></li>
+<li><p>array of status codes: Cache only specific status codes. For example:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">[200,</span> <span class="pre">404]</span></code>: Cache successful responses and not found pages.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[200,</span> <span class="pre">404,</span> <span class="pre">410]</span></code>: Cache successful responses and specific error codes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[200,</span> <span class="pre">201,</span> <span class="pre">202,</span> <span class="pre">203,</span> <span class="pre">204]</span></code>: All 2xx successful responses.</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Using an empty array <code class="docutils literal notranslate"><span class="pre">[]</span></code> may cache temporary error pages (404, 500, etc).
+For production applications, consider restricting this to <code class="docutils literal notranslate"><span class="pre">[200]</span></code> to avoid
+caching errors that should be temporary. For example, a cached 404 page would
+remain cached even after the resource is created, until the cache expires.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Regardless of this setting, <code class="docutils literal notranslate"><span class="pre">DownloadResponse</span></code> and <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code>
+instances are never cached by the <code class="docutils literal notranslate"><span class="pre">PageCache</span></code> filter.</p>
+</div>
+</section>
 </section>
 <section id="enabling-caching">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Enabling Caching</a><a class="headerlink" href="#enabling-caching" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Enabling Caching</a><a class="headerlink" href="#enabling-caching" title="Permalink to this heading"></a></h2>
 <p>To enable caching, put the following tag in any of your controller
 methods:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -380,7 +417,7 @@ your output, you have to manually delete your cache.</p>
 </div>
 </section>
 <section id="deleting-caches">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Deleting Caches</a><a class="headerlink" href="#deleting-caches" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Deleting Caches</a><a class="headerlink" href="#deleting-caches" title="Permalink to this heading"></a></h2>
 <p>If you no longer wish to cache a page you can remove the caching tag and
 it will no longer be refreshed when it expires.</p>
 <div class="admonition note">

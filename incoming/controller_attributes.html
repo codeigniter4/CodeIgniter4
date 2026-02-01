@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Controller Attributes &mdash; CodeIgniter 4.6.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Auto Routing (Improved)" href="auto_routing_improved.html" />
+    <link rel="prev" title="Controller Filters" href="filters.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/ci-logo-text.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/requirements.html">Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/credits.html">Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/psr.html">PSR Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License Agreement</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/factories.html">Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/http.html">Working with HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/security.html">Security Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/goals.html">Design and Architectural Goals</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../general/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/logging.html">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/ajax.html">AJAX Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Controllers and Routing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="routing.html">URI Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controllers.html">Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filters.html">Controller Filters</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Controller Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_routing_improved.html">Auto Routing (Improved)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methodspoofing.html">HTTP Method Spoofing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="restful.html">RESTful Resource Handling</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/views.html">Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_renderer.html">View Renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_layouts.html">View Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_cells.html">View Cells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_parser.html">View Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_transformers.html">API Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/csp.html">Content Security Policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working with Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../database/examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/helpers.html">Query Helper Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/metadata.html">Getting Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/events.html">Database Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/utilities.html">Database Utilities</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../models/model.html">Using CodeIgniter's Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/entities.html">Using Entity Classes</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/forge.html">Database Forge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/migration.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/seeds.html">Database Seeding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/db_commands.html">Database Commands</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/file_collections.html">File Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/honeypot.html">Honeypot Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/images.html">Image Manipulation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/publisher.html">Publisher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/security.html">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/sessions.html">Session Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/throttler.html">Throttler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/time.html">Times and Dates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/typography.html">Typography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uploaded_files.html">Working with Uploaded Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uri.html">Working with URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/user_agent.html">User Agent Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/validation.html">Validation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/array_helper.html">Array Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/cookie_helper.html">Cookie Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/date_helper.html">Date Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/filesystem_helper.html">Filesystem Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/form_helper.html">Form Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/html_helper.html">HTML Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/inflector_helper.html">Inflector Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/number_helper.html">Number Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/security_helper.html">Security Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/test_helper.html">Test Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/text_helper.html">Text Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/url_helper.html">URL Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/xml_helper.html">XML Helper</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../testing/overview.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/fabricator.html">Generating Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/session_testing.html">Session Testing</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_overview.html">CLI Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_controllers.html">Running Controllers via CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/spark_commands.html">Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_signals.html">CLI Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/core_classes.html">Creating Core System Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/common.html">Replacing Common Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/basecontroller.html">Extending the Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/authentication.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/composer_packages.html">Creating Composer Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/contributing.html">Contributing to CodeIgniter</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/official_packages.html">Official Packages</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/incoming/controller_attributes.rst">Edit this page</a>
+
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Controllers and Routing</a></li>
+      <li class="breadcrumb-item active">Controller Attributes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="controller-attributes">
+<span id="incoming-controller-attributes"></span><h1>Controller Attributes<a class="headerlink" href="#controller-attributes" title="Permalink to this heading"></a></h1>
+<p>PHP Attributes can be used to define filters and other metadata on controller classes and methods. This keeps the configuration close to the code it affects, and can make it easier to see at a glance what filters are applied to a given controller or method. This works across all routing methods, including auto-routing, which allows for a near feature-parity between the more robust route declarations and auto-routing.</p>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#getting-started" id="id1">Getting Started</a></p>
+<ul>
+<li><p><a class="reference internal" href="#disabling-attributes" id="id2">Disabling Attributes</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#provided-attributes" id="id3">Provided Attributes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#filter" id="id4">Filter</a></p></li>
+<li><p><a class="reference internal" href="#restrict" id="id5">Restrict</a></p></li>
+<li><p><a class="reference internal" href="#cache" id="id6">Cache</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#custom-attributes" id="id7">Custom Attributes</a></p></li>
+</ul>
+</nav>
+<section id="getting-started">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Getting Started</a><a class="headerlink" href="#getting-started" title="Permalink to this heading"></a></h2>
+<p>Controller Attributes can be applied to either the entire class, or to a specific method. The following example shows how to apply the <code class="docutils literal notranslate"><span class="pre">Filters</span></code> attribute to a controller class:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Router\Attributes\Filter</span><span class="p">;</span>
+
+<span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;auth&#39;</span><span class="p">)]</span>
+<span class="k">class</span> <span class="nc">AdminController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;welcome_message&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In this example, the <code class="docutils literal notranslate"><span class="pre">Auth</span></code> filter will be applied to all methods in <code class="docutils literal notranslate"><span class="pre">AdminController</span></code>.</p>
+<p>You can also apply the <code class="docutils literal notranslate"><span class="pre">Filters</span></code> attribute to a specific method within a controller. This allows you to apply filters only to certain methods, while leaving others unaffected. Here’s an example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Router\Attributes\Filter</span><span class="p">;</span>
+
+<span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="nx">having</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39;superadmin&#39;</span><span class="p">])]</span>
+<span class="k">class</span> <span class="nc">AdminController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
+    <span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;permission&#39;</span><span class="p">,</span> <span class="nx">having</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;users.manage&#39;</span><span class="p">])]</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">users</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// Will have &#39;group&#39; filter with [&#39;admin&#39;, &#39;superadmin&#39;]</span>
+        <span class="c1">// and &#39;permission&#39; filter with [&#39;users.manage&#39;]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Class-level and method-level attributes can work together to provide a flexible way to manage your routes at the controller level.</p>
+<section id="disabling-attributes">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Disabling Attributes</a><a class="headerlink" href="#disabling-attributes" title="Permalink to this heading"></a></h3>
+<p>If you know that you will not be using attributes in your application, you can disable the feature by setting the <code class="docutils literal notranslate"><span class="pre">$useControllerAttributes</span></code> property in your <code class="docutils literal notranslate"><span class="pre">app/Config/Routing.php</span></code> file to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+</section>
+</section>
+<section id="provided-attributes">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Provided Attributes</a><a class="headerlink" href="#provided-attributes" title="Permalink to this heading"></a></h2>
+<section id="filter">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Filter</a><a class="headerlink" href="#filter" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Filters</span></code> attribute allows you to specify one or more filters to be applied to a controller class or method. You can specify filters to run before or after the controller action, and you can also provide parameters to the filters. Here’s an example of how to use the <code class="docutils literal notranslate"><span class="pre">Filters</span></code> attribute:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Router\Attributes\Filter</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">HomeController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
+    <span class="c1">// Apply the filter by it&#39;s alias name</span>
+    <span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;csrf&#39;</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Apply a filter with arguments</span>
+    <span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;throttle&#39;</span><span class="p">,</span> <span class="nx">having</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;60&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">])]</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">api</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Multiple filters can be applied</span>
+    <span class="p">#[</span><span class="nd">Filter</span><span class="p">(</span><span class="nx">by</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;auth&#39;</span><span class="p">,</span> <span class="s1">&#39;csrf&#39;</span><span class="p">])]</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">admin</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When filters are applied both by an attribute and in the filter configuration file, they will both be applied, but that could lead to unexpected results.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please remember that every parameter applied to the filter will be converted to a string. This behavior affects only filters.</p>
+</div>
+</section>
+<section id="restrict">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Restrict</a><a class="headerlink" href="#restrict" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Restrict</span></code> attribute allows you to restrict access to the class or method based on the domain, the sub-domain, or
+the environment the application is running in. Here’s an example of how to use the <code class="docutils literal notranslate"><span class="pre">Restrict</span></code> attribute:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Router\Attributes\Restrict</span><span class="p">;</span>
+
+<span class="c1">// Restrict access by environment</span>
+<span class="p">#[</span><span class="nd">Restrict</span><span class="p">(</span><span class="nx">environment</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;development&#39;</span><span class="p">,</span> <span class="s1">&#39;!production&#39;</span><span class="p">])]</span>
+<span class="k">class</span> <span class="nc">HomeController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
+    <span class="c1">// Restrict access by hostname</span>
+    <span class="p">#[</span><span class="nd">Restrict</span><span class="p">(</span><span class="nx">hostname</span><span class="o">:</span> <span class="s1">&#39;localhost&#39;</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Multiple allowed hosts</span>
+    <span class="p">#[</span><span class="nd">Restrict</span><span class="p">(</span><span class="nx">hostname</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;dev.example.com&#39;</span><span class="p">])]</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">devOnly</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Restrict to subdomain, e.g. admin.example.com</span>
+    <span class="p">#[</span><span class="nd">Restrict</span><span class="p">(</span><span class="nx">subdomain</span><span class="o">:</span> <span class="s1">&#39;admin&#39;</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">deleteItem</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="cache">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Cache</a><a class="headerlink" href="#cache" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Cache</span></code> attribute allows the output of the controller method to be cached for a specified amount of time. You can specify a duration in seconds, and optionally a cache key. Here’s an example of how to use the <code class="docutils literal notranslate"><span class="pre">Cache</span></code> attribute:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Router\Attributes\Cache</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">HomeController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
+    <span class="c1">// Cache this method&#39;s response for 2 hours</span>
+    <span class="p">#[</span><span class="nd">Cache</span><span class="p">(</span><span class="k">for</span><span class="o">:</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">HOUR</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;welcome_message&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Custom cache key</span>
+    <span class="p">#[</span><span class="nd">Cache</span><span class="p">(</span><span class="k">for</span><span class="o">:</span> <span class="mi">10</span> <span class="o">*</span> <span class="nx">MINUTE</span><span class="p">,</span> <span class="nb">key</span><span class="o">:</span> <span class="s1">&#39;custom_cache_key&#39;</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">custom</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">&#39;This response is cached with a custom key for 10 minutes.&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="custom-attributes">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Custom Attributes</a><a class="headerlink" href="#custom-attributes" title="Permalink to this heading"></a></h2>
+<p>You can also create your own custom attributes to add metadata or behavior to your controllers and methods. Custom attributes must implement the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\Attributes\RouteAttributeInterface</span></code> interface. Here’s an example of a custom attribute that adds a custom header to the response:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Attributes</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Attribute</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\RequestInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\ResponseInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Router\Attributes\RouteAttributeInterface</span><span class="p">;</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Custom Header Attribute</span>
+<span class="sd"> *</span>
+<span class="sd"> * Adds custom headers to the response. This is useful for:</span>
+<span class="sd"> * - Adding security headers</span>
+<span class="sd"> * - Setting API version information</span>
+<span class="sd"> * - Adding custom metadata to responses</span>
+<span class="sd"> */</span>
+<span class="p">#[</span><span class="nd">Attribute</span><span class="p">(</span><span class="nx">Attribute</span><span class="o">::</span><span class="na">TARGET_METHOD</span> <span class="o">|</span> <span class="nx">Attribute</span><span class="o">::</span><span class="na">IS_REPEATABLE</span><span class="p">)]</span>
+<span class="k">class</span> <span class="nc">AddHeader</span> <span class="k">implements</span> <span class="nx">RouteAttributeInterface</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * @param string $name  The header name</span>
+<span class="sd">     * @param string $value The header value</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span>
+        <span class="k">private</span> <span class="nx">readonly</span> <span class="nx">string</span> <span class="nv">$name</span><span class="p">,</span>
+        <span class="k">private</span> <span class="nx">readonly</span> <span class="nx">string</span> <span class="nv">$value</span><span class="p">,</span>
+    <span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Called before the controller method executes.</span>
+<span class="sd">     * Return null to continue to the controller.</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">)</span><span class="o">:</span> <span class="nx">RequestInterface</span><span class="o">|</span><span class="nx">ResponseInterface</span><span class="o">|</span><span class="k">null</span>
+    <span class="p">{</span>
+        <span class="c1">// We don&#39;t need to do anything before the controller runs</span>
+        <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Called after the controller method executes.</span>
+<span class="sd">     * Add the custom header to the response.</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">after</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">)</span><span class="o">:</span> <span class="o">?</span><span class="nx">ResponseInterface</span>
+    <span class="p">{</span>
+        <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">value</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nv">$response</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can then apply this custom attribute to a controller class or method just like the built-in attributes:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">App\Attributes\AddHeader</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Router\Attributes\Cache</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Api</span> <span class="k">extends</span> <span class="nx">Controller</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * Add a single custom header</span>
+<span class="sd">     */</span>
+    <span class="p">#[</span><span class="nd">AddHeader</span><span class="p">(</span><span class="s1">&#39;X-API-Version&#39;</span><span class="p">,</span> <span class="s1">&#39;2.0&#39;</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">userInfo</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setJSON</span><span class="p">([</span>
+            <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john@example.com&#39;</span><span class="p">,</span>
+        <span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Add multiple custom headers using the IS_REPEATABLE attribute option.</span>
+<span class="sd">     * Each AddHeader attribute will be executed in order.</span>
+<span class="sd">     */</span>
+    <span class="p">#[</span><span class="nd">AddHeader</span><span class="p">(</span><span class="s1">&#39;X-API-Version&#39;</span><span class="p">,</span> <span class="s1">&#39;2.0&#39;</span><span class="p">)]</span>
+    <span class="p">#[</span><span class="nd">AddHeader</span><span class="p">(</span><span class="s1">&#39;X-Rate-Limit&#39;</span><span class="p">,</span> <span class="s1">&#39;100&#39;</span><span class="p">)]</span>
+    <span class="p">#[</span><span class="nd">AddHeader</span><span class="p">(</span><span class="s1">&#39;X-Content-Source&#39;</span><span class="p">,</span> <span class="s1">&#39;cache&#39;</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">statistics</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setJSON</span><span class="p">([</span>
+            <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="mi">1500</span><span class="p">,</span>
+            <span class="s1">&#39;posts&#39;</span> <span class="o">=&gt;</span> <span class="mi">3200</span><span class="p">,</span>
+        <span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Combine custom attributes with built-in attributes.</span>
+<span class="sd">     * The Cache attribute will cache the response,</span>
+<span class="sd">     * and AddHeader will add the custom header.</span>
+<span class="sd">     */</span>
+    <span class="p">#[</span><span class="nd">AddHeader</span><span class="p">(</span><span class="s1">&#39;X-Powered-By&#39;</span><span class="p">,</span> <span class="s1">&#39;My Custom API&#39;</span><span class="p">)]</span>
+    <span class="p">#[</span><span class="nd">Cache</span><span class="p">(</span><span class="k">for</span><span class="o">:</span> <span class="mi">3600</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">dashboard</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setJSON</span><span class="p">([</span>
+            <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;operational&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;uptime&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;99.9%&#39;</span><span class="p">,</span>
+        <span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="filters.html" class="btn btn-neutral float-left" title="Controller Filters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="auto_routing_improved.html" class="btn btn-neutral float-right" title="Auto Routing (Improved)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Feb 01, 2026.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

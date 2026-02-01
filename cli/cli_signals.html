@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CLI Signals &mdash; CodeIgniter 4.6.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CLIRequest Class" href="cli_request.html" />
+    <link rel="prev" title="CLI Library" href="cli_library.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/ci-logo-text.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/requirements.html">Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/credits.html">Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/psr.html">PSR Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License Agreement</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/factories.html">Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/http.html">Working with HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/security.html">Security Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/goals.html">Design and Architectural Goals</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../general/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/logging.html">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/ajax.html">AJAX Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controller_attributes.html">Controller Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/methodspoofing.html">HTTP Method Spoofing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/restful.html">RESTful Resource Handling</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/views.html">Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_renderer.html">View Renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_layouts.html">View Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_cells.html">View Cells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_parser.html">View Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_transformers.html">API Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/csp.html">Content Security Policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working with Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../database/examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/helpers.html">Query Helper Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/metadata.html">Getting Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/events.html">Database Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/utilities.html">Database Utilities</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../models/model.html">Using CodeIgniter's Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/entities.html">Using Entity Classes</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/forge.html">Database Forge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/migration.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/seeds.html">Database Seeding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/db_commands.html">Database Commands</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/file_collections.html">File Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/honeypot.html">Honeypot Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/images.html">Image Manipulation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/publisher.html">Publisher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/security.html">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/sessions.html">Session Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/throttler.html">Throttler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/time.html">Times and Dates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/typography.html">Typography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uploaded_files.html">Working with Uploaded Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uri.html">Working with URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/user_agent.html">User Agent Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/validation.html">Validation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/array_helper.html">Array Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/cookie_helper.html">Cookie Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/date_helper.html">Date Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/filesystem_helper.html">Filesystem Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/form_helper.html">Form Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/html_helper.html">HTML Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/inflector_helper.html">Inflector Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/number_helper.html">Number Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/security_helper.html">Security Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/test_helper.html">Test Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/text_helper.html">Text Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/url_helper.html">URL Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/xml_helper.html">XML Helper</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../testing/overview.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/fabricator.html">Generating Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/session_testing.html">Session Testing</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Command Line Usage</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cli_overview.html">CLI Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli_controllers.html">Running Controllers via CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spark_commands.html">Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli_commands.html">Creating Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli_generators.html">CLI Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli_library.html">CLI Library</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CLI Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli_request.html">CLIRequest Class</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/core_classes.html">Creating Core System Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/common.html">Replacing Common Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/basecontroller.html">Extending the Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/authentication.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/composer_packages.html">Creating Composer Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/contributing.html">Contributing to CodeIgniter</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/official_packages.html">Official Packages</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/cli/cli_signals.rst">Edit this page</a>
+
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Command Line Usage</a></li>
+      <li class="breadcrumb-item active">CLI Signals</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cli-signals">
+<h1>CLI Signals<a class="headerlink" href="#cli-signals" title="Permalink to this heading"></a></h1>
+<p>Unix signals are a fundamental part of process communication and control. They provide a way to interrupt, control,
+and communicate with running processes. CodeIgniter’s SignalTrait makes it easy to handle signals in your CLI commands,
+enabling graceful shutdowns, pause/resume functionality, and custom signal handling.</p>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#what-are-signals" id="id1">What are Signals?</a></p>
+<ul>
+<li><p><a class="reference internal" href="#common-unix-signals" id="id2">Common Unix Signals</a></p></li>
+<li><p><a class="reference internal" href="#system-requirements" id="id3">System Requirements</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#using-the-signaltrait" id="id4">Using the SignalTrait</a></p>
+<ul>
+<li><p><a class="reference internal" href="#custom-signal-handlers" id="id5">Custom Signal Handlers</a></p></li>
+<li><p><a class="reference internal" href="#fallback-signal-handler" id="id6">Fallback Signal Handler</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#critical-sections" id="id7">Critical Sections</a></p></li>
+<li><p><a class="reference internal" href="#pause-and-resume" id="id8">Pause and Resume</a></p>
+<ul>
+<li><p><a class="reference internal" href="#how-pause-resume-works" id="id9">How Pause/Resume Works</a></p></li>
+<li><p><a class="reference internal" href="#important-limitations" id="id10">Important Limitations</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#triggering-signals" id="id11">Triggering Signals</a></p>
+<ul>
+<li><p><a class="reference internal" href="#from-command-line" id="id12">From Command Line</a></p></li>
+<li><p><a class="reference internal" href="#keyboard-shortcuts" id="id13">Keyboard Shortcuts</a></p></li>
+<li><p><a class="reference internal" href="#job-control" id="id14">Job Control</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#debugging-signals" id="id15">Debugging Signals</a></p>
+<ul>
+<li><p><a class="reference internal" href="#process-state-information" id="id16">Process State Information</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\CLI" id="id17">Class Reference</a></p></li>
+</ul>
+</nav>
+<section id="what-are-signals">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">What are Signals?</a><a class="headerlink" href="#what-are-signals" title="Permalink to this heading"></a></h2>
+<p>Signals are software interrupts delivered to a process by the operating system. They notify processes of various
+events, from user-initiated interruptions (like pressing Ctrl+C) to system events (like terminal disconnection).</p>
+<p><code class="docutils literal notranslate"><span class="pre">SignalTrait</span></code> adds the ability to perform certain actions before the signal is consumed, as well as the capability
+to protect certain pieces of code from signal interruption. This protection mechanism guarantees the proper execution
+of critical command operations by ensuring they complete atomically without being interrupted by incoming signals.</p>
+<section id="common-unix-signals">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Common Unix Signals</a><a class="headerlink" href="#common-unix-signals" title="Permalink to this heading"></a></h3>
+<p>Here are the most commonly used signals in CLI applications:</p>
+<p><strong>Handleable Signals:</strong></p>
+<ul class="simple">
+<li><p><strong>SIGTERM (15)</strong>: Termination signal - requests graceful shutdown</p></li>
+<li><p><strong>SIGINT (2)</strong>: Interrupt signal - typically sent by Ctrl+C</p></li>
+<li><p><strong>SIGHUP (1)</strong>: Hangup signal - terminal disconnected or closed</p></li>
+<li><p><strong>SIGQUIT (3)</strong>: Quit signal - typically sent by Ctrl+\</p></li>
+<li><p><strong>SIGTSTP (20)</strong>: Terminal stop - typically sent by Ctrl+Z (suspend)</p></li>
+<li><p><strong>SIGCONT (18)</strong>: Continue signal - resume suspended process (fg command)</p></li>
+<li><p><strong>SIGUSR1 (10)</strong>: User-defined signal 1</p></li>
+<li><p><strong>SIGUSR2 (12)</strong>: User-defined signal 2</p></li>
+</ul>
+<p><strong>Unhandleable Signals:</strong></p>
+<p>Some signals cannot be caught, blocked, or handled by user processes:</p>
+<ul class="simple">
+<li><p><strong>SIGKILL (9)</strong>: Forceful termination - cannot be caught or ignored</p></li>
+<li><p><strong>SIGSTOP (19)</strong>: Forceful suspend - cannot be caught or ignored</p></li>
+</ul>
+<p>These signals are handled directly by the kernel and will terminate or suspend your process immediately, bypassing any custom handlers.</p>
+</section>
+<section id="system-requirements">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">System Requirements</a><a class="headerlink" href="#system-requirements" title="Permalink to this heading"></a></h3>
+<p>Signal handling requires:</p>
+<ul class="simple">
+<li><p><strong>Unix-based system</strong> (Linux, macOS, BSD) - Windows is not supported</p></li>
+<li><p><strong>PCNTL extension</strong> - for signal registration and handling</p></li>
+<li><p><strong>POSIX extension</strong> - required for pause/resume functionality (SIGTSTP/SIGCONT)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On systems without these extensions, the SignalTrait will gracefully degrade and disable signal handling.</p>
+</div>
+</section>
+</section>
+<section id="using-the-signaltrait">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Using the SignalTrait</a><a class="headerlink" href="#using-the-signaltrait" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">SignalTrait</span></code> provides a comprehensive signal handling system for CLI commands. To use it, simply add the trait
+to your command class and register signals in your command’s <code class="docutils literal notranslate"><span class="pre">run()</span></code> method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\BaseCommand</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">SampleCommand</span> <span class="k">extends</span> <span class="nx">BaseCommand</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span><span class="o">:</span> <span class="nx">int</span>
+    <span class="p">{</span>
+        <span class="c1">// Register basic termination signals</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">registerSignals</span><span class="p">();</span>
+
+        <span class="c1">// Main processing loop</span>
+        <span class="k">while</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">isRunning</span><span class="p">())</span> <span class="p">{</span>
+            <span class="c1">// Do work here</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">processItem</span><span class="p">();</span>
+
+            <span class="nb">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Command terminated gracefully&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nx">EXIT_SUCCESS</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This registers three termination signals that will set the <code class="docutils literal notranslate"><span class="pre">$running</span></code> state to <code class="docutils literal notranslate"><span class="pre">false</span></code> when received.</p>
+<section id="custom-signal-handlers">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Custom Signal Handlers</a><a class="headerlink" href="#custom-signal-handlers" title="Permalink to this heading"></a></h3>
+<p>You can map signals to custom methods for specific behavior:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\BaseCommand</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">SampleCommand</span> <span class="k">extends</span> <span class="nx">BaseCommand</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span><span class="o">:</span> <span class="nx">int</span>
+    <span class="p">{</span>
+        <span class="c1">// Register signals with custom handlers</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">registerSignals</span><span class="p">(</span>
+            <span class="p">[</span><span class="nx">SIGTERM</span><span class="p">,</span> <span class="nx">SIGINT</span><span class="p">,</span> <span class="nx">SIGUSR1</span><span class="p">,</span> <span class="nx">SIGUSR2</span><span class="p">],</span>
+            <span class="p">[</span>
+                <span class="nx">SIGTERM</span> <span class="o">=&gt;</span> <span class="s1">&#39;onGracefulShutdown&#39;</span><span class="p">,</span>
+                <span class="nx">SIGINT</span>  <span class="o">=&gt;</span> <span class="s1">&#39;onInterrupt&#39;</span><span class="p">,</span>
+                <span class="nx">SIGUSR1</span> <span class="o">=&gt;</span> <span class="s1">&#39;onToggleDebug&#39;</span><span class="p">,</span>
+                <span class="nx">SIGUSR2</span> <span class="o">=&gt;</span> <span class="s1">&#39;onStatusReport&#39;</span><span class="p">,</span>
+            <span class="p">],</span>
+        <span class="p">);</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">isRunning</span><span class="p">())</span> <span class="p">{</span>
+            <span class="c1">// Call custom method</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">doWork</span><span class="p">();</span>
+            <span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nx">EXIT_SUCCESS</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">onGracefulShutdown</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Received SIGTERM - shutting down gracefully...&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">onInterrupt</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Received SIGINT - stopping!&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">onToggleDebug</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="c1">// Custom debug mode</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">debugMode</span> <span class="o">=</span> <span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">debugMode</span><span class="p">;</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Debug mode: &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">debugMode</span> <span class="o">?</span> <span class="s1">&#39;ON&#39;</span> <span class="o">:</span> <span class="s1">&#39;OFF&#39;</span><span class="p">),</span> <span class="s1">&#39;blue&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">onStatusReport</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nv">$state</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getProcessState</span><span class="p">();</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Status: &#39;</span> <span class="o">.</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$state</span><span class="p">,</span> <span class="nx">JSON_PRETTY_PRINT</span><span class="p">),</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="fallback-signal-handler">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Fallback Signal Handler</a><a class="headerlink" href="#fallback-signal-handler" title="Permalink to this heading"></a></h3>
+<p>For signals without explicit mappings, you can implement a generic <code class="docutils literal notranslate"><span class="pre">onInterruption()</span></code> method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\BaseCommand</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">SampleCommand</span> <span class="k">extends</span> <span class="nx">BaseCommand</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span><span class="o">:</span> <span class="nx">int</span>
+    <span class="p">{</span>
+        <span class="c1">// Register signals without explicit mappings</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">registerSignals</span><span class="p">([</span><span class="nx">SIGTERM</span><span class="p">,</span> <span class="nx">SIGINT</span><span class="p">,</span> <span class="nx">SIGHUP</span><span class="p">,</span> <span class="nx">SIGUSR1</span><span class="p">]);</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">isRunning</span><span class="p">())</span> <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">doWork</span><span class="p">();</span>
+            <span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nx">EXIT_SUCCESS</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Generic handler for all unmapped signals</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">onInterruption</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nv">$signalName</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getSignalName</span><span class="p">(</span><span class="nv">$signal</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;Received </span><span class="si">{</span><span class="nv">$signalName</span><span class="si">}</span><span class="s2"> - handling generically&quot;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+
+        <span class="k">switch</span> <span class="p">(</span><span class="nv">$signal</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="nx">SIGTERM</span><span class="o">:</span>
+                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Graceful shutdown requested&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="k">case</span> <span class="nx">SIGINT</span><span class="o">:</span>
+                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Immediate shutdown requested&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="k">case</span> <span class="nx">SIGHUP</span><span class="o">:</span>
+                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Configuration reload requested&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="k">case</span> <span class="nx">SIGUSR1</span><span class="o">:</span>
+                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;User signal 1 received&#39;</span><span class="p">,</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="k">default</span><span class="o">:</span>
+                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Unknown signal received&#39;</span><span class="p">,</span> <span class="s1">&#39;light_gray&#39;</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="critical-sections">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Critical Sections</a><a class="headerlink" href="#critical-sections" title="Permalink to this heading"></a></h2>
+<p>Some operations should never be interrupted (database transactions, file operations). Use <code class="docutils literal notranslate"><span class="pre">withSignalsBlocked()</span></code>
+to create atomic operations:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">SampleCommand</span> <span class="k">extends</span> <span class="nx">\BaseCommand</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="k">private</span> <span class="k">function</span> <span class="nf">processOrder</span><span class="p">(</span><span class="k">array</span> <span class="nv">$orderData</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="c1">// Critical section - no interruptions allowed</span>
+        <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withSignalsBlocked</span><span class="p">(</span><span class="k">function</span> <span class="p">()</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$orderData</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Starting critical transaction - signals blocked&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+
+            <span class="c1">// Start database transaction</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transStart</span><span class="p">();</span>
+
+            <span class="k">try</span> <span class="p">{</span>
+                <span class="c1">// Create order record</span>
+                <span class="nv">$orderId</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createOrder</span><span class="p">(</span><span class="nv">$orderData</span><span class="p">);</span>
+
+                <span class="c1">// Update inventory</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">updateInventory</span><span class="p">(</span><span class="nv">$orderData</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">]);</span>
+
+                <span class="c1">// Process payment</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">processPayment</span><span class="p">(</span><span class="nv">$orderId</span><span class="p">,</span> <span class="nv">$orderData</span><span class="p">[</span><span class="s1">&#39;payment&#39;</span><span class="p">]);</span>
+
+                <span class="c1">// Commit transaction</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transCommit</span><span class="p">();</span>
+
+                <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Transaction completed successfully&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+
+                <span class="k">return</span> <span class="nv">$orderId</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">\Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">// Rollback on error</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transRollback</span><span class="p">();</span>
+
+                <span class="k">throw</span> <span class="nv">$e</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Critical section complete - signals restored&#39;</span><span class="p">,</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;Order </span><span class="si">{</span><span class="nv">$result</span><span class="si">}</span><span class="s2"> processed successfully&quot;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>During critical sections, ALL signals (including Ctrl+Z) are blocked to prevent data corruption.</p>
+</section>
+<section id="pause-and-resume">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Pause and Resume</a><a class="headerlink" href="#pause-and-resume" title="Permalink to this heading"></a></h2>
+<p>The SignalTrait supports proper Unix job control with custom handlers:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\BaseCommand</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">SampleCommand</span> <span class="k">extends</span> <span class="nx">BaseCommand</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span><span class="o">:</span> <span class="nx">int</span>
+    <span class="p">{</span>
+        <span class="c1">// Register pause/resume signals with custom handlers</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">registerSignals</span><span class="p">(</span>
+            <span class="p">[</span><span class="nx">SIGTERM</span><span class="p">,</span> <span class="nx">SIGINT</span><span class="p">,</span> <span class="nx">SIGTSTP</span><span class="p">,</span> <span class="nx">SIGCONT</span><span class="p">],</span>
+            <span class="p">[</span>
+                <span class="nx">SIGTSTP</span> <span class="o">=&gt;</span> <span class="s1">&#39;onPause&#39;</span><span class="p">,</span>
+                <span class="nx">SIGCONT</span> <span class="o">=&gt;</span> <span class="s1">&#39;onResume&#39;</span><span class="p">,</span>
+            <span class="p">],</span>
+        <span class="p">);</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">isRunning</span><span class="p">())</span> <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">processWork</span><span class="p">();</span>
+            <span class="nb">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nx">EXIT_SUCCESS</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">onPause</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Pausing - saving current date...&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+
+        <span class="c1">// Save current timestamp</span>
+        <span class="nv">$state</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;timestamp&#39;</span> <span class="o">=&gt;</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getTimestamp</span><span class="p">(),</span>
+        <span class="p">];</span>
+
+        <span class="nb">file_put_contents</span><span class="p">(</span><span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;app_state.json&#39;</span><span class="p">,</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$state</span><span class="p">));</span>
+
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;State saved. Process will now suspend.&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">onResume</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Resuming - restoring...&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+
+        <span class="nv">$file</span> <span class="o">=</span> <span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;app_state.json&#39;</span><span class="p">;</span>
+
+        <span class="c1">// Restore saved state</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">file_exists</span><span class="p">(</span><span class="nv">$file</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$state</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$file</span><span class="p">),</span> <span class="k">true</span><span class="p">);</span>
+            <span class="nv">$date</span>  <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromTimestamp</span><span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">&#39;Y-m-d H:i:s&#39;</span><span class="p">);</span>
+
+            <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Restored from &#39;</span> <span class="o">.</span> <span class="nv">$date</span><span class="p">,</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Resuming normal operation...&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="how-pause-resume-works">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">How Pause/Resume Works</a><a class="headerlink" href="#how-pause-resume-works" title="Permalink to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>SIGTSTP received</strong>: Custom <code class="docutils literal notranslate"><span class="pre">onPause()</span></code> handler runs</p></li>
+<li><p><strong>Process suspends</strong>: Using standard Unix job control</p></li>
+<li><p><strong>SIGCONT received</strong>: Process resumes, then <code class="docutils literal notranslate"><span class="pre">onResume()</span></code> handler runs</p></li>
+</ol>
+<p>This allows you to save state before suspension and restore it after resumption while maintaining proper shell integration.</p>
+</section>
+<section id="important-limitations">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Important Limitations</a><a class="headerlink" href="#important-limitations" title="Permalink to this heading"></a></h3>
+<p><strong>Shell Job Control vs Manual Signals</strong></p>
+<p>There’s a critical difference between using shell job control and manually sending signals:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># RECOMMENDED: Use shell job control</span>
+php<span class="w"> </span>spark<span class="w"> </span>my:command
+<span class="c1"># Press Ctrl+Z to suspend</span>
+<span class="nb">fg</span><span class="w">  </span><span class="c1"># Resume - maintains terminal control</span>
+
+<span class="c1"># PROBLEMATIC: Manual signal sending</span>
+php<span class="w"> </span>spark<span class="w"> </span>my:command<span class="w"> </span><span class="p">&amp;</span>
+<span class="nb">kill</span><span class="w"> </span>-TSTP<span class="w"> </span><span class="nv">$PID</span><span class="w">   </span><span class="c1"># Suspend</span>
+<span class="nb">kill</span><span class="w"> </span>-CONT<span class="w"> </span><span class="nv">$PID</span><span class="w">   </span><span class="c1"># Resume - may lose terminal control</span>
+</pre></div>
+</div>
+<p><strong>The Problem with Manual SIGCONT</strong></p>
+<p>When you manually send <code class="docutils literal notranslate"><span class="pre">kill</span> <span class="pre">-CONT</span></code> from a different terminal:</p>
+<dl class="simple">
+<dt><strong>Expected behavior:</strong></dt><dd><ul class="simple">
+<li><p>Process resumes and custom handlers execute</p></li>
+</ul>
+</dd>
+<dt><strong>Side effects:</strong></dt><dd><ul class="simple">
+<li><p>Process loses foreground terminal control</p></li>
+<li><p>Ctrl+C and Ctrl+Z may stop working</p></li>
+<li><p>Process runs in background state</p></li>
+</ul>
+</dd>
+</dl>
+<p>This happens because manual <code class="docutils literal notranslate"><span class="pre">kill</span> <span class="pre">-CONT</span></code> doesn’t restore the process to the terminal’s foreground process group.</p>
+<p><strong>Best Practices for Pause/Resume</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Use shell job control</strong> (Ctrl+Z, fg, bg) when possible</p></li>
+<li><p><strong>Document the limitation</strong> if your application needs manual signal control</p></li>
+<li><p><strong>Provide alternative control methods</strong> for automated environments</p></li>
+<li><p><strong>Test thoroughly</strong> in your deployment environment</p></li>
+</ol>
+</section>
+</section>
+<section id="triggering-signals">
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Triggering Signals</a><a class="headerlink" href="#triggering-signals" title="Permalink to this heading"></a></h2>
+<section id="from-command-line">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">From Command Line</a><a class="headerlink" href="#from-command-line" title="Permalink to this heading"></a></h3>
+<p>You can send signals to running processes using the <code class="docutils literal notranslate"><span class="pre">kill</span></code> command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the process ID</span>
+php<span class="w"> </span>spark<span class="w"> </span>long:running:command<span class="w"> </span><span class="p">&amp;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$!</span><span class="w">  </span><span class="c1"># Shows PID, e.g., 12345</span>
+
+<span class="c1"># Send different signals</span>
+<span class="nb">kill</span><span class="w"> </span>-TERM<span class="w"> </span><span class="m">12345</span><span class="w">   </span><span class="c1"># Graceful shutdown</span>
+<span class="nb">kill</span><span class="w"> </span>-INT<span class="w"> </span><span class="m">12345</span><span class="w">    </span><span class="c1"># Interrupt (same as Ctrl+C)</span>
+<span class="nb">kill</span><span class="w"> </span>-HUP<span class="w"> </span><span class="m">12345</span><span class="w">    </span><span class="c1"># Hangup</span>
+<span class="nb">kill</span><span class="w"> </span>-USR1<span class="w"> </span><span class="m">12345</span><span class="w">   </span><span class="c1"># User-defined signal 1</span>
+<span class="nb">kill</span><span class="w"> </span>-USR2<span class="w"> </span><span class="m">12345</span><span class="w">   </span><span class="c1"># User-defined signal 2</span>
+
+<span class="c1"># Pause and resume</span>
+<span class="nb">kill</span><span class="w"> </span>-TSTP<span class="w"> </span><span class="m">12345</span><span class="w">   </span><span class="c1"># Suspend (same as Ctrl+Z)</span>
+<span class="nb">kill</span><span class="w"> </span>-CONT<span class="w"> </span><span class="m">12345</span><span class="w">   </span><span class="c1"># Resume (same as fg)</span>
+</pre></div>
+</div>
+</section>
+<section id="keyboard-shortcuts">
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Keyboard Shortcuts</a><a class="headerlink" href="#keyboard-shortcuts" title="Permalink to this heading"></a></h3>
+<p>These keyboard shortcuts send signals to the foreground process:</p>
+<ul class="simple">
+<li><p><strong>Ctrl+C</strong>: Sends SIGINT (interrupt)</p></li>
+<li><p><strong>Ctrl+Z</strong>: Sends SIGTSTP (suspend/pause)</p></li>
+<li><p><strong>Ctrl+\</strong>: Sends SIGQUIT (quit with core dump)</p></li>
+</ul>
+</section>
+<section id="job-control">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Job Control</a><a class="headerlink" href="#job-control" title="Permalink to this heading"></a></h3>
+<p>Standard Unix job control works seamlessly:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>php<span class="w"> </span>spark<span class="w"> </span>long:command<span class="w">     </span><span class="c1"># Run in foreground</span>
+<span class="c1"># Press Ctrl+Z to suspend</span>
+<span class="nb">bg</span><span class="w">                         </span><span class="c1"># Move to background</span>
+<span class="nb">fg</span><span class="w">                         </span><span class="c1"># Bring back to foreground</span>
+<span class="nb">jobs</span><span class="w">                       </span><span class="c1"># List suspended jobs</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="debugging-signals">
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">Debugging Signals</a><a class="headerlink" href="#debugging-signals" title="Permalink to this heading"></a></h2>
+<section id="process-state-information">
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">Process State Information</a><a class="headerlink" href="#process-state-information" title="Permalink to this heading"></a></h3>
+<p>Use <code class="docutils literal notranslate"><span class="pre">getProcessState()</span></code> to debug signal issues:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\BaseCommand</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">SampleCommand</span> <span class="k">extends</span> <span class="nx">BaseCommand</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">debugProcessState</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nv">$state</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getProcessState</span><span class="p">();</span>
+
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;=== PROCESS DEBUG INFO ===&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;PID: &#39;</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;pid&#39;</span><span class="p">],</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Running: &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;running&#39;</span><span class="p">]</span> <span class="o">?</span> <span class="s1">&#39;YES&#39;</span> <span class="o">:</span> <span class="s1">&#39;NO&#39;</span><span class="p">),</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;PCNTL Available: &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;pcntl_available&#39;</span><span class="p">]</span> <span class="o">?</span> <span class="s1">&#39;YES&#39;</span> <span class="o">:</span> <span class="s1">&#39;NO&#39;</span><span class="p">),</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Signals Registered: &#39;</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;registered_signals&#39;</span><span class="p">],</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Signal Names: &#39;</span> <span class="o">.</span> <span class="nb">implode</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">,</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;registered_signals_names&#39;</span><span class="p">]),</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Explicit Mappings: &#39;</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;explicit_mappings&#39;</span><span class="p">],</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Signals Blocked: &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;signals_blocked&#39;</span><span class="p">]</span> <span class="o">?</span> <span class="s1">&#39;YES&#39;</span> <span class="o">:</span> <span class="s1">&#39;NO&#39;</span><span class="p">),</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Memory Usage: &#39;</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;memory_usage_mb&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39; MB&#39;</span><span class="p">,</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Peak Memory: &#39;</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;memory_peak_mb&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39; MB&#39;</span><span class="p">,</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+
+        <span class="c1">// POSIX info (if available)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;session_id&#39;</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Session ID: &#39;</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;session_id&#39;</span><span class="p">],</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+            <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Process Group: &#39;</span> <span class="o">.</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;process_group&#39;</span><span class="p">],</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+            <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Has Terminal: &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;has_controlling_terminal&#39;</span><span class="p">]</span> <span class="o">?</span> <span class="s1">&#39;YES&#39;</span> <span class="o">:</span> <span class="s1">&#39;NO&#39;</span><span class="p">),</span> <span class="s1">&#39;cyan&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;========================&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This returns comprehensive information including:</p>
+<ul class="simple">
+<li><p>Process ID and running state</p></li>
+<li><p>Registered signals and mappings</p></li>
+<li><p>Memory usage statistics</p></li>
+<li><p>Terminal control information (session, process group)</p></li>
+<li><p>Signal blocking status</p></li>
+</ul>
+</section>
+</section>
+<section id="namespace-CodeIgniter\CLI">
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id17" role="doc-backlink">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\CLI" title="Permalink to this heading"></a></h2>
+<dl class="php trait">
+<dt class="sig sig-object php" id="CodeIgniter\CLI\SignalTrait">
+<em class="property"><span class="pre">trait</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\CLI\</span></span><span class="sig-name descname"><span class="pre">SignalTrait</span></span><a class="headerlink" href="#CodeIgniter\CLI\SignalTrait" title="Permalink to this definition"></a></dt>
+<dd><dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\CLI\SignalTrait::registerSignals">
+<span class="sig-name descname"><span class="pre">registerSignals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$signals</span> <span class="pre">=</span> <span class="pre">[SIGTERM,</span> <span class="pre">SIGINT,</span> <span class="pre">SIGHUP,</span> <span class="pre">SIGQUIT],</span> <span class="pre">$methodMap</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\CLI\SignalTrait::registerSignals" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$signals</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – List of signals to handle</p></li>
+<li><p><strong>$methodMap</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Optional signal-to-method mapping</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">void</span></code></span></p>
+</dd>
+</dl>
+<p>Register signal handlers with optional custom method mapping.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Basic signal registration</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">registerSignals</span><span class="p">();</span>
+
+<span class="c1">// Register specific signals</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">registerSignals</span><span class="p">([</span><span class="nx">SIGTERM</span><span class="p">,</span> <span class="nx">SIGINT</span><span class="p">]);</span>
+
+<span class="c1">// Register signals with custom method mapping</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">registerSignals</span><span class="p">(</span>
+    <span class="p">[</span><span class="nx">SIGTERM</span><span class="p">,</span> <span class="nx">SIGINT</span><span class="p">,</span> <span class="nx">SIGUSR1</span><span class="p">],</span>
+    <span class="p">[</span>
+        <span class="nx">SIGTERM</span> <span class="o">=&gt;</span> <span class="s1">&#39;handleGracefulShutdown&#39;</span><span class="p">,</span>
+        <span class="nx">SIGUSR1</span> <span class="o">=&gt;</span> <span class="s1">&#39;handleReload&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Requires the PCNTL extension. On Windows, signal handling is automatically disabled.</p>
+</div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\CLI\SignalTrait::isRunning">
+<span class="sig-name descname"><span class="pre">isRunning</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\CLI\SignalTrait::isRunning" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if the process should continue running, false if not</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+<p>Check if the process should continue running (not terminated).</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+
+<span class="c1">// Main application loop</span>
+<span class="k">while</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">isRunning</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">// Process work items</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">processNextItem</span><span class="p">();</span>
+
+    <span class="c1">// Small delay to prevent CPU spinning</span>
+    <span class="nb">usleep</span><span class="p">(</span><span class="mi">100000</span><span class="p">);</span> <span class="c1">// 0.1 seconds</span>
+<span class="p">}</span>
+
+<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Process terminated gracefully.&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\CLI\SignalTrait::shouldTerminate">
+<span class="sig-name descname"><span class="pre">shouldTerminate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\CLI\SignalTrait::shouldTerminate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if termination has been requested, false if not</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+<p>Check if termination has been requested (opposite of <code class="docutils literal notranslate"><span class="pre">isRunning()</span></code>).</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+
+<span class="c1">// Check for termination before expensive operations</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">shouldTerminate</span><span class="p">())</span> <span class="p">{</span>
+    <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Termination requested, skipping file processing.&#39;</span><span class="p">);</span>
+
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Process large file</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$largeDataSet</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Check periodically during long operations</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">shouldTerminate</span><span class="p">())</span> <span class="p">{</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Termination requested during processing.&#39;</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">processItem</span><span class="p">(</span><span class="nv">$item</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\CLI\SignalTrait::requestTermination">
+<span class="sig-name descname"><span class="pre">requestTermination</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\CLI\SignalTrait::requestTermination" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">void</span></code></span></p>
+</dd>
+</dl>
+<p>Manually request process termination.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+
+<span class="c1">// Request termination based on conditions</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$errorCount</span> <span class="o">&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">maxErrors</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;Too many errors (</span><span class="si">{</span><span class="nv">$errorCount</span><span class="si">}</span><span class="s2">), requesting termination.&quot;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">);</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">requestTermination</span><span class="p">();</span>
+
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\CLI\SignalTrait::resetState">
+<span class="sig-name descname"><span class="pre">resetState</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\CLI\SignalTrait::resetState" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">void</span></code></span></p>
+</dd>
+</dl>
+<p>Reset all states - useful for testing or restart scenarios.</p>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\CLI\SignalTrait::withSignalsBlocked">
+<span class="sig-name descname"><span class="pre">withSignalsBlocked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$operation</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\CLI\SignalTrait::withSignalsBlocked" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$operation</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">callable</span></code></span>) – The critical operation to execute without interruption</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result of the operation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
+</dd>
+</dl>
+<p>Execute a critical operation with ALL signals blocked to prevent ANY interruption.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This blocks ALL interruptible signals including termination signals (SIGTERM, SIGINT),
+pause/resume signals (SIGTSTP, SIGCONT), and custom signals (SIGUSR1, SIGUSR2).
+Only SIGKILL (unblockable) can still terminate the process.</p>
+</div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\CLI\SignalTrait::areSignalsBlocked">
+<span class="sig-name descname"><span class="pre">areSignalsBlocked</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\CLI\SignalTrait::areSignalsBlocked" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if signals are currently blocked, false if not</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+<p>Check if signals are currently blocked.</p>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\CLI\SignalTrait::mapSignal">
+<span class="sig-name descname"><span class="pre">mapSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$signal</span></em>, <em class="sig-param"><span class="pre">$method</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\CLI\SignalTrait::mapSignal" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$signal</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Signal constant</p></li>
+<li><p><strong>$method</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Method name to call for this signal</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">void</span></code></span></p>
+</dd>
+</dl>
+<p>Add or update signal-to-method mapping at runtime.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\BaseCommand</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\SignalTrait</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">SampleCommand</span> <span class="k">extends</span> <span class="nx">BaseCommand</span>
+<span class="p">{</span>
+    <span class="k">use</span> <span class="nx">SignalTrait</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span><span class="o">:</span> <span class="nx">int</span>
+    <span class="p">{</span>
+        <span class="c1">// Register signals first</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">registerSignals</span><span class="p">([</span><span class="nx">SIGTERM</span><span class="p">,</span> <span class="nx">SIGINT</span><span class="p">,</span> <span class="nx">SIGUSR1</span><span class="p">,</span> <span class="nx">SIGUSR2</span><span class="p">]);</span>
+
+        <span class="c1">// Map signals to specific methods at runtime</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">mapSignal</span><span class="p">(</span><span class="nx">SIGUSR1</span><span class="p">,</span> <span class="s1">&#39;handleReload&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">mapSignal</span><span class="p">(</span><span class="nx">SIGUSR2</span><span class="p">,</span> <span class="s1">&#39;handleStatusDump&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Custom signal handlers</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">handleReload</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Received reload signal, reloading configuration...&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">reloadConfig</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">handleStatusDump</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;=== Process Status ===&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">printStatus</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getProcessState</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\CLI\SignalTrait::getSignalName">
+<span class="sig-name descname"><span class="pre">getSignalName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$signal</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\CLI\SignalTrait::getSignalName" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$signal</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Signal constant</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Human-readable signal name</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
+</dd>
+</dl>
+<p>Get human-readable name for a signal constant.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\BaseCommand</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\SignalTrait</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">SampleCommand</span> <span class="k">extends</span> <span class="nx">BaseCommand</span>
+<span class="p">{</span>
+    <span class="k">use</span> <span class="nx">SignalTrait</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span><span class="o">:</span> <span class="nx">int</span>
+    <span class="p">{</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Log signal information</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">onInterruption</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$signal</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nv">$signalName</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getSignalName</span><span class="p">(</span><span class="nv">$signal</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;Received signal: </span><span class="si">{</span><span class="nv">$signalName</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nv">$signal</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\CLI\SignalTrait::hasSignals">
+<span class="sig-name descname"><span class="pre">hasSignals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\CLI\SignalTrait::hasSignals" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if any signals are registered, false if not</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+<p>Check if any signals are registered.</p>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\CLI\SignalTrait::getSignals">
+<span class="sig-name descname"><span class="pre">getSignals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\CLI\SignalTrait::getSignals" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Array of registered signal constants</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
+</dd>
+</dl>
+<p>Get array of registered signal constants.</p>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\CLI\SignalTrait::getProcessState">
+<span class="sig-name descname"><span class="pre">getProcessState</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\CLI\SignalTrait::getProcessState" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Comprehensive process state information</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
+</dd>
+</dl>
+<p>Get comprehensive process state information including process ID, memory usage,
+signal handling status, and terminal control information.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\BaseCommand</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\SignalTrait</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">SampleCommand</span> <span class="k">extends</span> <span class="nx">BaseCommand</span>
+<span class="p">{</span>
+    <span class="k">use</span> <span class="nx">SignalTrait</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span><span class="o">:</span> <span class="nx">int</span>
+    <span class="p">{</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Debug process state</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">debugProcessState</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nv">$state</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getProcessState</span><span class="p">();</span>
+
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;=== Process Debug Information ===&#39;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;PID: </span><span class="si">{</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;pid&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Running: &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;running&#39;</span><span class="p">]</span> <span class="o">?</span> <span class="s1">&#39;Yes&#39;</span> <span class="o">:</span> <span class="s1">&#39;No&#39;</span><span class="p">));</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;Memory Usage: </span><span class="si">{</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;memory_usage_mb&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;Peak Memory: </span><span class="si">{</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;memory_peak_mb&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">);</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Registered Signals: &#39;</span> <span class="o">.</span> <span class="nb">implode</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">,</span> <span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;registered_signals_names&#39;</span><span class="p">]));</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;Signals Blocked: &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$state</span><span class="p">[</span><span class="s1">&#39;signals_blocked&#39;</span><span class="p">]</span> <span class="o">?</span> <span class="s1">&#39;Yes&#39;</span> <span class="o">:</span> <span class="s1">&#39;No&#39;</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\CLI\SignalTrait::unregisterSignals">
+<span class="sig-name descname"><span class="pre">unregisterSignals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\CLI\SignalTrait::unregisterSignals" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">void</span></code></span></p>
+</dd>
+</dl>
+<p>Unregister all signals and clean up resources.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This removes all signal handling behavior for all previously registered signals.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cli_library.html" class="btn btn-neutral float-left" title="CLI Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cli_request.html" class="btn btn-neutral float-right" title="CLIRequest Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Feb 01, 2026.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

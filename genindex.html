@@ -62,6 +62,7 @@
 <li class="toctree-l2"><a class="reference internal" href="installation/installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation/worker_mode.html">Worker Mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelogs/index.html">Change Logs</a></li>
@@ -71,11 +72,9 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial/index.html">Build Your First Application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/static_pages.html">Static Pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/news_section.html">News Section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/create_news_items.html">Create News Items</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/conclusion.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guides/api/index.html">Getting Started with REST APIs</a></li>
 </ul>
 </li>
 </ul>
@@ -113,6 +112,7 @@
 <li class="toctree-l2"><a class="reference internal" href="incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="incoming/controller_attributes.html">Controller Attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="incoming/request.html">Request Class</a></li>
@@ -133,7 +133,8 @@
 <li class="toctree-l2"><a class="reference internal" href="outgoing/view_decorators.html">View Decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="outgoing/table.html">HTML Table Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="outgoing/response.html">HTTP Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="outgoing/api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="outgoing/api_transformers.html">API Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="outgoing/csp.html">Content Security Policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="outgoing/localization.html">Localization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
@@ -241,6 +242,7 @@
 <li class="toctree-l2"><a class="reference internal" href="cli/cli_commands.html">Creating Spark Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cli/cli_generators.html">CLI Generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/cli_signals.html">CLI Signals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cli/cli_request.html">CLIRequest Class</a></li>
 </ul>
 </li>
@@ -321,7 +323,7 @@
 <h2 id="Symbols">Symbols</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="libraries/throttler.html#check"><strong>() ( method)</strong></a>, <a href="libraries/throttler.html#getTokentime"><strong>[1]</strong></a>, <a href="libraries/throttler.html#remove"><strong>[2]</strong></a>, <a href="outgoing/api_responses.html#fail"><strong>[3]</strong></a>, <a href="outgoing/api_responses.html#failForbidden"><strong>[4]</strong></a>, <a href="outgoing/api_responses.html#failNotFound"><strong>[5]</strong></a>, <a href="outgoing/api_responses.html#failResourceExists"><strong>[6]</strong></a>, <a href="outgoing/api_responses.html#failResourceGone"><strong>[7]</strong></a>, <a href="outgoing/api_responses.html#failServerError"><strong>[8]</strong></a>, <a href="outgoing/api_responses.html#failTooManyRequests"><strong>[9]</strong></a>, <a href="outgoing/api_responses.html#failUnauthorized"><strong>[10]</strong></a>, <a href="outgoing/api_responses.html#failValidationErrors"><strong>[11]</strong></a>, <a href="outgoing/api_responses.html#respond"><strong>[12]</strong></a>, <a href="outgoing/api_responses.html#respondCreated"><strong>[13]</strong></a>, <a href="outgoing/api_responses.html#respondDeleted"><strong>[14]</strong></a>, <a href="outgoing/api_responses.html#respondNoContent"><strong>[15]</strong></a>, <a href="outgoing/api_responses.html#setResponseFormat"><strong>[16]</strong></a>
+      <li><a href="libraries/throttler.html#check"><strong>() ( method)</strong></a>, <a href="libraries/throttler.html#getTokentime"><strong>[1]</strong></a>, <a href="libraries/throttler.html#remove"><strong>[2]</strong></a>, <a href="outgoing/api_responses.html#fail"><strong>[3]</strong></a>, <a href="outgoing/api_responses.html#failForbidden"><strong>[4]</strong></a>, <a href="outgoing/api_responses.html#failNotFound"><strong>[5]</strong></a>, <a href="outgoing/api_responses.html#failResourceExists"><strong>[6]</strong></a>, <a href="outgoing/api_responses.html#failResourceGone"><strong>[7]</strong></a>, <a href="outgoing/api_responses.html#failServerError"><strong>[8]</strong></a>, <a href="outgoing/api_responses.html#failTooManyRequests"><strong>[9]</strong></a>, <a href="outgoing/api_responses.html#failUnauthorized"><strong>[10]</strong></a>, <a href="outgoing/api_responses.html#failValidationErrors"><strong>[11]</strong></a>, <a href="outgoing/api_responses.html#paginate"><strong>[12]</strong></a>, <a href="outgoing/api_responses.html#respond"><strong>[13]</strong></a>, <a href="outgoing/api_responses.html#respondCreated"><strong>[14]</strong></a>, <a href="outgoing/api_responses.html#respondDeleted"><strong>[15]</strong></a>, <a href="outgoing/api_responses.html#respondNoContent"><strong>[16]</strong></a>, <a href="outgoing/api_responses.html#setResponseFormat"><strong>[17]</strong></a>
 </li>
   </ul></td>
 </tr></table>
@@ -329,9 +331,11 @@
 <h2 id="_">_</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="libraries/cookies.html#CodeIgniter\Cookie\Cookie::__construct"><strong>__construct() (CodeIgniter\Cookie\Cookie method)</strong></a>
+      <li><a href="outgoing/api_transformers.html#CodeIgniter\API\BaseTransformer::__construct"><strong>__construct() (CodeIgniter\API\BaseTransformer method)</strong></a>
 
       <ul>
+        <li><a href="libraries/cookies.html#CodeIgniter\Cookie\Cookie::__construct"><strong>(CodeIgniter\Cookie\Cookie method)</strong></a>
+</li>
         <li><a href="libraries/cookies.html#CodeIgniter\Cookie\CookieStore::__construct"><strong>(CodeIgniter\Cookie\CookieStore method)</strong></a>
 </li>
       </ul></li>
@@ -365,6 +369,8 @@
 </li>
       <li><a href="helpers/url_helper.html#anchor_popup"><strong>anchor_popup() (global function)</strong></a>
 </li>
+      <li><a href="outgoing/api_transformers.html#CodeIgniter\API\ApiException"><strong>ApiException (class in CodeIgniter\API)</strong></a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="general/common_functions.html#app_timezone"><strong>app_timezone() (global function)</strong></a>
@@ -374,6 +380,8 @@
       <li><a href="incoming/message.html#CodeIgniter\HTTP\Message::appendHeader"><strong>appendHeader() (CodeIgniter\HTTP\Message method)</strong></a>
 </li>
       <li><a href="general/common_functions.html#APPPATH"><strong>APPPATH (global constant)</strong></a>
+</li>
+      <li><a href="cli/cli_signals.html#CodeIgniter\CLI\SignalTrait::areSignalsBlocked"><strong>areSignalsBlocked() (CodeIgniter\CLI\SignalTrait method)</strong></a>
 </li>
       <li><a href="helpers/array_helper.html#array_deep_search"><strong>array_deep_search() (global function)</strong></a>
 </li>
@@ -409,6 +417,8 @@
 </li>
       <li><a href="database/results.html#CodeIgniter\Database\BaseResult"><strong>BaseResult (class in CodeIgniter\Database)</strong></a>
 </li>
+      <li><a href="outgoing/api_transformers.html#CodeIgniter\API\BaseTransformer"><strong>BaseTransformer (class in CodeIgniter\API)</strong></a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -437,9 +447,11 @@
       </ul></li>
       <li><a href="models/model.html#namespace-CodeIgniter"><strong>CodeIgniter (namespace)</strong></a>
 </li>
+      <li><a href="outgoing/api_transformers.html#namespace-CodeIgniter\API"><strong>CodeIgniter\API (namespace)</strong></a>
+</li>
       <li><a href="libraries/caching.html#namespace-CodeIgniter\Cache"><strong>CodeIgniter\Cache (namespace)</strong></a>
 </li>
-      <li><a href="cli/cli_commands.html#namespace-CodeIgniter\CLI"><strong>CodeIgniter\CLI (namespace)</strong></a>
+      <li><a href="cli/cli_commands.html#namespace-CodeIgniter\CLI"><strong>CodeIgniter\CLI (namespace)</strong></a>, <a href="cli/cli_signals.html#namespace-CodeIgniter\CLI"><strong>[1]</strong></a>
 </li>
       <li><a href="libraries/cookies.html#namespace-CodeIgniter\Cookie"><strong>CodeIgniter\Cookie (namespace)</strong></a>
 </li>
@@ -455,10 +467,10 @@
 </li>
       <li><a href="outgoing/table.html#namespace-CodeIgniter\View"><strong>CodeIgniter\View (namespace)</strong></a>, <a href="outgoing/view_parser.html#namespace-CodeIgniter\View"><strong>[1]</strong></a>, <a href="outgoing/view_renderer.html#namespace-CodeIgniter\View"><strong>[2]</strong></a>
 </li>
-      <li><a href="general/common_functions.html#config"><strong>config() (global function)</strong></a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="general/common_functions.html#config"><strong>config() (global function)</strong></a>
+</li>
       <li><a href="helpers/text_helper.html#convert_accented_characters"><strong>convert_accented_characters() (global function)</strong></a>
 </li>
       <li><a href="libraries/cookies.html#CodeIgniter\Cookie\Cookie"><strong>Cookie (class in CodeIgniter\Cookie)</strong></a>
@@ -617,6 +629,10 @@
 </li>
       <li><a href="dbmgmt/forge.html#CodeIgniter\Database\Forge"><strong>Forge (class in CodeIgniter\Database)</strong></a>
 </li>
+      <li><a href="outgoing/api_transformers.html#CodeIgniter\API\ApiException::forInvalidFields"><strong>forInvalidFields() (CodeIgniter\API\ApiException method)</strong></a>
+</li>
+      <li><a href="outgoing/api_transformers.html#CodeIgniter\API\ApiException::forInvalidIncludes"><strong>forInvalidIncludes() (CodeIgniter\API\ApiException method)</strong></a>
+</li>
       <li><a href="helpers/form_helper.html#form_button"><strong>form_button() (global function)</strong></a>
 </li>
       <li><a href="helpers/form_helper.html#form_checkbox"><strong>form_checkbox() (global function)</strong></a>
@@ -633,10 +649,10 @@
 </li>
       <li><a href="helpers/form_helper.html#form_input"><strong>form_input() (global function)</strong></a>
 </li>
-      <li><a href="helpers/form_helper.html#form_label"><strong>form_label() (global function)</strong></a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="helpers/form_helper.html#form_label"><strong>form_label() (global function)</strong></a>
+</li>
       <li><a href="helpers/form_helper.html#form_multiselect"><strong>form_multiselect() (global function)</strong></a>
 </li>
       <li><a href="helpers/form_helper.html#form_open"><strong>form_open() (global function)</strong></a>
@@ -656,6 +672,8 @@
       <li><a href="helpers/form_helper.html#form_upload"><strong>form_upload() (global function)</strong></a>
 </li>
       <li><a href="libraries/typography.html#formatCharacters"><strong>formatCharacters() (global function)</strong></a>
+</li>
+      <li><a href="outgoing/api_transformers.html#CodeIgniter\API\ApiException::forMissingInclude"><strong>forMissingInclude() (CodeIgniter\API\ApiException method)</strong></a>
 </li>
       <li><a href="database/results.html#CodeIgniter\Database\BaseResult::freeResult"><strong>freeResult() (CodeIgniter\Database\BaseResult method)</strong></a>
 </li>
@@ -694,6 +712,10 @@
       <li><a href="helpers/filesystem_helper.html#get_filenames"><strong>get_filenames() (global function)</strong></a>
 </li>
       <li><a href="libraries/user_agent.html#CodeIgniter\HTTP\UserAgent::getAgentString"><strong>getAgentString() (CodeIgniter\HTTP\UserAgent method)</strong></a>
+</li>
+      <li><a href="outgoing/api_transformers.html#CodeIgniter\API\BaseTransformer::getAllowedFields"><strong>getAllowedFields() (CodeIgniter\API\BaseTransformer method)</strong></a>
+</li>
+      <li><a href="outgoing/api_transformers.html#CodeIgniter\API\BaseTransformer::getAllowedIncludes"><strong>getAllowedIncludes() (CodeIgniter\API\BaseTransformer method)</strong></a>
 </li>
       <li><a href="incoming/message.html#CodeIgniter\HTTP\Message::getBody"><strong>getBody() (CodeIgniter\HTTP\Message method)</strong></a>
 </li>
@@ -755,10 +777,10 @@
 </li>
       <li><a href="libraries/cookies.html#CodeIgniter\Cookie\Cookie::getMaxAge"><strong>getMaxAge() (CodeIgniter\Cookie\Cookie method)</strong></a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="libraries/caching.html#CodeIgniter\Cache\CacheInterface::getMetadata"><strong>getMetadata() (CodeIgniter\Cache\CacheInterface method)</strong></a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="incoming/request.html#CodeIgniter\HTTP\Request::getMethod"><strong>getMethod() (CodeIgniter\HTTP\Request method)</strong></a>
 </li>
       <li><a href="libraries/user_agent.html#CodeIgniter\HTTP\UserAgent::getMobile"><strong>getMobile() (CodeIgniter\HTTP\UserAgent method)</strong></a>
@@ -791,6 +813,8 @@
 </li>
       <li><a href="database/results.html#CodeIgniter\Database\BaseResult::getPreviousRow"><strong>getPreviousRow() (CodeIgniter\Database\BaseResult method)</strong></a>
 </li>
+      <li><a href="cli/cli_signals.html#CodeIgniter\CLI\SignalTrait::getProcessState"><strong>getProcessState() (CodeIgniter\CLI\SignalTrait method)</strong></a>
+</li>
       <li><a href="incoming/message.html#CodeIgniter\HTTP\Message::getProtocolVersion"><strong>getProtocolVersion() (CodeIgniter\HTTP\Message method)</strong></a>
 </li>
       <li><a href="outgoing/response.html#CodeIgniter\HTTP\Response::getReasonPhrase"><strong>getReasonPhrase() (CodeIgniter\HTTP\Response method)</strong></a>
@@ -819,6 +843,10 @@
         <li><a href="incoming/request.html#CodeIgniter\HTTP\Request::getServer"><strong>(CodeIgniter\HTTP\Request method)</strong></a>
 </li>
       </ul></li>
+      <li><a href="cli/cli_signals.html#CodeIgniter\CLI\SignalTrait::getSignalName"><strong>getSignalName() (CodeIgniter\CLI\SignalTrait method)</strong></a>
+</li>
+      <li><a href="cli/cli_signals.html#CodeIgniter\CLI\SignalTrait::getSignals"><strong>getSignals() (CodeIgniter\CLI\SignalTrait method)</strong></a>
+</li>
       <li><a href="outgoing/response.html#CodeIgniter\HTTP\Response::getStatusCode"><strong>getStatusCode() (CodeIgniter\HTTP\Response method)</strong></a>
 </li>
       <li><a href="database/results.html#CodeIgniter\Database\BaseResult::getUnbufferedRow"><strong>getUnbufferedRow() (CodeIgniter\Database\BaseResult method)</strong></a>
@@ -855,16 +883,18 @@
 </li>
       <li><a href="incoming/message.html#CodeIgniter\HTTP\Message::hasHeader"><strong>hasHeader() (CodeIgniter\HTTP\Message method)</strong></a>
 </li>
+      <li><a href="cli/cli_signals.html#CodeIgniter\CLI\SignalTrait::hasSignals"><strong>hasSignals() (CodeIgniter\CLI\SignalTrait method)</strong></a>
+</li>
       <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::having"><strong>having() (CodeIgniter\Database\BaseBuilder method)</strong></a>
 </li>
       <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::havingGroupEnd"><strong>havingGroupEnd() (CodeIgniter\Database\BaseBuilder method)</strong></a>
 </li>
       <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::havingGroupStart"><strong>havingGroupStart() (CodeIgniter\Database\BaseBuilder method)</strong></a>
 </li>
-      <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::havingIn"><strong>havingIn() (CodeIgniter\Database\BaseBuilder method)</strong></a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::havingIn"><strong>havingIn() (CodeIgniter\Database\BaseBuilder method)</strong></a>
+</li>
       <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::havingLike"><strong>havingLike() (CodeIgniter\Database\BaseBuilder method)</strong></a>
 </li>
       <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::havingNotIn"><strong>havingNotIn() (CodeIgniter\Database\BaseBuilder method)</strong></a>
@@ -941,6 +971,8 @@
 </li>
       <li><a href="libraries/user_agent.html#CodeIgniter\HTTP\UserAgent::isRobot"><strong>isRobot() (CodeIgniter\HTTP\UserAgent method)</strong></a>
 </li>
+      <li><a href="cli/cli_signals.html#CodeIgniter\CLI\SignalTrait::isRunning"><strong>isRunning() (CodeIgniter\CLI\SignalTrait method)</strong></a>
+</li>
       <li><a href="libraries/cookies.html#CodeIgniter\Cookie\Cookie::isSecure"><strong>isSecure() (CodeIgniter\Cookie\Cookie method)</strong></a>
 
       <ul>
@@ -989,14 +1021,16 @@
 </li>
       <li><a href="outgoing/table.html#CodeIgniter\View\Table::makeColumns"><strong>makeColumns() (CodeIgniter\View\Table method)</strong></a>
 </li>
+      <li><a href="cli/cli_signals.html#CodeIgniter\CLI\SignalTrait::mapSignal"><strong>mapSignal() (CodeIgniter\CLI\SignalTrait method)</strong></a>
+</li>
       <li><a href="helpers/url_helper.html#mb_url_title"><strong>mb_url_title() (global function)</strong></a>
 </li>
       <li><a href="incoming/message.html#CodeIgniter\HTTP\Message"><strong>Message (class in CodeIgniter\HTTP)</strong></a>
 </li>
-      <li><a href="dbmgmt/migration.html#CodeIgniter\Database\MigrationRunner"><strong>MigrationRunner (class in CodeIgniter\Database)</strong></a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="dbmgmt/migration.html#CodeIgniter\Database\MigrationRunner"><strong>MigrationRunner (class in CodeIgniter\Database)</strong></a>
+</li>
       <li><a href="general/common_functions.html#MINUTE"><strong>MINUTE (global constant)</strong></a>
 </li>
       <li><a href="models/model.html#CodeIgniter\Model"><strong>Model (class in CodeIgniter)</strong></a>
@@ -1101,16 +1135,18 @@
 </li>
       <li><a href="libraries/user_agent.html#CodeIgniter\HTTP\UserAgent::parse"><strong>parse() (CodeIgniter\HTTP\UserAgent method)</strong></a>
 </li>
+      <li><a href="helpers/url_helper.html#parse_subdomain"><strong>parse_subdomain() (global function)</strong></a>
+</li>
       <li><a href="outgoing/view_parser.html#CodeIgniter\View\Parser"><strong>Parser (class in CodeIgniter\View)</strong></a>
 </li>
       <li><a href="helpers/inflector_helper.html#pascalize"><strong>pascalize() (global function)</strong></a>
 </li>
       <li><a href="helpers/inflector_helper.html#plural"><strong>plural() (global function)</strong></a>
 </li>
-      <li><a href="incoming/message.html#CodeIgniter\HTTP\Message::populateHeaders"><strong>populateHeaders() (CodeIgniter\HTTP\Message method)</strong></a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="incoming/message.html#CodeIgniter\HTTP\Message::populateHeaders"><strong>populateHeaders() (CodeIgniter\HTTP\Message method)</strong></a>
+</li>
       <li><a href="helpers/url_helper.html#prep_url"><strong>prep_url() (global function)</strong></a>
 </li>
       <li><a href="incoming/message.html#CodeIgniter\HTTP\Message::prependHeader"><strong>prependHeader() (CodeIgniter\HTTP\Message method)</strong></a>
@@ -1145,6 +1181,8 @@
 </li>
       <li><a href="helpers/text_helper.html#reduce_multiples"><strong>reduce_multiples() (global function)</strong></a>
 </li>
+      <li><a href="cli/cli_signals.html#CodeIgniter\CLI\SignalTrait::registerSignals"><strong>registerSignals() (CodeIgniter\CLI\SignalTrait method)</strong></a>
+</li>
       <li><a href="dbmgmt/migration.html#CodeIgniter\Database\MigrationRunner::regress"><strong>regress() (CodeIgniter\Database\MigrationRunner method)</strong></a>
 </li>
       <li><a href="libraries/caching.html#CodeIgniter\Cache\CacheInterface::remember"><strong>remember() (CodeIgniter\Cache\CacheInterface method)</strong></a>
@@ -1177,7 +1215,11 @@
 </li>
       <li><a href="general/common_functions.html#request"><strong>request() (global function)</strong></a>
 </li>
+      <li><a href="cli/cli_signals.html#CodeIgniter\CLI\SignalTrait::requestTermination"><strong>requestTermination() (CodeIgniter\CLI\SignalTrait method)</strong></a>
+</li>
       <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::resetQuery"><strong>resetQuery() (CodeIgniter\Database\BaseBuilder method)</strong></a>
+</li>
+      <li><a href="cli/cli_signals.html#CodeIgniter\CLI\SignalTrait::resetState"><strong>resetState() (CodeIgniter\CLI\SignalTrait method)</strong></a>
 </li>
       <li><a href="outgoing/response.html#CodeIgniter\HTTP\Response"><strong>Response (class in CodeIgniter\HTTP)</strong></a>
 </li>
@@ -1309,8 +1351,6 @@
 </li>
       <li><a href="cli/cli_commands.html#CodeIgniter\CLI\BaseCommand::setPad"><strong>setPad() (CodeIgniter\CLI\BaseCommand method)</strong></a>
 </li>
-      <li><a href="incoming/incomingrequest.html#CodeIgniter\HTTP\IncomingRequest::setPath"><strong>setPath() (CodeIgniter\HTTP\IncomingRequest method)</strong></a>
-</li>
       <li><a href="incoming/message.html#CodeIgniter\HTTP\Message::setProtocolVersion"><strong>setProtocolVersion() (CodeIgniter\HTTP\Message method)</strong></a>
 </li>
       <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::setQueryAsData"><strong>setQueryAsData() (CodeIgniter\Database\BaseBuilder method)</strong></a>
@@ -1345,9 +1385,13 @@
         <li><a href="outgoing/view_renderer.html#CodeIgniter\View\View::setVar"><strong>(CodeIgniter\View\View method)</strong></a>
 </li>
       </ul></li>
+      <li><a href="cli/cli_signals.html#CodeIgniter\CLI\SignalTrait::shouldTerminate"><strong>shouldTerminate() (CodeIgniter\CLI\SignalTrait method)</strong></a>
+</li>
       <li><a href="cli/cli_commands.html#CodeIgniter\CLI\BaseCommand::showError"><strong>showError() (CodeIgniter\CLI\BaseCommand method)</strong></a>
 </li>
       <li><a href="cli/cli_commands.html#CodeIgniter\CLI\BaseCommand::showHelp"><strong>showHelp() (CodeIgniter\CLI\BaseCommand method)</strong></a>
+</li>
+      <li><a href="cli/cli_signals.html#CodeIgniter\CLI\SignalTrait"><strong>SignalTrait (trait in CodeIgniter\CLI)</strong></a>
 </li>
       <li><a href="general/common_functions.html#single_service"><strong>single_service() (global function)</strong></a>
 </li>
@@ -1383,13 +1427,21 @@
 </li>
       <li><a href="helpers/date_helper.html#timezone_select"><strong>timezone_select() (global function)</strong></a>
 </li>
+      <li><a href="outgoing/api_transformers.html#CodeIgniter\API\BaseTransformer::toArray"><strong>toArray() (CodeIgniter\API\BaseTransformer method)</strong></a>
+
+      <ul>
+        <li><a href="libraries/cookies.html#CodeIgniter\Cookie\Cookie::toArray"><strong>(CodeIgniter\Cookie\Cookie method)</strong></a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="libraries/cookies.html#CodeIgniter\Cookie\Cookie::toArray"><strong>toArray() (CodeIgniter\Cookie\Cookie method)</strong></a>
-</li>
       <li><a href="libraries/cookies.html#CodeIgniter\Cookie\Cookie::toHeaderString"><strong>toHeaderString() (CodeIgniter\Cookie\Cookie method)</strong></a>
 </li>
       <li><a href="helpers/html_helper.html#track"><strong>track() (global function)</strong></a>
+</li>
+      <li><a href="outgoing/api_transformers.html#CodeIgniter\API\BaseTransformer::transform"><strong>transform() (CodeIgniter\API\BaseTransformer method)</strong></a>
+</li>
+      <li><a href="outgoing/api_transformers.html#CodeIgniter\API\BaseTransformer::transformMany"><strong>transformMany() (CodeIgniter\API\BaseTransformer method)</strong></a>
 </li>
       <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::truncate"><strong>truncate() (CodeIgniter\Database\BaseBuilder method)</strong></a>
 </li>
@@ -1407,14 +1459,16 @@
 </li>
       <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::unionAll"><strong>unionAll() (CodeIgniter\Database\BaseBuilder method)</strong></a>
 </li>
+      <li><a href="cli/cli_signals.html#CodeIgniter\CLI\SignalTrait::unregisterSignals"><strong>unregisterSignals() (CodeIgniter\CLI\SignalTrait method)</strong></a>
+</li>
       <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::update"><strong>update() (CodeIgniter\Database\BaseBuilder method)</strong></a>
 </li>
       <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::updateBatch"><strong>updateBatch() (CodeIgniter\Database\BaseBuilder method)</strong></a>
 </li>
-      <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::updateFields"><strong>updateFields() (CodeIgniter\Database\BaseBuilder method)</strong></a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::updateFields"><strong>updateFields() (CodeIgniter\Database\BaseBuilder method)</strong></a>
+</li>
       <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::upsert"><strong>upsert() (CodeIgniter\Database\BaseBuilder method)</strong></a>
 </li>
       <li><a href="database/query_builder.html#CodeIgniter\Database\BaseBuilder::upsertBatch"><strong>upsertBatch() (CodeIgniter\Database\BaseBuilder method)</strong></a>
@@ -1492,6 +1546,8 @@
       <li><a href="libraries/cookies.html#CodeIgniter\Cookie\Cookie::withSameSite"><strong>withSameSite() (CodeIgniter\Cookie\Cookie method)</strong></a>
 </li>
       <li><a href="libraries/cookies.html#CodeIgniter\Cookie\Cookie::withSecure"><strong>withSecure() (CodeIgniter\Cookie\Cookie method)</strong></a>
+</li>
+      <li><a href="cli/cli_signals.html#CodeIgniter\CLI\SignalTrait::withSignalsBlocked"><strong>withSignalsBlocked() (CodeIgniter\CLI\SignalTrait method)</strong></a>
 </li>
       <li><a href="libraries/cookies.html#CodeIgniter\Cookie\Cookie::withValue"><strong>withValue() (CodeIgniter\Cookie\Cookie method)</strong></a>
 </li>

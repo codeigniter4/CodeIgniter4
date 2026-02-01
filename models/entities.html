@@ -65,6 +65,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
@@ -74,11 +75,9 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static Pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News Section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create News Items</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
 </ul>
 </li>
 </ul>
@@ -116,6 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controller_attributes.html">Controller Attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
@@ -136,7 +136,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_transformers.html">API Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/csp.html">Content Security Policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
@@ -244,6 +245,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_signals.html">CLI Signals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
 </ul>
 </li>
@@ -319,7 +321,11 @@ be used directly with the <a class="reference internal" href="model.html"><span 
 <li><p><a class="reference internal" href="#property-casting" id="id13">Property Casting</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#checking-for-changed-attributes" id="id14">Checking for Changed Attributes</a></p></li>
+<li><p><a class="reference internal" href="#checking-for-changed-attributes" id="id14">Checking for Changed Attributes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#deep-change-tracking" id="id15">Deep Change Tracking</a></p></li>
+</ul>
+</li>
 </ul>
 </nav>
 <section id="entity-usage">
@@ -347,10 +353,6 @@ database when you’ve proven the concept works.</p>
 <span class="nx">password</span>    <span class="o">-</span> <span class="nx">string</span>
 <span class="nx">created_at</span>  <span class="o">-</span> <span class="nx">datetime</span>
 </pre></div>
-</div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p><code class="docutils literal notranslate"><span class="pre">attributes</span></code> is a reserved word for internal use. Prior to v4.4.0, if you use it as a column name, the Entity does not work correctly.</p>
 </div>
 <section id="create-the-entity-class">
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">Create the Entity Class</a><a class="headerlink" href="#create-the-entity-class" title="Permalink to this heading"></a></h3>
@@ -734,11 +736,15 @@ only read (get).</p>
 <section id="scalar-type-casting">
 <h4>Scalar Type Casting<a class="headerlink" href="#scalar-type-casting" title="Permalink to this heading"></a></h4>
 <p>Properties can be cast to any of the following data types:
-<strong>integer</strong>, <strong>float</strong>, <strong>double</strong>, <strong>string</strong>, <strong>boolean</strong>, <strong>object</strong>, <strong>array</strong>, <strong>datetime</strong>, <strong>timestamp</strong>, <strong>uri</strong> and <strong>int-bool</strong>.
+<strong>integer</strong>, <strong>float</strong>, <strong>double</strong>, <strong>string</strong>, <strong>boolean</strong>, <strong>object</strong>, <strong>array</strong>, <strong>datetime</strong>, <strong>timestamp</strong>, <strong>uri</strong>, <strong>int-bool</strong> and <strong>enum</strong>.
 Add a question mark at the beginning of type to mark property as nullable, i.e., <strong>?string</strong>, <strong>?integer</strong>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><strong>int-bool</strong> can be used since v4.3.0.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>enum</strong> can be used since v4.7.0.</p>
 </div>
 <p>For example, if you had a User entity with an <code class="docutils literal notranslate"><span class="pre">is_banned</span></code> property, you can cast it as a boolean:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -829,6 +835,81 @@ by humans:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Casting as CSV uses PHP’s internal <code class="docutils literal notranslate"><span class="pre">implode</span></code> and <code class="docutils literal notranslate"><span class="pre">explode</span></code> methods and assumes all values are string-safe and free of commas. For more complex data casts try <code class="docutils literal notranslate"><span class="pre">array</span></code> or <code class="docutils literal notranslate"><span class="pre">json</span></code>.</p>
+</div>
+</section>
+<section id="enum-casting">
+<h4>Enum Casting<a class="headerlink" href="#enum-casting" title="Permalink to this heading"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.7.0.</span></p>
+</div>
+<p>You can cast properties to PHP enums. You must specify the enum class name as a parameter.</p>
+<p>Enum casting supports:</p>
+<ul class="simple">
+<li><p><strong>Backed enums</strong> (string or int) - The backing value is stored in the database</p></li>
+<li><p><strong>Unit enums</strong> - The case name is stored in the database as a string</p></li>
+</ul>
+<p>For example, if you had a User entity with a <code class="docutils literal notranslate"><span class="pre">status</span></code> property using a backed enum:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Enums</span><span class="p">;</span>
+
+<span class="nx">enum</span> <span class="nx">UserStatus</span><span class="o">:</span> <span class="nx">string</span>
+<span class="p">{</span>
+    <span class="k">case</span> <span class="nx">Active</span>   <span class="o">=</span> <span class="s1">&#39;active&#39;</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nx">Inactive</span> <span class="o">=</span> <span class="s1">&#39;inactive&#39;</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nx">Pending</span>  <span class="o">=</span> <span class="s1">&#39;pending&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can cast it in your Entity:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Entity\Entity</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Entity</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$casts</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;enum[App\Enums\UserStatus]&#39;</span><span class="p">,</span>
+    <span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now, when you access the <code class="docutils literal notranslate"><span class="pre">status</span></code> property, it will automatically be converted to a <code class="docutils literal notranslate"><span class="pre">UserStatus</span></code> enum instance:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">App\Enums\UserStatus</span><span class="p">;</span>
+
+<span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="c1">// Returns a UserStatus enum instance</span>
+<span class="k">echo</span> <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">status</span><span class="o">-&gt;</span><span class="na">value</span><span class="p">;</span> <span class="c1">// &#39;active&#39;</span>
+
+<span class="c1">// Set using enum</span>
+<span class="nv">$user</span><span class="o">-&gt;</span><span class="na">status</span> <span class="o">=</span> <span class="nx">UserStatus</span><span class="o">::</span><span class="na">Inactive</span><span class="p">;</span>
+
+<span class="c1">// Or set using the backing value (will be converted to enum on read)</span>
+<span class="nv">$user</span><span class="o">-&gt;</span><span class="na">status</span> <span class="o">=</span> <span class="s1">&#39;pending&#39;</span><span class="p">;</span>
+
+<span class="c1">// Note: Internally, enums are always stored as their backing value (string/int)</span>
+<span class="c1">// in the entity&#39;s $attributes array</span>
+</pre></div>
+</div>
+<p>For nullable enums:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Entity\Entity</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Entity</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$casts</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;?enum[App\Enums\UserStatus]&#39;</span><span class="p">,</span>
+    <span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </section>
 <section id="custom-casting">
@@ -979,6 +1060,25 @@ attribute to check:</p>
 <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">hasChanged</span><span class="p">();</span> <span class="c1">// true</span>
 </pre></div>
 </div>
+<section id="deep-change-tracking">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">Deep Change Tracking</a><a class="headerlink" href="#deep-change-tracking" title="Permalink to this heading"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.7.0.</span></p>
+</div>
+<p>The Entity class performs <strong>deep comparison</strong> for objects and arrays to accurately detect changes in their internal state.</p>
+<section id="scalar-values">
+<h4>Scalar Values<a class="headerlink" href="#scalar-values" title="Permalink to this heading"></a></h4>
+<p>For scalar values (strings, integers, floats, booleans, null), the Entity uses direct comparison. When all attributes
+in an Entity are scalars, an optimized comparison is used for better performance.</p>
+</section>
+<section id="objects-and-arrays">
+<h4>Objects and Arrays<a class="headerlink" href="#objects-and-arrays" title="Permalink to this heading"></a></h4>
+<p>For objects and arrays, the Entity JSON-encodes and normalizes the values for comparison. This means that modifications
+to nested structures, object properties, array elements, nested entities (using <code class="docutils literal notranslate"><span class="pre">toRawArray()</span></code>), enums (<code class="docutils literal notranslate"><span class="pre">BackedEnum</span></code>
+and <code class="docutils literal notranslate"><span class="pre">UnitEnum</span></code>), datetime objects (<code class="docutils literal notranslate"><span class="pre">DateTimeInterface</span></code>), collections (<code class="docutils literal notranslate"><span class="pre">Traversable</span></code>), value objects with
+<code class="docutils literal notranslate"><span class="pre">__toString()</span></code>, and objects implementing <code class="docutils literal notranslate"><span class="pre">JsonSerializable</span></code> or <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> will be properly detected.</p>
+</section>
+</section>
 </section>
 </section>
 
