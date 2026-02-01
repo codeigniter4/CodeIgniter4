@@ -43,8 +43,9 @@ class ContentSecurityPolicy
         'plugin-types'    => 'pluginTypes',
         'script-src'      => 'scriptSrc',
         'style-src'       => 'styleSrc',
-        'manifest-src'    => 'manifestSrc',
         'sandbox'         => 'sandbox',
+        'manifest-src'    => 'manifestSrc',
+        'script-src-elem' => 'scriptSrcElem',
     ];
 
     /**
@@ -184,6 +185,13 @@ class ContentSecurityPolicy
      * @var array<string, bool>|string
      */
     protected $manifestSrc = [];
+
+    /**
+     * The `script-src-elem` directive applies to all script requests and script blocks.
+     *
+     * @var array<string, bool>|string
+     */
+    protected $scriptSrcElem = [];
 
     /**
      * Instructs user agents to rewrite URL schemes by changing HTTP to HTTPS.
@@ -645,6 +653,22 @@ class ContentSecurityPolicy
     public function addScriptSrc($uri, ?bool $explicitReporting = null)
     {
         $this->addOption($uri, 'scriptSrc', $explicitReporting ?? $this->reportOnly);
+
+        return $this;
+    }
+
+    /**
+     * Adds a new value to the `script-src-elem` directive.
+     *
+     * @see https://www.w3.org/TR/CSP/#directive-script-src-elem
+     *
+     * @param list<string>|string $uri
+     *
+     * @return $this
+     */
+    public function addScriptSrcElem($uri, ?bool $explicitReporting = null)
+    {
+        $this->addOption($uri, 'scriptSrcElem', $explicitReporting ?? $this->reportOnly);
 
         return $this;
     }

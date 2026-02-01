@@ -331,8 +331,16 @@ Others
 Model
 =====
 
-Helpers and Functions
-=====================
+HTTP
+====
+
+Content Security Policy
+-----------------------
+
+- Added support for the following CSP Level 3 directives:
+    - ``script-src-elem``
+
+  Update your CSP configuration in **app/Config/ContentSecurityPolicy.php** to include these new directives as needed.
 
 Others
 ======
