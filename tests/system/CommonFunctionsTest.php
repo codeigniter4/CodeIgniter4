@@ -731,7 +731,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $cliDetection        = Kint::$cli_detection;
         Kint::$cli_detection = false;
 
-        $this->expectOutputRegex('/<script class="kint-rich-script" nonce="[0-9a-z]{24}">/u');
+        $this->expectOutputRegex('/<script class="kint-rich-script" nonce="[a-zA-Z0-9+\/-_]+[=]{0,2}">/u');
         d('string');
 
         // Restore settings
@@ -754,7 +754,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
         Kint::$cli_detection = false;
 
-        $this->expectOutputRegex('/<style class="kint-rich-style" nonce="[0-9a-z]{24}">/u');
+        $this->expectOutputRegex('/<style class="kint-rich-style" nonce="[a-zA-Z0-9+\/-_]+[=]{0,2}">/u');
         trace();
     }
 

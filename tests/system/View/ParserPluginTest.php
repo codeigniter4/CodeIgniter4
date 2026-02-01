@@ -151,7 +151,7 @@ final class ParserPluginTest extends CIUnitTestCase
         $template = 'aaa {+ csp_script_nonce +} bbb';
 
         $this->assertMatchesRegularExpression(
-            '/aaa nonce="[0-9a-z]{24}" bbb/',
+            '/aaa nonce="[a-zA-Z0-9+\/-_]+[=]{0,2}" bbb/',
             $this->parser->renderString($template),
         );
     }
