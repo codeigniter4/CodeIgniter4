@@ -105,8 +105,9 @@ the existing content.
 * [ ] Update **user_guide_src/source/installation/upgrade_4xx.rst**
   * [ ] fill in the "All Changes" section using the following command, and add it to **upgrade_4xx.rst**:
     ```
-    git diff --name-status origin/master -- . ':!.github/' ':!admin/' ':!system/' ':!tests/' \
-        ':!user_guide_src/' ':!utils/' ':!*.json' ':!*.xml' ':!*.dist' ':!rector.php' \
+    git diff --name-status upstream/master -- . ':!.github/' ':!admin/' ':!changelogs/' ':!contributing/' \
+        ':!system/' ':!tests/' ':!user_guide_src/' ':!utils/' \
+        ':!*.json' ':!*.xml' ':!*.dist' ':!rector.php' ':!deptrac.yml' \
         ':!phpstan*' ':!psalm*' ':!.php-cs-fixer.*' ':!LICENSE' ':!CHANGELOG.md'
     ```
     * Note: `tests/` is not used for distribution repos. See `admin/starter/tests/`.
